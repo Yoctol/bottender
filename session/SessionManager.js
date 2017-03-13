@@ -1,48 +1,49 @@
-import Session from './Session';
+/* @flow */
 import SessionData from './SessionData';
-// import MemorySessionStore from './MemorySessionStore';
-import PersistentMemorySessionStore from './PersistentMemorySessionStore';
-// import DangerousFileSessionStore from './DangerousFileSessionStore';
+
+type SessionStore = {
+  init: () => Promise<SessionStore>,
+  get: (key: string) => Promise<any>,
+  set: (key: string, data: any) => Promise<undefined>,
+  destroy: (key: string) => Promise<undefined>,
+};
+
+type SessionRecord = {
+  sessionData: SessionData,
+  existed: boolean,
+};
 
 export default class SessionManager {
-  constructor(client, filePath) {
-    this._client = client;
-    // this._store = new MemorySessionStore();
-    this._store = new PersistentMemorySessionStore(filePath, 500);
-    // this._store = new DangerousFileSessionStore('./sess.json');
+  _sessionStore: SessionStore;
+
+  constructor(sessionStore) {
+    this._sessionStore = sessionStore;
   }
 
-  async init() {
-    return this._store.init();
+  async init(): SessionStore {
+    return this._sessionStore.init();
   }
 
-  async exists(key) {
-    return !!await this._store.get(key);
+  async createSessionDataIfNotExists(key: string): SessionRecord {
+    const existed: boolean = !!await this._sessionStore.get(key);
+    const sessionData: SessionData = existed
+      ? await this._getSessionData(key)
+      : await this._createSessionData(key);
+    return {
+      sessionData,
+      existed,
+    };
   }
 
-  async getSession(key) {
-    const data = await this._store.get(key);
+  async _getSessionData(key: string): SessionData {
+    const data = await this._sessionStore.get(key);
     return new SessionData(data);
   }
 
-  async createSession(key) {
-    const session = new SessionData();
-    await this._store.set(key, session);
+  async _createSessionData(key: string): SessionData {
+    const sessionData = new SessionData();
+    await this._sessionStore.set(key, sessionData);
 
-    return session;
-  }
-
-  async createSessionIfNotExists(key) {
-    const existed = await this.exists(key);
-    const sessionData = existed
-      ? await this.getSession(key)
-      : await this.createSession(key);
-    return {
-      session: new Session({
-        client: this._client,
-        data: sessionData,
-      }),
-      existed,
-    };
+    return sessionData;
   }
 }
