@@ -869,13 +869,12 @@ describe('sned api', () => {
     });
   });
 
-  describe('#setSenderAction', () => {
+  describe('#sendSenderAction', () => {
     it('should call messages api with sender action', async () => {
       const { client, mock } = createMock();
 
       const expected = {
         recipient_id: RECIPIENT_ID,
-        message_id: 'mid.1489394984387:3dd22de509',
       };
 
       mock
@@ -887,7 +886,7 @@ describe('sned api', () => {
         })
         .reply(200, expected);
 
-      const res = await client.setSenderAction(RECIPIENT_ID, 'typing_on');
+      const res = await client.sendSenderAction(RECIPIENT_ID, 'typing_on');
 
       expect(res.status).toBe(200);
       expect(res.data).toBe(expected);
@@ -900,7 +899,6 @@ describe('sned api', () => {
 
       const expected = {
         recipient_id: RECIPIENT_ID,
-        message_id: 'mid.1489394984387:3dd22de509',
       };
 
       mock
@@ -925,7 +923,6 @@ describe('sned api', () => {
 
       const expected = {
         recipient_id: RECIPIENT_ID,
-        message_id: 'mid.1489394984387:3dd22de509',
       };
 
       mock
