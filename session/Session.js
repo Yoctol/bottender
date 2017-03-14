@@ -124,7 +124,7 @@ export default class Session {
   }
 
   _getMessageDelay(message): number {
-    if (this._messageDelay === 'function') {
+    if (typeof this._messageDelay === 'function') {
       return this._messageDelay(message);
     }
     return this._messageDelay || DEFAULT_MESSAGE_DELAY;
