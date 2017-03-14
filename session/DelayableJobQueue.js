@@ -1,25 +1,56 @@
+/* @flow */
+
+type JobItem = {
+  instance: Object,
+  method: 'string',
+  args: Array<mixed>,
+  delay: number,
+};
+
+type Handler = (job: JobItem) => Promise<mixed>;
+
 export default class DelayableJobQueue {
+  _queue: Array<JobItem>;
+  _processing: boolean;
+  _beforeEach: Handler;
+  _afterEach: Handler;
+
   constructor() {
     this._queue = [];
     this._processing = false;
   }
 
-  beforeEach(fn) {
+  beforeEach(fn: Handler): DelayableJobQueue {
     this._beforeEach = fn;
     return this;
   }
 
-  afterEach(fn) {
+  afterEach(fn: Handler): DelayableJobQueue {
     this._afterEach = fn;
     return this;
   }
 
-  async process() {
+  enqueue(item): void {
+    this._queue.push(item);
+    if (!this._processing) {
+      this._process();
+    }
+  }
+
+  get _hasItem(): boolean {
+    return !!this._queue.length;
+  }
+
+  _dequeue(): JobItem {
+    return this._queue.shift();
+  }
+
+  async _process(): void {
     try {
       this._processing = true;
       /* eslint-disable no-await-in-loop */
-      while (this.hasItem()) {
-        const item = this.dequeue();
+      while (this._hasItem) {
+        const item = this._dequeue();
         const { instance, method, args } = item;
         if (typeof this._beforeEach === 'function') {
           await this._beforeEach(item);
@@ -36,20 +67,5 @@ export default class DelayableJobQueue {
     } catch (err) {
       console.error(err);
     }
-  }
-
-  hasItem() {
-    return !!this._queue.length;
-  }
-
-  enqueue(item) {
-    this._queue.push(item);
-    if (!this._processing) {
-      this.process();
-    }
-  }
-
-  dequeue() {
-    return this._queue.shift();
   }
 }
