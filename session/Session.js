@@ -2,22 +2,29 @@
 
 import wait from 'delay';
 
+import FBGraphAPIClient from '../graph/FBGraphAPIClient';
+
 import DelayableJobQueue from './DelayableJobQueue';
+import SessionData from './SessionData';
 
 const DEFAULT_MESSAGE_DELAY = 1000;
 
 type MessageDelay = number | ((text: string) => number);
 
-type Options = { messageDelay: MessageDelay };
+type Options = {
+  graphAPIClient: FBGraphAPIClient,
+  data: SessionData,
+  messageDelay: MessageDelay,
+};
 
 export default class Session {
-  _client: Object;
-  _data: Object;
+  _graphAPIClient: FBGraphAPIClient;
+  _data: SessionData;
   _jobQueue: DelayableJobQueue;
   _messageDelay: MessageDelay;
 
-  constructor({ client, data, messageDelay }: Options) {
-    this._client = client;
+  constructor({ graphAPIClient, data, messageDelay }: Options) {
+    this._graphAPIClient = graphAPIClient;
     this._data = data;
     this._jobQueue = new DelayableJobQueue();
     this._jobQueue.beforeEach(async ({ delay }) => {
@@ -28,104 +35,95 @@ export default class Session {
     this._messageDelay = messageDelay;
   }
 
-  get data() {
+  get data(): SessionData {
     return this._data;
   }
 
-  set data(data) {
+  set data(data: mixed): void {
     this._data = data;
   }
 
-  // deprecated
-  get user() {
-    return this.data.user;
-  }
-  // deprecated
-  set user(user) {
-    this.data.user = user;
-  }
-
-  sendText(text: string) {
+  sendText(text: string): void {
     this._jobQueue.enqueue({
-      instance: this._client,
+      instance: this._graphAPIClient,
       method: 'sendText',
       args: [this._data.user.id, text],
       delay: this._getMessageDelay(text),
     });
   }
 
-  sendImage(url: string) {
+  sendImage(url: string): void {
     this._jobQueue.enqueue({
-      instance: this._client,
+      instance: this._graphAPIClient,
       method: 'sendImage',
       args: [this._data.user.id, url],
       delay: this._getMessageDelay(),
     });
   }
 
-  sendAudio(url: string) {
+  sendAudio(url: string): void {
     this._jobQueue.enqueue({
-      instance: this._client,
+      instance: this._graphAPIClient,
       method: 'sendAudio',
       args: [this._data.user.id, url],
       delay: this._getMessageDelay(),
     });
   }
 
-  sendVideo(url: string) {
+  sendVideo(url: string): void {
     this._jobQueue.enqueue({
-      instance: this._client,
+      instance: this._graphAPIClient,
       method: 'sendVideo',
       args: [this._data.user.id, url],
       delay: this._getMessageDelay(),
     });
   }
 
-  sendFile(url: string) {
+  sendFile(url: string): void {
     this._jobQueue.enqueue({
-      instance: this._client,
+      instance: this._graphAPIClient,
       method: 'sendFile',
       args: [this._data.user.id, url],
       delay: this._getMessageDelay(),
     });
   }
 
-  sendQuickReplies(text: string, attachment, quickReplies) {
+  sendQuickReplies(text: string, attachment, quickReplies): void {
     this._jobQueue.enqueue({
-      instance: this._client,
+      instance: this._graphAPIClient,
       method: 'sendQuickReplies',
       args: [this._data.user.id, text, attachment, quickReplies],
       delay: this._getMessageDelay(),
     });
   }
 
-  sendGenericTemplate(elements) {
+  sendGenericTemplate(elements): void {
     this._jobQueue.enqueue({
-      instance: this._client,
+      instance: this._graphAPIClient,
       method: 'sendGenericTemplate',
       args: [this._data.user.id, elements],
       delay: this._getMessageDelay(),
     });
   }
 
-  sendButtonTemplate(text, buttons) {
+  sendButtonTemplate(text: string, buttons): void {
     this._jobQueue.enqueue({
-      instance: this._client,
+      instance: this._graphAPIClient,
       method: 'sendButtonTemplate',
       args: [this._data.user.id, text, buttons],
       delay: this._getMessageDelay(),
     });
   }
 
-  turnTypingIndicatorsOn() {
-    this._client.turnTypingIndicatorsOn(this._data.user.id);
+  turnTypingIndicatorsOn(): void {
+    this._graphAPIClient.turnTypingIndicatorsOn(this._data.user.id);
   }
 
-  turnTypingIndicatorsOff() {
-    this._client.turnTypingIndicatorsOff(this._data.user.id);
+  turnTypingIndicatorsOff(): void {
+    this._graphAPIClient.turnTypingIndicatorsOff(this._data.user.id);
   }
 
-  _getMessageDelay(message) {
+  _getMessageDelay(message): number {
     if (this._messageDelay === 'function') {
       return this._messageDelay(message);
     }

@@ -1,13 +1,20 @@
 import _debug from 'debug';
 
+import Session from '../session/Session';
 import SessionManager from '../session/SessionManager';
+// import MemorySessionStore from '../session/MemorySessionStore';
+import PersistentMemorySessionStore
+  from '../session/PersistentMemorySessionStore';
+// import DangerousFileSessionStore from '../session/DangerousFileSessionStore';
 
 const debug = _debug('shared/bot/Bot');
 
 export default class Bot {
   constructor({ graphAPIClient, filePath }) {
     this._graphAPIClient = graphAPIClient;
-    this._sessionManager = new SessionManager(this._graphAPIClient, filePath);
+    this._sessionManager = new SessionManager(
+      new PersistentMemorySessionStore(filePath, 500),
+    );
     this._initialized = false;
   }
 
@@ -61,9 +68,14 @@ export default class Bot {
       const ref = getStartedRef || normalRef;
 
       const {
-        session,
+        sessionData,
         existed,
       } = await this._sessionManager.createSessionIfNotExists(senderId);
+
+      const session = new Session({
+        graphAPIClient: this._graphAPIClient,
+        data: sessionData,
+      });
 
       if (!existed) {
         const { data } = await this._graphAPIClient.getUser(senderId);
