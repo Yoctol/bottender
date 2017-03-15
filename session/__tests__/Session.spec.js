@@ -27,6 +27,24 @@ const setup = (messageDelay = 1000) => {
   };
 };
 
+const setupNoDelay = () => {
+  const client = createMockGraphAPIClient();
+  const data = new SessionData({
+    user: {
+      id: 'fakeUserId',
+    },
+  });
+  const sessionInstance = new Session({
+    graphAPIClient: client,
+    data,
+  });
+  return {
+    sessionInstance,
+    data,
+    client,
+  };
+};
+
 it('be defined', () => {
   const { sessionInstance } = setup();
   expect(sessionInstance).toBeDefined();
@@ -191,6 +209,23 @@ it('turnTypingIndicatorsOff called client turnTypingIndicatorsOff', () => {
   const { sessionInstance, client, data } = setup();
   sessionInstance.turnTypingIndicatorsOff();
   expect(client.turnTypingIndicatorsOff).toBeCalledWith(data.user.id);
+});
+
+it('use default message delay when nothing passed in', () => {
+  const { sessionInstance, client, data } = setupNoDelay();
+
+  sessionInstance._jobQueue = {
+    enqueue: jest.fn(),
+  };
+
+  sessionInstance.sendText('yooooooo~');
+
+  expect(sessionInstance._jobQueue.enqueue).toBeCalledWith({
+    instance: client,
+    method: 'sendText',
+    args: [data.user.id, 'yooooooo~'],
+    delay: 1000,
+  });
 });
 
 it('call messageDelay() when it passed in with a function', () => {
