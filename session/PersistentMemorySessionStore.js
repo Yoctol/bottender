@@ -25,8 +25,11 @@ export default class PersistentMemorySessionStore {
       await write(this._filename, {});
     }
     const persistentMap = await this._readPersistentMap();
+
     this._map.load(Object.entries(persistentMap).map(([k, v]) => ({ k, v })));
+
     setInterval(this._mergeMapToFile, DEFAULT_SNAPSHOT_INTERVAL);
+
     return this;
   }
 
