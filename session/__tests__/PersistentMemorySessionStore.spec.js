@@ -91,7 +91,10 @@ it('should remove data from store when destroy be called', async () => {
 });
 
 it('should read session from persistent session file when it does not exist in memory', async () => {
-  jsonfile.readFile = jest.fn((filename, cb) => cb(null, { 1: 'cph' }));
+  jsonfile.readFile = jest
+    .fn()
+    .mockImplementationOnce((filename, cb) => cb(null, {}))
+    .mockImplementationOnce((filename, cb) => cb(null, { 1: 'cph' }));
   const PersistentMemorySessionStore = require('../PersistentMemorySessionStore').default;
   const store = new PersistentMemorySessionStore('sess.json', 500);
   await store.init();
