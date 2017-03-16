@@ -22,31 +22,31 @@ it('be defined', () => {
 it('onMessage will return this', () => {
   const { builder, condition, handler } = setup();
   const sameBuilder = builder.onMessage(condition, handler);
-  expect(sameBuilder).toEqual(builder);
+  expect(sameBuilder).toBe(builder);
 });
 
 it('onGetStarted will return this', () => {
   const { builder, handler } = setup();
   const sameBuilder = builder.onGetStarted(handler);
-  expect(sameBuilder).toEqual(builder);
+  expect(sameBuilder).toBe(builder);
 });
 
 it('onPostback will return this', () => {
   const { builder, condition, handler } = setup();
   const sameBuilder = builder.onPostback(condition, handler);
-  expect(sameBuilder).toEqual(builder);
+  expect(sameBuilder).toBe(builder);
 });
 
 it('onQuickReply will return this', () => {
   const { builder, condition, handler } = setup();
   const sameBuilder = builder.onQuickReply(condition, handler);
-  expect(sameBuilder).toEqual(builder);
+  expect(sameBuilder).toBe(builder);
 });
 
 it('onUnhandled will return this', () => {
   const { builder, handler } = setup();
   const sameBuilder = builder.onUnhandled(handler);
-  expect(sameBuilder).toEqual(builder);
+  expect(sameBuilder).toBe(builder);
 });
 
 describe('#build', () => {
