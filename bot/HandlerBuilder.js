@@ -2,13 +2,15 @@
 import type Context from '../session/Context';
 
 type Condition = string | RegExp;
-type Handler = (context: Context) => {};
+
+export type Handler = (context: Context) => {};
+
 type ConditionHandler = {
   condition: Condition,
   handler: Handler,
 };
 
-function matchCondition(condition, payload): boolean {
+function matchCondition(condition: Condition, payload): boolean {
   if (typeof condition === 'string') {
     return condition === payload;
   } else if (condition instanceof RegExp) {
@@ -25,7 +27,7 @@ export default class HandlerBuilder {
   _postbackHandlers: Array<ConditionHandler> = [];
   _quickReplyHandlers: Array<ConditionHandler> = [];
 
-  onMessage(condition, handler: Handler) {
+  onMessage(condition: Condition, handler: Handler) {
     this._messageHandlers.push({
       condition,
       handler,
@@ -38,7 +40,7 @@ export default class HandlerBuilder {
     return this;
   }
 
-  onPostback(condition, handler: Handler) {
+  onPostback(condition: Condition, handler: Handler) {
     this._postbackHandlers.push({
       condition,
       handler,
@@ -46,7 +48,7 @@ export default class HandlerBuilder {
     return this;
   }
 
-  onQuickReply(condition, handler: Handler) {
+  onQuickReply(condition: Condition, handler: Handler) {
     this._quickReplyHandlers.push({
       condition,
       handler,
