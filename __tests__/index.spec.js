@@ -9,6 +9,10 @@ describe('core', () => {
     expect(core.HandlerBuilder).toBeDefined();
   });
 
+  it('export CompositeHandlerBuilder', () => {
+    expect(core.CompositeHandlerBuilder).toBeDefined();
+  });
+
   it('export FBGraphAPIClient', () => {
     expect(core.FBGraphAPIClient).toBeDefined();
   });

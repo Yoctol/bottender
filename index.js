@@ -1,5 +1,8 @@
 export { default as Bot } from './bot/Bot';
 export { default as HandlerBuilder } from './bot/HandlerBuilder';
+export {
+  default as CompositeHandlerBuilder,
+} from './bot/CompositeHandlerBuilder';
 
 export { default as FBGraphAPIClient } from './graph/FBGraphAPIClient';
 
