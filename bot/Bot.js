@@ -70,7 +70,7 @@ export default class Bot {
       const {
         sessionData,
         existed,
-      } = await this._sessionManager.createSessionIfNotExists(senderId);
+      } = await this._sessionManager.createSessionDataIfNotExists(senderId);
 
       const context = new Context({
         graphAPIClient: this._graphAPIClient,

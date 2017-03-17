@@ -60,7 +60,7 @@ describe('Bot', () => {
       const bot = new Bot({ graphAPIClient, filePath: 'file/path' });
 
       bot._sessionManager.init = jest.fn(() => Promise.resolve(true));
-      bot._sessionManager.createSessionIfNotExists = jest.fn(
+      bot._sessionManager.createSessionDataIfNotExists = jest.fn(
         () => Promise.resolve({ existed: true, sessionData: {} }),
       );
 
@@ -78,7 +78,7 @@ describe('Bot', () => {
       const bot = new Bot({ graphAPIClient, filePath: 'file/path' });
 
       bot._sessionManager.init = jest.fn(() => Promise.resolve(true));
-      bot._sessionManager.createSessionIfNotExists = jest.fn(
+      bot._sessionManager.createSessionDataIfNotExists = jest.fn(
         () => Promise.resolve({ existed: true, sessionData: {} }),
       );
 
@@ -96,7 +96,7 @@ describe('Bot', () => {
       const bot = new Bot({ graphAPIClient, filePath: 'file/path' });
 
       bot._sessionManager.init = jest.fn(() => Promise.resolve(true));
-      bot._sessionManager.createSessionIfNotExists = jest.fn(
+      bot._sessionManager.createSessionDataIfNotExists = jest.fn(
         () => Promise.resolve({ existed: false, sessionData: {} }),
       );
 
@@ -118,7 +118,7 @@ describe('Bot', () => {
       const bot = new Bot({ graphAPIClient, filePath: 'file/path' });
 
       bot._sessionManager.init = jest.fn(() => Promise.resolve(true));
-      bot._sessionManager.createSessionIfNotExists = jest.fn(
+      bot._sessionManager.createSessionDataIfNotExists = jest.fn(
         () => Promise.resolve({ existed: false, sessionData: {} }),
       );
 
@@ -161,7 +161,7 @@ describe('Bot', () => {
       const bot = new Bot({ graphAPIClient, filePath: 'file/path' });
 
       bot._sessionManager.init = jest.fn(() => Promise.resolve(true));
-      bot._sessionManager.createSessionIfNotExists = jest.fn(
+      bot._sessionManager.createSessionDataIfNotExists = jest.fn(
         () => Promise.resolve({ existed: false, sessionData: {} }),
       );
 
@@ -202,7 +202,7 @@ describe('Bot', () => {
       const bot = new Bot({ graphAPIClient, filePath: 'file/path' });
 
       bot._sessionManager.init = jest.fn(() => Promise.resolve(true));
-      bot._sessionManager.createSessionIfNotExists = jest.fn(
+      bot._sessionManager.createSessionDataIfNotExists = jest.fn(
         () => Promise.resolve({ existed: true, sessionData: {} }),
       );
 
