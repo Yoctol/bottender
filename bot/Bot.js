@@ -1,6 +1,6 @@
 import _debug from 'debug';
 
-import Session from '../session/Session';
+import Context from '../session/Context';
 import SessionManager from '../session/SessionManager';
 // import MemorySessionStore from '../session/MemorySessionStore';
 import PersistentMemorySessionStore
@@ -72,7 +72,7 @@ export default class Bot {
         existed,
       } = await this._sessionManager.createSessionIfNotExists(senderId);
 
-      const session = new Session({
+      const context = new Context({
         graphAPIClient: this._graphAPIClient,
         data: sessionData,
       });
@@ -80,21 +80,21 @@ export default class Bot {
       if (!existed) {
         const { data } = await this._graphAPIClient.getUser(senderId);
         // FIXME: define property
-        session.data.user = {
+        context.data.user = {
           ...data,
           id: senderId,
         };
       }
 
       if (ref) {
-        session.data.user.ref = ref;
+        context.data.user.ref = ref;
       }
 
       if (!this._handler) {
         throw new Error('must have at least 1 handler');
       }
 
-      this._handler(session, msg);
+      this._handler(context, msg);
 
       response.status = 200;
     };

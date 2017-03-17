@@ -1,8 +1,8 @@
 /* @flow */
-import type Session from '../session/Session';
+import type Context from '../session/Context';
 
 type Condition = string | RegExp;
-type Handler = (session: Session) => {};
+type Handler = (context: Context) => {};
 type ConditionHandler = {
   condition: Condition,
   handler: Handler,
@@ -60,7 +60,7 @@ export default class HandlerBuilder {
   }
 
   build(): Handler {
-    return (session, msg) => {
+    return (context, msg) => {
       const { message, postback } = msg;
       if (message && message.quick_reply) {
         for (let i = 0; i < this._quickReplyHandlers.length; i++) {
@@ -70,12 +70,12 @@ export default class HandlerBuilder {
             message.quick_reply.payload,
           );
           if (match) {
-            quickReplyHandler.handler(session, msg);
+            quickReplyHandler.handler(context, msg);
             return;
           }
         }
         if (this._unhandledHandler) {
-          this._unhandledHandler(session, msg);
+          this._unhandledHandler(context, msg);
         }
         return;
       }
@@ -85,12 +85,12 @@ export default class HandlerBuilder {
           const messageHandler = this._messageHandlers[i];
           const match = matchCondition(messageHandler.condition, message.text);
           if (match) {
-            messageHandler.handler(session, msg);
+            messageHandler.handler(context, msg);
             return;
           }
         }
         if (this._unhandledHandler) {
-          this._unhandledHandler(session, msg);
+          this._unhandledHandler(context, msg);
         }
         return;
       }
@@ -99,7 +99,7 @@ export default class HandlerBuilder {
           this._getStartedHandler &&
           postback.payload === HandlerBuilder.GET_STARTED_PAYLOAD
         ) {
-          this._getStartedHandler(session, msg);
+          this._getStartedHandler(context, msg);
           return;
         }
 
@@ -111,12 +111,12 @@ export default class HandlerBuilder {
             postback.payload,
           );
           if (match) {
-            postbackHandler.handler(session, msg);
+            postbackHandler.handler(context, msg);
             return;
           }
         }
         if (this._unhandledHandler) {
-          this._unhandledHandler(session, msg);
+          this._unhandledHandler(context, msg);
         }
       }
     };

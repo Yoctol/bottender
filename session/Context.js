@@ -17,7 +17,7 @@ type Options = {
   messageDelay: MessageDelay,
 };
 
-export default class Session {
+export default class Context {
   _graphAPIClient: FBGraphAPIClient;
   _data: SessionData;
   _jobQueue: DelayableJobQueue;
