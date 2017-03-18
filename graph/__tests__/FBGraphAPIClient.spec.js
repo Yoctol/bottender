@@ -352,7 +352,7 @@ describe('greeting text', () => {
 
 describe('domain whitelist', () => {
   describe('#getDomainWhitelist', () => {
-    it('should response data of greeting text', async () => {
+    it('should response data of domain whitelist', async () => {
       const { client, mock } = createMock();
 
       const expected = {
@@ -412,6 +412,280 @@ describe('domain whitelist', () => {
         .reply(200, expected);
 
       const res = await client.deleteDomainWhitelist();
+
+      expect(res.status).toBe(200);
+      expect(res.data).toBe(expected);
+    });
+  });
+});
+
+describe('account linking url', () => {
+  describe('#getAccountLinkingURL', () => {
+    it('should response data of account linking url', async () => {
+      const { client, mock } = createMock();
+
+      const expected = {
+        data: [
+          {
+            account_linking_url: 'https://www.example.com/oauth?response_type=code&client_id=1234567890&scope=basic',
+          },
+        ],
+      };
+
+      mock
+        .onGet(
+          `/me/messenger_profile?fields=account_linking_url&access_token=${ACCESS_TOKEN}`,
+        )
+        .reply(200, expected);
+
+      const res = await client.getAccountLinkingURL();
+
+      expect(res.status).toBe(200);
+      expect(res.data).toBe(expected);
+    });
+  });
+
+  describe('#setAccountLinkingURL', () => {
+    it('should response success result', async () => {
+      const { client, mock } = createMock();
+
+      const expected = {
+        result: 'success',
+      };
+
+      mock
+        .onPost(`/me/messenger_profile?access_token=${ACCESS_TOKEN}`, {
+          account_linking_url: 'https://www.example.com/oauth?response_type=code&client_id=1234567890&scope=basic',
+        })
+        .reply(200, expected);
+
+      const res = await client.setAccountLinkingURL(
+        'https://www.example.com/oauth?response_type=code&client_id=1234567890&scope=basic',
+      );
+
+      expect(res.status).toBe(200);
+      expect(res.data).toBe(expected);
+    });
+  });
+
+  describe('#deleteAccountLinkingURL', () => {
+    it('should response success result', async () => {
+      const { client, mock } = createMock();
+
+      const expected = {
+        result: 'success',
+      };
+
+      mock
+        .onDelete(`/me/messenger_profile?access_token=${ACCESS_TOKEN}`, {
+          fields: ['account_linking_url'],
+        })
+        .reply(200, expected);
+
+      const res = await client.deleteAccountLinkingURL();
+
+      expect(res.status).toBe(200);
+      expect(res.data).toBe(expected);
+    });
+  });
+});
+
+describe('payment settings', () => {
+  describe('#getPaymentSettings', () => {
+    it('should response data of payment settings', async () => {
+      const { client, mock } = createMock();
+
+      const expected = {
+        data: [
+          {
+            privacy_url: 'www.facebook.com',
+            public_key: 'YOUR_PUBLIC_KEY',
+            test_users: ['12345678'],
+          },
+        ],
+      };
+
+      mock
+        .onGet(
+          `/me/messenger_profile?fields=payment_settings&access_token=${ACCESS_TOKEN}`,
+        )
+        .reply(200, expected);
+
+      const res = await client.getPaymentSettings();
+
+      expect(res.status).toBe(200);
+      expect(res.data).toBe(expected);
+    });
+  });
+
+  describe('#setPaymentPrivacyPolicyURL', () => {
+    it('should response success result', async () => {
+      const { client, mock } = createMock();
+
+      const expected = {
+        result: 'success',
+      };
+
+      mock
+        .onPost(`/me/messenger_profile?access_token=${ACCESS_TOKEN}`, {
+          payment_settings: {
+            privacy_url: 'https://www.example.com',
+          },
+        })
+        .reply(200, expected);
+
+      const res = await client.setPaymentPrivacyPolicyURL(
+        'https://www.example.com',
+      );
+
+      expect(res.status).toBe(200);
+      expect(res.data).toBe(expected);
+    });
+  });
+
+  describe('#setPaymentPublicKey', () => {
+    it('should response success result', async () => {
+      const { client, mock } = createMock();
+
+      const expected = {
+        result: 'success',
+      };
+
+      mock
+        .onPost(`/me/messenger_profile?access_token=${ACCESS_TOKEN}`, {
+          payment_settings: {
+            public_key: 'YOUR_PUBLIC_KEY',
+          },
+        })
+        .reply(200, expected);
+
+      const res = await client.setPaymentPublicKey('YOUR_PUBLIC_KEY');
+
+      expect(res.status).toBe(200);
+      expect(res.data).toBe(expected);
+    });
+  });
+
+  describe('#setPaymentTestUsers', () => {
+    it('should response success result', async () => {
+      const { client, mock } = createMock();
+
+      const expected = {
+        result: 'success',
+      };
+
+      mock
+        .onPost(`/me/messenger_profile?access_token=${ACCESS_TOKEN}`, {
+          payment_settings: {
+            test_users: ['12345678'],
+          },
+        })
+        .reply(200, expected);
+
+      const res = await client.setPaymentTestUsers(['12345678']);
+
+      expect(res.status).toBe(200);
+      expect(res.data).toBe(expected);
+    });
+  });
+
+  describe('#deletePaymentSettings', () => {
+    it('should response success result', async () => {
+      const { client, mock } = createMock();
+
+      const expected = {
+        result: 'success',
+      };
+
+      mock
+        .onDelete(`/me/messenger_profile?access_token=${ACCESS_TOKEN}`, {
+          fields: ['payment_settings'],
+        })
+        .reply(200, expected);
+
+      const res = await client.deletePaymentSettings();
+
+      expect(res.status).toBe(200);
+      expect(res.data).toBe(expected);
+    });
+  });
+});
+
+describe('target audience', () => {
+  describe('#getTargetAudience', () => {
+    it('should response data of target audience', async () => {
+      const { client, mock } = createMock();
+
+      const expected = {
+        data: [
+          {
+            audience_type: 'custom',
+            countries: {
+              whitelist: ['US', 'CA'],
+            },
+          },
+        ],
+      };
+
+      mock
+        .onGet(
+          `/me/messenger_profile?fields=target_audience&access_token=${ACCESS_TOKEN}`,
+        )
+        .reply(200, expected);
+
+      const res = await client.getTargetAudience();
+
+      expect(res.status).toBe(200);
+      expect(res.data).toBe(expected);
+    });
+  });
+
+  describe('#setTargetAudience', () => {
+    it('should response success result', async () => {
+      const { client, mock } = createMock();
+
+      const expected = {
+        result: 'success',
+      };
+
+      mock
+        .onPost(`/me/messenger_profile?access_token=${ACCESS_TOKEN}`, {
+          target_audience: {
+            audience_type: 'custom',
+            countries: {
+              whitelist: ['US', 'CA'],
+              blacklist: ['UK'],
+            },
+          },
+        })
+        .reply(200, expected);
+
+      const res = await client.setTargetAudience(
+        'custom',
+        ['US', 'CA'],
+        ['UK'],
+      );
+
+      expect(res.status).toBe(200);
+      expect(res.data).toBe(expected);
+    });
+  });
+
+  describe('#deleteTargetAudience', () => {
+    it('should response success result', async () => {
+      const { client, mock } = createMock();
+
+      const expected = {
+        result: 'success',
+      };
+
+      mock
+        .onDelete(`/me/messenger_profile?access_token=${ACCESS_TOKEN}`, {
+          fields: ['target_audience'],
+        })
+        .reply(200, expected);
+
+      const res = await client.deleteTargetAudience();
 
       expect(res.status).toBe(200);
       expect(res.data).toBe(expected);

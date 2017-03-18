@@ -210,7 +210,7 @@ export default class FBGraphAPIClient {
     );
 
   /**
-   * Setting Domain Whitelist
+   * Domain Whitelist
    *
    * https://developers.facebook.com/docs/messenger-platform/messenger-profile/domain-whitelisting
    */
@@ -230,6 +230,111 @@ export default class FBGraphAPIClient {
       {
         data: {
           fields: ['whitelisted_domains'],
+        },
+      },
+    );
+
+  /**
+   * Account Linking URL
+   *
+   * https://developers.facebook.com/docs/messenger-platform/messenger-profile/account-linking-url
+   */
+  getAccountLinkingURL = (): Promise<MessengerProfileResponse> =>
+    this._http.get(
+      `/me/messenger_profile?fields=account_linking_url&access_token=${this._accessToken}`,
+    );
+
+  setAccountLinkingURL = (url: string): Promise<MutationSuccessResponse> =>
+    this._http.post(`/me/messenger_profile?access_token=${this._accessToken}`, {
+      account_linking_url: url,
+    });
+
+  deleteAccountLinkingURL = (): Promise<MutationSuccessResponse> =>
+    this._http.delete(
+      `/me/messenger_profile?access_token=${this._accessToken}`,
+      {
+        data: {
+          fields: ['account_linking_url'],
+        },
+      },
+    );
+
+  /**
+   * Payment Settings
+   *
+   * https://developers.facebook.com/docs/messenger-platform/messenger-profile/payment-settings
+   */
+  getPaymentSettings = (): Promise<MessengerProfileResponse> =>
+    this._http.get(
+      `/me/messenger_profile?fields=payment_settings&access_token=${this._accessToken}`,
+    );
+
+  setPaymentPrivacyPolicyURL = (
+    url: string,
+  ): Promise<MutationSuccessResponse> =>
+    this._http.post(`/me/messenger_profile?access_token=${this._accessToken}`, {
+      payment_settings: {
+        privacy_url: url,
+      },
+    });
+
+  setPaymentPublicKey = (key: string): Promise<MutationSuccessResponse> =>
+    this._http.post(`/me/messenger_profile?access_token=${this._accessToken}`, {
+      payment_settings: {
+        public_key: key,
+      },
+    });
+
+  setPaymentTestUsers = (
+    users: Array<string>,
+  ): Promise<MutationSuccessResponse> =>
+    this._http.post(`/me/messenger_profile?access_token=${this._accessToken}`, {
+      payment_settings: {
+        test_users: users,
+      },
+    });
+
+  deletePaymentSettings = (): Promise<MutationSuccessResponse> =>
+    this._http.delete(
+      `/me/messenger_profile?access_token=${this._accessToken}`,
+      {
+        data: {
+          fields: ['payment_settings'],
+        },
+      },
+    );
+
+  /**
+   * Target Audience
+   *
+   * https://developers.facebook.com/docs/messenger-platform/messenger-profile/target-audience
+   */
+  getTargetAudience = (): Promise<MessengerProfileResponse> =>
+    this._http.get(
+      `/me/messenger_profile?fields=target_audience&access_token=${this._accessToken}`,
+    );
+
+  setTargetAudience = (
+    type: string,
+    whitelist: ?Array<string> = [],
+    blacklist: ?Array<string> = [],
+  ): Promise<MutationSuccessResponse> =>
+    this._http.post(`/me/messenger_profile?access_token=${this._accessToken}`, {
+      target_audience: {
+        audience_type: type,
+        countries: {
+          whitelist,
+          blacklist,
+        },
+      },
+    });
+
+  deleteTargetAudience = (): Promise<MutationSuccessResponse> =>
+    this._http.delete(
+      `/me/messenger_profile?access_token=${this._accessToken}`,
+      {
+        data: {
+          fields: ['target_audience'],
         },
       },
     );
@@ -267,49 +372,53 @@ export default class FBGraphAPIClient {
   ): Promise<SendMessageSucessResponse> => this.send(recipientId, { text });
 
   // TODO: support formdata fileupload?
-  // FIXME: prettier bug
+  // FIXME: prettier bug?
   sendAudio = (
     recipientId: string,
     url: string,
-  ): Promise<SendMessageSucessResponse> => this.sendAttachment(recipientId, {
-    type: 'audio', // eslint-disable-line
-    payload: {
-      url,
-    },
-  });
+  ): Promise<SendMessageSucessResponse> =>
+    this.sendAttachment(recipientId, {
+      type: 'audio', // eslint-disable-line
+      payload: {
+        url,
+      },
+    });
 
   // TODO: support formdata fileupload?
   sendImage = (
     recipientId: string,
     url: string,
-  ): Promise<SendMessageSucessResponse> => this.sendAttachment(recipientId, {
-    type: 'image',
-    payload: {
-      url,
-    },
-  });
+  ): Promise<SendMessageSucessResponse> =>
+    this.sendAttachment(recipientId, {
+      type: 'image',
+      payload: {
+        url,
+      },
+    });
 
   // TODO: support formdata fileupload?
   sendVideo = (
     recipientId: string,
     url: string,
-  ): Promise<SendMessageSucessResponse> => this.sendAttachment(recipientId, {
-    type: 'video',
-    payload: {
-      url,
-    },
-  });
+  ): Promise<SendMessageSucessResponse> =>
+    this.sendAttachment(recipientId, {
+      type: 'video',
+      payload: {
+        url,
+      },
+    });
 
   // TODO: support formdata fileupload?
   sendFile = (
     recipientId: string,
     url: string,
-  ): Promise<SendMessageSucessResponse> => this.sendAttachment(recipientId, {
-    type: 'file',
-    payload: {
-      url,
-    },
-  });
+  ): Promise<SendMessageSucessResponse> =>
+    this.sendAttachment(recipientId, {
+      type: 'file',
+      payload: {
+        url,
+      },
+    });
 
   /**
    * Templates
@@ -319,32 +428,35 @@ export default class FBGraphAPIClient {
   sendTemplate = (
     recipientId: string,
     payload: AttachmentPayload,
-  ): Promise<SendMessageSucessResponse> => this.sendAttachment(recipientId, {
-    type: 'template',
-    payload,
-  });
+  ): Promise<SendMessageSucessResponse> =>
+    this.sendAttachment(recipientId, {
+      type: 'template',
+      payload,
+    });
 
   // https://developers.facebook.com/docs/messenger-platform/send-api-reference/button-template
   sendButtonTemplate = (
     recipientId: string,
     text: string,
     buttons: Array<TemplateButton>,
-  ): Promise<SendMessageSucessResponse> => this.sendTemplate(recipientId, {
-    template_type: 'button',
-    text,
-    buttons,
-  });
+  ): Promise<SendMessageSucessResponse> =>
+    this.sendTemplate(recipientId, {
+      template_type: 'button',
+      text,
+      buttons,
+    });
 
   // https://developers.facebook.com/docs/messenger-platform/send-api-reference/generic-template
   sendGenericTemplate = (
     recipientId: string,
     elements: Array<TemplateElement>,
     ratio: string = 'square',
-  ): Promise<SendMessageSucessResponse> => this.sendTemplate(recipientId, {
-    template_type: 'generic',
-    elements,
-    image_aspect_ratio: ratio,
-  });
+  ): Promise<SendMessageSucessResponse> =>
+    this.sendTemplate(recipientId, {
+      template_type: 'generic',
+      elements,
+      image_aspect_ratio: ratio,
+    });
 
   /**
    * Quick Replies
