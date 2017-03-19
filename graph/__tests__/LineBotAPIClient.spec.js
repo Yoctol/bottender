@@ -3,7 +3,7 @@ import MockAdapter from 'axios-mock-adapter';
 import LineBotAPIClient from '../LineBotAPIClient';
 
 const RECIPIENT_ID = '1QAZ2WSX';
-const REPLY_TOKEN = "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA";
+const REPLY_TOKEN = 'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA';
 const ACCESS_TOKEN = '1234567890';
 
 const headers = {
@@ -32,10 +32,10 @@ describe('user profile', () => {
     it('should response user profile', async () => {
       const { client, mock } = createMock();
       const expected = {
-        "displayName":"LINE taro",
-        "userId":RECIPIENT_ID,
-        "pictureUrl":"http://obs.line-apps.com/...",
-        "statusMessage":"Hello, LINE!"
+        displayName: 'LINE taro',
+        userId: RECIPIENT_ID,
+        pictureUrl: 'http://obs.line-apps.com/...',
+        statusMessage: 'Hello, LINE!',
       };
 
       mock.onGet(`/profile/${RECIPIENT_ID}`).reply(200, expected, headers);
@@ -58,16 +58,16 @@ describe('reply message', () => {
       mock
         .onPost('/message/reply', {
           replyToken: REPLY_TOKEN,
-          messages: [
-            { type: 'text', text: 'Hello!' },
-          ],
+          messages: [{ type: 'text', text: 'Hello!' }],
         })
         .reply(200, expected, headers);
 
-      const res = await client.reply(REPLY_TOKEN, [{
-        type: 'text',
-        text: 'Hello!',
-      }]);
+      const res = await client.reply(REPLY_TOKEN, [
+        {
+          type: 'text',
+          text: 'Hello!',
+        },
+      ]);
 
       expect(res.status).toBe(200);
       expect(res.data).toBe(expected);
@@ -83,9 +83,7 @@ describe('reply message', () => {
       mock
         .onPost('/message/reply', {
           replyToken: REPLY_TOKEN,
-          messages: [
-            { type: 'text', text: 'Hello!' },
-          ],
+          messages: [{ type: 'text', text: 'Hello!' }],
         })
         .reply(200, expected, headers);
 
@@ -107,16 +105,16 @@ describe('push message', () => {
       mock
         .onPost('/message/push', {
           to: RECIPIENT_ID,
-          messages: [
-            { type: 'text', text: 'Hello!' },
-          ],
+          messages: [{ type: 'text', text: 'Hello!' }],
         })
         .reply(200, expected, headers);
 
-      const res = await client.push(RECIPIENT_ID, [{
-        type: 'text',
-        text: 'Hello!',
-      }]);
+      const res = await client.push(RECIPIENT_ID, [
+        {
+          type: 'text',
+          text: 'Hello!',
+        },
+      ]);
 
       expect(res.status).toBe(200);
       expect(res.data).toBe(expected);
@@ -132,9 +130,7 @@ describe('push message', () => {
       mock
         .onPost('/message/push', {
           to: RECIPIENT_ID,
-          messages: [
-            { type: 'text', text: 'Hello!' },
-          ],
+          messages: [{ type: 'text', text: 'Hello!' }],
         })
         .reply(200, expected, headers);
 
@@ -156,16 +152,19 @@ describe('multicast', () => {
       mock
         .onPost('/message/multicast', {
           to: [RECIPIENT_ID],
-          messages: [
-            { type: 'text', text: 'Hello!' },
-          ],
+          messages: [{ type: 'text', text: 'Hello!' }],
         })
         .reply(200, expected, headers);
 
-      const res = await client.multicast([RECIPIENT_ID], [{
-        type: 'text',
-        text: 'Hello!',
-      }]);
+      const res = await client.multicast(
+        [RECIPIENT_ID],
+        [
+          {
+            type: 'text',
+            text: 'Hello!',
+          },
+        ],
+      );
 
       expect(res.status).toBe(200);
       expect(res.data).toBe(expected);
@@ -182,8 +181,7 @@ describe('leave', () => {
 
       const GROUP_ID = 'G123456';
 
-      mock.onPost(`/group/${GROUP_ID}/leave`)
-        .reply(200, expected, headers);
+      mock.onPost(`/group/${GROUP_ID}/leave`).reply(200, expected, headers);
 
       const res = await client.leaveGroup(GROUP_ID);
 
@@ -200,8 +198,7 @@ describe('leave', () => {
 
       const ROOM_ID = 'R123456';
 
-      mock.onPost(`/room/${ROOM_ID}/leave`)
-        .reply(200, expected, headers);
+      mock.onPost(`/room/${ROOM_ID}/leave`).reply(200, expected, headers);
 
       const res = await client.leaveRoom(ROOM_ID);
 

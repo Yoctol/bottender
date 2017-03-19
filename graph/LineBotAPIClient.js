@@ -19,9 +19,9 @@ type Message = TextMessage | {};
 
 type MutationSuccessResponse = {};
 
-export default class FBGraphAPIClient {
-  static factory: FBGraphAPIClient = (accessToken: string) =>
-    new FBGraphAPIClient(accessToken);
+export default class LineBotAPIClient {
+  static factory: LineBotAPIClient = (accessToken: string) =>
+    new LineBotAPIClient(accessToken);
 
   _http: Axios;
 

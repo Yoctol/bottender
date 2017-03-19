@@ -1,5 +1,6 @@
 import _debug from 'debug';
 
+import LineBotAPIClient from '../graph/LineBotAPIClient';
 import Context from '../session/Context';
 import SessionManager from '../session/SessionManager';
 // import MemorySessionStore from '../session/MemorySessionStore';
@@ -7,11 +8,11 @@ import PersistentMemorySessionStore
   from '../session/PersistentMemorySessionStore';
 // import DangerousFileSessionStore from '../session/DangerousFileSessionStore';
 
-const debug = _debug('core/bot/Bot');
+const debug = _debug('core/bot/LineBot');
 
-export default class Bot {
-  constructor({ graphAPIClient, filePath }) {
-    this._graphAPIClient = graphAPIClient;
+export default class LineBot {
+  constructor({ accessToken, filePath }) {
+    this._lineAPIClient = new LineBotAPIClient(accessToken);
     this._sessionManager = new SessionManager(
       new PersistentMemorySessionStore(filePath, 500),
     );
@@ -23,27 +24,29 @@ export default class Bot {
   }
 
   // {
-  //   "object": "page",
-  //   "entry": [
+  //   "events": [
   //     {
-  //       "id": "1895382890692545",
-  //       "time": 1486464322257,
-  //       "messaging": [
-  //         {
-  //           "sender": {
-  //             "id": "1412611362105802"
-  //           },
-  //           "recipient": {
-  //             "id": "1895382890692545"
-  //           },
-  //           "timestamp": 1486464322190,
-  //           "message": {
-  //             "mid": "mid.1486464322190:cb04e5a654",
-  //             "seq": 339979,
-  //             "text": "測試了"
-  //           }
-  //         }
-  //       ]
+  //       "replyToken": "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
+  //       "type": "message",
+  //       "timestamp": 1462629479859,
+  //       "source": {
+  //         "type": "user",
+  //         "userId": "U206d25c2ea6bd87c17655609a1c37cb8"
+  //       },
+  //       "message": {
+  //         "id": "325708",
+  //         "type": "text",
+  //         "text": "Hello, world"
+  //       }
+  //     },
+  //     {
+  //       "replyToken": "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
+  //       "type": "follow",
+  //       "timestamp": 1462629479859,
+  //       "source": {
+  //         "type": "user",
+  //         "userId": "U206d25c2ea6bd87c17655609a1c37cb8"
+  //       }
   //     }
   //   ]
   // }
@@ -56,16 +59,8 @@ export default class Bot {
         this._initialized = true;
       }
 
-      const msg = request.body.entry[0].messaging[0];
-      const senderId = msg.sender.id;
-      const getStartedRef = msg &&
-        msg.postback &&
-        msg.postback.referral &&
-        msg.postback.referral.ref;
-
-      const normalRef = msg && msg.referral && msg.referral.ref;
-
-      const ref = getStartedRef || normalRef;
+      const msg = request.body.events[0];
+      const senderId = msg.source.userId;
 
       const {
         sessionData,
@@ -73,20 +68,16 @@ export default class Bot {
       } = await this._sessionManager.createSessionDataIfNotExists(senderId);
 
       const context = new Context({
-        graphAPIClient: this._graphAPIClient,
+        lineAPIClient: this._lineAPIClient,
         data: sessionData,
       });
 
       if (!existed) {
-        const { data } = await this._graphAPIClient.getUserProfile(senderId);
+        const { data } = await this._lineAPIClient.getUserProfile(senderId);
         context.data.user = {
           ...data,
           id: senderId,
         };
-      }
-
-      if (ref) {
-        context.data.user.ref = ref;
       }
 
       if (!this._handler) {
