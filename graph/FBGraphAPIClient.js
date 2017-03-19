@@ -2,13 +2,7 @@
 import axios from 'axios';
 import invariant from 'invariant';
 
-type Axios = {
-  get: Function,
-  post: Function,
-  put: Function,
-  path: Function,
-  delete: Function,
-};
+import type Axios from './types.flow';
 
 type AttachmentPayload = {
   url?: string,
@@ -119,7 +113,7 @@ export default class FBGraphAPIClient {
    * https://www.quora.com/How-connect-Facebook-user-id-to-sender-id-in-the-Facebook-messenger-platform
    * first_name, last_name, profile_pic, locale, timezone, gender
    */
-  getUser = (userId: string): Promise<User> =>
+  getUserProfile = (userId: string): Promise<User> =>
     this._http.get(`/${userId}?access_token=${this._accessToken}`);
 
   /**
@@ -277,45 +271,49 @@ export default class FBGraphAPIClient {
   sendAudio = (
     recipientId: string,
     url: string,
-  ): Promise<SendMessageSucessResponse> => this.sendAttachment(recipientId, {
-    type: 'audio', // eslint-disable-line
-    payload: {
-      url,
-    },
-  });
+  ): Promise<SendMessageSucessResponse> =>
+    this.sendAttachment(recipientId, {
+      type: 'audio', // eslint-disable-line
+      payload: {
+        url,
+      },
+    });
 
   // TODO: support formdata fileupload?
   sendImage = (
     recipientId: string,
     url: string,
-  ): Promise<SendMessageSucessResponse> => this.sendAttachment(recipientId, {
-    type: 'image',
-    payload: {
-      url,
-    },
-  });
+  ): Promise<SendMessageSucessResponse> =>
+    this.sendAttachment(recipientId, {
+      type: 'image',
+      payload: {
+        url,
+      },
+    });
 
   // TODO: support formdata fileupload?
   sendVideo = (
     recipientId: string,
     url: string,
-  ): Promise<SendMessageSucessResponse> => this.sendAttachment(recipientId, {
-    type: 'video',
-    payload: {
-      url,
-    },
-  });
+  ): Promise<SendMessageSucessResponse> =>
+    this.sendAttachment(recipientId, {
+      type: 'video',
+      payload: {
+        url,
+      },
+    });
 
   // TODO: support formdata fileupload?
   sendFile = (
     recipientId: string,
     url: string,
-  ): Promise<SendMessageSucessResponse> => this.sendAttachment(recipientId, {
-    type: 'file',
-    payload: {
-      url,
-    },
-  });
+  ): Promise<SendMessageSucessResponse> =>
+    this.sendAttachment(recipientId, {
+      type: 'file',
+      payload: {
+        url,
+      },
+    });
 
   /**
    * Templates
@@ -325,32 +323,35 @@ export default class FBGraphAPIClient {
   sendTemplate = (
     recipientId: string,
     payload: AttachmentPayload,
-  ): Promise<SendMessageSucessResponse> => this.sendAttachment(recipientId, {
-    type: 'template',
-    payload,
-  });
+  ): Promise<SendMessageSucessResponse> =>
+    this.sendAttachment(recipientId, {
+      type: 'template',
+      payload,
+    });
 
   // https://developers.facebook.com/docs/messenger-platform/send-api-reference/button-template
   sendButtonTemplate = (
     recipientId: string,
     text: string,
     buttons: Array<TemplateButton>,
-  ): Promise<SendMessageSucessResponse> => this.sendTemplate(recipientId, {
-    template_type: 'button',
-    text,
-    buttons,
-  });
+  ): Promise<SendMessageSucessResponse> =>
+    this.sendTemplate(recipientId, {
+      template_type: 'button',
+      text,
+      buttons,
+    });
 
   // https://developers.facebook.com/docs/messenger-platform/send-api-reference/generic-template
   sendGenericTemplate = (
     recipientId: string,
     elements: Array<TemplateElement>,
     ratio: string = 'square',
-  ): Promise<SendMessageSucessResponse> => this.sendTemplate(recipientId, {
-    template_type: 'generic',
-    elements,
-    image_aspect_ratio: ratio,
-  });
+  ): Promise<SendMessageSucessResponse> =>
+    this.sendTemplate(recipientId, {
+      template_type: 'generic',
+      elements,
+      image_aspect_ratio: ratio,
+    });
 
   /**
    * Quick Replies

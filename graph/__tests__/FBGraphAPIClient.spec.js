@@ -22,8 +22,8 @@ describe('#getHTTPClient', () => {
   });
 });
 
-describe('user', () => {
-  describe('#getUser', () => {
+describe('user profile', () => {
+  describe('#getUserProfile', () => {
     it('should response user profile', async () => {
       const { client, mock } = createMock();
       const expected = {
@@ -37,7 +37,7 @@ describe('user', () => {
 
       mock.onGet(`/1?access_token=${ACCESS_TOKEN}`).reply(200, expected);
 
-      const res = await client.getUser('1');
+      const res = await client.getUserProfile('1');
 
       expect(res.status).toBe(200);
       expect(res.data).toBe(expected);

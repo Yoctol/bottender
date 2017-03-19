@@ -29,7 +29,7 @@ const request = {
 };
 
 const createMockGraphAPIClient = () => ({
-  getUser: jest.fn(),
+  getUserProfile: jest.fn(),
 });
 
 describe('Bot', () => {
@@ -60,9 +60,8 @@ describe('Bot', () => {
       const bot = new Bot({ graphAPIClient, filePath: 'file/path' });
 
       bot._sessionManager.init = jest.fn(() => Promise.resolve(true));
-      bot._sessionManager.createSessionDataIfNotExists = jest.fn(
-        () => Promise.resolve({ existed: true, sessionData: {} }),
-      );
+      bot._sessionManager.createSessionDataIfNotExists = jest.fn(() =>
+        Promise.resolve({ existed: true, sessionData: {} }));
 
       bot.handle(jest.fn());
 
@@ -78,9 +77,8 @@ describe('Bot', () => {
       const bot = new Bot({ graphAPIClient, filePath: 'file/path' });
 
       bot._sessionManager.init = jest.fn(() => Promise.resolve(true));
-      bot._sessionManager.createSessionDataIfNotExists = jest.fn(
-        () => Promise.resolve({ existed: true, sessionData: {} }),
-      );
+      bot._sessionManager.createSessionDataIfNotExists = jest.fn(() =>
+        Promise.resolve({ existed: true, sessionData: {} }));
 
       bot._initialized = true;
       bot.handle(jest.fn());
@@ -91,16 +89,15 @@ describe('Bot', () => {
       expect(bot._sessionManager.init).not.toHaveBeenCalled();
     });
 
-    it('getUser if not existed in session', async () => {
+    it('getUserProfile if not existed in session', async () => {
       const graphAPIClient = createMockGraphAPIClient();
       const bot = new Bot({ graphAPIClient, filePath: 'file/path' });
 
       bot._sessionManager.init = jest.fn(() => Promise.resolve(true));
-      bot._sessionManager.createSessionDataIfNotExists = jest.fn(
-        () => Promise.resolve({ existed: false, sessionData: {} }),
-      );
+      bot._sessionManager.createSessionDataIfNotExists = jest.fn(() =>
+        Promise.resolve({ existed: false, sessionData: {} }));
 
-      bot._graphAPIClient.getUser.mockReturnValueOnce({ data: {} });
+      bot._graphAPIClient.getUserProfile.mockReturnValueOnce({ data: {} });
 
       bot._initialized = true;
       bot.handle(jest.fn());
@@ -108,7 +105,7 @@ describe('Bot', () => {
       const middleware = bot.createKoaMiddleware();
 
       await middleware({ request, response: {} });
-      expect(bot._graphAPIClient.getUser).toHaveBeenCalledWith(
+      expect(bot._graphAPIClient.getUserProfile).toHaveBeenCalledWith(
         '1412611362105802',
       );
     });
@@ -118,11 +115,10 @@ describe('Bot', () => {
       const bot = new Bot({ graphAPIClient, filePath: 'file/path' });
 
       bot._sessionManager.init = jest.fn(() => Promise.resolve(true));
-      bot._sessionManager.createSessionDataIfNotExists = jest.fn(
-        () => Promise.resolve({ existed: false, sessionData: {} }),
-      );
+      bot._sessionManager.createSessionDataIfNotExists = jest.fn(() =>
+        Promise.resolve({ existed: false, sessionData: {} }));
 
-      bot._graphAPIClient.getUser.mockReturnValueOnce({ data: {} });
+      bot._graphAPIClient.getUserProfile.mockReturnValueOnce({ data: {} });
 
       bot._initialized = true;
 
@@ -161,11 +157,10 @@ describe('Bot', () => {
       const bot = new Bot({ graphAPIClient, filePath: 'file/path' });
 
       bot._sessionManager.init = jest.fn(() => Promise.resolve(true));
-      bot._sessionManager.createSessionDataIfNotExists = jest.fn(
-        () => Promise.resolve({ existed: false, sessionData: {} }),
-      );
+      bot._sessionManager.createSessionDataIfNotExists = jest.fn(() =>
+        Promise.resolve({ existed: false, sessionData: {} }));
 
-      bot._graphAPIClient.getUser.mockReturnValueOnce({ data: {} });
+      bot._graphAPIClient.getUserProfile.mockReturnValueOnce({ data: {} });
 
       bot._initialized = true;
 
@@ -202,9 +197,8 @@ describe('Bot', () => {
       const bot = new Bot({ graphAPIClient, filePath: 'file/path' });
 
       bot._sessionManager.init = jest.fn(() => Promise.resolve(true));
-      bot._sessionManager.createSessionDataIfNotExists = jest.fn(
-        () => Promise.resolve({ existed: true, sessionData: {} }),
-      );
+      bot._sessionManager.createSessionDataIfNotExists = jest.fn(() =>
+        Promise.resolve({ existed: true, sessionData: {} }));
 
       bot._initialized = true;
 

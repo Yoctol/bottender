@@ -78,7 +78,7 @@ export default class Bot {
       });
 
       if (!existed) {
-        const { data } = await this._graphAPIClient.getUser(senderId);
+        const { data } = await this._graphAPIClient.getUserProfile(senderId);
         // FIXME: define property
         context.data.user = {
           ...data,
