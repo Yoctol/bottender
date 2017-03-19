@@ -36,23 +36,22 @@ it('should create new file when file does not exist', async () => {
 });
 
 it('should not create new file when file exists', async () => {
-  fs.stat = jest.fn((filename, cb) =>
-    cb(null, {
-      dev: 16777220,
-      mode: 33188,
-      nlink: 1,
-      uid: 501,
-      gid: 20,
-      rdev: 0,
-      blksize: 4096,
-      ino: 111335250,
-      size: 2668,
-      blocks: 8,
-      atime: '2017-03-16T06:55:21.000Z',
-      mtime: '2017-03-16T06:39:44.000Z',
-      ctime: '2017-03-16T06:39:44.000Z',
-      birthtime: '2017-03-16T06:39:44.000Z',
-    }));
+  fs.stat = jest.fn((filename, cb) => cb(null, {
+    dev: 16777220,
+    mode: 33188,
+    nlink: 1,
+    uid: 501,
+    gid: 20,
+    rdev: 0,
+    blksize: 4096,
+    ino: 111335250,
+    size: 2668,
+    blocks: 8,
+    atime: '2017-03-16T06:55:21.000Z',
+    mtime: '2017-03-16T06:39:44.000Z',
+    ctime: '2017-03-16T06:39:44.000Z',
+    birthtime: '2017-03-16T06:39:44.000Z',
+  }));
   const PersistentMemorySessionStore = require('../PersistentMemorySessionStore').default;
   const store = new PersistentMemorySessionStore('sess.json', 500);
   expect(await store.init()).toBe(store);

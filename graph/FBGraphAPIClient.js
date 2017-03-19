@@ -271,49 +271,45 @@ export default class FBGraphAPIClient {
   sendAudio = (
     recipientId: string,
     url: string,
-  ): Promise<SendMessageSucessResponse> =>
-    this.sendAttachment(recipientId, {
-      type: 'audio', // eslint-disable-line
-      payload: {
-        url,
-      },
-    });
+  ): Promise<SendMessageSucessResponse> => this.sendAttachment(recipientId, {
+    type: 'audio', // eslint-disable-line
+    payload: {
+      url,
+    },
+  });
 
   // TODO: support formdata fileupload?
   sendImage = (
     recipientId: string,
     url: string,
-  ): Promise<SendMessageSucessResponse> =>
-    this.sendAttachment(recipientId, {
-      type: 'image',
-      payload: {
-        url,
-      },
-    });
+  ): Promise<SendMessageSucessResponse> => this.sendAttachment(recipientId, {
+    type: 'image',
+    payload: {
+      url,
+    },
+  });
 
   // TODO: support formdata fileupload?
   sendVideo = (
     recipientId: string,
     url: string,
-  ): Promise<SendMessageSucessResponse> =>
-    this.sendAttachment(recipientId, {
-      type: 'video',
-      payload: {
-        url,
-      },
-    });
+  ): Promise<SendMessageSucessResponse> => this.sendAttachment(recipientId, {
+    type: 'video',
+    payload: {
+      url,
+    },
+  });
 
   // TODO: support formdata fileupload?
   sendFile = (
     recipientId: string,
     url: string,
-  ): Promise<SendMessageSucessResponse> =>
-    this.sendAttachment(recipientId, {
-      type: 'file',
-      payload: {
-        url,
-      },
-    });
+  ): Promise<SendMessageSucessResponse> => this.sendAttachment(recipientId, {
+    type: 'file',
+    payload: {
+      url,
+    },
+  });
 
   /**
    * Templates
@@ -323,35 +319,32 @@ export default class FBGraphAPIClient {
   sendTemplate = (
     recipientId: string,
     payload: AttachmentPayload,
-  ): Promise<SendMessageSucessResponse> =>
-    this.sendAttachment(recipientId, {
-      type: 'template',
-      payload,
-    });
+  ): Promise<SendMessageSucessResponse> => this.sendAttachment(recipientId, {
+    type: 'template',
+    payload,
+  });
 
   // https://developers.facebook.com/docs/messenger-platform/send-api-reference/button-template
   sendButtonTemplate = (
     recipientId: string,
     text: string,
     buttons: Array<TemplateButton>,
-  ): Promise<SendMessageSucessResponse> =>
-    this.sendTemplate(recipientId, {
-      template_type: 'button',
-      text,
-      buttons,
-    });
+  ): Promise<SendMessageSucessResponse> => this.sendTemplate(recipientId, {
+    template_type: 'button',
+    text,
+    buttons,
+  });
 
   // https://developers.facebook.com/docs/messenger-platform/send-api-reference/generic-template
   sendGenericTemplate = (
     recipientId: string,
     elements: Array<TemplateElement>,
     ratio: string = 'square',
-  ): Promise<SendMessageSucessResponse> =>
-    this.sendTemplate(recipientId, {
-      template_type: 'generic',
-      elements,
-      image_aspect_ratio: ratio,
-    });
+  ): Promise<SendMessageSucessResponse> => this.sendTemplate(recipientId, {
+    template_type: 'generic',
+    elements,
+    image_aspect_ratio: ratio,
+  });
 
   /**
    * Quick Replies

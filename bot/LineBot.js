@@ -1,9 +1,8 @@
 import _debug from 'debug';
 
 import LineBotAPIClient from '../graph/LineBotAPIClient';
-import Context from '../session/Context';
+import LineContext from '../session/LineContext';
 import SessionManager from '../session/SessionManager';
-// import MemorySessionStore from '../session/MemorySessionStore';
 import PersistentMemorySessionStore
   from '../session/PersistentMemorySessionStore';
 // import DangerousFileSessionStore from '../session/DangerousFileSessionStore';
@@ -11,8 +10,8 @@ import PersistentMemorySessionStore
 const debug = _debug('core/bot/LineBot');
 
 export default class LineBot {
-  constructor({ accessToken, filePath }) {
-    this._lineAPIClient = new LineBotAPIClient(accessToken);
+  constructor({ accessToken, channelSecret, filePath }) {
+    this._lineAPIClient = LineBotAPIClient.factory(accessToken, channelSecret);
     this._sessionManager = new SessionManager(
       new PersistentMemorySessionStore(filePath, 500),
     );
@@ -54,6 +53,18 @@ export default class LineBot {
     return async ({ request, response }) => {
       debug(JSON.stringify(request.body, null, 2));
 
+      // FIXME: https://github.com/koajs/bodyparser/issues/43#issuecomment-287596020
+      // rawBody
+
+      // const signature = request.header['X-Line-Signature'];
+      // const isValidSignature = this._lineAPIClient.isValidSignature(rawBody, signature);
+
+      // if (!isValidSignature) {
+      //   response.status = 400;
+      //   response.body = 'invalid signature';
+      //   return;
+      // }
+
       if (!this._initialized) {
         await this._sessionManager.init();
         this._initialized = true;
@@ -67,7 +78,7 @@ export default class LineBot {
         existed,
       } = await this._sessionManager.createSessionDataIfNotExists(senderId);
 
-      const context = new Context({
+      const context = new LineContext({
         lineAPIClient: this._lineAPIClient,
         data: sessionData,
       });
@@ -84,7 +95,9 @@ export default class LineBot {
         throw new Error('must have at least 1 handler');
       }
 
-      this._handler(context, msg);
+      request.body.events.forEach(event => {
+        this._handler(context, event);
+      });
 
       response.status = 200;
     };

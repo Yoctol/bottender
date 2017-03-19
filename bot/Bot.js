@@ -1,8 +1,7 @@
 import _debug from 'debug';
 
-import Context from '../session/Context';
+import MessengerContext from '../session/MessengerContext';
 import SessionManager from '../session/SessionManager';
-// import MemorySessionStore from '../session/MemorySessionStore';
 import PersistentMemorySessionStore
   from '../session/PersistentMemorySessionStore';
 // import DangerousFileSessionStore from '../session/DangerousFileSessionStore';
@@ -72,7 +71,7 @@ export default class Bot {
         existed,
       } = await this._sessionManager.createSessionDataIfNotExists(senderId);
 
-      const context = new Context({
+      const context = new MessengerContext({
         graphAPIClient: this._graphAPIClient,
         data: sessionData,
       });

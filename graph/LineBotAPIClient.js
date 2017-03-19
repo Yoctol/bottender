@@ -1,4 +1,6 @@
 /* @flow */
+import crypto from 'crypto';
+
 import axios from 'axios';
 
 import type Axios from './types.flow';
@@ -20,12 +22,16 @@ type Message = TextMessage | {};
 type MutationSuccessResponse = {};
 
 export default class LineBotAPIClient {
-  static factory: LineBotAPIClient = (accessToken: string) =>
-    new LineBotAPIClient(accessToken);
+  static factory: LineBotAPIClient = (
+    accessToken: string,
+    channelSecret: string,
+  ) => new LineBotAPIClient(accessToken, channelSecret);
 
+  _channelSecret: string;
   _http: Axios;
 
-  constructor(accessToken: string) {
+  constructor(accessToken: string, channelSecret: string) {
+    this._channelSecret = channelSecret;
     this._http = axios.create({
       baseURL: 'https://api.line.me/v2/bot/',
       headers: {
@@ -55,10 +61,7 @@ export default class LineBotAPIClient {
     replyToken: string,
     messages: Array<Message>,
   ): Promise<MutationSuccessResponse> =>
-    this._http.post('/message/reply', {
-      replyToken,
-      messages,
-    });
+    this._http.post('/message/reply', { replyToken, messages });
 
   replyText = (
     replyToken: string,
@@ -75,10 +78,7 @@ export default class LineBotAPIClient {
     to: string,
     messages: Array<Message>,
   ): Promise<MutationSuccessResponse> =>
-    this._http.post('/message/push', {
-      to,
-      messages,
-    });
+    this._http.post('/message/push', { to, messages });
 
   pushText = (to: string, text: string): Promise<MutationSuccessResponse> =>
     this.push(to, [{ type: 'text', text }]);
@@ -92,10 +92,7 @@ export default class LineBotAPIClient {
     to: Array<string>,
     messages: Array<Message>,
   ): Promise<MutationSuccessResponse> =>
-    this._http.post('/message/multicast', {
-      to,
-      messages,
-    });
+    this._http.post('/message/multicast', { to, messages });
 
   /**
    * Leave
@@ -107,4 +104,11 @@ export default class LineBotAPIClient {
 
   leaveRoom = (roomId: string): Promise<MutationSuccessResponse> =>
     this._http.post(`/room/${roomId}/leave`);
+
+  isValidSignature = (rawBody, signature: string): boolean =>
+    signature ===
+    crypto
+      .createHmac('sha256', this._channelSecret)
+      .update(rawBody, 'utf8')
+      .digest('base64');
 }

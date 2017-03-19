@@ -1,4 +1,4 @@
-import Context from '../Context';
+import MessengerContext from '../MessengerContext';
 import SessionData from '../SessionData';
 
 jest.mock('../../graph/FBGraphAPIClient');
@@ -15,7 +15,7 @@ const setup = (messageDelay = 1000) => {
       id: 'fakeUserId',
     },
   });
-  const context = new Context({
+  const context = new MessengerContext({
     graphAPIClient: client,
     data,
     messageDelay,
@@ -34,7 +34,7 @@ const setupNoDelay = () => {
       id: 'fakeUserId',
     },
   });
-  const context = new Context({
+  const context = new MessengerContext({
     graphAPIClient: client,
     data,
   });
