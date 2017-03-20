@@ -41,6 +41,41 @@ type TemplateElement = {
   buttons: Array<TemplateButton>,
 };
 
+type Address = {
+  street_1: string,
+  street_2?: ?string,
+  city: string,
+  postal_code: string,
+  state: string,
+  country: string,
+};
+
+type Summary = {
+  subtotal?: ?number,
+  shipping_cost?: ?number,
+  total_tax?: ?number,
+  total_cost: number,
+};
+
+type Adjustment = {
+  name?: ?string,
+  ammont?: ?number,
+};
+
+type ReceiptAttributes = {
+  recipient_name: string,
+  merchant_name?: ?string,
+  order_number: string, // must be unique
+  currency: string,
+  payment_method: string,
+  timestamp?: ?string,
+  order_url?: ?string,
+  elements?: ?Array<TemplateElement>,
+  address?: ?Address,
+  summary: Summary,
+  adjustments?: ?Array<Adjustment>,
+};
+
 type QuickReply = {
   content_type: string,
   title?: string,
@@ -458,6 +493,30 @@ export default class FBGraphAPIClient {
       image_aspect_ratio: ratio,
     });
 
+  // https://developers.facebook.com/docs/messenger-platform/send-api-reference/list-template
+  sendListTemplate = (
+    recipientId: string,
+    elements: Array<TemplateElement>,
+    buttons: Array<TemplateButton>,
+    topElementStyle = 'large',
+  ): Promise<SendMessageSucessResponse> =>
+    this.sendTemplate(recipientId, {
+      template_type: 'list',
+      elements,
+      buttons,
+      top_element_style: topElementStyle,
+    });
+
+  // https://developers.facebook.com/docs/messenger-platform/send-api-reference/receipt-template
+  sendReceiptTemplate = (
+    recipientId: string,
+    receipt: ReceiptAttributes,
+  ): Promise<SendMessageSucessResponse> =>
+    this.sendTemplate(recipientId, {
+      template_type: 'receipt',
+      ...receipt,
+    });
+
   /**
    * Quick Replies
    *
@@ -523,4 +582,30 @@ export default class FBGraphAPIClient {
     recipientId: string,
   ): Promise<SendSenderActionResponse> =>
     this.sendSenderAction(recipientId, 'typing_off');
+
+  /**
+   * Upload API
+   *
+   * https://developers.facebook.com/docs/messenger-platform/send-api-reference/attachment-upload/v2.8
+   */
+  uploadAttachment = (type: string, url: string) =>
+    this._http.post(
+      `/me/message_attachments?access_token=${this._accessToken}`,
+      {
+        message: {
+          attachment: {
+            type,
+            payload: {
+              url,
+              is_reusable: true,
+            },
+          },
+        },
+      },
+    );
+
+  uploadAudio = (url: string) => this.uploadAttachment('audio', url);
+  uploadImage = (url: string) => this.uploadAttachment('image', url);
+  uploadVideo = (url: string) => this.uploadAttachment('video', url);
+  uploadFile = (url: string) => this.uploadAttachment('file', url);
 }

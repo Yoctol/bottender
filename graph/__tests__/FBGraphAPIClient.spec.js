@@ -1097,6 +1097,233 @@ describe('sned api', () => {
     });
   });
 
+  describe('#sendListTemplate', () => {
+    it('should call messages api with list template', async () => {
+      const { client, mock } = createMock();
+
+      const expected = {
+        recipient_id: RECIPIENT_ID,
+        message_id: 'mid.1489394984387:3dd22de509',
+      };
+
+      mock
+        .onPost(`/me/messages?access_token=${ACCESS_TOKEN}`, {
+          recipient: {
+            id: RECIPIENT_ID,
+          },
+          message: {
+            attachment: {
+              type: 'template',
+              payload: {
+                template_type: 'list',
+                elements: [
+                  {
+                    title: 'Classic T-Shirt Collection',
+                    image_url: 'https://peterssendreceiveapp.ngrok.io/img/collection.png',
+                    subtitle: 'See all our colors',
+                    default_action: {
+                      type: 'web_url',
+                      url: 'https://peterssendreceiveapp.ngrok.io/shop_collection',
+                      messenger_extensions: true,
+                      webview_height_ratio: 'tall',
+                      fallback_url: 'https://peterssendreceiveapp.ngrok.io/',
+                    },
+                    buttons: [
+                      {
+                        title: 'View',
+                        type: 'web_url',
+                        url: 'https://peterssendreceiveapp.ngrok.io/collection',
+                        messenger_extensions: true,
+                        webview_height_ratio: 'tall',
+                        fallback_url: 'https://peterssendreceiveapp.ngrok.io/',
+                      },
+                    ],
+                  },
+                ],
+                buttons: [
+                  {
+                    type: 'postback',
+                    title: 'Start Chatting',
+                    payload: 'USER_DEFINED_PAYLOAD',
+                  },
+                ],
+                top_element_style: 'compact',
+              },
+            },
+          },
+        })
+        .reply(200, expected);
+
+      const res = await client.sendListTemplate(
+        RECIPIENT_ID,
+        [
+          {
+            title: 'Classic T-Shirt Collection',
+            image_url: 'https://peterssendreceiveapp.ngrok.io/img/collection.png',
+            subtitle: 'See all our colors',
+            default_action: {
+              type: 'web_url',
+              url: 'https://peterssendreceiveapp.ngrok.io/shop_collection',
+              messenger_extensions: true,
+              webview_height_ratio: 'tall',
+              fallback_url: 'https://peterssendreceiveapp.ngrok.io/',
+            },
+            buttons: [
+              {
+                title: 'View',
+                type: 'web_url',
+                url: 'https://peterssendreceiveapp.ngrok.io/collection',
+                messenger_extensions: true,
+                webview_height_ratio: 'tall',
+                fallback_url: 'https://peterssendreceiveapp.ngrok.io/',
+              },
+            ],
+          },
+        ],
+        [
+          {
+            type: 'postback',
+            title: 'Start Chatting',
+            payload: 'USER_DEFINED_PAYLOAD',
+          },
+        ],
+        'compact',
+      );
+
+      expect(res.status).toBe(200);
+      expect(res.data).toBe(expected);
+    });
+  });
+
+  describe('#sendReceiptTemplate', () => {
+    it('should call messages api with receipt template', async () => {
+      const { client, mock } = createMock();
+
+      const expected = {
+        recipient_id: RECIPIENT_ID,
+        message_id: 'mid.1489394984387:3dd22de509',
+      };
+
+      mock
+        .onPost(`/me/messages?access_token=${ACCESS_TOKEN}`, {
+          recipient: {
+            id: RECIPIENT_ID,
+          },
+          message: {
+            attachment: {
+              type: 'template',
+              payload: {
+                template_type: 'receipt',
+                recipient_name: 'Stephane Crozatier',
+                order_number: '12345678902',
+                currency: 'USD',
+                payment_method: 'Visa 2345',
+                order_url: 'http://petersapparel.parseapp.com/order?order_id=123456',
+                timestamp: '1428444852',
+                elements: [
+                  {
+                    title: 'Classic White T-Shirt',
+                    subtitle: '100% Soft and Luxurious Cotton',
+                    quantity: 2,
+                    price: 50,
+                    currency: 'USD',
+                    image_url: 'http://petersapparel.parseapp.com/img/whiteshirt.png',
+                  },
+                  {
+                    title: 'Classic Gray T-Shirt',
+                    subtitle: '100% Soft and Luxurious Cotton',
+                    quantity: 1,
+                    price: 25,
+                    currency: 'USD',
+                    image_url: 'http://petersapparel.parseapp.com/img/grayshirt.png',
+                  },
+                ],
+                address: {
+                  street_1: '1 Hacker Way',
+                  street_2: '',
+                  city: 'Menlo Park',
+                  postal_code: '94025',
+                  state: 'CA',
+                  country: 'US',
+                },
+                summary: {
+                  subtotal: 75.00,
+                  shipping_cost: 4.95,
+                  total_tax: 6.19,
+                  total_cost: 56.14,
+                },
+                adjustments: [
+                  {
+                    name: 'New Customer Discount',
+                    amount: 20,
+                  },
+                  {
+                    name: '$10 Off Coupon',
+                    amount: 10,
+                  },
+                ],
+              },
+            },
+          },
+        })
+        .reply(200, expected);
+
+      const res = await client.sendReceiptTemplate(RECIPIENT_ID, {
+        recipient_name: 'Stephane Crozatier',
+        order_number: '12345678902',
+        currency: 'USD',
+        payment_method: 'Visa 2345',
+        order_url: 'http://petersapparel.parseapp.com/order?order_id=123456',
+        timestamp: '1428444852',
+        elements: [
+          {
+            title: 'Classic White T-Shirt',
+            subtitle: '100% Soft and Luxurious Cotton',
+            quantity: 2,
+            price: 50,
+            currency: 'USD',
+            image_url: 'http://petersapparel.parseapp.com/img/whiteshirt.png',
+          },
+          {
+            title: 'Classic Gray T-Shirt',
+            subtitle: '100% Soft and Luxurious Cotton',
+            quantity: 1,
+            price: 25,
+            currency: 'USD',
+            image_url: 'http://petersapparel.parseapp.com/img/grayshirt.png',
+          },
+        ],
+        address: {
+          street_1: '1 Hacker Way',
+          street_2: '',
+          city: 'Menlo Park',
+          postal_code: '94025',
+          state: 'CA',
+          country: 'US',
+        },
+        summary: {
+          subtotal: 75.00,
+          shipping_cost: 4.95,
+          total_tax: 6.19,
+          total_cost: 56.14,
+        },
+        adjustments: [
+          {
+            name: 'New Customer Discount',
+            amount: 20,
+          },
+          {
+            name: '$10 Off Coupon',
+            amount: 10,
+          },
+        ],
+      });
+
+      expect(res.status).toBe(200);
+      expect(res.data).toBe(expected);
+    });
+  });
+
   describe('#sendQuickReplies', () => {
     it('should call messages api with quick replies', async () => {
       const { client, mock } = createMock();
@@ -1209,6 +1436,164 @@ describe('sned api', () => {
         .reply(200, expected);
 
       const res = await client.turnTypingIndicatorsOff(RECIPIENT_ID);
+
+      expect(res.status).toBe(200);
+      expect(res.data).toBe(expected);
+    });
+  });
+});
+
+describe('upload api', () => {
+  describe('#uploadAttachment', () => {
+    it('should call messages api to upload attachment', async () => {
+      const { client, mock } = createMock();
+
+      const expected = {
+        attachment_id: '1854626884821032',
+      };
+
+      mock
+        .onPost(`/me/message_attachments?access_token=${ACCESS_TOKEN}`, {
+          message: {
+            attachment: {
+              type: 'image',
+              payload: {
+                url: 'http://www.yoctol-rocks.com/image.jpg',
+                is_reusable: true,
+              },
+            },
+          },
+        })
+        .reply(200, expected);
+
+      const res = await client.uploadAttachment(
+        'image',
+        'http://www.yoctol-rocks.com/image.jpg',
+      );
+
+      expect(res.status).toBe(200);
+      expect(res.data).toBe(expected);
+    });
+  });
+
+  describe('#uploadAudio', () => {
+    it('should call messages api to upload audio', async () => {
+      const { client, mock } = createMock();
+
+      const expected = {
+        attachment_id: '1854626884821032',
+      };
+
+      mock
+        .onPost(`/me/message_attachments?access_token=${ACCESS_TOKEN}`, {
+          message: {
+            attachment: {
+              type: 'audio',
+              payload: {
+                url: 'http://www.yoctol-rocks.com/audio.mp3',
+                is_reusable: true,
+              },
+            },
+          },
+        })
+        .reply(200, expected);
+
+      const res = await client.uploadAudio(
+        'http://www.yoctol-rocks.com/audio.mp3',
+      );
+
+      expect(res.status).toBe(200);
+      expect(res.data).toBe(expected);
+    });
+  });
+
+  describe('#uploadImage', () => {
+    it('should call messages api to upload image', async () => {
+      const { client, mock } = createMock();
+
+      const expected = {
+        attachment_id: '1854626884821032',
+      };
+
+      mock
+        .onPost(`/me/message_attachments?access_token=${ACCESS_TOKEN}`, {
+          message: {
+            attachment: {
+              type: 'image',
+              payload: {
+                url: 'http://www.yoctol-rocks.com/image.jpg',
+                is_reusable: true,
+              },
+            },
+          },
+        })
+        .reply(200, expected);
+
+      const res = await client.uploadImage(
+        'http://www.yoctol-rocks.com/image.jpg',
+      );
+
+      expect(res.status).toBe(200);
+      expect(res.data).toBe(expected);
+    });
+  });
+
+  describe('#uploadVideo', () => {
+    it('should call messages api to upload video', async () => {
+      const { client, mock } = createMock();
+
+      const expected = {
+        attachment_id: '1854626884821032',
+      };
+
+      mock
+        .onPost(`/me/message_attachments?access_token=${ACCESS_TOKEN}`, {
+          message: {
+            attachment: {
+              type: 'video',
+              payload: {
+                url: 'http://www.yoctol-rocks.com/video.mp4',
+                is_reusable: true,
+              },
+            },
+          },
+        })
+        .reply(200, expected);
+
+      const res = await client.uploadVideo(
+        'http://www.yoctol-rocks.com/video.mp4',
+      );
+
+      expect(res.status).toBe(200);
+      expect(res.data).toBe(expected);
+    });
+  });
+
+  describe('#uploadFile', () => {
+    it('should call messages api to upload file', async () => {
+      const { client, mock } = createMock();
+
+      const expected = {
+        attachment_id: '1854626884821032',
+      };
+
+      mock
+        .onPost(`/me/message_attachments?access_token=${ACCESS_TOKEN}`, {
+          message: {
+            attachment: {
+              type: 'file',
+              payload: {
+                url: 'http://www.yoctol-rocks.com/file.pdf',
+                is_reusable: true,
+              },
+            },
+          },
+        })
+        .reply(200, expected);
+
+      const res = await client.uploadFile(
+        'http://www.yoctol-rocks.com/file.pdf',
+      );
 
       expect(res.status).toBe(200);
       expect(res.data).toBe(expected);
