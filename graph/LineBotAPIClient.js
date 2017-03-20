@@ -200,6 +200,85 @@ export default class LineBotAPIClient {
     ]);
 
   /**
+   * Imagemap Message
+   *
+   * https://devdocs.line.me/en/#imagemap-message
+   */
+  pushImagemap = (
+    to: string,
+    {
+      baseUrl,
+      altText,
+      baseHeight,
+      baseWidth,
+      actions,
+    },
+  ): Promise<MutationSuccessResponse> =>
+    this.push(to, [
+      {
+        type: 'imagemap',
+        baseUrl,
+        altText,
+        baseSize: {
+          height,
+          width,
+        },
+        actions,
+      },
+    ]);
+
+  /**
+   * Template Messages
+   *
+   * https://devdocs.line.me/en/#template-messages
+   */
+  pushTemplate = (to: string, { altText, template }): Promise<MutationSuccessResponse> =>
+    this.push(to, [
+      {
+        type: 'template',
+        altText,
+        template,
+      },
+    ]);
+
+  pushButtonTemplate = (to: string, {
+    altText,
+    thumbnailImageUrl
+    title,
+    text,
+    actions,
+  }): Promise<MutationSuccessResponse> =>
+    this.pushTemplate(to, altText, {
+      type: 'buttons',
+      thumbnailImageUrl
+      title,
+      text,
+      actions,
+    });
+
+  pushConfirmTemplate = (to: string, {
+    altText,
+    text,
+    actions,
+  }): Promise<MutationSuccessResponse> =>
+    this.pushTemplate(to, altText, {
+      type: 'confirm',
+      text,
+      actions,
+    });
+
+  pushCarouselTemplate = (to: string, {
+    altText,
+    text,
+    actions,
+    columns,
+  }): Promise<MutationSuccessResponse> =>
+    this.pushTemplate(to, altText, {
+      type: 'carousel',
+      columns,
+    });
+
+  /**
    * Multicast
    *
    * https://devdocs.line.me/en/#multicast
@@ -221,10 +300,23 @@ export default class LineBotAPIClient {
   leaveRoom = (roomId: string): Promise<MutationSuccessResponse> =>
     this._http.post(`/room/${roomId}/leave`);
 
+  /**
+   * Signature Validation
+   *
+   * https://devdocs.line.me/en/#webhooks
+   */
   isValidSignature = (rawBody, signature: string): boolean =>
     signature ===
     crypto
       .createHmac('sha256', this._channelSecret)
       .update(rawBody, 'utf8')
       .digest('base64');
+
+  /**
+   * Content
+   *
+   * https://devdocs.line.me/en/#content
+   */
+  retrieveMessageContent = (messageId: string) =>
+    this._http.get(`message/${messageId}/content`);
 }
