@@ -1,5 +1,6 @@
 import _debug from 'debug';
 
+import FBGraphAPIClient from '../graph/FBGraphAPIClient';
 import MessengerContext from '../session/MessengerContext';
 import SessionManager from '../session/SessionManager';
 import PersistentMemorySessionStore
@@ -9,8 +10,8 @@ import PersistentMemorySessionStore
 const debug = _debug('core/bot/Bot');
 
 export default class Bot {
-  constructor({ graphAPIClient, filePath }) {
-    this._graphAPIClient = graphAPIClient;
+  constructor({ accessToken, filePath }) {
+    this._graphAPIClient = FBGraphAPIClient.factory(accessToken);
     this._sessionManager = new SessionManager(
       new PersistentMemorySessionStore(filePath, 500),
     );
