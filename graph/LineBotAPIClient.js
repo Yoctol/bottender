@@ -17,7 +17,52 @@ type TextMessage = {
   text: string,
 };
 
-type Message = TextMessage | {};
+type ImageMessage = {
+  type: 'image',
+  originalContentUrl: string,
+  previewImageUrl: string,
+};
+
+type VideoMessage = {
+  type: 'video',
+  originalContentUrl: string,
+  previewImageUrl: string,
+};
+
+type AudioMessage = {
+  type: 'audio',
+  originalContentUrl: string,
+  duration: number,
+};
+
+type Location = {
+  title: string,
+  address: string,
+  latitude: number,
+  longitude: number,
+};
+
+type LocationMessage = {
+  type: 'location',
+  title: string,
+  address: string,
+  latitude: number,
+  longitude: number,
+};
+
+type StickerMessage = {
+  type: 'sticker',
+  packageId: string,
+  stickerId: string,
+};
+
+type Message =
+  | TextMessage
+  | ImageMessage
+  | VideoMessage
+  | AudioMessage
+  | LocationMessage
+  | StickerMessage;
 
 type MutationSuccessResponse = {};
 
@@ -82,6 +127,77 @@ export default class LineBotAPIClient {
 
   pushText = (to: string, text: string): Promise<MutationSuccessResponse> =>
     this.push(to, [{ type: 'text', text }]);
+
+  pushImage = (
+    to: string,
+    contentUrl: string,
+    previewUrl: ?string,
+  ): Promise<MutationSuccessResponse> =>
+    this.push(to, [
+      {
+        type: 'image',
+        originalContentUrl: contentUrl,
+        previewImageUrl: previewUrl || contentUrl,
+      },
+    ]);
+
+  pushVideo = (
+    to: string,
+    contentUrl: string,
+    previewUrl: string,
+  ): Promise<MutationSuccessResponse> =>
+    this.push(to, [
+      {
+        type: 'video',
+        originalContentUrl: contentUrl,
+        previewImageUrl: previewUrl,
+      },
+    ]);
+
+  pushAudio = (
+    to: string,
+    contentUrl: string,
+    duration: number,
+  ): Promise<MutationSuccessResponse> =>
+    this.push(to, [
+      {
+        type: 'audio',
+        originalContentUrl: contentUrl,
+        duration,
+      },
+    ]);
+
+  pushLocation = (
+    to: string,
+    {
+      title,
+      address,
+      latitude,
+      longitude,
+    }: Location,
+  ): Promise<MutationSuccessResponse> =>
+    this.push(to, [
+      {
+        type: 'location',
+        title,
+        address,
+        latitude,
+        longitude,
+      },
+    ]);
+
+  pushSticker = (
+    to: string,
+    packageId: string,
+    stickerId: string,
+  ): Promise<MutationSuccessResponse> =>
+    this.push(to, [
+      {
+        type: 'sticker',
+        packageId,
+        stickerId,
+      },
+    ]);
 
   /**
    * Multicast

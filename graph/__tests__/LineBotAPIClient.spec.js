@@ -140,6 +140,175 @@ describe('push message', () => {
       expect(res.data).toBe(expected);
     });
   });
+
+  describe('#pushText', () => {
+    it('should call push api', async () => {
+      const { client, mock } = createMock();
+
+      const expected = {};
+
+      mock
+        .onPost('/message/push', {
+          to: RECIPIENT_ID,
+          messages: [{ type: 'text', text: 'Hello!' }],
+        })
+        .reply(200, expected, headers);
+
+      const res = await client.pushText(RECIPIENT_ID, 'Hello!');
+
+      expect(res.status).toBe(200);
+      expect(res.data).toBe(expected);
+    });
+  });
+
+  describe('#pushImage', () => {
+    it('should call push api', async () => {
+      const { client, mock } = createMock();
+
+      const expected = {};
+
+      mock
+        .onPost('/message/push', {
+          to: RECIPIENT_ID,
+          messages: [
+            {
+              type: 'image',
+              originalContentUrl: 'https://example.com/original.jpg',
+              previewImageUrl: 'https://example.com/preview.jpg',
+            },
+          ],
+        })
+        .reply(200, expected, headers);
+
+      const res = await client.pushImage(
+        RECIPIENT_ID,
+        'https://example.com/original.jpg',
+        'https://example.com/preview.jpg',
+      );
+
+      expect(res.status).toBe(200);
+      expect(res.data).toBe(expected);
+    });
+  });
+
+  describe('#pushVideo', () => {
+    it('should call push api', async () => {
+      const { client, mock } = createMock();
+
+      const expected = {};
+
+      mock
+        .onPost('/message/push', {
+          to: RECIPIENT_ID,
+          messages: [
+            {
+              type: 'video',
+              originalContentUrl: 'https://example.com/original.mp4',
+              previewImageUrl: 'https://example.com/preview.jpg',
+            },
+          ],
+        })
+        .reply(200, expected, headers);
+
+      const res = await client.pushVideo(
+        RECIPIENT_ID,
+        'https://example.com/original.mp4',
+        'https://example.com/preview.jpg',
+      );
+
+      expect(res.status).toBe(200);
+      expect(res.data).toBe(expected);
+    });
+  });
+
+  describe('#pushAudio', () => {
+    it('should call push api', async () => {
+      const { client, mock } = createMock();
+
+      const expected = {};
+
+      mock
+        .onPost('/message/push', {
+          to: RECIPIENT_ID,
+          messages: [
+            {
+              type: 'audio',
+              originalContentUrl: 'https://example.com/original.m4a',
+              duration: 240000,
+            },
+          ],
+        })
+        .reply(200, expected, headers);
+
+      const res = await client.pushAudio(
+        RECIPIENT_ID,
+        'https://example.com/original.m4a',
+        240000,
+      );
+
+      expect(res.status).toBe(200);
+      expect(res.data).toBe(expected);
+    });
+  });
+
+  describe('#pushLocation', () => {
+    it('should call push api', async () => {
+      const { client, mock } = createMock();
+
+      const expected = {};
+
+      mock
+        .onPost('/message/push', {
+          to: RECIPIENT_ID,
+          messages: [
+            {
+              type: 'location',
+              title: 'my location',
+              address: '〒150-0002 東京都渋谷区渋谷２丁目２１−１',
+              latitude: 35.65910807942215,
+              longitude: 139.70372892916203,
+            },
+          ],
+        })
+        .reply(200, expected, headers);
+
+      const res = await client.pushLocation(RECIPIENT_ID, {
+        title: 'my location',
+        address: '〒150-0002 東京都渋谷区渋谷２丁目２１−１',
+        latitude: 35.65910807942215,
+        longitude: 139.70372892916203,
+      });
+
+      expect(res.status).toBe(200);
+      expect(res.data).toBe(expected);
+    });
+  });
+
+  describe('#pushSticker', () => {
+    it('should call push api', async () => {
+      const { client, mock } = createMock();
+
+      const expected = {};
+
+      mock
+        .onPost('/message/push', {
+          to: RECIPIENT_ID,
+          messages: [
+            {
+              type: 'sticker',
+              packageId: '1',
+              stickerId: '1',
+            },
+          ],
+        })
+        .reply(200, expected, headers);
+
+      const res = await client.pushSticker(RECIPIENT_ID, '1', '1');
+
+      expect(res.status).toBe(200);
+      expect(res.data).toBe(expected);
+    });
+  });
 });
 
 describe('multicast', () => {
