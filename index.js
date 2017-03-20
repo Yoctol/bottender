@@ -14,3 +14,4 @@ export { default as verifyWebhook } from './middlewares/verifyWebhook';
 export { default as logMessage } from './middlewares/logMessage';
 
 export { toAbsolutePath, getProjectPath } from './shared/path';
+export { getProjectConfig } from './shared/config';

@@ -1,5 +1,9 @@
 import Bot from '../Bot';
 
+jest.mock('../../graph/FBGraphAPIClient');
+
+const FBGraphAPIClient = require('../../graph/FBGraphAPIClient').default;
+
 const request = {
   body: {
     object: 'page',
@@ -28,21 +32,26 @@ const request = {
   },
 };
 
-const createMockGraphAPIClient = () => ({
-  getUserProfile: jest.fn(),
+const ACCESS_TOKEN = 'asdfghj';
+
+let _graphAPIClient;
+
+beforeEach(() => {
+  _graphAPIClient = {
+    getUserProfile: jest.fn(),
+  };
+  FBGraphAPIClient.factory = jest.fn(() => _graphAPIClient);
 });
 
 describe('Bot', () => {
   it('init', () => {
-    const graphAPIClient = createMockGraphAPIClient();
-    const bot = new Bot({ graphAPIClient, filePath: 'file/path' });
+    const bot = new Bot({ accessToken: ACCESS_TOKEN, filePath: 'file/path' });
 
     expect(bot).toBeDefined();
   });
 
   it('handle', () => {
-    const graphAPIClient = createMockGraphAPIClient();
-    const bot = new Bot({ graphAPIClient, filePath: 'file/path' });
+    const bot = new Bot({ accessToken: ACCESS_TOKEN, filePath: 'file/path' });
 
     const mockHandler = jest.fn();
 
@@ -56,8 +65,7 @@ describe('Bot', () => {
     });
 
     it('calls sessionManager init', async () => {
-      const graphAPIClient = createMockGraphAPIClient();
-      const bot = new Bot({ graphAPIClient, filePath: 'file/path' });
+      const bot = new Bot({ accessToken: ACCESS_TOKEN, filePath: 'file/path' });
 
       bot._sessionManager.init = jest.fn(() => Promise.resolve(true));
       bot._sessionManager.createSessionDataIfNotExists = jest.fn(() =>
@@ -73,8 +81,7 @@ describe('Bot', () => {
     });
 
     it('not call sessionManager init if already initialized', async () => {
-      const graphAPIClient = createMockGraphAPIClient();
-      const bot = new Bot({ graphAPIClient, filePath: 'file/path' });
+      const bot = new Bot({ accessToken: ACCESS_TOKEN, filePath: 'file/path' });
 
       bot._sessionManager.init = jest.fn(() => Promise.resolve(true));
       bot._sessionManager.createSessionDataIfNotExists = jest.fn(() =>
@@ -90,8 +97,7 @@ describe('Bot', () => {
     });
 
     it('getUserProfile if not existed in session', async () => {
-      const graphAPIClient = createMockGraphAPIClient();
-      const bot = new Bot({ graphAPIClient, filePath: 'file/path' });
+      const bot = new Bot({ accessToken: ACCESS_TOKEN, filePath: 'file/path' });
 
       bot._sessionManager.init = jest.fn(() => Promise.resolve(true));
       bot._sessionManager.createSessionDataIfNotExists = jest.fn(() =>
@@ -111,8 +117,7 @@ describe('Bot', () => {
     });
 
     it('handle getStartedRef', async () => {
-      const graphAPIClient = createMockGraphAPIClient();
-      const bot = new Bot({ graphAPIClient, filePath: 'file/path' });
+      const bot = new Bot({ accessToken: ACCESS_TOKEN, filePath: 'file/path' });
 
       bot._sessionManager.init = jest.fn(() => Promise.resolve(true));
       bot._sessionManager.createSessionDataIfNotExists = jest.fn(() =>
@@ -153,8 +158,7 @@ describe('Bot', () => {
     });
 
     it('handle normalRef', async () => {
-      const graphAPIClient = createMockGraphAPIClient();
-      const bot = new Bot({ graphAPIClient, filePath: 'file/path' });
+      const bot = new Bot({ accessToken: ACCESS_TOKEN, filePath: 'file/path' });
 
       bot._sessionManager.init = jest.fn(() => Promise.resolve(true));
       bot._sessionManager.createSessionDataIfNotExists = jest.fn(() =>
@@ -193,8 +197,7 @@ describe('Bot', () => {
     });
 
     it('throw if no handler', async () => {
-      const graphAPIClient = createMockGraphAPIClient();
-      const bot = new Bot({ graphAPIClient, filePath: 'file/path' });
+      const bot = new Bot({ accessToken: ACCESS_TOKEN, filePath: 'file/path' });
 
       bot._sessionManager.init = jest.fn(() => Promise.resolve(true));
       bot._sessionManager.createSessionDataIfNotExists = jest.fn(() =>

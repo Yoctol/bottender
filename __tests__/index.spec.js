@@ -5,6 +5,14 @@ describe('core', () => {
     expect(core.Bot).toBeDefined();
   });
 
+  it('export MessengerBot', () => {
+    expect(core.MessengerBot).toBeDefined();
+  });
+
+  it('export LineBot', () => {
+    expect(core.LineBot).toBeDefined();
+  });
+
   it('export HandlerBuilder', () => {
     expect(core.HandlerBuilder).toBeDefined();
   });
@@ -27,5 +35,11 @@ describe('core', () => {
 
   it('export logMessage', () => {
     expect(core.logMessage).toBeDefined();
+  });
+
+  it('export helpers', () => {
+    expect(core.toAbsolutePath).toBeDefined();
+    expect(core.getProjectPath).toBeDefined();
+    expect(core.getProjectConfig).toBeDefined();
   });
 });
