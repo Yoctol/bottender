@@ -4,14 +4,13 @@ import wait from 'delay';
 
 import FBGraphAPIClient from '../graph/FBGraphAPIClient';
 
+import type { MessageDelay } from './Context';
 import Context from './Context';
 import DelayableJobQueue from './DelayableJobQueue';
 import SessionData from './SessionData';
 
-type MessageDelay = number | ((text: string) => number);
-
 type Options = {
-  client: FBGraphAPIClient,
+  graphAPIClient: FBGraphAPIClient,
   data: SessionData,
   messageDelay: MessageDelay,
 };
@@ -77,7 +76,7 @@ export default class MessengerContext extends Context {
     });
   }
 
-  sendQuickReplies(text: string, attachment, quickReplies): void {
+  sendQuickReplies(text: string, attachment: Object, quickReplies: []): void {
     this._jobQueue.enqueue({
       instance: this._client,
       method: 'sendQuickReplies',
@@ -86,7 +85,7 @@ export default class MessengerContext extends Context {
     });
   }
 
-  sendGenericTemplate(elements): void {
+  sendGenericTemplate(elements: []): void {
     this._jobQueue.enqueue({
       instance: this._client,
       method: 'sendGenericTemplate',
@@ -95,7 +94,7 @@ export default class MessengerContext extends Context {
     });
   }
 
-  sendButtonTemplate(text: string, buttons): void {
+  sendButtonTemplate(text: string, buttons: []): void {
     this._jobQueue.enqueue({
       instance: this._client,
       method: 'sendButtonTemplate',

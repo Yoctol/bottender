@@ -3,14 +3,18 @@ import type Context from '../session/Context';
 
 type Condition = string | RegExp;
 
-export type Handler = (context: Context) => {};
+export type Msg = {
+  message: ?{ quick_reply: ?Object, text: string },
+  postback: ?{ payload: string },
+};
+export type Handler = (context: Context, msg: Msg) => void;
 
 type ConditionHandler = {
   condition: Condition,
   handler: Handler,
 };
 
-function matchCondition(condition: Condition, payload): boolean {
+function matchCondition(condition: Condition, payload: string): boolean {
   if (typeof condition === 'string') {
     return condition === payload;
   } else if (condition instanceof RegExp) {
@@ -22,10 +26,11 @@ function matchCondition(condition: Condition, payload): boolean {
 export default class HandlerBuilder {
   static GET_STARTED_PAYLOAD = '__ALOHA.AI_GET_STARTED__';
 
-  _getStartedHandler: Handler = null;
+  _getStartedHandler: ?Handler;
   _messageHandlers: Array<ConditionHandler> = [];
   _postbackHandlers: Array<ConditionHandler> = [];
   _quickReplyHandlers: Array<ConditionHandler> = [];
+  _unhandledHandler: ?Handler;
 
   onMessage(condition: Condition, handler: Handler) {
     this._messageHandlers.push({
@@ -62,7 +67,7 @@ export default class HandlerBuilder {
   }
 
   build(): Handler {
-    return (context, msg) => {
+    return (context: Context, msg: Msg) => {
       const { message, postback } = msg;
       if (message && message.quick_reply) {
         for (let i = 0; i < this._quickReplyHandlers.length; i++) {

@@ -4,14 +4,13 @@ import wait from 'delay';
 
 import LineBotAPIClient from '../graph/LineBotAPIClient';
 
+import type { MessageDelay } from './Context';
 import Context from './Context';
 import DelayableJobQueue from './DelayableJobQueue';
 import SessionData from './SessionData';
 
-type MessageDelay = number | ((text: string) => number);
-
 type Options = {
-  client: LineBotAPIClient,
+  lineAPIClient: LineBotAPIClient,
   data: SessionData,
   messageDelay: MessageDelay,
 };
@@ -70,6 +69,11 @@ export default class LineContext extends Context {
       address,
       latitude,
       longitude,
+    }: {
+      title: string,
+      address: string,
+      latitude: number,
+      longitude: number,
     },
   ): void {
     this._jobQueue.enqueue({

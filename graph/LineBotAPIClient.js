@@ -67,10 +67,10 @@ type Message =
 type MutationSuccessResponse = {};
 
 export default class LineBotAPIClient {
-  static factory: LineBotAPIClient = (
+  static factory = (
     accessToken: string,
     channelSecret: string,
-  ) => new LineBotAPIClient(accessToken, channelSecret);
+  ): LineBotAPIClient => new LineBotAPIClient(accessToken, channelSecret);
 
   _channelSecret: string;
   _http: Axios;
@@ -314,7 +314,7 @@ export default class LineBotAPIClient {
    *
    * https://devdocs.line.me/en/#webhooks
    */
-  isValidSignature = (rawBody, signature: string): boolean =>
+  isValidSignature = (rawBody: string, signature: string): boolean =>
     signature ===
     crypto
       .createHmac('sha256', this._channelSecret)

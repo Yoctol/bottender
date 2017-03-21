@@ -126,7 +126,7 @@ type SendSenderActionResponse = {
 };
 
 export default class FBGraphAPIClient {
-  static factory: FBGraphAPIClient = (accessToken: string) =>
+  static factory = (accessToken: string): FBGraphAPIClient =>
     new FBGraphAPIClient(accessToken);
 
   _accessToken: string;
@@ -498,7 +498,7 @@ export default class FBGraphAPIClient {
     recipientId: string,
     elements: Array<TemplateElement>,
     buttons: Array<TemplateButton>,
-    topElementStyle = 'large',
+    topElementStyle: string = 'large',
   ): Promise<SendMessageSucessResponse> =>
     this.sendTemplate(recipientId, {
       template_type: 'list',
