@@ -4,8 +4,8 @@ import type Context from '../session/Context';
 type Condition = string | RegExp;
 
 export type Msg = {
-  message: ?{ quick_reply: ?Object, text: string },
-  postback: ?{ payload: string },
+  message?: { quick_reply: ?Object, text: string },
+  postback?: { payload: string },
 };
 export type Handler = (context: Context, msg: Msg) => void;
 
