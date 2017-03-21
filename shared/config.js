@@ -11,7 +11,7 @@ const readFile = thenify(fs.readFile);
 export async function getProjectConfig(
   projectName: string,
   fileName: string,
-): string {
+): Promise<string> {
   const configPath = path.join(getProjectPath(projectName), 'config', fileName);
   return readFile(configPath, 'utf8');
 }

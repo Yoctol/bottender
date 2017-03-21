@@ -7,7 +7,7 @@ import SessionData from './SessionData';
 
 const DEFAULT_MESSAGE_DELAY = 1000;
 
-type MessageDelay = number | ((text: string) => number);
+export type MessageDelay = number | ((text?: string) => number);
 
 type Options = {
   data: SessionData,
@@ -34,7 +34,7 @@ export default class Context {
     this._data = data;
   }
 
-  _getMessageDelay(message): number {
+  _getMessageDelay(message?: string): number {
     if (typeof this._messageDelay === 'function') {
       return this._messageDelay(message);
     }

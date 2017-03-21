@@ -1,5 +1,7 @@
 /* @flow */
-import type { Handler } from './HandlerBuilder';
+import type Context from '../session/Context';
+
+import type { Handler, Msg } from './HandlerBuilder';
 
 type Condition = () => boolean;
 type ConditionHandler = {
@@ -28,16 +30,16 @@ export default class CompositeHandlerBuilder {
   }
 
   build() {
-    return (session, msg) => {
+    return (context: Context, msg: Msg) => {
       for (let i = 0; i < this._conditionHandlers.length; i++) {
         const { condition, handler } = this._conditionHandlers[i];
-        if (condition(session, msg)) {
-          handler(session, msg);
+        if (condition(context, msg)) {
+          handler(context, msg);
           return;
         }
       }
       if (this._fallbackHandler) {
-        this._fallbackHandler(session, msg);
+        this._fallbackHandler(context, msg);
       }
     };
   }

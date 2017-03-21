@@ -2,7 +2,7 @@
 
 type JobItem = {
   instance: Object,
-  method: 'string',
+  method: string,
   args: Array<mixed>,
   delay: number,
 };
@@ -30,7 +30,7 @@ export default class DelayableJobQueue {
     return this;
   }
 
-  enqueue(item): void {
+  enqueue(item: JobItem): void {
     this._queue.push(item);
     if (!this._processing) {
       this._process();
@@ -45,7 +45,7 @@ export default class DelayableJobQueue {
     return this._queue.shift();
   }
 
-  async _process(): void {
+  async _process(): ?Promise<void> {
     try {
       this._processing = true;
       /* eslint-disable no-await-in-loop */
