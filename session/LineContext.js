@@ -96,4 +96,87 @@ export default class LineContext extends Context {
       delay: this._getMessageDelay(),
     });
   }
+
+  sendImagemap(
+    altText: string,
+    {
+      baseUrl,
+      baseHeight,
+      baseWidth,
+      actions,
+    },
+  ): void {
+    this._jobQueue.enqueue({
+      instance: this._client,
+      method: 'pushImagemap',
+      args: [
+        this._data.user.id,
+        altText,
+        {
+          baseUrl,
+          baseHeight,
+          baseWidth,
+          actions,
+        },
+      ],
+      delay: this._getMessageDelay(),
+    });
+  }
+
+  sendButtonTemplate(
+    altText: string,
+    {
+      thumbnailImageUrl,
+      title,
+      text,
+      actions,
+    },
+  ): void {
+    this._jobQueue.enqueue({
+      instance: this._client,
+      method: 'pushButtonTemplate',
+      args: [
+        this._data.user.id,
+        altText,
+        {
+          thumbnailImageUrl,
+          title,
+          text,
+          actions,
+        },
+      ],
+      delay: this._getMessageDelay(),
+    });
+  }
+
+  sendConfirmTemplate(
+    altText: string,
+    {
+      text,
+      actions,
+    },
+  ): void {
+    this._jobQueue.enqueue({
+      instance: this._client,
+      method: 'pushConfirmTemplate',
+      args: [
+        this._data.user.id,
+        altText,
+        {
+          text,
+          actions,
+        },
+      ],
+      delay: this._getMessageDelay(),
+    });
+  }
+
+  sendCarouselTemplate(altText: string, columns): void {
+    this._jobQueue.enqueue({
+      instance: this._client,
+      method: 'pushCarouselTemplate',
+      args: [this._data.user.id, altText, columns],
+      delay: this._getMessageDelay(),
+    });
+  }
 }

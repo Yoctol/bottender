@@ -95,9 +95,19 @@ export default class LineBot {
         throw new Error('must have at least 1 handler');
       }
 
-      request.body.events.forEach(event => {
-        this._handler(context, event);
-      });
+      // message, follow, unfollow, join, leave, postback, beacon
+      request.body.events
+        .filter(event => ['message'].includes(event.type))
+        .forEach(event => {
+          this._handler(context, event);
+        });
+
+      request.body.events
+        .filter(event => ['postback'].includes(event.type))
+        .forEach(event => {
+          event.postback.payload = event.postback.data; // FIXME
+          this._handler(context, event);
+        });
 
       response.status = 200;
     };

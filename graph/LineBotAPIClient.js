@@ -206,9 +206,9 @@ export default class LineBotAPIClient {
    */
   pushImagemap = (
     to: string,
+    altText: string,
     {
       baseUrl,
-      altText,
       baseHeight,
       baseWidth,
       actions,
@@ -220,8 +220,8 @@ export default class LineBotAPIClient {
         baseUrl,
         altText,
         baseSize: {
-          height,
-          width,
+          height: baseHeight,
+          width: baseWidth,
         },
         actions,
       },
@@ -232,7 +232,11 @@ export default class LineBotAPIClient {
    *
    * https://devdocs.line.me/en/#template-messages
    */
-  pushTemplate = (to: string, { altText, template }): Promise<MutationSuccessResponse> =>
+  pushTemplate = (
+    to: string,
+    altText: string,
+    template,
+  ): Promise<MutationSuccessResponse> =>
     this.push(to, [
       {
         type: 'template',
@@ -241,38 +245,43 @@ export default class LineBotAPIClient {
       },
     ]);
 
-  pushButtonTemplate = (to: string, {
-    altText,
-    thumbnailImageUrl
-    title,
-    text,
-    actions,
-  }): Promise<MutationSuccessResponse> =>
+  pushButtonTemplate = (
+    to: string,
+    altText: string,
+    {
+      thumbnailImageUrl,
+      title,
+      text,
+      actions,
+    },
+  ): Promise<MutationSuccessResponse> =>
     this.pushTemplate(to, altText, {
       type: 'buttons',
-      thumbnailImageUrl
+      thumbnailImageUrl,
       title,
       text,
       actions,
     });
 
-  pushConfirmTemplate = (to: string, {
-    altText,
-    text,
-    actions,
-  }): Promise<MutationSuccessResponse> =>
+  pushConfirmTemplate = (
+    to: string,
+    altText: string,
+    {
+      text,
+      actions,
+    },
+  ): Promise<MutationSuccessResponse> =>
     this.pushTemplate(to, altText, {
       type: 'confirm',
       text,
       actions,
     });
 
-  pushCarouselTemplate = (to: string, {
-    altText,
-    text,
-    actions,
+  pushCarouselTemplate = (
+    to: string,
+    altText: string,
     columns,
-  }): Promise<MutationSuccessResponse> =>
+  ): Promise<MutationSuccessResponse> =>
     this.pushTemplate(to, altText, {
       type: 'carousel',
       columns,
