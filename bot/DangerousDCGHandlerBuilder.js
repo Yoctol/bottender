@@ -105,6 +105,7 @@ export default class DangerousDCGHandlerBuilder {
               });
             }
 
+            // $FlowExpectedError
             context[`send${pascalCase(type)}`](...args);
           });
         }
