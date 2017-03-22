@@ -10,6 +10,32 @@ import type { Handler, Msg } from './HandlerBuilder';
 
 type Action = Array<any>;
 
+function handleNode(context, node) {
+  const actions = node.getActions();
+  actions.forEach(([type, ...args]) => {
+    // auto link for buttons, quick_replies
+    if (type === 'button_template') {
+      args[1].forEach(button => {
+        if (button.transition_to) {
+          button.payload = button.transition_to().key;
+          delete button.transition_to;
+        }
+      });
+    }
+    if (type === 'quick_replies') {
+      args[2].forEach(button => {
+        if (button.transition_to) {
+          button.payload = button.transition_to().key;
+          delete button.transition_to;
+        }
+      });
+    }
+
+    // $FlowExpectedError
+    context[`send${pascalCase(type)}`](...args);
+  });
+}
+
 class Node {
   _key: string;
   _name: string;
@@ -22,7 +48,7 @@ class Node {
   }
 
   get key(): string {
-    return this.key;
+    return this._key;
   }
 
   getActions(): Array<Action> {
@@ -35,13 +61,13 @@ type NodeMap = {
 };
 
 export default class DangerousDCGHandlerBuilder {
-  _getStartedHandler: ?Handler;
+  _getStartedNode: ?Node;
   _unhandledHandler: ?Handler;
 
   _nodeMap: NodeMap = {};
 
   onGetStarted(handler: Handler) {
-    this._getStartedHandler = handler;
+    this._getStartedNode = handler;
     return this;
   }
 
@@ -68,10 +94,10 @@ export default class DangerousDCGHandlerBuilder {
 
       if (postback) {
         if (
-          this._getStartedHandler &&
+          this._getStartedNode &&
           postback.payload === HandlerBuilder.GET_STARTED_PAYLOAD
         ) {
-          this._getStartedHandler(context, msg);
+          handleNode(context, this._getStartedNode);
           return;
         }
         payload = postback.payload;
@@ -85,29 +111,7 @@ export default class DangerousDCGHandlerBuilder {
         // handler
         const targetNode = this._nodeMap[payload];
         if (targetNode) {
-          const actions = targetNode.getActions();
-          actions.forEach(([type, ...args]) => {
-            // auto link for buttons, quick_replies
-            if (type === 'button_template') {
-              args[2].forEach(button => {
-                if (button.transition_to) {
-                  button.payload = button.transition_to().key;
-                  delete button.transition_to;
-                }
-              });
-            }
-            if (type === 'quick_replies') {
-              args[3].forEach(button => {
-                if (button.transition_to) {
-                  button.payload = button.transition_to().key;
-                  delete button.transition_to;
-                }
-              });
-            }
-
-            // $FlowExpectedError
-            context[`send${pascalCase(type)}`](...args);
-          });
+          handleNode(context, targetNode);
         }
       }
 
