@@ -23,6 +23,28 @@ type ImageMessage = {
   previewImageUrl: string,
 };
 
+export type ImageMapAction = {
+  type: string,
+  linkUri: string,
+  area: {
+    x: number,
+    y: number,
+    width: number,
+    height: number,
+  },
+};
+
+type ImageMapMessage = {
+  type: 'imagemap',
+  baseUrl: string,
+  altText: string,
+  baseSize: {
+    height: number,
+    width: number,
+  },
+  actions: Array<ImageMapAction>,
+};
+
 type VideoMessage = {
   type: 'video',
   originalContentUrl: string,
@@ -56,13 +78,70 @@ type StickerMessage = {
   stickerId: string,
 };
 
+type PostbackAction = {
+  type: 'postback',
+  label: string,
+  data: string,
+  text?: string,
+};
+
+type MessageAction = {
+  type: 'message',
+  label: string,
+  text: string,
+};
+
+type URIAction = {
+  type: 'uri',
+  label: string,
+  uri: string,
+};
+
+export type TemplateAction = PostbackAction | MessageAction | URIAction;
+
+type ButtonsTemplate = {
+  type: 'buttons',
+  thumbnailImageUrl?: string,
+  title?: string,
+  text: string,
+  actions: Array<TemplateAction>,
+};
+
+type ConfirmTemplate = {
+  type: 'confirm',
+  text: string,
+  actions: Array<TemplateAction>,
+};
+
+export type ColumnObject = {
+  thumbnailImageUrl?: string,
+  title?: string,
+  text: string,
+  actions: Array<TemplateAction>,
+};
+
+type CarouselTemplate = {
+  type: 'carousel',
+  columns: Array<ColumnObject>,
+};
+
+type Template = ButtonsTemplate | ConfirmTemplate | CarouselTemplate;
+
+type TemplateMessage = {
+  type: 'template',
+  altText: string,
+  template: Template,
+};
+
 type Message =
   | TextMessage
   | ImageMessage
+  | ImageMapMessage
   | VideoMessage
   | AudioMessage
   | LocationMessage
-  | StickerMessage;
+  | StickerMessage
+  | TemplateMessage;
 
 type MutationSuccessResponse = {};
 
@@ -212,6 +291,11 @@ export default class LineBotAPIClient {
       baseHeight,
       baseWidth,
       actions,
+    }: {
+      baseUrl: string,
+      baseHeight: number,
+      baseWidth: number,
+      actions: Array<ImageMapAction>,
     },
   ): Promise<MutationSuccessResponse> =>
     this.push(to, [
@@ -235,7 +319,7 @@ export default class LineBotAPIClient {
   pushTemplate = (
     to: string,
     altText: string,
-    template,
+    template: Template,
   ): Promise<MutationSuccessResponse> =>
     this.push(to, [
       {
@@ -253,6 +337,11 @@ export default class LineBotAPIClient {
       title,
       text,
       actions,
+    }: {
+      thumbnailImageUrl?: string,
+      title?: string,
+      text: string,
+      actions: Array<TemplateAction>,
     },
   ): Promise<MutationSuccessResponse> =>
     this.pushTemplate(to, altText, {
@@ -269,6 +358,9 @@ export default class LineBotAPIClient {
     {
       text,
       actions,
+    }: {
+      text: string,
+      actions: Array<TemplateAction>,
     },
   ): Promise<MutationSuccessResponse> =>
     this.pushTemplate(to, altText, {
@@ -280,7 +372,7 @@ export default class LineBotAPIClient {
   pushCarouselTemplate = (
     to: string,
     altText: string,
-    columns,
+    columns: Array<ColumnObject>,
   ): Promise<MutationSuccessResponse> =>
     this.pushTemplate(to, altText, {
       type: 'carousel',

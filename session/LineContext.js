@@ -2,6 +2,11 @@
 
 import wait from 'delay';
 
+import type {
+  ImageMapAction,
+  TemplateAction,
+  ColumnObject,
+} from '../graph/LineBotAPIClient';
 import LineBotAPIClient from '../graph/LineBotAPIClient';
 
 import type { MessageDelay } from './Context';
@@ -108,6 +113,11 @@ export default class LineContext extends Context {
       baseHeight,
       baseWidth,
       actions,
+    }: {
+      baseUrl: string,
+      baseHeight: number,
+      baseWidth: number,
+      actions: Array<ImageMapAction>,
     },
   ): void {
     this._jobQueue.enqueue({
@@ -134,6 +144,11 @@ export default class LineContext extends Context {
       title,
       text,
       actions,
+    }: {
+      thumbnailImageUrl?: string,
+      title?: string,
+      text: string,
+      actions: Array<TemplateAction>,
     },
   ): void {
     this._jobQueue.enqueue({
@@ -158,6 +173,9 @@ export default class LineContext extends Context {
     {
       text,
       actions,
+    }: {
+      text: string,
+      actions: Array<TemplateAction>,
     },
   ): void {
     this._jobQueue.enqueue({
@@ -175,7 +193,7 @@ export default class LineContext extends Context {
     });
   }
 
-  sendCarouselTemplate(altText: string, columns): void {
+  sendCarouselTemplate(altText: string, columns: Array<ColumnObject>): void {
     this._jobQueue.enqueue({
       instance: this._client,
       method: 'pushCarouselTemplate',
