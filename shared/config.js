@@ -1,17 +1,12 @@
 /* @flow */
-import fs from 'fs';
 import path from 'path';
 
-import thenify from 'thenify';
-
 import { getProjectPath } from './path';
-
-const readFile = thenify(fs.readFile);
 
 export async function getProjectConfig(
   projectName: string,
   fileName: string,
-): Promise<string> {
+): {} {
   const configPath = path.join(getProjectPath(projectName), 'config', fileName);
-  return readFile(configPath, 'utf8');
+  return require(configPath); // eslint-disable-line import/no-dynamic-require, global-require
 }
