@@ -2,6 +2,11 @@
 
 import wait from 'delay';
 
+import type {
+  ImageMapAction,
+  TemplateAction,
+  ColumnObject,
+} from '../graph/LineBotAPIClient';
 import LineBotAPIClient from '../graph/LineBotAPIClient';
 
 import type { MessageDelay } from './Context';
@@ -97,6 +102,102 @@ export default class LineContext extends Context {
       instance: this._client,
       method: 'pushSticker',
       args: [this._data.user.id, packageId, stickerId],
+      delay: this._getMessageDelay(),
+    });
+  }
+
+  sendImagemap(
+    altText: string,
+    {
+      baseUrl,
+      baseHeight,
+      baseWidth,
+      actions,
+    }: {
+      baseUrl: string,
+      baseHeight: number,
+      baseWidth: number,
+      actions: Array<ImageMapAction>,
+    },
+  ): void {
+    this._jobQueue.enqueue({
+      instance: this._client,
+      method: 'pushImagemap',
+      args: [
+        this._data.user.id,
+        altText,
+        {
+          baseUrl,
+          baseHeight,
+          baseWidth,
+          actions,
+        },
+      ],
+      delay: this._getMessageDelay(),
+    });
+  }
+
+  sendButtonTemplate(
+    altText: string,
+    {
+      thumbnailImageUrl,
+      title,
+      text,
+      actions,
+    }: {
+      thumbnailImageUrl?: string,
+      title?: string,
+      text: string,
+      actions: Array<TemplateAction>,
+    },
+  ): void {
+    this._jobQueue.enqueue({
+      instance: this._client,
+      method: 'pushButtonTemplate',
+      args: [
+        this._data.user.id,
+        altText,
+        {
+          thumbnailImageUrl,
+          title,
+          text,
+          actions,
+        },
+      ],
+      delay: this._getMessageDelay(),
+    });
+  }
+
+  sendConfirmTemplate(
+    altText: string,
+    {
+      text,
+      actions,
+    }: {
+      text: string,
+      actions: Array<TemplateAction>,
+    },
+  ): void {
+    this._jobQueue.enqueue({
+      instance: this._client,
+      method: 'pushConfirmTemplate',
+      args: [
+        this._data.user.id,
+        altText,
+        {
+          text,
+          actions,
+        },
+      ],
+      delay: this._getMessageDelay(),
+    });
+  }
+
+  sendCarouselTemplate(altText: string, columns: Array<ColumnObject>): void {
+    this._jobQueue.enqueue({
+      instance: this._client,
+      method: 'pushCarouselTemplate',
+      args: [this._data.user.id, altText, columns],
       delay: this._getMessageDelay(),
     });
   }

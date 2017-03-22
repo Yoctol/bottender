@@ -23,6 +23,28 @@ type ImageMessage = {
   previewImageUrl: string,
 };
 
+export type ImageMapAction = {
+  type: string,
+  linkUri: string,
+  area: {
+    x: number,
+    y: number,
+    width: number,
+    height: number,
+  },
+};
+
+type ImageMapMessage = {
+  type: 'imagemap',
+  baseUrl: string,
+  altText: string,
+  baseSize: {
+    height: number,
+    width: number,
+  },
+  actions: Array<ImageMapAction>,
+};
+
 type VideoMessage = {
   type: 'video',
   originalContentUrl: string,
@@ -56,13 +78,70 @@ type StickerMessage = {
   stickerId: string,
 };
 
+type PostbackAction = {
+  type: 'postback',
+  label: string,
+  data: string,
+  text?: string,
+};
+
+type MessageAction = {
+  type: 'message',
+  label: string,
+  text: string,
+};
+
+type URIAction = {
+  type: 'uri',
+  label: string,
+  uri: string,
+};
+
+export type TemplateAction = PostbackAction | MessageAction | URIAction;
+
+type ButtonsTemplate = {
+  type: 'buttons',
+  thumbnailImageUrl?: string,
+  title?: string,
+  text: string,
+  actions: Array<TemplateAction>,
+};
+
+type ConfirmTemplate = {
+  type: 'confirm',
+  text: string,
+  actions: Array<TemplateAction>,
+};
+
+export type ColumnObject = {
+  thumbnailImageUrl?: string,
+  title?: string,
+  text: string,
+  actions: Array<TemplateAction>,
+};
+
+type CarouselTemplate = {
+  type: 'carousel',
+  columns: Array<ColumnObject>,
+};
+
+type Template = ButtonsTemplate | ConfirmTemplate | CarouselTemplate;
+
+type TemplateMessage = {
+  type: 'template',
+  altText: string,
+  template: Template,
+};
+
 type Message =
   | TextMessage
   | ImageMessage
+  | ImageMapMessage
   | VideoMessage
   | AudioMessage
   | LocationMessage
-  | StickerMessage;
+  | StickerMessage
+  | TemplateMessage;
 
 type MutationSuccessResponse = {};
 
@@ -200,6 +279,107 @@ export default class LineBotAPIClient {
     ]);
 
   /**
+   * Imagemap Message
+   *
+   * https://devdocs.line.me/en/#imagemap-message
+   */
+  pushImagemap = (
+    to: string,
+    altText: string,
+    {
+      baseUrl,
+      baseHeight,
+      baseWidth,
+      actions,
+    }: {
+      baseUrl: string,
+      baseHeight: number,
+      baseWidth: number,
+      actions: Array<ImageMapAction>,
+    },
+  ): Promise<MutationSuccessResponse> =>
+    this.push(to, [
+      {
+        type: 'imagemap',
+        baseUrl,
+        altText,
+        baseSize: {
+          height: baseHeight,
+          width: baseWidth,
+        },
+        actions,
+      },
+    ]);
+
+  /**
+   * Template Messages
+   *
+   * https://devdocs.line.me/en/#template-messages
+   */
+  pushTemplate = (
+    to: string,
+    altText: string,
+    template: Template,
+  ): Promise<MutationSuccessResponse> =>
+    this.push(to, [
+      {
+        type: 'template',
+        altText,
+        template,
+      },
+    ]);
+
+  pushButtonTemplate = (
+    to: string,
+    altText: string,
+    {
+      thumbnailImageUrl,
+      title,
+      text,
+      actions,
+    }: {
+      thumbnailImageUrl?: string,
+      title?: string,
+      text: string,
+      actions: Array<TemplateAction>,
+    },
+  ): Promise<MutationSuccessResponse> =>
+    this.pushTemplate(to, altText, {
+      type: 'buttons',
+      thumbnailImageUrl,
+      title,
+      text,
+      actions,
+    });
+
+  pushConfirmTemplate = (
+    to: string,
+    altText: string,
+    {
+      text,
+      actions,
+    }: {
+      text: string,
+      actions: Array<TemplateAction>,
+    },
+  ): Promise<MutationSuccessResponse> =>
+    this.pushTemplate(to, altText, {
+      type: 'confirm',
+      text,
+      actions,
+    });
+
+  pushCarouselTemplate = (
+    to: string,
+    altText: string,
+    columns: Array<ColumnObject>,
+  ): Promise<MutationSuccessResponse> =>
+    this.pushTemplate(to, altText, {
+      type: 'carousel',
+      columns,
+    });
+
+  /**
    * Multicast
    *
    * https://devdocs.line.me/en/#multicast
@@ -221,10 +401,23 @@ export default class LineBotAPIClient {
   leaveRoom = (roomId: string): Promise<MutationSuccessResponse> =>
     this._http.post(`/room/${roomId}/leave`);
 
+  /**
+   * Signature Validation
+   *
+   * https://devdocs.line.me/en/#webhooks
+   */
   isValidSignature = (rawBody: string, signature: string): boolean =>
     signature ===
     crypto
       .createHmac('sha256', this._channelSecret)
       .update(rawBody, 'utf8')
       .digest('base64');
+
+  /**
+   * Content
+   *
+   * https://devdocs.line.me/en/#content
+   */
+  retrieveMessageContent = (messageId: string) =>
+    this._http.get(`message/${messageId}/content`);
 }
