@@ -10,7 +10,31 @@ import type { Handler, Msg } from './HandlerBuilder';
 
 type Action = Array<any>;
 
-function handleNode(context, node) {
+class Node {
+  _key: string;
+  _name: string;
+  _actions: Array<Action>;
+
+  constructor(name: string, actions) {
+    this._key = `__${hasha(name, { algorithm: 'sha256' })}__`;
+    this._name = name;
+    this._actions = actions;
+  }
+
+  get key(): string {
+    return this._key;
+  }
+
+  getActions(): Array<Action> {
+    return this._actions;
+  }
+}
+
+type NodeMap = {
+  [key: string]: Node,
+};
+
+function handleNode(context: Context, node: Node) {
   const actions = node.getActions();
   actions.forEach(([type, ...args]) => {
     // auto link for buttons, quick_replies
@@ -36,38 +60,14 @@ function handleNode(context, node) {
   });
 }
 
-class Node {
-  _key: string;
-  _name: string;
-  _actions: Array<Action>;
-
-  constructor(name: string, actions) {
-    this._key = `__${hasha(name, { algorithm: 'sha256' })}__`;
-    this._name = name;
-    this._actions = actions;
-  }
-
-  get key(): string {
-    return this._key;
-  }
-
-  getActions(): Array<Action> {
-    return this._actions;
-  }
-}
-
-type NodeMap = {
-  [key: string]: Node,
-};
-
 export default class DangerousDCGHandlerBuilder {
   _getStartedNode: ?Node;
   _unhandledHandler: ?Handler;
 
   _nodeMap: NodeMap = {};
 
-  onGetStarted(handler: Handler) {
-    this._getStartedNode = handler;
+  onGetStarted(node: Node) {
+    this._getStartedNode = node;
     return this;
   }
 
@@ -78,10 +78,12 @@ export default class DangerousDCGHandlerBuilder {
 
   createNode(name: string, actions: Array<Action>): Node {
     const node = new Node(name, actions);
+
     invariant(
       !this._nodeMap[node.key],
       'can not create node with duplicate name',
     );
+
     this._nodeMap[node.key] = node;
     return node;
   }
