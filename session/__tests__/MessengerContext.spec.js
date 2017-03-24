@@ -150,15 +150,14 @@ it('sendQuickReplies to enqueu in jobQueue', () => {
     enqueue: jest.fn(),
   };
 
-  const attachment = [];
   const quickReplies = [];
 
-  context.sendQuickReplies('xxx.com', attachment, quickReplies);
+  context.sendQuickReplies({ text: 'xxx.com' }, quickReplies);
 
   expect(context._jobQueue.enqueue).toBeCalledWith({
     instance: client,
     method: 'sendQuickReplies',
-    args: [data.user.id, 'xxx.com', attachment, quickReplies],
+    args: [data.user.id, { text: 'xxx.com' }, quickReplies],
     delay: 1000,
   });
 });

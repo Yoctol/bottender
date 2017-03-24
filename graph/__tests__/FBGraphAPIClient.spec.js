@@ -1340,7 +1340,6 @@ describe('sned api', () => {
           },
           message: {
             text: 'Pick a color:',
-            attachment: null,
             quick_replies: [
               {
                 content_type: 'text',
@@ -1354,8 +1353,7 @@ describe('sned api', () => {
 
       const res = await client.sendQuickReplies(
         RECIPIENT_ID,
-        'Pick a color:',
-        null,
+        { text: 'Pick a color:' },
         [
           {
             content_type: 'text',
