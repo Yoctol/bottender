@@ -23,7 +23,7 @@ type Message = {
   attachment?: ?Attachment,
 };
 
-type TemplateButton = {
+export type TemplateButton = {
   type: string,
   title: string,
   url?: string,
@@ -32,7 +32,7 @@ type TemplateButton = {
 
 type MenuItem = TemplateButton;
 
-type TemplateElement = {
+export type TemplateElement = {
   title: string,
   image_url: string,
   subtitle: string,
@@ -81,7 +81,7 @@ type ReceiptAttributes = {
   adjustments?: ?Array<Adjustment>,
 };
 
-type QuickReply = {
+export type QuickReply = {
   content_type: string,
   title?: string,
   payload?: string,
