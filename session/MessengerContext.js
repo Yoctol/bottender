@@ -76,11 +76,14 @@ export default class MessengerContext extends Context {
     });
   }
 
-  sendQuickReplies(text: string, attachment: Object, quickReplies: []): void {
+  sendQuickReplies(
+    textOrAttachment: { text?: string, attachment?: Object },
+    quickReplies: [],
+  ): void {
     this._jobQueue.enqueue({
       instance: this._client,
       method: 'sendQuickReplies',
-      args: [this._data.user.id, text, attachment, quickReplies],
+      args: [this._data.user.id, textOrAttachment, quickReplies],
       delay: this._getMessageDelay(),
     });
   }

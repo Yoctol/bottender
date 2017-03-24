@@ -13,6 +13,11 @@ type Attachment = {
   payload: AttachmentPayload,
 };
 
+type TextOrAttachment = {
+  text?: string,
+  attachment?: Attachment,
+};
+
 type Message = {
   text?: ?string,
   attachment?: ?Attachment,
@@ -524,8 +529,7 @@ export default class FBGraphAPIClient {
    */
   sendQuickReplies = (
     recipientId: string,
-    text: ?string,
-    attachment: ?Attachment,
+    textOrAttachment: TextOrAttachment,
     quickReplies: Array<QuickReply>,
   ): Promise<SendMessageSucessResponse> => {
     // quick_replies is limited to 11
@@ -551,8 +555,7 @@ export default class FBGraphAPIClient {
     });
 
     return this.send(recipientId, {
-      text,
-      attachment,
+      ...textOrAttachment,
       quick_replies: quickReplies,
     });
   };
