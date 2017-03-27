@@ -85,7 +85,7 @@ export type QuickReply = {
   content_type: string,
   title?: string,
   payload?: string,
-  image_url: string,
+  image_url?: string,
 };
 
 type SenderAction = string;
