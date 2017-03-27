@@ -95,6 +95,8 @@ export default class Bot {
 
       this._handler(context, msg);
 
+      this._sessionManager.saveSessionData(senderId, context.data);
+
       response.status = 200;
     };
   }

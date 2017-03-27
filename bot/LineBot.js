@@ -109,6 +109,8 @@ export default class LineBot {
           this._handler(context, event);
         });
 
+      this._sessionManager.saveSessionData(senderId, context.data);
+
       response.status = 200;
     };
   }

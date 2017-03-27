@@ -30,10 +30,6 @@ export default class Context {
     return this._data;
   }
 
-  set data(data: mixed): void {
-    this._data = data;
-  }
-
   _getMessageDelay(message?: string): number {
     if (typeof this._messageDelay === 'function') {
       return this._messageDelay(message);
