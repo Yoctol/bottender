@@ -33,7 +33,7 @@ export default class LineContext extends Context {
   }
 
   sendText(text: string): void {
-    this._jobQueue.enqueue({
+    this._enqueue({
       instance: this._client,
       method: 'pushText',
       args: [this._data.user.id, text],
@@ -42,7 +42,7 @@ export default class LineContext extends Context {
   }
 
   sendImage(contentUrl: string, previewUrl: ?string): void {
-    this._jobQueue.enqueue({
+    this._enqueue({
       instance: this._client,
       method: 'pushImage',
       args: [this._data.user.id, contentUrl, previewUrl],
@@ -51,7 +51,7 @@ export default class LineContext extends Context {
   }
 
   sendVideo(contentUrl: string, previewUrl: string): void {
-    this._jobQueue.enqueue({
+    this._enqueue({
       instance: this._client,
       method: 'pushVideo',
       args: [this._data.user.id, contentUrl, previewUrl],
@@ -60,7 +60,7 @@ export default class LineContext extends Context {
   }
 
   sendAudio(contentUrl: string, duration: number): void {
-    this._jobQueue.enqueue({
+    this._enqueue({
       instance: this._client,
       method: 'pushAudio',
       args: [this._data.user.id, contentUrl, duration],
@@ -81,7 +81,7 @@ export default class LineContext extends Context {
       longitude: number,
     },
   ): void {
-    this._jobQueue.enqueue({
+    this._enqueue({
       instance: this._client,
       method: 'pushLocation',
       args: [
@@ -98,7 +98,7 @@ export default class LineContext extends Context {
   }
 
   sendSticker(packageId: string, stickerId: string): void {
-    this._jobQueue.enqueue({
+    this._enqueue({
       instance: this._client,
       method: 'pushSticker',
       args: [this._data.user.id, packageId, stickerId],
@@ -120,7 +120,7 @@ export default class LineContext extends Context {
       actions: Array<ImageMapAction>,
     },
   ): void {
-    this._jobQueue.enqueue({
+    this._enqueue({
       instance: this._client,
       method: 'pushImagemap',
       args: [
@@ -151,7 +151,7 @@ export default class LineContext extends Context {
       actions: Array<TemplateAction>,
     },
   ): void {
-    this._jobQueue.enqueue({
+    this._enqueue({
       instance: this._client,
       method: 'pushButtonTemplate',
       args: [
@@ -178,7 +178,7 @@ export default class LineContext extends Context {
       actions: Array<TemplateAction>,
     },
   ): void {
-    this._jobQueue.enqueue({
+    this._enqueue({
       instance: this._client,
       method: 'pushConfirmTemplate',
       args: [
@@ -194,7 +194,7 @@ export default class LineContext extends Context {
   }
 
   sendCarouselTemplate(altText: string, columns: Array<ColumnObject>): void {
-    this._jobQueue.enqueue({
+    this._enqueue({
       instance: this._client,
       method: 'pushCarouselTemplate',
       args: [this._data.user.id, altText, columns],

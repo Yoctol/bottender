@@ -168,14 +168,15 @@ it('sendGenericTemplate to enqueu in jobQueue', () => {
     enqueue: jest.fn(),
   };
 
-  const element = {};
+  const elements = {};
+  const ratio = '';
 
-  context.sendGenericTemplate(element);
+  context.sendGenericTemplate(elements, ratio);
 
   expect(context._jobQueue.enqueue).toBeCalledWith({
     instance: client,
     method: 'sendGenericTemplate',
-    args: [data.user.id, element],
+    args: [data.user.id, elements, ratio],
     delay: 1000,
   });
 });
@@ -261,5 +262,37 @@ it('return messageDelay when it passed in with a number', () => {
     method: 'sendText',
     args: [data.user.id, 'yooooooo~'],
     delay: 999,
+  });
+});
+
+it('should not sendText to enqueu in jobQueue when paused', () => {
+  const { context } = setup();
+  context._jobQueue = {
+    enqueue: jest.fn(),
+  };
+
+  context.hitl.pause();
+
+  context.sendText('xxx.com');
+
+  expect(context._jobQueue.enqueue).not.toBeCalled();
+});
+
+it('should sendText to enqueu in jobQueue when resumed', () => {
+  const { context, client, data } = setup();
+  context._jobQueue = {
+    enqueue: jest.fn(),
+  };
+
+  context.hitl.pause();
+  context.hitl.unpause();
+
+  context.sendText('xxx.com');
+
+  expect(context._jobQueue.enqueue).toBeCalledWith({
+    instance: client,
+    method: 'sendText',
+    args: [data.user.id, 'xxx.com'],
+    delay: 1000,
   });
 });

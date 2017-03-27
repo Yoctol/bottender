@@ -37,7 +37,7 @@ export default class MessengerContext extends Context {
   }
 
   sendText(text: string): void {
-    this._jobQueue.enqueue({
+    this._enqueue({
       instance: this._client,
       method: 'sendText',
       args: [this._data.user.id, text],
@@ -46,7 +46,7 @@ export default class MessengerContext extends Context {
   }
 
   sendImage(url: string): void {
-    this._jobQueue.enqueue({
+    this._enqueue({
       instance: this._client,
       method: 'sendImage',
       args: [this._data.user.id, url],
@@ -55,7 +55,7 @@ export default class MessengerContext extends Context {
   }
 
   sendAudio(url: string): void {
-    this._jobQueue.enqueue({
+    this._enqueue({
       instance: this._client,
       method: 'sendAudio',
       args: [this._data.user.id, url],
@@ -64,7 +64,7 @@ export default class MessengerContext extends Context {
   }
 
   sendVideo(url: string): void {
-    this._jobQueue.enqueue({
+    this._enqueue({
       instance: this._client,
       method: 'sendVideo',
       args: [this._data.user.id, url],
@@ -73,7 +73,7 @@ export default class MessengerContext extends Context {
   }
 
   sendFile(url: string): void {
-    this._jobQueue.enqueue({
+    this._enqueue({
       instance: this._client,
       method: 'sendFile',
       args: [this._data.user.id, url],
@@ -85,7 +85,7 @@ export default class MessengerContext extends Context {
     textOrAttachment: { text?: string, attachment?: Object },
     quickReplies: Array<QuickReply>,
   ): void {
-    this._jobQueue.enqueue({
+    this._enqueue({
       instance: this._client,
       method: 'sendQuickReplies',
       args: [this._data.user.id, textOrAttachment, quickReplies],
@@ -93,17 +93,18 @@ export default class MessengerContext extends Context {
     });
   }
 
-  sendGenericTemplate(elements: Array<TemplateElement>): void {
-    this._jobQueue.enqueue({
+  sendGenericTemplate(elements: Array<TemplateElement>, ratio: string): void {
+    // ratio = 'horizontal' | 'square' (default:'horizontal')
+    this._enqueue({
       instance: this._client,
       method: 'sendGenericTemplate',
-      args: [this._data.user.id, elements],
+      args: [this._data.user.id, elements, ratio],
       delay: this._getMessageDelay(),
     });
   }
 
   sendButtonTemplate(text: string, buttons: Array<TemplateButton>): void {
-    this._jobQueue.enqueue({
+    this._enqueue({
       instance: this._client,
       method: 'sendButtonTemplate',
       args: [this._data.user.id, text, buttons],

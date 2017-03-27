@@ -381,3 +381,35 @@ it('return messageDelay when it passed in with a number', () => {
     delay: 999,
   });
 });
+
+it('should not pushText to enqueu in jobQueue when paused', () => {
+  const { context } = setup();
+  context._jobQueue = {
+    enqueue: jest.fn(),
+  };
+
+  context.hitl.pause();
+
+  context.sendText('xxx.com');
+
+  expect(context._jobQueue.enqueue).not.toBeCalled();
+});
+
+it('should pushText to enqueu in jobQueue when resumed', () => {
+  const { context, client, data } = setup();
+  context._jobQueue = {
+    enqueue: jest.fn(),
+  };
+
+  context.hitl.pause();
+  context.hitl.unpause();
+
+  context.sendText('xxx.com');
+
+  expect(context._jobQueue.enqueue).toBeCalledWith({
+    instance: client,
+    method: 'pushText',
+    args: [data.user.id, 'xxx.com'],
+    delay: 1000,
+  });
+});
