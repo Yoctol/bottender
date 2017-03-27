@@ -32,15 +32,6 @@ it('get #data works', () => {
   expect(context.data).toBe(data);
 });
 
-it('set #data works', () => {
-  const { context } = setup();
-  const data = new SessionData();
-
-  context.data = data;
-
-  expect(context.data).toBe(data);
-});
-
 it('put pushText to jobQueue', () => {
   const { context, client, data } = setup();
   context._jobQueue = {

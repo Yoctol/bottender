@@ -55,15 +55,6 @@ it('get #data works', () => {
   expect(context.data).toBe(data);
 });
 
-it('set #data works', () => {
-  const { context } = setup();
-  const data = new SessionData();
-
-  context.data = data;
-
-  expect(context.data).toBe(data);
-});
-
 it('sendText to enqueu in jobQueue', () => {
   const { context, client, data } = setup();
   context._jobQueue = {
