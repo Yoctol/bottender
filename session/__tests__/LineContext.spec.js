@@ -383,7 +383,7 @@ it('return messageDelay when it passed in with a number', () => {
 });
 
 it('should not pushText to enqueu in jobQueue when paused', () => {
-  const { context, client, data } = setup();
+  const { context } = setup();
   context._jobQueue = {
     enqueue: jest.fn(),
   };
@@ -392,12 +392,7 @@ it('should not pushText to enqueu in jobQueue when paused', () => {
 
   context.sendText('xxx.com');
 
-  expect(context._jobQueue.enqueue).not.toBeCalledWith({
-    instance: client,
-    method: 'pushText',
-    args: [data.user.id, 'xxx.com'],
-    delay: 1000,
-  });
+  expect(context._jobQueue.enqueue).not.toBeCalled();
 });
 
 it('should pushText to enqueu in jobQueue when resumed', () => {
