@@ -93,7 +93,7 @@ export default class MessengerContext extends Context {
     });
   }
 
-  sendGenericTemplate(elements: [], ratio: string): void {
+  sendGenericTemplate(elements: Array<TemplateElement>, ratio: string): void {
     this._jobQueue.enqueue({
       instance: this._client,
       method: 'sendGenericTemplate',
