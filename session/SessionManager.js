@@ -47,7 +47,7 @@ export default class SessionManager {
     return sessionData;
   }
 
-  async saveSessionData(key: string, data: SessionData): void {
+  async saveSessionData(key: string, data: SessionData): Promise<void> {
     await this._sessionStore.set(key, data);
   }
 }
