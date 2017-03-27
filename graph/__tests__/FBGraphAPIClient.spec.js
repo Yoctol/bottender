@@ -1063,7 +1063,7 @@ describe('sned api', () => {
                     ],
                   },
                 ],
-                image_aspect_ratio: 'square',
+                image_aspect_ratio: 'horizontal',
               },
             },
           },

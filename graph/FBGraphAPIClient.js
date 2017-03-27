@@ -490,7 +490,7 @@ export default class FBGraphAPIClient {
   sendGenericTemplate = (
     recipientId: string,
     elements: Array<TemplateElement>,
-    ratio: string = 'square',
+    ratio: string = 'horizontal',
   ): Promise<SendMessageSucessResponse> =>
     this.sendTemplate(recipientId, {
       template_type: 'generic',

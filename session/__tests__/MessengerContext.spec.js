@@ -168,14 +168,15 @@ it('sendGenericTemplate to enqueu in jobQueue', () => {
     enqueue: jest.fn(),
   };
 
-  const element = {};
+  const elements = {};
+  const ratio = '';
 
-  context.sendGenericTemplate(element);
+  context.sendGenericTemplate(elements, ratio);
 
   expect(context._jobQueue.enqueue).toBeCalledWith({
     instance: client,
     method: 'sendGenericTemplate',
-    args: [data.user.id, element],
+    args: [data.user.id, elements, ratio],
     delay: 1000,
   });
 });
