@@ -7,7 +7,7 @@ import PersistentMemorySessionStore
   from '../session/PersistentMemorySessionStore';
 // import DangerousFileSessionStore from '../session/DangerousFileSessionStore';
 
-const debug = _debug('core/bot/Bot');
+const debug = _debug('core/bot/MessengerBot');
 
 export default class Bot {
   constructor({ accessToken, filePath }) {
