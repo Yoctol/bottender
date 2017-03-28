@@ -5,6 +5,7 @@ type JobItem = {
   method: string,
   args: Array<mixed>,
   delay: number,
+  showIndicators?: boolean,
 };
 
 type Handler = (job: JobItem) => Promise<mixed>;
