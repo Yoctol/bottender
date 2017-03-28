@@ -1,4 +1,4 @@
-import Bot from '../Bot';
+import MessengerBot from '../MessengerBot';
 
 jest.mock('../../graph/FBGraphAPIClient');
 
@@ -43,15 +43,21 @@ beforeEach(() => {
   FBGraphAPIClient.factory = jest.fn(() => _graphAPIClient);
 });
 
-describe('Bot', () => {
+describe('MessengerBot', () => {
   it('init', () => {
-    const bot = new Bot({ accessToken: ACCESS_TOKEN, filePath: 'file/path' });
+    const bot = new MessengerBot({
+      accessToken: ACCESS_TOKEN,
+      filePath: 'file/path',
+    });
 
     expect(bot).toBeDefined();
   });
 
   it('handle', () => {
-    const bot = new Bot({ accessToken: ACCESS_TOKEN, filePath: 'file/path' });
+    const bot = new MessengerBot({
+      accessToken: ACCESS_TOKEN,
+      filePath: 'file/path',
+    });
 
     const mockHandler = jest.fn();
 
@@ -65,7 +71,10 @@ describe('Bot', () => {
     });
 
     it('calls sessionManager init', async () => {
-      const bot = new Bot({ accessToken: ACCESS_TOKEN, filePath: 'file/path' });
+      const bot = new MessengerBot({
+        accessToken: ACCESS_TOKEN,
+        filePath: 'file/path',
+      });
 
       bot._sessionManager.init = jest.fn(() => Promise.resolve(true));
       bot._sessionManager.createSessionDataIfNotExists = jest.fn(() =>
@@ -81,7 +90,10 @@ describe('Bot', () => {
     });
 
     it('not call sessionManager init if already initialized', async () => {
-      const bot = new Bot({ accessToken: ACCESS_TOKEN, filePath: 'file/path' });
+      const bot = new MessengerBot({
+        accessToken: ACCESS_TOKEN,
+        filePath: 'file/path',
+      });
 
       bot._sessionManager.init = jest.fn(() => Promise.resolve(true));
       bot._sessionManager.createSessionDataIfNotExists = jest.fn(() =>
@@ -97,7 +109,10 @@ describe('Bot', () => {
     });
 
     it('getUserProfile if not existed in session', async () => {
-      const bot = new Bot({ accessToken: ACCESS_TOKEN, filePath: 'file/path' });
+      const bot = new MessengerBot({
+        accessToken: ACCESS_TOKEN,
+        filePath: 'file/path',
+      });
 
       bot._sessionManager.init = jest.fn(() => Promise.resolve(true));
       bot._sessionManager.createSessionDataIfNotExists = jest.fn(() =>
@@ -117,7 +132,10 @@ describe('Bot', () => {
     });
 
     it('handle getStartedRef', async () => {
-      const bot = new Bot({ accessToken: ACCESS_TOKEN, filePath: 'file/path' });
+      const bot = new MessengerBot({
+        accessToken: ACCESS_TOKEN,
+        filePath: 'file/path',
+      });
 
       bot._sessionManager.init = jest.fn(() => Promise.resolve(true));
       bot._sessionManager.createSessionDataIfNotExists = jest.fn(() =>
@@ -158,7 +176,10 @@ describe('Bot', () => {
     });
 
     it('handle normalRef', async () => {
-      const bot = new Bot({ accessToken: ACCESS_TOKEN, filePath: 'file/path' });
+      const bot = new MessengerBot({
+        accessToken: ACCESS_TOKEN,
+        filePath: 'file/path',
+      });
 
       bot._sessionManager.init = jest.fn(() => Promise.resolve(true));
       bot._sessionManager.createSessionDataIfNotExists = jest.fn(() =>
@@ -197,7 +218,10 @@ describe('Bot', () => {
     });
 
     it('throw if no handler', async () => {
-      const bot = new Bot({ accessToken: ACCESS_TOKEN, filePath: 'file/path' });
+      const bot = new MessengerBot({
+        accessToken: ACCESS_TOKEN,
+        filePath: 'file/path',
+      });
 
       bot._sessionManager.init = jest.fn(() => Promise.resolve(true));
       bot._sessionManager.createSessionDataIfNotExists = jest.fn(() =>
