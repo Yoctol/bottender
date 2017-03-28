@@ -29,10 +29,24 @@ export default class MessengerContext extends Context {
   constructor({ graphAPIClient, data, messageDelay }: Options) {
     super({ data, messageDelay });
     this._client = graphAPIClient;
-    this._jobQueue.beforeEach(async ({ delay }) => {
-      await this.turnTypingIndicatorsOn();
+    this._jobQueue.beforeEach(async ({ delay, showIndicators = true }) => {
+      if (showIndicators) {
+        await this.turnTypingIndicatorsOn();
+      }
       await wait(delay);
-      await this.turnTypingIndicatorsOff();
+      if (showIndicators) {
+        await this.turnTypingIndicatorsOff();
+      }
+    });
+  }
+
+  sendTextTo(id: string, text: string): void {
+    this._enqueue({
+      instance: this._client,
+      method: 'sendText',
+      args: [id, text],
+      delay: 0,
+      showIndicators: false,
     });
   }
 

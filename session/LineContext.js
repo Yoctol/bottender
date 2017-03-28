@@ -41,6 +41,16 @@ export default class LineContext extends Context {
     });
   }
 
+  sendTextTo(id: string, text: string): void {
+    this._enqueue({
+      instance: this._client,
+      method: 'pushText',
+      args: [id, text],
+      delay: 0,
+      showIndicators: false,
+    });
+  }
+
   sendImage(contentUrl: string, previewUrl: ?string): void {
     this._enqueue({
       instance: this._client,

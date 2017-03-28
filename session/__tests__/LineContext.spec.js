@@ -32,7 +32,7 @@ it('get #data works', () => {
   expect(context.data).toBe(data);
 });
 
-it('put pushText to jobQueue', () => {
+it('#sendText put pushText to jobQueue', () => {
   const { context, client, data } = setup();
   context._jobQueue = {
     enqueue: jest.fn(),
@@ -48,7 +48,24 @@ it('put pushText to jobQueue', () => {
   });
 });
 
-it('put pushImage to jobQueue', () => {
+it('#sendTextTo put pushText to jobQueue', () => {
+  const { context, client } = setup();
+  context._jobQueue = {
+    enqueue: jest.fn(),
+  };
+
+  context.sendTextTo('uid_1', 'xxx.com');
+
+  expect(context._jobQueue.enqueue).toBeCalledWith({
+    instance: client,
+    method: 'pushText',
+    args: ['uid_1', 'xxx.com'],
+    delay: 0,
+    showIndicators: false,
+  });
+});
+
+it('#sendImage put pushImage to jobQueue', () => {
   const { context, client, data } = setup();
   context._jobQueue = {
     enqueue: jest.fn(),
@@ -64,7 +81,7 @@ it('put pushImage to jobQueue', () => {
   });
 });
 
-it('put pushAudio to jobQueue', () => {
+it('#sendAudio put pushAudio to jobQueue', () => {
   const { context, client, data } = setup();
   context._jobQueue = {
     enqueue: jest.fn(),
@@ -80,7 +97,7 @@ it('put pushAudio to jobQueue', () => {
   });
 });
 
-it('put pushVideo to jobQueue', () => {
+it('#sendVideo put pushVideo to jobQueue', () => {
   const { context, client, data } = setup();
   context._jobQueue = {
     enqueue: jest.fn(),
@@ -96,7 +113,7 @@ it('put pushVideo to jobQueue', () => {
   });
 });
 
-it('put sendLocation to jobQueue', () => {
+it('#sendLocation put pushLocation to jobQueue', () => {
   const { context, client, data } = setup();
   context._jobQueue = {
     enqueue: jest.fn(),
@@ -125,7 +142,7 @@ it('put sendLocation to jobQueue', () => {
   });
 });
 
-it('put pushSticker to jobQueue', () => {
+it('#sendSticker put pushSticker to jobQueue', () => {
   const { context, client, data } = setup();
   context._jobQueue = {
     enqueue: jest.fn(),
@@ -141,7 +158,7 @@ it('put pushSticker to jobQueue', () => {
   });
 });
 
-it('put pushImagemap to jobQueue', () => {
+it('#sendImagemap put pushImagemap to jobQueue', () => {
   const { context, client, data } = setup();
   context._jobQueue = {
     enqueue: jest.fn(),
@@ -185,7 +202,7 @@ it('put pushImagemap to jobQueue', () => {
   });
 });
 
-it('put pushButtonTemplate to jobQueue', () => {
+it('#sendButtonTemplate put pushButtonTemplate to jobQueue', () => {
   const { context, client, data } = setup();
   context._jobQueue = {
     enqueue: jest.fn(),
@@ -224,7 +241,7 @@ it('put pushButtonTemplate to jobQueue', () => {
   });
 });
 
-it('put pushConfirmTemplate to jobQueue', () => {
+it('#sendConfirmTemplate put pushConfirmTemplate to jobQueue', () => {
   const { context, client, data } = setup();
   context._jobQueue = {
     enqueue: jest.fn(),
@@ -256,7 +273,7 @@ it('put pushConfirmTemplate to jobQueue', () => {
   });
 });
 
-it('put pushCarouselTemplate to jobQueue', () => {
+it('#sendCarouselTemplate put pushCarouselTemplate to jobQueue', () => {
   const { context, client, data } = setup();
   context._jobQueue = {
     enqueue: jest.fn(),

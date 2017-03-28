@@ -55,7 +55,7 @@ it('get #data works', () => {
   expect(context.data).toBe(data);
 });
 
-it('sendText to enqueu in jobQueue', () => {
+it('#sendText put sendText to jobQueue', () => {
   const { context, client, data } = setup();
   context._jobQueue = {
     enqueue: jest.fn(),
@@ -71,7 +71,24 @@ it('sendText to enqueu in jobQueue', () => {
   });
 });
 
-it('sendImage to enqueu in jobQueue', () => {
+it('#sendTextTo put sendText to jobQueue', () => {
+  const { context, client } = setup();
+  context._jobQueue = {
+    enqueue: jest.fn(),
+  };
+
+  context.sendTextTo('uid_1', 'xxx.com');
+
+  expect(context._jobQueue.enqueue).toBeCalledWith({
+    instance: client,
+    method: 'sendText',
+    args: ['uid_1', 'xxx.com'],
+    delay: 0,
+    showIndicators: false,
+  });
+});
+
+it('#sendImage put sendImage to jobQueue', () => {
   const { context, client, data } = setup();
   context._jobQueue = {
     enqueue: jest.fn(),
@@ -87,7 +104,7 @@ it('sendImage to enqueu in jobQueue', () => {
   });
 });
 
-it('sendAudio to enqueu in jobQueue', () => {
+it('#sendAudio put sendAudio to jobQueue', () => {
   const { context, client, data } = setup();
   context._jobQueue = {
     enqueue: jest.fn(),
@@ -103,7 +120,7 @@ it('sendAudio to enqueu in jobQueue', () => {
   });
 });
 
-it('sendVideo to enqueu in jobQueue', () => {
+it('#sendVideo put sendVideo to jobQueue', () => {
   const { context, client, data } = setup();
   context._jobQueue = {
     enqueue: jest.fn(),
@@ -119,7 +136,7 @@ it('sendVideo to enqueu in jobQueue', () => {
   });
 });
 
-it('sendFile to enqueu in jobQueue', () => {
+it('#sendFile put sendFile to jobQueue', () => {
   const { context, client, data } = setup();
   context._jobQueue = {
     enqueue: jest.fn(),
@@ -135,7 +152,7 @@ it('sendFile to enqueu in jobQueue', () => {
   });
 });
 
-it('sendQuickReplies to enqueu in jobQueue', () => {
+it('#sendQuickReplies put sendQuickReplies to jobQueue', () => {
   const { context, client, data } = setup();
   context._jobQueue = {
     enqueue: jest.fn(),
@@ -153,7 +170,7 @@ it('sendQuickReplies to enqueu in jobQueue', () => {
   });
 });
 
-it('sendGenericTemplate to enqueu in jobQueue', () => {
+it('#sendGenericTemplate put sendGenericTemplate to jobQueue', () => {
   const { context, client, data } = setup();
   context._jobQueue = {
     enqueue: jest.fn(),
@@ -172,7 +189,7 @@ it('sendGenericTemplate to enqueu in jobQueue', () => {
   });
 });
 
-it('sendButtonTemplate to enqueu in jobQueue', () => {
+it('#sendButtonTemplate put sendButtonTemplate to jobQueue', () => {
   const { context, client, data } = setup();
   context._jobQueue = {
     enqueue: jest.fn(),
@@ -190,13 +207,13 @@ it('sendButtonTemplate to enqueu in jobQueue', () => {
   });
 });
 
-it('turnTypingIndicatorsOn called client turnTypingIndicatorsOn', () => {
+it('#turnTypingIndicatorsOn call client turnTypingIndicatorsOn', () => {
   const { context, client, data } = setup();
   context.turnTypingIndicatorsOn();
   expect(client.turnTypingIndicatorsOn).toBeCalledWith(data.user.id);
 });
 
-it('turnTypingIndicatorsOff called client turnTypingIndicatorsOff', () => {
+it('#turnTypingIndicatorsOff call client turnTypingIndicatorsOff', () => {
   const { context, client, data } = setup();
   context.turnTypingIndicatorsOff();
   expect(client.turnTypingIndicatorsOff).toBeCalledWith(data.user.id);
