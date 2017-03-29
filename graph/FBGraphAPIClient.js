@@ -28,6 +28,7 @@ export type TemplateButton = {
   title: string,
   url?: string,
   payload?: string,
+  webview_height_ratio?: 'compact' | 'tall' | 'full',
 };
 
 type MenuItem = TemplateButton;
