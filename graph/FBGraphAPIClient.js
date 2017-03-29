@@ -99,22 +99,37 @@ type User = {
   gender: string,
 };
 
-type MessengerProfileResponse = {
-  data: Array<{
-    get_started?: {
-      payload: string,
-    },
-    persistent_menu?: Array<{
-      locale: string,
-      composer_input_disabled: boolean,
-      call_to_actions: Array<TemplateButton>,
-    }>,
-    greeting?: Array<{
-      locale: string,
-      text: string,
-    }>,
-    whitelisted_domains?: Array<string>,
+type MessengerProfile = {
+  get_started?: {
+    payload: string,
+  },
+  persistent_menu?: Array<{
+    locale: string,
+    composer_input_disabled: boolean,
+    call_to_actions: Array<TemplateButton>,
   }>,
+  greeting?: Array<{
+    locale: string,
+    text: string,
+  }>,
+  whitelisted_domains?: Array<string>,
+  account_linking_url?: string,
+  payment_settings?: {
+    privacy_url?: string,
+    public_key?: string,
+    test_users?: Array<string>,
+  },
+  target_audience?: {
+    audience_type?: string,
+    countries?: {
+      whitelist: ?Array<string>,
+      blacklist: ?Array<string>,
+    },
+  },
+};
+
+type MessengerProfileResponse = {
+  data: Array<MessengerProfile>,
 };
 
 type MutationSuccessResponse = {
@@ -157,31 +172,54 @@ export default class FBGraphAPIClient {
     this._http.get(`/${userId}?access_token=${this._accessToken}`);
 
   /**
+   * Messenger Profile
+   *
+   * https://developers.facebook.com/docs/messenger-platform/messenger-profile
+   */
+  getMessengerProfile = (
+    fields: Array<string>,
+  ): Promise<MessengerProfileResponse> =>
+    this._http.get(
+      `/me/messenger_profile?fields=${fields.join(',')}&access_token=${this._accessToken}`,
+    );
+
+  setMessengerProfile = (
+    profile: MessengerProfile,
+  ): Promise<MutationSuccessResponse> =>
+    this._http.post(
+      `/me/messenger_profile?access_token=${this._accessToken}`,
+      profile,
+    );
+
+  deleteMessengerProfile = (
+    fields: Array<string>,
+  ): Promise<MutationSuccessResponse> =>
+    this._http.delete(
+      `/me/messenger_profile?access_token=${this._accessToken}`,
+      {
+        data: {
+          fields,
+        },
+      },
+    );
+
+  /**
    * Get Started Button
    *
    * https://developers.facebook.com/docs/messenger-platform/messenger-profile/get-started-button
    */
   getGetStartedButton = (): Promise<MessengerProfileResponse> =>
-    this._http.get(
-      `/me/messenger_profile?fields=get_started&access_token=${this._accessToken}`,
-    );
+    this.getMessengerProfile(['get_started']);
 
   setGetStartedButton = (payload: string): Promise<MutationSuccessResponse> =>
-    this._http.post(`/me/messenger_profile?access_token=${this._accessToken}`, {
+    this.setMessengerProfile({
       get_started: {
         payload,
       },
     });
 
   deleteGetStartedButton = (): Promise<MutationSuccessResponse> =>
-    this._http.delete(
-      `/me/messenger_profile?access_token=${this._accessToken}`,
-      {
-        data: {
-          fields: ['get_started'],
-        },
-      },
-    );
+    this.deleteMessengerProfile(['get_started']);
 
   /**
    * Persistent Menu
@@ -190,15 +228,13 @@ export default class FBGraphAPIClient {
    * TODO: support locale?
    */
   getPersistentMenu = (): Promise<MessengerProfileResponse> =>
-    this._http.get(
-      `/me/messenger_profile?fields=persistent_menu&access_token=${this._accessToken}`,
-    );
+    this.getMessengerProfile(['persistent_menu']);
 
   setPersistentMenu = (
     menuItems: Array<MenuItem>,
     { inputDisabled = false }: { inputDisabled: boolean } = {},
   ): Promise<MutationSuccessResponse> =>
-    this._http.post(`/me/messenger_profile?access_token=${this._accessToken}`, {
+    this.setMessengerProfile({
       persistent_menu: [
         {
           locale: 'default',
@@ -209,14 +245,7 @@ export default class FBGraphAPIClient {
     });
 
   deletePersistentMenu = (): Promise<MutationSuccessResponse> =>
-    this._http.delete(
-      `/me/messenger_profile?access_token=${this._accessToken}`,
-      {
-        data: {
-          fields: ['persistent_menu'],
-        },
-      },
-    );
+    this.deleteMessengerProfile(['persistent_menu']);
 
   /**
    * Greeting Text
@@ -225,12 +254,10 @@ export default class FBGraphAPIClient {
    * TODO: support locale?
    */
   getGreetingText = (): Promise<MessengerProfileResponse> =>
-    this._http.get(
-      `/me/messenger_profile?fields=greeting&access_token=${this._accessToken}`,
-    );
+    this.getMessengerProfile(['greeting']);
 
   setGreetingText = (text: string): Promise<MutationSuccessResponse> =>
-    this._http.post(`/me/messenger_profile?access_token=${this._accessToken}`, {
+    this.setMessengerProfile({
       greeting: [
         {
           locale: 'default',
@@ -240,14 +267,7 @@ export default class FBGraphAPIClient {
     });
 
   deleteGreetingText = (): Promise<MutationSuccessResponse> =>
-    this._http.delete(
-      `/me/messenger_profile?access_token=${this._accessToken}`,
-      {
-        data: {
-          fields: ['greeting'],
-        },
-      },
-    );
+    this.deleteMessengerProfile(['greeting']);
 
   /**
    * Domain Whitelist
@@ -255,24 +275,15 @@ export default class FBGraphAPIClient {
    * https://developers.facebook.com/docs/messenger-platform/messenger-profile/domain-whitelisting
    */
   getDomainWhitelist = (): Promise<MessengerProfileResponse> =>
-    this._http.get(
-      `/me/messenger_profile?fields=whitelisted_domains&access_token=${this._accessToken}`,
-    );
+    this.getMessengerProfile(['whitelisted_domains']);
 
   setDomainWhitelist = (domain: string): Promise<MutationSuccessResponse> =>
-    this._http.post(`/me/messenger_profile?access_token=${this._accessToken}`, {
+    this.setMessengerProfile({
       whitelisted_domains: [domain],
     });
 
   deleteDomainWhitelist = (): Promise<MutationSuccessResponse> =>
-    this._http.delete(
-      `/me/messenger_profile?access_token=${this._accessToken}`,
-      {
-        data: {
-          fields: ['whitelisted_domains'],
-        },
-      },
-    );
+    this.deleteMessengerProfile(['whitelisted_domains']);
 
   /**
    * Account Linking URL
@@ -280,24 +291,15 @@ export default class FBGraphAPIClient {
    * https://developers.facebook.com/docs/messenger-platform/messenger-profile/account-linking-url
    */
   getAccountLinkingURL = (): Promise<MessengerProfileResponse> =>
-    this._http.get(
-      `/me/messenger_profile?fields=account_linking_url&access_token=${this._accessToken}`,
-    );
+    this.getMessengerProfile(['account_linking_url']);
 
   setAccountLinkingURL = (url: string): Promise<MutationSuccessResponse> =>
-    this._http.post(`/me/messenger_profile?access_token=${this._accessToken}`, {
+    this.setMessengerProfile({
       account_linking_url: url,
     });
 
   deleteAccountLinkingURL = (): Promise<MutationSuccessResponse> =>
-    this._http.delete(
-      `/me/messenger_profile?access_token=${this._accessToken}`,
-      {
-        data: {
-          fields: ['account_linking_url'],
-        },
-      },
-    );
+    this.deleteMessengerProfile(['account_linking_url']);
 
   /**
    * Payment Settings
@@ -305,21 +307,19 @@ export default class FBGraphAPIClient {
    * https://developers.facebook.com/docs/messenger-platform/messenger-profile/payment-settings
    */
   getPaymentSettings = (): Promise<MessengerProfileResponse> =>
-    this._http.get(
-      `/me/messenger_profile?fields=payment_settings&access_token=${this._accessToken}`,
-    );
+    this.getMessengerProfile(['payment_settings']);
 
   setPaymentPrivacyPolicyURL = (
     url: string,
   ): Promise<MutationSuccessResponse> =>
-    this._http.post(`/me/messenger_profile?access_token=${this._accessToken}`, {
+    this.setMessengerProfile({
       payment_settings: {
         privacy_url: url,
       },
     });
 
   setPaymentPublicKey = (key: string): Promise<MutationSuccessResponse> =>
-    this._http.post(`/me/messenger_profile?access_token=${this._accessToken}`, {
+    this.setMessengerProfile({
       payment_settings: {
         public_key: key,
       },
@@ -328,21 +328,14 @@ export default class FBGraphAPIClient {
   setPaymentTestUsers = (
     users: Array<string>,
   ): Promise<MutationSuccessResponse> =>
-    this._http.post(`/me/messenger_profile?access_token=${this._accessToken}`, {
+    this.setMessengerProfile({
       payment_settings: {
         test_users: users,
       },
     });
 
   deletePaymentSettings = (): Promise<MutationSuccessResponse> =>
-    this._http.delete(
-      `/me/messenger_profile?access_token=${this._accessToken}`,
-      {
-        data: {
-          fields: ['payment_settings'],
-        },
-      },
-    );
+    this.deleteMessengerProfile(['payment_settings']);
 
   /**
    * Target Audience
@@ -350,16 +343,14 @@ export default class FBGraphAPIClient {
    * https://developers.facebook.com/docs/messenger-platform/messenger-profile/target-audience
    */
   getTargetAudience = (): Promise<MessengerProfileResponse> =>
-    this._http.get(
-      `/me/messenger_profile?fields=target_audience&access_token=${this._accessToken}`,
-    );
+    this.getMessengerProfile(['target_audience']);
 
   setTargetAudience = (
     type: string,
     whitelist: ?Array<string> = [],
     blacklist: ?Array<string> = [],
   ): Promise<MutationSuccessResponse> =>
-    this._http.post(`/me/messenger_profile?access_token=${this._accessToken}`, {
+    this.setMessengerProfile({
       target_audience: {
         audience_type: type,
         countries: {
@@ -370,14 +361,7 @@ export default class FBGraphAPIClient {
     });
 
   deleteTargetAudience = (): Promise<MutationSuccessResponse> =>
-    this._http.delete(
-      `/me/messenger_profile?access_token=${this._accessToken}`,
-      {
-        data: {
-          fields: ['target_audience'],
-        },
-      },
-    );
+    this.deleteMessengerProfile(['target_audience']);
 
   /**
    * Send API

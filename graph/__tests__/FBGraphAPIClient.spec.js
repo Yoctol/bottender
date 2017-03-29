@@ -45,6 +45,130 @@ describe('user profile', () => {
   });
 });
 
+describe('messenger profile', () => {
+  describe('#getMessengerProfile', () => {
+    it('should response data of get messenger profile', async () => {
+      const { client, mock } = createMock();
+
+      const expected = {
+        data: [
+          {
+            get_started: {
+              payload: '__ALOHA.AI_GET_STARTED__',
+            },
+          },
+          {
+            persistent_menu: [
+              {
+                locale: 'default',
+                composer_input_disabled: true,
+                call_to_actions: [
+                  {
+                    type: 'postback',
+                    title: '重新開始對話',
+                    payload: '__ALOHA.AI_RESTARTED__',
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      };
+
+      mock
+        .onGet(
+          `/me/messenger_profile?fields=get_started,persistent_menu&access_token=${ACCESS_TOKEN}`,
+        )
+        .reply(200, expected);
+
+      const res = await client.getMessengerProfile([
+        'get_started',
+        'persistent_menu',
+      ]);
+
+      expect(res.status).toBe(200);
+      expect(res.data).toBe(expected);
+    });
+  });
+
+  describe('#setMessengerProfile', () => {
+    it('should response success result', async () => {
+      const { client, mock } = createMock();
+
+      const expected = {
+        result: 'success',
+      };
+
+      mock
+        .onPost(`/me/messenger_profile?access_token=${ACCESS_TOKEN}`, {
+          get_started: {
+            payload: '__ALOHA.AI_GET_STARTED__',
+          },
+          persistent_menu: [
+            {
+              locale: 'default',
+              composer_input_disabled: true,
+              call_to_actions: [
+                {
+                  type: 'postback',
+                  title: '重新開始對話',
+                  payload: '__ALOHA.AI_RESTARTED__',
+                },
+              ],
+            },
+          ],
+        })
+        .reply(200, expected);
+
+      const res = await client.setMessengerProfile({
+        get_started: {
+          payload: '__ALOHA.AI_GET_STARTED__',
+        },
+        persistent_menu: [
+          {
+            locale: 'default',
+            composer_input_disabled: true,
+            call_to_actions: [
+              {
+                type: 'postback',
+                title: '重新開始對話',
+                payload: '__ALOHA.AI_RESTARTED__',
+              },
+            ],
+          },
+        ],
+      });
+
+      expect(res.status).toBe(200);
+      expect(res.data).toBe(expected);
+    });
+  });
+
+  describe('#deleteMessengerProfile', () => {
+    it('should response success result', async () => {
+      const { client, mock } = createMock();
+
+      const expected = {
+        result: 'success',
+      };
+
+      mock
+        .onDelete(`/me/messenger_profile?access_token=${ACCESS_TOKEN}`, {
+          fields: ['get_started', 'persistent_menu'],
+        })
+        .reply(200, expected);
+
+      const res = await client.deleteMessengerProfile([
+        'get_started',
+        'persistent_menu',
+      ]);
+
+      expect(res.status).toBe(200);
+      expect(res.data).toBe(expected);
+    });
+  });
+});
+
 describe('get started button', () => {
   describe('#getGetStartedButton', () => {
     it('should response data of get started button', async () => {
