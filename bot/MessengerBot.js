@@ -9,7 +9,7 @@ import PersistentMemorySessionStore
 
 const debug = _debug('core/bot/MessengerBot');
 
-export default class Bot {
+export default class MessengerBot {
   constructor({ accessToken, filePath }) {
     this._graphAPIClient = FBGraphAPIClient.factory(accessToken);
     this._sessionManager = new SessionManager(

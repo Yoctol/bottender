@@ -1,10 +1,6 @@
 import * as core from '../index';
 
 describe('core', () => {
-  it('export Bot', () => {
-    expect(core.Bot).toBeDefined();
-  });
-
   it('export MessengerBot', () => {
     expect(core.MessengerBot).toBeDefined();
   });

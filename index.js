@@ -1,4 +1,3 @@
-export { default as Bot } from './bot/Bot';
 export { default as MessengerBot } from './bot/MessengerBot';
 export { default as LineBot } from './bot/LineBot';
 export { default as HandlerBuilder } from './bot/HandlerBuilder';
