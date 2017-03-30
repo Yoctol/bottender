@@ -507,6 +507,94 @@ export default class FBGraphAPIClient {
       ...receipt,
     });
 
+  // https://developers.facebook.com/docs/messenger-platform/send-api-reference/airline-boardingpass-template
+  sendAirlineBoardingPassTemplate = (
+    recipientId: string,
+    {
+      introMessage,
+      locale,
+      boardingPass,
+    },
+  ): Promise<SendMessageSucessResponse> =>
+    this.sendTemplate(recipientId, {
+      template_type: 'airline_boardingpass',
+      intro_message: introMessage,
+      locale,
+      boarding_pass: boardingPass,
+    });
+
+  // https://developers.facebook.com/docs/messenger-platform/send-api-reference/airline-checkin-template
+  sendAirlineCheckinReminderTemplate = (
+    recipientId: string,
+    {
+      introMessage,
+      locale,
+      pnrNumber,
+      flightInfo,
+      checkinUrl,
+    },
+  ): Promise<SendMessageSucessResponse> =>
+    this.sendTemplate(recipientId, {
+      template_type: 'airline_checkin',
+      intro_message: introMessage,
+      locale,
+      pnr_number: pnrNumber,
+      flight_info: flightInfo,
+      checkin_url: checkinUrl,
+    });
+
+  // https://developers.facebook.com/docs/messenger-platform/send-api-reference/airline-itinerary-template
+  sendAirlineItineraryTemplate = (
+    recipientId: string,
+    {
+      introMessage,
+      locale,
+      pnrNumber,
+      passengerInfo,
+      flightInfo,
+      passengerSegmentInfo,
+      priceInfo,
+      basePrice,
+      tax,
+      totalPrice,
+      currency,
+    },
+  ): Promise<SendMessageSucessResponse> =>
+    this.sendTemplate(recipientId, {
+      template_type: 'airline_itinerary',
+      intro_message: introMessage,
+      locale,
+      pnr_number: pnrNumber,
+      passenger_info: passengerInfo,
+      flight_info: flightInfo,
+      passenger_segment_info: passengerSegmentInfo,
+      price_info: priceInfo,
+      base_price: basePrice,
+      tax,
+      total_price: totalPrice,
+      currency,
+    });
+
+  // https://developers.facebook.com/docs/messenger-platform/send-api-reference/airline-update-template
+  sendAirlineFlightUpdateTemplate = (
+    recipientId: string,
+    {
+      introMessage,
+      updateType,
+      locale,
+      pnrNumber,
+      updateFlightInfo,
+    },
+  ): Promise<SendMessageSucessResponse> =>
+    this.sendTemplate(recipientId, {
+      template_type: 'airline_update',
+      intro_message: introMessage,
+      update_type: updateType,
+      locale,
+      pnr_number: pnrNumber,
+      update_flight_info: updateFlightInfo,
+    });
+
   /**
    * Quick Replies
    *
