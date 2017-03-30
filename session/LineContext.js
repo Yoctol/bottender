@@ -2,11 +2,6 @@
 
 import wait from 'delay';
 
-import type {
-  ImageMapAction,
-  TemplateAction,
-  ColumnObject,
-} from '../api/LineBotAPIClient';
 import LineBotAPIClient from '../api/LineBotAPIClient';
 
 import type { MessageDelay } from './Context';
@@ -30,185 +25,63 @@ export default class LineContext extends Context {
     super({ data, messageDelay });
     this._client = lineAPIClient;
     this._jobQueue.beforeEach(({ delay }) => wait(delay));
-  }
-
-  sendText(text: string): void {
-    this._enqueue({
-      instance: this._client,
-      method: 'pushText',
-      args: [this._data.user.id, text],
-      delay: this._getMessageDelay(text),
-    });
-  }
-
-  sendTextTo(id: string, text: string): void {
-    this._enqueue({
-      instance: this._client,
-      method: 'pushText',
-      args: [id, text],
-      delay: 0,
-      showIndicators: false,
-    });
-  }
-
-  sendImage(contentUrl: string, previewUrl: ?string): void {
-    this._enqueue({
-      instance: this._client,
-      method: 'pushImage',
-      args: [this._data.user.id, contentUrl, previewUrl],
-      delay: this._getMessageDelay(),
-    });
-  }
-
-  sendVideo(contentUrl: string, previewUrl: string): void {
-    this._enqueue({
-      instance: this._client,
-      method: 'pushVideo',
-      args: [this._data.user.id, contentUrl, previewUrl],
-      delay: this._getMessageDelay(),
-    });
-  }
-
-  sendAudio(contentUrl: string, duration: number): void {
-    this._enqueue({
-      instance: this._client,
-      method: 'pushAudio',
-      args: [this._data.user.id, contentUrl, duration],
-      delay: this._getMessageDelay(),
-    });
-  }
-
-  sendLocation(
-    {
-      title,
-      address,
-      latitude,
-      longitude,
-    }: {
-      title: string,
-      address: string,
-      latitude: number,
-      longitude: number,
-    },
-  ): void {
-    this._enqueue({
-      instance: this._client,
-      method: 'pushLocation',
-      args: [
-        this._data.user.id,
-        {
-          title,
-          address,
-          latitude,
-          longitude,
+    const types = [
+      'Text',
+      'Image',
+      'Video',
+      'Audio',
+      'Location',
+      'Sticker',
+      'Imagemap',
+      'ButtonTemplate',
+      'ConfirmTemplate',
+      'CarouselTemplate',
+    ];
+    types.forEach(type => {
+      Object.defineProperty(this, `send${type}`, {
+        enumerable: false,
+        configurable: true,
+        writable: true,
+        value(...args) {
+          this._enqueue({
+            instance: this._client,
+            method: `push${type}`,
+            args: [this._data.user.id, ...args],
+            delay: this._getMessageDelay(),
+            showIndicators: true,
+          });
         },
-      ],
-      delay: this._getMessageDelay(),
-    });
-  }
+      });
 
-  sendSticker(packageId: string, stickerId: string): void {
-    this._enqueue({
-      instance: this._client,
-      method: 'pushSticker',
-      args: [this._data.user.id, packageId, stickerId],
-      delay: this._getMessageDelay(),
-    });
-  }
-
-  sendImagemap(
-    altText: string,
-    {
-      baseUrl,
-      baseHeight,
-      baseWidth,
-      actions,
-    }: {
-      baseUrl: string,
-      baseHeight: number,
-      baseWidth: number,
-      actions: Array<ImageMapAction>,
-    },
-  ): void {
-    this._enqueue({
-      instance: this._client,
-      method: 'pushImagemap',
-      args: [
-        this._data.user.id,
-        altText,
-        {
-          baseUrl,
-          baseHeight,
-          baseWidth,
-          actions,
+      Object.defineProperty(this, `send${type}To`, {
+        enumerable: false,
+        configurable: true,
+        writable: true,
+        value(id, ...rest) {
+          this._enqueue({
+            instance: this._client,
+            method: `push${type}`,
+            args: [id, ...rest],
+            delay: 0,
+            showIndicators: false,
+          });
         },
-      ],
-      delay: this._getMessageDelay(),
-    });
-  }
+      });
 
-  sendButtonTemplate(
-    altText: string,
-    {
-      thumbnailImageUrl,
-      title,
-      text,
-      actions,
-    }: {
-      thumbnailImageUrl?: string,
-      title?: string,
-      text: string,
-      actions: Array<TemplateAction>,
-    },
-  ): void {
-    this._enqueue({
-      instance: this._client,
-      method: 'pushButtonTemplate',
-      args: [
-        this._data.user.id,
-        altText,
-        {
-          thumbnailImageUrl,
-          title,
-          text,
-          actions,
+      Object.defineProperty(this, `send${type}WithDelay`, {
+        enumerable: false,
+        configurable: true,
+        writable: true,
+        value(delay, ...rest) {
+          this._enqueue({
+            instance: this._client,
+            method: `push${type}`,
+            args: [this._data.user.id, ...rest],
+            delay,
+            showIndicators: true,
+          });
         },
-      ],
-      delay: this._getMessageDelay(),
-    });
-  }
-
-  sendConfirmTemplate(
-    altText: string,
-    {
-      text,
-      actions,
-    }: {
-      text: string,
-      actions: Array<TemplateAction>,
-    },
-  ): void {
-    this._enqueue({
-      instance: this._client,
-      method: 'pushConfirmTemplate',
-      args: [
-        this._data.user.id,
-        altText,
-        {
-          text,
-          actions,
-        },
-      ],
-      delay: this._getMessageDelay(),
-    });
-  }
-
-  sendCarouselTemplate(altText: string, columns: Array<ColumnObject>): void {
-    this._enqueue({
-      instance: this._client,
-      method: 'pushCarouselTemplate',
-      args: [this._data.user.id, altText, columns],
-      delay: this._getMessageDelay(),
+      });
     });
   }
 }
