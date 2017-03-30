@@ -82,6 +82,92 @@ type ReceiptAttributes = {
   adjustments?: ?Array<Adjustment>,
 };
 
+type Airport = {
+  airport_code: string,
+  city: string,
+  terminal?: string,
+  gate?: string,
+};
+
+type FlightSchedule = {
+  boarding_time?: string,
+  departure_time: string,
+  arrival_time?: string,
+};
+
+type FlightInfo = {
+  flight_number: string,
+  departure_airport: Airport,
+  arrival_airport: Airport,
+  flight_schedule: FlightSchedule,
+};
+
+type Field = {
+  label: string,
+  value: string,
+};
+
+type BoardingPass = {
+  passenger_name: string,
+  pnr_number: string,
+  travel_class?: string,
+  seat?: string,
+  auxiliary_fields?: Array<Field>,
+  secondary_fields?: Array<Field>,
+  logo_image_url: string,
+  header_image_url?: string,
+  header_text_field?: Field,
+  qr_code?: string, // FIXME: qr_code or barcode_image_url
+  barcode_image_url?: string,
+  above_bar_code_image_url: string,
+  flight_info: FlightInfo,
+};
+
+type AirlineBoardingPassAttributes = {
+  intro_message: string,
+  locale: string,
+  boarding_pass: Array<BoardingPass>,
+};
+
+type PassengerInfo = {
+  passenger_id: string,
+  ticket_number?: string,
+  name: string,
+};
+
+type PassengerSegmentInfo = {
+  segment_id: string,
+  passenger_id: string,
+  seat: string,
+  seat_type: string,
+  product_info?: string,
+};
+
+type PriceInfo = {
+  title: string,
+  ammont: number,
+  currency?: string,
+};
+
+type AirlineCheckinAttributes = {
+  intro_message: string,
+  locale: string,
+  theme_color?: string,
+  pnr_number: string,
+  passenger_info: Array<PassengerInfo>,
+  flight_info: Array<FlightInfo>,
+  passenger_segment_info: Array<PassengerSegmentInfo>,
+  price_info?: Array<PriceInfo>,
+  base_price?: number,
+  tax?: number,
+  total_price: number,
+  currency: string,
+};
+
+type AirlineItineraryAttributes = {};
+
+type AirlineFlightUpdateAttributes = {};
+
 export type QuickReply = {
   content_type: string,
   title?: string,
@@ -500,99 +586,51 @@ export default class FBGraphAPIClient {
   // https://developers.facebook.com/docs/messenger-platform/send-api-reference/receipt-template
   sendReceiptTemplate = (
     recipientId: string,
-    receipt: ReceiptAttributes,
+    attrs: ReceiptAttributes,
   ): Promise<SendMessageSucessResponse> =>
     this.sendTemplate(recipientId, {
       template_type: 'receipt',
-      ...receipt,
+      ...attrs,
     });
 
   // https://developers.facebook.com/docs/messenger-platform/send-api-reference/airline-boardingpass-template
   sendAirlineBoardingPassTemplate = (
     recipientId: string,
-    {
-      introMessage,
-      locale,
-      boardingPass,
-    },
+    attrs: AirlineBoardingPassAttributes,
   ): Promise<SendMessageSucessResponse> =>
     this.sendTemplate(recipientId, {
       template_type: 'airline_boardingpass',
-      intro_message: introMessage,
-      locale,
-      boarding_pass: boardingPass,
+      ...attrs,
     });
 
   // https://developers.facebook.com/docs/messenger-platform/send-api-reference/airline-checkin-template
   sendAirlineCheckinTemplate = (
     recipientId: string,
-    {
-      introMessage,
-      locale,
-      pnrNumber,
-      flightInfo,
-      checkinURL,
-    },
+    attrs: AirlineCheckinAttributes,
   ): Promise<SendMessageSucessResponse> =>
     this.sendTemplate(recipientId, {
       template_type: 'airline_checkin',
-      intro_message: introMessage,
-      locale,
-      pnr_number: pnrNumber,
-      flight_info: flightInfo,
-      checkin_url: checkinURL,
+      ...attrs,
     });
 
   // https://developers.facebook.com/docs/messenger-platform/send-api-reference/airline-itinerary-template
   sendAirlineItineraryTemplate = (
     recipientId: string,
-    {
-      introMessage,
-      locale,
-      pnrNumber,
-      passengerInfo,
-      flightInfo,
-      passengerSegmentInfo,
-      priceInfo,
-      basePrice,
-      tax,
-      totalPrice,
-      currency,
-    },
+    attrs: AirlineItineraryAttributes,
   ): Promise<SendMessageSucessResponse> =>
     this.sendTemplate(recipientId, {
       template_type: 'airline_itinerary',
-      intro_message: introMessage,
-      locale,
-      pnr_number: pnrNumber,
-      passenger_info: passengerInfo,
-      flight_info: flightInfo,
-      passenger_segment_info: passengerSegmentInfo,
-      price_info: priceInfo,
-      base_price: basePrice,
-      tax,
-      total_price: totalPrice,
-      currency,
+      ...attrs,
     });
 
   // https://developers.facebook.com/docs/messenger-platform/send-api-reference/airline-update-template
   sendAirlineFlightUpdateTemplate = (
     recipientId: string,
-    {
-      introMessage,
-      updateType,
-      locale,
-      pnrNumber,
-      updateFlightInfo,
-    },
+    attrs: AirlineFlightUpdateAttributes,
   ): Promise<SendMessageSucessResponse> =>
     this.sendTemplate(recipientId, {
       template_type: 'airline_update',
-      intro_message: introMessage,
-      update_type: updateType,
-      locale,
-      pnr_number: pnrNumber,
-      update_flight_info: updateFlightInfo,
+      ...attrs,
     });
 
   /**

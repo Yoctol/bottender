@@ -1589,9 +1589,8 @@ describe('sned api', () => {
 
       const res = await client.sendAirlineBoardingPassTemplate(RECIPIENT_ID, {
         intro_message: 'You are checked in.',
-        introMessage: 'You are checked in.',
         locale: 'en_US',
-        boardingPass: [
+        boarding_pass: [
           {
             passenger_name: 'SMITH/NICOLAS',
             pnr_number: 'CG4X7U',
@@ -1762,10 +1761,10 @@ describe('sned api', () => {
         .reply(200, expected);
 
       const res = await client.sendAirlineCheckinTemplate(RECIPIENT_ID, {
-        introMessage: 'Check-in is available now.',
+        intro_message: 'Check-in is available now.',
         locale: 'en_US',
-        pnrNumber: 'ABCDEF',
-        flightInfo: [
+        pnr_number: 'ABCDEF',
+        flight_info: [
           {
             flight_number: 'f001',
             departure_airport: {
@@ -1787,7 +1786,7 @@ describe('sned api', () => {
             },
           },
         ],
-        checkinURL: 'https://www.airline.com/check-in',
+        checkin_url: 'https://www.airline.com/check-in',
       });
 
       expect(res.status).toBe(200);
@@ -1941,10 +1940,10 @@ describe('sned api', () => {
         .reply(200, expected);
 
       const res = await client.sendAirlineItineraryTemplate(RECIPIENT_ID, {
-        introMessage: "Here's your flight itinerary.",
+        intro_message: "Here's your flight itinerary.",
         locale: 'en_US',
-        pnrNumber: 'ABCDEF',
-        passengerInfo: [
+        pnr_number: 'ABCDEF',
+        passenger_info: [
           {
             name: 'Farbound Smith Jr',
             ticket_number: '0741234567890',
@@ -1956,7 +1955,7 @@ describe('sned api', () => {
             passenger_id: 'p002',
           },
         ],
-        flightInfo: [
+        flight_info: [
           {
             connection_id: 'c001',
             segment_id: 's001',
@@ -2004,7 +2003,7 @@ describe('sned api', () => {
             },
           },
         ],
-        passengerSegmentInfo: [
+        passenger_segment_info: [
           {
             segment_id: 's001',
             passenger_id: 'p001',
@@ -2050,16 +2049,16 @@ describe('sned api', () => {
             ],
           },
         ],
-        priceInfo: [
+        price_info: [
           {
             title: 'Fuel surcharge',
             amount: '1597',
             currency: 'USD',
           },
         ],
-        basePrice: '12206',
+        base_price: '12206',
         tax: '200',
-        totalPrice: '14003',
+        total_price: '14003',
         currency: 'USD',
       });
 
@@ -2069,7 +2068,7 @@ describe('sned api', () => {
   });
 
   describe('#sendAirlineFlightUpdateTemplate', () => {
-    it('should call messages api with airline itinerary template', async () => {
+    it('should call messages api with airline flight update template', async () => {
       const { client, mock } = createMock();
 
       const expected = {
@@ -2118,11 +2117,11 @@ describe('sned api', () => {
         .reply(200, expected);
 
       const res = await client.sendAirlineFlightUpdateTemplate(RECIPIENT_ID, {
-        introMessage: 'Your flight is delayed',
-        updateType: 'delay',
+        intro_message: 'Your flight is delayed',
+        update_type: 'delay',
         locale: 'en_US',
-        pnrNumber: 'CF23G2',
-        updateFlightInfo: {
+        pnr_number: 'CF23G2',
+        update_flight_info: {
           flight_number: 'KL123',
           departure_airport: {
             airport_code: 'SFO',
