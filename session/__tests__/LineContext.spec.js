@@ -45,23 +45,7 @@ it('#sendText put pushText to jobQueue', () => {
     method: 'pushText',
     args: [data.user.id, 'xxx.com'],
     delay: 1000,
-  });
-});
-
-it('#sendTextTo put pushText to jobQueue', () => {
-  const { context, client } = setup();
-  context._jobQueue = {
-    enqueue: jest.fn(),
-  };
-
-  context.sendTextTo('uid_1', 'xxx.com');
-
-  expect(context._jobQueue.enqueue).toBeCalledWith({
-    instance: client,
-    method: 'pushText',
-    args: ['uid_1', 'xxx.com'],
-    delay: 0,
-    showIndicators: false,
+    showIndicators: true,
   });
 });
 
@@ -78,6 +62,7 @@ it('#sendImage put pushImage to jobQueue', () => {
     method: 'pushImage',
     args: [data.user.id, 'xxx.jpg', 'yyy.jpg'],
     delay: 1000,
+    showIndicators: true,
   });
 });
 
@@ -94,6 +79,7 @@ it('#sendAudio put pushAudio to jobQueue', () => {
     method: 'pushAudio',
     args: [data.user.id, 'xxx.mp3', 240000],
     delay: 1000,
+    showIndicators: true,
   });
 });
 
@@ -110,6 +96,7 @@ it('#sendVideo put pushVideo to jobQueue', () => {
     method: 'pushVideo',
     args: [data.user.id, 'xxx.mp4', 'yyy.jpg'],
     delay: 1000,
+    showIndicators: true,
   });
 });
 
@@ -139,6 +126,7 @@ it('#sendLocation put pushLocation to jobQueue', () => {
       },
     ],
     delay: 1000,
+    showIndicators: true,
   });
 });
 
@@ -155,6 +143,7 @@ it('#sendSticker put pushSticker to jobQueue', () => {
     method: 'pushSticker',
     args: [data.user.id, '1', '1'],
     delay: 1000,
+    showIndicators: true,
   });
 });
 
@@ -199,6 +188,7 @@ it('#sendImagemap put pushImagemap to jobQueue', () => {
     method: 'pushImagemap',
     args: [data.user.id, 'this is an imagemap', template],
     delay: 1000,
+    showIndicators: true,
   });
 });
 
@@ -238,6 +228,7 @@ it('#sendButtonTemplate put pushButtonTemplate to jobQueue', () => {
     method: 'pushButtonTemplate',
     args: [data.user.id, 'this is a button template', template],
     delay: 1000,
+    showIndicators: true,
   });
 });
 
@@ -270,6 +261,7 @@ it('#sendConfirmTemplate put pushConfirmTemplate to jobQueue', () => {
     method: 'pushConfirmTemplate',
     args: [data.user.id, 'this is a confirm template', template],
     delay: 1000,
+    showIndicators: true,
   });
 });
 
@@ -333,6 +325,7 @@ it('#sendCarouselTemplate put pushCarouselTemplate to jobQueue', () => {
     method: 'pushCarouselTemplate',
     args: [data.user.id, 'this is a carousel template', template],
     delay: 1000,
+    showIndicators: true,
   });
 });
 
@@ -350,6 +343,7 @@ it('use default message delay when nothing passed in', () => {
     method: 'pushText',
     args: [data.user.id, 'yooooooo~'],
     delay: 1000,
+    showIndicators: true,
   });
 });
 
@@ -369,6 +363,7 @@ it('call messageDelay() when it passed in with a function', () => {
     method: 'pushText',
     args: [data.user.id, 'yooooooo~'],
     delay: 2500,
+    showIndicators: true,
   });
 });
 
@@ -387,6 +382,7 @@ it('return messageDelay when it passed in with a number', () => {
     method: 'pushText',
     args: [data.user.id, 'yooooooo~'],
     delay: 999,
+    showIndicators: true,
   });
 });
 
@@ -419,5 +415,68 @@ it('should pushText to enqueu in jobQueue when resumed', () => {
     method: 'pushText',
     args: [data.user.id, 'xxx.com'],
     delay: 1000,
+    showIndicators: true,
+  });
+});
+
+it('has send to methods', () => {
+  const { context } = setup();
+  expect(context.sendTextTo).toBeDefined();
+  expect(context.sendImageTo).toBeDefined();
+  expect(context.sendVideoTo).toBeDefined();
+  expect(context.sendAudioTo).toBeDefined();
+  expect(context.sendLocationTo).toBeDefined();
+  expect(context.sendStickerTo).toBeDefined();
+  expect(context.sendImagemapTo).toBeDefined();
+  expect(context.sendButtonTemplateTo).toBeDefined();
+  expect(context.sendConfirmTemplateTo).toBeDefined();
+  expect(context.sendCarouselTemplateTo).toBeDefined();
+});
+
+it('#sendTextTo put pushText to jobQueue', () => {
+  const { context, client } = setup();
+  context._jobQueue = {
+    enqueue: jest.fn(),
+  };
+
+  context.sendTextTo('uid_1', 'xxx.com');
+
+  expect(context._jobQueue.enqueue).toBeCalledWith({
+    instance: client,
+    method: 'pushText',
+    args: ['uid_1', 'xxx.com'],
+    delay: 0,
+    showIndicators: false,
+  });
+});
+
+it('has delay with methods', () => {
+  const { context } = setup();
+  expect(context.sendTextWithDelay).toBeDefined();
+  expect(context.sendImageWithDelay).toBeDefined();
+  expect(context.sendVideoWithDelay).toBeDefined();
+  expect(context.sendAudioWithDelay).toBeDefined();
+  expect(context.sendLocationWithDelay).toBeDefined();
+  expect(context.sendStickerWithDelay).toBeDefined();
+  expect(context.sendImagemapWithDelay).toBeDefined();
+  expect(context.sendButtonTemplateWithDelay).toBeDefined();
+  expect(context.sendConfirmTemplateWithDelay).toBeDefined();
+  expect(context.sendCarouselTemplateWithDelay).toBeDefined();
+});
+
+it('#sendTextWithDelay put pushText to jobQueue', () => {
+  const { context, client, data } = setup();
+  context._jobQueue = {
+    enqueue: jest.fn(),
+  };
+
+  context.sendTextWithDelay(3000, 'xxx.com');
+
+  expect(context._jobQueue.enqueue).toBeCalledWith({
+    instance: client,
+    method: 'pushText',
+    args: [data.user.id, 'xxx.com'],
+    delay: 3000,
+    showIndicators: true,
   });
 });
