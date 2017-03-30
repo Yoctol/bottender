@@ -10,7 +10,8 @@ import PersistentMemorySessionStore
 const debug = _debug('core/bot/MessengerBot');
 
 export default class MessengerBot {
-  constructor({ accessToken, filePath }) {
+  constructor({ accessToken, filePath, messageDelay }) {
+    this._messageDelay = messageDelay;
     this._graphAPIClient = FBGraphAPIClient.factory(accessToken);
     this._sessionManager = new SessionManager(
       new PersistentMemorySessionStore(filePath, 500),
@@ -75,6 +76,7 @@ export default class MessengerBot {
       const context = new MessengerContext({
         graphAPIClient: this._graphAPIClient,
         data: sessionData,
+        messageDelay: this._messageDelay,
       });
 
       if (!existed) {

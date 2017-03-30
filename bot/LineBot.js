@@ -10,7 +10,8 @@ import PersistentMemorySessionStore
 const debug = _debug('core/bot/LineBot');
 
 export default class LineBot {
-  constructor({ accessToken, channelSecret, filePath }) {
+  constructor({ accessToken, channelSecret, filePath, messageDelay }) {
+    this._messageDelay = messageDelay;
     this._lineAPIClient = LineBotAPIClient.factory(accessToken, channelSecret);
     this._sessionManager = new SessionManager(
       new PersistentMemorySessionStore(filePath, 500),
@@ -81,6 +82,7 @@ export default class LineBot {
       const context = new LineContext({
         lineAPIClient: this._lineAPIClient,
         data: sessionData,
+        messageDelay: this._messageDelay,
       });
 
       if (!existed) {
