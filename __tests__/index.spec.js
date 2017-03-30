@@ -33,10 +33,6 @@ describe('core', () => {
     expect(core.verifyWebhook).toBeDefined();
   });
 
-  it('export logMessage', () => {
-    expect(core.logMessage).toBeDefined();
-  });
-
   it('export helpers', () => {
     expect(core.toAbsolutePath).toBeDefined();
     expect(core.getProjectPath).toBeDefined();
