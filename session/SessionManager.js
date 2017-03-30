@@ -6,6 +6,7 @@ type SessionStore = {
   get: (key: string) => Promise<any>,
   set: (key: string, data: any) => Promise<void>,
   destroy: (key: string) => Promise<void>,
+  save: (key: string, data: any) => Promise<void>,
 };
 
 type SessionRecord = {
@@ -48,6 +49,6 @@ export default class SessionManager {
   }
 
   async saveSessionData(key: string, data: SessionData): Promise<void> {
-    await this._sessionStore.set(key, data);
+    await this._sessionStore.save(key, data);
   }
 }

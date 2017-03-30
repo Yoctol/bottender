@@ -67,4 +67,8 @@ export default class PersistentMemorySessionStore {
     );
     return write(this._filename, mergedMap);
   };
+
+  async save(key, sess) {
+    this._map.set(key, sess);
+  }
 }

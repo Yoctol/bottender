@@ -1,6 +1,3 @@
-// FIXME: buggy
-// where to save the session?
-
 import fs from 'fs';
 
 import jsonfile from 'jsonfile';
