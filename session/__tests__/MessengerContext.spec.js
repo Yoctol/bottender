@@ -68,6 +68,7 @@ it('#sendText put sendText to jobQueue', () => {
     method: 'sendText',
     args: [data.user.id, 'xxx.com'],
     delay: 1000,
+    showIndicators: true,
   });
 });
 
@@ -84,6 +85,7 @@ it('#sendImage put sendImage to jobQueue', () => {
     method: 'sendImage',
     args: [data.user.id, 'xxx.com'],
     delay: 1000,
+    showIndicators: true,
   });
 });
 
@@ -100,6 +102,7 @@ it('#sendAudio put sendAudio to jobQueue', () => {
     method: 'sendAudio',
     args: [data.user.id, 'xxx.com'],
     delay: 1000,
+    showIndicators: true,
   });
 });
 
@@ -116,6 +119,7 @@ it('#sendVideo put sendVideo to jobQueue', () => {
     method: 'sendVideo',
     args: [data.user.id, 'xxx.com'],
     delay: 1000,
+    showIndicators: true,
   });
 });
 
@@ -132,6 +136,7 @@ it('#sendFile put sendFile to jobQueue', () => {
     method: 'sendFile',
     args: [data.user.id, 'xxx.com'],
     delay: 1000,
+    showIndicators: true,
   });
 });
 
@@ -150,6 +155,7 @@ it('#sendQuickReplies put sendQuickReplies to jobQueue', () => {
     method: 'sendQuickReplies',
     args: [data.user.id, { text: 'xxx.com' }, quickReplies],
     delay: 1000,
+    showIndicators: true,
   });
 });
 
@@ -169,6 +175,7 @@ it('#sendGenericTemplate put sendGenericTemplate to jobQueue', () => {
     method: 'sendGenericTemplate',
     args: [data.user.id, elements, ratio],
     delay: 1000,
+    showIndicators: true,
   });
 });
 
@@ -187,6 +194,7 @@ it('#sendButtonTemplate put sendButtonTemplate to jobQueue', () => {
     method: 'sendButtonTemplate',
     args: [data.user.id, 'yayaya', buttons],
     delay: 1000,
+    showIndicators: true,
   });
 });
 
@@ -216,6 +224,7 @@ it('use default message delay when nothing passed in', () => {
     method: 'sendText',
     args: [data.user.id, 'yooooooo~'],
     delay: 1000,
+    showIndicators: true,
   });
 });
 
@@ -235,6 +244,7 @@ it('call messageDelay() when it passed in with a function', () => {
     method: 'sendText',
     args: [data.user.id, 'yooooooo~'],
     delay: 2500,
+    showIndicators: true,
   });
 });
 
@@ -253,6 +263,7 @@ it('return messageDelay when it passed in with a number', () => {
     method: 'sendText',
     args: [data.user.id, 'yooooooo~'],
     delay: 999,
+    showIndicators: true,
   });
 });
 
@@ -285,6 +296,7 @@ it('should sendText to enqueu in jobQueue when resumed', () => {
     method: 'sendText',
     args: [data.user.id, 'xxx.com'],
     delay: 1000,
+    showIndicators: true,
   });
 });
 
