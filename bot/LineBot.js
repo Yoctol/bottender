@@ -1,6 +1,6 @@
 import _debug from 'debug';
 
-import LineBotAPIClient from '../graph/LineBotAPIClient';
+import LineBotAPIClient from '../api/LineBotAPIClient';
 import LineContext from '../session/LineContext';
 import SessionManager from '../session/SessionManager';
 import PersistentMemorySessionStore

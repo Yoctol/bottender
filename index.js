@@ -5,8 +5,8 @@ export {
   default as CompositeHandlerBuilder,
 } from './bot/CompositeHandlerBuilder';
 
-export { default as FBGraphAPIClient } from './graph/FBGraphAPIClient';
-export { default as LineBotAPIClient } from './graph/LineBotAPIClient';
+export { default as FBGraphAPIClient } from './api/FBGraphAPIClient';
+export { default as LineBotAPIClient } from './api/LineBotAPIClient';
 
 export { default as serveWebviews } from './middlewares/serveWebviews';
 export { default as verifyWebhook } from './middlewares/verifyWebhook';

@@ -1,6 +1,6 @@
 import _debug from 'debug';
 
-import FBGraphAPIClient from '../graph/FBGraphAPIClient';
+import FBGraphAPIClient from '../api/FBGraphAPIClient';
 import MessengerContext from '../session/MessengerContext';
 import SessionManager from '../session/SessionManager';
 import PersistentMemorySessionStore

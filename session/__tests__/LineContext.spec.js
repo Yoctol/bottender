@@ -1,7 +1,7 @@
 import LineContext from '../LineContext';
 import SessionData from '../SessionData';
 
-jest.mock('../../graph/LineBotAPIClient');
+jest.mock('../../api/LineBotAPIClient');
 
 const setup = (messageDelay = 1000, noDelay = false) => {
   const client = {};

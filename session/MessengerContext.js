@@ -6,8 +6,8 @@ import type {
   TemplateButton,
   TemplateElement,
   QuickReply,
-} from '../graph/FBGraphAPIClient';
-import FBGraphAPIClient from '../graph/FBGraphAPIClient';
+} from '../api/FBGraphAPIClient';
+import FBGraphAPIClient from '../api/FBGraphAPIClient';
 
 import type { MessageDelay } from './Context';
 import Context from './Context';

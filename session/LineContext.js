@@ -6,8 +6,8 @@ import type {
   ImageMapAction,
   TemplateAction,
   ColumnObject,
-} from '../graph/LineBotAPIClient';
-import LineBotAPIClient from '../graph/LineBotAPIClient';
+} from '../api/LineBotAPIClient';
+import LineBotAPIClient from '../api/LineBotAPIClient';
 
 import type { MessageDelay } from './Context';
 import Context from './Context';

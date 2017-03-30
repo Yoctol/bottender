@@ -1,8 +1,8 @@
 import MessengerBot from '../MessengerBot';
 
-jest.mock('../../graph/FBGraphAPIClient');
+jest.mock('../../api/FBGraphAPIClient');
 
-const FBGraphAPIClient = require('../../graph/FBGraphAPIClient').default;
+const FBGraphAPIClient = require('../../api/FBGraphAPIClient').default;
 
 const request = {
   body: {

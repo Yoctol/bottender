@@ -1,7 +1,7 @@
 import MessengerContext from '../MessengerContext';
 import SessionData from '../SessionData';
 
-jest.mock('../../graph/FBGraphAPIClient');
+jest.mock('../../api/FBGraphAPIClient');
 
 const createMockGraphAPIClient = () => ({
   turnTypingIndicatorsOn: jest.fn(),

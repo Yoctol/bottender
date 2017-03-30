@@ -1,6 +1,6 @@
 /* @flow */
 
-import FBGraphAPIClient from '../graph/FBGraphAPIClient';
+import FBGraphAPIClient from '../api/FBGraphAPIClient';
 
 import DelayableJobQueue from './DelayableJobQueue';
 import SessionData from './SessionData';
