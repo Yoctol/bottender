@@ -524,14 +524,14 @@ export default class FBGraphAPIClient {
     });
 
   // https://developers.facebook.com/docs/messenger-platform/send-api-reference/airline-checkin-template
-  sendAirlineCheckinReminderTemplate = (
+  sendAirlineCheckinTemplate = (
     recipientId: string,
     {
       introMessage,
       locale,
       pnrNumber,
       flightInfo,
-      checkinUrl,
+      checkinURL,
     },
   ): Promise<SendMessageSucessResponse> =>
     this.sendTemplate(recipientId, {
@@ -540,7 +540,7 @@ export default class FBGraphAPIClient {
       locale,
       pnr_number: pnrNumber,
       flight_info: flightInfo,
-      checkin_url: checkinUrl,
+      checkin_url: checkinURL,
     });
 
   // https://developers.facebook.com/docs/messenger-platform/send-api-reference/airline-itinerary-template
