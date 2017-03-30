@@ -71,23 +71,6 @@ it('#sendText put sendText to jobQueue', () => {
   });
 });
 
-it('#sendTextTo put sendText to jobQueue', () => {
-  const { context, client } = setup();
-  context._jobQueue = {
-    enqueue: jest.fn(),
-  };
-
-  context.sendTextTo('uid_1', 'xxx.com');
-
-  expect(context._jobQueue.enqueue).toBeCalledWith({
-    instance: client,
-    method: 'sendText',
-    args: ['uid_1', 'xxx.com'],
-    delay: 0,
-    showIndicators: false,
-  });
-});
-
 it('#sendImage put sendImage to jobQueue', () => {
   const { context, client, data } = setup();
   context._jobQueue = {
@@ -302,5 +285,63 @@ it('should sendText to enqueu in jobQueue when resumed', () => {
     method: 'sendText',
     args: [data.user.id, 'xxx.com'],
     delay: 1000,
+  });
+});
+
+it('has send to methods', () => {
+  const { context } = setup();
+  expect(context.sendTextTo).toBeDefined();
+  expect(context.sendImageTo).toBeDefined();
+  expect(context.sendAudioTo).toBeDefined();
+  expect(context.sendVideoTo).toBeDefined();
+  expect(context.sendFileTo).toBeDefined();
+  expect(context.sendQuickRepliesTo).toBeDefined();
+  expect(context.sendGenericTemplateTo).toBeDefined();
+  expect(context.sendButtonTemplateTo).toBeDefined();
+});
+
+it('#sendTextTo put sendText to jobQueue', () => {
+  const { context, client } = setup();
+  context._jobQueue = {
+    enqueue: jest.fn(),
+  };
+
+  context.sendTextTo('uid_1', 'xxx.com');
+
+  expect(context._jobQueue.enqueue).toBeCalledWith({
+    instance: client,
+    method: 'sendText',
+    args: ['uid_1', 'xxx.com'],
+    delay: 0,
+    showIndicators: false,
+  });
+});
+
+it('has send with delay methods', () => {
+  const { context } = setup();
+  expect(context.sendTextWithDelay).toBeDefined();
+  expect(context.sendImageWithDelay).toBeDefined();
+  expect(context.sendAudioWithDelay).toBeDefined();
+  expect(context.sendVideoWithDelay).toBeDefined();
+  expect(context.sendFileWithDelay).toBeDefined();
+  expect(context.sendQuickRepliesWithDelay).toBeDefined();
+  expect(context.sendGenericTemplateWithDelay).toBeDefined();
+  expect(context.sendButtonTemplateWithDelay).toBeDefined();
+});
+
+it('#sendTextWithDelay put sendText to jobQueue', () => {
+  const { context, client, data } = setup();
+  context._jobQueue = {
+    enqueue: jest.fn(),
+  };
+
+  context.sendTextWithDelay(3000, 'xxx.com');
+
+  expect(context._jobQueue.enqueue).toBeCalledWith({
+    instance: client,
+    method: 'sendText',
+    args: [data.user.id, 'xxx.com'],
+    delay: 3000,
+    showIndicators: true,
   });
 });

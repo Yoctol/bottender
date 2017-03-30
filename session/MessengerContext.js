@@ -38,15 +38,42 @@ export default class MessengerContext extends Context {
         await this.turnTypingIndicatorsOff();
       }
     });
-  }
 
-  sendTextTo(id: string, text: string): void {
-    this._enqueue({
-      instance: this._client,
-      method: 'sendText',
-      args: [id, text],
-      delay: 0,
-      showIndicators: false,
+    const properties = Object.getOwnPropertyNames(Object.getPrototypeOf(this));
+    const sendMethods = properties.filter(
+      // $FlowExpectedError
+      prop => prop.startsWith('send') && typeof this[prop] === 'function',
+    );
+    sendMethods.forEach(method => {
+      Object.defineProperty(this, `${method}To`, {
+        enumerable: false,
+        configurable: true,
+        writable: true,
+        value(id, ...rest) {
+          this._enqueue({
+            instance: this._client,
+            method,
+            args: [id, ...rest],
+            delay: 0,
+            showIndicators: false,
+          });
+        },
+      });
+
+      Object.defineProperty(this, `${method}WithDelay`, {
+        enumerable: false,
+        configurable: true,
+        writable: true,
+        value(delay, ...rest) {
+          this._enqueue({
+            instance: this._client,
+            method,
+            args: [this._data.user.id, ...rest],
+            delay,
+            showIndicators: true,
+          });
+        },
+      });
     });
   }
 
