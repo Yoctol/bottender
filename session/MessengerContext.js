@@ -43,6 +43,8 @@ export default class MessengerContext extends Context {
       'sendQuickReplies',
       'sendGenericTemplate',
       'sendButtonTemplate',
+      'sendListTemplate',
+      'sendReceiptTemplate',
     ];
 
     sendMethods.forEach(method => {

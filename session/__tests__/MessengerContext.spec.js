@@ -198,6 +198,45 @@ it('#sendButtonTemplate put sendButtonTemplate to jobQueue', () => {
   });
 });
 
+it('#sendListTemplate put sendListTemplate to jobQueue', () => {
+  const { context, client, data } = setup();
+  context._jobQueue = {
+    enqueue: jest.fn(),
+  };
+
+  const elements = [];
+  const buttons = [];
+
+  context.sendListTemplate(elements, buttons, 'large');
+
+  expect(context._jobQueue.enqueue).toBeCalledWith({
+    instance: client,
+    method: 'sendListTemplate',
+    args: [data.user.id, elements, buttons, 'large'],
+    delay: 1000,
+    showIndicators: true,
+  });
+});
+
+it('#sendReceiptTemplate put sendReceiptTemplate to jobQueue', () => {
+  const { context, client, data } = setup();
+  context._jobQueue = {
+    enqueue: jest.fn(),
+  };
+
+  const receipt = {};
+
+  context.sendReceiptTemplate(receipt);
+
+  expect(context._jobQueue.enqueue).toBeCalledWith({
+    instance: client,
+    method: 'sendReceiptTemplate',
+    args: [data.user.id, receipt],
+    delay: 1000,
+    showIndicators: true,
+  });
+});
+
 it('#turnTypingIndicatorsOn call client turnTypingIndicatorsOn', () => {
   const { context, client, data } = setup();
   context.turnTypingIndicatorsOn();
@@ -310,6 +349,8 @@ it('has send to methods', () => {
   expect(context.sendQuickRepliesTo).toBeDefined();
   expect(context.sendGenericTemplateTo).toBeDefined();
   expect(context.sendButtonTemplateTo).toBeDefined();
+  expect(context.sendListTemplateTo).toBeDefined();
+  expect(context.sendReceiptTemplateTo).toBeDefined();
 });
 
 it('#sendTextTo put sendText to jobQueue', () => {
@@ -339,6 +380,8 @@ it('has send with delay methods', () => {
   expect(context.sendQuickRepliesWithDelay).toBeDefined();
   expect(context.sendGenericTemplateWithDelay).toBeDefined();
   expect(context.sendButtonTemplateWithDelay).toBeDefined();
+  expect(context.sendListTemplateWithDelay).toBeDefined();
+  expect(context.sendReceiptTemplateWithDelay).toBeDefined();
 });
 
 it('#sendTextWithDelay put sendText to jobQueue', () => {
