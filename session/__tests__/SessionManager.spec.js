@@ -7,6 +7,7 @@ const createMockStore = () => {
     get: jest.fn(),
     set: () => {},
     destroy: () => {},
+    save: jest.fn(() => Promise.resolve()),
   };
   return store;
 };
@@ -39,5 +40,19 @@ describe('#createSessionDataIfNotExists', () => {
       sessionData: new SessionData({}),
       existed: true,
     });
+  });
+});
+
+describe('#saveSessionData', () => {
+  it('should call save method on the session store', async () => {
+    const store = createMockStore();
+    const manager = new SessionManager(store);
+    await manager.init();
+
+    const sessionData = new SessionData();
+
+    await manager.saveSessionData('1', sessionData);
+
+    expect(store.save).toBeCalledWith('1', sessionData);
   });
 });

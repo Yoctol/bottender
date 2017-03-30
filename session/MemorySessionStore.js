@@ -21,4 +21,8 @@ export default class MemorySessionStore {
   async destroy(key: string): void {
     delete this._map[key];
   }
+
+  async save(key: string, sess: mixed) {
+    this._map[key] = sess;
+  }
 }
