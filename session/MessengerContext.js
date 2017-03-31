@@ -45,6 +45,10 @@ export default class MessengerContext extends Context {
       'sendButtonTemplate',
       'sendListTemplate',
       'sendReceiptTemplate',
+      'sendAirlineBoardingPassTemplate',
+      'sendAirlineCheckinTemplate',
+      'sendAirlineItineraryTemplate',
+      'sendAirlineFlightUpdateTemplate',
     ];
 
     sendMethods.forEach(method => {

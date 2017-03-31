@@ -237,6 +237,82 @@ it('#sendReceiptTemplate put sendReceiptTemplate to jobQueue', () => {
   });
 });
 
+it('#sendAirlineBoardingPassTemplate put sendAirlineBoardingPassTemplate to jobQueue', () => {
+  const { context, client, data } = setup();
+  context._jobQueue = {
+    enqueue: jest.fn(),
+  };
+
+  const boardingPass = {};
+
+  context.sendAirlineBoardingPassTemplate(boardingPass);
+
+  expect(context._jobQueue.enqueue).toBeCalledWith({
+    instance: client,
+    method: 'sendAirlineBoardingPassTemplate',
+    args: [data.user.id, boardingPass],
+    delay: 1000,
+    showIndicators: true,
+  });
+});
+
+it('#sendAirlineCheckinTemplate put sendAirlineCheckinTemplate to jobQueue', () => {
+  const { context, client, data } = setup();
+  context._jobQueue = {
+    enqueue: jest.fn(),
+  };
+
+  const checkin = {};
+
+  context.sendAirlineCheckinTemplate(checkin);
+
+  expect(context._jobQueue.enqueue).toBeCalledWith({
+    instance: client,
+    method: 'sendAirlineCheckinTemplate',
+    args: [data.user.id, checkin],
+    delay: 1000,
+    showIndicators: true,
+  });
+});
+
+it('#sendAirlineItineraryTemplate put sendAirlineItineraryTemplate to jobQueue', () => {
+  const { context, client, data } = setup();
+  context._jobQueue = {
+    enqueue: jest.fn(),
+  };
+
+  const itinerary = {};
+
+  context.sendAirlineItineraryTemplate(itinerary);
+
+  expect(context._jobQueue.enqueue).toBeCalledWith({
+    instance: client,
+    method: 'sendAirlineItineraryTemplate',
+    args: [data.user.id, itinerary],
+    delay: 1000,
+    showIndicators: true,
+  });
+});
+
+it('#sendAirlineFlightUpdateTemplate put sendAirlineFlightUpdateTemplate to jobQueue', () => {
+  const { context, client, data } = setup();
+  context._jobQueue = {
+    enqueue: jest.fn(),
+  };
+
+  const flightUpdate = {};
+
+  context.sendAirlineFlightUpdateTemplate(flightUpdate);
+
+  expect(context._jobQueue.enqueue).toBeCalledWith({
+    instance: client,
+    method: 'sendAirlineFlightUpdateTemplate',
+    args: [data.user.id, flightUpdate],
+    delay: 1000,
+    showIndicators: true,
+  });
+});
+
 it('#turnTypingIndicatorsOn call client turnTypingIndicatorsOn', () => {
   const { context, client, data } = setup();
   context.turnTypingIndicatorsOn();
@@ -351,6 +427,10 @@ it('has send to methods', () => {
   expect(context.sendButtonTemplateTo).toBeDefined();
   expect(context.sendListTemplateTo).toBeDefined();
   expect(context.sendReceiptTemplateTo).toBeDefined();
+  expect(context.sendAirlineBoardingPassTemplateTo).toBeDefined();
+  expect(context.sendAirlineCheckinTemplateTo).toBeDefined();
+  expect(context.sendAirlineItineraryTemplateTo).toBeDefined();
+  expect(context.sendAirlineFlightUpdateTemplateTo).toBeDefined();
 });
 
 it('#sendTextTo put sendText to jobQueue', () => {
@@ -382,6 +462,10 @@ it('has send with delay methods', () => {
   expect(context.sendButtonTemplateWithDelay).toBeDefined();
   expect(context.sendListTemplateWithDelay).toBeDefined();
   expect(context.sendReceiptTemplateWithDelay).toBeDefined();
+  expect(context.sendAirlineBoardingPassTemplateWithDelay).toBeDefined();
+  expect(context.sendAirlineCheckinTemplateWithDelay).toBeDefined();
+  expect(context.sendAirlineItineraryTemplateWithDelay).toBeDefined();
+  expect(context.sendAirlineFlightUpdateTemplateWithDelay).toBeDefined();
 });
 
 it('#sendTextWithDelay put sendText to jobQueue', () => {
