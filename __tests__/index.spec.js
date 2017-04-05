@@ -38,4 +38,9 @@ describe('core', () => {
     expect(core.getProjectPath).toBeDefined();
     expect(core.getProjectConfig).toBeDefined();
   });
+
+  it('export payload', () => {
+    expect(core.payload.GET_STARTED).toBeDefined();
+    expect(core.payload.STILL_ALIVE).toBeDefined();
+  });
 });

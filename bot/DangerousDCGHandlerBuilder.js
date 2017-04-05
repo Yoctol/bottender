@@ -3,9 +3,9 @@ import hasha from 'hasha';
 import pascalCase from 'pascal-case';
 import invariant from 'invariant';
 
+import * as constants from '../constants';
 import type Context from '../session/Context';
 
-import HandlerBuilder from './HandlerBuilder';
 import type { Handler, Msg } from './HandlerBuilder';
 
 type Action = Array<any>;
@@ -97,7 +97,7 @@ export default class DangerousDCGHandlerBuilder {
       if (postback) {
         if (
           this._getStartedNode &&
-          postback.payload === HandlerBuilder.GET_STARTED_PAYLOAD
+          postback.payload === constants.payload.GET_STARTED
         ) {
           handleNode(context, this._getStartedNode);
           return;
