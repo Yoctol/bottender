@@ -1,4 +1,5 @@
 /* @flow */
+import * as constants from '../constants';
 import type Context from '../session/Context';
 
 type Condition = string | RegExp;
@@ -24,8 +25,6 @@ function matchCondition(condition: Condition, payload: string): boolean {
 }
 
 export default class HandlerBuilder {
-  static GET_STARTED_PAYLOAD = '__ALOHA.AI_GET_STARTED__';
-
   _getStartedHandler: ?Handler;
   _messageHandlers: Array<ConditionHandler> = [];
   _postbackHandlers: Array<ConditionHandler> = [];
@@ -104,7 +103,7 @@ export default class HandlerBuilder {
       if (postback) {
         if (
           this._getStartedHandler &&
-          postback.payload === HandlerBuilder.GET_STARTED_PAYLOAD
+          postback.payload === constants.payload.GET_STARTED
         ) {
           this._getStartedHandler(context, msg);
           return;
