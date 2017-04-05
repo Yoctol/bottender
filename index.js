@@ -8,8 +8,8 @@ export {
 export { default as FBGraphAPIClient } from './api/FBGraphAPIClient';
 export { default as LineBotAPIClient } from './api/LineBotAPIClient';
 
-export { default as serveWebviews } from './middlewares/serveWebviews';
-export { default as verifyWebhook } from './middlewares/verifyWebhook';
+export { default as serveWebviews } from './middleware/serveWebviews';
+export { default as verifyWebhook } from './middleware/verifyWebhook';
 
 export { toAbsolutePath, getProjectPath } from './shared/path';
 export { getProjectConfig } from './shared/config';
