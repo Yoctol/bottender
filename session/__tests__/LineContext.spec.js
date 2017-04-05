@@ -1,7 +1,7 @@
-import LineContext from '../LineContext';
+import LINEContext from '../LINEContext';
 import SessionData from '../SessionData';
 
-jest.mock('../../api/LineBotAPIClient');
+jest.mock('../../api/LINEBotAPIClient');
 
 const setup = (messageDelay = 1000, noDelay = false) => {
   const client = {};
@@ -10,7 +10,7 @@ const setup = (messageDelay = 1000, noDelay = false) => {
       id: 'fakeUserId',
     },
   });
-  const context = new LineContext({
+  const context = new LINEContext({
     lineAPIClient: client,
     data,
     messageDelay: noDelay ? undefined : messageDelay,

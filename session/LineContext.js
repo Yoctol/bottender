@@ -2,7 +2,7 @@
 
 import wait from 'delay';
 
-import LineBotAPIClient from '../api/LineBotAPIClient';
+import LINEBotAPIClient from '../api/LINEBotAPIClient';
 
 import type { MessageDelay } from './Context';
 import Context from './Context';
@@ -10,13 +10,13 @@ import DelayableJobQueue from './DelayableJobQueue';
 import SessionData from './SessionData';
 
 type Options = {
-  lineAPIClient: LineBotAPIClient,
+  lineAPIClient: LINEBotAPIClient,
   data: SessionData,
   messageDelay: MessageDelay,
 };
 
-export default class LineContext extends Context {
-  _client: LineBotAPIClient;
+export default class LINEContext extends Context {
+  _client: LINEBotAPIClient;
   _data: SessionData;
   _jobQueue: DelayableJobQueue;
   _messageDelay: MessageDelay;
