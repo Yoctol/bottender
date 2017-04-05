@@ -1,18 +1,18 @@
 import _debug from 'debug';
 
-import LineBotAPIClient from '../api/LineBotAPIClient';
-import LineContext from '../session/LineContext';
+import LINEBotAPIClient from '../api/LINEBotAPIClient';
+import LINEContext from '../session/LINEContext';
 import SessionManager from '../session/SessionManager';
 import PersistentMemorySessionStore
   from '../session/PersistentMemorySessionStore';
 // import DangerousFileSessionStore from '../session/DangerousFileSessionStore';
 
-const debug = _debug('core/bot/LineBot');
+const debug = _debug('core/bot/LINEBot');
 
-export default class LineBot {
+export default class LINEBot {
   constructor({ accessToken, channelSecret, filePath, messageDelay }) {
     this._messageDelay = messageDelay;
-    this._lineAPIClient = LineBotAPIClient.factory(accessToken, channelSecret);
+    this._lineAPIClient = LINEBotAPIClient.factory(accessToken, channelSecret);
     this._sessionManager = new SessionManager(
       new PersistentMemorySessionStore(filePath, 500),
     );
@@ -79,7 +79,7 @@ export default class LineBot {
         existed,
       } = await this._sessionManager.createSessionDataIfNotExists(senderId);
 
-      const context = new LineContext({
+      const context = new LINEContext({
         lineAPIClient: this._lineAPIClient,
         data: sessionData,
         messageDelay: this._messageDelay,

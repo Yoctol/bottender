@@ -1,6 +1,6 @@
 import MockAdapter from 'axios-mock-adapter';
 
-import LineBotAPIClient from '../LineBotAPIClient';
+import LINEBotAPIClient from '../LINEBotAPIClient';
 
 const RECIPIENT_ID = '1QAZ2WSX';
 const REPLY_TOKEN = 'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA';
@@ -11,14 +11,14 @@ const headers = {
 };
 
 const createMock = () => {
-  const client = new LineBotAPIClient(ACCESS_TOKEN);
+  const client = new LINEBotAPIClient(ACCESS_TOKEN);
   const mock = new MockAdapter(client.getHTTPClient());
   return { client, mock };
 };
 
 describe('#getHTTPClient', () => {
   it('should return underlying http client', () => {
-    const client = new LineBotAPIClient(ACCESS_TOKEN);
+    const client = new LINEBotAPIClient(ACCESS_TOKEN);
     const http = client.getHTTPClient();
     expect(http.get).toBeDefined();
     expect(http.post).toBeDefined();

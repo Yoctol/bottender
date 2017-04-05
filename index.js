@@ -1,12 +1,12 @@
 export { default as MessengerBot } from './bot/MessengerBot';
-export { default as LineBot } from './bot/LineBot';
+export { default as LINEBot } from './bot/LINEBot';
 export { default as HandlerBuilder } from './bot/HandlerBuilder';
 export {
   default as CompositeHandlerBuilder,
 } from './bot/CompositeHandlerBuilder';
 
 export { default as FBGraphAPIClient } from './api/FBGraphAPIClient';
-export { default as LineBotAPIClient } from './api/LineBotAPIClient';
+export { default as LINEBotAPIClient } from './api/LINEBotAPIClient';
 
 export { default as serveWebviews } from './middleware/serveWebviews';
 export { default as verifyWebhook } from './middleware/verifyWebhook';

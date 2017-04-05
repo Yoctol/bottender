@@ -5,8 +5,8 @@ describe('core', () => {
     expect(core.MessengerBot).toBeDefined();
   });
 
-  it('export LineBot', () => {
-    expect(core.LineBot).toBeDefined();
+  it('export LINEBot', () => {
+    expect(core.LINEBot).toBeDefined();
   });
 
   it('export HandlerBuilder', () => {
@@ -19,6 +19,10 @@ describe('core', () => {
 
   it('export FBGraphAPIClient', () => {
     expect(core.FBGraphAPIClient).toBeDefined();
+  });
+
+  it('export LINEBotAPIClient', () => {
+    expect(core.LINEBotAPIClient).toBeDefined();
   });
 
   it('export serveWebviews', () => {
