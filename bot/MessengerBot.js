@@ -95,7 +95,7 @@ export default class MessengerBot {
         throw new Error('must have at least 1 handler');
       }
 
-      this._handler(context, msg);
+      await Promise.resolve(this._handler(context, msg));
 
       this._sessionManager.saveSessionData(senderId, context.data);
 

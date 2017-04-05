@@ -129,6 +129,19 @@ describe('#build', () => {
       expect(handler).toBeCalledWith(context, msg);
     });
 
+    it('async messageHandler will call when msg has message.text', async () => {
+      const { builder, context, handler } = setup();
+      const msg = {
+        message: {
+          text: 'aloha',
+        },
+      };
+      builder.onMessage('aloha', handler);
+      const resultHandler = builder.build();
+      await resultHandler(context, msg);
+      expect(handler).toBeCalledWith(context, msg);
+    });
+
     it('no match message.text', () => {
       const { builder, context, handler } = setup();
       const unhandledHandler = jest.fn();
@@ -197,6 +210,19 @@ describe('#build', () => {
       builder.onPostback('__ALOHA.AI_SOMETHING_ELSE__', handler);
       const resultHandler = builder.build();
       resultHandler(context, msg);
+      expect(handler).toBeCalledWith(context, msg);
+    });
+
+    it('async postbackHandler will call when msg has normal postback payload', async () => {
+      const { builder, context, handler } = setup();
+      const msg = {
+        postback: {
+          payload: '__ALOHA.AI_SOMETHING_ELSE__',
+        },
+      };
+      builder.onPostback('__ALOHA.AI_SOMETHING_ELSE__', handler);
+      const resultHandler = builder.build();
+      await resultHandler(context, msg);
       expect(handler).toBeCalledWith(context, msg);
     });
 

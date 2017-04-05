@@ -77,12 +77,11 @@ export default class HandlerBuilder {
             message.quick_reply.payload,
           );
           if (match) {
-            quickReplyHandler.handler(context, msg);
-            return;
+            return quickReplyHandler.handler(context, msg);
           }
         }
         if (this._unhandledHandler) {
-          this._unhandledHandler(context, msg);
+          return this._unhandledHandler(context, msg);
         }
         return;
       }
@@ -92,12 +91,11 @@ export default class HandlerBuilder {
           const messageHandler = this._messageHandlers[i];
           const match = matchCondition(messageHandler.condition, message.text);
           if (match) {
-            messageHandler.handler(context, msg);
-            return;
+            return messageHandler.handler(context, msg);
           }
         }
         if (this._unhandledHandler) {
-          this._unhandledHandler(context, msg);
+          return this._unhandledHandler(context, msg);
         }
         return;
       }
@@ -106,8 +104,7 @@ export default class HandlerBuilder {
           this._getStartedHandler &&
           postback.payload === HandlerBuilder.GET_STARTED_PAYLOAD
         ) {
-          this._getStartedHandler(context, msg);
-          return;
+          return this._getStartedHandler(context, msg);
         }
 
         // TODO: verify
@@ -118,12 +115,11 @@ export default class HandlerBuilder {
             postback.payload,
           );
           if (match) {
-            postbackHandler.handler(context, msg);
-            return;
+            return postbackHandler.handler(context, msg);
           }
         }
         if (this._unhandledHandler) {
-          this._unhandledHandler(context, msg);
+          return this._unhandledHandler(context, msg);
         }
       }
     };

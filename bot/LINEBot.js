@@ -98,18 +98,21 @@ export default class LINEBot {
       }
 
       // message, follow, unfollow, join, leave, postback, beacon
+      const promises = [];
       request.body.events
         .filter(event => ['message'].includes(event.type))
         .forEach(event => {
-          this._handler(context, event);
+          promises.push(Promise.resolve(this._handler(context, event)));
         });
 
       request.body.events
         .filter(event => ['postback'].includes(event.type))
         .forEach(event => {
           event.postback.payload = event.postback.data; // FIXME
-          this._handler(context, event);
+          promises.push(Promise.resolve(this._handler(context, event)));
         });
+
+      await Promise.all(promises);
 
       this._sessionManager.saveSessionData(senderId, context.data);
 

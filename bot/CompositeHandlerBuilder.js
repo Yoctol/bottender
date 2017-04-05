@@ -34,12 +34,11 @@ export default class CompositeHandlerBuilder {
       for (let i = 0; i < this._conditionHandlers.length; i++) {
         const { condition, handler } = this._conditionHandlers[i];
         if (condition(context, msg)) {
-          handler(context, msg);
-          return;
+          return handler(context, msg);
         }
       }
       if (this._fallbackHandler) {
-        this._fallbackHandler(context, msg);
+        return this._fallbackHandler(context, msg);
       }
     };
   }
