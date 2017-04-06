@@ -1,9 +1,7 @@
 export { default as MessengerBot } from './bot/MessengerBot';
 export { default as LINEBot } from './bot/LINEBot';
 export { default as HandlerBuilder } from './bot/HandlerBuilder';
-export {
-  default as CompositeHandlerBuilder,
-} from './bot/CompositeHandlerBuilder';
+export { default as SwitchHandlerBuilder } from './bot/SwitchHandlerBuilder';
 
 export { default as FBGraphAPIClient } from './api/FBGraphAPIClient';
 export { default as LINEBotAPIClient } from './api/LINEBotAPIClient';

@@ -12,11 +12,11 @@ type Builder = {
   build: () => Handler,
 };
 
-export default class CompositeHandlerBuilder {
+export default class SwitchHandlerBuilder {
   _conditionHandlers: Array<ConditionHandler> = [];
   _fallbackHandler: ?Handler;
 
-  when(condition: Condition, builder: Builder): CompositeHandlerBuilder {
+  when(condition: Condition, builder: Builder): SwitchHandlerBuilder {
     this._conditionHandlers.push({
       condition,
       handler: builder.build(),
@@ -24,7 +24,7 @@ export default class CompositeHandlerBuilder {
     return this;
   }
 
-  else(builder: Builder): CompositeHandlerBuilder {
+  else(builder: Builder): SwitchHandlerBuilder {
     this._fallbackHandler = builder.build();
     return this;
   }

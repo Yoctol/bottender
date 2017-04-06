@@ -13,8 +13,8 @@ describe('core', () => {
     expect(core.HandlerBuilder).toBeDefined();
   });
 
-  it('export CompositeHandlerBuilder', () => {
-    expect(core.CompositeHandlerBuilder).toBeDefined();
+  it('export SwitchHandlerBuilder', () => {
+    expect(core.SwitchHandlerBuilder).toBeDefined();
   });
 
   it('export FBGraphAPIClient', () => {
