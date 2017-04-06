@@ -1,4 +1,4 @@
-const verifyWebhook = ({ verifyToken }) =>
+const verifyMessengerWebhook = ({ verifyToken }) =>
   ({ request, response }) => {
     if (
       request.query['hub.mode'] === 'subscribe' &&
@@ -14,4 +14,4 @@ const verifyWebhook = ({ verifyToken }) =>
     }
   };
 
-export default verifyWebhook;
+export default verifyMessengerWebhook;

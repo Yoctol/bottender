@@ -7,7 +7,9 @@ export { default as FBGraphAPIClient } from './api/FBGraphAPIClient';
 export { default as LINEBotAPIClient } from './api/LINEBotAPIClient';
 
 export { default as serveWebviews } from './middleware/serveWebviews';
-export { default as verifyWebhook } from './middleware/verifyWebhook';
+export {
+  default as verifyMessengerWebhook,
+} from './middleware/verifyMessengerWebhook';
 
 export { toAbsolutePath, getProjectPath } from './shared/path';
 export { getProjectConfig } from './shared/config';

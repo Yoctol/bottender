@@ -29,8 +29,8 @@ describe('core', () => {
     expect(core.serveWebviews).toBeDefined();
   });
 
-  it('export verifyWebhook', () => {
-    expect(core.verifyWebhook).toBeDefined();
+  it('export verifyMessengerWebhook', () => {
+    expect(core.verifyMessengerWebhook).toBeDefined();
   });
 
   it('export helpers', () => {
