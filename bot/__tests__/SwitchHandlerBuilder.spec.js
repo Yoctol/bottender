@@ -1,23 +1,23 @@
 import HandlerBuilder from '../HandlerBuilder';
-import CompositeHandlerBuilder from '../CompositeHandlerBuilder';
+import SwitchHandlerBuilder from '../SwitchHandlerBuilder';
 
 it('when will return this', () => {
-  const compositebuilder = new CompositeHandlerBuilder();
+  const switchBuilder = new SwitchHandlerBuilder();
 
   const builder = new HandlerBuilder();
-  expect(compositebuilder.when(() => true, builder)).toBe(compositebuilder);
+  expect(switchBuilder.when(() => true, builder)).toBe(switchBuilder);
 });
 
 it('else will return this', () => {
-  const compositebuilder = new CompositeHandlerBuilder();
+  const switchBuilder = new SwitchHandlerBuilder();
 
   const builder = new HandlerBuilder();
-  expect(compositebuilder.else(builder)).toBe(compositebuilder);
+  expect(switchBuilder.else(builder)).toBe(switchBuilder);
 });
 
 describe('#build', () => {
   it('should handle by handler which match the condition', () => {
-    const compositebuilder = new CompositeHandlerBuilder();
+    const switchBuilder = new SwitchHandlerBuilder();
 
     const handler1 = jest.fn();
     const builder1 = new HandlerBuilder();
@@ -27,7 +27,7 @@ describe('#build', () => {
     const fallbackBuilder = new HandlerBuilder();
     fallbackBuilder.onUnhandled(fallbackHandler);
 
-    compositebuilder.when(() => true, builder1).else(fallbackBuilder);
+    switchBuilder.when(() => true, builder1).else(fallbackBuilder);
 
     const context = {};
     const msg = {
@@ -36,14 +36,14 @@ describe('#build', () => {
       },
     };
 
-    compositebuilder.build()(context, msg);
+    switchBuilder.build()(context, msg);
 
     expect(handler1).toBeCalledWith(context, msg);
     expect(fallbackHandler).not.toBeCalled();
   });
 
   it('return promise when handled by async handler', async () => {
-    const compositebuilder = new CompositeHandlerBuilder();
+    const switchBuilder = new SwitchHandlerBuilder();
 
     const handler1 = jest.fn().mockReturnValue(Promise.resolve());
     const builder1 = new HandlerBuilder();
@@ -53,7 +53,7 @@ describe('#build', () => {
     const fallbackBuilder = new HandlerBuilder();
     fallbackBuilder.onUnhandled(fallbackHandler);
 
-    compositebuilder.when(() => true, builder1).else(fallbackBuilder);
+    switchBuilder.when(() => true, builder1).else(fallbackBuilder);
 
     const context = {};
     const msg = {
@@ -62,14 +62,14 @@ describe('#build', () => {
       },
     };
 
-    await compositebuilder.build()(context, msg);
+    await switchBuilder.build()(context, msg);
 
     expect(handler1).toBeCalledWith(context, msg);
     expect(fallbackHandler).not.toBeCalled();
   });
 
   it('should handle by fallback handler when all condition failed', () => {
-    const compositebuilder = new CompositeHandlerBuilder();
+    const switchBuilder = new SwitchHandlerBuilder();
 
     const handler1 = jest.fn();
     const builder1 = new HandlerBuilder();
@@ -83,7 +83,7 @@ describe('#build', () => {
     const fallbackBuilder = new HandlerBuilder();
     fallbackBuilder.onUnhandled(fallbackHandler);
 
-    compositebuilder
+    switchBuilder
       .when(() => false, builder1)
       .when(() => 1 > 2, builder2)
       .else(fallbackBuilder);
@@ -95,7 +95,7 @@ describe('#build', () => {
       },
     };
 
-    compositebuilder.build()(context, msg);
+    switchBuilder.build()(context, msg);
 
     expect(handler1).not.toBeCalled();
     expect(handler2).not.toBeCalled();
@@ -103,7 +103,7 @@ describe('#build', () => {
   });
 
   it('return promise when handled by async fallback handler', async () => {
-    const compositebuilder = new CompositeHandlerBuilder();
+    const switchBuilder = new SwitchHandlerBuilder();
 
     const handler1 = jest.fn();
     const builder1 = new HandlerBuilder();
@@ -117,7 +117,7 @@ describe('#build', () => {
     const fallbackBuilder = new HandlerBuilder();
     fallbackBuilder.onUnhandled(fallbackHandler);
 
-    compositebuilder
+    switchBuilder
       .when(() => false, builder1)
       .when(() => 1 > 2, builder2)
       .else(fallbackBuilder);
@@ -129,7 +129,7 @@ describe('#build', () => {
       },
     };
 
-    await compositebuilder.build()(context, msg);
+    await switchBuilder.build()(context, msg);
 
     expect(handler1).not.toBeCalled();
     expect(handler2).not.toBeCalled();

@@ -13,8 +13,8 @@ describe('core', () => {
     expect(core.HandlerBuilder).toBeDefined();
   });
 
-  it('export CompositeHandlerBuilder', () => {
-    expect(core.CompositeHandlerBuilder).toBeDefined();
+  it('export SwitchHandlerBuilder', () => {
+    expect(core.SwitchHandlerBuilder).toBeDefined();
   });
 
   it('export FBGraphAPIClient', () => {
@@ -29,8 +29,8 @@ describe('core', () => {
     expect(core.serveWebviews).toBeDefined();
   });
 
-  it('export verifyWebhook', () => {
-    expect(core.verifyWebhook).toBeDefined();
+  it('export verifyMessengerWebhook', () => {
+    expect(core.verifyMessengerWebhook).toBeDefined();
   });
 
   it('export helpers', () => {

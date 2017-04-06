@@ -1,8 +1,8 @@
-import verifyWebhook from '../verifyWebhook';
+import verifyMessengerWebhook from '../verifyMessengerWebhook';
 
 const VERIFY_TOKEN = '1qaz2wsx';
 
-const middleware = verifyWebhook({ verifyToken: VERIFY_TOKEN });
+const middleware = verifyMessengerWebhook({ verifyToken: VERIFY_TOKEN });
 
 const createContext = ({ verifyToken }) => ({
   request: {
