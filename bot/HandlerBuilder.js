@@ -25,6 +25,7 @@ function matchCondition(condition: Condition, payload: string): boolean {
 }
 
 export default class HandlerBuilder {
+  _echoHandlers: Array<ConditionHandler> = [];
   _getStartedHandler: ?Handler;
   _messageHandlers: Array<ConditionHandler> = [];
   _postbackHandlers: Array<ConditionHandler> = [];
@@ -60,6 +61,14 @@ export default class HandlerBuilder {
     return this;
   }
 
+  onEcho(condition: Condition, handler: Handler) {
+    this._echoHandlers.push({
+      condition,
+      handler,
+    });
+    return this;
+  }
+
   onUnhandled(handler: Handler) {
     this._unhandledHandler = handler;
     return this;
@@ -68,6 +77,26 @@ export default class HandlerBuilder {
   build(): Handler {
     return (context: Context, msg: Msg) => {
       const { message, postback } = msg;
+
+      if (message && message.is_echo) {
+        for (let i = 0; i < this._echoHandlers.length; i++) {
+          const echoHandler = this._echoHandlers[i];
+          // FIXME: handle more than text case?
+          if (message.text) {
+            const match = matchCondition(echoHandler.condition, message.text);
+            if (match) {
+              return echoHandler.handler(context, msg);
+            }
+          }
+        }
+        return;
+      }
+
+      if (message && message.read) {
+        // handle read event in the future
+        return;
+      }
+
       if (message && message.quick_reply) {
         for (let i = 0; i < this._quickReplyHandlers.length; i++) {
           const quickReplyHandler = this._quickReplyHandlers[i];
@@ -84,6 +113,7 @@ export default class HandlerBuilder {
         }
         return;
       }
+
       if (message) {
         // TODO: verify
         for (let i = 0; i < this._messageHandlers.length; i++) {
@@ -98,6 +128,7 @@ export default class HandlerBuilder {
         }
         return;
       }
+
       if (postback) {
         if (
           this._getStartedHandler &&
