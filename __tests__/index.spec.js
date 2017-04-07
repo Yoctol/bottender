@@ -25,10 +25,6 @@ describe('core', () => {
     expect(core.LINEBotAPIClient).toBeDefined();
   });
 
-  it('export serveWebviews', () => {
-    expect(core.serveWebviews).toBeDefined();
-  });
-
   it('export verifyMessengerWebhook', () => {
     expect(core.verifyMessengerWebhook).toBeDefined();
   });

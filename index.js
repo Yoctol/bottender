@@ -6,7 +6,6 @@ export { default as SwitchHandlerBuilder } from './bot/SwitchHandlerBuilder';
 export { default as FBGraphAPIClient } from './api/FBGraphAPIClient';
 export { default as LINEBotAPIClient } from './api/LINEBotAPIClient';
 
-export { default as serveWebviews } from './middleware/serveWebviews';
 export {
   default as verifyMessengerWebhook,
 } from './middleware/verifyMessengerWebhook';
