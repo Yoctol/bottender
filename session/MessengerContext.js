@@ -4,26 +4,29 @@ import wait from 'delay';
 
 import FBGraphAPIClient from '../api/FBGraphAPIClient';
 
-import type { MessageDelay } from './Context';
-import Context from './Context';
+import Context, { type MessageDelay } from './Context';
+import MessengerEvent, { type RawMessengerEvent } from './MessengerEvent';
 import DelayableJobQueue from './DelayableJobQueue';
 import SessionData from './SessionData';
 
 type Options = {
   graphAPIClient: FBGraphAPIClient,
+  rawEvent: RawMessengerEvent,
   data: SessionData,
   messageDelay: MessageDelay,
 };
 
 export default class MessengerContext extends Context {
   _client: FBGraphAPIClient;
+  _event: MessengerEvent;
   _data: SessionData;
   _jobQueue: DelayableJobQueue;
   _messageDelay: MessageDelay;
 
-  constructor({ graphAPIClient, data, messageDelay }: Options) {
+  constructor({ graphAPIClient, rawEvent, data, messageDelay }: Options) {
     super({ data, messageDelay });
     this._client = graphAPIClient;
+    this._event = new MessengerEvent(rawEvent);
     this._jobQueue.beforeEach(async ({ delay, showIndicators = true }) => {
       if (showIndicators) {
         await this.turnTypingIndicatorsOn();
@@ -97,6 +100,10 @@ export default class MessengerContext extends Context {
         },
       });
     });
+  }
+
+  get event(): MessengerEvent {
+    return this._event;
   }
 
   turnTypingIndicatorsOn(): void {
