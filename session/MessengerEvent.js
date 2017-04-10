@@ -98,6 +98,6 @@ export default class MessengerEvent {
   }
 
   get postback(): ?Postback {
-    return this._rawEvent ? this._rawEvent.postback : null;
+    return this._rawEvent.postback || null;
   }
 }

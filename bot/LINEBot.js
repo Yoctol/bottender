@@ -79,15 +79,9 @@ export default class LINEBot {
         existed,
       } = await this._sessionManager.createSessionDataIfNotExists(senderId);
 
-      const context = new LINEContext({
-        lineAPIClient: this._lineAPIClient,
-        data: sessionData,
-        messageDelay: this._messageDelay,
-      });
-
       if (!existed) {
         const { data } = await this._lineAPIClient.getUserProfile(senderId);
-        context.data.user = {
+        sessionData.user = {
           ...data,
           id: senderId,
         };
@@ -102,6 +96,12 @@ export default class LINEBot {
       request.body.events
         .filter(event => ['message'].includes(event.type))
         .forEach(event => {
+          const context = new LINEContext({
+            lineAPIClient: this._lineAPIClient,
+            rawEvent: event,
+            data: sessionData,
+            messageDelay: this._messageDelay,
+          });
           promises.push(Promise.resolve(this._handler(context, event)));
         });
 
@@ -109,12 +109,18 @@ export default class LINEBot {
         .filter(event => ['postback'].includes(event.type))
         .forEach(event => {
           event.postback.payload = event.postback.data; // FIXME
+          const context = new LINEContext({
+            lineAPIClient: this._lineAPIClient,
+            rawEvent: event,
+            data: sessionData,
+            messageDelay: this._messageDelay,
+          });
           promises.push(Promise.resolve(this._handler(context, event)));
         });
 
       await Promise.all(promises);
 
-      this._sessionManager.saveSessionData(senderId, context.data);
+      this._sessionManager.saveSessionData(senderId, sessionData);
 
       response.status = 200;
     };

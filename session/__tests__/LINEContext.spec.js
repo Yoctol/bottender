@@ -1,10 +1,25 @@
 import LINEContext from '../LINEContext';
+import LINEEvent from '../LINEEvent';
 import SessionData from '../SessionData';
 
 jest.mock('../../api/LINEBotAPIClient');
 
 const setup = (messageDelay = 1000, noDelay = false) => {
   const client = {};
+  const rawEvent = {
+    replyToken: 'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA',
+    type: 'message',
+    timestamp: 1462629479859,
+    source: {
+      type: 'user',
+      userId: 'U206d25c2ea6bd87c17655609a1c37cb8',
+    },
+    message: {
+      id: '325708',
+      type: 'text',
+      text: 'Hello, world',
+    },
+  };
   const data = new SessionData({
     user: {
       id: 'fakeUserId',
@@ -12,6 +27,7 @@ const setup = (messageDelay = 1000, noDelay = false) => {
   });
   const context = new LINEContext({
     lineAPIClient: client,
+    rawEvent,
     data,
     messageDelay: noDelay ? undefined : messageDelay,
   });
@@ -30,6 +46,11 @@ it('be defined', () => {
 it('get #data works', () => {
   const { context, data } = setup();
   expect(context.data).toBe(data);
+});
+
+it('get #event works', () => {
+  const { context } = setup();
+  expect(context.event).toBeInstanceOf(LINEEvent);
 });
 
 it('#sendText put pushText to jobQueue', () => {

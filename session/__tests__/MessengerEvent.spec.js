@@ -105,7 +105,7 @@ const postback = {
   },
 };
 
-it('#rawEvent getter', () => {
+it('#rawEvent', () => {
   expect(new MessengerEvent(textMessage).rawEvent).toEqual(textMessage);
   expect(new MessengerEvent(imageMessage).rawEvent).toEqual(imageMessage);
   expect(new MessengerEvent(stickerMessage).rawEvent).toEqual(stickerMessage);
@@ -125,7 +125,7 @@ it('#isMessage', () => {
   expect(new MessengerEvent(postback).isMessage).toEqual(false);
 });
 
-it('#message getter', () => {
+it('#message', () => {
   expect(new MessengerEvent(textMessage).message).toEqual({
     mid: 'mid.$cAAE1UUyiiwthh0NPrVbVf4HFNDGl',
     seq: 348847,
@@ -171,7 +171,7 @@ it('#hasAttachment', () => {
   expect(new MessengerEvent(stickerMessage).hasAttachment).toEqual(true);
 });
 
-it('#attachments getter', () => {
+it('#attachments', () => {
   expect(new MessengerEvent(imageMessage).attachments).toEqual([
     {
       type: 'image',
@@ -211,7 +211,7 @@ it('#isQuickReply', () => {
   expect(new MessengerEvent(echoMessage).isQuickReply).toEqual(false);
 });
 
-it('#quickReply getter', () => {
+it('#quickReply', () => {
   expect(new MessengerEvent(quickReplyMessage).quickReply).toEqual({
     payload: 'DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_RED',
   });
@@ -234,7 +234,7 @@ it('#isPostback', () => {
   expect(new MessengerEvent(postback).isPostback).toEqual(true);
 });
 
-it('#postback getter', () => {
+it('#postback', () => {
   expect(new MessengerEvent(postback).postback).toEqual({
     payload: 'USER_DEFINED_PAYLOAD',
   });

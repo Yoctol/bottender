@@ -4,26 +4,29 @@ import wait from 'delay';
 
 import LINEBotAPIClient from '../api/LINEBotAPIClient';
 
-import type { MessageDelay } from './Context';
-import Context from './Context';
+import Context, { type MessageDelay } from './Context';
+import LINEEvent, { type RawLINEEvent } from './LINEEvent';
 import DelayableJobQueue from './DelayableJobQueue';
 import SessionData from './SessionData';
 
 type Options = {
   lineAPIClient: LINEBotAPIClient,
+  rawEvent: RawLINEEvent,
   data: SessionData,
   messageDelay: MessageDelay,
 };
 
 export default class LINEContext extends Context {
   _client: LINEBotAPIClient;
+  _event: LINEEvent;
   _data: SessionData;
   _jobQueue: DelayableJobQueue;
   _messageDelay: MessageDelay;
 
-  constructor({ lineAPIClient, data, messageDelay }: Options) {
+  constructor({ lineAPIClient, rawEvent, data, messageDelay }: Options) {
     super({ data, messageDelay });
     this._client = lineAPIClient;
+    this._event = new LINEEvent(rawEvent);
     this._jobQueue.beforeEach(({ delay }) => wait(delay));
     const types = [
       'Text',
@@ -83,5 +86,9 @@ export default class LINEContext extends Context {
         },
       });
     });
+  }
+
+  get event(): LINEEvent {
+    return this._event;
   }
 }
