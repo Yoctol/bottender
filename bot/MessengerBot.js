@@ -75,6 +75,7 @@ export default class MessengerBot {
 
       const context = new MessengerContext({
         graphAPIClient: this._graphAPIClient,
+        rawEvent: msg,
         data: sessionData,
         messageDelay: this._messageDelay,
       });

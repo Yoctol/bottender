@@ -1,4 +1,5 @@
 import MessengerContext from '../MessengerContext';
+import MessengerEvent from '../MessengerEvent';
 import SessionData from '../SessionData';
 
 jest.mock('../../api/FBGraphAPIClient');
@@ -10,6 +11,16 @@ const createMockGraphAPIClient = () => ({
 
 const setup = (messageDelay = 1000) => {
   const client = createMockGraphAPIClient();
+  const rawEvent = {
+    sender: { id: '1423587017700273' },
+    recipient: { id: '404217156637689' },
+    timestamp: 1491796363181,
+    message: {
+      mid: 'mid.$cAAE1UUyiiwthh0NPrVbVf4HFNDGl',
+      seq: 348847,
+      text: '請給我背影',
+    },
+  };
   const data = new SessionData({
     user: {
       id: 'fakeUserId',
@@ -17,6 +28,7 @@ const setup = (messageDelay = 1000) => {
   });
   const context = new MessengerContext({
     graphAPIClient: client,
+    rawEvent,
     data,
     messageDelay,
   });
@@ -53,6 +65,11 @@ it('be defined', () => {
 it('get #data works', () => {
   const { context, data } = setup();
   expect(context.data).toBe(data);
+});
+
+it('get #event works', () => {
+  const { context } = setup();
+  expect(context.event).toBeInstanceOf(MessengerEvent);
 });
 
 it('#sendText put sendText to jobQueue', () => {
