@@ -169,7 +169,7 @@ type AirlineItineraryAttributes = {};
 type AirlineFlightUpdateAttributes = {};
 
 export type QuickReply = {
-  content_type: string,
+  content_type: 'text' | 'location',
   title?: string,
   payload?: string,
   image_url?: string,
