@@ -1,4 +1,4 @@
-class ScopedDB {
+export class ScopedDB {
   constructor(db, scope) {
     this._db = db;
     this._scope = scope;
@@ -8,14 +8,13 @@ class ScopedDB {
     return this._scope;
   }
 
-  collection(name, options, callback) {
-    return this._db.collection(`${this._scope}.${name}`, options, callback);
+  collection(name, ...args) {
+    return this._db.collection(`${this._scope}.${name}`, ...args);
   }
 
-  collections(callback) {
-    function belongsToScope(collection) {
-      return collection.startsWith(this._scope);
-    }
+  collections = callback => {
+    const belongsToScope = collection =>
+      collection.collectionName.startsWith(this._scope);
     if (callback) {
       return this._db.collections((err, collections) => {
         if (err) return callback(err);
@@ -25,52 +24,33 @@ class ScopedDB {
     return this._db
       .collections()
       .then(collections => collections.filter(belongsToScope));
+  };
+
+  createCollection(name, ...args) {
+    return this._db.createCollection(`${this._scope}.${name}`, ...args);
   }
 
-  createCollection(name, options, callback) {
-    return this._db.createCollection(
-      `${this._scope}.${name}`,
-      options,
-      callback,
-    );
+  createIndex(name, ...args) {
+    return this._db.createIndex(`${this._scope}.${name}`, ...args);
   }
 
-  createIndex(name, fieldOrSpec, options, callback) {
-    return this._db.createIndex(
-      `${this._scope}.${name}`,
-      fieldOrSpec,
-      options,
-      callback,
-    );
+  dropCollection(name, ...args) {
+    return this._db.dropCollection(`${this._scope}.${name}`, ...args);
   }
 
-  dropCollection(name, callback) {
-    return this._db.dropCollection(`${this._scope}.${name}`, callback);
+  ensureIndex(name, ...args) {
+    return this._db.ensureIndex(`${this._scope}.${name}`, ...args);
   }
 
-  ensureIndex(name, fieldOrSpec, options, callback) {
-    return this._db.ensureIndex(
-      `${this._scope}.${name}`,
-      fieldOrSpec,
-      options,
-      callback,
-    );
+  indexInformation(name, ...args) {
+    return this._db.indexInformation(`${this._scope}.${name}`, ...args);
   }
 
-  indexInformation(name, options, callback) {
-    return this._db.indexInformation(
-      `${this._scope}.${name}`,
-      options,
-      callback,
-    );
-  }
-
-  renameCollection(from, to, options, callback) {
+  renameCollection(from, to, ...args) {
     return this._db.renameCollection(
       `${this._scope}.${from}`,
       `${this._scope}.${to}`,
-      options,
-      callback,
+      ...args,
     );
   }
 }

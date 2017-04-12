@@ -4,17 +4,21 @@ import scoped from './scoped';
 
 let _db;
 
-export default (async function resolve() {
+async function resolve() {
   if (_db) {
     return _db;
   }
-  const url = process.env.__MONGO_URL__ || 'mongodb://localhost:27017/toolbot';
+  const url = process.env.MONGO_URL || 'mongodb://localhost:27017/toolbot';
   const db = await MongoClient.connect(url);
   _db = db;
   return db;
-});
+}
 
-export const resolveScoped = async name => {
+async function resolveScoped(scope) {
   const db = await resolve();
-  return scoped(db, name);
-};
+  return scoped(db, scope);
+}
+
+export default resolve;
+
+export { resolveScoped };
