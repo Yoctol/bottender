@@ -29,11 +29,11 @@ export default class MessengerContext extends Context {
     this._event = new MessengerEvent(rawEvent);
     this._jobQueue.beforeEach(async ({ delay, showIndicators = true }) => {
       if (showIndicators) {
-        await this.turnTypingIndicatorsOn();
+        this.turnTypingIndicatorsOn();
       }
       await wait(delay);
       if (showIndicators) {
-        await this.turnTypingIndicatorsOff();
+        this.turnTypingIndicatorsOff();
       }
     });
 

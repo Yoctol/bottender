@@ -2,7 +2,12 @@ import MessengerContext from '../MessengerContext';
 import MessengerEvent from '../MessengerEvent';
 import SessionData from '../SessionData';
 
+jest.mock('delay');
 jest.mock('../../api/FBGraphAPIClient');
+
+afterEach(() => {
+  jest.useRealTimers();
+});
 
 const createMockGraphAPIClient = () => ({
   turnTypingIndicatorsOn: jest.fn(),
@@ -500,4 +505,40 @@ it('#sendTextWithDelay put sendText to jobQueue', () => {
     delay: 3000,
     showIndicators: true,
   });
+});
+
+it('show typing when sending', async () => {
+  jest.useFakeTimers();
+
+  const { context, client } = setup();
+
+  context.sendText('xxx.com');
+
+  expect(client.turnTypingIndicatorsOn).toBeCalled();
+  expect(client.turnTypingIndicatorsOff).not.toBeCalled();
+
+  jest.runAllTimers();
+
+  jest.useRealTimers();
+
+  await new Promise(resolve => setTimeout(resolve, 0));
+
+  expect(client.turnTypingIndicatorsOff).toBeCalled();
+});
+
+it('should not show typing when sending to others', async () => {
+  jest.useFakeTimers();
+
+  const { context, client } = setup();
+
+  context.sendTextTo('uid_1', 'xxx.com');
+
+  jest.runAllTimers();
+
+  jest.useRealTimers();
+
+  await new Promise(resolve => setTimeout(resolve, 0));
+
+  expect(client.turnTypingIndicatorsOn).not.toBeCalled();
+  expect(client.turnTypingIndicatorsOff).not.toBeCalled();
 });
