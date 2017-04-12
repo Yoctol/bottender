@@ -3,6 +3,7 @@
 import wait from 'delay';
 
 import FBGraphAPIClient from '../api/FBGraphAPIClient';
+import type { ScopedDB } from '../database/scoped';
 
 import Context, { type MessageDelay } from './Context';
 import MessengerEvent, { type RawMessengerEvent } from './MessengerEvent';
@@ -13,6 +14,7 @@ type Options = {
   graphAPIClient: FBGraphAPIClient,
   rawEvent: RawMessengerEvent,
   data: SessionData,
+  db: ScopedDB,
   messageDelay: MessageDelay,
 };
 
@@ -23,8 +25,8 @@ export default class MessengerContext extends Context {
   _jobQueue: DelayableJobQueue;
   _messageDelay: MessageDelay;
 
-  constructor({ graphAPIClient, rawEvent, data, messageDelay }: Options) {
-    super({ data, messageDelay });
+  constructor({ graphAPIClient, rawEvent, data, db, messageDelay }: Options) {
+    super({ data, db, messageDelay });
     this._client = graphAPIClient;
     this._event = new MessengerEvent(rawEvent);
     this._jobQueue.beforeEach(async ({ delay, showIndicators = true }) => {

@@ -3,6 +3,7 @@ import LINEEvent from '../LINEEvent';
 import SessionData from '../SessionData';
 
 jest.mock('../../api/LINEBotAPIClient');
+jest.mock('../../database/resolve');
 
 const setup = (messageDelay = 1000, noDelay = false) => {
   const client = {};

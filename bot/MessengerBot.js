@@ -5,12 +5,13 @@ import MessengerContext from '../session/MessengerContext';
 import SessionManager from '../session/SessionManager';
 import PersistentMemorySessionStore
   from '../session/PersistentMemorySessionStore';
-// import DangerousFileSessionStore from '../session/DangerousFileSessionStore';
+import { resolveScoped } from '../database/resolve';
 
 const debug = _debug('core/bot/MessengerBot');
 
 export default class MessengerBot {
-  constructor({ accessToken, filePath, messageDelay }) {
+  constructor({ id, accessToken, filePath, messageDelay }) {
+    this._id = id;
     this._messageDelay = messageDelay;
     this._graphAPIClient = FBGraphAPIClient.factory(accessToken);
     this._sessionManager = new SessionManager(
@@ -77,6 +78,7 @@ export default class MessengerBot {
         graphAPIClient: this._graphAPIClient,
         rawEvent: msg,
         data: sessionData,
+        db: await resolveScoped(this._id),
         messageDelay: this._messageDelay,
       });
 

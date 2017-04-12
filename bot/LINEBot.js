@@ -5,12 +5,13 @@ import LINEContext from '../session/LINEContext';
 import SessionManager from '../session/SessionManager';
 import PersistentMemorySessionStore
   from '../session/PersistentMemorySessionStore';
-// import DangerousFileSessionStore from '../session/DangerousFileSessionStore';
+import { resolveScoped } from '../database/resolve';
 
 const debug = _debug('core/bot/LINEBot');
 
 export default class LINEBot {
-  constructor({ accessToken, channelSecret, filePath, messageDelay }) {
+  constructor({ id, accessToken, channelSecret, filePath, messageDelay }) {
+    this._id = id;
     this._messageDelay = messageDelay;
     this._lineAPIClient = LINEBotAPIClient.factory(accessToken, channelSecret);
     this._sessionManager = new SessionManager(
@@ -91,6 +92,8 @@ export default class LINEBot {
         throw new Error('must have at least 1 handler');
       }
 
+      const db = await resolveScoped(this._id);
+
       // message, follow, unfollow, join, leave, postback, beacon
       const promises = [];
       request.body.events
@@ -100,6 +103,7 @@ export default class LINEBot {
             lineAPIClient: this._lineAPIClient,
             rawEvent: event,
             data: sessionData,
+            db,
             messageDelay: this._messageDelay,
           });
           promises.push(Promise.resolve(this._handler(context, event)));
@@ -113,6 +117,7 @@ export default class LINEBot {
             lineAPIClient: this._lineAPIClient,
             rawEvent: event,
             data: sessionData,
+            db,
             messageDelay: this._messageDelay,
           });
           promises.push(Promise.resolve(this._handler(context, event)));

@@ -8,10 +8,15 @@ async function resolve() {
   if (_db) {
     return _db;
   }
-  const url = process.env.MONGO_URL || 'mongodb://localhost:27017/toolbot';
-  const db = await MongoClient.connect(url);
-  _db = db;
-  return db;
+
+  try {
+    const url = process.env.MONGO_URL || 'mongodb://localhost:27017/toolbot';
+    const db = await MongoClient.connect(url);
+    _db = db;
+  } catch (err) {
+    _db = {};
+  }
+  return _db;
 }
 
 async function resolveScoped(scope) {

@@ -4,6 +4,7 @@ import SessionData from '../SessionData';
 
 jest.mock('delay');
 jest.mock('../../api/FBGraphAPIClient');
+jest.mock('../../database/resolve');
 
 afterEach(() => {
   jest.useRealTimers();
