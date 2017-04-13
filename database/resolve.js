@@ -1,4 +1,5 @@
 import { MongoClient } from 'mongodb';
+import warning from 'warning';
 
 import scoped from './scoped';
 
@@ -14,6 +15,10 @@ async function resolve() {
     const db = await MongoClient.connect(url);
     _db = db;
   } catch (err) {
+    warning(
+      false,
+      'failed to connect to mongodb, db instance fallback to empty object.',
+    );
     _db = {};
   }
   return _db;
