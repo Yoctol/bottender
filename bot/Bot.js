@@ -21,6 +21,10 @@ export default class Bot {
     return this._connector;
   }
 
+  get sessionManager() {
+    return this._sessionManager;
+  }
+
   handle(handler) {
     this._connector.setHandler(handler);
   }
