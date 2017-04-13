@@ -1,4 +1,5 @@
 import _debug from 'debug';
+import warning from 'warning';
 
 import FBGraphAPIClient from '../api/FBGraphAPIClient';
 import MessengerContext from '../session/MessengerContext';
@@ -98,7 +99,18 @@ export default class MessengerBot {
         throw new Error('must have at least 1 handler');
       }
 
-      await Promise.resolve(this._handler(context, msg));
+      await Promise.resolve(
+        this._handler(context, {
+          get message() {
+            warning(false, 'access message on second argument is deprecated.');
+            return msg.message;
+          },
+          get postback() {
+            warning(false, 'access postback on second argument is deprecated.');
+            return msg.postback;
+          },
+        }),
+      );
 
       this._sessionManager.saveSessionData(senderId, context.data);
 

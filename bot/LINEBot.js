@@ -106,7 +106,7 @@ export default class LINEBot {
             db,
             messageDelay: this._messageDelay,
           });
-          promises.push(Promise.resolve(this._handler(context, event)));
+          promises.push(Promise.resolve(this._handler(context)));
         });
 
       request.body.events
@@ -120,7 +120,7 @@ export default class LINEBot {
             db,
             messageDelay: this._messageDelay,
           });
-          promises.push(Promise.resolve(this._handler(context, event)));
+          promises.push(Promise.resolve(this._handler(context)));
         });
 
       await Promise.all(promises);
