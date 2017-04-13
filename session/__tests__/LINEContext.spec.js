@@ -5,36 +5,40 @@ import SessionData from '../SessionData';
 jest.mock('../../api/LINEBotAPIClient');
 jest.mock('../../database/resolve');
 
+const rawEvent = {
+  replyToken: 'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA',
+  type: 'message',
+  timestamp: 1462629479859,
+  source: {
+    type: 'user',
+    userId: 'U206d25c2ea6bd87c17655609a1c37cb8',
+  },
+  message: {
+    id: '325708',
+    type: 'text',
+    text: 'Hello, world',
+  },
+};
+
 const setup = (messageDelay = 1000, noDelay = false) => {
   const client = {};
-  const rawEvent = {
-    replyToken: 'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA',
-    type: 'message',
-    timestamp: 1462629479859,
-    source: {
-      type: 'user',
-      userId: 'U206d25c2ea6bd87c17655609a1c37cb8',
-    },
-    message: {
-      id: '325708',
-      type: 'text',
-      text: 'Hello, world',
-    },
-  };
   const data = new SessionData({
     user: {
       id: 'fakeUserId',
     },
   });
+  const db = {};
   const context = new LINEContext({
     lineAPIClient: client,
     rawEvent,
     data,
+    db,
     messageDelay: noDelay ? undefined : messageDelay,
   });
   return {
     context,
     data,
+    db,
     client,
   };
 };
@@ -47,6 +51,11 @@ it('be defined', () => {
 it('get #data works', () => {
   const { context, data } = setup();
   expect(context.data).toBe(data);
+});
+
+it('get #db works', () => {
+  const { context, db } = setup();
+  expect(context.db).toBe(db);
 });
 
 it('get #event works', () => {

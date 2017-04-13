@@ -15,50 +15,39 @@ const createMockGraphAPIClient = () => ({
   turnTypingIndicatorsOff: jest.fn(),
 });
 
-const setup = (messageDelay = 1000) => {
+const rawEvent = {
+  sender: { id: '1423587017700273' },
+  recipient: { id: '404217156637689' },
+  timestamp: 1491796363181,
+  message: {
+    mid: 'mid.$cAAE1UUyiiwthh0NPrVbVf4HFNDGl',
+    seq: 348847,
+    text: '請給我背影',
+  },
+};
+
+const setup = ({ messageDelay = 1000, noDelay = false } = {}) => {
   const client = createMockGraphAPIClient();
-  const rawEvent = {
-    sender: { id: '1423587017700273' },
-    recipient: { id: '404217156637689' },
-    timestamp: 1491796363181,
-    message: {
-      mid: 'mid.$cAAE1UUyiiwthh0NPrVbVf4HFNDGl',
-      seq: 348847,
-      text: '請給我背影',
-    },
-  };
   const data = new SessionData({
     user: {
       id: 'fakeUserId',
     },
   });
-  const context = new MessengerContext({
+  const db = {};
+  const args = {
     graphAPIClient: client,
     rawEvent,
     data,
-    messageDelay,
-  });
-  return {
-    context,
-    data,
-    client,
+    db,
   };
-};
-
-const setupNoDelay = () => {
-  const client = createMockGraphAPIClient();
-  const data = new SessionData({
-    user: {
-      id: 'fakeUserId',
-    },
-  });
-  const context = new MessengerContext({
-    graphAPIClient: client,
-    data,
-  });
+  if (!noDelay) {
+    args.messageDelay = messageDelay;
+  }
+  const context = new MessengerContext(args);
   return {
     context,
     data,
+    db,
     client,
   };
 };
@@ -71,6 +60,11 @@ it('be defined', () => {
 it('get #data works', () => {
   const { context, data } = setup();
   expect(context.data).toBe(data);
+});
+
+it('get #db works', () => {
+  const { context, db } = setup();
+  expect(context.db).toBe(db);
 });
 
 it('get #event works', () => {
@@ -349,7 +343,7 @@ it('#turnTypingIndicatorsOff call client turnTypingIndicatorsOff', () => {
 });
 
 it('use default message delay when nothing passed in', () => {
-  const { context, client, data } = setupNoDelay();
+  const { context, client, data } = setup({ noDelay: true });
 
   context._jobQueue = {
     enqueue: jest.fn(),
@@ -369,7 +363,7 @@ it('use default message delay when nothing passed in', () => {
 it('call messageDelay() when it passed in with a function', () => {
   const messageDelay = jest.fn();
   messageDelay.mockReturnValue(2500);
-  const { context, client, data } = setup(messageDelay);
+  const { context, client, data } = setup({ messageDelay });
 
   context._jobQueue = {
     enqueue: jest.fn(),
@@ -387,8 +381,8 @@ it('call messageDelay() when it passed in with a function', () => {
 });
 
 it('return messageDelay when it passed in with a number', () => {
-  const _messageDelay = 999;
-  const { context, client, data } = setup(_messageDelay);
+  const messageDelay = 999;
+  const { context, client, data } = setup({ messageDelay });
 
   context._jobQueue = {
     enqueue: jest.fn(),
