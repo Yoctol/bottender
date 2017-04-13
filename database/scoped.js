@@ -1,7 +1,9 @@
+import snakeCase from 'snake-case';
+
 export class ScopedDB {
   constructor(db, scope) {
     this._db = db;
-    this._scope = scope;
+    this._scope = snakeCase(scope);
   }
 
   get scope() {

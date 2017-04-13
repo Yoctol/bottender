@@ -25,6 +25,13 @@ describe('#ScopedDB', () => {
     expect(new ScopedDB(db, 'cph').scope).toBe('cph');
   });
 
+  it('#scope', () => {
+    const db = createMockDB();
+    expect(new ScopedDB(db, 'cph-awesome-nlp-cool-great').scope).toBe(
+      'cph_awesome_nlp_cool_great',
+    );
+  });
+
   it('#collection', () => {
     const db = createMockDB();
     const scopedDB = new ScopedDB(db, 'cph');
