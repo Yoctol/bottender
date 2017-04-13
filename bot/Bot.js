@@ -8,12 +8,17 @@ import { resolveScoped } from '../database/resolve';
 const debug = _debug('core/bot/Bot');
 
 export default class Bot {
-  constructor({ id, filePath }) {
+  constructor({ id, filePath, connector }) {
     this._id = id;
     this._sessionManager = new SessionManager(
       new PersistentMemorySessionStore(filePath, 500),
     );
     this._initialized = false;
+    this._connector = connector;
+  }
+
+  get connector() {
+    return this._connector;
   }
 
   handle(handler) {
@@ -33,7 +38,7 @@ export default class Bot {
         this._initialized = true;
       }
 
-      const senderId = this._connector.getSenderIdFromRequest();
+      const senderId = this._connector.getSenderIdFromRequest(request);
 
       const {
         sessionData,
