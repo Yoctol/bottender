@@ -5,13 +5,21 @@ import scoped from './scoped';
 
 let _db;
 
+const getMongoUrl = () => {
+  const url = process.env.MONGO_URL;
+  if (url && url.length > 0) {
+    return url;
+  }
+  return false;
+};
+
 async function resolve() {
   if (_db) {
     return _db;
   }
 
   try {
-    const url = process.env.MONGO_URL || 'mongodb://localhost:27017/toolbot';
+    const url = getMongoUrl() || 'mongodb://localhost:27017/toolbot';
     const db = await MongoClient.connect(url);
     _db = db;
   } catch (err) {
