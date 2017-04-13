@@ -39,4 +39,9 @@ describe('core', () => {
     expect(core.payload.GET_STARTED).toBeDefined();
     expect(core.payload.STILL_ALIVE).toBeDefined();
   });
+
+  it('export intent', () => {
+    expect(core.REGEX).toBeDefined();
+    expect(core.recognizers).toBeDefined();
+  });
 });
