@@ -158,6 +158,38 @@ describe('#build', () => {
       expect(unhandledHandler).toBeCalledWith(context, msg);
     });
 
+    it('call handler when condition function return true', () => {
+      const { builder, context, handler } = setup();
+      const unhandledHandler = jest.fn();
+      builder.onUnhandled(unhandledHandler);
+      const msg = {
+        message: {
+          text: 'aloha',
+        },
+      };
+      builder.onMessage(() => true, handler);
+      const resultHandler = builder.build();
+      resultHandler(context, msg);
+      expect(handler).toBeCalled();
+      expect(unhandledHandler).not.toBeCalledWith(context, msg);
+    });
+
+    it('not to call handler when condition function return false', () => {
+      const { builder, context, handler } = setup();
+      const unhandledHandler = jest.fn();
+      builder.onUnhandled(unhandledHandler);
+      const msg = {
+        message: {
+          text: 'aloha',
+        },
+      };
+      builder.onMessage(() => false, handler);
+      const resultHandler = builder.build();
+      resultHandler(context, msg);
+      expect(handler).not.toBeCalled();
+      expect(unhandledHandler).toBeCalledWith(context, msg);
+    });
+
     it('no match message.text && no onUnhandled', () => {
       const { builder, context, handler } = setup();
       const msg = {

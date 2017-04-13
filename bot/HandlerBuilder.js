@@ -2,7 +2,7 @@
 import * as constants from '../constants';
 import type Context from '../session/Context';
 
-type Condition = string | RegExp;
+type Condition = string | RegExp | ((context: Context) => boolean);
 
 export type Msg = {
   message?: { quick_reply: ?Object, text: string },
@@ -118,7 +118,12 @@ export default class HandlerBuilder {
         // TODO: verify
         for (let i = 0; i < this._messageHandlers.length; i++) {
           const messageHandler = this._messageHandlers[i];
-          const match = matchCondition(messageHandler.condition, message.text);
+          const match = matchCondition(
+            messageHandler.condition,
+            message.text,
+          ) ||
+            (typeof messageHandler.condition === 'function' &&
+              messageHandler.condition(context));
           if (match) {
             return messageHandler.handler(context, msg);
           }
