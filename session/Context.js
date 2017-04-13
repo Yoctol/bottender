@@ -13,7 +13,7 @@ export type MessageDelay = number | ((text?: string) => number);
 
 type Options = {
   data: SessionData,
-  _db: ScopedDB,
+  db: ScopedDB,
   messageDelay: MessageDelay,
 };
 
