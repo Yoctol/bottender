@@ -11,8 +11,8 @@ export default class LINEConnector extends Connecter {
   }
 
   getSenderIdFromRequest(request) {
-    const msg = request.body.events[0];
-    return msg.source.userId;
+    const rawEvent = request.body.events[0];
+    return rawEvent.source.userId; // FIXME: group, room?
   }
 
   async getUserProfile(senderId) {
@@ -21,14 +21,13 @@ export default class LINEConnector extends Connecter {
   }
 
   async handleRequest({ request, sessionData, db }) {
-    function createLINEContext(rawEvent) {
-      return new LINEContext({
+    const createLINEContext = rawEvent =>
+      new LINEContext({
         lineAPIClient: this._lineAPIClient,
         rawEvent,
         data: sessionData,
         db,
       });
-    }
     // message, follow, unfollow, join, leave, postback, beacon
     const promises = [];
     request.body.events
