@@ -14,11 +14,21 @@ function setup(
     handleRequest: jest.fn(),
   },
 ) {
-  const collection = {
+  const logs = {
+    insert: jest.fn(),
+  };
+  const users = {
+    findOne: jest.fn(),
     insert: jest.fn(),
   };
   const db = {
-    collection: jest.fn(() => collection),
+    collection: jest.fn(name => {
+      if (name === 'logs') {
+        return logs;
+      } else if (name === 'users') {
+        return users;
+      }
+    }),
   };
   resolve.resolveScoped.mockReturnValue(Promise.resolve(db));
   const bot = new Bot({
@@ -32,8 +42,9 @@ function setup(
   return {
     bot,
     connector,
-    collection,
     db,
+    logs,
+    users,
   };
 }
 
@@ -67,7 +78,7 @@ describe('#createKoaMiddleware', () => {
   });
 
   it('insert every request into logs collection', async () => {
-    const { bot, collection } = setup();
+    const { bot, logs } = setup();
     bot.sessionManager.createSessionDataIfNotExists.mockReturnValue(
       Promise.resolve({
         sessionData: {},
@@ -80,7 +91,7 @@ describe('#createKoaMiddleware', () => {
     };
     const response = {};
     await middleware({ request, response });
-    expect(collection.insert).toBeCalledWith({
+    expect(logs.insert).toBeCalledWith({
       platform: 'yoctol',
       body: request.body,
     });
@@ -118,7 +129,7 @@ describe('#createKoaMiddleware', () => {
 
   it('call getUserProfile when session not existed', async () => {
     const { bot, connector } = setup();
-    connector.getUserProfile.mockReturnValue(Promise.resolve({ data: {} }));
+    connector.getUserProfile.mockReturnValue(Promise.resolve({}));
     bot.sessionManager.createSessionDataIfNotExists.mockReturnValue(
       Promise.resolve({
         sessionData: {},
@@ -130,6 +141,30 @@ describe('#createKoaMiddleware', () => {
     const response = {};
     await middleware({ request, response });
     expect(connector.getUserProfile).toBeCalledWith('SENDER_ID');
+  });
+
+  it('insert user to users collection when session not existed', async () => {
+    const { bot, connector, users } = setup();
+    connector.getUserProfile.mockReturnValue(
+      Promise.resolve({
+        name: 'cph',
+      }),
+    );
+    bot.sessionManager.createSessionDataIfNotExists.mockReturnValue(
+      Promise.resolve({
+        sessionData: {},
+        existed: false,
+      }),
+    );
+    const middleware = bot.createKoaMiddleware();
+    const request = {};
+    const response = {};
+    await middleware({ request, response });
+    expect(users.insert).toBeCalledWith({
+      platform: 'yoctol',
+      id: 'SENDER_ID',
+      name: 'cph',
+    });
   });
 
   it('call createSessionDataIfNotExists with seeder id', async () => {

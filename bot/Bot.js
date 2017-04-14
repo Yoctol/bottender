@@ -61,14 +61,19 @@ export default class Bot {
 
       if (!existed) {
         const data = await this._connector.getUserProfile(senderId);
-        sessionData.user = {
+
+        const users = await db.collection('users');
+        const user = {
           ...data,
           id: senderId,
+          platform: this._connector.platform,
         };
+
+        sessionData.user = user;
+        users.insert(user);
       }
 
       await this._connector.handleRequest({ request, sessionData, db });
-
       this._sessionManager.saveSessionData(senderId, sessionData);
 
       response.status = 200;
