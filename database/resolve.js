@@ -5,15 +5,23 @@ import scoped from './scoped';
 
 let _db;
 
-const mock = {
-  collection: () => ({}),
-  collections: () => ({}),
-  createCollection: () => ({}),
-  createIndex: () => ({}),
-  dropCollection: () => {},
-  ensureIndex: () => ({}),
-  indexInformation: () => ({}),
-  renameCollection: () => {},
+const mockCollection = {
+  __MOCK__: true,
+
+  insert: () => {},
+};
+
+const mockDB = {
+  __MOCK__: true,
+
+  collection: () => Promise.resolve(mockCollection),
+  collections: () => Promise.resolve([mockCollection]),
+  createCollection: () => Promise.resolve({}),
+  createIndex: () => Promise.resolve({}),
+  dropCollection: () => Promise.resolve(),
+  ensureIndex: () => Promise.resolve({}),
+  indexInformation: () => Promise.resolve({}),
+  renameCollection: () => Promise.resolve(),
 };
 
 const getMongoUrl = () => {
@@ -38,7 +46,7 @@ async function resolve() {
       false,
       'failed to connect to mongodb, db instance fallback to empty object.',
     );
-    _db = mock;
+    _db = mockDB;
   }
   return _db;
 }

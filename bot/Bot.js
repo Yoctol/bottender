@@ -39,7 +39,7 @@ export default class Bot {
 
       const db = await resolveScoped(this._id);
 
-      if (db && typeof db.collection === 'function') {
+      if (!db.__MOCK__) {
         const logs = await db.collection('logs');
         logs.insert({
           platform: this._connector.platform,
@@ -61,8 +61,6 @@ export default class Bot {
 
       if (!existed) {
         const data = await this._connector.getUserProfile(senderId);
-
-        const users = await db.collection('users');
         const user = {
           ...data,
           id: senderId,
@@ -70,7 +68,11 @@ export default class Bot {
         };
 
         sessionData.user = user;
-        users.insert(user);
+
+        if (!db.__MOCK__) {
+          const users = await db.collection('users');
+          users.insert(user);
+        }
       }
 
       await this._connector.handleRequest({ request, sessionData, db });
