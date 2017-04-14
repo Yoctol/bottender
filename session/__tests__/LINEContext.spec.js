@@ -20,7 +20,7 @@ const rawEvent = {
   },
 };
 
-const setup = (messageDelay = 1000, noDelay = false) => {
+const setup = () => {
   const client = {};
   const data = new SessionData({
     user: {
@@ -33,7 +33,6 @@ const setup = (messageDelay = 1000, noDelay = false) => {
     rawEvent,
     data,
     db,
-    messageDelay: noDelay ? undefined : messageDelay,
   });
   return {
     context,
@@ -360,8 +359,8 @@ it('#sendCarouselTemplate put pushCarouselTemplate to jobQueue', () => {
   });
 });
 
-it('use default message delay when nothing passed in', () => {
-  const { context, client, data } = setup(null, true);
+it('use default message delay', () => {
+  const { context, client, data } = setup();
 
   context._jobQueue = {
     enqueue: jest.fn(),
@@ -374,45 +373,6 @@ it('use default message delay when nothing passed in', () => {
     method: 'pushText',
     args: [data.user.id, 'yooooooo~'],
     delay: 1000,
-    showIndicators: true,
-  });
-});
-
-it('call messageDelay() when it passed in with a function', () => {
-  const messageDelay = jest.fn();
-  messageDelay.mockReturnValue(2500);
-  const { context, client, data } = setup(messageDelay);
-
-  context._jobQueue = {
-    enqueue: jest.fn(),
-  };
-
-  context.sendText('yooooooo~');
-
-  expect(context._jobQueue.enqueue).toBeCalledWith({
-    instance: client,
-    method: 'pushText',
-    args: [data.user.id, 'yooooooo~'],
-    delay: 2500,
-    showIndicators: true,
-  });
-});
-
-it('return messageDelay when it passed in with a number', () => {
-  const _messageDelay = 999;
-  const { context, client, data } = setup(_messageDelay);
-
-  context._jobQueue = {
-    enqueue: jest.fn(),
-  };
-
-  context.sendText('yooooooo~');
-
-  expect(context._jobQueue.enqueue).toBeCalledWith({
-    instance: client,
-    method: 'pushText',
-    args: [data.user.id, 'yooooooo~'],
-    delay: 999,
     showIndicators: true,
   });
 });

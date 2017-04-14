@@ -26,7 +26,7 @@ const rawEvent = {
   },
 };
 
-const setup = ({ messageDelay = 1000, noDelay = false } = {}) => {
+const setup = () => {
   const client = createMockGraphAPIClient();
   const data = new SessionData({
     user: {
@@ -40,9 +40,6 @@ const setup = ({ messageDelay = 1000, noDelay = false } = {}) => {
     data,
     db,
   };
-  if (!noDelay) {
-    args.messageDelay = messageDelay;
-  }
   const context = new MessengerContext(args);
   return {
     context,
@@ -342,8 +339,8 @@ it('#turnTypingIndicatorsOff call client turnTypingIndicatorsOff', () => {
   expect(client.turnTypingIndicatorsOff).toBeCalledWith(data.user.id);
 });
 
-it('use default message delay when nothing passed in', () => {
-  const { context, client, data } = setup({ noDelay: true });
+it('use default message delay', () => {
+  const { context, client, data } = setup();
 
   context._jobQueue = {
     enqueue: jest.fn(),
@@ -356,45 +353,6 @@ it('use default message delay when nothing passed in', () => {
     method: 'sendText',
     args: [data.user.id, 'yooooooo~'],
     delay: 1000,
-    showIndicators: true,
-  });
-});
-
-it('call messageDelay() when it passed in with a function', () => {
-  const messageDelay = jest.fn();
-  messageDelay.mockReturnValue(2500);
-  const { context, client, data } = setup({ messageDelay });
-
-  context._jobQueue = {
-    enqueue: jest.fn(),
-  };
-
-  context.sendText('yooooooo~');
-
-  expect(context._jobQueue.enqueue).toBeCalledWith({
-    instance: client,
-    method: 'sendText',
-    args: [data.user.id, 'yooooooo~'],
-    delay: 2500,
-    showIndicators: true,
-  });
-});
-
-it('return messageDelay when it passed in with a number', () => {
-  const messageDelay = 999;
-  const { context, client, data } = setup({ messageDelay });
-
-  context._jobQueue = {
-    enqueue: jest.fn(),
-  };
-
-  context.sendText('yooooooo~');
-
-  expect(context._jobQueue.enqueue).toBeCalledWith({
-    instance: client,
-    method: 'sendText',
-    args: [data.user.id, 'yooooooo~'],
-    delay: 999,
     showIndicators: true,
   });
 });
