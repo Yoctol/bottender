@@ -14,6 +14,8 @@ type Options = {
   db: ScopedDB,
 };
 
+type Collection = {};
+
 export default class Context {
   _graphAPIClient: FBGraphAPIClient;
   _data: SessionData;
@@ -38,6 +40,18 @@ export default class Context {
 
   get hitl(): SessionHITL {
     return this._hitl;
+  }
+
+  get logs(): Promise<Collection> {
+    return this._db.collection('logs');
+  }
+
+  get users(): Promise<Collection> {
+    return this._db.collection('users');
+  }
+
+  get sessions(): Promise<Collection> {
+    return this._db.collection('sessions');
   }
 
   _enqueue(job: Object): void {
