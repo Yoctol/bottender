@@ -13,14 +13,27 @@ type Attachment = {
   payload: AttachmentPayload,
 };
 
-type TextOrAttachment = {
-  text?: string,
-  attachment?: Attachment,
-};
+type TextOrAttachment =
+  | {
+      text: string,
+    }
+  | {
+      attachment: Attachment,
+    };
 
 type Message = {
   text?: ?string,
   attachment?: ?Attachment,
+};
+
+type Tag = 'SHIPPING_UPDATE' | 'RESERVATION_UPDATE' | 'ISSUE_RESOLUTION';
+
+type SendOption = {
+  tag: Tag,
+};
+
+type SendTextOption = {
+  tag: 'ISSUE_RESOLUTION',
 };
 
 export type TemplateButton = {
@@ -457,13 +470,15 @@ export default class FBGraphAPIClient {
    */
   send = (
     recipientId: string,
-    message: Message
+    message: Message,
+    options?: SendOption
   ): Promise<SendMessageSucessResponse> =>
     this._http.post(`/me/messages?access_token=${this._accessToken}`, {
       recipient: {
         id: recipientId,
       },
       message,
+      ...options,
     });
 
   /**
@@ -473,13 +488,15 @@ export default class FBGraphAPIClient {
    */
   sendAttachment = (
     recipientId: string,
-    attachment: Attachment
+    attachment: Attachment,
+    options?: SendOption
   ): Promise<SendMessageSucessResponse> =>
-    this.send(recipientId, { attachment });
+    this.send(recipientId, { attachment }, options);
 
   sendText = (
     recipientId: string,
-    text: string
+    text: string,
+    options?: SendTextOption
   ): Promise<SendMessageSucessResponse> => this.send(recipientId, { text });
 
   // TODO: support formdata fileupload?
@@ -538,12 +555,17 @@ export default class FBGraphAPIClient {
    */
   sendTemplate = (
     recipientId: string,
-    payload: AttachmentPayload
+    payload: AttachmentPayload,
+    options?: SendOption
   ): Promise<SendMessageSucessResponse> =>
-    this.sendAttachment(recipientId, {
-      type: 'template',
-      payload,
-    });
+    this.sendAttachment(
+      recipientId,
+      {
+        type: 'template',
+        payload,
+      },
+      options,
+    );
 
   // https://developers.facebook.com/docs/messenger-platform/send-api-reference/button-template
   sendButtonTemplate = (
@@ -561,13 +583,18 @@ export default class FBGraphAPIClient {
   sendGenericTemplate = (
     recipientId: string,
     elements: Array<TemplateElement>,
-    ratio: string = 'horizontal'
+    ratio: string = 'horizontal',
+    options?: SendOption
   ): Promise<SendMessageSucessResponse> =>
-    this.sendTemplate(recipientId, {
-      template_type: 'generic',
-      elements,
-      image_aspect_ratio: ratio,
-    });
+    this.sendTemplate(
+      recipientId,
+      {
+        template_type: 'generic',
+        elements,
+        image_aspect_ratio: ratio,
+      },
+      options,
+    );
 
   // https://developers.facebook.com/docs/messenger-platform/send-api-reference/list-template
   sendListTemplate = (
