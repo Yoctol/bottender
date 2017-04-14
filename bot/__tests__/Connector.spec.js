@@ -13,6 +13,13 @@ describe('#setHandler & hasHandler', () => {
   });
 });
 
+describe('#platform', () => {
+  it('should throw unimplemented', () => {
+    const connector = new Connector();
+    expect(() => connector.platform).toThrow(/must implement/);
+  });
+});
+
 describe('#getSenderIdFromRequest', () => {
   it('should throw unimplemented', () => {
     const connector = new Connector();

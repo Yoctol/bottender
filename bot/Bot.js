@@ -37,6 +37,16 @@ export default class Bot {
     return async ({ request, response }) => {
       debug(JSON.stringify(request.body, null, 2));
 
+      const db = await resolveScoped(this._id);
+
+      if (db && typeof db.collection === 'function') {
+        const logs = await db.collection('logs');
+        logs.insert({
+          platform: this._connector.platform,
+          body: request.body,
+        });
+      }
+
       if (!this._initialized) {
         await this._sessionManager.init();
         this._initialized = true;
@@ -56,8 +66,6 @@ export default class Bot {
           id: senderId,
         };
       }
-
-      const db = await resolveScoped(this._id);
 
       await this._connector.handleRequest({ request, sessionData, db });
 

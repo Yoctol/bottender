@@ -49,6 +49,13 @@ function setup() {
   };
 }
 
+describe('#platform', () => {
+  it('should be line', () => {
+    const { connector } = setup();
+    expect(connector.platform).toBe('line');
+  });
+});
+
 describe('#getSenderIdFromRequest', () => {
   it('extract correct sender id', () => {
     const { connector } = setup();

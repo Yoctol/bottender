@@ -10,6 +10,10 @@ export default class LINEConnector extends Connecter {
     this._lineAPIClient = LINEBotAPIClient.factory(accessToken, channelSecret);
   }
 
+  get platform(): string {
+    return 'line';
+  }
+
   getSenderIdFromRequest(request) {
     const rawEvent = request.body.events[0];
     return rawEvent.source.userId; // FIXME: group, room?

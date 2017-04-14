@@ -46,6 +46,13 @@ function setup() {
   };
 }
 
+describe('#platform', () => {
+  it('should be messenger', () => {
+    const { connector } = setup();
+    expect(connector.platform).toBe('messenger');
+  });
+});
+
 describe('#getSenderIdFromRequest', () => {
   it('extract correct sender id', () => {
     const { connector } = setup();

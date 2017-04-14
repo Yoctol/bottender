@@ -12,6 +12,10 @@ export default class MessengerConnector extends Connecter {
     this._graphAPIClient = FBGraphAPIClient.factory(accessToken);
   }
 
+  get platform(): string {
+    return 'messenger';
+  }
+
   getSenderIdFromRequest(request) {
     const rawEvent = this._getRawEventFromRequest(request);
     return rawEvent.sender.id;

@@ -5,6 +5,17 @@ import scoped from './scoped';
 
 let _db;
 
+const mock = {
+  collection: () => ({}),
+  collections: () => ({}),
+  createCollection: () => ({}),
+  createIndex: () => ({}),
+  dropCollection: () => {},
+  ensureIndex: () => ({}),
+  indexInformation: () => ({}),
+  renameCollection: () => {},
+};
+
 const getMongoUrl = () => {
   const url = process.env.MONGO_URL;
   if (url && url.length > 0) {
@@ -27,7 +38,7 @@ async function resolve() {
       false,
       'failed to connect to mongodb, db instance fallback to empty object.',
     );
-    _db = {};
+    _db = mock;
   }
   return _db;
 }

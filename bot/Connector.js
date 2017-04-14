@@ -16,6 +16,10 @@ export default class Connecter {
   }
 
   /* eslint-disable class-methods-use-this */
+  get platform(): string {
+    unimplemented('platform getter');
+  }
+
   getSenderIdFromRequest() {
     unimplemented('getSenderIdFromRequest');
   }

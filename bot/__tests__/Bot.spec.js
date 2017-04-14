@@ -1,7 +1,12 @@
 import Bot from '../Bot';
 
+jest.mock('../../database/resolve');
+
+const resolve = require('../../database/resolve');
+
 function setup(
   connector = {
+    platform: 'yoctol',
     hasHandler: true,
     setHandler: jest.fn(),
     getSenderIdFromRequest: jest.fn(() => 'SENDER_ID'),
@@ -9,6 +14,13 @@ function setup(
     handleRequest: jest.fn(),
   },
 ) {
+  const collection = {
+    insert: jest.fn(),
+  };
+  const db = {
+    collection: jest.fn(() => collection),
+  };
+  resolve.resolveScoped.mockReturnValue(Promise.resolve(db));
   const bot = new Bot({
     id: 'fake-id',
     filePath: 'fake://',
@@ -20,6 +32,8 @@ function setup(
   return {
     bot,
     connector,
+    collection,
+    db,
   };
 }
 
@@ -50,6 +64,26 @@ describe('#createKoaMiddleware', () => {
   it('throw when no handler', () => {
     const { bot } = setup({});
     expect(() => bot.createKoaMiddleware()).toThrow();
+  });
+
+  it('insert every request into logs collection', async () => {
+    const { bot, collection } = setup();
+    bot.sessionManager.createSessionDataIfNotExists.mockReturnValue(
+      Promise.resolve({
+        sessionData: {},
+        existed: true,
+      }),
+    );
+    const middleware = bot.createKoaMiddleware();
+    const request = {
+      body: {},
+    };
+    const response = {};
+    await middleware({ request, response });
+    expect(collection.insert).toBeCalledWith({
+      platform: 'yoctol',
+      body: request.body,
+    });
   });
 
   it('init session manager when first request', async () => {
