@@ -32,10 +32,6 @@ type SendOption = {
   tag: Tag,
 };
 
-type SendTextOption = {
-  tag: 'ISSUE_RESOLUTION',
-};
-
 export type TemplateButton = {
   type: string,
   title: string,
@@ -496,7 +492,7 @@ export default class FBGraphAPIClient {
   sendText = (
     recipientId: string,
     text: string,
-    options?: SendTextOption
+    options?: SendOption
   ): Promise<SendMessageSucessResponse> =>
     this.send(recipientId, { text }, options);
 

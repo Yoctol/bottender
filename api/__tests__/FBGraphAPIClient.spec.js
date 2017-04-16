@@ -911,6 +911,34 @@ describe('sned api', () => {
     });
   });
 
+  describe('#sendIssueResolutionText', () => {
+    it('should call messages api with issue resolution text', async () => {
+      const { client, mock } = createMock();
+
+      const expected = {
+        recipient_id: RECIPIENT_ID,
+        message_id: 'mid.1489394984387:3dd22de509',
+      };
+
+      mock
+        .onPost(`/me/messages?access_token=${ACCESS_TOKEN}`, {
+          recipient: {
+            id: RECIPIENT_ID,
+          },
+          message: {
+            text: 'Hello!',
+          },
+          tag: 'ISSUE_RESOLUTION',
+        })
+        .reply(200, expected);
+
+      const res = await client.sendIssueResolutionText(RECIPIENT_ID, 'Hello!');
+
+      expect(res.status).toBe(200);
+      expect(res.data).toBe(expected);
+    });
+  });
+
   describe('#sendAudio', () => {
     it('should call messages api with audio', async () => {
       const { client, mock } = createMock();
@@ -1147,6 +1175,38 @@ describe('sned api', () => {
     });
   });
 
+  const templateElements = [
+    {
+      title: "Welcome to Peter's Hats",
+      image_url: 'https://petersfancybrownhats.com/company_image.png',
+      subtitle: "We've got the right hat for everyone.",
+      default_action: {
+        type: 'web_url',
+        url: 'https://peterssendreceiveapp.ngrok.io/view?item=103',
+        messenger_extensions: true,
+        webview_height_ratio: 'tall',
+        fallback_url: 'https://peterssendreceiveapp.ngrok.io/',
+      },
+      buttons: [
+        {
+          type: 'postback',
+          title: 'Start Chatting',
+          payload: 'DEVELOPER_DEFINED_PAYLOAD',
+        },
+      ],
+    },
+  ];
+  const templateMessage = {
+    attachment: {
+      type: 'template',
+      payload: {
+        template_type: 'generic',
+        elements: templateElements,
+        image_aspect_ratio: 'horizontal',
+      },
+    },
+  };
+
   describe('#sendGenericTemplate', () => {
     it('should call messages api with generic template', async () => {
       const { client, mock } = createMock();
@@ -1161,60 +1221,101 @@ describe('sned api', () => {
           recipient: {
             id: RECIPIENT_ID,
           },
-          message: {
-            attachment: {
-              type: 'template',
-              payload: {
-                template_type: 'generic',
-                elements: [
-                  {
-                    title: "Welcome to Peter's Hats",
-                    image_url: 'https://petersfancybrownhats.com/company_image.png',
-                    subtitle: "We've got the right hat for everyone.",
-                    default_action: {
-                      type: 'web_url',
-                      url: 'https://peterssendreceiveapp.ngrok.io/view?item=103',
-                      messenger_extensions: true,
-                      webview_height_ratio: 'tall',
-                      fallback_url: 'https://peterssendreceiveapp.ngrok.io/',
-                    },
-                    buttons: [
-                      {
-                        type: 'postback',
-                        title: 'Start Chatting',
-                        payload: 'DEVELOPER_DEFINED_PAYLOAD',
-                      },
-                    ],
-                  },
-                ],
-                image_aspect_ratio: 'horizontal',
-              },
-            },
-          },
+          message: templateMessage,
         })
         .reply(200, expected);
 
-      const res = await client.sendGenericTemplate(RECIPIENT_ID, [
-        {
-          title: "Welcome to Peter's Hats",
-          image_url: 'https://petersfancybrownhats.com/company_image.png',
-          subtitle: "We've got the right hat for everyone.",
-          default_action: {
-            type: 'web_url',
-            url: 'https://peterssendreceiveapp.ngrok.io/view?item=103',
-            messenger_extensions: true,
-            webview_height_ratio: 'tall',
-            fallback_url: 'https://peterssendreceiveapp.ngrok.io/',
+      const res = await client.sendGenericTemplate(
+        RECIPIENT_ID,
+        templateElements
+      );
+
+      expect(res.status).toBe(200);
+      expect(res.data).toBe(expected);
+    });
+  });
+
+  describe('#sendShippingUpdateTemplate', () => {
+    it('should call messages api with shipping update generic template', async () => {
+      const { client, mock } = createMock();
+
+      const expected = {
+        recipient_id: RECIPIENT_ID,
+        message_id: 'mid.1489394984387:3dd22de509',
+      };
+
+      mock
+        .onPost(`/me/messages?access_token=${ACCESS_TOKEN}`, {
+          recipient: {
+            id: RECIPIENT_ID,
           },
-          buttons: [
-            {
-              type: 'postback',
-              title: 'Start Chatting',
-              payload: 'DEVELOPER_DEFINED_PAYLOAD',
-            },
-          ],
-        },
-      ]);
+          message: templateMessage,
+          tag: 'SHIPPING_UPDATE',
+        })
+        .reply(200, expected);
+
+      const res = await client.sendShippingUpdateTemplate(
+        RECIPIENT_ID,
+        templateElements
+      );
+
+      expect(res.status).toBe(200);
+      expect(res.data).toBe(expected);
+    });
+  });
+
+  describe('#sendReservationUpdateTemplate', () => {
+    it('should call messages api with reservation update generic template', async () => {
+      const { client, mock } = createMock();
+
+      const expected = {
+        recipient_id: RECIPIENT_ID,
+        message_id: 'mid.1489394984387:3dd22de509',
+      };
+
+      mock
+        .onPost(`/me/messages?access_token=${ACCESS_TOKEN}`, {
+          recipient: {
+            id: RECIPIENT_ID,
+          },
+          message: templateMessage,
+          tag: 'RESERVATION_UPDATE',
+        })
+        .reply(200, expected);
+
+      const res = await client.sendReservationUpdateTemplate(
+        RECIPIENT_ID,
+        templateElements
+      );
+
+      expect(res.status).toBe(200);
+      expect(res.data).toBe(expected);
+    });
+  });
+
+  describe('#sendIssueResolutionTemplate', () => {
+    it('should call messages api with issue reservation generic template', async () => {
+      const { client, mock } = createMock();
+
+      const expected = {
+        recipient_id: RECIPIENT_ID,
+        message_id: 'mid.1489394984387:3dd22de509',
+      };
+
+      mock
+        .onPost(`/me/messages?access_token=${ACCESS_TOKEN}`, {
+          recipient: {
+            id: RECIPIENT_ID,
+          },
+          message: templateMessage,
+          tag: 'ISSUE_RESOLUTION',
+        })
+        .reply(200, expected);
+
+      const res = await client.sendIssueResolutionTemplate(
+        RECIPIENT_ID,
+        templateElements
+      );
 
       expect(res.status).toBe(200);
       expect(res.data).toBe(expected);
