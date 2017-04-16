@@ -497,7 +497,14 @@ export default class FBGraphAPIClient {
     recipientId: string,
     text: string,
     options?: SendTextOption
-  ): Promise<SendMessageSucessResponse> => this.send(recipientId, { text });
+  ): Promise<SendMessageSucessResponse> =>
+    this.send(recipientId, { text }, options);
+
+  sendIssueResolutionText = (
+    recipientId: string,
+    text: string
+  ): Promise<SendMessageSucessResponse> =>
+    this.sendText(recipientId, text, { tag: 'ISSUE_RESOLUTION' });
 
   // TODO: support formdata fileupload?
   // FIXME: prettier bug?
@@ -564,7 +571,7 @@ export default class FBGraphAPIClient {
         type: 'template',
         payload,
       },
-      options,
+      options
     );
 
   // https://developers.facebook.com/docs/messenger-platform/send-api-reference/button-template
@@ -591,10 +598,37 @@ export default class FBGraphAPIClient {
       {
         template_type: 'generic',
         elements,
-        image_aspect_ratio: ratio,
+        image_aspect_ratio: ratio, // FIXME rename to image_aspect_ratio?
       },
-      options,
+      options
     );
+
+  sendShippingUpdateTemplate = (
+    recipientId: string,
+    elements: Array<TemplateElement>,
+    ratio: string = 'horizontal'
+  ): Promise<SendMessageSucessResponse> =>
+    this.sendGenericTemplate(recipientId, elements, ratio, {
+      tag: 'SHIPPING_UPDATE',
+    });
+
+  sendReservationUpdateTemplate = (
+    recipientId: string,
+    elements: Array<TemplateElement>,
+    ratio: string = 'horizontal'
+  ): Promise<SendMessageSucessResponse> =>
+    this.sendGenericTemplate(recipientId, elements, ratio, {
+      tag: 'RESERVATION_UPDATE',
+    });
+
+  sendIssueResolutionTemplate = (
+    recipientId: string,
+    elements: Array<TemplateElement>,
+    ratio: string = 'horizontal'
+  ): Promise<SendMessageSucessResponse> =>
+    this.sendGenericTemplate(recipientId, elements, ratio, {
+      tag: 'ISSUE_RESOLUTION',
+    });
 
   // https://developers.facebook.com/docs/messenger-platform/send-api-reference/list-template
   sendListTemplate = (

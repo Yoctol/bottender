@@ -39,12 +39,16 @@ export default class MessengerContext extends Context {
 
     const sendMethods = [
       'sendText',
+      'sendIssueResolutionText',
       'sendImage',
       'sendAudio',
       'sendVideo',
       'sendFile',
       'sendQuickReplies',
       'sendGenericTemplate',
+      'sendShippingUpdateTemplate',
+      'sendReservationUpdateTemplate',
+      'sendIssueResolutionTemplate',
       'sendButtonTemplate',
       'sendListTemplate',
       'sendReceiptTemplate',
