@@ -248,12 +248,7 @@ export default class LineBotAPIClient {
 
   pushLocation = (
     to: string,
-    {
-      title,
-      address,
-      latitude,
-      longitude,
-    }: Location,
+    { title, address, latitude, longitude }: Location,
   ): Promise<MutationSuccessResponse> =>
     this.push(to, [
       {
