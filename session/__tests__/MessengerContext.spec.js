@@ -86,6 +86,23 @@ it('#sendText put sendText to jobQueue', () => {
   });
 });
 
+it('#sendIssueResolutionText put sendIssueResolutionText to jobQueue', () => {
+  const { context, client, data } = setup();
+  context._jobQueue = {
+    enqueue: jest.fn(),
+  };
+
+  context.sendIssueResolutionText('xxx.com');
+
+  expect(context._jobQueue.enqueue).toBeCalledWith({
+    instance: client,
+    method: 'sendIssueResolutionText',
+    args: [data.user.id, 'xxx.com'],
+    delay: 1000,
+    showIndicators: true,
+  });
+});
+
 it('#sendImage put sendImage to jobQueue', () => {
   const { context, client, data } = setup();
   context._jobQueue = {
@@ -187,6 +204,66 @@ it('#sendGenericTemplate put sendGenericTemplate to jobQueue', () => {
   expect(context._jobQueue.enqueue).toBeCalledWith({
     instance: client,
     method: 'sendGenericTemplate',
+    args: [data.user.id, elements, ratio],
+    delay: 1000,
+    showIndicators: true,
+  });
+});
+
+it('#sendShippingUpdateTemplate put sendShippingUpdateTemplate to jobQueue', () => {
+  const { context, client, data } = setup();
+  context._jobQueue = {
+    enqueue: jest.fn(),
+  };
+
+  const elements = {};
+  const ratio = '';
+
+  context.sendShippingUpdateTemplate(elements, ratio);
+
+  expect(context._jobQueue.enqueue).toBeCalledWith({
+    instance: client,
+    method: 'sendShippingUpdateTemplate',
+    args: [data.user.id, elements, ratio],
+    delay: 1000,
+    showIndicators: true,
+  });
+});
+
+it('#sendReservationUpdateTemplate put sendReservationUpdateTemplate to jobQueue', () => {
+  const { context, client, data } = setup();
+  context._jobQueue = {
+    enqueue: jest.fn(),
+  };
+
+  const elements = {};
+  const ratio = '';
+
+  context.sendReservationUpdateTemplate(elements, ratio);
+
+  expect(context._jobQueue.enqueue).toBeCalledWith({
+    instance: client,
+    method: 'sendReservationUpdateTemplate',
+    args: [data.user.id, elements, ratio],
+    delay: 1000,
+    showIndicators: true,
+  });
+});
+
+it('#sendIssueResolutionTemplate put sendIssueResolutionTemplate to jobQueue', () => {
+  const { context, client, data } = setup();
+  context._jobQueue = {
+    enqueue: jest.fn(),
+  };
+
+  const elements = {};
+  const ratio = '';
+
+  context.sendIssueResolutionTemplate(elements, ratio);
+
+  expect(context._jobQueue.enqueue).toBeCalledWith({
+    instance: client,
+    method: 'sendIssueResolutionTemplate',
     args: [data.user.id, elements, ratio],
     delay: 1000,
     showIndicators: true,
@@ -393,12 +470,16 @@ it('should sendText to enqueu in jobQueue when resumed', () => {
 it('has send to methods', () => {
   const { context } = setup();
   expect(context.sendTextTo).toBeDefined();
+  expect(context.sendIssueResolutionTextTo).toBeDefined();
   expect(context.sendImageTo).toBeDefined();
   expect(context.sendAudioTo).toBeDefined();
   expect(context.sendVideoTo).toBeDefined();
   expect(context.sendFileTo).toBeDefined();
   expect(context.sendQuickRepliesTo).toBeDefined();
   expect(context.sendGenericTemplateTo).toBeDefined();
+  expect(context.sendShippingUpdateTemplateTo).toBeDefined();
+  expect(context.sendReservationUpdateTemplateTo).toBeDefined();
+  expect(context.sendIssueResolutionTemplateTo).toBeDefined();
   expect(context.sendButtonTemplateTo).toBeDefined();
   expect(context.sendListTemplateTo).toBeDefined();
   expect(context.sendReceiptTemplateTo).toBeDefined();
@@ -428,12 +509,16 @@ it('#sendTextTo put sendText to jobQueue', () => {
 it('has send with delay methods', () => {
   const { context } = setup();
   expect(context.sendTextWithDelay).toBeDefined();
+  expect(context.sendIssueResolutionTextWithDelay).toBeDefined();
   expect(context.sendImageWithDelay).toBeDefined();
   expect(context.sendAudioWithDelay).toBeDefined();
   expect(context.sendVideoWithDelay).toBeDefined();
   expect(context.sendFileWithDelay).toBeDefined();
   expect(context.sendQuickRepliesWithDelay).toBeDefined();
   expect(context.sendGenericTemplateWithDelay).toBeDefined();
+  expect(context.sendShippingUpdateTemplateWithDelay).toBeDefined();
+  expect(context.sendReservationUpdateTemplateWithDelay).toBeDefined();
+  expect(context.sendIssueResolutionTemplateWithDelay).toBeDefined();
   expect(context.sendButtonTemplateWithDelay).toBeDefined();
   expect(context.sendListTemplateWithDelay).toBeDefined();
   expect(context.sendReceiptTemplateWithDelay).toBeDefined();
