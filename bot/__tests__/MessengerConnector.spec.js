@@ -74,11 +74,11 @@ describe('#getUserProfile', () => {
     };
     const response = { data };
     mockGraphAPIClient.getUserProfile.mockReturnValue(
-      Promise.resolve(response),
+      Promise.resolve(response)
     );
     const user = await connector.getUserProfile('1412611362105802');
     expect(mockGraphAPIClient.getUserProfile).toBeCalledWith(
-      '1412611362105802',
+      '1412611362105802'
     );
     expect(user).toEqual(data);
   });

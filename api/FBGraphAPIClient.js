@@ -264,22 +264,22 @@ export default class FBGraphAPIClient {
    * https://developers.facebook.com/docs/messenger-platform/messenger-profile
    */
   getMessengerProfile = (
-    fields: Array<string>,
+    fields: Array<string>
   ): Promise<MessengerProfileResponse> =>
     this._http.get(
-      `/me/messenger_profile?fields=${fields.join(',')}&access_token=${this._accessToken}`,
+      `/me/messenger_profile?fields=${fields.join(',')}&access_token=${this._accessToken}`
     );
 
   setMessengerProfile = (
-    profile: MessengerProfile,
+    profile: MessengerProfile
   ): Promise<MutationSuccessResponse> =>
     this._http.post(
       `/me/messenger_profile?access_token=${this._accessToken}`,
-      profile,
+      profile
     );
 
   deleteMessengerProfile = (
-    fields: Array<string>,
+    fields: Array<string>
   ): Promise<MutationSuccessResponse> =>
     this._http.delete(
       `/me/messenger_profile?access_token=${this._accessToken}`,
@@ -287,7 +287,7 @@ export default class FBGraphAPIClient {
         data: {
           fields,
         },
-      },
+      }
     );
 
   /**
@@ -319,7 +319,7 @@ export default class FBGraphAPIClient {
 
   setPersistentMenu = (
     menuItems: Array<MenuItem>,
-    { inputDisabled = false }: { inputDisabled: boolean } = {},
+    { inputDisabled = false }: { inputDisabled: boolean } = {}
   ): Promise<MutationSuccessResponse> =>
     this.setMessengerProfile({
       persistent_menu: [
@@ -397,7 +397,7 @@ export default class FBGraphAPIClient {
     this.getMessengerProfile(['payment_settings']);
 
   setPaymentPrivacyPolicyURL = (
-    url: string,
+    url: string
   ): Promise<MutationSuccessResponse> =>
     this.setMessengerProfile({
       payment_settings: {
@@ -413,7 +413,7 @@ export default class FBGraphAPIClient {
     });
 
   setPaymentTestUsers = (
-    users: Array<string>,
+    users: Array<string>
   ): Promise<MutationSuccessResponse> =>
     this.setMessengerProfile({
       payment_settings: {
@@ -435,7 +435,7 @@ export default class FBGraphAPIClient {
   setTargetAudience = (
     type: string,
     whitelist: ?Array<string> = [],
-    blacklist: ?Array<string> = [],
+    blacklist: ?Array<string> = []
   ): Promise<MutationSuccessResponse> =>
     this.setMessengerProfile({
       target_audience: {
@@ -457,7 +457,7 @@ export default class FBGraphAPIClient {
    */
   send = (
     recipientId: string,
-    message: Message,
+    message: Message
   ): Promise<SendMessageSucessResponse> =>
     this._http.post(`/me/messages?access_token=${this._accessToken}`, {
       recipient: {
@@ -473,20 +473,20 @@ export default class FBGraphAPIClient {
    */
   sendAttachment = (
     recipientId: string,
-    attachment: Attachment,
+    attachment: Attachment
   ): Promise<SendMessageSucessResponse> =>
     this.send(recipientId, { attachment });
 
   sendText = (
     recipientId: string,
-    text: string,
+    text: string
   ): Promise<SendMessageSucessResponse> => this.send(recipientId, { text });
 
   // TODO: support formdata fileupload?
   // FIXME: prettier bug?
   sendAudio = (
     recipientId: string,
-    url: string,
+    url: string
   ): Promise<SendMessageSucessResponse> =>
     this.sendAttachment(recipientId, {
       type: 'audio', // eslint-disable-line
@@ -498,7 +498,7 @@ export default class FBGraphAPIClient {
   // TODO: support formdata fileupload?
   sendImage = (
     recipientId: string,
-    url: string,
+    url: string
   ): Promise<SendMessageSucessResponse> =>
     this.sendAttachment(recipientId, {
       type: 'image',
@@ -510,7 +510,7 @@ export default class FBGraphAPIClient {
   // TODO: support formdata fileupload?
   sendVideo = (
     recipientId: string,
-    url: string,
+    url: string
   ): Promise<SendMessageSucessResponse> =>
     this.sendAttachment(recipientId, {
       type: 'video',
@@ -522,7 +522,7 @@ export default class FBGraphAPIClient {
   // TODO: support formdata fileupload?
   sendFile = (
     recipientId: string,
-    url: string,
+    url: string
   ): Promise<SendMessageSucessResponse> =>
     this.sendAttachment(recipientId, {
       type: 'file',
@@ -538,7 +538,7 @@ export default class FBGraphAPIClient {
    */
   sendTemplate = (
     recipientId: string,
-    payload: AttachmentPayload,
+    payload: AttachmentPayload
   ): Promise<SendMessageSucessResponse> =>
     this.sendAttachment(recipientId, {
       type: 'template',
@@ -549,7 +549,7 @@ export default class FBGraphAPIClient {
   sendButtonTemplate = (
     recipientId: string,
     text: string,
-    buttons: Array<TemplateButton>,
+    buttons: Array<TemplateButton>
   ): Promise<SendMessageSucessResponse> =>
     this.sendTemplate(recipientId, {
       template_type: 'button',
@@ -561,7 +561,7 @@ export default class FBGraphAPIClient {
   sendGenericTemplate = (
     recipientId: string,
     elements: Array<TemplateElement>,
-    ratio: string = 'horizontal',
+    ratio: string = 'horizontal'
   ): Promise<SendMessageSucessResponse> =>
     this.sendTemplate(recipientId, {
       template_type: 'generic',
@@ -574,7 +574,7 @@ export default class FBGraphAPIClient {
     recipientId: string,
     elements: Array<TemplateElement>,
     buttons: Array<TemplateButton>,
-    topElementStyle: string = 'large',
+    topElementStyle: string = 'large'
   ): Promise<SendMessageSucessResponse> =>
     this.sendTemplate(recipientId, {
       template_type: 'list',
@@ -586,7 +586,7 @@ export default class FBGraphAPIClient {
   // https://developers.facebook.com/docs/messenger-platform/send-api-reference/receipt-template
   sendReceiptTemplate = (
     recipientId: string,
-    attrs: ReceiptAttributes,
+    attrs: ReceiptAttributes
   ): Promise<SendMessageSucessResponse> =>
     this.sendTemplate(recipientId, {
       template_type: 'receipt',
@@ -596,7 +596,7 @@ export default class FBGraphAPIClient {
   // https://developers.facebook.com/docs/messenger-platform/send-api-reference/airline-boardingpass-template
   sendAirlineBoardingPassTemplate = (
     recipientId: string,
-    attrs: AirlineBoardingPassAttributes,
+    attrs: AirlineBoardingPassAttributes
   ): Promise<SendMessageSucessResponse> =>
     this.sendTemplate(recipientId, {
       template_type: 'airline_boardingpass',
@@ -606,7 +606,7 @@ export default class FBGraphAPIClient {
   // https://developers.facebook.com/docs/messenger-platform/send-api-reference/airline-checkin-template
   sendAirlineCheckinTemplate = (
     recipientId: string,
-    attrs: AirlineCheckinAttributes,
+    attrs: AirlineCheckinAttributes
   ): Promise<SendMessageSucessResponse> =>
     this.sendTemplate(recipientId, {
       template_type: 'airline_checkin',
@@ -616,7 +616,7 @@ export default class FBGraphAPIClient {
   // https://developers.facebook.com/docs/messenger-platform/send-api-reference/airline-itinerary-template
   sendAirlineItineraryTemplate = (
     recipientId: string,
-    attrs: AirlineItineraryAttributes,
+    attrs: AirlineItineraryAttributes
   ): Promise<SendMessageSucessResponse> =>
     this.sendTemplate(recipientId, {
       template_type: 'airline_itinerary',
@@ -626,7 +626,7 @@ export default class FBGraphAPIClient {
   // https://developers.facebook.com/docs/messenger-platform/send-api-reference/airline-update-template
   sendAirlineFlightUpdateTemplate = (
     recipientId: string,
-    attrs: AirlineFlightUpdateAttributes,
+    attrs: AirlineFlightUpdateAttributes
   ): Promise<SendMessageSucessResponse> =>
     this.sendTemplate(recipientId, {
       template_type: 'airline_update',
@@ -641,12 +641,12 @@ export default class FBGraphAPIClient {
   sendQuickReplies = (
     recipientId: string,
     textOrAttachment: TextOrAttachment,
-    quickReplies: Array<QuickReply>,
+    quickReplies: Array<QuickReply>
   ): Promise<SendMessageSucessResponse> => {
     // quick_replies is limited to 11
     invariant(
       Array.isArray(quickReplies) && quickReplies.length <= 11,
-      'quickReplies is an array and limited to 11',
+      'quickReplies is an array and limited to 11'
     );
 
     quickReplies.forEach(quickReply => {
@@ -654,13 +654,13 @@ export default class FBGraphAPIClient {
         // title has a 20 character limit, after that it gets truncated
         invariant(
           (quickReply.title: any).trim().length <= 20,
-          'title of quickReply has a 20 character limit, after that it gets truncated',
+          'title of quickReply has a 20 character limit, after that it gets truncated'
         );
 
         // payload has a 1000 character limit
         invariant(
           (quickReply.payload: any).length <= 1000,
-          'payload of quickReply has a 1000 character limit',
+          'payload of quickReply has a 1000 character limit'
         );
       }
     });
@@ -678,7 +678,7 @@ export default class FBGraphAPIClient {
    */
   sendSenderAction = (
     recipientId: string,
-    action: SenderAction,
+    action: SenderAction
   ): Promise<SendSenderActionResponse> =>
     this._http.post(`/me/messages?access_token=${this._accessToken}`, {
       recipient: {
@@ -688,12 +688,12 @@ export default class FBGraphAPIClient {
     });
 
   turnTypingIndicatorsOn = (
-    recipientId: string,
+    recipientId: string
   ): Promise<SendSenderActionResponse> =>
     this.sendSenderAction(recipientId, 'typing_on');
 
   turnTypingIndicatorsOff = (
-    recipientId: string,
+    recipientId: string
   ): Promise<SendSenderActionResponse> =>
     this.sendSenderAction(recipientId, 'typing_off');
 
@@ -715,7 +715,7 @@ export default class FBGraphAPIClient {
             },
           },
         },
-      },
+      }
     );
 
   uploadAudio = (url: string) => this.uploadAttachment('audio', url);

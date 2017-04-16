@@ -12,7 +12,7 @@ function setup(
     getSenderIdFromRequest: jest.fn(() => 'SENDER_ID'),
     getUserProfile: jest.fn(),
     handleRequest: jest.fn(),
-  },
+  }
 ) {
   const logs = {
     insert: jest.fn(),
@@ -83,7 +83,7 @@ describe('#createKoaMiddleware', () => {
       Promise.resolve({
         sessionData: {},
         existed: true,
-      }),
+      })
     );
     const middleware = bot.createKoaMiddleware();
     const request = {
@@ -103,7 +103,7 @@ describe('#createKoaMiddleware', () => {
       Promise.resolve({
         sessionData: {},
         existed: true,
-      }),
+      })
     );
     const middleware = bot.createKoaMiddleware();
     const request = {};
@@ -118,7 +118,7 @@ describe('#createKoaMiddleware', () => {
       Promise.resolve({
         sessionData: {},
         existed: true,
-      }),
+      })
     );
     const middleware = bot.createKoaMiddleware();
     const request = {};
@@ -134,7 +134,7 @@ describe('#createKoaMiddleware', () => {
       Promise.resolve({
         sessionData: {},
         existed: false,
-      }),
+      })
     );
     const middleware = bot.createKoaMiddleware();
     const request = {};
@@ -148,13 +148,13 @@ describe('#createKoaMiddleware', () => {
     connector.getUserProfile.mockReturnValue(
       Promise.resolve({
         name: 'cph',
-      }),
+      })
     );
     bot.sessionManager.createSessionDataIfNotExists.mockReturnValue(
       Promise.resolve({
         sessionData: {},
         existed: false,
-      }),
+      })
     );
     const middleware = bot.createKoaMiddleware();
     const request = {};
@@ -174,14 +174,14 @@ describe('#createKoaMiddleware', () => {
       Promise.resolve({
         sessionData: {},
         existed: false,
-      }),
+      })
     );
     const middleware = bot.createKoaMiddleware();
     const request = {};
     const response = {};
     await middleware({ request, response });
     expect(bot.sessionManager.createSessionDataIfNotExists).toBeCalledWith(
-      'SENDER_ID',
+      'SENDER_ID'
     );
   });
 
@@ -193,7 +193,7 @@ describe('#createKoaMiddleware', () => {
       Promise.resolve({
         sessionData,
         existed: false,
-      }),
+      })
     );
     const middleware = bot.createKoaMiddleware();
     const request = {};
@@ -214,7 +214,7 @@ describe('#createKoaMiddleware', () => {
       Promise.resolve({
         sessionData,
         existed: false,
-      }),
+      })
     );
     const middleware = bot.createKoaMiddleware();
     const request = {};
@@ -222,7 +222,7 @@ describe('#createKoaMiddleware', () => {
     await middleware({ request, response });
     expect(bot.sessionManager.saveSessionData).toBeCalledWith(
       'SENDER_ID',
-      sessionData,
+      sessionData
     );
   });
 
@@ -233,7 +233,7 @@ describe('#createKoaMiddleware', () => {
       Promise.resolve({
         sessionData: {},
         existed: false,
-      }),
+      })
     );
     const middleware = bot.createKoaMiddleware();
     const request = {};

@@ -63,7 +63,7 @@ export default class PersistentMemorySessionStore {
         ...prev,
         [k]: v,
       }),
-      persistentMap,
+      persistentMap
     );
     return write(this._filename, mergedMap);
   };

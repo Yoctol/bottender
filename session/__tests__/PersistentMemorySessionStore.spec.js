@@ -23,7 +23,7 @@ beforeEach(() => {
 
 it('should create new file when file does not exist', async () => {
   fs.stat = jest.fn((filename, cb) =>
-    cb(new Error('no such file or directory')),
+    cb(new Error('no such file or directory'))
   );
   const PersistentMemorySessionStore = require('../PersistentMemorySessionStore')
     .default;
@@ -33,7 +33,7 @@ it('should create new file when file does not exist', async () => {
   expect(steno.writeFile).toBeCalledWith(
     'sess.json',
     '{}',
-    expect.any(Function),
+    expect.any(Function)
   );
 });
 
@@ -54,7 +54,7 @@ it('should not create new file when file exists', async () => {
       mtime: '2017-03-16T06:39:44.000Z',
       ctime: '2017-03-16T06:39:44.000Z',
       birthtime: '2017-03-16T06:39:44.000Z',
-    }),
+    })
   );
   const PersistentMemorySessionStore = require('../PersistentMemorySessionStore')
     .default;
@@ -167,6 +167,6 @@ it('should write merged session map to file when taking snapshot', async () => {
   expect(steno.writeFile).toBeCalledWith(
     'sess.json',
     '{"1":"cph","2":"kpman"}',
-    expect.any(Function),
+    expect.any(Function)
   );
 });

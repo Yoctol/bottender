@@ -11,7 +11,7 @@ export default class Bot {
   constructor({ id, filePath, connector }) {
     this._id = id;
     this._sessionManager = new SessionManager(
-      new PersistentMemorySessionStore(filePath, 500),
+      new PersistentMemorySessionStore(filePath, 500)
     );
     this._initialized = false;
     this._connector = connector;

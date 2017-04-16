@@ -110,7 +110,7 @@ it('#rawEvent', () => {
   expect(new MessengerEvent(imageMessage).rawEvent).toEqual(imageMessage);
   expect(new MessengerEvent(stickerMessage).rawEvent).toEqual(stickerMessage);
   expect(new MessengerEvent(quickReplyMessage).rawEvent).toEqual(
-    quickReplyMessage,
+    quickReplyMessage
   );
   expect(new MessengerEvent(echoMessage).rawEvent).toEqual(echoMessage);
   expect(new MessengerEvent(postback).rawEvent).toEqual(postback);

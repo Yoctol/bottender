@@ -8,7 +8,7 @@ function setup(
     db = {
       collection: jest.fn(),
     },
-  } = {},
+  } = {}
 ) {
   return {
     data,

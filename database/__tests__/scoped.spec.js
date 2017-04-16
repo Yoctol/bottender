@@ -28,7 +28,7 @@ describe('#ScopedDB', () => {
   it('#scope', () => {
     const db = createMockDB();
     expect(new ScopedDB(db, 'cph-awesome-nlp-cool-great').scope).toBe(
-      'cph_awesome_nlp_cool_great',
+      'cph_awesome_nlp_cool_great'
     );
   });
 
@@ -45,7 +45,7 @@ describe('#ScopedDB', () => {
       Promise.resolve([
         { collectionName: 'cph.girls' },
         { collectionName: 'kpman.girls ' },
-      ]),
+      ])
     );
     const scopedDB = new ScopedDB(db, 'cph');
     const collections = await scopedDB.collections();

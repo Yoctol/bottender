@@ -52,7 +52,7 @@ export class ScopedDB {
     return this._db.renameCollection(
       `${this._scope}.${from}`,
       `${this._scope}.${to}`,
-      ...args,
+      ...args
     );
   }
 }

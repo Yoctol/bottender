@@ -77,7 +77,7 @@ describe('messenger profile', () => {
 
       mock
         .onGet(
-          `/me/messenger_profile?fields=get_started,persistent_menu&access_token=${ACCESS_TOKEN}`,
+          `/me/messenger_profile?fields=get_started,persistent_menu&access_token=${ACCESS_TOKEN}`
         )
         .reply(200, expected);
 
@@ -186,7 +186,7 @@ describe('get started button', () => {
 
       mock
         .onGet(
-          `/me/messenger_profile?fields=get_started&access_token=${ACCESS_TOKEN}`,
+          `/me/messenger_profile?fields=get_started&access_token=${ACCESS_TOKEN}`
         )
         .reply(200, expected);
 
@@ -274,7 +274,7 @@ describe('persistent menu', () => {
 
       mock
         .onGet(
-          `/me/messenger_profile?fields=persistent_menu&access_token=${ACCESS_TOKEN}`,
+          `/me/messenger_profile?fields=persistent_menu&access_token=${ACCESS_TOKEN}`
         )
         .reply(200, expected);
 
@@ -489,7 +489,7 @@ describe('domain whitelist', () => {
 
       mock
         .onGet(
-          `/me/messenger_profile?fields=whitelisted_domains&access_token=${ACCESS_TOKEN}`,
+          `/me/messenger_profile?fields=whitelisted_domains&access_token=${ACCESS_TOKEN}`
         )
         .reply(200, expected);
 
@@ -558,7 +558,7 @@ describe('account linking url', () => {
 
       mock
         .onGet(
-          `/me/messenger_profile?fields=account_linking_url&access_token=${ACCESS_TOKEN}`,
+          `/me/messenger_profile?fields=account_linking_url&access_token=${ACCESS_TOKEN}`
         )
         .reply(200, expected);
 
@@ -584,7 +584,7 @@ describe('account linking url', () => {
         .reply(200, expected);
 
       const res = await client.setAccountLinkingURL(
-        'https://www.example.com/oauth?response_type=code&client_id=1234567890&scope=basic',
+        'https://www.example.com/oauth?response_type=code&client_id=1234567890&scope=basic'
       );
 
       expect(res.status).toBe(200);
@@ -631,7 +631,7 @@ describe('payment settings', () => {
 
       mock
         .onGet(
-          `/me/messenger_profile?fields=payment_settings&access_token=${ACCESS_TOKEN}`,
+          `/me/messenger_profile?fields=payment_settings&access_token=${ACCESS_TOKEN}`
         )
         .reply(200, expected);
 
@@ -659,7 +659,7 @@ describe('payment settings', () => {
         .reply(200, expected);
 
       const res = await client.setPaymentPrivacyPolicyURL(
-        'https://www.example.com',
+        'https://www.example.com'
       );
 
       expect(res.status).toBe(200);
@@ -753,7 +753,7 @@ describe('target audience', () => {
 
       mock
         .onGet(
-          `/me/messenger_profile?fields=target_audience&access_token=${ACCESS_TOKEN}`,
+          `/me/messenger_profile?fields=target_audience&access_token=${ACCESS_TOKEN}`
         )
         .reply(200, expected);
 
@@ -787,7 +787,7 @@ describe('target audience', () => {
       const res = await client.setTargetAudience(
         'custom',
         ['US', 'CA'],
-        ['UK'],
+        ['UK']
       );
 
       expect(res.status).toBe(200);
@@ -938,7 +938,7 @@ describe('sned api', () => {
 
       const res = await client.sendAudio(
         RECIPIENT_ID,
-        'https://example.com/audio.mp3',
+        'https://example.com/audio.mp3'
       );
 
       expect(res.status).toBe(200);
@@ -973,7 +973,7 @@ describe('sned api', () => {
 
       const res = await client.sendImage(
         RECIPIENT_ID,
-        'https://example.com/pic.png',
+        'https://example.com/pic.png'
       );
 
       expect(res.status).toBe(200);
@@ -1008,7 +1008,7 @@ describe('sned api', () => {
 
       const res = await client.sendVideo(
         RECIPIENT_ID,
-        'https://example.com/video.mp4',
+        'https://example.com/video.mp4'
       );
 
       expect(res.status).toBe(200);
@@ -1043,7 +1043,7 @@ describe('sned api', () => {
 
       const res = await client.sendFile(
         RECIPIENT_ID,
-        'https://example.com/word.docx',
+        'https://example.com/word.docx'
       );
 
       expect(res.status).toBe(200);
@@ -1311,7 +1311,7 @@ describe('sned api', () => {
             payload: 'USER_DEFINED_PAYLOAD',
           },
         ],
-        'compact',
+        'compact'
       );
 
       expect(res.status).toBe(200);
@@ -2184,7 +2184,7 @@ describe('sned api', () => {
             title: 'Red',
             payload: 'DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_RED',
           },
-        ],
+        ]
       );
 
       expect(res.status).toBe(200);
@@ -2290,7 +2290,7 @@ describe('upload api', () => {
 
       const res = await client.uploadAttachment(
         'image',
-        'http://www.yoctol-rocks.com/image.jpg',
+        'http://www.yoctol-rocks.com/image.jpg'
       );
 
       expect(res.status).toBe(200);
@@ -2321,7 +2321,7 @@ describe('upload api', () => {
         .reply(200, expected);
 
       const res = await client.uploadAudio(
-        'http://www.yoctol-rocks.com/audio.mp3',
+        'http://www.yoctol-rocks.com/audio.mp3'
       );
 
       expect(res.status).toBe(200);
@@ -2352,7 +2352,7 @@ describe('upload api', () => {
         .reply(200, expected);
 
       const res = await client.uploadImage(
-        'http://www.yoctol-rocks.com/image.jpg',
+        'http://www.yoctol-rocks.com/image.jpg'
       );
 
       expect(res.status).toBe(200);
@@ -2383,7 +2383,7 @@ describe('upload api', () => {
         .reply(200, expected);
 
       const res = await client.uploadVideo(
-        'http://www.yoctol-rocks.com/video.mp4',
+        'http://www.yoctol-rocks.com/video.mp4'
       );
 
       expect(res.status).toBe(200);
@@ -2414,7 +2414,7 @@ describe('upload api', () => {
         .reply(200, expected);
 
       const res = await client.uploadFile(
-        'http://www.yoctol-rocks.com/file.pdf',
+        'http://www.yoctol-rocks.com/file.pdf'
       );
 
       expect(res.status).toBe(200);

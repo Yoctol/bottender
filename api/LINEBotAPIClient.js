@@ -148,7 +148,7 @@ type MutationSuccessResponse = {};
 export default class LineBotAPIClient {
   static factory = (
     accessToken: string,
-    channelSecret: string,
+    channelSecret: string
   ): LineBotAPIClient => new LineBotAPIClient(accessToken, channelSecret);
 
   _channelSecret: string;
@@ -183,13 +183,13 @@ export default class LineBotAPIClient {
    */
   reply = (
     replyToken: string,
-    messages: Array<Message>,
+    messages: Array<Message>
   ): Promise<MutationSuccessResponse> =>
     this._http.post('/message/reply', { replyToken, messages });
 
   replyText = (
     replyToken: string,
-    text: string,
+    text: string
   ): Promise<MutationSuccessResponse> =>
     this.reply(replyToken, [{ type: 'text', text }]);
 
@@ -200,7 +200,7 @@ export default class LineBotAPIClient {
    */
   push = (
     to: string,
-    messages: Array<Message>,
+    messages: Array<Message>
   ): Promise<MutationSuccessResponse> =>
     this._http.post('/message/push', { to, messages });
 
@@ -210,7 +210,7 @@ export default class LineBotAPIClient {
   pushImage = (
     to: string,
     contentUrl: string,
-    previewUrl: ?string,
+    previewUrl: ?string
   ): Promise<MutationSuccessResponse> =>
     this.push(to, [
       {
@@ -223,7 +223,7 @@ export default class LineBotAPIClient {
   pushVideo = (
     to: string,
     contentUrl: string,
-    previewUrl: string,
+    previewUrl: string
   ): Promise<MutationSuccessResponse> =>
     this.push(to, [
       {
@@ -236,7 +236,7 @@ export default class LineBotAPIClient {
   pushAudio = (
     to: string,
     contentUrl: string,
-    duration: number,
+    duration: number
   ): Promise<MutationSuccessResponse> =>
     this.push(to, [
       {
@@ -248,7 +248,7 @@ export default class LineBotAPIClient {
 
   pushLocation = (
     to: string,
-    { title, address, latitude, longitude }: Location,
+    { title, address, latitude, longitude }: Location
   ): Promise<MutationSuccessResponse> =>
     this.push(to, [
       {
@@ -263,7 +263,7 @@ export default class LineBotAPIClient {
   pushSticker = (
     to: string,
     packageId: string,
-    stickerId: string,
+    stickerId: string
   ): Promise<MutationSuccessResponse> =>
     this.push(to, [
       {
@@ -291,7 +291,7 @@ export default class LineBotAPIClient {
       baseHeight: number,
       baseWidth: number,
       actions: Array<ImageMapAction>,
-    },
+    }
   ): Promise<MutationSuccessResponse> =>
     this.push(to, [
       {
@@ -314,7 +314,7 @@ export default class LineBotAPIClient {
   pushTemplate = (
     to: string,
     altText: string,
-    template: Template,
+    template: Template
   ): Promise<MutationSuccessResponse> =>
     this.push(to, [
       {
@@ -337,7 +337,7 @@ export default class LineBotAPIClient {
       title?: string,
       text: string,
       actions: Array<TemplateAction>,
-    },
+    }
   ): Promise<MutationSuccessResponse> =>
     this.pushTemplate(to, altText, {
       type: 'buttons',
@@ -356,7 +356,7 @@ export default class LineBotAPIClient {
     }: {
       text: string,
       actions: Array<TemplateAction>,
-    },
+    }
   ): Promise<MutationSuccessResponse> =>
     this.pushTemplate(to, altText, {
       type: 'confirm',
@@ -367,7 +367,7 @@ export default class LineBotAPIClient {
   pushCarouselTemplate = (
     to: string,
     altText: string,
-    columns: Array<ColumnObject>,
+    columns: Array<ColumnObject>
   ): Promise<MutationSuccessResponse> =>
     this.pushTemplate(to, altText, {
       type: 'carousel',
@@ -381,7 +381,7 @@ export default class LineBotAPIClient {
    */
   multicast = (
     to: Array<string>,
-    messages: Array<Message>,
+    messages: Array<Message>
   ): Promise<MutationSuccessResponse> =>
     this._http.post('/message/multicast', { to, messages });
 

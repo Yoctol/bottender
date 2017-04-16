@@ -183,7 +183,7 @@ describe('push message', () => {
       const res = await client.pushImage(
         RECIPIENT_ID,
         'https://example.com/original.jpg',
-        'https://example.com/preview.jpg',
+        'https://example.com/preview.jpg'
       );
 
       expect(res.status).toBe(200);
@@ -213,7 +213,7 @@ describe('push message', () => {
       const res = await client.pushVideo(
         RECIPIENT_ID,
         'https://example.com/original.mp4',
-        'https://example.com/preview.jpg',
+        'https://example.com/preview.jpg'
       );
 
       expect(res.status).toBe(200);
@@ -243,7 +243,7 @@ describe('push message', () => {
       const res = await client.pushAudio(
         RECIPIENT_ID,
         'https://example.com/original.m4a',
-        240000,
+        240000
       );
 
       expect(res.status).toBe(200);
@@ -384,7 +384,7 @@ describe('push message', () => {
               },
             },
           ],
-        },
+        }
       );
 
       expect(res.status).toBe(200);
@@ -458,7 +458,7 @@ describe('push message', () => {
               uri: 'http://example.com/page/123',
             },
           ],
-        },
+        }
       );
 
       expect(res.status).toBe(200);
@@ -531,7 +531,7 @@ describe('push message', () => {
               uri: 'http://example.com/page/123',
             },
           ],
-        },
+        }
       );
 
       expect(res.status).toBe(200);
@@ -590,7 +590,7 @@ describe('push message', () => {
               text: 'no',
             },
           ],
-        },
+        }
       );
 
       expect(res.status).toBe(200);
@@ -713,7 +713,7 @@ describe('push message', () => {
               },
             ],
           },
-        ],
+        ]
       );
 
       expect(res.status).toBe(200);
@@ -743,7 +743,7 @@ describe('multicast', () => {
             type: 'text',
             text: 'Hello!',
           },
-        ],
+        ]
       );
 
       expect(res.status).toBe(200);

@@ -44,7 +44,7 @@ async function resolve() {
   } catch (err) {
     warning(
       false,
-      'failed to connect to mongodb, db instance fallback to empty object.',
+      'failed to connect to mongodb, db instance fallback to empty object.'
     );
     _db = mockDB;
   }

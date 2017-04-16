@@ -61,7 +61,7 @@ export default class MessengerConnector extends Connecter {
           warning(false, 'access postback on second argument is deprecated.');
           return rawEvent.postback;
         },
-      }),
+      })
     );
   }
 

@@ -32,7 +32,7 @@ describe('resolve', () => {
     MongoClient.connect.mockReturnValue(Promise.resolve(db));
     const resolved = await resolve();
     expect(MongoClient.connect).toBeCalledWith(
-      'mongodb://localhost:27017/toolbot',
+      'mongodb://localhost:27017/toolbot'
     );
     expect(resolved).toBe(db);
   });
@@ -45,7 +45,7 @@ describe('resolve', () => {
     MongoClient.connect.mockReturnValue(Promise.resolve(db));
     const resolved = await resolve();
     expect(MongoClient.connect).toBeCalledWith(
-      'mongodb://localhost:54321/toolbot',
+      'mongodb://localhost:54321/toolbot'
     );
     expect(resolved).toBe(db);
   });

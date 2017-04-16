@@ -81,7 +81,7 @@ export default class DangerousDCGHandlerBuilder {
 
     invariant(
       !this._nodeMap[node.key],
-      'can not create node with duplicate name',
+      'can not create node with duplicate name'
     );
 
     this._nodeMap[node.key] = node;

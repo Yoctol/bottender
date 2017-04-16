@@ -102,7 +102,7 @@ export default class HandlerBuilder {
           const quickReplyHandler = this._quickReplyHandlers[i];
           const match = matchCondition(
             quickReplyHandler.condition,
-            message.quick_reply.payload,
+            message.quick_reply.payload
           );
           if (match) {
             return quickReplyHandler.handler(context, msg);
@@ -145,7 +145,7 @@ export default class HandlerBuilder {
           const postbackHandler = this._postbackHandlers[i];
           const match = matchCondition(
             postbackHandler.condition,
-            postback.payload,
+            postback.payload
           );
           if (match) {
             return postbackHandler.handler(context, msg);

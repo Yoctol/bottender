@@ -76,10 +76,10 @@ describe('#getUserProfile', () => {
     const response = { data };
     mockLINEAPIClient.getUserProfile.mockReturnValue(Promise.resolve(response));
     const user = await connector.getUserProfile(
-      'U206d25c2ea6bd87c17655609a1c37cb8',
+      'U206d25c2ea6bd87c17655609a1c37cb8'
     );
     expect(mockLINEAPIClient.getUserProfile).toBeCalledWith(
-      'U206d25c2ea6bd87c17655609a1c37cb8',
+      'U206d25c2ea6bd87c17655609a1c37cb8'
     );
     expect(user).toEqual(data);
   });
