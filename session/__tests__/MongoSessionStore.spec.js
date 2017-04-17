@@ -37,16 +37,29 @@ it('should call findOne with platform and id when get', async () => {
   const sess = {};
   sessions.findOne.mockReturnValue(Promise.resolve(sess));
   await store.get('yoctol:1');
-  expect(sessions.findOne).toBeCalledWith({ platform: 'yoctol', id: '1' });
+  expect(sessions.findOne).toBeCalledWith({
+    'user.platform': 'yoctol',
+    'user.id': '1',
+  });
 });
 
-it('should call replaceOne with upsert mode when set', async () => {
+it('should call replaceOne with _id when set with _id', async () => {
+  const { store, sessions } = await createMongoStore();
+  const sess = { _id: '123456' };
+  sessions.replaceOne.mockReturnValue(Promise.resolve());
+  await store.set('yoctol:1', sess);
+  expect(sessions.replaceOne).toBeCalledWith({ _id: '123456' }, sess, {
+    upsert: true,
+  });
+});
+
+it('should call replaceOne with platform and id when set without _id', async () => {
   const { store, sessions } = await createMongoStore();
   const sess = {};
   sessions.replaceOne.mockReturnValue(Promise.resolve());
   await store.set('yoctol:1', sess);
   expect(sessions.replaceOne).toBeCalledWith(
-    { platform: 'yoctol', id: '1' },
+    { 'user.platform': 'yoctol', 'user.id': '1' },
     sess,
     { upsert: true }
   );
@@ -56,17 +69,16 @@ it('should call remove with platform and id when destroy', async () => {
   const { store, sessions } = await createMongoStore();
   sessions.remove.mockReturnValue(Promise.resolve());
   await store.destroy('yoctol:1');
-  expect(sessions.remove).toBeCalledWith({ platform: 'yoctol', id: '1' });
+  expect(sessions.remove).toBeCalledWith({
+    'user.platform': 'yoctol',
+    'user.id': '1',
+  });
 });
 
-it('should have the same behavior as set when save session', async () => {
+it('should call replaceOne with _id when save', async () => {
   const { store, sessions } = await createMongoStore();
-  const sess = {};
+  const sess = { _id: '123456' };
   sessions.replaceOne.mockReturnValue(Promise.resolve());
   await store.save('yoctol:1', sess);
-  expect(sessions.replaceOne).toBeCalledWith(
-    { platform: 'yoctol', id: '1' },
-    sess,
-    { upsert: true }
-  );
+  expect(sessions.replaceOne).toBeCalledWith({ _id: '123456' }, sess);
 });

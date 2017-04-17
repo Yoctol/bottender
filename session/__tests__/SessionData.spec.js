@@ -40,7 +40,6 @@ describe('construct without data', () => {
   });
 
   it('init', () => {
-    expect(sessionData.isNew).toBe(true);
     expect(sessionData.toJSON()).toEqual({});
     expect(sessionData.inspect()).toEqual({});
     expect(sessionData.length).toBe(0);

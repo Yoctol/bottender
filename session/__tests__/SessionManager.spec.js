@@ -5,7 +5,7 @@ const createMockStore = () => {
   const store = {
     init: jest.fn(() => Promise.resolve(store)),
     get: jest.fn(),
-    set: () => {},
+    set: jest.fn(),
     destroy: () => {},
     save: jest.fn(() => Promise.resolve()),
   };
@@ -22,7 +22,8 @@ it('should call store init when session manager init', async () => {
 describe('#createSessionDataIfNotExists', () => {
   it('should create session data when it does not exist', async () => {
     const store = createMockStore();
-    store.get.mockReturnValue(undefined);
+    store.get.mockReturnValue(Promise.resolve(undefined));
+    store.set.mockReturnValue(Promise.resolve());
     const manager = new SessionManager(store);
     await manager.init();
     expect(await manager.createSessionDataIfNotExists('1')).toEqual({
@@ -33,7 +34,7 @@ describe('#createSessionDataIfNotExists', () => {
 
   it('should return existed session data when it does exists', async () => {
     const store = createMockStore();
-    store.get.mockReturnValue({});
+    store.get.mockReturnValue(Promise.resolve({}));
     const manager = new SessionManager(store);
     await manager.init();
     expect(await manager.createSessionDataIfNotExists('1')).toEqual({

@@ -44,7 +44,6 @@ export default class SessionManager {
   async _createSessionData(key: string): SessionData {
     const sessionData = new SessionData();
     await this._sessionStore.set(key, sessionData);
-
     return sessionData;
   }
 
