@@ -118,10 +118,8 @@ export default class HandlerBuilder {
         // TODO: verify
         for (let i = 0; i < this._messageHandlers.length; i++) {
           const messageHandler = this._messageHandlers[i];
-          const match = matchCondition(
-            messageHandler.condition,
-            message.text
-          ) ||
+          const match =
+            matchCondition(messageHandler.condition, message.text) ||
             (typeof messageHandler.condition === 'function' &&
               messageHandler.condition(context));
           if (match) {
