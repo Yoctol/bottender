@@ -33,7 +33,9 @@ export default class MongoSessionStore {
       };
     }
 
-    const result = this._sessions.replaceOne(filter, sess, { upsert: true });
+    const result = await this._sessions.replaceOne(filter, sess, {
+      upsert: true,
+    });
     if (result && result.upsertedId && result.upsertedId._id) {
       sess._id = result.upsertedId._id;
     }

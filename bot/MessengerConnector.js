@@ -18,6 +18,9 @@ export default class MessengerConnector extends Connecter {
 
   getSenderIdFromRequest(request) {
     const rawEvent = this._getRawEventFromRequest(request);
+    if (rawEvent.message && rawEvent.message.is_echo) {
+      return rawEvent.recipient.id;
+    }
     return rawEvent.sender.id;
   }
 

@@ -34,6 +34,36 @@ const request = {
   },
 };
 
+const echoRequest = {
+  body: {
+    object: 'page',
+    entry: [
+      {
+        id: '1134713619900975', // 粉絲團 id
+        time: 1492414608999.0,
+        messaging: [
+          {
+            sender: {
+              id: '1134713619900975',
+            },
+            recipient: {
+              id: '1244813222196986', // 使用者 id
+            },
+            timestamp: 1492414608982.0,
+            message: {
+              is_echo: true,
+              app_id: 1821152484774199,
+              mid: 'mid.$cAARS90328R5hrBz-Vlbete17ftIb',
+              seq: 661428,
+              text: '未來就是現在，引領未來商務的關鍵字，你壓寶哪一個？',
+            },
+          },
+        ],
+      },
+    ],
+  },
+};
+
 function setup() {
   const mockGraphAPIClient = {
     getUserProfile: jest.fn(),
@@ -58,6 +88,12 @@ describe('#getSenderIdFromRequest', () => {
     const { connector } = setup();
     const senderId = connector.getSenderIdFromRequest(request);
     expect(senderId).toBe('1412611362105802');
+  });
+
+  it('return recipient id when request is an echo event', () => {
+    const { connector } = setup();
+    const senderId = connector.getSenderIdFromRequest(echoRequest);
+    expect(senderId).toBe('1244813222196986');
   });
 });
 
