@@ -30,8 +30,7 @@ export default class MessengerConnector extends Connecter {
     const rawEvent = this._getRawEventFromRequest(request);
 
     // FIXME: start
-    const getStartedRef =
-      rawEvent &&
+    const getStartedRef = rawEvent &&
       rawEvent.postback &&
       rawEvent.postback.referral &&
       rawEvent.postback.referral.ref;

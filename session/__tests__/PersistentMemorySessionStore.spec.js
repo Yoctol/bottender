@@ -23,10 +23,8 @@ beforeEach(() => {
 
 it('should create new file when file does not exist', async () => {
   fs.stat = jest.fn((filename, cb) =>
-    cb(new Error('no such file or directory'))
-  );
-  const PersistentMemorySessionStore = require('../PersistentMemorySessionStore')
-    .default;
+    cb(new Error('no such file or directory')));
+  const PersistentMemorySessionStore = require('../PersistentMemorySessionStore').default;
 
   const store = new PersistentMemorySessionStore('sess.json', 500);
   expect(await store.init()).toBe(store);
@@ -54,18 +52,15 @@ it('should not create new file when file exists', async () => {
       mtime: '2017-03-16T06:39:44.000Z',
       ctime: '2017-03-16T06:39:44.000Z',
       birthtime: '2017-03-16T06:39:44.000Z',
-    })
-  );
-  const PersistentMemorySessionStore = require('../PersistentMemorySessionStore')
-    .default;
+    }));
+  const PersistentMemorySessionStore = require('../PersistentMemorySessionStore').default;
   const store = new PersistentMemorySessionStore('sess.json', 500);
   expect(await store.init()).toBe(store);
   expect(steno.writeFile).not.toBeCalled();
 });
 
 it('should handle multiple types', async () => {
-  const PersistentMemorySessionStore = require('../PersistentMemorySessionStore')
-    .default;
+  const PersistentMemorySessionStore = require('../PersistentMemorySessionStore').default;
   const store = new PersistentMemorySessionStore('sess.json', 500);
   await store.init();
   const six = {};
@@ -84,8 +79,7 @@ it('should handle multiple types', async () => {
 });
 
 it('should remove data from store when destroy be called', async () => {
-  const PersistentMemorySessionStore = require('../PersistentMemorySessionStore')
-    .default;
+  const PersistentMemorySessionStore = require('../PersistentMemorySessionStore').default;
   const store = new PersistentMemorySessionStore('sess.json', 500);
   await store.init();
   await store.set('1', 1);
@@ -102,16 +96,14 @@ it('should read session from persistent session file when it does not exist in m
     .fn()
     .mockImplementationOnce((filename, cb) => cb(null, {}))
     .mockImplementationOnce((filename, cb) => cb(null, { 1: 'cph' }));
-  const PersistentMemorySessionStore = require('../PersistentMemorySessionStore')
-    .default;
+  const PersistentMemorySessionStore = require('../PersistentMemorySessionStore').default;
   const store = new PersistentMemorySessionStore('sess.json', 500);
   await store.init();
   expect(await store.get('1')).toBe('cph');
 });
 
 it('should have the same behavior as set when save memory session', async () => {
-  const PersistentMemorySessionStore = require('../PersistentMemorySessionStore')
-    .default;
+  const PersistentMemorySessionStore = require('../PersistentMemorySessionStore').default;
   const store = new PersistentMemorySessionStore('sess.json', 500);
   await store.init();
   const six = {};
@@ -133,8 +125,7 @@ it('should not write to file before timing of taking snapshot', async () => {
   jest.useFakeTimers();
 
   jsonfile.readFile = jest.fn((filename, cb) => cb(null, { 1: 'cph' }));
-  const PersistentMemorySessionStore = require('../PersistentMemorySessionStore')
-    .default;
+  const PersistentMemorySessionStore = require('../PersistentMemorySessionStore').default;
   const store = new PersistentMemorySessionStore('sess.json', 500);
   await store.init();
   await store.set('2', 'kpman');
@@ -152,8 +143,7 @@ it('should write merged session map to file when taking snapshot', async () => {
   jest.useFakeTimers();
 
   jsonfile.readFile = jest.fn((filename, cb) => cb(null, { 1: 'cph' }));
-  const PersistentMemorySessionStore = require('../PersistentMemorySessionStore')
-    .default;
+  const PersistentMemorySessionStore = require('../PersistentMemorySessionStore').default;
   const store = new PersistentMemorySessionStore('sess.json', 500);
   await store.init();
   await store.set('2', 'kpman');

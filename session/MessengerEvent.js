@@ -48,9 +48,8 @@ export default class MessengerEvent {
   }
 
   get isMessage(): boolean {
-    return (
-      !!this._rawEvent.message && typeof this._rawEvent.message === 'object'
-    );
+    return !!this._rawEvent.message &&
+      typeof this._rawEvent.message === 'object';
   }
 
   get message(): ?Message {
@@ -62,11 +61,9 @@ export default class MessengerEvent {
   }
 
   get hasAttachment(): boolean {
-    return (
-      this.isMessage &&
+    return this.isMessage &&
       !!(this.message: any).attachments &&
-      (this.message: any).attachments.length > 0
-    );
+      (this.message: any).attachments.length > 0;
   }
 
   get attachments(): ?Array<Attachment> {
@@ -82,11 +79,9 @@ export default class MessengerEvent {
   }
 
   get isQuickReply(): boolean {
-    return (
-      this.isMessage &&
+    return this.isMessage &&
       !!(this.message: any).quick_reply &&
-      typeof (this.message: any).quick_reply === 'object'
-    );
+      typeof (this.message: any).quick_reply === 'object';
   }
 
   get quickReply(): ?QuickReply {
@@ -98,9 +93,8 @@ export default class MessengerEvent {
   }
 
   get isPostback(): boolean {
-    return (
-      !!this._rawEvent.postback && typeof this._rawEvent.postback === 'object'
-    );
+    return !!this._rawEvent.postback &&
+      typeof this._rawEvent.postback === 'object';
   }
 
   get postback(): ?Postback {
