@@ -1,18 +1,15 @@
 import _debug from 'debug';
 
 import SessionManager from '../session/SessionManager';
-import PersistentMemorySessionStore
-  from '../session/PersistentMemorySessionStore';
+import MongoSessionStore from '../session/MongoSessionStore';
 import { resolveScoped } from '../database/resolve';
 
 const debug = _debug('core/bot/Bot');
 
 export default class Bot {
-  constructor({ id, filePath, connector }) {
+  constructor({ id, connector }) {
     this._id = id;
-    this._sessionManager = new SessionManager(
-      new PersistentMemorySessionStore(filePath, 500)
-    );
+    this._sessionManager = new SessionManager(new MongoSessionStore({ id }));
     this._initialized = false;
     this._connector = connector;
   }

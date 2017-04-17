@@ -26,6 +26,10 @@ export default class MongoSessionStore {
     return this._sessions.remove({ platform, id });
   }
 
+  async save(key, sess /* , maxAge */) {
+    return this.set(key, sess);
+  }
+
   get _sessions() {
     return this._db.collection('sessions');
   }
