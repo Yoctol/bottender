@@ -38,11 +38,12 @@ export default class Bot {
       debug(JSON.stringify(request.body, null, 2));
 
       const db = await resolveScoped(this._id);
+      const platform = this._connector.platform;
 
       if (!db.__MOCK__) {
         const logs = await db.collection('logs');
         logs.insert({
-          platform: this._connector.platform,
+          platform,
           body: request.body,
         });
       }
@@ -54,10 +55,12 @@ export default class Bot {
 
       const senderId = this._connector.getSenderIdFromRequest(request);
 
+      const sessionKey = `${platform}:${senderId}`;
+
       const {
         sessionData,
         existed,
-      } = await this._sessionManager.createSessionDataIfNotExists(senderId);
+      } = await this._sessionManager.createSessionDataIfNotExists(sessionKey);
 
       if (!existed) {
         const data = await this._connector.getUserProfile(senderId);
@@ -76,7 +79,7 @@ export default class Bot {
       }
 
       await this._connector.handleRequest({ request, sessionData, db });
-      this._sessionManager.saveSessionData(senderId, sessionData);
+      this._sessionManager.saveSessionData(sessionKey, sessionData);
 
       response.status = 200;
     };

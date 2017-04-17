@@ -34,24 +34,27 @@ export default class PersistentMemorySessionStore {
   }
 
   async get(key) {
-    let sess = this._map.get(key);
+    const [, id] = key.split(':');
+    let sess = this._map.get(id);
     if (!sess) {
       const persistentMap = await this._readPersistentMap();
-      if (persistentMap[key]) {
-        sess = persistentMap[key];
-        this._map.set(key, sess);
+      if (persistentMap[id]) {
+        sess = persistentMap[id];
+        this._map.set(id, sess);
       }
     }
     return sess;
   }
 
   async set(key, sess /* , maxAge */) {
-    this._map.set(key, sess);
+    const [, id] = key.split(':');
+    this._map.set(id, sess);
     // FIXME: maxAge
   }
 
   async destroy(key) {
-    delete this._map.del(key);
+    const [, id] = key.split(':');
+    delete this._map.del(id);
   }
 
   _readPersistentMap = () => read(this._filename);
@@ -69,6 +72,7 @@ export default class PersistentMemorySessionStore {
   };
 
   async save(key, sess) {
-    this._map.set(key, sess);
+    const [, id] = key.split(':');
+    this._map.set(id, sess);
   }
 }

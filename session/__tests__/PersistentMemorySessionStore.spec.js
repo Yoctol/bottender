@@ -69,18 +69,18 @@ it('should handle multiple types', async () => {
   const store = new PersistentMemorySessionStore('sess.json', 500);
   await store.init();
   const six = {};
-  await store.set('1', undefined);
-  await store.set('2', null);
-  await store.set('3', true);
-  await store.set('4', 4);
-  await store.set('5', '5');
-  await store.set('6', six);
-  expect(await store.get('1')).toBeUndefined();
-  expect(await store.get('2')).toBeNull();
-  expect(await store.get('3')).toBe(true);
-  expect(await store.get('4')).toBe(4);
-  expect(await store.get('5')).toBe('5');
-  expect(await store.get('6')).toBe(six);
+  await store.set('yoctol:1', undefined);
+  await store.set('yoctol:2', null);
+  await store.set('yoctol:3', true);
+  await store.set('yoctol:4', 4);
+  await store.set('yoctol:5', '5');
+  await store.set('yoctol:6', six);
+  expect(await store.get('yoctol:1')).toBeUndefined();
+  expect(await store.get('yoctol:2')).toBeNull();
+  expect(await store.get('yoctol:3')).toBe(true);
+  expect(await store.get('yoctol:4')).toBe(4);
+  expect(await store.get('yoctol:5')).toBe('5');
+  expect(await store.get('yoctol:6')).toBe(six);
 });
 
 it('should remove data from store when destroy be called', async () => {
@@ -88,13 +88,13 @@ it('should remove data from store when destroy be called', async () => {
     .default;
   const store = new PersistentMemorySessionStore('sess.json', 500);
   await store.init();
-  await store.set('1', 1);
-  await store.set('2', 2);
-  await store.set('3', 3);
-  await store.destroy('2');
-  expect(await store.get('1')).toBe(1);
-  expect(await store.get('2')).toBeUndefined();
-  expect(await store.get('3')).toBe(3);
+  await store.set('yoctol:1', 1);
+  await store.set('yoctol:2', 2);
+  await store.set('yoctol:3', 3);
+  await store.destroy('yoctol:2');
+  expect(await store.get('yoctol:1')).toBe(1);
+  expect(await store.get('yoctol:2')).toBeUndefined();
+  expect(await store.get('yoctol:3')).toBe(3);
 });
 
 it('should read session from persistent session file when it does not exist in memory', async () => {
@@ -106,7 +106,7 @@ it('should read session from persistent session file when it does not exist in m
     .default;
   const store = new PersistentMemorySessionStore('sess.json', 500);
   await store.init();
-  expect(await store.get('1')).toBe('cph');
+  expect(await store.get('yoctol:1')).toBe('cph');
 });
 
 it('should have the same behavior as set when save memory session', async () => {
@@ -115,18 +115,18 @@ it('should have the same behavior as set when save memory session', async () => 
   const store = new PersistentMemorySessionStore('sess.json', 500);
   await store.init();
   const six = {};
-  await store.save('1', undefined);
-  await store.save('2', null);
-  await store.save('3', true);
-  await store.save('4', 4);
-  await store.save('5', '5');
-  await store.save('6', six);
-  expect(await store.get('1')).toBeUndefined();
-  expect(await store.get('2')).toBeNull();
-  expect(await store.get('3')).toBe(true);
-  expect(await store.get('4')).toBe(4);
-  expect(await store.get('5')).toBe('5');
-  expect(await store.get('6')).toBe(six);
+  await store.save('yoctol:1', undefined);
+  await store.save('yoctol:2', null);
+  await store.save('yoctol:3', true);
+  await store.save('yoctol:4', 4);
+  await store.save('yoctol:5', '5');
+  await store.save('yoctol:6', six);
+  expect(await store.get('yoctol:1')).toBeUndefined();
+  expect(await store.get('yoctol:2')).toBeNull();
+  expect(await store.get('yoctol:3')).toBe(true);
+  expect(await store.get('yoctol:4')).toBe(4);
+  expect(await store.get('yoctol:5')).toBe('5');
+  expect(await store.get('yoctol:6')).toBe(six);
 });
 
 it('should not write to file before timing of taking snapshot', async () => {
@@ -137,7 +137,7 @@ it('should not write to file before timing of taking snapshot', async () => {
     .default;
   const store = new PersistentMemorySessionStore('sess.json', 500);
   await store.init();
-  await store.set('2', 'kpman');
+  await store.set('yoctol:2', 'kpman');
 
   jest.runTimersToTime(25000);
 
@@ -156,7 +156,7 @@ it('should write merged session map to file when taking snapshot', async () => {
     .default;
   const store = new PersistentMemorySessionStore('sess.json', 500);
   await store.init();
-  await store.set('2', 'kpman');
+  await store.set('yoctol:2', 'kpman');
 
   jest.runTimersToTime(30000);
 

@@ -181,7 +181,7 @@ describe('#createKoaMiddleware', () => {
     const response = {};
     await middleware({ request, response });
     expect(bot.sessionManager.createSessionDataIfNotExists).toBeCalledWith(
-      'SENDER_ID'
+      'yoctol:SENDER_ID'
     );
   });
 
@@ -221,7 +221,7 @@ describe('#createKoaMiddleware', () => {
     const response = {};
     await middleware({ request, response });
     expect(bot.sessionManager.saveSessionData).toBeCalledWith(
-      'SENDER_ID',
+      'yoctol:SENDER_ID',
       sessionData
     );
   });
