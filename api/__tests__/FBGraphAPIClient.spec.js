@@ -818,6 +818,40 @@ describe('target audience', () => {
 });
 
 describe('sned api', () => {
+  describe('#sendRawBody', () => {
+    it('should call messages api', async () => {
+      const { client, mock } = createMock();
+
+      const expected = {
+        recipient_id: RECIPIENT_ID,
+        message_id: 'mid.1489394984387:3dd22de509',
+      };
+
+      mock
+        .onPost(`/me/messages?access_token=${ACCESS_TOKEN}`, {
+          recipient: {
+            id: RECIPIENT_ID,
+          },
+          message: {
+            text: 'Hello!',
+          },
+        })
+        .reply(200, expected);
+
+      const res = await client.sendRawBody({
+        recipient: {
+          id: RECIPIENT_ID,
+        },
+        message: {
+          text: 'Hello!',
+        },
+      });
+
+      expect(res.status).toBe(200);
+      expect(res.data).toBe(expected);
+    });
+  });
+
   describe('#send', () => {
     it('should call messages api', async () => {
       const { client, mock } = createMock();
