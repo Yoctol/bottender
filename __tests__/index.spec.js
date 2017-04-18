@@ -43,5 +43,6 @@ describe('core', () => {
   it('export intent', () => {
     expect(core.REGEX).toBeDefined();
     expect(core.recognizers).toBeDefined();
+    expect(core.createRecognizer).toBeDefined();
   });
 });
