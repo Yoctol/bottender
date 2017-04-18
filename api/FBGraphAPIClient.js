@@ -464,12 +464,15 @@ export default class FBGraphAPIClient {
    *
    * https://developers.facebook.com/docs/messenger-platform/send-api-reference
    */
+  sendRawBody = (body: Object): Promise<SendMessageSucessResponse> =>
+    this._http.post(`/me/messages?access_token=${this._accessToken}`, body);
+
   send = (
     recipientId: string,
     message: Message,
     options?: SendOption
   ): Promise<SendMessageSucessResponse> =>
-    this._http.post(`/me/messages?access_token=${this._accessToken}`, {
+    this.sendRawBody({
       recipient: {
         id: recipientId,
       },
