@@ -33,7 +33,7 @@ const imageMessage = {
   },
 };
 
-const stickerMessage = {
+const likeStickerMessage = {
   sender: {
     id: '1423587017700273',
   },
@@ -51,6 +51,30 @@ const stickerMessage = {
         payload: {
           url: 'https://scontent.xx.fbcdn.net/v/t39.1997-6/851557_369239266556155_759568595_n.png?_nc_ad=z-m&oh=547beb90237e24a9682810a5144c9fba&oe=5988CFDC',
           sticker_id: 369239263222822,
+        },
+      },
+    ],
+  },
+};
+
+const largeLikeStickerMessage = {
+  sender: {
+    id: '1423587017700273',
+  },
+  recipient: {
+    id: '404217156637689',
+  },
+  timestamp: 1491797086506,
+  message: {
+    mid: 'mid.$cAAE1UUyiiwthh05ZKlbVgkOobi32',
+    seq: 348853,
+    sticker_id: 369239343222814,
+    attachments: [
+      {
+        type: 'image',
+        payload: {
+          url: 'https://scontent.xx.fbcdn.net/v/t39.1997-6/p100x100/851587_369239346556147_162929011_n.png?_nc_ad=z-m&oh=2008c832edbd2376b09a1008358b8fd9&oe=598FC1B0',
+          sticker_id: 369239343222814,
         },
       },
     ],
@@ -108,7 +132,9 @@ const postback = {
 it('#rawEvent', () => {
   expect(new MessengerEvent(textMessage).rawEvent).toEqual(textMessage);
   expect(new MessengerEvent(imageMessage).rawEvent).toEqual(imageMessage);
-  expect(new MessengerEvent(stickerMessage).rawEvent).toEqual(stickerMessage);
+  expect(new MessengerEvent(likeStickerMessage).rawEvent).toEqual(
+    likeStickerMessage
+  );
   expect(new MessengerEvent(quickReplyMessage).rawEvent).toEqual(
     quickReplyMessage
   );
@@ -119,7 +145,7 @@ it('#rawEvent', () => {
 it('#isMessage', () => {
   expect(new MessengerEvent(textMessage).isMessage).toEqual(true);
   expect(new MessengerEvent(imageMessage).isMessage).toEqual(true);
-  expect(new MessengerEvent(stickerMessage).isMessage).toEqual(true);
+  expect(new MessengerEvent(likeStickerMessage).isMessage).toEqual(true);
   expect(new MessengerEvent(quickReplyMessage).isMessage).toEqual(true);
   expect(new MessengerEvent(echoMessage).isMessage).toEqual(true);
   expect(new MessengerEvent(postback).isMessage).toEqual(false);
@@ -143,7 +169,7 @@ it('#message', () => {
       },
     ],
   });
-  expect(new MessengerEvent(stickerMessage).message).toEqual({
+  expect(new MessengerEvent(likeStickerMessage).message).toEqual({
     mid: 'mid.$cAAE1UUyiiwthh05ZKlbVgkOobi32',
     seq: 348853,
     sticker_id: 369239263222822,
@@ -162,13 +188,13 @@ it('#message', () => {
 it('#isTextMessage', () => {
   expect(new MessengerEvent(textMessage).isTextMessage).toEqual(true);
   expect(new MessengerEvent(imageMessage).isTextMessage).toEqual(false);
-  expect(new MessengerEvent(stickerMessage).isTextMessage).toEqual(false);
+  expect(new MessengerEvent(likeStickerMessage).isTextMessage).toEqual(false);
 });
 
 it('#hasAttachment', () => {
   expect(new MessengerEvent(textMessage).hasAttachment).toEqual(false);
   expect(new MessengerEvent(imageMessage).hasAttachment).toEqual(true);
-  expect(new MessengerEvent(stickerMessage).hasAttachment).toEqual(true);
+  expect(new MessengerEvent(likeStickerMessage).hasAttachment).toEqual(true);
 });
 
 it('#attachments', () => {
@@ -180,7 +206,7 @@ it('#attachments', () => {
       },
     },
   ]);
-  expect(new MessengerEvent(stickerMessage).attachments).toEqual([
+  expect(new MessengerEvent(likeStickerMessage).attachments).toEqual([
     {
       type: 'image',
       payload: {
@@ -194,19 +220,31 @@ it('#attachments', () => {
 it('#isImageMessage', () => {
   expect(new MessengerEvent(textMessage).isImageMessage).toEqual(false);
   expect(new MessengerEvent(imageMessage).isImageMessage).toEqual(true);
-  expect(new MessengerEvent(stickerMessage).isImageMessage).toEqual(true);
+  expect(new MessengerEvent(likeStickerMessage).isImageMessage).toEqual(true);
 });
 
 it('#isStickerMessage', () => {
   expect(new MessengerEvent(textMessage).isStickerMessage).toEqual(false);
   expect(new MessengerEvent(imageMessage).isStickerMessage).toEqual(false);
-  expect(new MessengerEvent(stickerMessage).isStickerMessage).toEqual(true);
+  expect(new MessengerEvent(likeStickerMessage).isStickerMessage).toEqual(true);
+  expect(new MessengerEvent(largeLikeStickerMessage).isStickerMessage).toEqual(
+    true
+  );
+});
+
+it('#isLikeSticker', () => {
+  expect(new MessengerEvent(textMessage).isLikeSticker).toEqual(false);
+  expect(new MessengerEvent(imageMessage).isLikeSticker).toEqual(false);
+  expect(new MessengerEvent(likeStickerMessage).isLikeSticker).toEqual(true);
+  expect(new MessengerEvent(largeLikeStickerMessage).isLikeSticker).toEqual(
+    true
+  );
 });
 
 it('#isQuickReply', () => {
   expect(new MessengerEvent(textMessage).isQuickReply).toEqual(false);
   expect(new MessengerEvent(imageMessage).isQuickReply).toEqual(false);
-  expect(new MessengerEvent(stickerMessage).isQuickReply).toEqual(false);
+  expect(new MessengerEvent(likeStickerMessage).isQuickReply).toEqual(false);
   expect(new MessengerEvent(quickReplyMessage).isQuickReply).toEqual(true);
   expect(new MessengerEvent(echoMessage).isQuickReply).toEqual(false);
 });
@@ -220,7 +258,7 @@ it('#quickReply', () => {
 it('#isEcho', () => {
   expect(new MessengerEvent(textMessage).isEcho).toEqual(false);
   expect(new MessengerEvent(imageMessage).isEcho).toEqual(false);
-  expect(new MessengerEvent(stickerMessage).isEcho).toEqual(false);
+  expect(new MessengerEvent(likeStickerMessage).isEcho).toEqual(false);
   expect(new MessengerEvent(quickReplyMessage).isEcho).toEqual(false);
   expect(new MessengerEvent(echoMessage).isEcho).toEqual(true);
 });
@@ -228,7 +266,7 @@ it('#isEcho', () => {
 it('#isPostback', () => {
   expect(new MessengerEvent(textMessage).isPostback).toEqual(false);
   expect(new MessengerEvent(imageMessage).isPostback).toEqual(false);
-  expect(new MessengerEvent(stickerMessage).isPostback).toEqual(false);
+  expect(new MessengerEvent(likeStickerMessage).isPostback).toEqual(false);
   expect(new MessengerEvent(quickReplyMessage).isPostback).toEqual(false);
   expect(new MessengerEvent(echoMessage).isPostback).toEqual(false);
   expect(new MessengerEvent(postback).isPostback).toEqual(true);

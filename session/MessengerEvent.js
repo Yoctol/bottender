@@ -81,6 +81,14 @@ export default class MessengerEvent {
     return this.isMessage && typeof (this.message: any).sticker_id === 'number';
   }
 
+  get isLikeSticker(): boolean {
+    return (
+      this.isStickerMessage &&
+      ((this.message: any).sticker_id === 369239263222822 ||
+        (this.message: any).sticker_id === 369239343222814)
+    );
+  }
+
   get isQuickReply(): boolean {
     return (
       this.isMessage &&
