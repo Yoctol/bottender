@@ -49,6 +49,17 @@ describe('resolve', () => {
     );
     expect(resolved).toBe(db);
   });
+
+  it('should use mock when connect failed', async () => {
+    const resolve = require('../resolve').default;
+
+    MongoClient.connect.mockImplementation(() => {
+      throw new Error();
+    });
+
+    const resolved = await resolve();
+    expect(resolved.__MOCK__).toBe(true);
+  });
 });
 
 describe('resolveScoped', () => {

@@ -39,17 +39,35 @@ describe('#ScopedDB', () => {
     expect(db.collection).toBeCalledWith('cph.logs');
   });
 
-  it('#collections', async () => {
-    const db = createMockDB();
-    db.collections.mockReturnValue(
-      Promise.resolve([
-        { collectionName: 'cph.girls' },
-        { collectionName: 'kpman.girls ' },
-      ])
-    );
-    const scopedDB = new ScopedDB(db, 'cph');
-    const collections = await scopedDB.collections();
-    expect(collections).toEqual([{ collectionName: 'cph.girls' }]);
+  describe('#collections', () => {
+    it('Promise', async () => {
+      const db = createMockDB();
+      db.collections.mockReturnValue(
+        Promise.resolve([
+          { collectionName: 'cph.girls' },
+          { collectionName: 'kpman.girls ' },
+        ])
+      );
+      const scopedDB = new ScopedDB(db, 'cph');
+      const collections = await scopedDB.collections();
+      expect(collections).toEqual([{ collectionName: 'cph.girls' }]);
+    });
+
+    it('Callback', () => {
+      expect.assertions(2);
+      const db = createMockDB();
+      db.collections.mockImplementation(callback => {
+        callback(null, [
+          { collectionName: 'cph.girls' },
+          { collectionName: 'kpman.girls ' },
+        ]);
+      });
+      const scopedDB = new ScopedDB(db, 'cph');
+      scopedDB.collections((err, collections) => {
+        expect(err).toBeNull();
+        expect(collections).toEqual([{ collectionName: 'cph.girls' }]);
+      });
+    });
   });
 
   it('#createCollection', () => {
