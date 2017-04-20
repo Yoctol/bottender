@@ -1,27 +1,20 @@
 import * as core from '../index';
 
 describe('core', () => {
-  it('export MessengerBot', () => {
+  it('export Bots', () => {
     expect(core.MessengerBot).toBeDefined();
-  });
-
-  it('export LINEBot', () => {
     expect(core.LINEBot).toBeDefined();
   });
 
-  it('export HandlerBuilder', () => {
+  it('export handler builders', () => {
     expect(core.HandlerBuilder).toBeDefined();
-  });
-
-  it('export SwitchHandlerBuilder', () => {
     expect(core.SwitchHandlerBuilder).toBeDefined();
+    expect(core.BasicHandlerBuilder).toBeDefined();
+    expect(core.MessengerHandlerBuilder).toBeDefined();
   });
 
-  it('export FBGraphAPIClient', () => {
+  it('export api clients', () => {
     expect(core.FBGraphAPIClient).toBeDefined();
-  });
-
-  it('export LINEBotAPIClient', () => {
     expect(core.LINEBotAPIClient).toBeDefined();
   });
 

@@ -5,6 +5,7 @@ import randomItem from 'random-item';
 type Context = {
   event: {
     isMessage: boolean,
+    isTextMessage: boolean,
     message: {
       is_echo: boolean,
       quick_reply: {
