@@ -514,7 +514,7 @@ describe('domain whitelist', () => {
         })
         .reply(200, expected);
 
-      const res = await client.setDomainWhitelist('www.yoctol.com');
+      const res = await client.setDomainWhitelist(['www.yoctol.com']);
 
       expect(res.status).toBe(200);
       expect(res.data).toBe(expected);
