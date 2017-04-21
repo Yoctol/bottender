@@ -373,9 +373,11 @@ export default class FBGraphAPIClient {
   getDomainWhitelist = (): Promise<MessengerProfileResponse> =>
     this.getMessengerProfile(['whitelisted_domains']);
 
-  setDomainWhitelist = (domain: string): Promise<MutationSuccessResponse> =>
+  setDomainWhitelist = (
+    domains: Array<string>
+  ): Promise<MutationSuccessResponse> =>
     this.setMessengerProfile({
-      whitelisted_domains: [domain],
+      whitelisted_domains: domains,
     });
 
   deleteDomainWhitelist = (): Promise<MutationSuccessResponse> =>
