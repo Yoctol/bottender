@@ -1,4 +1,6 @@
 /* @flow */
+import warning from 'warning';
+
 import * as constants from '../constants';
 
 import BasicHandlerBuilder, {
@@ -24,6 +26,10 @@ export default class MessengerHandlerBuilder extends BasicHandlerBuilder {
   }
 
   onText(pattern: Pattern, handler: Handler) {
+    warning(
+      typeof pattern === 'string' || pattern instanceof RegExp,
+      `'onText' only accepts string or regex, but received ${typeof pattern}`
+    );
     this.onMessage(
       context =>
         context.event.isTextMessage &&
@@ -39,6 +45,10 @@ export default class MessengerHandlerBuilder extends BasicHandlerBuilder {
   }
 
   onPayload(pattern: Pattern, handler: Handler) {
+    warning(
+      typeof pattern === 'string' || pattern instanceof RegExp,
+      `'onPayload' only accepts string or regex, but received ${typeof pattern}`
+    );
     this.on(({ event }) => {
       if (event.isPostback && matchPattern(pattern, event.postback.payload)) {
         return true;

@@ -1,4 +1,6 @@
 /* @flow */
+import warning from 'warning';
+
 import * as constants from '../constants';
 import type Context from '../session/Context';
 
@@ -31,6 +33,10 @@ export default class HandlerBuilder {
   _postbackHandlers: Array<ConditionHandler> = [];
   _quickReplyHandlers: Array<ConditionHandler> = [];
   _unhandledHandler: ?Handler;
+
+  constructor() {
+    warning(false, '`HandlerBuilder` is deprecated.');
+  }
 
   onMessage(condition: Condition, handler: Handler) {
     this._messageHandlers.push({
