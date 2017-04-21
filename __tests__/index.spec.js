@@ -13,6 +13,10 @@ describe('core', () => {
     expect(core.MessengerHandlerBuilder).toBeDefined();
   });
 
+  it('export database api', () => {
+    expect(core.resolveScopedDatabase).toBeDefined();
+  });
+
   it('export api clients', () => {
     expect(core.FBGraphAPIClient).toBeDefined();
     expect(core.LINEBotAPIClient).toBeDefined();

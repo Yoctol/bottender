@@ -10,6 +10,8 @@ export {
 export { default as FBGraphAPIClient } from './api/FBGraphAPIClient';
 export { default as LINEBotAPIClient } from './api/LINEBotAPIClient';
 
+export { resolveScoped as resolveScopedDatabase } from './database/resolve';
+
 export { default as REGEX } from './intent/REGEX';
 export { default as recognizers, createRecognizer } from './intent/recognizers';
 
