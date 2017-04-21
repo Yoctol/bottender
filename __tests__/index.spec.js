@@ -14,6 +14,7 @@ describe('core', () => {
   });
 
   it('export database api', () => {
+    expect(core.resolveDatabase).toBeDefined();
     expect(core.resolveScopedDatabase).toBeDefined();
   });
 
