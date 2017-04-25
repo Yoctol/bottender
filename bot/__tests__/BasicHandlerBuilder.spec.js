@@ -15,12 +15,47 @@ describe('#constructor', () => {
   });
 });
 
+describe('#before', () => {
+  it('should return this', () => {
+    const { builder } = setup();
+    const handler = () => {};
+    expect(builder.before(handler)).toBe(builder);
+  });
+
+  it('should run every time', async () => {
+    const { builder } = setup();
+    const handler = jest.fn();
+    let i = 1;
+    builder
+      .before(handler)
+      .on(
+        () => i === 1,
+        () => {
+          i += 1;
+        }
+      )
+      .on(
+        () => i === 2,
+        () => {
+          i += 1;
+        }
+      )
+      .onUnhandled(() => {});
+    const rootHandler = builder.build();
+    const context = {};
+    await rootHandler(context);
+    await rootHandler(context);
+    await rootHandler(context);
+    expect(handler).toHaveBeenCalledTimes(3);
+  });
+});
+
 describe('#on', () => {
-  it('should return this', async () => {
+  it('should return this', () => {
     const { builder } = setup();
     const condition = () => true;
     const handler = () => {};
-    expect(await builder.on(condition, handler)).toBe(builder);
+    expect(builder.on(condition, handler)).toBe(builder);
   });
 
   it('should receive context pass from builder in condition and handler function', async () => {
@@ -105,10 +140,10 @@ describe('#on', () => {
 });
 
 describe('#onUnhandled', () => {
-  it('should return this', async () => {
+  it('should return this', () => {
     const { builder } = setup();
     const handler = () => {};
-    expect(await builder.onUnhandled(handler)).toBe(builder);
+    expect(builder.onUnhandled(handler)).toBe(builder);
   });
 
   it('should call fallback handler if can not find a match condition', async () => {

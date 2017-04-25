@@ -47,8 +47,14 @@ function normalizeHandler(handler: Handler): FunctionalHandler {
 }
 
 export default class HandlerBuilder {
+  _beforeHandler: ?FunctionalHandler = null;
   _handlers: Array<ConditionHandler> = [];
   _fallbackHandler: ?ConditionHandler = null;
+
+  before(handler: FunctionalHandler) {
+    this._beforeHandler = handler;
+    return this;
+  }
 
   on(condition: Condition, handler: Handler) {
     this._handlers.push({
@@ -67,10 +73,15 @@ export default class HandlerBuilder {
   }
 
   build(): FunctionalHandler {
+    const handlers = this._fallbackHandler
+      ? this._handlers.concat(this._fallbackHandler)
+      : this._handlers;
+
     return async (context: Context) => {
-      const handlers = this._fallbackHandler
-        ? this._handlers.concat(this._fallbackHandler)
-        : this._handlers;
+      if (this._beforeHandler) {
+        await Promise.resolve(this._beforeHandler(context));
+      }
+
       for (let i = 0; i < handlers.length; i++) {
         const { condition, handler } = handlers[i];
         // eslint-disable-next-line no-await-in-loop
