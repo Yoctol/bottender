@@ -33,12 +33,11 @@ export default class MongoSessionStore {
       };
     }
 
-    const found = await this._sessions.findOne(filter);
-    if (found) {
-      await this._sessions.updateOne(filter, sess);
-    } else {
-      const { insertedId } = await this._sessions.insertOne(sess);
-      sess._id = insertedId;
+    const result = await this._sessions.updateOne(filter, sess, {
+      upsert: true,
+    });
+    if (result && result.upsertedId && result.upsertedId._id) {
+      sess._id = result.upsertedId._id;
     }
   }
 

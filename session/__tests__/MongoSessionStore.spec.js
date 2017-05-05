@@ -9,7 +9,6 @@ async function createMongoStore() {
     findOne: jest.fn(),
     updateOne: jest.fn(),
     remove: jest.fn(),
-    insertOne: jest.fn(),
   };
 
   const db = {
@@ -44,26 +43,26 @@ it('should call findOne with platform and id when get', async () => {
   });
 });
 
-it('should call updateOne with _id and sess when set with _id', async () => {
+it('should call updateOne with _id when set with _id', async () => {
   const { store, sessions } = await createMongoStore();
   const sess = { _id: '123456' };
-  sessions.findOne.mockReturnValue(Promise.resolve({ sess }));
   sessions.updateOne.mockReturnValue(Promise.resolve());
   await store.set('yoctol:1', sess);
-  expect(sessions.updateOne).toBeCalledWith({ _id: '123456' }, sess);
+  expect(sessions.updateOne).toBeCalledWith({ _id: '123456' }, sess, {
+    upsert: true,
+  });
 });
 
-it('should call insertOne with sess when set without _id', async () => {
+it('should call updateOne with platform and id when set without _id', async () => {
   const { store, sessions } = await createMongoStore();
   const sess = {};
-  sessions.findOne.mockReturnValue(Promise.resolve(undefined));
-  sessions.insertOne.mockReturnValue(
-    Promise.resolve({
-      insertedId: '1',
-    })
-  );
+  sessions.updateOne.mockReturnValue(Promise.resolve());
   await store.set('yoctol:1', sess);
-  expect(sessions.insertOne).toBeCalledWith(sess);
+  expect(sessions.updateOne).toBeCalledWith(
+    { 'user.platform': 'yoctol', 'user.id': '1' },
+    sess,
+    { upsert: true }
+  );
 });
 
 it('should call remove with platform and id when destroy', async () => {
