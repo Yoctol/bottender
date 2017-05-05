@@ -32,21 +32,6 @@ export default class MessengerConnector extends Connecter {
   async handleRequest({ request, sessionData, db }) {
     const rawEvent = this._getRawEventFromRequest(request);
 
-    // FIXME: start
-    const getStartedRef =
-      rawEvent &&
-      rawEvent.postback &&
-      rawEvent.postback.referral &&
-      rawEvent.postback.referral.ref;
-
-    const normalRef = rawEvent && rawEvent.referral && rawEvent.referral.ref;
-    const ref = getStartedRef || normalRef;
-
-    if (ref) {
-      sessionData.user.ref = ref;
-    }
-
-    // FIXME: end
     const context = new MessengerContext({
       graphAPIClient: this._graphAPIClient,
       rawEvent,
