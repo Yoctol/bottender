@@ -1,4 +1,6 @@
 /* @flow */
+import warning from 'warning';
+
 import type Context from '../session/Context';
 
 import type { Handler, Msg } from './HandlerBuilder';
@@ -30,6 +32,7 @@ export default class SwitchHandlerBuilder {
   }
 
   build() {
+    warning(false, 'SwitchHandlerBuilder is deprecated.');
     return (context: Context, msg: Msg) => {
       for (let i = 0; i < this._conditionHandlers.length; i++) {
         const { condition, handler } = this._conditionHandlers[i];
