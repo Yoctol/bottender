@@ -6,7 +6,7 @@ import invariant from 'invariant';
 import * as constants from '../constants';
 import type Context from '../session/Context';
 
-import type { Handler } from './HandlerBuilder';
+type Handler = (ctx: Context) => void;
 
 type Action = Array<any>;
 

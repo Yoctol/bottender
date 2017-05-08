@@ -3,7 +3,7 @@ import warning from 'warning';
 
 import type Context from '../session/Context';
 
-import type { Handler } from './HandlerBuilder';
+type Handler = (ctx: Context) => void;
 
 type Condition = () => boolean;
 type ConditionHandler = {
