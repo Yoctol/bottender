@@ -1,6 +1,4 @@
 /* eslint-disable class-methods-use-this */
-import warning from 'warning';
-
 import FBGraphAPIClient from '../api/FBGraphAPIClient';
 import MessengerContext from '../session/MessengerContext';
 
@@ -39,18 +37,7 @@ export default class MessengerConnector extends Connecter {
       db,
     });
 
-    await Promise.resolve(
-      this._handler(context, {
-        get message() {
-          warning(false, 'access message on second argument is deprecated.');
-          return rawEvent.message;
-        },
-        get postback() {
-          warning(false, 'access postback on second argument is deprecated.');
-          return rawEvent.postback;
-        },
-      })
-    );
+    await Promise.resolve(this._handler(context));
   }
 
   _getRawEventFromRequest(request) {

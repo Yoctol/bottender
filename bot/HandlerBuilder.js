@@ -6,11 +6,7 @@ import type Context from '../session/Context';
 
 type Condition = string | RegExp | ((context: Context) => boolean);
 
-export type Msg = {
-  message?: { quick_reply: ?Object, text: string },
-  postback?: { payload: string },
-};
-export type Handler = (context: Context, msg: Msg) => void;
+export type Handler = (context: Context) => void;
 
 type ConditionHandler = {
   condition: Condition,
@@ -81,8 +77,8 @@ export default class HandlerBuilder {
   }
 
   build(): Handler {
-    return (context: Context, msg: Msg) => {
-      const { message, postback } = msg;
+    return (context: Context) => {
+      const { message, postback } = context.event;
 
       if (message && message.is_echo) {
         for (let i = 0; i < this._echoHandlers.length; i++) {
@@ -91,7 +87,7 @@ export default class HandlerBuilder {
           if (message.text) {
             const match = matchCondition(echoHandler.condition, message.text);
             if (match) {
-              return echoHandler.handler(context, msg);
+              return echoHandler.handler(context);
             }
           }
         }
@@ -111,11 +107,11 @@ export default class HandlerBuilder {
             message.quick_reply.payload
           );
           if (match) {
-            return quickReplyHandler.handler(context, msg);
+            return quickReplyHandler.handler(context);
           }
         }
         if (this._unhandledHandler) {
-          return this._unhandledHandler(context, msg);
+          return this._unhandledHandler(context);
         }
         return;
       }
@@ -129,11 +125,11 @@ export default class HandlerBuilder {
             (typeof messageHandler.condition === 'function' &&
               messageHandler.condition(context));
           if (match) {
-            return messageHandler.handler(context, msg);
+            return messageHandler.handler(context);
           }
         }
         if (this._unhandledHandler) {
-          return this._unhandledHandler(context, msg);
+          return this._unhandledHandler(context);
         }
         return;
       }
@@ -143,7 +139,7 @@ export default class HandlerBuilder {
           this._getStartedHandler &&
           postback.payload === constants.payload.GET_STARTED
         ) {
-          return this._getStartedHandler(context, msg);
+          return this._getStartedHandler(context);
         }
 
         // TODO: verify
@@ -154,11 +150,11 @@ export default class HandlerBuilder {
             postback.payload
           );
           if (match) {
-            return postbackHandler.handler(context, msg);
+            return postbackHandler.handler(context);
           }
         }
         if (this._unhandledHandler) {
-          return this._unhandledHandler(context, msg);
+          return this._unhandledHandler(context);
         }
       }
     };

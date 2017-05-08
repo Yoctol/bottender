@@ -6,7 +6,7 @@ import invariant from 'invariant';
 import * as constants from '../constants';
 import type Context from '../session/Context';
 
-import type { Handler, Msg } from './HandlerBuilder';
+import type { Handler } from './HandlerBuilder';
 
 type Action = Array<any>;
 
@@ -89,8 +89,8 @@ export default class DangerousDCGHandlerBuilder {
   }
 
   build() {
-    return (context: Context, msg: Msg) => {
-      const { message, postback } = msg;
+    return (context: Context) => {
+      const { message, postback } = context.event;
 
       let payload;
 
@@ -118,7 +118,7 @@ export default class DangerousDCGHandlerBuilder {
       }
 
       if (this._unhandledHandler) {
-        this._unhandledHandler(context, msg);
+        this._unhandledHandler(context);
       }
     };
   }

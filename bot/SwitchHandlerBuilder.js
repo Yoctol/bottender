@@ -3,7 +3,7 @@ import warning from 'warning';
 
 import type Context from '../session/Context';
 
-import type { Handler, Msg } from './HandlerBuilder';
+import type { Handler } from './HandlerBuilder';
 
 type Condition = () => boolean;
 type ConditionHandler = {
@@ -33,15 +33,15 @@ export default class SwitchHandlerBuilder {
 
   build() {
     warning(false, 'SwitchHandlerBuilder is deprecated.');
-    return (context: Context, msg: Msg) => {
+    return (context: Context) => {
       for (let i = 0; i < this._conditionHandlers.length; i++) {
         const { condition, handler } = this._conditionHandlers[i];
-        if (condition(context, msg)) {
-          return handler(context, msg);
+        if (condition(context)) {
+          return handler(context);
         }
       }
       if (this._fallbackHandler) {
-        return this._fallbackHandler(context, msg);
+        return this._fallbackHandler(context);
       }
     };
   }

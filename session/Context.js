@@ -16,10 +16,13 @@ type Options = {
 
 type Collection = {};
 
+type Event = any;
+
 export default class Context {
   _graphAPIClient: FBGraphAPIClient;
   _data: SessionData;
   _db: ScopedDB;
+  _event: Event;
   _hitl: SessionHITL;
   _jobQueue: DelayableJobQueue;
 
@@ -36,6 +39,10 @@ export default class Context {
 
   get db(): ScopedDB {
     return this._db;
+  }
+
+  get event(): Event {
+    return this._event;
   }
 
   get hitl(): SessionHITL {

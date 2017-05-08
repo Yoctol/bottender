@@ -29,16 +29,16 @@ describe('#build', () => {
 
     switchBuilder.when(() => true, builder1).else(fallbackBuilder);
 
-    const context = {};
-    const msg = {
+    const event = {
       message: {
         text: 'hi!',
       },
     };
+    const context = { event };
 
-    switchBuilder.build()(context, msg);
+    switchBuilder.build()(context);
 
-    expect(handler1).toBeCalledWith(context, msg);
+    expect(handler1).toBeCalledWith(context);
     expect(fallbackHandler).not.toBeCalled();
   });
 
@@ -55,16 +55,16 @@ describe('#build', () => {
 
     switchBuilder.when(() => true, builder1).else(fallbackBuilder);
 
-    const context = {};
-    const msg = {
+    const event = {
       message: {
         text: 'hi!',
       },
     };
+    const context = { event };
 
-    await switchBuilder.build()(context, msg);
+    await switchBuilder.build()(context);
 
-    expect(handler1).toBeCalledWith(context, msg);
+    expect(handler1).toBeCalledWith(context);
     expect(fallbackHandler).not.toBeCalled();
   });
 
@@ -88,18 +88,18 @@ describe('#build', () => {
       .when(() => 1 > 2, builder2)
       .else(fallbackBuilder);
 
-    const context = {};
-    const msg = {
+    const event = {
       message: {
         text: 'hi!',
       },
     };
+    const context = { event };
 
-    switchBuilder.build()(context, msg);
+    switchBuilder.build()(context);
 
     expect(handler1).not.toBeCalled();
     expect(handler2).not.toBeCalled();
-    expect(fallbackHandler).toBeCalledWith(context, msg);
+    expect(fallbackHandler).toBeCalledWith(context);
   });
 
   it('return promise when handled by async fallback handler', async () => {
@@ -122,17 +122,17 @@ describe('#build', () => {
       .when(() => 1 > 2, builder2)
       .else(fallbackBuilder);
 
-    const context = {};
-    const msg = {
+    const event = {
       message: {
         text: 'hi!',
       },
     };
+    const context = { event };
 
-    await switchBuilder.build()(context, msg);
+    await switchBuilder.build()(context);
 
     expect(handler1).not.toBeCalled();
     expect(handler2).not.toBeCalled();
-    expect(fallbackHandler).toBeCalledWith(context, msg);
+    expect(fallbackHandler).toBeCalledWith(context);
   });
 });
