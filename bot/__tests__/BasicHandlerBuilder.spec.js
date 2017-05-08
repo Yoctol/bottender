@@ -188,6 +188,30 @@ describe('#onUnhandled', () => {
   });
 });
 
+describe('#onError', () => {
+  it('should return this', () => {
+    const { builder } = setup();
+    const handler = () => {};
+    expect(builder.onError(handler)).toBe(builder);
+  });
+
+  it('should call error handler when error be thrown', async () => {
+    const { builder } = setup();
+    const context = {
+      sendText: jest.fn(),
+    };
+    builder
+      .onUnhandled(() => {
+        throw new Error('Boom!');
+      })
+      .onError((err, ctx) => {
+        ctx.sendText(err.message);
+      });
+    await builder.build()(context);
+    expect(context.sendText).toBeCalledWith('Boom!');
+  });
+});
+
 describe('#build', () => {
   it('should return a function', () => {
     const { builder } = setup();
