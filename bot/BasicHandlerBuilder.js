@@ -2,21 +2,27 @@
 import randomItem from 'random-item';
 
 // FIXME: platform
-type Context = {
+export type Context = {
   event: {
     isMessage: boolean,
     isTextMessage: boolean,
     message: {
+      text: string,
       is_echo: boolean,
       quick_reply: {
         payload: string,
       },
-      text: string,
     },
-    isPostback: boolean,
     postback: {
       payload: string,
+      data: string,
     },
+    isPostback: boolean,
+    isFollow: boolean,
+    isUnfollow: boolean,
+    isJoin: boolean,
+    isLeave: boolean,
+    isBeacon: boolean,
   },
   sendText: (text: string) => void,
 };
