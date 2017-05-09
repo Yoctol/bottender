@@ -7,7 +7,6 @@ describe('core', () => {
   });
 
   it('export handler builders', () => {
-    expect(core.SwitchHandlerBuilder).toBeDefined();
     expect(core.BasicHandlerBuilder).toBeDefined();
     expect(core.MessengerHandlerBuilder).toBeDefined();
   });
