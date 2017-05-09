@@ -1,6 +1,5 @@
 export { default as MessengerBot } from './bot/MessengerBot';
 export { default as LINEBot } from './bot/LINEBot';
-export { default as SwitchHandlerBuilder } from './bot/SwitchHandlerBuilder';
 export { default as BasicHandlerBuilder } from './bot/BasicHandlerBuilder';
 export {
   default as MessengerHandlerBuilder,
