@@ -46,4 +46,32 @@ export default class LINEHandlerBuilder extends BasicHandlerBuilder {
     );
     return this;
   }
+
+  // account is added as a friend (or unblocked).
+  onFollow(condition: Condition, handler: Handler) {
+    this.on(context => context.event.isFollow && condition(context), handler);
+    return this;
+  }
+
+  onUnfollow(condition: Condition, handler: Handler) {
+    this.on(context => context.event.isUnfollow && condition(context), handler);
+    return this;
+  }
+
+  // account joins a group or talk room.
+  onJoin(condition: Condition, handler: Handler) {
+    this.on(context => context.event.isJoin && condition(context), handler);
+    return this;
+  }
+
+  // account leaves a group.
+  onLeave(condition: Condition, handler: Handler) {
+    this.on(context => context.event.isLeave && condition(context), handler);
+    return this;
+  }
+
+  onBeacon(condition: Condition, handler: Handler) {
+    this.on(context => context.event.isBeacon && condition(context), handler);
+    return this;
+  }
 }
