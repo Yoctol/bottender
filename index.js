@@ -4,6 +4,7 @@ export { default as BasicHandlerBuilder } from './bot/BasicHandlerBuilder';
 export {
   default as MessengerHandlerBuilder,
 } from './bot/MessengerHandlerBuilder';
+export { default as LINEHandlerBuilder } from './bot/LINEHandlerBuilder';
 
 export { default as FBGraphAPIClient } from './api/FBGraphAPIClient';
 export { default as LINEBotAPIClient } from './api/LINEBotAPIClient';

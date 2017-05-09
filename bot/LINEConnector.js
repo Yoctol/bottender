@@ -32,22 +32,12 @@ export default class LINEConnector extends Connecter {
         data: sessionData,
         db,
       });
-    // message, follow, unfollow, join, leave, postback, beacon
-    const promises = [];
-    request.body.events
-      .filter(event => ['message'].includes(event.type))
-      .forEach(event => {
-        const context = createLINEContext(event);
-        promises.push(Promise.resolve(this._handler(context)));
-      });
 
-    request.body.events
-      .filter(event => ['postback'].includes(event.type))
-      .forEach(event => {
-        event.postback.payload = event.postback.data; // FIXME
-        const context = createLINEContext(event);
-        promises.push(Promise.resolve(this._handler(context)));
-      });
+    const promises = [];
+    request.body.events.forEach(event => {
+      const context = createLINEContext(event);
+      promises.push(Promise.resolve(this._handler(context)));
+    });
 
     await Promise.all(promises);
   }

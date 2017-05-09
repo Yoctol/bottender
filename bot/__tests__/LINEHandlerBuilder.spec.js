@@ -257,7 +257,6 @@ describe('#onFollow', () => {
   it('should call condition when received follow event', async () => {
     const { builder } = setup();
     const handler = jest.fn();
-    const condition = jest.fn(() => true);
     const context = {
       event: {
         isFollow: true,
@@ -267,24 +266,21 @@ describe('#onFollow', () => {
         },
       },
     };
-    builder.onFollow(condition, handler);
+    builder.onFollow(handler);
     await builder.build()(context);
-    expect(condition).toBeCalledWith(context);
     expect(handler).toBeCalledWith(context);
   });
 
   it('should not call handler when received no follow event', async () => {
     const { builder } = setup();
     const handler = jest.fn();
-    const condition = jest.fn(() => true);
     const context = {
       event: {
         isFollow: false,
       },
     };
-    builder.onFollow(condition, handler);
+    builder.onFollow(handler);
     await builder.build()(context);
-    expect(condition).not.toBeCalledWith();
     expect(handler).not.toBeCalled();
   });
 });
@@ -299,7 +295,6 @@ describe('#onUnfollow', () => {
   it('should call condition when received onUnfollow event', async () => {
     const { builder } = setup();
     const handler = jest.fn();
-    const condition = jest.fn(() => true);
     const context = {
       event: {
         isUnfollow: true,
@@ -309,24 +304,21 @@ describe('#onUnfollow', () => {
         },
       },
     };
-    builder.onUnfollow(condition, handler);
+    builder.onUnfollow(handler);
     await builder.build()(context);
-    expect(condition).toBeCalledWith(context);
     expect(handler).toBeCalledWith(context);
   });
 
   it('should not call handler when received not unfollow event', async () => {
     const { builder } = setup();
     const handler = jest.fn();
-    const condition = jest.fn(() => true);
     const context = {
       event: {
         isUnfollow: false,
       },
     };
-    builder.onUnfollow(condition, handler);
+    builder.onUnfollow(handler);
     await builder.build()(context);
-    expect(condition).not.toBeCalledWith();
     expect(handler).not.toBeCalled();
   });
 });
@@ -341,7 +333,6 @@ describe('#onJoin', () => {
   it('should call condition when received onJoin event', async () => {
     const { builder } = setup();
     const handler = jest.fn();
-    const condition = jest.fn(() => true);
     const context = {
       event: {
         isJoin: true,
@@ -351,24 +342,21 @@ describe('#onJoin', () => {
         },
       },
     };
-    builder.onJoin(condition, handler);
+    builder.onJoin(handler);
     await builder.build()(context);
-    expect(condition).toBeCalledWith(context);
     expect(handler).toBeCalledWith(context);
   });
 
   it('should not call handler when received not Join event', async () => {
     const { builder } = setup();
     const handler = jest.fn();
-    const condition = jest.fn(() => true);
     const context = {
       event: {
         isJoin: false,
       },
     };
-    builder.onJoin(condition, handler);
+    builder.onJoin(handler);
     await builder.build()(context);
-    expect(condition).not.toBeCalledWith();
     expect(handler).not.toBeCalled();
   });
 });
@@ -383,7 +371,6 @@ describe('#onLeave', () => {
   it('should call condition when received onLeave event', async () => {
     const { builder } = setup();
     const handler = jest.fn();
-    const condition = jest.fn(() => true);
     const context = {
       event: {
         isLeave: true,
@@ -393,24 +380,21 @@ describe('#onLeave', () => {
         },
       },
     };
-    builder.onLeave(condition, handler);
+    builder.onLeave(handler);
     await builder.build()(context);
-    expect(condition).toBeCalledWith(context);
     expect(handler).toBeCalledWith(context);
   });
 
   it('should not call handler when received not Leave event', async () => {
     const { builder } = setup();
     const handler = jest.fn();
-    const condition = jest.fn(() => true);
     const context = {
       event: {
         isLeave: false,
       },
     };
-    builder.onLeave(condition, handler);
+    builder.onLeave(handler);
     await builder.build()(context);
-    expect(condition).not.toBeCalledWith();
     expect(handler).not.toBeCalled();
   });
 });
