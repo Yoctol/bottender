@@ -1,8 +1,6 @@
 /* @flow */
 import warning from 'warning';
 
-import * as constants from '../constants';
-
 import BasicHandlerBuilder, {
   type Condition,
   type Handler,
@@ -10,7 +8,7 @@ import BasicHandlerBuilder, {
   matchPattern,
 } from './BasicHandlerBuilder';
 
-export default class MessengerHandlerBuilder extends BasicHandlerBuilder {
+export default class LINEHandlerBuilder extends BasicHandlerBuilder {
   onMessage(condition: Condition, handler: Handler) {
     this.on(context => context.event.isMessage && condition(context), handler);
     return this;
@@ -40,38 +38,10 @@ export default class MessengerHandlerBuilder extends BasicHandlerBuilder {
       typeof pattern === 'string' || pattern instanceof RegExp,
       `'onPayload' only accepts string or regex, but received ${typeof pattern}`
     );
-    this.on(({ event }) => {
-      if (event.isPostback && matchPattern(pattern, event.postback.payload)) {
-        return true;
-      }
-      if (
-        event.isMessage &&
-        event.message.quick_reply &&
-        matchPattern(pattern, event.message.quick_reply.payload)
-      ) {
-        return true;
-      }
-      return false;
-    }, handler);
-    return this;
-  }
-
-  onGetStarted(handler: Handler) {
-    this.onPayload(constants.payload.GET_STARTED, handler);
-    return this;
-  }
-
-  onQuickReply(condition: Condition, handler: Handler) {
-    this.onMessage(
-      context => !!context.event.message.quick_reply && condition(context),
-      handler
-    );
-    return this;
-  }
-
-  onEcho(condition: Condition, handler: Handler) {
-    this.onMessage(
-      context => context.event.message.is_echo && condition(context),
+    this.on(
+      context =>
+        context.event.isPostback &&
+        matchPattern(pattern, context.event.postback.data),
       handler
     );
     return this;

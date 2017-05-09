@@ -27,6 +27,8 @@ type FunctionalHandler = (context: Context) => void | Promise<void>;
 
 export type Handler = string | Array<string> | FunctionalHandler;
 
+export type Pattern = string | RegExp;
+
 type ConditionHandler = {
   condition: Condition,
   handler: FunctionalHandler,
@@ -44,6 +46,15 @@ function normalizeHandler(handler: Handler): FunctionalHandler {
     };
   }
   return handler;
+}
+
+export function matchPattern(pattern: Pattern, text: string): boolean {
+  if (typeof pattern === 'string') {
+    return pattern === text;
+  } else if (pattern instanceof RegExp) {
+    return pattern.test(text);
+  }
+  return false;
 }
 
 export default class HandlerBuilder {
