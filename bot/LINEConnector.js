@@ -36,7 +36,7 @@ export default class LINEConnector extends Connecter {
     const promises = [];
     request.body.events.forEach(event => {
       const context = createLINEContext(event);
-      promises.push(Promise.resolve(this._handler(context)));
+      promises.push(this._handler(context));
     });
 
     await Promise.all(promises);

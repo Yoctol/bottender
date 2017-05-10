@@ -37,7 +37,7 @@ export default class MessengerConnector extends Connecter {
       db,
     });
 
-    await Promise.resolve(this._handler(context));
+    await this._handler(context);
   }
 
   _getRawEventFromRequest(request) {

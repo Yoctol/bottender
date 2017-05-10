@@ -103,13 +103,13 @@ export default class HandlerBuilder {
     return async (context: Context) => {
       try {
         if (this._beforeHandler) {
-          await Promise.resolve(this._beforeHandler(context));
+          await this._beforeHandler(context);
         }
 
         for (let i = 0; i < handlers.length; i++) {
           const { condition, handler } = handlers[i];
           // eslint-disable-next-line no-await-in-loop
-          if (await Promise.resolve(condition(context))) {
+          if (await condition(context)) {
             return handler(context);
           }
         }
