@@ -7,12 +7,17 @@ import BasicHandlerBuilder, {
   type Condition,
   type Handler,
   type Pattern,
+  normalizeHandler,
   matchPattern,
 } from './BasicHandlerBuilder';
 
 export default class MessengerHandlerBuilder extends BasicHandlerBuilder {
   onMessage(condition: Condition, handler: Handler) {
-    this.on(context => context.event.isMessage && condition(context), handler);
+    this.on(
+      context =>
+        context.event.isMessage && !context.event.isEcho && condition(context),
+      handler
+    );
     return this;
   }
 
@@ -24,6 +29,7 @@ export default class MessengerHandlerBuilder extends BasicHandlerBuilder {
     this.onMessage(
       context =>
         context.event.isTextMessage &&
+        !context.event.isEcho &&
         matchPattern(pattern, context.event.message.text),
       handler
     );
@@ -70,10 +76,38 @@ export default class MessengerHandlerBuilder extends BasicHandlerBuilder {
   }
 
   onEcho(condition: Condition, handler: Handler) {
-    this.onMessage(
-      context => context.event.message.is_echo && condition(context),
+    this.on(context => context.event.isEcho && condition(context), handler);
+    return this;
+  }
+
+  onEchoText(pattern: Pattern, handler: Handler) {
+    this.on(
+      context =>
+        context.event.isEcho &&
+        matchPattern(pattern, context.event.message.text), // FIXME
       handler
     );
+    return this;
+  }
+
+  onRead(condition: Condition, handler: Handler) {
+    this.on(context => context.event.isRead && condition(context), handler);
+    return this;
+  }
+
+  onDelivery(condition: Condition, handler: Handler) {
+    this.on(context => context.event.isDelivery && condition(context), handler);
+    return this;
+  }
+
+  onUnhandled(handler: Handler) {
+    this._fallbackHandler = {
+      condition: context =>
+        !context.event.isEcho &&
+        !context.event.isRead &&
+        !context.event.isDelivery,
+      handler: normalizeHandler(handler),
+    };
     return this;
   }
 }

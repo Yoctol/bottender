@@ -114,4 +114,14 @@ export default class MessengerEvent {
   get postback(): ?Postback {
     return this._rawEvent.postback || null;
   }
+
+  get isRead(): boolean {
+    return !!this._rawEvent.read && typeof this._rawEvent.read === 'object';
+  }
+
+  get isDelivery(): boolean {
+    return (
+      !!this._rawEvent.delivery && typeof this._rawEvent.delivery === 'object'
+    );
+  }
 }

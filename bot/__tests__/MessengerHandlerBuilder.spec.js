@@ -386,3 +386,140 @@ describe('#onEcho', () => {
     expect(handler).not.toBeCalled();
   });
 });
+
+describe('#onEchoText', () => {
+  it('should return this', async () => {
+    const { builder } = setup();
+    const handler = () => {};
+    expect(await builder.onEchoText('some text', handler)).toBe(builder);
+  });
+
+  it('should call handler when received echo message', async () => {
+    const { builder } = setup();
+    const handler = jest.fn();
+    const context = {
+      event: {
+        isMessage: true,
+        isEcho: true,
+        message: {
+          is_echo: true,
+          text: 'wow',
+        },
+      },
+    };
+    builder.onEchoText(/wow/, handler);
+    await builder.build()(context);
+    expect(handler).toBeCalledWith(context);
+  });
+
+  it('should not call handler when received not echo message', async () => {
+    const { builder } = setup();
+    const handler = jest.fn();
+    const context = {
+      event: {
+        isMessage: true,
+        message: {
+          text: 'wow',
+        },
+      },
+    };
+    builder.onEcho(/wow/, handler);
+    await builder.build()(context);
+    expect(handler).not.toBeCalled();
+  });
+});
+
+describe('#onRead', () => {
+  it('should return this', async () => {
+    const { builder } = setup();
+    const handler = () => {};
+    const condition = jest.fn(() => true);
+    expect(await builder.onRead(condition, handler)).toBe(builder);
+  });
+
+  it('should call handler when received read event', async () => {
+    const { builder } = setup();
+    const handler = jest.fn();
+    const condition = jest.fn(() => true);
+    const context = {
+      event: {
+        isRead: true,
+        read: {
+          watermark: 1458668856253,
+          seq: 38,
+        },
+      },
+    };
+    builder.onRead(condition, handler);
+    await builder.build()(context);
+    expect(condition).toBeCalledWith(context);
+    expect(handler).toBeCalledWith(context);
+  });
+
+  it('should not call handler when received not read event', async () => {
+    const { builder } = setup();
+    const condition = jest.fn(() => true);
+    const handler = jest.fn();
+    const context = {
+      event: {
+        isRead: false,
+        message: {
+          text: 'wow',
+        },
+      },
+    };
+    builder.onRead(condition, handler);
+    await builder.build()(context);
+    expect(condition).not.toBeCalled();
+    expect(handler).not.toBeCalled();
+  });
+});
+
+describe('#onDelivery', () => {
+  it('should return this', async () => {
+    const { builder } = setup();
+    const handler = () => {};
+    const condition = jest.fn(() => true);
+    expect(await builder.onDelivery(condition, handler)).toBe(builder);
+  });
+
+  it('should call handler when received delivery event', async () => {
+    const { builder } = setup();
+    const handler = jest.fn();
+    const condition = jest.fn(() => true);
+    const context = {
+      event: {
+        isDelivery: true,
+        delivery: {
+          mids: ['mid.1458668856218:ed81099e15d3f4f233'],
+          watermark: 1458668856253,
+          seq: 37,
+        },
+      },
+    };
+    builder.onDelivery(condition, handler);
+    await builder.build()(context);
+    expect(condition).toBeCalledWith(context);
+    expect(handler).toBeCalledWith(context);
+  });
+
+  it('should not call handler when received not delivery event', async () => {
+    const { builder } = setup();
+    const condition = jest.fn(() => true);
+    const handler = jest.fn();
+    const context = {
+      event: {
+        isDelivery: false,
+        delivery: {
+          mids: ['mid.1458668856218:ed81099e15d3f4f233'],
+          watermark: 1458668856253,
+          seq: 37,
+        },
+      },
+    };
+    builder.onDelivery(condition, handler);
+    await builder.build()(context);
+    expect(condition).not.toBeCalled();
+    expect(handler).not.toBeCalled();
+  });
+});

@@ -17,6 +17,9 @@ export type Context = {
       payload: string,
       data: string,
     },
+    isEcho: boolean,
+    isRead: boolean,
+    isDelivery: boolean,
     isPostback: boolean,
     isFollow: boolean,
     isUnfollow: boolean,
@@ -40,7 +43,7 @@ type ConditionHandler = {
   handler: FunctionalHandler,
 };
 
-function normalizeHandler(handler: Handler): FunctionalHandler {
+export function normalizeHandler(handler: Handler): FunctionalHandler {
   if (typeof handler === 'string') {
     return context => {
       // $FlowFixMe

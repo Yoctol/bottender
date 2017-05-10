@@ -10,6 +10,10 @@ export default class MessengerConnector extends Connecter {
     this._graphAPIClient = FBGraphAPIClient.factory(accessToken);
   }
 
+  _getRawEventFromRequest(request) {
+    return request.body.entry[0].messaging[0];
+  }
+
   get platform(): string {
     return 'messenger';
   }
@@ -38,9 +42,5 @@ export default class MessengerConnector extends Connecter {
     });
 
     await this._handler(context);
-  }
-
-  _getRawEventFromRequest(request) {
-    return request.body.entry[0].messaging[0];
   }
 }
