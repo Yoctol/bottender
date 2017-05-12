@@ -112,7 +112,8 @@ export default class HandlerBuilder {
         for (let i = 0; i < handlers.length; i++) {
           const { condition, handler } = handlers[i];
           // eslint-disable-next-line no-await-in-loop
-          if (await condition(context)) {
+          const conditionReturn = await condition(context);
+          if (typeof conditionReturn === 'boolean' && conditionReturn) {
             return handler(context);
           }
         }

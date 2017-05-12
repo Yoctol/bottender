@@ -89,6 +89,26 @@ describe('#on', () => {
     expect(handler).not.toBeCalled();
   });
 
+  it('should not call handler if condition return Promise.resolve(false)', async () => {
+    const { builder } = setup();
+    const context = {};
+    const condition = jest.fn(() => Promise.resolve(false));
+    const handler = jest.fn();
+    builder.on(condition, handler);
+    await builder.build()(context);
+    expect(handler).not.toBeCalled();
+  });
+
+  it('should not call handler if condition function not return boolean type', async () => {
+    const { builder } = setup();
+    const context = {};
+    const condition = jest.fn(() => 'NotBooleanType');
+    const handler = jest.fn();
+    builder.on(condition, handler);
+    await builder.build()(context);
+    expect(handler).not.toBeCalled();
+  });
+
   it('should not call second condition if already found a match condition', async () => {
     const { builder } = setup();
     const context = {};
