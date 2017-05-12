@@ -51,6 +51,21 @@ describe('#onMessage', () => {
     await builder.build()(context);
     expect(condition).not.toBeCalledWith(context);
   });
+
+  it('should accept async condition', async () => {
+    const { builder } = setup();
+    const condition = jest.fn(() => Promise.resolve(false));
+    const handler = jest.fn();
+    const context = {
+      event: {
+        isMessage: true,
+      },
+    };
+    builder.onMessage(condition, handler);
+    await builder.build()(context);
+    expect(condition).toBeCalledWith(context);
+    expect(handler).not.toBeCalledWith(context);
+  });
 });
 
 describe('#onText', () => {
@@ -188,6 +203,21 @@ describe('#onPostback', () => {
     builder.onPostback(condition, handler);
     await builder.build()(context);
     expect(condition).not.toBeCalledWith(context);
+  });
+
+  it('should accept async condition', async () => {
+    const { builder } = setup();
+    const condition = jest.fn(() => Promise.resolve(false));
+    const handler = jest.fn();
+    const context = {
+      event: {
+        isPostback: true,
+      },
+    };
+    builder.onPostback(condition, handler);
+    await builder.build()(context);
+    expect(condition).toBeCalledWith(context);
+    expect(handler).not.toBeCalledWith(context);
   });
 });
 

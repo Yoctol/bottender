@@ -52,6 +52,21 @@ describe('#onMessage', () => {
     await builder.build()(context);
     expect(condition).not.toBeCalledWith(context);
   });
+
+  it('should accept async condition', async () => {
+    const { builder } = setup();
+    const condition = jest.fn(() => Promise.resolve(false));
+    const handler = jest.fn();
+    const context = {
+      event: {
+        isMessage: true,
+      },
+    };
+    builder.onMessage(condition, handler);
+    await builder.build()(context);
+    expect(condition).toBeCalledWith(context);
+    expect(handler).not.toBeCalledWith(context);
+  });
 });
 
 describe('#onText', () => {
@@ -169,6 +184,21 @@ describe('#onPostback', () => {
     builder.onPostback(condition, handler);
     await builder.build()(context);
     expect(condition).not.toBeCalledWith(context);
+  });
+
+  it('should accept async condition', async () => {
+    const { builder } = setup();
+    const condition = jest.fn(() => Promise.resolve(false));
+    const handler = jest.fn();
+    const context = {
+      event: {
+        isPostback: true,
+      },
+    };
+    builder.onPostback(condition, handler);
+    await builder.build()(context);
+    expect(condition).toBeCalledWith(context);
+    expect(handler).not.toBeCalledWith(context);
   });
 });
 
@@ -337,6 +367,28 @@ describe('#onQuickReply', () => {
     expect(condition).not.toBeCalled();
     expect(handler).not.toBeCalled();
   });
+
+  it('should accept async condition', async () => {
+    const { builder } = setup();
+    const condition = jest.fn(() => Promise.resolve(false));
+    const handler = jest.fn();
+    const context = {
+      event: {
+        isMessage: true,
+        isQuickReply: true,
+        message: {
+          quick_reply: {
+            payload: 'so quick!',
+          },
+          text: 'wow',
+        },
+      },
+    };
+    builder.onQuickReply(condition, handler);
+    await builder.build()(context);
+    expect(condition).toBeCalledWith(context);
+    expect(handler).not.toBeCalledWith(context);
+  });
 });
 
 describe('#onEcho', () => {
@@ -384,6 +436,26 @@ describe('#onEcho', () => {
     await builder.build()(context);
     expect(condition).not.toBeCalled();
     expect(handler).not.toBeCalled();
+  });
+
+  it('should accept async condition', async () => {
+    const { builder } = setup();
+    const condition = jest.fn(() => Promise.resolve(false));
+    const handler = jest.fn();
+    const context = {
+      event: {
+        isMessage: true,
+        isEcho: true,
+        message: {
+          is_echo: true,
+          text: 'wow',
+        },
+      },
+    };
+    builder.onEcho(condition, handler);
+    await builder.build()(context);
+    expect(condition).toBeCalledWith(context);
+    expect(handler).not.toBeCalledWith(context);
   });
 });
 
@@ -473,6 +545,25 @@ describe('#onRead', () => {
     expect(condition).not.toBeCalled();
     expect(handler).not.toBeCalled();
   });
+
+  it('should accept async condition', async () => {
+    const { builder } = setup();
+    const handler = jest.fn();
+    const condition = jest.fn(() => Promise.resolve(false));
+    const context = {
+      event: {
+        isRead: true,
+        read: {
+          watermark: 1458668856253,
+          seq: 38,
+        },
+      },
+    };
+    builder.onRead(condition, handler);
+    await builder.build()(context);
+    expect(condition).toBeCalledWith(context);
+    expect(handler).not.toBeCalledWith(context);
+  });
 });
 
 describe('#onDelivery', () => {
@@ -521,5 +612,25 @@ describe('#onDelivery', () => {
     await builder.build()(context);
     expect(condition).not.toBeCalled();
     expect(handler).not.toBeCalled();
+  });
+
+  it('should accept async condition', async () => {
+    const { builder } = setup();
+    const handler = jest.fn();
+    const condition = jest.fn(() => Promise.resolve(false));
+    const context = {
+      event: {
+        isDelivery: true,
+        delivery: {
+          mids: ['mid.1458668856218:ed81099e15d3f4f233'],
+          watermark: 1458668856253,
+          seq: 37,
+        },
+      },
+    };
+    builder.onDelivery(condition, handler);
+    await builder.build()(context);
+    expect(condition).toBeCalledWith(context);
+    expect(handler).not.toBeCalledWith(context);
   });
 });
