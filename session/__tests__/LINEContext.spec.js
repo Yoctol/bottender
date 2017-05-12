@@ -2,7 +2,7 @@ import LINEContext from '../LINEContext';
 import LINEEvent from '../LINEEvent';
 import SessionData from '../SessionData';
 
-jest.mock('../../api/LINEBotAPIClient');
+jest.mock('messaging-api-line');
 jest.mock('../../database/resolve');
 
 const rawEvent = {

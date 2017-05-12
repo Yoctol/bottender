@@ -1,5 +1,6 @@
 /* eslint-disable class-methods-use-this */
-import FBGraphAPIClient from '../api/FBGraphAPIClient';
+import { MessengerClient } from 'messaging-api-messenger';
+
 import MessengerContext from '../session/MessengerContext';
 
 import Connecter from './Connector';
@@ -7,7 +8,7 @@ import Connecter from './Connector';
 export default class MessengerConnector extends Connecter {
   constructor(accessToken) {
     super();
-    this._graphAPIClient = FBGraphAPIClient.factory(accessToken);
+    this._graphAPIClient = MessengerClient.factory(accessToken);
   }
 
   _getRawEventFromRequest(request) {

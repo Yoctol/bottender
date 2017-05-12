@@ -1,8 +1,9 @@
+import { LINEClient } from 'messaging-api-line';
+
 import LINEConnector from '../LINEConnector';
-import LINEBotAPIClient from '../../api/LINEBotAPIClient';
 import LINEContext from '../../session/LINEContext';
 
-jest.mock('../../api/LINEBotAPIClient');
+jest.mock('messaging-api-line');
 
 const ACCESS_TOKEN = 'FAKE_TOKEN';
 const CHANNEL_SECRET = 'FAKE_SECRET';
@@ -41,8 +42,8 @@ function setup() {
   const mockLINEAPIClient = {
     getUserProfile: jest.fn(),
   };
-  LINEBotAPIClient.factory = jest.fn();
-  LINEBotAPIClient.factory.mockReturnValue(mockLINEAPIClient);
+  LINEClient.factory = jest.fn();
+  LINEClient.factory.mockReturnValue(mockLINEAPIClient);
   return {
     mockLINEAPIClient,
     connector: new LINEConnector({ ACCESS_TOKEN, CHANNEL_SECRET }),

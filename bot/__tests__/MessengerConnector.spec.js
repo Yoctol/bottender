@@ -1,8 +1,9 @@
+import { MessengerClient } from 'messaging-api-messenger';
+
 import MessengerConnector from '../MessengerConnector';
-import FBGraphAPIClient from '../../api/FBGraphAPIClient';
 import MessengerContext from '../../session/MessengerContext';
 
-jest.mock('../../api/FBGraphAPIClient');
+jest.mock('messaging-api-messenger');
 
 const ACCESS_TOKEN = 'FAKE_TOKEN';
 
@@ -68,8 +69,8 @@ function setup() {
   const mockGraphAPIClient = {
     getUserProfile: jest.fn(),
   };
-  FBGraphAPIClient.factory = jest.fn();
-  FBGraphAPIClient.factory.mockReturnValue(mockGraphAPIClient);
+  MessengerClient.factory = jest.fn();
+  MessengerClient.factory.mockReturnValue(mockGraphAPIClient);
   return {
     mockGraphAPIClient,
     connector: new MessengerConnector(ACCESS_TOKEN),

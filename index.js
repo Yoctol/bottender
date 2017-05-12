@@ -6,8 +6,8 @@ export {
 } from './bot/MessengerHandlerBuilder';
 export { default as LINEHandlerBuilder } from './bot/LINEHandlerBuilder';
 
-export { default as FBGraphAPIClient } from './api/FBGraphAPIClient';
-export { default as LINEBotAPIClient } from './api/LINEBotAPIClient';
+export { MessengerClient as FBGraphAPIClient } from 'messaging-api-messenger';
+export { LINEClient as LINEBotAPIClient } from 'messaging-api-line';
 
 export {
   default as resolveDatabase,

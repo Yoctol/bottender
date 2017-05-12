@@ -1,6 +1,5 @@
 /* @flow */
 
-import FBGraphAPIClient from '../api/FBGraphAPIClient';
 import type { ScopedDB } from '../database/scoped';
 
 import DelayableJobQueue from './DelayableJobQueue';
@@ -19,7 +18,6 @@ type Collection = {};
 type Event = any;
 
 export default class Context {
-  _graphAPIClient: FBGraphAPIClient;
   _data: SessionData;
   _db: ScopedDB;
   _event: Event;

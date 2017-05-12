@@ -3,7 +3,7 @@ import MessengerEvent from '../MessengerEvent';
 import SessionData from '../SessionData';
 
 jest.mock('delay');
-jest.mock('../../api/FBGraphAPIClient');
+jest.mock('messaging-api-messenger');
 jest.mock('../../database/resolve');
 
 afterEach(() => {

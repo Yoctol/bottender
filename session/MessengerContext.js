@@ -1,8 +1,8 @@
 /* @flow */
 
 import wait from 'delay';
+import { MessengerClient } from 'messaging-api-messenger';
 
-import FBGraphAPIClient from '../api/FBGraphAPIClient';
 import type { ScopedDB } from '../database/scoped';
 
 import Context, { DEFAULT_MESSAGE_DELAY } from './Context';
@@ -11,14 +11,14 @@ import DelayableJobQueue from './DelayableJobQueue';
 import SessionData from './SessionData';
 
 type Options = {
-  graphAPIClient: FBGraphAPIClient,
+  graphAPIClient: MessengerClient,
   rawEvent: RawMessengerEvent,
   data: SessionData,
   db: ScopedDB,
 };
 
 export default class MessengerContext extends Context {
-  _client: FBGraphAPIClient;
+  _client: MessengerClient;
   _event: MessengerEvent;
   _data: SessionData;
   _jobQueue: DelayableJobQueue;

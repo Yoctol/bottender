@@ -1,8 +1,8 @@
 /* @flow */
 
 import wait from 'delay';
+import { LINEClient } from 'messaging-api-line';
 
-import LINEBotAPIClient from '../api/LINEBotAPIClient';
 import type { ScopedDB } from '../database/scoped';
 
 import Context, { DEFAULT_MESSAGE_DELAY } from './Context';
@@ -11,14 +11,14 @@ import DelayableJobQueue from './DelayableJobQueue';
 import SessionData from './SessionData';
 
 type Options = {
-  lineAPIClient: LINEBotAPIClient,
+  lineAPIClient: LINEClient,
   rawEvent: RawLINEEvent,
   data: SessionData,
   db: ScopedDB,
 };
 
 export default class LINEContext extends Context {
-  _client: LINEBotAPIClient;
+  _client: LINEClient;
   _event: LINEEvent;
   _data: SessionData;
   _db: ScopedDB;

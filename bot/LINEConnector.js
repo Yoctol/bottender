@@ -1,5 +1,6 @@
 /* eslint-disable class-methods-use-this */
-import LINEBotAPIClient from '../api/LINEBotAPIClient';
+import { LINEClient } from 'messaging-api-line';
+
 import LINEContext from '../session/LINEContext';
 
 import Connecter from './Connector';
@@ -7,7 +8,7 @@ import Connecter from './Connector';
 export default class LINEConnector extends Connecter {
   constructor({ accessToken, channelSecret }) {
     super();
-    this._lineAPIClient = LINEBotAPIClient.factory(accessToken, channelSecret);
+    this._lineAPIClient = LINEClient.factory(accessToken, channelSecret);
   }
 
   get platform(): string {
