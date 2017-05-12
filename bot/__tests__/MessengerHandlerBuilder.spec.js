@@ -65,7 +65,7 @@ describe('#onMessage', () => {
     builder.onMessage(condition, handler);
     await builder.build()(context);
     expect(condition).toBeCalledWith(context);
-    expect(handler).not.toBeCalledWith(context);
+    expect(handler).not.toBeCalled();
   });
 });
 
@@ -198,7 +198,7 @@ describe('#onPostback', () => {
     builder.onPostback(condition, handler);
     await builder.build()(context);
     expect(condition).toBeCalledWith(context);
-    expect(handler).not.toBeCalledWith(context);
+    expect(handler).not.toBeCalled();
   });
 });
 
@@ -387,7 +387,7 @@ describe('#onQuickReply', () => {
     builder.onQuickReply(condition, handler);
     await builder.build()(context);
     expect(condition).toBeCalledWith(context);
-    expect(handler).not.toBeCalledWith(context);
+    expect(handler).not.toBeCalled();
   });
 });
 
@@ -455,7 +455,7 @@ describe('#onEcho', () => {
     builder.onEcho(condition, handler);
     await builder.build()(context);
     expect(condition).toBeCalledWith(context);
-    expect(handler).not.toBeCalledWith(context);
+    expect(handler).not.toBeCalled();
   });
 });
 
@@ -562,7 +562,7 @@ describe('#onRead', () => {
     builder.onRead(condition, handler);
     await builder.build()(context);
     expect(condition).toBeCalledWith(context);
-    expect(handler).not.toBeCalledWith(context);
+    expect(handler).not.toBeCalled();
   });
 });
 
@@ -631,6 +631,6 @@ describe('#onDelivery', () => {
     builder.onDelivery(condition, handler);
     await builder.build()(context);
     expect(condition).toBeCalledWith(context);
-    expect(handler).not.toBeCalledWith(context);
+    expect(handler).not.toBeCalled();
   });
 });
