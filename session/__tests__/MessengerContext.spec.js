@@ -561,7 +561,7 @@ it('show typing when sending', async () => {
 
   await new Promise(resolve => setTimeout(resolve, 0));
 
-  expect(client.turnTypingIndicatorsOff).toBeCalled();
+  expect(client.turnTypingIndicatorsOff).not.toBeCalled();
 });
 
 it('should not show typing when sending to others', async () => {

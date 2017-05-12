@@ -47,7 +47,58 @@ describe('#afterEach', () => {
       method: 'run',
       args: [],
     });
+    queue.enqueue({
+      instance: obj,
+      method: 'run',
+      args: [],
+    });
     await new Promise(resolve => setImmediate(resolve));
-    expect(afterEach).toBeCalled();
+    expect(afterEach).toHaveBeenCalledTimes(2);
+  });
+});
+
+describe('#before', () => {
+  it('should be called one time before queue process job item', async () => {
+    const queue = new DelayableJobQueue();
+    const before = jest.fn(() => Promise.resolve());
+    queue.before(before);
+    const obj = {
+      run: () => Promise.resolve(),
+    };
+    queue.enqueue({
+      instance: obj,
+      method: 'run',
+      args: [],
+    });
+    queue.enqueue({
+      instance: obj,
+      method: 'run',
+      args: [],
+    });
+    await new Promise(resolve => setImmediate(resolve));
+    expect(before).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe('#after', () => {
+  it('should be called one time after queue process job item', async () => {
+    const queue = new DelayableJobQueue();
+    const after = jest.fn(() => Promise.resolve());
+    queue.after(after);
+    const obj = {
+      run: () => Promise.resolve(),
+    };
+    queue.enqueue({
+      instance: obj,
+      method: 'run',
+      args: [],
+    });
+    queue.enqueue({
+      instance: obj,
+      method: 'run',
+      args: [],
+    });
+    await new Promise(resolve => setImmediate(resolve));
+    expect(after).toHaveBeenCalledTimes(1);
   });
 });

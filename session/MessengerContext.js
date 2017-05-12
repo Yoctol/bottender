@@ -32,6 +32,8 @@ export default class MessengerContext extends Context {
         this.turnTypingIndicatorsOn();
       }
       await wait(delay);
+    });
+    this._jobQueue.after(async ({ showIndicators = true }) => {
       if (showIndicators) {
         this.turnTypingIndicatorsOff();
       }

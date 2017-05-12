@@ -15,6 +15,9 @@ export default class DelayableJobQueue {
   _processing: boolean;
   _beforeEach: Handler;
   _afterEach: Handler;
+  _before: Handler;
+  _after: Handler;
+  _beforeProcessing: boolean;
 
   constructor() {
     this._queue = [];
@@ -28,6 +31,16 @@ export default class DelayableJobQueue {
 
   afterEach(fn: Handler): DelayableJobQueue {
     this._afterEach = fn;
+    return this;
+  }
+
+  before(fn: Handler): DelayableJobQueue {
+    this._before = fn;
+    return this;
+  }
+
+  after(fn: Handler): DelayableJobQueue {
+    this._after = fn;
     return this;
   }
 
@@ -49,10 +62,19 @@ export default class DelayableJobQueue {
   async _process(): ?Promise<void> {
     try {
       this._processing = true;
+      this._beforeProcessing = true;
       /* eslint-disable no-await-in-loop */
       while (this._hasItem) {
         const item = this._dequeue();
         const { instance, method, args } = item;
+
+        if (this._beforeProcessing) {
+          if (typeof this._before === 'function') {
+            await this._before(item);
+          }
+          this._beforeProcessing = false;
+        }
+
         if (typeof this._beforeEach === 'function') {
           await this._beforeEach(item);
         }
@@ -61,6 +83,12 @@ export default class DelayableJobQueue {
 
         if (typeof this._afterEach === 'function') {
           await this._afterEach(item);
+        }
+
+        if (!this._hasItem) {
+          if (typeof this._after === 'function') {
+            await this._after(item);
+          }
         }
       }
       this._processing = false;
