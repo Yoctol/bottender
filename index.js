@@ -21,6 +21,9 @@ export {
   default as verifyMessengerWebhook,
 } from './middleware/verifyMessengerWebhook';
 
+export {
+  default as getProjectWebviewLink,
+} from './shared/getProjectWebviewLink';
 export { toAbsolutePath, getProjectPath } from './shared/path';
 export { getProjectConfig } from './shared/config';
 
