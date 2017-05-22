@@ -14,8 +14,7 @@ export const getLinkPrefix = (path: string): string => {
 };
 
 // 例如 https://bot-apt.yoctol.com/public/bnext-fc/webviews/companies
-const getProjectWebviewLink = (project: string) => (
-  path: string
-): string => `${getLinkPrefix('')}/public/${project}/webviews/${path}`;
+const getProjectWebviewLink = (project: string) => (path: string): string =>
+  `${getLinkPrefix('')}/public/${project}/webviews/${path}`;
 
 export default getProjectWebviewLink;
