@@ -11,18 +11,14 @@
   },
   "scripts": {
     "check": "flow check",
-    "dev": "cross-env NODE_ENV=development nodemon bin/go.js",
-    "dev:webhook": "npm run dev -- --webhook",
     "lint": "eslint bin src scripts",
     "lint:fix": "npm run lint -- --fix",
     "lint:staged": "lint-staged",
     "precommit": "lint-staged",
-    "start": "cross-env NODE_ENV=production node bin/go.js",
     "test": "npm run lint:fix && npm run check && npm run testonly",
     "testonly": "jest",
     "testonly:cov": "jest --coverage --runInBand --forceExit",
-    "testonly:watch": "jest --watch",
-    "webhook": "babel-node src/runWebhook.js"
+    "testonly:watch": "jest --watch"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
