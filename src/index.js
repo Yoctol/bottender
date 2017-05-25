@@ -6,17 +6,9 @@ export {
 } from './bot/MessengerHandlerBuilder';
 export { default as LINEHandlerBuilder } from './bot/LINEHandlerBuilder';
 
-export { MessengerClient as FBGraphAPIClient } from 'messaging-api-messenger';
-export { LINEClient as LINEBotAPIClient } from 'messaging-api-line';
-
 export {
-  default as resolveDatabase,
   resolveScoped as resolveScopedDatabase,
 } from './database/resolve';
-
-export { default as REGEX } from './intent/REGEX';
-export { default as recognizers, createRecognizer } from './intent/recognizers';
-export { default as IntentClassifier } from './intent/IntentClassifier';
 
 export {
   default as verifyMessengerWebhook,
