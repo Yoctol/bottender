@@ -26,21 +26,8 @@ describe('core', () => {
     expect(core.verifyMessengerWebhook).toBeDefined();
   });
 
-  it('export helpers', () => {
-    expect(core.toAbsolutePath).toBeDefined();
-    expect(core.getProjectPath).toBeDefined();
-    expect(core.getProjectConfig).toBeDefined();
-  });
-
   it('export payload', () => {
     expect(core.payload.GET_STARTED).toBeDefined();
     expect(core.payload.STILL_ALIVE).toBeDefined();
-  });
-
-  it('export intent', () => {
-    expect(core.REGEX).toBeDefined();
-    expect(core.recognizers).toBeDefined();
-    expect(core.createRecognizer).toBeDefined();
-    expect(core.IntentClassifier).toBeDefined();
   });
 });
