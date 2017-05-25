@@ -1,0 +1,16 @@
+.DS_Store
+node_modules
+npm-debug.log*
+yarn-error.log
+coverage
+junit.xml
+
+*.tar.gz
+
+src/**/config/*.js
+!src/**/config/*.sample.js
+!src/**/config/messenger-profile.js
+!src/**/templates/config/*.js
+
+src/**/persistent-session.json
+.next

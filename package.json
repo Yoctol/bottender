@@ -1,0 +1,141 @@
+{
+  "private": true,
+  "name": "toolbot",
+  "version": "0.8.2",
+  "description": "Implement what you want here.",
+  "license": "UNLICENSED",
+  "main": "bin/go.js",
+  "repository": "https://github.com/Yoctol/toolbot",
+  "bin": {
+    "toolbot": "bin/cli.js"
+  },
+  "scripts": {
+    "check": "flow check",
+    "dev": "cross-env NODE_ENV=development nodemon bin/go.js",
+    "dev:webhook": "npm run dev -- --webhook",
+    "lint": "eslint bin src scripts",
+    "lint:fix": "npm run lint -- --fix",
+    "lint:staged": "lint-staged",
+    "precommit": "lint-staged",
+    "start": "cross-env NODE_ENV=production node bin/go.js",
+    "test": "npm run lint:fix && npm run check && npm run testonly",
+    "testonly": "jest",
+    "testonly:cov": "jest --coverage --runInBand --forceExit",
+    "testonly:watch": "jest --watch",
+    "webhook": "babel-node src/runWebhook.js"
+  },
+  "devDependencies": {
+    "axios-mock-adapter": "^1.8.1",
+    "babel-cli": "^6.24.1",
+    "babel-eslint": "^7.2.3",
+    "babel-jest": "^20.0.3",
+    "ddenv": "^0.1.1",
+    "eslint": "^3.19.0",
+    "eslint-config-prettier": "^2.1.1",
+    "eslint-config-yoctol": "^0.13.0",
+    "eslint-plugin-flowtype": "^2.33.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^5.0.3",
+    "eslint-plugin-prettier": "^2.1.1",
+    "eslint-plugin-react": "^7.0.1",
+    "flow-bin": "^0.46.0",
+    "husky": "^0.13.3",
+    "jest": "^20.0.3",
+    "jest-junit": "^1.5.1",
+    "lint-staged": "^3.4.2",
+    "nodemon": "^1.11.0",
+    "prettier": "^1.3.1",
+    "timekeeper": "^1.0.0"
+  },
+  "dependencies": {
+    "@promised/child_process": "^0.1.0-0",
+    "axios": "^0.16.1",
+    "babel-preset-yoctol": "^0.5.1",
+    "babel-register": "^6.24.1",
+    "chalk": "^1.1.3",
+    "cli-table2": "^0.2.0",
+    "commander": "^2.9.0",
+    "cross-env": "^5.0.0",
+    "date-fns": "^1.28.5",
+    "debug": "^2.6.8",
+    "delay": "^2.0.0",
+    "didyoumean": "^1.2.1",
+    "glob": "^7.1.2",
+    "gm": "^1.23.0",
+    "handlebars": "^4.0.10",
+    "hasha": "^3.0.0",
+    "htmlescape": "^1.1.1",
+    "imgur-uploader": "^4.2.0",
+    "invariant": "^2.2.2",
+    "is-image": "^1.0.1",
+    "is-npm-linked": "^0.1.1",
+    "js-yaml": "^3.8.4",
+    "jscodeshift": "^0.3.30",
+    "jsonfile": "^3.0.0",
+    "koa": "^2.2.0",
+    "koa-bodyparser": "^4.2.0",
+    "koa-convert": "^1.2.0",
+    "koa-monitor": "^0.3.0",
+    "koa-router": "^7.1.1",
+    "lru-cache": "^4.0.2",
+    "material-ui": "^0.18.1",
+    "messaging-api-line": "^0.1.0-2",
+    "messaging-api-messenger": "^0.1.0-2",
+    "minimist": "^1.2.0",
+    "mkdirp": "^0.5.1",
+    "mongodb": "^2.2.26",
+    "next": "2.1.1",
+    "ngrok": "^2.2.9",
+    "pascal-case": "^2.0.1",
+    "pg": "^6.2.2",
+    "prop-types": "^15.5.10",
+    "random-item": "^1.0.0",
+    "react": "^15.5.4",
+    "react-dimensions": "^1.3.0",
+    "react-dom": "^15.5.4",
+    "react-tap-event-plugin": "^2.0.1",
+    "rimraf": "^2.6.1",
+    "rollbar": "^2.0.1",
+    "shelljs": "^0.7.7",
+    "snake-case": "^2.1.0",
+    "steno": "^0.4.4",
+    "styled-components": "^1.4.6",
+    "thenify": "^3.3.0",
+    "tmp": "^0.0.31",
+    "underscore.string": "^3.3.4",
+    "warning": "^3.0.0",
+    "yeoman-environment": "^1.6.6",
+    "yeoman-generator": "^1.1.1"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "^test/(.*)": "<rootDir>/test/helpers/$1.js"
+    },
+    "collectCoverageFrom": [
+      "src/cli/**/*.js",
+      "src/core/**/*.js"
+    ],
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "/__tests__/",
+      "Dangerous.*\\.js",
+      "dangerous.*\\.js"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 87,
+        "functions": 87,
+        "lines": 87,
+        "statements": 87
+      }
+    },
+    "testResultsProcessor": "./node_modules/jest-junit",
+    "transformIgnorePatterns": [
+      "/node_modules/"
+    ],
+    "testEnvironment": "node"
+  },
+  "lint-staged": {
+    "*.js": "eslint --fix"
+  }
+}

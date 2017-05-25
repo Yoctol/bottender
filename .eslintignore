@@ -1,0 +1,3 @@
+/src/generator-bot/app/templates/**
+/src/codemod/__testfixtures__/**
+node_modules
