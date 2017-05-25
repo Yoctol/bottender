@@ -30,21 +30,21 @@ const createContext = ({ status }) => ({
 
 describe('finalHandler on production', () => {
   beforeEach(() => {
-    reporter.handleErrorWithPayloadData = jest.fn();
+    reporter.error = jest.fn();
   });
 
   afterEach(() => {
     jest.resetAllMocks();
   });
 
-  it('not call handleErrorWithPayloadData if no error', async () => {
+  it('not call error if no error', async () => {
     const ctx = createContext({ status: 200 });
     const next = jest.fn(() => Promise.resolve());
 
     await middleware(ctx, next);
 
     expect(next).toBeCalled();
-    expect(reporter.handleErrorWithPayloadData).not.toBeCalled();
+    expect(reporter.error).not.toBeCalled();
   });
 
   it('set status 404 and throw if no status set', async () => {
@@ -57,7 +57,7 @@ describe('finalHandler on production', () => {
     expect(ctx.throw).toBeCalledWith(404);
   });
 
-  it('call handleErrorWithPayloadData if error happens', async () => {
+  it('call error if error happens', async () => {
     const error = new Error('my error');
     const ctx = createContext({ status: 500 });
     const next = jest.fn(() => Promise.reject(error));
@@ -65,7 +65,7 @@ describe('finalHandler on production', () => {
     await middleware(ctx, next);
 
     expect(next).toBeCalled();
-    expect(reporter.handleErrorWithPayloadData).toBeCalledWith(
+    expect(reporter.error).toBeCalledWith(
       error,
       {
         custom: {

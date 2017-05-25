@@ -1,22 +1,27 @@
-import rollbar from 'rollbar';
+import Rollbar from 'rollbar';
 
 const ROLLBAR_TOKEN = process.env.ROLLBAR_TOKEN;
 
 const createReporter = () => {
   if (process.env.NODE_ENV === 'production' && ROLLBAR_TOKEN) {
-    rollbar.init(ROLLBAR_TOKEN, {
+    const rollbar = new Rollbar({
+      accessToken: ROLLBAR_TOKEN,
       branch: 'master',
       codeVersion: process.env.CODE_VERSION,
       environment: process.env.NODE_ENV,
+      handleUncaughtExceptions: true,
+      handleUnhandledRejections: true,
     });
     return rollbar;
   }
   return {
     /* eslint-disable no-console */
-    reportMessage: console.log,
-    reportMessageWithPayloadData: console.log,
-    handleError: console.error,
-    handleErrorWithPayloadData: console.error,
+    debug: console.debug,
+    info: console.info,
+    message: console.log,
+    warning: console.warn,
+    error: console.error,
+    critical: console.error,
     /* eslint-enable no-console */
 
     __FAKE_ROLLBAR__: true,
