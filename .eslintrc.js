@@ -1,6 +1,6 @@
 module.exports = {
   parser: 'babel-eslint',
-  extends: ['yoctol', 'prettier'],
+  extends: ['yoctol-base', 'prettier'],
   env: {
     browser: true,
     node: true,
