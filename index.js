@@ -16,6 +16,7 @@ export {
 
 export { default as REGEX } from './intent/REGEX';
 export { default as recognizers, createRecognizer } from './intent/recognizers';
+export { default as IntentClassifier } from './intent/IntentClassifier';
 
 export {
   default as verifyMessengerWebhook,

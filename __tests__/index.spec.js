@@ -41,5 +41,6 @@ describe('core', () => {
     expect(core.REGEX).toBeDefined();
     expect(core.recognizers).toBeDefined();
     expect(core.createRecognizer).toBeDefined();
+    expect(core.IntentClassifier).toBeDefined();
   });
 });
