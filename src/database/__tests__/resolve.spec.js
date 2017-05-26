@@ -61,15 +61,3 @@ describe('resolve', () => {
     expect(resolved.__MOCK__).toBe(true);
   });
 });
-
-describe('resolveScoped', () => {
-  it('resolve a ScopedDB instance', async () => {
-    const { ScopedDB } = require('../scoped');
-    const { resolveScoped } = require('../resolve');
-
-    const db = {};
-    MongoClient.connect.mockReturnValue(Promise.resolve(db));
-    const resolved = await resolveScoped();
-    expect(resolved).toBeInstanceOf(ScopedDB);
-  });
-});

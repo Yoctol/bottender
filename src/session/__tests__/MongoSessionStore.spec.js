@@ -14,8 +14,8 @@ async function createMongoStore() {
   const db = {
     collection: jest.fn(() => sessions),
   };
-  resolve.resolveScoped = jest.fn(() => Promise.resolve(db));
-  const store = new MongoSessionStore({ id: 'cph-nlp' });
+  resolve.default = jest.fn(() => Promise.resolve(db));
+  const store = new MongoSessionStore();
   await store.init();
   return {
     store,
@@ -24,12 +24,12 @@ async function createMongoStore() {
   };
 }
 
-it('should call resolveScoped when init', async () => {
+it('should call resolve when init', async () => {
   const db = {};
-  resolve.resolveScoped = jest.fn(() => Promise.resolve(db));
-  const store = new MongoSessionStore({ id: 'cph-nlp' });
+  resolve.default = jest.fn(() => Promise.resolve(db));
+  const store = new MongoSessionStore();
   await store.init();
-  expect(resolve.resolveScoped).toBeCalledWith('cph-nlp');
+  expect(resolve.default).toBeCalled();
 });
 
 it('should call findOne with platform and id when get', async () => {

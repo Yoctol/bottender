@@ -1,12 +1,8 @@
-import { resolveScoped } from '../database/resolve';
+import resolve from '../database/resolve';
 
 export default class MongoSessionStore {
-  constructor({ id }) {
-    this._id = id;
-  }
-
   async init() {
-    this._db = await resolveScoped(this._id);
+    this._db = await resolve();
     return this;
   }
 

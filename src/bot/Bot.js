@@ -2,14 +2,13 @@ import _debug from 'debug';
 
 import SessionManager from '../session/SessionManager';
 import MongoSessionStore from '../session/MongoSessionStore';
-import { resolveScoped } from '../database/resolve';
+import resolve from '../database/resolve';
 
 const debug = _debug('core/bot/Bot');
 
 export default class Bot {
-  constructor({ id, connector }) {
-    this._id = id;
-    this._sessionManager = new SessionManager(new MongoSessionStore({ id }));
+  constructor({ connector }) {
+    this._sessionManager = new SessionManager(new MongoSessionStore());
     this._initialized = false;
     this._connector = connector;
   }
@@ -34,7 +33,7 @@ export default class Bot {
     return async ({ request, response }) => {
       debug(JSON.stringify(request.body, null, 2));
 
-      const db = await resolveScoped(this._id);
+      const db = await resolve();
       const platform = this._connector.platform;
 
       if (!db.__MOCK__) {

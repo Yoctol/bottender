@@ -30,7 +30,7 @@ function setup(
       }
     }),
   };
-  resolve.resolveScoped.mockReturnValue(Promise.resolve(db));
+  resolve.default.mockReturnValue(Promise.resolve(db));
   const bot = new Bot({
     id: 'fake-id',
     filePath: 'fake://',

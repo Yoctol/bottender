@@ -1,8 +1,6 @@
 import { MongoClient } from 'mongodb';
 import warning from 'warning';
 
-import scoped from './scoped';
-
 let _db;
 
 const mockCollection = {
@@ -51,11 +49,4 @@ async function resolve() {
   return _db;
 }
 
-async function resolveScoped(scope) {
-  const db = await resolve();
-  return scoped(db, scope);
-}
-
 export default resolve;
-
-export { resolveScoped };
