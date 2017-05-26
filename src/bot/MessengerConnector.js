@@ -32,14 +32,13 @@ export default class MessengerConnector extends Connecter {
     return data;
   }
 
-  async handleRequest({ request, sessionData, db }) {
+  async handleRequest({ request, sessionData }) {
     const rawEvent = this._getRawEventFromRequest(request);
 
     const context = new MessengerContext({
       graphAPIClient: this._graphAPIClient,
       rawEvent,
       data: sessionData,
-      db,
     });
 
     await this._handler(context);

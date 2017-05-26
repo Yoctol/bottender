@@ -75,7 +75,7 @@ export default class Bot {
         }
       }
 
-      await this._connector.handleRequest({ request, sessionData, db });
+      await this._connector.handleRequest({ request, sessionData });
       this._sessionManager.saveSessionData(sessionKey, sessionData);
 
       response.status = 200;

@@ -27,17 +27,14 @@ const setup = () => {
       id: 'fakeUserId',
     },
   });
-  const db = {};
   const context = new LINEContext({
     lineAPIClient: client,
     rawEvent,
     data,
-    db,
   });
   return {
     context,
     data,
-    db,
     client,
   };
 };
@@ -50,11 +47,6 @@ it('be defined', () => {
 it('get #data works', () => {
   const { context, data } = setup();
   expect(context.data).toBe(data);
-});
-
-it('get #db works', () => {
-  const { context, db } = setup();
-  expect(context.db).toBe(db);
 });
 
 it('get #event works', () => {

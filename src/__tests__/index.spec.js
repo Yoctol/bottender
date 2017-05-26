@@ -12,16 +12,6 @@ describe('core', () => {
     expect(core.LINEHandlerBuilder).toBeDefined();
   });
 
-  it('export database api', () => {
-    expect(core.resolveDatabase).toBeDefined();
-    expect(core.resolveScopedDatabase).toBeDefined();
-  });
-
-  it('export api clients', () => {
-    expect(core.FBGraphAPIClient).toBeDefined();
-    expect(core.LINEBotAPIClient).toBeDefined();
-  });
-
   it('export verifyMessengerWebhook', () => {
     expect(core.verifyMessengerWebhook).toBeDefined();
   });

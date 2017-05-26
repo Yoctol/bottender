@@ -3,8 +3,6 @@
 import wait from 'delay';
 import { LINEClient } from 'messaging-api-line';
 
-import type { ScopedDB } from '../database/scoped';
-
 import Context, { DEFAULT_MESSAGE_DELAY } from './Context';
 import LINEEvent, { type RawLINEEvent } from './LINEEvent';
 import DelayableJobQueue from './DelayableJobQueue';
@@ -14,18 +12,16 @@ type Options = {
   lineAPIClient: LINEClient,
   rawEvent: RawLINEEvent,
   data: SessionData,
-  db: ScopedDB,
 };
 
 export default class LINEContext extends Context {
   _client: LINEClient;
   _event: LINEEvent;
   _data: SessionData;
-  _db: ScopedDB;
   _jobQueue: DelayableJobQueue;
 
-  constructor({ lineAPIClient, rawEvent, data, db }: Options) {
-    super({ data, db });
+  constructor({ lineAPIClient, rawEvent, data }: Options) {
+    super({ data });
     this._client = lineAPIClient;
     this._event = new LINEEvent(rawEvent);
     this._jobQueue.beforeEach(({ delay }) => wait(delay));

@@ -33,18 +33,15 @@ const setup = () => {
       id: 'fakeUserId',
     },
   });
-  const db = {};
   const args = {
     graphAPIClient: client,
     rawEvent,
     data,
-    db,
   };
   const context = new MessengerContext(args);
   return {
     context,
     data,
-    db,
     client,
   };
 };
@@ -57,11 +54,6 @@ it('be defined', () => {
 it('get #data works', () => {
   const { context, data } = setup();
   expect(context.data).toBe(data);
-});
-
-it('get #db works', () => {
-  const { context, db } = setup();
-  expect(context.db).toBe(db);
 });
 
 it('get #event works', () => {

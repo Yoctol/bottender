@@ -6,8 +6,6 @@ export {
 } from './bot/MessengerHandlerBuilder';
 export { default as LINEHandlerBuilder } from './bot/LINEHandlerBuilder';
 
-export { resolveScoped as resolveScopedDatabase } from './database/resolve';
-
 export {
   default as verifyMessengerWebhook,
 } from './middleware/verifyMessengerWebhook';

@@ -3,8 +3,6 @@
 import wait from 'delay';
 import { MessengerClient } from 'messaging-api-messenger';
 
-import type { ScopedDB } from '../database/scoped';
-
 import Context, { DEFAULT_MESSAGE_DELAY } from './Context';
 import MessengerEvent, { type RawMessengerEvent } from './MessengerEvent';
 import DelayableJobQueue from './DelayableJobQueue';
@@ -14,7 +12,6 @@ type Options = {
   graphAPIClient: MessengerClient,
   rawEvent: RawMessengerEvent,
   data: SessionData,
-  db: ScopedDB,
 };
 
 export default class MessengerContext extends Context {
@@ -23,8 +20,8 @@ export default class MessengerContext extends Context {
   _data: SessionData;
   _jobQueue: DelayableJobQueue;
 
-  constructor({ graphAPIClient, rawEvent, data, db }: Options) {
-    super({ data, db });
+  constructor({ graphAPIClient, rawEvent, data }: Options) {
+    super({ data });
     this._client = graphAPIClient;
     this._event = new MessengerEvent(rawEvent);
     this._jobQueue.beforeEach(async ({ delay, showIndicators = true }) => {

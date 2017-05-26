@@ -25,13 +25,12 @@ export default class LINEConnector extends Connecter {
     return data;
   }
 
-  async handleRequest({ request, sessionData, db }) {
+  async handleRequest({ request, sessionData }) {
     const createLINEContext = rawEvent =>
       new LINEContext({
         lineAPIClient: this._lineAPIClient,
         rawEvent,
         data: sessionData,
-        db,
       });
 
     const promises = [];

@@ -202,7 +202,6 @@ describe('#createKoaMiddleware', () => {
     expect(connector.handleRequest).toBeCalledWith({
       request,
       sessionData,
-      db: expect.any(Object),
     });
   });
 
