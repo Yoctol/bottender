@@ -36,13 +36,11 @@ export default class Bot {
       const db = await resolve();
       const platform = this._connector.platform;
 
-      if (!db.__MOCK__) {
-        const logs = await db.collection('logs');
-        logs.insert({
-          platform,
-          body: request.body,
-        });
-      }
+      const logs = await db.collection('logs');
+      logs.insert({
+        platform,
+        body: request.body,
+      });
 
       if (!this._initialized) {
         await this._sessionManager.init();
@@ -68,10 +66,8 @@ export default class Bot {
 
         sessionData.user = user;
 
-        if (!db.__MOCK__) {
-          const users = await db.collection('users');
-          users.insert(user);
-        }
+        const users = await db.collection('users');
+        users.insert(user);
       }
 
       await this._connector.handleRequest({ request, sessionData });
