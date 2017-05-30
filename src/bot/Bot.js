@@ -33,14 +33,7 @@ export default class Bot {
     return async ({ request, response }) => {
       debug(JSON.stringify(request.body, null, 2));
 
-      const db = await resolve();
       const platform = this._connector.platform;
-
-      const logs = await db.collection('logs');
-      logs.insert({
-        platform,
-        body: request.body,
-      });
 
       if (!this._initialized) {
         await this._sessionManager.init();
@@ -66,6 +59,7 @@ export default class Bot {
 
         sessionData.user = user;
 
+        const db = await resolve();
         const users = await db.collection('users');
         users.insert(user);
       }
