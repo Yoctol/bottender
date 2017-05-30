@@ -9,6 +9,7 @@ module.exports = {
   },
   plugins: ['flowtype', 'prettier'],
   rules: {
+    'class-methods-use-this': 'off',
     'consistent-return': 'off',
     'no-param-reassign': 'off',
     'prettier/prettier': [
