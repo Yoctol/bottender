@@ -1,7 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
-const { MessengerBot, verifyMessengerWebhook } = require('../../src');
+const { MessengerBot } = require('../../src');
+const { verifyMessengerWebhook } = require('../../src/express');
 
 const config = {
   verifyToken: '',
@@ -17,7 +18,6 @@ const server = express();
 server.use(bodyParser.json());
 server.get(
   verifyMessengerWebhook({
-    // FIXME
     verifyToken: config.verifyToken,
   })
 );

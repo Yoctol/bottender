@@ -2,13 +2,12 @@ require('babel-register');
 const Koa = require('koa');
 const Router = require('koa-router');
 const bodyParser = require('koa-bodyparser');
-
 const {
   MessengerBot,
-  verifyMessengerWebhook,
   MemoryCacheStore,
   CacheBasedSessionStore,
 } = require('../../src');
+const { verifyMessengerWebhook } = require('../../src/koa');
 
 const config = {
   verifyToken: '1qaz2wsx',
