@@ -8,4 +8,4 @@ export { default as LINEHandlerBuilder } from './bot/LINEHandlerBuilder';
 
 export {
   default as verifyMessengerWebhook,
-} from './middleware/verifyMessengerWebhook';
+} from './middleware/koa/verifyMessengerWebhook';
