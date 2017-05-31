@@ -1,8 +1,12 @@
-import resolve from '../database/resolve';
+import { MongoClient } from 'mongodb';
 
 export default class MongoSessionStore {
+  constructor(url) {
+    this._url = url;
+  }
+
   async init() {
-    this._db = await resolve();
+    this._db = await MongoClient.connect(this._url);
     return this;
   }
 

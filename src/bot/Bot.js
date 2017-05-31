@@ -7,7 +7,7 @@ const debug = _debug('core/bot/Bot');
 
 export default class Bot {
   constructor({ connector }) {
-    this._sessions = new MongoSessionStore();
+    this._sessions = new MongoSessionStore('mongodb://localhost:27017/toolbot');
     this._initialized = false;
     this._connector = connector;
   }
