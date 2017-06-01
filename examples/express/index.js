@@ -21,7 +21,7 @@ server.get(
     verifyToken: config.verifyToken,
   })
 );
-server.post(bot.createKoaMiddleware()); // FIXME
+server.post(bot.createExpressMiddleware());
 
 server.listen(5000, () => {
   console.log('server is running...');
