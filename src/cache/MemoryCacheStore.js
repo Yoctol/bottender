@@ -1,26 +1,26 @@
 import LRU from 'quick-lru';
 
 export default class MemoryCacheStore {
-  construct(maxSize) {
+  constructor(maxSize) {
     this._lru = new LRU({ maxSize });
   }
 
-  get(key) {
+  async get(key) {
     return this._lru.get(key);
   }
 
-  put(key, value, minutes) {
+  async put(key, value, minutes) {
     this._lru.set(key, value);
     setTimeout(() => {
       this.forget(key);
     }, minutes * 60);
   }
 
-  forget(key) {
+  async forget(key) {
     this._lru.delete(key);
   }
 
-  flush() {
+  async flush() {
     this._lru.clear();
   }
 

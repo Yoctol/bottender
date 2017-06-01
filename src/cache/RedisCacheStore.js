@@ -1,27 +1,36 @@
 import Redis from 'ioredis';
 
 export default class RedisCacheStore {
-  construct(maxSize) {
+  constructor() {
     this._redis = new Redis();
   }
 
-  get(key) {
-    return this._redis.get(key);
+  async get(key) {
+    const val = await this._redis.get(key);
+    return this._unserialize(val);
   }
 
-  put(key, value, minutes) {
-    this._redis.setex(key, minutes * 60, value);
+  async put(key, value, minutes) {
+    await this._redis.setex(key, minutes * 60, this._serialize(value));
   }
 
-  forget(key) {
-    this._redis.del(key);
+  async forget(key) {
+    await this._redis.del(key);
   }
 
-  flush() {
-    this._redis.flushdb();
+  async flush() {
+    await this._redis.flushdb();
   }
 
   getPrefix() {
     return '';
+  }
+
+  _serialize(value) {
+    return value ? JSON.stringify(value) : value;
+  }
+
+  _unserialize(value) {
+    return value ? JSON.parse(value) : value;
   }
 }
