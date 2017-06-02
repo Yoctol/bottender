@@ -1,8 +1,8 @@
 import MongoSessionStore from '../MongoSessionStore';
 
-jest.mock('../../database/resolve');
+jest.mock('mongodb');
 
-const resolve = require('../../database/resolve');
+const { MongoClient } = require('mongodb');
 
 async function createMongoStore() {
   const sessions = {
@@ -10,27 +10,18 @@ async function createMongoStore() {
     updateOne: jest.fn(),
     remove: jest.fn(),
   };
-
-  const db = {
-    collection: jest.fn(() => sessions),
-  };
-  resolve.default = jest.fn(() => Promise.resolve(db));
-  const store = new MongoSessionStore();
+  MongoClient.connect.mockReturnValue(
+    Promise.resolve({
+      collection: jest.fn(() => sessions),
+    })
+  );
+  const store = new MongoSessionStore('mongodb://fakemongourl');
   await store.init();
   return {
     store,
     sessions,
-    db,
   };
 }
-
-it('should call resolve when init', async () => {
-  const db = {};
-  resolve.default = jest.fn(() => Promise.resolve(db));
-  const store = new MongoSessionStore();
-  await store.init();
-  expect(resolve.default).toBeCalled();
-});
 
 it('should call findOne with platform and id when get', async () => {
   const { store, sessions } = await createMongoStore();

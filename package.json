@@ -72,10 +72,10 @@
     ],
     "coverageThreshold": {
       "global": {
-        "branches": 87,
-        "functions": 87,
-        "lines": 87,
-        "statements": 87
+        "branches": 70,
+        "functions": 70,
+        "lines": 70,
+        "statements": 70
       }
     },
     "testResultsProcessor": "./node_modules/jest-junit",

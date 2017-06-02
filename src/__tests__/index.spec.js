@@ -11,8 +11,4 @@ describe('core', () => {
     expect(core.MessengerHandlerBuilder).toBeDefined();
     expect(core.LINEHandlerBuilder).toBeDefined();
   });
-
-  it('export verifyMessengerWebhook', () => {
-    expect(core.verifyMessengerWebhook).toBeDefined();
-  });
 });
