@@ -1,12 +1,12 @@
-import MemorySessionStore from '../MemorySessionStore';
+import CacheBasedSessionStore from '../CacheBasedSessionStore';
 
 it('should be initialized successfully', async () => {
-  const store = new MemorySessionStore();
+  const store = new CacheBasedSessionStore();
   expect(await store.init()).toBe(store);
 });
 
 it('should handle multiple types', async () => {
-  const store = new MemorySessionStore();
+  const store = new CacheBasedSessionStore();
   await store.init();
   const six = {};
   await store.set('1', undefined);
@@ -24,7 +24,7 @@ it('should handle multiple types', async () => {
 });
 
 it('should remove data from store when destroy be called', async () => {
-  const store = new MemorySessionStore();
+  const store = new CacheBasedSessionStore();
   await store.init();
   await store.set('1', 1);
   await store.set('2', 2);
@@ -36,7 +36,7 @@ it('should remove data from store when destroy be called', async () => {
 });
 
 it('should have the same behavior as set when save memory session', async () => {
-  const store = new MemorySessionStore();
+  const store = new CacheBasedSessionStore();
   await store.init();
   const six = {};
   await store.save('1', undefined);
