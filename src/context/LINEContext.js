@@ -3,7 +3,7 @@
 import wait from 'delay';
 import { LINEClient } from 'messaging-api-line';
 
-import SessionData from '../session/SessionData';
+import Session from '../session/Session';
 
 import Context, { DEFAULT_MESSAGE_DELAY } from './Context';
 import LINEEvent, { type RawLINEEvent } from './LINEEvent';
@@ -12,17 +12,17 @@ import DelayableJobQueue from './DelayableJobQueue';
 type Options = {
   lineAPIClient: LINEClient,
   rawEvent: RawLINEEvent,
-  data: SessionData,
+  session: Session,
 };
 
 export default class LINEContext extends Context {
   _client: LINEClient;
   _event: LINEEvent;
-  _data: SessionData;
+  _session: Session;
   _jobQueue: DelayableJobQueue;
 
-  constructor({ lineAPIClient, rawEvent, data }: Options) {
-    super({ data });
+  constructor({ lineAPIClient, rawEvent, session }: Options) {
+    super({ session });
     this._client = lineAPIClient;
     this._event = new LINEEvent(rawEvent);
     this._jobQueue.beforeEach(({ delay }) => wait(delay));
@@ -47,7 +47,7 @@ export default class LINEContext extends Context {
           this._enqueue({
             instance: this._client,
             method: `push${type}`,
-            args: [this._data.user.id, ...args],
+            args: [this._session.user.id, ...args],
             delay: DEFAULT_MESSAGE_DELAY,
             showIndicators: true,
           });
@@ -77,7 +77,7 @@ export default class LINEContext extends Context {
           this._enqueue({
             instance: this._client,
             method: `push${type}`,
-            args: [this._data.user.id, ...rest],
+            args: [this._session.user.id, ...rest],
             delay,
             showIndicators: true,
           });

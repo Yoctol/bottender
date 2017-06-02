@@ -1,6 +1,6 @@
 import MessengerContext from '../MessengerContext';
 import MessengerEvent from '../MessengerEvent';
-import SessionData from '../../session/SessionData';
+import Session from '../../session/Session';
 
 jest.mock('delay');
 jest.mock('messaging-api-messenger');
@@ -27,7 +27,7 @@ const rawEvent = {
 
 const setup = () => {
   const client = createMockGraphAPIClient();
-  const data = new SessionData({
+  const session = new Session({
     user: {
       id: 'fakeUserId',
     },
@@ -35,12 +35,12 @@ const setup = () => {
   const args = {
     graphAPIClient: client,
     rawEvent,
-    data,
+    session,
   };
   const context = new MessengerContext(args);
   return {
     context,
-    data,
+    session,
     client,
   };
 };
@@ -50,9 +50,9 @@ it('be defined', () => {
   expect(context).toBeDefined();
 });
 
-it('get #data works', () => {
-  const { context, data } = setup();
-  expect(context.data).toBe(data);
+it('get #session works', () => {
+  const { context, session } = setup();
+  expect(context.session).toBe(session);
 });
 
 it('get #event works', () => {
@@ -61,7 +61,7 @@ it('get #event works', () => {
 });
 
 it('#sendText put sendText to jobQueue', () => {
-  const { context, client, data } = setup();
+  const { context, client, session } = setup();
   context._jobQueue = {
     enqueue: jest.fn(),
   };
@@ -71,14 +71,14 @@ it('#sendText put sendText to jobQueue', () => {
   expect(context._jobQueue.enqueue).toBeCalledWith({
     instance: client,
     method: 'sendText',
-    args: [data.user.id, 'xxx.com'],
+    args: [session.user.id, 'xxx.com'],
     delay: 1000,
     showIndicators: true,
   });
 });
 
 it('#sendIssueResolutionText put sendIssueResolutionText to jobQueue', () => {
-  const { context, client, data } = setup();
+  const { context, client, session } = setup();
   context._jobQueue = {
     enqueue: jest.fn(),
   };
@@ -88,14 +88,14 @@ it('#sendIssueResolutionText put sendIssueResolutionText to jobQueue', () => {
   expect(context._jobQueue.enqueue).toBeCalledWith({
     instance: client,
     method: 'sendIssueResolutionText',
-    args: [data.user.id, 'xxx.com'],
+    args: [session.user.id, 'xxx.com'],
     delay: 1000,
     showIndicators: true,
   });
 });
 
 it('#sendImage put sendImage to jobQueue', () => {
-  const { context, client, data } = setup();
+  const { context, client, session } = setup();
   context._jobQueue = {
     enqueue: jest.fn(),
   };
@@ -105,14 +105,14 @@ it('#sendImage put sendImage to jobQueue', () => {
   expect(context._jobQueue.enqueue).toBeCalledWith({
     instance: client,
     method: 'sendImage',
-    args: [data.user.id, 'xxx.com'],
+    args: [session.user.id, 'xxx.com'],
     delay: 1000,
     showIndicators: true,
   });
 });
 
 it('#sendAudio put sendAudio to jobQueue', () => {
-  const { context, client, data } = setup();
+  const { context, client, session } = setup();
   context._jobQueue = {
     enqueue: jest.fn(),
   };
@@ -122,14 +122,14 @@ it('#sendAudio put sendAudio to jobQueue', () => {
   expect(context._jobQueue.enqueue).toBeCalledWith({
     instance: client,
     method: 'sendAudio',
-    args: [data.user.id, 'xxx.com'],
+    args: [session.user.id, 'xxx.com'],
     delay: 1000,
     showIndicators: true,
   });
 });
 
 it('#sendVideo put sendVideo to jobQueue', () => {
-  const { context, client, data } = setup();
+  const { context, client, session } = setup();
   context._jobQueue = {
     enqueue: jest.fn(),
   };
@@ -139,14 +139,14 @@ it('#sendVideo put sendVideo to jobQueue', () => {
   expect(context._jobQueue.enqueue).toBeCalledWith({
     instance: client,
     method: 'sendVideo',
-    args: [data.user.id, 'xxx.com'],
+    args: [session.user.id, 'xxx.com'],
     delay: 1000,
     showIndicators: true,
   });
 });
 
 it('#sendFile put sendFile to jobQueue', () => {
-  const { context, client, data } = setup();
+  const { context, client, session } = setup();
   context._jobQueue = {
     enqueue: jest.fn(),
   };
@@ -156,14 +156,14 @@ it('#sendFile put sendFile to jobQueue', () => {
   expect(context._jobQueue.enqueue).toBeCalledWith({
     instance: client,
     method: 'sendFile',
-    args: [data.user.id, 'xxx.com'],
+    args: [session.user.id, 'xxx.com'],
     delay: 1000,
     showIndicators: true,
   });
 });
 
 it('#sendQuickReplies put sendQuickReplies to jobQueue', () => {
-  const { context, client, data } = setup();
+  const { context, client, session } = setup();
   context._jobQueue = {
     enqueue: jest.fn(),
   };
@@ -175,14 +175,14 @@ it('#sendQuickReplies put sendQuickReplies to jobQueue', () => {
   expect(context._jobQueue.enqueue).toBeCalledWith({
     instance: client,
     method: 'sendQuickReplies',
-    args: [data.user.id, { text: 'xxx.com' }, quickReplies],
+    args: [session.user.id, { text: 'xxx.com' }, quickReplies],
     delay: 1000,
     showIndicators: true,
   });
 });
 
 it('#sendGenericTemplate put sendGenericTemplate to jobQueue', () => {
-  const { context, client, data } = setup();
+  const { context, client, session } = setup();
   context._jobQueue = {
     enqueue: jest.fn(),
   };
@@ -195,14 +195,14 @@ it('#sendGenericTemplate put sendGenericTemplate to jobQueue', () => {
   expect(context._jobQueue.enqueue).toBeCalledWith({
     instance: client,
     method: 'sendGenericTemplate',
-    args: [data.user.id, elements, ratio],
+    args: [session.user.id, elements, ratio],
     delay: 1000,
     showIndicators: true,
   });
 });
 
 it('#sendShippingUpdateTemplate put sendShippingUpdateTemplate to jobQueue', () => {
-  const { context, client, data } = setup();
+  const { context, client, session } = setup();
   context._jobQueue = {
     enqueue: jest.fn(),
   };
@@ -215,14 +215,14 @@ it('#sendShippingUpdateTemplate put sendShippingUpdateTemplate to jobQueue', () 
   expect(context._jobQueue.enqueue).toBeCalledWith({
     instance: client,
     method: 'sendShippingUpdateTemplate',
-    args: [data.user.id, elements, ratio],
+    args: [session.user.id, elements, ratio],
     delay: 1000,
     showIndicators: true,
   });
 });
 
 it('#sendReservationUpdateTemplate put sendReservationUpdateTemplate to jobQueue', () => {
-  const { context, client, data } = setup();
+  const { context, client, session } = setup();
   context._jobQueue = {
     enqueue: jest.fn(),
   };
@@ -235,14 +235,14 @@ it('#sendReservationUpdateTemplate put sendReservationUpdateTemplate to jobQueue
   expect(context._jobQueue.enqueue).toBeCalledWith({
     instance: client,
     method: 'sendReservationUpdateTemplate',
-    args: [data.user.id, elements, ratio],
+    args: [session.user.id, elements, ratio],
     delay: 1000,
     showIndicators: true,
   });
 });
 
 it('#sendIssueResolutionTemplate put sendIssueResolutionTemplate to jobQueue', () => {
-  const { context, client, data } = setup();
+  const { context, client, session } = setup();
   context._jobQueue = {
     enqueue: jest.fn(),
   };
@@ -255,14 +255,14 @@ it('#sendIssueResolutionTemplate put sendIssueResolutionTemplate to jobQueue', (
   expect(context._jobQueue.enqueue).toBeCalledWith({
     instance: client,
     method: 'sendIssueResolutionTemplate',
-    args: [data.user.id, elements, ratio],
+    args: [session.user.id, elements, ratio],
     delay: 1000,
     showIndicators: true,
   });
 });
 
 it('#sendButtonTemplate put sendButtonTemplate to jobQueue', () => {
-  const { context, client, data } = setup();
+  const { context, client, session } = setup();
   context._jobQueue = {
     enqueue: jest.fn(),
   };
@@ -274,14 +274,14 @@ it('#sendButtonTemplate put sendButtonTemplate to jobQueue', () => {
   expect(context._jobQueue.enqueue).toBeCalledWith({
     instance: client,
     method: 'sendButtonTemplate',
-    args: [data.user.id, 'yayaya', buttons],
+    args: [session.user.id, 'yayaya', buttons],
     delay: 1000,
     showIndicators: true,
   });
 });
 
 it('#sendListTemplate put sendListTemplate to jobQueue', () => {
-  const { context, client, data } = setup();
+  const { context, client, session } = setup();
   context._jobQueue = {
     enqueue: jest.fn(),
   };
@@ -294,14 +294,14 @@ it('#sendListTemplate put sendListTemplate to jobQueue', () => {
   expect(context._jobQueue.enqueue).toBeCalledWith({
     instance: client,
     method: 'sendListTemplate',
-    args: [data.user.id, elements, buttons, 'large'],
+    args: [session.user.id, elements, buttons, 'large'],
     delay: 1000,
     showIndicators: true,
   });
 });
 
 it('#sendReceiptTemplate put sendReceiptTemplate to jobQueue', () => {
-  const { context, client, data } = setup();
+  const { context, client, session } = setup();
   context._jobQueue = {
     enqueue: jest.fn(),
   };
@@ -313,14 +313,14 @@ it('#sendReceiptTemplate put sendReceiptTemplate to jobQueue', () => {
   expect(context._jobQueue.enqueue).toBeCalledWith({
     instance: client,
     method: 'sendReceiptTemplate',
-    args: [data.user.id, receipt],
+    args: [session.user.id, receipt],
     delay: 1000,
     showIndicators: true,
   });
 });
 
 it('#sendAirlineBoardingPassTemplate put sendAirlineBoardingPassTemplate to jobQueue', () => {
-  const { context, client, data } = setup();
+  const { context, client, session } = setup();
   context._jobQueue = {
     enqueue: jest.fn(),
   };
@@ -332,14 +332,14 @@ it('#sendAirlineBoardingPassTemplate put sendAirlineBoardingPassTemplate to jobQ
   expect(context._jobQueue.enqueue).toBeCalledWith({
     instance: client,
     method: 'sendAirlineBoardingPassTemplate',
-    args: [data.user.id, boardingPass],
+    args: [session.user.id, boardingPass],
     delay: 1000,
     showIndicators: true,
   });
 });
 
 it('#sendAirlineCheckinTemplate put sendAirlineCheckinTemplate to jobQueue', () => {
-  const { context, client, data } = setup();
+  const { context, client, session } = setup();
   context._jobQueue = {
     enqueue: jest.fn(),
   };
@@ -351,14 +351,14 @@ it('#sendAirlineCheckinTemplate put sendAirlineCheckinTemplate to jobQueue', () 
   expect(context._jobQueue.enqueue).toBeCalledWith({
     instance: client,
     method: 'sendAirlineCheckinTemplate',
-    args: [data.user.id, checkin],
+    args: [session.user.id, checkin],
     delay: 1000,
     showIndicators: true,
   });
 });
 
 it('#sendAirlineItineraryTemplate put sendAirlineItineraryTemplate to jobQueue', () => {
-  const { context, client, data } = setup();
+  const { context, client, session } = setup();
   context._jobQueue = {
     enqueue: jest.fn(),
   };
@@ -370,14 +370,14 @@ it('#sendAirlineItineraryTemplate put sendAirlineItineraryTemplate to jobQueue',
   expect(context._jobQueue.enqueue).toBeCalledWith({
     instance: client,
     method: 'sendAirlineItineraryTemplate',
-    args: [data.user.id, itinerary],
+    args: [session.user.id, itinerary],
     delay: 1000,
     showIndicators: true,
   });
 });
 
 it('#sendAirlineFlightUpdateTemplate put sendAirlineFlightUpdateTemplate to jobQueue', () => {
-  const { context, client, data } = setup();
+  const { context, client, session } = setup();
   context._jobQueue = {
     enqueue: jest.fn(),
   };
@@ -389,26 +389,26 @@ it('#sendAirlineFlightUpdateTemplate put sendAirlineFlightUpdateTemplate to jobQ
   expect(context._jobQueue.enqueue).toBeCalledWith({
     instance: client,
     method: 'sendAirlineFlightUpdateTemplate',
-    args: [data.user.id, flightUpdate],
+    args: [session.user.id, flightUpdate],
     delay: 1000,
     showIndicators: true,
   });
 });
 
 it('#turnTypingIndicatorsOn call client turnTypingIndicatorsOn', () => {
-  const { context, client, data } = setup();
+  const { context, client, session } = setup();
   context.turnTypingIndicatorsOn();
-  expect(client.turnTypingIndicatorsOn).toBeCalledWith(data.user.id);
+  expect(client.turnTypingIndicatorsOn).toBeCalledWith(session.user.id);
 });
 
 it('#turnTypingIndicatorsOff call client turnTypingIndicatorsOff', () => {
-  const { context, client, data } = setup();
+  const { context, client, session } = setup();
   context.turnTypingIndicatorsOff();
-  expect(client.turnTypingIndicatorsOff).toBeCalledWith(data.user.id);
+  expect(client.turnTypingIndicatorsOff).toBeCalledWith(session.user.id);
 });
 
 it('use default message delay', () => {
-  const { context, client, data } = setup();
+  const { context, client, session } = setup();
 
   context._jobQueue = {
     enqueue: jest.fn(),
@@ -419,7 +419,7 @@ it('use default message delay', () => {
   expect(context._jobQueue.enqueue).toBeCalledWith({
     instance: client,
     method: 'sendText',
-    args: [data.user.id, 'yooooooo~'],
+    args: [session.user.id, 'yooooooo~'],
     delay: 1000,
     showIndicators: true,
   });
@@ -487,7 +487,7 @@ it('has send with delay methods', () => {
 });
 
 it('#sendTextWithDelay put sendText to jobQueue', () => {
-  const { context, client, data } = setup();
+  const { context, client, session } = setup();
   context._jobQueue = {
     enqueue: jest.fn(),
   };
@@ -497,7 +497,7 @@ it('#sendTextWithDelay put sendText to jobQueue', () => {
   expect(context._jobQueue.enqueue).toBeCalledWith({
     instance: client,
     method: 'sendText',
-    args: [data.user.id, 'xxx.com'],
+    args: [session.user.id, 'xxx.com'],
     delay: 3000,
     showIndicators: true,
   });
