@@ -3,7 +3,6 @@ import LINEEvent from '../LINEEvent';
 import SessionData from '../SessionData';
 
 jest.mock('messaging-api-line');
-jest.mock('../../database/resolve');
 
 const rawEvent = {
   replyToken: 'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA',
@@ -364,39 +363,6 @@ it('use default message delay', () => {
     instance: client,
     method: 'pushText',
     args: [data.user.id, 'yooooooo~'],
-    delay: 1000,
-    showIndicators: true,
-  });
-});
-
-it('should not pushText to enqueu in jobQueue when paused', () => {
-  const { context } = setup();
-  context._jobQueue = {
-    enqueue: jest.fn(),
-  };
-
-  context.hitl.pause();
-
-  context.sendText('xxx.com');
-
-  expect(context._jobQueue.enqueue).not.toBeCalled();
-});
-
-it('should pushText to enqueu in jobQueue when resumed', () => {
-  const { context, client, data } = setup();
-  context._jobQueue = {
-    enqueue: jest.fn(),
-  };
-
-  context.hitl.pause();
-  context.hitl.unpause();
-
-  context.sendText('xxx.com');
-
-  expect(context._jobQueue.enqueue).toBeCalledWith({
-    instance: client,
-    method: 'pushText',
-    args: [data.user.id, 'xxx.com'],
     delay: 1000,
     showIndicators: true,
   });
