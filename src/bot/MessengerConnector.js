@@ -3,9 +3,9 @@ import { MessengerClient } from 'messaging-api-messenger';
 
 import MessengerContext from '../context/MessengerContext';
 
-import Connecter from './Connector';
+import Connector from './Connector';
 
-export default class MessengerConnector extends Connecter {
+export default class MessengerConnector extends Connector {
   constructor(accessToken) {
     super();
     this._graphAPIClient = MessengerClient.factory(accessToken);
