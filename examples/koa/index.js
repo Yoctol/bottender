@@ -2,11 +2,8 @@ require('babel-register');
 const Koa = require('koa');
 const Router = require('koa-router');
 const bodyParser = require('koa-bodyparser');
-const {
-  MessengerBot,
-  MemoryCacheStore,
-  CacheBasedSessionStore,
-} = require('../../src');
+
+const { MessengerBot } = require('../../src');
 const { verifyMessengerWebhook } = require('../../src/koa');
 
 const config = {
@@ -14,12 +11,8 @@ const config = {
   accessToken: '__FILL_YOUR_TOKEN_HERE__',
 };
 
-const cache = new MemoryCacheStore(500);
-const sessionHandler = new CacheBasedSessionStore(cache);
-
 const bot = new MessengerBot({
   accessToken: config.accessToken,
-  sessionHandler,
 });
 
 bot.handle(context => {
