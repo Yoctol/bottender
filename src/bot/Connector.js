@@ -1,10 +1,10 @@
 import invariant from 'invariant';
 
 function unimplemented(methodName) {
-  invariant(false, `Connecter must implement abstract method: ${methodName}`);
+  invariant(false, `Connector must implement abstract method: ${methodName}`);
 }
 
-export default class Connecter {
+export default class Connector {
   _handler = null;
 
   get hasHandler(): boolean {

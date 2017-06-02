@@ -3,9 +3,9 @@ import { LINEClient } from 'messaging-api-line';
 
 import LINEContext from '../context/LINEContext';
 
-import Connecter from './Connector';
+import Connector from './Connector';
 
-export default class LINEConnector extends Connecter {
+export default class LINEConnector extends Connector {
   constructor({ accessToken, channelSecret }) {
     super();
     this._lineAPIClient = LINEClient.factory(accessToken, channelSecret);
