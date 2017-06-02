@@ -23,32 +23,32 @@ async function createMongoStore() {
   };
 }
 
-it('should call findOne with platform and id when get', async () => {
+it('should call findOne with platform and id when read', async () => {
   const { store, sessions } = await createMongoStore();
   const sess = {};
   sessions.findOne.mockReturnValue(Promise.resolve(sess));
-  await store.get('yoctol:1');
+  await store.read('yoctol:1');
   expect(sessions.findOne).toBeCalledWith({
     'user.platform': 'yoctol',
     'user.id': '1',
   });
 });
 
-it('should call updateOne with _id when set with _id', async () => {
+it('should call updateOne with _id when write with _id', async () => {
   const { store, sessions } = await createMongoStore();
   const sess = { _id: '123456' };
   sessions.updateOne.mockReturnValue(Promise.resolve());
-  await store.set('yoctol:1', sess);
+  await store.write('yoctol:1', sess);
   expect(sessions.updateOne).toBeCalledWith({ _id: '123456' }, sess, {
     upsert: true,
   });
 });
 
-it('should call updateOne with platform and id when set without _id', async () => {
+it('should call updateOne with platform and id when write without _id', async () => {
   const { store, sessions } = await createMongoStore();
   const sess = {};
   sessions.updateOne.mockReturnValue(Promise.resolve());
-  await store.set('yoctol:1', sess);
+  await store.write('yoctol:1', sess);
   expect(sessions.updateOne).toBeCalledWith(
     { 'user.platform': 'yoctol', 'user.id': '1' },
     sess,
@@ -64,12 +64,4 @@ it('should call remove with platform and id when destroy', async () => {
     'user.platform': 'yoctol',
     'user.id': '1',
   });
-});
-
-it('should call updateOne with _id when save', async () => {
-  const { store, sessions } = await createMongoStore();
-  const sess = { _id: '123456' };
-  sessions.updateOne.mockReturnValue(Promise.resolve());
-  await store.save('yoctol:1', sess);
-  expect(sessions.updateOne).toBeCalledWith({ _id: '123456' }, sess);
 });
