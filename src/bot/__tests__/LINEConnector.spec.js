@@ -1,7 +1,7 @@
 import { LINEClient } from 'messaging-api-line';
 
 import LINEConnector from '../LINEConnector';
-import LINEContext from '../../session/LINEContext';
+import LINEContext from '../../context/LINEContext';
 
 jest.mock('messaging-api-line');
 

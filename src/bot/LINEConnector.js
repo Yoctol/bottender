@@ -1,7 +1,7 @@
 /* eslint-disable class-methods-use-this */
 import { LINEClient } from 'messaging-api-line';
 
-import LINEContext from '../session/LINEContext';
+import LINEContext from '../context/LINEContext';
 
 import Connecter from './Connector';
 

@@ -3,10 +3,11 @@
 import wait from 'delay';
 import { MessengerClient } from 'messaging-api-messenger';
 
+import SessionData from '../session/SessionData';
+
 import Context, { DEFAULT_MESSAGE_DELAY } from './Context';
 import MessengerEvent, { type RawMessengerEvent } from './MessengerEvent';
 import DelayableJobQueue from './DelayableJobQueue';
-import SessionData from './SessionData';
 
 type Options = {
   graphAPIClient: MessengerClient,
