@@ -2,7 +2,11 @@ require('babel-register');
 const express = require('express');
 const bodyParser = require('body-parser');
 
-const { MessengerBot } = require('../../src');
+const {
+  MessengerBot,
+  RedisCacheStore,
+  CacheBasedSessionStore,
+} = require('../../src');
 const { verifyMessengerWebhook } = require('../../src/express');
 
 const config = {
@@ -10,8 +14,12 @@ const config = {
   accessToken: '__FILL_YOUR_TOKEN_HERE__',
 };
 
+const cache = new RedisCacheStore();
+const sessionHandler = new CacheBasedSessionStore(cache);
+
 const bot = new MessengerBot({
   accessToken: config.accessToken,
+  sessionHandler,
 });
 
 bot.handle(context => {
