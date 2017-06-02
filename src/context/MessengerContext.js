@@ -3,7 +3,7 @@
 import wait from 'delay';
 import { MessengerClient } from 'messaging-api-messenger';
 
-import SessionData from '../session/SessionData';
+import Session from '../session/Session';
 
 import Context, { DEFAULT_MESSAGE_DELAY } from './Context';
 import MessengerEvent, { type RawMessengerEvent } from './MessengerEvent';
@@ -12,17 +12,17 @@ import DelayableJobQueue from './DelayableJobQueue';
 type Options = {
   graphAPIClient: MessengerClient,
   rawEvent: RawMessengerEvent,
-  data: SessionData,
+  session: Session,
 };
 
 export default class MessengerContext extends Context {
   _client: MessengerClient;
   _event: MessengerEvent;
-  _data: SessionData;
+  _session: Session;
   _jobQueue: DelayableJobQueue;
 
-  constructor({ graphAPIClient, rawEvent, data }: Options) {
-    super({ data });
+  constructor({ graphAPIClient, rawEvent, session }: Options) {
+    super({ session });
     this._client = graphAPIClient;
     this._event = new MessengerEvent(rawEvent);
     this._jobQueue.beforeEach(async ({ delay, showIndicators = true }) => {
@@ -67,7 +67,7 @@ export default class MessengerContext extends Context {
           this._enqueue({
             instance: this._client,
             method,
-            args: [this._data.user.id, ...args],
+            args: [this._session.user.id, ...args],
             delay: DEFAULT_MESSAGE_DELAY,
             showIndicators: true,
           });
@@ -97,7 +97,7 @@ export default class MessengerContext extends Context {
           this._enqueue({
             instance: this._client,
             method,
-            args: [this._data.user.id, ...rest],
+            args: [this._session.user.id, ...rest],
             delay,
             showIndicators: true,
           });
@@ -111,10 +111,10 @@ export default class MessengerContext extends Context {
   }
 
   turnTypingIndicatorsOn(): void {
-    this._client.turnTypingIndicatorsOn(this._data.user.id);
+    this._client.turnTypingIndicatorsOn(this._session.user.id);
   }
 
   turnTypingIndicatorsOff(): void {
-    this._client.turnTypingIndicatorsOff(this._data.user.id);
+    this._client.turnTypingIndicatorsOff(this._session.user.id);
   }
 }
