@@ -1,11 +1,18 @@
 import _debug from 'debug';
 
+import MemoryCacheStore from '../cache/MemoryCacheStore';
+import CacheBasedSessionStore from '../session/CacheBasedSessionStore';
 import SessionData from '../session/SessionData';
 
 const debug = _debug('core/bot/Bot');
 
+function createMemorySessionStore() {
+  const cache = new MemoryCacheStore(500);
+  return new CacheBasedSessionStore(cache);
+}
+
 export default class Bot {
-  constructor({ connector, sessionHandler }) {
+  constructor({ connector, sessionHandler = createMemorySessionStore() }) {
     this._sessions = sessionHandler;
     this._initialized = false;
     this._connector = connector;
