@@ -6,6 +6,8 @@ import Session from '../session/Session';
 
 const debug = _debug('core/bot/Bot');
 
+const MINUTES_IN_ONE_YEAR = 365 * 24 * 60;
+
 function createMemorySessionStore() {
   const cache = new MemoryCacheStore(500);
   return new CacheBasedSessionStore(cache);
@@ -50,7 +52,7 @@ export default class Bot {
 
       const sessionKey = `${platform}:${senderId}`;
 
-      const data = await this._sessions.get(sessionKey);
+      const data = await this._sessions.read(sessionKey);
       const session = new Session(data);
 
       if (!session.user) {
@@ -64,7 +66,8 @@ export default class Bot {
       }
 
       await this._connector.handleRequest({ request: req, session });
-      this._sessions.save(sessionKey, session);
+
+      this._sessions.write(sessionKey, session, MINUTES_IN_ONE_YEAR);
 
       res.sendStatus(200);
     };
@@ -90,7 +93,7 @@ export default class Bot {
 
       const sessionKey = `${platform}:${senderId}`;
 
-      const data = await this._sessions.get(sessionKey);
+      const data = await this._sessions.read(sessionKey);
       const session = new Session(data);
 
       if (!session.user) {
@@ -104,7 +107,8 @@ export default class Bot {
       }
 
       await this._connector.handleRequest({ request, session });
-      this._sessions.save(sessionKey, session);
+
+      this._sessions.write(sessionKey, session, MINUTES_IN_ONE_YEAR);
 
       response.status = 200;
     };
