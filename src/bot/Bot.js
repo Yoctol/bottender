@@ -32,7 +32,9 @@ export default class Bot {
 
   createExpressMiddleware() {
     if (!this._connector.hasHandler) {
-      throw new Error('must have at least 1 handler');
+      throw new Error(
+        'Bot: Missing event handler function. You should assign it using handle(...)'
+      );
     }
 
     return async (req, res) => {
@@ -70,7 +72,9 @@ export default class Bot {
 
   createKoaMiddleware() {
     if (!this._connector.hasHandler) {
-      throw new Error('must have at least 1 handler');
+      throw new Error(
+        'Bot: Missing event handler function. You should assign it using handle(...)'
+      );
     }
 
     return async ({ request, response }) => {
