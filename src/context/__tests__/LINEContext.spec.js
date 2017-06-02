@@ -1,6 +1,6 @@
 import LINEContext from '../LINEContext';
 import LINEEvent from '../LINEEvent';
-import SessionData from '../SessionData';
+import SessionData from '../../session/SessionData';
 
 jest.mock('messaging-api-line');
 

@@ -1,5 +1,5 @@
 import Context from '../Context';
-import SessionData from '../SessionData';
+import SessionData from '../../session/SessionData';
 
 function setup({ data = new SessionData() } = {}) {
   return {

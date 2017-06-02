@@ -1,6 +1,6 @@
 import MessengerContext from '../MessengerContext';
 import MessengerEvent from '../MessengerEvent';
-import SessionData from '../SessionData';
+import SessionData from '../../session/SessionData';
 
 jest.mock('delay');
 jest.mock('messaging-api-messenger');

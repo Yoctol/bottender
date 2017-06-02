@@ -3,10 +3,11 @@
 import wait from 'delay';
 import { LINEClient } from 'messaging-api-line';
 
+import SessionData from '../session/SessionData';
+
 import Context, { DEFAULT_MESSAGE_DELAY } from './Context';
 import LINEEvent, { type RawLINEEvent } from './LINEEvent';
 import DelayableJobQueue from './DelayableJobQueue';
-import SessionData from './SessionData';
 
 type Options = {
   lineAPIClient: LINEClient,

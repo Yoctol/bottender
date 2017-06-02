@@ -1,7 +1,7 @@
 /* @flow */
+import SessionData from '../session/SessionData';
 
 import DelayableJobQueue from './DelayableJobQueue';
-import SessionData from './SessionData';
 
 export const DEFAULT_MESSAGE_DELAY = 1000;
 

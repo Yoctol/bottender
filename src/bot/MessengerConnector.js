@@ -1,7 +1,7 @@
 /* eslint-disable class-methods-use-this */
 import { MessengerClient } from 'messaging-api-messenger';
 
-import MessengerContext from '../session/MessengerContext';
+import MessengerContext from '../context/MessengerContext';
 
 import Connecter from './Connector';
 
