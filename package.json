@@ -41,6 +41,7 @@
     "rimraf": "^2.6.1"
   },
   "dependencies": {
+    "babel-runtime": "^6.23.0",
     "debug": "^2.6.8",
     "delay": "^2.0.0",
     "invariant": "^2.2.2",
