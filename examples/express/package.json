@@ -1,9 +1,8 @@
 {
   "dependencies": {
     "babel-register": "^6.24.1",
-    "koa": "^2.2.0",
-    "koa-bodyparser": "^4.2.0",
-    "koa-router": "^7.2.0"
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3"
   },
   "scripts": {
     "start": "node index.js"
