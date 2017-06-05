@@ -119,7 +119,8 @@ export default class HandlerBuilder {
         }
       } catch (err) {
         if (this._errorHandler) {
-          return this._errorHandler(err, context);
+          // TODO: pass error in
+          return this._errorHandler(context);
         }
         throw err;
       }
