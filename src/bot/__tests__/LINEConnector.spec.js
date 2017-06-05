@@ -89,13 +89,13 @@ describe('#getUserProfile', () => {
 describe('#handleRequest', () => {
   it('call handler with context', async () => {
     const { connector } = setup();
-    const sessionData = {};
+    const session = {};
     const db = {};
     let context;
     connector.setHandler(_context => {
       context = _context;
     });
-    await connector.handleRequest({ request, sessionData, db });
+    await connector.handleRequest({ request, session, db });
 
     expect(context).toBeDefined();
     expect(context).toBeInstanceOf(LINEContext);

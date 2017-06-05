@@ -2,9 +2,11 @@ import _debug from 'debug';
 
 import MemoryCacheStore from '../cache/MemoryCacheStore';
 import CacheBasedSessionStore from '../session/CacheBasedSessionStore';
-import SessionData from '../session/SessionData';
+import Session from '../session/Session';
 
 const debug = _debug('core/bot/Bot');
+
+const MINUTES_IN_ONE_YEAR = 365 * 24 * 60;
 
 function createMemorySessionStore() {
   const cache = new MemoryCacheStore(500);
@@ -50,21 +52,22 @@ export default class Bot {
 
       const sessionKey = `${platform}:${senderId}`;
 
-      const session = await this._sessions.get(sessionKey);
-      const sessionData = new SessionData(session);
+      const data = await this._sessions.read(sessionKey);
+      const session = new Session(data);
 
-      if (!sessionData.user) {
+      if (!session.user) {
         const user = {
           ...(await this._connector.getUserProfile(senderId)),
           id: senderId,
           platform: this._connector.platform,
         };
 
-        sessionData.user = user;
+        session.user = user;
       }
 
-      await this._connector.handleRequest({ request: req, sessionData });
-      this._sessions.save(sessionKey, sessionData);
+      await this._connector.handleRequest({ request: req, session });
+
+      this._sessions.write(sessionKey, session, MINUTES_IN_ONE_YEAR);
 
       res.sendStatus(200);
     };
@@ -90,21 +93,22 @@ export default class Bot {
 
       const sessionKey = `${platform}:${senderId}`;
 
-      const session = await this._sessions.get(sessionKey);
-      const sessionData = new SessionData(session);
+      const data = await this._sessions.read(sessionKey);
+      const session = new Session(data);
 
-      if (!sessionData.user) {
+      if (!session.user) {
         const user = {
           ...(await this._connector.getUserProfile(senderId)),
           id: senderId,
           platform: this._connector.platform,
         };
 
-        sessionData.user = user;
+        session.user = user;
       }
 
-      await this._connector.handleRequest({ request, sessionData });
-      this._sessions.save(sessionKey, sessionData);
+      await this._connector.handleRequest({ request, session });
+
+      this._sessions.write(sessionKey, session, MINUTES_IN_ONE_YEAR);
 
       response.status = 200;
     };

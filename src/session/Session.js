@@ -1,4 +1,4 @@
-export default class SessionData {
+export default class Session {
   constructor(data) {
     if (data) {
       // eslint-disable-next-line no-restricted-syntax

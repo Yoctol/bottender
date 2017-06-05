@@ -58,7 +58,7 @@ describe('#createKoaMiddleware', () => {
     const { bot, connector } = setup();
     bot.sessionManager.createSessionDataIfNotExists.mockReturnValue(
       Promise.resolve({
-        sessionData: {},
+        session: {},
         existed: true,
       })
     );
@@ -75,7 +75,7 @@ describe('#createKoaMiddleware', () => {
     connector.getUserProfile.mockReturnValue(Promise.resolve({}));
     bot.sessionManager.createSessionDataIfNotExists.mockReturnValue(
       Promise.resolve({
-        sessionData: {},
+        session: {},
         existed: false,
       })
     );
@@ -92,7 +92,7 @@ describe('#createKoaMiddleware', () => {
     connector.getUserProfile.mockReturnValue(Promise.resolve({ data: {} }));
     bot.sessionManager.createSessionDataIfNotExists.mockReturnValue(
       Promise.resolve({
-        sessionData: {},
+        session: {},
         existed: false,
       })
     );
@@ -109,10 +109,10 @@ describe('#createKoaMiddleware', () => {
   xit('call handleRequest', async () => {
     const { bot, connector } = setup();
     connector.getUserProfile.mockReturnValue(Promise.resolve({ data: {} }));
-    const sessionData = {};
+    const session = {};
     bot.sessionManager.createSessionDataIfNotExists.mockReturnValue(
       Promise.resolve({
-        sessionData,
+        session,
         existed: false,
       })
     );
@@ -122,7 +122,7 @@ describe('#createKoaMiddleware', () => {
     await middleware({ request, response });
     expect(connector.handleRequest).toBeCalledWith({
       request,
-      sessionData,
+      session,
     });
   });
 
@@ -130,10 +130,10 @@ describe('#createKoaMiddleware', () => {
   xit('call saveSessionData', async () => {
     const { bot, connector } = setup();
     connector.getUserProfile.mockReturnValue(Promise.resolve({ data: {} }));
-    const sessionData = {};
+    const session = {};
     bot.sessionManager.createSessionDataIfNotExists.mockReturnValue(
       Promise.resolve({
-        sessionData,
+        session,
         existed: false,
       })
     );
@@ -143,7 +143,7 @@ describe('#createKoaMiddleware', () => {
     await middleware({ request, response });
     expect(bot.sessionManager.saveSessionData).toBeCalledWith(
       'yoctol:SENDER_ID',
-      sessionData
+      session
     );
   });
 
@@ -153,7 +153,7 @@ describe('#createKoaMiddleware', () => {
     connector.getUserProfile.mockReturnValue(Promise.resolve({ data: {} }));
     bot.sessionManager.createSessionDataIfNotExists.mockReturnValue(
       Promise.resolve({
-        sessionData: {},
+        session: {},
         existed: false,
       })
     );

@@ -3,9 +3,9 @@ import { MessengerClient } from 'messaging-api-messenger';
 
 import MessengerContext from '../context/MessengerContext';
 
-import Connecter from './Connector';
+import Connector from './Connector';
 
-export default class MessengerConnector extends Connecter {
+export default class MessengerConnector extends Connector {
   constructor(accessToken) {
     super();
     this._graphAPIClient = MessengerClient.factory(accessToken);
@@ -32,13 +32,13 @@ export default class MessengerConnector extends Connecter {
     return data;
   }
 
-  async handleRequest({ request, sessionData }) {
+  async handleRequest({ request, session }) {
     const rawEvent = this._getRawEventFromRequest(request);
 
     const context = new MessengerContext({
       graphAPIClient: this._graphAPIClient,
       rawEvent,
-      data: sessionData,
+      session,
     });
 
     await this._handler(context);

@@ -1,28 +1,28 @@
 /* @flow */
-import SessionData from '../session/SessionData';
+import Session from '../session/Session';
 
 import DelayableJobQueue from './DelayableJobQueue';
 
 export const DEFAULT_MESSAGE_DELAY = 1000;
 
 type Options = {
-  data: SessionData,
+  session: Session,
 };
 
 type Event = any;
 
 export default class Context {
-  _data: SessionData;
+  _session: Session;
   _event: Event;
   _jobQueue: DelayableJobQueue;
 
-  constructor({ data }: Options) {
-    this._data = data;
+  constructor({ session }: Options) {
+    this._session = session;
     this._jobQueue = new DelayableJobQueue();
   }
 
-  get data(): SessionData {
-    return this._data;
+  get session(): Session {
+    return this._session;
   }
 
   get event(): Event {

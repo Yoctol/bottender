@@ -10,7 +10,7 @@ export default class MongoSessionStore {
     return this;
   }
 
-  async get(key) {
+  async read(key) {
     const [platform, id] = key.split(':');
     const filter = {
       'user.platform': platform,
@@ -19,7 +19,7 @@ export default class MongoSessionStore {
     return this._sessions.findOne(filter);
   }
 
-  async set(key, sess /* , maxAge */) {
+  async write(key, sess /* , maxAge */) {
     const [platform, id] = key.split(':');
     let filter;
     if (sess._id) {
@@ -48,13 +48,6 @@ export default class MongoSessionStore {
       'user.id': id,
     };
     return this._sessions.remove(filter);
-  }
-
-  async save(key, sess /* , maxAge */) {
-    const filter = {
-      _id: sess._id,
-    };
-    return this._sessions.updateOne(filter, sess);
   }
 
   get _sessions() {

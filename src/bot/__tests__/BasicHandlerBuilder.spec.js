@@ -224,8 +224,8 @@ describe('#onError', () => {
       .onUnhandled(() => {
         throw new Error('Boom!');
       })
-      .onError((err, ctx) => {
-        ctx.sendText(err.message);
+      .onError(ctx => {
+        ctx.sendText('Boom!');
       });
     await builder.build()(context);
     expect(context.sendText).toBeCalledWith('Boom!');

@@ -1,16 +1,16 @@
 import Context from '../Context';
-import SessionData from '../../session/SessionData';
+import Session from '../../session/Session';
 
-function setup({ data = new SessionData() } = {}) {
+function setup({ session = new Session() } = {}) {
   return {
-    data,
-    context: new Context({ data }),
+    session,
+    context: new Context({ session }),
   };
 }
 
-describe('#data', () => {
+describe('#session', () => {
   it('can be access', () => {
     const { context } = setup();
-    expect(context.data).toBeInstanceOf(SessionData);
+    expect(context.session).toBeInstanceOf(Session);
   });
 });
