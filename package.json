@@ -46,11 +46,13 @@
     "delay": "^2.0.0",
     "invariant": "^2.2.2",
     "ioredis": "^3.1.0",
+    "jfs": "^0.2.6",
     "messaging-api-line": "^0.1.0-2",
     "messaging-api-messenger": "^0.1.0-2",
     "mongodb": "^2.2.26",
     "quick-lru": "^1.0.0",
     "random-item": "^1.0.0",
+    "thenify": "^3.3.0",
     "warning": "^3.0.0"
   },
   "jest": {
