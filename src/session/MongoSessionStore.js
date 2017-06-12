@@ -36,6 +36,8 @@ export default class MongoSessionStore {
     const result = await this._sessions.updateOne(filter, sess, {
       upsert: true,
     });
+
+    // FIXME: may delete?
     if (result && result.upsertedId && result.upsertedId._id) {
       sess._id = result.upsertedId._id;
     }

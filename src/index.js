@@ -18,4 +18,5 @@ export { default as RedisCacheStore } from './cache/RedisCacheStore';
 export {
   default as CacheBasedSessionStore,
 } from './session/CacheBasedSessionStore';
+export { default as FileSessionStore } from './session/FileSessionStore';
 export { default as MongoSessionStore } from './session/MongoSessionStore';
