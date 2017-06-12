@@ -11,16 +11,16 @@ export default class MessengerConnector extends Connector {
     this._graphAPIClient = MessengerClient.factory(accessToken);
   }
 
-  _getRawEventFromRequest(request) {
-    return request.body.entry[0].messaging[0];
+  _getRawEventFromRequest(body) {
+    return body.entry[0].messaging[0];
   }
 
   get platform(): string {
     return 'messenger';
   }
 
-  getSenderIdFromRequest(request) {
-    const rawEvent = this._getRawEventFromRequest(request);
+  getSenderIdFromRequest(body) {
+    const rawEvent = this._getRawEventFromRequest(body);
     if (rawEvent.message && rawEvent.message.is_echo) {
       return rawEvent.recipient.id;
     }
@@ -32,8 +32,8 @@ export default class MessengerConnector extends Connector {
     return data;
   }
 
-  async handleRequest({ request, session }) {
-    const rawEvent = this._getRawEventFromRequest(request);
+  async handleRequest({ body, session }) {
+    const rawEvent = this._getRawEventFromRequest(body);
 
     const context = new MessengerContext({
       graphAPIClient: this._graphAPIClient,

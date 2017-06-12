@@ -15,8 +15,8 @@ export default class LINEConnector extends Connector {
     return 'line';
   }
 
-  getSenderIdFromRequest(request) {
-    const rawEvent = request.body.events[0];
+  getSenderIdFromRequest(body) {
+    const rawEvent = body.events[0];
     return rawEvent.source.userId; // FIXME: group, room?
   }
 
@@ -25,7 +25,7 @@ export default class LINEConnector extends Connector {
     return data;
   }
 
-  async handleRequest({ request, session }) {
+  async handleRequest({ body, session }) {
     const createLINEContext = rawEvent =>
       new LINEContext({
         lineAPIClient: this._lineAPIClient,
@@ -34,7 +34,7 @@ export default class LINEConnector extends Connector {
       });
 
     const promises = [];
-    request.body.events.forEach(event => {
+    body.events.forEach(event => {
       const context = createLINEContext(event);
       promises.push(this._handler(context));
     });

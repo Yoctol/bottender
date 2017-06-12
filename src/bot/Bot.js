@@ -48,7 +48,7 @@ export default class Bot {
       }
 
       const platform = this._connector.platform;
-      const senderId = this._connector.getSenderIdFromRequest(req);
+      const senderId = this._connector.getSenderIdFromRequest(req.body);
 
       const sessionKey = `${platform}:${senderId}`;
 
@@ -65,7 +65,7 @@ export default class Bot {
         session.user = user;
       }
 
-      await this._connector.handleRequest({ request: req, session });
+      await this._connector.handleRequest({ body: req.body, session });
 
       this._sessions.write(sessionKey, session, MINUTES_IN_ONE_YEAR);
 
@@ -89,7 +89,7 @@ export default class Bot {
       }
 
       const platform = this._connector.platform;
-      const senderId = this._connector.getSenderIdFromRequest(request);
+      const senderId = this._connector.getSenderIdFromRequest(request.body);
 
       const sessionKey = `${platform}:${senderId}`;
 
@@ -106,7 +106,7 @@ export default class Bot {
         session.user = user;
       }
 
-      await this._connector.handleRequest({ request, session });
+      await this._connector.handleRequest({ body: request.body, session });
 
       this._sessions.write(sessionKey, session, MINUTES_IN_ONE_YEAR);
 
