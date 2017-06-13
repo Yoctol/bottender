@@ -70,20 +70,4 @@ export default class Bot {
       this._sessions.write(sessionKey, session, MINUTES_IN_ONE_YEAR);
     };
   }
-
-  createExpressMiddleware() {
-    const requestHandler = this.createRequestHandler();
-    return async (req, res) => {
-      await requestHandler(req.body);
-      res.sendStatus(200);
-    };
-  }
-
-  createKoaMiddleware() {
-    const requestHandler = this.createRequestHandler();
-    return async ({ request, response }) => {
-      await requestHandler(request.body);
-      response.status = 200;
-    };
-  }
 }
