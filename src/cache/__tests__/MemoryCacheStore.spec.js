@@ -1,74 +1,88 @@
 import MemoryCacheStore from '../MemoryCacheStore';
 
-jest.mock('quick-lru', () => jest.fn(() => {}));
-
-const LRU = require('quick-lru');
-
-beforeEach(() => {
-  jest.resetAllMocks();
-
-  const LRUMock = {
-    get: jest.fn(),
-    set: jest.fn(),
-    forget: jest.fn(),
-    delete: jest.fn(),
-    clear: jest.fn(),
-  };
-
-  LRU.mockImplementation(() => LRUMock);
+afterEach(() => {
+  jest.useRealTimers();
 });
 
-it('new LRU instance', () => {
-  const store = new MemoryCacheStore(5); // eslint-disable-line no-unused-vars
+describe('#get', () => {
+  it('should get cache value when value exists', async () => {
+    const store = new MemoryCacheStore(5);
 
-  expect(LRU).toBeCalledWith({ maxSize: 5 });
-  expect(LRU.mock.instances.length).toBe(1);
+    await store.put('x', 'abc', 5);
+    expect(await store.get('x')).toBe('abc');
+  });
+
+  it('should get null when value does not exist', async () => {
+    const store = new MemoryCacheStore(5);
+
+    expect(await store.get('x')).toBeNull();
+  });
 });
 
-it('get', async () => {
-  const store = new MemoryCacheStore(5);
+describe('#put', () => {
+  it('should store cache item for a given number of minutes', async () => {
+    jest.useFakeTimers();
 
-  store._lru.get.mockReturnValueOnce(Promise.resolve({ aaa: 456 }));
+    const store = new MemoryCacheStore(5);
 
-  expect(LRU.mock.instances.length).toBe(1);
-  expect(await store.get('123')).toEqual({ aaa: 456 });
+    await store.put('x', 1, 5);
+    expect(await store.get('x')).toBe(1);
+
+    jest.runTimersToTime(6 * 60 * 1000);
+
+    expect(await store.get('x')).toBeNull();
+  });
+
+  it('can store mixed data types', async () => {
+    const store = new MemoryCacheStore(5);
+
+    await store.put('x', 1, 5);
+    expect(await store.get('x')).toBe(1);
+
+    await store.put('x', 'abc', 5);
+    expect(await store.get('x')).toBe('abc');
+
+    await store.put('x', true, 5);
+    expect(await store.get('x')).toBe(true);
+
+    await store.put('x', { x: 1 }, 5);
+    expect(await store.get('x')).toEqual({ x: 1 });
+
+    await store.put('x', [{ x: 1 }], 5);
+    expect(await store.get('x')).toEqual([{ x: 1 }]);
+  });
 });
 
-it('put', async () => {
-  jest.useFakeTimers();
-  const store = new MemoryCacheStore(5);
-  store.forget = jest.fn();
+describe('#forget', () => {
+  it('should remove specified item from the cache', async () => {
+    const store = new MemoryCacheStore(5);
 
-  await store.put('123', { aaa: 456 }, 5);
+    await store.put('x', 1, 5);
+    await store.put('y', 2, 5);
+    await store.forget('x');
 
-  expect(LRU.mock.instances.length).toBe(1);
-  expect(store._lru.set).toBeCalledWith('123', { aaa: 456 });
-
-  jest.runTimersToTime(5 * 60 * 1000);
-  expect(store.forget).toBeCalledWith('123');
+    expect(await store.get('x')).toBeNull();
+    expect(await store.get('y')).toBe(2);
+  });
 });
 
-it('forget', async () => {
-  const store = new MemoryCacheStore(5);
+describe('#flush', () => {
+  it('should remove all items from the cache', async () => {
+    const store = new MemoryCacheStore(5);
 
-  await store.forget('123');
+    await store.put('x', 1, 5);
+    await store.put('y', 2, 5);
+    await store.flush();
 
-  expect(LRU.mock.instances.length).toBe(1);
-  expect(store._lru.delete).toBeCalledWith('123');
+    expect(await store.get('x')).toBeNull();
+    expect(await store.get('y')).toBeNull();
+  });
 });
 
-it('flush', async () => {
-  const store = new MemoryCacheStore(5);
+describe('#getPrefix', () => {
+  it('should have empty prefix', async () => {
+    const store = new MemoryCacheStore(5);
 
-  await store.flush();
-
-  expect(LRU.mock.instances.length).toBe(1);
-  expect(store._lru.clear).toBeCalled();
-});
-
-it('getPrefix', async () => {
-  const store = new MemoryCacheStore(5);
-
-  expect(LRU.mock.instances.length).toBe(1);
-  expect(store.getPrefix()).toEqual('');
+    expect(store.getPrefix()).toBe('');
+  });
 });
