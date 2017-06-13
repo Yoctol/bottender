@@ -32,15 +32,15 @@ export default class Bot {
     this._connector.setHandler(handler);
   }
 
-  createExpressMiddleware() {
+  createRequestHandler() {
     if (!this._connector.hasHandler) {
       throw new Error(
         'Bot: Missing event handler function. You should assign it using handle(...)'
       );
     }
 
-    return async (req, res) => {
-      debug(JSON.stringify(req.body, null, 2));
+    return async body => {
+      debug(JSON.stringify(body, null, 2));
 
       if (!this._initialized) {
         await this._sessions.init();
@@ -48,7 +48,7 @@ export default class Bot {
       }
 
       const platform = this._connector.platform;
-      const senderId = this._connector.getSenderIdFromRequest(req.body);
+      const senderId = this._connector.getSenderIdFromRequest(body);
 
       const sessionKey = `${platform}:${senderId}`;
 
@@ -65,51 +65,24 @@ export default class Bot {
         session.user = user;
       }
 
-      await this._connector.handleRequest({ body: req.body, session });
+      await this._connector.handleRequest({ body, session });
 
       this._sessions.write(sessionKey, session, MINUTES_IN_ONE_YEAR);
+    };
+  }
 
+  createExpressMiddleware() {
+    const requestHandler = this.createRequestHandler();
+    return async (req, res) => {
+      await requestHandler(req.body);
       res.sendStatus(200);
     };
   }
 
   createKoaMiddleware() {
-    if (!this._connector.hasHandler) {
-      throw new Error(
-        'Bot: Missing event handler function. You should assign it using handle(...)'
-      );
-    }
-
+    const requestHandler = this.createRequestHandler();
     return async ({ request, response }) => {
-      debug(JSON.stringify(request.body, null, 2));
-
-      if (!this._initialized) {
-        await this._sessions.init();
-        this._initialized = true;
-      }
-
-      const platform = this._connector.platform;
-      const senderId = this._connector.getSenderIdFromRequest(request.body);
-
-      const sessionKey = `${platform}:${senderId}`;
-
-      const data = await this._sessions.read(sessionKey);
-      const session = new Session(data);
-
-      if (!session.user) {
-        const user = {
-          ...(await this._connector.getUserProfile(senderId)),
-          id: senderId,
-          platform: this._connector.platform,
-        };
-
-        session.user = user;
-      }
-
-      await this._connector.handleRequest({ body: request.body, session });
-
-      this._sessions.write(sessionKey, session, MINUTES_IN_ONE_YEAR);
-
+      await requestHandler(request.body);
       response.status = 200;
     };
   }
