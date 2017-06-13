@@ -1,30 +1,35 @@
+/* @flow */
+
 import LRU from 'quick-lru';
 
 export default class MemoryCacheStore {
-  constructor(maxSize) {
+  _lru: LRU;
+
+  constructor(maxSize: number) {
     this._lru = new LRU({ maxSize });
   }
 
-  async get(key) {
-    return this._lru.get(key);
+  async get(key: string): Promise<mixed> {
+    const value = await this._lru.get(key);
+    return value || null;
   }
 
-  async put(key, value, minutes) {
+  async put(key: string, value: mixed, minutes: number): Promise<void> {
     this._lru.set(key, value);
     setTimeout(() => {
       this.forget(key);
     }, minutes * 60);
   }
 
-  async forget(key) {
+  async forget(key: string): Promise<void> {
     this._lru.delete(key);
   }
 
-  async flush() {
+  async flush(): Promise<void> {
     this._lru.clear();
   }
 
-  getPrefix() {
+  getPrefix(): string {
     return '';
   }
 }
