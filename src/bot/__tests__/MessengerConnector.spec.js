@@ -87,13 +87,13 @@ describe('#platform', () => {
 describe('#getSenderIdFromRequest', () => {
   it('extract correct sender id', () => {
     const { connector } = setup();
-    const senderId = connector.getSenderIdFromRequest(request);
+    const senderId = connector.getSenderIdFromRequest(request.body);
     expect(senderId).toBe('1412611362105802');
   });
 
   it('return recipient id when request is an echo event', () => {
     const { connector } = setup();
-    const senderId = connector.getSenderIdFromRequest(echoRequest);
+    const senderId = connector.getSenderIdFromRequest(echoRequest.body);
     expect(senderId).toBe('1244813222196986');
   });
 });
@@ -125,12 +125,11 @@ describe('#handleRequest', () => {
   it('call handler with context', async () => {
     const { connector } = setup();
     const session = {};
-    const db = {};
     let context;
     connector.setHandler(_context => {
       context = _context;
     });
-    await connector.handleRequest({ request, session, db });
+    await connector.handleRequest({ body: request.body, session });
 
     expect(context).toBeDefined();
     expect(context).toBeInstanceOf(MessengerContext);

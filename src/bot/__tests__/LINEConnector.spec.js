@@ -60,7 +60,7 @@ describe('#platform', () => {
 describe('#getSenderIdFromRequest', () => {
   it('extract correct sender id', () => {
     const { connector } = setup();
-    const senderId = connector.getSenderIdFromRequest(request);
+    const senderId = connector.getSenderIdFromRequest(request.body);
     expect(senderId).toBe('U206d25c2ea6bd87c17655609a1c37cb8');
   });
 });
@@ -90,12 +90,11 @@ describe('#handleRequest', () => {
   it('call handler with context', async () => {
     const { connector } = setup();
     const session = {};
-    const db = {};
     let context;
     connector.setHandler(_context => {
       context = _context;
     });
-    await connector.handleRequest({ request, session, db });
+    await connector.handleRequest({ body: request.body, session });
 
     expect(context).toBeDefined();
     expect(context).toBeInstanceOf(LINEContext);
