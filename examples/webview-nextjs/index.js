@@ -6,7 +6,10 @@ const bodyParser = require('body-parser');
 const nextjs = require('next');
 
 const { MessengerBot } = require('../../src');
-const { verifyMessengerWebhook } = require('../../src/express');
+const {
+  createMiddleware,
+  verifyMessengerWebhook,
+} = require('../../src/express');
 
 const config = {
   verifyToken: '1qaz2wsx',
@@ -39,7 +42,7 @@ async function createServer() {
       verifyToken: config.verifyToken,
     })
   );
-  server.post('/', bot.createExpressMiddleware());
+  server.post('/', createMiddleware(bot));
   server.get('*', (req, res) => {
     const parsedUrl = parse(req.url, true);
     handle(req, res, parsedUrl);

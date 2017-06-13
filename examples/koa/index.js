@@ -4,7 +4,7 @@ const Router = require('koa-router');
 const bodyParser = require('koa-bodyparser');
 
 const { MessengerBot } = require('../../src');
-const { verifyMessengerWebhook } = require('../../src/koa');
+const { createMiddleware, verifyMessengerWebhook } = require('../../src/koa');
 
 const config = {
   verifyToken: '1qaz2wsx',
@@ -29,7 +29,7 @@ router.get(
     verifyToken: config.verifyToken,
   })
 );
-router.post('/', bot.createKoaMiddleware());
+router.post('/', createMiddleware(bot));
 
 server.use(router.routes());
 

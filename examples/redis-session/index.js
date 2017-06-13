@@ -7,7 +7,10 @@ const {
   RedisCacheStore,
   CacheBasedSessionStore,
 } = require('../../src');
-const { verifyMessengerWebhook } = require('../../src/express');
+const {
+  createMiddleware,
+  verifyMessengerWebhook,
+} = require('../../src/express');
 
 const config = {
   verifyToken: '1qaz2wsx',
@@ -35,7 +38,7 @@ server.get(
     verifyToken: config.verifyToken,
   })
 );
-server.post('/', bot.createExpressMiddleware());
+server.post('/', createMiddleware(bot));
 
 server.listen(5000, () => {
   console.log('server is running...');

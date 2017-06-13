@@ -10,7 +10,7 @@ it('should construct LINEConnector', () => {
   });
   expect(bot).toBeDefined();
   expect(bot.handle).toBeDefined();
-  expect(bot.createKoaMiddleware).toBeDefined();
+  expect(bot.createRequestHandler).toBeDefined();
   expect(bot.connector).toBeDefined();
   expect(bot.connector).toBeInstanceOf(LINEConnector);
 });
