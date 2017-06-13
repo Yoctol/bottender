@@ -1,8 +1,6 @@
 {
   "dependencies": {
     "babel-register": "^6.24.1",
-    "body-parser": "^1.17.2",
-    "express": "^4.15.3",
     "next": "beta",
     "react": "^15.5.4",
     "react-dom": "^15.5.4"
