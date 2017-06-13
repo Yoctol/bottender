@@ -1,10 +1,7 @@
 require('babel-register');
-const Koa = require('koa');
-const Router = require('koa-router');
-const bodyParser = require('koa-bodyparser');
 
 const { MessengerBot } = require('../../src');
-const { createMiddleware, verifyMessengerWebhook } = require('../../src/koa');
+const { createServer } = require('../../src/koa');
 
 const config = {
   verifyToken: '1qaz2wsx',
@@ -19,19 +16,7 @@ bot.handle(context => {
   context.sendText('Hello World');
 });
 
-const server = new Koa();
-const router = new Router();
-
-router.use(bodyParser());
-router.get(
-  '/',
-  verifyMessengerWebhook({
-    verifyToken: config.verifyToken,
-  })
-);
-router.post('/', createMiddleware(bot));
-
-server.use(router.routes());
+const server = createServer(bot, config);
 
 server.listen(5000, () => {
   console.log('server is running...');

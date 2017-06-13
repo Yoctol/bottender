@@ -1,15 +1,10 @@
 const { parse } = require('url');
 
 require('babel-register');
-const express = require('express');
-const bodyParser = require('body-parser');
 const nextjs = require('next');
 
 const { MessengerBot } = require('../../src');
-const {
-  createMiddleware,
-  verifyMessengerWebhook,
-} = require('../../src/express');
+const { createServer } = require('../../src/express');
 
 const config = {
   verifyToken: '1qaz2wsx',
@@ -24,7 +19,7 @@ bot.handle(context => {
   context.sendText('Hello World');
 });
 
-async function createServer() {
+async function createServerWithNext() {
   const nextApp = nextjs({
     dev: process.env.NODE_ENV !== 'production',
   });
@@ -33,16 +28,8 @@ async function createServer() {
 
   await nextApp.prepare(); // eslint-disable-line no-await-in-loop
 
-  const server = express();
+  const server = createServer(bot, config);
 
-  server.use(bodyParser.json());
-  server.get(
-    '/',
-    verifyMessengerWebhook({
-      verifyToken: config.verifyToken,
-    })
-  );
-  server.post('/', createMiddleware(bot));
   server.get('*', (req, res) => {
     const parsedUrl = parse(req.url, true);
     handle(req, res, parsedUrl);
@@ -51,7 +38,7 @@ async function createServer() {
   return server;
 }
 
-createServer()
+createServerWithNext()
   .then(server => {
     server.listen(5000, () => {
       console.log('server is running...');
