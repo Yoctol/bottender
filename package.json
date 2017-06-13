@@ -52,6 +52,7 @@
     "koa": "^2.2.0",
     "koa-bodyparser": "^4.2.0",
     "koa-router": "^7.2.0",
+    "lodash": "^4.17.4",
     "messaging-api-line": "^0.1.0-2",
     "messaging-api-messenger": "^0.1.0-2",
     "mongodb": "^2.2.27",

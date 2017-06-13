@@ -1,85 +1,149 @@
+import Redis from 'ioredis';
+
 import RedisCacheStore from '../RedisCacheStore';
-
-jest.mock('ioredis', () => jest.fn(() => {}));
-
-const Redis = require('ioredis');
 
 beforeEach(() => {
   jest.resetAllMocks();
-
-  const RedisMock = {
-    get: jest.fn(),
-    setex: jest.fn(),
-    del: jest.fn(),
-    flushdb: jest.fn(),
-  };
-
-  Redis.mockImplementation(() => RedisMock);
 });
 
-it('new Redis instance', () => {
-  const store = new RedisCacheStore(); // eslint-disable-line no-unused-vars
+describe('#constructor', () => {
+  it('can call without any arguments', () => {
+    const store = new RedisCacheStore(); // eslint-disable-line no-unused-vars
 
-  expect(Redis.mock.instances.length).toBe(1);
+    expect(Redis).toBeCalledWith();
+  });
+
+  it('can call with port', () => {
+    const store = new RedisCacheStore(6380); // eslint-disable-line no-unused-vars
+
+    expect(Redis).toBeCalledWith(6380);
+  });
+
+  it('can call with port and host', () => {
+    const store = new RedisCacheStore(6379, '192.168.1.1'); // eslint-disable-line no-unused-vars
+
+    expect(Redis).toBeCalledWith(6379, '192.168.1.1');
+  });
+
+  it('can call with .sock', () => {
+    const store = new RedisCacheStore('/tmp/redis.sock'); // eslint-disable-line no-unused-vars
+
+    expect(Redis).toBeCalledWith('/tmp/redis.sock');
+  });
+
+  it('can call with config object', () => {
+    // eslint-disable-next-line no-unused-vars
+    const store = new RedisCacheStore({
+      port: 6379,
+      host: '127.0.0.1',
+      family: 4,
+      password: 'auth',
+      db: 0,
+    });
+
+    expect(Redis).toBeCalledWith({
+      port: 6379,
+      host: '127.0.0.1',
+      family: 4,
+      password: 'auth',
+      db: 0,
+    });
+  });
+
+  it('can call with url', () => {
+    const store = new RedisCacheStore('redis://:authpassword@127.0.0.1:6380/4'); // eslint-disable-line no-unused-vars
+
+    expect(Redis).toBeCalledWith('redis://:authpassword@127.0.0.1:6380/4');
+  });
 });
 
-it('get', async () => {
-  const store = new RedisCacheStore();
+describe('#get', () => {
+  it('should get cache value when value exists', async () => {
+    const store = new RedisCacheStore();
+    const redis = store.getRedis();
 
-  store._redis.get.mockReturnValueOnce(Promise.resolve('{"aaa":456}'));
+    redis.get.mockReturnValueOnce(Promise.resolve('{"aaa":456}'));
 
-  expect(Redis.mock.instances.length).toBe(1);
-  expect(await store.get('123')).toEqual({ aaa: 456 });
+    expect(await store.get('123')).toEqual({ aaa: 456 });
+    expect(redis.get).toBeCalledWith('123');
+  });
+
+  it('should get null when value does not exist', async () => {
+    const store = new RedisCacheStore();
+    const redis = store.getRedis();
+
+    redis.get.mockReturnValueOnce(Promise.resolve(null));
+
+    expect(await store.get('123')).toBeNull();
+    expect(redis.get).toBeCalledWith('123');
+  });
 });
 
-it('get nothing', async () => {
-  const store = new RedisCacheStore();
+describe('#put', () => {
+  it('should store cache item for a given number of minutes', async () => {
+    const store = new RedisCacheStore();
+    const redis = store.getRedis();
 
-  store._redis.get.mockReturnValueOnce(Promise.resolve(null));
+    await store.put('123', 'xyz', 5);
 
-  expect(Redis.mock.instances.length).toBe(1);
-  expect(await store.get('123')).toEqual(null);
+    expect(redis.setex).toBeCalledWith('123', 300, '"xyz"');
+  });
+
+  it('can store mixed data types', async () => {
+    const store = new RedisCacheStore();
+    const redis = store.getRedis();
+
+    await store.put('x', 1, 5);
+    expect(redis.setex).toHaveBeenLastCalledWith('x', 300, 1);
+
+    await store.put('x', 'abc', 5);
+    expect(redis.setex).toHaveBeenLastCalledWith('x', 300, '"abc"');
+
+    await store.put('x', true, 5);
+    expect(redis.setex).toHaveBeenLastCalledWith('x', 300, 'true');
+
+    await store.put('x', { x: 1 }, 5);
+    expect(redis.setex).toHaveBeenLastCalledWith('x', 300, '{"x":1}');
+
+    await store.put('x', [{ x: 1 }], 5);
+    expect(redis.setex).toHaveBeenLastCalledWith('x', 300, '[{"x":1}]');
+  });
 });
 
-it('put', async () => {
-  const store = new RedisCacheStore();
+describe('#forget', () => {
+  it('should remove specified item from the cache', async () => {
+    const store = new RedisCacheStore();
+    const redis = store.getRedis();
 
-  await store.put('123', { aaa: 456 }, 5);
+    await store.forget('123');
 
-  expect(Redis.mock.instances.length).toBe(1);
-  expect(store._redis.setex).toBeCalledWith('123', 300, '{"aaa":456}');
+    expect(redis.del).toBeCalledWith('123');
+  });
 });
 
-it('put nothing', async () => {
-  const store = new RedisCacheStore();
+describe('#flush', () => {
+  it('should remove all items from the cache', async () => {
+    const store = new RedisCacheStore();
+    const redis = store.getRedis();
 
-  await store.put('123', null, 5);
+    await store.flush();
 
-  expect(Redis.mock.instances.length).toBe(1);
-  expect(store._redis.setex).toBeCalledWith('123', 300, null);
+    expect(redis.flushdb).toBeCalled();
+  });
 });
 
-it('forget', async () => {
-  const store = new RedisCacheStore();
+describe('#getPrefix', () => {
+  it('should have initial value empty string', () => {
+    const store = new RedisCacheStore();
 
-  await store.forget('123');
+    expect(store.getPrefix()).toBe('');
+  });
 
-  expect(Redis.mock.instances.length).toBe(1);
-  expect(store._redis.del).toBeCalledWith('123');
-});
+  it('should get prefix set by setPrefix', () => {
+    const store = new RedisCacheStore();
 
-it('flush', async () => {
-  const store = new RedisCacheStore();
+    store.setPrefix('myprefix');
 
-  await store.flush();
-
-  expect(Redis.mock.instances.length).toBe(1);
-  expect(store._redis.flushdb).toBeCalled();
-});
-
-it('getPrefix', async () => {
-  const store = new RedisCacheStore();
-
-  expect(Redis.mock.instances.length).toBe(1);
-  expect(store.getPrefix()).toEqual('');
+    expect(store.getPrefix()).toBe('myprefix:');
+  });
 });
