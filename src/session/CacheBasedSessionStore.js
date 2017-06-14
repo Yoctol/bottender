@@ -2,7 +2,9 @@
 
 import type { CacheStore } from '../cache/CacheStore';
 
-export default class CacheBasedSessionStore {
+import type { SessionStore } from './SessionStore';
+
+export default class CacheBasedSessionStore implements SessionStore {
   _cache: CacheStore;
 
   constructor(cache: CacheStore) {
