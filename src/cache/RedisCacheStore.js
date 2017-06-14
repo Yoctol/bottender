@@ -2,7 +2,9 @@
 import Redis from 'ioredis';
 import { isNumber } from 'lodash';
 
-export default class RedisCacheStore {
+import type { CacheStore } from './CacheStore';
+
+export default class RedisCacheStore implements CacheStore {
   _redis: Redis;
 
   _prefix: string = '';

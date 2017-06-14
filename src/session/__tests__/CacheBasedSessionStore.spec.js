@@ -1,41 +1,64 @@
 import CacheBasedSessionStore from '../CacheBasedSessionStore';
 
-async function createSessionStore() {
+function setup() {
   const cache = {
     get: jest.fn(),
     put: jest.fn(),
     forget: jest.fn(),
+    flush: jest.fn(),
+    getPrefix: jest.fn(),
   };
 
   const store = new CacheBasedSessionStore(cache);
-  await store.init();
   return {
     store,
     cache,
   };
 }
 
-it('should call cache get with key when read', async () => {
-  const { store, cache } = await createSessionStore();
+describe('#init', () => {
+  it('should return initialize store instance', async () => {
+    const { store } = setup();
 
-  await store.read('yoctol:1');
-
-  expect(cache.get).toBeCalledWith('yoctol:1');
+    expect(await store.init()).toBe(store);
+  });
 });
 
-it('should call cache put with key when write', async () => {
-  const { store, cache } = await createSessionStore();
-  const sess = {};
+describe('#read', () => {
+  it('should call cache get with key', async () => {
+    const { store, cache } = setup();
 
-  await store.write('yoctol:1', sess, 100);
+    await store.init();
 
-  expect(cache.put).toBeCalledWith('yoctol:1', sess, 100);
+    cache.get.mockReturnValue(Promise.resolve({ x: 1 }));
+
+    expect(await store.read('yoctol:1')).toEqual({ x: 1 });
+    expect(cache.get).toBeCalledWith('yoctol:1');
+  });
 });
 
-it('should call cache forget with key when destroy', async () => {
-  const { store, cache } = await createSessionStore();
+describe('#write', () => {
+  it('should call cache put with key, value, and maxAge', async () => {
+    const { store, cache } = setup();
 
-  await store.destroy('yoctol:1');
+    await store.init();
 
-  expect(cache.forget).toBeCalledWith('yoctol:1');
+    const sess = { x: 1 };
+
+    await store.write('yoctol:1', sess, 100);
+
+    expect(cache.put).toBeCalledWith('yoctol:1', sess, 100);
+  });
+});
+
+describe('#destroy', () => {
+  it('should call cache forget with key', async () => {
+    const { store, cache } = setup();
+
+    await store.init();
+
+    await store.destroy('yoctol:1');
+
+    expect(cache.forget).toBeCalledWith('yoctol:1');
+  });
 });
