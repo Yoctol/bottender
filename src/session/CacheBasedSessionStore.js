@@ -1,21 +1,27 @@
+/* @flow */
+
+import type { CacheStore } from '../cache/CacheStore';
+
 export default class CacheBasedSessionStore {
-  constructor(cache) {
+  _cache: CacheStore;
+
+  constructor(cache: CacheStore) {
     this._cache = cache;
   }
 
-  async init(): CacheBasedSessionStore {
+  async init(): Promise<CacheBasedSessionStore> {
     return this;
   }
 
-  async read(key): mixed {
+  async read(key: string): Promise<mixed> {
     return this._cache.get(key);
   }
 
-  async write(key: string, sess: mixed, maxAge: number) {
+  async write(key: string, sess: mixed, maxAge: number): Promise<void> {
     this._cache.put(key, sess, maxAge);
   }
 
-  async destroy(key: string): void {
+  async destroy(key: string): Promise<void> {
     this._cache.forget(key);
   }
 }

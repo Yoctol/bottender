@@ -2,7 +2,9 @@
 
 import LRU from 'quick-lru';
 
-export default class MemoryCacheStore {
+import type { CacheStore } from './CacheStore';
+
+export default class MemoryCacheStore implements CacheStore {
   _lru: LRU;
 
   constructor(maxSize: number) {
