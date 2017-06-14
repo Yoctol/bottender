@@ -111,10 +111,12 @@ export default class MessengerContext extends Context {
   }
 
   turnTypingIndicatorsOn(): void {
+    // $FlowExpectedError
     this._client.turnTypingIndicatorsOn(this._session.user.id);
   }
 
   turnTypingIndicatorsOff(): void {
+    // $FlowExpectedError
     this._client.turnTypingIndicatorsOff(this._session.user.id);
   }
 }
