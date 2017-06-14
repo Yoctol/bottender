@@ -59,9 +59,6 @@
     "prop-types": "^15.5.10",
     "quick-lru": "^1.0.0",
     "random-item": "^1.0.0",
-    "rollbar": "^2.0.2",
-    "shelljs": "^0.7.7",
-    "snake-case": "^2.1.0",
     "thenify": "^3.3.0",
     "warning": "^3.0.0"
   },
