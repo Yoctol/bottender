@@ -26,7 +26,7 @@ export default class MessengerConnector
   implements Connector<MessengerRequestBody, MessengerUser> {
   _graphAPIClient: MessengerClient;
 
-  constructor(accessToken: string) {
+  constructor({ accessToken }: { accessToken: string }) {
     this._graphAPIClient = MessengerClient.factory(accessToken);
   }
 
