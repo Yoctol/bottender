@@ -1,35 +1,19 @@
-import invariant from 'invariant';
+/* @flow */
 
-function unimplemented(methodName) {
-  invariant(false, `Connector must implement abstract method: ${methodName}`);
-}
+import Session from '../session/Session';
 
-export default class Connector {
-  _handler = null;
+import type { FunctionalHandler } from './Bot';
 
-  get hasHandler(): boolean {
-    return !!this._handler;
-  }
-
-  setHandler(handler): void {
-    this._handler = handler;
-  }
-
-  /* eslint-disable class-methods-use-this */
-  get platform(): string {
-    unimplemented('platform getter');
-  }
-
-  getSenderIdFromRequest() {
-    unimplemented('getSenderIdFromRequest');
-  }
-
-  getUserProfile() {
-    unimplemented('getUserProfile');
-  }
-
-  handleRequest() {
-    unimplemented('handleRequest');
-  }
-  /* eslint-enable class-methods-use-this */
+export interface Connector<B, U> {
+  +platform: string,
+  getSenderIdFromRequest(body: B): string,
+  getUserProfile(senderId: string): Promise<U>,
+  handleRequest(params: {
+    body: B,
+    session: {
+      ...Session,
+      user: U,
+    },
+    handler: FunctionalHandler,
+  }): Promise<void>,
 }

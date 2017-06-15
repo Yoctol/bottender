@@ -126,10 +126,10 @@ describe('#handleRequest', () => {
     const { connector } = setup();
     const session = {};
     let context;
-    connector.setHandler(_context => {
+    const handler = _context => {
       context = _context;
-    });
-    await connector.handleRequest({ body: request.body, session });
+    };
+    await connector.handleRequest({ body: request.body, session, handler });
 
     expect(context).toBeDefined();
     expect(context).toBeInstanceOf(MessengerContext);
