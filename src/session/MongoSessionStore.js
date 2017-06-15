@@ -1,6 +1,8 @@
 import { MongoClient } from 'mongodb';
 
-export default class MongoSessionStore {
+import type { SessionStore } from './SessionStore';
+
+export default class MongoSessionStore implements SessionStore {
   constructor(url) {
     this._url = url;
   }

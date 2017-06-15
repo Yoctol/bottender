@@ -27,7 +27,6 @@ describe('#init', () => {
 describe('#read', () => {
   it('should call cache get with key', async () => {
     const { store, cache } = setup();
-
     await store.init();
 
     cache.get.mockReturnValue(Promise.resolve({ x: 1 }));
@@ -40,7 +39,6 @@ describe('#read', () => {
 describe('#write', () => {
   it('should call cache put with key, value, and maxAge', async () => {
     const { store, cache } = setup();
-
     await store.init();
 
     const sess = { x: 1 };
@@ -54,7 +52,6 @@ describe('#write', () => {
 describe('#destroy', () => {
   it('should call cache forget with key', async () => {
     const { store, cache } = setup();
-
     await store.init();
 
     await store.destroy('yoctol:1');

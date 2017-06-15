@@ -20,7 +20,7 @@ export default class MemoryCacheStore implements CacheStore {
     this._lru.set(key, value);
     setTimeout(() => {
       this.forget(key);
-    }, minutes * 60);
+    }, minutes * 60 * 1000);
   }
 
   async forget(key: string): Promise<void> {
