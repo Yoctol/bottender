@@ -1,170 +1,140 @@
 import Bot from '../Bot';
 
-function setup(
+function setup({
   connector = {
-    platform: 'yoctol',
-    hasHandler: true,
-    setHandler: jest.fn(),
-    getSenderIdFromRequest: jest.fn(() => 'SENDER_ID'),
+    platform: 'any',
+    getSenderIdFromRequest: jest.fn(),
     getUserProfile: jest.fn(),
     handleRequest: jest.fn(),
-  }
-) {
-  const logs = {
-    insert: jest.fn(),
-  };
-  const users = {
-    findOne: jest.fn(),
-    insert: jest.fn(),
-  };
-  const bot = new Bot({
-    id: 'fake-id',
-    filePath: 'fake://',
-    connector,
-  });
+  },
+  sessionStore = {
+    init: jest.fn(),
+    read: jest.fn(),
+    write: jest.fn(),
+  },
+}) {
+  const bot = new Bot({ connector, sessionStore });
 
   return {
     bot,
     connector,
-    logs,
-    users,
+    sessionStore,
   };
 }
 
 describe('#connector', () => {
   it('can be access', () => {
-    const { bot, connector } = setup();
+    const { bot, connector } = setup({});
     expect(bot.connector).toBe(connector);
   });
 });
 
-describe('#handle', () => {
-  it('should set handler', () => {
-    const { bot } = setup();
+describe('#handler', () => {
+  it('can be access', () => {
+    const { bot } = setup({});
+
+    expect(bot.handler).toBeNull();
+
     const handler = () => {};
     bot.handle(handler);
     expect(bot.handler).toBe(handler);
   });
 });
 
-describe('#createKoaMiddleware', () => {
+describe('#createRequestHandler', () => {
   it('throw when no handler', () => {
     const { bot } = setup({});
-    expect(() => bot.createKoaMiddleware()).toThrow();
+    expect(() => bot.createRequestHandler()).toThrow();
   });
 
-  // FIXME: sessionManager
-  xit('call getSenderIdFromRequest with request', async () => {
-    const { bot, connector } = setup();
-    bot.sessionManager.createSessionDataIfNotExists.mockReturnValue(
-      Promise.resolve({
-        session: {},
-        existed: true,
+  it('throw when call without request body', async () => {
+    const { bot } = setup({});
+
+    const handler = () => {};
+    bot.handle(handler);
+
+    const requestHandler = bot.createRequestHandler();
+    let error;
+    try {
+      await requestHandler();
+    } catch (err) {
+      error = err;
+    }
+    expect(error).toBeDefined();
+  });
+
+  it('should fetch user data when it does not exist in session', async () => {
+    const { bot, connector, sessionStore } = setup({});
+
+    connector.getSenderIdFromRequest.mockReturnValue('__id__');
+    sessionStore.read.mockReturnValue(Promise.resolve(null));
+
+    const handler = () => {};
+    bot.handle(handler);
+
+    const requestHandler = bot.createRequestHandler();
+
+    await requestHandler({});
+
+    expect(connector.getUserProfile).toBeCalledWith('__id__');
+  });
+
+  it('should not fetch user data when it exists in session', async () => {
+    const { bot, connector, sessionStore } = setup({});
+
+    connector.getSenderIdFromRequest.mockReturnValue('__id__');
+    sessionStore.read.mockReturnValue(Promise.resolve({ user: {} }));
+
+    const handler = () => {};
+    bot.handle(handler);
+
+    const requestHandler = bot.createRequestHandler();
+
+    await requestHandler({});
+
+    expect(connector.getUserProfile).not.toBeCalled();
+  });
+
+  it('should call handleRequest on connector', async () => {
+    const { bot, connector, sessionStore } = setup({});
+
+    connector.getSenderIdFromRequest.mockReturnValue('__id__');
+    sessionStore.read.mockReturnValue(Promise.resolve({ user: {} }));
+
+    const handler = () => {};
+    bot.handle(handler);
+
+    const requestHandler = bot.createRequestHandler();
+
+    const body = {};
+    await requestHandler(body);
+
+    expect(connector.handleRequest).toBeCalledWith(
+      expect.objectContaining({
+        body,
+        session: { user: {} },
+        handler,
       })
     );
-    const middleware = bot.createKoaMiddleware();
-    const request = {};
-    const response = {};
-    await middleware({ request, response });
-    expect(connector.getSenderIdFromRequest).toBeCalledWith(request);
   });
 
-  // FIXME: sessionManager
-  xit('call getUserProfile when session not existed', async () => {
-    const { bot, connector } = setup();
-    connector.getUserProfile.mockReturnValue(Promise.resolve({}));
-    bot.sessionManager.createSessionDataIfNotExists.mockReturnValue(
-      Promise.resolve({
-        session: {},
-        existed: false,
-      })
-    );
-    const middleware = bot.createKoaMiddleware();
-    const request = {};
-    const response = {};
-    await middleware({ request, response });
-    expect(connector.getUserProfile).toBeCalledWith('SENDER_ID');
-  });
+  it('should call write on sessionStore', async () => {
+    const { bot, connector, sessionStore } = setup({});
 
-  // FIXME: sessionManager
-  xit('call createSessionDataIfNotExists with seeder id', async () => {
-    const { bot, connector } = setup();
-    connector.getUserProfile.mockReturnValue(Promise.resolve({ data: {} }));
-    bot.sessionManager.createSessionDataIfNotExists.mockReturnValue(
-      Promise.resolve({
-        session: {},
-        existed: false,
-      })
-    );
-    const middleware = bot.createKoaMiddleware();
-    const request = {};
-    const response = {};
-    await middleware({ request, response });
-    expect(bot.sessionManager.createSessionDataIfNotExists).toBeCalledWith(
-      'yoctol:SENDER_ID'
+    connector.getSenderIdFromRequest.mockReturnValue('__id__');
+    sessionStore.read.mockReturnValue(Promise.resolve({ user: {} }));
+
+    const handler = () => {};
+    bot.handle(handler);
+
+    const requestHandler = bot.createRequestHandler();
+
+    await requestHandler({});
+
+    expect(sessionStore.write).toBeCalledWith(
+      'any:__id__',
+      { user: {} },
+      525600
     );
   });
-
-  // FIXME: sessionManager
-  xit('call handleRequest', async () => {
-    const { bot, connector } = setup();
-    connector.getUserProfile.mockReturnValue(Promise.resolve({ data: {} }));
-    const session = {};
-    bot.sessionManager.createSessionDataIfNotExists.mockReturnValue(
-      Promise.resolve({
-        session,
-        existed: false,
-      })
-    );
-    const middleware = bot.createKoaMiddleware();
-    const request = {};
-    const response = {};
-    await middleware({ request, response });
-    expect(connector.handleRequest).toBeCalledWith({
-      request,
-      session,
-    });
-  });
-
-  // FIXME: sessionManager
-  xit('call saveSessionData', async () => {
-    const { bot, connector } = setup();
-    connector.getUserProfile.mockReturnValue(Promise.resolve({ data: {} }));
-    const session = {};
-    bot.sessionManager.createSessionDataIfNotExists.mockReturnValue(
-      Promise.resolve({
-        session,
-        existed: false,
-      })
-    );
-    const middleware = bot.createKoaMiddleware();
-    const request = {};
-    const response = {};
-    await middleware({ request, response });
-    expect(bot.sessionManager.saveSessionData).toBeCalledWith(
-      'yoctol:SENDER_ID',
-      session
-    );
-  });
-
-  // FIXME: sessionManager
-  xit('should response status 200', async () => {
-    const { bot, connector } = setup();
-    connector.getUserProfile.mockReturnValue(Promise.resolve({ data: {} }));
-    bot.sessionManager.createSessionDataIfNotExists.mockReturnValue(
-      Promise.resolve({
-        session: {},
-        existed: false,
-      })
-    );
-    const middleware = bot.createKoaMiddleware();
-    const request = {};
-    const response = {};
-    await middleware({ request, response });
-    expect(response.status).toBe(200);
-  });
-});
-
-xdescribe('#createExpressMiddleware', () => {
-  // FIXME: createExpressMiddleware
 });
