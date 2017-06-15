@@ -3,28 +3,29 @@
 import wait from 'delay';
 import { MessengerClient } from 'messaging-api-messenger';
 
-import Session from '../session/Session';
+import type { MessengerSession } from '../bot/MessengerConnector';
 
-import Context, { DEFAULT_MESSAGE_DELAY } from './Context';
-import MessengerEvent, { type RawMessengerEvent } from './MessengerEvent';
+import { DEFAULT_MESSAGE_DELAY } from './Context';
+import MessengerEvent, { type MessengerRawEvent } from './MessengerEvent';
 import DelayableJobQueue from './DelayableJobQueue';
 
 type Options = {
   graphAPIClient: MessengerClient,
-  rawEvent: RawMessengerEvent,
-  session: Session,
+  rawEvent: MessengerRawEvent,
+  session: MessengerSession,
 };
 
-export default class MessengerContext extends Context {
+export default class MessengerContext {
   _client: MessengerClient;
   _event: MessengerEvent;
-  _session: Session;
+  _session: MessengerSession;
   _jobQueue: DelayableJobQueue;
 
   constructor({ graphAPIClient, rawEvent, session }: Options) {
-    super({ session });
     this._client = graphAPIClient;
     this._event = new MessengerEvent(rawEvent);
+    this._session = session;
+    this._jobQueue = new DelayableJobQueue();
     this._jobQueue.beforeEach(async ({ delay, showIndicators = true }) => {
       if (showIndicators) {
         this.turnTypingIndicatorsOn();
@@ -110,13 +111,19 @@ export default class MessengerContext extends Context {
     return this._event;
   }
 
+  get session(): MessengerSession {
+    return this._session;
+  }
+
   turnTypingIndicatorsOn(): void {
-    // $FlowExpectedError
     this._client.turnTypingIndicatorsOn(this._session.user.id);
   }
 
   turnTypingIndicatorsOff(): void {
-    // $FlowExpectedError
     this._client.turnTypingIndicatorsOff(this._session.user.id);
+  }
+
+  _enqueue(job: Object): void {
+    this._jobQueue.enqueue(job);
   }
 }
