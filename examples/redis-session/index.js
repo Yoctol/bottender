@@ -13,11 +13,10 @@ const config = {
 };
 
 const cache = new RedisCacheStore();
-const sessionHandler = new CacheBasedSessionStore(cache);
 
 const bot = new MessengerBot({
   accessToken: config.accessToken,
-  sessionHandler,
+  sessionStore: new CacheBasedSessionStore(cache),
 });
 
 bot.handle(context => {

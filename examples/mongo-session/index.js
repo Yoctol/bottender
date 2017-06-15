@@ -8,12 +8,9 @@ const config = {
   accessToken: '__FILL_YOUR_TOKEN_HERE__',
 };
 
-const MONGO_URL = 'mongodb://localhost:27017/';
-const sessionHandler = new MongoSessionStore(MONGO_URL);
-
 const bot = new MessengerBot({
   accessToken: config.accessToken,
-  sessionHandler,
+  sessionStore: new MongoSessionStore('mongodb://localhost:27017/'),
 });
 
 bot.handle(context => {

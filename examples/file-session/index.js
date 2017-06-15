@@ -8,11 +8,9 @@ const config = {
   accessToken: '__FILL_YOUR_TOKEN_HERE__',
 };
 
-const sessionHandler = new FileSessionStore();
-
 const bot = new MessengerBot({
   accessToken: config.accessToken,
-  sessionHandler,
+  sessionStore: new FileSessionStore(),
 });
 
 bot.handle(context => {
