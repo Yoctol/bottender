@@ -1,6 +1,6 @@
 /* @flow */
 
-import wait from 'delay';
+import sleep from 'delay';
 import { MessengerClient } from 'messaging-api-messenger';
 
 import type { MessengerSession } from '../bot/MessengerConnector';
@@ -30,7 +30,7 @@ export default class MessengerContext implements Context {
       if (showIndicators) {
         this.turnTypingIndicatorsOn();
       }
-      await wait(delay);
+      await sleep(delay);
     });
     this._jobQueue.after(async ({ showIndicators = true }) => {
       if (showIndicators) {

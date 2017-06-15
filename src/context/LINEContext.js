@@ -1,6 +1,6 @@
 /* @flow */
 
-import wait from 'delay';
+import sleep from 'delay';
 import { LINEClient } from 'messaging-api-line';
 
 import type { LINESession } from '../bot/LINEConnector';
@@ -26,7 +26,7 @@ export default class LINEContext implements Context {
     this._event = new LINEEvent(rawEvent);
     this._session = session;
     this._jobQueue = new DelayableJobQueue();
-    this._jobQueue.beforeEach(({ delay }) => wait(delay));
+    this._jobQueue.beforeEach(({ delay }) => sleep(delay));
     const types = [
       'Text',
       'Image',
