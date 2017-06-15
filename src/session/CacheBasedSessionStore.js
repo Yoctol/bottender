@@ -2,6 +2,7 @@
 
 import type { CacheStore } from '../cache/CacheStore';
 
+import Session from './Session';
 import type { SessionStore } from './SessionStore';
 
 export default class CacheBasedSessionStore implements SessionStore {
@@ -19,7 +20,7 @@ export default class CacheBasedSessionStore implements SessionStore {
     return this._cache.get(key);
   }
 
-  async write(key: string, sess: mixed, maxAge: number): Promise<void> {
+  async write(key: string, sess: Session, maxAge: number): Promise<void> {
     this._cache.put(key, sess, maxAge);
   }
 

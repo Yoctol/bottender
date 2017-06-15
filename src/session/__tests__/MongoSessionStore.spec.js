@@ -4,64 +4,81 @@ jest.mock('mongodb');
 
 const { MongoClient } = require('mongodb');
 
-async function createMongoStore() {
+function setup() {
   const sessions = {
     findOne: jest.fn(),
     updateOne: jest.fn(),
     remove: jest.fn(),
   };
-  MongoClient.connect.mockReturnValue(
-    Promise.resolve({
-      collection: jest.fn(() => sessions),
-    })
-  );
+  const connection = {
+    collection: jest.fn(() => sessions),
+  };
+  MongoClient.connect.mockReturnValue(Promise.resolve(connection));
   const store = new MongoSessionStore('mongodb://fakemongourl');
-  await store.init();
   return {
     store,
+    connection,
     sessions,
   };
 }
 
-it('should call findOne with platform and id when read', async () => {
-  const { store, sessions } = await createMongoStore();
-  const sess = {};
-  sessions.findOne.mockReturnValue(Promise.resolve(sess));
-  await store.read('yoctol:1');
-  expect(sessions.findOne).toBeCalledWith({
-    'user.platform': 'yoctol',
-    'user.id': '1',
+describe('#init', () => {
+  it('should return initialize store instance', async () => {
+    const { store } = setup();
+
+    expect(await store.init()).toBe(store);
   });
 });
 
-it('should call updateOne with _id when write with _id', async () => {
-  const { store, sessions } = await createMongoStore();
-  const sess = { _id: '123456' };
-  sessions.updateOne.mockReturnValue(Promise.resolve());
-  await store.write('yoctol:1', sess);
-  expect(sessions.updateOne).toBeCalledWith({ _id: '123456' }, sess, {
-    upsert: true,
+describe('#read', () => {
+  it('should call findOne with platform and id', async () => {
+    const { store, sessions } = setup();
+    await store.init();
+    const sess = {};
+    sessions.findOne.mockReturnValue(Promise.resolve(sess));
+    expect(await store.read('messenger:1')).toBe(sess);
+    expect(sessions.findOne).toBeCalledWith({
+      'user.platform': 'messenger',
+      'user.id': '1',
+    });
+  });
+
+  it('should return null when document not found', async () => {
+    const { store, sessions } = setup();
+    await store.init();
+    sessions.findOne.mockReturnValue(Promise.resolve(null));
+    expect(await store.read('messenger:1')).toBeNull();
+    expect(sessions.findOne).toBeCalledWith({
+      'user.platform': 'messenger',
+      'user.id': '1',
+    });
   });
 });
 
-it('should call updateOne with platform and id when write without _id', async () => {
-  const { store, sessions } = await createMongoStore();
-  const sess = {};
-  sessions.updateOne.mockReturnValue(Promise.resolve());
-  await store.write('yoctol:1', sess);
-  expect(sessions.updateOne).toBeCalledWith(
-    { 'user.platform': 'yoctol', 'user.id': '1' },
-    sess,
-    { upsert: true }
-  );
+describe('#write', () => {
+  it('should call updateOne with platform, id and session using upsert', async () => {
+    const { store, sessions } = setup();
+    await store.init();
+    const sess = {};
+    sessions.updateOne.mockReturnValue(Promise.resolve());
+    await store.write('messenger:1', sess);
+    expect(sessions.updateOne).toBeCalledWith(
+      { 'user.platform': 'messenger', 'user.id': '1' },
+      sess,
+      { upsert: true }
+    );
+  });
 });
 
-it('should call remove with platform and id when destroy', async () => {
-  const { store, sessions } = await createMongoStore();
-  sessions.remove.mockReturnValue(Promise.resolve());
-  await store.destroy('yoctol:1');
-  expect(sessions.remove).toBeCalledWith({
-    'user.platform': 'yoctol',
-    'user.id': '1',
+describe('#destroy', () => {
+  it('should call remove with platform and id', async () => {
+    const { store, sessions } = setup();
+    await store.init();
+    sessions.remove.mockReturnValue(Promise.resolve());
+    await store.destroy('messenger:1');
+    expect(sessions.remove).toBeCalledWith({
+      'user.platform': 'messenger',
+      'user.id': '1',
+    });
   });
 });
