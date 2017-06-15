@@ -1,12 +1,10 @@
 import LINEBot from '../LINEBot';
 import LINEConnector from '../LINEConnector';
 
-it('should construct LINEConnector', () => {
+it('should construct bot with LINEConnector', () => {
   const bot = new LINEBot({
-    id: 'fake-id',
     accessToken: 'FAKE_TOKEN',
     channelSecret: 'FAKE_SECRET',
-    filePath: 'fake://',
   });
   expect(bot).toBeDefined();
   expect(bot.handle).toBeDefined();
