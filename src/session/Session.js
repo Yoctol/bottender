@@ -1,32 +1,38 @@
+/* @flow */
+
+type SessionJSONObject = { [key: string]: mixed };
+
 export default class Session {
-  constructor(data) {
+  constructor(data: SessionJSONObject) {
     if (data) {
       // eslint-disable-next-line no-restricted-syntax
       for (const [key, val] of Object.entries(data)) {
+        // $FlowExpectedError
         this[key] = val;
       }
     }
   }
 
-  toJSON() {
+  toJSON(): SessionJSONObject {
     const obj = {};
 
     Object.keys(this).forEach(key => {
+      // $FlowExpectedError
       obj[key] = this[key];
     });
 
     return obj;
   }
 
-  inspect() {
+  inspect(): SessionJSONObject {
     return this.toJSON();
   }
 
-  get length() {
+  get length(): number {
     return Object.keys(this.toJSON()).length;
   }
 
-  get populated() {
+  get populated(): boolean {
     return !!this.length;
   }
 }
