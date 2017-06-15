@@ -1,54 +1,74 @@
+/* @flow */
+
 import _debug from 'debug';
 
 import MemoryCacheStore from '../cache/MemoryCacheStore';
 import CacheBasedSessionStore from '../session/CacheBasedSessionStore';
 import Session from '../session/Session';
+import type { SessionStore } from '../session/SessionStore';
+import type { Context } from '../context/Context';
+
+import type { Connector, SessionWithUser } from './Connector';
 
 const debug = _debug('core/bot/Bot');
 
 const MINUTES_IN_ONE_YEAR = 365 * 24 * 60;
 
-function createMemorySessionStore() {
+function createMemorySessionStore(): SessionStore {
   const cache = new MemoryCacheStore(500);
   return new CacheBasedSessionStore(cache);
 }
 
-type Context = any; // FIXME
-
 export type FunctionalHandler = (context: Context) => void | Promise<void>;
 
+type RequestHandler = (body: Object) => void | Promise<void>;
+
 export default class Bot {
+  _sessions: SessionStore;
+
+  _initialized: boolean;
+
+  _connector: Connector<any, any>;
+
   _handler: ?FunctionalHandler;
 
-  constructor({ connector, sessionStore = createMemorySessionStore() }) {
+  constructor({
+    connector,
+    sessionStore = createMemorySessionStore(),
+  }: {
+    connector: Connector<any, any>,
+    sessionStore: SessionStore,
+  }) {
     this._sessions = sessionStore;
     this._initialized = false;
     this._connector = connector;
     this._handler = null;
   }
 
-  get connector() {
+  get connector(): Connector<any, any> {
     return this._connector;
   }
 
-  get sessions() {
+  get sessions(): SessionStore {
     return this._sessions;
   }
 
-  get handler() {
+  get handler(): ?FunctionalHandler {
     return this._handler;
   }
 
-  handle(handler) {
+  handle(handler: FunctionalHandler): void {
     this._handler = handler;
   }
 
-  createRequestHandler() {
+  createRequestHandler(): RequestHandler {
     if (this._handler == null) {
       throw new Error(
         'Bot: Missing event handler function. You should assign it using handle(...)'
       );
     }
+
+    const handler = this._handler;
 
     return async body => {
       debug(JSON.stringify(body, null, 2));
@@ -73,13 +93,14 @@ export default class Bot {
           platform: this._connector.platform,
         };
 
+        // $FlowExpectedError
         session.user = user;
       }
 
       await this._connector.handleRequest({
         body,
-        session,
-        handler: this._handler,
+        session: ((session: any): SessionWithUser<{}>),
+        handler,
       });
 
       this._sessions.write(sessionKey, session, MINUTES_IN_ONE_YEAR);
