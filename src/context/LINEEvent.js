@@ -1,5 +1,7 @@
 /* @flow */
 
+import type { Event } from './Event';
+
 type Source =
   | {
       type: 'user',
@@ -33,7 +35,7 @@ export type LINERawEvent = {
   postback?: Postback,
 };
 
-export default class LINEEvent {
+export default class LINEEvent implements Event {
   _rawEvent: LINERawEvent;
 
   constructor(rawEvent: LINERawEvent) {
