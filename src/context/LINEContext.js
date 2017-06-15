@@ -1,11 +1,11 @@
 /* @flow */
 
-import wait from 'delay';
+import sleep from 'delay';
 import { LINEClient } from 'messaging-api-line';
 
 import type { LINESession } from '../bot/LINEConnector';
 
-import { DEFAULT_MESSAGE_DELAY } from './Context';
+import { DEFAULT_MESSAGE_DELAY, type Context } from './Context';
 import LINEEvent, { type LINERawEvent } from './LINEEvent';
 import DelayableJobQueue from './DelayableJobQueue';
 
@@ -15,7 +15,7 @@ type Options = {
   session: LINESession,
 };
 
-export default class LINEContext {
+export default class LINEContext implements Context {
   _client: LINEClient;
   _event: LINEEvent;
   _session: LINESession;
@@ -26,7 +26,7 @@ export default class LINEContext {
     this._event = new LINEEvent(rawEvent);
     this._session = session;
     this._jobQueue = new DelayableJobQueue();
-    this._jobQueue.beforeEach(({ delay }) => wait(delay));
+    this._jobQueue.beforeEach(({ delay }) => sleep(delay));
     const types = [
       'Text',
       'Image',

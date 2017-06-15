@@ -1,5 +1,7 @@
 /* @flow */
 
+import type { Event } from './Event';
+
 type Sender = {
   id: string,
 };
@@ -36,7 +38,7 @@ export type MessengerRawEvent = {
   postback?: Postback,
 };
 
-export default class MessengerEvent {
+export default class MessengerEvent implements Event {
   _rawEvent: MessengerRawEvent;
 
   constructor(rawEvent: MessengerRawEvent) {

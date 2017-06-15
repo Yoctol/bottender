@@ -1,35 +1,12 @@
 /* @flow */
-import Session from '../session/Session';
 
-import DelayableJobQueue from './DelayableJobQueue';
+import type { Event } from './Event';
 
 export const DEFAULT_MESSAGE_DELAY = 1000;
 
-type Options = {
-  session: Session,
-};
-
-type Event = any;
-
-export default class Context {
-  _session: Session;
-  _event: Event;
-  _jobQueue: DelayableJobQueue;
-
-  constructor({ session }: Options) {
-    this._session = session;
-    this._jobQueue = new DelayableJobQueue();
-  }
-
-  get session(): Session {
-    return this._session;
-  }
-
-  get event(): Event {
-    return this._event;
-  }
-
-  _enqueue(job: Object): void {
-    this._jobQueue.enqueue(job);
-  }
+export interface Context {
+  +event: Event,
+  +session: {},
+  sendText?: (text: string) => void,
+  sendTextWithDelay?: (seconds: number, text: string) => void,
 }
