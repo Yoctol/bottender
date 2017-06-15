@@ -1,12 +1,36 @@
-/* eslint-disable class-methods-use-this */
+/*
+  eslint-disable class-methods-use-this
+  @flow
+*/
 import { LINEClient } from 'messaging-api-line';
 
 import LINEContext from '../context/LINEContext';
+import type { LINERawEvent } from '../context/LINEEvent';
 
-import type { Connector } from './Connector';
+import type { FunctionalHandler } from './Bot';
+import type { Connector, SessionWithUser } from './Connector';
 
-export default class LINEConnector implements Connector {
-  constructor({ accessToken, channelSecret }) {
+type LINERequestBody = {
+  events: Array<LINERawEvent>,
+};
+
+type LINEUser = {
+  id: string,
+};
+
+export type LINESession = SessionWithUser<LINEUser>;
+
+export default class LINEConnector
+  implements Connector<LINERequestBody, LINEUser> {
+  _lineAPIClient: LINEClient;
+
+  constructor({
+    accessToken,
+    channelSecret,
+  }: {
+    accessToken: string,
+    channelSecret: string,
+  }) {
     this._lineAPIClient = LINEClient.factory(accessToken, channelSecret);
   }
 
@@ -14,17 +38,34 @@ export default class LINEConnector implements Connector {
     return 'line';
   }
 
-  getSenderIdFromRequest(body) {
-    const rawEvent = body.events[0];
-    return rawEvent.source.userId; // FIXME: group, room?
+  getSenderIdFromRequest(body: LINERequestBody): string {
+    const { source } = body.events[0];
+    if (source.type === 'user') {
+      return source.userId;
+    } else if (source.type === 'group') {
+      return source.groupId;
+    } else if (source.type === 'room') {
+      return source.roomId;
+    }
+    throw new TypeError(
+      'LINEConnector: sender type should be one of user, group, room.'
+    );
   }
 
-  async getUserProfile(senderId: string) {
+  async getUserProfile(senderId: string): Promise<LINEUser> {
     const { data } = await this._lineAPIClient.getUserProfile(senderId);
     return data;
   }
 
-  async handleRequest({ body, session, handler }) {
+  async handleRequest({
+    body,
+    session,
+    handler,
+  }: {
+    body: LINERequestBody,
+    session: LINESession,
+    handler: FunctionalHandler,
+  }): Promise<void> {
     const createLINEContext = rawEvent =>
       new LINEContext({
         lineAPIClient: this._lineAPIClient,
