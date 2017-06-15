@@ -5,7 +5,7 @@ import { MessengerClient } from 'messaging-api-messenger';
 
 import type { MessengerSession } from '../bot/MessengerConnector';
 
-import { DEFAULT_MESSAGE_DELAY } from './Context';
+import { DEFAULT_MESSAGE_DELAY, type Context } from './Context';
 import MessengerEvent, { type MessengerRawEvent } from './MessengerEvent';
 import DelayableJobQueue from './DelayableJobQueue';
 
@@ -15,7 +15,7 @@ type Options = {
   session: MessengerSession,
 };
 
-export default class MessengerContext {
+export default class MessengerContext implements Context {
   _client: MessengerClient;
   _event: MessengerEvent;
   _session: MessengerSession;
