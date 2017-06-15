@@ -14,8 +14,8 @@ function createMemorySessionStore() {
 }
 
 export default class Bot {
-  constructor({ connector, sessionHandler = createMemorySessionStore() }) {
-    this._sessions = sessionHandler;
+  constructor({ connector, sessionStore = createMemorySessionStore() }) {
+    this._sessions = sessionStore;
     this._initialized = false;
     this._connector = connector;
   }
