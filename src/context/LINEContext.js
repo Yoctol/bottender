@@ -5,7 +5,7 @@ import { LINEClient } from 'messaging-api-line';
 
 import Session from '../session/Session';
 
-import Context, { DEFAULT_MESSAGE_DELAY } from './Context';
+import { DEFAULT_MESSAGE_DELAY } from './Context';
 import LINEEvent, { type RawLINEEvent } from './LINEEvent';
 import DelayableJobQueue from './DelayableJobQueue';
 
@@ -15,16 +15,17 @@ type Options = {
   session: Session,
 };
 
-export default class LINEContext extends Context {
+export default class LINEContext {
   _client: LINEClient;
   _event: LINEEvent;
   _session: Session;
   _jobQueue: DelayableJobQueue;
 
   constructor({ lineAPIClient, rawEvent, session }: Options) {
-    super({ session });
     this._client = lineAPIClient;
     this._event = new LINEEvent(rawEvent);
+    this._session = session;
+    this._jobQueue = new DelayableJobQueue();
     this._jobQueue.beforeEach(({ delay }) => wait(delay));
     const types = [
       'Text',
@@ -88,5 +89,14 @@ export default class LINEContext extends Context {
 
   get event(): LINEEvent {
     return this._event;
+  }
+
+  get session(): Session {
+    // FIXME
+    return this._session;
+  }
+
+  _enqueue(job: Object): void {
+    this._jobQueue.enqueue(job);
   }
 }

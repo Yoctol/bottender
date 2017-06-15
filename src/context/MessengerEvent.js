@@ -28,7 +28,7 @@ type Postback = {
   payload: string,
 };
 
-export type RawMessengerEvent = {
+export type MessengerRawEvent = {
   sender: Sender,
   recipient: Recipient,
   timestamp: number,
@@ -37,13 +37,13 @@ export type RawMessengerEvent = {
 };
 
 export default class MessengerEvent {
-  _rawEvent: RawMessengerEvent;
+  _rawEvent: MessengerRawEvent;
 
-  constructor(rawEvent: RawMessengerEvent) {
+  constructor(rawEvent: MessengerRawEvent) {
     this._rawEvent = rawEvent;
   }
 
-  get rawEvent(): RawMessengerEvent {
+  get rawEvent(): MessengerRawEvent {
     return this._rawEvent;
   }
 
