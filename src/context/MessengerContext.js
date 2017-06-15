@@ -10,7 +10,7 @@ import MessengerEvent, { type MessengerRawEvent } from './MessengerEvent';
 import DelayableJobQueue from './DelayableJobQueue';
 
 type Options = {
-  graphAPIClient: MessengerClient,
+  client: MessengerClient,
   rawEvent: MessengerRawEvent,
   session: MessengerSession,
 };
@@ -21,8 +21,8 @@ export default class MessengerContext implements Context {
   _session: MessengerSession;
   _jobQueue: DelayableJobQueue;
 
-  constructor({ graphAPIClient, rawEvent, session }: Options) {
-    this._client = graphAPIClient;
+  constructor({ client, rawEvent, session }: Options) {
+    this._client = client;
     this._event = new MessengerEvent(rawEvent);
     this._session = session;
     this._jobQueue = new DelayableJobQueue();

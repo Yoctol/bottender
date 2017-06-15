@@ -22,7 +22,7 @@ export type LINESession = SessionWithUser<LINEUser>;
 
 export default class LINEConnector
   implements Connector<LINERequestBody, LINEUser> {
-  _lineAPIClient: LINEClient;
+  _client: LINEClient;
 
   constructor({
     accessToken,
@@ -31,7 +31,7 @@ export default class LINEConnector
     accessToken: string,
     channelSecret: string,
   }) {
-    this._lineAPIClient = LINEClient.factory(accessToken, channelSecret);
+    this._client = LINEClient.factory(accessToken, channelSecret);
   }
 
   get platform(): string {
@@ -53,7 +53,7 @@ export default class LINEConnector
   }
 
   async getUserProfile(senderId: string): Promise<LINEUser> {
-    const { data } = await this._lineAPIClient.getUserProfile(senderId);
+    const { data } = await this._client.getUserProfile(senderId);
     return data;
   }
 
@@ -68,7 +68,7 @@ export default class LINEConnector
   }): Promise<void> {
     const createLINEContext = rawEvent =>
       new LINEContext({
-        lineAPIClient: this._lineAPIClient,
+        client: this._client,
         rawEvent,
         session,
       });

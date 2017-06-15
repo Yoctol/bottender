@@ -33,7 +33,7 @@ const setup = () => {
     },
   });
   const args = {
-    graphAPIClient: client,
+    client,
     rawEvent,
     session,
   };
