@@ -24,10 +24,10 @@ export type MessengerSession = SessionWithUser<MessengerUser>;
 
 export default class MessengerConnector
   implements Connector<MessengerRequestBody, MessengerUser> {
-  _graphAPIClient: MessengerClient;
+  _client: MessengerClient;
 
   constructor({ accessToken }: { accessToken: string }) {
-    this._graphAPIClient = MessengerClient.factory(accessToken);
+    this._client = MessengerClient.factory(accessToken);
   }
 
   _getRawEventFromRequest(body: MessengerRequestBody) {
@@ -47,7 +47,7 @@ export default class MessengerConnector
   }
 
   async getUserProfile(senderId: string): Promise<MessengerUser> {
-    const { data } = await this._graphAPIClient.getUserProfile(senderId);
+    const { data } = await this._client.getUserProfile(senderId);
     return data;
   }
 
@@ -63,7 +63,7 @@ export default class MessengerConnector
     const rawEvent = this._getRawEventFromRequest(body);
 
     const context = new MessengerContext({
-      graphAPIClient: this._graphAPIClient,
+      client: this._client,
       rawEvent,
       session,
     });

@@ -10,7 +10,7 @@ import LINEEvent, { type LINERawEvent } from './LINEEvent';
 import DelayableJobQueue from './DelayableJobQueue';
 
 type Options = {
-  lineAPIClient: LINEClient,
+  client: LINEClient,
   rawEvent: LINERawEvent,
   session: LINESession,
 };
@@ -21,8 +21,8 @@ export default class LINEContext implements Context {
   _session: LINESession;
   _jobQueue: DelayableJobQueue;
 
-  constructor({ lineAPIClient, rawEvent, session }: Options) {
-    this._client = lineAPIClient;
+  constructor({ client, rawEvent, session }: Options) {
+    this._client = client;
     this._event = new LINEEvent(rawEvent);
     this._session = session;
     this._jobQueue = new DelayableJobQueue();
