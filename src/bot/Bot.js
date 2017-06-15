@@ -71,6 +71,10 @@ export default class Bot {
     const handler = this._handler;
 
     return async body => {
+      if (!body) {
+        throw new Error('Bot.createRequestHandler: Missing argument.');
+      }
+
       debug(JSON.stringify(body, null, 2));
 
       if (!this._initialized) {
