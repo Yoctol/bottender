@@ -1,6 +1,6 @@
 /* @flow */
 
-type SessionJSONObject = { [key: string]: mixed };
+export type SessionJSONObject = { [key: string]: mixed };
 
 export default class Session {
   constructor(data: SessionJSONObject) {

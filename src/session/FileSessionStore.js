@@ -3,7 +3,7 @@
 import JFSStore from 'jfs';
 import thenify from 'thenify';
 
-import Session from './Session';
+import Session, { type SessionJSONObject } from './Session';
 import type { SessionStore } from './SessionStore';
 
 export default class FileSessionStore implements SessionStore {
@@ -21,7 +21,7 @@ export default class FileSessionStore implements SessionStore {
     return this;
   }
 
-  async read(key: string): Promise<mixed> {
+  async read(key: string): Promise<SessionJSONObject> {
     return this._jfs.get(key).catch(() => null);
   }
 

@@ -2,11 +2,11 @@
 
 import { MongoClient } from 'mongodb';
 
-import Session from './Session';
+import Session, { type SessionJSONObject } from './Session';
 import type { SessionStore } from './SessionStore';
 
 type MongoCollection = {
-  findOne: (filter: Object) => Promise<mixed>,
+  findOne: (filter: Object) => Promise<{}>,
   updateOne: (filter: Object, data: Object, options: Object) => Promise<void>,
   remove: (filter: Object) => Promise<void>,
 };
@@ -29,7 +29,7 @@ export default class MongoSessionStore implements SessionStore {
     return this;
   }
 
-  async read(key: string): Promise<mixed> {
+  async read(key: string): Promise<SessionJSONObject> {
     const [platform, id] = key.split(':');
     const filter = {
       'user.platform': platform,
