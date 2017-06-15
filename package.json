@@ -60,6 +60,7 @@
     "prop-types": "^15.5.10",
     "quick-lru": "^1.0.0",
     "random-item": "^1.0.0",
+    "restify": "^4.3.0",
     "thenify": "^3.3.0",
     "warning": "^3.0.0"
   },
