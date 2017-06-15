@@ -39,11 +39,11 @@ describe('#connector', () => {
 });
 
 describe('#handle', () => {
-  it('can be access', () => {
-    const { bot, connector } = setup();
+  it('should set handler', () => {
+    const { bot } = setup();
     const handler = () => {};
     bot.handle(handler);
-    expect(connector.setHandler).toBeCalledWith(handler);
+    expect(bot.handler).toBe(handler);
   });
 });
 

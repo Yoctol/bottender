@@ -3,11 +3,10 @@ import { LINEClient } from 'messaging-api-line';
 
 import LINEContext from '../context/LINEContext';
 
-import Connector from './Connector';
+import type { Connector } from './Connector';
 
-export default class LINEConnector extends Connector {
+export default class LINEConnector implements Connector {
   constructor({ accessToken, channelSecret }) {
-    super();
     this._lineAPIClient = LINEClient.factory(accessToken, channelSecret);
   }
 
@@ -20,12 +19,12 @@ export default class LINEConnector extends Connector {
     return rawEvent.source.userId; // FIXME: group, room?
   }
 
-  async getUserProfile(senderId) {
+  async getUserProfile(senderId: string) {
     const { data } = await this._lineAPIClient.getUserProfile(senderId);
     return data;
   }
 
-  async handleRequest({ body, session }) {
+  async handleRequest({ body, session, handler }) {
     const createLINEContext = rawEvent =>
       new LINEContext({
         lineAPIClient: this._lineAPIClient,
@@ -36,7 +35,7 @@ export default class LINEConnector extends Connector {
     const promises = [];
     body.events.forEach(event => {
       const context = createLINEContext(event);
-      promises.push(this._handler(context));
+      promises.push(handler(context));
     });
 
     await Promise.all(promises);

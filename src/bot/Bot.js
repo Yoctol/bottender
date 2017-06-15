@@ -13,11 +13,18 @@ function createMemorySessionStore() {
   return new CacheBasedSessionStore(cache);
 }
 
+type Context = any; // FIXME
+
+export type FunctionalHandler = (context: Context) => void | Promise<void>;
+
 export default class Bot {
+  _handler: ?FunctionalHandler;
+
   constructor({ connector, sessionStore = createMemorySessionStore() }) {
     this._sessions = sessionStore;
     this._initialized = false;
     this._connector = connector;
+    this._handler = null;
   }
 
   get connector() {
@@ -28,12 +35,16 @@ export default class Bot {
     return this._sessions;
   }
 
+  get handler() {
+    return this._handler;
+  }
+
   handle(handler) {
-    this._connector.setHandler(handler);
+    this._handler = handler;
   }
 
   createRequestHandler() {
-    if (!this._connector.hasHandler) {
+    if (this._handler == null) {
       throw new Error(
         'Bot: Missing event handler function. You should assign it using handle(...)'
       );
@@ -65,7 +76,11 @@ export default class Bot {
         session.user = user;
       }
 
-      await this._connector.handleRequest({ body, session });
+      await this._connector.handleRequest({
+        body,
+        session,
+        handler: this._handler,
+      });
 
       this._sessions.write(sessionKey, session, MINUTES_IN_ONE_YEAR);
     };
