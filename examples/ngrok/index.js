@@ -1,10 +1,11 @@
 require('babel-register');
 
 const { MessengerBot } = require('../../src');
-const { createServer } = require('../../src/restify');
+const { createServer } = require('../../src/express');
 
 const config = {
   accessToken: '__FILL_YOUR_TOKEN_HERE__',
+  ngrok: true,
 };
 
 const bot = new MessengerBot({

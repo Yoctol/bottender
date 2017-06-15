@@ -4,7 +4,6 @@ const { MessengerBot } = require('../../src');
 const { createServer } = require('../../src/koa');
 
 const config = {
-  verifyToken: '1qaz2wsx',
   accessToken: '__FILL_YOUR_TOKEN_HERE__',
 };
 

@@ -57,10 +57,12 @@
     "messaging-api-messenger": "^0.1.0-2",
     "micro": "^7.3.3",
     "mongodb": "^2.2.27",
+    "ngrok": "^2.2.10",
     "prop-types": "^15.5.10",
     "quick-lru": "^1.0.0",
     "random-item": "^1.0.0",
     "restify": "^4.3.0",
+    "shortid": "^2.2.8",
     "thenify": "^3.3.0",
     "warning": "^3.0.0"
   },
