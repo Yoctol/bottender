@@ -58,9 +58,55 @@ describe('#platform', () => {
 });
 
 describe('#getSenderIdFromRequest', () => {
-  it('extract correct sender id', () => {
+  it('extract userId from user source', () => {
     const { connector } = setup();
     const senderId = connector.getSenderIdFromRequest(request.body);
+    expect(senderId).toBe('U206d25c2ea6bd87c17655609a1c37cb8');
+  });
+
+  it('extract groupId from user source', () => {
+    const { connector } = setup();
+    const senderId = connector.getSenderIdFromRequest({
+      events: [
+        {
+          replyToken: 'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA',
+          type: 'message',
+          timestamp: 1462629479859,
+          source: {
+            type: 'group',
+            groupId: 'U206d25c2ea6bd87c17655609a1c37cb8',
+          },
+          message: {
+            id: '325708',
+            type: 'text',
+            text: 'Hello, world',
+          },
+        },
+      ],
+    });
+    expect(senderId).toBe('U206d25c2ea6bd87c17655609a1c37cb8');
+  });
+
+  it('extract roomId from user source', () => {
+    const { connector } = setup();
+    const senderId = connector.getSenderIdFromRequest({
+      events: [
+        {
+          replyToken: 'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA',
+          type: 'message',
+          timestamp: 1462629479859,
+          source: {
+            type: 'room',
+            roomId: 'U206d25c2ea6bd87c17655609a1c37cb8',
+          },
+          message: {
+            id: '325708',
+            type: 'text',
+            text: 'Hello, world',
+          },
+        },
+      ],
+    });
     expect(senderId).toBe('U206d25c2ea6bd87c17655609a1c37cb8');
   });
 });

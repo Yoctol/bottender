@@ -3,22 +3,22 @@
 import wait from 'delay';
 import { LINEClient } from 'messaging-api-line';
 
-import Session from '../session/Session';
+import type { LINESession } from '../bot/LINEConnector';
 
 import { DEFAULT_MESSAGE_DELAY } from './Context';
-import LINEEvent, { type RawLINEEvent } from './LINEEvent';
+import LINEEvent, { type LINERawEvent } from './LINEEvent';
 import DelayableJobQueue from './DelayableJobQueue';
 
 type Options = {
   lineAPIClient: LINEClient,
-  rawEvent: RawLINEEvent,
-  session: Session,
+  rawEvent: LINERawEvent,
+  session: LINESession,
 };
 
 export default class LINEContext {
   _client: LINEClient;
   _event: LINEEvent;
-  _session: Session;
+  _session: LINESession;
   _jobQueue: DelayableJobQueue;
 
   constructor({ lineAPIClient, rawEvent, session }: Options) {
@@ -91,8 +91,7 @@ export default class LINEContext {
     return this._event;
   }
 
-  get session(): Session {
-    // FIXME
+  get session(): LINESession {
     return this._session;
   }
 

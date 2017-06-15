@@ -1,11 +1,18 @@
 /* @flow */
 
-type Source = {
-  type: string,
-  userId?: string,
-  groupId?: string,
-  roomId?: string,
-};
+type Source =
+  | {
+      type: 'user',
+      userId: string,
+    }
+  | {
+      type: 'group',
+      groupId: string,
+    }
+  | {
+      type: 'room',
+      roomId: string,
+    };
 
 type Message = {
   id: string,
@@ -17,7 +24,7 @@ type Postback = {
   data: string,
 };
 
-export type RawLINEEvent = {
+export type LINERawEvent = {
   replyToken: string,
   type: string,
   timestamp: number,
@@ -27,13 +34,13 @@ export type RawLINEEvent = {
 };
 
 export default class LINEEvent {
-  _rawEvent: RawLINEEvent;
+  _rawEvent: LINERawEvent;
 
-  constructor(rawEvent: RawLINEEvent) {
+  constructor(rawEvent: LINERawEvent) {
     this._rawEvent = rawEvent;
   }
 
-  get rawEvent(): RawLINEEvent {
+  get rawEvent(): LINERawEvent {
     return this._rawEvent;
   }
 
