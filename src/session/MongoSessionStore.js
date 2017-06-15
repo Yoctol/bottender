@@ -1,18 +1,35 @@
+/* @flow */
+
 import { MongoClient } from 'mongodb';
 
+import Session from './Session';
 import type { SessionStore } from './SessionStore';
 
+type MongoCollection = {
+  findOne: (filter: Object) => Promise<mixed>,
+  updateOne: (filter: Object, data: Object, options: Object) => Promise<void>,
+  remove: (filter: Object) => Promise<void>,
+};
+
+type MongoConnection = {
+  collection: (name: string) => MongoCollection,
+};
+
 export default class MongoSessionStore implements SessionStore {
-  constructor(url) {
+  _url: string;
+
+  _connection: ?MongoConnection;
+
+  constructor(url: string) {
     this._url = url;
   }
 
-  async init() {
-    this._db = await MongoClient.connect(this._url);
+  async init(): Promise<MongoSessionStore> {
+    this._connection = await MongoClient.connect(this._url);
     return this;
   }
 
-  async read(key) {
+  async read(key: string): Promise<mixed> {
     const [platform, id] = key.split(':');
     const filter = {
       'user.platform': platform,
@@ -21,40 +38,34 @@ export default class MongoSessionStore implements SessionStore {
     return this._sessions.findOne(filter);
   }
 
-  async write(key, sess /* , maxAge */) {
-    const [platform, id] = key.split(':');
-    let filter;
-    if (sess._id) {
-      filter = {
-        _id: sess._id,
-      };
-    } else {
-      filter = {
-        'user.platform': platform,
-        'user.id': id,
-      };
-    }
-
-    const result = await this._sessions.updateOne(filter, sess, {
-      upsert: true,
-    });
-
-    // FIXME: may delete?
-    if (result && result.upsertedId && result.upsertedId._id) {
-      sess._id = result.upsertedId._id;
-    }
-  }
-
-  async destroy(key) {
+  // FIXME: maxAge
+  async write(key: string, sess: Session /* , maxAge */): Promise<void> {
     const [platform, id] = key.split(':');
     const filter = {
       'user.platform': platform,
       'user.id': id,
     };
-    return this._sessions.remove(filter);
+
+    await this._sessions.updateOne(filter, sess, {
+      upsert: true,
+    });
   }
 
-  get _sessions() {
-    return this._db.collection('sessions');
+  async destroy(key: string): Promise<void> {
+    const [platform, id] = key.split(':');
+    const filter = {
+      'user.platform': platform,
+      'user.id': id,
+    };
+    await this._sessions.remove(filter);
+  }
+
+  get _sessions(): MongoCollection {
+    if (this._connection == null) {
+      throw new Error(
+        'MongoSessionStore: must call `init` before any operation.'
+      );
+    }
+    return this._connection.collection('sessions');
   }
 }

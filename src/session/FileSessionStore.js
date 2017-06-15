@@ -3,6 +3,7 @@
 import JFSStore from 'jfs';
 import thenify from 'thenify';
 
+import Session from './Session';
 import type { SessionStore } from './SessionStore';
 
 export default class FileSessionStore implements SessionStore {
@@ -24,7 +25,7 @@ export default class FileSessionStore implements SessionStore {
     return this._jfs.get(key).catch(() => null);
   }
 
-  async write(key: string, sess: mixed, maxAge: number): Promise<void> {
+  async write(key: string, sess: Session, maxAge: number): Promise<void> {
     await this._jfs.save(key, sess);
     setTimeout(() => {
       this.destroy(key);
