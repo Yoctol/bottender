@@ -1,9 +1,9 @@
 import request from 'supertest';
-import ngrok from 'ngrok';
 
+import connectNgrok from '../../connectNgrok';
 import createServer from '../createServer';
 
-jest.mock('ngrok');
+jest.mock('../../connectNgrok');
 
 function setup() {
   const requestHandler = jest.fn();
@@ -40,12 +40,12 @@ it('should handle bot request', async () => {
   expect(status).toBe(200);
 });
 
-it('should run ngrok when ngrok option is provided', async () => {
+it('should run connectNgrok when server listen and ngrok option is provided', async () => {
   const { bot, requestHandler } = setup();
   requestHandler.mockReturnValue(Promise.resolve());
   const verifyToken = '1qaz2wsx';
   const server = createServer(bot, { verifyToken, ngrok: true });
-  await request(server.callback()).post('/').send({});
+  server.listen();
 
-  expect(ngrok.connect).toBeCalled();
+  expect(connectNgrok).toBeCalled();
 });
