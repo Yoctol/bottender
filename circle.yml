@@ -29,7 +29,7 @@ test:
         pwd: ./
     - npm run check:
         pwd: ./
-    - npm run testonly:cov:
+    - npm run testonly:cov -- --no-cache:
         pwd: ./
   post:
     - cp -R coverage $CIRCLE_ARTIFACTS/cov
