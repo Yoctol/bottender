@@ -4,7 +4,8 @@ jest.mock('mongodb');
 
 const { MongoClient } = require('mongodb');
 
-function setup() {
+function setup(options = {}) {
+  jest.resetAllMocks();
   const sessions = {
     findOne: jest.fn(),
     updateOne: jest.fn(),
@@ -14,7 +15,7 @@ function setup() {
     collection: jest.fn(() => sessions),
   };
   MongoClient.connect.mockReturnValue(Promise.resolve(connection));
-  const store = new MongoSessionStore('mongodb://fakemongourl');
+  const store = new MongoSessionStore('mongodb://fakemongourl', options);
   return {
     store,
     connection,
@@ -27,6 +28,13 @@ describe('#init', () => {
     const { store } = setup();
 
     expect(await store.init()).toBe(store);
+  });
+
+  it('should connect to provided url', async () => {
+    const { store } = setup();
+
+    await store.init();
+    expect(MongoClient.connect).toBeCalledWith('mongodb://fakemongourl');
   });
 });
 
@@ -80,5 +88,25 @@ describe('#destroy', () => {
       'user.platform': 'messenger',
       'user.id': '1',
     });
+  });
+});
+
+describe('collection name', () => {
+  it('should use sessions as default collection name', async () => {
+    const { store, sessions, connection } = setup();
+    await store.init();
+    sessions.findOne.mockReturnValue(Promise.resolve(null));
+    await store.read('messenger:1');
+    expect(connection.collection).toBeCalledWith('sessions');
+  });
+
+  it('should allow custom collection name', async () => {
+    const { store, sessions, connection } = setup({
+      collectionName: 'my.sessions',
+    });
+    await store.init();
+    sessions.findOne.mockReturnValue(Promise.resolve(null));
+    await store.read('messenger:1');
+    expect(connection.collection).toBeCalledWith('my.sessions');
   });
 });

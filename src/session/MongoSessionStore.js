@@ -18,10 +18,13 @@ type MongoConnection = {
 export default class MongoSessionStore implements SessionStore {
   _url: string;
 
+  _collectionName: string;
+
   _connection: ?MongoConnection;
 
-  constructor(url: string) {
+  constructor(url: string, options: { collectionName?: string } = {}) {
     this._url = url;
+    this._collectionName = options.collectionName || 'sessions';
   }
 
   async init(): Promise<MongoSessionStore> {
@@ -66,6 +69,6 @@ export default class MongoSessionStore implements SessionStore {
         'MongoSessionStore: must call `init` before any operation.'
       );
     }
-    return this._connection.collection('sessions');
+    return this._connection.collection(this._collectionName);
   }
 }
