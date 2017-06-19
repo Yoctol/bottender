@@ -1,20 +1,25 @@
 import micro from 'micro';
 import shortid from 'shortid';
-import ngrok from 'ngrok';
+
+import connectNgrok from '../connectNgrok';
 
 import createRequestHandler from './createRequestHandler';
 
 function createServer(bot, config = {}) {
-  config.verifyToken = config.verifyToke || shortid.generate();
+  config.verifyToken = config.verifyToken || shortid.generate();
 
   const server = micro(createRequestHandler(bot, config));
 
-  console.log(`verify token: ${config.verifyToken}`);
-  if (config.ngrok) {
-    ngrok.connect((err, url) => {
-      console.log(`webhook url: ${url}/`);
-    });
-  }
+  const _listen = server.listen.bind(server);
+  server.listen = (...args) => {
+    _listen(...args);
+    if (config.ngrok) {
+      connectNgrok(args[0], (err, url) => {
+        console.log(`webhook url: ${url}/`);
+      });
+    }
+    console.log(`verify token: ${config.verifyToken}`);
+  };
 
   return server;
 }
