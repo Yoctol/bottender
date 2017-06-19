@@ -1,12 +1,12 @@
-const { json, send } = require('micro');
+import { json, send } from 'micro';
 
-const verifyMessengerWebhook = require('./verifyMessengerWebhook');
+import verifyMessengerWebhook from './verifyMessengerWebhook';
 
 function createRequestHandler(bot, config = {}) {
   const requestHandler = bot.createRequestHandler();
   return async (req, res) => {
     if (req.method === 'GET') {
-      await verifyMessengerWebhook({ verifyToken: config.verifyToken });
+      verifyMessengerWebhook({ verifyToken: config.verifyToken })(req, res);
     } else if (req.method === 'POST') {
       const body = await json(req);
       await requestHandler(body);

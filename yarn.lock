@@ -4680,7 +4680,7 @@ strip-json-comments@~2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/strip-json-comments/-/strip-json-comments-2.0.1.tgz#3c531942e908c2697c0ec344858c286c7ca0a60a"
 
-superagent@^3.0.0:
+superagent@^3.0.0, superagent@^3.5.2:
   version "3.5.2"
   resolved "https://registry.yarnpkg.com/superagent/-/superagent-3.5.2.tgz#3361a3971567504c351063abeaae0faa23dbf3f8"
   dependencies:
@@ -4767,6 +4767,10 @@ test-exclude@^4.1.1:
     object-assign "^4.1.0"
     read-pkg-up "^1.0.1"
     require-main-filename "^1.0.1"
+
+test-listen@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/test-listen/-/test-listen-1.0.2.tgz#2f3c638044538a506a8c39cc5d845c3d2beff548"
 
 text-table@~0.2.0:
   version "0.2.0"

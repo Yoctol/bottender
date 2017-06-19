@@ -1,6 +1,6 @@
-const url = require('url');
+import url from 'url';
 
-const { send } = require('micro');
+import { send } from 'micro';
 
 const verifyMessengerWebhook = ({ verifyToken }) => (req, res) => {
   const { query } = url.parse(req.url, true);
@@ -8,7 +8,6 @@ const verifyMessengerWebhook = ({ verifyToken }) => (req, res) => {
     query['hub.mode'] === 'subscribe' &&
     query['hub.verify_token'] === verifyToken
   ) {
-    console.log('Validating webhook');
     send(res, 200, query['hub.challenge']);
   } else {
     console.error('Failed validation. Make sure the validation tokens match.');
