@@ -19,13 +19,13 @@ it('should response 200 when no error be thrown', async () => {
 
   const req = { params: {} };
   const res = {
-    status: jest.fn(),
+    send: jest.fn(),
   };
   const next = jest.fn();
 
   await middleware(req, res, next);
 
-  expect(res.status).toBeCalledWith(200);
+  expect(res.send).toBeCalledWith(200);
   expect(next).toBeCalled();
 });
 

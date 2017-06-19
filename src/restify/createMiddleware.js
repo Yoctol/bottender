@@ -7,7 +7,7 @@ function createMiddleware(bot) {
       );
     }
     await requestHandler(req.params);
-    res.status(200);
+    res.send(200);
     return next();
   };
 }

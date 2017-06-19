@@ -7,14 +7,16 @@ const middleware = verifyMessengerWebhook({ verifyToken: VERIFY_TOKEN });
 const createReqRes = ({ verifyToken }) => [
   {
     params: {
-      'hub.mode': 'subscribe',
-      'hub.verify_token': verifyToken,
-      'hub.challenge': 'chatbot is awesome',
+      hub: {
+        mode: 'subscribe',
+        verify_token: verifyToken,
+        challenge: 'chatbot is awesome',
+      },
     },
   },
   {
+    end: jest.fn(),
     send: jest.fn(),
-    status: jest.fn(),
   },
 ];
 
@@ -22,7 +24,7 @@ it('should correctly response the challenge when verifyToken is same', () => {
   const [req, res] = createReqRes({ verifyToken: '1qaz2wsx' });
   const next = jest.fn();
   middleware(req, res, next);
-  expect(res.send).toBeCalledWith('chatbot is awesome');
+  expect(res.end).toBeCalledWith('chatbot is awesome');
   expect(next).toBeCalled();
 });
 
@@ -30,6 +32,6 @@ it('should response status 403 when verifyToken is different', () => {
   const [req, res] = createReqRes({ verifyToken: 'I am a trouble maker' });
   const next = jest.fn();
   middleware(req, res, next);
-  expect(res.status).toBeCalledWith(403);
+  expect(res.send).toBeCalledWith(403);
   expect(next).toBeCalled();
 });
