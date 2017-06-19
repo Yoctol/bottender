@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "babel-register": "^6.24.1"
+  },
+  "scripts": {
+    "start": "node index.js"
+  }
+}
