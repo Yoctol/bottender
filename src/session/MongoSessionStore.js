@@ -2,7 +2,7 @@
 
 import { MongoClient } from 'mongodb';
 
-import Session, { type SessionJSONObject } from './Session';
+import type { Session } from './Session';
 import type { SessionStore } from './SessionStore';
 
 type MongoCollection = {
@@ -32,7 +32,7 @@ export default class MongoSessionStore implements SessionStore {
     return this;
   }
 
-  async read(key: string): Promise<SessionJSONObject> {
+  async read(key: string): Promise<Session> {
     const [platform, id] = key.split(':');
     const filter = {
       'user.platform': platform,

@@ -4,7 +4,6 @@ import _debug from 'debug';
 
 import MemoryCacheStore from '../cache/MemoryCacheStore';
 import CacheBasedSessionStore from '../session/CacheBasedSessionStore';
-import Session from '../session/Session';
 import type { SessionStore } from '../session/SessionStore';
 import type { Context } from '../context/Context';
 
@@ -88,7 +87,7 @@ export default class Bot {
       const sessionKey = `${platform}:${senderId}`;
 
       const data = await this._sessions.read(sessionKey);
-      const session = new Session(data);
+      const session = data || Object.create(null);
 
       if (!session.user) {
         const user = {
@@ -97,7 +96,6 @@ export default class Bot {
           platform: this._connector.platform,
         };
 
-        // $FlowExpectedError
         session.user = user;
       }
 
