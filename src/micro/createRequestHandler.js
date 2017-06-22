@@ -5,7 +5,7 @@ import verifyMessengerWebhook from './verifyMessengerWebhook';
 function createRequestHandler(bot, config = {}) {
   const requestHandler = bot.createRequestHandler();
   return async (req, res) => {
-    if (req.method === 'GET') {
+    if (req.method === 'GET' && bot.connector.platform === 'messenger') {
       verifyMessengerWebhook({ verifyToken: config.verifyToken })(req, res);
     } else if (req.method === 'POST') {
       const body = await json(req);

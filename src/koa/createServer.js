@@ -10,13 +10,16 @@ import verifyMessengerWebhook from './verifyMessengerWebhook';
 
 function createServer(bot, config = {}) {
   const path = config.path || '/';
-  const verifyToken = config.verifyToken || shortid.generate();
+  let verifyToken;
 
   const server = new Koa();
   const router = new Router();
 
   router.use(bodyParser());
-  router.get(path, verifyMessengerWebhook({ verifyToken }));
+  if (bot.connector.platform === 'messenger') {
+    verifyToken = config.verifyToken || shortid.generate();
+    router.get(path, verifyMessengerWebhook({ verifyToken }));
+  }
   router.post(path, createMiddleware(bot));
 
   server.use(router.routes());
@@ -29,7 +32,9 @@ function createServer(bot, config = {}) {
         console.log(`webhook url: ${url}${path}`);
       });
     }
-    console.log(`verify token: ${verifyToken}`);
+    if (bot.connector.platform === 'messenger') {
+      console.log(`verify token: ${verifyToken}`);
+    }
   };
 
   return server;

@@ -8,12 +8,15 @@ import verifyMessengerWebhook from './verifyMessengerWebhook';
 
 function createServer(bot, config = {}) {
   const path = config.path || '/';
-  const verifyToken = config.verifyToken || shortid.generate();
+  let verifyToken;
   const server = restify.createServer();
 
   server.use(restify.plugins.queryParser());
   server.use(restify.plugins.bodyParser());
-  server.get(path, verifyMessengerWebhook({ verifyToken }));
+  if (bot.connector.platform === 'messenger') {
+    verifyToken = config.verifyToken || shortid.generate();
+    server.get(path, verifyMessengerWebhook({ verifyToken }));
+  }
   server.post(path, createMiddleware(bot));
 
   const _listen = server.listen.bind(server);
@@ -24,7 +27,9 @@ function createServer(bot, config = {}) {
         console.log(`webhook url: ${url}${path}`);
       });
     }
-    console.log(`verify token: ${verifyToken}`);
+    if (bot.connector.platform === 'messenger') {
+      console.log(`verify token: ${verifyToken}`);
+    }
   };
 
   return server;

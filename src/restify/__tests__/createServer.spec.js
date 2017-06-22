@@ -11,6 +11,9 @@ function setup() {
   const requestHandler = jest.fn();
   const bot = {
     createRequestHandler: () => requestHandler,
+    connector: {
+      platform: 'messenger',
+    },
   };
   return {
     bot,
