@@ -2,15 +2,15 @@
 import warning from 'warning';
 
 import BasicHandlerBuilder, {
-  type Condition,
+  type Predicate,
   type Handler,
   type Pattern,
   matchPattern,
 } from './BasicHandlerBuilder';
 
 export default class LINEHandlerBuilder extends BasicHandlerBuilder {
-  onMessage(condition: Condition, handler: Handler) {
-    this.on(context => context.event.isMessage && condition(context), handler);
+  onMessage(predicate: Predicate, handler: Handler) {
+    this.on(context => context.event.isMessage && predicate(context), handler);
     return this;
   }
 
@@ -28,8 +28,8 @@ export default class LINEHandlerBuilder extends BasicHandlerBuilder {
     return this;
   }
 
-  onPostback(condition: Condition, handler: Handler) {
-    this.on(context => context.event.isPostback && condition(context), handler);
+  onPostback(predicate: Predicate, handler: Handler) {
+    this.on(context => context.event.isPostback && predicate(context), handler);
     return this;
   }
 
@@ -70,8 +70,8 @@ export default class LINEHandlerBuilder extends BasicHandlerBuilder {
     return this;
   }
 
-  onBeacon(condition: Condition, handler: Handler) {
-    this.on(context => context.event.isBeacon && condition(context), handler);
+  onBeacon(predicate: Predicate, handler: Handler) {
+    this.on(context => context.event.isBeacon && predicate(context), handler);
     return this;
   }
 }

@@ -19,52 +19,52 @@ describe('#constructor', () => {
 describe('#onMessage', () => {
   it('should return this', async () => {
     const { builder } = setup();
-    const condition = () => true;
+    const predicate = () => true;
     const handler = () => {};
-    expect(await builder.onMessage(condition, handler)).toBe(builder);
+    expect(await builder.onMessage(predicate, handler)).toBe(builder);
   });
 
-  it('should call condition when received message', async () => {
+  it('should call predicate when received message', async () => {
     const { builder } = setup();
-    const condition = jest.fn(() => true);
+    const predicate = jest.fn(() => true);
     const handler = jest.fn();
     const context = {
       event: {
         isMessage: true,
       },
     };
-    builder.onMessage(condition, handler);
+    builder.onMessage(predicate, handler);
     await builder.build()(context);
-    expect(condition).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(context);
     expect(handler).toBeCalledWith(context);
   });
 
-  it('should not call condition when received not message', async () => {
+  it('should not call predicate when received not message', async () => {
     const { builder } = setup();
-    const condition = jest.fn(() => true);
+    const predicate = jest.fn(() => true);
     const handler = jest.fn();
     const context = {
       event: {
         isMessage: false,
       },
     };
-    builder.onMessage(condition, handler);
+    builder.onMessage(predicate, handler);
     await builder.build()(context);
-    expect(condition).not.toBeCalledWith(context);
+    expect(predicate).not.toBeCalledWith(context);
   });
 
-  it('should accept async condition', async () => {
+  it('should accept async predicate', async () => {
     const { builder } = setup();
-    const condition = jest.fn(() => Promise.resolve(false));
+    const predicate = jest.fn(() => Promise.resolve(false));
     const handler = jest.fn();
     const context = {
       event: {
         isMessage: true,
       },
     };
-    builder.onMessage(condition, handler);
+    builder.onMessage(predicate, handler);
     await builder.build()(context);
-    expect(condition).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(context);
     expect(handler).not.toBeCalled();
   });
 });
@@ -152,52 +152,52 @@ describe('#onText', () => {
 describe('#onPostback', () => {
   it('should return this', async () => {
     const { builder } = setup();
-    const condition = () => true;
+    const predicate = () => true;
     const handler = () => {};
-    expect(await builder.onPostback(condition, handler)).toBe(builder);
+    expect(await builder.onPostback(predicate, handler)).toBe(builder);
   });
 
-  it('should call condition when received postback', async () => {
+  it('should call predicate when received postback', async () => {
     const { builder } = setup();
-    const condition = jest.fn(() => true);
+    const predicate = jest.fn(() => true);
     const handler = jest.fn();
     const context = {
       event: {
         isPostback: true,
       },
     };
-    builder.onPostback(condition, handler);
+    builder.onPostback(predicate, handler);
     await builder.build()(context);
-    expect(condition).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(context);
     expect(handler).toBeCalledWith(context);
   });
 
-  it('should not call condition when received not postback', async () => {
+  it('should not call predicate when received not postback', async () => {
     const { builder } = setup();
-    const condition = jest.fn(() => true);
+    const predicate = jest.fn(() => true);
     const handler = jest.fn();
     const context = {
       event: {
         isPostback: false,
       },
     };
-    builder.onPostback(condition, handler);
+    builder.onPostback(predicate, handler);
     await builder.build()(context);
-    expect(condition).not.toBeCalledWith(context);
+    expect(predicate).not.toBeCalledWith(context);
   });
 
-  it('should accept async condition', async () => {
+  it('should accept async predicate', async () => {
     const { builder } = setup();
-    const condition = jest.fn(() => Promise.resolve(false));
+    const predicate = jest.fn(() => Promise.resolve(false));
     const handler = jest.fn();
     const context = {
       event: {
         isPostback: true,
       },
     };
-    builder.onPostback(condition, handler);
+    builder.onPostback(predicate, handler);
     await builder.build()(context);
-    expect(condition).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(context);
     expect(handler).not.toBeCalled();
   });
 });
@@ -209,7 +209,7 @@ describe('#onPayload', () => {
     expect(await builder.onPayload('payload', handler)).toBe(builder);
   });
 
-  it('should call condition when received postback', async () => {
+  it('should call predicate when received postback', async () => {
     const { builder } = setup();
     const handler = jest.fn();
     const context = {
@@ -322,14 +322,14 @@ describe('#onGetStarted', () => {
 describe('#onQuickReply', () => {
   it('should return this', async () => {
     const { builder } = setup();
-    const condition = () => true;
+    const predicate = () => true;
     const handler = () => {};
-    expect(await builder.onQuickReply(condition, handler)).toBe(builder);
+    expect(await builder.onQuickReply(predicate, handler)).toBe(builder);
   });
 
   it('should call handler when received quick reply message', async () => {
     const { builder } = setup();
-    const condition = jest.fn(() => true);
+    const predicate = jest.fn(() => true);
     const handler = jest.fn();
     const context = {
       event: {
@@ -343,15 +343,15 @@ describe('#onQuickReply', () => {
         },
       },
     };
-    builder.onQuickReply(condition, handler);
+    builder.onQuickReply(predicate, handler);
     await builder.build()(context);
-    expect(condition).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(context);
     expect(handler).toBeCalledWith(context);
   });
 
   it('should not call handler when received not quick reply message', async () => {
     const { builder } = setup();
-    const condition = jest.fn(() => true);
+    const predicate = jest.fn(() => true);
     const handler = jest.fn();
     const context = {
       event: {
@@ -362,15 +362,15 @@ describe('#onQuickReply', () => {
         },
       },
     };
-    builder.onQuickReply(condition, handler);
+    builder.onQuickReply(predicate, handler);
     await builder.build()(context);
-    expect(condition).not.toBeCalled();
+    expect(predicate).not.toBeCalled();
     expect(handler).not.toBeCalled();
   });
 
-  it('should accept async condition', async () => {
+  it('should accept async predicate', async () => {
     const { builder } = setup();
-    const condition = jest.fn(() => Promise.resolve(false));
+    const predicate = jest.fn(() => Promise.resolve(false));
     const handler = jest.fn();
     const context = {
       event: {
@@ -384,9 +384,9 @@ describe('#onQuickReply', () => {
         },
       },
     };
-    builder.onQuickReply(condition, handler);
+    builder.onQuickReply(predicate, handler);
     await builder.build()(context);
-    expect(condition).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(context);
     expect(handler).not.toBeCalled();
   });
 });
@@ -394,14 +394,14 @@ describe('#onQuickReply', () => {
 describe('#onEcho', () => {
   it('should return this', async () => {
     const { builder } = setup();
-    const condition = () => true;
+    const predicate = () => true;
     const handler = () => {};
-    expect(await builder.onEcho(condition, handler)).toBe(builder);
+    expect(await builder.onEcho(predicate, handler)).toBe(builder);
   });
 
   it('should call handler when received echo message', async () => {
     const { builder } = setup();
-    const condition = jest.fn(() => true);
+    const predicate = jest.fn(() => true);
     const handler = jest.fn();
     const context = {
       event: {
@@ -413,15 +413,15 @@ describe('#onEcho', () => {
         },
       },
     };
-    builder.onEcho(condition, handler);
+    builder.onEcho(predicate, handler);
     await builder.build()(context);
-    expect(condition).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(context);
     expect(handler).toBeCalledWith(context);
   });
 
   it('should not call handler when received not echo message', async () => {
     const { builder } = setup();
-    const condition = jest.fn(() => true);
+    const predicate = jest.fn(() => true);
     const handler = jest.fn();
     const context = {
       event: {
@@ -432,15 +432,15 @@ describe('#onEcho', () => {
         },
       },
     };
-    builder.onEcho(condition, handler);
+    builder.onEcho(predicate, handler);
     await builder.build()(context);
-    expect(condition).not.toBeCalled();
+    expect(predicate).not.toBeCalled();
     expect(handler).not.toBeCalled();
   });
 
-  it('should accept async condition', async () => {
+  it('should accept async predicate', async () => {
     const { builder } = setup();
-    const condition = jest.fn(() => Promise.resolve(false));
+    const predicate = jest.fn(() => Promise.resolve(false));
     const handler = jest.fn();
     const context = {
       event: {
@@ -452,9 +452,9 @@ describe('#onEcho', () => {
         },
       },
     };
-    builder.onEcho(condition, handler);
+    builder.onEcho(predicate, handler);
     await builder.build()(context);
-    expect(condition).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(context);
     expect(handler).not.toBeCalled();
   });
 });
@@ -505,14 +505,14 @@ describe('#onRead', () => {
   it('should return this', async () => {
     const { builder } = setup();
     const handler = () => {};
-    const condition = jest.fn(() => true);
-    expect(await builder.onRead(condition, handler)).toBe(builder);
+    const predicate = jest.fn(() => true);
+    expect(await builder.onRead(predicate, handler)).toBe(builder);
   });
 
   it('should call handler when received read event', async () => {
     const { builder } = setup();
     const handler = jest.fn();
-    const condition = jest.fn(() => true);
+    const predicate = jest.fn(() => true);
     const context = {
       event: {
         isRead: true,
@@ -522,15 +522,15 @@ describe('#onRead', () => {
         },
       },
     };
-    builder.onRead(condition, handler);
+    builder.onRead(predicate, handler);
     await builder.build()(context);
-    expect(condition).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(context);
     expect(handler).toBeCalledWith(context);
   });
 
   it('should not call handler when received not read event', async () => {
     const { builder } = setup();
-    const condition = jest.fn(() => true);
+    const predicate = jest.fn(() => true);
     const handler = jest.fn();
     const context = {
       event: {
@@ -540,16 +540,16 @@ describe('#onRead', () => {
         },
       },
     };
-    builder.onRead(condition, handler);
+    builder.onRead(predicate, handler);
     await builder.build()(context);
-    expect(condition).not.toBeCalled();
+    expect(predicate).not.toBeCalled();
     expect(handler).not.toBeCalled();
   });
 
-  it('should accept async condition', async () => {
+  it('should accept async predicate', async () => {
     const { builder } = setup();
     const handler = jest.fn();
-    const condition = jest.fn(() => Promise.resolve(false));
+    const predicate = jest.fn(() => Promise.resolve(false));
     const context = {
       event: {
         isRead: true,
@@ -559,9 +559,9 @@ describe('#onRead', () => {
         },
       },
     };
-    builder.onRead(condition, handler);
+    builder.onRead(predicate, handler);
     await builder.build()(context);
-    expect(condition).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(context);
     expect(handler).not.toBeCalled();
   });
 });
@@ -570,14 +570,14 @@ describe('#onDelivery', () => {
   it('should return this', async () => {
     const { builder } = setup();
     const handler = () => {};
-    const condition = jest.fn(() => true);
-    expect(await builder.onDelivery(condition, handler)).toBe(builder);
+    const predicate = jest.fn(() => true);
+    expect(await builder.onDelivery(predicate, handler)).toBe(builder);
   });
 
   it('should call handler when received delivery event', async () => {
     const { builder } = setup();
     const handler = jest.fn();
-    const condition = jest.fn(() => true);
+    const predicate = jest.fn(() => true);
     const context = {
       event: {
         isDelivery: true,
@@ -588,15 +588,15 @@ describe('#onDelivery', () => {
         },
       },
     };
-    builder.onDelivery(condition, handler);
+    builder.onDelivery(predicate, handler);
     await builder.build()(context);
-    expect(condition).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(context);
     expect(handler).toBeCalledWith(context);
   });
 
   it('should not call handler when received not delivery event', async () => {
     const { builder } = setup();
-    const condition = jest.fn(() => true);
+    const predicate = jest.fn(() => true);
     const handler = jest.fn();
     const context = {
       event: {
@@ -608,16 +608,16 @@ describe('#onDelivery', () => {
         },
       },
     };
-    builder.onDelivery(condition, handler);
+    builder.onDelivery(predicate, handler);
     await builder.build()(context);
-    expect(condition).not.toBeCalled();
+    expect(predicate).not.toBeCalled();
     expect(handler).not.toBeCalled();
   });
 
-  it('should accept async condition', async () => {
+  it('should accept async predicate', async () => {
     const { builder } = setup();
     const handler = jest.fn();
-    const condition = jest.fn(() => Promise.resolve(false));
+    const predicate = jest.fn(() => Promise.resolve(false));
     const context = {
       event: {
         isDelivery: true,
@@ -628,9 +628,9 @@ describe('#onDelivery', () => {
         },
       },
     };
-    builder.onDelivery(condition, handler);
+    builder.onDelivery(predicate, handler);
     await builder.build()(context);
-    expect(condition).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(context);
     expect(handler).not.toBeCalled();
   });
 });

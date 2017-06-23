@@ -30,7 +30,7 @@ export type Context = {
   sendText: (text: string) => void,
 };
 
-export type Condition = (context: Context) => boolean | Promise<boolean>;
+export type Predicate = (context: Context) => boolean | Promise<boolean>;
 
 type FunctionalHandler = (context: Context) => void | Promise<void>;
 
@@ -38,8 +38,8 @@ export type Handler = string | Array<string> | FunctionalHandler;
 
 export type Pattern = string | RegExp;
 
-type ConditionHandler = {
-  condition: Condition,
+type PredicateHandler = {
+  predicate: Predicate,
   handler: FunctionalHandler,
 };
 
@@ -68,8 +68,8 @@ export function matchPattern(pattern: Pattern, text: string): boolean {
 
 export default class HandlerBuilder {
   _beforeHandler: ?FunctionalHandler = null;
-  _handlers: Array<ConditionHandler> = [];
-  _fallbackHandler: ?ConditionHandler = null;
+  _handlers: Array<PredicateHandler> = [];
+  _fallbackHandler: ?PredicateHandler = null;
   _errorHandler: ?FunctionalHandler = null;
 
   before(handler: FunctionalHandler) {
@@ -77,9 +77,9 @@ export default class HandlerBuilder {
     return this;
   }
 
-  on(condition: Condition, handler: Handler) {
+  on(predicate: Predicate, handler: Handler) {
     this._handlers.push({
-      condition,
+      predicate,
       handler: normalizeHandler(handler),
     });
     return this;
@@ -87,7 +87,7 @@ export default class HandlerBuilder {
 
   onUnhandled(handler: Handler) {
     this._fallbackHandler = {
-      condition: () => true,
+      predicate: () => true,
       handler: normalizeHandler(handler),
     };
     return this;
@@ -110,10 +110,10 @@ export default class HandlerBuilder {
         }
 
         for (let i = 0; i < handlers.length; i++) {
-          const { condition, handler } = handlers[i];
+          const { predicate, handler } = handlers[i];
           // eslint-disable-next-line no-await-in-loop
-          const conditionReturn = await condition(context);
-          if (typeof conditionReturn === 'boolean' && conditionReturn) {
+          const predicateReturn = await predicate(context);
+          if (typeof predicateReturn === 'boolean' && predicateReturn) {
             return handler(context);
           }
         }

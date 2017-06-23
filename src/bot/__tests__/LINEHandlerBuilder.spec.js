@@ -18,52 +18,52 @@ describe('#constructor', () => {
 describe('#onMessage', () => {
   it('should return this', async () => {
     const { builder } = setup();
-    const condition = () => true;
+    const predicate = () => true;
     const handler = () => {};
-    expect(await builder.onMessage(condition, handler)).toBe(builder);
+    expect(await builder.onMessage(predicate, handler)).toBe(builder);
   });
 
-  it('should call condition when received message', async () => {
+  it('should call predicate when received message', async () => {
     const { builder } = setup();
-    const condition = jest.fn(() => true);
+    const predicate = jest.fn(() => true);
     const handler = jest.fn();
     const context = {
       event: {
         isMessage: true,
       },
     };
-    builder.onMessage(condition, handler);
+    builder.onMessage(predicate, handler);
     await builder.build()(context);
-    expect(condition).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(context);
     expect(handler).toBeCalledWith(context);
   });
 
-  it('should not call condition when received not message', async () => {
+  it('should not call predicate when received not message', async () => {
     const { builder } = setup();
-    const condition = jest.fn(() => true);
+    const predicate = jest.fn(() => true);
     const handler = jest.fn();
     const context = {
       event: {
         isMessage: false,
       },
     };
-    builder.onMessage(condition, handler);
+    builder.onMessage(predicate, handler);
     await builder.build()(context);
-    expect(condition).not.toBeCalledWith(context);
+    expect(predicate).not.toBeCalledWith(context);
   });
 
-  it('should accept async condition', async () => {
+  it('should accept async predicate', async () => {
     const { builder } = setup();
-    const condition = jest.fn(() => Promise.resolve(false));
+    const predicate = jest.fn(() => Promise.resolve(false));
     const handler = jest.fn();
     const context = {
       event: {
         isMessage: true,
       },
     };
-    builder.onMessage(condition, handler);
+    builder.onMessage(predicate, handler);
     await builder.build()(context);
-    expect(condition).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(context);
     expect(handler).not.toBeCalled();
   });
 });
@@ -171,52 +171,52 @@ describe('#onText', () => {
 describe('#onPostback', () => {
   it('should return this', async () => {
     const { builder } = setup();
-    const condition = () => true;
+    const predicate = () => true;
     const handler = () => {};
-    expect(await builder.onPostback(condition, handler)).toBe(builder);
+    expect(await builder.onPostback(predicate, handler)).toBe(builder);
   });
 
-  it('should call condition when received postback', async () => {
+  it('should call predicate when received postback', async () => {
     const { builder } = setup();
-    const condition = jest.fn(() => true);
+    const predicate = jest.fn(() => true);
     const handler = jest.fn();
     const context = {
       event: {
         isPostback: true,
       },
     };
-    builder.onPostback(condition, handler);
+    builder.onPostback(predicate, handler);
     await builder.build()(context);
-    expect(condition).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(context);
     expect(handler).toBeCalledWith(context);
   });
 
-  it('should not call condition when received not postback', async () => {
+  it('should not call predicate when received not postback', async () => {
     const { builder } = setup();
-    const condition = jest.fn(() => true);
+    const predicate = jest.fn(() => true);
     const handler = jest.fn();
     const context = {
       event: {
         isPostback: false,
       },
     };
-    builder.onPostback(condition, handler);
+    builder.onPostback(predicate, handler);
     await builder.build()(context);
-    expect(condition).not.toBeCalledWith(context);
+    expect(predicate).not.toBeCalledWith(context);
   });
 
-  it('should accept async condition', async () => {
+  it('should accept async predicate', async () => {
     const { builder } = setup();
-    const condition = jest.fn(() => Promise.resolve(false));
+    const predicate = jest.fn(() => Promise.resolve(false));
     const handler = jest.fn();
     const context = {
       event: {
         isPostback: true,
       },
     };
-    builder.onPostback(condition, handler);
+    builder.onPostback(predicate, handler);
     await builder.build()(context);
-    expect(condition).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(context);
     expect(handler).not.toBeCalled();
   });
 });
@@ -228,7 +228,7 @@ describe('#onPayload', () => {
     expect(await builder.onPayload('payload', handler)).toBe(builder);
   });
 
-  it('should call condition when received postback', async () => {
+  it('should call predicate when received postback', async () => {
     const { builder } = setup();
     const handler = jest.fn();
     const context = {
@@ -284,7 +284,7 @@ describe('#onFollow', () => {
     expect(await builder.onFollow('payload', handler)).toBe(builder);
   });
 
-  it('should call condition when received follow event', async () => {
+  it('should call predicate when received follow event', async () => {
     const { builder } = setup();
     const handler = jest.fn();
     const context = {
@@ -322,7 +322,7 @@ describe('#onUnfollow', () => {
     expect(await builder.onUnfollow('payload', handler)).toBe(builder);
   });
 
-  it('should call condition when received onUnfollow event', async () => {
+  it('should call predicate when received onUnfollow event', async () => {
     const { builder } = setup();
     const handler = jest.fn();
     const context = {
@@ -360,7 +360,7 @@ describe('#onJoin', () => {
     expect(await builder.onJoin('payload', handler)).toBe(builder);
   });
 
-  it('should call condition when received onJoin event', async () => {
+  it('should call predicate when received onJoin event', async () => {
     const { builder } = setup();
     const handler = jest.fn();
     const context = {
@@ -398,7 +398,7 @@ describe('#onLeave', () => {
     expect(await builder.onLeave('payload', handler)).toBe(builder);
   });
 
-  it('should call condition when received onLeave event', async () => {
+  it('should call predicate when received onLeave event', async () => {
     const { builder } = setup();
     const handler = jest.fn();
     const context = {
@@ -436,10 +436,10 @@ describe('#onBeacon', () => {
     expect(await builder.onBeacon('payload', handler)).toBe(builder);
   });
 
-  it('should call condition when received onBeacon event', async () => {
+  it('should call predicate when received onBeacon event', async () => {
     const { builder } = setup();
     const handler = jest.fn();
-    const condition = jest.fn(() => true);
+    const predicate = jest.fn(() => true);
     const context = {
       event: {
         isBeacon: true,
@@ -449,24 +449,24 @@ describe('#onBeacon', () => {
         },
       },
     };
-    builder.onBeacon(condition, handler);
+    builder.onBeacon(predicate, handler);
     await builder.build()(context);
-    expect(condition).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(context);
     expect(handler).toBeCalledWith(context);
   });
 
   it('should not call handler when received not Beacon event', async () => {
     const { builder } = setup();
     const handler = jest.fn();
-    const condition = jest.fn(() => true);
+    const predicate = jest.fn(() => true);
     const context = {
       event: {
         isBeacon: false,
       },
     };
-    builder.onBeacon(condition, handler);
+    builder.onBeacon(predicate, handler);
     await builder.build()(context);
-    expect(condition).not.toBeCalledWith();
+    expect(predicate).not.toBeCalledWith();
     expect(handler).not.toBeCalled();
   });
 });
