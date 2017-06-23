@@ -4,7 +4,7 @@ import warning from 'warning';
 import * as constants from '../constants';
 
 import BasicHandlerBuilder, {
-  type Condition,
+  type Predicate,
   type Handler,
   type Pattern,
   normalizeHandler,
@@ -12,10 +12,10 @@ import BasicHandlerBuilder, {
 } from './BasicHandlerBuilder';
 
 export default class MessengerHandlerBuilder extends BasicHandlerBuilder {
-  onMessage(condition: Condition, handler: Handler) {
+  onMessage(predicate: Predicate, handler: Handler) {
     this.on(
       context =>
-        context.event.isMessage && !context.event.isEcho && condition(context),
+        context.event.isMessage && !context.event.isEcho && predicate(context),
       handler
     );
     return this;
@@ -36,8 +36,8 @@ export default class MessengerHandlerBuilder extends BasicHandlerBuilder {
     return this;
   }
 
-  onPostback(condition: Condition, handler: Handler) {
-    this.on(context => context.event.isPostback && condition(context), handler);
+  onPostback(predicate: Predicate, handler: Handler) {
+    this.on(context => context.event.isPostback && predicate(context), handler);
     return this;
   }
 
@@ -67,16 +67,16 @@ export default class MessengerHandlerBuilder extends BasicHandlerBuilder {
     return this;
   }
 
-  onQuickReply(condition: Condition, handler: Handler) {
+  onQuickReply(predicate: Predicate, handler: Handler) {
     this.onMessage(
-      context => !!context.event.message.quick_reply && condition(context),
+      context => !!context.event.message.quick_reply && predicate(context),
       handler
     );
     return this;
   }
 
-  onEcho(condition: Condition, handler: Handler) {
-    this.on(context => context.event.isEcho && condition(context), handler);
+  onEcho(predicate: Predicate, handler: Handler) {
+    this.on(context => context.event.isEcho && predicate(context), handler);
     return this;
   }
 
@@ -90,19 +90,19 @@ export default class MessengerHandlerBuilder extends BasicHandlerBuilder {
     return this;
   }
 
-  onRead(condition: Condition, handler: Handler) {
-    this.on(context => context.event.isRead && condition(context), handler);
+  onRead(predicate: Predicate, handler: Handler) {
+    this.on(context => context.event.isRead && predicate(context), handler);
     return this;
   }
 
-  onDelivery(condition: Condition, handler: Handler) {
-    this.on(context => context.event.isDelivery && condition(context), handler);
+  onDelivery(predicate: Predicate, handler: Handler) {
+    this.on(context => context.event.isDelivery && predicate(context), handler);
     return this;
   }
 
   onUnhandled(handler: Handler) {
     this._fallbackHandler = {
-      condition: context =>
+      predicate: context =>
         !context.event.isEcho &&
         !context.event.isRead &&
         !context.event.isDelivery,
