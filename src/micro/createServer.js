@@ -18,7 +18,9 @@ function createServer(bot, config = {}) {
         console.log(`webhook url: ${url}/`);
       });
     }
-    console.log(`verify token: ${config.verifyToken}`);
+    if (bot.connector.platform === 'messenger') {
+      console.log(`verify token: ${config.verifyToken}`);
+    }
   };
 
   return server;
