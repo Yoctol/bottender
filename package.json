@@ -46,6 +46,7 @@
     "babel-runtime": "^6.23.0",
     "body-parser": "^1.17.2",
     "chalk": "^1.1.3",
+    "cli-table2": "^0.2.0",
     "commander": "^2.9.0",
     "debug": "^2.6.8",
     "delay": "^2.0.0",

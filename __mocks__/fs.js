@@ -7,7 +7,7 @@ function __setMockFiles(newMockFiles) {
 }
 
 function readFileSync() {
-  return new Buffer(JSON.stringify(mockFiles || { mockKey: 'mockValue' }));
+  return JSON.stringify(mockFiles || { mockKey: 'mockValue' });
 }
 
 fs.__setMockFiles = __setMockFiles;
