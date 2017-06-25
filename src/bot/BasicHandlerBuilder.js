@@ -70,6 +70,7 @@ export default class HandlerBuilder {
   _beforeHandler: ?FunctionalHandler = null;
   _handlers: Array<PredicateHandler> = [];
   _fallbackHandler: ?PredicateHandler = null;
+  _fallbackMessageHandler: ?PredicateHandler = null;
   _errorHandler: ?FunctionalHandler = null;
 
   before(handler: FunctionalHandler) {
@@ -93,15 +94,24 @@ export default class HandlerBuilder {
     return this;
   }
 
+  onUnhandledMessage(handler: Handler) {
+    this._fallbackMessageHandler = {
+      predicate: context => context.event.isMessage,
+      handler: normalizeHandler(handler),
+    };
+    return this;
+  }
+
   onError(handler: Handler) {
     this._errorHandler = normalizeHandler(handler);
     return this;
   }
 
   build(): FunctionalHandler {
-    const handlers = this._fallbackHandler
-      ? this._handlers.concat(this._fallbackHandler)
-      : this._handlers;
+    const handlers = this._handlers.concat(
+      this._fallbackMessageHandler || [],
+      this._fallbackHandler || []
+    );
 
     return async (context: Context) => {
       try {
