@@ -2,7 +2,7 @@
 
 import type { CacheStore } from '../cache/CacheStore';
 
-import Session, { type SessionJSONObject } from './Session';
+import type { Session } from './Session';
 import type { SessionStore } from './SessionStore';
 
 export default class CacheBasedSessionStore implements SessionStore {
@@ -16,7 +16,7 @@ export default class CacheBasedSessionStore implements SessionStore {
     return this;
   }
 
-  async read(key: string): Promise<SessionJSONObject> {
+  async read(key: string): Promise<Session> {
     return (this._cache.get(key): any);
   }
 

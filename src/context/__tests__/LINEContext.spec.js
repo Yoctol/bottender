@@ -1,6 +1,5 @@
 import LINEContext from '../LINEContext';
 import LINEEvent from '../LINEEvent';
-import Session from '../../session/Session';
 
 jest.mock('messaging-api-line');
 
@@ -21,11 +20,11 @@ const rawEvent = {
 
 const setup = () => {
   const client = {};
-  const session = new Session({
+  const session = {
     user: {
       id: 'fakeUserId',
     },
-  });
+  };
   const context = new LINEContext({
     client,
     rawEvent,

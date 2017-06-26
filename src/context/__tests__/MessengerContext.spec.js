@@ -1,6 +1,5 @@
 import MessengerContext from '../MessengerContext';
 import MessengerEvent from '../MessengerEvent';
-import Session from '../../session/Session';
 
 jest.mock('delay');
 jest.mock('messaging-api-messenger');
@@ -27,11 +26,11 @@ const rawEvent = {
 
 const setup = () => {
   const client = createMockGraphAPIClient();
-  const session = new Session({
+  const session = {
     user: {
       id: 'fakeUserId',
     },
-  });
+  };
   const args = {
     client,
     rawEvent,
