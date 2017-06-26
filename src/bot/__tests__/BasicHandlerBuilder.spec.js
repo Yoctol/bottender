@@ -208,6 +208,85 @@ describe('#onUnhandled', () => {
   });
 });
 
+describe('#onUnhandledMessage', () => {
+  it('should return this', () => {
+    const { builder } = setup();
+    const handler = () => {};
+    expect(builder.onUnhandledMessage(handler)).toBe(builder);
+  });
+
+  it('should call fallback message handler if can not find a match predicate and is a message', async () => {
+    const { builder } = setup();
+    const context = {
+      event: {
+        isMessage: true,
+      },
+    };
+    const predicate = jest.fn(() => false);
+    const handler = jest.fn();
+    const fallbackHandler = jest.fn();
+    builder.on(predicate, handler).onUnhandledMessage(fallbackHandler);
+    await builder.build()(context);
+    expect(handler).not.toBeCalled();
+    expect(fallbackHandler).toBeCalledWith(context);
+  });
+
+  it('should not call fallback message handler if is not a message', async () => {
+    const { builder } = setup();
+    const context = {
+      event: {
+        isMessage: false,
+      },
+    };
+    const predicate = jest.fn(() => false);
+    const handler = jest.fn();
+    const fallbackHandler = jest.fn();
+    builder.on(predicate, handler).onUnhandledMessage(fallbackHandler);
+    await builder.build()(context);
+    expect(handler).not.toBeCalled();
+    expect(fallbackHandler).not.toBeCalled();
+  });
+
+  it('should support async handler', async () => {
+    const { builder } = setup();
+    const context = {
+      event: {
+        isMessage: true,
+      },
+    };
+    const fallbackHandler = jest.fn(() => Promise.resolve());
+    builder.onUnhandledMessage(fallbackHandler);
+    await builder.build()(context);
+    expect(fallbackHandler).toBeCalledWith(context);
+  });
+
+  it('should support string as handler', async () => {
+    const { builder } = setup();
+    const context = {
+      event: {
+        isMessage: true,
+      },
+      sendText: jest.fn(),
+    };
+    builder.onUnhandledMessage('沒處理到');
+    await builder.build()(context);
+    expect(context.sendText).toBeCalledWith('沒處理到');
+  });
+
+  it('should support array as handler', async () => {
+    const { builder } = setup();
+    const context = {
+      event: {
+        isMessage: true,
+      },
+      sendText: jest.fn(),
+    };
+    builder.onUnhandledMessage(['沒處理到', '漏掉了']);
+    await builder.build()(context);
+    expect(context.sendText).toBeCalledWith(expect.stringMatching(/沒處理到|漏掉了/));
+  });
+});
+
 describe('#onError', () => {
   it('should return this', () => {
     const { builder } = setup();
