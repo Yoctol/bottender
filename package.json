@@ -42,6 +42,7 @@
     "supertest": "^3.0.0"
   },
   "dependencies": {
+    "@yoctol/static": "^0.0.2-1",
     "babel-register": "^6.24.1",
     "babel-runtime": "^6.23.0",
     "body-parser": "^1.17.2",
@@ -52,9 +53,13 @@
     "delay": "^2.0.0",
     "didyoumean": "^1.2.1",
     "express": "^4.15.3",
+    "glob": "^7.1.2",
+    "hasha": "^3.0.0",
     "invariant": "^2.2.2",
     "ioredis": "^3.1.0",
+    "is-image": "^1.0.1",
     "jfs": "^0.2.6",
+    "jsonfile": "^3.0.0",
     "koa": "^2.2.0",
     "koa-bodyparser": "^4.2.0",
     "koa-router": "^7.2.0",

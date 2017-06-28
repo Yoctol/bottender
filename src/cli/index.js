@@ -5,6 +5,7 @@ import invariant from 'invariant';
 import pkg from '../../package.json';
 
 import { error, bold } from './shared/log';
+import { toAbsolutePath } from './shared/path';
 import deleteDomainWhitelist from './actions/deleteDomainWhitelist';
 import deleteGetStartedButton from './actions/deleteGetStartedButton';
 import deleteGreetingText from './actions/deleteGreetingText';
@@ -16,6 +17,7 @@ import getPersistentMenu from './actions/getPersistentMenu';
 import setDomainWhitelist from './actions/setDomainWhitelist';
 import setGetStartedButton from './actions/setGetStartedButton';
 import setGreetingText from './actions/setGreetingText';
+import uploadImages from './actions/uploadImages';
 
 program.version(pkg.version);
 
@@ -171,6 +173,23 @@ program
   .action(({ config }) => {
     invariant(config, '-c <config_file_path> is required but not found.');
     deleteGreetingText(config);
+  });
+
+program
+  .command('upload-images <folder>')
+  .alias('img')
+  .description('upload all images in the folder')
+  .option(
+    '-o, --output <output_path>',
+    'The out path of the upload result json file.'
+  )
+  .option('-c, --container <container_name>', 'The URL prefix of the file')
+  .action((folderPath, { output, container }) => {
+    uploadImages({
+      folderPath: toAbsolutePath(folderPath),
+      outputPath: output,
+      container,
+    });
   });
 
 program.command('*').action(command => {
