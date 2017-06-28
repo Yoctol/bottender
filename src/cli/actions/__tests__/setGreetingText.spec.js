@@ -39,7 +39,7 @@ describe('resolved', () => {
   it('call setGreetingText with text', async () => {
     _client.setGreetingText.mockReturnValue(Promise.resolve());
 
-    await setGreetingText(configPath, greetingText);
+    await setGreetingText(greetingText, configPath);
 
     expect(log.print).toHaveBeenCalledTimes(1);
     expect(_client.setGreetingText).toBeCalledWith('__FAKE_GREETING_TEXT__');
@@ -57,7 +57,7 @@ describe('reject', () => {
 
     process.exit = jest.fn();
 
-    await setGreetingText(configPath, greetingText);
+    await setGreetingText(greetingText, configPath);
 
     expect(log.error).toHaveBeenCalledTimes(2);
     expect(process.exit).toBeCalled();
@@ -82,7 +82,7 @@ describe('reject', () => {
 
     process.exit = jest.fn();
 
-    await setGreetingText(configPath, greetingText);
+    await setGreetingText(greetingText, configPath);
 
     expect(log.error).toHaveBeenCalledTimes(3);
     expect(log.error.mock.calls[2][0]).not.toMatch(/\[object Object\]/);
@@ -97,7 +97,7 @@ describe('reject', () => {
 
     process.exit = jest.fn();
 
-    await setGreetingText(configPath, greetingText);
+    await setGreetingText(greetingText, configPath);
 
     expect(log.error).toHaveBeenCalledTimes(2);
     expect(process.exit).toBeCalled();

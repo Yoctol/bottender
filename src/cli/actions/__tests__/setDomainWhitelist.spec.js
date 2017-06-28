@@ -35,11 +35,29 @@ it('be defined', () => {
   expect(setDomainWhitelist).toBeDefined();
 });
 
+describe('#getConfig', () => {
+  it('will call `bot.json` and platform = messenger when NOT passed <config_path>', async () => {
+    _client.setDomainWhitelist.mockReturnValue(Promise.resolve());
+
+    await setDomainWhitelist(domains);
+
+    expect(getConfig).toBeCalledWith('bot.json', 'messenger');
+  });
+
+  it('will call <config_path> when it was passed', async () => {
+    _client.setDomainWhitelist.mockReturnValue(Promise.resolve());
+
+    await setDomainWhitelist(domains, configPath);
+
+    expect(getConfig).toBeCalledWith('bot.sample.json', 'messenger');
+  });
+});
+
 describe('resolved', () => {
   it('call setDomainWhitelist with array of domains', async () => {
     _client.setDomainWhitelist.mockReturnValue(Promise.resolve());
 
-    await setDomainWhitelist(configPath, domains);
+    await setDomainWhitelist(domains, configPath);
 
     expect(log.print).toHaveBeenCalledTimes(1);
     expect(_client.setDomainWhitelist).toBeCalledWith([
@@ -59,7 +77,7 @@ describe('reject', () => {
 
     process.exit = jest.fn();
 
-    await setDomainWhitelist(configPath, domains);
+    await setDomainWhitelist(domains, configPath);
 
     expect(log.error).toHaveBeenCalledTimes(2);
     expect(process.exit).toBeCalled();
@@ -84,7 +102,7 @@ describe('reject', () => {
 
     process.exit = jest.fn();
 
-    await setDomainWhitelist(configPath, domains);
+    await setDomainWhitelist(domains, configPath);
 
     expect(log.error).toHaveBeenCalledTimes(3);
     expect(log.error.mock.calls[2][0]).not.toMatch(/\[object Object\]/);
@@ -99,7 +117,7 @@ describe('reject', () => {
 
     process.exit = jest.fn();
 
-    await setDomainWhitelist(configPath, domains);
+    await setDomainWhitelist(domains, configPath);
 
     expect(log.error).toHaveBeenCalledTimes(2);
     expect(process.exit).toBeCalled();

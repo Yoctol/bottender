@@ -50,10 +50,10 @@ describe('#domain-whilelist', () => {
       'http://www.yoctol.com,http://www.facebook.com',
     ];
     require('../index');
-    expect(setDomainWhitelist.default).toBeCalledWith('bot.sample.json', [
-      'http://www.yoctol.com',
-      'http://www.facebook.com',
-    ]);
+    expect(setDomainWhitelist.default).toBeCalledWith(
+      ['http://www.yoctol.com', 'http://www.facebook.com'],
+      'bot.sample.json'
+    );
   });
 
   it('#delete', () => {
@@ -100,8 +100,8 @@ describe('#get-started-button', () => {
     ];
     require('../index');
     expect(setGetStartedButton.default).toBeCalledWith(
-      'bot.sample.json',
-      '__PAYLOAD__'
+      '__PAYLOAD__',
+      'bot.sample.json'
     );
   });
 
@@ -149,8 +149,8 @@ describe('#greeting-text', () => {
     ];
     require('../index');
     expect(setGreetingText.default).toBeCalledWith(
-      'bot.sample.json',
-      '__greeting_text__'
+      '__greeting_text__',
+      'bot.sample.json'
     );
   });
 

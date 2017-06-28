@@ -34,6 +34,66 @@ it('be defined', () => {
   expect(getPersistentMenu).toBeDefined();
 });
 
+describe('#getConfig', () => {
+  it('will call `bot.json` and platform = messenger when NOT passed <config_path>', async () => {
+    _client.getPersistentMenu.mockReturnValue(
+      Promise.resolve({
+        data: {
+          data: [
+            {
+              persistent_menu: [
+                {
+                  composer_input_disabled: false,
+                  call_to_actions: [
+                    {
+                      type: 'postback',
+                      title: 'RESTART',
+                      payload: 'RESTART',
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      })
+    );
+
+    await getPersistentMenu();
+
+    expect(getConfig).toBeCalledWith('bot.json', 'messenger');
+  });
+
+  it('will call <config_path> when it was passed', async () => {
+    _client.getPersistentMenu.mockReturnValue(
+      Promise.resolve({
+        data: {
+          data: [
+            {
+              persistent_menu: [
+                {
+                  composer_input_disabled: false,
+                  call_to_actions: [
+                    {
+                      type: 'postback',
+                      title: 'RESTART',
+                      payload: 'RESTART',
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      })
+    );
+
+    await getPersistentMenu(configPath);
+
+    expect(getConfig).toBeCalledWith('bot.sample.json', 'messenger');
+  });
+});
+
 describe('resolved', () => {
   it('call getPersistentMenu', async () => {
     _client.getPersistentMenu.mockReturnValue(
@@ -47,7 +107,7 @@ describe('resolved', () => {
                   call_to_actions: [
                     {
                       type: 'postback',
-                      title: '重新開始對話',
+                      title: 'RESTART',
                       payload: 'RESTART',
                     },
                   ],

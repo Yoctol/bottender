@@ -34,6 +34,24 @@ it('be defined', () => {
   expect(deleteGetStartedButton).toBeDefined();
 });
 
+describe('#getConfig', () => {
+  it('will call `bot.json` and platform = messenger when NOT passed <config_path>', async () => {
+    _client.deleteGetStartedButton.mockReturnValue(Promise.resolve());
+
+    await deleteGetStartedButton();
+
+    expect(getConfig).toBeCalledWith('bot.json', 'messenger');
+  });
+
+  it('will call <config_path> when it was passed', async () => {
+    _client.deleteGetStartedButton.mockReturnValue(Promise.resolve());
+
+    await deleteGetStartedButton(configPath);
+
+    expect(getConfig).toBeCalledWith('bot.sample.json', 'messenger');
+  });
+});
+
 describe('resolved', () => {
   it('call deleteGetStartedButton', async () => {
     _client.deleteGetStartedButton.mockReturnValue(Promise.resolve());

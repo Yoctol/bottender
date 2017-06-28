@@ -25,10 +25,9 @@ program
   .description('get domain whitelist')
   .option(
     '-c, --config <config_file_path>',
-    'The config file path of your project.'
+    'The config file path of your project. Default to `bot.json`'
   )
   .action(({ config }) => {
-    invariant(config, '-c <config_file_path> is required but not found.');
     getDomainWhitelist(config);
   });
 
@@ -37,17 +36,16 @@ program
   .alias('dws')
   .description('set domains whitelist')
   .option(
-    '-c, --config <config_file_path>',
-    'The config file path of your project.'
-  )
-  .option(
     '-d, --domains <array of domain_name>',
     'All domains to set domains whitelist, should separate by comma(,)'
   )
+  .option(
+    '-c, --config <config_file_path>',
+    'The config file path of your project. Default to `bot.json`'
+  )
   .action(({ config, domains }) => {
-    invariant(config, '-c <config_file_path> is required but not found.');
     invariant(domains, '-d <array of domain_name> is required but not found.');
-    setDomainWhitelist(config, domains.split(','));
+    setDomainWhitelist(domains.split(','), config);
   });
 
 program
@@ -56,10 +54,9 @@ program
   .description('delete domain whitelist')
   .option(
     '-c, --config <config_file_path>',
-    'The config file path of your project.'
+    'The config file path of your project. Default to `bot.json`'
   )
   .action(({ config }) => {
-    invariant(config, '-c <config_file_path> is required but not found.');
     deleteDomainWhitelist(config);
   });
 
@@ -69,10 +66,9 @@ program
   .description('get persistent menu')
   .option(
     '-c, --config <config_file_path>',
-    'The config file path of your project.'
+    'The config file path of your project. Default to `bot.json`'
   )
   .action(({ config }) => {
-    invariant(config, '-c <config_file_path> is required but not found.');
     getPersistentMenu(config);
   });
 
@@ -82,10 +78,9 @@ program
   .description('delete persistent menu')
   .option(
     '-c, --config <config_file_path>',
-    'The config file path of your project.'
+    'The config file path of your project. Default to `bot.json`'
   )
   .action(({ config }) => {
-    invariant(config, '-c <config_file_path> is required but not found.');
     deletePersistentMenu(config);
   });
 
@@ -95,10 +90,9 @@ program
   .description('get get started button')
   .option(
     '-c, --config <config_file_path>',
-    'The config file path of your project.'
+    'The config file path of your project. Default to `bot.json`'
   )
   .action(({ config }) => {
-    invariant(config, '-c <config_file_path> is required but not found.');
     getGetStartedButton(config);
   });
 
@@ -108,16 +102,15 @@ program
   .description('set get started button')
   .option(
     '-c, --config <config_file_path>',
-    'The config file path of your project.'
+    'The config file path of your project. Default to `bot.json`'
   )
   .option(
     '-p, --payload <payload>',
     'The payload to set for get started button'
   )
   .action(({ config, payload }) => {
-    invariant(config, '-c <config_file_path> is required but not found.');
     invariant(config, '-p <payload> is required but not found.');
-    setGetStartedButton(config, payload);
+    setGetStartedButton(payload, config);
   });
 
 program
@@ -126,10 +119,9 @@ program
   .description('delete get started button')
   .option(
     '-c, --config <config_file_path>',
-    'The config file path of your project.'
+    'The config file path of your project. Default to `bot.json`'
   )
   .action(({ config }) => {
-    invariant(config, '-c <config_file_path> is required but not found.');
     deleteGetStartedButton(config);
   });
 
@@ -139,10 +131,9 @@ program
   .description('get greeting text')
   .option(
     '-c, --config <config_file_path>',
-    'The config file path of your project.'
+    'The config file path of your project. Default to `bot.json`'
   )
   .action(({ config }) => {
-    invariant(config, '-c <config_file_path> is required but not found.');
     getGreetingText(config);
   });
 
@@ -150,14 +141,14 @@ program
   .command('greeting-text:set')
   .alias('gts')
   .description('set greeting text for specific project')
+  .option('-g, --greetingText <greeting_text>', 'The greeting text of the bot')
   .option(
     '-c, --config <config_file_path>',
-    'The config file path of your project.'
+    'The config file path of your project. Default to `bot.json`'
   )
-  .option('-g, --greetingText <greeting_text>', 'The greeting text of the bot')
   .action(({ config, greetingText }) => {
-    invariant(config, '-c <config_file_path> is required but not found.');
-    setGreetingText(config, greetingText);
+    invariant(greetingText, '-g <greeting_text> is required but not found.');
+    setGreetingText(greetingText, config);
   });
 
 program
@@ -166,10 +157,9 @@ program
   .description('delete greeting text')
   .option(
     '-c, --config <config_file_path>',
-    'The config file path of your project.'
+    'The config file path of your project. Default to `bot.json`'
   )
   .action(({ config }) => {
-    invariant(config, '-c <config_file_path> is required but not found.');
     deleteGreetingText(config);
   });
 
