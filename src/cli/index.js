@@ -1,5 +1,6 @@
 import program from 'commander';
 import didYouMean from 'didyoumean';
+import invariant from 'invariant';
 
 import pkg from '../../package.json';
 
@@ -27,6 +28,7 @@ program
     'The config file path of your project.'
   )
   .action(({ config }) => {
+    invariant(config, '-c <config_file_path> is required but not found.');
     getDomainWhitelist(config);
   });
 
@@ -43,6 +45,8 @@ program
     'All domains to set domains whitelist, should separate by comma(,)'
   )
   .action(({ config, domains }) => {
+    invariant(config, '-c <config_file_path> is required but not found.');
+    invariant(domains, '-d <array of domain_name> is required but not found.');
     setDomainWhitelist(config, domains.split(','));
   });
 
@@ -55,6 +59,7 @@ program
     'The config file path of your project.'
   )
   .action(({ config }) => {
+    invariant(config, '-c <config_file_path> is required but not found.');
     deleteDomainWhitelist(config);
   });
 
@@ -67,6 +72,7 @@ program
     'The config file path of your project.'
   )
   .action(({ config }) => {
+    invariant(config, '-c <config_file_path> is required but not found.');
     getPersistentMenu(config);
   });
 
@@ -79,6 +85,7 @@ program
     'The config file path of your project.'
   )
   .action(({ config }) => {
+    invariant(config, '-c <config_file_path> is required but not found.');
     deletePersistentMenu(config);
   });
 
@@ -91,6 +98,7 @@ program
     'The config file path of your project.'
   )
   .action(({ config }) => {
+    invariant(config, '-c <config_file_path> is required but not found.');
     getGetStartedButton(config);
   });
 
@@ -107,6 +115,8 @@ program
     'The payload to set for get started button'
   )
   .action(({ config, payload }) => {
+    invariant(config, '-c <config_file_path> is required but not found.');
+    invariant(config, '-p <payload> is required but not found.');
     setGetStartedButton(config, payload);
   });
 
@@ -119,6 +129,7 @@ program
     'The config file path of your project.'
   )
   .action(({ config }) => {
+    invariant(config, '-c <config_file_path> is required but not found.');
     deleteGetStartedButton(config);
   });
 
@@ -131,6 +142,7 @@ program
     'The config file path of your project.'
   )
   .action(({ config }) => {
+    invariant(config, '-c <config_file_path> is required but not found.');
     getGreetingText(config);
   });
 
@@ -144,6 +156,7 @@ program
   )
   .option('-g, --greetingText <greeting_text>', 'The greeting text of the bot')
   .action(({ config, greetingText }) => {
+    invariant(config, '-c <config_file_path> is required but not found.');
     setGreetingText(config, greetingText);
   });
 
@@ -156,6 +169,7 @@ program
     'The config file path of your project.'
   )
   .action(({ config }) => {
+    invariant(config, '-c <config_file_path> is required but not found.');
     deleteGreetingText(config);
   });
 
