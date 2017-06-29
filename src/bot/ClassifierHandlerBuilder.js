@@ -1,0 +1,47 @@
+import { normalizeHandler } from './BasicHandlerBuilder';
+
+export default class ClassifierHandlerBuilder {
+  constructor(classifier, threshold) {
+    this._classifier = classifier;
+    this._threshold = threshold;
+    this._intentHandlers = [];
+    this._unmatchedHandler = null;
+  }
+
+  onIntent(intent, handler) {
+    this._intentHandlers.push({
+      intent,
+      handler: normalizeHandler(handler),
+    });
+    return this;
+  }
+
+  onUnmatched(handler) {
+    this._unmatchedHandler = normalizeHandler(handler);
+    return this;
+  }
+
+  build() {
+    return async context => {
+      if (context.event.isTextMessage) {
+        const [intent] = await this._classifier.predict(
+          context.event.message.text
+        );
+        if (intent.score > this._threshold) {
+          const intentHandler = this._findMatchIntentHandler(intent.name);
+          if (intentHandler) {
+            await intentHandler.handler(context);
+          }
+        } else if (this._unmatchedHandler) {
+          await this._unmatchedHandler(context);
+        }
+      }
+    };
+  }
+
+  _findMatchIntentHandler(intent) {
+    return this._intentHandlers.find(
+      intentHandler => intentHandler.intent === intent
+    );
+  }
+}
