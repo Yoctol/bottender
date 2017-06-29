@@ -16,11 +16,9 @@ export default class MemoryCacheStore implements CacheStore {
     return value || null;
   }
 
+  // eslint-disable-next-line no-unused-vars
   async put(key: string, value: mixed, minutes: number): Promise<void> {
     this._lru.set(key, value);
-    setTimeout(() => {
-      this.forget(key);
-    }, minutes * 60 * 1000);
   }
 
   async forget(key: string): Promise<void> {
