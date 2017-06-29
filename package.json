@@ -1,6 +1,6 @@
 {
   "name": "toolbot-core-experiment",
-  "version": "0.9.0-3",
+  "version": "0.9.0-4",
   "license": "UNLICENSED",
   "main": "lib/index.js",
   "files": [
