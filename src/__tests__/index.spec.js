@@ -26,6 +26,7 @@ describe('core', () => {
 
   it('export handler builders', () => {
     expect(core.BasicHandlerBuilder).toBeDefined();
+    expect(core.ClassifierHandlerBuilder).toBeDefined();
     expect(core.MessengerHandlerBuilder).toBeDefined();
     expect(core.LINEHandlerBuilder).toBeDefined();
   });

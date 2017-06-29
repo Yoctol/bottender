@@ -13,6 +13,9 @@ export { default as LINEConnector } from './bot/LINEConnector';
 /* HandlerBuilder */
 export { default as BasicHandlerBuilder } from './bot/BasicHandlerBuilder';
 export {
+  default as ClassifierHandlerBuilder,
+} from './bot/ClassifierHandlerBuilder';
+export {
   default as MessengerHandlerBuilder,
 } from './bot/MessengerHandlerBuilder';
 export { default as LINEHandlerBuilder } from './bot/LINEHandlerBuilder';
