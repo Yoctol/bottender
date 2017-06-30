@@ -34,6 +34,44 @@ it('be defined', () => {
   expect(getGreetingText).toBeDefined();
 });
 
+describe('#getConfig', () => {
+  it('will call `bot.json` and platform = messenger when NOT passed <config_path>', async () => {
+    _client.getGreetingText.mockReturnValue(
+      Promise.resolve({
+        data: {
+          data: [
+            {
+              greeting: [{ text: 'hello' }],
+            },
+          ],
+        },
+      })
+    );
+
+    await getGreetingText();
+
+    expect(getConfig).toBeCalledWith('bot.json', 'messenger');
+  });
+
+  it('will call <config_path> when it was passed', async () => {
+    _client.getGreetingText.mockReturnValue(
+      Promise.resolve({
+        data: {
+          data: [
+            {
+              greeting: [{ text: 'hello' }],
+            },
+          ],
+        },
+      })
+    );
+
+    await getGreetingText(configPath);
+
+    expect(getConfig).toBeCalledWith('bot.sample.json', 'messenger');
+  });
+});
+
 describe('resolved', () => {
   it('call getGreetingText', async () => {
     _client.getGreetingText.mockReturnValue(

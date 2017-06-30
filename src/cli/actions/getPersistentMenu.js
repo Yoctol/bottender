@@ -6,9 +6,10 @@ import { MessengerClient } from 'messaging-api-messenger';
 import getConfig from '../shared/getConfig';
 import { print, error, bold } from '../shared/log';
 
-export default (async function getPersistentMenu(configPath) {
+export default (async function getPersistentMenu(_configPath) {
   try {
     const platform = 'messenger';
+    const configPath = _configPath || 'bot.json';
     const config = getConfig(configPath, platform);
 
     invariant(config.accessToken, 'accessToken is not found in config file');

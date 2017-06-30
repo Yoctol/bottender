@@ -34,6 +34,24 @@ it('be defined', () => {
   expect(deletePersistentMenu).toBeDefined();
 });
 
+describe('#getConfig', () => {
+  it('will call `bot.json` and platform = messenger when NOT passed <config_path>', async () => {
+    _client.deletePersistentMenu.mockReturnValue(Promise.resolve());
+
+    await deletePersistentMenu();
+
+    expect(getConfig).toBeCalledWith('bot.json', 'messenger');
+  });
+
+  it('will call <config_path> when it was passed', async () => {
+    _client.deletePersistentMenu.mockReturnValue(Promise.resolve());
+
+    await deletePersistentMenu(configPath);
+
+    expect(getConfig).toBeCalledWith('bot.sample.json', 'messenger');
+  });
+});
+
 describe('resolved', () => {
   it('call deletePersistentMenu', async () => {
     _client.deletePersistentMenu.mockReturnValue(Promise.resolve());

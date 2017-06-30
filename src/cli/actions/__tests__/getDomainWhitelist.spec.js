@@ -34,6 +34,48 @@ it('be defined', () => {
   expect(getDomainWhitelist).toBeDefined();
 });
 
+describe('#getConfig', () => {
+  it('will call `bot.json` and platform = messenger when NOT passed <config_path>', async () => {
+    _client.getDomainWhitelist.mockReturnValue(
+      Promise.resolve({
+        data: {
+          data: [
+            {
+              whitelisted_domains: [
+                'http://www.facebook.com',
+                'http://www.yoctol.com',
+              ],
+            },
+          ],
+        },
+      })
+    );
+
+    await getDomainWhitelist();
+    expect(getConfig).toBeCalledWith('bot.json', 'messenger');
+  });
+
+  it('will call <config_path> when it was passed', async () => {
+    _client.getDomainWhitelist.mockReturnValue(
+      Promise.resolve({
+        data: {
+          data: [
+            {
+              whitelisted_domains: [
+                'http://www.facebook.com',
+                'http://www.yoctol.com',
+              ],
+            },
+          ],
+        },
+      })
+    );
+
+    await getDomainWhitelist(configPath);
+    expect(getConfig).toBeCalledWith('bot.sample.json', 'messenger');
+  });
+});
+
 describe('resolved', () => {
   it('call getDomainWhitelist', async () => {
     _client.getDomainWhitelist.mockReturnValue(
