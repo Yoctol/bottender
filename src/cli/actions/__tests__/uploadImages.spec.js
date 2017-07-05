@@ -8,6 +8,7 @@ jest.mock('jsonfile');
 jest.mock('hasha');
 jest.mock('@yoctol/static');
 jest.mock('delay');
+jest.mock('file-type');
 
 const fs = require('fs');
 
@@ -15,6 +16,7 @@ const glob = require('glob');
 const jsonfile = require('jsonfile');
 const hasha = require('hasha');
 const yoctolStatic = require('@yoctol/static');
+const fileType = require('file-type');
 
 const _log = console.log;
 const folderPath = '/tmp';
@@ -28,7 +30,6 @@ beforeEach(() => {
   glob.sync = jest.fn(() => filenames);
   jsonfile.writeFileSync = jest.fn();
   jsonfile.readFileSync = jest.fn(() => ({}));
-
   console.log = jest.fn();
 });
 
@@ -96,8 +97,10 @@ describe('#staticManager', () => {
       .mockReturnValueOnce('qazwsx')
       .mockReturnValueOnce('wsxedc');
     yoctolStatic.__setMockPushFile(mockPushFile);
+    fileType.mockReturnValue({
+      mime: 'image/png',
+    });
     await uploadImages({ folderPath });
-
     expect(mockPushFile).toHaveBeenCalledTimes(2);
   });
 

@@ -53,6 +53,7 @@
     "delay": "^2.0.0",
     "didyoumean": "^1.2.1",
     "express": "^4.15.3",
+    "file-type": "^5.2.0",
     "glob": "^7.1.2",
     "hasha": "^3.0.0",
     "invariant": "^2.2.2",
