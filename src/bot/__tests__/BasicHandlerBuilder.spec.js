@@ -50,6 +50,35 @@ describe('#before', () => {
   });
 });
 
+describe('#beforeMessage', () => {
+  it('should return this', () => {
+    const { builder } = setup();
+    const handler = () => {};
+    expect(builder.beforeMessage(handler)).toBe(builder);
+  });
+
+  it('should run before any message received', async () => {
+    const { builder } = setup();
+    const handler = jest.fn();
+    builder.beforeMessage(handler).onUnhandled(() => {});
+    const rootHandler = builder.build();
+    const contextWithMessageEvent = {
+      event: {
+        isMessage: true,
+      },
+    };
+    const contextWithNotMessageEvent = {
+      event: {
+        isMessage: false,
+      },
+    };
+    await rootHandler(contextWithMessageEvent);
+    await rootHandler(contextWithNotMessageEvent);
+    await rootHandler(contextWithMessageEvent);
+    expect(handler).toHaveBeenCalledTimes(2);
+  });
+});
+
 describe('#on', () => {
   it('should return this', () => {
     const { builder } = setup();

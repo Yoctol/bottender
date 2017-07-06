@@ -78,6 +78,15 @@ export default class HandlerBuilder {
     return this;
   }
 
+  beforeMessage(handler: FunctionalHandler) {
+    this._beforeHandler = context => {
+      if (context.event.isMessage) {
+        return handler(context);
+      }
+    };
+    return this;
+  }
+
   on(predicate: Predicate, handler: Handler) {
     this._handlers.push({
       predicate,
