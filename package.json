@@ -62,6 +62,7 @@
     "jsonfile": "^3.0.0",
     "koa": "^2.2.0",
     "koa-bodyparser": "^4.2.0",
+    "koa-compose": "^4.0.0",
     "koa-router": "^7.2.0",
     "lodash": "^4.17.4",
     "messaging-api-line": "^0.1.1",
