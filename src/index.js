@@ -16,6 +16,9 @@ export {
   default as ClassifierHandlerBuilder,
 } from './bot/ClassifierHandlerBuilder';
 export {
+  default as MiddlewareHandlerBuilder,
+} from './bot/MiddlewareHandlerBuilder';
+export {
   default as MessengerHandlerBuilder,
 } from './bot/MessengerHandlerBuilder';
 export { default as LINEHandlerBuilder } from './bot/LINEHandlerBuilder';
