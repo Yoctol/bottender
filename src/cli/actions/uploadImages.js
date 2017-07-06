@@ -8,6 +8,7 @@ import isImage from 'is-image';
 import jsonfile from 'jsonfile';
 import hasha from 'hasha';
 import delay from 'delay';
+import fileType from 'file-type';
 import { StaticManager } from '@yoctol/static';
 
 import { print, error, bold } from '../shared/log';
@@ -51,7 +52,6 @@ export default (async function uploadImages({
 
     const name = filenames[i];
     const basename = path.basename(name);
-
     const imageMeta = uploadedImages[basename];
 
     const checksum = hasha.fromFileSync(name);
@@ -64,7 +64,7 @@ export default (async function uploadImages({
           shortid.generate(),
           file,
           {
-            contentType: 'image/png',
+            contentType: fileType(file).mime,
           }
         );
         jsonfile.writeFileSync(
