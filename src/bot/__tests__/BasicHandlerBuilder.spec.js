@@ -48,6 +48,36 @@ describe('#before', () => {
     await rootHandler(context);
     expect(handler).toHaveBeenCalledTimes(3);
   });
+
+  it('should support multiple before handlers', async () => {
+    const { builder } = setup();
+    const handler1 = jest.fn();
+    const handler2 = jest.fn();
+    let i = 1;
+    builder
+      .before(handler1)
+      .before(handler2)
+      .on(
+        () => i === 1,
+        () => {
+          i += 1;
+        }
+      )
+      .on(
+        () => i === 2,
+        () => {
+          i += 1;
+        }
+      )
+      .onUnhandled(() => {});
+    const rootHandler = builder.build();
+    const context = {};
+    await rootHandler(context);
+    await rootHandler(context);
+    await rootHandler(context);
+    expect(handler1).toHaveBeenCalledTimes(3);
+    expect(handler2).toHaveBeenCalledTimes(3);
+  });
 });
 
 describe('#beforeMessage', () => {
@@ -76,6 +106,32 @@ describe('#beforeMessage', () => {
     await rootHandler(contextWithNotMessageEvent);
     await rootHandler(contextWithMessageEvent);
     expect(handler).toHaveBeenCalledTimes(2);
+  });
+
+  it('should support multiple beforeMessage handlers', async () => {
+    const { builder } = setup();
+    const handler1 = jest.fn();
+    const handler2 = jest.fn();
+    builder
+      .beforeMessage(handler1)
+      .beforeMessage(handler2)
+      .onUnhandled(() => {});
+    const rootHandler = builder.build();
+    const contextWithMessageEvent = {
+      event: {
+        isMessage: true,
+      },
+    };
+    const contextWithNotMessageEvent = {
+      event: {
+        isMessage: false,
+      },
+    };
+    await rootHandler(contextWithMessageEvent);
+    await rootHandler(contextWithNotMessageEvent);
+    await rootHandler(contextWithMessageEvent);
+    expect(handler1).toHaveBeenCalledTimes(2);
+    expect(handler2).toHaveBeenCalledTimes(2);
   });
 });
 
