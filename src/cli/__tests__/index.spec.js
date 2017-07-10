@@ -187,6 +187,20 @@ describe('#persistent-menu', () => {
     expect(getPersistentMenu.default).toBeCalledWith('bot.sample.json');
   });
 
+  it('#set', () => {
+    const setPersistentMenu = require('../actions/setPersistentMenu');
+    setPersistentMenu.default = jest.fn();
+    process.argv = [
+      '/usr/local/bin/iojs',
+      '/usr/local/bin/toolbot',
+      'persistent-menu:set',
+      '-c',
+      'bot.sample.json',
+    ];
+    require('../index');
+    expect(setPersistentMenu.default).toBeCalledWith('bot.sample.json');
+  });
+
   it('#delete', () => {
     const deletePersistentMenu = require('../actions/deletePersistentMenu');
     deletePersistentMenu.default = jest.fn();
