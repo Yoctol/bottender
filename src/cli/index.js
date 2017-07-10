@@ -17,6 +17,7 @@ import getPersistentMenu from './actions/getPersistentMenu';
 import setDomainWhitelist from './actions/setDomainWhitelist';
 import setGetStartedButton from './actions/setGetStartedButton';
 import setGreetingText from './actions/setGreetingText';
+import setPersistentMenu from './actions/setPersistentMenu';
 import uploadImages from './actions/uploadImages';
 
 program.version(pkg.version);
@@ -72,6 +73,18 @@ program
   )
   .action(({ config }) => {
     getPersistentMenu(config);
+  });
+
+program
+  .command('persistent-menu:set')
+  .alias('pms')
+  .description('set persistent menu')
+  .option(
+    '-c, --config <config_file_path>',
+    'The config file path of your project. Default to `bot.json`'
+  )
+  .action(({ config }) => {
+    setPersistentMenu(config);
   });
 
 program
