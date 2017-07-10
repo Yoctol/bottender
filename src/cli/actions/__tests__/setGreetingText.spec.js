@@ -44,9 +44,33 @@ describe('resolved', () => {
     expect(log.print).toHaveBeenCalledTimes(1);
     expect(_client.setGreetingText).toBeCalledWith('__FAKE_GREETING_TEXT__');
   });
+
+  it('use config file greetingText', async () => {
+    _client.setGreetingText.mockReturnValue(Promise.resolve());
+    getConfig.mockReturnValue({
+      accessToken: '__FAKE_TOKEN__',
+      greetingText: '__FAKE_GREETING_TEXT_IN_TEST_CASE__',
+    });
+
+    await setGreetingText(undefined, configPath);
+
+    expect(log.print).toHaveBeenCalledTimes(1);
+    expect(_client.setGreetingText).toBeCalledWith(
+      '__FAKE_GREETING_TEXT_IN_TEST_CASE__'
+    );
+  });
 });
 
 describe('reject', () => {
+  it('handle error thrown when no greetingText pass or find in config file', async () => {
+    process.exit = jest.fn();
+
+    await setGreetingText(undefined, configPath);
+
+    expect(log.error).toHaveBeenCalledTimes(2);
+    expect(process.exit).toBeCalled();
+  });
+
   it('handle error thrown with only status', async () => {
     const error = {
       response: {

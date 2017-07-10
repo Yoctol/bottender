@@ -5,16 +5,17 @@ import { MessengerClient } from 'messaging-api-messenger';
 import getConfig from '../shared/getConfig';
 import { print, error, bold } from '../shared/log';
 
-export default (async function setGreetingText(greetingText, _configPath) {
+export default (async function setGreetingText(_greetingText, _configPath) {
   try {
     const platform = 'messenger';
     const configPath = _configPath || 'bot.json';
     const config = getConfig(configPath, platform);
+    const greetingText = _greetingText || config.greetingText;
 
     invariant(config.accessToken, 'accessToken is not found in config file');
     invariant(
       greetingText,
-      'greetingText is required but not found. using -g <greetingText> to setup.'
+      'greetingText is required but not found. using -g <greetingText> to setup or list `greetingText` key it in config file.'
     );
 
     const client = MessengerClient.factory(config.accessToken);
