@@ -64,9 +64,34 @@ describe('resolved', () => {
       'http://www.facebook.com',
     ]);
   });
+
+  it('call setDomainWhitelist with array of domains from config file', async () => {
+    _client.setDomainWhitelist.mockReturnValue(Promise.resolve());
+    getConfig.mockReturnValue({
+      accessToken: '__FAKE_TOKEN__',
+      domainWhitelist: ['http://www.facebook.com', 'http://www.example.com'],
+    });
+
+    await setDomainWhitelist(undefined, configPath);
+
+    expect(log.print).toHaveBeenCalledTimes(1);
+    expect(_client.setDomainWhitelist).toBeCalledWith([
+      'http://www.facebook.com',
+      'http://www.example.com',
+    ]);
+  });
 });
 
 describe('reject', () => {
+  it('handle error when not found domainWhitelist in args or config file', async () => {
+    process.exit = jest.fn();
+
+    await setDomainWhitelist(undefined, configPath);
+
+    expect(log.error).toHaveBeenCalledTimes(2);
+    expect(process.exit).toBeCalled();
+  });
+
   it('handle error thrown with only status', async () => {
     const error = {
       response: {

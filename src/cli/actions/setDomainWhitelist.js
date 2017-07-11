@@ -5,14 +5,18 @@ import { MessengerClient } from 'messaging-api-messenger';
 import getConfig from '../shared/getConfig';
 import { print, error, bold } from '../shared/log';
 
-export default (async function setDomainWhitelist(domains, _configPath) {
+export default (async function setDomainWhitelist(_domains, _configPath) {
   try {
     const platform = 'messenger';
     const configPath = _configPath || 'bot.json';
     const config = getConfig(configPath, platform);
+    const domains = _domains || config.domainWhitelist;
 
     invariant(config.accessToken, 'accessToken is not found in config file');
-    invariant(domains, 'domains is required but not found.');
+    invariant(
+      domains,
+      'domains is required but not found. using -d <array of domain_name> separate by comma(,) to setup or list `domainWhitelist` key it in config file.'
+    );
     invariant(Array.isArray(domains), 'domains should be an array');
     invariant(domains.length < 10, 'The domains should less than 10');
 
