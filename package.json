@@ -3,7 +3,13 @@
   "version": "0.9.0-6",
   "license": "UNLICENSED",
   "main": "lib/index.js",
-  "files": ["lib"],
+  "files": [
+    "lib",
+    "express.js",
+    "koa.js",
+    "micro.js",
+    "restify.js"
+  ],
   "bin": {
     "tce": "bin/cli.js"
   },
