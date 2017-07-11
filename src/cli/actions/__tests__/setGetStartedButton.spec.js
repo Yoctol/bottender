@@ -62,9 +62,31 @@ describe('resolved', () => {
     expect(log.print).toHaveBeenCalledTimes(1);
     expect(_client.setGetStartedButton).toBeCalledWith(defaultPayload);
   });
+
+  it('call setGetStartedButtonPayload in config file', async () => {
+    _client.setGetStartedButton.mockReturnValue(Promise.resolve());
+    getConfig.mockReturnValue({
+      accessToken: '__FAKE_TOKEN__',
+      getStartedButtonPayload: '__PUT_YOUR_PAYLOAD_HERE__',
+    });
+
+    await setGetStartedButton(undefined, configPath);
+
+    expect(log.print).toHaveBeenCalledTimes(1);
+    expect(_client.setGetStartedButton).toBeCalledWith(
+      '__PUT_YOUR_PAYLOAD_HERE__'
+    );
+  });
 });
 
 describe('reject', () => {
+  it('handle error when no payload found', async () => {
+    process.exit = jest.fn();
+    await setGetStartedButton(undefined, configPath);
+    expect(log.error).toHaveBeenCalledTimes(2);
+    expect(process.exit).toBeCalled();
+  });
+
   it('handle error thrown with only status', async () => {
     const error = {
       response: {

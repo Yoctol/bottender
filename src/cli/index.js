@@ -116,15 +116,14 @@ program
   .alias('gss')
   .description('set get started button')
   .option(
-    '-c, --config <config_file_path>',
-    'The config file path of your project. Default to `bot.json`'
-  )
-  .option(
     '-p, --payload <payload>',
     'The payload to set for get started button'
   )
-  .action(({ config, payload }) => {
-    invariant(config, '-p <payload> is required but not found.');
+  .option(
+    '-c, --config <config_file_path>',
+    'The config file path of your project. Default to `bot.json`'
+  )
+  .action(({ payload, config }) => {
     setGetStartedButton(payload, config);
   });
 
