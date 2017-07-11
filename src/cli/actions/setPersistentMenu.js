@@ -21,7 +21,9 @@ export default (async function setPersistentMenu(_configPath) {
     const client = MessengerClient.factory(accessToken);
     await client.setPersistentMenu(persistentMenu, { composerInputDisabled });
 
-    print('successfully set persistent menu to');
+    print(
+      `successfully set persistent menu to with composerInputDisabled: ${composerInputDisabled}`
+    );
     persistentMenu.forEach(item => {
       print(`- ${item.title}`);
     });
