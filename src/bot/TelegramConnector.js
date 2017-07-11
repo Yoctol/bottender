@@ -10,7 +10,7 @@ import type { TelegramRawEvent } from '../context/TelegramEvent';
 import type { FunctionalHandler } from './Bot';
 import type { Connector, SessionWithUser } from './Connector';
 
-type TelegramUser = {
+export type TelegramUser = {
   id: number,
   first_name: string,
   last_name?: string,
@@ -18,7 +18,7 @@ type TelegramUser = {
   language_code?: string,
 };
 
-type TelegramRequestBody = {
+export type TelegramRequestBody = {
   update_id: number,
   message: {
     message_id: number,
@@ -31,7 +31,7 @@ type TelegramRequestBody = {
     },
     date: number,
     text: string,
-    entities: Arrat<{
+    entities: Array<{
       type: 'bot_command',
       offset: number,
       length: number,
@@ -49,7 +49,7 @@ export default class TelegramConnector
     this._client = TelegramClient.connect(accessToken);
   }
 
-  _getRawEventFromRequest(body: TelegramRequestBody) {
+  _getRawEventFromRequest(body: TelegramRequestBody): TelegramRawEvent {
     return body;
   }
 
@@ -58,7 +58,7 @@ export default class TelegramConnector
   }
 
   getSenderIdFromRequest(body: TelegramRequestBody): string {
-    return body.message.from.id;
+    return `${body.message.from.id}`;
   }
 
   async getUserProfile(

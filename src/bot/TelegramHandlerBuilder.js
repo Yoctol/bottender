@@ -1,13 +1,10 @@
 /* @flow */
 import warning from 'warning';
 
-import * as constants from '../constants';
-
 import BasicHandlerBuilder, {
   type Predicate,
   type Handler,
   type Pattern,
-  normalizeHandler,
   matchPattern,
 } from './BasicHandlerBuilder';
 

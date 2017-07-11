@@ -1,5 +1,10 @@
 /* @flow */
 
+import type {
+  TelegramUser,
+  TelegramRequestBody,
+} from '../bot/TelegramConnector';
+
 import type { Event } from './Event';
 
 type Message = {
@@ -13,17 +18,14 @@ type Message = {
   },
   date: number,
   text: string,
-  entities: Arrat<{
+  entities: Array<{
     type: 'bot_command',
     offset: number,
     length: number,
   }>,
 };
 
-export type TelegramRawEvent = {
-  update_id: number,
-  message: Message,
-};
+export type TelegramRawEvent = TelegramRequestBody;
 
 export default class TelegramEvent implements Event {
   _rawEvent: TelegramRawEvent;

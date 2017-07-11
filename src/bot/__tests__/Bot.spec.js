@@ -74,9 +74,10 @@ describe('#createRequestHandler', () => {
 
     const requestHandler = bot.createRequestHandler();
 
-    await requestHandler({});
+    const body = {};
+    await requestHandler(body);
 
-    expect(connector.getUserProfile).toBeCalledWith('__id__');
+    expect(connector.getUserProfile).toBeCalledWith('__id__', body);
   });
 
   it('should not fetch user data when it exists in session', async () => {
