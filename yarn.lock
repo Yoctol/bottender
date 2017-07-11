@@ -3473,6 +3473,12 @@ messaging-api-messenger@^0.1.1:
     axios "^0.16.1"
     invariant "^2.2.2"
 
+messaging-api-telegram@^0.2.2:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/messaging-api-telegram/-/messaging-api-telegram-0.2.2.tgz#dbdc0c34082b6326d7bb5bc60b8404a23626c939"
+  dependencies:
+    axios "^0.16.1"
+
 methods@^1.0.1, methods@^1.1.1, methods@~1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/methods/-/methods-1.1.2.tgz#5529a4d67654134edcc5266656835b0f851afcee"

@@ -69,6 +69,7 @@
     "lodash": "^4.17.4",
     "messaging-api-line": "^0.1.1",
     "messaging-api-messenger": "^0.1.1",
+    "messaging-api-telegram": "^0.2.2",
     "micro": "^7.3.3",
     "mongodb": "^2.2.27",
     "ngrok": "^2.2.10",

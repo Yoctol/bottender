@@ -4,11 +4,13 @@
 export { default as Bot } from './bot/Bot';
 export { default as MessengerBot } from './bot/MessengerBot';
 export { default as LINEBot } from './bot/LINEBot';
+export { default as TelegramBot } from './bot/TelegramBot';
 
 /* Connector */
 export { default as Connector } from './bot/Connector';
 export { default as MessengerConnector } from './bot/MessengerConnector';
 export { default as LINEConnector } from './bot/LINEConnector';
+export { default as TelegramConnector } from './bot/TelegramConnector';
 
 /* HandlerBuilder */
 export { default as BasicHandlerBuilder } from './bot/BasicHandlerBuilder';
@@ -22,6 +24,9 @@ export {
   default as MessengerHandlerBuilder,
 } from './bot/MessengerHandlerBuilder';
 export { default as LINEHandlerBuilder } from './bot/LINEHandlerBuilder';
+export {
+  default as TelegramHandlerBuilder,
+} from './bot/TelegramHandlerBuilder';
 
 /* Cache */
 export { default as MemoryCacheStore } from './cache/MemoryCacheStore';

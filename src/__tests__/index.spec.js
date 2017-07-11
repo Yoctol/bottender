@@ -5,12 +5,14 @@ describe('core', () => {
     expect(core.Bot).toBeDefined();
     expect(core.MessengerBot).toBeDefined();
     expect(core.LINEBot).toBeDefined();
+    expect(core.TelegramBot).toBeDefined();
   });
 
   it('export connectors', () => {
     expect(core.Connector).toBeDefined();
     expect(core.MessengerConnector).toBeDefined();
     expect(core.LINEConnector).toBeDefined();
+    expect(core.TelegramConnector).toBeDefined();
   });
 
   it('export cache implements', () => {
@@ -30,5 +32,6 @@ describe('core', () => {
     expect(core.MiddlewareHandlerBuilder).toBeDefined();
     expect(core.MessengerHandlerBuilder).toBeDefined();
     expect(core.LINEHandlerBuilder).toBeDefined();
+    expect(core.TelegramHandlerBuilder).toBeDefined();
   });
 });

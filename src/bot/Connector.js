@@ -12,7 +12,7 @@ export type SessionWithUser<U> = {
 export interface Connector<B, U> {
   +platform: string,
   getSenderIdFromRequest(body: B): string,
-  getUserProfile(senderId: string): Promise<U>,
+  getUserProfile(senderId: string, body: B): Promise<U>,
   handleRequest(params: {
     body: B,
     session: SessionWithUser<U>,

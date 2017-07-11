@@ -91,7 +91,7 @@ export default class Bot {
 
       if (!session.user) {
         const user = {
-          ...(await this._connector.getUserProfile(senderId)),
+          ...(await this._connector.getUserProfile(senderId, body)),
           id: senderId,
           platform: this._connector.platform,
         };
