@@ -1,5 +1,4 @@
 /* eslint-disable consistent-return */
-import warning from 'warning';
 import { MessengerClient } from 'messaging-api-messenger';
 
 import getConfig from '../shared/getConfig';
@@ -18,13 +17,35 @@ export default (async function setMessengerProfile(_configPath) {
       getStartedButtonPayload,
     } = getConfig(configPath, platform);
 
-    warning(domainWhitelist, '<domainWhitelist> is not found in config file');
-    warning(greetingText, '<greetingText> is not found in config file');
-    warning(persistentMenu, '<persistentMenu> is not found in config file');
-    warning(
-      getStartedButtonPayload,
-      '<getStartedButtonPayload> is not found in config file'
+    const valid = {
+      composerInputDisabled: !!composerInputDisabled,
+      domainWhitelist: !!domainWhitelist,
+      greetingText: !!greetingText,
+      persistentMenu: !!persistentMenu,
+      getStartedButtonPayload: !!getStartedButtonPayload,
+    };
+
+    const positive = [];
+    const negative = [];
+
+    Object.keys(valid).forEach(
+      key =>
+        valid[key]
+          ? positive.push(`<${bold(key)}>`)
+          : negative.push(`<${bold(key)}>`)
     );
+
+    if (positive.length > 0) {
+      print(
+        `We found ${positive.join(
+          ', '
+        )} in your config file and we are trying to setup this value.`
+      );
+    }
+
+    if (negative.length > 0) {
+      print(`And we also support ${negative.join(', ')} in config file.`);
+    }
 
     const graphAPIClient = MessengerClient.factory(accessToken);
 
@@ -37,7 +58,7 @@ export default (async function setMessengerProfile(_configPath) {
 
     if (getStartedButtonPayload) {
       await graphAPIClient.setGetStartedButton(getStartedButtonPayload);
-      print('successfully set getStartedButton');
+      print('Successfully set getStartedButton');
     }
 
     if (Array.isArray(persistentMenu)) {
@@ -49,18 +70,18 @@ export default (async function setMessengerProfile(_configPath) {
         await graphAPIClient.setPersistentMenu(persistentMenu);
       }
       print(
-        `successfully set persistentMenu with composerInputDisabled: ${composerInputDisabled}`
+        `Successfully set persistentMenu with composerInputDisabled: ${composerInputDisabled}`
       );
     }
 
     if (greetingText) {
       await graphAPIClient.setGreetingText(greetingText);
-      print('successfully set greetingText');
+      print('Successfully set greetingText');
     }
 
     if (domainWhitelist) {
       await graphAPIClient.setDomainWhitelist(domainWhitelist);
-      print('successfully set domain whitelist');
+      print('Successfully set domain whitelist');
     }
   } catch (err) {
     error('set messenger profile error with');

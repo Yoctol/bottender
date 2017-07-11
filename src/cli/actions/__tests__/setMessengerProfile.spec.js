@@ -40,6 +40,7 @@ beforeEach(() => {
   MessengerClient.factory = jest.fn(() => _client);
   log.print = jest.fn();
   log.error = jest.fn();
+  log.bold = jest.fn();
   getConfig.mockReturnValue(MOCK_FILE_WITH_PLATFORM.messenger);
 });
 
