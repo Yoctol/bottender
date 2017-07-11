@@ -13,6 +13,8 @@ jest.mock('../actions/getPersistentMenu');
 jest.mock('../actions/setDomainWhitelist');
 jest.mock('../actions/setGetStartedButton');
 jest.mock('../actions/setGreetingText');
+jest.mock('../actions/setMessengerProfile');
+jest.mock('../actions/setPersistentMenu');
 jest.mock('../actions/uploadImages');
 
 let log;
@@ -213,6 +215,22 @@ describe('#persistent-menu', () => {
     ];
     require('../index');
     expect(deletePersistentMenu.default).toBeCalledWith('bot.sample.json');
+  });
+});
+
+describe('#messenger-profile', () => {
+  it('#set', () => {
+    const setMessengerProfile = require('../actions/setMessengerProfile');
+    setMessengerProfile.default = jest.fn();
+    process.argv = [
+      '/usr/local/bin/iojs',
+      '/usr/local/bin/toolbot',
+      'messenger-profile:set',
+      '-c',
+      'bot.sample.json',
+    ];
+    require('../index');
+    expect(setMessengerProfile.default).toBeCalledWith('bot.sample.json');
   });
 });
 

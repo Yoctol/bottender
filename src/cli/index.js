@@ -17,6 +17,7 @@ import getPersistentMenu from './actions/getPersistentMenu';
 import setDomainWhitelist from './actions/setDomainWhitelist';
 import setGetStartedButton from './actions/setGetStartedButton';
 import setGreetingText from './actions/setGreetingText';
+import setMessengerProfile from './actions/setMessengerProfile';
 import setPersistentMenu from './actions/setPersistentMenu';
 import uploadImages from './actions/uploadImages';
 
@@ -175,6 +176,18 @@ program
   )
   .action(({ config }) => {
     deleteGreetingText(config);
+  });
+
+program
+  .command('messenger-profile:set')
+  .alias('mps')
+  .description('set messenger profile from config file')
+  .option(
+    '-c, --config <config_file_path>',
+    'The config file path of your project. Default to `bot.json`'
+  )
+  .action(({ config }) => {
+    setMessengerProfile(config);
   });
 
 program

@@ -3,9 +3,10 @@
   "version": "0.9.0-6",
   "license": "UNLICENSED",
   "main": "lib/index.js",
-  "files": [
-    "lib"
-  ],
+  "files": ["lib"],
+  "bin": {
+    "tce": "bin/cli.js"
+  },
   "scripts": {
     "build": "npm run clean && babel src -d lib --ignore __tests__",
     "clean": "rimraf lib",
@@ -80,9 +81,7 @@
     "warning": "^3.0.0"
   },
   "jest": {
-    "collectCoverageFrom": [
-      "src/**/*.js"
-    ],
+    "collectCoverageFrom": ["src/**/*.js"],
     "coveragePathIgnorePatterns": [
       "/node_modules/",
       "/__tests__/",
@@ -98,9 +97,7 @@
       }
     },
     "testResultsProcessor": "./node_modules/jest-junit",
-    "transformIgnorePatterns": [
-      "/node_modules/"
-    ],
+    "transformIgnorePatterns": ["/node_modules/"],
     "testEnvironment": "node"
   },
   "lint-staged": {
