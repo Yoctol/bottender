@@ -69,8 +69,8 @@ function setup() {
   const mockGraphAPIClient = {
     getUserProfile: jest.fn(),
   };
-  MessengerClient.factory = jest.fn();
-  MessengerClient.factory.mockReturnValue(mockGraphAPIClient);
+  MessengerClient.connect = jest.fn();
+  MessengerClient.connect.mockReturnValue(mockGraphAPIClient);
   return {
     mockGraphAPIClient,
     connector: new MessengerConnector(ACCESS_TOKEN),

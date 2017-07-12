@@ -24,7 +24,7 @@ beforeEach(() => {
   _client = {
     getPersistentMenu: jest.fn(),
   };
-  MessengerClient.factory = jest.fn(() => _client);
+  MessengerClient.connect = jest.fn(() => _client);
   log.error = jest.fn();
   log.print = jest.fn();
   getConfig.mockReturnValue(MOCK_FILE_WITH_PLATFORM.messenger);
@@ -38,24 +38,22 @@ describe('#getConfig', () => {
   it('will call `bot.json` and platform = messenger when NOT passed <config_path>', async () => {
     _client.getPersistentMenu.mockReturnValue(
       Promise.resolve({
-        data: {
-          data: [
-            {
-              persistent_menu: [
-                {
-                  composer_input_disabled: false,
-                  call_to_actions: [
-                    {
-                      type: 'postback',
-                      title: 'RESTART',
-                      payload: 'RESTART',
-                    },
-                  ],
-                },
-              ],
-            },
-          ],
-        },
+        data: [
+          {
+            persistent_menu: [
+              {
+                composer_input_disabled: false,
+                call_to_actions: [
+                  {
+                    type: 'postback',
+                    title: 'RESTART',
+                    payload: 'RESTART',
+                  },
+                ],
+              },
+            ],
+          },
+        ],
       })
     );
 
@@ -67,24 +65,22 @@ describe('#getConfig', () => {
   it('will call <config_path> when it was passed', async () => {
     _client.getPersistentMenu.mockReturnValue(
       Promise.resolve({
-        data: {
-          data: [
-            {
-              persistent_menu: [
-                {
-                  composer_input_disabled: false,
-                  call_to_actions: [
-                    {
-                      type: 'postback',
-                      title: 'RESTART',
-                      payload: 'RESTART',
-                    },
-                  ],
-                },
-              ],
-            },
-          ],
-        },
+        data: [
+          {
+            persistent_menu: [
+              {
+                composer_input_disabled: false,
+                call_to_actions: [
+                  {
+                    type: 'postback',
+                    title: 'RESTART',
+                    payload: 'RESTART',
+                  },
+                ],
+              },
+            ],
+          },
+        ],
       })
     );
 
@@ -98,24 +94,22 @@ describe('resolved', () => {
   it('call getPersistentMenu', async () => {
     _client.getPersistentMenu.mockReturnValue(
       Promise.resolve({
-        data: {
-          data: [
-            {
-              persistent_menu: [
-                {
-                  composer_input_disabled: false,
-                  call_to_actions: [
-                    {
-                      type: 'postback',
-                      title: 'RESTART',
-                      payload: 'RESTART',
-                    },
-                  ],
-                },
-              ],
-            },
-          ],
-        },
+        data: [
+          {
+            persistent_menu: [
+              {
+                composer_input_disabled: false,
+                call_to_actions: [
+                  {
+                    type: 'postback',
+                    title: 'RESTART',
+                    payload: 'RESTART',
+                  },
+                ],
+              },
+            ],
+          },
+        ],
       })
     );
 
@@ -128,9 +122,7 @@ describe('resolved', () => {
   it('error when no config setting', async () => {
     _client.getPersistentMenu.mockReturnValue(
       Promise.resolve({
-        data: {
-          data: [],
-        },
+        data: [],
       })
     );
 

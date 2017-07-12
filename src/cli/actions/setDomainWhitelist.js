@@ -20,7 +20,7 @@ export default (async function setDomainWhitelist(_domains, _configPath) {
     invariant(Array.isArray(domains), 'domains should be an array');
     invariant(domains.length < 10, 'The domains should less than 10');
 
-    const client = MessengerClient.factory(config.accessToken);
+    const client = MessengerClient.connect(config.accessToken);
     await client.setDomainWhitelist(domains);
 
     print(`successfully set whitelist to ${bold(domains)}`);

@@ -13,11 +13,11 @@ export default (async function getGreetingText(_configPath) {
 
     invariant(config.accessToken, 'accessToken is not found in config file');
 
-    const client = MessengerClient.factory(config.accessToken);
+    const client = MessengerClient.connect(config.accessToken);
 
     const { data } = await client.getGreetingText();
-    if (data.data.length) {
-      print(`greeting text is: ${bold(data.data[0].greeting[0].text)}`);
+    if (data.length) {
+      print(`greeting text is: ${bold(data[0].greeting[0].text)}`);
     } else {
       error('no greeting text setting could be found');
     }

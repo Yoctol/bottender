@@ -14,12 +14,12 @@ export default (async function getPersistentMenu(_configPath) {
 
     invariant(config.accessToken, 'accessToken is not found in config file');
 
-    const graphAPIClient = MessengerClient.factory(config.accessToken);
+    const graphAPIClient = MessengerClient.connect(config.accessToken);
 
     const { data } = await graphAPIClient.getPersistentMenu();
 
-    if (data.data.length) {
-      const menu = data.data[0].persistent_menu[0];
+    if (data.length) {
+      const menu = data[0].persistent_menu[0];
       print(`input disabled: ${menu.composer_input_disabled}`);
       print('actions:');
       const table = new Table({

@@ -18,7 +18,7 @@ export default (async function setGetStartedButton(_payload, _configPath) {
       'payload is not found, using -p <YOUR_PAYLOAD> to setup or list `getStartedButtonPayload` key it in config file.'
     );
 
-    const graphAPIClient = MessengerClient.factory(config.accessToken);
+    const graphAPIClient = MessengerClient.connect(config.accessToken);
 
     await graphAPIClient.setGetStartedButton(payload);
 

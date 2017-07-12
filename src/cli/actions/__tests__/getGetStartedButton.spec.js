@@ -24,7 +24,7 @@ beforeEach(() => {
   _client = {
     getGetStartedButton: jest.fn(),
   };
-  MessengerClient.factory = jest.fn(() => _client);
+  MessengerClient.connect = jest.fn(() => _client);
   log.error = jest.fn();
   log.print = jest.fn();
   getConfig.mockReturnValue(MOCK_FILE_WITH_PLATFORM.messenger);
@@ -38,15 +38,13 @@ describe('#getConfig', () => {
   it('will call `bot.json` and platform = messenger when NOT passed <config_path>', async () => {
     _client.getGetStartedButton.mockReturnValue(
       Promise.resolve({
-        data: {
-          data: [
-            {
-              get_started: {
-                payload: 'get started yo!',
-              },
+        data: [
+          {
+            get_started: {
+              payload: 'get started yo!',
             },
-          ],
-        },
+          },
+        ],
       })
     );
 
@@ -58,15 +56,13 @@ describe('#getConfig', () => {
   it('will call <config_path> when it was passed', async () => {
     _client.getGetStartedButton.mockReturnValue(
       Promise.resolve({
-        data: {
-          data: [
-            {
-              get_started: {
-                payload: 'get started yo!',
-              },
+        data: [
+          {
+            get_started: {
+              payload: 'get started yo!',
             },
-          ],
-        },
+          },
+        ],
       })
     );
 
@@ -80,15 +76,13 @@ describe('resolved', () => {
   it('call getGetStartedButton', async () => {
     _client.getGetStartedButton.mockReturnValue(
       Promise.resolve({
-        data: {
-          data: [
-            {
-              get_started: {
-                payload: 'get started yo!',
-              },
+        data: [
+          {
+            get_started: {
+              payload: 'get started yo!',
             },
-          ],
-        },
+          },
+        ],
       })
     );
 
@@ -101,9 +95,7 @@ describe('resolved', () => {
   it('error when no config setting', async () => {
     _client.getGetStartedButton.mockReturnValue(
       Promise.resolve({
-        data: {
-          data: [],
-        },
+        data: [],
       })
     );
 

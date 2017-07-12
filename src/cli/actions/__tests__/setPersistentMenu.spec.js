@@ -31,7 +31,7 @@ beforeEach(() => {
   _client = {
     setPersistentMenu: jest.fn(),
   };
-  MessengerClient.factory = jest.fn(() => _client);
+  MessengerClient.connect = jest.fn(() => _client);
   log.print = jest.fn();
   log.error = jest.fn();
   getConfig.mockReturnValue(MOCK_FILE_WITH_PLATFORM.messenger);

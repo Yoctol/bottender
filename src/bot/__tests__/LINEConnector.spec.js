@@ -42,8 +42,8 @@ function setup() {
   const mockLINEAPIClient = {
     getUserProfile: jest.fn(),
   };
-  LINEClient.factory = jest.fn();
-  LINEClient.factory.mockReturnValue(mockLINEAPIClient);
+  LINEClient.connect = jest.fn();
+  LINEClient.connect.mockReturnValue(mockLINEAPIClient);
   return {
     mockLINEAPIClient,
     connector: new LINEConnector({ ACCESS_TOKEN, CHANNEL_SECRET }),

@@ -47,7 +47,7 @@ export default (async function setMessengerProfile(_configPath) {
       print(`And we also support ${negative.join(', ')} in config file.`);
     }
 
-    const graphAPIClient = MessengerClient.factory(accessToken);
+    const graphAPIClient = MessengerClient.connect(accessToken);
 
     await graphAPIClient.deleteMessengerProfile([
       'persistent_menu',

@@ -31,7 +31,7 @@ export default class LINEConnector
     accessToken: string,
     channelSecret: string,
   }) {
-    this._client = LINEClient.factory(accessToken, channelSecret);
+    this._client = LINEClient.connect(accessToken, channelSecret);
   }
 
   get platform(): string {

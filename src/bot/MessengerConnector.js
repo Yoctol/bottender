@@ -27,7 +27,7 @@ export default class MessengerConnector
   _client: MessengerClient;
 
   constructor({ accessToken }: { accessToken: string }) {
-    this._client = MessengerClient.factory(accessToken);
+    this._client = MessengerClient.connect(accessToken);
   }
 
   _getRawEventFromRequest(body: MessengerRequestBody) {

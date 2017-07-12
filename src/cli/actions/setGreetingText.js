@@ -18,7 +18,7 @@ export default (async function setGreetingText(_greetingText, _configPath) {
       'greetingText is required but not found. using -g <greetingText> to setup or list `greetingText` key it in config file.'
     );
 
-    const client = MessengerClient.factory(config.accessToken);
+    const client = MessengerClient.connect(config.accessToken);
     await client.setGreetingText(greetingText);
 
     print(`set greeting text to ${bold(greetingText)} successfully`);

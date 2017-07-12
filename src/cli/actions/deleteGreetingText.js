@@ -13,7 +13,7 @@ export default (async function deleteGreetingText(_configPath) {
 
     invariant(config.accessToken, 'accessToken is not found in config file');
 
-    const client = MessengerClient.factory(config.accessToken);
+    const client = MessengerClient.connect(config.accessToken);
 
     await client.deleteGreetingText();
 

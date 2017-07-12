@@ -13,12 +13,12 @@ export default (async function getDomainWhitelist(_configPath) {
 
     invariant(config.accessToken, 'accessToken is not found in config file');
 
-    const client = MessengerClient.factory(config.accessToken);
+    const client = MessengerClient.connect(config.accessToken);
 
     const { data } = await client.getDomainWhitelist();
-    if (data.data.length) {
-      for (let i = 0; i < data.data[0].whitelisted_domains.length; i++) {
-        print(`whitelist is: ${bold(data.data[0].whitelisted_domains[i])}`);
+    if (data.length) {
+      for (let i = 0; i < data[0].whitelisted_domains.length; i++) {
+        print(`whitelist is: ${bold(data[0].whitelisted_domains[i])}`);
       }
     } else {
       error('no whitelist setting could be found');

@@ -13,13 +13,11 @@ export default (async function getGetStartedButton(_configPath) {
 
     invariant(config.accessToken, 'accessToken is not found in config file');
 
-    const graphAPIClient = MessengerClient.factory(config.accessToken);
+    const graphAPIClient = MessengerClient.connect(config.accessToken);
     const { data } = await graphAPIClient.getGetStartedButton();
-    if (data.data.length) {
+    if (data.length) {
       print(
-        `get started button payload is: ${bold(
-          data.data[0].get_started.payload
-        )}`
+        `get started button payload is: ${bold(data[0].get_started.payload)}`
       );
     } else {
       error('no get started button setting could be found');

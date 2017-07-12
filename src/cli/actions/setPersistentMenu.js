@@ -18,7 +18,7 @@ export default (async function setPersistentMenu(_configPath) {
     invariant(accessToken, '`accessToken` is not found in config file.');
     invariant(persistentMenu, '`persistentMenu` is not found in config file.');
 
-    const client = MessengerClient.factory(accessToken);
+    const client = MessengerClient.connect(accessToken);
     await client.setPersistentMenu(persistentMenu, { composerInputDisabled });
 
     print(

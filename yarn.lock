@@ -3460,15 +3460,15 @@ merge@^1.1.3:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/merge/-/merge-1.2.0.tgz#7531e39d4949c281a66b8c5a6e0265e8b05894da"
 
-messaging-api-line@^0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/messaging-api-line/-/messaging-api-line-0.1.1.tgz#5faa382b81baa553e3cd66bddaa20436f3fa7d2f"
+messaging-api-line@^0.2.2:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/messaging-api-line/-/messaging-api-line-0.2.2.tgz#2d2665e0de657977ef3eca6aba0c7af020a35a1d"
   dependencies:
     axios "^0.16.1"
 
-messaging-api-messenger@^0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/messaging-api-messenger/-/messaging-api-messenger-0.1.1.tgz#a15ff81d3e6b115daed71e0a0f83e82c124be975"
+messaging-api-messenger@^0.2.2:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/messaging-api-messenger/-/messaging-api-messenger-0.2.2.tgz#512f1f55528b854f9b27e94ff4d9196254b19c5f"
   dependencies:
     axios "^0.16.1"
     invariant "^2.2.2"

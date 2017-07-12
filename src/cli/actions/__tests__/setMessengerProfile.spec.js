@@ -37,7 +37,7 @@ beforeEach(() => {
     setGreetingText: jest.fn(),
     setPersistentMenu: jest.fn(),
   };
-  MessengerClient.factory = jest.fn(() => _client);
+  MessengerClient.connect = jest.fn(() => _client);
   log.print = jest.fn();
   log.error = jest.fn();
   log.bold = jest.fn();
