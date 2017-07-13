@@ -29,6 +29,7 @@
     "prepublish": "npm run build"
   },
   "devDependencies": {
+    "axios-mock-adapter": "^1.9.0",
     "babel-cli": "^6.24.1",
     "babel-eslint": "^7.2.3",
     "babel-jest": "^20.0.3",
@@ -50,6 +51,7 @@
   },
   "dependencies": {
     "@yoctol/static": "^0.0.2-1",
+    "axios": "^0.16.2",
     "babel-register": "^6.24.1",
     "babel-runtime": "^6.23.0",
     "body-parser": "^1.17.2",
@@ -88,7 +90,9 @@
     "warning": "^3.0.0"
   },
   "jest": {
-    "collectCoverageFrom": ["src/**/*.js"],
+    "collectCoverageFrom": [
+      "src/**/*.js"
+    ],
     "coveragePathIgnorePatterns": [
       "/node_modules/",
       "/__tests__/",
@@ -104,7 +108,9 @@
       }
     },
     "testResultsProcessor": "./node_modules/jest-junit",
-    "transformIgnorePatterns": ["/node_modules/"],
+    "transformIgnorePatterns": [
+      "/node_modules/"
+    ],
     "testEnvironment": "node"
   },
   "lint-staged": {

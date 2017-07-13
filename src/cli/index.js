@@ -19,6 +19,7 @@ import setGetStartedButton from './actions/setGetStartedButton';
 import setGreetingText from './actions/setGreetingText';
 import setMessengerProfile from './actions/setMessengerProfile';
 import setPersistentMenu from './actions/setPersistentMenu';
+import setWebhook from './actions/setWebhook';
 import uploadImages from './actions/uploadImages';
 
 program.version(pkg.version);
@@ -188,6 +189,23 @@ program
   )
   .action(({ config }) => {
     setMessengerProfile(config);
+  });
+
+program
+  .command('set-webhook')
+  .alias('swh')
+  .description('set messenger webhook url')
+  .option('-w, --webhook <webhook_url>', 'The callback url for webhook.')
+  .option(
+    '-c, --config <config_file_path>',
+    'The config file path of your project. Default to `bot.json`'
+  )
+  .option(
+    '-v, --verifyToken <verify_token>',
+    'The verify token for webhook usage.'
+  )
+  .action(({ webhook, config, verifyToken }) => {
+    setWebhook(webhook, config, verifyToken);
   });
 
 program

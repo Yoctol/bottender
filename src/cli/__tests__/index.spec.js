@@ -15,6 +15,7 @@ jest.mock('../actions/setGetStartedButton');
 jest.mock('../actions/setGreetingText');
 jest.mock('../actions/setMessengerProfile');
 jest.mock('../actions/setPersistentMenu');
+jest.mock('../actions/setWebhook');
 jest.mock('../actions/uploadImages');
 
 let log;
@@ -231,6 +232,54 @@ describe('#messenger-profile', () => {
     ];
     require('../index');
     expect(setMessengerProfile.default).toBeCalledWith('bot.sample.json');
+  });
+});
+
+describe('#webhook', () => {
+  it('to be called without passing any options', () => {
+    const setWebhook = require('../actions/setWebhook');
+    setWebhook.default = jest.fn();
+    process.argv = [
+      '/usr/local/bin/iojs',
+      '/usr/local/bin/toolbot',
+      'set-webhook',
+    ];
+    require('../index');
+    expect(setWebhook.default).toBeCalledWith(undefined, undefined, undefined);
+  });
+  it('to be called when passing webhook', () => {
+    const setWebhook = require('../actions/setWebhook');
+    setWebhook.default = jest.fn();
+    process.argv = [
+      '/usr/local/bin/iojs',
+      '/usr/local/bin/toolbot',
+      'set-webhook',
+      '-w',
+      'http://test.com',
+    ];
+    require('../index');
+    expect(setWebhook.default).toBeCalledWith(
+      'http://test.com',
+      undefined,
+      undefined
+    );
+  });
+  it('to be called when passing webhook', () => {
+    const setWebhook = require('../actions/setWebhook');
+    setWebhook.default = jest.fn();
+    process.argv = [
+      '/usr/local/bin/iojs',
+      '/usr/local/bin/toolbot',
+      'set-webhook',
+      '-v',
+      '__FAKE_VERIFYTOKEN__',
+    ];
+    require('../index');
+    expect(setWebhook.default).toBeCalledWith(
+      undefined,
+      undefined,
+      '__FAKE_VERIFYTOKEN__'
+    );
   });
 });
 
