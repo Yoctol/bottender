@@ -4,6 +4,7 @@
   "license": "UNLICENSED",
   "main": "lib/index.js",
   "files": [
+    "bin",
     "lib",
     "express.js",
     "koa.js",
