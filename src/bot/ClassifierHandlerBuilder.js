@@ -24,16 +24,17 @@ export default class ClassifierHandlerBuilder {
   build() {
     return async context => {
       if (context.event.isTextMessage) {
-        const [intent] = await this._classifier.predict(
+        const result = await this._classifier.predict(
           context.event.message.text
         );
+        const intent = result[0];
         if (intent.score > this._threshold) {
           const intentHandler = this._findMatchIntentHandler(intent.name);
           if (intentHandler) {
-            await intentHandler.handler(context);
+            await intentHandler.handler(context, result);
           }
         } else if (this._unmatchedHandler) {
-          await this._unmatchedHandler(context);
+          await this._unmatchedHandler(context, result);
         }
       }
     };

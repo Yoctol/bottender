@@ -28,13 +28,12 @@ describe('#onIntent', () => {
 
   it('handler should be called with context when intent match', async () => {
     const { builder, classifier } = setup();
-    classifier.predict.mockReturnValue(
-      Promise.resolve([
-        { name: 'intent_1', score: 0.5 },
-        { name: 'intent_2', score: 0.25 },
-        { name: 'intent_3', score: 0.25 },
-      ])
-    );
+    const result = [
+      { name: 'intent_1', score: 0.5 },
+      { name: 'intent_2', score: 0.25 },
+      { name: 'intent_3', score: 0.25 },
+    ];
+    classifier.predict.mockReturnValue(Promise.resolve(result));
     const handler1 = jest.fn();
     const handler2 = jest.fn();
     builder.onIntent('intent_1', handler1).onIntent('intent_2', handler2);
@@ -47,19 +46,18 @@ describe('#onIntent', () => {
       },
     };
     await builder.build()(context);
-    expect(handler1).toBeCalledWith(context);
+    expect(handler1).toBeCalledWith(context, result);
     expect(handler2).not.toBeCalled();
   });
 
   it('should support string as handler', async () => {
     const { builder, classifier } = setup();
-    classifier.predict.mockReturnValue(
-      Promise.resolve([
-        { name: 'intent_1', score: 0.5 },
-        { name: 'intent_2', score: 0.25 },
-        { name: 'intent_3', score: 0.25 },
-      ])
-    );
+    const result = [
+      { name: 'intent_1', score: 0.5 },
+      { name: 'intent_2', score: 0.25 },
+      { name: 'intent_3', score: 0.25 },
+    ];
+    classifier.predict.mockReturnValue(Promise.resolve(result));
     const context = {
       event: {
         isTextMessage: true,
@@ -76,13 +74,12 @@ describe('#onIntent', () => {
 
   it('should support array as handler', async () => {
     const { builder, classifier } = setup();
-    classifier.predict.mockReturnValue(
-      Promise.resolve([
-        { name: 'intent_1', score: 0.5 },
-        { name: 'intent_2', score: 0.25 },
-        { name: 'intent_3', score: 0.25 },
-      ])
-    );
+    const result = [
+      { name: 'intent_1', score: 0.5 },
+      { name: 'intent_2', score: 0.25 },
+      { name: 'intent_3', score: 0.25 },
+    ];
+    classifier.predict.mockReturnValue(Promise.resolve(result));
     const context = {
       event: {
         isTextMessage: true,
@@ -99,13 +96,12 @@ describe('#onIntent', () => {
 
   it('should not throw when matched intent handler undefiend', async () => {
     const { builder, classifier } = setup();
-    classifier.predict.mockReturnValue(
-      Promise.resolve([
-        { name: 'intent_1', score: 0.5 },
-        { name: 'intent_2', score: 0.25 },
-        { name: 'intent_3', score: 0.25 },
-      ])
-    );
+    const result = [
+      { name: 'intent_1', score: 0.5 },
+      { name: 'intent_2', score: 0.25 },
+      { name: 'intent_3', score: 0.25 },
+    ];
+    classifier.predict.mockReturnValue(Promise.resolve(result));
     const handler2 = jest.fn();
     builder.onIntent('intent_2', handler2);
     const context = {
@@ -135,14 +131,13 @@ describe('#onUnmatched', () => {
 
   it('handler should be called with context when under threshold', async () => {
     const { builder, classifier } = setup();
-    classifier.predict.mockReturnValue(
-      Promise.resolve([
-        { name: 'intent_1', score: 0.25 },
-        { name: 'intent_2', score: 0.25 },
-        { name: 'intent_3', score: 0.25 },
-        { name: 'intent_4', score: 0.25 },
-      ])
-    );
+    const result = [
+      { name: 'intent_1', score: 0.25 },
+      { name: 'intent_2', score: 0.25 },
+      { name: 'intent_3', score: 0.25 },
+      { name: 'intent_4', score: 0.25 },
+    ];
+    classifier.predict.mockReturnValue(Promise.resolve(result));
     const handler = jest.fn();
     builder.onUnmatched(handler);
     const context = {
@@ -154,19 +149,18 @@ describe('#onUnmatched', () => {
       },
     };
     await builder.build()(context);
-    expect(handler).toBeCalledWith(context);
+    expect(handler).toBeCalledWith(context, result);
   });
 
   it('should support string as handler', async () => {
     const { builder, classifier } = setup();
-    classifier.predict.mockReturnValue(
-      Promise.resolve([
-        { name: 'intent_1', score: 0.25 },
-        { name: 'intent_2', score: 0.25 },
-        { name: 'intent_3', score: 0.25 },
-        { name: 'intent_4', score: 0.25 },
-      ])
-    );
+    const result = [
+      { name: 'intent_1', score: 0.25 },
+      { name: 'intent_2', score: 0.25 },
+      { name: 'intent_3', score: 0.25 },
+      { name: 'intent_4', score: 0.25 },
+    ];
+    classifier.predict.mockReturnValue(Promise.resolve(result));
     const context = {
       event: {
         isTextMessage: true,
@@ -183,14 +177,13 @@ describe('#onUnmatched', () => {
 
   it('should support array as handler', async () => {
     const { builder, classifier } = setup();
-    classifier.predict.mockReturnValue(
-      Promise.resolve([
-        { name: 'intent_1', score: 0.25 },
-        { name: 'intent_2', score: 0.25 },
-        { name: 'intent_3', score: 0.25 },
-        { name: 'intent_4', score: 0.25 },
-      ])
-    );
+    const result = [
+      { name: 'intent_1', score: 0.25 },
+      { name: 'intent_2', score: 0.25 },
+      { name: 'intent_3', score: 0.25 },
+      { name: 'intent_4', score: 0.25 },
+    ];
+    classifier.predict.mockReturnValue(Promise.resolve(result));
     const context = {
       event: {
         isTextMessage: true,
@@ -207,14 +200,13 @@ describe('#onUnmatched', () => {
 
   it('should not throw when no unmatched handler', async () => {
     const { builder, classifier } = setup();
-    classifier.predict.mockReturnValue(
-      Promise.resolve([
-        { name: 'intent_1', score: 0.25 },
-        { name: 'intent_2', score: 0.25 },
-        { name: 'intent_3', score: 0.25 },
-        { name: 'intent_4', score: 0.25 },
-      ])
-    );
+    const result = [
+      { name: 'intent_1', score: 0.25 },
+      { name: 'intent_2', score: 0.25 },
+      { name: 'intent_3', score: 0.25 },
+      { name: 'intent_4', score: 0.25 },
+    ];
+    classifier.predict.mockReturnValue(Promise.resolve(result));
     const context = {
       event: {
         isTextMessage: true,
