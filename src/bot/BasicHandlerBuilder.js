@@ -32,7 +32,10 @@ export type Context = {
 
 export type Predicate = (context: Context) => boolean | Promise<boolean>;
 
-type FunctionalHandler = (context: Context) => void | Promise<void>;
+type FunctionalHandler = (
+  context: Context,
+  otherArg?: any
+) => void | Promise<void>;
 
 export type Handler = string | Array<string> | FunctionalHandler;
 
