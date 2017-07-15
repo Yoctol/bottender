@@ -3,6 +3,7 @@ import * as core from '../index';
 describe('core', () => {
   it('export bots', () => {
     expect(core.Bot).toBeDefined();
+    expect(core.ConsoleBot).toBeDefined();
     expect(core.MessengerBot).toBeDefined();
     expect(core.LINEBot).toBeDefined();
     expect(core.TelegramBot).toBeDefined();
@@ -10,6 +11,7 @@ describe('core', () => {
 
   it('export connectors', () => {
     expect(core.Connector).toBeDefined();
+    expect(core.ConsoleConnector).toBeDefined();
     expect(core.MessengerConnector).toBeDefined();
     expect(core.LINEConnector).toBeDefined();
     expect(core.TelegramConnector).toBeDefined();
