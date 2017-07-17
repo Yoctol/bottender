@@ -17,6 +17,11 @@ export type Context = {
       payload: string,
       data: string,
     },
+    attachments: [
+      {
+        type: string,
+      },
+    ],
     isEcho: boolean,
     isRead: boolean,
     isDelivery: boolean,
@@ -26,6 +31,8 @@ export type Context = {
     isJoin: boolean,
     isLeave: boolean,
     isBeacon: boolean,
+    hasAttachment: boolean,
+    isImageMessage: boolean,
   },
   sendText: (text: string) => void,
 };
