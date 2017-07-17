@@ -6,6 +6,7 @@ import pkg from '../../package.json';
 
 import { error, bold } from './shared/log';
 import { toAbsolutePath } from './shared/path';
+import init from './actions/init';
 import deleteDomainWhitelist from './actions/deleteDomainWhitelist';
 import deleteGetStartedButton from './actions/deleteGetStartedButton';
 import deleteGreetingText from './actions/deleteGreetingText';
@@ -23,6 +24,10 @@ import setWebhook from './actions/setWebhook';
 import uploadImages from './actions/uploadImages';
 
 program.version(pkg.version);
+
+program.command('init').description('initialize your bot').action(() => {
+  init();
+});
 
 program
   .command('domain-whitelist:get')
