@@ -67,6 +67,7 @@
     "file-type": "^5.2.0",
     "glob": "^7.1.2",
     "hasha": "^3.0.0",
+    "inquirer": "^3.2.0",
     "invariant": "^2.2.2",
     "ioredis": "^3.1.0",
     "is-image": "^1.0.1",

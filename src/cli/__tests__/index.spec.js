@@ -2,6 +2,7 @@
 import path from 'path';
 
 jest.mock('../shared/log');
+jest.mock('../actions/init');
 jest.mock('../actions/deleteDomainWhitelist');
 jest.mock('../actions/deleteGetStartedButton');
 jest.mock('../actions/deleteGreetingText');
@@ -26,6 +27,14 @@ beforeEach(() => {
   log.error = jest.fn();
   log.bold = str => str;
   process.exit = jest.fn();
+});
+
+it('#init', () => {
+  const init = require('../actions/init');
+  init.default = jest.fn();
+  process.argv = ['/usr/local/bin/iojs', '/usr/local/bin/toolbot', 'init'];
+  require('../index');
+  expect(init.default).toHaveBeenCalledTimes(1);
 });
 
 describe('#domain-whilelist', () => {
