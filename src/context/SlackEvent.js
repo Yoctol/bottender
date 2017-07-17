@@ -29,9 +29,17 @@ export default class SlackEvent implements Event {
     return this._rawEvent;
   }
 
+  get isMessage(): boolean {
+    return this._rawEvent.type.indexOf('message') > 0;
+  }
+
   get message(): ?Message {
     if (!this.isMessage) return;
     return this._rawEvent;
+  }
+
+  get isTextMessage(): boolean {
+    return this.isMessage;
   }
 }
 
