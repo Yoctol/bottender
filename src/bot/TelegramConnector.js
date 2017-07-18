@@ -18,26 +18,7 @@ export type TelegramUser = {
   language_code?: string,
 };
 
-export type TelegramRequestBody = {
-  update_id: number,
-  message: {
-    message_id: number,
-    from: TelegramUser,
-    chat: {
-      id: number,
-      first_name: string,
-      last_name: string,
-      type: 'private',
-    },
-    date: number,
-    text: string,
-    entities: Array<{
-      type: 'bot_command',
-      offset: number,
-      length: number,
-    }>,
-  },
-};
+export type TelegramRequestBody = TelegramRawEvent;
 
 export type TelegramSession = SessionWithUser<TelegramUser>;
 
