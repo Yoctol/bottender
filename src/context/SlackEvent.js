@@ -12,11 +12,23 @@ export type Message = {
   ts: string,
 };
 
+type EventCallback = {
+  type: 'event_callback',
+  event: {
+    type:
+      | 'grid_migration_finished'
+      | 'grid_migration_started'
+      | 'link_shared'
+      | 'tokens_revoked',
+  },
+};
+
 export type SlackRawEvent =
   | {
       type: string,
     }
-  | Message;
+  | Message
+  | EventCallback;
 
 export default class SlackEvent implements Event {
   _rawEvent: SlackRawEvent;
@@ -30,16 +42,81 @@ export default class SlackEvent implements Event {
   }
 
   get isMessage(): boolean {
-    return this._rawEvent.type.indexOf('message') > 0;
+    return this._rawEvent.type === 'message';
+  }
+
+  get isChannelsMessage(): boolean {
+    if (!this.isMessage) return false;
+
+    const message: Message = (this.message: any);
+
+    return message.channel.startsWith('C');
+  }
+
+  get isGroupsMessage(): boolean {
+    if (!this.isMessage) return false;
+
+    const message: Message = (this.message: any);
+
+    return message.channel.startsWith('G');
+  }
+
+  get isImMessage(): boolean {
+    if (!this.isMessage) return false;
+
+    const message: Message = (this.message: any);
+
+    return message.channel.startsWith('D');
+  }
+
+  get isMpimMessage(): boolean {
+    if (!this.isMessage) return false;
+
+    const message: Message = (this.message: any);
+
+    return message.channel.startsWith('G');
   }
 
   get message(): ?Message {
     if (!this.isMessage) return;
-    return this._rawEvent;
+
+    const message: Message = (this._rawEvent: any);
+
+    return message;
   }
 
   get isTextMessage(): boolean {
     return this.isMessage;
+  }
+
+  get isGridMigrationFinished(): boolean {
+    return (
+      this._rawEvent.type === 'event_callback' &&
+      ((this._rawEvent: any): EventCallback).event.type ===
+        'grid_migration_finished'
+    );
+  }
+
+  get isGridMigrationStarted(): boolean {
+    return (
+      this._rawEvent.type === 'event_callback' &&
+      ((this._rawEvent: any): EventCallback).event.type ===
+        'grid_migration_started'
+    );
+  }
+
+  get isLinkShared(): boolean {
+    return (
+      this._rawEvent.type === 'event_callback' &&
+      ((this._rawEvent: any): EventCallback).event.type === 'link_shared'
+    );
+  }
+
+  get isTokensRevoked(): boolean {
+    return (
+      this._rawEvent.type === 'event_callback' &&
+      ((this._rawEvent: any): EventCallback).event.type === 'tokens_revoked'
+    );
   }
 }
 
@@ -65,8 +142,6 @@ const eventTypes = [
   'file_public',
   'file_shared',
   'file_unshared',
-  'grid_migration_finished',
-  'grid_migration_started',
   'group_archive',
   'group_close',
   'group_history_changed',
@@ -77,14 +152,8 @@ const eventTypes = [
   'im_created',
   'im_history_changed',
   'im_open',
-  'link_shared',
   'member_joined_channel',
   'member_left_channel',
-  'message',
-  'message.channels',
-  'message.groups',
-  'message.im',
-  'message.mpim',
   'pin_added',
   'pin_removed',
   'reaction_added',
@@ -99,21 +168,12 @@ const eventTypes = [
   'team_domain_change',
   'team_join',
   'team_rename',
-  'tokens_revoked',
   'url_verification',
   'user_change',
 ];
 
-function withMethodName(event) {
-  const unified = event.split('.').reverse().join('_');
-  return {
-    event,
-    method: `is${pascalCase(unified)}`,
-  };
-}
-
-eventTypes.map(withMethodName).forEach(({ event, method }) => {
-  Object.defineProperty(SlackEvent.prototype, method, {
+eventTypes.forEach(event => {
+  Object.defineProperty(SlackEvent.prototype, `is${pascalCase(event)}`, {
     enumerable: false,
     configurable: true,
     get() {
