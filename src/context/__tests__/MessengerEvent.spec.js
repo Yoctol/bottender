@@ -34,6 +34,119 @@ const imageMessage = {
   },
 };
 
+const locationMessage = {
+  sender: {
+    id: '1423587017700273',
+  },
+  recipient: {
+    id: '404217156637689',
+  },
+  timestamp: 1491797604411,
+  message: {
+    mid: 'mid.$cAAE1UUyiiwthh1ZAO1bVhDxGk2N0',
+    seq: 348855,
+    attachments: [
+      {
+        type: 'location',
+        payload: {
+          coordinates: {
+            lat: 0,
+            long: 0,
+          },
+        },
+      },
+    ],
+  },
+};
+
+const audioMessage = {
+  sender: {
+    id: '1423587017700273',
+  },
+  recipient: {
+    id: '404217156637689',
+  },
+  timestamp: 1491797604411,
+  message: {
+    mid: 'mid.$cAAE1UUyiiwthh1ZAO1bVhDxGk2N0',
+    seq: 348855,
+    attachments: [
+      {
+        type: 'audio',
+        payload: {
+          url: 'https://example.com/bot/audios/audio.mp3',
+        },
+      },
+    ],
+  },
+};
+
+const videoMessage = {
+  sender: {
+    id: '1423587017700273',
+  },
+  recipient: {
+    id: '404217156637689',
+  },
+  timestamp: 1491797604411,
+  message: {
+    mid: 'mid.$cAAE1UUyiiwthh1ZAO1bVhDxGk2N0',
+    seq: 348855,
+    attachments: [
+      {
+        type: 'video',
+        payload: {
+          url: 'https://example.com/bot/videos/video.mp4',
+        },
+      },
+    ],
+  },
+};
+
+const fileMessage = {
+  sender: {
+    id: '1423587017700273',
+  },
+  recipient: {
+    id: '404217156637689',
+  },
+  timestamp: 1491797604411,
+  message: {
+    mid: 'mid.$cAAE1UUyiiwthh1ZAO1bVhDxGk2N0',
+    seq: 348855,
+    attachments: [
+      {
+        type: 'file',
+        payload: {
+          url: 'https://example.com/bot/files/file.doc',
+        },
+      },
+    ],
+  },
+};
+
+const fallbackMessage = {
+  sender: {
+    id: '1423587017700273',
+  },
+  recipient: {
+    id: '404217156637689',
+  },
+  timestamp: 1491797604411,
+  message: {
+    mid: 'mid.$cAAE1UUyiiwthh1ZAO1bVhDxGk2N0',
+    seq: 348855,
+    attachments: [
+      {
+        type: 'fallback',
+        payload: null,
+        title: 'TITLE_OF_THE_URL_ATTACHMENT',
+        URL: 'URL_OF_THE_ATTACHMENT',
+      },
+    ],
+  },
+};
+
 const likeStickerMessage = {
   sender: {
     id: '1423587017700273',
@@ -226,8 +339,72 @@ it('#attachments', () => {
 
 it('#isImageMessage', () => {
   expect(new MessengerEvent(textMessage).isImageMessage).toEqual(false);
+  expect(new MessengerEvent(locationMessage).isImageMessage).toEqual(false);
+  expect(new MessengerEvent(videoMessage).isImageMessage).toEqual(false);
+  expect(new MessengerEvent(audioMessage).isImageMessage).toEqual(false);
+  expect(new MessengerEvent(fileMessage).isImageMessage).toEqual(false);
+  expect(new MessengerEvent(fallbackMessage).isImageMessage).toEqual(false);
   expect(new MessengerEvent(imageMessage).isImageMessage).toEqual(true);
   expect(new MessengerEvent(likeStickerMessage).isImageMessage).toEqual(true);
+});
+
+it('#isAudioMessage', () => {
+  expect(new MessengerEvent(textMessage).isAudioMessage).toEqual(false);
+  expect(new MessengerEvent(locationMessage).isAudioMessage).toEqual(false);
+  expect(new MessengerEvent(videoMessage).isAudioMessage).toEqual(false);
+  expect(new MessengerEvent(audioMessage).isAudioMessage).toEqual(true);
+  expect(new MessengerEvent(fileMessage).isAudioMessage).toEqual(false);
+  expect(new MessengerEvent(fallbackMessage).isAudioMessage).toEqual(false);
+  expect(new MessengerEvent(imageMessage).isAudioMessage).toEqual(false);
+  expect(new MessengerEvent(likeStickerMessage).isAudioMessage).toEqual(false);
+});
+
+it('#isVideoMessage', () => {
+  expect(new MessengerEvent(textMessage).isVideoMessage).toEqual(false);
+  expect(new MessengerEvent(locationMessage).isVideoMessage).toEqual(false);
+  expect(new MessengerEvent(videoMessage).isVideoMessage).toEqual(true);
+  expect(new MessengerEvent(audioMessage).isVideoMessage).toEqual(false);
+  expect(new MessengerEvent(fileMessage).isVideoMessage).toEqual(false);
+  expect(new MessengerEvent(fallbackMessage).isVideoMessage).toEqual(false);
+  expect(new MessengerEvent(imageMessage).isVideoMessage).toEqual(false);
+  expect(new MessengerEvent(likeStickerMessage).isVideoMessage).toEqual(false);
+});
+
+it('#isLocationMessage', () => {
+  expect(new MessengerEvent(textMessage).isLocationMessage).toEqual(false);
+  expect(new MessengerEvent(locationMessage).isLocationMessage).toEqual(true);
+  expect(new MessengerEvent(videoMessage).isLocationMessage).toEqual(false);
+  expect(new MessengerEvent(audioMessage).isLocationMessage).toEqual(false);
+  expect(new MessengerEvent(fileMessage).isLocationMessage).toEqual(false);
+  expect(new MessengerEvent(fallbackMessage).isLocationMessage).toEqual(false);
+  expect(new MessengerEvent(imageMessage).isLocationMessage).toEqual(false);
+  expect(new MessengerEvent(likeStickerMessage).isLocationMessage).toEqual(
+    false
+  );
+});
+
+it('#isFileMessage', () => {
+  expect(new MessengerEvent(textMessage).isFileMessage).toEqual(false);
+  expect(new MessengerEvent(locationMessage).isFileMessage).toEqual(false);
+  expect(new MessengerEvent(videoMessage).isFileMessage).toEqual(false);
+  expect(new MessengerEvent(audioMessage).isFileMessage).toEqual(false);
+  expect(new MessengerEvent(fileMessage).isFileMessage).toEqual(true);
+  expect(new MessengerEvent(fallbackMessage).isFileMessage).toEqual(false);
+  expect(new MessengerEvent(imageMessage).isFileMessage).toEqual(false);
+  expect(new MessengerEvent(likeStickerMessage).isFileMessage).toEqual(false);
+});
+
+it('#isFallbackMessage', () => {
+  expect(new MessengerEvent(textMessage).isFallbackMessage).toEqual(false);
+  expect(new MessengerEvent(locationMessage).isFallbackMessage).toEqual(false);
+  expect(new MessengerEvent(videoMessage).isFallbackMessage).toEqual(false);
+  expect(new MessengerEvent(audioMessage).isFallbackMessage).toEqual(false);
+  expect(new MessengerEvent(fileMessage).isFallbackMessage).toEqual(false);
+  expect(new MessengerEvent(fallbackMessage).isFallbackMessage).toEqual(true);
+  expect(new MessengerEvent(imageMessage).isFallbackMessage).toEqual(false);
+  expect(new MessengerEvent(likeStickerMessage).isFallbackMessage).toEqual(
+    false
+  );
 });
 
 it('#isStickerMessage', () => {

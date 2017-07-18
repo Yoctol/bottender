@@ -100,6 +100,54 @@ export default class MessengerHandlerBuilder extends BasicHandlerBuilder {
     return this;
   }
 
+  onLocation(predicate: Predicate, handler: Handler) {
+    this.on(
+      context => context.event.isLocationMessage && predicate(context),
+      handler
+    );
+    return this;
+  }
+
+  onImage(predicate: Predicate, handler: Handler) {
+    this.on(
+      context => context.event.isImageMessage && predicate(context),
+      handler
+    );
+    return this;
+  }
+
+  onAudio(predicate: Predicate, handler: Handler) {
+    this.on(
+      context => context.event.isAudioMessage && predicate(context),
+      handler
+    );
+    return this;
+  }
+
+  onVideo(predicate: Predicate, handler: Handler) {
+    this.on(
+      context => context.event.isVideoMessage && predicate(context),
+      handler
+    );
+    return this;
+  }
+
+  onFile(predicate: Predicate, handler: Handler) {
+    this.on(
+      context => context.event.isFileMessage && predicate(context),
+      handler
+    );
+    return this;
+  }
+
+  onFallback(predicate: Predicate, handler: Handler) {
+    this.on(
+      context => context.event.isFallbackMessage && predicate(context),
+      handler
+    );
+    return this;
+  }
+
   onUnhandled(handler: Handler) {
     this._fallbackHandler = {
       predicate: context =>

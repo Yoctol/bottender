@@ -634,3 +634,447 @@ describe('#onDelivery', () => {
     expect(handler).not.toBeCalled();
   });
 });
+
+describe('#onLocation', () => {
+  it('should return this', async () => {
+    const { builder } = setup();
+    const handler = () => {};
+    const predicate = jest.fn(() => true);
+    expect(await builder.onLocation(predicate, handler)).toBe(builder);
+  });
+
+  it('should call handler when received location event', async () => {
+    const { builder } = setup();
+    const handler = jest.fn();
+    const predicate = jest.fn(() => true);
+    const context = {
+      event: {
+        isLocationMessage: true,
+        attachments: [
+          {
+            type: 'location',
+            payload: {
+              coordinates: {
+                lat: 0,
+                long: 0,
+              },
+            },
+          },
+        ],
+      },
+    };
+    builder.onLocation(predicate, handler);
+    await builder.build()(context);
+    expect(predicate).toBeCalledWith(context);
+    expect(handler).toBeCalledWith(context);
+  });
+
+  it('should not call handler when received not location event', async () => {
+    const { builder } = setup();
+    const predicate = jest.fn(() => true);
+    const handler = jest.fn();
+    const context = {
+      event: {
+        isLocationMessage: false,
+        message: {
+          text: 'wow',
+        },
+      },
+    };
+    builder.onLocation(predicate, handler);
+    await builder.build()(context);
+    expect(predicate).not.toBeCalled();
+    expect(handler).not.toBeCalled();
+  });
+
+  it('should accept async predicate', async () => {
+    const { builder } = setup();
+    const handler = jest.fn();
+    const predicate = jest.fn(() => Promise.resolve(false));
+    const context = {
+      event: {
+        isLocationMessage: true,
+        attachments: [
+          {
+            type: 'location',
+            payload: {
+              coordinates: {
+                lat: 0,
+                long: 0,
+              },
+            },
+          },
+        ],
+      },
+    };
+    builder.onLocation(predicate, handler);
+    await builder.build()(context);
+    expect(predicate).toBeCalledWith(context);
+    expect(handler).not.toBeCalled();
+  });
+});
+
+describe('#onImage', () => {
+  it('should return this', async () => {
+    const { builder } = setup();
+    const handler = () => {};
+    const predicate = jest.fn(() => true);
+    expect(await builder.onImage(predicate, handler)).toBe(builder);
+  });
+
+  it('should call handler when received image event', async () => {
+    const { builder } = setup();
+    const handler = jest.fn();
+    const predicate = jest.fn(() => true);
+    const context = {
+      event: {
+        isImageMessage: true,
+        attachments: [
+          {
+            type: 'image',
+            payload: {
+              url: 'https://example.com/bot/images/image.jpg',
+            },
+          },
+        ],
+      },
+    };
+    builder.onImage(predicate, handler);
+    await builder.build()(context);
+    expect(predicate).toBeCalledWith(context);
+    expect(handler).toBeCalledWith(context);
+  });
+
+  it('should not call handler when received not image event', async () => {
+    const { builder } = setup();
+    const predicate = jest.fn(() => true);
+    const handler = jest.fn();
+    const context = {
+      event: {
+        isImageMessage: false,
+        message: {
+          text: 'wow',
+        },
+      },
+    };
+    builder.onImage(predicate, handler);
+    await builder.build()(context);
+    expect(predicate).not.toBeCalled();
+    expect(handler).not.toBeCalled();
+  });
+
+  it('should accept async predicate', async () => {
+    const { builder } = setup();
+    const handler = jest.fn();
+    const predicate = jest.fn(() => Promise.resolve(false));
+    const context = {
+      event: {
+        isImageMessage: true,
+        attachments: [
+          {
+            type: 'image',
+            payload: {
+              url: 'https://example.com/bot/images/image.jpg',
+            },
+          },
+        ],
+      },
+    };
+    builder.onImage(predicate, handler);
+    await builder.build()(context);
+    expect(predicate).toBeCalledWith(context);
+    expect(handler).not.toBeCalled();
+  });
+});
+
+describe('#onAudio', () => {
+  it('should return this', async () => {
+    const { builder } = setup();
+    const handler = () => {};
+    const predicate = jest.fn(() => true);
+    expect(await builder.onAudio(predicate, handler)).toBe(builder);
+  });
+
+  it('should call handler when received audio event', async () => {
+    const { builder } = setup();
+    const handler = jest.fn();
+    const predicate = jest.fn(() => true);
+    const context = {
+      event: {
+        isAudioMessage: true,
+        attachments: [
+          {
+            type: 'audio',
+            payload: {
+              url: 'https://example.com/bot/audios/audio.mp3',
+            },
+          },
+        ],
+      },
+    };
+    builder.onAudio(predicate, handler);
+    await builder.build()(context);
+    expect(predicate).toBeCalledWith(context);
+    expect(handler).toBeCalledWith(context);
+  });
+
+  it('should not call handler when received not audio event', async () => {
+    const { builder } = setup();
+    const predicate = jest.fn(() => true);
+    const handler = jest.fn();
+    const context = {
+      event: {
+        isAudioMessage: false,
+        message: {
+          text: 'wow',
+        },
+      },
+    };
+    builder.onAudio(predicate, handler);
+    await builder.build()(context);
+    expect(predicate).not.toBeCalled();
+    expect(handler).not.toBeCalled();
+  });
+
+  it('should accept async predicate', async () => {
+    const { builder } = setup();
+    const handler = jest.fn();
+    const predicate = jest.fn(() => Promise.resolve(false));
+    const context = {
+      event: {
+        isAudioMessage: true,
+        attachments: [
+          {
+            type: 'audio',
+            payload: {
+              url: 'https://example.com/bot/audios/audio.mp3',
+            },
+          },
+        ],
+      },
+    };
+    builder.onAudio(predicate, handler);
+    await builder.build()(context);
+    expect(predicate).toBeCalledWith(context);
+    expect(handler).not.toBeCalled();
+  });
+});
+
+describe('#onVideo', () => {
+  it('should return this', async () => {
+    const { builder } = setup();
+    const handler = () => {};
+    const predicate = jest.fn(() => true);
+    expect(await builder.onVideo(predicate, handler)).toBe(builder);
+  });
+
+  it('should call handler when received video event', async () => {
+    const { builder } = setup();
+    const handler = jest.fn();
+    const predicate = jest.fn(() => true);
+    const context = {
+      event: {
+        isVideoMessage: true,
+        attachments: [
+          {
+            type: 'video',
+            payload: {
+              url: 'https://example.com/bot/videos/video.mp4',
+            },
+          },
+        ],
+      },
+    };
+    builder.onVideo(predicate, handler);
+    await builder.build()(context);
+    expect(predicate).toBeCalledWith(context);
+    expect(handler).toBeCalledWith(context);
+  });
+
+  it('should not call handler when received not video event', async () => {
+    const { builder } = setup();
+    const predicate = jest.fn(() => true);
+    const handler = jest.fn();
+    const context = {
+      event: {
+        isVideoMessage: false,
+        message: {
+          text: 'wow',
+        },
+      },
+    };
+    builder.onVideo(predicate, handler);
+    await builder.build()(context);
+    expect(predicate).not.toBeCalled();
+    expect(handler).not.toBeCalled();
+  });
+
+  it('should accept async predicate', async () => {
+    const { builder } = setup();
+    const handler = jest.fn();
+    const predicate = jest.fn(() => Promise.resolve(false));
+    const context = {
+      event: {
+        isVideoMessage: true,
+        attachments: [
+          {
+            type: 'video',
+            payload: {
+              url: 'https://example.com/bot/videos/video.mp4',
+            },
+          },
+        ],
+      },
+    };
+    builder.onVideo(predicate, handler);
+    await builder.build()(context);
+    expect(predicate).toBeCalledWith(context);
+    expect(handler).not.toBeCalled();
+  });
+});
+
+describe('#onFile', () => {
+  it('should return this', async () => {
+    const { builder } = setup();
+    const handler = () => {};
+    const predicate = jest.fn(() => true);
+    expect(await builder.onFile(predicate, handler)).toBe(builder);
+  });
+
+  it('should call handler when received file event', async () => {
+    const { builder } = setup();
+    const handler = jest.fn();
+    const predicate = jest.fn(() => true);
+    const context = {
+      event: {
+        isFileMessage: true,
+        attachments: [
+          {
+            type: 'file',
+            payload: {
+              url: 'https://example.com/bot/files/file.doc',
+            },
+          },
+        ],
+      },
+    };
+    builder.onFile(predicate, handler);
+    await builder.build()(context);
+    expect(predicate).toBeCalledWith(context);
+    expect(handler).toBeCalledWith(context);
+  });
+
+  it('should not call handler when received not file event', async () => {
+    const { builder } = setup();
+    const predicate = jest.fn(() => true);
+    const handler = jest.fn();
+    const context = {
+      event: {
+        isFileMessage: false,
+        message: {
+          text: 'wow',
+        },
+      },
+    };
+    builder.onFile(predicate, handler);
+    await builder.build()(context);
+    expect(predicate).not.toBeCalled();
+    expect(handler).not.toBeCalled();
+  });
+
+  it('should accept async predicate', async () => {
+    const { builder } = setup();
+    const handler = jest.fn();
+    const predicate = jest.fn(() => Promise.resolve(false));
+    const context = {
+      event: {
+        isFileMessage: true,
+        attachments: [
+          {
+            type: 'file',
+            payload: {
+              url: 'https://example.com/bot/files/file.doc',
+            },
+          },
+        ],
+      },
+    };
+    builder.onFile(predicate, handler);
+    await builder.build()(context);
+    expect(predicate).toBeCalledWith(context);
+    expect(handler).not.toBeCalled();
+  });
+});
+
+describe('#onFallback', () => {
+  it('should return this', async () => {
+    const { builder } = setup();
+    const handler = () => {};
+    const predicate = jest.fn(() => true);
+    expect(await builder.onFallback(predicate, handler)).toBe(builder);
+  });
+
+  it('should call handler when received fallback event', async () => {
+    const { builder } = setup();
+    const handler = jest.fn();
+    const predicate = jest.fn(() => true);
+    const context = {
+      event: {
+        isFallbackMessage: true,
+        attachments: [
+          {
+            type: 'fallback',
+            payload: null,
+            title: 'TITLE_OF_THE_URL_ATTACHMENT',
+            URL: 'URL_OF_THE_ATTACHMENT',
+          },
+        ],
+      },
+    };
+    builder.onFallback(predicate, handler);
+    await builder.build()(context);
+    expect(predicate).toBeCalledWith(context);
+    expect(handler).toBeCalledWith(context);
+  });
+
+  it('should not call handler when received not fallback event', async () => {
+    const { builder } = setup();
+    const predicate = jest.fn(() => true);
+    const handler = jest.fn();
+    const context = {
+      event: {
+        isFallbackMessage: false,
+        message: {
+          text: 'wow',
+        },
+      },
+    };
+    builder.onFallback(predicate, handler);
+    await builder.build()(context);
+    expect(predicate).not.toBeCalled();
+    expect(handler).not.toBeCalled();
+  });
+
+  it('should accept async predicate', async () => {
+    const { builder } = setup();
+    const handler = jest.fn();
+    const predicate = jest.fn(() => Promise.resolve(false));
+    const context = {
+      event: {
+        isFallbackMessage: true,
+        attachments: [
+          {
+            type: 'fallback',
+            payload: null,
+            title: 'TITLE_OF_THE_URL_ATTACHMENT',
+            URL: 'URL_OF_THE_ATTACHMENT',
+          },
+        ],
+      },
+    };
+    builder.onFallback(predicate, handler);
+    await builder.build()(context);
+    expect(predicate).toBeCalledWith(context);
+    expect(handler).not.toBeCalled();
+  });
+});
