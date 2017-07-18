@@ -79,6 +79,26 @@ export default class MessengerEvent implements Event {
     return this.hasAttachment && (this.attachments: any)[0].type === 'image';
   }
 
+  get isAudioMessage(): boolean {
+    return this.hasAttachment && (this.attachments: any)[0].type === 'audio';
+  }
+
+  get isVideoMessage(): boolean {
+    return this.hasAttachment && (this.attachments: any)[0].type === 'video';
+  }
+
+  get isLocationMessage(): boolean {
+    return this.hasAttachment && (this.attachments: any)[0].type === 'location';
+  }
+
+  get isFileMessage(): boolean {
+    return this.hasAttachment && (this.attachments: any)[0].type === 'file';
+  }
+
+  get isFallbackMessage(): boolean {
+    return this.hasAttachment && (this.attachments: any)[0].type === 'fallback';
+  }
+
   get isStickerMessage(): boolean {
     return this.isMessage && typeof (this.message: any).sticker_id === 'number';
   }

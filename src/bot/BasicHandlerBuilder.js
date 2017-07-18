@@ -33,6 +33,11 @@ export type Context = {
     isBeacon: boolean,
     hasAttachment: boolean,
     isImageMessage: boolean,
+    isLocationMessage: boolean,
+    isVideoMessage: boolean,
+    isAudioMessage: boolean,
+    isFileMessage: boolean,
+    isFallbackMessage: boolean,
   },
   sendText: (text: string) => void,
 };

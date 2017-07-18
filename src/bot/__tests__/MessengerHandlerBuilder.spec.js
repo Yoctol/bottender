@@ -649,7 +649,7 @@ describe('#onLocation', () => {
     const predicate = jest.fn(() => true);
     const context = {
       event: {
-        hasAttachment: true,
+        isLocationMessage: true,
         attachments: [
           {
             type: 'location',
@@ -675,7 +675,7 @@ describe('#onLocation', () => {
     const handler = jest.fn();
     const context = {
       event: {
-        hasAttachment: false,
+        isLocationMessage: false,
         message: {
           text: 'wow',
         },
@@ -693,7 +693,7 @@ describe('#onLocation', () => {
     const predicate = jest.fn(() => Promise.resolve(false));
     const context = {
       event: {
-        hasAttachment: true,
+        isLocationMessage: true,
         attachments: [
           {
             type: 'location',
@@ -751,7 +751,7 @@ describe('#onImage', () => {
     const handler = jest.fn();
     const context = {
       event: {
-        hasAttachment: false,
+        isImageMessage: false,
         message: {
           text: 'wow',
         },
@@ -801,7 +801,7 @@ describe('#onAudio', () => {
     const predicate = jest.fn(() => true);
     const context = {
       event: {
-        hasAttachment: true,
+        isAudioMessage: true,
         attachments: [
           {
             type: 'audio',
@@ -824,7 +824,7 @@ describe('#onAudio', () => {
     const handler = jest.fn();
     const context = {
       event: {
-        hasAttachment: false,
+        isAudioMessage: false,
         message: {
           text: 'wow',
         },
@@ -842,7 +842,7 @@ describe('#onAudio', () => {
     const predicate = jest.fn(() => Promise.resolve(false));
     const context = {
       event: {
-        hasAttachment: true,
+        isAudioMessage: true,
         attachments: [
           {
             type: 'audio',
@@ -874,7 +874,7 @@ describe('#onVideo', () => {
     const predicate = jest.fn(() => true);
     const context = {
       event: {
-        hasAttachment: true,
+        isVideoMessage: true,
         attachments: [
           {
             type: 'video',
@@ -897,7 +897,7 @@ describe('#onVideo', () => {
     const handler = jest.fn();
     const context = {
       event: {
-        hasAttachment: false,
+        isVideoMessage: false,
         message: {
           text: 'wow',
         },
@@ -915,7 +915,7 @@ describe('#onVideo', () => {
     const predicate = jest.fn(() => Promise.resolve(false));
     const context = {
       event: {
-        hasAttachment: true,
+        isVideoMessage: true,
         attachments: [
           {
             type: 'video',
@@ -947,7 +947,7 @@ describe('#onFile', () => {
     const predicate = jest.fn(() => true);
     const context = {
       event: {
-        hasAttachment: true,
+        isFileMessage: true,
         attachments: [
           {
             type: 'file',
@@ -970,7 +970,7 @@ describe('#onFile', () => {
     const handler = jest.fn();
     const context = {
       event: {
-        hasAttachment: false,
+        isFileMessage: false,
         message: {
           text: 'wow',
         },
@@ -988,7 +988,7 @@ describe('#onFile', () => {
     const predicate = jest.fn(() => Promise.resolve(false));
     const context = {
       event: {
-        hasAttachment: true,
+        isFileMessage: true,
         attachments: [
           {
             type: 'file',
@@ -1020,7 +1020,7 @@ describe('#onFallback', () => {
     const predicate = jest.fn(() => true);
     const context = {
       event: {
-        hasAttachment: true,
+        isFallbackMessage: true,
         attachments: [
           {
             type: 'fallback',
@@ -1043,7 +1043,7 @@ describe('#onFallback', () => {
     const handler = jest.fn();
     const context = {
       event: {
-        hasAttachment: false,
+        isFallbackMessage: false,
         message: {
           text: 'wow',
         },
@@ -1061,7 +1061,7 @@ describe('#onFallback', () => {
     const predicate = jest.fn(() => Promise.resolve(false));
     const context = {
       event: {
-        hasAttachment: true,
+        isFallbackMessage: true,
         attachments: [
           {
             type: 'fallback',

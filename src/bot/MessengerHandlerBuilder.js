@@ -102,10 +102,7 @@ export default class MessengerHandlerBuilder extends BasicHandlerBuilder {
 
   onLocation(predicate: Predicate, handler: Handler) {
     this.on(
-      context =>
-        context.event.hasAttachment &&
-        context.event.attachments[0].type === 'location' &&
-        predicate(context),
+      context => context.event.isLocationMessage && predicate(context),
       handler
     );
     return this;
@@ -121,10 +118,7 @@ export default class MessengerHandlerBuilder extends BasicHandlerBuilder {
 
   onAudio(predicate: Predicate, handler: Handler) {
     this.on(
-      context =>
-        context.event.hasAttachment &&
-        context.event.attachments[0].type === 'audio' &&
-        predicate(context),
+      context => context.event.isAudioMessage && predicate(context),
       handler
     );
     return this;
@@ -132,10 +126,7 @@ export default class MessengerHandlerBuilder extends BasicHandlerBuilder {
 
   onVideo(predicate: Predicate, handler: Handler) {
     this.on(
-      context =>
-        context.event.hasAttachment &&
-        context.event.attachments[0].type === 'video' &&
-        predicate(context),
+      context => context.event.isVideoMessage && predicate(context),
       handler
     );
     return this;
@@ -143,10 +134,7 @@ export default class MessengerHandlerBuilder extends BasicHandlerBuilder {
 
   onFile(predicate: Predicate, handler: Handler) {
     this.on(
-      context =>
-        context.event.hasAttachment &&
-        context.event.attachments[0].type === 'file' &&
-        predicate(context),
+      context => context.event.isFileMessage && predicate(context),
       handler
     );
     return this;
@@ -154,10 +142,7 @@ export default class MessengerHandlerBuilder extends BasicHandlerBuilder {
 
   onFallback(predicate: Predicate, handler: Handler) {
     this.on(
-      context =>
-        context.event.hasAttachment &&
-        context.event.attachments[0].type === 'fallback' &&
-        predicate(context),
+      context => context.event.isFallbackMessage && predicate(context),
       handler
     );
     return this;
