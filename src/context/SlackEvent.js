@@ -53,7 +53,6 @@ const eventTypes = [
   'channel_rename',
   'channel_unarchive',
   'dnd_updated',
-  'dnd_updated',
   'dnd_updated_user',
   'email_domain_changed',
   'emoji_changed',
