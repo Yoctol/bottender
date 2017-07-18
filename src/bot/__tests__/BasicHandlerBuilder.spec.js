@@ -394,6 +394,23 @@ describe('#onError', () => {
     await builder.build()(context);
     expect(context.sendText).toBeCalledWith('Boom!');
   });
+
+  it('should pass error as second argument to error handler when error be thrown', async () => {
+    const { builder } = setup();
+    const context = {
+      sendText: jest.fn(),
+    };
+    const error = new Error('Boom!');
+    const errorHandler = jest.fn();
+    builder
+      .onUnhandled(() => {
+        throw error;
+      })
+      .onError(errorHandler);
+    await builder.build()(context);
+
+    expect(errorHandler).toBeCalledWith(context, error);
+  });
 });
 
 describe('#build', () => {
