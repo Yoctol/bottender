@@ -28,6 +28,7 @@ export {
   default as MessengerHandlerBuilder,
 } from './bot/MessengerHandlerBuilder';
 export { default as LINEHandlerBuilder } from './bot/LINEHandlerBuilder';
+export { default as SlackHandlerBuilder } from './bot/SlackHandlerBuilder';
 export {
   default as TelegramHandlerBuilder,
 } from './bot/TelegramHandlerBuilder';
