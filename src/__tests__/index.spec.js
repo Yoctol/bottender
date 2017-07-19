@@ -36,6 +36,7 @@ describe('core', () => {
     expect(core.MiddlewareHandlerBuilder).toBeDefined();
     expect(core.MessengerHandlerBuilder).toBeDefined();
     expect(core.LINEHandlerBuilder).toBeDefined();
+    expect(core.SlackHandlerBuilder).toBeDefined();
     expect(core.TelegramHandlerBuilder).toBeDefined();
   });
 });
