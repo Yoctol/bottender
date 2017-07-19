@@ -12,11 +12,19 @@ import type { Connector, SessionWithUser } from './Connector';
 
 // FIXME
 export type SlackUser = {
-  id: number,
+  id: string,
 };
 
-// FIXME
-export type SlackRequestBody = SlackRawEvent;
+export type SlackRequestBody = {
+  token: string,
+  team_id: string,
+  api_app_id: string,
+  type: string,
+  event: SlackRawEvent,
+  authed_users: Array<string>,
+  event_id: string,
+  event_time: number,
+};
 
 export type SlackSession = SessionWithUser<SlackUser>;
 
@@ -37,7 +45,10 @@ export default class SlackConnector
   }
 
   getSenderIdFromRequest(body: SlackRequestBody): string {
-    return `${body.event.user || 'no_id'}`; // FIXME
+    if (body.event.user && typeof body.event.user === 'string') {
+      return body.event.user;
+    }
+    return 'U000000000'; // FIXME
   }
 
   // FIXME

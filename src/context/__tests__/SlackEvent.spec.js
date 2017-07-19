@@ -156,29 +156,13 @@ const fileUnshared = {
 };
 
 const gridMigrationFinished = {
-  token: 'XXYYZZ',
-  team_id: 'TXXXXXXXX',
-  api_app_id: 'AXXXXXXXXX',
-  event: {
-    type: 'grid_migration_finished',
-    enterprise_id: 'EXXXXXXXX',
-  },
-  type: 'event_callback',
-  event_id: 'EvXXXXXXXX',
-  event_time: 1234567890,
+  type: 'grid_migration_finished',
+  enterprise_id: 'EXXXXXXXX',
 };
 
 const gridMigrationStarted = {
-  token: 'XXYYZZ',
-  team_id: 'TXXXXXXXX',
-  api_app_id: 'AXXXXXXXXX',
-  event: {
-    type: 'grid_migration_started',
-    enterprise_id: 'EXXXXXXXX',
-  },
-  type: 'event_callback',
-  event_id: 'EvXXXXXXXX',
-  event_time: 1234567890,
+  type: 'grid_migration_started',
+  enterprise_id: 'EXXXXXXXX',
 };
 
 const groupArchive = {
@@ -245,33 +229,24 @@ const imOpen = {
 };
 
 const linkShared = {
-  token: 'XXYYZZ',
-  team_id: 'TXXXXXXXX',
-  api_app_id: 'AXXXXXXXXX',
-  event: {
-    type: 'link_shared',
-    channel: 'Cxxxxxx',
-    user: 'Uxxxxxxx',
-    message_ts: '123456789.9875',
-    links: [
-      {
-        domain: 'example.com',
-        url: 'https://example.com/12345',
-      },
-      {
-        domain: 'example.com',
-        url: 'https://example.com/67890',
-      },
-      {
-        domain: 'another-example.com',
-        url: 'https://yet.another-example.com/v/abcde',
-      },
-    ],
-  },
-  type: 'event_callback',
-  authed_users: ['UXXXXXXX1', 'UXXXXXXX2'],
-  event_id: 'Ev08MFMKH6',
-  event_time: 123456789,
+  type: 'link_shared',
+  channel: 'Cxxxxxx',
+  user: 'Uxxxxxxx',
+  message_ts: '123456789.9875',
+  links: [
+    {
+      domain: 'example.com',
+      url: 'https://example.com/12345',
+    },
+    {
+      domain: 'example.com',
+      url: 'https://example.com/67890',
+    },
+    {
+      domain: 'another-example.com',
+      url: 'https://yet.another-example.com/v/abcde',
+    },
+  ],
 };
 
 const memberJoinedChannel = {
@@ -468,19 +443,11 @@ const teamRename = {
 };
 
 const tokensRevoked = {
-  token: 'XXYYZZ',
-  team_id: 'TXXXXXXXX',
-  api_app_id: 'AXXXXXXXXX',
-  event: {
-    type: 'tokens_revoked',
-    tokens: {
-      oauth: ['UXXXXXXXX'],
-      bot: ['UXXXXXXXX'],
-    },
+  type: 'tokens_revoked',
+  tokens: {
+    oauth: ['UXXXXXXXX'],
+    bot: ['UXXXXXXXX'],
   },
-  type: 'event_callback',
-  event_id: 'EvXXXXXXXX',
-  event_time: 1234567890,
 };
 
 const urlVerification = {
