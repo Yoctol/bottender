@@ -6,6 +6,7 @@ describe('core', () => {
     expect(core.ConsoleBot).toBeDefined();
     expect(core.MessengerBot).toBeDefined();
     expect(core.LINEBot).toBeDefined();
+    expect(core.SlackBot).toBeDefined();
     expect(core.TelegramBot).toBeDefined();
   });
 
@@ -14,6 +15,7 @@ describe('core', () => {
     expect(core.ConsoleConnector).toBeDefined();
     expect(core.MessengerConnector).toBeDefined();
     expect(core.LINEConnector).toBeDefined();
+    expect(core.SlackConnector).toBeDefined();
     expect(core.TelegramConnector).toBeDefined();
   });
 

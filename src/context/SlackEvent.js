@@ -6,29 +6,18 @@ import type { Event } from './Event';
 
 export type Message = {
   type: string,
+  subtype?: string,
   channel: string,
   user: string,
   text: string,
   ts: string,
 };
 
-type EventCallback = {
-  type: 'event_callback',
-  event: {
-    type:
-      | 'grid_migration_finished'
-      | 'grid_migration_started'
-      | 'link_shared'
-      | 'tokens_revoked',
-  },
-};
-
 export type SlackRawEvent =
   | {
       type: string,
     }
-  | Message
-  | EventCallback;
+  | Message;
 
 export default class SlackEvent implements Event {
   _rawEvent: SlackRawEvent;
@@ -88,36 +77,6 @@ export default class SlackEvent implements Event {
   get isTextMessage(): boolean {
     return this.isMessage;
   }
-
-  get isGridMigrationFinished(): boolean {
-    return (
-      this._rawEvent.type === 'event_callback' &&
-      ((this._rawEvent: any): EventCallback).event.type ===
-        'grid_migration_finished'
-    );
-  }
-
-  get isGridMigrationStarted(): boolean {
-    return (
-      this._rawEvent.type === 'event_callback' &&
-      ((this._rawEvent: any): EventCallback).event.type ===
-        'grid_migration_started'
-    );
-  }
-
-  get isLinkShared(): boolean {
-    return (
-      this._rawEvent.type === 'event_callback' &&
-      ((this._rawEvent: any): EventCallback).event.type === 'link_shared'
-    );
-  }
-
-  get isTokensRevoked(): boolean {
-    return (
-      this._rawEvent.type === 'event_callback' &&
-      ((this._rawEvent: any): EventCallback).event.type === 'tokens_revoked'
-    );
-  }
 }
 
 // https://api.slack.com/events
@@ -142,6 +101,8 @@ const eventTypes = [
   'file_public',
   'file_shared',
   'file_unshared',
+  'grid_migration_finished',
+  'grid_migration_started',
   'group_archive',
   'group_close',
   'group_history_changed',
@@ -152,6 +113,7 @@ const eventTypes = [
   'im_created',
   'im_history_changed',
   'im_open',
+  'link_shared',
   'member_joined_channel',
   'member_left_channel',
   'pin_added',
@@ -168,6 +130,7 @@ const eventTypes = [
   'team_domain_change',
   'team_join',
   'team_rename',
+  'tokens_revoked',
   'url_verification',
   'user_change',
 ];

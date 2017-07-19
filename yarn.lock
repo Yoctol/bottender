@@ -3563,6 +3563,13 @@ messaging-api-messenger@^0.2.2:
     axios "^0.16.1"
     invariant "^2.2.2"
 
+messaging-api-slack@^0.2.3:
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/messaging-api-slack/-/messaging-api-slack-0.2.3.tgz#1ab5d42e2cc174706dbe4eb4906c32f3523b3569"
+  dependencies:
+    axios "^0.16.1"
+    invariant "^2.2.2"
+
 messaging-api-telegram@^0.2.2:
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/messaging-api-telegram/-/messaging-api-telegram-0.2.2.tgz#dbdc0c34082b6326d7bb5bc60b8404a23626c939"
