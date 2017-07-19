@@ -80,6 +80,7 @@
     "lodash": "^4.17.4",
     "messaging-api-line": "^0.2.2",
     "messaging-api-messenger": "^0.2.2",
+    "messaging-api-slack": "^0.2.3",
     "messaging-api-telegram": "^0.2.2",
     "micro": "^7.3.3",
     "mongodb": "^2.2.27",

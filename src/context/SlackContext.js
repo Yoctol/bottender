@@ -39,24 +39,9 @@ export default class SlackContext implements Context {
           this._enqueue({
             instance: this._client,
             method,
-            args: [this._session.user.id, ...args],
+            args: [...args],
             delay: DEFAULT_MESSAGE_DELAY,
             showIndicators: true,
-          });
-        },
-      });
-
-      Object.defineProperty(this, `${method}To`, {
-        enumerable: false,
-        configurable: true,
-        writable: true,
-        value(id, ...rest) {
-          this._enqueue({
-            instance: this._client,
-            method,
-            args: [id, ...rest],
-            delay: 0,
-            showIndicators: false,
           });
         },
       });
@@ -69,7 +54,7 @@ export default class SlackContext implements Context {
           this._enqueue({
             instance: this._client,
             method,
-            args: [this._session.user.id, ...rest],
+            args: [...rest],
             delay,
             showIndicators: true,
           });

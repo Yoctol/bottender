@@ -7,13 +7,13 @@ import SlackConnector from './SlackConnector';
 
 export default class SlackBot extends Bot {
   constructor({
-    accessToken, // FIXME
+    webhookURL,
     sessionStore,
   }: {
-    accessToken: string, // FIXME
+    webhookURL: string,
     sessionStore: SessionStore,
   }) {
-    const connector = new SlackConnector({ accessToken });
+    const connector = new SlackConnector({ webhookURL });
     super({ connector, sessionStore });
   }
 }

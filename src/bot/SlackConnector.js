@@ -24,31 +24,25 @@ export default class SlackConnector
   implements Connector<SlackRequestBody, SlackUser> {
   _client: SlackClient;
 
-  // FIXME
-  constructor({ accessToken }: { accessToken: string }) {
-    this._client = SlackClient.connect(accessToken);
+  constructor({ webhookURL }: { webhookURL: string }) {
+    this._client = SlackClient.connect(webhookURL);
   }
 
-  // FIXME
   _getRawEventFromRequest(body: SlackRequestBody): SlackRawEvent {
-    return body;
+    return body.event;
   }
 
   get platform(): string {
     return 'slack';
   }
 
-  // FIXME
   getSenderIdFromRequest(body: SlackRequestBody): string {
-    return `${body.message.from.id}`;
+    return `${body.event.user || 'no_id'}`; // FIXME
   }
 
   // FIXME
-  async getUserProfile(
-    senderId: string,
-    body: SlackRequestBody
-  ): Promise<SlackUser> {
-    return body.message.from;
+  async getUserProfile(senderId: string): Promise<SlackUser> {
+    return { id: senderId };
   }
 
   async handleRequest({
@@ -61,6 +55,10 @@ export default class SlackConnector
     handler: FunctionalHandler,
   }): Promise<void> {
     const rawEvent = this._getRawEventFromRequest(body);
+
+    if (rawEvent.bot_id || rawEvent.subtype === 'bot_message') {
+      return; // FIXME
+    }
 
     const context = new SlackContext({
       client: this._client,
