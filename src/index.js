@@ -5,6 +5,7 @@ export { default as Bot } from './bot/Bot';
 export { default as ConsoleBot } from './bot/ConsoleBot';
 export { default as MessengerBot } from './bot/MessengerBot';
 export { default as LINEBot } from './bot/LINEBot';
+export { default as SlackBot } from './bot/SlackBot';
 export { default as TelegramBot } from './bot/TelegramBot';
 
 /* Connector */
@@ -12,6 +13,7 @@ export { default as Connector } from './bot/Connector';
 export { default as ConsoleConnector } from './bot/ConsoleConnector';
 export { default as MessengerConnector } from './bot/MessengerConnector';
 export { default as LINEConnector } from './bot/LINEConnector';
+export { default as SlackConnector } from './bot/SlackConnector';
 export { default as TelegramConnector } from './bot/TelegramConnector';
 
 /* HandlerBuilder */
