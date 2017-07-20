@@ -5,5 +5,6 @@ describe('koa', () => {
     expect(koa.createServer).toBeDefined();
     expect(koa.createMiddleware).toBeDefined();
     expect(koa.verifyMessengerWebhook).toBeDefined();
+    expect(koa.verifySlackWebhook).toBeDefined();
   });
 });

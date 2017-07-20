@@ -13,5 +13,6 @@ describe('restify', () => {
     expect(restify.createServer).toBeDefined();
     expect(restify.createMiddleware).toBeDefined();
     expect(restify.verifyMessengerWebhook).toBeDefined();
+    expect(restify.verifySlackWebhook).toBeDefined();
   });
 });
