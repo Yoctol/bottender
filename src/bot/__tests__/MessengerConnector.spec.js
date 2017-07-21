@@ -109,7 +109,7 @@ describe('#getUserProfile', () => {
       timezone: 8,
       gender: 'male',
     };
-    const response = { data };
+    const response = data;
     mockGraphAPIClient.getUserProfile.mockReturnValue(
       Promise.resolve(response)
     );
