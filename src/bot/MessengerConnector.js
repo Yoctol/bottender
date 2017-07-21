@@ -46,9 +46,8 @@ export default class MessengerConnector
     return rawEvent.sender.id;
   }
 
-  async getUserProfile(senderId: string): Promise<MessengerUser> {
-    const { data } = await this._client.getUserProfile(senderId);
-    return data;
+  getUserProfile(senderId: string): Promise<MessengerUser> {
+    return this._client.getUserProfile(senderId);
   }
 
   async handleRequest({
