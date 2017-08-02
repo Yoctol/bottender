@@ -4,10 +4,6 @@ import SlackEvent from '../SlackEvent';
 jest.mock('delay');
 jest.mock('messaging-api-slack');
 
-afterEach(() => {
-  jest.useRealTimers();
-});
-
 const rawEvent = {
   type: 'message',
   user: 'U13AGSN1X',

@@ -28,12 +28,10 @@ let _write;
 beforeEach(() => {
   _write = process.stdout.write;
   process.stdout.write = jest.fn();
-  jest.useFakeTimers();
 });
 
 afterEach(() => {
   process.stdout.write = _write;
-  jest.useRealTimers();
 });
 
 it('be defined', () => {

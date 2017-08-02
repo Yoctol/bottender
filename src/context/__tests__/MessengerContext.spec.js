@@ -5,7 +5,7 @@ jest.mock('delay');
 jest.mock('messaging-api-messenger');
 
 afterEach(() => {
-  jest.useRealTimers();
+  jest.useFakeTimers();
 });
 
 const createMockGraphAPIClient = () => ({
@@ -503,8 +503,6 @@ it('#sendTextWithDelay put sendText to jobQueue', () => {
 });
 
 it('show typing when sending', async () => {
-  jest.useFakeTimers();
-
   const { context, client } = setup();
 
   context.sendText('xxx.com');
