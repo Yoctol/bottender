@@ -2,19 +2,24 @@
 
 import type { Event } from './Event';
 
-type Source =
-  | {
-      type: 'user',
-      userId: string,
-    }
-  | {
-      type: 'group',
-      groupId: string,
-    }
-  | {
-      type: 'room',
-      roomId: string,
-    };
+type UserSource = {
+  type: 'user',
+  userId: string,
+};
+
+type GroupSource = {
+  type: 'group',
+  userId?: string,
+  groupId: string,
+};
+
+type RoomSource = {
+  type: 'room',
+  userId?: string,
+  roomId: string,
+};
+
+type Source = UserSource | GroupSource | RoomSource;
 
 type Message = {
   id: string,
