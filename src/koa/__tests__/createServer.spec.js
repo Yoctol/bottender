@@ -11,6 +11,7 @@ function setup({ platform = 'messenger' } = { platform: 'messenger' }) {
     createRequestHandler: () => requestHandler,
     connector: {
       platform,
+      verifySignature: jest.fn(),
     },
   };
   return {
@@ -44,6 +45,16 @@ it('should not handle token verification if platform is not messenger', async ()
   });
 
   expect(status).toBe(404);
+});
+
+it('should handle LINE signature verification if platform is LINE', async () => {
+  const { bot, requestHandler } = setup({ platform: 'line' });
+  requestHandler.mockReturnValue(Promise.resolve());
+
+  const server = createServer(bot);
+  const { status } = await request(server.callback()).post('/').send({});
+
+  expect(status).toBe(400);
 });
 
 it('should handle bot request', async () => {

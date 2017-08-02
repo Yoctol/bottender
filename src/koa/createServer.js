@@ -6,6 +6,7 @@ import shortid from 'shortid';
 import connectNgrok from '../connectNgrok';
 
 import createMiddleware from './createMiddleware';
+import verifyLINESignature from './verifyLINESignature';
 import verifyMessengerWebhook from './verifyMessengerWebhook';
 import verifySlackWebhook from './verifySlackWebhook';
 
@@ -23,6 +24,8 @@ function createServer(bot, config = {}) {
     router.post(path, createMiddleware(bot));
   } else if (bot.connector.platform === 'slack') {
     router.post(path, verifySlackWebhook(), createMiddleware(bot));
+  } else if (bot.connector.platform === 'line') {
+    router.post(path, verifyLINESignature(bot), createMiddleware(bot));
   } else {
     router.post(path, createMiddleware(bot));
   }
