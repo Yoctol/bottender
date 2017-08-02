@@ -84,24 +84,24 @@ describe('#platform', () => {
   });
 });
 
-describe('#getSenderIdFromRequest', () => {
+describe('#getUniqueSessionIdFromRequest', () => {
   it('extract correct sender id', () => {
     const { connector } = setup();
-    const senderId = connector.getSenderIdFromRequest(request.body);
+    const senderId = connector.getUniqueSessionIdFromRequest(request.body);
     expect(senderId).toBe('1412611362105802');
   });
 
   it('return recipient id when request is an echo event', () => {
     const { connector } = setup();
-    const senderId = connector.getSenderIdFromRequest(echoRequest.body);
+    const senderId = connector.getUniqueSessionIdFromRequest(echoRequest.body);
     expect(senderId).toBe('1244813222196986');
   });
 });
 
-describe('#getUserProfile', () => {
-  it('call graph api and get result back', async () => {
+describe('#updateSession', () => {
+  it('update session with data needed', async () => {
     const { connector, mockGraphAPIClient } = setup();
-    const data = {
+    const user = {
       first_name: '薄餡',
       last_name: '茱',
       profile_pic: 'https://example.com/pic.png',
@@ -109,15 +109,15 @@ describe('#getUserProfile', () => {
       timezone: 8,
       gender: 'male',
     };
-    const response = data;
-    mockGraphAPIClient.getUserProfile.mockReturnValue(
-      Promise.resolve(response)
-    );
-    const user = await connector.getUserProfile('1412611362105802');
+    mockGraphAPIClient.getUserProfile.mockReturnValue(Promise.resolve(user));
+
+    const session = {};
+    await connector.updateSession(session, request.body);
+
     expect(mockGraphAPIClient.getUserProfile).toBeCalledWith(
       '1412611362105802'
     );
-    expect(user).toEqual(data);
+    expect(session).toEqual({ user });
   });
 });
 

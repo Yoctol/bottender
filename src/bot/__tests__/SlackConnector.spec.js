@@ -41,23 +41,26 @@ describe('#platform', () => {
   });
 });
 
-describe('#getSenderIdFromRequest', () => {
+describe('#getUniqueSessionIdFromRequest', () => {
   it('extract correct sender id', () => {
     const { connector } = setup();
-    const senderId = connector.getSenderIdFromRequest(request.body);
+    const senderId = connector.getUniqueSessionIdFromRequest(request.body);
     expect(senderId).toBe('U13AGSN1X'); // FIXME
   });
 });
 
-describe('#getUserProfile', () => {
-  it('get result from id', async () => {
+describe('#updateSession', () => {
+  it('update session with data needed', async () => {
     const { connector } = setup();
-    const data = {
+
+    const user = {
       id: 'U13AGSN1X',
     };
-    const user = await connector.getUserProfile('U13AGSN1X');
+    const session = {};
 
-    expect(user).toEqual(data);
+    await connector.updateSession(session, request.body);
+
+    expect(session).toEqual({ user });
   });
 });
 

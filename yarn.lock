@@ -3550,29 +3550,29 @@ merge@^1.1.3:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/merge/-/merge-1.2.0.tgz#7531e39d4949c281a66b8c5a6e0265e8b05894da"
 
-messaging-api-line@^0.2.2:
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/messaging-api-line/-/messaging-api-line-0.2.2.tgz#2d2665e0de657977ef3eca6aba0c7af020a35a1d"
+messaging-api-line@^0.2.4:
+  version "0.2.4"
+  resolved "https://registry.yarnpkg.com/messaging-api-line/-/messaging-api-line-0.2.4.tgz#4c0c07d73c14d7b0fccee537e6ef97a34a967187"
   dependencies:
     axios "^0.16.1"
 
-messaging-api-messenger@^0.2.2:
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/messaging-api-messenger/-/messaging-api-messenger-0.2.2.tgz#512f1f55528b854f9b27e94ff4d9196254b19c5f"
-  dependencies:
-    axios "^0.16.1"
-    invariant "^2.2.2"
-
-messaging-api-slack@^0.2.3:
-  version "0.2.3"
-  resolved "https://registry.yarnpkg.com/messaging-api-slack/-/messaging-api-slack-0.2.3.tgz#1ab5d42e2cc174706dbe4eb4906c32f3523b3569"
+messaging-api-messenger@^0.2.4:
+  version "0.2.4"
+  resolved "https://registry.yarnpkg.com/messaging-api-messenger/-/messaging-api-messenger-0.2.4.tgz#2de2a73cdf507ece69eb25e14f8e29b0ee68cba4"
   dependencies:
     axios "^0.16.1"
     invariant "^2.2.2"
 
-messaging-api-telegram@^0.2.2:
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/messaging-api-telegram/-/messaging-api-telegram-0.2.2.tgz#dbdc0c34082b6326d7bb5bc60b8404a23626c939"
+messaging-api-slack@^0.2.4:
+  version "0.2.4"
+  resolved "https://registry.yarnpkg.com/messaging-api-slack/-/messaging-api-slack-0.2.4.tgz#e83bb2e9f68f3294281f999ea7deb843f012d8ea"
+  dependencies:
+    axios "^0.16.1"
+    invariant "^2.2.2"
+
+messaging-api-telegram@^0.2.4:
+  version "0.2.4"
+  resolved "https://registry.yarnpkg.com/messaging-api-telegram/-/messaging-api-telegram-0.2.4.tgz#690a39e60539336b17c6a213e53a335773adac26"
   dependencies:
     axios "^0.16.1"
 

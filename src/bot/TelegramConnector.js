@@ -6,6 +6,7 @@ import { TelegramClient } from 'messaging-api-telegram';
 
 import TelegramContext from '../context/TelegramContext';
 import type { TelegramRawEvent } from '../context/TelegramEvent';
+import type { Session } from '../session/Session';
 
 import type { FunctionalHandler } from './Bot';
 import type { Connector, SessionWithUser } from './Connector';
@@ -38,15 +39,19 @@ export default class TelegramConnector
     return 'telegram';
   }
 
-  getSenderIdFromRequest(body: TelegramRequestBody): string {
+  getUniqueSessionIdFromRequest(body: TelegramRequestBody): string {
     return `${body.message.from.id}`;
   }
 
-  async getUserProfile(
-    senderId: string,
+  shouldSessionUpdate(session: Session): boolean {
+    return !session.user;
+  }
+
+  async updateSession(
+    session: Session,
     body: TelegramRequestBody
-  ): Promise<TelegramUser> {
-    return body.message.from;
+  ): Promise<void> {
+    session.user = body.message.from;
   }
 
   async handleRequest({

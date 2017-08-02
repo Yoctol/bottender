@@ -6,6 +6,7 @@ import { MessengerClient } from 'messaging-api-messenger';
 
 import MessengerContext from '../context/MessengerContext';
 import type { MessengerRawEvent } from '../context/MessengerEvent';
+import type { Session } from '../session/Session';
 
 import type { FunctionalHandler } from './Bot';
 import type { Connector, SessionWithUser } from './Connector';
@@ -38,7 +39,7 @@ export default class MessengerConnector
     return 'messenger';
   }
 
-  getSenderIdFromRequest(body: MessengerRequestBody): string {
+  getUniqueSessionIdFromRequest(body: MessengerRequestBody): string {
     const rawEvent = this._getRawEventFromRequest(body);
     if (rawEvent.message && rawEvent.message.is_echo) {
       return rawEvent.recipient.id;
@@ -46,8 +47,18 @@ export default class MessengerConnector
     return rawEvent.sender.id;
   }
 
-  getUserProfile(senderId: string): Promise<MessengerUser> {
-    return this._client.getUserProfile(senderId);
+  shouldSessionUpdate(session: Session): boolean {
+    return !session.user;
+  }
+
+  async updateSession(
+    session: Session,
+    body: MessengerRequestBody
+  ): Promise<void> {
+    const senderId = this.getUniqueSessionIdFromRequest(body);
+    const user = await this._client.getUserProfile(senderId);
+
+    session.user = user;
   }
 
   async handleRequest({

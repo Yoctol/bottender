@@ -6,6 +6,7 @@ import { LINEClient } from 'messaging-api-line';
 
 import LINEContext from '../context/LINEContext';
 import type { LINERawEvent } from '../context/LINEEvent';
+import type { Session } from '../session/Session';
 
 import type { FunctionalHandler } from './Bot';
 import type { Connector, SessionWithUser } from './Connector';
@@ -38,7 +39,7 @@ export default class LINEConnector
     return 'line';
   }
 
-  getSenderIdFromRequest(body: LINERequestBody): string {
+  getUniqueSessionIdFromRequest(body: LINERequestBody): string {
     const { source } = body.events[0];
     if (source.type === 'user') {
       return source.userId;
@@ -52,9 +53,15 @@ export default class LINEConnector
     );
   }
 
-  async getUserProfile(senderId: string): Promise<LINEUser> {
-    const { data } = await this._client.getUserProfile(senderId);
-    return data;
+  shouldSessionUpdate(session: Session): boolean {
+    return !session.user;
+  }
+
+  async updateSession(session: Session, body: LINERequestBody): Promise<void> {
+    const senderId = this.getUniqueSessionIdFromRequest(body);
+    const user = await this._client.getUserProfile(senderId);
+
+    session.user = user;
   }
 
   async handleRequest({

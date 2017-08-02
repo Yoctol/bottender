@@ -3,8 +3,9 @@ import Bot from '../Bot';
 function setup({
   connector = {
     platform: 'any',
-    getSenderIdFromRequest: jest.fn(),
-    getUserProfile: jest.fn(),
+    getUniqueSessionIdFromRequest: jest.fn(),
+    shouldSessionUpdate: jest.fn(),
+    updateSession: jest.fn(),
     handleRequest: jest.fn(),
   },
   sessionStore = {
@@ -66,7 +67,8 @@ describe('#createRequestHandler', () => {
   it('should fetch user data when it does not exist in session', async () => {
     const { bot, connector, sessionStore } = setup({});
 
-    connector.getSenderIdFromRequest.mockReturnValue('__id__');
+    connector.getUniqueSessionIdFromRequest.mockReturnValue('__id__');
+    connector.shouldSessionUpdate.mockReturnValue(true);
     sessionStore.read.mockReturnValue(Promise.resolve(null));
 
     const handler = () => {};
@@ -77,13 +79,14 @@ describe('#createRequestHandler', () => {
     const body = {};
     await requestHandler(body);
 
-    expect(connector.getUserProfile).toBeCalledWith('__id__', body);
+    expect(connector.updateSession).toBeCalledWith(expect.any(Object), body);
   });
 
   it('should not fetch user data when it exists in session', async () => {
     const { bot, connector, sessionStore } = setup({});
 
-    connector.getSenderIdFromRequest.mockReturnValue('__id__');
+    connector.getUniqueSessionIdFromRequest.mockReturnValue('__id__');
+    connector.shouldSessionUpdate.mockReturnValue(false);
     sessionStore.read.mockReturnValue(Promise.resolve({ user: {} }));
 
     const handler = () => {};
@@ -93,13 +96,13 @@ describe('#createRequestHandler', () => {
 
     await requestHandler({});
 
-    expect(connector.getUserProfile).not.toBeCalled();
+    expect(connector.updateSession).not.toBeCalled();
   });
 
   it('should call handleRequest on connector', async () => {
     const { bot, connector, sessionStore } = setup({});
 
-    connector.getSenderIdFromRequest.mockReturnValue('__id__');
+    connector.getUniqueSessionIdFromRequest.mockReturnValue('__id__');
     sessionStore.read.mockReturnValue(Promise.resolve({ user: {} }));
 
     const handler = () => {};
@@ -122,7 +125,7 @@ describe('#createRequestHandler', () => {
   it('should call write on sessionStore', async () => {
     const { bot, connector, sessionStore } = setup({});
 
-    connector.getSenderIdFromRequest.mockReturnValue('__id__');
+    connector.getUniqueSessionIdFromRequest.mockReturnValue('__id__');
     sessionStore.read.mockReturnValue(Promise.resolve({ user: {} }));
 
     const handler = () => {};

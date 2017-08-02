@@ -11,8 +11,9 @@ export type SessionWithUser<U> = {
 
 export interface Connector<B, U> {
   +platform: string,
-  getSenderIdFromRequest(body: B): string,
-  getUserProfile(senderId: string, body: B): Promise<U>,
+  getUniqueSessionIdFromRequest(body: B): string,
+  shouldSessionUpdate(session: Session, body: B): boolean,
+  updateSession(session: Session, body: B): Promise<void>,
   handleRequest(params: {
     body: B,
     session: SessionWithUser<U>,

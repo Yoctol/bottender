@@ -44,27 +44,30 @@ describe('#platform', () => {
   });
 });
 
-describe('#getSenderIdFromRequest', () => {
+describe('#getUniqueSessionIdFromRequest', () => {
   it('extract correct sender id', () => {
     const { connector } = setup();
-    const senderId = connector.getSenderIdFromRequest(request.body);
+    const senderId = connector.getUniqueSessionIdFromRequest(request.body);
     expect(senderId).toBe('313534466'); // FIXME
   });
 });
 
-describe('#getUserProfile', () => {
-  it('call telegram api and get result back', async () => {
+describe('#updateSession', () => {
+  it('update session with data needed', async () => {
     const { connector } = setup();
-    const data = {
+    const user = {
       id: 313534466,
       first_name: 'first',
       last_name: 'last',
       username: 'username',
       language_code: 'en',
     };
-    const user = await connector.getUserProfile(313534466, request.body);
 
-    expect(user).toEqual(data);
+    const session = {};
+
+    await connector.updateSession(session, request.body);
+
+    expect(session).toEqual({ user });
   });
 });
 

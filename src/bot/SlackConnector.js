@@ -6,6 +6,7 @@ import { SlackClient } from 'messaging-api-slack';
 
 import SlackContext from '../context/SlackContext';
 import type { SlackRawEvent } from '../context/SlackEvent';
+import type { Session } from '../session/Session';
 
 import type { FunctionalHandler } from './Bot';
 import type { Connector, SessionWithUser } from './Connector';
@@ -44,16 +45,22 @@ export default class SlackConnector
     return 'slack';
   }
 
-  getSenderIdFromRequest(body: SlackRequestBody): string {
+  getUniqueSessionIdFromRequest(body: SlackRequestBody): string {
     if (body.event.user && typeof body.event.user === 'string') {
       return body.event.user;
     }
     return 'U000000000'; // FIXME
   }
 
+  shouldSessionUpdate(session: Session): boolean {
+    return !session.user;
+  }
+
   // FIXME
-  async getUserProfile(senderId: string): Promise<SlackUser> {
-    return { id: senderId };
+  async updateSession(session: Session, body: SlackRequestBody): Promise<void> {
+    const senderId = this.getUniqueSessionIdFromRequest(body);
+
+    session.user = { id: senderId };
   }
 
   async handleRequest({
