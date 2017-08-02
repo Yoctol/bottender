@@ -117,7 +117,8 @@
     "transformIgnorePatterns": [
       "/node_modules/"
     ],
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "timers": "fake"
   },
   "lint-staged": {
     "*.js": "eslint --fix"

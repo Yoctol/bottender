@@ -12,10 +12,6 @@ function setup() {
   };
 }
 
-afterEach(() => {
-  jest.useRealTimers();
-});
-
 describe('#init', () => {
   it('should return initialize store instance', async () => {
     const { store } = setup();

@@ -1,9 +1,5 @@
 import MemoryCacheStore from '../MemoryCacheStore';
 
-afterEach(() => {
-  jest.useRealTimers();
-});
-
 describe('#get', () => {
   it('should get cache value when value exists', async () => {
     const store = new MemoryCacheStore(5);

@@ -4,10 +4,6 @@ import TelegramEvent from '../TelegramEvent';
 jest.mock('delay');
 jest.mock('messaging-api-messenger');
 
-afterEach(() => {
-  jest.useRealTimers();
-});
-
 const createMockGraphAPIClient = () => ({
   turnTypingIndicatorsOn: jest.fn(),
   turnTypingIndicatorsOff: jest.fn(),
