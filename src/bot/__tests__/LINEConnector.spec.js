@@ -57,16 +57,16 @@ describe('#platform', () => {
   });
 });
 
-describe('#getSenderIdFromRequest', () => {
+describe('#getUniqueSessionIdFromRequest', () => {
   it('extract userId from user source', () => {
     const { connector } = setup();
-    const senderId = connector.getSenderIdFromRequest(request.body);
+    const senderId = connector.getUniqueSessionIdFromRequest(request.body);
     expect(senderId).toBe('U206d25c2ea6bd87c17655609a1c37cb8');
   });
 
   it('extract groupId from user source', () => {
     const { connector } = setup();
-    const senderId = connector.getSenderIdFromRequest({
+    const senderId = connector.getUniqueSessionIdFromRequest({
       events: [
         {
           replyToken: 'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA',
@@ -89,7 +89,7 @@ describe('#getSenderIdFromRequest', () => {
 
   it('extract roomId from user source', () => {
     const { connector } = setup();
-    const senderId = connector.getSenderIdFromRequest({
+    const senderId = connector.getUniqueSessionIdFromRequest({
       events: [
         {
           replyToken: 'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA',
@@ -111,24 +111,26 @@ describe('#getSenderIdFromRequest', () => {
   });
 });
 
-describe('#getUserProfile', () => {
-  it('call graph api and get result back', async () => {
+describe('#updateSession', () => {
+  it('update session with data needed', async () => {
     const { connector, mockLINEAPIClient } = setup();
-    const data = {
+    const user = {
       displayName: 'LINE taro',
       userId: 'U206d25c2ea6bd87c17655609a1c37cb8',
       pictureUrl: 'http://obs.line-apps.com/...',
       statusMessage: 'Hello, LINE!',
     };
-    const response = { data };
-    mockLINEAPIClient.getUserProfile.mockReturnValue(Promise.resolve(response));
-    const user = await connector.getUserProfile(
-      'U206d25c2ea6bd87c17655609a1c37cb8'
-    );
+    mockLINEAPIClient.getUserProfile.mockReturnValue(Promise.resolve(user));
+
+    const session = {};
+
+    await connector.updateSession(session, request.body);
+
     expect(mockLINEAPIClient.getUserProfile).toBeCalledWith(
       'U206d25c2ea6bd87c17655609a1c37cb8'
     );
-    expect(user).toEqual(data);
+
+    expect(session).toEqual({ user });
   });
 });
 

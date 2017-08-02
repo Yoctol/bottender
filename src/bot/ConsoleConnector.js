@@ -4,6 +4,7 @@
 */
 import ConsoleContext from '../context/ConsoleContext';
 import type { ConsoleRawEvent } from '../context/ConsoleEvent';
+import type { Session } from '../session/Session';
 
 import type { FunctionalHandler } from './Bot';
 import type { Connector, SessionWithUser } from './Connector';
@@ -23,13 +24,17 @@ export default class ConsoleConnector
     return 'console';
   }
 
-  getSenderIdFromRequest(): string {
+  getUniqueSessionIdFromRequest(): string {
     return '1';
   }
 
-  async getUserProfile(senderId: string): Promise<ConsoleUser> {
-    return {
-      id: senderId,
+  shouldSessionUpdate(session: Session): boolean {
+    return !session.user;
+  }
+
+  async updateSession(session: Session): Promise<void> {
+    session.user = {
+      id: '1',
       name: 'you',
     };
   }

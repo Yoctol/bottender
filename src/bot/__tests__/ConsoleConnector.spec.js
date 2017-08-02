@@ -20,21 +20,26 @@ describe('#platform', () => {
   });
 });
 
-describe('#getSenderIdFromRequest', () => {
+describe('#getUniqueSessionIdFromRequest', () => {
   it('always return 1', () => {
     const { connector } = setup();
-    const senderId = connector.getSenderIdFromRequest(request.body);
+    const senderId = connector.getUniqueSessionIdFromRequest(request.body);
     expect(senderId).toBe('1');
   });
 });
 
-describe('#getUserProfile', () => {
-  it('always return sample dummy user', async () => {
+describe('#updateSession', () => {
+  it('always attach sample dummy user', async () => {
     const { connector } = setup();
-    const user = await connector.getUserProfile('1');
-    expect(user).toEqual({
-      id: '1',
-      name: 'you',
+    const session = {};
+
+    await connector.updateSession(session);
+
+    expect(session).toEqual({
+      user: {
+        id: '1',
+        name: 'you',
+      },
     });
   });
 });
