@@ -3563,9 +3563,9 @@ messaging-api-messenger@^0.2.4:
     axios "^0.16.1"
     invariant "^2.2.2"
 
-messaging-api-slack@^0.2.4:
-  version "0.2.4"
-  resolved "https://registry.yarnpkg.com/messaging-api-slack/-/messaging-api-slack-0.2.4.tgz#e83bb2e9f68f3294281f999ea7deb843f012d8ea"
+messaging-api-slack@^0.2.5-0:
+  version "0.2.5-0"
+  resolved "https://registry.yarnpkg.com/messaging-api-slack/-/messaging-api-slack-0.2.5-0.tgz#646830103def5ec69096045d5bc031ac681342ef"
   dependencies:
     axios "^0.16.1"
     invariant "^2.2.2"

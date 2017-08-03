@@ -1,7 +1,7 @@
 /* @flow */
 
 import sleep from 'delay';
-import { SlackClient } from 'messaging-api-telegram';
+import { SlackOAuthClient } from 'messaging-api-slack';
 
 import type { SlackSession } from '../bot/SlackConnector';
 
@@ -10,13 +10,13 @@ import SlackEvent, { type SlackRawEvent } from './SlackEvent';
 import DelayableJobQueue from './DelayableJobQueue';
 
 type Options = {
-  client: SlackClient,
+  client: SlackOAuthClient,
   rawEvent: SlackRawEvent,
   session: SlackSession,
 };
 
 export default class SlackContext implements Context {
-  _client: SlackClient;
+  _client: SlackOAuthClient;
   _event: SlackEvent;
   _session: SlackSession;
   _jobQueue: DelayableJobQueue;
@@ -27,41 +27,31 @@ export default class SlackContext implements Context {
     this._session = session;
     this._jobQueue = new DelayableJobQueue();
     this._jobQueue.beforeEach(({ delay }) => sleep(delay));
-
-    const sendMethods = ['sendText', 'sendAttachment', 'sendAttachments'];
-
-    sendMethods.forEach(method => {
-      Object.defineProperty(this, `${method}`, {
-        enumerable: false,
-        configurable: true,
-        writable: true,
-        value(...args) {
-          this._enqueue({
-            instance: this._client,
-            method,
-            args: [...args],
-            delay: DEFAULT_MESSAGE_DELAY,
-            showIndicators: true,
-          });
-        },
-      });
-
-      Object.defineProperty(this, `${method}WithDelay`, {
-        enumerable: false,
-        configurable: true,
-        writable: true,
-        value(delay, ...rest) {
-          this._enqueue({
-            instance: this._client,
-            method,
-            args: [...rest],
-            delay,
-            showIndicators: true,
-          });
-        },
-      });
-    });
   }
+
+  sendText = (text: string): void => {
+    const channelId = this._session.channel.id;
+
+    this._enqueue({
+      instance: this._client,
+      method: 'postMessage',
+      args: [channelId, text],
+      delay: DEFAULT_MESSAGE_DELAY,
+      showIndicators: true,
+    });
+  };
+
+  sendTextWithDelay = (delay, text: string): void => {
+    const channelId = this._session.channel.id;
+
+    this._enqueue({
+      instance: this._client,
+      method: 'postMessage',
+      args: [channelId, text],
+      delay,
+      showIndicators: true,
+    });
+  };
 
   get event(): SlackEvent {
     return this._event;

@@ -19,6 +19,9 @@ const setup = () => {
     user: {
       id: 'fakeUserId',
     },
+    channel: {
+      id: 'C6A9RJJ3F',
+    },
   };
   const args = {
     client,
@@ -58,42 +61,8 @@ it('#sendText put sendText to jobQueue', () => {
 
   expect(context._jobQueue.enqueue).toBeCalledWith({
     instance: client,
-    method: 'sendText',
-    args: ['xxx.com'],
-    delay: 1000,
-    showIndicators: true,
-  });
-});
-
-it('#sendAttachment put sendAttachment to jobQueue', () => {
-  const { context, client } = setup();
-  context._jobQueue = {
-    enqueue: jest.fn(),
-  };
-
-  context.sendAttachment('xxx.png');
-
-  expect(context._jobQueue.enqueue).toBeCalledWith({
-    instance: client,
-    method: 'sendAttachment',
-    args: ['xxx.png'],
-    delay: 1000,
-    showIndicators: true,
-  });
-});
-
-it('#sendAttachments put sendAttachments to jobQueue', () => {
-  const { context, client } = setup();
-  context._jobQueue = {
-    enqueue: jest.fn(),
-  };
-
-  context.sendAttachments(['xxx.mp3']);
-
-  expect(context._jobQueue.enqueue).toBeCalledWith({
-    instance: client,
-    method: 'sendAttachments',
-    args: [['xxx.mp3']],
+    method: 'postMessage',
+    args: ['C6A9RJJ3F', 'xxx.com'],
     delay: 1000,
     showIndicators: true,
   });
@@ -110,8 +79,8 @@ it('use default message delay', () => {
 
   expect(context._jobQueue.enqueue).toBeCalledWith({
     instance: client,
-    method: 'sendText',
-    args: ['yooooooo~'],
+    method: 'postMessage',
+    args: ['C6A9RJJ3F', 'yooooooo~'],
     delay: 1000,
     showIndicators: true,
   });
@@ -120,8 +89,6 @@ it('use default message delay', () => {
 it('has send with delay methods', () => {
   const { context } = setup();
   expect(context.sendTextWithDelay).toBeDefined();
-  expect(context.sendAttachmentWithDelay).toBeDefined();
-  expect(context.sendAttachmentsWithDelay).toBeDefined();
 });
 
 it('#sendTextWithDelay put sendText to jobQueue', () => {
@@ -134,8 +101,8 @@ it('#sendTextWithDelay put sendText to jobQueue', () => {
 
   expect(context._jobQueue.enqueue).toBeCalledWith({
     instance: client,
-    method: 'sendText',
-    args: ['xxx.com'],
+    method: 'postMessage',
+    args: ['C6A9RJJ3F', 'xxx.com'],
     delay: 3000,
     showIndicators: true,
   });

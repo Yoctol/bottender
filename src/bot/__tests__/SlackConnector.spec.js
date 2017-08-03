@@ -1,11 +1,11 @@
-import { SlackClient } from 'messaging-api-slack';
+import { SlackOAuthClient } from 'messaging-api-slack';
 
 import SlackConnector from '../SlackConnector';
 import SlackContext from '../../context/SlackContext';
 
 jest.mock('messaging-api-slack');
 
-const webhookURL = 'WEBHOOK_URL';
+const token = 'SLACK_TOKEN';
 
 const request = {
   body: {
@@ -28,9 +28,15 @@ const request = {
 };
 
 function setup() {
-  SlackClient.connect = jest.fn();
+  const mockSlackOAuthClient = {
+    getUserInfo: jest.fn(),
+    getChannelInfo: jest.fn(),
+  };
+  SlackOAuthClient.connect = jest.fn();
+  SlackOAuthClient.connect.mockReturnValue(mockSlackOAuthClient);
   return {
-    connector: new SlackConnector({ webhookURL }),
+    connector: new SlackConnector({ token }),
+    mockSlackOAuthClient,
   };
 }
 
@@ -44,23 +50,33 @@ describe('#platform', () => {
 describe('#getUniqueSessionIdFromRequest', () => {
   it('extract correct sender id', () => {
     const { connector } = setup();
-    const senderId = connector.getUniqueSessionIdFromRequest(request.body);
-    expect(senderId).toBe('U13AGSN1X'); // FIXME
+    const channelId = connector.getUniqueSessionIdFromRequest(request.body);
+    expect(channelId).toBe('C6A9RJJ3F');
   });
 });
 
 describe('#updateSession', () => {
   it('update session with data needed', async () => {
-    const { connector } = setup();
+    const { connector, mockSlackOAuthClient } = setup();
 
     const user = {
       id: 'U13AGSN1X',
     };
+    const channel = {
+      id: 'C6A9RJJ3F',
+    };
     const session = {};
+
+    mockSlackOAuthClient.getUserInfo.mockReturnValue(Promise.resolve(user));
+    mockSlackOAuthClient.getChannelInfo.mockReturnValue(
+      Promise.resolve(channel)
+    );
 
     await connector.updateSession(session, request.body);
 
-    expect(session).toEqual({ user });
+    expect(mockSlackOAuthClient.getUserInfo).toBeCalledWith('U13AGSN1X');
+    expect(mockSlackOAuthClient.getChannelInfo).toBeCalledWith('C6A9RJJ3F');
+    expect(session).toEqual({ user, channel });
   });
 });
 
