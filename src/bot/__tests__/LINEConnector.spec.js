@@ -115,6 +115,7 @@ describe('#updateSession', () => {
   it('update session with data needed', async () => {
     const { connector, mockLINEAPIClient } = setup();
     const user = {
+      id: 'U206d25c2ea6bd87c17655609a1c37cb8',
       displayName: 'LINE taro',
       userId: 'U206d25c2ea6bd87c17655609a1c37cb8',
       pictureUrl: 'http://obs.line-apps.com/...',
@@ -130,7 +131,10 @@ describe('#updateSession', () => {
       'U206d25c2ea6bd87c17655609a1c37cb8'
     );
 
-    expect(session).toEqual({ user });
+    expect(session).toEqual({
+      type: 'user',
+      user,
+    });
   });
 });
 

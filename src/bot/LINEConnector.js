@@ -54,14 +54,45 @@ export default class LINEConnector
   }
 
   shouldSessionUpdate(session: Session): boolean {
-    return !session.user;
+    if (!session.type) return true;
+
+    if (session.type === 'user') {
+      return !session.user;
+    }
+
+    return true;
   }
 
   async updateSession(session: Session, body: LINERequestBody): Promise<void> {
-    const senderId = this.getUniqueSessionIdFromRequest(body);
-    const user = await this._client.getUserProfile(senderId);
+    const { source } = body.events[0];
 
-    session.user = user;
+    if (!session.type) {
+      session.type = source.type;
+    }
+
+    if (source.type === 'group') {
+      const memberIds = await this._client.getAllGroupMemberIds(source.groupId);
+      session.group = {
+        id: source.groupId,
+        members: memberIds.map(id => ({ id })),
+      };
+    } else if (source.type === 'room') {
+      const memberIds = await this._client.getAllRoomMemberIds(source.roomId);
+      session.room = {
+        id: source.roomId,
+        members: memberIds.map(id => ({ id })),
+      };
+    }
+
+    if (source.userId) {
+      const user = await this._client.getUserProfile(source.userId);
+      session.user = {
+        id: source.userId,
+        ...user,
+      };
+    } else {
+      session.user = null;
+    }
   }
 
   async handleRequest({
