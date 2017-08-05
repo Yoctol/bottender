@@ -15,7 +15,7 @@ type Options = {
   session: TelegramSession,
 };
 
-export default class TelegramContext implements Context {
+class TelegramContext implements Context {
   _client: TelegramClient;
   _event: TelegramEvent;
   _session: TelegramSession;
@@ -27,68 +27,6 @@ export default class TelegramContext implements Context {
     this._session = session;
     this._jobQueue = new DelayableJobQueue();
     this._jobQueue.beforeEach(({ delay }) => sleep(delay));
-
-    const sendMethods = [
-      'sendMessage',
-      'sendPhoto',
-      'sendAudio',
-      'sendDocument',
-      'sendSticker',
-      'sendVideo',
-      'sendVoice',
-      // 'sendVideoNote',
-      'sendLocation',
-      'sendVenue',
-      'sendContact',
-      'sendChatAction',
-    ];
-
-    sendMethods.forEach(method => {
-      Object.defineProperty(this, `${method}`, {
-        enumerable: false,
-        configurable: true,
-        writable: true,
-        value(...args) {
-          this._enqueue({
-            instance: this._client,
-            method,
-            args: [this._session.user.id, ...args],
-            delay: DEFAULT_MESSAGE_DELAY,
-            showIndicators: true,
-          });
-        },
-      });
-
-      Object.defineProperty(this, `${method}To`, {
-        enumerable: false,
-        configurable: true,
-        writable: true,
-        value(id, ...rest) {
-          this._enqueue({
-            instance: this._client,
-            method,
-            args: [id, ...rest],
-            delay: 0,
-            showIndicators: false,
-          });
-        },
-      });
-
-      Object.defineProperty(this, `${method}WithDelay`, {
-        enumerable: false,
-        configurable: true,
-        writable: true,
-        value(delay, ...rest) {
-          this._enqueue({
-            instance: this._client,
-            method,
-            args: [this._session.user.id, ...rest],
-            delay,
-            showIndicators: true,
-          });
-        },
-      });
-    });
   }
 
   get event(): TelegramEvent {
@@ -113,3 +51,67 @@ export default class TelegramContext implements Context {
     this._jobQueue.enqueue(job);
   }
 }
+
+const sendMethods = [
+  'sendMessage',
+  'sendPhoto',
+  'sendAudio',
+  'sendDocument',
+  'sendSticker',
+  'sendVideo',
+  'sendVoice',
+  // 'sendVideoNote',
+  'sendLocation',
+  'sendVenue',
+  'sendContact',
+  'sendChatAction',
+];
+
+sendMethods.forEach(method => {
+  Object.defineProperty(TelegramContext.prototype, `${method}`, {
+    enumerable: false,
+    configurable: true,
+    writable: true,
+    value(...args) {
+      this._enqueue({
+        instance: this._client,
+        method,
+        args: [this._session.user.id, ...args],
+        delay: DEFAULT_MESSAGE_DELAY,
+        showIndicators: true,
+      });
+    },
+  });
+
+  Object.defineProperty(TelegramContext.prototype, `${method}To`, {
+    enumerable: false,
+    configurable: true,
+    writable: true,
+    value(id, ...rest) {
+      this._enqueue({
+        instance: this._client,
+        method,
+        args: [id, ...rest],
+        delay: 0,
+        showIndicators: false,
+      });
+    },
+  });
+
+  Object.defineProperty(TelegramContext.prototype, `${method}WithDelay`, {
+    enumerable: false,
+    configurable: true,
+    writable: true,
+    value(delay, ...rest) {
+      this._enqueue({
+        instance: this._client,
+        method,
+        args: [this._session.user.id, ...rest],
+        delay,
+        showIndicators: true,
+      });
+    },
+  });
+});
+
+export default TelegramContext;
