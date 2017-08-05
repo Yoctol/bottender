@@ -15,7 +15,7 @@ type Options = {
   session: LINESession,
 };
 
-export default class LINEContext implements Context {
+class LINEContext implements Context {
   _client: LINEClient;
   _event: LINEEvent;
   _session: LINESession;
@@ -27,64 +27,6 @@ export default class LINEContext implements Context {
     this._session = session;
     this._jobQueue = new DelayableJobQueue();
     this._jobQueue.beforeEach(({ delay }) => sleep(delay));
-    const types = [
-      'Text',
-      'Image',
-      'Video',
-      'Audio',
-      'Location',
-      'Sticker',
-      'Imagemap',
-      'ButtonTemplate',
-      'ConfirmTemplate',
-      'CarouselTemplate',
-    ];
-    types.forEach(type => {
-      Object.defineProperty(this, `send${type}`, {
-        enumerable: false,
-        configurable: true,
-        writable: true,
-        value(...args) {
-          this._enqueue({
-            instance: this._client,
-            method: `push${type}`,
-            args: [this._session.user.id, ...args],
-            delay: DEFAULT_MESSAGE_DELAY,
-            showIndicators: true,
-          });
-        },
-      });
-
-      Object.defineProperty(this, `send${type}To`, {
-        enumerable: false,
-        configurable: true,
-        writable: true,
-        value(id, ...rest) {
-          this._enqueue({
-            instance: this._client,
-            method: `push${type}`,
-            args: [id, ...rest],
-            delay: 0,
-            showIndicators: false,
-          });
-        },
-      });
-
-      Object.defineProperty(this, `send${type}WithDelay`, {
-        enumerable: false,
-        configurable: true,
-        writable: true,
-        value(delay, ...rest) {
-          this._enqueue({
-            instance: this._client,
-            method: `push${type}`,
-            args: [this._session.user.id, ...rest],
-            delay,
-            showIndicators: true,
-          });
-        },
-      });
-    });
   }
 
   get event(): LINEEvent {
@@ -99,3 +41,64 @@ export default class LINEContext implements Context {
     this._jobQueue.enqueue(job);
   }
 }
+
+const types = [
+  'Text',
+  'Image',
+  'Video',
+  'Audio',
+  'Location',
+  'Sticker',
+  'Imagemap',
+  'ButtonTemplate',
+  'ConfirmTemplate',
+  'CarouselTemplate',
+];
+types.forEach(type => {
+  Object.defineProperty(LINEContext.prototype, `send${type}`, {
+    enumerable: false,
+    configurable: true,
+    writable: true,
+    value(...args) {
+      this._enqueue({
+        instance: this._client,
+        method: `push${type}`,
+        args: [this._session.user.id, ...args],
+        delay: DEFAULT_MESSAGE_DELAY,
+        showIndicators: true,
+      });
+    },
+  });
+
+  Object.defineProperty(LINEContext.prototype, `send${type}To`, {
+    enumerable: false,
+    configurable: true,
+    writable: true,
+    value(id, ...rest) {
+      this._enqueue({
+        instance: this._client,
+        method: `push${type}`,
+        args: [id, ...rest],
+        delay: 0,
+        showIndicators: false,
+      });
+    },
+  });
+
+  Object.defineProperty(LINEContext.prototype, `send${type}WithDelay`, {
+    enumerable: false,
+    configurable: true,
+    writable: true,
+    value(delay, ...rest) {
+      this._enqueue({
+        instance: this._client,
+        method: `push${type}`,
+        args: [this._session.user.id, ...rest],
+        delay,
+        showIndicators: true,
+      });
+    },
+  });
+});
+
+export default LINEContext;

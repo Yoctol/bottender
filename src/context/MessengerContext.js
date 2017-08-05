@@ -15,7 +15,7 @@ type Options = {
   session: MessengerSession,
 };
 
-export default class MessengerContext implements Context {
+class MessengerContext implements Context {
   _client: MessengerClient;
   _event: MessengerEvent;
   _session: MessengerSession;
@@ -36,74 +36,6 @@ export default class MessengerContext implements Context {
       if (showIndicators) {
         this.turnTypingIndicatorsOff();
       }
-    });
-
-    const sendMethods = [
-      'sendText',
-      'sendIssueResolutionText',
-      'sendImage',
-      'sendAudio',
-      'sendVideo',
-      'sendFile',
-      'sendQuickReplies',
-      'sendGenericTemplate',
-      'sendShippingUpdateTemplate',
-      'sendReservationUpdateTemplate',
-      'sendIssueResolutionTemplate',
-      'sendButtonTemplate',
-      'sendListTemplate',
-      'sendReceiptTemplate',
-      'sendAirlineBoardingPassTemplate',
-      'sendAirlineCheckinTemplate',
-      'sendAirlineItineraryTemplate',
-      'sendAirlineFlightUpdateTemplate',
-    ];
-
-    sendMethods.forEach(method => {
-      Object.defineProperty(this, `${method}`, {
-        enumerable: false,
-        configurable: true,
-        writable: true,
-        value(...args) {
-          this._enqueue({
-            instance: this._client,
-            method,
-            args: [this._session.user.id, ...args],
-            delay: DEFAULT_MESSAGE_DELAY,
-            showIndicators: true,
-          });
-        },
-      });
-
-      Object.defineProperty(this, `${method}To`, {
-        enumerable: false,
-        configurable: true,
-        writable: true,
-        value(id, ...rest) {
-          this._enqueue({
-            instance: this._client,
-            method,
-            args: [id, ...rest],
-            delay: 0,
-            showIndicators: false,
-          });
-        },
-      });
-
-      Object.defineProperty(this, `${method}WithDelay`, {
-        enumerable: false,
-        configurable: true,
-        writable: true,
-        value(delay, ...rest) {
-          this._enqueue({
-            instance: this._client,
-            method,
-            args: [this._session.user.id, ...rest],
-            delay,
-            showIndicators: true,
-          });
-        },
-      });
     });
   }
 
@@ -127,3 +59,73 @@ export default class MessengerContext implements Context {
     this._jobQueue.enqueue(job);
   }
 }
+
+const sendMethods = [
+  'sendText',
+  'sendIssueResolutionText',
+  'sendImage',
+  'sendAudio',
+  'sendVideo',
+  'sendFile',
+  'sendQuickReplies',
+  'sendGenericTemplate',
+  'sendShippingUpdateTemplate',
+  'sendReservationUpdateTemplate',
+  'sendIssueResolutionTemplate',
+  'sendButtonTemplate',
+  'sendListTemplate',
+  'sendReceiptTemplate',
+  'sendAirlineBoardingPassTemplate',
+  'sendAirlineCheckinTemplate',
+  'sendAirlineItineraryTemplate',
+  'sendAirlineFlightUpdateTemplate',
+];
+
+sendMethods.forEach(method => {
+  Object.defineProperty(MessengerContext.prototype, `${method}`, {
+    enumerable: false,
+    configurable: true,
+    writable: true,
+    value(...args) {
+      this._enqueue({
+        instance: this._client,
+        method,
+        args: [this._session.user.id, ...args],
+        delay: DEFAULT_MESSAGE_DELAY,
+        showIndicators: true,
+      });
+    },
+  });
+
+  Object.defineProperty(MessengerContext.prototype, `${method}To`, {
+    enumerable: false,
+    configurable: true,
+    writable: true,
+    value(id, ...rest) {
+      this._enqueue({
+        instance: this._client,
+        method,
+        args: [id, ...rest],
+        delay: 0,
+        showIndicators: false,
+      });
+    },
+  });
+
+  Object.defineProperty(MessengerContext.prototype, `${method}WithDelay`, {
+    enumerable: false,
+    configurable: true,
+    writable: true,
+    value(delay, ...rest) {
+      this._enqueue({
+        instance: this._client,
+        method,
+        args: [this._session.user.id, ...rest],
+        delay,
+        showIndicators: true,
+      });
+    },
+  });
+});
+
+export default MessengerContext;
