@@ -62,7 +62,7 @@ it('#sendText put sendText to jobQueue', () => {
   expect(context._jobQueue.enqueue).toBeCalledWith({
     instance: client,
     method: 'postMessage',
-    args: ['C6A9RJJ3F', 'xxx.com'],
+    args: ['C6A9RJJ3F', 'xxx.com', { as_user: true }],
     delay: 1000,
     showIndicators: true,
   });
@@ -80,7 +80,7 @@ it('use default message delay', () => {
   expect(context._jobQueue.enqueue).toBeCalledWith({
     instance: client,
     method: 'postMessage',
-    args: ['C6A9RJJ3F', 'yooooooo~'],
+    args: ['C6A9RJJ3F', 'yooooooo~', { as_user: true }],
     delay: 1000,
     showIndicators: true,
   });
@@ -102,7 +102,7 @@ it('#sendTextWithDelay put sendText to jobQueue', () => {
   expect(context._jobQueue.enqueue).toBeCalledWith({
     instance: client,
     method: 'postMessage',
-    args: ['C6A9RJJ3F', 'xxx.com'],
+    args: ['C6A9RJJ3F', 'xxx.com', { as_user: true }],
     delay: 3000,
     showIndicators: true,
   });
