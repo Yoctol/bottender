@@ -47,6 +47,7 @@
     "jest": "^20.0.4",
     "jest-junit": "^1.5.1",
     "lint-staged": "^3.5.1",
+    "ngrok": "^2.2.15",
     "prettier": "^1.5.2",
     "rimraf": "^2.6.1",
     "supertest": "^3.0.0"
@@ -84,7 +85,6 @@
     "messaging-api-telegram": "^0.2.4",
     "micro": "^7.3.3",
     "mongodb": "^2.2.27",
-    "ngrok": "^2.2.10",
     "pascal-case": "^2.0.1",
     "quick-lru": "^1.0.0",
     "random-item": "^1.0.0",
