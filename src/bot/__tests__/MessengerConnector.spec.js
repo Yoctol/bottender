@@ -102,6 +102,7 @@ describe('#updateSession', () => {
   it('update session with data needed', async () => {
     const { connector, mockGraphAPIClient } = setup();
     const user = {
+      id: '1412611362105802',
       first_name: '薄餡',
       last_name: '茱',
       profile_pic: 'https://example.com/pic.png',
