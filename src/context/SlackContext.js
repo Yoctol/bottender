@@ -30,7 +30,7 @@ export default class SlackContext implements Context {
   }
 
   sendText = (text: string): void => {
-    const channelId = this._session.channel.id;
+    const channelId = this._getChannelIdFromSession();
 
     this._enqueue({
       instance: this._client,
@@ -42,7 +42,7 @@ export default class SlackContext implements Context {
   };
 
   sendTextWithDelay = (delay: number, text: string): void => {
-    const channelId = this._session.channel.id;
+    const channelId = this._getChannelIdFromSession();
 
     this._enqueue({
       instance: this._client,
@@ -63,5 +63,18 @@ export default class SlackContext implements Context {
 
   _enqueue(job: Object): void {
     this._jobQueue.enqueue(job);
+  }
+
+  // FIXME: this is to fix type checking
+  _getChannelIdFromSession(): string {
+    if (
+      typeof this._session.channel === 'object' &&
+      this._session.channel &&
+      this._session.channel.id &&
+      typeof this._session.channel.id === 'string'
+    ) {
+      return this._session.channel.id;
+    }
+    return '';
   }
 }

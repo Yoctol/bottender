@@ -31,6 +31,7 @@ function setup() {
   const mockSlackOAuthClient = {
     getUserInfo: jest.fn(),
     getChannelInfo: jest.fn(),
+    getAllUserList: jest.fn(),
   };
   SlackOAuthClient.connect = jest.fn();
   SlackOAuthClient.connect.mockReturnValue(mockSlackOAuthClient);
@@ -65,18 +66,23 @@ describe('#updateSession', () => {
     const channel = {
       id: 'C6A9RJJ3F',
     };
+    const members = [user];
     const session = {};
 
     mockSlackOAuthClient.getUserInfo.mockReturnValue(Promise.resolve(user));
     mockSlackOAuthClient.getChannelInfo.mockReturnValue(
       Promise.resolve(channel)
     );
+    mockSlackOAuthClient.getAllUserList.mockReturnValue(
+      Promise.resolve(members)
+    );
 
     await connector.updateSession(session, request.body);
 
     expect(mockSlackOAuthClient.getUserInfo).toBeCalledWith('U13AGSN1X');
     expect(mockSlackOAuthClient.getChannelInfo).toBeCalledWith('C6A9RJJ3F');
-    expect(session).toEqual({ user, channel });
+    expect(mockSlackOAuthClient.getAllUserList).toBeCalled();
+    expect(session).toEqual({ user, channel, team: { members } });
   });
 });
 
