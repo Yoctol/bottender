@@ -42,6 +42,11 @@ it('be defined', () => {
   expect(context).toBeDefined();
 });
 
+it('#platform to be `line`', () => {
+  const { context } = setup();
+  expect(context.platform).toBe('line');
+});
+
 it('get #session works', () => {
   const { context, session } = setup();
   expect(context.session).toBe(session);

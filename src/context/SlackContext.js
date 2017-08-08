@@ -63,6 +63,10 @@ export default class SlackContext implements Context {
     });
   }
 
+  get platform(): string {
+    return 'slack';
+  }
+
   get event(): SlackEvent {
     return this._event;
   }
