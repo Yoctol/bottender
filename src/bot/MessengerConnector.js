@@ -58,7 +58,10 @@ export default class MessengerConnector
     const senderId = this.getUniqueSessionIdFromRequest(body);
     const user = await this._client.getUserProfile(senderId);
 
-    session.user = user;
+    session.user = {
+      id: senderId,
+      ...user,
+    };
   }
 
   async handleRequest({
