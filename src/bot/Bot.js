@@ -90,7 +90,7 @@ export default class Bot {
       const session = data || Object.create(null);
 
       if (this._connector.shouldSessionUpdate(session, body)) {
-        this._connector.updateSession(session, body);
+        await this._connector.updateSession(session, body);
       }
 
       await this._connector.handleRequest({
