@@ -29,6 +29,10 @@ class LINEContext implements Context {
     this._jobQueue.beforeEach(({ delay }) => sleep(delay));
   }
 
+  get platform(): string {
+    return 'line';
+  }
+
   get event(): LINEEvent {
     return this._event;
   }

@@ -29,6 +29,10 @@ export default class ConsoleContext implements Context {
     }, delay);
   };
 
+  get platform(): string {
+    return 'console';
+  }
+
   get event(): ConsoleEvent {
     return this._event;
   }

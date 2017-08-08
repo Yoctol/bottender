@@ -39,6 +39,11 @@ it('be defined', () => {
   expect(context).toBeDefined();
 });
 
+it('#platform to be `console`', () => {
+  const { context } = setup();
+  expect(context.platform).toBe('console');
+});
+
 it('get #session works', () => {
   const { context, session } = setup();
   expect(context.session).toBe(session);

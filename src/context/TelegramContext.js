@@ -29,6 +29,10 @@ class TelegramContext implements Context {
     this._jobQueue.beforeEach(({ delay }) => sleep(delay));
   }
 
+  get platform(): string {
+    return 'telegram';
+  }
+
   get event(): TelegramEvent {
     return this._event;
   }

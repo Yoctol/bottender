@@ -39,6 +39,10 @@ class MessengerContext implements Context {
     });
   }
 
+  get platform(): string {
+    return 'messenger';
+  }
+
   get event(): MessengerEvent {
     return this._event;
   }
