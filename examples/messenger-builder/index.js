@@ -13,9 +13,7 @@ const bot = new MessengerBot({
   accessToken: config.accessToken,
 });
 
-const builder = new MessengerHandlerBuilder();
-
-builder
+const handler = new MessengerHandlerBuilder()
   .onText(/Hi/i, 'Nice to see you!')
   .onText(/yo/i, context => {
     context.sendText('Hi there!');
@@ -26,9 +24,10 @@ builder
   })
   .onError(context => {
     context.sendText('Something wrong happend.');
-  });
+  })
+  .build();
 
-bot.handle(builder.build());
+bot.handle(handler);
 
 const server = createServer(bot, config);
 server.listen(5000, () => {
