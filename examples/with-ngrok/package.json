@@ -3,7 +3,11 @@
     "babel-register": "^6.24.1",
     "ngrok": "^2.2.15"
   },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  },
   "scripts": {
+    "dev": "nodemon index.js",
     "start": "node index.js"
   }
 }
