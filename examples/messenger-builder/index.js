@@ -4,12 +4,10 @@ const { MessengerBot, MessengerHandlerBuilder } = require('../../src');
 const { createServer } = require('../../src/express');
 
 const config = {
-  channelSecret: '__FILL_YOUR_SECRET_HERE__',
   accessToken: '__FILL_YOUR_TOKEN_HERE__',
 };
 
 const bot = new MessengerBot({
-  channelSecret: config.channelSecret,
   accessToken: config.accessToken,
 });
 
@@ -23,7 +21,7 @@ const handler = new MessengerHandlerBuilder()
     context.sendText("I don't know what you say.");
   })
   .onError(context => {
-    context.sendText('Something wrong happend.');
+    context.sendText('Something wrong happened.');
   })
   .build();
 
