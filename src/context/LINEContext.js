@@ -59,6 +59,36 @@ const types = [
   'CarouselTemplate',
 ];
 types.forEach(type => {
+  Object.defineProperty(LINEContext.prototype, `reply${type}`, {
+    enumerable: false,
+    configurable: true,
+    writable: true,
+    value(...args) {
+      this._enqueue({
+        instance: this._client,
+        method: `reply${type}`,
+        args: [this._event.replyToken, ...args],
+        delay: DEFAULT_MESSAGE_DELAY,
+        showIndicators: true,
+      });
+    },
+  });
+
+  Object.defineProperty(LINEContext.prototype, `push${type}`, {
+    enumerable: false,
+    configurable: true,
+    writable: true,
+    value(...args) {
+      this._enqueue({
+        instance: this._client,
+        method: `push${type}`,
+        args: [this._session.user.id, ...args],
+        delay: DEFAULT_MESSAGE_DELAY,
+        showIndicators: true,
+      });
+    },
+  });
+
   Object.defineProperty(LINEContext.prototype, `send${type}`, {
     enumerable: false,
     configurable: true,
