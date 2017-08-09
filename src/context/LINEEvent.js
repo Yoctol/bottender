@@ -2,6 +2,8 @@
 
 import type { Event } from './Event';
 
+type ReplyToken = string;
+
 type UserSource = {
   type: 'user',
   userId: string,
@@ -32,7 +34,8 @@ type Postback = {
 };
 
 export type LINERawEvent = {
-  replyToken: string,
+  // only message, follow, join, postback, beacon events have replyToken
+  replyToken?: ReplyToken,
   type: string,
   timestamp: number,
   source: Source,
@@ -49,6 +52,10 @@ export default class LINEEvent implements Event {
 
   get rawEvent(): LINERawEvent {
     return this._rawEvent;
+  }
+
+  get replyToken(): ?ReplyToken {
+    return this._rawEvent.replyToken || null;
   }
 
   get isMessage(): boolean {
