@@ -2,8 +2,12 @@
   "dependencies": {
     "babel-register": "^6.24.1"
   },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  },
   "main": "index.js",
   "scripts": {
+    "dev": "nodemon index.js",
     "start": "micro"
   }
 }

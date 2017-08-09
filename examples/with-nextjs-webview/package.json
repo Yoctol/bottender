@@ -5,8 +5,11 @@
     "react": "^15.5.4",
     "react-dom": "^15.5.4"
   },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  },
   "scripts": {
-    "dev": "node index.js",
+    "dev": "nodemon index.js",
     "build": "next build",
     "start": "NODE_ENV=production node index.js"
   }
