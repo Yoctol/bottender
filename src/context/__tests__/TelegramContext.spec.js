@@ -84,7 +84,8 @@ it('#sendMessage put sendMessage to jobQueue', () => {
     args: [session.user.id, 'xxx.com'],
     delay: 1000,
     showIndicators: true,
-    callback: expect.any(Function),
+    onSuccess: expect.any(Function),
+    onError: expect.any(Function),
   });
 });
 
@@ -102,7 +103,8 @@ it('#sendPhoto put sendPhoto to jobQueue', () => {
     args: [session.user.id, 'xxx.png'],
     delay: 1000,
     showIndicators: true,
-    callback: expect.any(Function),
+    onSuccess: expect.any(Function),
+    onError: expect.any(Function),
   });
 });
 
@@ -120,7 +122,8 @@ it('#sendAudio put sendAudio to jobQueue', () => {
     args: [session.user.id, 'xxx.mp3'],
     delay: 1000,
     showIndicators: true,
-    callback: expect.any(Function),
+    onSuccess: expect.any(Function),
+    onError: expect.any(Function),
   });
 });
 
@@ -138,7 +141,8 @@ it('#sendDocument put sendDocument to jobQueue', () => {
     args: [session.user.id, 'xxx.gif'],
     delay: 1000,
     showIndicators: true,
-    callback: expect.any(Function),
+    onSuccess: expect.any(Function),
+    onError: expect.any(Function),
   });
 });
 
@@ -156,7 +160,8 @@ it('#sendSticker put sendSticker to jobQueue', () => {
     args: [session.user.id, 'CAADAgADQAADyIsGAAE7MpzFPFQX5QI'],
     delay: 1000,
     showIndicators: true,
-    callback: expect.any(Function),
+    onSuccess: expect.any(Function),
+    onError: expect.any(Function),
   });
 });
 
@@ -174,7 +179,8 @@ it('#sendVideo put sendVideo to jobQueue', () => {
     args: [session.user.id, 'xxx.mp4'],
     delay: 1000,
     showIndicators: true,
-    callback: expect.any(Function),
+    onSuccess: expect.any(Function),
+    onError: expect.any(Function),
   });
 });
 
@@ -192,7 +198,8 @@ it('#sendVoice put sendVoice to jobQueue', () => {
     args: [session.user.id, 'xxx.ogg'],
     delay: 1000,
     showIndicators: true,
-    callback: expect.any(Function),
+    onSuccess: expect.any(Function),
+    onError: expect.any(Function),
   });
 });
 
@@ -212,7 +219,8 @@ it('#sendLocation put sendLocation to jobQueue', () => {
     args: [session.user.id, location],
     delay: 1000,
     showIndicators: true,
-    callback: expect.any(Function),
+    onSuccess: expect.any(Function),
+    onError: expect.any(Function),
   });
 });
 
@@ -232,7 +240,8 @@ it('#sendVenue put sendVenue to jobQueue', () => {
     args: [session.user.id, venue],
     delay: 1000,
     showIndicators: true,
-    callback: expect.any(Function),
+    onSuccess: expect.any(Function),
+    onError: expect.any(Function),
   });
 });
 
@@ -252,7 +261,8 @@ it('#sendContact put sendContact to jobQueue', () => {
     args: [session.user.id, contact],
     delay: 1000,
     showIndicators: true,
-    callback: expect.any(Function),
+    onSuccess: expect.any(Function),
+    onError: expect.any(Function),
   });
 });
 
@@ -270,7 +280,8 @@ it('#sendChatAction put sendChatAction to jobQueue', () => {
     args: [session.user.id, 'typing'],
     delay: 1000,
     showIndicators: true,
-    callback: expect.any(Function),
+    onSuccess: expect.any(Function),
+    onError: expect.any(Function),
   });
 });
 
@@ -289,7 +300,8 @@ it('use default message delay', () => {
     args: [session.user.id, 'yooooooo~'],
     delay: 1000,
     showIndicators: true,
-    callback: expect.any(Function),
+    onSuccess: expect.any(Function),
+    onError: expect.any(Function),
   });
 });
 
@@ -322,7 +334,8 @@ it('#sendMessageTo put sendMessage to jobQueue', () => {
     args: ['userId', 'xxx.com'],
     delay: 0,
     showIndicators: false,
-    callback: expect.any(Function),
+    onSuccess: expect.any(Function),
+    onError: expect.any(Function),
   });
 });
 
@@ -355,6 +368,7 @@ it('#sendMessageWithDelay put sendMessage to jobQueue', () => {
     args: [session.user.id, 'xxx.com'],
     delay: 3000,
     showIndicators: true,
-    callback: expect.any(Function),
+    onSuccess: expect.any(Function),
+    onError: expect.any(Function),
   });
 });

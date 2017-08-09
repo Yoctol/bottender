@@ -6,7 +6,8 @@ type JobItem = {
   args: Array<mixed>,
   delay: number,
   showIndicators?: boolean,
-  callback?: Function,
+  onSuccess?: Function,
+  onError?: Function,
 };
 
 type Handler = (job: JobItem) => Promise<mixed>;
@@ -67,7 +68,7 @@ export default class DelayableJobQueue {
       /* eslint-disable no-await-in-loop */
       while (this._hasItem) {
         const item = this._dequeue();
-        const { instance, method, args, callback } = item;
+        const { instance, method, args, onSuccess, onError } = item;
 
         if (this._beforeProcessing) {
           if (typeof this._before === 'function') {
@@ -80,9 +81,18 @@ export default class DelayableJobQueue {
           await this._beforeEach(item);
         }
 
-        const response = await instance[method](...args);
-        if (callback) {
-          callback(response);
+        try {
+          const response = await instance[method](...args);
+          if (onSuccess) {
+            onSuccess(response);
+          }
+        } catch (err) {
+          if (onError) {
+            onError(err);
+          } else {
+            console.error(err);
+            throw err;
+          }
         }
 
         if (typeof this._afterEach === 'function') {

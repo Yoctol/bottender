@@ -91,14 +91,15 @@ sendMethods.forEach(method => {
     configurable: true,
     writable: true,
     value(...args) {
-      return new Promise(resolve => {
+      return new Promise((resolve, reject) => {
         this._enqueue({
           instance: this._client,
           method,
           args: [this._session.user.id, ...args],
           delay: DEFAULT_MESSAGE_DELAY,
           showIndicators: true,
-          callback: resolve,
+          onSuccess: resolve,
+          onError: reject,
         });
       });
     },
@@ -109,14 +110,15 @@ sendMethods.forEach(method => {
     configurable: true,
     writable: true,
     value(id, ...rest) {
-      return new Promise(resolve => {
+      return new Promise((resolve, reject) => {
         this._enqueue({
           instance: this._client,
           method,
           args: [id, ...rest],
           delay: 0,
           showIndicators: false,
-          callback: resolve,
+          onSuccess: resolve,
+          onError: reject,
         });
       });
     },
@@ -127,14 +129,15 @@ sendMethods.forEach(method => {
     configurable: true,
     writable: true,
     value(delay, ...rest) {
-      return new Promise(resolve => {
+      return new Promise((resolve, reject) => {
         this._enqueue({
           instance: this._client,
           method,
           args: [this._session.user.id, ...rest],
           delay,
           showIndicators: true,
-          callback: resolve,
+          onSuccess: resolve,
+          onError: reject,
         });
       });
     },

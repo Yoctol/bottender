@@ -78,7 +78,8 @@ it('#sendText put sendText to jobQueue', () => {
     args: [session.user.id, 'xxx.com'],
     delay: 1000,
     showIndicators: true,
-    callback: expect.any(Function),
+    onSuccess: expect.any(Function),
+    onError: expect.any(Function),
   });
 });
 
@@ -96,7 +97,8 @@ it('#sendIssueResolutionText put sendIssueResolutionText to jobQueue', () => {
     args: [session.user.id, 'xxx.com'],
     delay: 1000,
     showIndicators: true,
-    callback: expect.any(Function),
+    onSuccess: expect.any(Function),
+    onError: expect.any(Function),
   });
 });
 
@@ -114,7 +116,8 @@ it('#sendImage put sendImage to jobQueue', () => {
     args: [session.user.id, 'xxx.com'],
     delay: 1000,
     showIndicators: true,
-    callback: expect.any(Function),
+    onSuccess: expect.any(Function),
+    onError: expect.any(Function),
   });
 });
 
@@ -132,7 +135,8 @@ it('#sendAudio put sendAudio to jobQueue', () => {
     args: [session.user.id, 'xxx.com'],
     delay: 1000,
     showIndicators: true,
-    callback: expect.any(Function),
+    onSuccess: expect.any(Function),
+    onError: expect.any(Function),
   });
 });
 
@@ -150,7 +154,8 @@ it('#sendVideo put sendVideo to jobQueue', () => {
     args: [session.user.id, 'xxx.com'],
     delay: 1000,
     showIndicators: true,
-    callback: expect.any(Function),
+    onSuccess: expect.any(Function),
+    onError: expect.any(Function),
   });
 });
 
@@ -168,7 +173,8 @@ it('#sendFile put sendFile to jobQueue', () => {
     args: [session.user.id, 'xxx.com'],
     delay: 1000,
     showIndicators: true,
-    callback: expect.any(Function),
+    onSuccess: expect.any(Function),
+    onError: expect.any(Function),
   });
 });
 
@@ -188,7 +194,8 @@ it('#sendQuickReplies put sendQuickReplies to jobQueue', () => {
     args: [session.user.id, { text: 'xxx.com' }, quickReplies],
     delay: 1000,
     showIndicators: true,
-    callback: expect.any(Function),
+    onSuccess: expect.any(Function),
+    onError: expect.any(Function),
   });
 });
 
@@ -209,7 +216,8 @@ it('#sendGenericTemplate put sendGenericTemplate to jobQueue', () => {
     args: [session.user.id, elements, ratio],
     delay: 1000,
     showIndicators: true,
-    callback: expect.any(Function),
+    onSuccess: expect.any(Function),
+    onError: expect.any(Function),
   });
 });
 
@@ -230,7 +238,8 @@ it('#sendShippingUpdateTemplate put sendShippingUpdateTemplate to jobQueue', () 
     args: [session.user.id, elements, ratio],
     delay: 1000,
     showIndicators: true,
-    callback: expect.any(Function),
+    onSuccess: expect.any(Function),
+    onError: expect.any(Function),
   });
 });
 
@@ -251,7 +260,8 @@ it('#sendReservationUpdateTemplate put sendReservationUpdateTemplate to jobQueue
     args: [session.user.id, elements, ratio],
     delay: 1000,
     showIndicators: true,
-    callback: expect.any(Function),
+    onSuccess: expect.any(Function),
+    onError: expect.any(Function),
   });
 });
 
@@ -272,7 +282,8 @@ it('#sendIssueResolutionTemplate put sendIssueResolutionTemplate to jobQueue', (
     args: [session.user.id, elements, ratio],
     delay: 1000,
     showIndicators: true,
-    callback: expect.any(Function),
+    onSuccess: expect.any(Function),
+    onError: expect.any(Function),
   });
 });
 
@@ -292,7 +303,8 @@ it('#sendButtonTemplate put sendButtonTemplate to jobQueue', () => {
     args: [session.user.id, 'yayaya', buttons],
     delay: 1000,
     showIndicators: true,
-    callback: expect.any(Function),
+    onSuccess: expect.any(Function),
+    onError: expect.any(Function),
   });
 });
 
@@ -313,7 +325,8 @@ it('#sendListTemplate put sendListTemplate to jobQueue', () => {
     args: [session.user.id, elements, buttons, 'large'],
     delay: 1000,
     showIndicators: true,
-    callback: expect.any(Function),
+    onSuccess: expect.any(Function),
+    onError: expect.any(Function),
   });
 });
 
@@ -333,7 +346,8 @@ it('#sendReceiptTemplate put sendReceiptTemplate to jobQueue', () => {
     args: [session.user.id, receipt],
     delay: 1000,
     showIndicators: true,
-    callback: expect.any(Function),
+    onSuccess: expect.any(Function),
+    onError: expect.any(Function),
   });
 });
 
@@ -353,7 +367,8 @@ it('#sendAirlineBoardingPassTemplate put sendAirlineBoardingPassTemplate to jobQ
     args: [session.user.id, boardingPass],
     delay: 1000,
     showIndicators: true,
-    callback: expect.any(Function),
+    onSuccess: expect.any(Function),
+    onError: expect.any(Function),
   });
 });
 
@@ -373,7 +388,8 @@ it('#sendAirlineCheckinTemplate put sendAirlineCheckinTemplate to jobQueue', () 
     args: [session.user.id, checkin],
     delay: 1000,
     showIndicators: true,
-    callback: expect.any(Function),
+    onSuccess: expect.any(Function),
+    onError: expect.any(Function),
   });
 });
 
@@ -393,7 +409,8 @@ it('#sendAirlineItineraryTemplate put sendAirlineItineraryTemplate to jobQueue',
     args: [session.user.id, itinerary],
     delay: 1000,
     showIndicators: true,
-    callback: expect.any(Function),
+    onSuccess: expect.any(Function),
+    onError: expect.any(Function),
   });
 });
 
@@ -413,7 +430,8 @@ it('#sendAirlineFlightUpdateTemplate put sendAirlineFlightUpdateTemplate to jobQ
     args: [session.user.id, flightUpdate],
     delay: 1000,
     showIndicators: true,
-    callback: expect.any(Function),
+    onSuccess: expect.any(Function),
+    onError: expect.any(Function),
   });
 });
 
@@ -444,7 +462,8 @@ it('use default message delay', () => {
     args: [session.user.id, 'yooooooo~'],
     delay: 1000,
     showIndicators: true,
-    callback: expect.any(Function),
+    onSuccess: expect.any(Function),
+    onError: expect.any(Function),
   });
 });
 
@@ -484,7 +503,8 @@ it('#sendTextTo put sendText to jobQueue', () => {
     args: ['uid_1', 'xxx.com'],
     delay: 0,
     showIndicators: false,
-    callback: expect.any(Function),
+    onSuccess: expect.any(Function),
+    onError: expect.any(Function),
   });
 });
 
@@ -524,7 +544,8 @@ it('#sendTextWithDelay put sendText to jobQueue', () => {
     args: [session.user.id, 'xxx.com'],
     delay: 3000,
     showIndicators: true,
-    callback: expect.any(Function),
+    onSuccess: expect.any(Function),
+    onError: expect.any(Function),
   });
 });
 
