@@ -6,6 +6,7 @@ type JobItem = {
   args: Array<mixed>,
   delay: number,
   showIndicators?: boolean,
+  callback?: Function,
 };
 
 type Handler = (job: JobItem) => Promise<mixed>;
@@ -66,7 +67,7 @@ export default class DelayableJobQueue {
       /* eslint-disable no-await-in-loop */
       while (this._hasItem) {
         const item = this._dequeue();
-        const { instance, method, args } = item;
+        const { instance, method, args, callback } = item;
 
         if (this._beforeProcessing) {
           if (typeof this._before === 'function') {
@@ -79,7 +80,10 @@ export default class DelayableJobQueue {
           await this._beforeEach(item);
         }
 
-        await instance[method](...args);
+        const response = await instance[method](...args);
+        if (callback) {
+          callback(response);
+        }
 
         if (typeof this._afterEach === 'function') {
           await this._afterEach(item);

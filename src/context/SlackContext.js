@@ -32,24 +32,30 @@ export default class SlackContext implements Context {
   sendText = (text: string): void => {
     const channelId = this._getChannelIdFromSession();
 
-    this._enqueue({
-      instance: this._client,
-      method: 'postMessage',
-      args: [channelId, text, { as_user: true }],
-      delay: DEFAULT_MESSAGE_DELAY,
-      showIndicators: true,
+    return new Promise(resolve => {
+      this._enqueue({
+        instance: this._client,
+        method: 'postMessage',
+        args: [channelId, text, { as_user: true }],
+        delay: DEFAULT_MESSAGE_DELAY,
+        showIndicators: true,
+        callback: resolve,
+      });
     });
   };
 
   sendTextWithDelay = (delay: number, text: string): void => {
     const channelId = this._getChannelIdFromSession();
 
-    this._enqueue({
-      instance: this._client,
-      method: 'postMessage',
-      args: [channelId, text, { as_user: true }],
-      delay,
-      showIndicators: true,
+    return new Promise(resolve => {
+      this._enqueue({
+        instance: this._client,
+        method: 'postMessage',
+        args: [channelId, text, { as_user: true }],
+        delay,
+        showIndicators: true,
+        callback: resolve,
+      });
     });
   };
 
