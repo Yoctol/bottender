@@ -53,21 +53,6 @@ describe('#write', () => {
 
     expect(jfs.save).toBeCalledWith('yoctol:1', sess);
   });
-
-  it('should call jfs delte after maxAge', async () => {
-    jest.useFakeTimers();
-
-    const { store, jfs } = setup();
-    await store.init();
-
-    const sess = { x: 1 };
-
-    await store.write('yoctol:1', sess, 5);
-
-    jest.runTimersToTime(5 * 60 * 1000);
-
-    expect(jfs.delete).toBeCalledWith('yoctol:1');
-  });
 });
 
 describe('#destroy', () => {
