@@ -96,6 +96,7 @@ type Message = {
 export type TelegramRawEvent = {
   update_id: number,
   message: Message,
+  data?: string,
 };
 
 export default class TelegramEvent implements Event {
@@ -115,6 +116,10 @@ export default class TelegramEvent implements Event {
 
   get message(): ?Message {
     return this._rawEvent.message;
+  }
+
+  get data(): ?string {
+    return this._rawEvent.data;
   }
 
   get isTextMessage(): boolean {
@@ -206,5 +211,11 @@ export default class TelegramEvent implements Event {
     const message: Message = (this.message: any);
 
     return !!message.venue && typeof message.venue === 'object';
+  }
+
+  get isCallbackQuery(): boolean {
+    if (!this.isMessage) return false;
+
+    return !!this.data && typeof this.data === 'string';
   }
 }
