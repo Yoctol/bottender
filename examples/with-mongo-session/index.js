@@ -1,14 +1,8 @@
 require('babel-register');
 
-const { MessengerBot, MongoSessionStore } = require('../../src');
-const { createServer } = require('../../src/express');
+const { ConsoleBot, MongoSessionStore } = require('../../src');
 
-const config = {
-  accessToken: '__FILL_YOUR_TOKEN_HERE__',
-};
-
-const bot = new MessengerBot({
-  accessToken: config.accessToken,
+const bot = new ConsoleBot({
   sessionStore: new MongoSessionStore('mongodb://localhost:27017/'),
 });
 
@@ -16,8 +10,4 @@ bot.handle(context => {
   context.sendText('Hello World');
 });
 
-const server = createServer(bot, config);
-
-server.listen(5000, () => {
-  console.log('server is running...');
-});
+bot.createRuntime();
