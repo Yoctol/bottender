@@ -93,13 +93,16 @@ export default class Bot {
         await this._connector.updateSession(session, body);
       }
 
-      await this._connector.handleRequest({
-        body,
-        session: ((session: any): SessionWithUser<{}>),
-        handler,
-      });
-
-      this._sessions.write(sessionKey, session, MINUTES_IN_ONE_YEAR);
+      this._connector
+        .handleRequest({
+          body,
+          session: ((session: any): SessionWithUser<{}>),
+          handler,
+        })
+        .then(() => {
+          this._sessions.write(sessionKey, session, MINUTES_IN_ONE_YEAR);
+        })
+        .catch(console.error);
     };
   }
 }

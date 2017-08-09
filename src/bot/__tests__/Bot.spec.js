@@ -6,7 +6,7 @@ function setup({
     getUniqueSessionIdFromRequest: jest.fn(),
     shouldSessionUpdate: jest.fn(),
     updateSession: jest.fn(),
-    handleRequest: jest.fn(),
+    handleRequest: jest.fn(() => Promise.resolve(true)),
   },
   sessionStore = {
     init: jest.fn(),
