@@ -36,11 +36,16 @@ const request = {
       },
     ],
   },
+  rawBody: 'fake_raw_body',
+  header: {
+    'x-line-signature': 'fake_signature',
+  },
 };
 
 function setup() {
   const mockLINEAPIClient = {
     getUserProfile: jest.fn(),
+    isValidSignature: jest.fn(),
   };
   LINEClient.connect = jest.fn();
   LINEClient.connect.mockReturnValue(mockLINEAPIClient);
@@ -150,5 +155,18 @@ describe('#handleRequest', () => {
 
     expect(context).toBeDefined();
     expect(context).toBeInstanceOf(LINEContext);
+  });
+});
+
+describe('#verifySignature', () => {
+  it('call client verify function with rawbody and signature', () => {
+    const { connector, mockLINEAPIClient } = setup();
+
+    connector.verifySignature(request);
+
+    expect(mockLINEAPIClient.isValidSignature).toBeCalledWith(
+      'fake_raw_body',
+      'fake_signature'
+    );
   });
 });

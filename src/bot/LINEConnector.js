@@ -119,4 +119,14 @@ export default class LINEConnector
 
     await Promise.all(promises);
   }
+
+  verifySignature(request: {
+    rawBody: string,
+    header: { 'x-line-signature': string },
+  }): boolean {
+    return this._client.isValidSignature(
+      request.rawBody,
+      request.header['x-line-signature']
+    );
+  }
 }
