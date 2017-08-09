@@ -52,9 +52,12 @@ export default class SlackConnector
     return 'U000000000'; // FIXME
   }
 
-  shouldSessionUpdate(session: Session): boolean {
-    // TODO: member_joined_channel or member_left_channel event?
-    return !session.user || !session.channel;
+  shouldSessionUpdate(session: Session, body: SlackRequestBody): boolean {
+    // FIXME: don't update channel or team part so often
+    if (typeof session.user === 'object' && session.user && session.user.id) {
+      return session.user.id !== body.event.user;
+    }
+    return false;
   }
 
   // FIXME
