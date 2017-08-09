@@ -57,7 +57,7 @@ export default class SlackConnector
     if (typeof session.user === 'object' && session.user && session.user.id) {
       return session.user.id !== body.event.user;
     }
-    return false;
+    return true;
   }
 
   // FIXME
