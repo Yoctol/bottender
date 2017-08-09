@@ -16,6 +16,7 @@ export type Message = {
 export type SlackRawEvent =
   | {
       type: string,
+      user: string, // FIXME: this is to fix type checking
     }
   | Message;
 

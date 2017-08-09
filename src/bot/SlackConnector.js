@@ -2,7 +2,7 @@
   eslint-disable class-methods-use-this
   @flow
 */
-import { SlackClient } from 'messaging-api-slack';
+import { SlackOAuthClient } from 'messaging-api-slack';
 
 import SlackContext from '../context/SlackContext';
 import type { SlackRawEvent } from '../context/SlackEvent';
@@ -31,10 +31,10 @@ export type SlackSession = SessionWithUser<SlackUser>;
 
 export default class SlackConnector
   implements Connector<SlackRequestBody, SlackUser> {
-  _client: SlackClient;
+  _client: SlackOAuthClient;
 
-  constructor({ webhookURL }: { webhookURL: string }) {
-    this._client = SlackClient.connect(webhookURL);
+  constructor({ token }: { token: string }) {
+    this._client = SlackOAuthClient.connect(token);
   }
 
   _getRawEventFromRequest(body: SlackRequestBody): SlackRawEvent {
@@ -46,21 +46,32 @@ export default class SlackConnector
   }
 
   getUniqueSessionIdFromRequest(body: SlackRequestBody): string {
-    if (body.event.user && typeof body.event.user === 'string') {
-      return body.event.user;
+    if (body.event.channel && typeof body.event.channel === 'string') {
+      return body.event.channel;
     }
     return 'U000000000'; // FIXME
   }
 
   shouldSessionUpdate(session: Session): boolean {
-    return !session.user;
+    // TODO: member_joined_channel or member_left_channel event?
+    return !session.user || !session.channel;
   }
 
   // FIXME
   async updateSession(session: Session, body: SlackRequestBody): Promise<void> {
-    const senderId = this.getUniqueSessionIdFromRequest(body);
+    const channelId = this.getUniqueSessionIdFromRequest(body);
+    const senderId = body.event.user;
 
-    session.user = { id: senderId };
+    const sender = await this._client.getUserInfo(senderId);
+    const channel = await this._client.getChannelInfo(channelId);
+    const allUsers = await this._client.getAllUserList();
+
+    session.user = sender;
+    session.channel = channel;
+    // TODO: check if team exists
+    session.team = {
+      members: allUsers,
+    };
   }
 
   async handleRequest({

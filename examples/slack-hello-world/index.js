@@ -4,11 +4,11 @@ const { SlackBot } = require('../../src');
 const { createServer } = require('../../src/express');
 
 const config = {
-  webhookURL: '__FILL_YOUR_WEBHOOKURL_HERE__',
+  token: '__FILL_YOUR_token_HERE__',
 };
 
 const bot = new SlackBot({
-  webhookURL: config.webhookURL,
+  token: config.token,
 });
 bot.handle(context => {
   context.sendText('Hello World');
