@@ -25,11 +25,10 @@ export default class FileSessionStore implements SessionStore {
     return this._jfs.get(key).catch(() => null);
   }
 
+  // FIXME: maxAge
+  // eslint-disable-next-line no-unused-vars
   async write(key: string, sess: Session, maxAge: number): Promise<void> {
     await this._jfs.save(key, sess);
-    setTimeout(() => {
-      this.destroy(key);
-    }, maxAge * 60 * 1000);
   }
 
   async destroy(key: string): Promise<void> {
