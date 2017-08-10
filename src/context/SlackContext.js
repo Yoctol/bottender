@@ -29,7 +29,7 @@ export default class SlackContext implements Context {
     this._jobQueue.beforeEach(({ delay }) => sleep(delay));
   }
 
-  sendText = (text: string): void => {
+  postMessage(text: string): void {
     const channelId = this._getChannelIdFromSession();
 
     this._enqueue({
@@ -39,9 +39,13 @@ export default class SlackContext implements Context {
       delay: DEFAULT_MESSAGE_DELAY,
       showIndicators: true,
     });
-  };
+  }
 
-  sendTextWithDelay = (delay: number, text: string): void => {
+  sendText(text: string): void {
+    return this.postMessage(text);
+  }
+
+  sendTextWithDelay(delay: number, text: string): void {
     const channelId = this._getChannelIdFromSession();
 
     this._enqueue({
@@ -51,7 +55,7 @@ export default class SlackContext implements Context {
       delay,
       showIndicators: true,
     });
-  };
+  }
 
   get platform(): string {
     return 'slack';
