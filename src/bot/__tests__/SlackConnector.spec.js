@@ -5,7 +5,7 @@ import SlackContext from '../../context/SlackContext';
 
 jest.mock('messaging-api-slack');
 
-const token = 'SLACK_TOKEN';
+const accessToken = 'SLACK_accessTOKEN';
 
 const request = {
   body: {
@@ -36,7 +36,7 @@ function setup() {
   SlackOAuthClient.connect = jest.fn();
   SlackOAuthClient.connect.mockReturnValue(mockSlackOAuthClient);
   return {
-    connector: new SlackConnector({ token }),
+    connector: new SlackConnector({ accessToken }),
     mockSlackOAuthClient,
   };
 }
