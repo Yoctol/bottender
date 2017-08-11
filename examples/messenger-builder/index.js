@@ -1,19 +1,17 @@
 require('babel-register');
 
-const { LINEBot, LINEHandlerBuilder } = require('../../src');
+const { MessengerBot, MessengerHandlerBuilder } = require('../../src');
 const { createServer } = require('../../src/express');
 
 const config = {
-  channelSecret: '__FILL_YOUR_SECRET_HERE__',
   accessToken: '__FILL_YOUR_TOKEN_HERE__',
 };
 
-const bot = new LINEBot({
-  channelSecret: config.channelSecret,
+const bot = new MessengerBot({
   accessToken: config.accessToken,
 });
 
-const handler = new LINEHandlerBuilder()
+const handler = new MessengerHandlerBuilder()
   .onText(/Hi/i, 'Nice to see you!')
   .onText(/yo/i, context => {
     context.sendText('Hi there!');

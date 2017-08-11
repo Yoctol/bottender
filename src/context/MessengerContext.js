@@ -51,6 +51,37 @@ class MessengerContext implements Context {
     return this._session;
   }
 
+  sendText(text: string): void {
+    this._enqueue({
+      instance: this._client,
+      method: 'sendText',
+      args: [this._session.user.id, text],
+      delay: DEFAULT_MESSAGE_DELAY,
+      showIndicators: true,
+    });
+  }
+
+  sendTextWithDelay(delay: number, text: string) {
+    this._enqueue({
+      instance: this._client,
+      method: 'sendText',
+      args: [this._session.user.id, text],
+      delay,
+      showIndicators: true,
+    });
+  }
+
+  // FIXME: rethink
+  sendTextTo(id: string, text: string): void {
+    this._enqueue({
+      instance: this._client,
+      method: 'sendText',
+      args: [id, text],
+      delay: 0,
+      showIndicators: false,
+    });
+  }
+
   turnTypingIndicatorsOn(): void {
     this._client.turnTypingIndicatorsOn(this._session.user.id);
   }
@@ -65,7 +96,6 @@ class MessengerContext implements Context {
 }
 
 const sendMethods = [
-  'sendText',
   'sendIssueResolutionText',
   'sendImage',
   'sendAudio',

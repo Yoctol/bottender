@@ -8,6 +8,6 @@ export interface Context {
   +platform: string,
   +event: Event,
   +session: {},
-  sendText?: (text: string) => any | Promise<any>,
-  sendTextWithDelay?: (seconds: number, text: string) => any | Promise<any>,
+  +sendText: (text: string) => any,
+  +sendTextWithDelay: (seconds: number, text: string) => any,
 }
