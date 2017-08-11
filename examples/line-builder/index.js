@@ -29,7 +29,7 @@ const handler = new LINEHandlerBuilder()
 
 bot.handle(handler);
 
-const server = createServer(bot, config);
+const server = createServer(bot);
 server.listen(5000, () => {
   console.log('server is running on 5000 port...');
 });

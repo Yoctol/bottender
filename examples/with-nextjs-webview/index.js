@@ -27,7 +27,7 @@ async function createServerWithNext() {
 
   await nextApp.prepare(); // eslint-disable-line no-await-in-loop
 
-  const server = createServer(bot, config);
+  const server = createServer(bot);
 
   server.get('*', (req, res) => {
     const parsedUrl = parse(req.url, true);
