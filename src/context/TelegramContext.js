@@ -41,8 +41,8 @@ class TelegramContext implements Context {
     return this._session;
   }
 
-  sendText(text: string): void {
-    this._enqueue({
+  sendText(text: string): Promise<any> {
+    return this._enqueue({
       instance: this._client,
       method: 'sendMessage',
       args: [this._session.user.id, text],
@@ -51,8 +51,8 @@ class TelegramContext implements Context {
     });
   }
 
-  sendTextWithDelay(delay: number, text: string) {
-    this._enqueue({
+  sendTextWithDelay(delay: number, text: string): Promise<any> {
+    return this._enqueue({
       instance: this._client,
       method: 'sendMessage',
       args: [this._session.user.id, text],
@@ -61,8 +61,14 @@ class TelegramContext implements Context {
     });
   }
 
-  _enqueue(job: Object): void {
-    this._jobQueue.enqueue(job);
+  _enqueue(job: Object): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this._jobQueue.enqueue({
+        ...job,
+        onSuccess: resolve,
+        onError: reject,
+      });
+    });
   }
 }
 
@@ -87,7 +93,7 @@ sendMethods.forEach(method => {
     configurable: true,
     writable: true,
     value(...args) {
-      this._enqueue({
+      return this._enqueue({
         instance: this._client,
         method,
         args: [this._session.user.id, ...args],
@@ -102,7 +108,7 @@ sendMethods.forEach(method => {
     configurable: true,
     writable: true,
     value(id, ...rest) {
-      this._enqueue({
+      return this._enqueue({
         instance: this._client,
         method,
         args: [id, ...rest],
@@ -117,7 +123,7 @@ sendMethods.forEach(method => {
     configurable: true,
     writable: true,
     value(delay, ...rest) {
-      this._enqueue({
+      return this._enqueue({
         instance: this._client,
         method,
         args: [this._session.user.id, ...rest],
