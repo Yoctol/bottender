@@ -89,7 +89,7 @@ const config = {
     ? `\n  channelSecret: '__FILL_YOUR_SECRET_HERE__',`
     : ''}
 };
-  ${session === 'redis' ? '\nconst cache = new RedisCacheStore();\n' : ''}
+${session === 'redis' ? '\nconst cache = new RedisCacheStore();\n' : ''}
 const bot = new ${dependencies[0]}({
   accessToken: config.accessToken,${platform === 'line'
     ? `\n  channelSecret: config.channelSecret,`
