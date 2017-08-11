@@ -61,16 +61,6 @@ class TelegramContext implements Context {
     });
   }
 
-  // FIXME
-  turnTypingIndicatorsOn(): void {
-    this._client.turnTypingIndicatorsOn(this._session.user.id);
-  }
-
-  // FIXME
-  turnTypingIndicatorsOff(): void {
-    this._client.turnTypingIndicatorsOff(this._session.user.id);
-  }
-
   _enqueue(job: Object): void {
     this._jobQueue.enqueue(job);
   }

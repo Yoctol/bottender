@@ -93,10 +93,17 @@ type Message = {
   file?: File,
 };
 
+type CallbackQuery = {
+  from: TelegramUser,
+  message: Message,
+  chat_instance: string,
+  data: string,
+};
+
 export type TelegramRawEvent = {
   update_id: number,
-  message: Message,
-  data?: string,
+  message?: Message,
+  callback_query?: CallbackQuery,
 };
 
 export default class TelegramEvent implements Event {
@@ -118,8 +125,8 @@ export default class TelegramEvent implements Event {
     return this._rawEvent.message;
   }
 
-  get data(): ?string {
-    return this._rawEvent.data;
+  get callbackQuery(): ?CallbackQuery {
+    return this._rawEvent.callback_query;
   }
 
   get isTextMessage(): boolean {
@@ -214,8 +221,8 @@ export default class TelegramEvent implements Event {
   }
 
   get isCallbackQuery(): boolean {
-    if (!this.isMessage) return false;
+    if (this.isMessage) return false;
 
-    return !!this.data && typeof this.data === 'string';
+    return !!this.callbackQuery && typeof this.callbackQuery === 'object';
   }
 }
