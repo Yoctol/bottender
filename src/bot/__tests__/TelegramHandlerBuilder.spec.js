@@ -128,12 +128,14 @@ describe('#onText', () => {
 describe('#onCallbackQuery', () => {
   const context = {
     event: {
-      isMessage: true,
+      isMessage: false,
       isCallbackQuery: true,
-      message: {
-        text: 'awesome',
+      callbackQuery: {
+        message: {
+          text: 'awesome',
+        },
+        data: 'data',
       },
-      data: 'data',
     },
   };
 

@@ -22,7 +22,9 @@ export type Context = {
         type: string,
       },
     ],
-    data: string,
+    callbackQuery: {
+      data: string,
+    },
     isEcho: boolean,
     isRead: boolean,
     isDelivery: boolean,

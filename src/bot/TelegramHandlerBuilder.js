@@ -33,10 +33,10 @@ export default class TelegramHandlerBuilder extends BasicHandlerBuilder {
       typeof pattern === 'string' || pattern instanceof RegExp,
       `'onCallbackQuery' only accepts string or regex, but received ${typeof pattern}`
     );
-    this.onMessage(
+    this.on(
       context =>
         context.event.isCallbackQuery &&
-        matchPattern(pattern, context.event.data),
+        matchPattern(pattern, context.event.callbackQuery.data),
       handler
     );
     return this;
