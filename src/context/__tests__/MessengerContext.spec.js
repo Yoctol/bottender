@@ -556,14 +556,6 @@ it('show typing when sending', async () => {
 
   expect(client.turnTypingIndicatorsOn).toBeCalled();
   expect(client.turnTypingIndicatorsOff).not.toBeCalled();
-
-  jest.runAllTimers();
-
-  jest.useRealTimers();
-
-  await new Promise(resolve => setTimeout(resolve, 0));
-
-  expect(client.turnTypingIndicatorsOff).not.toBeCalled();
 });
 
 it('should not show typing when sending to others', async () => {
@@ -573,12 +565,5 @@ it('should not show typing when sending to others', async () => {
 
   context.sendTextTo('uid_1', 'xxx.com');
 
-  jest.runAllTimers();
-
-  jest.useRealTimers();
-
-  await new Promise(resolve => setTimeout(resolve, 0));
-
   expect(client.turnTypingIndicatorsOn).not.toBeCalled();
-  expect(client.turnTypingIndicatorsOff).not.toBeCalled();
 });

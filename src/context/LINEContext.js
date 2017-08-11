@@ -42,22 +42,30 @@ class LINEContext implements Context {
   }
 
   sendText(text: string) {
-    this._enqueue({
-      instance: this._client,
-      method: `pushText`,
-      args: [this._session.user.id, text],
-      delay: DEFAULT_MESSAGE_DELAY,
-      showIndicators: true,
+    return new Promise((resolve, reject) => {
+      this._enqueue({
+        instance: this._client,
+        method: `pushText`,
+        args: [this._session.user.id, text],
+        delay: DEFAULT_MESSAGE_DELAY,
+        showIndicators: true,
+        onSuccess: resolve,
+        onError: reject,
+      });
     });
   }
 
   sendTextWithDelay(delay: number, text: string) {
-    this._enqueue({
-      instance: this._client,
-      method: `pushText`,
-      args: [this._session.user.id, text],
-      delay,
-      showIndicators: true,
+    return new Promise((resolve, reject) => {
+      this._enqueue({
+        instance: this._client,
+        method: `pushText`,
+        args: [this._session.user.id, text],
+        delay,
+        showIndicators: true,
+        onSuccess: resolve,
+        onError: reject,
+      });
     });
   }
 
@@ -124,12 +132,16 @@ types.filter(type => type !== 'Text').forEach(type => {
     configurable: true,
     writable: true,
     value(...args) {
-      this._enqueue({
-        instance: this._client,
-        method: `push${type}`,
-        args: [this._session.user.id, ...args],
-        delay: DEFAULT_MESSAGE_DELAY,
-        showIndicators: true,
+      return new Promise((resolve, reject) => {
+        this._enqueue({
+          instance: this._client,
+          method: `push${type}`,
+          args: [this._session.user.id, ...args],
+          delay: DEFAULT_MESSAGE_DELAY,
+          showIndicators: true,
+          onSuccess: resolve,
+          onError: reject,
+        });
       });
     },
   });

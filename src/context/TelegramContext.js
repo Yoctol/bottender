@@ -42,22 +42,30 @@ class TelegramContext implements Context {
   }
 
   sendText(text: string): void {
-    this._enqueue({
-      instance: this._client,
-      method: 'sendMessage',
-      args: [this._session.user.id, text],
-      delay: DEFAULT_MESSAGE_DELAY,
-      showIndicators: true,
+    return new Promise((resolve, reject) => {
+      this._enqueue({
+        instance: this._client,
+        method: 'sendMessage',
+        args: [this._session.user.id, text],
+        delay: DEFAULT_MESSAGE_DELAY,
+        showIndicators: true,
+        onSuccess: resolve,
+        onError: reject,
+      });
     });
   }
 
   sendTextWithDelay(delay: number, text: string) {
-    this._enqueue({
-      instance: this._client,
-      method: 'sendMessage',
-      args: [this._session.user.id, text],
-      delay,
-      showIndicators: true,
+    return new Promise((resolve, reject) => {
+      this._enqueue({
+        instance: this._client,
+        method: 'sendMessage',
+        args: [this._session.user.id, text],
+        delay,
+        showIndicators: true,
+        onSuccess: resolve,
+        onError: reject,
+      });
     });
   }
 

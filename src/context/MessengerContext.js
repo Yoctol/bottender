@@ -52,33 +52,45 @@ class MessengerContext implements Context {
   }
 
   sendText(text: string): void {
-    this._enqueue({
-      instance: this._client,
-      method: 'sendText',
-      args: [this._session.user.id, text],
-      delay: DEFAULT_MESSAGE_DELAY,
-      showIndicators: true,
+    return new Promise((resolve, reject) => {
+      this._enqueue({
+        instance: this._client,
+        method: 'sendText',
+        args: [this._session.user.id, text],
+        delay: DEFAULT_MESSAGE_DELAY,
+        showIndicators: true,
+        onSuccess: resolve,
+        onError: reject,
+      });
     });
   }
 
   sendTextWithDelay(delay: number, text: string) {
-    this._enqueue({
-      instance: this._client,
-      method: 'sendText',
-      args: [this._session.user.id, text],
-      delay,
-      showIndicators: true,
+    return new Promise((resolve, reject) => {
+      this._enqueue({
+        instance: this._client,
+        method: 'sendText',
+        args: [this._session.user.id, text],
+        delay,
+        showIndicators: true,
+        onSuccess: resolve,
+        onError: reject,
+      });
     });
   }
 
   // FIXME: rethink
   sendTextTo(id: string, text: string): void {
-    this._enqueue({
-      instance: this._client,
-      method: 'sendText',
-      args: [id, text],
-      delay: 0,
-      showIndicators: false,
+    return new Promise((resolve, reject) => {
+      this._enqueue({
+        instance: this._client,
+        method: 'sendText',
+        args: [id, text],
+        delay: 0,
+        showIndicators: false,
+        onSuccess: resolve,
+        onError: reject,
+      });
     });
   }
 
