@@ -27,7 +27,7 @@ const handler = new TelegramHandlerBuilder()
 
 bot.handle(handler);
 
-const server = createServer(bot, config);
+const server = createServer(bot);
 server.listen(5000, () => {
   bot.connector._client.setWebhook(config.url);
   console.log('server is running on 5000 port...');
