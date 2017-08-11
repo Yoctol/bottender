@@ -397,10 +397,10 @@ it('#isGameMessage', () => {
   expect(new TelegramEvent(gameMessage).isGameMessage).toEqual(true);
 });
 
-it('#isPhoteMessage', () => {
-  expect(new TelegramEvent(callbackQuery).isPhoteMessage).toEqual(false);
-  expect(new TelegramEvent(textMessage).isPhoteMessage).toEqual(false);
-  expect(new TelegramEvent(photoMessage).isPhoteMessage).toEqual(true);
+it('#isPhotoMessage', () => {
+  expect(new TelegramEvent(callbackQuery).isPhotoMessage).toEqual(false);
+  expect(new TelegramEvent(textMessage).isPhotoMessage).toEqual(false);
+  expect(new TelegramEvent(photoMessage).isPhotoMessage).toEqual(true);
 });
 
 it('#isStickerMessage', () => {

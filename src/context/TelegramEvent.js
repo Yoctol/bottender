@@ -157,7 +157,7 @@ export default class TelegramEvent implements Event {
     return !!message.game && typeof message.game === 'object';
   }
 
-  get isPhoteMessage(): boolean {
+  get isPhotoMessage(): boolean {
     if (!this.isMessage) return false;
 
     const message: Message = (this.message: any);
