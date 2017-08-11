@@ -19,15 +19,15 @@ export default class ConsoleContext implements Context {
     this._session = session;
   }
 
-  sendText = (text: string): void => {
+  sendText(text: string): void {
     process.stdout.write(`Bot > ${text}\nYou > `);
-  };
+  }
 
-  sendTextWithDelay = (delay: number, text: string): void => {
+  sendTextWithDelay(delay: number, text: string): void {
     setTimeout(() => {
       this.sendText(text);
     }, delay);
-  };
+  }
 
   get platform(): string {
     return 'console';

@@ -41,6 +41,26 @@ class LINEContext implements Context {
     return this._session;
   }
 
+  sendText(text: string) {
+    this._enqueue({
+      instance: this._client,
+      method: `pushText`,
+      args: [this._session.user.id, text],
+      delay: DEFAULT_MESSAGE_DELAY,
+      showIndicators: true,
+    });
+  }
+
+  sendTextWithDelay(delay: number, text: string) {
+    this._enqueue({
+      instance: this._client,
+      method: `pushText`,
+      args: [this._session.user.id, text],
+      delay,
+      showIndicators: true,
+    });
+  }
+
   _enqueue(job: Object): void {
     this._jobQueue.enqueue(job);
   }
@@ -59,7 +79,7 @@ const types = [
   'CarouselTemplate',
 ];
 types.forEach(type => {
-  Object.defineProperty(LINEContext.prototype, `send${type}`, {
+  Object.defineProperty(LINEContext.prototype, `push${type}`, {
     enumerable: false,
     configurable: true,
     writable: true,
@@ -88,6 +108,23 @@ types.forEach(type => {
       });
     },
   });
+});
+
+types.filter(type => type !== 'Text').forEach(type => {
+  Object.defineProperty(LINEContext.prototype, `send${type}`, {
+    enumerable: false,
+    configurable: true,
+    writable: true,
+    value(...args) {
+      this._enqueue({
+        instance: this._client,
+        method: `push${type}`,
+        args: [this._session.user.id, ...args],
+        delay: DEFAULT_MESSAGE_DELAY,
+        showIndicators: true,
+      });
+    },
+  });
 
   Object.defineProperty(LINEContext.prototype, `send${type}WithDelay`, {
     enumerable: false,
@@ -104,5 +141,4 @@ types.forEach(type => {
     },
   });
 });
-
 export default LINEContext;
