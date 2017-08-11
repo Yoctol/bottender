@@ -77,8 +77,14 @@ export default class SlackContext implements Context {
     return this._session;
   }
 
-  _enqueue(job: Object): void {
-    this._jobQueue.enqueue(job);
+  _enqueue(job: Object): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this._jobQueue.enqueue({
+        ...job,
+        onSuccess: resolve,
+        onError: reject,
+      });
+    });
   }
 
   // FIXME: this is to fix type checking

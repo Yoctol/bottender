@@ -51,46 +51,34 @@ class MessengerContext implements Context {
     return this._session;
   }
 
-  sendText(text: string): void {
-    return new Promise((resolve, reject) => {
-      this._enqueue({
-        instance: this._client,
-        method: 'sendText',
-        args: [this._session.user.id, text],
-        delay: DEFAULT_MESSAGE_DELAY,
-        showIndicators: true,
-        onSuccess: resolve,
-        onError: reject,
-      });
+  sendText(text: string): Promise<any> {
+    return this._enqueue({
+      instance: this._client,
+      method: 'sendText',
+      args: [this._session.user.id, text],
+      delay: DEFAULT_MESSAGE_DELAY,
+      showIndicators: true,
     });
   }
 
-  sendTextWithDelay(delay: number, text: string) {
-    return new Promise((resolve, reject) => {
-      this._enqueue({
-        instance: this._client,
-        method: 'sendText',
-        args: [this._session.user.id, text],
-        delay,
-        showIndicators: true,
-        onSuccess: resolve,
-        onError: reject,
-      });
+  sendTextWithDelay(delay: number, text: string): Promise<any> {
+    return this._enqueue({
+      instance: this._client,
+      method: 'sendText',
+      args: [this._session.user.id, text],
+      delay,
+      showIndicators: true,
     });
   }
 
   // FIXME: rethink
-  sendTextTo(id: string, text: string): void {
-    return new Promise((resolve, reject) => {
-      this._enqueue({
-        instance: this._client,
-        method: 'sendText',
-        args: [id, text],
-        delay: 0,
-        showIndicators: false,
-        onSuccess: resolve,
-        onError: reject,
-      });
+  sendTextTo(id: string, text: string): Promise<any> {
+    return this._enqueue({
+      instance: this._client,
+      method: 'sendText',
+      args: [id, text],
+      delay: 0,
+      showIndicators: false,
     });
   }
 
@@ -102,8 +90,14 @@ class MessengerContext implements Context {
     this._client.turnTypingIndicatorsOff(this._session.user.id);
   }
 
-  _enqueue(job: Object): void {
-    this._jobQueue.enqueue(job);
+  _enqueue(job: Object): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this._jobQueue.enqueue({
+        ...job,
+        onSuccess: resolve,
+        onError: reject,
+      });
+    });
   }
 }
 
@@ -133,16 +127,12 @@ sendMethods.forEach(method => {
     configurable: true,
     writable: true,
     value(...args) {
-      return new Promise((resolve, reject) => {
-        this._enqueue({
-          instance: this._client,
-          method,
-          args: [this._session.user.id, ...args],
-          delay: DEFAULT_MESSAGE_DELAY,
-          showIndicators: true,
-          onSuccess: resolve,
-          onError: reject,
-        });
+      return this._enqueue({
+        instance: this._client,
+        method,
+        args: [this._session.user.id, ...args],
+        delay: DEFAULT_MESSAGE_DELAY,
+        showIndicators: true,
       });
     },
   });
@@ -152,16 +142,12 @@ sendMethods.forEach(method => {
     configurable: true,
     writable: true,
     value(id, ...rest) {
-      return new Promise((resolve, reject) => {
-        this._enqueue({
-          instance: this._client,
-          method,
-          args: [id, ...rest],
-          delay: 0,
-          showIndicators: false,
-          onSuccess: resolve,
-          onError: reject,
-        });
+      return this._enqueue({
+        instance: this._client,
+        method,
+        args: [id, ...rest],
+        delay: 0,
+        showIndicators: false,
       });
     },
   });
@@ -171,16 +157,12 @@ sendMethods.forEach(method => {
     configurable: true,
     writable: true,
     value(delay, ...rest) {
-      return new Promise((resolve, reject) => {
-        this._enqueue({
-          instance: this._client,
-          method,
-          args: [this._session.user.id, ...rest],
-          delay,
-          showIndicators: true,
-          onSuccess: resolve,
-          onError: reject,
-        });
+      return this._enqueue({
+        instance: this._client,
+        method,
+        args: [this._session.user.id, ...rest],
+        delay,
+        showIndicators: true,
       });
     },
   });

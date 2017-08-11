@@ -41,36 +41,34 @@ class LINEContext implements Context {
     return this._session;
   }
 
-  sendText(text: string) {
+  sendText(text: string): Promise<any> {
+    return this._enqueue({
+      instance: this._client,
+      method: `pushText`,
+      args: [this._session.user.id, text],
+      delay: DEFAULT_MESSAGE_DELAY,
+      showIndicators: true,
+    });
+  }
+
+  sendTextWithDelay(delay: number, text: string): Promise<any> {
+    return this._enqueue({
+      instance: this._client,
+      method: `pushText`,
+      args: [this._session.user.id, text],
+      delay,
+      showIndicators: true,
+    });
+  }
+
+  _enqueue(job: Object): Promise<any> {
     return new Promise((resolve, reject) => {
-      this._enqueue({
-        instance: this._client,
-        method: `pushText`,
-        args: [this._session.user.id, text],
-        delay: DEFAULT_MESSAGE_DELAY,
-        showIndicators: true,
+      this._jobQueue.enqueue({
+        ...job,
         onSuccess: resolve,
         onError: reject,
       });
     });
-  }
-
-  sendTextWithDelay(delay: number, text: string) {
-    return new Promise((resolve, reject) => {
-      this._enqueue({
-        instance: this._client,
-        method: `pushText`,
-        args: [this._session.user.id, text],
-        delay,
-        showIndicators: true,
-        onSuccess: resolve,
-        onError: reject,
-      });
-    });
-  }
-
-  _enqueue(job: Object): void {
-    this._jobQueue.enqueue(job);
   }
 }
 
@@ -92,16 +90,12 @@ types.forEach(type => {
     configurable: true,
     writable: true,
     value(...args) {
-      return new Promise((resolve, reject) => {
-        this._enqueue({
-          instance: this._client,
-          method: `push${type}`,
-          args: [this._session.user.id, ...args],
-          delay: DEFAULT_MESSAGE_DELAY,
-          showIndicators: true,
-          onSuccess: resolve,
-          onError: reject,
-        });
+      return this._enqueue({
+        instance: this._client,
+        method: `push${type}`,
+        args: [this._session.user.id, ...args],
+        delay: DEFAULT_MESSAGE_DELAY,
+        showIndicators: true,
       });
     },
   });
@@ -111,16 +105,12 @@ types.forEach(type => {
     configurable: true,
     writable: true,
     value(id, ...rest) {
-      return new Promise((resolve, reject) => {
-        this._enqueue({
-          instance: this._client,
-          method: `push${type}`,
-          args: [id, ...rest],
-          delay: 0,
-          showIndicators: false,
-          onSuccess: resolve,
-          onError: reject,
-        });
+      return this._enqueue({
+        instance: this._client,
+        method: `push${type}`,
+        args: [id, ...rest],
+        delay: 0,
+        showIndicators: false,
       });
     },
   });
@@ -132,16 +122,12 @@ types.filter(type => type !== 'Text').forEach(type => {
     configurable: true,
     writable: true,
     value(...args) {
-      return new Promise((resolve, reject) => {
-        this._enqueue({
-          instance: this._client,
-          method: `push${type}`,
-          args: [this._session.user.id, ...args],
-          delay: DEFAULT_MESSAGE_DELAY,
-          showIndicators: true,
-          onSuccess: resolve,
-          onError: reject,
-        });
+      return this._enqueue({
+        instance: this._client,
+        method: `push${type}`,
+        args: [this._session.user.id, ...args],
+        delay: DEFAULT_MESSAGE_DELAY,
+        showIndicators: true,
       });
     },
   });
@@ -151,18 +137,15 @@ types.filter(type => type !== 'Text').forEach(type => {
     configurable: true,
     writable: true,
     value(delay, ...rest) {
-      return new Promise((resolve, reject) => {
-        this._enqueue({
-          instance: this._client,
-          method: `push${type}`,
-          args: [this._session.user.id, ...rest],
-          delay,
-          showIndicators: true,
-          onSuccess: resolve,
-          onError: reject,
-        });
+      return this._enqueue({
+        instance: this._client,
+        method: `push${type}`,
+        args: [this._session.user.id, ...rest],
+        delay,
+        showIndicators: true,
       });
     },
   });
 });
+
 export default LINEContext;
