@@ -10,6 +10,7 @@ const config = {
 const bot = new SlackBot({
   accessToken: config.accessToken,
 });
+
 bot.handle(context => {
   context.sendText('Hello World');
 });
