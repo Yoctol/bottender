@@ -57,6 +57,37 @@ it('get #event works', () => {
   expect(context.event).toBeInstanceOf(LINEEvent);
 });
 
+describe('#reply', () => {
+  it('#replyText put replyText to jobQueue', () => {
+    const { context, client } = setup();
+    context._jobQueue = {
+      enqueue: jest.fn(),
+    };
+
+    context.replyText('xxx.com');
+
+    expect(context._jobQueue.enqueue).toBeCalledWith({
+      instance: client,
+      method: 'replyText',
+      args: ['nHuyWiB7yP5Zw52FIkcQobQuGDXCTA', 'xxx.com'],
+      delay: 1000,
+      showIndicators: true,
+    });
+  });
+
+  it('should throw when reply mulitple times', () => {
+    const { context } = setup();
+    context._jobQueue = {
+      enqueue: jest.fn(),
+    };
+
+    context.replyText('xxx.com');
+    expect(() => {
+      context.replyText('xxx.com');
+    }).toThrow();
+  });
+});
+
 it('#sendText put pushText to jobQueue', () => {
   const { context, client, session } = setup();
   context._jobQueue = {
