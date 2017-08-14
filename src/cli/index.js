@@ -21,6 +21,7 @@ import setGreetingText from './actions/setGreetingText';
 import setMessengerProfile from './actions/setMessengerProfile';
 import setPersistentMenu from './actions/setPersistentMenu';
 import setWebhook from './actions/setWebhook';
+import setTelegramWebhook from './actions/setTelegramWebhook';
 import uploadImages from './actions/uploadImages';
 
 program.version(pkg.version);
@@ -211,6 +212,19 @@ program
   )
   .action(({ webhook, config, verifyToken }) => {
     setWebhook(webhook, config, verifyToken);
+  });
+
+program
+  .command('set-telegram-webhook')
+  .alias('stwh')
+  .description('set telegram webhook url')
+  .option('-w, --webhook <webhook_url>', 'The callback url for webhook.')
+  .option(
+    '-c, --config <config_file_path>',
+    'The config file path of your project. Default to `bot.json`'
+  )
+  .action(({ webhook, config }) => {
+    setTelegramWebhook(webhook, config);
   });
 
 program

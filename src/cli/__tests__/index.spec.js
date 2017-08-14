@@ -17,6 +17,7 @@ jest.mock('../actions/setGreetingText');
 jest.mock('../actions/setMessengerProfile');
 jest.mock('../actions/setPersistentMenu');
 jest.mock('../actions/setWebhook');
+jest.mock('../actions/setTelegramWebhook');
 jest.mock('../actions/uploadImages');
 
 let log;
@@ -288,6 +289,36 @@ describe('#webhook', () => {
       undefined,
       undefined,
       '__FAKE_VERIFYTOKEN__'
+    );
+  });
+});
+
+describe('#setTelegramWebhook', () => {
+  it('to be called without passing any options', () => {
+    const setTelegramWebhook = require('../actions/setTelegramWebhook');
+    setTelegramWebhook.default = jest.fn();
+    process.argv = [
+      '/usr/local/bin/iojs',
+      '/usr/local/bin/toolbot',
+      'set-telegram-webhook',
+    ];
+    require('../index');
+    expect(setTelegramWebhook.default).toBeCalledWith(undefined, undefined);
+  });
+  it('to be called when passing webhook', () => {
+    const setTelegramWebhook = require('../actions/setTelegramWebhook');
+    setTelegramWebhook.default = jest.fn();
+    process.argv = [
+      '/usr/local/bin/iojs',
+      '/usr/local/bin/toolbot',
+      'set-telegram-webhook',
+      '-w',
+      'http://test.com',
+    ];
+    require('../index');
+    expect(setTelegramWebhook.default).toBeCalledWith(
+      'http://test.com',
+      undefined
     );
   });
 });
