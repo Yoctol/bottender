@@ -171,6 +171,26 @@ it('#rawEvent', () => {
   expect(new LINEEvent(beacon).rawEvent).toEqual(beacon);
 });
 
+it('#replyToken', () => {
+  expect(new LINEEvent(textMessage).replyToken).toEqual(
+    'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA'
+  );
+  expect(new LINEEvent(follow).replyToken).toEqual(
+    'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA'
+  );
+  expect(new LINEEvent(unfollow).replyToken).toEqual(null);
+  expect(new LINEEvent(join).replyToken).toEqual(
+    'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA'
+  );
+  expect(new LINEEvent(leave).replyToken).toEqual(null);
+  expect(new LINEEvent(postback).replyToken).toEqual(
+    'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA'
+  );
+  expect(new LINEEvent(beacon).replyToken).toEqual(
+    'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA'
+  );
+});
+
 it('#isMessage', () => {
   expect(new LINEEvent(textMessage).isMessage).toEqual(true);
   expect(new LINEEvent(follow).isMessage).toEqual(false);

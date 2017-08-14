@@ -1,6 +1,7 @@
 /* @flow */
 
 import sleep from 'delay';
+import invariant from 'invariant';
 import { LINEClient } from 'messaging-api-line';
 
 import type { LINESession } from '../bot/LINEConnector';
@@ -21,6 +22,8 @@ class LINEContext implements Context {
   _session: LINESession;
   _jobQueue: DelayableJobQueue;
 
+  _replied: boolean = false;
+
   constructor({ client, rawEvent, session }: Options) {
     this._client = client;
     this._event = new LINEEvent(rawEvent);
@@ -39,6 +42,10 @@ class LINEContext implements Context {
 
   get session(): LINESession {
     return this._session;
+  }
+
+  get replied(): boolean {
+    return this._replied;
   }
 
   sendText(text: string): Promise<any> {
@@ -85,6 +92,25 @@ const types = [
   'CarouselTemplate',
 ];
 types.forEach(type => {
+  Object.defineProperty(LINEContext.prototype, `reply${type}`, {
+    enumerable: false,
+    configurable: true,
+    writable: true,
+    value(...args) {
+      invariant(!this._replied, 'Can not reply event mulitple times');
+
+      this._replied = true;
+
+      return this._enqueue({
+        instance: this._client,
+        method: `reply${type}`,
+        args: [this._event.replyToken, ...args],
+        delay: DEFAULT_MESSAGE_DELAY,
+        showIndicators: true,
+      });
+    },
+  });
+
   Object.defineProperty(LINEContext.prototype, `push${type}`, {
     enumerable: false,
     configurable: true,
