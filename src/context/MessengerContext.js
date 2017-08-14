@@ -51,6 +51,37 @@ class MessengerContext implements Context {
     return this._session;
   }
 
+  sendText(text: string): Promise<any> {
+    return this._enqueue({
+      instance: this._client,
+      method: 'sendText',
+      args: [this._session.user.id, text],
+      delay: DEFAULT_MESSAGE_DELAY,
+      showIndicators: true,
+    });
+  }
+
+  sendTextWithDelay(delay: number, text: string): Promise<any> {
+    return this._enqueue({
+      instance: this._client,
+      method: 'sendText',
+      args: [this._session.user.id, text],
+      delay,
+      showIndicators: true,
+    });
+  }
+
+  // FIXME: rethink
+  sendTextTo(id: string, text: string): Promise<any> {
+    return this._enqueue({
+      instance: this._client,
+      method: 'sendText',
+      args: [id, text],
+      delay: 0,
+      showIndicators: false,
+    });
+  }
+
   turnTypingIndicatorsOn(): void {
     this._client.turnTypingIndicatorsOn(this._session.user.id);
   }
@@ -59,13 +90,18 @@ class MessengerContext implements Context {
     this._client.turnTypingIndicatorsOff(this._session.user.id);
   }
 
-  _enqueue(job: Object): void {
-    this._jobQueue.enqueue(job);
+  _enqueue(job: Object): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this._jobQueue.enqueue({
+        ...job,
+        onSuccess: resolve,
+        onError: reject,
+      });
+    });
   }
 }
 
 const sendMethods = [
-  'sendText',
   'sendIssueResolutionText',
   'sendImage',
   'sendAudio',
@@ -91,7 +127,7 @@ sendMethods.forEach(method => {
     configurable: true,
     writable: true,
     value(...args) {
-      this._enqueue({
+      return this._enqueue({
         instance: this._client,
         method,
         args: [this._session.user.id, ...args],
@@ -106,7 +142,7 @@ sendMethods.forEach(method => {
     configurable: true,
     writable: true,
     value(id, ...rest) {
-      this._enqueue({
+      return this._enqueue({
         instance: this._client,
         method,
         args: [id, ...rest],
@@ -121,7 +157,7 @@ sendMethods.forEach(method => {
     configurable: true,
     writable: true,
     value(delay, ...rest) {
-      this._enqueue({
+      return this._enqueue({
         instance: this._client,
         method,
         args: [this._session.user.id, ...rest],

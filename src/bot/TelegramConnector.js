@@ -40,7 +40,15 @@ export default class TelegramConnector
   }
 
   getUniqueSessionIdFromRequest(body: TelegramRequestBody): string {
-    return `${body.message.from.id}`;
+    let id = '';
+
+    if (body.message !== undefined) {
+      id = body.message.from.id;
+    } else if (body.callback_query !== undefined) {
+      id = body.callback_query.from.id;
+    }
+
+    return `${id}`;
   }
 
   shouldSessionUpdate(session: Session): boolean {
@@ -51,7 +59,15 @@ export default class TelegramConnector
     session: Session,
     body: TelegramRequestBody
   ): Promise<void> {
-    session.user = body.message.from;
+    let user = {};
+
+    if (body.message !== undefined) {
+      user = body.message.from;
+    } else if (body.callback_query !== undefined) {
+      user = body.callback_query.from;
+    }
+
+    session.user = user;
   }
 
   async handleRequest({

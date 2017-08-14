@@ -48,8 +48,34 @@ class LINEContext implements Context {
     return this._replied;
   }
 
-  _enqueue(job: Object): void {
-    this._jobQueue.enqueue(job);
+  sendText(text: string): Promise<any> {
+    return this._enqueue({
+      instance: this._client,
+      method: `pushText`,
+      args: [this._session.user.id, text],
+      delay: DEFAULT_MESSAGE_DELAY,
+      showIndicators: true,
+    });
+  }
+
+  sendTextWithDelay(delay: number, text: string): Promise<any> {
+    return this._enqueue({
+      instance: this._client,
+      method: `pushText`,
+      args: [this._session.user.id, text],
+      delay,
+      showIndicators: true,
+    });
+  }
+
+  _enqueue(job: Object): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this._jobQueue.enqueue({
+        ...job,
+        onSuccess: resolve,
+        onError: reject,
+      });
+    });
   }
 }
 
@@ -72,15 +98,16 @@ types.forEach(type => {
     writable: true,
     value(...args) {
       invariant(!this._replied, 'Can not reply event mulitple times');
-      this._enqueue({
+
+      this._replied = true;
+
+      return this._enqueue({
         instance: this._client,
         method: `reply${type}`,
         args: [this._event.replyToken, ...args],
         delay: DEFAULT_MESSAGE_DELAY,
         showIndicators: true,
       });
-
-      this._replied = true;
     },
   });
 
@@ -89,22 +116,7 @@ types.forEach(type => {
     configurable: true,
     writable: true,
     value(...args) {
-      this._enqueue({
-        instance: this._client,
-        method: `push${type}`,
-        args: [this._session.user.id, ...args],
-        delay: DEFAULT_MESSAGE_DELAY,
-        showIndicators: true,
-      });
-    },
-  });
-
-  Object.defineProperty(LINEContext.prototype, `send${type}`, {
-    enumerable: false,
-    configurable: true,
-    writable: true,
-    value(...args) {
-      this._enqueue({
+      return this._enqueue({
         instance: this._client,
         method: `push${type}`,
         args: [this._session.user.id, ...args],
@@ -119,12 +131,29 @@ types.forEach(type => {
     configurable: true,
     writable: true,
     value(id, ...rest) {
-      this._enqueue({
+      return this._enqueue({
         instance: this._client,
         method: `push${type}`,
         args: [id, ...rest],
         delay: 0,
         showIndicators: false,
+      });
+    },
+  });
+});
+
+types.filter(type => type !== 'Text').forEach(type => {
+  Object.defineProperty(LINEContext.prototype, `send${type}`, {
+    enumerable: false,
+    configurable: true,
+    writable: true,
+    value(...args) {
+      return this._enqueue({
+        instance: this._client,
+        method: `push${type}`,
+        args: [this._session.user.id, ...args],
+        delay: DEFAULT_MESSAGE_DELAY,
+        showIndicators: true,
       });
     },
   });
@@ -134,7 +163,7 @@ types.forEach(type => {
     configurable: true,
     writable: true,
     value(delay, ...rest) {
-      this._enqueue({
+      return this._enqueue({
         instance: this._client,
         method: `push${type}`,
         args: [this._session.user.id, ...rest],

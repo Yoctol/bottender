@@ -1,5 +1,3 @@
-import getConfig from '../getConfig';
-
 jest.mock('fs');
 
 const setup = () => {
@@ -26,6 +24,11 @@ const setup = () => {
     MOCK_FILE,
   };
 };
+
+let getConfig;
+beforeEach(() => {
+  getConfig = require('../getConfig'); // eslint-disable-line global-require
+});
 
 it('be defined', () => {
   expect(getConfig).toBeDefined();

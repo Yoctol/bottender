@@ -8,6 +8,6 @@ export interface Context {
   +platform: string,
   +event: Event,
   +session: {},
-  sendText?: (text: string) => void,
-  sendTextWithDelay?: (seconds: number, text: string) => void,
+  +sendText: (text: string) => any,
+  +sendTextWithDelay: (seconds: number, text: string) => any,
 }

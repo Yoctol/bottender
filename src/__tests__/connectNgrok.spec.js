@@ -1,5 +1,4 @@
 /* eslint-disable global-require */
-import connectNgrok from '../connectNgrok';
 
 jest.mock('ngrok');
 
@@ -12,9 +11,12 @@ function setup() {
   };
 }
 
+let connectNgrok;
+
 beforeEach(() => {
   ngrok = require('ngrok');
   ngrok.connect = jest.fn();
+  connectNgrok = require('../connectNgrok').default;
 });
 
 it('be defined', () => {

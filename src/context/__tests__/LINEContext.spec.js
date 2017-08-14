@@ -72,6 +72,8 @@ describe('#reply', () => {
       args: ['nHuyWiB7yP5Zw52FIkcQobQuGDXCTA', 'xxx.com'],
       delay: 1000,
       showIndicators: true,
+      onSuccess: expect.any(Function),
+      onError: expect.any(Function),
     });
   });
 
@@ -102,6 +104,8 @@ it('#sendText put pushText to jobQueue', () => {
     args: [session.user.id, 'xxx.com'],
     delay: 1000,
     showIndicators: true,
+    onSuccess: expect.any(Function),
+    onError: expect.any(Function),
   });
 });
 
@@ -119,6 +123,8 @@ it('#sendImage put pushImage to jobQueue', () => {
     args: [session.user.id, 'xxx.jpg', 'yyy.jpg'],
     delay: 1000,
     showIndicators: true,
+    onSuccess: expect.any(Function),
+    onError: expect.any(Function),
   });
 });
 
@@ -136,6 +142,8 @@ it('#sendAudio put pushAudio to jobQueue', () => {
     args: [session.user.id, 'xxx.mp3', 240000],
     delay: 1000,
     showIndicators: true,
+    onSuccess: expect.any(Function),
+    onError: expect.any(Function),
   });
 });
 
@@ -153,6 +161,8 @@ it('#sendVideo put pushVideo to jobQueue', () => {
     args: [session.user.id, 'xxx.mp4', 'yyy.jpg'],
     delay: 1000,
     showIndicators: true,
+    onSuccess: expect.any(Function),
+    onError: expect.any(Function),
   });
 });
 
@@ -183,6 +193,8 @@ it('#sendLocation put pushLocation to jobQueue', () => {
     ],
     delay: 1000,
     showIndicators: true,
+    onSuccess: expect.any(Function),
+    onError: expect.any(Function),
   });
 });
 
@@ -200,6 +212,8 @@ it('#sendSticker put pushSticker to jobQueue', () => {
     args: [session.user.id, '1', '1'],
     delay: 1000,
     showIndicators: true,
+    onSuccess: expect.any(Function),
+    onError: expect.any(Function),
   });
 });
 
@@ -245,6 +259,8 @@ it('#sendImagemap put pushImagemap to jobQueue', () => {
     args: [session.user.id, 'this is an imagemap', template],
     delay: 1000,
     showIndicators: true,
+    onSuccess: expect.any(Function),
+    onError: expect.any(Function),
   });
 });
 
@@ -285,6 +301,8 @@ it('#sendButtonTemplate put pushButtonTemplate to jobQueue', () => {
     args: [session.user.id, 'this is a button template', template],
     delay: 1000,
     showIndicators: true,
+    onSuccess: expect.any(Function),
+    onError: expect.any(Function),
   });
 });
 
@@ -318,6 +336,8 @@ it('#sendConfirmTemplate put pushConfirmTemplate to jobQueue', () => {
     args: [session.user.id, 'this is a confirm template', template],
     delay: 1000,
     showIndicators: true,
+    onSuccess: expect.any(Function),
+    onError: expect.any(Function),
   });
 });
 
@@ -382,6 +402,8 @@ it('#sendCarouselTemplate put pushCarouselTemplate to jobQueue', () => {
     args: [session.user.id, 'this is a carousel template', template],
     delay: 1000,
     showIndicators: true,
+    onSuccess: expect.any(Function),
+    onError: expect.any(Function),
   });
 });
 
@@ -400,6 +422,8 @@ it('use default message delay', () => {
     args: [session.user.id, 'yooooooo~'],
     delay: 1000,
     showIndicators: true,
+    onSuccess: expect.any(Function),
+    onError: expect.any(Function),
   });
 });
 
@@ -431,6 +455,8 @@ it('#sendTextTo put pushText to jobQueue', () => {
     args: ['uid_1', 'xxx.com'],
     delay: 0,
     showIndicators: false,
+    onSuccess: expect.any(Function),
+    onError: expect.any(Function),
   });
 });
 
@@ -462,5 +488,7 @@ it('#sendTextWithDelay put pushText to jobQueue', () => {
     args: [session.user.id, 'xxx.com'],
     delay: 3000,
     showIndicators: true,
+    onSuccess: expect.any(Function),
+    onError: expect.any(Function),
   });
 });

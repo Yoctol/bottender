@@ -70,6 +70,8 @@ it('#sendText put sendText to jobQueue', () => {
     args: ['C6A9RJJ3F', 'xxx.com', { as_user: true }],
     delay: 1000,
     showIndicators: true,
+    onSuccess: expect.any(Function),
+    onError: expect.any(Function),
   });
 });
 
@@ -88,6 +90,8 @@ it('use default message delay', () => {
     args: ['C6A9RJJ3F', 'yooooooo~', { as_user: true }],
     delay: 1000,
     showIndicators: true,
+    onSuccess: expect.any(Function),
+    onError: expect.any(Function),
   });
 });
 
@@ -110,5 +114,7 @@ it('#sendTextWithDelay put sendText to jobQueue', () => {
     args: ['C6A9RJJ3F', 'xxx.com', { as_user: true }],
     delay: 3000,
     showIndicators: true,
+    onSuccess: expect.any(Function),
+    onError: expect.any(Function),
   });
 });

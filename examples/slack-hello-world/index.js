@@ -4,18 +4,19 @@ const { SlackBot } = require('../../src');
 const { createServer } = require('../../src/express');
 
 const config = {
-  token: '__FILL_YOUR_token_HERE__',
+  accessToken: '__FILL_YOUR_TOKEN_HERE__',
 };
 
 const bot = new SlackBot({
-  token: config.token,
+  accessToken: config.accessToken,
 });
+
 bot.handle(context => {
   context.sendText('Hello World');
 });
 
-const server = createServer(bot, config);
+const server = createServer(bot);
 
 server.listen(5000, () => {
-  console.log('server is running...');
+  console.log('server is running on 5000 port...');
 });

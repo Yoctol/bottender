@@ -29,29 +29,41 @@ export default class SlackContext implements Context {
     this._jobQueue.beforeEach(({ delay }) => sleep(delay));
   }
 
-  sendText = (text: string): void => {
+  postMessage(text: string): Promise<any> {
     const channelId = this._getChannelIdFromSession();
 
-    this._enqueue({
-      instance: this._client,
-      method: 'postMessage',
-      args: [channelId, text, { as_user: true }],
-      delay: DEFAULT_MESSAGE_DELAY,
-      showIndicators: true,
+    return new Promise((resolve, reject) => {
+      this._enqueue({
+        instance: this._client,
+        method: 'postMessage',
+        args: [channelId, text, { as_user: true }],
+        delay: DEFAULT_MESSAGE_DELAY,
+        showIndicators: true,
+        onSuccess: resolve,
+        onError: reject,
+      });
     });
-  };
+  }
 
-  sendTextWithDelay = (delay: number, text: string): void => {
+  sendText(text: string): Promise<any> {
+    return this.postMessage(text);
+  }
+
+  sendTextWithDelay(delay: number, text: string): Promise<any> {
     const channelId = this._getChannelIdFromSession();
 
-    this._enqueue({
-      instance: this._client,
-      method: 'postMessage',
-      args: [channelId, text, { as_user: true }],
-      delay,
-      showIndicators: true,
+    return new Promise((resolve, reject) => {
+      this._enqueue({
+        instance: this._client,
+        method: 'postMessage',
+        args: [channelId, text, { as_user: true }],
+        delay,
+        showIndicators: true,
+        onSuccess: resolve,
+        onError: reject,
+      });
     });
-  };
+  }
 
   get platform(): string {
     return 'slack';
@@ -65,8 +77,14 @@ export default class SlackContext implements Context {
     return this._session;
   }
 
-  _enqueue(job: Object): void {
-    this._jobQueue.enqueue(job);
+  _enqueue(job: Object): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this._jobQueue.enqueue({
+        ...job,
+        onSuccess: resolve,
+        onError: reject,
+      });
+    });
   }
 
   // FIXME: this is to fix type checking

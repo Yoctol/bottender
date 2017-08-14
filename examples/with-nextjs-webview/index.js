@@ -27,7 +27,7 @@ async function createServerWithNext() {
 
   await nextApp.prepare(); // eslint-disable-line no-await-in-loop
 
-  const server = createServer(bot, config);
+  const server = createServer(bot);
 
   server.get('*', (req, res) => {
     const parsedUrl = parse(req.url, true);
@@ -40,7 +40,7 @@ async function createServerWithNext() {
 createServerWithNext()
   .then(server => {
     server.listen(5000, () => {
-      console.log('server is running...');
+      console.log('server is running on 5000 port...');
     });
   })
   .catch(console.error);
