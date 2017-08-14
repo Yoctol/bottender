@@ -110,7 +110,9 @@
     "testResultsProcessor": "./node_modules/jest-junit",
     "transformIgnorePatterns": ["/node_modules/"],
     "testEnvironment": "node",
-    "timers": "fake"
+    "timers": "fake",
+    "resetModules": true,
+    "resetMocks": true
   },
   "lint-staged": {
     "*.js": "eslint --fix"
