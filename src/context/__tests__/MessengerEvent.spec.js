@@ -461,3 +461,20 @@ it('#postback', () => {
     payload: 'USER_DEFINED_PAYLOAD',
   });
 });
+
+it('#isPayload', () => {
+  expect(new MessengerEvent(textMessage).isPayload).toEqual(false);
+  expect(new MessengerEvent(imageMessage).isPayload).toEqual(false);
+  expect(new MessengerEvent(likeStickerMessage).isPayload).toEqual(false);
+  expect(new MessengerEvent(echoMessage).isPayload).toEqual(false);
+  expect(new MessengerEvent(quickReplyMessage).isPayload).toEqual(true);
+  expect(new MessengerEvent(postback).isPayload).toEqual(true);
+});
+
+it('#postback', () => {
+  expect(new MessengerEvent(postback).payload).toEqual('USER_DEFINED_PAYLOAD');
+  expect(new MessengerEvent(quickReplyMessage).payload).toEqual(
+    'DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_RED'
+  );
+  expect(new MessengerEvent(textMessage).payload).toEqual(null);
+});

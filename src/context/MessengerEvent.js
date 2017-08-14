@@ -146,4 +146,20 @@ export default class MessengerEvent implements Event {
       !!this._rawEvent.delivery && typeof this._rawEvent.delivery === 'object'
     );
   }
+
+  get isPayload(): boolean {
+    return (
+      (!!this.postback && typeof this.postback.payload === 'string') ||
+      (!!this.quickReply && typeof this.quickReply.payload === 'string')
+    );
+  }
+
+  get payload(): ?string {
+    if (!!this.postback && this.isPayload) {
+      return this.postback.payload;
+    } else if (!!this.quickReply && this.isPayload) {
+      return this.quickReply.payload;
+    }
+    return null;
+  }
 }
