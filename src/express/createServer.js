@@ -5,6 +5,7 @@ import shortid from 'shortid';
 import connectNgrok from '../connectNgrok';
 
 import createMiddleware from './createMiddleware';
+import verifyLINESignature from './verifyLINESignature';
 import verifyMessengerWebhook from './verifyMessengerWebhook';
 import verifySlackWebhook from './verifySlackWebhook';
 
@@ -13,13 +14,21 @@ function createServer(bot, config = {}) {
   let verifyToken;
   const server = express();
 
-  server.use(bodyParser.json());
+  server.use(
+    bodyParser.json({
+      verify: (req, res, buf) => {
+        req.rawBody = buf.toString();
+      },
+    })
+  );
   if (bot.connector.platform === 'messenger') {
     verifyToken = config.verifyToken || shortid.generate();
     server.get(path, verifyMessengerWebhook({ verifyToken }));
     server.post(path, createMiddleware(bot));
   } else if (bot.connector.platform === 'slack') {
     server.post(path, verifySlackWebhook(), createMiddleware(bot));
+  } else if (bot.connector.platform === 'line') {
+    server.post(path, verifyLINESignature(bot), createMiddleware(bot));
   } else {
     server.post(path, createMiddleware(bot));
   }

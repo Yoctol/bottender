@@ -1,5 +1,10 @@
 const verifyLINESignature = bot => ({ request, response }, next) => {
-  if (bot.connector.verifySignature(request)) {
+  if (
+    bot.connector.verifySignature(
+      request.rawBody,
+      request.header['x-line-signature']
+    )
+  ) {
     return next();
   }
   const error = {

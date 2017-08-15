@@ -8,35 +8,46 @@ const bot = {
 
 const middleware = verifyLINESignature(bot);
 
-const createContext = () => ({
-  request: {
+const createReqRes = () => [
+  {
     rawBody: 'raw body from line',
-    header: {
+    headers: {
       'x-line-signature': 'signature from line',
     },
   },
-  response: {},
-});
+  {
+    send: jest.fn(),
+    status: jest.fn(),
+  },
+];
 
 it('should call next when verification pass', () => {
-  const ctx = createContext();
+  const [req, res] = createReqRes();
   const next = jest.fn();
   bot.connector.verifySignature.mockReturnValueOnce(true);
 
-  middleware(ctx, next);
+  middleware(req, res, next);
 
   expect(next).toBeCalled();
 });
 
 it('should send 400 when verification fail', () => {
-  const ctx = createContext();
+  const [req, res] = createReqRes();
   const next = jest.fn();
   bot.connector.verifySignature.mockReturnValueOnce(false);
 
-  middleware(ctx, next);
+  middleware(req, res, next);
 
-  expect(ctx.response.status).toBe(400);
-  expect(ctx.response.body.error.message).toBe(
-    'LINE Signature Validation Failed!'
-  );
+  expect(res.status).toBeCalledWith(400);
+  expect(res.send).toBeCalledWith({
+    error: {
+      message: 'LINE Signature Validation Failed!',
+      request: {
+        rawBody: req.rawBody,
+        headers: {
+          'x-line-signature': req.headers['x-line-signature'],
+        },
+      },
+    },
+  });
 });
