@@ -162,7 +162,10 @@ describe('#verifySignature', () => {
   it('call client verify function with rawbody and signature', () => {
     const { connector, mockLINEAPIClient } = setup();
 
-    connector.verifySignature(request);
+    connector.verifySignature(
+      request.rawBody,
+      request.header['x-line-signature']
+    );
 
     expect(mockLINEAPIClient.isValidSignature).toBeCalledWith(
       'fake_raw_body',
