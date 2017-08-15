@@ -11,6 +11,7 @@ afterEach(() => {
 const createMockGraphAPIClient = () => ({
   turnTypingIndicatorsOn: jest.fn(),
   turnTypingIndicatorsOff: jest.fn(),
+  sendText: jest.fn(),
 });
 
 const rawEvent = {
@@ -549,7 +550,7 @@ it('#sendTextWithDelay put sendText to jobQueue', () => {
   });
 });
 
-it('show typing when sending', async () => {
+it('show typing when sending', () => {
   const { context, client } = setup();
 
   context.sendText('xxx.com');
@@ -558,7 +559,7 @@ it('show typing when sending', async () => {
   expect(client.turnTypingIndicatorsOff).not.toBeCalled();
 });
 
-it('should not show typing when sending to others', async () => {
+it('should not show typing when sending to others', () => {
   jest.useFakeTimers();
 
   const { context, client } = setup();
