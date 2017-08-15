@@ -6,12 +6,10 @@ const middleware = verifyMessengerWebhook({ verifyToken: VERIFY_TOKEN });
 
 const createReqRes = ({ verifyToken }) => [
   {
-    params: {
-      hub: {
-        mode: 'subscribe',
-        verify_token: verifyToken,
-        challenge: 'chatbot is awesome',
-      },
+    query: {
+      'hub.mode': 'subscribe',
+      'hub.verify_token': verifyToken,
+      'hub.challenge': 'chatbot is awesome',
     },
   },
   {
