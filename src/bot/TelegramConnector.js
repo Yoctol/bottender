@@ -67,7 +67,10 @@ export default class TelegramConnector
       user = body.callback_query.from;
     }
 
-    session.user = user;
+    session.user = {
+      platform: 'telegram',
+      ...user,
+    };
   }
 
   async handleRequest({

@@ -35,6 +35,7 @@ export default class ConsoleConnector
   async updateSession(session: Session): Promise<void> {
     session.user = {
       id: '1',
+      platform: 'console',
       name: 'you',
     };
   }

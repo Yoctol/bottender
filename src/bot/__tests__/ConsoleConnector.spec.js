@@ -38,6 +38,7 @@ describe('#updateSession', () => {
     expect(session).toEqual({
       user: {
         id: '1',
+        platform: 'console',
         name: 'you',
       },
     });
