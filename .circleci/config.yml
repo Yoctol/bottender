@@ -20,7 +20,9 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: node-7-cache-{{checksum "yarn.lock"}}
+          keys: 
+            - node-7-cache-{{checksum "yarn.lock"}}
+            - node-7-cache
       - run:
           name: install dependencies
           command: |
@@ -58,7 +60,9 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: node-8-cache-{{checksum "yarn.lock"}}
+          keys:
+            - node-8-cache-{{checksum "yarn.lock"}}
+            - node-8-cache
       - run:
           name: install dependencies
           command: |
