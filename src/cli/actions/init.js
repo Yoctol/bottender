@@ -225,8 +225,8 @@ const run = async (root, botName, answer, useYarn) => {
     print('');
 
     await install(useYarn, allDependencies);
-    const indexFile = await generateIndexFile(answer);
-    await fs.writeFileSync(path.join(root, 'index.js'), indexFile);
+    const indexFile = generateIndexFile(answer);
+    fs.writeFileSync(path.join(root, 'index.js'), indexFile);
   } catch (reason) {
     print('');
     print('Aborting installation.');
@@ -301,8 +301,7 @@ const createBot = async answer => {
   process.chdir(root);
 
   const useYarn = shouldUseYarn();
-
-  run(root, botName, answer, useYarn);
+  await run(root, botName, answer, useYarn);
 };
 
 export default (async function init() {
@@ -320,7 +319,7 @@ export default (async function init() {
       return process.exit(1);
     }
 
-    createBot(answer);
+    await createBot(answer);
   } catch (err) {
     error('init error with');
     if (err.response) {
