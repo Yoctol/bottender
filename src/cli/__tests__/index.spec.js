@@ -1,6 +1,7 @@
 /* eslint-disable global-require */
 import path from 'path';
 
+jest.mock('didyoumean');
 jest.mock('../shared/log');
 jest.mock('../actions/init');
 jest.mock('../actions/deleteDomainWhitelist');
@@ -21,9 +22,11 @@ jest.mock('../actions/setTelegramWebhook');
 jest.mock('../actions/uploadImages');
 
 let log;
+let didYouMean;
 
 beforeEach(() => {
   jest.resetModules();
+  didYouMean = require('didyoumean');
   log = require('../shared/log');
   log.error = jest.fn();
   log.bold = str => str;
@@ -387,6 +390,39 @@ describe('#upload-images', () => {
       container: 'fake-container',
       delayMilliseconds: undefined,
     });
+  });
+});
+
+describe('*', () => {
+  it('call error unknown command', () => {
+    process.argv = [
+      '/usr/local/bin/iojs',
+      '/usr/local/bin/toolbot',
+      'unknown-command',
+    ];
+    didYouMean.mockReturnValueOnce(null);
+    require('../index');
+    expect(log.error).toBeCalledWith(
+      `unknown command: ${log.bold('unknown-command')}`
+    );
+    expect(process.exit).toBeCalledWith(1);
+  });
+
+  it('call error unknown command', () => {
+    process.argv = [
+      '/usr/local/bin/iojs',
+      '/usr/local/bin/toolbot',
+      'unknown-command',
+    ];
+    didYouMean.mockReturnValueOnce('set-webhook');
+    require('../index');
+    expect(log.error).toBeCalledWith(
+      `unknown command: ${log.bold('unknown-command')}`
+    );
+    expect(log.error).lastCalledWith(
+      `did you mean ${log.bold('set-webhook')}?`
+    );
+    expect(process.exit).toBeCalledWith(1);
   });
 });
 
