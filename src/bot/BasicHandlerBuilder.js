@@ -161,7 +161,9 @@ export default class HandlerBuilder {
           // eslint-disable-next-line no-await-in-loop
           const predicateReturn = await predicate(context);
           if (typeof predicateReturn === 'boolean' && predicateReturn) {
-            return handler(context);
+            // eslint-disable-next-line no-await-in-loop
+            await handler(context);
+            break;
           }
         }
       } catch (err) {
