@@ -1,10 +1,17 @@
 {
   "name": "toolbot-core-experiment",
-  "version": "0.10.0-5",
+  "version": "0.10.0-6",
   "license": "UNLICENSED",
   "main": "lib/index.js",
   "browser": "lib/browser.js",
-  "files": ["bin", "lib", "express.js", "koa.js", "micro.js", "restify.js"],
+  "files": [
+    "bin",
+    "lib",
+    "express.js",
+    "koa.js",
+    "micro.js",
+    "restify.js"
+  ],
   "bin": {
     "bottender": "bin/cli.js"
   },
@@ -92,7 +99,9 @@
     "warning": "^3.0.0"
   },
   "jest": {
-    "collectCoverageFrom": ["src/**/*.js"],
+    "collectCoverageFrom": [
+      "src/**/*.js"
+    ],
     "coveragePathIgnorePatterns": [
       "/node_modules/",
       "/__tests__/",
@@ -107,9 +116,13 @@
         "statements": 80
       }
     },
-    "setupFiles": ["./test/setupJest.js"],
+    "setupFiles": [
+      "./test/setupJest.js"
+    ],
     "testResultsProcessor": "./node_modules/jest-junit",
-    "transformIgnorePatterns": ["/node_modules/"],
+    "transformIgnorePatterns": [
+      "/node_modules/"
+    ],
     "testEnvironment": "node",
     "timers": "fake",
     "resetModules": true,
