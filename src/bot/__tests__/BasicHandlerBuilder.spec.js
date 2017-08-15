@@ -395,6 +395,23 @@ describe('#onError', () => {
     expect(context.sendText).toBeCalledWith('Boom!');
   });
 
+  it('should call error handler when error thrown from child handler', async () => {
+    const { builder } = setup();
+    const { builder: builder2 } = setup();
+    const context = {
+      sendText: jest.fn(),
+    };
+    builder2.onUnhandled(() => {
+      throw new Error('Boom!');
+    });
+
+    builder.onUnhandled(builder2.build()).onError(ctx => {
+      ctx.sendText('Boom!');
+    });
+    await builder.build()(context);
+    expect(context.sendText).toBeCalledWith('Boom!');
+  });
+
   it('should pass error as second argument to error handler when error be thrown', async () => {
     const { builder } = setup();
     const context = {
