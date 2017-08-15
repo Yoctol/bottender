@@ -88,6 +88,7 @@ export default class LINEConnector
       const user = await this._client.getUserProfile(source.userId);
       session.user = {
         id: source.userId,
+        platform: 'line',
         ...user,
       };
     } else {

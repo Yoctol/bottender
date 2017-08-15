@@ -60,6 +60,7 @@ export default class MessengerConnector
 
     session.user = {
       id: senderId,
+      platform: 'messenger',
       ...user,
     };
   }

@@ -69,7 +69,11 @@ export default class SlackConnector
     const channel = await this._client.getChannelInfo(channelId);
     const allUsers = await this._client.getAllUserList();
 
-    session.user = sender;
+    session.user = {
+      id: senderId,
+      platform: 'slack',
+      ...sender,
+    };
     session.channel = channel;
     // TODO: check if team exists
     session.team = {

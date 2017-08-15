@@ -138,7 +138,10 @@ describe('#updateSession', () => {
 
     expect(session).toEqual({
       type: 'user',
-      user,
+      user: {
+        platform: 'line',
+        ...user,
+      },
     });
   });
 });

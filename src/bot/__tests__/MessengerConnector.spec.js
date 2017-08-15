@@ -118,7 +118,12 @@ describe('#updateSession', () => {
     expect(mockGraphAPIClient.getUserProfile).toBeCalledWith(
       '1412611362105802'
     );
-    expect(session).toEqual({ user });
+    expect(session).toEqual({
+      user: {
+        platform: 'messenger',
+        ...user,
+      },
+    });
   });
 });
 

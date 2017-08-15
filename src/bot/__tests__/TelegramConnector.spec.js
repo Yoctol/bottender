@@ -112,13 +112,19 @@ describe('#updateSession', () => {
 
     await connector.updateSession(session, messageRequest.body);
 
-    expect(session).toEqual({ user });
+    expect(session).toEqual({
+      user: {
+        platform: 'telegram',
+        ...user,
+      },
+    });
   });
 
   it('update session with data needed from callbackQueryRequest', async () => {
     const { connector } = setup();
     const user = {
       id: 313534466,
+
       first_name: 'first',
       last_name: 'last',
       username: 'username',
@@ -129,7 +135,12 @@ describe('#updateSession', () => {
 
     await connector.updateSession(session, callbackQueryRequest.body);
 
-    expect(session).toEqual({ user });
+    expect(session).toEqual({
+      user: {
+        platform: 'telegram',
+        ...user,
+      },
+    });
   });
 });
 
