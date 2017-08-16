@@ -20,7 +20,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          keys: 
+          keys:
             - node-7-cache-{{checksum "yarn.lock"}}
             - node-7-cache
       - run:
@@ -49,7 +49,7 @@ jobs:
           at: .
       - run:
           name: run test
-          command: npm run testonly:cov -- --no-cache
+          command: npm run testonly:cov -- --no-cache --colors
       - store_artifacts:
           path: coverage
           prefix: coverage
@@ -110,7 +110,7 @@ jobs:
           at: .
       - run:
           name: run test
-          command: npm run testonly:cov -- --no-cache
+          command: npm run testonly:cov -- --no-cache --colors
       - store_artifacts:
           path: coverage
           prefix: coverage
