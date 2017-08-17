@@ -87,7 +87,7 @@ export default class SlackConnector
     handler,
   }: {
     body: SlackRequestBody,
-    session: SlackSession,
+    session: ?SlackSession,
     handler: FunctionalHandler,
   }): Promise<void> {
     const rawEvent = this._getRawEventFromRequest(body);

@@ -2,11 +2,11 @@
 
 import type { Event } from './Event';
 
-type Sender = {
+export type Sender = {
   id: string,
 };
 
-type Recipient = {
+export type Recipient = {
   id: string,
 };
 
@@ -18,7 +18,7 @@ type Attachment = {
   type: string,
 };
 
-type Message = {
+export type Message = {
   is_echo?: boolean,
   text?: string,
   sticker_id?: number,
@@ -26,16 +26,39 @@ type Message = {
   attachments?: Array<Attachment>,
 };
 
-type Postback = {
+export type Postback = {
   payload: string,
 };
 
+export type PolicyEnforcement = {
+  action: String,
+  reason: String,
+};
+
+export type AppRoles = {
+  [key: string]: Array<String>,
+};
+
+export type PassThreadControl = {
+  new_owner_app_id: String,
+  metadata: String,
+};
+
+export type TakeThreadControl = {
+  previous_owner_app_id: String,
+  metadata: String,
+};
+
 export type MessengerRawEvent = {
-  sender: Sender,
-  recipient: Recipient,
-  timestamp: number,
+  sender?: Sender,
+  recipient?: Recipient,
+  timestamp?: number,
   message?: Message,
   postback?: Postback,
+  'policy-enforcement'?: PolicyEnforcement,
+  app_roles?: AppRoles,
+  pass_thread_control?: PassThreadControl,
+  take_thread_control?: TakeThreadControl,
 };
 
 export default class MessengerEvent implements Event {

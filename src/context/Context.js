@@ -7,7 +7,7 @@ export const DEFAULT_MESSAGE_DELAY = 1000;
 export interface Context {
   +platform: string,
   +event: Event,
-  +session: {},
+  +session: ?{},
   +sendText: (text: string) => any,
   +sendTextWithDelay: (seconds: number, text: string) => any,
 }

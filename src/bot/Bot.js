@@ -84,13 +84,17 @@ export default class Bot {
       const platform = this._connector.platform;
       const senderId = this._connector.getUniqueSessionIdFromRequest(body);
 
-      const sessionKey = `${platform}:${senderId}`;
+      let sessionKey;
+      let session;
+      if (senderId) {
+        sessionKey = `${platform}:${senderId}`;
 
-      const data = await this._sessions.read(sessionKey);
-      const session = data || Object.create(null);
+        const data = await this._sessions.read(sessionKey);
+        session = data || Object.create(null);
 
-      if (this._connector.shouldSessionUpdate(session, body)) {
-        await this._connector.updateSession(session, body);
+        if (this._connector.shouldSessionUpdate(session, body)) {
+          await this._connector.updateSession(session, body);
+        }
       }
 
       this._connector

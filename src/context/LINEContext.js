@@ -1,6 +1,7 @@
 /* @flow */
 
 import sleep from 'delay';
+import warning from 'warning';
 import invariant from 'invariant';
 import { LINEClient } from 'messaging-api-line';
 
@@ -13,13 +14,13 @@ import DelayableJobQueue from './DelayableJobQueue';
 type Options = {
   client: LINEClient,
   rawEvent: LINERawEvent,
-  session: LINESession,
+  session: ?LINESession,
 };
 
 class LINEContext implements Context {
   _client: LINEClient;
   _event: LINEEvent;
-  _session: LINESession;
+  _session: ?LINESession;
   _jobQueue: DelayableJobQueue;
 
   _replied: boolean = false;
@@ -40,7 +41,7 @@ class LINEContext implements Context {
     return this._event;
   }
 
-  get session(): LINESession {
+  get session(): ?LINESession {
     return this._session;
   }
 
@@ -49,6 +50,13 @@ class LINEContext implements Context {
   }
 
   sendText(text: string): Promise<any> {
+    if (!this._session) {
+      warning(
+        false,
+        'sendText: should not be called in context without session'
+      );
+      return Promise.resolve();
+    }
     return this._enqueue({
       instance: this._client,
       method: `pushText`,
@@ -59,6 +67,13 @@ class LINEContext implements Context {
   }
 
   sendTextWithDelay(delay: number, text: string): Promise<any> {
+    if (!this._session) {
+      warning(
+        false,
+        'sendTextWithDelay: should not be called in context without session'
+      );
+      return Promise.resolve();
+    }
     return this._enqueue({
       instance: this._client,
       method: `pushText`,
@@ -116,6 +131,13 @@ types.forEach(type => {
     configurable: true,
     writable: true,
     value(...args) {
+      if (!this._session) {
+        warning(
+          false,
+          `push${type}: should not be called in context without session`
+        );
+        return Promise.resolve();
+      }
       return this._enqueue({
         instance: this._client,
         method: `push${type}`,
@@ -148,6 +170,13 @@ types.filter(type => type !== 'Text').forEach(type => {
     configurable: true,
     writable: true,
     value(...args) {
+      if (!this._session) {
+        warning(
+          false,
+          `send${type}: should not be called in context without session`
+        );
+        return Promise.resolve();
+      }
       return this._enqueue({
         instance: this._client,
         method: `push${type}`,
@@ -163,6 +192,13 @@ types.filter(type => type !== 'Text').forEach(type => {
     configurable: true,
     writable: true,
     value(delay, ...rest) {
+      if (!this._session) {
+        warning(
+          false,
+          `send${type}WithDelay: should not be called in context without session`
+        );
+        return Promise.resolve();
+      }
       return this._enqueue({
         instance: this._client,
         method: `push${type}`,

@@ -1,6 +1,7 @@
 /* @flow */
 
 import sleep from 'delay';
+import warning from 'warning';
 import { SlackOAuthClient } from 'messaging-api-slack';
 
 import type { SlackSession } from '../bot/SlackConnector';
@@ -12,13 +13,13 @@ import DelayableJobQueue from './DelayableJobQueue';
 type Options = {
   client: SlackOAuthClient,
   rawEvent: SlackRawEvent,
-  session: SlackSession,
+  session: ?SlackSession,
 };
 
 export default class SlackContext implements Context {
   _client: SlackOAuthClient;
   _event: SlackEvent;
-  _session: SlackSession;
+  _session: ?SlackSession;
   _jobQueue: DelayableJobQueue;
 
   constructor({ client, rawEvent, session }: Options) {
@@ -31,6 +32,14 @@ export default class SlackContext implements Context {
 
   postMessage(text: string): Promise<any> {
     const channelId = this._getChannelIdFromSession();
+
+    if (!channelId) {
+      warning(
+        false,
+        'postMessage: should not be called in context without session'
+      );
+      return Promise.resolve();
+    }
 
     return new Promise((resolve, reject) => {
       this._enqueue({
@@ -51,6 +60,14 @@ export default class SlackContext implements Context {
 
   sendTextWithDelay(delay: number, text: string): Promise<any> {
     const channelId = this._getChannelIdFromSession();
+
+    if (!channelId) {
+      warning(
+        false,
+        'sendTextWithDelay: should not be called in context without session'
+      );
+      return Promise.resolve();
+    }
 
     return new Promise((resolve, reject) => {
       this._enqueue({
@@ -73,7 +90,7 @@ export default class SlackContext implements Context {
     return this._event;
   }
 
-  get session(): SlackSession {
+  get session(): ?SlackSession {
     return this._session;
   }
 
@@ -88,7 +105,8 @@ export default class SlackContext implements Context {
   }
 
   // FIXME: this is to fix type checking
-  _getChannelIdFromSession(): string {
+  _getChannelIdFromSession(): ?string {
+    if (!this._session) return null;
     if (
       typeof this._session.channel === 'object' &&
       this._session.channel &&
@@ -97,6 +115,6 @@ export default class SlackContext implements Context {
     ) {
       return this._session.channel.id;
     }
-    return '';
+    return null;
   }
 }

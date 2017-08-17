@@ -102,7 +102,7 @@ export default class LINEConnector
     handler,
   }: {
     body: LINERequestBody,
-    session: LINESession,
+    session: ?LINESession,
     handler: FunctionalHandler,
   }): Promise<void> {
     const createLINEContext = rawEvent =>
