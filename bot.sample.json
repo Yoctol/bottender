@@ -2,7 +2,7 @@
   "messenger": {
     "accessToken": "__PUT_YOUR_ACCESS_TOKEN_HERE__",
     "verifyToken": "__PUT_YOUR_VERITY_TOKEN_HERE__",
-    "appID": "__PUT_YOUR_APP_ID_HERE__",
+    "appId": "__PUT_YOUR_APP_ID_HERE__",
     "appSecret": "__PUT_YOUR_APP_SECRET_HERE__",
     "persistentMenu": [
       {
@@ -17,7 +17,10 @@
       }
     ],
     "composerInputDisabled": false,
-    "domainWhitelist": ["http://example.com", "http://facebook.com"],
+    "domainWhitelist": [
+      "http://example.com",
+      "http://facebook.com"
+    ],
     "getStartedButtonPayload": "__PUT_YOUR_PAYLOAD_HERE__"
   },
   "LINE": {
