@@ -1,5 +1,6 @@
 /* @flow */
 import randomItem from 'random-item';
+import warning from 'warning';
 
 // FIXME: platform
 export type Context = {
@@ -122,7 +123,19 @@ export default class HandlerBuilder {
     return this;
   }
 
+  onEvent(handler: Handler) {
+    this._handlers.push({
+      predicate: () => true,
+      handler: normalizeHandler(handler),
+    });
+    return this;
+  }
+
   onUnhandled(handler: Handler) {
+    warning(
+      false,
+      '`onUnhandled` is deprecated. Use `onEvent` at tail call instead.'
+    );
     this._fallbackHandler = {
       predicate: () => true,
       handler: normalizeHandler(handler),

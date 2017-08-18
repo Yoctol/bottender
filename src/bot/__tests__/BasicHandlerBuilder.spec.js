@@ -244,11 +244,11 @@ describe('#on', () => {
   });
 });
 
-describe('#onUnhandled', () => {
+describe('#onEvent', () => {
   it('should return this', () => {
     const { builder } = setup();
     const handler = () => {};
-    expect(builder.onUnhandled(handler)).toBe(builder);
+    expect(builder.onEvent(handler)).toBe(builder);
   });
 
   it('should call fallback handler if can not find a match predicate', async () => {
@@ -257,7 +257,7 @@ describe('#onUnhandled', () => {
     const predicate = jest.fn(() => false);
     const handler = jest.fn();
     const fallbackHandler = jest.fn();
-    builder.on(predicate, handler).onUnhandled(fallbackHandler);
+    builder.on(predicate, handler).onEvent(fallbackHandler);
     await builder.build()(context);
     expect(handler).not.toBeCalled();
     expect(fallbackHandler).toBeCalledWith(context);
@@ -266,10 +266,10 @@ describe('#onUnhandled', () => {
   it('should support async handler', async () => {
     const { builder } = setup();
     const context = {};
-    const fallbackHandler = jest.fn(() => Promise.resolve());
-    builder.onUnhandled(fallbackHandler);
+    const handler = jest.fn(() => Promise.resolve());
+    builder.onEvent(handler);
     await builder.build()(context);
-    expect(fallbackHandler).toBeCalledWith(context);
+    expect(handler).toBeCalledWith(context);
   });
 
   it('should support string as handler', async () => {
@@ -277,7 +277,7 @@ describe('#onUnhandled', () => {
     const context = {
       sendText: jest.fn(),
     };
-    builder.onUnhandled('沒處理到');
+    builder.onEvent('沒處理到');
     await builder.build()(context);
     expect(context.sendText).toBeCalledWith('沒處理到');
   });
@@ -287,7 +287,7 @@ describe('#onUnhandled', () => {
     const context = {
       sendText: jest.fn(),
     };
-    builder.onUnhandled(['沒處理到', '漏掉了']);
+    builder.onEvent(['沒處理到', '漏掉了']);
     await builder.build()(context);
     expect(context.sendText).toBeCalledWith(expect.stringMatching(/沒處理到|漏掉了/));
   });
