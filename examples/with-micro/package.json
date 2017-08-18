@@ -1,13 +1,14 @@
 {
   "dependencies": {
-    "babel-register": "^6.24.1"
+    "babel-register": "^6.24.1",
+    "micro": "^8.0.2"
   },
   "devDependencies": {
-    "nodemon": "^1.11.0"
+    "micro-dev": "^1.2.1"
   },
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index.js",
+    "dev": "micro-dev",
     "start": "micro"
   }
 }
