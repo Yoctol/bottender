@@ -17,7 +17,7 @@ it('should response 200 when no error be thrown', async () => {
 
   const middleware = createMiddleware(bot);
 
-  const req = { params: {} };
+  const req = { body: {} };
   const res = {
     send: jest.fn(),
   };
