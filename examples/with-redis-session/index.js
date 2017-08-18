@@ -12,7 +12,7 @@ const bot = new ConsoleBot({
   sessionStore: new CacheBasedSessionStore(cache),
 });
 
-bot.handle(context => {
+bot.onEvent(context => {
   context.sendText('Hello World');
 });
 

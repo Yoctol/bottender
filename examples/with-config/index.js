@@ -9,7 +9,7 @@ const bot = new MessengerBot({
   accessToken: config.accessToken,
 });
 
-bot.handle(context => {
+bot.onEvent(context => {
   context.sendText('Hello World');
 });
 
