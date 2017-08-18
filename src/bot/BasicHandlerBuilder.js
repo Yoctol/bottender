@@ -144,6 +144,7 @@ export default class HandlerBuilder {
   }
 
   onUnhandledMessage(handler: Handler) {
+    warning(false, '`onUnhandledMessage` is deprecated.');
     this._fallbackMessageHandler = {
       predicate: context => context.event.isMessage,
       handler: normalizeHandler(handler),
