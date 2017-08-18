@@ -13,7 +13,7 @@ const getConfig = require('../../shared/getConfig');
 
 const MOCK_FILE_WITH_PLATFORM = {
   messenger: {
-    appID: '__APP_ID__',
+    appId: '__APP_ID__',
     appSecret: '__APP_SECRET__',
     verifyToken: '__verifyToken__',
   },
@@ -26,12 +26,12 @@ let localClient;
 
 const setup = (
   {
-    clientId = MOCK_FILE_WITH_PLATFORM.messenger.appID,
+    clientId = MOCK_FILE_WITH_PLATFORM.messenger.appId,
     clientSecret = MOCK_FILE_WITH_PLATFORM.messenger.appSecret,
     accessToken = '__FAKE_TOKEN__',
     webhook = 'http://example.com/webhook',
   } = {
-    clientId: MOCK_FILE_WITH_PLATFORM.messenger.appID,
+    clientId: MOCK_FILE_WITH_PLATFORM.messenger.appId,
     clientSecret: MOCK_FILE_WITH_PLATFORM.messenger.appSecret,
     accessToken: '__FAKE_TOKEN__',
     webhook: 'http://example.com/webhook',
@@ -134,7 +134,7 @@ describe('resolve', () => {
 });
 
 describe('reject', () => {
-  it('reject when `appID` not found in config file', async () => {
+  it('reject when `appId` not found in config file', async () => {
     const { webhook } = setup();
     getConfig.mockReturnValue({
       appSecret: '__APP_SECRET__',
@@ -150,7 +150,7 @@ describe('reject', () => {
   it('reject when `appSecret` not found in config file', async () => {
     const { webhook } = setup();
     getConfig.mockReturnValue({
-      appID: '__APP_ID__',
+      appId: '__APP_ID__',
       verifyToken: '__verifyToken__',
     });
     process.exit = jest.fn();

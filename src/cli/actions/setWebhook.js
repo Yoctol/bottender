@@ -39,7 +39,7 @@ export default (async function setWebhook(_webhook, _configPath, _verifyToken) {
     const webhook = _webhook || (await getWebhookFromNgrok());
     const verifyToken = _verifyToken || config.verifyToken;
 
-    invariant(config.appID, '`appID` is not found in config file');
+    invariant(config.appId, '`appId` is not found in config file');
     invariant(config.appSecret, '`appSecret` is not found in config file');
     invariant(
       verifyToken,
@@ -62,9 +62,9 @@ export default (async function setWebhook(_webhook, _configPath, _verifyToken) {
     }
     const fields = config.fields || defaultFields;
 
-    const token = await _getClientToken(config.appID, config.appSecret);
+    const token = await _getClientToken(config.appId, config.appSecret);
     const res = await client.post(
-      `/${config.appID}/subscriptions?access_token=${token}`,
+      `/${config.appId}/subscriptions?access_token=${token}`,
       {
         object: 'page',
         callback_url: webhook,

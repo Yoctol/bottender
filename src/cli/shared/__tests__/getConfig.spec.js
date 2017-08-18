@@ -5,7 +5,7 @@ const setup = () => {
     messenger: {
       accessToken: '__FAKE_ACCESS_TOKEN_WITH_PLATFORM__',
       verifyToken: '__FAKE_VERIFY_TOKEN_WITH_PLATFORM__',
-      appID: '__FAKE_APP_ID_WITH_PLATFORM__',
+      appId: '__FAKE_APP_ID_WITH_PLATFORM__',
       appSecret: '__FAKE_APP_SECRET_WITH_PLATFORM__',
     },
     LINE: {
@@ -16,7 +16,7 @@ const setup = () => {
   const MOCK_FILE = {
     accessToken: '__FAKE_ACCESS_TOKEN__',
     verifyToken: '__FAKE_VERIFY_TOKEN__',
-    appID: '__FAKE_APP_ID__',
+    appId: '__FAKE_APP_ID__',
     appSecret: '__FAKE_APP_SECRET__',
   };
   return {
@@ -44,7 +44,7 @@ it('read the config file with platform key', () => {
   expect(config).toEqual({
     accessToken: '__FAKE_ACCESS_TOKEN_WITH_PLATFORM__',
     verifyToken: '__FAKE_VERIFY_TOKEN_WITH_PLATFORM__',
-    appID: '__FAKE_APP_ID_WITH_PLATFORM__',
+    appId: '__FAKE_APP_ID_WITH_PLATFORM__',
     appSecret: '__FAKE_APP_SECRET_WITH_PLATFORM__',
   });
 });
@@ -59,7 +59,7 @@ it('read the config file without platform key', () => {
   expect(config).toEqual({
     accessToken: '__FAKE_ACCESS_TOKEN__',
     verifyToken: '__FAKE_VERIFY_TOKEN__',
-    appID: '__FAKE_APP_ID__',
+    appId: '__FAKE_APP_ID__',
     appSecret: '__FAKE_APP_SECRET__',
   });
 });
