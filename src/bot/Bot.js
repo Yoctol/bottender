@@ -1,6 +1,7 @@
 /* @flow */
 
 import _debug from 'debug';
+import warning from 'warning';
 
 import MemoryCacheStore from '../cache/MemoryCacheStore';
 import CacheBasedSessionStore from '../session/CacheBasedSessionStore';
@@ -56,8 +57,13 @@ export default class Bot {
     return this._handler;
   }
 
-  handle(handler: FunctionalHandler): void {
+  onEvent(handler: FunctionalHandler): void {
     this._handler = handler;
+  }
+
+  handle(handler: FunctionalHandler): void {
+    warning(false, '`handle` is deprecated. Use `onEvent` instead.');
+    this.onEvent(handler);
   }
 
   createRequestHandler(): RequestHandler {

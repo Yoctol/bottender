@@ -37,7 +37,7 @@ describe('#handler', () => {
     expect(bot.handler).toBeNull();
 
     const handler = () => {};
-    bot.handle(handler);
+    bot.onEvent(handler);
     expect(bot.handler).toBe(handler);
   });
 });
@@ -52,7 +52,7 @@ describe('#createRequestHandler', () => {
     const { bot } = setup({});
 
     const handler = () => {};
-    bot.handle(handler);
+    bot.onEvent(handler);
 
     const requestHandler = bot.createRequestHandler();
     let error;
@@ -72,7 +72,7 @@ describe('#createRequestHandler', () => {
     sessionStore.read.mockReturnValue(Promise.resolve(null));
 
     const handler = () => {};
-    bot.handle(handler);
+    bot.onEvent(handler);
 
     const requestHandler = bot.createRequestHandler();
 
@@ -90,7 +90,7 @@ describe('#createRequestHandler', () => {
     sessionStore.read.mockReturnValue(Promise.resolve({ user: {} }));
 
     const handler = () => {};
-    bot.handle(handler);
+    bot.onEvent(handler);
 
     const requestHandler = bot.createRequestHandler();
 
@@ -106,7 +106,7 @@ describe('#createRequestHandler', () => {
     sessionStore.read.mockReturnValue(Promise.resolve({ user: {} }));
 
     const handler = () => {};
-    bot.handle(handler);
+    bot.onEvent(handler);
 
     const requestHandler = bot.createRequestHandler();
 
@@ -129,7 +129,7 @@ describe('#createRequestHandler', () => {
     sessionStore.read.mockReturnValue(Promise.resolve({ user: {} }));
 
     const handler = () => {};
-    bot.handle(handler);
+    bot.onEvent(handler);
 
     const requestHandler = bot.createRequestHandler();
 

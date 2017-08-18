@@ -6,7 +6,7 @@ const bot = new ConsoleBot({
   sessionStore: new FileSessionStore(),
 });
 
-bot.handle(context => {
+bot.onEvent(context => {
   context.sendText('Hello World');
 });
 
