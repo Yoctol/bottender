@@ -13,7 +13,7 @@ const getConfig = require('../../shared/getConfig');
 
 const MOCK_FILE_WITH_PLATFORM = {
   telegram: {
-    token: '__TOKEN__',
+    accessToken: '__accessToken__',
   },
   LINE: {},
 };
@@ -24,14 +24,14 @@ let localClient;
 
 const setup = (
   {
-    token = MOCK_FILE_WITH_PLATFORM.telegram.token,
+    accessToken = MOCK_FILE_WITH_PLATFORM.telegram.accessToken,
     webhook = 'http://example.com/webhook',
   } = {
-    token: MOCK_FILE_WITH_PLATFORM.telegram.token,
+    accessToken: MOCK_FILE_WITH_PLATFORM.telegram.accessToken,
     webhook: 'http://example.com/webhook',
   }
 ) => ({
-  postUrl: `/bot${token}/setWebhook`,
+  postUrl: `/bot${accessToken}/setWebhook`,
   webhook,
 });
 
@@ -102,7 +102,7 @@ describe('resolve', () => {
 });
 
 describe('reject', () => {
-  it('reject when `token` not found in config file', async () => {
+  it('reject when `accessToken` not found in config file', async () => {
     const { webhook } = setup();
     getConfig.mockReturnValue({});
     process.exit = jest.fn();

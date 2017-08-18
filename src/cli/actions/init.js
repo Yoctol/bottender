@@ -6,7 +6,7 @@ import validateProjectName from 'validate-npm-package-name';
 import fs from 'fs-extra';
 import spawn from 'cross-spawn';
 
-import { print, error } from '../shared/log';
+import { print, error, bold } from '../shared/log';
 
 const questions = [
   {
@@ -33,6 +33,47 @@ const questions = [
     choices: ['express', 'koa', 'micro', 'restify'],
   },
 ];
+
+const generateBotJson = platform => {
+  const accessToken = '__PUT_YOUR_ACCESS_TOKEN_HERE__';
+  switch (platform) {
+    case 'messenger':
+      return {
+        messenger: {
+          accessToken,
+          verifyToken: '__PUT_YOUR_VERITY_TOKEN_HERE__',
+          appId: '__PUT_YOUR_APP_ID_HERE__',
+          appSecret: '__PUT_YOUR_APP_SECRET_HERE__',
+        },
+      };
+    case 'slack':
+      return {
+        slack: {
+          accessToken,
+        },
+      };
+    case 'line':
+      return {
+        LINE: {
+          accessToken,
+          channelSecret: '__PUT_YOUR_CHANNEL_SECRET_HERE__',
+        },
+      };
+    case 'telegram':
+      return {
+        telegram: {
+          accessToken,
+        },
+      };
+    default:
+      return {
+        messenger: {
+          accessToken,
+          verifyToken: '__PUT_YOUR_VERITY_TOKEN_HERE__',
+        },
+      };
+  }
+};
 
 const generateIndexFile = answer => {
   const { platform, session, server } = answer;
@@ -84,16 +125,12 @@ const { ${server === 'micro'
     ? 'createRequestHandler'
     : 'createServer'} } = require('toolbot-core-experiment/${server}');
 
-const config = {
-  accessToken: '__FILL_YOUR_TOKEN_HERE__',${platform === 'line'
-    ? `\n  channelSecret: '__FILL_YOUR_SECRET_HERE__',`
-    : ''}
-};
+const config = require('./bot.json').${platform === 'line' ? 'LINE' : platform};
 ${session === 'redis' ? '\nconst cache = new RedisCacheStore();\n' : ''}
 const bot = new ${dependencies[0]}({
   accessToken: config.accessToken,${platform === 'line'
     ? `\n  channelSecret: config.channelSecret,`
-    : ''}${sessionStore === '' ? `${sessionStore}` : `\n${sessionStore}`}
+    : ''}${sessionStore === '' ? `${sessionStore}` : `\n  ${sessionStore}`}
 });
 
 bot.handle(context => {
@@ -225,8 +262,22 @@ const run = async (root, botName, answer, useYarn) => {
     print('');
 
     await install(useYarn, allDependencies);
+
     const indexFile = generateIndexFile(answer);
     fs.writeFileSync(path.join(root, 'index.js'), indexFile);
+
+    if (answer.platform !== 'console') {
+      const botJson = generateBotJson(answer.platform);
+      fs.writeFileSync(
+        path.join(root, 'bot.json'),
+        JSON.stringify(botJson, null, 2)
+      );
+      print(
+        `\n\nAlready creat ${bold(
+          'bot.json'
+        )} for you, please make sure you have edited it before run the bot.\n\n`
+      );
+    }
   } catch (reason) {
     print('');
     print('Aborting installation.');

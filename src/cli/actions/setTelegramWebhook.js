@@ -23,16 +23,16 @@ export default (async function setTelegramWebhook(_webhook, _configPath) {
   try {
     const platform = 'telegram';
     const configPath = _configPath || 'bot.json';
-    const config = getConfig(configPath, platform);
+    const { accessToken } = getConfig(configPath, platform);
     const webhook = _webhook || (await getWebhookFromNgrok());
 
-    invariant(config.token, '`token` is not found in config file');
+    invariant(accessToken, '`accessToken` is not found in config file');
     invariant(
       webhook,
       '`webhook` is required but not found. Use -w <webhook> to setup or make sure you are running ngrok server.'
     );
 
-    const res = await client.post(`/bot${config.token}/setWebhook`);
+    const res = await client.post(`/bot${accessToken}/setWebhook`);
     invariant(res.data.success, 'Setting for webhook is failed');
 
     print('Successfully set webhook');

@@ -48,10 +48,41 @@ describe('init', () => {
         server: 'micro',
       })
     );
+    const botJson = {
+      telegram: {
+        accessToken: '__PUT_YOUR_ACCESS_TOKEN_HERE__',
+      },
+    };
+    const root = path.resolve('newbot');
 
     await init();
 
     expect(process.exit).not.toBeCalled();
+    expect(fs.writeFileSync).lastCalledWith(
+      path.join(root, 'bot.json'),
+      JSON.stringify(botJson, null, 2)
+    );
+  });
+
+  it('should not create bot.json if select console as platform', async () => {
+    inquirer.prompt.mockReturnValueOnce(
+      Promise.resolve({
+        name: 'newbot',
+        platform: 'console',
+        session: 'memory',
+        server: 'restify',
+      })
+    );
+    const botJson = {};
+    const root = path.resolve('newbot');
+
+    await init();
+
+    expect(process.exit).not.toBeCalled();
+    expect(fs.writeFileSync).not.lastCalledWith(
+      path.join(root, 'bot.json'),
+      JSON.stringify(botJson, null, 2)
+    );
   });
 
   it('should catch error when inquirer.prompt reject response with status', async () => {
