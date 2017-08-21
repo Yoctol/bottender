@@ -98,6 +98,13 @@ export default class MessengerConnector
     return ((body: any): MessengerRawEvent);
   }
 
+  _isStandby(body: MessengerRequestBody): boolean {
+    if (!body.entry) return false;
+    const entry = ((body: any): EntryRequestBody).entry[0];
+
+    return !!entry.standby;
+  }
+
   get platform(): string {
     return 'messenger';
   }
@@ -146,6 +153,7 @@ export default class MessengerConnector
       client: this._client,
       rawEvent,
       session,
+      isStandby: this._isStandby(body),
     });
 
     await handler(context);

@@ -14,6 +14,7 @@ type Options = {
   client: MessengerClient,
   rawEvent: MessengerRawEvent,
   session: ?MessengerSession,
+  isStandby?: boolean,
 };
 
 class MessengerContext implements Context {
@@ -22,9 +23,9 @@ class MessengerContext implements Context {
   _session: ?MessengerSession;
   _jobQueue: DelayableJobQueue;
 
-  constructor({ client, rawEvent, session }: Options) {
+  constructor({ client, rawEvent, session, isStandby }: Options) {
     this._client = client;
-    this._event = new MessengerEvent(rawEvent);
+    this._event = new MessengerEvent(rawEvent, { isStandby });
     this._session = session;
     this._jobQueue = new DelayableJobQueue();
     this._jobQueue.beforeEach(async ({ delay, showIndicators = true }) => {

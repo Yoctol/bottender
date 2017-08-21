@@ -122,6 +122,28 @@ describe('#createRequestHandler', () => {
     );
   });
 
+  it('should call handleRequest without session if unique session id is null', async () => {
+    const { bot, connector } = setup({});
+
+    connector.getUniqueSessionIdFromRequest.mockReturnValue(null);
+
+    const handler = () => {};
+    bot.onEvent(handler);
+
+    const requestHandler = bot.createRequestHandler();
+
+    const body = {};
+    await requestHandler(body);
+
+    expect(connector.handleRequest).toBeCalledWith(
+      expect.objectContaining({
+        body,
+        session: undefined,
+        handler,
+      })
+    );
+  });
+
   it('should call write on sessionStore', async () => {
     const { bot, connector, sessionStore } = setup({});
 
