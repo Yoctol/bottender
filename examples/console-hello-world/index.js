@@ -4,7 +4,7 @@ const { ConsoleBot } = require('../../src');
 
 const bot = new ConsoleBot();
 
-bot.handle(context => {
+bot.onEvent(context => {
   context.sendText('Hello World');
 });
 

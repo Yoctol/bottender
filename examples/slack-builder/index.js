@@ -25,7 +25,7 @@ const handler = new SlackHandlerBuilder()
   })
   .build();
 
-bot.handle(handler);
+bot.onEvent(handler);
 
 const server = createServer(bot);
 

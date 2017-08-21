@@ -25,7 +25,7 @@ const handler = new TelegramHandlerBuilder()
   })
   .build();
 
-bot.handle(handler);
+bot.onEvent(handler);
 
 const server = createServer(bot);
 server.listen(5000, () => {

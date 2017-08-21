@@ -6,7 +6,7 @@ const bot = new ConsoleBot({
   sessionStore: new MongoSessionStore('mongodb://localhost:27017/'),
 });
 
-bot.handle(context => {
+bot.onEvent(context => {
   context.sendText('Hello World');
 });
 

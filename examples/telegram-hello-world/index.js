@@ -11,7 +11,7 @@ const bot = new TelegramBot({
   accessToken: config.accessToken,
 });
 
-bot.handle(context => {
+bot.onEvent(context => {
   context.sendMessage('Hello World');
 });
 
