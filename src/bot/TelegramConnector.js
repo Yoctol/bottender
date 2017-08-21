@@ -79,7 +79,7 @@ export default class TelegramConnector
     handler,
   }: {
     body: TelegramRequestBody,
-    session: TelegramSession,
+    session: ?TelegramSession,
     handler: FunctionalHandler,
   }): Promise<void> {
     const rawEvent = this._getRawEventFromRequest(body);

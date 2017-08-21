@@ -245,6 +245,56 @@ const postback = {
   },
 };
 
+const policyEnforcement = {
+  recipient: {
+    id: '404217156637689',
+  },
+  timestamp: 1458692752478,
+  'policy-enforcement': {
+    action: 'block',
+    reason:
+      'The bot violated our Platform Policies (https://developers.facebook.com/policy/#messengerplatform). Common violations include sending out excessive spammy messages or being non-functional.',
+  },
+};
+
+const appRoles = {
+  recipient: {
+    id: '404217156637689',
+  },
+  timestamp: 1458692752478,
+  app_roles: {
+    '123456789': ['automation'],
+  },
+};
+
+const passThreadControl = {
+  sender: {
+    id: '404217156637689',
+  },
+  recipient: {
+    id: '1423587017700273',
+  },
+  timestamp: 1458692752478,
+  pass_thread_control: {
+    new_owner_app_id: '123456789',
+    metadata: 'additional content that the caller wants to set',
+  },
+};
+
+const takeThreadControl = {
+  sender: {
+    id: '404217156637689',
+  },
+  recipient: {
+    id: '1423587017700273',
+  },
+  timestamp: 1458692752478,
+  take_thread_control: {
+    previous_owner_app_id: '123456789',
+    metadata: 'additional content that the caller wants to set',
+  },
+};
+
 it('#rawEvent', () => {
   expect(new MessengerEvent(textMessage).rawEvent).toEqual(textMessage);
   expect(new MessengerEvent(imageMessage).rawEvent).toEqual(imageMessage);
@@ -477,4 +527,80 @@ it('#postback', () => {
     'DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_RED'
   );
   expect(new MessengerEvent(textMessage).payload).toEqual(null);
+});
+
+it('#isPolicyEnforcement', () => {
+  expect(new MessengerEvent(textMessage).isPolicyEnforcement).toEqual(false);
+  expect(new MessengerEvent(postback).isPolicyEnforcement).toEqual(false);
+  expect(new MessengerEvent(policyEnforcement).isPolicyEnforcement).toEqual(
+    true
+  );
+});
+
+it('#policyEnforcement', () => {
+  expect(new MessengerEvent(textMessage).policyEnforcement).toEqual(null);
+  expect(new MessengerEvent(postback).policyEnforcement).toEqual(null);
+  expect(new MessengerEvent(policyEnforcement).policyEnforcement).toEqual({
+    action: 'block',
+    reason:
+      'The bot violated our Platform Policies (https://developers.facebook.com/policy/#messengerplatform). Common violations include sending out excessive spammy messages or being non-functional.',
+  });
+});
+
+it('#isAppRoles', () => {
+  expect(new MessengerEvent(textMessage).isAppRoles).toEqual(false);
+  expect(new MessengerEvent(postback).isAppRoles).toEqual(false);
+  expect(new MessengerEvent(appRoles).isAppRoles).toEqual(true);
+});
+
+it('#appRoles', () => {
+  expect(new MessengerEvent(textMessage).appRoles).toEqual(null);
+  expect(new MessengerEvent(postback).appRoles).toEqual(null);
+  expect(new MessengerEvent(appRoles).appRoles).toEqual({
+    '123456789': ['automation'],
+  });
+});
+
+it('#isStandby', () => {
+  expect(new MessengerEvent(textMessage).isStandby).toEqual(false);
+  expect(
+    new MessengerEvent(textMessage, { isStandby: false }).isStandby
+  ).toEqual(false);
+  expect(
+    new MessengerEvent(textMessage, { isStandby: true }).isStandby
+  ).toEqual(true);
+});
+
+it('#isPassThreadControl', () => {
+  expect(new MessengerEvent(textMessage).isPassThreadControl).toEqual(false);
+  expect(new MessengerEvent(postback).isPassThreadControl).toEqual(false);
+  expect(new MessengerEvent(passThreadControl).isPassThreadControl).toEqual(
+    true
+  );
+});
+
+it('#passThreadControl', () => {
+  expect(new MessengerEvent(textMessage).passThreadControl).toEqual(null);
+  expect(new MessengerEvent(postback).passThreadControl).toEqual(null);
+  expect(new MessengerEvent(passThreadControl).passThreadControl).toEqual({
+    metadata: 'additional content that the caller wants to set',
+    new_owner_app_id: '123456789',
+  });
+});
+
+it('#isTakeThreadControl', () => {
+  expect(new MessengerEvent(textMessage).isTakeThreadControl).toEqual(false);
+  expect(new MessengerEvent(postback).isTakeThreadControl).toEqual(false);
+  expect(new MessengerEvent(takeThreadControl).isTakeThreadControl).toEqual(
+    true
+  );
+});
+
+it('#takeThreadControl', () => {
+  expect(new MessengerEvent(textMessage).takeThreadControl).toEqual(null);
+  expect(new MessengerEvent(postback).takeThreadControl).toEqual(null);
+  expect(new MessengerEvent(takeThreadControl).takeThreadControl).toEqual({
+    metadata: 'additional content that the caller wants to set',
+    previous_owner_app_id: '123456789',
+  });
 });

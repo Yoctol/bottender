@@ -2,11 +2,11 @@
 
 import type { Event } from './Event';
 
-type Sender = {
+export type Sender = {
   id: string,
 };
 
-type Recipient = {
+export type Recipient = {
   id: string,
 };
 
@@ -18,7 +18,7 @@ type Attachment = {
   type: string,
 };
 
-type Message = {
+export type Message = {
   is_echo?: boolean,
   text?: string,
   sticker_id?: number,
@@ -26,23 +26,55 @@ type Message = {
   attachments?: Array<Attachment>,
 };
 
-type Postback = {
+export type Postback = {
   payload: string,
 };
 
+export type PolicyEnforcement = {
+  action: String,
+  reason: String,
+};
+
+export type AppRoles = {
+  [key: string]: Array<String>,
+};
+
+export type PassThreadControl = {
+  new_owner_app_id: String,
+  metadata: String,
+};
+
+export type TakeThreadControl = {
+  previous_owner_app_id: String,
+  metadata: String,
+};
+
 export type MessengerRawEvent = {
-  sender: Sender,
-  recipient: Recipient,
-  timestamp: number,
+  sender?: Sender,
+  recipient?: Recipient,
+  timestamp?: number,
   message?: Message,
   postback?: Postback,
+  'policy-enforcement'?: PolicyEnforcement,
+  app_roles?: AppRoles,
+  pass_thread_control?: PassThreadControl,
+  take_thread_control?: TakeThreadControl,
+};
+
+type MessengerEventOptions = {
+  isStandby?: boolean,
 };
 
 export default class MessengerEvent implements Event {
   _rawEvent: MessengerRawEvent;
+  _isStandby: boolean;
 
-  constructor(rawEvent: MessengerRawEvent) {
+  constructor(
+    rawEvent: MessengerRawEvent,
+    options: MessengerEventOptions = {}
+  ) {
     this._rawEvent = rawEvent;
+    this._isStandby = options.isStandby || false;
   }
 
   get rawEvent(): MessengerRawEvent {
@@ -161,5 +193,52 @@ export default class MessengerEvent implements Event {
       return this.quickReply.payload;
     }
     return null;
+  }
+
+  get isPolicyEnforcement(): boolean {
+    return (
+      !!this._rawEvent['policy-enforcement'] &&
+      typeof this._rawEvent['policy-enforcement'] === 'object'
+    );
+  }
+
+  get policyEnforcement(): ?PolicyEnforcement {
+    return this._rawEvent['policy-enforcement'] || null;
+  }
+
+  get isAppRoles(): boolean {
+    return (
+      !!this._rawEvent.app_roles && typeof this._rawEvent.app_roles === 'object'
+    );
+  }
+
+  get appRoles(): ?AppRoles {
+    return this._rawEvent.app_roles || null;
+  }
+
+  get isStandby(): boolean {
+    return this._isStandby;
+  }
+
+  get isPassThreadControl(): boolean {
+    return (
+      !!this._rawEvent.pass_thread_control &&
+      typeof this._rawEvent.pass_thread_control === 'object'
+    );
+  }
+
+  get passThreadControl(): ?PassThreadControl {
+    return this._rawEvent.pass_thread_control || null;
+  }
+
+  get isTakeThreadControl(): boolean {
+    return (
+      !!this._rawEvent.take_thread_control &&
+      typeof this._rawEvent.take_thread_control === 'object'
+    );
+  }
+
+  get takeThreadControl(): ?TakeThreadControl {
+    return this._rawEvent.take_thread_control || null;
   }
 }

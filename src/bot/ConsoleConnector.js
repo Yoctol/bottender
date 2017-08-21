@@ -46,7 +46,7 @@ export default class ConsoleConnector
     handler,
   }: {
     body: ConsoleRequestBody,
-    session: ConsoleSession,
+    session: ?ConsoleSession,
     handler: FunctionalHandler,
   }): Promise<void> {
     const context = new ConsoleContext({

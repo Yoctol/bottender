@@ -7,12 +7,12 @@ import ConsoleEvent, { type ConsoleRawEvent } from './ConsoleEvent';
 
 type Options = {
   rawEvent: ConsoleRawEvent,
-  session: ConsoleSession,
+  session: ?ConsoleSession,
 };
 
 export default class ConsoleContext implements Context {
   _event: ConsoleEvent;
-  _session: ConsoleSession;
+  _session: ?ConsoleSession;
 
   constructor({ rawEvent, session }: Options) {
     this._event = new ConsoleEvent(rawEvent);
@@ -37,7 +37,7 @@ export default class ConsoleContext implements Context {
     return this._event;
   }
 
-  get session(): ConsoleSession {
+  get session(): ?ConsoleSession {
     return this._session;
   }
 }

@@ -1,6 +1,7 @@
 /* @flow */
 
 import sleep from 'delay';
+import warning from 'warning';
 import { TelegramClient } from 'messaging-api-telegram';
 
 import type { TelegramSession } from '../bot/TelegramConnector';
@@ -12,13 +13,13 @@ import DelayableJobQueue from './DelayableJobQueue';
 type Options = {
   client: TelegramClient,
   rawEvent: TelegramRawEvent,
-  session: TelegramSession,
+  session: ?TelegramSession,
 };
 
 class TelegramContext implements Context {
   _client: TelegramClient;
   _event: TelegramEvent;
-  _session: TelegramSession;
+  _session: ?TelegramSession;
   _jobQueue: DelayableJobQueue;
 
   constructor({ client, rawEvent, session }: Options) {
@@ -37,11 +38,18 @@ class TelegramContext implements Context {
     return this._event;
   }
 
-  get session(): TelegramSession {
+  get session(): ?TelegramSession {
     return this._session;
   }
 
   sendText(text: string): Promise<any> {
+    if (!this._session) {
+      warning(
+        false,
+        'sendText: should not be called in context without session'
+      );
+      return Promise.resolve();
+    }
     return this._enqueue({
       instance: this._client,
       method: 'sendMessage',
@@ -52,6 +60,13 @@ class TelegramContext implements Context {
   }
 
   sendTextWithDelay(delay: number, text: string): Promise<any> {
+    if (!this._session) {
+      warning(
+        false,
+        'sendText: should not be called in context without session'
+      );
+      return Promise.resolve();
+    }
     return this._enqueue({
       instance: this._client,
       method: 'sendMessage',
@@ -93,6 +108,13 @@ sendMethods.forEach(method => {
     configurable: true,
     writable: true,
     value(...args) {
+      if (!this._session) {
+        warning(
+          false,
+          `${method}: should not be called in context without session`
+        );
+        return Promise.resolve();
+      }
       return this._enqueue({
         instance: this._client,
         method,
@@ -123,6 +145,13 @@ sendMethods.forEach(method => {
     configurable: true,
     writable: true,
     value(delay, ...rest) {
+      if (!this._session) {
+        warning(
+          false,
+          `${method}WithDelay: should not be called in context without session`
+        );
+        return Promise.resolve();
+      }
       return this._enqueue({
         instance: this._client,
         method,

@@ -1,6 +1,7 @@
 /* @flow */
 
 import sleep from 'delay';
+import warning from 'warning';
 import { MessengerClient } from 'messaging-api-messenger';
 
 import type { MessengerSession } from '../bot/MessengerConnector';
@@ -12,18 +13,19 @@ import DelayableJobQueue from './DelayableJobQueue';
 type Options = {
   client: MessengerClient,
   rawEvent: MessengerRawEvent,
-  session: MessengerSession,
+  session: ?MessengerSession,
+  isStandby?: boolean,
 };
 
 class MessengerContext implements Context {
   _client: MessengerClient;
   _event: MessengerEvent;
-  _session: MessengerSession;
+  _session: ?MessengerSession;
   _jobQueue: DelayableJobQueue;
 
-  constructor({ client, rawEvent, session }: Options) {
+  constructor({ client, rawEvent, session, isStandby }: Options) {
     this._client = client;
-    this._event = new MessengerEvent(rawEvent);
+    this._event = new MessengerEvent(rawEvent, { isStandby });
     this._session = session;
     this._jobQueue = new DelayableJobQueue();
     this._jobQueue.beforeEach(async ({ delay, showIndicators = true }) => {
@@ -47,11 +49,18 @@ class MessengerContext implements Context {
     return this._event;
   }
 
-  get session(): MessengerSession {
+  get session(): ?MessengerSession {
     return this._session;
   }
 
   sendText(text: string): Promise<any> {
+    if (!this._session) {
+      warning(
+        false,
+        'sendText: should not be called in context without session'
+      );
+      return Promise.resolve();
+    }
     return this._enqueue({
       instance: this._client,
       method: 'sendText',
@@ -62,6 +71,13 @@ class MessengerContext implements Context {
   }
 
   sendTextWithDelay(delay: number, text: string): Promise<any> {
+    if (!this._session) {
+      warning(
+        false,
+        'sendTextWithDelay: should not be called in context without session'
+      );
+      return Promise.resolve();
+    }
     return this._enqueue({
       instance: this._client,
       method: 'sendText',
@@ -73,6 +89,13 @@ class MessengerContext implements Context {
 
   // FIXME: rethink
   sendTextTo(id: string, text: string): Promise<any> {
+    if (!this._session) {
+      warning(
+        false,
+        'sendTextTo: should not be called in context without session'
+      );
+      return Promise.resolve();
+    }
     return this._enqueue({
       instance: this._client,
       method: 'sendText',
@@ -82,12 +105,26 @@ class MessengerContext implements Context {
     });
   }
 
-  turnTypingIndicatorsOn(): void {
-    this._client.turnTypingIndicatorsOn(this._session.user.id);
+  turnTypingIndicatorsOn(): Promise<any> {
+    if (!this._session) {
+      warning(
+        false,
+        'turnTypingIndicatorsOn: should not be called in context without session'
+      );
+      return Promise.resolve();
+    }
+    return this._client.turnTypingIndicatorsOn(this._session.user.id);
   }
 
-  turnTypingIndicatorsOff(): void {
-    this._client.turnTypingIndicatorsOff(this._session.user.id);
+  turnTypingIndicatorsOff(): Promise<any> {
+    if (!this._session) {
+      warning(
+        false,
+        'turnTypingIndicatorsOff: should not be called in context without session'
+      );
+      return Promise.resolve();
+    }
+    return this._client.turnTypingIndicatorsOff(this._session.user.id);
   }
 
   _enqueue(job: Object): Promise<any> {
@@ -127,6 +164,14 @@ sendMethods.forEach(method => {
     configurable: true,
     writable: true,
     value(...args) {
+      if (!this._session) {
+        warning(
+          false,
+          `${method}: should not be called in context without session`
+        );
+        return Promise.resolve();
+      }
+
       return this._enqueue({
         instance: this._client,
         method,
@@ -157,6 +202,14 @@ sendMethods.forEach(method => {
     configurable: true,
     writable: true,
     value(delay, ...rest) {
+      if (!this._session) {
+        warning(
+          false,
+          `${method}WithDelay: should not be called in context without session`
+        );
+        return Promise.resolve();
+      }
+
       return this._enqueue({
         instance: this._client,
         method,
