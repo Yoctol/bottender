@@ -32,6 +32,8 @@ export default class Bot {
 
   _handler: ?FunctionalHandler;
 
+  _contextExtensions: Array<Function> = [];
+
   constructor({
     connector,
     sessionStore = createMemorySessionStore(),
@@ -64,6 +66,11 @@ export default class Bot {
   handle(handler: FunctionalHandler): void {
     warning(false, '`handle` is deprecated. Use `onEvent` instead.');
     this.onEvent(handler);
+  }
+
+  extendContext(fn: Function): void {
+    this._contextExtensions.push(fn);
+    return this;
   }
 
   createRequestHandler(): RequestHandler {
@@ -102,6 +109,8 @@ export default class Bot {
           await this._connector.updateSession(session, body);
         }
       }
+
+      // FIXME: how to patch context???
 
       this._connector
         .handleRequest({
