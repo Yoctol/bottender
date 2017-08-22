@@ -40,7 +40,7 @@ describe('#before', () => {
           i += 1;
         }
       )
-      .onUnhandled(() => {});
+      .onEvent(() => {});
     const rootHandler = builder.build();
     const context = {};
     await rootHandler(context);
@@ -69,7 +69,7 @@ describe('#before', () => {
           i += 1;
         }
       )
-      .onUnhandled(() => {});
+      .onEvent(() => {});
     const rootHandler = builder.build();
     const context = {};
     await rootHandler(context);
@@ -90,7 +90,7 @@ describe('#beforeMessage', () => {
   it('should run before any message received', async () => {
     const { builder } = setup();
     const handler = jest.fn();
-    builder.beforeMessage(handler).onUnhandled(() => {});
+    builder.beforeMessage(handler).onEvent(() => {});
     const rootHandler = builder.build();
     const contextWithMessageEvent = {
       event: {
@@ -112,10 +112,7 @@ describe('#beforeMessage', () => {
     const { builder } = setup();
     const handler1 = jest.fn();
     const handler2 = jest.fn();
-    builder
-      .beforeMessage(handler1)
-      .beforeMessage(handler2)
-      .onUnhandled(() => {});
+    builder.beforeMessage(handler1).beforeMessage(handler2).onEvent(() => {});
     const rootHandler = builder.build();
     const contextWithMessageEvent = {
       event: {
@@ -293,85 +290,6 @@ describe('#onEvent', () => {
   });
 });
 
-describe('#onUnhandledMessage', () => {
-  it('should return this', () => {
-    const { builder } = setup();
-    const handler = () => {};
-    expect(builder.onUnhandledMessage(handler)).toBe(builder);
-  });
-
-  it('should call fallback message handler if can not find a match predicate and is a message', async () => {
-    const { builder } = setup();
-    const context = {
-      event: {
-        isMessage: true,
-      },
-    };
-    const predicate = jest.fn(() => false);
-    const handler = jest.fn();
-    const fallbackHandler = jest.fn();
-    builder.on(predicate, handler).onUnhandledMessage(fallbackHandler);
-    await builder.build()(context);
-    expect(handler).not.toBeCalled();
-    expect(fallbackHandler).toBeCalledWith(context);
-  });
-
-  it('should not call fallback message handler if is not a message', async () => {
-    const { builder } = setup();
-    const context = {
-      event: {
-        isMessage: false,
-      },
-    };
-    const predicate = jest.fn(() => false);
-    const handler = jest.fn();
-    const fallbackHandler = jest.fn();
-    builder.on(predicate, handler).onUnhandledMessage(fallbackHandler);
-    await builder.build()(context);
-    expect(handler).not.toBeCalled();
-    expect(fallbackHandler).not.toBeCalled();
-  });
-
-  it('should support async handler', async () => {
-    const { builder } = setup();
-    const context = {
-      event: {
-        isMessage: true,
-      },
-    };
-    const fallbackHandler = jest.fn(() => Promise.resolve());
-    builder.onUnhandledMessage(fallbackHandler);
-    await builder.build()(context);
-    expect(fallbackHandler).toBeCalledWith(context);
-  });
-
-  it('should support string as handler', async () => {
-    const { builder } = setup();
-    const context = {
-      event: {
-        isMessage: true,
-      },
-      sendText: jest.fn(),
-    };
-    builder.onUnhandledMessage('沒處理到');
-    await builder.build()(context);
-    expect(context.sendText).toBeCalledWith('沒處理到');
-  });
-
-  it('should support array as handler', async () => {
-    const { builder } = setup();
-    const context = {
-      event: {
-        isMessage: true,
-      },
-      sendText: jest.fn(),
-    };
-    builder.onUnhandledMessage(['沒處理到', '漏掉了']);
-    await builder.build()(context);
-    expect(context.sendText).toBeCalledWith(expect.stringMatching(/沒處理到|漏掉了/));
-  });
-});
-
 describe('#onError', () => {
   it('should return this', () => {
     const { builder } = setup();
@@ -385,7 +303,7 @@ describe('#onError', () => {
       sendText: jest.fn(),
     };
     builder
-      .onUnhandled(() => {
+      .onEvent(() => {
         throw new Error('Boom!');
       })
       .onError(ctx => {
@@ -401,11 +319,11 @@ describe('#onError', () => {
     const context = {
       sendText: jest.fn(),
     };
-    builder2.onUnhandled(() => {
+    builder2.onEvent(() => {
       throw new Error('Boom!');
     });
 
-    builder.onUnhandled(builder2.build()).onError(ctx => {
+    builder.onEvent(builder2.build()).onError(ctx => {
       ctx.sendText('Boom!');
     });
     await builder.build()(context);
@@ -420,7 +338,7 @@ describe('#onError', () => {
     const error = new Error('Boom!');
     const errorHandler = jest.fn();
     builder
-      .onUnhandled(() => {
+      .onEvent(() => {
         throw error;
       })
       .onError(errorHandler);

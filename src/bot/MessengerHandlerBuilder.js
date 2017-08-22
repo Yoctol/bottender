@@ -148,14 +148,15 @@ export default class MessengerHandlerBuilder extends BasicHandlerBuilder {
     return this;
   }
 
-  onUnhandled(handler: Handler) {
-    this._fallbackHandler = {
+  // FIXME
+  onEvent(handler: Handler) {
+    this._handlers.push({
       predicate: context =>
         !context.event.isEcho &&
         !context.event.isRead &&
         !context.event.isDelivery,
       handler: normalizeHandler(handler),
-    };
+    });
     return this;
   }
 }

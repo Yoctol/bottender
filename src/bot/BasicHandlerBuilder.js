@@ -1,6 +1,5 @@
 /* @flow */
 import randomItem from 'random-item';
-import warning from 'warning';
 
 // FIXME: platform
 export type Context = {
@@ -97,8 +96,6 @@ export function matchPattern(pattern: Pattern, text: string): boolean {
 export default class HandlerBuilder {
   _beforeHandlers: Array<FunctionalHandler> = [];
   _handlers: Array<PredicateHandler> = [];
-  _fallbackHandler: ?PredicateHandler = null;
-  _fallbackMessageHandler: ?PredicateHandler = null;
   _errorHandler: ?FunctionalHandler = null;
 
   before(handler: FunctionalHandler) {
@@ -131,37 +128,13 @@ export default class HandlerBuilder {
     return this;
   }
 
-  onUnhandled(handler: Handler) {
-    warning(
-      false,
-      '`onUnhandled` is deprecated. Use `onEvent` at tail call instead.'
-    );
-    this._fallbackHandler = {
-      predicate: () => true,
-      handler: normalizeHandler(handler),
-    };
-    return this;
-  }
-
-  onUnhandledMessage(handler: Handler) {
-    warning(false, '`onUnhandledMessage` is deprecated.');
-    this._fallbackMessageHandler = {
-      predicate: context => context.event.isMessage,
-      handler: normalizeHandler(handler),
-    };
-    return this;
-  }
-
   onError(handler: Handler) {
     this._errorHandler = normalizeHandler(handler);
     return this;
   }
 
   build(): FunctionalHandler {
-    const handlers = this._handlers.concat(
-      this._fallbackMessageHandler || [],
-      this._fallbackHandler || []
-    );
+    const handlers = this._handlers;
 
     return async (context: Context) => {
       try {
