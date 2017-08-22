@@ -69,7 +69,7 @@ describe('#onMessage', () => {
 });
 
 describe('#onText', () => {
-  const context = {
+  const contextWithAwesomeText = {
     event: {
       isMessage: true,
       isTextMessage: true,
@@ -85,14 +85,14 @@ describe('#onText', () => {
     expect(await builder.onText('text', handler)).toBe(builder);
   });
 
-  describe('should support string', () => {
+  describe('should support catch all handler', () => {
     it('match', async () => {
       const { builder } = setup();
       const handler = jest.fn();
 
-      builder.onText('awesome', handler);
-      await builder.build()(context);
-      expect(handler).toBeCalledWith(context);
+      builder.onText(handler);
+      await builder.build()(contextWithAwesomeText);
+      expect(handler).toBeCalledWith(contextWithAwesomeText);
     });
 
     it('not match', async () => {
@@ -100,7 +100,32 @@ describe('#onText', () => {
       const handler = jest.fn();
 
       builder.onText('awful', handler);
-      await builder.build()(context);
+      await builder.build()({
+        event: {
+          isMessage: false,
+          isTextMessage: false,
+        },
+      });
+      expect(handler).not.toBeCalled();
+    });
+  });
+
+  describe('should support string', () => {
+    it('match', async () => {
+      const { builder } = setup();
+      const handler = jest.fn();
+
+      builder.onText('awesome', handler);
+      await builder.build()(contextWithAwesomeText);
+      expect(handler).toBeCalledWith(contextWithAwesomeText);
+    });
+
+    it('not match', async () => {
+      const { builder } = setup();
+      const handler = jest.fn();
+
+      builder.onText('awful', handler);
+      await builder.build()(contextWithAwesomeText);
       expect(handler).not.toBeCalled();
     });
   });
@@ -110,8 +135,8 @@ describe('#onText', () => {
       const { builder } = setup();
       const handler = jest.fn();
       builder.onText(/awesome/, handler);
-      await builder.build()(context);
-      expect(handler).toBeCalledWith(context);
+      await builder.build()(contextWithAwesomeText);
+      expect(handler).toBeCalledWith(contextWithAwesomeText);
     });
 
     it('not match', async () => {
@@ -119,14 +144,14 @@ describe('#onText', () => {
       const handler = jest.fn();
 
       builder.onText(/awful/, handler);
-      await builder.build()(context);
+      await builder.build()(contextWithAwesomeText);
       expect(handler).not.toBeCalled();
     });
   });
 });
 
 describe('#onCallbackQuery', () => {
-  const context = {
+  const contextWithCallbackQuery = {
     event: {
       isMessage: false,
       isCallbackQuery: true,
@@ -145,14 +170,14 @@ describe('#onCallbackQuery', () => {
     expect(await builder.onCallbackQuery('text', handler)).toBe(builder);
   });
 
-  describe('should support string', () => {
+  describe('should support catch all handler', () => {
     it('match', async () => {
       const { builder } = setup();
       const handler = jest.fn();
 
-      builder.onCallbackQuery('data', handler);
-      await builder.build()(context);
-      expect(handler).toBeCalledWith(context);
+      builder.onCallbackQuery(handler);
+      await builder.build()(contextWithCallbackQuery);
+      expect(handler).toBeCalledWith(contextWithCallbackQuery);
     });
 
     it('not match', async () => {
@@ -160,7 +185,32 @@ describe('#onCallbackQuery', () => {
       const handler = jest.fn();
 
       builder.onCallbackQuery('awful', handler);
-      await builder.build()(context);
+      await builder.build()({
+        event: {
+          isMessage: true,
+          isCallbackQuery: false,
+        },
+      });
+      expect(handler).not.toBeCalled();
+    });
+  });
+
+  describe('should support string', () => {
+    it('match', async () => {
+      const { builder } = setup();
+      const handler = jest.fn();
+
+      builder.onCallbackQuery('data', handler);
+      await builder.build()(contextWithCallbackQuery);
+      expect(handler).toBeCalledWith(contextWithCallbackQuery);
+    });
+
+    it('not match', async () => {
+      const { builder } = setup();
+      const handler = jest.fn();
+
+      builder.onCallbackQuery('awful', handler);
+      await builder.build()(contextWithCallbackQuery);
       expect(handler).not.toBeCalled();
     });
   });
@@ -170,8 +220,8 @@ describe('#onCallbackQuery', () => {
       const { builder } = setup();
       const handler = jest.fn();
       builder.onCallbackQuery(/data/, handler);
-      await builder.build()(context);
-      expect(handler).toBeCalledWith(context);
+      await builder.build()(contextWithCallbackQuery);
+      expect(handler).toBeCalledWith(contextWithCallbackQuery);
     });
 
     it('not match', async () => {
@@ -179,7 +229,7 @@ describe('#onCallbackQuery', () => {
       const handler = jest.fn();
 
       builder.onCallbackQuery(/awful/, handler);
-      await builder.build()(context);
+      await builder.build()(contextWithCallbackQuery);
       expect(handler).not.toBeCalled();
     });
   });

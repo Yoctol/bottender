@@ -14,11 +14,21 @@ export default class LINEHandlerBuilder extends BasicHandlerBuilder {
     return this;
   }
 
-  onText(pattern: Pattern, handler: Handler) {
-    warning(
-      typeof pattern === 'string' || pattern instanceof RegExp,
-      `'onText' only accepts string or regex, but received ${typeof pattern}`
-    );
+  onText(arg1: Pattern | Handler, arg2?: Handler) {
+    let pattern;
+    let handler;
+    if (arg2) {
+      pattern = ((arg1: any): Pattern);
+      handler = (arg2: Handler);
+
+      warning(
+        typeof pattern === 'string' || pattern instanceof RegExp,
+        `'onText' only accepts string or regex, but received ${typeof pattern}`
+      );
+    } else {
+      pattern = /[\s\S]*/;
+      handler = ((arg1: any): Handler);
+    }
     this.onMessage(
       context =>
         context.event.isTextMessage &&
@@ -33,11 +43,21 @@ export default class LINEHandlerBuilder extends BasicHandlerBuilder {
     return this;
   }
 
-  onPayload(pattern: Pattern, handler: Handler) {
-    warning(
-      typeof pattern === 'string' || pattern instanceof RegExp,
-      `'onPayload' only accepts string or regex, but received ${typeof pattern}`
-    );
+  onPayload(arg1: Pattern | Handler, arg2?: Handler) {
+    let pattern;
+    let handler;
+    if (arg2) {
+      pattern = ((arg1: any): Pattern);
+      handler = (arg2: Handler);
+
+      warning(
+        typeof pattern === 'string' || pattern instanceof RegExp,
+        `'onPayload' only accepts string or regex, but received ${typeof pattern}`
+      );
+    } else {
+      pattern = /[\s\S]*/;
+      handler = ((arg1: any): Handler);
+    }
     this.on(
       context =>
         context.event.isPostback &&
