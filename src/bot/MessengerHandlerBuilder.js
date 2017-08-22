@@ -5,14 +5,13 @@ import * as constants from '../constants';
 
 import BasicHandlerBuilder, {
   type Predicate,
-  type Handler,
+  type FunctionalHandler,
   type Pattern,
-  normalizeHandler,
   matchPattern,
 } from './BasicHandlerBuilder';
 
 export default class MessengerHandlerBuilder extends BasicHandlerBuilder {
-  onMessage(predicate: Predicate, handler: Handler) {
+  onMessage(predicate: Predicate, handler: FunctionalHandler) {
     this.on(
       context =>
         context.event.isMessage && !context.event.isEcho && predicate(context),
@@ -21,7 +20,7 @@ export default class MessengerHandlerBuilder extends BasicHandlerBuilder {
     return this;
   }
 
-  onText(pattern: Pattern, handler: Handler) {
+  onText(pattern: Pattern, handler: FunctionalHandler) {
     warning(
       typeof pattern === 'string' || pattern instanceof RegExp,
       `'onText' only accepts string or regex, but received ${typeof pattern}`
@@ -36,12 +35,12 @@ export default class MessengerHandlerBuilder extends BasicHandlerBuilder {
     return this;
   }
 
-  onPostback(predicate: Predicate, handler: Handler) {
+  onPostback(predicate: Predicate, handler: FunctionalHandler) {
     this.on(context => context.event.isPostback && predicate(context), handler);
     return this;
   }
 
-  onPayload(pattern: Pattern, handler: Handler) {
+  onPayload(pattern: Pattern, handler: FunctionalHandler) {
     warning(
       typeof pattern === 'string' || pattern instanceof RegExp,
       `'onPayload' only accepts string or regex, but received ${typeof pattern}`
@@ -62,12 +61,12 @@ export default class MessengerHandlerBuilder extends BasicHandlerBuilder {
     return this;
   }
 
-  onGetStarted(handler: Handler) {
+  onGetStarted(handler: FunctionalHandler) {
     this.onPayload(constants.payload.GET_STARTED, handler);
     return this;
   }
 
-  onQuickReply(predicate: Predicate, handler: Handler) {
+  onQuickReply(predicate: Predicate, handler: FunctionalHandler) {
     this.onMessage(
       context => !!context.event.message.quick_reply && predicate(context),
       handler
@@ -75,12 +74,12 @@ export default class MessengerHandlerBuilder extends BasicHandlerBuilder {
     return this;
   }
 
-  onEcho(predicate: Predicate, handler: Handler) {
+  onEcho(predicate: Predicate, handler: FunctionalHandler) {
     this.on(context => context.event.isEcho && predicate(context), handler);
     return this;
   }
 
-  onEchoText(pattern: Pattern, handler: Handler) {
+  onEchoText(pattern: Pattern, handler: FunctionalHandler) {
     this.on(
       context =>
         context.event.isEcho &&
@@ -90,17 +89,17 @@ export default class MessengerHandlerBuilder extends BasicHandlerBuilder {
     return this;
   }
 
-  onRead(predicate: Predicate, handler: Handler) {
+  onRead(predicate: Predicate, handler: FunctionalHandler) {
     this.on(context => context.event.isRead && predicate(context), handler);
     return this;
   }
 
-  onDelivery(predicate: Predicate, handler: Handler) {
+  onDelivery(predicate: Predicate, handler: FunctionalHandler) {
     this.on(context => context.event.isDelivery && predicate(context), handler);
     return this;
   }
 
-  onLocation(predicate: Predicate, handler: Handler) {
+  onLocation(predicate: Predicate, handler: FunctionalHandler) {
     this.on(
       context => context.event.isLocationMessage && predicate(context),
       handler
@@ -108,7 +107,7 @@ export default class MessengerHandlerBuilder extends BasicHandlerBuilder {
     return this;
   }
 
-  onImage(predicate: Predicate, handler: Handler) {
+  onImage(predicate: Predicate, handler: FunctionalHandler) {
     this.on(
       context => context.event.isImageMessage && predicate(context),
       handler
@@ -116,7 +115,7 @@ export default class MessengerHandlerBuilder extends BasicHandlerBuilder {
     return this;
   }
 
-  onAudio(predicate: Predicate, handler: Handler) {
+  onAudio(predicate: Predicate, handler: FunctionalHandler) {
     this.on(
       context => context.event.isAudioMessage && predicate(context),
       handler
@@ -124,7 +123,7 @@ export default class MessengerHandlerBuilder extends BasicHandlerBuilder {
     return this;
   }
 
-  onVideo(predicate: Predicate, handler: Handler) {
+  onVideo(predicate: Predicate, handler: FunctionalHandler) {
     this.on(
       context => context.event.isVideoMessage && predicate(context),
       handler
@@ -132,7 +131,7 @@ export default class MessengerHandlerBuilder extends BasicHandlerBuilder {
     return this;
   }
 
-  onFile(predicate: Predicate, handler: Handler) {
+  onFile(predicate: Predicate, handler: FunctionalHandler) {
     this.on(
       context => context.event.isFileMessage && predicate(context),
       handler
@@ -140,7 +139,7 @@ export default class MessengerHandlerBuilder extends BasicHandlerBuilder {
     return this;
   }
 
-  onFallback(predicate: Predicate, handler: Handler) {
+  onFallback(predicate: Predicate, handler: FunctionalHandler) {
     this.on(
       context => context.event.isFallbackMessage && predicate(context),
       handler
@@ -148,13 +147,13 @@ export default class MessengerHandlerBuilder extends BasicHandlerBuilder {
     return this;
   }
 
-  onUnhandled(handler: Handler) {
+  onUnhandled(handler: FunctionalHandler) {
     this._fallbackHandler = {
       predicate: context =>
         !context.event.isEcho &&
         !context.event.isRead &&
         !context.event.isDelivery,
-      handler: normalizeHandler(handler),
+      handler,
     };
     return this;
   }

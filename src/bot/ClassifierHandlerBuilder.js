@@ -1,5 +1,3 @@
-import { normalizeHandler } from './BasicHandlerBuilder';
-
 export default class ClassifierHandlerBuilder {
   constructor(classifier, threshold) {
     this._classifier = classifier;
@@ -11,13 +9,13 @@ export default class ClassifierHandlerBuilder {
   onIntent(intent, handler) {
     this._intentHandlers.push({
       intent,
-      handler: normalizeHandler(handler),
+      handler,
     });
     return this;
   }
 
   onUnmatched(handler) {
-    this._unmatchedHandler = normalizeHandler(handler);
+    this._unmatchedHandler = handler;
     return this;
   }
 
