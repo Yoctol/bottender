@@ -4,18 +4,12 @@
   "license": "UNLICENSED",
   "main": "lib/index.js",
   "browser": "lib/browser.js",
-  "files": [
-    "bin",
-    "lib",
-    "express.js",
-    "koa.js",
-    "micro.js",
-    "restify.js"
-  ],
+  "files": ["bin", "lib", "express.js", "koa.js", "micro.js", "restify.js"],
   "bin": {
     "bottender": "bin/cli.js"
   },
   "scripts": {
+    "build:docs": "node scripts/build-docs",
     "build": "npm run clean && babel src -d lib --ignore __tests__",
     "clean": "rimraf lib",
     "check": "flow check",
@@ -36,6 +30,7 @@
     "babel-eslint": "^7.2.3",
     "babel-jest": "^20.0.3",
     "babel-preset-yoctol": "^0.6.0",
+    "documentation": "^5.2.1",
     "eslint": "^4.4.1",
     "eslint-config-prettier": "^2.3.0",
     "eslint-config-yoctol-base": "^0.13.0",
@@ -99,9 +94,7 @@
     "warning": "^3.0.0"
   },
   "jest": {
-    "collectCoverageFrom": [
-      "src/**/*.js"
-    ],
+    "collectCoverageFrom": ["src/**/*.js"],
     "coveragePathIgnorePatterns": [
       "/node_modules/",
       "/__tests__/",
@@ -116,13 +109,9 @@
         "statements": 80
       }
     },
-    "setupFiles": [
-      "./test/setupJest.js"
-    ],
+    "setupFiles": ["./test/setupJest.js"],
     "testResultsProcessor": "./node_modules/jest-junit",
-    "transformIgnorePatterns": [
-      "/node_modules/"
-    ],
+    "transformIgnorePatterns": ["/node_modules/"],
     "testEnvironment": "node",
     "timers": "fake",
     "resetModules": true,
