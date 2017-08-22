@@ -14,11 +14,21 @@ export default class TelegramHandlerBuilder extends BasicHandlerBuilder {
     return this;
   }
 
-  onText(pattern: Pattern, handler: Handler) {
-    warning(
-      typeof pattern === 'string' || pattern instanceof RegExp,
-      `'onText' only accepts string or regex, but received ${typeof pattern}`
-    );
+  onText(arg1: Pattern | Handler, arg2?: Handler) {
+    let pattern;
+    let handler;
+    if (arg2) {
+      pattern = ((arg1: any): Pattern);
+      handler = (arg2: Handler);
+
+      warning(
+        typeof pattern === 'string' || pattern instanceof RegExp,
+        `'onText' only accepts string or regex, but received ${typeof pattern}`
+      );
+    } else {
+      pattern = /[\s\S]*/;
+      handler = ((arg1: any): Handler);
+    }
     this.onMessage(
       context =>
         context.event.isTextMessage &&
@@ -28,11 +38,21 @@ export default class TelegramHandlerBuilder extends BasicHandlerBuilder {
     return this;
   }
 
-  onCallbackQuery(pattern: Pattern, handler: Handler) {
-    warning(
-      typeof pattern === 'string' || pattern instanceof RegExp,
-      `'onCallbackQuery' only accepts string or regex, but received ${typeof pattern}`
-    );
+  onCallbackQuery(arg1: Pattern | Handler, arg2?: Handler) {
+    let pattern;
+    let handler;
+    if (arg2) {
+      pattern = ((arg1: any): Pattern);
+      handler = (arg2: Handler);
+
+      warning(
+        typeof pattern === 'string' || pattern instanceof RegExp,
+        `'onCallbackQuery' only accepts string or regex, but received ${typeof pattern}`
+      );
+    } else {
+      pattern = /[\s\S]*/;
+      handler = ((arg1: any): Handler);
+    }
     this.on(
       context =>
         context.event.isCallbackQuery &&

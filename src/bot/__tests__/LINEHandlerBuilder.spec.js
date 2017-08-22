@@ -75,6 +75,41 @@ describe('#onText', () => {
     expect(await builder.onText('text', handler)).toBe(builder);
   });
 
+  describe('should support catch all handler', () => {
+    it('match', async () => {
+      const { builder } = setup();
+      const handler = jest.fn();
+      const context = {
+        event: {
+          isMessage: true,
+          isTextMessage: true,
+          message: {
+            id: '325708',
+            type: 'text',
+            text: 'awesome',
+          },
+        },
+      };
+      builder.onText(handler);
+      await builder.build()(context);
+      expect(handler).toBeCalledWith(context);
+    });
+
+    it('not match', async () => {
+      const { builder } = setup();
+      const handler = jest.fn();
+      const context = {
+        event: {
+          isMessage: false,
+          isTextMessage: false,
+        },
+      };
+      builder.onText(handler);
+      await builder.build()(context);
+      expect(handler).not.toBeCalled();
+    });
+  });
+
   describe('should support string', () => {
     it('match', async () => {
       const { builder } = setup();
@@ -226,6 +261,22 @@ describe('#onPayload', () => {
     const { builder } = setup();
     const handler = () => {};
     expect(await builder.onPayload('payload', handler)).toBe(builder);
+  });
+
+  it('should support catch all handler', async () => {
+    const { builder } = setup();
+    const handler = jest.fn();
+    const context = {
+      event: {
+        isPostback: true,
+        postback: {
+          data: 'cool',
+        },
+      },
+    };
+    builder.onPayload(handler);
+    await builder.build()(context);
+    expect(handler).toBeCalledWith(context);
   });
 
   it('should call predicate when received postback', async () => {
