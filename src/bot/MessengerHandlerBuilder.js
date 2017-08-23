@@ -5,14 +5,13 @@ import * as constants from '../constants';
 
 import BasicHandlerBuilder, {
   type Predicate,
-  type Handler,
+  type FunctionalHandler,
   type Pattern,
-  normalizeHandler,
   matchPattern,
 } from './BasicHandlerBuilder';
 
 export default class MessengerHandlerBuilder extends BasicHandlerBuilder {
-  onMessage(predicate: Predicate, handler: Handler) {
+  onMessage(predicate: Predicate, handler: FunctionalHandler) {
     this.on(
       context =>
         context.event.isMessage && !context.event.isEcho && predicate(context),
@@ -21,12 +20,12 @@ export default class MessengerHandlerBuilder extends BasicHandlerBuilder {
     return this;
   }
 
-  onText(arg1: Pattern | Handler, arg2?: Handler) {
+  onText(arg1: Pattern | FunctionalHandler, arg2?: FunctionalHandler) {
     let pattern;
     let handler;
     if (arg2) {
       pattern = ((arg1: any): Pattern);
-      handler = (arg2: Handler);
+      handler = (arg2: FunctionalHandler);
 
       warning(
         typeof pattern === 'string' || pattern instanceof RegExp,
@@ -34,7 +33,7 @@ export default class MessengerHandlerBuilder extends BasicHandlerBuilder {
       );
     } else {
       pattern = /[\s\S]*/;
-      handler = ((arg1: any): Handler);
+      handler = ((arg1: any): FunctionalHandler);
     }
     this.onMessage(
       context =>
@@ -46,17 +45,17 @@ export default class MessengerHandlerBuilder extends BasicHandlerBuilder {
     return this;
   }
 
-  onPostback(predicate: Predicate, handler: Handler) {
+  onPostback(predicate: Predicate, handler: FunctionalHandler) {
     this.on(context => context.event.isPostback && predicate(context), handler);
     return this;
   }
 
-  onPayload(arg1: Pattern | Handler, arg2?: Handler) {
+  onPayload(arg1: Pattern | FunctionalHandler, arg2?: FunctionalHandler) {
     let pattern;
     let handler;
     if (arg2) {
       pattern = ((arg1: any): Pattern);
-      handler = (arg2: Handler);
+      handler = (arg2: FunctionalHandler);
 
       warning(
         typeof pattern === 'string' || pattern instanceof RegExp,
@@ -64,7 +63,7 @@ export default class MessengerHandlerBuilder extends BasicHandlerBuilder {
       );
     } else {
       pattern = /[\s\S]*/;
-      handler = ((arg1: any): Handler);
+      handler = ((arg1: any): FunctionalHandler);
     }
     this.on(({ event }) => {
       if (event.isPostback && matchPattern(pattern, event.postback.payload)) {
@@ -82,12 +81,12 @@ export default class MessengerHandlerBuilder extends BasicHandlerBuilder {
     return this;
   }
 
-  onGetStarted(handler: Handler) {
+  onGetStarted(handler: FunctionalHandler) {
     this.onPayload(constants.payload.GET_STARTED, handler);
     return this;
   }
 
-  onQuickReply(predicate: Predicate, handler: Handler) {
+  onQuickReply(predicate: Predicate, handler: FunctionalHandler) {
     this.onMessage(
       context => !!context.event.message.quick_reply && predicate(context),
       handler
@@ -95,12 +94,12 @@ export default class MessengerHandlerBuilder extends BasicHandlerBuilder {
     return this;
   }
 
-  onEcho(predicate: Predicate, handler: Handler) {
+  onEcho(predicate: Predicate, handler: FunctionalHandler) {
     this.on(context => context.event.isEcho && predicate(context), handler);
     return this;
   }
 
-  onEchoText(pattern: Pattern, handler: Handler) {
+  onEchoText(pattern: Pattern, handler: FunctionalHandler) {
     this.on(
       context =>
         context.event.isEcho &&
@@ -110,17 +109,17 @@ export default class MessengerHandlerBuilder extends BasicHandlerBuilder {
     return this;
   }
 
-  onRead(predicate: Predicate, handler: Handler) {
+  onRead(predicate: Predicate, handler: FunctionalHandler) {
     this.on(context => context.event.isRead && predicate(context), handler);
     return this;
   }
 
-  onDelivery(predicate: Predicate, handler: Handler) {
+  onDelivery(predicate: Predicate, handler: FunctionalHandler) {
     this.on(context => context.event.isDelivery && predicate(context), handler);
     return this;
   }
 
-  onLocation(predicate: Predicate, handler: Handler) {
+  onLocation(predicate: Predicate, handler: FunctionalHandler) {
     this.on(
       context => context.event.isLocationMessage && predicate(context),
       handler
@@ -128,7 +127,7 @@ export default class MessengerHandlerBuilder extends BasicHandlerBuilder {
     return this;
   }
 
-  onImage(predicate: Predicate, handler: Handler) {
+  onImage(predicate: Predicate, handler: FunctionalHandler) {
     this.on(
       context => context.event.isImageMessage && predicate(context),
       handler
@@ -136,7 +135,7 @@ export default class MessengerHandlerBuilder extends BasicHandlerBuilder {
     return this;
   }
 
-  onAudio(predicate: Predicate, handler: Handler) {
+  onAudio(predicate: Predicate, handler: FunctionalHandler) {
     this.on(
       context => context.event.isAudioMessage && predicate(context),
       handler
@@ -144,7 +143,7 @@ export default class MessengerHandlerBuilder extends BasicHandlerBuilder {
     return this;
   }
 
-  onVideo(predicate: Predicate, handler: Handler) {
+  onVideo(predicate: Predicate, handler: FunctionalHandler) {
     this.on(
       context => context.event.isVideoMessage && predicate(context),
       handler
@@ -152,7 +151,7 @@ export default class MessengerHandlerBuilder extends BasicHandlerBuilder {
     return this;
   }
 
-  onFile(predicate: Predicate, handler: Handler) {
+  onFile(predicate: Predicate, handler: FunctionalHandler) {
     this.on(
       context => context.event.isFileMessage && predicate(context),
       handler
@@ -160,7 +159,7 @@ export default class MessengerHandlerBuilder extends BasicHandlerBuilder {
     return this;
   }
 
-  onFallback(predicate: Predicate, handler: Handler) {
+  onFallback(predicate: Predicate, handler: FunctionalHandler) {
     this.on(
       context => context.event.isFallbackMessage && predicate(context),
       handler
@@ -169,13 +168,13 @@ export default class MessengerHandlerBuilder extends BasicHandlerBuilder {
   }
 
   // FIXME
-  onEvent(handler: Handler) {
+  onEvent(handler: FunctionalHandler) {
     this._handlers.push({
       predicate: context =>
         !context.event.isEcho &&
         !context.event.isRead &&
         !context.event.isDelivery,
-      handler: normalizeHandler(handler),
+      handler,
     });
     return this;
   }

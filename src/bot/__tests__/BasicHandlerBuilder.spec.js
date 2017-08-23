@@ -215,30 +215,6 @@ describe('#on', () => {
     expect(predicate).toBeCalledWith(context);
     expect(handler).toBeCalledWith(context);
   });
-
-  it('should support string as handler', async () => {
-    const { builder } = setup();
-    const context = {
-      sendText: jest.fn(),
-    };
-    const predicate = jest.fn(() => Promise.resolve(true));
-    builder.on(predicate, '處理到');
-    await builder.build()(context);
-    expect(predicate).toBeCalledWith(context);
-    expect(context.sendText).toBeCalledWith('處理到');
-  });
-
-  it('should support array as handler', async () => {
-    const { builder } = setup();
-    const context = {
-      sendText: jest.fn(),
-    };
-    const predicate = jest.fn(() => Promise.resolve(true));
-    builder.on(predicate, ['處理到', '完成']);
-    await builder.build()(context);
-    expect(predicate).toBeCalledWith(context);
-    expect(context.sendText).toBeCalledWith(expect.stringMatching(/處理到|完成/));
-  });
 });
 
 describe('#onEvent', () => {
@@ -267,26 +243,6 @@ describe('#onEvent', () => {
     builder.onEvent(handler);
     await builder.build()(context);
     expect(handler).toBeCalledWith(context);
-  });
-
-  it('should support string as handler', async () => {
-    const { builder } = setup();
-    const context = {
-      sendText: jest.fn(),
-    };
-    builder.onEvent('沒處理到');
-    await builder.build()(context);
-    expect(context.sendText).toBeCalledWith('沒處理到');
-  });
-
-  it('should support array as handler', async () => {
-    const { builder } = setup();
-    const context = {
-      sendText: jest.fn(),
-    };
-    builder.onEvent(['沒處理到', '漏掉了']);
-    await builder.build()(context);
-    expect(context.sendText).toBeCalledWith(expect.stringMatching(/沒處理到|漏掉了/));
   });
 });
 

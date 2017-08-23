@@ -3,23 +3,23 @@ import warning from 'warning';
 
 import BasicHandlerBuilder, {
   type Predicate,
-  type Handler,
+  type FunctionalHandler,
   type Pattern,
   matchPattern,
 } from './BasicHandlerBuilder';
 
 export default class TelegramHandlerBuilder extends BasicHandlerBuilder {
-  onMessage(predicate: Predicate, handler: Handler) {
+  onMessage(predicate: Predicate, handler: FunctionalHandler) {
     this.on(context => context.event.isMessage && predicate(context), handler);
     return this;
   }
 
-  onText(arg1: Pattern | Handler, arg2?: Handler) {
+  onText(arg1: Pattern | FunctionalHandler, arg2?: FunctionalHandler) {
     let pattern;
     let handler;
     if (arg2) {
       pattern = ((arg1: any): Pattern);
-      handler = (arg2: Handler);
+      handler = (arg2: FunctionalHandler);
 
       warning(
         typeof pattern === 'string' || pattern instanceof RegExp,
@@ -27,7 +27,7 @@ export default class TelegramHandlerBuilder extends BasicHandlerBuilder {
       );
     } else {
       pattern = /[\s\S]*/;
-      handler = ((arg1: any): Handler);
+      handler = ((arg1: any): FunctionalHandler);
     }
     this.onMessage(
       context =>
@@ -38,12 +38,12 @@ export default class TelegramHandlerBuilder extends BasicHandlerBuilder {
     return this;
   }
 
-  onCallbackQuery(arg1: Pattern | Handler, arg2?: Handler) {
+  onCallbackQuery(arg1: Pattern | FunctionalHandler, arg2?: FunctionalHandler) {
     let pattern;
     let handler;
     if (arg2) {
       pattern = ((arg1: any): Pattern);
-      handler = (arg2: Handler);
+      handler = (arg2: FunctionalHandler);
 
       warning(
         typeof pattern === 'string' || pattern instanceof RegExp,
@@ -51,7 +51,7 @@ export default class TelegramHandlerBuilder extends BasicHandlerBuilder {
       );
     } else {
       pattern = /[\s\S]*/;
-      handler = ((arg1: any): Handler);
+      handler = ((arg1: any): FunctionalHandler);
     }
     this.on(
       context =>
@@ -62,7 +62,7 @@ export default class TelegramHandlerBuilder extends BasicHandlerBuilder {
     return this;
   }
 
-  onPhoto(predicate: Predicate, handler: Handler) {
+  onPhoto(predicate: Predicate, handler: FunctionalHandler) {
     this.on(
       context => context.event.isPhotoMessage && predicate(context),
       handler
@@ -70,7 +70,7 @@ export default class TelegramHandlerBuilder extends BasicHandlerBuilder {
     return this;
   }
 
-  onDocument(predicate: Predicate, handler: Handler) {
+  onDocument(predicate: Predicate, handler: FunctionalHandler) {
     this.on(
       context => context.event.isDocumentMessage && predicate(context),
       handler
@@ -78,7 +78,7 @@ export default class TelegramHandlerBuilder extends BasicHandlerBuilder {
     return this;
   }
 
-  onAudio(predicate: Predicate, handler: Handler) {
+  onAudio(predicate: Predicate, handler: FunctionalHandler) {
     this.on(
       context => context.event.isAudioMessage && predicate(context),
       handler
@@ -86,7 +86,7 @@ export default class TelegramHandlerBuilder extends BasicHandlerBuilder {
     return this;
   }
 
-  onGame(predicate: Predicate, handler: Handler) {
+  onGame(predicate: Predicate, handler: FunctionalHandler) {
     this.on(
       context => context.event.isGameMessage && predicate(context),
       handler
@@ -94,7 +94,7 @@ export default class TelegramHandlerBuilder extends BasicHandlerBuilder {
     return this;
   }
 
-  onSticker(predicate: Predicate, handler: Handler) {
+  onSticker(predicate: Predicate, handler: FunctionalHandler) {
     this.on(
       context => context.event.isStickerMessage && predicate(context),
       handler
@@ -102,7 +102,7 @@ export default class TelegramHandlerBuilder extends BasicHandlerBuilder {
     return this;
   }
 
-  onVideo(predicate: Predicate, handler: Handler) {
+  onVideo(predicate: Predicate, handler: FunctionalHandler) {
     this.on(
       context => context.event.isVideoMessage && predicate(context),
       handler
@@ -110,7 +110,7 @@ export default class TelegramHandlerBuilder extends BasicHandlerBuilder {
     return this;
   }
 
-  onVoice(predicate: Predicate, handler: Handler) {
+  onVoice(predicate: Predicate, handler: FunctionalHandler) {
     this.on(
       context => context.event.isVoiceMessage && predicate(context),
       handler
@@ -118,7 +118,7 @@ export default class TelegramHandlerBuilder extends BasicHandlerBuilder {
     return this;
   }
 
-  onVideoNote(predicate: Predicate, handler: Handler) {
+  onVideoNote(predicate: Predicate, handler: FunctionalHandler) {
     this.on(
       context => context.event.isVideoNoteMessage && predicate(context),
       handler
@@ -126,7 +126,7 @@ export default class TelegramHandlerBuilder extends BasicHandlerBuilder {
     return this;
   }
 
-  onContact(predicate: Predicate, handler: Handler) {
+  onContact(predicate: Predicate, handler: FunctionalHandler) {
     this.on(
       context => context.event.isContactMessage && predicate(context),
       handler
@@ -134,7 +134,7 @@ export default class TelegramHandlerBuilder extends BasicHandlerBuilder {
     return this;
   }
 
-  onLocation(predicate: Predicate, handler: Handler) {
+  onLocation(predicate: Predicate, handler: FunctionalHandler) {
     this.on(
       context => context.event.isLocationMessage && predicate(context),
       handler
@@ -142,7 +142,7 @@ export default class TelegramHandlerBuilder extends BasicHandlerBuilder {
     return this;
   }
 
-  onVenue(predicate: Predicate, handler: Handler) {
+  onVenue(predicate: Predicate, handler: FunctionalHandler) {
     this.on(
       context => context.event.isVenueMessage && predicate(context),
       handler

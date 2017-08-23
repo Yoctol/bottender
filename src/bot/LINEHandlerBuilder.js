@@ -3,23 +3,23 @@ import warning from 'warning';
 
 import BasicHandlerBuilder, {
   type Predicate,
-  type Handler,
+  type FunctionalHandler,
   type Pattern,
   matchPattern,
 } from './BasicHandlerBuilder';
 
 export default class LINEHandlerBuilder extends BasicHandlerBuilder {
-  onMessage(predicate: Predicate, handler: Handler) {
+  onMessage(predicate: Predicate, handler: FunctionalHandler) {
     this.on(context => context.event.isMessage && predicate(context), handler);
     return this;
   }
 
-  onText(arg1: Pattern | Handler, arg2?: Handler) {
+  onText(arg1: Pattern | FunctionalHandler, arg2?: FunctionalHandler) {
     let pattern;
     let handler;
     if (arg2) {
       pattern = ((arg1: any): Pattern);
-      handler = (arg2: Handler);
+      handler = (arg2: FunctionalHandler);
 
       warning(
         typeof pattern === 'string' || pattern instanceof RegExp,
@@ -27,7 +27,7 @@ export default class LINEHandlerBuilder extends BasicHandlerBuilder {
       );
     } else {
       pattern = /[\s\S]*/;
-      handler = ((arg1: any): Handler);
+      handler = ((arg1: any): FunctionalHandler);
     }
     this.onMessage(
       context =>
@@ -38,17 +38,17 @@ export default class LINEHandlerBuilder extends BasicHandlerBuilder {
     return this;
   }
 
-  onPostback(predicate: Predicate, handler: Handler) {
+  onPostback(predicate: Predicate, handler: FunctionalHandler) {
     this.on(context => context.event.isPostback && predicate(context), handler);
     return this;
   }
 
-  onPayload(arg1: Pattern | Handler, arg2?: Handler) {
+  onPayload(arg1: Pattern | FunctionalHandler, arg2?: FunctionalHandler) {
     let pattern;
     let handler;
     if (arg2) {
       pattern = ((arg1: any): Pattern);
-      handler = (arg2: Handler);
+      handler = (arg2: FunctionalHandler);
 
       warning(
         typeof pattern === 'string' || pattern instanceof RegExp,
@@ -56,7 +56,7 @@ export default class LINEHandlerBuilder extends BasicHandlerBuilder {
       );
     } else {
       pattern = /[\s\S]*/;
-      handler = ((arg1: any): Handler);
+      handler = ((arg1: any): FunctionalHandler);
     }
     this.on(
       context =>
@@ -68,29 +68,29 @@ export default class LINEHandlerBuilder extends BasicHandlerBuilder {
   }
 
   // account is added as a friend (or unblocked).
-  onFollow(handler: Handler) {
+  onFollow(handler: FunctionalHandler) {
     this.on(context => context.event.isFollow, handler);
     return this;
   }
 
-  onUnfollow(handler: Handler) {
+  onUnfollow(handler: FunctionalHandler) {
     this.on(context => context.event.isUnfollow, handler);
     return this;
   }
 
   // account joins a group or talk room.
-  onJoin(handler: Handler) {
+  onJoin(handler: FunctionalHandler) {
     this.on(context => context.event.isJoin, handler);
     return this;
   }
 
   // account leaves a group.
-  onLeave(handler: Handler) {
+  onLeave(handler: FunctionalHandler) {
     this.on(context => context.event.isLeave, handler);
     return this;
   }
 
-  onBeacon(predicate: Predicate, handler: Handler) {
+  onBeacon(predicate: Predicate, handler: FunctionalHandler) {
     this.on(context => context.event.isBeacon && predicate(context), handler);
     return this;
   }

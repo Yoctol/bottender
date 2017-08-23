@@ -1,5 +1,5 @@
 /* @flow */
-import randomItem from 'random-item';
+
 import warning from 'warning';
 
 // FIXME: platform
@@ -57,12 +57,10 @@ export type Context = {
 
 export type Predicate = (context: Context) => boolean | Promise<boolean>;
 
-type FunctionalHandler = (
+export type FunctionalHandler = (
   context: Context,
   otherArg?: any
 ) => void | Promise<void>;
-
-export type Handler = string | Array<string> | FunctionalHandler;
 
 export type Pattern = string | RegExp;
 
@@ -70,20 +68,6 @@ type PredicateHandler = {
   predicate: Predicate,
   handler: FunctionalHandler,
 };
-
-export function normalizeHandler(handler: Handler): FunctionalHandler {
-  if (typeof handler === 'string') {
-    return context => {
-      // $FlowFixMe
-      context.sendText(handler);
-    };
-  } else if (Array.isArray(handler)) {
-    return context => {
-      context.sendText(randomItem(handler));
-    };
-  }
-  return handler;
-}
 
 export function matchPattern(pattern: Pattern, text: string): boolean {
   if (typeof pattern === 'string') {
@@ -117,24 +101,24 @@ export default class HandlerBuilder {
     return this;
   }
 
-  on(predicate: Predicate, handler: Handler) {
+  on(predicate: Predicate, handler: FunctionalHandler) {
     this._handlers.push({
       predicate,
-      handler: normalizeHandler(handler),
+      handler,
     });
     return this;
   }
 
-  onEvent(handler: Handler) {
+  onEvent(handler: FunctionalHandler) {
     this._handlers.push({
       predicate: () => true,
-      handler: normalizeHandler(handler),
+      handler,
     });
     return this;
   }
 
-  onError(handler: Handler) {
-    this._errorHandler = normalizeHandler(handler);
+  onError(handler: FunctionalHandler) {
+    this._errorHandler = handler;
     return this;
   }
 
