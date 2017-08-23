@@ -33,22 +33,42 @@ class LINEContext implements Context {
     this._jobQueue.beforeEach(({ delay }) => sleep(delay));
   }
 
+  /**
+   * The name of the platform.
+   *
+   */
   get platform(): string {
     return 'line';
   }
 
+  /**
+   * The event instance.
+   *
+   */
   get event(): LINEEvent {
     return this._event;
   }
 
+  /**
+   * The session state of the context.
+   *
+   */
   get session(): ?LINESession {
     return this._session;
   }
 
+  /**
+   * Determine if the reply token is already used.
+   *
+   */
   get replied(): boolean {
     return this._replied;
   }
 
+  /**
+   * Send text to the owner of then session.
+   *
+   */
   sendText(text: string): Promise<any> {
     if (!this._session) {
       warning(

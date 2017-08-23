@@ -30,6 +30,30 @@ export default class SlackContext implements Context {
     this._jobQueue.beforeEach(({ delay }) => sleep(delay));
   }
 
+  /**
+   * The name of the platform.
+   *
+   */
+  get platform(): string {
+    return 'slack';
+  }
+
+  /**
+   * The event instance.
+   *
+   */
+  get event(): SlackEvent {
+    return this._event;
+  }
+
+  /**
+   * The session state of the context.
+   *
+   */
+  get session(): ?SlackSession {
+    return this._session;
+  }
+
   postMessage(text: string): Promise<any> {
     const channelId = this._getChannelIdFromSession();
 
@@ -54,6 +78,10 @@ export default class SlackContext implements Context {
     });
   }
 
+  /**
+   * Send text to the owner of then session.
+   *
+   */
   sendText(text: string): Promise<any> {
     return this.postMessage(text);
   }
@@ -82,18 +110,6 @@ export default class SlackContext implements Context {
         onError: reject,
       });
     });
-  }
-
-  get platform(): string {
-    return 'slack';
-  }
-
-  get event(): SlackEvent {
-    return this._event;
-  }
-
-  get session(): ?SlackSession {
-    return this._session;
   }
 
   _enqueue(job: Object): Promise<any> {

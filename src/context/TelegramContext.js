@@ -30,18 +30,34 @@ class TelegramContext implements Context {
     this._jobQueue.beforeEach(({ delay }) => sleep(delay));
   }
 
+  /**
+   * The name of the platform.
+   *
+   */
   get platform(): string {
     return 'telegram';
   }
 
+  /**
+   * The event instance.
+   *
+   */
   get event(): TelegramEvent {
     return this._event;
   }
 
+  /**
+   * The session state of the context.
+   *
+   */
   get session(): ?TelegramSession {
     return this._session;
   }
 
+  /**
+   * Send text to the owner of then session.
+   *
+   */
   sendText(text: string): Promise<any> {
     if (!this._session) {
       warning(
