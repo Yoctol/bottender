@@ -1,5 +1,6 @@
 /* @flow */
 import randomItem from 'random-item';
+import warning from 'warning';
 
 // FIXME: platform
 export type Context = {
