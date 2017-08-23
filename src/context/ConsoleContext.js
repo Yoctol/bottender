@@ -19,6 +19,34 @@ export default class ConsoleContext implements Context {
     this._session = session;
   }
 
+  /**
+   * The name of the platform.
+   *
+   */
+  get platform(): string {
+    return 'console';
+  }
+
+  /**
+   * The event instance.
+   *
+   */
+  get event(): ConsoleEvent {
+    return this._event;
+  }
+
+  /**
+   * The session state of the context.
+   *
+   */
+  get session(): ?ConsoleSession {
+    return this._session;
+  }
+
+  /**
+   * Send text to the owner of then session.
+   *
+   */
   sendText(text: string): void {
     process.stdout.write(`Bot > ${text}\nYou > `);
   }
@@ -27,17 +55,5 @@ export default class ConsoleContext implements Context {
     setTimeout(() => {
       this.sendText(text);
     }, delay);
-  }
-
-  get platform(): string {
-    return 'console';
-  }
-
-  get event(): ConsoleEvent {
-    return this._event;
-  }
-
-  get session(): ?ConsoleSession {
-    return this._session;
   }
 }

@@ -17,18 +17,34 @@ export default class ConsoleEvent implements Event {
     this._rawEvent = rawEvent;
   }
 
+  /**
+   * Underlying raw event from Console.
+   *
+   */
   get rawEvent(): ConsoleRawEvent {
     return this._rawEvent;
   }
 
+  /**
+   * Determine if the event is a message event.
+   *
+   */
   get isMessage(): boolean {
     return true;
   }
 
+  /**
+   * The message object from Console raw event.
+   *
+   */
   get message(): Message {
     return this._rawEvent.message;
   }
 
+  /**
+   * Determine if the event is a message event which includes text.
+   *
+   */
   get isTextMessage(): boolean {
     return true;
   }

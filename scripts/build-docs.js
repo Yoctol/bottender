@@ -3,9 +3,15 @@ const fs = require('fs');
 const documentation = require('documentation');
 
 const pairs = [
+  ['context/ConsoleContext', 'ConsoleContext'],
+  ['context/ConsoleEvent', 'ConsoleEvent'],
+  ['context/MessengerContext', 'MessengerContext'],
   ['context/MessengerEvent', 'MessengerEvent'],
+  ['context/LINEContext', 'LINEContext'],
   ['context/LINEEvent', 'LINEEvent'],
+  ['context/SlackContext', 'SlackContext'],
   ['context/SlackEvent', 'SlackEvent'],
+  ['context/TelegramContext', 'TelegramContext'],
   ['context/TelegramEvent', 'TelegramEvent'],
 ];
 
