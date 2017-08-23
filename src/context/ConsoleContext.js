@@ -13,6 +13,7 @@ type Options = {
 export default class ConsoleContext implements Context {
   _event: ConsoleEvent;
   _session: ?ConsoleSession;
+  _messageDelay: number = 0;
 
   constructor({ event, session }: Options) {
     this._event = event;
@@ -44,11 +45,21 @@ export default class ConsoleContext implements Context {
   }
 
   /**
+   * Set delay before sending every messages.
+   *
+   */
+  setMessageDelay(seconds: number): void {
+    this._messageDelay = seconds;
+  }
+
+  /**
    * Send text to the owner of then session.
    *
    */
   sendText(text: string): void {
-    process.stdout.write(`Bot > ${text}\nYou > `);
+    setTimeout(() => {
+      process.stdout.write(`Bot > ${text}\nYou > `);
+    }, this._messageDelay);
   }
 
   sendTextWithDelay(delay: number, text: string): void {

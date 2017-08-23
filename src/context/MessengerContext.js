@@ -6,7 +6,7 @@ import { MessengerClient } from 'messaging-api-messenger';
 
 import type { MessengerSession } from '../bot/MessengerConnector';
 
-import { DEFAULT_MESSAGE_DELAY, type Context } from './Context';
+import type { Context } from './Context';
 import MessengerEvent from './MessengerEvent';
 import DelayableJobQueue from './DelayableJobQueue';
 
@@ -21,6 +21,7 @@ class MessengerContext implements Context {
   _event: MessengerEvent;
   _session: ?MessengerSession;
   _jobQueue: DelayableJobQueue;
+  _messageDelay: number = 1000;
 
   constructor({ client, event, session }: Options) {
     this._client = client;
@@ -65,6 +66,14 @@ class MessengerContext implements Context {
   }
 
   /**
+   * Set delay before sending every messages.
+   *
+   */
+  setMessageDelay(seconds: number): void {
+    this._messageDelay = seconds;
+  }
+
+  /**
    * Send text to the owner of then session.
    *
    */
@@ -80,7 +89,7 @@ class MessengerContext implements Context {
       instance: this._client,
       method: 'sendText',
       args: [this._session.user.id, text],
-      delay: DEFAULT_MESSAGE_DELAY,
+      delay: this._messageDelay,
       showIndicators: true,
     });
   }
@@ -191,7 +200,7 @@ sendMethods.forEach(method => {
         instance: this._client,
         method,
         args: [this._session.user.id, ...args],
-        delay: DEFAULT_MESSAGE_DELAY,
+        delay: this._messageDelay,
         showIndicators: true,
       });
     },

@@ -6,7 +6,7 @@ import { TelegramClient } from 'messaging-api-telegram';
 
 import type { TelegramSession } from '../bot/TelegramConnector';
 
-import { DEFAULT_MESSAGE_DELAY, type Context } from './Context';
+import type { Context } from './Context';
 import TelegramEvent from './TelegramEvent';
 import DelayableJobQueue from './DelayableJobQueue';
 
@@ -21,6 +21,7 @@ class TelegramContext implements Context {
   _event: TelegramEvent;
   _session: ?TelegramSession;
   _jobQueue: DelayableJobQueue;
+  _messageDelay: number = 1000;
 
   constructor({ client, event, session }: Options) {
     this._client = client;
@@ -55,6 +56,14 @@ class TelegramContext implements Context {
   }
 
   /**
+   * Set delay before sending every messages.
+   *
+   */
+  setMessageDelay(seconds: number): void {
+    this._messageDelay = seconds;
+  }
+
+  /**
    * Send text to the owner of then session.
    *
    */
@@ -70,7 +79,7 @@ class TelegramContext implements Context {
       instance: this._client,
       method: 'sendMessage',
       args: [this._session.user.id, text],
-      delay: DEFAULT_MESSAGE_DELAY,
+      delay: this._messageDelay,
       showIndicators: true,
     });
   }
@@ -137,7 +146,7 @@ sendMethods.forEach(method => {
         instance: this._client,
         method,
         args: [this._session.user.id, ...args],
-        delay: DEFAULT_MESSAGE_DELAY,
+        delay: this._messageDelay,
         showIndicators: true,
       });
     },

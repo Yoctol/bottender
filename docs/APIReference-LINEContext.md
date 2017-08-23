@@ -24,6 +24,16 @@ Determine if the reply token is already used.
 
 Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 
+## setMessageDelay
+
+Set delay before sending every messages.
+
+**Parameters**
+
+-   `seconds` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
+
+Returns **void** 
+
 ## sendText
 
 Send text to the owner of then session.
