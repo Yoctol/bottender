@@ -192,6 +192,8 @@ types.filter(type => type !== 'Text').forEach(type => {
     configurable: true,
     writable: true,
     value(delay, ...rest) {
+      warning(false, `send${type}WithDelay is deprecated.`);
+
       if (!this._session) {
         warning(
           false,

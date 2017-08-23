@@ -20,11 +20,21 @@ export default class MessengerHandlerBuilder extends BasicHandlerBuilder {
     return this;
   }
 
-  onText(pattern: Pattern, handler: FunctionalHandler) {
-    warning(
-      typeof pattern === 'string' || pattern instanceof RegExp,
-      `'onText' only accepts string or regex, but received ${typeof pattern}`
-    );
+  onText(arg1: Pattern | FunctionalHandler, arg2?: FunctionalHandler) {
+    let pattern;
+    let handler;
+    if (arg2) {
+      pattern = ((arg1: any): Pattern);
+      handler = (arg2: FunctionalHandler);
+
+      warning(
+        typeof pattern === 'string' || pattern instanceof RegExp,
+        `'onText' only accepts string or regex, but received ${typeof pattern}`
+      );
+    } else {
+      pattern = /[\s\S]*/;
+      handler = ((arg1: any): FunctionalHandler);
+    }
     this.onMessage(
       context =>
         context.event.isTextMessage &&
@@ -40,11 +50,21 @@ export default class MessengerHandlerBuilder extends BasicHandlerBuilder {
     return this;
   }
 
-  onPayload(pattern: Pattern, handler: FunctionalHandler) {
-    warning(
-      typeof pattern === 'string' || pattern instanceof RegExp,
-      `'onPayload' only accepts string or regex, but received ${typeof pattern}`
-    );
+  onPayload(arg1: Pattern | FunctionalHandler, arg2?: FunctionalHandler) {
+    let pattern;
+    let handler;
+    if (arg2) {
+      pattern = ((arg1: any): Pattern);
+      handler = (arg2: FunctionalHandler);
+
+      warning(
+        typeof pattern === 'string' || pattern instanceof RegExp,
+        `'onPayload' only accepts string or regex, but received ${typeof pattern}`
+      );
+    } else {
+      pattern = /[\s\S]*/;
+      handler = ((arg1: any): FunctionalHandler);
+    }
     this.on(({ event }) => {
       if (event.isPostback && matchPattern(pattern, event.postback.payload)) {
         return true;
@@ -147,14 +167,15 @@ export default class MessengerHandlerBuilder extends BasicHandlerBuilder {
     return this;
   }
 
-  onUnhandled(handler: FunctionalHandler) {
-    this._fallbackHandler = {
+  // FIXME
+  onEvent(handler: FunctionalHandler) {
+    this._handlers.push({
       predicate: context =>
         !context.event.isEcho &&
         !context.event.isRead &&
         !context.event.isDelivery,
       handler,
-    };
+    });
     return this;
   }
 }

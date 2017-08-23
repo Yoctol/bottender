@@ -80,16 +80,18 @@ export function matchPattern(pattern: Pattern, text: string): boolean {
 export default class HandlerBuilder {
   _beforeHandlers: Array<FunctionalHandler> = [];
   _handlers: Array<PredicateHandler> = [];
-  _fallbackHandler: ?PredicateHandler = null;
-  _fallbackMessageHandler: ?PredicateHandler = null;
   _errorHandler: ?FunctionalHandler = null;
 
   before(handler: FunctionalHandler) {
+    warning(false, '`before` is deprecated. Use middleware instead.');
+
     this._beforeHandlers.push(handler);
     return this;
   }
 
   beforeMessage(handler: FunctionalHandler) {
+    warning(false, '`beforeMessage` is deprecated. Use middleware instead.');
+
     this._beforeHandlers.push(context => {
       if (context.event.isMessage) {
         return handler(context);
@@ -114,37 +116,13 @@ export default class HandlerBuilder {
     return this;
   }
 
-  onUnhandled(handler: FunctionalHandler) {
-    warning(
-      false,
-      '`onUnhandled` is deprecated. Use `onEvent` at tail call instead.'
-    );
-    this._fallbackHandler = {
-      predicate: () => true,
-      handler,
-    };
-    return this;
-  }
-
-  onUnhandledMessage(handler: FunctionalHandler) {
-    warning(false, '`onUnhandledMessage` is deprecated.');
-    this._fallbackMessageHandler = {
-      predicate: context => context.event.isMessage,
-      handler,
-    };
-    return this;
-  }
-
   onError(handler: FunctionalHandler) {
     this._errorHandler = handler;
     return this;
   }
 
   build(): FunctionalHandler {
-    const handlers = this._handlers.concat(
-      this._fallbackMessageHandler || [],
-      this._fallbackHandler || []
-    );
+    const handlers = this._handlers;
 
     return async (context: Context) => {
       try {
