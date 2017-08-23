@@ -88,12 +88,12 @@ export default class Bot {
       }
 
       const platform = this._connector.platform;
-      const senderId = this._connector.getUniqueSessionIdFromRequest(body);
+      const sessionId = this._connector.getUniqueSessionIdFromRequest(body);
 
       let sessionKey;
       let session;
-      if (senderId) {
-        sessionKey = `${platform}:${senderId}`;
+      if (sessionId) {
+        sessionKey = `${platform}:${sessionId}`;
 
         const data = await this._sessions.read(sessionKey);
         session = data || Object.create(null);
