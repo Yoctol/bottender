@@ -202,6 +202,7 @@ sendMethods.forEach(method => {
     configurable: true,
     writable: true,
     value(delay, ...rest) {
+      warning(false, `${method}WithDelay is deprecated.`);
       if (!this._session) {
         warning(
           false,

@@ -59,6 +59,8 @@ export default class SlackContext implements Context {
   }
 
   sendTextWithDelay(delay: number, text: string): Promise<any> {
+    warning(false, `sendTextWithDelay is deprecated.`);
+
     const channelId = this._getChannelIdFromSession();
 
     if (!channelId) {

@@ -60,6 +60,8 @@ class TelegramContext implements Context {
   }
 
   sendTextWithDelay(delay: number, text: string): Promise<any> {
+    warning(false, `sendTextWithDelay is deprecated.`);
+
     if (!this._session) {
       warning(
         false,
