@@ -19,7 +19,7 @@ const handler = new LINEHandlerBuilder()
     context.sendText('Hi there!');
   })
   .onText(/Good morning/i, ['Good morning!', 'Morning!'])
-  .onUnhandled(context => {
+  .onEvent(context => {
     context.sendText("I don't know what you say.");
   })
   .onError(context => {

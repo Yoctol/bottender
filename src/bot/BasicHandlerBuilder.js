@@ -1,4 +1,5 @@
 /* @flow */
+
 import warning from 'warning';
 
 // FIXME: platform
