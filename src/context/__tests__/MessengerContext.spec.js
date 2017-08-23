@@ -34,7 +34,7 @@ const setup = () => {
   };
   const args = {
     client,
-    rawEvent,
+    event: new MessengerEvent(rawEvent),
     session,
   };
   const context = new MessengerContext(args);

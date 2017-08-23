@@ -15,7 +15,7 @@ const setup = () => {
     },
   };
   const context = new ConsoleContext({
-    rawEvent,
+    event: new ConsoleEvent(rawEvent),
     session,
   });
   return {

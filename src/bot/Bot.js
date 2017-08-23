@@ -74,6 +74,12 @@ export default class Bot {
   }
 
   createRequestHandler(): RequestHandler {
+    if (this._handler == null) {
+      throw new Error(
+        'Bot: Missing event handler function. You should assign it using onEvent(...)'
+      );
+    }
+
     return async body => {
       if (!body) {
         throw new Error('Bot.createRequestHandler: Missing argument.');
@@ -119,15 +125,20 @@ export default class Bot {
         });
       });
 
-      if (this._handler == null) {
-        throw new Error(
-          'Bot: Missing event handler function. You should assign it using onEvent(...)'
-        );
-      }
-
-      Promise.all(contexts.map(this._handler))
+      Promise.all(
+        contexts.map(context => {
+          if (this._handler == null) {
+            throw new Error(
+              'Bot: Missing event handler function. You should assign it using onEvent(...)'
+            );
+          }
+          return this._handler(context);
+        })
+      )
         .then(() => {
-          this._sessions.write(sessionKey, session, MINUTES_IN_ONE_YEAR);
+          if (session) {
+            this._sessions.write(sessionKey, session, MINUTES_IN_ONE_YEAR);
+          }
         })
         .catch(console.error);
     };

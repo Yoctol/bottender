@@ -27,7 +27,7 @@ const setup = () => {
   };
   const context = new LINEContext({
     client,
-    rawEvent,
+    event: new LINEEvent(rawEvent),
     session,
   });
   return {
