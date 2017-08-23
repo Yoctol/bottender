@@ -80,8 +80,6 @@ export default class Bot {
       );
     }
 
-    const handler = this._handler;
-
     return async body => {
       if (!body) {
         throw new Error('Bot.createRequestHandler: Missing argument.');
@@ -97,6 +95,7 @@ export default class Bot {
       const platform = this._connector.platform;
       const senderId = this._connector.getUniqueSessionIdFromRequest(body);
 
+      // Create or retrieve session if possible
       let sessionKey;
       let session;
       if (senderId) {
@@ -110,14 +109,23 @@ export default class Bot {
         }
       }
 
-      // FIXME: how to patch context???
+      const events = this._connector.mapRequestToEvents(body);
 
-      this._connector
-        .handleRequest({
-          body,
+      const contexts = events.map(event =>
+        this._connector.createContext({
+          event,
           session: ((session: any): SessionWithUser<{}>),
-          handler,
         })
+      );
+
+      // Call all of extension functions before passing to handler.
+      contexts.forEach(context => {
+        this._contextExtensions.forEach(ext => {
+          ext(context);
+        });
+      });
+
+      Promise.all(contexts.map(this._handler))
         .then(() => {
           this._sessions.write(sessionKey, session, MINUTES_IN_ONE_YEAR);
         })
