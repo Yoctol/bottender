@@ -5,10 +5,9 @@
 import { LINEClient } from 'messaging-api-line';
 
 import LINEContext from '../context/LINEContext';
-import type { LINERawEvent } from '../context/LINEEvent';
+import LINEEvent, { type LINERawEvent } from '../context/LINEEvent';
 import type { Session } from '../session/Session';
 
-import type { FunctionalHandler } from './Bot';
 import type { Connector, SessionWithUser } from './Connector';
 
 type LINERequestBody = {
@@ -96,29 +95,22 @@ export default class LINEConnector
     }
   }
 
-  async handleRequest({
-    body,
+  mapRequestToEvents(body: LINERequestBody): Array<LINEEvent> {
+    return body.events.map(e => new LINEEvent(e));
+  }
+
+  createContext({
+    event,
     session,
-    handler,
   }: {
-    body: LINERequestBody,
+    event: LINEEvent,
     session: ?LINESession,
-    handler: FunctionalHandler,
-  }): Promise<void> {
-    const createLINEContext = rawEvent =>
-      new LINEContext({
-        client: this._client,
-        rawEvent,
-        session,
-      });
-
-    const promises = [];
-    body.events.forEach(event => {
-      const context = createLINEContext(event);
-      promises.push(handler(context));
+  }): LINEContext {
+    return new LINEContext({
+      client: this._client,
+      event,
+      session,
     });
-
-    await Promise.all(promises);
   }
 
   verifySignature(rawBody: string, signature: string): boolean {

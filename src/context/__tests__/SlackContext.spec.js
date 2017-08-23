@@ -25,7 +25,7 @@ const setup = () => {
   };
   const args = {
     client,
-    rawEvent,
+    event: new SlackEvent(rawEvent),
     session,
   };
   const context = new SlackContext(args);

@@ -3,10 +3,10 @@
 import type { ConsoleSession } from '../bot/ConsoleConnector';
 
 import { type Context } from './Context';
-import ConsoleEvent, { type ConsoleRawEvent } from './ConsoleEvent';
+import ConsoleEvent from './ConsoleEvent';
 
 type Options = {
-  rawEvent: ConsoleRawEvent,
+  event: ConsoleEvent,
   session: ?ConsoleSession,
 };
 
@@ -14,8 +14,8 @@ export default class ConsoleContext implements Context {
   _event: ConsoleEvent;
   _session: ?ConsoleSession;
 
-  constructor({ rawEvent, session }: Options) {
-    this._event = new ConsoleEvent(rawEvent);
+  constructor({ event, session }: Options) {
+    this._event = event;
     this._session = session;
   }
 

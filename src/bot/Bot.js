@@ -32,6 +32,8 @@ export default class Bot {
 
   _handler: ?FunctionalHandler;
 
+  _contextExtensions: Array<Function> = [];
+
   constructor({
     connector,
     sessionStore = createMemorySessionStore(),
@@ -66,14 +68,17 @@ export default class Bot {
     this.onEvent(handler);
   }
 
+  extendContext(fn: Function): Bot {
+    this._contextExtensions.push(fn);
+    return this;
+  }
+
   createRequestHandler(): RequestHandler {
     if (this._handler == null) {
       throw new Error(
-        'Bot: Missing event handler function. You should assign it using handle(...)'
+        'Bot: Missing event handler function. You should assign it using onEvent(...)'
       );
     }
-
-    const handler = this._handler;
 
     return async body => {
       if (!body) {
@@ -90,6 +95,7 @@ export default class Bot {
       const platform = this._connector.platform;
       const sessionId = this._connector.getUniqueSessionIdFromRequest(body);
 
+      // Create or retrieve session if possible
       let sessionKey;
       let session;
       if (sessionId) {
@@ -103,14 +109,36 @@ export default class Bot {
         }
       }
 
-      this._connector
-        .handleRequest({
-          body,
+      const events = this._connector.mapRequestToEvents(body);
+
+      const contexts = events.map(event =>
+        this._connector.createContext({
+          event,
           session: ((session: any): SessionWithUser<{}>),
-          handler,
         })
+      );
+
+      // Call all of extension functions before passing to handler.
+      contexts.forEach(context => {
+        this._contextExtensions.forEach(ext => {
+          ext(context);
+        });
+      });
+
+      Promise.all(
+        contexts.map(context => {
+          if (this._handler == null) {
+            throw new Error(
+              'Bot: Missing event handler function. You should assign it using onEvent(...)'
+            );
+          }
+          return this._handler(context);
+        })
+      )
         .then(() => {
-          this._sessions.write(sessionKey, session, MINUTES_IN_ONE_YEAR);
+          if (session) {
+            this._sessions.write(sessionKey, session, MINUTES_IN_ONE_YEAR);
+          }
         })
         .catch(console.error);
     };

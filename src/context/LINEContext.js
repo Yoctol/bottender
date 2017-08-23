@@ -8,12 +8,12 @@ import { LINEClient } from 'messaging-api-line';
 import type { LINESession } from '../bot/LINEConnector';
 
 import { DEFAULT_MESSAGE_DELAY, type Context } from './Context';
-import LINEEvent, { type LINERawEvent } from './LINEEvent';
+import LINEEvent from './LINEEvent';
 import DelayableJobQueue from './DelayableJobQueue';
 
 type Options = {
   client: LINEClient,
-  rawEvent: LINERawEvent,
+  event: LINEEvent,
   session: ?LINESession,
 };
 
@@ -25,9 +25,9 @@ class LINEContext implements Context {
 
   _replied: boolean = false;
 
-  constructor({ client, rawEvent, session }: Options) {
+  constructor({ client, event, session }: Options) {
     this._client = client;
-    this._event = new LINEEvent(rawEvent);
+    this._event = event;
     this._session = session;
     this._jobQueue = new DelayableJobQueue();
     this._jobQueue.beforeEach(({ delay }) => sleep(delay));

@@ -7,14 +7,13 @@ import { MessengerClient } from 'messaging-api-messenger';
 import type { MessengerSession } from '../bot/MessengerConnector';
 
 import { DEFAULT_MESSAGE_DELAY, type Context } from './Context';
-import MessengerEvent, { type MessengerRawEvent } from './MessengerEvent';
+import MessengerEvent from './MessengerEvent';
 import DelayableJobQueue from './DelayableJobQueue';
 
 type Options = {
   client: MessengerClient,
-  rawEvent: MessengerRawEvent,
+  event: MessengerEvent,
   session: ?MessengerSession,
-  isStandby?: boolean,
 };
 
 class MessengerContext implements Context {
@@ -23,9 +22,9 @@ class MessengerContext implements Context {
   _session: ?MessengerSession;
   _jobQueue: DelayableJobQueue;
 
-  constructor({ client, rawEvent, session, isStandby }: Options) {
+  constructor({ client, event, session }: Options) {
     this._client = client;
-    this._event = new MessengerEvent(rawEvent, { isStandby });
+    this._event = event;
     this._session = session;
     this._jobQueue = new DelayableJobQueue();
     this._jobQueue.beforeEach(async ({ delay, showIndicators = true }) => {

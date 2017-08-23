@@ -39,7 +39,7 @@ const setup = () => {
   };
   const args = {
     client,
-    rawEvent,
+    event: new TelegramEvent(rawEvent),
     session,
   };
   const context = new TelegramContext(args);

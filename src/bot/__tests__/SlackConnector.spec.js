@@ -1,6 +1,7 @@
 import { SlackOAuthClient } from 'messaging-api-slack';
 
 import SlackConnector from '../SlackConnector';
+import SlackEvent from '../../context/SlackEvent';
 import SlackContext from '../../context/SlackContext';
 
 jest.mock('messaging-api-slack');
@@ -93,15 +94,26 @@ describe('#updateSession', () => {
   });
 });
 
-describe('#handleRequest', () => {
-  it('call handler with context', async () => {
+describe('#mapRequestToEvents', () => {
+  it('should map request to SlackEvents', () => {
     const { connector } = setup();
+    const events = connector.mapRequestToEvents(request.body);
+
+    expect(events).toHaveLength(1);
+    expect(events[0]).toBeInstanceOf(SlackEvent);
+  });
+});
+
+describe('#createContext', () => {
+  it('should create SlackContext', () => {
+    const { connector } = setup();
+    const event = {};
     const session = {};
-    let context;
-    const handler = _context => {
-      context = _context;
-    };
-    await connector.handleRequest({ body: request.body, session, handler });
+
+    const context = connector.createContext({
+      event,
+      session,
+    });
 
     expect(context).toBeDefined();
     expect(context).toBeInstanceOf(SlackContext);

@@ -7,12 +7,12 @@ import { SlackOAuthClient } from 'messaging-api-slack';
 import type { SlackSession } from '../bot/SlackConnector';
 
 import { DEFAULT_MESSAGE_DELAY, type Context } from './Context';
-import SlackEvent, { type SlackRawEvent } from './SlackEvent';
+import SlackEvent from './SlackEvent';
 import DelayableJobQueue from './DelayableJobQueue';
 
 type Options = {
   client: SlackOAuthClient,
-  rawEvent: SlackRawEvent,
+  event: SlackEvent,
   session: ?SlackSession,
 };
 
@@ -22,9 +22,9 @@ export default class SlackContext implements Context {
   _session: ?SlackSession;
   _jobQueue: DelayableJobQueue;
 
-  constructor({ client, rawEvent, session }: Options) {
+  constructor({ client, event, session }: Options) {
     this._client = client;
-    this._event = new SlackEvent(rawEvent);
+    this._event = event;
     this._session = session;
     this._jobQueue = new DelayableJobQueue();
     this._jobQueue.beforeEach(({ delay }) => sleep(delay));
