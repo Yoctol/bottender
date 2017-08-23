@@ -6,7 +6,6 @@ import ConsoleContext from '../context/ConsoleContext';
 import type { ConsoleRawEvent } from '../context/ConsoleEvent';
 import type { Session } from '../session/Session';
 
-import type { FunctionalHandler } from './Bot';
 import type { Connector, SessionWithUser } from './Connector';
 
 type ConsoleRequestBody = ConsoleRawEvent;
@@ -40,19 +39,20 @@ export default class ConsoleConnector
     };
   }
 
-  async handleRequest({
-    body,
+  mapRequestToEvents(body: ConsoleRequestBody): Array<ConsoleRawEvent> {
+    return [body];
+  }
+
+  createContext({
+    rawEvent,
     session,
-    handler,
   }: {
-    body: ConsoleRequestBody,
+    rawEvent: ConsoleRawEvent,
     session: ?ConsoleSession,
-    handler: FunctionalHandler,
-  }): Promise<void> {
-    const context = new ConsoleContext({
-      rawEvent: body,
+  }) {
+    return new ConsoleContext({
+      rawEvent,
       session,
     });
-    await handler(context);
   }
 }

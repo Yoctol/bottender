@@ -18,7 +18,6 @@ import type {
 } from '../context/MessengerEvent';
 import type { Session } from '../session/Session';
 
-import type { FunctionalHandler } from './Bot';
 import type { Connector, SessionWithUser } from './Connector';
 
 type Entry = {
@@ -138,24 +137,22 @@ export default class MessengerConnector
     };
   }
 
-  async handleRequest({
-    body,
-    session,
-    handler,
-  }: {
-    body: MessengerRequestBody,
-    session: ?MessengerSession,
-    handler: FunctionalHandler,
-  }): Promise<void> {
-    const rawEvent = this._getRawEventFromRequest(body);
+  mapRequestToEvents(body: MessengerRequestBody): Array<MessengerRawEvent> {
+    return [this._getRawEventFromRequest(body)];
+  }
 
-    const context = new MessengerContext({
+  createContext({
+    rawEvent,
+    session,
+  }: {
+    rawEvent: MessengerRawEvent,
+    session: ?MessengerSession,
+  }): MessengerContext {
+    return new MessengerContext({
       client: this._client,
       rawEvent,
       session,
-      isStandby: this._isStandby(body),
+      isStandby: this._isStandby(body), // FIXME: GG
     });
-
-    await handler(context);
   }
 }

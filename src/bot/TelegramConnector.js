@@ -8,7 +8,6 @@ import TelegramContext from '../context/TelegramContext';
 import type { TelegramRawEvent } from '../context/TelegramEvent';
 import type { Session } from '../session/Session';
 
-import type { FunctionalHandler } from './Bot';
 import type { Connector, SessionWithUser } from './Connector';
 
 export type TelegramUser = {
@@ -73,23 +72,21 @@ export default class TelegramConnector
     };
   }
 
-  async handleRequest({
-    body,
-    session,
-    handler,
-  }: {
-    body: TelegramRequestBody,
-    session: ?TelegramSession,
-    handler: FunctionalHandler,
-  }): Promise<void> {
-    const rawEvent = this._getRawEventFromRequest(body);
+  mapRequestToEvents(body: TelegramRequestBody): Array<TelegramRawEvent> {
+    return [this._getRawEventFromRequest(body)];
+  }
 
-    const context = new TelegramContext({
+  createContext({
+    rawEvent,
+    session,
+  }: {
+    rawEvent: TelegramRawEvent,
+    session: ?TelegramSession,
+  }): TelegramContext {
+    return new TelegramContext({
       client: this._client,
       rawEvent,
       session,
     });
-
-    await handler(context);
   }
 }

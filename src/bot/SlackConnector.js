@@ -8,7 +8,6 @@ import SlackContext from '../context/SlackContext';
 import type { SlackRawEvent } from '../context/SlackEvent';
 import type { Session } from '../session/Session';
 
-import type { FunctionalHandler } from './Bot';
 import type { Connector, SessionWithUser } from './Connector';
 
 // FIXME
@@ -81,27 +80,27 @@ export default class SlackConnector
     };
   }
 
-  async handleRequest({
-    body,
-    session,
-    handler,
-  }: {
-    body: SlackRequestBody,
-    session: ?SlackSession,
-    handler: FunctionalHandler,
-  }): Promise<void> {
+  mapRequestToEvents(body: SlackRequestBody): Array<SlackRawEvent> {
     const rawEvent = this._getRawEventFromRequest(body);
 
     if (rawEvent.bot_id || rawEvent.subtype === 'bot_message') {
-      return; // FIXME
+      return []; // FIXME
     }
 
-    const context = new SlackContext({
+    return [rawEvent];
+  }
+
+  createContext({
+    rawEvent,
+    session,
+  }: {
+    rawEvent: SlackRawEvent,
+    session: ?SlackSession,
+  }): SlackContext {
+    return new SlackContext({
       client: this._client,
       rawEvent,
       session,
     });
-
-    await handler(context);
   }
 }
