@@ -3,7 +3,7 @@
   @flow
 */
 import ConsoleContext from '../context/ConsoleContext';
-import type { ConsoleRawEvent } from '../context/ConsoleEvent';
+import ConsoleEvent, { type ConsoleRawEvent } from '../context/ConsoleEvent';
 import type { Session } from '../session/Session';
 
 import type { Connector, SessionWithUser } from './Connector';
@@ -39,19 +39,19 @@ export default class ConsoleConnector
     };
   }
 
-  mapRequestToEvents(body: ConsoleRequestBody): Array<ConsoleRawEvent> {
-    return [body];
+  mapRequestToEvents(body: ConsoleRequestBody): Array<ConsoleEvent> {
+    return [new ConsoleEvent(body)];
   }
 
   createContext({
-    rawEvent,
+    event,
     session,
   }: {
-    rawEvent: ConsoleRawEvent,
+    event: ConsoleEvent,
     session: ?ConsoleSession,
   }) {
     return new ConsoleContext({
-      rawEvent,
+      event,
       session,
     });
   }

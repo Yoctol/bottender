@@ -7,12 +7,12 @@ import { TelegramClient } from 'messaging-api-telegram';
 import type { TelegramSession } from '../bot/TelegramConnector';
 
 import { DEFAULT_MESSAGE_DELAY, type Context } from './Context';
-import TelegramEvent, { type TelegramRawEvent } from './TelegramEvent';
+import TelegramEvent from './TelegramEvent';
 import DelayableJobQueue from './DelayableJobQueue';
 
 type Options = {
   client: TelegramClient,
-  rawEvent: TelegramRawEvent,
+  event: TelegramEvent,
   session: ?TelegramSession,
 };
 
@@ -22,9 +22,9 @@ class TelegramContext implements Context {
   _session: ?TelegramSession;
   _jobQueue: DelayableJobQueue;
 
-  constructor({ client, rawEvent, session }: Options) {
+  constructor({ client, event, session }: Options) {
     this._client = client;
-    this._event = new TelegramEvent(rawEvent);
+    this._event = event;
     this._session = session;
     this._jobQueue = new DelayableJobQueue();
     this._jobQueue.beforeEach(({ delay }) => sleep(delay));

@@ -5,7 +5,7 @@
 import { SlackOAuthClient } from 'messaging-api-slack';
 
 import SlackContext from '../context/SlackContext';
-import type { SlackRawEvent } from '../context/SlackEvent';
+import SlackEvent, { type SlackRawEvent } from '../context/SlackEvent';
 import type { Session } from '../session/Session';
 
 import type { Connector, SessionWithUser } from './Connector';
@@ -80,26 +80,26 @@ export default class SlackConnector
     };
   }
 
-  mapRequestToEvents(body: SlackRequestBody): Array<SlackRawEvent> {
+  mapRequestToEvents(body: SlackRequestBody): Array<SlackEvent> {
     const rawEvent = this._getRawEventFromRequest(body);
 
     if (rawEvent.bot_id || rawEvent.subtype === 'bot_message') {
       return []; // FIXME
     }
 
-    return [rawEvent];
+    return [new SlackEvent(rawEvent)];
   }
 
   createContext({
-    rawEvent,
+    event,
     session,
   }: {
-    rawEvent: SlackRawEvent,
+    event: SlackEvent,
     session: ?SlackSession,
   }): SlackContext {
     return new SlackContext({
       client: this._client,
-      rawEvent,
+      event,
       session,
     });
   }

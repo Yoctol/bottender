@@ -5,7 +5,7 @@
 import { TelegramClient } from 'messaging-api-telegram';
 
 import TelegramContext from '../context/TelegramContext';
-import type { TelegramRawEvent } from '../context/TelegramEvent';
+import TelegramEvent, { type TelegramRawEvent } from '../context/TelegramEvent';
 import type { Session } from '../session/Session';
 
 import type { Connector, SessionWithUser } from './Connector';
@@ -72,20 +72,21 @@ export default class TelegramConnector
     };
   }
 
-  mapRequestToEvents(body: TelegramRequestBody): Array<TelegramRawEvent> {
-    return [this._getRawEventFromRequest(body)];
+  mapRequestToEvents(body: TelegramRequestBody): Array<TelegramEvent> {
+    const rawEvent = this._getRawEventFromRequest(body);
+    return [new TelegramEvent(rawEvent)];
   }
 
   createContext({
-    rawEvent,
+    event,
     session,
   }: {
-    rawEvent: TelegramRawEvent,
+    event: TelegramEvent,
     session: ?TelegramSession,
   }): TelegramContext {
     return new TelegramContext({
       client: this._client,
-      rawEvent,
+      event,
       session,
     });
   }

@@ -5,16 +5,16 @@
 import { MessengerClient } from 'messaging-api-messenger';
 
 import MessengerContext from '../context/MessengerContext';
-import type {
-  MessengerRawEvent,
-  Sender,
-  Recipient,
-  Message,
-  Postback,
-  PolicyEnforcement,
-  AppRoles,
-  PassThreadControl,
-  TakeThreadControl,
+import MessengerEvent, {
+  type MessengerRawEvent,
+  type Sender,
+  type Recipient,
+  type Message,
+  type Postback,
+  type PolicyEnforcement,
+  type AppRoles,
+  type PassThreadControl,
+  type TakeThreadControl,
 } from '../context/MessengerEvent';
 import type { Session } from '../session/Session';
 
@@ -137,22 +137,23 @@ export default class MessengerConnector
     };
   }
 
-  mapRequestToEvents(body: MessengerRequestBody): Array<MessengerRawEvent> {
-    return [this._getRawEventFromRequest(body)];
+  mapRequestToEvents(body: MessengerRequestBody): Array<MessengerEvent> {
+    const rawEvent = this._getRawEventFromRequest(body);
+    const isStandby = this._isStandby(body);
+    return [new MessengerEvent(rawEvent, { isStandby })];
   }
 
   createContext({
-    rawEvent,
+    event,
     session,
   }: {
-    rawEvent: MessengerRawEvent,
+    event: MessengerEvent,
     session: ?MessengerSession,
   }): MessengerContext {
     return new MessengerContext({
       client: this._client,
-      rawEvent,
+      event,
       session,
-      isStandby: this._isStandby(body), // FIXME: GG
     });
   }
 }

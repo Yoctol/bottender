@@ -5,7 +5,7 @@
 import { LINEClient } from 'messaging-api-line';
 
 import LINEContext from '../context/LINEContext';
-import type { LINERawEvent } from '../context/LINEEvent';
+import LINEEvent, { type LINERawEvent } from '../context/LINEEvent';
 import type { Session } from '../session/Session';
 
 import type { Connector, SessionWithUser } from './Connector';
@@ -95,20 +95,20 @@ export default class LINEConnector
     }
   }
 
-  mapRequestToEvents(body: LINERequestBody): Array<LINERawEvent> {
-    return body.events;
+  mapRequestToEvents(body: LINERequestBody): Array<LINEEvent> {
+    return body.events.map(e => new LINEEvent(e));
   }
 
   createContext({
-    rawEvent,
+    event,
     session,
   }: {
-    rawEvent: LINERawEvent,
+    event: LINEEvent,
     session: ?LINESession,
   }): LINEContext {
     return new LINEContext({
       client: this._client,
-      rawEvent,
+      event,
       session,
     });
   }
