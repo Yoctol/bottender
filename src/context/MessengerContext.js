@@ -74,6 +74,16 @@ class MessengerContext implements Context {
   }
 
   /**
+   * Delay and show indicators for seconds.
+   *
+   */
+  async typing(seconds: number): Promise<void> {
+    await this.turnTypingIndicatorsOn();
+    await sleep(seconds);
+    await this.turnTypingIndicatorsOff();
+  }
+
+  /**
    * Send text to the owner of then session.
    *
    */

@@ -1,4 +1,5 @@
 /* @flow */
+import sleep from 'delay';
 
 import type { ConsoleSession } from '../bot/ConsoleConnector';
 
@@ -50,6 +51,14 @@ export default class ConsoleContext implements Context {
    */
   setMessageDelay(seconds: number): void {
     this._messageDelay = seconds;
+  }
+
+  /**
+   * Delay and show indicators for seconds.
+   *
+   */
+  async typing(seconds: number): Promise<void> {
+    await sleep(seconds);
   }
 
   /**

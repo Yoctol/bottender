@@ -64,6 +64,14 @@ class TelegramContext implements Context {
   }
 
   /**
+   * Delay and show indicators for seconds.
+   *
+   */
+  async typing(seconds: number): Promise<void> {
+    await sleep(seconds);
+  }
+
+  /**
    * Send text to the owner of then session.
    *
    */

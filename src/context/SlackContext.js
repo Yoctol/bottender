@@ -63,6 +63,14 @@ export default class SlackContext implements Context {
     this._messageDelay = seconds;
   }
 
+  /**
+   * Delay and show indicators for seconds.
+   *
+   */
+  async typing(seconds: number): Promise<void> {
+    await sleep(seconds);
+  }
+
   postMessage(text: string): Promise<any> {
     const channelId = this._getChannelIdFromSession();
 
