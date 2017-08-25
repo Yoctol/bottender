@@ -119,22 +119,20 @@ export default class MessengerConnector
     return null;
   }
 
-  shouldSessionUpdate(session: Session): boolean {
-    return !session.user;
-  }
-
   async updateSession(
     session: Session,
     body: MessengerRequestBody
   ): Promise<void> {
-    const senderId = this.getUniqueSessionIdFromRequest(body);
-    const user = await this._client.getUserProfile(senderId);
+    if (!session.user) {
+      const senderId = this.getUniqueSessionIdFromRequest(body);
+      const user = await this._client.getUserProfile(senderId);
 
-    session.user = {
-      id: senderId,
-      platform: 'messenger',
-      ...user,
-    };
+      session.user = {
+        id: senderId,
+        platform: 'messenger',
+        ...user,
+      };
+    }
   }
 
   mapRequestToEvents(body: MessengerRequestBody): Array<MessengerEvent> {

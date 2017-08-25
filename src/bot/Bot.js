@@ -104,9 +104,7 @@ export default class Bot {
         const data = await this._sessions.read(sessionKey);
         session = data || Object.create(null);
 
-        if (this._connector.shouldSessionUpdate(session, body)) {
-          await this._connector.updateSession(session, body);
-        }
+        await this._connector.updateSession(session, body);
       }
 
       const events = this._connector.mapRequestToEvents(body);

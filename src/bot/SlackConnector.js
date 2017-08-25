@@ -51,16 +51,16 @@ export default class SlackConnector
     return 'U000000000'; // FIXME
   }
 
-  shouldSessionUpdate(session: Session, body: SlackRequestBody): boolean {
-    // FIXME: don't update channel or team part so often
-    if (typeof session.user === 'object' && session.user && session.user.id) {
-      return session.user.id !== body.event.user;
-    }
-    return true;
-  }
-
-  // FIXME
+  // FIXME: don't update channel or team part so often
   async updateSession(session: Session, body: SlackRequestBody): Promise<void> {
+    if (
+      typeof session.user === 'object' &&
+      session.user &&
+      session.user.id &&
+      session.user.id === body.event.user
+    ) {
+      return;
+    }
     const channelId = this.getUniqueSessionIdFromRequest(body);
     const senderId = body.event.user;
 

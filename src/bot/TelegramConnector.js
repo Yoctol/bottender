@@ -50,26 +50,24 @@ export default class TelegramConnector
     return `${id}`;
   }
 
-  shouldSessionUpdate(session: Session): boolean {
-    return !session.user;
-  }
-
   async updateSession(
     session: Session,
     body: TelegramRequestBody
   ): Promise<void> {
-    let user = {};
+    if (!session.user) {
+      let user = {};
 
-    if (body.message !== undefined) {
-      user = body.message.from;
-    } else if (body.callback_query !== undefined) {
-      user = body.callback_query.from;
+      if (body.message !== undefined) {
+        user = body.message.from;
+      } else if (body.callback_query !== undefined) {
+        user = body.callback_query.from;
+      }
+
+      session.user = {
+        platform: 'telegram',
+        ...user,
+      };
     }
-
-    session.user = {
-      platform: 'telegram',
-      ...user,
-    };
   }
 
   mapRequestToEvents(body: TelegramRequestBody): Array<TelegramEvent> {

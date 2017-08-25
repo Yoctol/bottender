@@ -65,7 +65,7 @@ describe('#createRequestHandler', () => {
     expect(error).toBeDefined();
   });
 
-  it('should fetch user data when it does not exist in session', async () => {
+  it('should call updateSession with session and body', async () => {
     const { bot, connector, sessionStore } = setup({});
 
     connector.getUniqueSessionIdFromRequest.mockReturnValue('__id__');
@@ -81,23 +81,6 @@ describe('#createRequestHandler', () => {
     await requestHandler(body);
 
     expect(connector.updateSession).toBeCalledWith(expect.any(Object), body);
-  });
-
-  it('should not fetch user data when it exists in session', async () => {
-    const { bot, connector, sessionStore } = setup({});
-
-    connector.getUniqueSessionIdFromRequest.mockReturnValue('__id__');
-    connector.shouldSessionUpdate.mockReturnValue(false);
-    sessionStore.read.mockReturnValue(Promise.resolve({ user: {} }));
-
-    const handler = () => {};
-    bot.onEvent(handler);
-
-    const requestHandler = bot.createRequestHandler();
-
-    await requestHandler({});
-
-    expect(connector.updateSession).not.toBeCalled();
   });
 
   it('should call handler', async () => {

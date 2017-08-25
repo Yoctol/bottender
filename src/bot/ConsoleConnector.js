@@ -27,16 +27,14 @@ export default class ConsoleConnector
     return '1';
   }
 
-  shouldSessionUpdate(session: Session): boolean {
-    return !session.user;
-  }
-
   async updateSession(session: Session): Promise<void> {
-    session.user = {
-      id: '1',
-      platform: 'console',
-      name: 'you',
-    };
+    if (!session.user) {
+      session.user = {
+        id: '1',
+        platform: 'console',
+        name: 'you',
+      };
+    }
   }
 
   mapRequestToEvents(body: ConsoleRequestBody): Array<ConsoleEvent> {

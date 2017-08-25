@@ -10,7 +10,6 @@ export type SessionWithUser<U> = {
 export interface Connector<B, U> {
   +platform: string,
   getUniqueSessionIdFromRequest(body: B): ?string,
-  shouldSessionUpdate(session: Session, body: B): boolean,
   updateSession(session: Session, body: B): Promise<void>,
   mapRequestToEvents(body: B): Array<any>,
   createContext(params: {
