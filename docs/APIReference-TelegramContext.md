@@ -18,6 +18,16 @@ The session state of the context.
 
 Returns **TelegramSession?** 
 
+## setMessageDelay
+
+Set delay before sending every messages.
+
+**Parameters**
+
+-   `seconds` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
+
+Returns **void** 
+
 ## sendText
 
 Send text to the owner of then session.

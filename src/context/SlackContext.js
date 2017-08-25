@@ -6,7 +6,7 @@ import { SlackOAuthClient } from 'messaging-api-slack';
 
 import type { SlackSession } from '../bot/SlackConnector';
 
-import { DEFAULT_MESSAGE_DELAY, type Context } from './Context';
+import type { Context } from './Context';
 import SlackEvent from './SlackEvent';
 import DelayableJobQueue from './DelayableJobQueue';
 
@@ -21,6 +21,7 @@ export default class SlackContext implements Context {
   _event: SlackEvent;
   _session: ?SlackSession;
   _jobQueue: DelayableJobQueue;
+  _messageDelay: number = 1000;
 
   constructor({ client, event, session }: Options) {
     this._client = client;
@@ -54,6 +55,14 @@ export default class SlackContext implements Context {
     return this._session;
   }
 
+  /**
+   * Set delay before sending every messages.
+   *
+   */
+  setMessageDelay(seconds: number): void {
+    this._messageDelay = seconds;
+  }
+
   postMessage(text: string): Promise<any> {
     const channelId = this._getChannelIdFromSession();
 
@@ -70,7 +79,7 @@ export default class SlackContext implements Context {
         instance: this._client,
         method: 'postMessage',
         args: [channelId, text, { as_user: true }],
-        delay: DEFAULT_MESSAGE_DELAY,
+        delay: this._messageDelay,
         showIndicators: true,
         onSuccess: resolve,
         onError: reject,

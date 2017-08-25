@@ -7,7 +7,7 @@ import { LINEClient } from 'messaging-api-line';
 
 import type { LINESession } from '../bot/LINEConnector';
 
-import { DEFAULT_MESSAGE_DELAY, type Context } from './Context';
+import type { Context } from './Context';
 import LINEEvent from './LINEEvent';
 import DelayableJobQueue from './DelayableJobQueue';
 
@@ -22,6 +22,7 @@ class LINEContext implements Context {
   _event: LINEEvent;
   _session: ?LINESession;
   _jobQueue: DelayableJobQueue;
+  _messageDelay: number = 1000;
 
   _replied: boolean = false;
 
@@ -66,6 +67,14 @@ class LINEContext implements Context {
   }
 
   /**
+   * Set delay before sending every messages.
+   *
+   */
+  setMessageDelay(seconds: number): void {
+    this._messageDelay = seconds;
+  }
+
+  /**
    * Send text to the owner of then session.
    *
    */
@@ -81,7 +90,7 @@ class LINEContext implements Context {
       instance: this._client,
       method: `pushText`,
       args: [this._session.user.id, text],
-      delay: DEFAULT_MESSAGE_DELAY,
+      delay: this._messageDelay,
       showIndicators: true,
     });
   }
@@ -140,7 +149,7 @@ types.forEach(type => {
         instance: this._client,
         method: `reply${type}`,
         args: [this._event.replyToken, ...args],
-        delay: DEFAULT_MESSAGE_DELAY,
+        delay: this._messageDelay,
         showIndicators: true,
       });
     },
@@ -162,7 +171,7 @@ types.forEach(type => {
         instance: this._client,
         method: `push${type}`,
         args: [this._session.user.id, ...args],
-        delay: DEFAULT_MESSAGE_DELAY,
+        delay: this._messageDelay,
         showIndicators: true,
       });
     },
@@ -201,7 +210,7 @@ types.filter(type => type !== 'Text').forEach(type => {
         instance: this._client,
         method: `push${type}`,
         args: [this._session.user.id, ...args],
-        delay: DEFAULT_MESSAGE_DELAY,
+        delay: this._messageDelay,
         showIndicators: true,
       });
     },

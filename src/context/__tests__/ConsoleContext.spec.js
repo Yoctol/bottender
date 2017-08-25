@@ -59,6 +59,8 @@ it('#sendText should write text to stdout', () => {
 
   context.sendText('hello');
 
+  jest.runTimersToTime(0);
+
   expect(process.stdout.write).toBeCalledWith('Bot > hello\nYou > ');
 });
 
