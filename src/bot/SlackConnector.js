@@ -51,7 +51,6 @@ export default class SlackConnector
     return 'U000000000'; // FIXME
   }
 
-  // FIXME: don't update channel or team part so often
   async updateSession(session: Session, body: SlackRequestBody): Promise<void> {
     if (
       typeof session.user === 'object' &&
@@ -63,21 +62,37 @@ export default class SlackConnector
     }
     const channelId = this.getUniqueSessionIdFromRequest(body);
     const senderId = body.event.user;
-
     const sender = await this._client.getUserInfo(senderId);
-    const channel = await this._client.getChannelInfo(channelId);
-    const allUsers = await this._client.getAllUserList();
-
     session.user = {
       id: senderId,
       platform: 'slack',
       ...sender,
     };
-    session.channel = channel;
-    // TODO: check if team exists
-    session.team = {
-      members: allUsers,
-    };
+
+    // TODO: check join or leave events?
+    if (
+      !session.channel ||
+      (session.channel.members &&
+        Array.isArray(session.channel.members) &&
+        session.channel.members.indexOf(senderId) < 0)
+    ) {
+      const channel = await this._client.getChannelInfo(channelId);
+      session.channel = channel;
+    }
+
+    // TODO: how to know if user leave team?
+    // TODO: team info shared by all channels?
+    if (
+      !session.team ||
+      (session.team.members &&
+        Array.isArray(session.team.members) &&
+        session.team.members.indexOf(senderId) < 0)
+    ) {
+      const allUsers = await this._client.getAllUserList();
+      session.team = {
+        members: allUsers,
+      };
+    }
   }
 
   mapRequestToEvents(body: SlackRequestBody): Array<SlackEvent> {
