@@ -8,7 +8,6 @@ import type { TelegramSession } from '../bot/TelegramConnector';
 
 import type { Context } from './Context';
 import TelegramEvent from './TelegramEvent';
-import DelayableJobQueue from './DelayableJobQueue';
 
 type Options = {
   client: TelegramClient,
@@ -20,15 +19,12 @@ class TelegramContext implements Context {
   _client: TelegramClient;
   _event: TelegramEvent;
   _session: ?TelegramSession;
-  _jobQueue: DelayableJobQueue;
   _messageDelay: number = 1000;
 
   constructor({ client, event, session }: Options) {
     this._client = client;
     this._event = event;
     this._session = session;
-    this._jobQueue = new DelayableJobQueue();
-    this._jobQueue.beforeEach(({ delay }) => sleep(delay));
   }
 
   /**
@@ -75,24 +71,19 @@ class TelegramContext implements Context {
    * Send text to the owner of then session.
    *
    */
-  sendText(text: string): Promise<any> {
+  async sendText(text: string): Promise<any> {
     if (!this._session) {
       warning(
         false,
         'sendText: should not be called in context without session'
       );
-      return Promise.resolve();
+      return;
     }
-    return this._enqueue({
-      instance: this._client,
-      method: 'sendMessage',
-      args: [this._session.user.id, text],
-      delay: this._messageDelay,
-      showIndicators: true,
-    });
+    await this.typing(this._messageDelay);
+    return this._client.sendMessage(this._session.user.id, text);
   }
 
-  sendTextWithDelay(delay: number, text: string): Promise<any> {
+  async sendTextWithDelay(delay: number, text: string): Promise<any> {
     warning(false, `sendTextWithDelay is deprecated.`);
 
     if (!this._session) {
@@ -100,25 +91,10 @@ class TelegramContext implements Context {
         false,
         'sendText: should not be called in context without session'
       );
-      return Promise.resolve();
+      return;
     }
-    return this._enqueue({
-      instance: this._client,
-      method: 'sendMessage',
-      args: [this._session.user.id, text],
-      delay,
-      showIndicators: true,
-    });
-  }
-
-  _enqueue(job: Object): Promise<any> {
-    return new Promise((resolve, reject) => {
-      this._jobQueue.enqueue({
-        ...job,
-        onSuccess: resolve,
-        onError: reject,
-      });
-    });
+    await this.typing(delay);
+    return this._client.sendMessage(this._session.user.id, text);
   }
 }
 
@@ -142,21 +118,16 @@ sendMethods.forEach(method => {
     enumerable: false,
     configurable: true,
     writable: true,
-    value(...args) {
+    async value(...args) {
       if (!this._session) {
         warning(
           false,
           `${method}: should not be called in context without session`
         );
-        return Promise.resolve();
+        return;
       }
-      return this._enqueue({
-        instance: this._client,
-        method,
-        args: [this._session.user.id, ...args],
-        delay: this._messageDelay,
-        showIndicators: true,
-      });
+      await this.typing(this._messageDelay);
+      return this._client[method](this._session.user.id, ...args);
     },
   });
 
@@ -165,13 +136,7 @@ sendMethods.forEach(method => {
     configurable: true,
     writable: true,
     value(id, ...rest) {
-      return this._enqueue({
-        instance: this._client,
-        method,
-        args: [id, ...rest],
-        delay: 0,
-        showIndicators: false,
-      });
+      return this._client[method](id, ...rest);
     },
   });
 
@@ -179,21 +144,17 @@ sendMethods.forEach(method => {
     enumerable: false,
     configurable: true,
     writable: true,
-    value(delay, ...rest) {
+    async value(delay, ...rest) {
       if (!this._session) {
         warning(
           false,
           `${method}WithDelay: should not be called in context without session`
         );
-        return Promise.resolve();
+        return;
       }
-      return this._enqueue({
-        instance: this._client,
-        method,
-        args: [this._session.user.id, ...rest],
-        delay,
-        showIndicators: true,
-      });
+
+      await this.typing(delay);
+      return this._client[method](this._session.user.id, ...rest);
     },
   });
 });

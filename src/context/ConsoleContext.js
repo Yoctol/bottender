@@ -65,15 +65,17 @@ export default class ConsoleContext implements Context {
    * Send text to the owner of then session.
    *
    */
-  sendText(text: string): void {
-    setTimeout(() => {
-      process.stdout.write(`Bot > ${text}\nYou > `);
-    }, this._messageDelay);
+  async sendText(text: string): Promise<void> {
+    await this.typing(this._messageDelay);
+    this._sendText(text);
   }
 
-  sendTextWithDelay(delay: number, text: string): void {
-    setTimeout(() => {
-      this.sendText(text);
-    }, delay);
+  async sendTextWithDelay(delay: number, text: string): Promise<void> {
+    await this.typing(delay);
+    this._sendText(text);
+  }
+
+  _sendText(text: string): void {
+    process.stdout.write(`Bot > ${text}\nYou > `);
   }
 }

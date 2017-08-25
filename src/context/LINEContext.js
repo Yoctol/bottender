@@ -9,7 +9,6 @@ import type { LINESession } from '../bot/LINEConnector';
 
 import type { Context } from './Context';
 import LINEEvent from './LINEEvent';
-import DelayableJobQueue from './DelayableJobQueue';
 
 type Options = {
   client: LINEClient,
@@ -21,7 +20,6 @@ class LINEContext implements Context {
   _client: LINEClient;
   _event: LINEEvent;
   _session: ?LINESession;
-  _jobQueue: DelayableJobQueue;
   _messageDelay: number = 1000;
 
   _replied: boolean = false;
@@ -30,8 +28,6 @@ class LINEContext implements Context {
     this._client = client;
     this._event = event;
     this._session = session;
-    this._jobQueue = new DelayableJobQueue();
-    this._jobQueue.beforeEach(({ delay }) => sleep(delay));
   }
 
   /**
@@ -86,48 +82,28 @@ class LINEContext implements Context {
    * Send text to the owner of then session.
    *
    */
-  sendText(text: string): Promise<any> {
+  async sendText(text: string): Promise<any> {
     if (!this._session) {
       warning(
         false,
         'sendText: should not be called in context without session'
       );
-      return Promise.resolve();
+      return;
     }
-    return this._enqueue({
-      instance: this._client,
-      method: `pushText`,
-      args: [this._session.user.id, text],
-      delay: this._messageDelay,
-      showIndicators: true,
-    });
+    await this.typing(this._messageDelay);
+    return this._client.pushText(this._session.user.id, text);
   }
 
-  sendTextWithDelay(delay: number, text: string): Promise<any> {
+  async sendTextWithDelay(delay: number, text: string): Promise<any> {
     if (!this._session) {
       warning(
         false,
         'sendTextWithDelay: should not be called in context without session'
       );
-      return Promise.resolve();
+      return;
     }
-    return this._enqueue({
-      instance: this._client,
-      method: `pushText`,
-      args: [this._session.user.id, text],
-      delay,
-      showIndicators: true,
-    });
-  }
-
-  _enqueue(job: Object): Promise<any> {
-    return new Promise((resolve, reject) => {
-      this._jobQueue.enqueue({
-        ...job,
-        onSuccess: resolve,
-        onError: reject,
-      });
-    });
+    await this.typing(delay);
+    return this._client.pushText(this._session.user.id, text);
   }
 }
 
@@ -148,18 +124,13 @@ types.forEach(type => {
     enumerable: false,
     configurable: true,
     writable: true,
-    value(...args) {
+    async value(...args) {
       invariant(!this._replied, 'Can not reply event mulitple times');
 
       this._replied = true;
 
-      return this._enqueue({
-        instance: this._client,
-        method: `reply${type}`,
-        args: [this._event.replyToken, ...args],
-        delay: this._messageDelay,
-        showIndicators: true,
-      });
+      await this.typing(this._messageDelay);
+      return this._client[`reply${type}`](this._event.replyToken, ...args);
     },
   });
 
@@ -167,21 +138,17 @@ types.forEach(type => {
     enumerable: false,
     configurable: true,
     writable: true,
-    value(...args) {
+    async value(...args) {
       if (!this._session) {
         warning(
           false,
           `push${type}: should not be called in context without session`
         );
-        return Promise.resolve();
+        return;
       }
-      return this._enqueue({
-        instance: this._client,
-        method: `push${type}`,
-        args: [this._session.user.id, ...args],
-        delay: this._messageDelay,
-        showIndicators: true,
-      });
+
+      await this.typing(this._messageDelay);
+      return this._client[`push${type}`](this._session.user.id, ...args);
     },
   });
 
@@ -190,13 +157,7 @@ types.forEach(type => {
     configurable: true,
     writable: true,
     value(id, ...rest) {
-      return this._enqueue({
-        instance: this._client,
-        method: `push${type}`,
-        args: [id, ...rest],
-        delay: 0,
-        showIndicators: false,
-      });
+      return this._client[`push${type}`](id, ...rest);
     },
   });
 });
@@ -206,21 +167,17 @@ types.filter(type => type !== 'Text').forEach(type => {
     enumerable: false,
     configurable: true,
     writable: true,
-    value(...args) {
+    async value(...args) {
       if (!this._session) {
         warning(
           false,
           `send${type}: should not be called in context without session`
         );
-        return Promise.resolve();
+        return;
       }
-      return this._enqueue({
-        instance: this._client,
-        method: `push${type}`,
-        args: [this._session.user.id, ...args],
-        delay: this._messageDelay,
-        showIndicators: true,
-      });
+
+      await this.typing(this._messageDelay);
+      return this._client[`push${type}`](this._session.user.id, ...args);
     },
   });
 
@@ -228,7 +185,7 @@ types.filter(type => type !== 'Text').forEach(type => {
     enumerable: false,
     configurable: true,
     writable: true,
-    value(delay, ...rest) {
+    async value(delay, ...rest) {
       warning(false, `send${type}WithDelay is deprecated.`);
 
       if (!this._session) {
@@ -236,15 +193,11 @@ types.filter(type => type !== 'Text').forEach(type => {
           false,
           `send${type}WithDelay: should not be called in context without session`
         );
-        return Promise.resolve();
+        return;
       }
-      return this._enqueue({
-        instance: this._client,
-        method: `push${type}`,
-        args: [this._session.user.id, ...rest],
-        delay,
-        showIndicators: true,
-      });
+
+      await this.typing(delay);
+      return this._client[`push${type}`](this._session.user.id, ...rest);
     },
   });
 });
