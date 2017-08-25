@@ -211,3 +211,38 @@ describe('#extendContext', () => {
     expect(monkeyPatchFn).toBeCalled();
   });
 });
+
+describe('#setMessageDelay', () => {
+  it('can setMessageDelay on context', async () => {
+    const event = {};
+    const context = {
+      event,
+      session: undefined,
+      setMessageDelay: jest.fn(),
+    };
+    const connector = {
+      platform: 'any',
+      getUniqueSessionIdFromRequest: jest.fn(),
+      shouldSessionUpdate: jest.fn(),
+      updateSession: jest.fn(),
+      mapRequestToEvents: jest.fn(() => [event]),
+      createContext: jest.fn(() => context),
+    };
+
+    const { bot } = setup({ connector });
+
+    connector.getUniqueSessionIdFromRequest.mockReturnValue('__id__');
+
+    bot.setMessageDelay(5000);
+
+    const handler = () => {};
+    bot.onEvent(handler);
+
+    const requestHandler = bot.createRequestHandler();
+
+    const body = {};
+    await requestHandler(body);
+
+    expect(context.setMessageDelay).toBeCalledWith(5000);
+  });
+});

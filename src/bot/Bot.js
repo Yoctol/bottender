@@ -73,6 +73,12 @@ export default class Bot {
     return this;
   }
 
+  setMessageDelay(milliseconds: number): Bot {
+    return this.extendContext(context => {
+      context.setMessageDelay(milliseconds);
+    });
+  }
+
   createRequestHandler(): RequestHandler {
     if (this._handler == null) {
       throw new Error(
