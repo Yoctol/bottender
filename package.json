@@ -76,7 +76,7 @@
     "koa-router": "^7.2.1",
     "lodash": "^4.17.4",
     "messaging-api-line": "^0.3.0",
-    "messaging-api-messenger": "^0.3.0",
+    "messaging-api-messenger": "^0.3.1",
     "messaging-api-slack": "^0.3.0",
     "messaging-api-telegram": "^0.3.0",
     "micro": "^8.0.3",

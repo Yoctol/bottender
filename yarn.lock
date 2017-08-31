@@ -2708,6 +2708,12 @@ is-path-inside@^1.0.0:
   dependencies:
     path-is-inside "^1.0.1"
 
+is-plain-object@^2.0.4:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/is-plain-object/-/is-plain-object-2.0.4.tgz#2c163b3fafb1b606d9d17928f05c2a1c38e07677"
+  dependencies:
+    isobject "^3.0.1"
+
 is-posix-bracket@^0.1.0:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/is-posix-bracket/-/is-posix-bracket-0.1.1.tgz#3334dc79774368e92f016e6fbc0a88f5cd6e6bc4"
@@ -2763,6 +2769,10 @@ isobject@^2.0.0:
   resolved "https://registry.yarnpkg.com/isobject/-/isobject-2.1.0.tgz#f065561096a3f1da2ef46272f815c840d87e0c89"
   dependencies:
     isarray "1.0.0"
+
+isobject@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/isobject/-/isobject-3.0.1.tgz#4e431e92b11a9731636aa1f9c8d1ccbcfdab78df"
 
 isomorphic-fetch@^2.1.1:
   version "2.2.1"
@@ -3499,13 +3509,14 @@ messaging-api-line@^0.3.0:
   dependencies:
     axios "^0.16.1"
 
-messaging-api-messenger@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/messaging-api-messenger/-/messaging-api-messenger-0.3.0.tgz#b682f6a5b17d0c492a9fabeb4211dd340aa0326b"
+messaging-api-messenger@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/messaging-api-messenger/-/messaging-api-messenger-0.3.1.tgz#4cec8c06e7006b407360ed96aaf34197804eaf0a"
   dependencies:
     axios "^0.16.1"
     form-data "^2.2.0"
     invariant "^2.2.2"
+    is-plain-object "^2.0.4"
     lodash.omit "^4.5.0"
 
 messaging-api-slack@^0.3.0:
