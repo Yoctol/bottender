@@ -9,8 +9,8 @@ afterEach(() => {
 });
 
 const createMockGraphAPIClient = () => ({
-  turnTypingIndicatorsOn: jest.fn(),
-  turnTypingIndicatorsOff: jest.fn(),
+  typingOn: jest.fn(),
+  typingOff: jest.fn(),
   sendText: jest.fn(),
 });
 
@@ -84,18 +84,30 @@ it('#sendText put sendText to jobQueue', () => {
   });
 });
 
-it('#sendIssueResolutionText put sendIssueResolutionText to jobQueue', () => {
+it('#sendAttachment put sendAttachment to jobQueue', () => {
   const { context, client, session } = setup();
   context._jobQueue = {
     enqueue: jest.fn(),
   };
 
-  context.sendIssueResolutionText('xxx.com');
+  const attachment = {
+    type: 'image',
+    payload: {
+      url: 'https://example.com/pic.png',
+    },
+  };
+
+  context.sendAttachment({
+    type: 'image',
+    payload: {
+      url: 'https://example.com/pic.png',
+    },
+  });
 
   expect(context._jobQueue.enqueue).toBeCalledWith({
     instance: client,
-    method: 'sendIssueResolutionText',
-    args: [session.user.id, 'xxx.com'],
+    method: 'sendAttachment',
+    args: [session.user.id, attachment],
     delay: 1000,
     showIndicators: true,
     onSuccess: expect.any(Function),
@@ -209,78 +221,12 @@ it('#sendGenericTemplate put sendGenericTemplate to jobQueue', () => {
   const elements = {};
   const ratio = '';
 
-  context.sendGenericTemplate(elements, ratio);
+  context.sendGenericTemplate(elements, { image_aspect_ratio: ratio });
 
   expect(context._jobQueue.enqueue).toBeCalledWith({
     instance: client,
     method: 'sendGenericTemplate',
-    args: [session.user.id, elements, ratio],
-    delay: 1000,
-    showIndicators: true,
-    onSuccess: expect.any(Function),
-    onError: expect.any(Function),
-  });
-});
-
-it('#sendShippingUpdateTemplate put sendShippingUpdateTemplate to jobQueue', () => {
-  const { context, client, session } = setup();
-  context._jobQueue = {
-    enqueue: jest.fn(),
-  };
-
-  const elements = {};
-  const ratio = '';
-
-  context.sendShippingUpdateTemplate(elements, ratio);
-
-  expect(context._jobQueue.enqueue).toBeCalledWith({
-    instance: client,
-    method: 'sendShippingUpdateTemplate',
-    args: [session.user.id, elements, ratio],
-    delay: 1000,
-    showIndicators: true,
-    onSuccess: expect.any(Function),
-    onError: expect.any(Function),
-  });
-});
-
-it('#sendReservationUpdateTemplate put sendReservationUpdateTemplate to jobQueue', () => {
-  const { context, client, session } = setup();
-  context._jobQueue = {
-    enqueue: jest.fn(),
-  };
-
-  const elements = {};
-  const ratio = '';
-
-  context.sendReservationUpdateTemplate(elements, ratio);
-
-  expect(context._jobQueue.enqueue).toBeCalledWith({
-    instance: client,
-    method: 'sendReservationUpdateTemplate',
-    args: [session.user.id, elements, ratio],
-    delay: 1000,
-    showIndicators: true,
-    onSuccess: expect.any(Function),
-    onError: expect.any(Function),
-  });
-});
-
-it('#sendIssueResolutionTemplate put sendIssueResolutionTemplate to jobQueue', () => {
-  const { context, client, session } = setup();
-  context._jobQueue = {
-    enqueue: jest.fn(),
-  };
-
-  const elements = {};
-  const ratio = '';
-
-  context.sendIssueResolutionTemplate(elements, ratio);
-
-  expect(context._jobQueue.enqueue).toBeCalledWith({
-    instance: client,
-    method: 'sendIssueResolutionTemplate',
-    args: [session.user.id, elements, ratio],
+    args: [session.user.id, elements, { image_aspect_ratio: ratio }],
     delay: 1000,
     showIndicators: true,
     onSuccess: expect.any(Function),
@@ -436,16 +382,16 @@ it('#sendAirlineFlightUpdateTemplate put sendAirlineFlightUpdateTemplate to jobQ
   });
 });
 
-it('#turnTypingIndicatorsOn call client turnTypingIndicatorsOn', () => {
+it('#turnTypingIndicatorsOn call client typingOn', () => {
   const { context, client, session } = setup();
   context.turnTypingIndicatorsOn();
-  expect(client.turnTypingIndicatorsOn).toBeCalledWith(session.user.id);
+  expect(client.typingOn).toBeCalledWith(session.user.id);
 });
 
-it('#turnTypingIndicatorsOff call client turnTypingIndicatorsOff', () => {
+it('#turnTypingIndicatorsOff call client typingOff', () => {
   const { context, client, session } = setup();
   context.turnTypingIndicatorsOff();
-  expect(client.turnTypingIndicatorsOff).toBeCalledWith(session.user.id);
+  expect(client.typingOff).toBeCalledWith(session.user.id);
 });
 
 it('use default message delay', () => {
@@ -471,16 +417,13 @@ it('use default message delay', () => {
 it('has send to methods', () => {
   const { context } = setup();
   expect(context.sendTextTo).toBeDefined();
-  expect(context.sendIssueResolutionTextTo).toBeDefined();
+  expect(context.sendAttachment).toBeDefined();
   expect(context.sendImageTo).toBeDefined();
   expect(context.sendAudioTo).toBeDefined();
   expect(context.sendVideoTo).toBeDefined();
   expect(context.sendFileTo).toBeDefined();
   expect(context.sendQuickRepliesTo).toBeDefined();
   expect(context.sendGenericTemplateTo).toBeDefined();
-  expect(context.sendShippingUpdateTemplateTo).toBeDefined();
-  expect(context.sendReservationUpdateTemplateTo).toBeDefined();
-  expect(context.sendIssueResolutionTemplateTo).toBeDefined();
   expect(context.sendButtonTemplateTo).toBeDefined();
   expect(context.sendListTemplateTo).toBeDefined();
   expect(context.sendReceiptTemplateTo).toBeDefined();
@@ -512,16 +455,12 @@ it('#sendTextTo put sendText to jobQueue', () => {
 it('has send with delay methods', () => {
   const { context } = setup();
   expect(context.sendTextWithDelay).toBeDefined();
-  expect(context.sendIssueResolutionTextWithDelay).toBeDefined();
   expect(context.sendImageWithDelay).toBeDefined();
   expect(context.sendAudioWithDelay).toBeDefined();
   expect(context.sendVideoWithDelay).toBeDefined();
   expect(context.sendFileWithDelay).toBeDefined();
   expect(context.sendQuickRepliesWithDelay).toBeDefined();
   expect(context.sendGenericTemplateWithDelay).toBeDefined();
-  expect(context.sendShippingUpdateTemplateWithDelay).toBeDefined();
-  expect(context.sendReservationUpdateTemplateWithDelay).toBeDefined();
-  expect(context.sendIssueResolutionTemplateWithDelay).toBeDefined();
   expect(context.sendButtonTemplateWithDelay).toBeDefined();
   expect(context.sendListTemplateWithDelay).toBeDefined();
   expect(context.sendReceiptTemplateWithDelay).toBeDefined();
@@ -555,8 +494,8 @@ it('show typing when sending', () => {
 
   context.sendText('xxx.com');
 
-  expect(client.turnTypingIndicatorsOn).toBeCalled();
-  expect(client.turnTypingIndicatorsOff).not.toBeCalled();
+  expect(client.typingOn).toBeCalled();
+  expect(client.typingOff).not.toBeCalled();
 });
 
 it('should not show typing when sending to others', () => {
@@ -566,5 +505,5 @@ it('should not show typing when sending to others', () => {
 
   context.sendTextTo('uid_1', 'xxx.com');
 
-  expect(client.turnTypingIndicatorsOn).not.toBeCalled();
+  expect(client.typingOn).not.toBeCalled();
 });
