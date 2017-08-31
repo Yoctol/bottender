@@ -28,11 +28,13 @@ describe('#onIntent', () => {
 
   it('handler should be called with context when intent match', async () => {
     const { builder, classifier } = setup();
-    const result = [
-      { name: 'intent_1', score: 0.5 },
-      { name: 'intent_2', score: 0.25 },
-      { name: 'intent_3', score: 0.25 },
-    ];
+    const result = {
+      intents: [
+        { name: 'intent_1', score: 0.5 },
+        { name: 'intent_2', score: 0.25 },
+        { name: 'intent_3', score: 0.25 },
+      ],
+    };
     classifier.predict.mockReturnValue(Promise.resolve(result));
     const handler1 = jest.fn();
     const handler2 = jest.fn();
@@ -52,11 +54,13 @@ describe('#onIntent', () => {
 
   it('should support string as handler', async () => {
     const { builder, classifier } = setup();
-    const result = [
-      { name: 'intent_1', score: 0.5 },
-      { name: 'intent_2', score: 0.25 },
-      { name: 'intent_3', score: 0.25 },
-    ];
+    const result = {
+      intents: [
+        { name: 'intent_1', score: 0.5 },
+        { name: 'intent_2', score: 0.25 },
+        { name: 'intent_3', score: 0.25 },
+      ],
+    };
     classifier.predict.mockReturnValue(Promise.resolve(result));
     const context = {
       event: {
@@ -74,11 +78,13 @@ describe('#onIntent', () => {
 
   it('should support array as handler', async () => {
     const { builder, classifier } = setup();
-    const result = [
-      { name: 'intent_1', score: 0.5 },
-      { name: 'intent_2', score: 0.25 },
-      { name: 'intent_3', score: 0.25 },
-    ];
+    const result = {
+      intents: [
+        { name: 'intent_1', score: 0.5 },
+        { name: 'intent_2', score: 0.25 },
+        { name: 'intent_3', score: 0.25 },
+      ],
+    };
     classifier.predict.mockReturnValue(Promise.resolve(result));
     const context = {
       event: {
@@ -96,11 +102,13 @@ describe('#onIntent', () => {
 
   it('should not throw when matched intent handler undefiend', async () => {
     const { builder, classifier } = setup();
-    const result = [
-      { name: 'intent_1', score: 0.5 },
-      { name: 'intent_2', score: 0.25 },
-      { name: 'intent_3', score: 0.25 },
-    ];
+    const result = {
+      intents: [
+        { name: 'intent_1', score: 0.5 },
+        { name: 'intent_2', score: 0.25 },
+        { name: 'intent_3', score: 0.25 },
+      ],
+    };
     classifier.predict.mockReturnValue(Promise.resolve(result));
     const handler2 = jest.fn();
     builder.onIntent('intent_2', handler2);
@@ -131,12 +139,14 @@ describe('#onUnmatched', () => {
 
   it('handler should be called with context when under threshold', async () => {
     const { builder, classifier } = setup();
-    const result = [
-      { name: 'intent_1', score: 0.25 },
-      { name: 'intent_2', score: 0.25 },
-      { name: 'intent_3', score: 0.25 },
-      { name: 'intent_4', score: 0.25 },
-    ];
+    const result = {
+      intents: [
+        { name: 'intent_1', score: 0.25 },
+        { name: 'intent_2', score: 0.25 },
+        { name: 'intent_3', score: 0.25 },
+        { name: 'intent_4', score: 0.25 },
+      ],
+    };
     classifier.predict.mockReturnValue(Promise.resolve(result));
     const handler = jest.fn();
     builder.onUnmatched(handler);
@@ -154,12 +164,14 @@ describe('#onUnmatched', () => {
 
   it('should support string as handler', async () => {
     const { builder, classifier } = setup();
-    const result = [
-      { name: 'intent_1', score: 0.25 },
-      { name: 'intent_2', score: 0.25 },
-      { name: 'intent_3', score: 0.25 },
-      { name: 'intent_4', score: 0.25 },
-    ];
+    const result = {
+      intents: [
+        { name: 'intent_1', score: 0.25 },
+        { name: 'intent_2', score: 0.25 },
+        { name: 'intent_3', score: 0.25 },
+        { name: 'intent_4', score: 0.25 },
+      ],
+    };
     classifier.predict.mockReturnValue(Promise.resolve(result));
     const context = {
       event: {
@@ -177,12 +189,14 @@ describe('#onUnmatched', () => {
 
   it('should support array as handler', async () => {
     const { builder, classifier } = setup();
-    const result = [
-      { name: 'intent_1', score: 0.25 },
-      { name: 'intent_2', score: 0.25 },
-      { name: 'intent_3', score: 0.25 },
-      { name: 'intent_4', score: 0.25 },
-    ];
+    const result = {
+      intents: [
+        { name: 'intent_1', score: 0.25 },
+        { name: 'intent_2', score: 0.25 },
+        { name: 'intent_3', score: 0.25 },
+        { name: 'intent_4', score: 0.25 },
+      ],
+    };
     classifier.predict.mockReturnValue(Promise.resolve(result));
     const context = {
       event: {
@@ -200,12 +214,14 @@ describe('#onUnmatched', () => {
 
   it('should not throw when no unmatched handler', async () => {
     const { builder, classifier } = setup();
-    const result = [
-      { name: 'intent_1', score: 0.25 },
-      { name: 'intent_2', score: 0.25 },
-      { name: 'intent_3', score: 0.25 },
-      { name: 'intent_4', score: 0.25 },
-    ];
+    const result = {
+      intents: [
+        { name: 'intent_1', score: 0.25 },
+        { name: 'intent_2', score: 0.25 },
+        { name: 'intent_3', score: 0.25 },
+        { name: 'intent_4', score: 0.25 },
+      ],
+    };
     classifier.predict.mockReturnValue(Promise.resolve(result));
     const context = {
       event: {
