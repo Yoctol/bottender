@@ -53,7 +53,7 @@ class MessengerContext implements Context {
     return this._session;
   }
 
-  sendText(text: string): Promise<any> {
+  sendText(text: string, options?: Object): Promise<any> {
     if (!this._session) {
       warning(
         false,
@@ -64,7 +64,9 @@ class MessengerContext implements Context {
     return this._enqueue({
       instance: this._client,
       method: 'sendText',
-      args: [this._session.user.id, text],
+      args: options
+        ? [this._session.user.id, text, options]
+        : [this._session.user.id, text],
       delay: DEFAULT_MESSAGE_DELAY,
       showIndicators: true,
     });
@@ -113,7 +115,7 @@ class MessengerContext implements Context {
       );
       return Promise.resolve();
     }
-    return this._client.turnTypingIndicatorsOn(this._session.user.id);
+    return this._client.typingOn(this._session.user.id);
   }
 
   turnTypingIndicatorsOff(): Promise<any> {
@@ -124,7 +126,7 @@ class MessengerContext implements Context {
       );
       return Promise.resolve();
     }
-    return this._client.turnTypingIndicatorsOff(this._session.user.id);
+    return this._client.typingOff(this._session.user.id);
   }
 
   _enqueue(job: Object): Promise<any> {
@@ -139,16 +141,13 @@ class MessengerContext implements Context {
 }
 
 const sendMethods = [
-  'sendIssueResolutionText',
+  'sendAttachment',
   'sendImage',
   'sendAudio',
   'sendVideo',
   'sendFile',
   'sendQuickReplies',
   'sendGenericTemplate',
-  'sendShippingUpdateTemplate',
-  'sendReservationUpdateTemplate',
-  'sendIssueResolutionTemplate',
   'sendButtonTemplate',
   'sendListTemplate',
   'sendReceiptTemplate',
@@ -182,6 +181,7 @@ sendMethods.forEach(method => {
     },
   });
 
+  // FIXME: rethink
   Object.defineProperty(MessengerContext.prototype, `${method}To`, {
     enumerable: false,
     configurable: true,
