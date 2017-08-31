@@ -5,10 +5,9 @@
 import { SlackOAuthClient } from 'messaging-api-slack';
 
 import SlackContext from '../context/SlackContext';
-import type { SlackRawEvent } from '../context/SlackEvent';
+import SlackEvent, { type SlackRawEvent } from '../context/SlackEvent';
 import type { Session } from '../session/Session';
 
-import type { FunctionalHandler } from './Bot';
 import type { Connector, SessionWithUser } from './Connector';
 
 // FIXME
@@ -52,56 +51,71 @@ export default class SlackConnector
     return 'U000000000'; // FIXME
   }
 
-  shouldSessionUpdate(session: Session, body: SlackRequestBody): boolean {
-    // FIXME: don't update channel or team part so often
-    if (typeof session.user === 'object' && session.user && session.user.id) {
-      return session.user.id !== body.event.user;
-    }
-    return true;
-  }
-
-  // FIXME
   async updateSession(session: Session, body: SlackRequestBody): Promise<void> {
+    if (
+      typeof session.user === 'object' &&
+      session.user &&
+      session.user.id &&
+      session.user.id === body.event.user
+    ) {
+      return;
+    }
     const channelId = this.getUniqueSessionIdFromRequest(body);
     const senderId = body.event.user;
-
     const sender = await this._client.getUserInfo(senderId);
-    const channel = await this._client.getChannelInfo(channelId);
-    const allUsers = await this._client.getAllUserList();
-
     session.user = {
       id: senderId,
       platform: 'slack',
       ...sender,
     };
-    session.channel = channel;
-    // TODO: check if team exists
-    session.team = {
-      members: allUsers,
-    };
+
+    // TODO: check join or leave events?
+    if (
+      !session.channel ||
+      (session.channel.members &&
+        Array.isArray(session.channel.members) &&
+        session.channel.members.indexOf(senderId) < 0)
+    ) {
+      const channel = await this._client.getChannelInfo(channelId);
+      session.channel = channel;
+    }
+
+    // TODO: how to know if user leave team?
+    // TODO: team info shared by all channels?
+    if (
+      !session.team ||
+      (session.team.members &&
+        Array.isArray(session.team.members) &&
+        session.team.members.indexOf(senderId) < 0)
+    ) {
+      const allUsers = await this._client.getAllUserList();
+      session.team = {
+        members: allUsers,
+      };
+    }
   }
 
-  async handleRequest({
-    body,
-    session,
-    handler,
-  }: {
-    body: SlackRequestBody,
-    session: ?SlackSession,
-    handler: FunctionalHandler,
-  }): Promise<void> {
+  mapRequestToEvents(body: SlackRequestBody): Array<SlackEvent> {
     const rawEvent = this._getRawEventFromRequest(body);
 
     if (rawEvent.bot_id || rawEvent.subtype === 'bot_message') {
-      return; // FIXME
+      return []; // FIXME
     }
 
-    const context = new SlackContext({
+    return [new SlackEvent(rawEvent)];
+  }
+
+  createContext({
+    event,
+    session,
+  }: {
+    event: SlackEvent,
+    session: ?SlackSession,
+  }): SlackContext {
+    return new SlackContext({
       client: this._client,
-      rawEvent,
+      event,
       session,
     });
-
-    await handler(context);
   }
 }

@@ -1,6 +1,7 @@
 import { MessengerClient } from 'messaging-api-messenger';
 
 import MessengerConnector from '../MessengerConnector';
+import MessengerEvent from '../../context/MessengerEvent';
 import MessengerContext from '../../context/MessengerContext';
 
 jest.mock('messaging-api-messenger');
@@ -127,15 +128,26 @@ describe('#updateSession', () => {
   });
 });
 
-describe('#handleRequest', () => {
-  it('call handler with context', async () => {
+describe('#mapRequestToEvents', () => {
+  it('should map request to MessengerEvents', () => {
     const { connector } = setup();
+    const events = connector.mapRequestToEvents(request.body);
+
+    expect(events).toHaveLength(1);
+    expect(events[0]).toBeInstanceOf(MessengerEvent);
+  });
+});
+
+describe('#createContext', () => {
+  it('should create MessengerContext', () => {
+    const { connector } = setup();
+    const event = {};
     const session = {};
-    let context;
-    const handler = _context => {
-      context = _context;
-    };
-    await connector.handleRequest({ body: request.body, session, handler });
+
+    const context = connector.createContext({
+      event,
+      session,
+    });
 
     expect(context).toBeDefined();
     expect(context).toBeInstanceOf(MessengerContext);

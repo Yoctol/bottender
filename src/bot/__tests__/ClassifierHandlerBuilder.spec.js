@@ -52,54 +52,6 @@ describe('#onIntent', () => {
     expect(handler2).not.toBeCalled();
   });
 
-  it('should support string as handler', async () => {
-    const { builder, classifier } = setup();
-    const result = {
-      intents: [
-        { name: 'intent_1', score: 0.5 },
-        { name: 'intent_2', score: 0.25 },
-        { name: 'intent_3', score: 0.25 },
-      ],
-    };
-    classifier.predict.mockReturnValue(Promise.resolve(result));
-    const context = {
-      event: {
-        isTextMessage: true,
-        message: {
-          text: 'Hello World',
-        },
-      },
-      sendText: jest.fn(),
-    };
-    builder.onIntent('intent_1', '沒處理到');
-    await builder.build()(context);
-    expect(context.sendText).toBeCalledWith('沒處理到');
-  });
-
-  it('should support array as handler', async () => {
-    const { builder, classifier } = setup();
-    const result = {
-      intents: [
-        { name: 'intent_1', score: 0.5 },
-        { name: 'intent_2', score: 0.25 },
-        { name: 'intent_3', score: 0.25 },
-      ],
-    };
-    classifier.predict.mockReturnValue(Promise.resolve(result));
-    const context = {
-      event: {
-        isTextMessage: true,
-        message: {
-          text: 'Hello World',
-        },
-      },
-      sendText: jest.fn(),
-    };
-    builder.onIntent('intent_1', ['沒處理到', '漏掉了']);
-    await builder.build()(context);
-    expect(context.sendText).toBeCalledWith(expect.stringMatching(/沒處理到|漏掉了/));
-  });
-
   it('should not throw when matched intent handler undefiend', async () => {
     const { builder, classifier } = setup();
     const result = {
@@ -160,56 +112,6 @@ describe('#onUnmatched', () => {
     };
     await builder.build()(context);
     expect(handler).toBeCalledWith(context, result);
-  });
-
-  it('should support string as handler', async () => {
-    const { builder, classifier } = setup();
-    const result = {
-      intents: [
-        { name: 'intent_1', score: 0.25 },
-        { name: 'intent_2', score: 0.25 },
-        { name: 'intent_3', score: 0.25 },
-        { name: 'intent_4', score: 0.25 },
-      ],
-    };
-    classifier.predict.mockReturnValue(Promise.resolve(result));
-    const context = {
-      event: {
-        isTextMessage: true,
-        message: {
-          text: 'Hello World',
-        },
-      },
-      sendText: jest.fn(),
-    };
-    builder.onUnmatched('沒處理到');
-    await builder.build()(context);
-    expect(context.sendText).toBeCalledWith('沒處理到');
-  });
-
-  it('should support array as handler', async () => {
-    const { builder, classifier } = setup();
-    const result = {
-      intents: [
-        { name: 'intent_1', score: 0.25 },
-        { name: 'intent_2', score: 0.25 },
-        { name: 'intent_3', score: 0.25 },
-        { name: 'intent_4', score: 0.25 },
-      ],
-    };
-    classifier.predict.mockReturnValue(Promise.resolve(result));
-    const context = {
-      event: {
-        isTextMessage: true,
-        message: {
-          text: 'Hello World',
-        },
-      },
-      sendText: jest.fn(),
-    };
-    builder.onUnmatched(['沒處理到', '漏掉了']);
-    await builder.build()(context);
-    expect(context.sendText).toBeCalledWith(expect.stringMatching(/沒處理到|漏掉了/));
   });
 
   it('should not throw when no unmatched handler', async () => {

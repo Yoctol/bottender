@@ -5,10 +5,9 @@
 import { LINEClient } from 'messaging-api-line';
 
 import LINEContext from '../context/LINEContext';
-import type { LINERawEvent } from '../context/LINEEvent';
+import LINEEvent, { type LINERawEvent } from '../context/LINEEvent';
 import type { Session } from '../session/Session';
 
-import type { FunctionalHandler } from './Bot';
 import type { Connector, SessionWithUser } from './Connector';
 
 type LINERequestBody = {
@@ -53,17 +52,46 @@ export default class LINEConnector
     );
   }
 
-  shouldSessionUpdate(session: Session): boolean {
-    if (!session.type) return true;
-
-    if (session.type === 'user') {
-      return !session.user;
+  // FIXME: handling different type session
+  async updateSession(session: Session, body: LINERequestBody): Promise<void> {
+    if (!session.type) {
+      await this._updateSession(session, body);
+      return;
     }
 
-    return true;
+    if (session.type === 'user') {
+      if (!session.user) {
+        await this._updateSession(session, body);
+      }
+      return;
+    }
+
+    await this._updateSession(session, body);
   }
 
-  async updateSession(session: Session, body: LINERequestBody): Promise<void> {
+  mapRequestToEvents(body: LINERequestBody): Array<LINEEvent> {
+    return body.events.map(e => new LINEEvent(e));
+  }
+
+  createContext({
+    event,
+    session,
+  }: {
+    event: LINEEvent,
+    session: ?LINESession,
+  }): LINEContext {
+    return new LINEContext({
+      client: this._client,
+      event,
+      session,
+    });
+  }
+
+  verifySignature(rawBody: string, signature: string): boolean {
+    return this._client.isValidSignature(rawBody, signature);
+  }
+
+  async _updateSession(session: Session, body: LINERequestBody): Promise<void> {
     const { source } = body.events[0];
 
     if (!session.type) {
@@ -94,34 +122,5 @@ export default class LINEConnector
     } else {
       session.user = null;
     }
-  }
-
-  async handleRequest({
-    body,
-    session,
-    handler,
-  }: {
-    body: LINERequestBody,
-    session: ?LINESession,
-    handler: FunctionalHandler,
-  }): Promise<void> {
-    const createLINEContext = rawEvent =>
-      new LINEContext({
-        client: this._client,
-        rawEvent,
-        session,
-      });
-
-    const promises = [];
-    body.events.forEach(event => {
-      const context = createLINEContext(event);
-      promises.push(handler(context));
-    });
-
-    await Promise.all(promises);
-  }
-
-  verifySignature(rawBody: string, signature: string): boolean {
-    return this._client.isValidSignature(rawBody, signature);
   }
 }

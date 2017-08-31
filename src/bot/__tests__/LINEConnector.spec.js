@@ -1,6 +1,7 @@
 import { LINEClient } from 'messaging-api-line';
 
 import LINEConnector from '../LINEConnector';
+import LINEEvent from '../../context/LINEEvent';
 import LINEContext from '../../context/LINEContext';
 
 jest.mock('messaging-api-line');
@@ -146,15 +147,27 @@ describe('#updateSession', () => {
   });
 });
 
-describe('#handleRequest', () => {
-  it('call handler with context', async () => {
+describe('#mapRequestToEvents', () => {
+  it('should map request to LINEEvents', () => {
     const { connector } = setup();
+    const events = connector.mapRequestToEvents(request.body);
+
+    expect(events).toHaveLength(2);
+    expect(events[0]).toBeInstanceOf(LINEEvent);
+    expect(events[1]).toBeInstanceOf(LINEEvent);
+  });
+});
+
+describe('#createContext', () => {
+  it('should create LINEContext', () => {
+    const { connector } = setup();
+    const event = {};
     const session = {};
-    let context;
-    const handler = _context => {
-      context = _context;
-    };
-    await connector.handleRequest({ body: request.body, session, handler });
+
+    const context = connector.createContext({
+      event,
+      session,
+    });
 
     expect(context).toBeDefined();
     expect(context).toBeInstanceOf(LINEContext);

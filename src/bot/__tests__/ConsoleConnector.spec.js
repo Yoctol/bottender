@@ -1,4 +1,5 @@
 import ConsoleConnector from '../ConsoleConnector';
+import ConsoleEvent from '../../context/ConsoleEvent';
 import ConsoleContext from '../../context/ConsoleContext';
 
 const request = {
@@ -45,15 +46,26 @@ describe('#updateSession', () => {
   });
 });
 
-describe('#handleRequest', () => {
-  it('call handler with context', async () => {
+describe('#mapRequestToEvents', () => {
+  it('should map request to ConsoleEvents', () => {
     const { connector } = setup();
+    const events = connector.mapRequestToEvents(request.body);
+
+    expect(events).toHaveLength(1);
+    expect(events[0]).toBeInstanceOf(ConsoleEvent);
+  });
+});
+
+describe('#createContext', () => {
+  it('should create ConsoleContext', () => {
+    const { connector } = setup();
+    const event = {};
     const session = {};
-    let context;
-    const handler = _context => {
-      context = _context;
-    };
-    await connector.handleRequest({ body: request.body, session, handler });
+
+    const context = connector.createContext({
+      event,
+      session,
+    });
 
     expect(context).toBeDefined();
     expect(context).toBeInstanceOf(ConsoleContext);

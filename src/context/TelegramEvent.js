@@ -113,14 +113,26 @@ export default class TelegramEvent implements Event {
     this._rawEvent = rawEvent;
   }
 
+  /**
+   * Underlying raw event from Telegram.
+   *
+   */
   get rawEvent(): TelegramRawEvent {
     return this._rawEvent;
   }
 
+  /**
+   * Determine if the event is a message event.
+   *
+   */
   get isMessage(): boolean {
     return !!this._rawEvent.message;
   }
 
+  /**
+   * The message object from Telegram raw event.
+   *
+   */
   get message(): ?Message {
     return this._rawEvent.message;
   }
@@ -129,10 +141,18 @@ export default class TelegramEvent implements Event {
     return this._rawEvent.callback_query;
   }
 
+  /**
+   * Determine if the event is a message event which includes text.
+   *
+   */
   get isTextMessage(): boolean {
     return this.isMessage && typeof (this.message: any).text === 'string';
   }
 
+  /**
+   * Determine if the event is a message event which includes audio.
+   *
+   */
   get isAudioMessage(): boolean {
     if (!this.isMessage) return false;
 
@@ -141,6 +161,10 @@ export default class TelegramEvent implements Event {
     return !!message.audio && typeof message.audio === 'object';
   }
 
+  /**
+   * Determine if the event is a message event which includes document.
+   *
+   */
   get isDocumentMessage(): boolean {
     if (!this.isMessage) return false;
 
@@ -149,6 +173,10 @@ export default class TelegramEvent implements Event {
     return !!message.document && typeof message.document === 'object';
   }
 
+  /**
+   * Determine if the event is a message event which includes game.
+   *
+   */
   get isGameMessage(): boolean {
     if (!this.isMessage) return false;
 
@@ -157,6 +185,10 @@ export default class TelegramEvent implements Event {
     return !!message.game && typeof message.game === 'object';
   }
 
+  /**
+   * Determine if the event is a message event which includes photo.
+   *
+   */
   get isPhotoMessage(): boolean {
     if (!this.isMessage) return false;
 
@@ -165,6 +197,10 @@ export default class TelegramEvent implements Event {
     return !!message.photo && message.photo.length > 0;
   }
 
+  /**
+   * Determine if the event is a message event which includes sticker.
+   *
+   */
   get isStickerMessage(): boolean {
     if (!this.isMessage) return false;
 
@@ -173,6 +209,10 @@ export default class TelegramEvent implements Event {
     return !!message.sticker && typeof message.sticker === 'object';
   }
 
+  /**
+   * Determine if the event is a message event which includes video.
+   *
+   */
   get isVideoMessage(): boolean {
     if (!this.isMessage) return false;
 
@@ -180,6 +220,10 @@ export default class TelegramEvent implements Event {
     return !!message.video && typeof message.video === 'object';
   }
 
+  /**
+   * Determine if the event is a message event which includes voice.
+   *
+   */
   get isVoiceMessage(): boolean {
     if (!this.isMessage) return false;
 
@@ -188,6 +232,10 @@ export default class TelegramEvent implements Event {
     return !!message.voice && typeof message.voice === 'object';
   }
 
+  /**
+   * Determine if the event is a message event which includes video note.
+   *
+   */
   get isVideoNoteMessage(): boolean {
     if (!this.isMessage) return false;
 
@@ -196,6 +244,10 @@ export default class TelegramEvent implements Event {
     return !!message.video_note && typeof message.video_note === 'object';
   }
 
+  /**
+   * Determine if the event is a message event which includes contact.
+   *
+   */
   get isContactMessage(): boolean {
     if (!this.isMessage) return false;
 
@@ -204,6 +256,10 @@ export default class TelegramEvent implements Event {
     return !!message.contact && typeof message.contact === 'object';
   }
 
+  /**
+   * Determine if the event is a message event which includes location.
+   *
+   */
   get isLocationMessage(): boolean {
     if (!this.isMessage) return false;
 
@@ -212,6 +268,10 @@ export default class TelegramEvent implements Event {
     return !!message.location && typeof message.location === 'object';
   }
 
+  /**
+   * Determine if the event is a message event which includes venue.
+   *
+   */
   get isVenueMessage(): boolean {
     if (!this.isMessage) return false;
 
@@ -220,9 +280,11 @@ export default class TelegramEvent implements Event {
     return !!message.venue && typeof message.venue === 'object';
   }
 
+  /**
+   * Determine if the event is a callback query event.
+   *
+   */
   get isCallbackQuery(): boolean {
-    if (this.isMessage) return false;
-
     return !!this.callbackQuery && typeof this.callbackQuery === 'object';
   }
 }

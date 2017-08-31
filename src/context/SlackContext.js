@@ -6,13 +6,13 @@ import { SlackOAuthClient } from 'messaging-api-slack';
 
 import type { SlackSession } from '../bot/SlackConnector';
 
-import { DEFAULT_MESSAGE_DELAY, type Context } from './Context';
-import SlackEvent, { type SlackRawEvent } from './SlackEvent';
+import type { Context } from './Context';
+import SlackEvent from './SlackEvent';
 import DelayableJobQueue from './DelayableJobQueue';
 
 type Options = {
   client: SlackOAuthClient,
-  rawEvent: SlackRawEvent,
+  event: SlackEvent,
   session: ?SlackSession,
 };
 
@@ -21,13 +21,54 @@ export default class SlackContext implements Context {
   _event: SlackEvent;
   _session: ?SlackSession;
   _jobQueue: DelayableJobQueue;
+  _messageDelay: number = 1000;
 
-  constructor({ client, rawEvent, session }: Options) {
+  constructor({ client, event, session }: Options) {
     this._client = client;
-    this._event = new SlackEvent(rawEvent);
+    this._event = event;
     this._session = session;
     this._jobQueue = new DelayableJobQueue();
     this._jobQueue.beforeEach(({ delay }) => sleep(delay));
+  }
+
+  /**
+   * The name of the platform.
+   *
+   */
+  get platform(): string {
+    return 'slack';
+  }
+
+  /**
+   * The event instance.
+   *
+   */
+  get event(): SlackEvent {
+    return this._event;
+  }
+
+  /**
+   * The session state of the context.
+   *
+   */
+  get session(): ?SlackSession {
+    return this._session;
+  }
+
+  /**
+   * Set delay before sending every messages.
+   *
+   */
+  setMessageDelay(milliseconds: number): void {
+    this._messageDelay = milliseconds;
+  }
+
+  /**
+   * Delay and show indicators for milliseconds.
+   *
+   */
+  async typing(milliseconds: number): Promise<void> {
+    await sleep(milliseconds);
   }
 
   postMessage(text: string): Promise<any> {
@@ -46,7 +87,7 @@ export default class SlackContext implements Context {
         instance: this._client,
         method: 'postMessage',
         args: [channelId, text, { as_user: true }],
-        delay: DEFAULT_MESSAGE_DELAY,
+        delay: this._messageDelay,
         showIndicators: true,
         onSuccess: resolve,
         onError: reject,
@@ -54,11 +95,17 @@ export default class SlackContext implements Context {
     });
   }
 
+  /**
+   * Send text to the owner of then session.
+   *
+   */
   sendText(text: string): Promise<any> {
     return this.postMessage(text);
   }
 
   sendTextWithDelay(delay: number, text: string): Promise<any> {
+    warning(false, `sendTextWithDelay is deprecated.`);
+
     const channelId = this._getChannelIdFromSession();
 
     if (!channelId) {
@@ -80,18 +127,6 @@ export default class SlackContext implements Context {
         onError: reject,
       });
     });
-  }
-
-  get platform(): string {
-    return 'slack';
-  }
-
-  get event(): SlackEvent {
-    return this._event;
-  }
-
-  get session(): ?SlackSession {
-    return this._session;
   }
 
   _enqueue(job: Object): Promise<any> {

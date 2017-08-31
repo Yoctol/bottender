@@ -2,12 +2,11 @@
 
 import type { Event } from './Event';
 
-export const DEFAULT_MESSAGE_DELAY = 1000;
-
 export interface Context {
   +platform: string,
   +event: Event,
   +session: ?{},
+  setMessageDelay(milliseconds: number): void,
   +sendText: (text: string) => any,
   +sendTextWithDelay: (seconds: number, text: string) => any,
 }

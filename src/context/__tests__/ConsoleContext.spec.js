@@ -15,7 +15,7 @@ const setup = () => {
     },
   };
   const context = new ConsoleContext({
-    rawEvent,
+    event: new ConsoleEvent(rawEvent),
     session,
   });
   return {
@@ -58,6 +58,8 @@ it('#sendText should write text to stdout', () => {
   const { context } = setup();
 
   context.sendText('hello');
+
+  jest.runTimersToTime(0);
 
   expect(process.stdout.write).toBeCalledWith('Bot > hello\nYou > ');
 });

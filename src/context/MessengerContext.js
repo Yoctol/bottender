@@ -6,15 +6,14 @@ import { MessengerClient } from 'messaging-api-messenger';
 
 import type { MessengerSession } from '../bot/MessengerConnector';
 
-import { DEFAULT_MESSAGE_DELAY, type Context } from './Context';
-import MessengerEvent, { type MessengerRawEvent } from './MessengerEvent';
+import type { Context } from './Context';
+import MessengerEvent from './MessengerEvent';
 import DelayableJobQueue from './DelayableJobQueue';
 
 type Options = {
   client: MessengerClient,
-  rawEvent: MessengerRawEvent,
+  event: MessengerEvent,
   session: ?MessengerSession,
-  isStandby?: boolean,
 };
 
 class MessengerContext implements Context {
@@ -22,10 +21,11 @@ class MessengerContext implements Context {
   _event: MessengerEvent;
   _session: ?MessengerSession;
   _jobQueue: DelayableJobQueue;
+  _messageDelay: number = 1000;
 
-  constructor({ client, rawEvent, session, isStandby }: Options) {
+  constructor({ client, event, session }: Options) {
     this._client = client;
-    this._event = new MessengerEvent(rawEvent, { isStandby });
+    this._event = event;
     this._session = session;
     this._jobQueue = new DelayableJobQueue();
     this._jobQueue.beforeEach(async ({ delay, showIndicators = true }) => {
@@ -41,18 +41,52 @@ class MessengerContext implements Context {
     });
   }
 
+  /**
+   * The name of the platform.
+   *
+   */
   get platform(): string {
     return 'messenger';
   }
 
+  /**
+   * The event instance.
+   *
+   */
   get event(): MessengerEvent {
     return this._event;
   }
 
+  /**
+   * The session state of the context.
+   *
+   */
   get session(): ?MessengerSession {
     return this._session;
   }
 
+  /**
+   * Set delay before sending every messages.
+   *
+   */
+  setMessageDelay(milliseconds: number): void {
+    this._messageDelay = milliseconds;
+  }
+
+  /**
+   * Delay and show indicators for milliseconds.
+   *
+   */
+  async typing(milliseconds: number): Promise<void> {
+    await this.turnTypingIndicatorsOn();
+    await sleep(milliseconds);
+    await this.turnTypingIndicatorsOff();
+  }
+
+  /**
+   * Send text to the owner of then session.
+   *
+   */
   sendText(text: string, options?: Object): Promise<any> {
     if (!this._session) {
       warning(
@@ -67,7 +101,7 @@ class MessengerContext implements Context {
       args: options
         ? [this._session.user.id, text, options]
         : [this._session.user.id, text],
-      delay: DEFAULT_MESSAGE_DELAY,
+      delay: this._messageDelay,
       showIndicators: true,
     });
   }
@@ -175,7 +209,7 @@ sendMethods.forEach(method => {
         instance: this._client,
         method,
         args: [this._session.user.id, ...args],
-        delay: DEFAULT_MESSAGE_DELAY,
+        delay: this._messageDelay,
         showIndicators: true,
       });
     },
@@ -202,6 +236,7 @@ sendMethods.forEach(method => {
     configurable: true,
     writable: true,
     value(delay, ...rest) {
+      warning(false, `${method}WithDelay is deprecated.`);
       if (!this._session) {
         warning(
           false,

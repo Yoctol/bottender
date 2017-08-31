@@ -20,7 +20,7 @@ const handler = new TelegramHandlerBuilder()
     };
     context.sendMessage('*Hi* there!', options);
   })
-  .onUnhandled(context => {
+  .onEvent(context => {
     context.sendMessage("Sorry, I don't know what you say.");
   })
   .build();

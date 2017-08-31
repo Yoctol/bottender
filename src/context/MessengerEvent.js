@@ -77,24 +77,44 @@ export default class MessengerEvent implements Event {
     this._isStandby = options.isStandby || false;
   }
 
+  /**
+   * Underlying raw event from Messenger.
+   *
+   */
   get rawEvent(): MessengerRawEvent {
     return this._rawEvent;
   }
 
+  /**
+   * Determine if the event is a message event.
+   *
+   */
   get isMessage(): boolean {
     return (
       !!this._rawEvent.message && typeof this._rawEvent.message === 'object'
     );
   }
 
+  /**
+   * The message object from Messenger raw event.
+   *
+   */
   get message(): ?Message {
     return this._rawEvent.message;
   }
 
+  /**
+   * Determine if the event is a message event which includes text.
+   *
+   */
   get isTextMessage(): boolean {
     return this.isMessage && typeof (this.message: any).text === 'string';
   }
 
+  /**
+   * Determine if the event has any attachments.
+   *
+   */
   get hasAttachment(): boolean {
     return (
       this.isMessage &&
@@ -103,38 +123,74 @@ export default class MessengerEvent implements Event {
     );
   }
 
+  /**
+   * The attachments array from Messenger raw event.
+   *
+   */
   get attachments(): ?Array<Attachment> {
     return this.message ? this.message.attachments : null;
   }
 
+  /**
+   * Determine if the event is a message event which includes image attachment.
+   *
+   */
   get isImageMessage(): boolean {
     return this.hasAttachment && (this.attachments: any)[0].type === 'image';
   }
 
+  /**
+   * Determine if the event is a message event which includes audio attachment.
+   *
+   */
   get isAudioMessage(): boolean {
     return this.hasAttachment && (this.attachments: any)[0].type === 'audio';
   }
 
+  /**
+   * Determine if the event is a message event which includes video attachment.
+   *
+   */
   get isVideoMessage(): boolean {
     return this.hasAttachment && (this.attachments: any)[0].type === 'video';
   }
 
+  /**
+   * Determine if the event is a message event which includes location attachment.
+   *
+   */
   get isLocationMessage(): boolean {
     return this.hasAttachment && (this.attachments: any)[0].type === 'location';
   }
 
+  /**
+   * Determine if the event is a message event which includes file attachment.
+   *
+   */
   get isFileMessage(): boolean {
     return this.hasAttachment && (this.attachments: any)[0].type === 'file';
   }
 
+  /**
+   * Determine if the event is a message event which includes fallback attachment.
+   *
+   */
   get isFallbackMessage(): boolean {
     return this.hasAttachment && (this.attachments: any)[0].type === 'fallback';
   }
 
+  /**
+   * Determine if the event is a message event which includes sticker.
+   *
+   */
   get isStickerMessage(): boolean {
     return this.isMessage && typeof (this.message: any).sticker_id === 'number';
   }
 
+  /**
+   * Determine if the event is a message event which includes 'like' sticker.
+   *
+   */
   get isLikeSticker(): boolean {
     return (
       this.isStickerMessage &&
@@ -143,6 +199,10 @@ export default class MessengerEvent implements Event {
     );
   }
 
+  /**
+   * Determine if the event is a message event triggered from quick reply.
+   *
+   */
   get isQuickReply(): boolean {
     return (
       this.isMessage &&
@@ -151,34 +211,62 @@ export default class MessengerEvent implements Event {
     );
   }
 
+  /**
+   * The quick reply object from Messenger raw event.
+   *
+   */
   get quickReply(): ?QuickReply {
     return this.message ? this.message.quick_reply : null;
   }
 
+  /**
+   * Determine if the event is a message event sent from our side.
+   *
+   */
   get isEcho(): boolean {
     return this.isMessage && !!(this.message: any).is_echo;
   }
 
+  /**
+   * Determine if the event is a postback event.
+   *
+   */
   get isPostback(): boolean {
     return (
       !!this._rawEvent.postback && typeof this._rawEvent.postback === 'object'
     );
   }
 
+  /**
+   * The postback object from Messenger raw event.
+   *
+   */
   get postback(): ?Postback {
     return this._rawEvent.postback || null;
   }
 
+  /**
+   * Determine if the event is a message read event.
+   *
+   */
   get isRead(): boolean {
     return !!this._rawEvent.read && typeof this._rawEvent.read === 'object';
   }
 
+  /**
+   * Determine if the event is a message delivery event.
+   *
+   */
   get isDelivery(): boolean {
     return (
       !!this._rawEvent.delivery && typeof this._rawEvent.delivery === 'object'
     );
   }
 
+  /**
+   * Determine if the event is a postback or quick reply which includes payload.
+   *
+   */
   get isPayload(): boolean {
     return (
       (!!this.postback && typeof this.postback.payload === 'string') ||
@@ -186,6 +274,10 @@ export default class MessengerEvent implements Event {
     );
   }
 
+  /**
+   * The payload received from postback or quick reply.
+   *
+   */
   get payload(): ?string {
     if (!!this.postback && this.isPayload) {
       return this.postback.payload;
@@ -195,6 +287,10 @@ export default class MessengerEvent implements Event {
     return null;
   }
 
+  /**
+   * Determine if the event is a policy enforcement event.
+   *
+   */
   get isPolicyEnforcement(): boolean {
     return (
       !!this._rawEvent['policy-enforcement'] &&
@@ -202,24 +298,44 @@ export default class MessengerEvent implements Event {
     );
   }
 
+  /**
+   * The policy enforcement object from Messenger raw event.
+   *
+   */
   get policyEnforcement(): ?PolicyEnforcement {
     return this._rawEvent['policy-enforcement'] || null;
   }
 
+  /**
+   * Determine if the event is an app roles event.
+   *
+   */
   get isAppRoles(): boolean {
     return (
       !!this._rawEvent.app_roles && typeof this._rawEvent.app_roles === 'object'
     );
   }
 
+  /**
+   * The app roles object from Messenger raw event.
+   *
+   */
   get appRoles(): ?AppRoles {
     return this._rawEvent.app_roles || null;
   }
 
+  /**
+   * Determine if the event is a standby event.
+   *
+   */
   get isStandby(): boolean {
     return this._isStandby;
   }
 
+  /**
+   * Determine if the event is a pass thread control event.
+   *
+   */
   get isPassThreadControl(): boolean {
     return (
       !!this._rawEvent.pass_thread_control &&
@@ -227,10 +343,18 @@ export default class MessengerEvent implements Event {
     );
   }
 
+  /**
+   * The pass thread control object from Messenger raw event.
+   *
+   */
   get passThreadControl(): ?PassThreadControl {
     return this._rawEvent.pass_thread_control || null;
   }
 
+  /**
+   * Determine if the event is a take thread control event.
+   *
+   */
   get isTakeThreadControl(): boolean {
     return (
       !!this._rawEvent.take_thread_control &&
@@ -238,6 +362,10 @@ export default class MessengerEvent implements Event {
     );
   }
 
+  /**
+   * The take thread control object from Messenger raw event.
+   *
+   */
   get takeThreadControl(): ?TakeThreadControl {
     return this._rawEvent.take_thread_control || null;
   }

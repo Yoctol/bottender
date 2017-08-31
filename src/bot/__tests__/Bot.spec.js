@@ -6,7 +6,8 @@ function setup({
     getUniqueSessionIdFromRequest: jest.fn(),
     shouldSessionUpdate: jest.fn(),
     updateSession: jest.fn(),
-    handleRequest: jest.fn(() => Promise.resolve(true)),
+    mapRequestToEvents: jest.fn(() => [{}]),
+    createContext: jest.fn(() => ({})),
   },
   sessionStore = {
     init: jest.fn(),
@@ -64,7 +65,7 @@ describe('#createRequestHandler', () => {
     expect(error).toBeDefined();
   });
 
-  it('should fetch user data when it does not exist in session', async () => {
+  it('should call updateSession with session and body', async () => {
     const { bot, connector, sessionStore } = setup({});
 
     connector.getUniqueSessionIdFromRequest.mockReturnValue('__id__');
@@ -82,30 +83,24 @@ describe('#createRequestHandler', () => {
     expect(connector.updateSession).toBeCalledWith(expect.any(Object), body);
   });
 
-  it('should not fetch user data when it exists in session', async () => {
-    const { bot, connector, sessionStore } = setup({});
+  it('should call handler', async () => {
+    const event = {};
+    const session = { user: {} };
+    const connector = {
+      platform: 'any',
+      getUniqueSessionIdFromRequest: jest.fn(),
+      shouldSessionUpdate: jest.fn(),
+      updateSession: jest.fn(),
+      mapRequestToEvents: jest.fn(() => [event]),
+      createContext: jest.fn(() => ({ event, session })),
+    };
+
+    const { bot, sessionStore } = setup({ connector });
 
     connector.getUniqueSessionIdFromRequest.mockReturnValue('__id__');
-    connector.shouldSessionUpdate.mockReturnValue(false);
-    sessionStore.read.mockReturnValue(Promise.resolve({ user: {} }));
+    sessionStore.read.mockReturnValue(Promise.resolve(session));
 
-    const handler = () => {};
-    bot.onEvent(handler);
-
-    const requestHandler = bot.createRequestHandler();
-
-    await requestHandler({});
-
-    expect(connector.updateSession).not.toBeCalled();
-  });
-
-  it('should call handleRequest on connector', async () => {
-    const { bot, connector, sessionStore } = setup({});
-
-    connector.getUniqueSessionIdFromRequest.mockReturnValue('__id__');
-    sessionStore.read.mockReturnValue(Promise.resolve({ user: {} }));
-
-    const handler = () => {};
+    const handler = jest.fn();
     bot.onEvent(handler);
 
     const requestHandler = bot.createRequestHandler();
@@ -113,21 +108,29 @@ describe('#createRequestHandler', () => {
     const body = {};
     await requestHandler(body);
 
-    expect(connector.handleRequest).toBeCalledWith(
+    expect(handler).toBeCalledWith(
       expect.objectContaining({
-        body,
         session: { user: {} },
-        handler,
       })
     );
   });
 
-  it('should call handleRequest without session if unique session id is null', async () => {
-    const { bot, connector } = setup({});
+  it('should call handler without session if unique session id is null', async () => {
+    const event = {};
+    const connector = {
+      platform: 'any',
+      getUniqueSessionIdFromRequest: jest.fn(),
+      shouldSessionUpdate: jest.fn(),
+      updateSession: jest.fn(),
+      mapRequestToEvents: jest.fn(() => [event]),
+      createContext: jest.fn(() => ({ event, session: undefined })),
+    };
+
+    const { bot } = setup({ connector });
 
     connector.getUniqueSessionIdFromRequest.mockReturnValue(null);
 
-    const handler = () => {};
+    const handler = jest.fn();
     bot.onEvent(handler);
 
     const requestHandler = bot.createRequestHandler();
@@ -135,20 +138,29 @@ describe('#createRequestHandler', () => {
     const body = {};
     await requestHandler(body);
 
-    expect(connector.handleRequest).toBeCalledWith(
+    expect(handler).toBeCalledWith(
       expect.objectContaining({
-        body,
         session: undefined,
-        handler,
       })
     );
   });
 
   it('should call write on sessionStore', async () => {
-    const { bot, connector, sessionStore } = setup({});
+    const event = {};
+    const session = { user: {} };
+    const connector = {
+      platform: 'any',
+      getUniqueSessionIdFromRequest: jest.fn(),
+      shouldSessionUpdate: jest.fn(),
+      updateSession: jest.fn(),
+      mapRequestToEvents: jest.fn(() => [event]),
+      createContext: jest.fn(() => ({ event, session })),
+    };
+
+    const { bot, sessionStore } = setup({ connector });
 
     connector.getUniqueSessionIdFromRequest.mockReturnValue('__id__');
-    sessionStore.read.mockReturnValue(Promise.resolve({ user: {} }));
+    sessionStore.read.mockReturnValue(Promise.resolve(session));
 
     const handler = () => {};
     bot.onEvent(handler);
@@ -156,11 +168,81 @@ describe('#createRequestHandler', () => {
     const requestHandler = bot.createRequestHandler();
 
     await requestHandler({});
+    await Promise.resolve();
 
     expect(sessionStore.write).toBeCalledWith(
       'any:__id__',
       { user: {} },
       525600
     );
+  });
+});
+
+describe('#extendContext', () => {
+  it('can extend function to context', async () => {
+    const event = {};
+    const connector = {
+      platform: 'any',
+      getUniqueSessionIdFromRequest: jest.fn(),
+      shouldSessionUpdate: jest.fn(),
+      updateSession: jest.fn(),
+      mapRequestToEvents: jest.fn(() => [event]),
+      createContext: jest.fn(() => ({ event, session: undefined })),
+    };
+
+    const { bot } = setup({ connector });
+
+    connector.getUniqueSessionIdFromRequest.mockReturnValue('__id__');
+
+    const monkeyPatchFn = jest.fn();
+
+    bot.extendContext(context => {
+      context.monkeyPatchFn = monkeyPatchFn;
+    });
+
+    const handler = context => context.monkeyPatchFn();
+    bot.onEvent(handler);
+
+    const requestHandler = bot.createRequestHandler();
+
+    const body = {};
+    await requestHandler(body);
+
+    expect(monkeyPatchFn).toBeCalled();
+  });
+});
+
+describe('#setMessageDelay', () => {
+  it('can setMessageDelay on context', async () => {
+    const event = {};
+    const context = {
+      event,
+      session: undefined,
+      setMessageDelay: jest.fn(),
+    };
+    const connector = {
+      platform: 'any',
+      getUniqueSessionIdFromRequest: jest.fn(),
+      shouldSessionUpdate: jest.fn(),
+      updateSession: jest.fn(),
+      mapRequestToEvents: jest.fn(() => [event]),
+      createContext: jest.fn(() => context),
+    };
+
+    const { bot } = setup({ connector });
+
+    connector.getUniqueSessionIdFromRequest.mockReturnValue('__id__');
+
+    bot.setMessageDelay(5000);
+
+    const handler = () => {};
+    bot.onEvent(handler);
+
+    const requestHandler = bot.createRequestHandler();
+
+    const body = {};
+    await requestHandler(body);
+
+    expect(context.setMessageDelay).toBeCalledWith(5000);
   });
 });

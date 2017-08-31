@@ -6,13 +6,13 @@ import { TelegramClient } from 'messaging-api-telegram';
 
 import type { TelegramSession } from '../bot/TelegramConnector';
 
-import { DEFAULT_MESSAGE_DELAY, type Context } from './Context';
-import TelegramEvent, { type TelegramRawEvent } from './TelegramEvent';
+import type { Context } from './Context';
+import TelegramEvent from './TelegramEvent';
 import DelayableJobQueue from './DelayableJobQueue';
 
 type Options = {
   client: TelegramClient,
-  rawEvent: TelegramRawEvent,
+  event: TelegramEvent,
   session: ?TelegramSession,
 };
 
@@ -21,27 +21,60 @@ class TelegramContext implements Context {
   _event: TelegramEvent;
   _session: ?TelegramSession;
   _jobQueue: DelayableJobQueue;
+  _messageDelay: number = 1000;
 
-  constructor({ client, rawEvent, session }: Options) {
+  constructor({ client, event, session }: Options) {
     this._client = client;
-    this._event = new TelegramEvent(rawEvent);
+    this._event = event;
     this._session = session;
     this._jobQueue = new DelayableJobQueue();
     this._jobQueue.beforeEach(({ delay }) => sleep(delay));
   }
 
+  /**
+   * The name of the platform.
+   *
+   */
   get platform(): string {
     return 'telegram';
   }
 
+  /**
+   * The event instance.
+   *
+   */
   get event(): TelegramEvent {
     return this._event;
   }
 
+  /**
+   * The session state of the context.
+   *
+   */
   get session(): ?TelegramSession {
     return this._session;
   }
 
+  /**
+   * Set delay before sending every messages.
+   *
+   */
+  setMessageDelay(milliseconds: number): void {
+    this._messageDelay = milliseconds;
+  }
+
+  /**
+   * Delay and show indicators for milliseconds.
+   *
+   */
+  async typing(milliseconds: number): Promise<void> {
+    await sleep(milliseconds);
+  }
+
+  /**
+   * Send text to the owner of then session.
+   *
+   */
   sendText(text: string): Promise<any> {
     if (!this._session) {
       warning(
@@ -54,12 +87,14 @@ class TelegramContext implements Context {
       instance: this._client,
       method: 'sendMessage',
       args: [this._session.user.id, text],
-      delay: DEFAULT_MESSAGE_DELAY,
+      delay: this._messageDelay,
       showIndicators: true,
     });
   }
 
   sendTextWithDelay(delay: number, text: string): Promise<any> {
+    warning(false, `sendTextWithDelay is deprecated.`);
+
     if (!this._session) {
       warning(
         false,
@@ -119,7 +154,7 @@ sendMethods.forEach(method => {
         instance: this._client,
         method,
         args: [this._session.user.id, ...args],
-        delay: DEFAULT_MESSAGE_DELAY,
+        delay: this._messageDelay,
         showIndicators: true,
       });
     },

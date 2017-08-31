@@ -1,6 +1,7 @@
 import { TelegramClient } from 'messaging-api-telegram';
 
 import TelegramConnector from '../TelegramConnector';
+import TelegramEvent from '../../context/TelegramEvent';
 import TelegramContext from '../../context/TelegramContext';
 
 jest.mock('messaging-api-telegram');
@@ -144,18 +145,25 @@ describe('#updateSession', () => {
   });
 });
 
-describe('#handleRequest', () => {
-  it('call handler with context', async () => {
+describe('#mapRequestToEvents', () => {
+  it('should map request to TelegramEvents', () => {
     const { connector } = setup();
+    const events = connector.mapRequestToEvents(messageRequest.body);
+
+    expect(events).toHaveLength(1);
+    expect(events[0]).toBeInstanceOf(TelegramEvent);
+  });
+});
+
+describe('#createContext', () => {
+  it('should create TelegramContext', () => {
+    const { connector } = setup();
+    const event = {};
     const session = {};
-    let context;
-    const handler = _context => {
-      context = _context;
-    };
-    await connector.handleRequest({
-      body: messageRequest.body,
+
+    const context = connector.createContext({
+      event,
       session,
-      handler,
     });
 
     expect(context).toBeDefined();

@@ -5,10 +5,9 @@
 import { TelegramClient } from 'messaging-api-telegram';
 
 import TelegramContext from '../context/TelegramContext';
-import type { TelegramRawEvent } from '../context/TelegramEvent';
+import TelegramEvent, { type TelegramRawEvent } from '../context/TelegramEvent';
 import type { Session } from '../session/Session';
 
-import type { FunctionalHandler } from './Bot';
 import type { Connector, SessionWithUser } from './Connector';
 
 export type TelegramUser = {
@@ -51,45 +50,42 @@ export default class TelegramConnector
     return `${id}`;
   }
 
-  shouldSessionUpdate(session: Session): boolean {
-    return !session.user;
-  }
-
   async updateSession(
     session: Session,
     body: TelegramRequestBody
   ): Promise<void> {
-    let user = {};
+    if (!session.user) {
+      let user = {};
 
-    if (body.message !== undefined) {
-      user = body.message.from;
-    } else if (body.callback_query !== undefined) {
-      user = body.callback_query.from;
+      if (body.message !== undefined) {
+        user = body.message.from;
+      } else if (body.callback_query !== undefined) {
+        user = body.callback_query.from;
+      }
+
+      session.user = {
+        platform: 'telegram',
+        ...user,
+      };
     }
-
-    session.user = {
-      platform: 'telegram',
-      ...user,
-    };
   }
 
-  async handleRequest({
-    body,
-    session,
-    handler,
-  }: {
-    body: TelegramRequestBody,
-    session: ?TelegramSession,
-    handler: FunctionalHandler,
-  }): Promise<void> {
+  mapRequestToEvents(body: TelegramRequestBody): Array<TelegramEvent> {
     const rawEvent = this._getRawEventFromRequest(body);
+    return [new TelegramEvent(rawEvent)];
+  }
 
-    const context = new TelegramContext({
+  createContext({
+    event,
+    session,
+  }: {
+    event: TelegramEvent,
+    session: ?TelegramSession,
+  }): TelegramContext {
+    return new TelegramContext({
       client: this._client,
-      rawEvent,
+      event,
       session,
     });
-
-    await handler(context);
   }
 }

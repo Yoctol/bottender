@@ -5,20 +5,19 @@
 import { MessengerClient } from 'messaging-api-messenger';
 
 import MessengerContext from '../context/MessengerContext';
-import type {
-  MessengerRawEvent,
-  Sender,
-  Recipient,
-  Message,
-  Postback,
-  PolicyEnforcement,
-  AppRoles,
-  PassThreadControl,
-  TakeThreadControl,
+import MessengerEvent, {
+  type MessengerRawEvent,
+  type Sender,
+  type Recipient,
+  type Message,
+  type Postback,
+  type PolicyEnforcement,
+  type AppRoles,
+  type PassThreadControl,
+  type TakeThreadControl,
 } from '../context/MessengerEvent';
 import type { Session } from '../session/Session';
 
-import type { FunctionalHandler } from './Bot';
 import type { Connector, SessionWithUser } from './Connector';
 
 type Entry = {
@@ -120,42 +119,39 @@ export default class MessengerConnector
     return null;
   }
 
-  shouldSessionUpdate(session: Session): boolean {
-    return !session.user;
-  }
-
   async updateSession(
     session: Session,
     body: MessengerRequestBody
   ): Promise<void> {
-    const senderId = this.getUniqueSessionIdFromRequest(body);
-    const user = await this._client.getUserProfile(senderId);
+    if (!session.user) {
+      const senderId = this.getUniqueSessionIdFromRequest(body);
+      const user = await this._client.getUserProfile(senderId);
 
-    session.user = {
-      id: senderId,
-      platform: 'messenger',
-      ...user,
-    };
+      session.user = {
+        id: senderId,
+        platform: 'messenger',
+        ...user,
+      };
+    }
   }
 
-  async handleRequest({
-    body,
-    session,
-    handler,
-  }: {
-    body: MessengerRequestBody,
-    session: ?MessengerSession,
-    handler: FunctionalHandler,
-  }): Promise<void> {
+  mapRequestToEvents(body: MessengerRequestBody): Array<MessengerEvent> {
     const rawEvent = this._getRawEventFromRequest(body);
+    const isStandby = this._isStandby(body);
+    return [new MessengerEvent(rawEvent, { isStandby })];
+  }
 
-    const context = new MessengerContext({
+  createContext({
+    event,
+    session,
+  }: {
+    event: MessengerEvent,
+    session: ?MessengerSession,
+  }): MessengerContext {
+    return new MessengerContext({
       client: this._client,
-      rawEvent,
+      event,
       session,
-      isStandby: this._isStandby(body),
     });
-
-    await handler(context);
   }
 }

@@ -27,14 +27,26 @@ export default class SlackEvent implements Event {
     this._rawEvent = rawEvent;
   }
 
+  /**
+   * Underlying raw event from Slack.
+   *
+   */
   get rawEvent(): SlackRawEvent {
     return this._rawEvent;
   }
 
+  /**
+   * Determine if the event is a message event.
+   *
+   */
   get isMessage(): boolean {
     return this._rawEvent.type === 'message';
   }
 
+  /**
+   * Determine if the event is a message event sent from channels.
+   *
+   */
   get isChannelsMessage(): boolean {
     if (!this.isMessage) return false;
 
@@ -43,6 +55,10 @@ export default class SlackEvent implements Event {
     return message.channel.startsWith('C');
   }
 
+  /**
+   * Determine if the event is a message event sent from groups.
+   *
+   */
   get isGroupsMessage(): boolean {
     if (!this.isMessage) return false;
 
@@ -51,6 +67,10 @@ export default class SlackEvent implements Event {
     return message.channel.startsWith('G');
   }
 
+  /**
+   * Determine if the event is a message event sent from instant messaging.
+   *
+   */
   get isImMessage(): boolean {
     if (!this.isMessage) return false;
 
@@ -59,6 +79,10 @@ export default class SlackEvent implements Event {
     return message.channel.startsWith('D');
   }
 
+  /**
+   * Determine if the event is a message event sent from multiple people instant messaging.
+   *
+   */
   get isMpimMessage(): boolean {
     if (!this.isMessage) return false;
 
@@ -67,6 +91,10 @@ export default class SlackEvent implements Event {
     return message.channel.startsWith('G');
   }
 
+  /**
+   * The message object from Slack raw event.
+   *
+   */
   get message(): ?Message {
     if (!this.isMessage) return;
 
@@ -75,6 +103,10 @@ export default class SlackEvent implements Event {
     return message;
   }
 
+  /**
+   * Determine if the event is a message event which includes text.
+   *
+   */
   get isTextMessage(): boolean {
     return this.isMessage;
   }
