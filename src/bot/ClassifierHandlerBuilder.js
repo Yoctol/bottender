@@ -27,7 +27,11 @@ export default class ClassifierHandlerBuilder {
         const result = await this._classifier.predict(
           context.event.message.text
         );
-        const intent = result[0];
+        const intent = result.intents.sort((a, b) => {
+          if (a.score > b.score) return -1;
+          if (a.score < b.score) return 1;
+          return 0;
+        })[0];
         if (intent.score > this._threshold) {
           const intentHandler = this._findMatchIntentHandler(intent.name);
           if (intentHandler) {
