@@ -3409,6 +3409,10 @@ lodash.noop@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/lodash.noop/-/lodash.noop-3.0.1.tgz#38188f4d650a3a474258439b96ec45b32617133c"
 
+lodash.omit@^4.5.0:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/lodash.omit/-/lodash.omit-4.5.0.tgz#6eb19ae5a1ee1dd9df0b969e66ce0b7fa30b5e60"
+
 lodash.partial@^4.2.1:
   version "4.2.1"
   resolved "https://registry.yarnpkg.com/lodash.partial/-/lodash.partial-4.2.1.tgz#49f3d8cfdaa3bff8b3a91d127e923245418961d4"
@@ -3489,30 +3493,31 @@ merge@^1.1.3:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/merge/-/merge-1.2.0.tgz#7531e39d4949c281a66b8c5a6e0265e8b05894da"
 
-messaging-api-line@^0.2.4:
-  version "0.2.4"
-  resolved "https://registry.yarnpkg.com/messaging-api-line/-/messaging-api-line-0.2.4.tgz#4c0c07d73c14d7b0fccee537e6ef97a34a967187"
+messaging-api-line@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/messaging-api-line/-/messaging-api-line-0.3.0.tgz#f09dadb5ab4c903b7f9ebf64a921f03fa548fb51"
   dependencies:
     axios "^0.16.1"
 
-messaging-api-messenger@^0.2.6:
-  version "0.2.6"
-  resolved "https://registry.yarnpkg.com/messaging-api-messenger/-/messaging-api-messenger-0.2.6.tgz#19312c484a174b8223a45b6120891ea7c51cf986"
+messaging-api-messenger@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/messaging-api-messenger/-/messaging-api-messenger-0.3.0.tgz#b682f6a5b17d0c492a9fabeb4211dd340aa0326b"
   dependencies:
     axios "^0.16.1"
     form-data "^2.2.0"
     invariant "^2.2.2"
+    lodash.omit "^4.5.0"
 
-messaging-api-slack@^0.2.6:
-  version "0.2.6"
-  resolved "https://registry.yarnpkg.com/messaging-api-slack/-/messaging-api-slack-0.2.6.tgz#804feaaa703a3bd00feec0c2e00900e4d6fbd0a8"
+messaging-api-slack@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/messaging-api-slack/-/messaging-api-slack-0.3.0.tgz#9edb62849aa566c37082afed00e5c214d4a85b16"
   dependencies:
     axios "^0.16.1"
     invariant "^2.2.2"
 
-messaging-api-telegram@^0.2.7:
-  version "0.2.7"
-  resolved "https://registry.yarnpkg.com/messaging-api-telegram/-/messaging-api-telegram-0.2.7.tgz#c2c7fb8fd9c9a5c4178a359d9b3186c88823b56d"
+messaging-api-telegram@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/messaging-api-telegram/-/messaging-api-telegram-0.3.0.tgz#1ae3949806f1ed701ddc3e9fd9a41ee676e5734f"
   dependencies:
     axios "^0.16.1"
 
