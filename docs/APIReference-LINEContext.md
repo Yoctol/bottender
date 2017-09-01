@@ -30,9 +30,19 @@ Set delay before sending every messages.
 
 **Parameters**
 
--   `seconds` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
+-   `milliseconds` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
 
 Returns **void** 
+
+## typing
+
+Delay and show indicators for milliseconds.
+
+**Parameters**
+
+-   `milliseconds` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
+
+Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;void>** 
 
 ## sendText
 

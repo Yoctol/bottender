@@ -25,16 +25,19 @@ export default class TelegramHandlerBuilder extends BasicHandlerBuilder {
         typeof pattern === 'string' || pattern instanceof RegExp,
         `'onText' only accepts string or regex, but received ${typeof pattern}`
       );
+
+      this.onMessage(
+        context =>
+          context.event.isTextMessage &&
+          matchPattern(pattern, context.event.message.text),
+        handler
+      );
     } else {
-      pattern = /[\s\S]*/;
       handler = ((arg1: any): FunctionalHandler);
+
+      this.onMessage(context => context.event.isTextMessage, handler);
     }
-    this.onMessage(
-      context =>
-        context.event.isTextMessage &&
-        matchPattern(pattern, context.event.message.text),
-      handler
-    );
+
     return this;
   }
 
@@ -49,16 +52,19 @@ export default class TelegramHandlerBuilder extends BasicHandlerBuilder {
         typeof pattern === 'string' || pattern instanceof RegExp,
         `'onCallbackQuery' only accepts string or regex, but received ${typeof pattern}`
       );
+
+      this.on(
+        context =>
+          context.event.isCallbackQuery &&
+          matchPattern(pattern, context.event.callbackQuery.data),
+        handler
+      );
     } else {
-      pattern = /[\s\S]*/;
       handler = ((arg1: any): FunctionalHandler);
+
+      this.on(context => context.event.isCallbackQuery, handler);
     }
-    this.on(
-      context =>
-        context.event.isCallbackQuery &&
-        matchPattern(pattern, context.event.callbackQuery.data),
-      handler
-    );
+
     return this;
   }
 

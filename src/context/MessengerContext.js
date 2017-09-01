@@ -55,17 +55,17 @@ class MessengerContext implements Context {
    * Set delay before sending every messages.
    *
    */
-  setMessageDelay(seconds: number): void {
-    this._messageDelay = seconds;
+  setMessageDelay(milliseconds: number): void {
+    this._messageDelay = milliseconds;
   }
 
   /**
-   * Delay and show indicators for seconds.
+   * Delay and show indicators for milliseconds.
    *
    */
-  async typing(seconds: number): Promise<void> {
+  async typing(milliseconds: number): Promise<void> {
     await this.turnTypingIndicatorsOn();
-    await sleep(seconds);
+    await sleep(milliseconds);
     await this.turnTypingIndicatorsOff();
   }
 
@@ -73,7 +73,7 @@ class MessengerContext implements Context {
    * Send text to the owner of then session.
    *
    */
-  async sendText(text: string): Promise<any> {
+  async sendText(text: string, options?: Object): Promise<any> {
     if (!this._session) {
       warning(
         false,
@@ -82,7 +82,7 @@ class MessengerContext implements Context {
       return;
     }
     await this.typing(this._messageDelay);
-    return this._client.sendText(this._session.user.id, text);
+    return this._client.sendText(this._session.user.id, text, options);
   }
 
   async sendTextWithDelay(delay: number, text: string): Promise<any> {
@@ -110,7 +110,7 @@ class MessengerContext implements Context {
       );
       return;
     }
-    return this._client.turnTypingIndicatorsOn(this._session.user.id);
+    return this._client.typingOn(this._session.user.id);
   }
 
   async turnTypingIndicatorsOff(): Promise<any> {
@@ -121,21 +121,18 @@ class MessengerContext implements Context {
       );
       return;
     }
-    return this._client.turnTypingIndicatorsOff(this._session.user.id);
+    return this._client.typingOff(this._session.user.id);
   }
 }
 
 const sendMethods = [
-  'sendIssueResolutionText',
+  'sendAttachment',
   'sendImage',
   'sendAudio',
   'sendVideo',
   'sendFile',
   'sendQuickReplies',
   'sendGenericTemplate',
-  'sendShippingUpdateTemplate',
-  'sendReservationUpdateTemplate',
-  'sendIssueResolutionTemplate',
   'sendButtonTemplate',
   'sendListTemplate',
   'sendReceiptTemplate',
@@ -163,6 +160,7 @@ sendMethods.forEach(method => {
     },
   });
 
+  // FIXME: rethink
   Object.defineProperty(MessengerContext.prototype, `${method}To`, {
     enumerable: false,
     configurable: true,

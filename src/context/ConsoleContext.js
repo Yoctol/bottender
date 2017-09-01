@@ -49,16 +49,16 @@ export default class ConsoleContext implements Context {
    * Set delay before sending every messages.
    *
    */
-  setMessageDelay(seconds: number): void {
-    this._messageDelay = seconds;
+  setMessageDelay(milliseconds: number): void {
+    this._messageDelay = milliseconds;
   }
 
   /**
-   * Delay and show indicators for seconds.
+   * Delay and show indicators for milliseconds.
    *
    */
-  async typing(seconds: number): Promise<void> {
-    await sleep(seconds);
+  async typing(milliseconds: number): Promise<void> {
+    await sleep(milliseconds);
   }
 
   /**
