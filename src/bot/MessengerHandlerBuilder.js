@@ -31,17 +31,23 @@ export default class MessengerHandlerBuilder extends BasicHandlerBuilder {
         typeof pattern === 'string' || pattern instanceof RegExp,
         `'onText' only accepts string or regex, but received ${typeof pattern}`
       );
+
+      this.onMessage(
+        context =>
+          context.event.isTextMessage &&
+          !context.event.isEcho &&
+          matchPattern(pattern, context.event.message.text),
+        handler
+      );
     } else {
-      pattern = /[\s\S]*/;
       handler = ((arg1: any): FunctionalHandler);
+
+      this.onMessage(
+        context => context.event.isTextMessage && !context.event.isEcho,
+        handler
+      );
     }
-    this.onMessage(
-      context =>
-        context.event.isTextMessage &&
-        !context.event.isEcho &&
-        matchPattern(pattern, context.event.message.text),
-      handler
-    );
+
     return this;
   }
 
@@ -61,23 +67,28 @@ export default class MessengerHandlerBuilder extends BasicHandlerBuilder {
         typeof pattern === 'string' || pattern instanceof RegExp,
         `'onPayload' only accepts string or regex, but received ${typeof pattern}`
       );
+
+      this.on(({ event }) => {
+        if (event.isPostback && matchPattern(pattern, event.postback.payload)) {
+          return true;
+        } else if (
+          event.isMessage &&
+          event.message.quick_reply &&
+          matchPattern(pattern, event.message.quick_reply.payload)
+        ) {
+          return true;
+        }
+        return false;
+      }, handler);
     } else {
-      pattern = /[\s\S]*/;
       handler = ((arg1: any): FunctionalHandler);
+
+      this.on(
+        ({ event }) =>
+          event.isPostback || (event.isMessage && !!event.message.quick_reply),
+        handler
+      );
     }
-    this.on(({ event }) => {
-      if (event.isPostback && matchPattern(pattern, event.postback.payload)) {
-        return true;
-      }
-      if (
-        event.isMessage &&
-        event.message.quick_reply &&
-        matchPattern(pattern, event.message.quick_reply.payload)
-      ) {
-        return true;
-      }
-      return false;
-    }, handler);
     return this;
   }
 

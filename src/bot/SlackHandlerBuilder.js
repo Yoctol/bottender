@@ -25,17 +25,19 @@ export default class SlackHandlerBuilder extends BasicHandlerBuilder {
         typeof pattern === 'string' || pattern instanceof RegExp,
         `'onText' only accepts string or regex, but received ${typeof pattern}`
       );
+
+      this.onMessage(
+        context =>
+          context.event.isTextMessage &&
+          matchPattern(pattern, context.event.message.text),
+        handler
+      );
     } else {
-      pattern = /[\s\S]*/;
       handler = ((arg1: any): FunctionalHandler);
+
+      this.onMessage(context => context.event.isTextMessage, handler);
     }
 
-    this.onMessage(
-      context =>
-        context.event.isTextMessage &&
-        matchPattern(pattern, context.event.message.text),
-      handler
-    );
     return this;
   }
 }
