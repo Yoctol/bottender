@@ -66,6 +66,54 @@ const echoRequest = {
   },
 };
 
+const batchRequest = {
+  body: {
+    object: 'page',
+    entry: [
+      {
+        id: '1895382890692545',
+        time: 1486464322257,
+        messaging: [
+          {
+            sender: {
+              id: '1412611362105802',
+            },
+            recipient: {
+              id: '1895382890692545',
+            },
+            timestamp: 1486464322190,
+            message: {
+              mid: 'mid.1486464322190:cb04e5a654',
+              seq: 339979,
+              text: '測試1',
+            },
+          },
+        ],
+      },
+      {
+        id: '189538289069256',
+        time: 1486464322257,
+        messaging: [
+          {
+            sender: {
+              id: '1412611362105802',
+            },
+            recipient: {
+              id: '1895382890692545',
+            },
+            timestamp: 1486464322190,
+            message: {
+              mid: 'mid.1486464322190:cb04e5a656',
+              seq: 339979,
+              text: '測試2',
+            },
+          },
+        ],
+      },
+    ],
+  },
+};
+
 function setup() {
   const mockGraphAPIClient = {
     getUserProfile: jest.fn(),
@@ -96,6 +144,12 @@ describe('#getUniqueSessionIdFromRequest', () => {
     const { connector } = setup();
     const senderId = connector.getUniqueSessionIdFromRequest(echoRequest.body);
     expect(senderId).toBe('1244813222196986');
+  });
+
+  it('extract sender id from first event', () => {
+    const { connector } = setup();
+    const senderId = connector.getUniqueSessionIdFromRequest(batchRequest.body);
+    expect(senderId).toBe('1412611362105802');
   });
 });
 
@@ -135,6 +189,15 @@ describe('#mapRequestToEvents', () => {
 
     expect(events).toHaveLength(1);
     expect(events[0]).toBeInstanceOf(MessengerEvent);
+  });
+
+  it('should wroks with batch entry', () => {
+    const { connector } = setup();
+    const events = connector.mapRequestToEvents(batchRequest.body);
+
+    expect(events).toHaveLength(2);
+    expect(events[0]).toBeInstanceOf(MessengerEvent);
+    expect(events[1]).toBeInstanceOf(MessengerEvent);
   });
 });
 

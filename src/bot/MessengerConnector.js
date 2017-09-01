@@ -82,19 +82,28 @@ export default class MessengerConnector
     this._client = MessengerClient.connect(accessToken);
   }
 
-  _getRawEventFromRequest(body: MessengerRequestBody): MessengerRawEvent {
+  _getRawEventsFromRequest(
+    body: MessengerRequestBody
+  ): Array<MessengerRawEvent> {
     if (body.entry) {
-      const entry = ((body: any): EntryRequestBody).entry[0];
-      if (entry.messaging) {
-        return ((entry.messaging[0]: any): MessengerRawEvent);
-      }
+      const entry = ((body: any): EntryRequestBody).entry;
 
-      if (entry.standby) {
-        return ((entry.standby[0]: any): MessengerRawEvent);
-      }
+      return entry
+        .map(ent => {
+          if (ent.messaging) {
+            return ((ent.messaging[0]: any): MessengerRawEvent);
+          }
+
+          if (ent.standby) {
+            return ((ent.standby[0]: any): MessengerRawEvent);
+          }
+          // $FlowExpectedError
+          return null;
+        })
+        .filter(event => event != null);
     }
 
-    return ((body: any): MessengerRawEvent);
+    return [((body: any): MessengerRawEvent)];
   }
 
   _isStandby(body: MessengerRequestBody): boolean {
@@ -109,7 +118,7 @@ export default class MessengerConnector
   }
 
   getUniqueSessionIdFromRequest(body: MessengerRequestBody): ?string {
-    const rawEvent = this._getRawEventFromRequest(body);
+    const rawEvent = this._getRawEventsFromRequest(body)[0];
     if (rawEvent.message && rawEvent.message.is_echo && rawEvent.recipient) {
       return rawEvent.recipient.id;
     }
@@ -136,9 +145,9 @@ export default class MessengerConnector
   }
 
   mapRequestToEvents(body: MessengerRequestBody): Array<MessengerEvent> {
-    const rawEvent = this._getRawEventFromRequest(body);
+    const rawEvents = this._getRawEventsFromRequest(body);
     const isStandby = this._isStandby(body);
-    return [new MessengerEvent(rawEvent, { isStandby })];
+    return rawEvents.map(event => new MessengerEvent(event, { isStandby }));
   }
 
   createContext({
