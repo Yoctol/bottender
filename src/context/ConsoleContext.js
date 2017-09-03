@@ -11,10 +11,19 @@ type Options = {
   session: ?ConsoleSession,
 };
 
+type ConsoleClient = {
+  sendText(text: string): void,
+};
+
 export default class ConsoleContext implements Context {
   _event: ConsoleEvent;
   _session: ?ConsoleSession;
   _messageDelay: number = 0;
+  _client: ConsoleClient = {
+    sendText: text => {
+      process.stdout.write(`Bot > ${text}\nYou > `);
+    },
+  };
 
   constructor({ event, session }: Options) {
     this._event = event;
@@ -27,6 +36,14 @@ export default class ConsoleContext implements Context {
    */
   get platform(): string {
     return 'console';
+  }
+
+  /**
+   * The client instance.
+   *
+   */
+  get client(): ConsoleClient {
+    return this._client;
   }
 
   /**
@@ -67,13 +84,13 @@ export default class ConsoleContext implements Context {
    */
   sendText(text: string): void {
     setTimeout(() => {
-      process.stdout.write(`Bot > ${text}\nYou > `);
+      this._client.sendText(text);
     }, this._messageDelay);
   }
 
   sendTextWithDelay(delay: number, text: string): void {
     setTimeout(() => {
-      this.sendText(text);
+      this._client.sendText(text);
     }, delay);
   }
 }

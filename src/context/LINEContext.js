@@ -43,6 +43,14 @@ class LINEContext implements Context {
   }
 
   /**
+   * The client instance.
+   *
+   */
+  get client(): LINEClient {
+    return this._client;
+  }
+
+  /**
    * The event instance.
    *
    */
