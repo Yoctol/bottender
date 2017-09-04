@@ -2,7 +2,10 @@
   eslint-disable class-methods-use-this
   @flow
 */
+import crypto from 'crypto';
+
 import { MessengerClient } from 'messaging-api-messenger';
+import warning from 'warning';
 
 import MessengerContext from '../context/MessengerContext';
 import MessengerEvent, {
@@ -77,9 +80,17 @@ export type MessengerSession = SessionWithUser<MessengerUser>;
 export default class MessengerConnector
   implements Connector<MessengerRequestBody, MessengerUser> {
   _client: MessengerClient;
+  _appSecret: string;
 
-  constructor({ accessToken }: { accessToken: string }) {
+  constructor({
+    accessToken,
+    appSecret,
+  }: {
+    accessToken: string,
+    appSecret: string,
+  }) {
     this._client = MessengerClient.connect(accessToken);
+    this._appSecret = appSecret;
   }
 
   _getRawEventsFromRequest(
@@ -162,5 +173,23 @@ export default class MessengerConnector
       event,
       session,
     });
+  }
+
+  // https://developers.facebook.com/docs/messenger-platform/webhook#security
+  verifySignature(rawBody: string, signature: string): boolean {
+    if (!this._appSecret) {
+      warning(
+        false,
+        'App secret is not set. Cannot perform Messenger signature validation!'
+      );
+      return true;
+    }
+    return (
+      signature ===
+      `sha1=${crypto
+        .createHmac('sha1', this._appSecret)
+        .update(rawBody, 'utf8')
+        .digest('hex')}`
+    );
   }
 }
