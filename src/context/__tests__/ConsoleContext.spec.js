@@ -54,6 +54,11 @@ it('get #event works', () => {
   expect(context.event).toBeInstanceOf(ConsoleEvent);
 });
 
+it('get #client works', () => {
+  const { context } = setup();
+  expect(context.client.sendText).toBeDefined();
+});
+
 it('#sendText should write text to stdout', () => {
   const { context } = setup();
 

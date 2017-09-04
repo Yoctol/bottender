@@ -4,11 +4,6 @@ import TelegramEvent from '../TelegramEvent';
 jest.mock('delay');
 jest.mock('messaging-api-messenger');
 
-const createMockGraphAPIClient = () => ({
-  turnTypingIndicatorsOn: jest.fn(),
-  turnTypingIndicatorsOff: jest.fn(),
-});
-
 const rawEvent = {
   message: {
     message_id: 666,
@@ -31,7 +26,7 @@ const rawEvent = {
 };
 
 const setup = () => {
-  const client = createMockGraphAPIClient();
+  const client = {};
   const session = {
     user: {
       id: 'fakeUserId',
@@ -68,6 +63,11 @@ it('get #session works', () => {
 it('get #event works', () => {
   const { context } = setup();
   expect(context.event).toBeInstanceOf(TelegramEvent);
+});
+
+it('get #client works', () => {
+  const { context, client } = setup();
+  expect(context.client).toBe(client);
 });
 
 it('#sendMessage put sendMessage to jobQueue', () => {
