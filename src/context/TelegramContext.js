@@ -40,6 +40,14 @@ class TelegramContext implements Context {
   }
 
   /**
+   * The client instance.
+   *
+   */
+  get client(): TelegramClient {
+    return this._client;
+  }
+
+  /**
    * The event instance.
    *
    */

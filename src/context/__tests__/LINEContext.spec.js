@@ -57,6 +57,11 @@ it('get #event works', () => {
   expect(context.event).toBeInstanceOf(LINEEvent);
 });
 
+it('get #client works', () => {
+  const { context, client } = setup();
+  expect(context.client).toBe(client);
+});
+
 describe('#reply', () => {
   it('#replyText put replyText to jobQueue', () => {
     const { context, client } = setup();

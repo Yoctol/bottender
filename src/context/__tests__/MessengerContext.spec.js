@@ -65,6 +65,11 @@ it('get #event works', () => {
   expect(context.event).toBeInstanceOf(MessengerEvent);
 });
 
+it('get #client works', () => {
+  const { context, client } = setup();
+  expect(context.client).toBe(client);
+});
+
 it('#sendText put sendText to jobQueue', () => {
   const { context, client, session } = setup();
   context._jobQueue = {

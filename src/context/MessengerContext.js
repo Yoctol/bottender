@@ -50,6 +50,14 @@ class MessengerContext implements Context {
   }
 
   /**
+   * The client instance.
+   *
+   */
+  get client(): MessengerClient {
+    return this._client;
+  }
+
+  /**
    * The event instance.
    *
    */

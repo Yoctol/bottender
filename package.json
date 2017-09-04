@@ -106,9 +106,7 @@
     ],
     "coveragePathIgnorePatterns": [
       "/node_modules/",
-      "/__tests__/",
-      "Dangerous.*\\.js",
-      "dangerous.*\\.js"
+      "/__tests__/"
     ],
     "coverageThreshold": {
       "global": {

@@ -40,6 +40,14 @@ export default class SlackContext implements Context {
   }
 
   /**
+   * The client instance.
+   *
+   */
+  get client(): SlackOAuthClient {
+    return this._client;
+  }
+
+  /**
    * The event instance.
    *
    */
