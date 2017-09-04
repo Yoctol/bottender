@@ -414,44 +414,6 @@ it('use default message delay', () => {
   });
 });
 
-it('has send to methods', () => {
-  const { context } = setup();
-  expect(context.sendTextTo).toBeDefined();
-  expect(context.sendAttachment).toBeDefined();
-  expect(context.sendImageTo).toBeDefined();
-  expect(context.sendAudioTo).toBeDefined();
-  expect(context.sendVideoTo).toBeDefined();
-  expect(context.sendFileTo).toBeDefined();
-  expect(context.sendQuickRepliesTo).toBeDefined();
-  expect(context.sendGenericTemplateTo).toBeDefined();
-  expect(context.sendButtonTemplateTo).toBeDefined();
-  expect(context.sendListTemplateTo).toBeDefined();
-  expect(context.sendReceiptTemplateTo).toBeDefined();
-  expect(context.sendAirlineBoardingPassTemplateTo).toBeDefined();
-  expect(context.sendAirlineCheckinTemplateTo).toBeDefined();
-  expect(context.sendAirlineItineraryTemplateTo).toBeDefined();
-  expect(context.sendAirlineFlightUpdateTemplateTo).toBeDefined();
-});
-
-it('#sendTextTo put sendText to jobQueue', () => {
-  const { context, client } = setup();
-  context._jobQueue = {
-    enqueue: jest.fn(),
-  };
-
-  context.sendTextTo('uid_1', 'xxx.com');
-
-  expect(context._jobQueue.enqueue).toBeCalledWith({
-    instance: client,
-    method: 'sendText',
-    args: ['uid_1', 'xxx.com'],
-    delay: 0,
-    showIndicators: false,
-    onSuccess: expect.any(Function),
-    onError: expect.any(Function),
-  });
-});
-
 it('has send with delay methods', () => {
   const { context } = setup();
   expect(context.sendTextWithDelay).toBeDefined();
@@ -496,14 +458,4 @@ it('show typing when sending', () => {
 
   expect(client.typingOn).toBeCalled();
   expect(client.typingOff).not.toBeCalled();
-});
-
-it('should not show typing when sending to others', () => {
-  jest.useFakeTimers();
-
-  const { context, client } = setup();
-
-  context.sendTextTo('uid_1', 'xxx.com');
-
-  expect(client.typingOn).not.toBeCalled();
 });

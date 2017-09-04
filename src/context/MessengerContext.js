@@ -123,24 +123,6 @@ class MessengerContext implements Context {
     });
   }
 
-  // FIXME: rethink
-  sendTextTo(id: string, text: string): Promise<any> {
-    if (!this._session) {
-      warning(
-        false,
-        'sendTextTo: should not be called in context without session'
-      );
-      return Promise.resolve();
-    }
-    return this._enqueue({
-      instance: this._client,
-      method: 'sendText',
-      args: [id, text],
-      delay: 0,
-      showIndicators: false,
-    });
-  }
-
   turnTypingIndicatorsOn(): Promise<any> {
     if (!this._session) {
       warning(
@@ -211,22 +193,6 @@ sendMethods.forEach(method => {
         args: [this._session.user.id, ...args],
         delay: this._messageDelay,
         showIndicators: true,
-      });
-    },
-  });
-
-  // FIXME: rethink
-  Object.defineProperty(MessengerContext.prototype, `${method}To`, {
-    enumerable: false,
-    configurable: true,
-    writable: true,
-    value(id, ...rest) {
-      return this._enqueue({
-        instance: this._client,
-        method,
-        args: [id, ...rest],
-        delay: 0,
-        showIndicators: false,
       });
     },
   });

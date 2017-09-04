@@ -160,21 +160,6 @@ sendMethods.forEach(method => {
     },
   });
 
-  Object.defineProperty(TelegramContext.prototype, `${method}To`, {
-    enumerable: false,
-    configurable: true,
-    writable: true,
-    value(id, ...rest) {
-      return this._enqueue({
-        instance: this._client,
-        method,
-        args: [id, ...rest],
-        delay: 0,
-        showIndicators: false,
-      });
-    },
-  });
-
   Object.defineProperty(TelegramContext.prototype, `${method}WithDelay`, {
     enumerable: false,
     configurable: true,

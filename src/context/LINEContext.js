@@ -184,21 +184,6 @@ types.forEach(type => {
       });
     },
   });
-
-  Object.defineProperty(LINEContext.prototype, `send${type}To`, {
-    enumerable: false,
-    configurable: true,
-    writable: true,
-    value(id, ...rest) {
-      return this._enqueue({
-        instance: this._client,
-        method: `push${type}`,
-        args: [id, ...rest],
-        delay: 0,
-        showIndicators: false,
-      });
-    },
-  });
 });
 
 types.filter(type => type !== 'Text').forEach(type => {

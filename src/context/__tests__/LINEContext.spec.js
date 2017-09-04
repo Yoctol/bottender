@@ -427,39 +427,6 @@ it('use default message delay', () => {
   });
 });
 
-it('has send to methods', () => {
-  const { context } = setup();
-  expect(context.sendTextTo).toBeDefined();
-  expect(context.sendImageTo).toBeDefined();
-  expect(context.sendVideoTo).toBeDefined();
-  expect(context.sendAudioTo).toBeDefined();
-  expect(context.sendLocationTo).toBeDefined();
-  expect(context.sendStickerTo).toBeDefined();
-  expect(context.sendImagemapTo).toBeDefined();
-  expect(context.sendButtonTemplateTo).toBeDefined();
-  expect(context.sendConfirmTemplateTo).toBeDefined();
-  expect(context.sendCarouselTemplateTo).toBeDefined();
-});
-
-it('#sendTextTo put pushText to jobQueue', () => {
-  const { context, client } = setup();
-  context._jobQueue = {
-    enqueue: jest.fn(),
-  };
-
-  context.sendTextTo('uid_1', 'xxx.com');
-
-  expect(context._jobQueue.enqueue).toBeCalledWith({
-    instance: client,
-    method: 'pushText',
-    args: ['uid_1', 'xxx.com'],
-    delay: 0,
-    showIndicators: false,
-    onSuccess: expect.any(Function),
-    onError: expect.any(Function),
-  });
-});
-
 it('has delay with methods', () => {
   const { context } = setup();
   expect(context.sendTextWithDelay).toBeDefined();
