@@ -65,6 +65,7 @@
     "cli-table2": "^0.2.0",
     "commander": "^2.11.0",
     "cross-spawn": "^5.1.0",
+    "date-fns": "^1.28.5",
     "debug": "^3.0.0",
     "delay": "^2.0.0",
     "didyoumean": "^1.2.1",

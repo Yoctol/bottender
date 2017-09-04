@@ -1,5 +1,7 @@
 import CacheBasedSessionStore from '../CacheBasedSessionStore';
 
+const expiresIn = 10;
+
 function setup() {
   const cache = {
     get: jest.fn(),
@@ -9,7 +11,7 @@ function setup() {
     getPrefix: jest.fn(),
   };
 
-  const store = new CacheBasedSessionStore(cache);
+  const store = new CacheBasedSessionStore(cache, expiresIn);
   return {
     store,
     cache,
@@ -37,15 +39,15 @@ describe('#read', () => {
 });
 
 describe('#write', () => {
-  it('should call cache put with key, value, and maxAge', async () => {
+  it('should call cache put with key, value, and expiresIn', async () => {
     const { store, cache } = setup();
     await store.init();
 
     const sess = { x: 1 };
 
-    await store.write('yoctol:1', sess, 100);
+    await store.write('yoctol:1', sess, expiresIn);
 
-    expect(cache.put).toBeCalledWith('yoctol:1', sess, 100);
+    expect(cache.put).toBeCalledWith('yoctol:1', sess, expiresIn);
   });
 });
 
