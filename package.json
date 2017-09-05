@@ -4,14 +4,7 @@
   "license": "UNLICENSED",
   "main": "lib/index.js",
   "browser": "lib/browser.js",
-  "files": [
-    "bin",
-    "lib",
-    "express.js",
-    "koa.js",
-    "micro.js",
-    "restify.js"
-  ],
+  "files": ["bin", "lib", "express.js", "koa.js", "micro.js", "restify.js"],
   "bin": {
     "bottender": "bin/cli.js"
   },
@@ -84,7 +77,7 @@
     "koa-compose": "^4.0.0",
     "koa-router": "^7.2.1",
     "lodash": "^4.17.4",
-    "messaging-api-line": "^0.3.0",
+    "messaging-api-line": "^0.3.2",
     "messaging-api-messenger": "^0.3.1",
     "messaging-api-slack": "^0.3.0",
     "messaging-api-telegram": "^0.3.0",
@@ -101,13 +94,8 @@
     "warning": "^3.0.0"
   },
   "jest": {
-    "collectCoverageFrom": [
-      "src/**/*.js"
-    ],
-    "coveragePathIgnorePatterns": [
-      "/node_modules/",
-      "/__tests__/"
-    ],
+    "collectCoverageFrom": ["src/**/*.js"],
+    "coveragePathIgnorePatterns": ["/node_modules/", "/__tests__/"],
     "coverageThreshold": {
       "global": {
         "branches": 80,
@@ -116,13 +104,9 @@
         "statements": 80
       }
     },
-    "setupFiles": [
-      "./test/setupJest.js"
-    ],
+    "setupFiles": ["./test/setupJest.js"],
     "testResultsProcessor": "./node_modules/jest-junit",
-    "transformIgnorePatterns": [
-      "/node_modules/"
-    ],
+    "transformIgnorePatterns": ["/node_modules/"],
     "testEnvironment": "node",
     "timers": "fake",
     "resetModules": true,

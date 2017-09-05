@@ -150,6 +150,7 @@ const types = [
   'ButtonTemplate',
   'ConfirmTemplate',
   'CarouselTemplate',
+  'ImageCarouselTemplate',
 ];
 types.forEach(type => {
   Object.defineProperty(LINEContext.prototype, `reply${type}`, {
