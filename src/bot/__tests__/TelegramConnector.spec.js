@@ -67,8 +67,11 @@ const callbackQueryRequest = {
 };
 
 function setup() {
+  const mockTelegramClient = {};
   TelegramClient.connect = jest.fn();
+  TelegramClient.connect.mockReturnValue(mockTelegramClient);
   return {
+    mockTelegramClient,
     connector: new TelegramConnector(ACCESS_TOKEN),
   };
 }
@@ -77,6 +80,13 @@ describe('#platform', () => {
   it('should be telegram', () => {
     const { connector } = setup();
     expect(connector.platform).toBe('telegram');
+  });
+});
+
+describe('#clinet', () => {
+  it('should be client', () => {
+    const { connector, mockTelegramClient } = setup();
+    expect(connector.client).toBe(mockTelegramClient);
   });
 });
 

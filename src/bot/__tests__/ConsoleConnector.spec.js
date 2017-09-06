@@ -21,6 +21,35 @@ describe('#platform', () => {
   });
 });
 
+describe('#clinet', () => {
+  it('should be defined', () => {
+    const { connector } = setup();
+    expect(connector.client).toBeDefined();
+  });
+
+  describe('#sendText', () => {
+    let _write;
+    beforeEach(() => {
+      _write = process.stdout.write;
+      process.stdout.write = jest.fn();
+    });
+
+    afterEach(() => {
+      process.stdout.write = _write;
+    });
+
+    it('should call stdout', () => {
+      const { connector } = setup();
+
+      connector.client.sendText('hello');
+
+      jest.runTimersToTime(0);
+
+      expect(process.stdout.write).toBeCalledWith('Bot > hello\nYou > ');
+    });
+  });
+});
+
 describe('#getUniqueSessionIdFromRequest', () => {
   it('always return 1', () => {
     const { connector } = setup();

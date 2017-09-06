@@ -133,6 +133,13 @@ describe('#platform', () => {
   });
 });
 
+describe('#clinet', () => {
+  it('should be client', () => {
+    const { connector, mockGraphAPIClient } = setup();
+    expect(connector.client).toBe(mockGraphAPIClient);
+  });
+});
+
 describe('#getUniqueSessionIdFromRequest', () => {
   it('extract correct sender id', () => {
     const { connector } = setup();

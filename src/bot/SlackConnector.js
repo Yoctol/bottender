@@ -44,6 +44,10 @@ export default class SlackConnector
     return 'slack';
   }
 
+  get client(): SlackOAuthClient {
+    return this._client;
+  }
+
   getUniqueSessionIdFromRequest(body: SlackRequestBody): string {
     if (body.event.channel && typeof body.event.channel === 'string') {
       return body.event.channel;

@@ -38,6 +38,10 @@ export default class TelegramConnector
     return 'telegram';
   }
 
+  get client(): TelegramClient {
+    return this._client;
+  }
+
   getUniqueSessionIdFromRequest(body: TelegramRequestBody): string {
     let id = '';
 

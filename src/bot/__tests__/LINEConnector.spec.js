@@ -63,6 +63,13 @@ describe('#platform', () => {
   });
 });
 
+describe('#clinet', () => {
+  it('should be client', () => {
+    const { connector, mockLINEAPIClient } = setup();
+    expect(connector.client).toBe(mockLINEAPIClient);
+  });
+});
+
 describe('#getUniqueSessionIdFromRequest', () => {
   it('extract userId from user source', () => {
     const { connector } = setup();
