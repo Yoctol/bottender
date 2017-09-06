@@ -45,12 +45,20 @@ export default class MongoSessionStore implements SessionStore {
   }
 
   async read(key: string): Promise<Session | null> {
+    // FIXME: remove later
     const [platform, id] = key.split(':');
+
     const filter = {
-      'user.platform': platform,
-      'user.id': id,
+      $or: [
+        { id: key },
+        {
+          'user.platform': platform,
+          'user.id': id,
+        },
+      ],
     };
     const session = await this._sessions.findOne(filter);
+
     if (session && this._expired(session)) {
       return null;
     }
@@ -59,22 +67,35 @@ export default class MongoSessionStore implements SessionStore {
   }
 
   async write(key: string, sess: Session): Promise<void> {
+    // FIXME: remove later
     const [platform, id] = key.split(':');
-    const filter = {
-      'user.platform': platform,
-      'user.id': id,
-    };
 
+    const filter = {
+      $or: [
+        { id: key },
+        {
+          'user.platform': platform,
+          'user.id': id,
+        },
+      ],
+    };
     await this._sessions.updateOne(filter, sess, {
       upsert: true,
     });
   }
 
   async destroy(key: string): Promise<void> {
+    // FIXME: remove later
     const [platform, id] = key.split(':');
+
     const filter = {
-      'user.platform': platform,
-      'user.id': id,
+      $or: [
+        { id: key },
+        {
+          'user.platform': platform,
+          'user.id': id,
+        },
+      ],
     };
     await this._sessions.remove(filter);
   }
