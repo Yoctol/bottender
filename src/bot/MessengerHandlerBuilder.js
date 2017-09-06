@@ -92,6 +92,11 @@ export default class MessengerHandlerBuilder extends BasicHandlerBuilder {
     return this;
   }
 
+  onPayment(predicate: Predicate, handler: FunctionalHandler) {
+    this.on(context => context.event.isPayment && predicate(context), handler);
+    return this;
+  }
+
   onGetStarted(handler: FunctionalHandler) {
     this.onPayload(constants.payload.GET_STARTED, handler);
     return this;
