@@ -30,6 +30,17 @@ export type Postback = {
   payload: string,
 };
 
+export type Payment = {
+  payload: string,
+  requested_user_info: Object,
+  payment_credential: Object,
+  amount: {
+    currency: string,
+    amount: string,
+  },
+  shipping_option_id: string,
+};
+
 export type PolicyEnforcement = {
   action: String,
   reason: String,
@@ -55,6 +66,7 @@ export type MessengerRawEvent = {
   timestamp?: number,
   message?: Message,
   postback?: Postback,
+  payment?: Payment,
   'policy-enforcement'?: PolicyEnforcement,
   app_roles?: AppRoles,
   pass_thread_control?: PassThreadControl,
@@ -243,6 +255,24 @@ export default class MessengerEvent implements Event {
    */
   get postback(): ?Postback {
     return this._rawEvent.postback || null;
+  }
+
+  /**
+   * Determine if the event is a payment event.
+   *
+   */
+  get isPayment(): boolean {
+    return (
+      !!this._rawEvent.payment && typeof this._rawEvent.payment === 'object'
+    );
+  }
+
+  /**
+   * The payment object from Messenger raw event.
+   *
+   */
+  get payment(): ?Payment {
+    return this._rawEvent.payment || null;
   }
 
   /**

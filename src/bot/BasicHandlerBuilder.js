@@ -30,6 +30,7 @@ export type Context = {
     isRead: boolean,
     isDelivery: boolean,
     isPostback: boolean,
+    isPayment: boolean,
     isFollow: boolean,
     isUnfollow: boolean,
     isJoin: boolean,
