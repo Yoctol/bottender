@@ -38,9 +38,15 @@ type Message = {
   text?: string,
 };
 
-type Postback = {
+type PostbackParams =
+  | {| date: string |}
+  | {| time: string |}
+  | {| datetime: string |};
+
+type Postback = {|
   data: string,
-};
+  params?: PostbackParams,
+|};
 
 export type LINERawEvent = {
   // only message, follow, join, postback, beacon events have replyToken
@@ -185,6 +191,43 @@ export default class LINEEvent implements Event {
    */
   get postback(): ?Postback {
     return this._rawEvent.postback || null;
+  }
+
+  /**
+   * The date string from LINE postback event.
+   *
+   */
+  get date(): ?string {
+    if (this.postback && this.postback.params && this.postback.params.date) {
+      return this.postback.params.date;
+    }
+    return null;
+  }
+
+  /**
+   * The time string from LINE postback event.
+   *
+   */
+  get time(): ?string {
+    if (this.postback && this.postback.params && this.postback.params.time) {
+      return this.postback.params.time;
+    }
+    return null;
+  }
+
+  /**
+   * The datetime string from LINE postback event.
+   *
+   */
+  get datetime(): ?string {
+    if (
+      this.postback &&
+      this.postback.params &&
+      this.postback.params.datetime
+    ) {
+      return this.postback.params.datetime;
+    }
+    return null;
   }
 
   /**
