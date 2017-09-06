@@ -8,6 +8,9 @@ const rawEvent = {
 };
 
 const setup = () => {
+  const client = {
+    sendText: jest.fn(),
+  };
   const session = {
     user: {
       id: '1',
@@ -15,24 +18,16 @@ const setup = () => {
     },
   };
   const context = new ConsoleContext({
+    client,
     event: new ConsoleEvent(rawEvent),
     session,
   });
   return {
+    client,
     context,
     session,
   };
 };
-
-let _write;
-beforeEach(() => {
-  _write = process.stdout.write;
-  process.stdout.write = jest.fn();
-});
-
-afterEach(() => {
-  process.stdout.write = _write;
-});
 
 it('be defined', () => {
   const { context } = setup();
@@ -55,18 +50,18 @@ it('get #event works', () => {
 });
 
 it('get #client works', () => {
-  const { context } = setup();
-  expect(context.client.sendText).toBeDefined();
+  const { context, client } = setup();
+  expect(context.client).toBe(client);
 });
 
 it('#sendText should write text to stdout', () => {
-  const { context } = setup();
+  const { context, client } = setup();
 
   context.sendText('hello');
 
   jest.runTimersToTime(0);
 
-  expect(process.stdout.write).toBeCalledWith('Bot > hello\nYou > ');
+  expect(client.sendText).toBeCalledWith('hello');
 });
 
 it('has delay with methods', () => {
@@ -75,11 +70,11 @@ it('has delay with methods', () => {
 });
 
 it('#sendTextWithDelay write text to stdout after delay', () => {
-  const { context } = setup();
+  const { context, client } = setup();
 
   context.sendTextWithDelay(3000, 'hello');
 
   jest.runTimersToTime(3000);
 
-  expect(process.stdout.write).toBeCalledWith('Bot > hello\nYou > ');
+  expect(client.sendText).toBeCalledWith('hello');
 });

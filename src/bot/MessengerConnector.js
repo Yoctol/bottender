@@ -117,6 +117,10 @@ export default class MessengerConnector
     return 'messenger';
   }
 
+  get client(): MessengerClient {
+    return this._client;
+  }
+
   getUniqueSessionIdFromRequest(body: MessengerRequestBody): ?string {
     const rawEvent = this._getRawEventsFromRequest(body)[0];
     if (rawEvent.message && rawEvent.message.is_echo && rawEvent.recipient) {

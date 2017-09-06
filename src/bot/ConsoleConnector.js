@@ -15,12 +15,26 @@ type ConsoleUser = {
   name: string,
 };
 
+export type ConsoleClient = {
+  sendText(text: string): void,
+};
+
 export type ConsoleSession = SessionWithUser<ConsoleUser>;
 
 export default class ConsoleConnector
   implements Connector<ConsoleRequestBody, ConsoleUser> {
+  _client: ConsoleClient = {
+    sendText: text => {
+      process.stdout.write(`Bot > ${text}\nYou > `);
+    },
+  };
+
   get platform(): string {
     return 'console';
+  }
+
+  get client(): ConsoleClient {
+    return this._client;
   }
 
   getUniqueSessionIdFromRequest(): string {
@@ -49,6 +63,7 @@ export default class ConsoleConnector
     session: ?ConsoleSession,
   }) {
     return new ConsoleContext({
+      client: this._client,
       event,
       session,
     });

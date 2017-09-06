@@ -38,6 +38,10 @@ export default class LINEConnector
     return 'line';
   }
 
+  get client(): LINEClient {
+    return this._client;
+  }
+
   getUniqueSessionIdFromRequest(body: LINERequestBody): string {
     const { source } = body.events[0];
     if (source.type === 'user') {

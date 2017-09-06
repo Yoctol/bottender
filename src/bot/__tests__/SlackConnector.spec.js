@@ -49,6 +49,13 @@ describe('#platform', () => {
   });
 });
 
+describe('#clinet', () => {
+  it('should be client', () => {
+    const { connector, mockSlackOAuthClient } = setup();
+    expect(connector.client).toBe(mockSlackOAuthClient);
+  });
+});
+
 describe('#getUniqueSessionIdFromRequest', () => {
   it('extract correct sender id', () => {
     const { connector } = setup();

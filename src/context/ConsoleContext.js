@@ -1,31 +1,25 @@
 /* @flow */
 import sleep from 'delay';
 
-import type { ConsoleSession } from '../bot/ConsoleConnector';
+import type { ConsoleSession, ConsoleClient } from '../bot/ConsoleConnector';
 
 import { type Context } from './Context';
 import ConsoleEvent from './ConsoleEvent';
 
 type Options = {
+  client: ConsoleClient,
   event: ConsoleEvent,
   session: ?ConsoleSession,
 };
 
-type ConsoleClient = {
-  sendText(text: string): void,
-};
-
 export default class ConsoleContext implements Context {
+  _client: ConsoleClient;
   _event: ConsoleEvent;
   _session: ?ConsoleSession;
   _messageDelay: number = 0;
-  _client: ConsoleClient = {
-    sendText: text => {
-      process.stdout.write(`Bot > ${text}\nYou > `);
-    },
-  };
 
-  constructor({ event, session }: Options) {
+  constructor({ client, event, session }: Options) {
+    this._client = client;
     this._event = event;
     this._session = session;
   }
