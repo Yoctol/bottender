@@ -23,7 +23,7 @@ pairs.forEach(pair => {
       // output is a string of Markdown data
       fs.writeFileSync(
         `${__dirname}/../docs/APIReference-${pair[1]}.md`,
-        output
+        `# ${pair[1]}\n\n${output}`
       );
     });
 });
