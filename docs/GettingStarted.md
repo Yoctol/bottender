@@ -1,22 +1,29 @@
-## Getting Started
+# Getting Started
 
-### Install Package
+## Install Package
 
-Install `toolbot-core-experiment` package from registry:
+Install `toolbot-core-experiment` package from the registry:
 
 ```sh
-npm i -g toolbot-core-experiment
+npm install -g toolbot-core-experiment
 ```
 
-### Initialize
+or
+
+```sh
+yarn global add toolbot-core-experiment
+```
+
+
+## Initialize
 
 ```
 bottender init
 ```
 
-This command will create a folder with a `bot.js` within:
+This command will create a folder with a `bot.js` file within:
 
-```js=
+```js
 const { ConsoleBot } = require('toolbot-core-experiment');
 
 const bot = new ConsoleBot();
@@ -28,16 +35,16 @@ bot.handle(context => {
 bot.createRuntime();
 ```
 
-We can skip over this file and directly see the result of execution:
+We can skip over this file and directly see the result of the execution:
 
 ```sh
-npm start
+npm run dev
 ```
 
 (show terminal gif)
 
 
-### Echo Bot
+## Teach Bot to Echo
 
 Open the file and edit the follow lines of code:
 
@@ -51,8 +58,13 @@ bot.handle(context => {
 });
 ```
 
-And then restart the server.
+And then the server will be restarted automatically.
 
 (show terminal gif)
 
 It works like a charm!
+
+
+## Next Steps
+
+Guides...

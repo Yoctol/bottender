@@ -27,14 +27,14 @@ See more in [examples](./examples) folder.
 
 ## Installation
 
-```
-npm install toolbot-core-experiment
+```sh
+npm install -g toolbot-core-experiment
 ```
 
 or
 
-```
-yarn add toolbot-core-experiment
+```sh
+yarn global add toolbot-core-experiment
 ```
 
 ## Documentation
