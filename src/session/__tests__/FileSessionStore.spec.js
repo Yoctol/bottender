@@ -1,7 +1,11 @@
+import subMinutes from 'date-fns/sub_minutes';
+
 import FileSessionStore from '../FileSessionStore';
 
+const expiresIn = 10;
+
 function setup() {
-  const store = new FileSessionStore();
+  const store = new FileSessionStore('.session', expiresIn);
   const jfs = store.getJFS();
   jfs.get = jest.fn();
   jfs.save = jest.fn();
@@ -36,6 +40,17 @@ describe('#read', () => {
     await store.init();
 
     jfs.get.mockReturnValue(Promise.reject(new Error()));
+
+    expect(await store.read('yoctol:1')).toBeNull();
+    expect(jfs.get).toBeCalledWith('yoctol:1');
+  });
+
+  it('should return null when session expires', async () => {
+    const { store, jfs } = setup();
+    await store.init();
+
+    const sess = { lastActivity: subMinutes(Date.now(), expiresIn + 1) };
+    jfs.get.mockReturnValue(Promise.resolve(sess));
 
     expect(await store.read('yoctol:1')).toBeNull();
     expect(jfs.get).toBeCalledWith('yoctol:1');

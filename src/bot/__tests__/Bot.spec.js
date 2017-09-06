@@ -146,6 +146,8 @@ describe('#createRequestHandler', () => {
   });
 
   it('should call write on sessionStore', async () => {
+    const _now = Date.now;
+    Date.now = jest.fn(() => 1504514594622);
     const event = {};
     const session = { user: {} };
     const connector = {
@@ -170,11 +172,11 @@ describe('#createRequestHandler', () => {
     await requestHandler({});
     await Promise.resolve();
 
-    expect(sessionStore.write).toBeCalledWith(
-      'any:__id__',
-      { user: {} },
-      525600
-    );
+    expect(sessionStore.write).toBeCalledWith('any:__id__', {
+      user: {},
+      lastActivity: Date.now(),
+    });
+    Date.now = _now;
   });
 });
 

@@ -16,7 +16,7 @@ const MINUTES_IN_ONE_YEAR = 365 * 24 * 60;
 
 function createMemorySessionStore(): SessionStore {
   const cache = new MemoryCacheStore(500);
-  return new CacheBasedSessionStore(cache);
+  return new CacheBasedSessionStore(cache, MINUTES_IN_ONE_YEAR);
 }
 
 export type FunctionalHandler = (context: Context) => void | Promise<void>;
@@ -141,7 +141,9 @@ export default class Bot {
       )
         .then(() => {
           if (session) {
-            this._sessions.write(sessionKey, session, MINUTES_IN_ONE_YEAR);
+            // $FlowFixMe: suppressing this error until we can refactor
+            session.lastActivity = Date.now();
+            this._sessions.write(sessionKey, session);
           }
         })
         .catch(console.error);

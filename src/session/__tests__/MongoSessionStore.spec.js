@@ -1,8 +1,12 @@
+import subMinutes from 'date-fns/sub_minutes';
+
 import MongoSessionStore from '../MongoSessionStore';
 
 jest.mock('mongodb');
 
 const { MongoClient } = require('mongodb');
+
+const expiresIn = 10;
 
 function setup(options = {}) {
   jest.resetAllMocks();
@@ -15,7 +19,11 @@ function setup(options = {}) {
     collection: jest.fn(() => sessions),
   };
   MongoClient.connect.mockReturnValue(Promise.resolve(connection));
-  const store = new MongoSessionStore('mongodb://fakemongourl', options);
+  const store = new MongoSessionStore(
+    'mongodb://fakemongourl',
+    options,
+    expiresIn
+  );
   return {
     store,
     connection,
@@ -42,7 +50,7 @@ describe('#read', () => {
   it('should call findOne with platform and id', async () => {
     const { store, sessions } = setup();
     await store.init();
-    const sess = {};
+    const sess = { lastActivity: Date.now() };
     sessions.findOne.mockReturnValue(Promise.resolve(sess));
     expect(await store.read('messenger:1')).toBe(sess);
     expect(sessions.findOne).toBeCalledWith({
@@ -55,6 +63,18 @@ describe('#read', () => {
     const { store, sessions } = setup();
     await store.init();
     sessions.findOne.mockReturnValue(Promise.resolve(null));
+    expect(await store.read('messenger:1')).toBeNull();
+    expect(sessions.findOne).toBeCalledWith({
+      'user.platform': 'messenger',
+      'user.id': '1',
+    });
+  });
+
+  it('should return null when seesion expires', async () => {
+    const { store, sessions } = setup();
+    await store.init();
+    const sess = { lastActivity: subMinutes(Date.now(), expiresIn + 1) };
+    sessions.findOne.mockReturnValue(Promise.resolve(sess));
     expect(await store.read('messenger:1')).toBeNull();
     expect(sessions.findOne).toBeCalledWith({
       'user.platform': 'messenger',
