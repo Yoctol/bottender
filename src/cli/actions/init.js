@@ -37,15 +37,6 @@ const questions = [
 const generateBotJson = platform => {
   const accessToken = '__PUT_YOUR_ACCESS_TOKEN_HERE__';
   switch (platform) {
-    case 'messenger':
-      return {
-        messenger: {
-          accessToken,
-          verifyToken: '__PUT_YOUR_VERITY_TOKEN_HERE__',
-          appId: '__PUT_YOUR_APP_ID_HERE__',
-          appSecret: '__PUT_YOUR_APP_SECRET_HERE__',
-        },
-      };
     case 'slack':
       return {
         slack: {
@@ -65,11 +56,14 @@ const generateBotJson = platform => {
           accessToken,
         },
       };
+    case 'messenger':
     default:
       return {
         messenger: {
           accessToken,
           verifyToken: '__PUT_YOUR_VERITY_TOKEN_HERE__',
+          appId: '__PUT_YOUR_APP_ID_HERE__',
+          appSecret: '__PUT_YOUR_APP_SECRET_HERE__',
         },
       };
   }
@@ -81,9 +75,6 @@ const generateIndexFile = answer => {
   let sessionStore = '';
 
   switch (platform) {
-    case 'messenger':
-      dependencies.push('MessengerBot');
-      break;
     case 'line':
       dependencies.push('LINEBot');
       break;
@@ -96,6 +87,7 @@ const generateIndexFile = answer => {
     case 'console':
       dependencies.push('ConsoleBot');
       break;
+    case 'messenger':
     default:
       dependencies.push('MessengerBot');
       break;
@@ -115,7 +107,6 @@ const generateIndexFile = answer => {
       sessionStore = `sessionStore: new MongoSessionStore('mongodb://localhost:27017/'),`;
       break;
     default:
-      break;
   }
 
   return `require('babel-register');
