@@ -142,6 +142,54 @@ const postback = {
   },
 };
 
+const datePostback = {
+  replyToken: 'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA',
+  type: 'postback',
+  timestamp: 1462629479859,
+  source: {
+    type: 'user',
+    userId: 'U206d25c2ea6bd87c17655609a1c37cb8',
+  },
+  postback: {
+    data: 'action=buyItem&itemId=123123&color=red',
+    params: {
+      date: '2017-09-06',
+    },
+  },
+};
+
+const timePostback = {
+  replyToken: 'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA',
+  type: 'postback',
+  timestamp: 1462629479859,
+  source: {
+    type: 'user',
+    userId: 'U206d25c2ea6bd87c17655609a1c37cb8',
+  },
+  postback: {
+    data: 'action=buyItem&itemId=123123&color=red',
+    params: {
+      time: '12:30',
+    },
+  },
+};
+
+const datetimePostback = {
+  replyToken: 'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA',
+  type: 'postback',
+  timestamp: 1462629479859,
+  source: {
+    type: 'user',
+    userId: 'U206d25c2ea6bd87c17655609a1c37cb8',
+  },
+  postback: {
+    data: 'action=buyItem&itemId=123123&color=red',
+    params: {
+      datetime: '2017-09-06T12:30',
+    },
+  },
+};
+
 const beacon = {
   replyToken: 'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA',
   type: 'beacon',
@@ -336,13 +384,59 @@ it('#isPostback', () => {
   expect(new LINEEvent(join).isPostback).toEqual(false);
   expect(new LINEEvent(leave).isPostback).toEqual(false);
   expect(new LINEEvent(postback).isPostback).toEqual(true);
+  expect(new LINEEvent(datePostback).isPostback).toEqual(true);
+  expect(new LINEEvent(timePostback).isPostback).toEqual(true);
+  expect(new LINEEvent(datetimePostback).isPostback).toEqual(true);
   expect(new LINEEvent(beacon).isPostback).toEqual(false);
 });
 
 it('#postback', () => {
+  expect(new LINEEvent(textMessage).postback).toEqual(null);
   expect(new LINEEvent(postback).postback).toEqual({
     data: 'action=buyItem&itemId=123123&color=red',
   });
+  expect(new LINEEvent(datePostback).postback).toEqual({
+    data: 'action=buyItem&itemId=123123&color=red',
+    params: {
+      date: '2017-09-06',
+    },
+  });
+  expect(new LINEEvent(timePostback).postback).toEqual({
+    data: 'action=buyItem&itemId=123123&color=red',
+    params: {
+      time: '12:30',
+    },
+  });
+  expect(new LINEEvent(datetimePostback).postback).toEqual({
+    data: 'action=buyItem&itemId=123123&color=red',
+    params: {
+      datetime: '2017-09-06T12:30',
+    },
+  });
+});
+
+it('#date', () => {
+  expect(new LINEEvent(textMessage).date).toEqual(null);
+  expect(new LINEEvent(postback).date).toEqual(null);
+  expect(new LINEEvent(datePostback).date).toEqual('2017-09-06');
+  expect(new LINEEvent(timePostback).date).toEqual(null);
+  expect(new LINEEvent(datetimePostback).date).toEqual(null);
+});
+
+it('#time', () => {
+  expect(new LINEEvent(textMessage).time).toEqual(null);
+  expect(new LINEEvent(postback).time).toEqual(null);
+  expect(new LINEEvent(datePostback).time).toEqual(null);
+  expect(new LINEEvent(timePostback).time).toEqual('12:30');
+  expect(new LINEEvent(datetimePostback).time).toEqual(null);
+});
+
+it('#datetime', () => {
+  expect(new LINEEvent(textMessage).datetime).toEqual(null);
+  expect(new LINEEvent(postback).datetime).toEqual(null);
+  expect(new LINEEvent(datePostback).datetime).toEqual(null);
+  expect(new LINEEvent(timePostback).datetime).toEqual(null);
+  expect(new LINEEvent(datetimePostback).datetime).toEqual('2017-09-06T12:30');
 });
 
 it('#isBeacon', () => {
