@@ -6,11 +6,11 @@ import type { ConsoleSession, ConsoleClient } from '../bot/ConsoleConnector';
 import { type Context } from './Context';
 import ConsoleEvent from './ConsoleEvent';
 
-type Options = {
+type Options = {|
   client: ConsoleClient,
   event: ConsoleEvent,
   session: ?ConsoleSession,
-};
+|};
 
 export default class ConsoleContext implements Context {
   _client: ConsoleClient;

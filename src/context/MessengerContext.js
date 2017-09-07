@@ -10,11 +10,11 @@ import type { Context } from './Context';
 import MessengerEvent from './MessengerEvent';
 import DelayableJobQueue from './DelayableJobQueue';
 
-type Options = {
+type Options = {|
   client: MessengerClient,
   event: MessengerEvent,
   session: ?MessengerSession,
-};
+|};
 
 class MessengerContext implements Context {
   _client: MessengerClient;

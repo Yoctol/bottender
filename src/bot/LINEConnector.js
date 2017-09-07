@@ -27,10 +27,10 @@ export default class LINEConnector
   constructor({
     accessToken,
     channelSecret,
-  }: {
+  }: {|
     accessToken: string,
     channelSecret: string,
-  }) {
+  |}) {
     this._client = LINEClient.connect(accessToken, channelSecret);
   }
 

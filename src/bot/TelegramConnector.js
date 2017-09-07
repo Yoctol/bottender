@@ -26,7 +26,7 @@ export default class TelegramConnector
   implements Connector<TelegramRequestBody, TelegramUser> {
   _client: TelegramClient;
 
-  constructor({ accessToken }: { accessToken: string }) {
+  constructor({ accessToken }: {| accessToken: string |}) {
     this._client = TelegramClient.connect(accessToken);
   }
 

@@ -37,10 +37,10 @@ export default class Bot {
   constructor({
     connector,
     sessionStore = createMemorySessionStore(),
-  }: {
+  }: {|
     connector: Connector<any, any>,
     sessionStore: SessionStore,
-  }) {
+  |}) {
     this._sessions = sessionStore;
     this._initialized = false;
     this._connector = connector;

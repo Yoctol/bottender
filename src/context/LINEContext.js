@@ -11,11 +11,11 @@ import type { Context } from './Context';
 import LINEEvent from './LINEEvent';
 import DelayableJobQueue from './DelayableJobQueue';
 
-type Options = {
+type Options = {|
   client: LINEClient,
   event: LINEEvent,
   session: ?LINESession,
-};
+|};
 
 class LINEContext implements Context {
   _client: LINEClient;
