@@ -1,14 +1,14 @@
 /* @flow */
 
-import LRU from 'quick-lru';
+import LRU from 'lru-cache';
 
 import type { CacheStore } from './CacheStore';
 
 export default class MemoryCacheStore implements CacheStore {
   _lru: LRU;
 
-  constructor(maxSize: number) {
-    this._lru = new LRU({ maxSize });
+  constructor(max: number) {
+    this._lru = new LRU({ max });
   }
 
   async get(key: string): Promise<mixed> {
@@ -16,17 +16,16 @@ export default class MemoryCacheStore implements CacheStore {
     return value || null;
   }
 
-  // eslint-disable-next-line no-unused-vars
   async put(key: string, value: mixed, minutes: number): Promise<void> {
-    this._lru.set(key, value);
+    this._lru.set(key, value, minutes * 60 * 1000);
   }
 
   async forget(key: string): Promise<void> {
-    this._lru.delete(key);
+    this._lru.del(key);
   }
 
   async flush(): Promise<void> {
-    this._lru.clear();
+    this._lru.reset();
   }
 
   getPrefix(): string {
