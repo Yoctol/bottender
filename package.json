@@ -6,7 +6,8 @@
   "browser": "lib/browser.js",
   "files": ["bin", "lib", "express.js", "koa.js", "micro.js", "restify.js"],
   "bin": {
-    "bottender": "bin/cli.js"
+    "bottender": "bin/cli.js",
+    "btd": "bin/cli.js"
   },
   "scripts": {
     "build:docs": "node scripts/build-docs",
