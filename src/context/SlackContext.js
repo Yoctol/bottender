@@ -10,11 +10,11 @@ import type { Context } from './Context';
 import SlackEvent from './SlackEvent';
 import DelayableJobQueue from './DelayableJobQueue';
 
-type Options = {
+type Options = {|
   client: SlackOAuthClient,
   event: SlackEvent,
   session: ?SlackSession,
-};
+|};
 
 export default class SlackContext implements Context {
   _client: SlackOAuthClient;

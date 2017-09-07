@@ -32,7 +32,7 @@ export default class SlackConnector
   implements Connector<SlackRequestBody, SlackUser> {
   _client: SlackOAuthClient;
 
-  constructor({ accessToken: token }: { accessToken: string }) {
+  constructor({ accessToken: token }: {| accessToken: string |}) {
     this._client = SlackOAuthClient.connect(token);
   }
 
