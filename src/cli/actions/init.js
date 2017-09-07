@@ -124,7 +124,7 @@ const bot = new ${dependencies[0]}({
     : ''}${sessionStore === '' ? `${sessionStore}` : `\n  ${sessionStore}`}
 });
 
-bot.handle(context => {
+bot.onEvent(context => {
   context.sendText('Hello World');
 });
 
