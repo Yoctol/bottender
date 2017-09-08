@@ -70,7 +70,7 @@ describe('init', () => {
         name: 'newbot',
         platform: 'console',
         session: 'memory',
-        server: 'restify',
+        server: undefined,
       })
     );
     const botJson = {};

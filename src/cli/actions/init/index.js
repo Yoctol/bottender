@@ -6,7 +6,9 @@ import validateProjectName from 'validate-npm-package-name';
 import fs from 'fs-extra';
 import spawn from 'cross-spawn';
 
-import { print, error, bold } from '../shared/log';
+import { print, error, bold } from '../../shared/log';
+
+import generateIndexFile from './generateIndexFile';
 
 const questions = [
   {
@@ -27,6 +29,7 @@ const questions = [
     choices: ['memory', 'file', 'redis', 'mongo'],
   },
   {
+    when: answer => answer.platform !== 'console',
     name: 'server',
     message: 'What kind of server do you want to use?',
     type: 'list',
@@ -67,75 +70,6 @@ const generateBotJson = platform => {
         },
       };
   }
-};
-
-const generateIndexFile = answer => {
-  const { platform, session, server } = answer;
-  const dependencies = [];
-  let sessionStore = '';
-
-  switch (platform) {
-    case 'line':
-      dependencies.push('LINEBot');
-      break;
-    case 'slack':
-      dependencies.push('SlackBot');
-      break;
-    case 'telegram':
-      dependencies.push('TelegramBot');
-      break;
-    case 'console':
-      dependencies.push('ConsoleBot');
-      break;
-    case 'messenger':
-    default:
-      dependencies.push('MessengerBot');
-      break;
-  }
-
-  switch (session) {
-    case 'file':
-      dependencies.push('FileSessionStore');
-      sessionStore = 'sessionStore: new FileSessionStore(),';
-      break;
-    case 'redis':
-      dependencies.push('RedisCacheStore', 'CacheBasedSessionStore');
-      sessionStore = 'sessionStore: new CacheBasedSessionStore(cache),';
-      break;
-    case 'mongo':
-      dependencies.push('MongoSessionStore');
-      sessionStore = `sessionStore: new MongoSessionStore('mongodb://localhost:27017/'),`;
-      break;
-    default:
-  }
-
-  return `require('babel-register');
-
-const { ${dependencies.join(', ')} } = require('toolbot-core-experiment');
-const { ${server === 'micro'
-    ? 'createRequestHandler'
-    : 'createServer'} } = require('toolbot-core-experiment/${server}');
-
-const config = require('./bot.json').${platform === 'line' ? 'LINE' : platform};
-${session === 'redis' ? '\nconst cache = new RedisCacheStore();\n' : ''}
-const bot = new ${dependencies[0]}({
-  accessToken: config.accessToken,${platform === 'line'
-    ? `\n  channelSecret: config.channelSecret,`
-    : ''}${sessionStore === '' ? `${sessionStore}` : `\n  ${sessionStore}`}
-});
-
-bot.onEvent(context => {
-  context.sendText('Hello World');
-});
-
-${server === 'micro'
-    ? 'module.exports = createRequestHandler(bot);'
-    : `const server = createServer(bot);
-
-server.listen(5000, () => {
-  console.log('server is running...');
-});`}
-`;
 };
 
 const shouldUseYarn = () => {
@@ -349,6 +283,7 @@ const createBot = async answer => {
 export default (async function init() {
   try {
     const answer = await inquirer.prompt(questions);
+
     const { name } = answer;
 
     if (typeof name === 'undefined' || name === '') {
