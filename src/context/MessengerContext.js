@@ -30,13 +30,13 @@ class MessengerContext implements Context {
     this._jobQueue = new DelayableJobQueue();
     this._jobQueue.beforeEach(async ({ delay, showIndicators = true }) => {
       if (showIndicators) {
-        this.turnTypingIndicatorsOn();
+        this.typingOn();
       }
       await sleep(delay);
     });
     this._jobQueue.after(async ({ showIndicators = true }) => {
       if (showIndicators) {
-        this.turnTypingIndicatorsOff();
+        this.typingOff();
       }
     });
   }
@@ -86,9 +86,9 @@ class MessengerContext implements Context {
    *
    */
   async typing(milliseconds: number): Promise<void> {
-    await this.turnTypingIndicatorsOn();
+    await this.typingOn();
     await sleep(milliseconds);
-    await this.turnTypingIndicatorsOff();
+    await this.typingOff();
   }
 
   /**
@@ -131,7 +131,33 @@ class MessengerContext implements Context {
     });
   }
 
+  typingOn(): Promise<any> {
+    if (!this._session) {
+      warning(
+        false,
+        'typingOn: should not be called in context without session'
+      );
+      return Promise.resolve();
+    }
+    return this._client.typingOn(this._session.user.id);
+  }
+
+  typingOff(): Promise<any> {
+    if (!this._session) {
+      warning(
+        false,
+        'typingOff: should not be called in context without session'
+      );
+      return Promise.resolve();
+    }
+    return this._client.typingOff(this._session.user.id);
+  }
+
   turnTypingIndicatorsOn(): Promise<any> {
+    warning(
+      false,
+      '`turnTypingIndicatorsOn` is deprecated. Use `typingOn` instead'
+    );
     if (!this._session) {
       warning(
         false,
@@ -143,6 +169,10 @@ class MessengerContext implements Context {
   }
 
   turnTypingIndicatorsOff(): Promise<any> {
+    warning(
+      false,
+      '`turnTypingIndicatorsOff` is deprecated. Use `typingOff` instead'
+    );
     if (!this._session) {
       warning(
         false,
