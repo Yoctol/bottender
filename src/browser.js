@@ -7,6 +7,7 @@ export { default as Bot } from './bot/Bot';
 export { default as Connector } from './bot/Connector';
 
 /* HandlerBuilder */
+export { default as middleware } from './bot/middleware';
 export { default as BasicHandlerBuilder } from './bot/BasicHandlerBuilder';
 export {
   default as ClassifierHandlerBuilder,
