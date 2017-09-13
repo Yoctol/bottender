@@ -17,6 +17,7 @@ export { default as SlackConnector } from './bot/SlackConnector';
 export { default as TelegramConnector } from './bot/TelegramConnector';
 
 /* HandlerBuilder */
+export { default as middleware } from './bot/middleware';
 export { default as BasicHandlerBuilder } from './bot/BasicHandlerBuilder';
 export {
   default as ClassifierHandlerBuilder,

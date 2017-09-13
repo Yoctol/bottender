@@ -31,6 +31,7 @@ describe('core', () => {
   });
 
   it('export handler builders', () => {
+    expect(core.middleware).toBeDefined();
     expect(core.BasicHandlerBuilder).toBeDefined();
     expect(core.ClassifierHandlerBuilder).toBeDefined();
     expect(core.MiddlewareHandlerBuilder).toBeDefined();
