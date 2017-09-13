@@ -54,10 +54,7 @@ describe('#read', () => {
     sessions.findOne.mockReturnValue(Promise.resolve(sess));
     expect(await store.read('messenger:1')).toBe(sess);
     expect(sessions.findOne).toBeCalledWith({
-      $or: [
-        { id: 'messenger:1' },
-        { 'user.platform': 'messenger', 'user.id': '1' },
-      ],
+      id: 'messenger:1',
     });
   });
 
@@ -67,10 +64,7 @@ describe('#read', () => {
     sessions.findOne.mockReturnValue(Promise.resolve(null));
     expect(await store.read('messenger:1')).toBeNull();
     expect(sessions.findOne).toBeCalledWith({
-      $or: [
-        { id: 'messenger:1' },
-        { 'user.platform': 'messenger', 'user.id': '1' },
-      ],
+      id: 'messenger:1',
     });
   });
 
@@ -81,10 +75,7 @@ describe('#read', () => {
     sessions.findOne.mockReturnValue(Promise.resolve(sess));
     expect(await store.read('messenger:1')).toBeNull();
     expect(sessions.findOne).toBeCalledWith({
-      $or: [
-        { id: 'messenger:1' },
-        { 'user.platform': 'messenger', 'user.id': '1' },
-      ],
+      id: 'messenger:1',
     });
   });
 });
@@ -98,10 +89,7 @@ describe('#write', () => {
     await store.write('messenger:1', sess);
     expect(sessions.updateOne).toBeCalledWith(
       {
-        $or: [
-          { id: 'messenger:1' },
-          { 'user.platform': 'messenger', 'user.id': '1' },
-        ],
+        id: 'messenger:1',
       },
       sess,
       { upsert: true }
@@ -116,10 +104,7 @@ describe('#destroy', () => {
     sessions.remove.mockReturnValue(Promise.resolve());
     await store.destroy('messenger:1');
     expect(sessions.remove).toBeCalledWith({
-      $or: [
-        { id: 'messenger:1' },
-        { 'user.platform': 'messenger', 'user.id': '1' },
-      ],
+      id: 'messenger:1',
     });
   });
 });
