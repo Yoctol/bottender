@@ -1,7 +1,5 @@
 /* @flow */
 
-import warning from 'warning';
-
 // FIXME: platform
 export type Context = {
   event: {
@@ -80,27 +78,8 @@ export function matchPattern(pattern: Pattern, text: string): boolean {
 }
 
 export default class HandlerBuilder {
-  _beforeHandlers: Array<FunctionalHandler> = [];
   _handlers: Array<PredicateHandler> = [];
   _errorHandler: ?FunctionalHandler = null;
-
-  before(handler: FunctionalHandler) {
-    warning(false, '`before` is deprecated. Use middleware instead.');
-
-    this._beforeHandlers.push(handler);
-    return this;
-  }
-
-  beforeMessage(handler: FunctionalHandler) {
-    warning(false, '`beforeMessage` is deprecated. Use middleware instead.');
-
-    this._beforeHandlers.push(context => {
-      if (context.event.isMessage) {
-        return handler(context);
-      }
-    });
-    return this;
-  }
 
   on(predicate: Predicate, handler: FunctionalHandler) {
     this._handlers.push({
@@ -128,11 +107,6 @@ export default class HandlerBuilder {
 
     return async (context: Context) => {
       try {
-        for (let i = 0; i < this._beforeHandlers.length; i++) {
-          // eslint-disable-next-line no-await-in-loop
-          await this._beforeHandlers[i](context);
-        }
-
         for (let i = 0; i < handlers.length; i++) {
           const { predicate, handler } = handlers[i];
           // eslint-disable-next-line no-await-in-loop
