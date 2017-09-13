@@ -43,15 +43,12 @@ export default class TelegramConnector
   }
 
   getUniqueSessionIdFromRequest(body: TelegramRequestBody): string {
-    let id = '';
-
     if (body.message !== undefined) {
-      id = body.message.from.id;
+      return `${body.message.from.id}`;
     } else if (body.callback_query !== undefined) {
-      id = body.callback_query.from.id;
+      return `${body.callback_query.from.id}`;
     }
-
-    return `${id}`;
+    return '';
   }
 
   async updateSession(

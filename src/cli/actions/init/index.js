@@ -168,9 +168,9 @@ const install = (useYarn, allDependencies) =>
     const child = spawn(command, args, { stdio: 'inherit' });
     child.on('close', code => {
       if (code !== 0) {
-        reject({
-          command: `${command} ${args.join(' ')}`,
-        });
+        const err = new Error('install failed');
+        err.command = `${command} ${args.join(' ')}`;
+        reject(err);
         return;
       }
       resolve();

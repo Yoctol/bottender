@@ -86,7 +86,7 @@ export default class MessengerConnector
     body: MessengerRequestBody
   ): Array<MessengerRawEvent> {
     if (body.entry) {
-      const entry = ((body: any): EntryRequestBody).entry;
+      const { entry } = ((body: any): EntryRequestBody);
 
       return entry
         .map(ent => {

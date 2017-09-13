@@ -86,9 +86,11 @@ describe('init', () => {
   });
 
   it('should catch error when inquirer.prompt reject response with status', async () => {
-    inquirer.prompt.mockReturnValueOnce(
-      Promise.reject({ response: { status: 'error status' } })
-    );
+    const err = new Error();
+    err.response = {
+      status: 'error status',
+    };
+    inquirer.prompt.mockReturnValueOnce(Promise.reject(err));
 
     await init();
 
@@ -97,9 +99,8 @@ describe('init', () => {
   });
 
   it('should catch error when inquirer.prompt reject with message', async () => {
-    inquirer.prompt.mockReturnValueOnce(
-      Promise.reject({ message: 'error message' })
-    );
+    const err = new Error('error message');
+    inquirer.prompt.mockReturnValueOnce(Promise.reject(err));
 
     await init();
 
