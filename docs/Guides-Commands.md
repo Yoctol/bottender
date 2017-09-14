@@ -4,16 +4,26 @@
 
 The command-line interface included with bottender provides a number of helpful commands that can help you while you build your bot.
 
-TODO: implement help
-
 ```sh
-bottender help
+bottender
 ```
 
 Or using `btd` shorthand:
 
 ```sh
-btd help
+btd
+```
+
+To see all of available commands, just use the `--help` option:
+
+```sh
+bottender --help
+```
+
+Every command also includes a "help" screen which displays and describes the command's available arguments and options. To view a help screen, simply precede the name of the command with `--help`:
+
+```sh
+bottender init --help
 ```
 
 ## Create Bot
