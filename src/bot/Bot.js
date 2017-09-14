@@ -98,7 +98,7 @@ export default class Bot {
         this._initialized = true;
       }
 
-      const platform = this._connector.platform;
+      const { platform } = this._connector;
       const sessionId = this._connector.getUniqueSessionIdFromRequest(body);
 
       // Create or retrieve session if possible

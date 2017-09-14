@@ -24,9 +24,12 @@ import setTelegramWebhook from './actions/setTelegramWebhook';
 
 program.version(pkg.version);
 
-program.command('init').description('initialize your bot').action(() => {
-  init();
-});
+program
+  .command('init')
+  .description('initialize your bot')
+  .action(() => {
+    init();
+  });
 
 program
   .command('domain-whitelist:get')
