@@ -19,6 +19,7 @@ export default class CacheBasedSessionStore implements SessionStore {
   }
 
   async init(): Promise<CacheBasedSessionStore> {
+    // $FlowFixMe
     return this;
   }
 

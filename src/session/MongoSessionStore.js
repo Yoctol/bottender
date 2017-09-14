@@ -41,6 +41,7 @@ export default class MongoSessionStore implements SessionStore {
 
   async init(): Promise<MongoSessionStore> {
     this._connection = await MongoClient.connect(this._url);
+    // $FlowFixMe
     return this;
   }
 
