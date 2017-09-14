@@ -5,7 +5,6 @@ import invariant from 'invariant';
 import pkg from '../../package.json';
 
 import { error, bold } from './shared/log';
-import { toAbsolutePath } from './shared/path';
 import init from './actions/init';
 import deleteDomainWhitelist from './actions/deleteDomainWhitelist';
 import deleteGetStartedButton from './actions/deleteGetStartedButton';
@@ -22,7 +21,6 @@ import setMessengerProfile from './actions/setMessengerProfile';
 import setPersistentMenu from './actions/setPersistentMenu';
 import setWebhook from './actions/setWebhook';
 import setTelegramWebhook from './actions/setTelegramWebhook';
-import uploadImages from './actions/uploadImages';
 
 program.version(pkg.version);
 
@@ -225,23 +223,6 @@ program
   )
   .action(({ webhook, config }) => {
     setTelegramWebhook(webhook, config);
-  });
-
-program
-  .command('upload-images <folder>')
-  .alias('img')
-  .description('upload all images in the folder')
-  .option(
-    '-o, --output <output_path>',
-    'The out path of the upload result json file.'
-  )
-  .option('-c, --container <container_name>', 'The URL prefix of the file')
-  .action((folderPath, { output, container }) => {
-    uploadImages({
-      folderPath: toAbsolutePath(folderPath),
-      outputPath: output,
-      container,
-    });
   });
 
 program.command('*').action(command => {
