@@ -23,7 +23,7 @@ bot.onEvent(context => {
 bot.createRuntime();
 ```
 
-See more in [examples](./examples) folder.
+See more in [examples](../) folder.
 
 ## Installation
 
@@ -37,9 +37,13 @@ or
 yarn global add toolbot-core-experiment
 ```
 
+## Getting Started
+
+See [Getting Started](./GettingStarted.md).
+
 ## Documentation
 
-See [docs](./docs).
+See [docs](./).
 
 ## License
 

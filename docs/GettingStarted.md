@@ -67,4 +67,4 @@ It works like a charm!
 
 ## Next Steps
 
-Guides...
+Guides...[Understand User Intents](./Guides-Intent.md)
