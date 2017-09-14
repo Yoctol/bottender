@@ -14,8 +14,9 @@ function setup({
     read: jest.fn(),
     write: jest.fn(),
   },
+  sync = false,
 }) {
-  const bot = new Bot({ connector, sessionStore });
+  const bot = new Bot({ connector, sessionStore, sync });
 
   return {
     bot,
@@ -113,6 +114,59 @@ describe('#createRequestHandler', () => {
         session: { platform: 'any', user: {} },
       })
     );
+  });
+
+  it('should return response in sync mode', async () => {
+    const event = {};
+    const session = { user: {} };
+    const context = {
+      event,
+      session,
+      response: {
+        status: 200,
+        headers: {},
+        body: null,
+      },
+    };
+    const connector = {
+      platform: 'any',
+      getUniqueSessionIdFromRequest: jest.fn(),
+      shouldSessionUpdate: jest.fn(),
+      updateSession: jest.fn(),
+      mapRequestToEvents: jest.fn(() => [event]),
+      createContext: jest.fn(() => context),
+    };
+
+    const { bot, sessionStore } = setup({ connector, sync: true });
+
+    connector.getUniqueSessionIdFromRequest.mockReturnValue('__id__');
+    sessionStore.read.mockReturnValue(Promise.resolve(session));
+
+    const handler = ({ response }) => {
+      response.status = 200;
+      response.headers = {
+        'X-Header': 'x',
+      };
+      response.body = {
+        name: 'x',
+      };
+    };
+    bot.onEvent(handler);
+
+    const requestHandler = bot.createRequestHandler();
+
+    const body = {};
+    const response = await requestHandler(body);
+
+    expect(response).toEqual({
+      status: 200,
+      headers: {
+        'X-Header': 'x',
+      },
+      body: {
+        name: 'x',
+      },
+    });
   });
 
   it('should call handler without session if unique session id is null', async () => {

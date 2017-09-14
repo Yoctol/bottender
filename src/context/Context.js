@@ -6,6 +6,12 @@ type Options = {|
   session: ?any,
 |};
 
+type Response = {
+  status: number,
+  headers: { [key: string]: string },
+  body: any,
+};
+
 export default class Context {
   _handled = false;
 
@@ -13,10 +19,18 @@ export default class Context {
   _event: Object;
   _session: ?Object;
 
+  response: Response;
+
   constructor({ client, event, session }: Options) {
     this._client = client;
     this._event = event;
     this._session = session;
+
+    this.response = {
+      status: 200,
+      headers: {},
+      body: null,
+    };
   }
 
   /**

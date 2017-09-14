@@ -36,17 +36,22 @@ export default class Bot {
 
   _contextExtensions: Array<Function> = [];
 
+  _sync: boolean;
+
   constructor({
     connector,
     sessionStore = createMemorySessionStore(),
+    sync = false,
   }: {|
     connector: Connector<any>,
     sessionStore: SessionStore,
+    sync?: boolean,
   |}) {
     this._sessions = sessionStore;
     this._initialized = false;
     this._connector = connector;
     this._handler = null;
+    this._sync = sync;
   }
 
   get connector(): Connector<any> {
@@ -130,7 +135,7 @@ export default class Bot {
         });
       });
 
-      Promise.all(
+      const promises = Promise.all(
         contexts.map(context => {
           if (this._handler == null) {
             throw new Error(
@@ -139,9 +144,26 @@ export default class Bot {
           }
           return this._handler(context);
         })
-      )
+      );
+
+      if (this._sync) {
+        try {
+          await promises;
+          if (sessionKey && session) {
+            // $FlowFixMe: suppressing this error until we can refactor
+            session.lastActivity = Date.now();
+            await this._sessions.write(sessionKey, session);
+          }
+        } catch (err) {
+          console.error(err);
+        }
+
+        // TODO: Any chances to merge multiple response from context?
+        return contexts[0].response;
+      }
+      promises
         .then(() => {
-          if (session) {
+          if (sessionKey && session) {
             // $FlowFixMe: suppressing this error until we can refactor
             session.lastActivity = Date.now();
             this._sessions.write(sessionKey, session);
