@@ -1,39 +1,42 @@
 const requireServerLine = server => {
   switch (server) {
     case 'micro':
-      return `const { createRequestHandler } = require('toolbot-core-experiment/${server}');`;
-    case 'console':
+      return `const { createRequestHandler } = require('toolbot-core-experiment/${server}');\n\n`;
+    case undefined: // platform is console
       return '';
     default:
-      return `const { createServer } = require('toolbot-core-experiment/${server}');`;
+      return `const { createServer } = require('toolbot-core-experiment/${server}');\n\n`;
   }
 };
 
 const requireBotJSONLine = platform => {
   switch (platform) {
     case 'line':
-      return `const config = require('./bot.json').LINE;`;
+      return `const config = require('./bot.json').LINE;\n`;
+    case 'console':
+      return '';
     default:
-      return `const config = require('./bot.json').${platform};`;
+      return `const config = require('./bot.json').${platform};\n`;
   }
 };
 
 const newBotLines = (bot, platform, sessionStore) => {
   const lines = [];
-
-  lines.push(`const bot = new ${bot}({`);
-  if (platform !== 'console') {
+  if (platform === 'console') {
+    lines.push(`const bot = new ${bot}();`);
+  } else {
+    lines.push(`const bot = new ${bot}({`);
     lines.push('  accessToken: config.accessToken,');
+    if (platform === 'line') {
+      lines.push('  channelSecret: config.channelSecret,');
+    } else if (platform === 'messenger') {
+      lines.push('  appSecret: config.appSecret,');
+    }
+    if (sessionStore) {
+      lines.push(`  ${sessionStore}`);
+    }
+    lines.push('});');
   }
-  if (platform === 'line') {
-    lines.push('  channelSecret: config.channelSecret,');
-  } else if (platform === 'messenger') {
-    lines.push('  appSecret: config.appSecret,');
-  }
-  if (sessionStore) {
-    lines.push(`  ${sessionStore}`);
-  }
-  lines.push('});');
 
   return lines.join('\n');
 };
@@ -91,13 +94,12 @@ export default function generateIndexFile(answer) {
     default:
   }
 
-  return `require('babel-register');
-
-const { ${dependencies.join(', ')} } = require('toolbot-core-experiment');
-${requireServerLine(server)}
-
-${requireBotJSONLine(platform)}
-${session === 'redis' ? '\nconst cache = new RedisCacheStore();\n' : ''}
+  return `const { ${dependencies.join(
+    ', '
+  )} } = require('toolbot-core-experiment');
+${requireServerLine(server)}${requireBotJSONLine(platform)}${session === 'redis'
+    ? '\nconst cache = new RedisCacheStore();\n'
+    : ''}
 ${newBotLines(dependencies[0], platform, sessionStore)}
 
 bot.onEvent(context => {
