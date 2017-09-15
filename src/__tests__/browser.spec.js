@@ -15,6 +15,7 @@ describe('browser', () => {
 
   it('export session stores', () => {
     expect(core.CacheBasedSessionStore).toBeDefined();
+    expect(core.MemorySessionStore).toBeDefined();
   });
 
   it('export handler builders', () => {
