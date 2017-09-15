@@ -67,4 +67,4 @@ It works like a charm!
 
 ## Next Steps
 
-Guides...[Understand User Intents](./Guides-Intent.md)
+You just created your first bot with bottender! To dive deeper into bot development, you may want to determine the intents behind the user saying. For more information on intent understanding, [check out its documentation](./Guides-Intents.md).
