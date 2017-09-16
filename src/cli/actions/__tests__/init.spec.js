@@ -230,7 +230,7 @@ describe('init', () => {
 
       expect(spawn).toBeCalledWith(
         'yarnpkg',
-        ['add', '--exact', 'babel-register', 'toolbot-core-experiment'],
+        ['add', '--exact', 'toolbot-core-experiment'],
         {
           stdio: 'inherit',
         }

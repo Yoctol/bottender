@@ -180,7 +180,7 @@ const install = (useYarn, allDependencies) =>
 const run = async (root, botName, answer, useYarn) => {
   try {
     const allDependencies = {
-      dependencies: ['babel-register', 'toolbot-core-experiment'],
+      dependencies: ['toolbot-core-experiment'],
       devDependencies: ['nodemon'],
     };
     print('Installing packages... This might take a couple of minutes.');
