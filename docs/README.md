@@ -45,6 +45,8 @@ See [Getting Started](./GettingStarted.md).
 
 See [docs](./).
 
+[Messaging APIs](https://github.com/Yoctol/messaging-apis)
+
 ## License
 
 MIT © [Yoctol](https://github.com/Yoctol/bottender)

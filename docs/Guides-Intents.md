@@ -5,13 +5,17 @@
 
 ## Events
 
+// Todo:  
+// explain event
+// event list links ...Message, Postback
 
-`context.event`
-
+When every time handler be called with incoming request, parsed event instance will be attached to context, so that you can access it via `context.event`.
 
 ## Pattern Matching
 
 ### String Comparison
+
+Here's an example handler which only handle specific commands:
 
 ```js
 bot.onEvent(context => {
@@ -35,12 +39,35 @@ bot.onEvent(context => {
 
 ### Regular Expression
 
-Coming Soon...
+Exactly matching looks a little rigid. Consider using some equality operators to determine whether receiving greeting words or not:
 
-### Builder
+```js
+bot.onEvent(context => {
+  if (context.event.isTextMessage) {
+    const { text } = context.event.message;
+    if (text === 'hello' || text === 'hi') {
+      // ...
+    }
+  }
+});
+```
 
-Coming Soon...
+It only match `hello` and `hi`, but not works for either `Hello` or `hi~` in above example.
+
+We can use [regular expressions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp) for more general pattern matching. It could be helpful when building rule-based logic.
+
+```js
+bot.onEvent(context => {
+  if (context.event.isTextMessage) {
+    if (/^h(ello|i)/i) {
+      // ...
+    }
+  }
+});
+```
+
+Now, not only `hello`, `hi` but also `Hello`, `hi~` will be matched.
 
 ## Leverage NLU Technologies
 
-[LUIS](https://www.luis.ai/)
+Microsoft's [LUIS](https://www.luis.ai/)
