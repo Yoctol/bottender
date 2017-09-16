@@ -297,6 +297,27 @@ export default (async function init() {
     }
 
     await createBot(answer);
+
+    const root = path.resolve(name);
+
+    print(`Success! Created ${name} at ${root}`);
+    print('Inside that directory, you can run several commands:');
+    print('');
+    print('  yarn start');
+    print('    Starts the production server.');
+    print('');
+    print('  yarn dev');
+    print('    Starts the development server.');
+    print('');
+    print('  yarn test');
+    print('    Starts the test runner.');
+    print('');
+    print('We suggest that you begin by typing:');
+    print('');
+    print(`  cd ${name}`);
+    print('  yarn dev');
+    print('');
+    print('Happy hacking!');
   } catch (err) {
     error('init error with');
     if (err.response) {
