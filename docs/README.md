@@ -23,7 +23,7 @@ bot.onEvent(context => {
 bot.createRuntime();
 ```
 
-See more in [examples](../) folder.
+See more in [examples](../examples) folder.
 
 ## Installation
 
