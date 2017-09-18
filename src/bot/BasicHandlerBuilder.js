@@ -97,6 +97,11 @@ export default class HandlerBuilder {
     return this;
   }
 
+  onMessage(predicate: Predicate, handler: FunctionalHandler) {
+    this.on(context => context.event.isMessage && predicate(context), handler);
+    return this;
+  }
+
   onError(handler: FunctionalHandler) {
     this._errorHandler = handler;
     return this;

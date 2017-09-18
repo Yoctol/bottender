@@ -11,15 +11,6 @@ import BasicHandlerBuilder, {
 } from './BasicHandlerBuilder';
 
 export default class MessengerHandlerBuilder extends BasicHandlerBuilder {
-  onMessage(predicate: Predicate, handler: FunctionalHandler) {
-    this.on(
-      context =>
-        context.event.isMessage && !context.event.isEcho && predicate(context),
-      handler
-    );
-    return this;
-  }
-
   onText(arg1: Pattern | FunctionalHandler, arg2?: FunctionalHandler) {
     let pattern;
     let handler;
