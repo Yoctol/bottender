@@ -129,6 +129,59 @@ describe('#onEvent', () => {
   });
 });
 
+describe('#onMessage', () => {
+  it('should return this', async () => {
+    const { builder } = setup();
+    const predicate = () => true;
+    const handler = () => {};
+    expect(await builder.onMessage(predicate, handler)).toBe(builder);
+  });
+
+  it('should call predicate when received message', async () => {
+    const { builder } = setup();
+    const predicate = jest.fn(() => true);
+    const handler = jest.fn();
+    const context = {
+      event: {
+        isMessage: true,
+      },
+    };
+    builder.onMessage(predicate, handler);
+    await builder.build()(context);
+    expect(predicate).toBeCalledWith(context);
+    expect(handler).toBeCalledWith(context);
+  });
+
+  it('should not call predicate when received not message', async () => {
+    const { builder } = setup();
+    const predicate = jest.fn(() => true);
+    const handler = jest.fn();
+    const context = {
+      event: {
+        isMessage: false,
+      },
+    };
+    builder.onMessage(predicate, handler);
+    await builder.build()(context);
+    expect(predicate).not.toBeCalledWith(context);
+  });
+
+  it('should accept async predicate', async () => {
+    const { builder } = setup();
+    const predicate = jest.fn(() => Promise.resolve(false));
+    const handler = jest.fn();
+    const context = {
+      event: {
+        isMessage: true,
+      },
+    };
+    builder.onMessage(predicate, handler);
+    await builder.build()(context);
+    expect(predicate).toBeCalledWith(context);
+    expect(handler).not.toBeCalled();
+  });
+});
+
 describe('#onError', () => {
   it('should return this', () => {
     const { builder } = setup();

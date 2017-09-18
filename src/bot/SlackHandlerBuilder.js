@@ -2,18 +2,12 @@
 import warning from 'warning';
 
 import BasicHandlerBuilder, {
-  type Predicate,
   type FunctionalHandler,
   type Pattern,
   matchPattern,
 } from './BasicHandlerBuilder';
 
 export default class SlackHandlerBuilder extends BasicHandlerBuilder {
-  onMessage(predicate: Predicate, handler: FunctionalHandler) {
-    this.on(context => context.event.isMessage && predicate(context), handler);
-    return this;
-  }
-
   onText(arg1: Pattern | FunctionalHandler, arg2?: FunctionalHandler) {
     let pattern;
     let handler;
