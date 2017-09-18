@@ -147,17 +147,23 @@ const install = (useYarn, allDependencies) =>
     let args = [];
     if (useYarn) {
       command = 'yarnpkg';
-      args = args.concat(['add', '--exact'], allDependencies.dependencies);
-      spawn(command, args, { stdio: 'inherit' });
+      args = args.concat(
+        ['add', '--exact', '--silent'],
+        allDependencies.dependencies
+      );
+      spawn.sync(command, args, { stdio: 'inherit' });
       args = [];
-      args = args.concat(['add', '--dev'], allDependencies.devDependencies);
+      args = args.concat(
+        ['add', '--dev', '--silent'],
+        allDependencies.devDependencies
+      );
     } else {
       command = 'npm';
       args = args.concat(
         ['install', '--save', '--save-exact', '--loglevel', 'error'],
         allDependencies.dependencies
       );
-      spawn(command, args, { stdio: 'inherit' });
+      spawn.sync(command, args, { stdio: 'inherit' });
       args = [];
       args = args.concat(
         ['install', '--dev', '--save-exact', '--loglevel', 'error'],
@@ -196,11 +202,6 @@ const run = async (root, botName, answer, useYarn) => {
       fs.writeFileSync(
         path.join(root, 'bot.json'),
         JSON.stringify(botJson, null, 2)
-      );
-      print(
-        `\n\nAlready creat ${bold(
-          'bot.json'
-        )} for you, please make sure you have edited it before run the bot.\n\n`
       );
     }
   } catch (reason) {
@@ -244,9 +245,8 @@ const run = async (root, botName, answer, useYarn) => {
   }
 };
 
-const createBot = async answer => {
+const createBot = async (answer, root, useYarn) => {
   const { name, platform } = answer;
-  const root = path.resolve(name);
   const botName = path.basename(root);
 
   if (!checkBotName(botName)) {
@@ -257,7 +257,7 @@ const createBot = async answer => {
     return process.exit(1);
   }
 
-  print(`Creating a new ${platform} bot in ${root}.`);
+  print(`Creating a new ${platform} bot at ${root}.`);
   print('');
 
   const packageJson = {
@@ -276,7 +276,6 @@ const createBot = async answer => {
 
   process.chdir(root);
 
-  const useYarn = shouldUseYarn();
   await run(root, botName, answer, useYarn);
 };
 
@@ -296,7 +295,33 @@ export default (async function init() {
       return process.exit(1);
     }
 
-    await createBot(answer);
+    const useYarn = shouldUseYarn();
+    const root = path.resolve(name);
+
+    await createBot(answer, root, useYarn);
+
+    const command = useYarn ? 'yarn' : 'npm';
+
+    print('Success!');
+    print(`Created ${name} at ${root}`);
+    print(
+      `Please make sure you have edited ${bold('bot.json')} before run the bot.`
+    );
+    print('');
+    print('Inside that directory, you can run several commands:');
+    print('');
+    print(`  ${command} start`);
+    print('    Starts the production server.');
+    print('');
+    print(`  ${command} dev`);
+    print('    Starts the development server.');
+    print('');
+    print('We suggest that you begin by typing:');
+    print('');
+    print(`  cd ${name}`);
+    print(`  ${command} dev`);
+    print('');
+    print('Happy hacking!');
   } catch (err) {
     error('init error with');
     if (err.response) {

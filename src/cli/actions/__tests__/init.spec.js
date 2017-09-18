@@ -183,7 +183,7 @@ describe('init', () => {
       await init();
 
       expect(error.mock.calls).toContainEqual([
-        '  yarnpkg add --dev nodemon has failed.',
+        '  yarnpkg add --dev --silent nodemon has failed.',
       ]);
       expect(print.mock.calls).toContainEqual([
         'Deleting generated file... package.json',
@@ -230,7 +230,7 @@ describe('init', () => {
 
       expect(spawn).toBeCalledWith(
         'yarnpkg',
-        ['add', '--exact', 'toolbot-core-experiment'],
+        ['add', '--dev', '--silent', 'nodemon'],
         {
           stdio: 'inherit',
         }
