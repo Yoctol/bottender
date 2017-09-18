@@ -182,6 +182,141 @@ describe('#onMessage', () => {
   });
 });
 
+describe('#onText', () => {
+  it('should return this', async () => {
+    const { builder } = setup();
+    const handler = () => {};
+    expect(await builder.onText('text', handler)).toBe(builder);
+  });
+
+  describe('should support catch all handler', () => {
+    it('match', async () => {
+      const { builder } = setup();
+      const handler = jest.fn();
+      const context = {
+        event: {
+          isMessage: true,
+          isTextMessage: true,
+          message: {
+            id: '325708',
+            type: 'text',
+            text: 'awesome',
+          },
+        },
+      };
+      builder.onText(handler);
+      await builder.build()(context);
+      expect(handler).toBeCalledWith(context);
+    });
+
+    it('not match', async () => {
+      const { builder } = setup();
+      const handler = jest.fn();
+      const context = {
+        event: {
+          isMessage: false,
+          isTextMessage: false,
+        },
+      };
+      builder.onText(handler);
+      await builder.build()(context);
+      expect(handler).not.toBeCalled();
+    });
+  });
+
+  describe('should support string', () => {
+    it('match', async () => {
+      const { builder } = setup();
+      const handler = jest.fn();
+      const context = {
+        event: {
+          isMessage: true,
+          isTextMessage: true,
+          message: {
+            id: '325708',
+            type: 'text',
+            text: 'awesome',
+          },
+        },
+      };
+      builder.onText('awesome', handler);
+      await builder.build()(context);
+      expect(handler).toBeCalledWith(context);
+    });
+
+    it('not match', async () => {
+      const { builder } = setup();
+      const handler = jest.fn();
+      const context = {
+        event: {
+          isMessage: true,
+          isTextMessage: true,
+          message: {
+            text: 'awesome',
+          },
+        },
+      };
+      builder.onText('awful', handler);
+      await builder.build()(context);
+      expect(handler).not.toBeCalled();
+    });
+
+    it('not match with different message type', async () => {
+      const { builder } = setup();
+      const handler = jest.fn();
+      const context = {
+        event: {
+          isMessage: true,
+          isImageMessage: true,
+          message: {
+            id: '325708',
+            type: 'image',
+          },
+        },
+      };
+      builder.onText('awful', handler);
+      await builder.build()(context);
+      expect(handler).not.toBeCalled();
+    });
+  });
+
+  describe('should support regex', () => {
+    it('match', async () => {
+      const { builder } = setup();
+      const handler = jest.fn();
+      const context = {
+        event: {
+          isMessage: true,
+          isTextMessage: true,
+          message: {
+            text: 'awesome',
+          },
+        },
+      };
+      builder.onText(/awesome/, handler);
+      await builder.build()(context);
+      expect(handler).toBeCalledWith(context);
+    });
+
+    it('not match', async () => {
+      const { builder } = setup();
+      const handler = jest.fn();
+      const context = {
+        event: {
+          isMessage: true,
+          isTextMessage: true,
+          message: {
+            text: 'awesome',
+          },
+        },
+      };
+      builder.onText(/awful/, handler);
+      await builder.build()(context);
+      expect(handler).not.toBeCalled();
+    });
+  });
+});
+
 describe('#onError', () => {
   it('should return this', () => {
     const { builder } = setup();
