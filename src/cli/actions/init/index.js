@@ -20,7 +20,7 @@ const questions = [
     name: 'platform',
     message: 'What platform of bot do you want to create?',
     type: 'list',
-    choices: ['messenger', 'line', 'slack', 'telegram', 'console'],
+    choices: ['console', 'messenger', 'line', 'slack', 'telegram'],
   },
   {
     name: 'session',
