@@ -1,9 +1,9 @@
 # LINE
 
 ```js
-const { LINEBot } = require('toolbot-core-experiment');
+const { LineBot } = require('toolbot-core-experiment');
 
-const bot = new LINEBot({
+const bot = new LineBot({
   channelSecret: '__FILL_YOUR_SECRET_HERE__',
   accessToken: '__FILL_YOUR_TOKEN_HERE__',
 });
