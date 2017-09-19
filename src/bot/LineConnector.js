@@ -2,27 +2,27 @@
   eslint-disable class-methods-use-this
   @flow
 */
-import { LINEClient } from 'messaging-api-line';
+import { LineClient } from 'messaging-api-line';
 
-import LINEContext from '../context/LINEContext';
-import LINEEvent, { type LINERawEvent } from '../context/LINEEvent';
+import LineContext from '../context/LineContext';
+import LineEvent, { type LineRawEvent } from '../context/LineEvent';
 import type { Session } from '../session/Session';
 
 import type { Connector, SessionWithUser } from './Connector';
 
-type LINERequestBody = {
-  events: Array<LINERawEvent>,
+type LineRequestBody = {
+  events: Array<LineRawEvent>,
 };
 
-type LINEUser = {
+type LineUser = {
   id: string,
 };
 
-export type LINESession = SessionWithUser<LINEUser>;
+export type LineSession = SessionWithUser<LineUser>;
 
-export default class LINEConnector
-  implements Connector<LINERequestBody, LINEUser> {
-  _client: LINEClient;
+export default class LineConnector
+  implements Connector<LineRequestBody, LineUser> {
+  _client: LineClient;
 
   constructor({
     accessToken,
@@ -31,18 +31,18 @@ export default class LINEConnector
     accessToken: string,
     channelSecret: string,
   |}) {
-    this._client = LINEClient.connect(accessToken, channelSecret);
+    this._client = LineClient.connect(accessToken, channelSecret);
   }
 
   get platform(): string {
     return 'line';
   }
 
-  get client(): LINEClient {
+  get client(): LineClient {
     return this._client;
   }
 
-  getUniqueSessionIdFromRequest(body: LINERequestBody): string {
+  getUniqueSessionIdFromRequest(body: LineRequestBody): string {
     const { source } = body.events[0];
     if (source.type === 'user') {
       return source.userId;
@@ -52,12 +52,12 @@ export default class LINEConnector
       return source.roomId;
     }
     throw new TypeError(
-      'LINEConnector: sender type should be one of user, group, room.'
+      'LineConnector: sender type should be one of user, group, room.'
     );
   }
 
   // FIXME: handling different type session
-  async updateSession(session: Session, body: LINERequestBody): Promise<void> {
+  async updateSession(session: Session, body: LineRequestBody): Promise<void> {
     if (!session.type) {
       await this._updateSession(session, body);
       return;
@@ -73,18 +73,18 @@ export default class LINEConnector
     await this._updateSession(session, body);
   }
 
-  mapRequestToEvents(body: LINERequestBody): Array<LINEEvent> {
-    return body.events.map(e => new LINEEvent(e));
+  mapRequestToEvents(body: LineRequestBody): Array<LineEvent> {
+    return body.events.map(e => new LineEvent(e));
   }
 
   createContext({
     event,
     session,
   }: {
-    event: LINEEvent,
-    session: ?LINESession,
-  }): LINEContext {
-    return new LINEContext({
+    event: LineEvent,
+    session: ?LineSession,
+  }): LineContext {
+    return new LineContext({
       client: this._client,
       event,
       session,
@@ -95,7 +95,7 @@ export default class LINEConnector
     return this._client.isValidSignature(rawBody, signature);
   }
 
-  async _updateSession(session: Session, body: LINERequestBody): Promise<void> {
+  async _updateSession(session: Session, body: LineRequestBody): Promise<void> {
     const { source } = body.events[0];
 
     if (!session.type) {

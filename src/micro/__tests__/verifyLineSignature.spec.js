@@ -1,6 +1,6 @@
 import micro from 'micro';
 
-import verifyLINESignature from '../verifyLINESignature';
+import verifyLineSignature from '../verifyLineSignature';
 
 jest.mock('micro');
 
@@ -10,7 +10,7 @@ const bot = {
   },
 };
 
-const middleware = verifyLINESignature(bot);
+const middleware = verifyLineSignature(bot);
 
 const createReqRes = () => [
   {

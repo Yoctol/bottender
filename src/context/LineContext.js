@@ -3,24 +3,24 @@
 import sleep from 'delay';
 import warning from 'warning';
 import invariant from 'invariant';
-import { LINEClient } from 'messaging-api-line';
+import { LineClient } from 'messaging-api-line';
 
-import type { LINESession } from '../bot/LINEConnector';
+import type { LineSession } from '../bot/LineConnector';
 
 import type { Context } from './Context';
-import LINEEvent from './LINEEvent';
+import LineEvent from './LineEvent';
 import DelayableJobQueue from './DelayableJobQueue';
 
 type Options = {|
-  client: LINEClient,
-  event: LINEEvent,
-  session: ?LINESession,
+  client: LineClient,
+  event: LineEvent,
+  session: ?LineSession,
 |};
 
-class LINEContext implements Context {
-  _client: LINEClient;
-  _event: LINEEvent;
-  _session: ?LINESession;
+class LineContext implements Context {
+  _client: LineClient;
+  _event: LineEvent;
+  _session: ?LineSession;
   _jobQueue: DelayableJobQueue;
   _messageDelay: number = 1000;
 
@@ -46,7 +46,7 @@ class LINEContext implements Context {
    * The client instance.
    *
    */
-  get client(): LINEClient {
+  get client(): LineClient {
     return this._client;
   }
 
@@ -54,7 +54,7 @@ class LINEContext implements Context {
    * The event instance.
    *
    */
-  get event(): LINEEvent {
+  get event(): LineEvent {
     return this._event;
   }
 
@@ -62,7 +62,7 @@ class LINEContext implements Context {
    * The session state of the context.
    *
    */
-  get session(): ?LINESession {
+  get session(): ?LineSession {
     return this._session;
   }
 
@@ -153,7 +153,7 @@ const types = [
   'ImageCarouselTemplate',
 ];
 types.forEach(type => {
-  Object.defineProperty(LINEContext.prototype, `reply${type}`, {
+  Object.defineProperty(LineContext.prototype, `reply${type}`, {
     enumerable: false,
     configurable: true,
     writable: true,
@@ -172,7 +172,7 @@ types.forEach(type => {
     },
   });
 
-  Object.defineProperty(LINEContext.prototype, `push${type}`, {
+  Object.defineProperty(LineContext.prototype, `push${type}`, {
     enumerable: false,
     configurable: true,
     writable: true,
@@ -196,7 +196,7 @@ types.forEach(type => {
 });
 
 types.filter(type => type !== 'Text').forEach(type => {
-  Object.defineProperty(LINEContext.prototype, `send${type}`, {
+  Object.defineProperty(LineContext.prototype, `send${type}`, {
     enumerable: false,
     configurable: true,
     writable: true,
@@ -218,7 +218,7 @@ types.filter(type => type !== 'Text').forEach(type => {
     },
   });
 
-  Object.defineProperty(LINEContext.prototype, `send${type}WithDelay`, {
+  Object.defineProperty(LineContext.prototype, `send${type}WithDelay`, {
     enumerable: false,
     configurable: true,
     writable: true,
@@ -243,4 +243,4 @@ types.filter(type => type !== 'Text').forEach(type => {
   });
 });
 
-export default LINEContext;
+export default LineContext;

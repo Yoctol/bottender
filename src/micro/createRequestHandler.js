@@ -1,6 +1,6 @@
 import { json, send } from 'micro';
 
-import verifyLINESignature from './verifyLINESignature';
+import verifyLineSignature from './verifyLineSignature';
 import verifyMessengerWebhook from './verifyMessengerWebhook';
 import verifySlackWebhook from './verifySlackWebhook';
 
@@ -19,8 +19,8 @@ function createRequestHandler(bot, config = {}) {
         await verifySlackWebhook()(req, res);
       } else {
         if (bot.connector.platform === 'line') {
-          const LINEVerified = await verifyLINESignature(bot)(req, res);
-          if (!LINEVerified) {
+          const LineVerified = await verifyLineSignature(bot)(req, res);
+          if (!LineVerified) {
             return;
           }
         }
