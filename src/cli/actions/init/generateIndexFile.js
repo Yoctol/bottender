@@ -1,29 +1,38 @@
 const requireServerLine = server => {
   switch (server) {
     case 'micro':
-      return `const { createRequestHandler } = require('toolbot-core-experiment/${server}');\n\n`;
+      return `const { createRequestHandler } = require('toolbot-core-experiment/${server}');`;
     case undefined: // platform is console
       return '';
     default:
-      return `const { createServer } = require('toolbot-core-experiment/${server}');\n\n`;
+      return `const { createServer } = require('toolbot-core-experiment/${server}');`;
   }
 };
 
 const requireBotJSONLine = platform => {
   switch (platform) {
     case 'line':
-      return `const config = require('./bot.json').LINE;\n`;
+      return `const config = require('./bot.json').LINE;`;
     case 'console':
       return '';
     default:
-      return `const config = require('./bot.json').${platform};\n`;
+      return `const config = require('./bot.json').${platform};`;
   }
 };
+
+const newRedisLine = session =>
+  session === 'redis' ? 'const cache = new RedisCacheStore();' : '';
 
 const newBotLines = (bot, platform, sessionStore) => {
   const lines = [];
   if (platform === 'console') {
-    lines.push(`const bot = new ${bot}();`);
+    if (sessionStore) {
+      lines.push(`const bot = new ${bot}({`);
+      lines.push(`  ${sessionStore}`);
+      lines.push('});');
+    } else {
+      lines.push(`const bot = new ${bot}();`);
+    }
   } else {
     lines.push(`const bot = new ${bot}({`);
     lines.push('  accessToken: config.accessToken,');
@@ -94,18 +103,30 @@ export default function generateIndexFile(answer) {
     default:
   }
 
-  return `const { ${dependencies.join(
+  const dependenciesLine = `const { ${dependencies.join(
     ', '
-  )} } = require('toolbot-core-experiment');
-${requireServerLine(server)}${requireBotJSONLine(platform)}${session === 'redis'
-    ? '\nconst cache = new RedisCacheStore();\n'
-    : ''}
-${newBotLines(dependencies[0], platform, sessionStore)}
+  )} } = require('toolbot-core-experiment');`;
+  const moduleDepsGroup = [dependenciesLine, requireServerLine(server)]
+    .filter(s => !!s)
+    .join('\n');
+  const peerDepsGroup = requireBotJSONLine(platform);
+  const newRedisGroup = newRedisLine(session);
+  const newBotGroup = newBotLines(dependencies[0], platform, sessionStore);
+  const handlerGroup = [
+    'bot.onEvent(context => {',
+    "  context.sendText('Hello World');",
+    '});',
+  ].join('\n');
+  const runBotGroup = runBotLines(platform, server);
 
-bot.onEvent(context => {
-  context.sendText('Hello World');
-});
-
-${runBotLines(platform, server)}
-`;
+  return `${[
+    moduleDepsGroup,
+    peerDepsGroup,
+    newRedisGroup,
+    newBotGroup,
+    handlerGroup,
+    runBotGroup,
+  ]
+    .filter(s => !!s)
+    .join('\n\n')}\n`;
 }
