@@ -1,5 +1,5 @@
 /* @flow */
 
-import BasicHandlerBuilder from './BasicHandlerBuilder';
+import HandlerBuilder from './HandlerBuilder';
 
-export default class SlackHandlerBuilder extends BasicHandlerBuilder {}
+export default class SlackHandlerBuilder extends HandlerBuilder {}

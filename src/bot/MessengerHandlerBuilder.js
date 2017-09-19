@@ -3,14 +3,14 @@ import warning from 'warning';
 
 import * as constants from '../constants';
 
-import BasicHandlerBuilder, {
+import HandlerBuilder, {
   type Predicate,
   type FunctionalHandler,
   type Pattern,
   matchPattern,
-} from './BasicHandlerBuilder';
+} from './HandlerBuilder';
 
-export default class MessengerHandlerBuilder extends BasicHandlerBuilder {
+export default class MessengerHandlerBuilder extends HandlerBuilder {
   onPostback(predicate: Predicate, handler: FunctionalHandler) {
     this.on(context => context.event.isPostback && predicate(context), handler);
     return this;

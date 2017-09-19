@@ -1,7 +1,7 @@
-import BasicHandlerBuilder from '../BasicHandlerBuilder';
+import HandlerBuilder from '../HandlerBuilder';
 
 const setup = () => {
-  const builder = new BasicHandlerBuilder();
+  const builder = new HandlerBuilder();
   return {
     builder,
   };
@@ -10,8 +10,8 @@ const setup = () => {
 describe('#constructor', () => {
   it('should construct without error', () => {
     const { builder } = setup();
-    expect(BasicHandlerBuilder).toBeDefined();
-    expect(builder).toBeInstanceOf(BasicHandlerBuilder);
+    expect(HandlerBuilder).toBeDefined();
+    expect(builder).toBeInstanceOf(HandlerBuilder);
   });
 });
 
