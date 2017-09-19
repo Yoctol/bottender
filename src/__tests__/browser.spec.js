@@ -19,7 +19,7 @@ describe('browser', () => {
 
   it('export handler builders', () => {
     expect(core.middleware).toBeDefined();
-    expect(core.BasicHandlerBuilder).toBeDefined();
+    expect(core.HandlerBuilder).toBeDefined();
     expect(core.ClassifierHandlerBuilder).toBeDefined();
     expect(core.MiddlewareHandlerBuilder).toBeDefined();
   });

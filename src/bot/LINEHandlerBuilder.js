@@ -1,14 +1,14 @@
 /* @flow */
 import warning from 'warning';
 
-import BasicHandlerBuilder, {
+import HandlerBuilder, {
   type Predicate,
   type FunctionalHandler,
   type Pattern,
   matchPattern,
-} from './BasicHandlerBuilder';
+} from './HandlerBuilder';
 
-export default class LINEHandlerBuilder extends BasicHandlerBuilder {
+export default class LINEHandlerBuilder extends HandlerBuilder {
   onPostback(predicate: Predicate, handler: FunctionalHandler) {
     this.on(context => context.event.isPostback && predicate(context), handler);
     return this;

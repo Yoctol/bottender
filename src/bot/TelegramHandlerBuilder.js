@@ -1,14 +1,14 @@
 /* @flow */
 import warning from 'warning';
 
-import BasicHandlerBuilder, {
+import HandlerBuilder, {
   type Predicate,
   type FunctionalHandler,
   type Pattern,
   matchPattern,
-} from './BasicHandlerBuilder';
+} from './HandlerBuilder';
 
-export default class TelegramHandlerBuilder extends BasicHandlerBuilder {
+export default class TelegramHandlerBuilder extends HandlerBuilder {
   onCallbackQuery(arg1: Pattern | FunctionalHandler, arg2?: FunctionalHandler) {
     let pattern;
     let handler;
