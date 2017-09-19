@@ -4506,15 +4506,15 @@ merge@^1.1.3:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/merge/-/merge-1.2.0.tgz#7531e39d4949c281a66b8c5a6e0265e8b05894da"
 
-messaging-api-line@^0.3.5:
-  version "0.3.5"
-  resolved "https://registry.yarnpkg.com/messaging-api-line/-/messaging-api-line-0.3.5.tgz#8e5b995a8ece26b83dcfcbcebe490760ac2e449b"
+messaging-api-line@^0.4.1:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/messaging-api-line/-/messaging-api-line-0.4.1.tgz#74323886ab428679fc03ce040cd19cf68213b840"
   dependencies:
     axios "^0.16.1"
 
-messaging-api-messenger@^0.3.5:
-  version "0.3.5"
-  resolved "https://registry.yarnpkg.com/messaging-api-messenger/-/messaging-api-messenger-0.3.5.tgz#3b5b8a960f5ad6c3c9568c82998de3902e720fa2"
+messaging-api-messenger@^0.4.1:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/messaging-api-messenger/-/messaging-api-messenger-0.4.1.tgz#b6aa79e405077fd999203595c4b77629ab3ec2d6"
   dependencies:
     axios "^0.16.1"
     form-data "^2.2.0"
@@ -4522,16 +4522,16 @@ messaging-api-messenger@^0.3.5:
     is-plain-object "^2.0.4"
     lodash.omit "^4.5.0"
 
-messaging-api-slack@^0.3.5:
-  version "0.3.5"
-  resolved "https://registry.yarnpkg.com/messaging-api-slack/-/messaging-api-slack-0.3.5.tgz#32e192ef994349ace3dc4472401e3a6a75ef386f"
+messaging-api-slack@^0.4.1:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/messaging-api-slack/-/messaging-api-slack-0.4.1.tgz#80ea4c98e92c2b756bbe0d6ba09e0fe0d0ebb3d3"
   dependencies:
     axios "^0.16.1"
     invariant "^2.2.2"
 
-messaging-api-telegram@^0.3.5:
-  version "0.3.5"
-  resolved "https://registry.yarnpkg.com/messaging-api-telegram/-/messaging-api-telegram-0.3.5.tgz#028278e682bf154fa685dae5543f53a67f7f7e18"
+messaging-api-telegram@^0.4.1:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/messaging-api-telegram/-/messaging-api-telegram-0.4.1.tgz#39934a6c7f239bdf62ef438632dfc49407f87523"
   dependencies:
     axios "^0.16.1"
 
