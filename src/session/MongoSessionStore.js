@@ -47,25 +47,41 @@ export default class MongoSessionStore implements SessionStore {
 
   async read(key: string): Promise<Session | null> {
     const filter = { id: key };
-    const session = await this._sessions.findOne(filter);
+    try {
+      const session = await this._sessions.findOne(filter);
 
-    if (session && this._expired(session)) {
+      if (session && this._expired(session)) {
+        return null;
+      }
+
+      return session;
+    } catch (e) {
+      console.error(e);
       return null;
     }
-
-    return session;
   }
 
   async write(key: string, sess: Session): Promise<void> {
     const filter = { id: key };
-    await this._sessions.updateOne(filter, sess, {
-      upsert: true,
-    });
+
+    sess.lastActivity = Date.now();
+
+    try {
+      await this._sessions.updateOne(filter, sess, {
+        upsert: true,
+      });
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   async destroy(key: string): Promise<void> {
     const filter = { id: key };
-    await this._sessions.remove(filter);
+    try {
+      await this._sessions.remove(filter);
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   _expired(sess: Session): boolean {
