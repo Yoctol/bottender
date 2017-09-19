@@ -23,3 +23,4 @@ export { default as MemoryCacheStore } from './cache/MemoryCacheStore';
 export {
   default as CacheBasedSessionStore,
 } from './session/CacheBasedSessionStore';
+export { default as MemorySessionStore } from './session/MemorySessionStore';

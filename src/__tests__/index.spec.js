@@ -26,6 +26,8 @@ describe('core', () => {
 
   it('export session stores', () => {
     expect(core.CacheBasedSessionStore).toBeDefined();
+    expect(core.MemorySessionStore).toBeDefined();
+    expect(core.RedisSessionStore).toBeDefined();
     expect(core.FileSessionStore).toBeDefined();
     expect(core.MongoSessionStore).toBeDefined();
   });
