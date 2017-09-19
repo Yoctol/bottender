@@ -1,7 +1,7 @@
-import LINEHandlerBuilder from '../LINEHandlerBuilder';
+import LineHandlerBuilder from '../LineHandlerBuilder';
 
 const setup = () => {
-  const builder = new LINEHandlerBuilder();
+  const builder = new LineHandlerBuilder();
   return {
     builder,
   };
@@ -10,8 +10,8 @@ const setup = () => {
 describe('#constructor', () => {
   it('should construct without error', () => {
     const { builder } = setup();
-    expect(LINEHandlerBuilder).toBeDefined();
-    expect(builder).toBeInstanceOf(LINEHandlerBuilder);
+    expect(LineHandlerBuilder).toBeDefined();
+    expect(builder).toBeInstanceOf(LineHandlerBuilder);
   });
 });
 

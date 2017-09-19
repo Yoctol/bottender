@@ -5,7 +5,7 @@ describe('core', () => {
     expect(core.Bot).toBeDefined();
     expect(core.ConsoleBot).toBeDefined();
     expect(core.MessengerBot).toBeDefined();
-    expect(core.LINEBot).toBeDefined();
+    expect(core.LineBot).toBeDefined();
     expect(core.SlackBot).toBeDefined();
     expect(core.TelegramBot).toBeDefined();
   });
@@ -14,7 +14,7 @@ describe('core', () => {
     expect(core.Connector).toBeDefined();
     expect(core.ConsoleConnector).toBeDefined();
     expect(core.MessengerConnector).toBeDefined();
-    expect(core.LINEConnector).toBeDefined();
+    expect(core.LineConnector).toBeDefined();
     expect(core.SlackConnector).toBeDefined();
     expect(core.TelegramConnector).toBeDefined();
   });
@@ -38,7 +38,7 @@ describe('core', () => {
     expect(core.ClassifierHandlerBuilder).toBeDefined();
     expect(core.MiddlewareHandlerBuilder).toBeDefined();
     expect(core.MessengerHandlerBuilder).toBeDefined();
-    expect(core.LINEHandlerBuilder).toBeDefined();
+    expect(core.LineHandlerBuilder).toBeDefined();
     expect(core.SlackHandlerBuilder).toBeDefined();
     expect(core.TelegramHandlerBuilder).toBeDefined();
   });

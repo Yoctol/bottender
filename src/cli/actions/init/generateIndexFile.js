@@ -67,7 +67,7 @@ export default function generateIndexFile(answer) {
 
   switch (platform) {
     case 'line':
-      dependencies.push('LINEBot');
+      dependencies.push('LineBot');
       break;
     case 'slack':
       dependencies.push('SlackBot');

@@ -1,4 +1,4 @@
-import verifyLINESignature from '../verifyLINESignature';
+import verifyLineSignature from '../verifyLineSignature';
 
 const bot = {
   connector: {
@@ -6,7 +6,7 @@ const bot = {
   },
 };
 
-const middleware = verifyLINESignature(bot);
+const middleware = verifyLineSignature(bot);
 
 const createReqRes = () => [
   {

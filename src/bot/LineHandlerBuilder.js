@@ -8,7 +8,7 @@ import HandlerBuilder, {
   matchPattern,
 } from './HandlerBuilder';
 
-export default class LINEHandlerBuilder extends HandlerBuilder {
+export default class LineHandlerBuilder extends HandlerBuilder {
   onPostback(predicate: Predicate, handler: FunctionalHandler) {
     this.on(context => context.event.isPostback && predicate(context), handler);
     return this;

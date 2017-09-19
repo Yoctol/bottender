@@ -2,11 +2,11 @@ import micro from 'micro';
 
 import createRequestHandler from '../createRequestHandler';
 import verifyMessengerWebhook from '../verifyMessengerWebhook';
-import verifyLINESignature from '../verifyLINESignature';
+import verifyLineSignature from '../verifyLineSignature';
 
 jest.mock('micro');
 jest.mock('../verifyMessengerWebhook');
-jest.mock('../verifyLINESignature');
+jest.mock('../verifyLineSignature');
 
 function setup({ platform = 'messenger' } = { platform: 'messenger' }) {
   const requestHandler = jest.fn();
@@ -60,11 +60,11 @@ it('should not call verifyMessengerWebhook when GET if platform is not messenger
   expect(micro.send).toBeCalledWith(res, 405);
 });
 
-it('should call verifyLINESignature if platform is LINE', async () => {
+it('should call verifyLineSignature if platform is Line', async () => {
   const { bot, requestHandler } = setup({ platform: 'line' });
   const middleware = jest.fn();
   middleware.mockReturnValue(Promise.resolve(true));
-  verifyLINESignature.mockReturnValue(middleware);
+  verifyLineSignature.mockReturnValue(middleware);
   requestHandler.mockReturnValue(Promise.resolve());
 
   const microRequestHandler = createRequestHandler(bot);
@@ -78,11 +78,11 @@ it('should call verifyLINESignature if platform is LINE', async () => {
   expect(micro.send).toBeCalledWith(res, 200);
 });
 
-it('should not send 200 if verifyLINESignature fail if platform is LINE', async () => {
+it('should not send 200 if verifyLineSignature fail if platform is Line', async () => {
   const { bot, requestHandler } = setup({ platform: 'line' });
   const middleware = jest.fn();
   middleware.mockReturnValue(Promise.resolve(false));
-  verifyLINESignature.mockReturnValue(middleware);
+  verifyLineSignature.mockReturnValue(middleware);
   requestHandler.mockReturnValue(Promise.resolve());
 
   const microRequestHandler = createRequestHandler(bot);

@@ -1,4 +1,4 @@
-const verifyLINESignature = bot => ({ request, response }, next) => {
+const verifyLineSignature = bot => ({ request, response }, next) => {
   if (
     bot.connector.verifySignature(
       request.rawBody,
@@ -21,4 +21,4 @@ const verifyLINESignature = bot => ({ request, response }, next) => {
   response.body = { error };
 };
 
-export default verifyLINESignature;
+export default verifyLineSignature;

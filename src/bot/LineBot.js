@@ -3,9 +3,9 @@
 import type { SessionStore } from '../session/SessionStore';
 
 import Bot from './Bot';
-import LINEConnector from './LINEConnector';
+import LineConnector from './LineConnector';
 
-export default class LINEBot extends Bot {
+export default class LineBot extends Bot {
   constructor({
     accessToken,
     channelSecret,
@@ -15,7 +15,7 @@ export default class LINEBot extends Bot {
     channelSecret: string,
     sessionStore: SessionStore,
   }) {
-    const connector = new LINEConnector({ accessToken, channelSecret });
+    const connector = new LineConnector({ accessToken, channelSecret });
     super({ connector, sessionStore });
   }
 }

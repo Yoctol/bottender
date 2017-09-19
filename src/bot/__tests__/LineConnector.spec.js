@@ -1,8 +1,8 @@
-import { LINEClient } from 'messaging-api-line';
+import { LineClient } from 'messaging-api-line';
 
-import LINEConnector from '../LINEConnector';
-import LINEEvent from '../../context/LINEEvent';
-import LINEContext from '../../context/LINEContext';
+import LineConnector from '../LineConnector';
+import LineEvent from '../../context/LineEvent';
+import LineContext from '../../context/LineContext';
 
 jest.mock('messaging-api-line');
 
@@ -44,15 +44,15 @@ const request = {
 };
 
 function setup() {
-  const mockLINEAPIClient = {
+  const mockLineAPIClient = {
     getUserProfile: jest.fn(),
     isValidSignature: jest.fn(),
   };
-  LINEClient.connect = jest.fn();
-  LINEClient.connect.mockReturnValue(mockLINEAPIClient);
+  LineClient.connect = jest.fn();
+  LineClient.connect.mockReturnValue(mockLineAPIClient);
   return {
-    mockLINEAPIClient,
-    connector: new LINEConnector({ ACCESS_TOKEN, CHANNEL_SECRET }),
+    mockLineAPIClient,
+    connector: new LineConnector({ ACCESS_TOKEN, CHANNEL_SECRET }),
   };
 }
 
@@ -65,8 +65,8 @@ describe('#platform', () => {
 
 describe('#clinet', () => {
   it('should be client', () => {
-    const { connector, mockLINEAPIClient } = setup();
-    expect(connector.client).toBe(mockLINEAPIClient);
+    const { connector, mockLineAPIClient } = setup();
+    expect(connector.client).toBe(mockLineAPIClient);
   });
 });
 
@@ -126,7 +126,7 @@ describe('#getUniqueSessionIdFromRequest', () => {
 
 describe('#updateSession', () => {
   it('update session with data needed', async () => {
-    const { connector, mockLINEAPIClient } = setup();
+    const { connector, mockLineAPIClient } = setup();
     const user = {
       id: 'U206d25c2ea6bd87c17655609a1c37cb8',
       displayName: 'LINE taro',
@@ -134,13 +134,13 @@ describe('#updateSession', () => {
       pictureUrl: 'http://obs.line-apps.com/...',
       statusMessage: 'Hello, LINE!',
     };
-    mockLINEAPIClient.getUserProfile.mockReturnValue(Promise.resolve(user));
+    mockLineAPIClient.getUserProfile.mockReturnValue(Promise.resolve(user));
 
     const session = {};
 
     await connector.updateSession(session, request.body);
 
-    expect(mockLINEAPIClient.getUserProfile).toBeCalledWith(
+    expect(mockLineAPIClient.getUserProfile).toBeCalledWith(
       'U206d25c2ea6bd87c17655609a1c37cb8'
     );
 
@@ -155,18 +155,18 @@ describe('#updateSession', () => {
 });
 
 describe('#mapRequestToEvents', () => {
-  it('should map request to LINEEvents', () => {
+  it('should map request to LineEvents', () => {
     const { connector } = setup();
     const events = connector.mapRequestToEvents(request.body);
 
     expect(events).toHaveLength(2);
-    expect(events[0]).toBeInstanceOf(LINEEvent);
-    expect(events[1]).toBeInstanceOf(LINEEvent);
+    expect(events[0]).toBeInstanceOf(LineEvent);
+    expect(events[1]).toBeInstanceOf(LineEvent);
   });
 });
 
 describe('#createContext', () => {
-  it('should create LINEContext', () => {
+  it('should create LineContext', () => {
     const { connector } = setup();
     const event = {};
     const session = {};
@@ -177,20 +177,20 @@ describe('#createContext', () => {
     });
 
     expect(context).toBeDefined();
-    expect(context).toBeInstanceOf(LINEContext);
+    expect(context).toBeInstanceOf(LineContext);
   });
 });
 
 describe('#verifySignature', () => {
   it('call client verify function with rawbody and signature', () => {
-    const { connector, mockLINEAPIClient } = setup();
+    const { connector, mockLineAPIClient } = setup();
 
     connector.verifySignature(
       request.rawBody,
       request.header['x-line-signature']
     );
 
-    expect(mockLINEAPIClient.isValidSignature).toBeCalledWith(
+    expect(mockLineAPIClient.isValidSignature).toBeCalledWith(
       'fake_raw_body',
       'fake_signature'
     );

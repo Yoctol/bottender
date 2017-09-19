@@ -48,7 +48,7 @@ type Postback = {|
   params?: PostbackParams,
 |};
 
-export type LINERawEvent = {
+export type LineRawEvent = {
   // only message, follow, join, postback, beacon events have replyToken
   replyToken?: ReplyToken,
   type: EventType,
@@ -58,10 +58,10 @@ export type LINERawEvent = {
   postback?: Postback,
 };
 
-export default class LINEEvent implements Event {
-  _rawEvent: LINERawEvent;
+export default class LineEvent implements Event {
+  _rawEvent: LineRawEvent;
 
-  constructor(rawEvent: LINERawEvent) {
+  constructor(rawEvent: LineRawEvent) {
     this._rawEvent = rawEvent;
   }
 
@@ -69,7 +69,7 @@ export default class LINEEvent implements Event {
    * Underlying raw event from LINE.
    *
    */
-  get rawEvent(): LINERawEvent {
+  get rawEvent(): LineRawEvent {
     return this._rawEvent;
   }
 

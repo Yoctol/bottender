@@ -1,4 +1,4 @@
-const verifyLINESignature = bot => (req, res, next) => {
+const verifyLineSignature = bot => (req, res, next) => {
   if (
     bot.connector.verifySignature(req.rawBody, req.headers['x-line-signature'])
   ) {
@@ -18,4 +18,4 @@ const verifyLINESignature = bot => (req, res, next) => {
   res.send({ error });
 };
 
-export default verifyLINESignature;
+export default verifyLineSignature;

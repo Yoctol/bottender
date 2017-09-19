@@ -1,5 +1,5 @@
-import LINEContext from '../LINEContext';
-import LINEEvent from '../LINEEvent';
+import LineContext from '../LineContext';
+import LineEvent from '../LineEvent';
 
 jest.mock('messaging-api-line');
 
@@ -25,9 +25,9 @@ const setup = () => {
       id: 'fakeUserId',
     },
   };
-  const context = new LINEContext({
+  const context = new LineContext({
     client,
-    event: new LINEEvent(rawEvent),
+    event: new LineEvent(rawEvent),
     session,
   });
   return {
@@ -54,7 +54,7 @@ it('get #session works', () => {
 
 it('get #event works', () => {
   const { context } = setup();
-  expect(context.event).toBeInstanceOf(LINEEvent);
+  expect(context.event).toBeInstanceOf(LineEvent);
 });
 
 it('get #client works', () => {
