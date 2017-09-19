@@ -109,12 +109,29 @@ export default class HandlerBuilder {
     let handler;
     if (arg2) {
       pattern = ((arg1: any): Pattern);
-      handler = (arg2: FunctionalHandler);
+      const _handler = (arg2: FunctionalHandler);
 
       warning(
         typeof pattern === 'string' || pattern instanceof RegExp,
         `'onText' only accepts string or regex, but received ${typeof pattern}`
       );
+
+      if (pattern instanceof RegExp) {
+        handler = context => {
+          // $FlowFixMe
+          const match = pattern.exec(context.event.message.text);
+
+          if (!match) return _handler(context);
+
+          // reset index so we start at the beginning of the regex each time
+          // $FlowFixMe
+          pattern.lastIndex = 0;
+
+          return _handler(context, match);
+        };
+      } else {
+        handler = _handler;
+      }
 
       this.onMessage(
         context =>
