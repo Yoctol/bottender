@@ -20,9 +20,6 @@ const requireBotJSONLine = platform => {
   }
 };
 
-const newRedisLine = session =>
-  session === 'redis' ? 'const cache = new RedisCacheStore();' : '';
-
 const newBotLines = (bot, platform, sessionStore) => {
   const lines = [];
   if (platform === 'console') {
@@ -79,10 +76,10 @@ export default function generateIndexFile(answer) {
       dependencies.push('TelegramBot');
       break;
     case 'console':
+    default:
       dependencies.push('ConsoleBot');
       break;
     case 'messenger':
-    default:
       dependencies.push('MessengerBot');
       break;
   }
@@ -93,8 +90,8 @@ export default function generateIndexFile(answer) {
       sessionStore = 'sessionStore: new FileSessionStore(),';
       break;
     case 'redis':
-      dependencies.push('RedisCacheStore', 'CacheBasedSessionStore');
-      sessionStore = 'sessionStore: new CacheBasedSessionStore(cache),';
+      dependencies.push('RedisSessionStore');
+      sessionStore = 'sessionStore: new RedisSessionStore(),';
       break;
     case 'mongo':
       dependencies.push('MongoSessionStore');
@@ -110,7 +107,6 @@ export default function generateIndexFile(answer) {
     .filter(s => !!s)
     .join('\n');
   const peerDepsGroup = requireBotJSONLine(platform);
-  const newRedisGroup = newRedisLine(session);
   const newBotGroup = newBotLines(dependencies[0], platform, sessionStore);
   const handlerGroup = [
     'bot.onEvent(context => {',
@@ -122,7 +118,6 @@ export default function generateIndexFile(answer) {
   return `${[
     moduleDepsGroup,
     peerDepsGroup,
-    newRedisGroup,
     newBotGroup,
     handlerGroup,
     runBotGroup,
