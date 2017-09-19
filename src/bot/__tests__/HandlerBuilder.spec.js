@@ -293,9 +293,16 @@ describe('#onText', () => {
           },
         },
       };
+
       builder.onText(/awesome/, handler);
+
       await builder.build()(context);
-      expect(handler).toBeCalledWith(context);
+
+      const match = ['awesome'];
+      match.index = 0;
+      match.input = 'awesome';
+
+      expect(handler).toBeCalledWith(context, match);
     });
 
     it('not match', async () => {
@@ -311,7 +318,9 @@ describe('#onText', () => {
         },
       };
       builder.onText(/awful/, handler);
+
       await builder.build()(context);
+
       expect(handler).not.toBeCalled();
     });
   });
