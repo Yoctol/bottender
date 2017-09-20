@@ -74,12 +74,17 @@ type MessengerUser = {
 
 export type MessengerSession = SessionWithUser<MessengerUser>;
 
+type ConstructorOptions = {|
+  accessToken?: string,
+  client?: MessengerClient,
+|};
+
 export default class MessengerConnector
   implements Connector<MessengerRequestBody, MessengerUser> {
   _client: MessengerClient;
 
-  constructor({ accessToken }: { accessToken: string }) {
-    this._client = MessengerClient.connect(accessToken);
+  constructor({ accessToken, client }: ConstructorOptions) {
+    this._client = client || MessengerClient.connect(accessToken);
   }
 
   _getRawEventsFromRequest(

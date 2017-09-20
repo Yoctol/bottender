@@ -21,13 +21,21 @@ export type ConsoleClient = {
 
 export type ConsoleSession = SessionWithUser<ConsoleUser>;
 
+type ConstructorOptions = {|
+  client?: ConsoleClient,
+|};
+
 export default class ConsoleConnector
   implements Connector<ConsoleRequestBody, ConsoleUser> {
-  _client: ConsoleClient = {
-    sendText: text => {
-      process.stdout.write(`Bot > ${text}\nYou > `);
-    },
-  };
+  _client: ConsoleClient;
+
+  constructor({ client }: ConstructorOptions = {}) {
+    this._client = client || {
+      sendText: text => {
+        process.stdout.write(`Bot > ${text}\nYou > `);
+      },
+    };
+  }
 
   get platform(): string {
     return 'console';

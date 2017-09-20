@@ -20,18 +20,18 @@ type LineUser = {
 
 export type LineSession = SessionWithUser<LineUser>;
 
+type ConstructorOptions = {|
+  accessToken?: string,
+  channelSecret?: string,
+  client?: LineClient,
+|};
+
 export default class LineConnector
   implements Connector<LineRequestBody, LineUser> {
   _client: LineClient;
 
-  constructor({
-    accessToken,
-    channelSecret,
-  }: {|
-    accessToken: string,
-    channelSecret: string,
-  |}) {
-    this._client = LineClient.connect(accessToken, channelSecret);
+  constructor({ accessToken, channelSecret, client }: ConstructorOptions) {
+    this._client = client || LineClient.connect(accessToken, channelSecret);
   }
 
   get platform(): string {

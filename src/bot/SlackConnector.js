@@ -28,12 +28,17 @@ export type SlackRequestBody = {
 
 export type SlackSession = SessionWithUser<SlackUser>;
 
+type ConstructorOptions = {|
+  accessToken?: string,
+  client?: SlackOAuthClient,
+|};
+
 export default class SlackConnector
   implements Connector<SlackRequestBody, SlackUser> {
   _client: SlackOAuthClient;
 
-  constructor({ accessToken: token }: {| accessToken: string |}) {
-    this._client = SlackOAuthClient.connect(token);
+  constructor({ accessToken, client }: ConstructorOptions) {
+    this._client = client || SlackOAuthClient.connect(accessToken);
   }
 
   _getRawEventFromRequest(body: SlackRequestBody): SlackRawEvent {

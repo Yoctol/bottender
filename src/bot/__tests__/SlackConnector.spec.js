@@ -49,10 +49,16 @@ describe('#platform', () => {
   });
 });
 
-describe('#clinet', () => {
+describe('#client', () => {
   it('should be client', () => {
     const { connector, mockSlackOAuthClient } = setup();
     expect(connector.client).toBe(mockSlackOAuthClient);
+  });
+
+  it('support custom client', () => {
+    const client = {};
+    const connector = new SlackConnector({ client });
+    expect(connector.client).toBe(client);
   });
 });
 

@@ -21,10 +21,16 @@ describe('#platform', () => {
   });
 });
 
-describe('#clinet', () => {
+describe('#client', () => {
   it('should be defined', () => {
     const { connector } = setup();
     expect(connector.client).toBeDefined();
+  });
+
+  it('support custom client', () => {
+    const client = {};
+    const connector = new ConsoleConnector({ client });
+    expect(connector.client).toBe(client);
   });
 
   describe('#sendText', () => {

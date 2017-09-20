@@ -63,10 +63,16 @@ describe('#platform', () => {
   });
 });
 
-describe('#clinet', () => {
+describe('#client', () => {
   it('should be client', () => {
     const { connector, mockLineAPIClient } = setup();
     expect(connector.client).toBe(mockLineAPIClient);
+  });
+
+  it('support custom client', () => {
+    const client = {};
+    const connector = new LineConnector({ client });
+    expect(connector.client).toBe(client);
   });
 });
 

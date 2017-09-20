@@ -72,7 +72,7 @@ function setup() {
   TelegramClient.connect.mockReturnValue(mockTelegramClient);
   return {
     mockTelegramClient,
-    connector: new TelegramConnector(ACCESS_TOKEN),
+    connector: new TelegramConnector({ accessToken: ACCESS_TOKEN }),
   };
 }
 
@@ -83,10 +83,16 @@ describe('#platform', () => {
   });
 });
 
-describe('#clinet', () => {
+describe('#client', () => {
   it('should be client', () => {
     const { connector, mockTelegramClient } = setup();
     expect(connector.client).toBe(mockTelegramClient);
+  });
+
+  it('support custom client', () => {
+    const client = {};
+    const connector = new TelegramConnector({ client });
+    expect(connector.client).toBe(client);
   });
 });
 
