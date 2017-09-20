@@ -22,7 +22,7 @@ const MOCK_FILE_WITH_PLATFORM = {
       },
     ],
   },
-  LINE: {},
+  line: {},
 };
 const configPath = 'bot.sample.json';
 

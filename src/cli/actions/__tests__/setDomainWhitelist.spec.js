@@ -15,7 +15,7 @@ const MOCK_FILE_WITH_PLATFORM = {
   messenger: {
     accessToken: '__FAKE_TOKEN__',
   },
-  LINE: {},
+  line: {},
 };
 const configPath = 'bot.sample.json';
 
