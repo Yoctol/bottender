@@ -1,6 +1,6 @@
 require('babel-register');
 
-const { LINEBot, LINEHandlerBuilder } = require('../../src');
+const { LineBot, LineHandlerBuilder } = require('../../src');
 const { createServer } = require('../../src/express');
 
 const config = {
@@ -8,12 +8,12 @@ const config = {
   accessToken: '__FILL_YOUR_TOKEN_HERE__',
 };
 
-const bot = new LINEBot({
+const bot = new LineBot({
   channelSecret: config.channelSecret,
   accessToken: config.accessToken,
 });
 
-const handler = new LINEHandlerBuilder()
+const handler = new LineHandlerBuilder()
   .onText(/yo/i, context => {
     context.sendText('Hi there!');
   })
