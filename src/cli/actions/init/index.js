@@ -5,6 +5,7 @@ import inquirer from 'inquirer';
 import validateProjectName from 'validate-npm-package-name';
 import fs from 'fs-extra';
 import spawn from 'cross-spawn';
+import stringifyObject from 'stringify-object';
 
 import { print, error, bold } from '../../shared/log';
 
@@ -37,7 +38,7 @@ const questions = [
   },
 ];
 
-const generateBotJson = platform => {
+const generateBotConfig = platform => {
   const accessToken = '__PUT_YOUR_ACCESS_TOKEN_HERE__';
   switch (platform) {
     case 'slack':
@@ -48,7 +49,7 @@ const generateBotJson = platform => {
       };
     case 'line':
       return {
-        LINE: {
+        line: {
           accessToken,
           channelSecret: '__PUT_YOUR_CHANNEL_SECRET_HERE__',
         },
@@ -198,10 +199,12 @@ const run = async (root, botName, answer, useYarn) => {
     fs.writeFileSync(path.join(root, 'index.js'), indexFile);
 
     if (answer.platform !== 'console') {
-      const botJson = generateBotJson(answer.platform);
+      const botConfig = generateBotConfig(answer.platform);
       fs.writeFileSync(
-        path.join(root, 'bot.json'),
-        JSON.stringify(botJson, null, 2)
+        path.join(root, 'bottender.config.js'),
+        `module.exports = ${stringifyObject(botConfig, {
+          indent: '  ',
+        })};`
       );
     }
   } catch (reason) {
@@ -305,7 +308,9 @@ export default (async function init() {
     print('Success!');
     print(`Created ${name} at ${root}`);
     print(
-      `Please make sure you have edited ${bold('bot.json')} before run the bot.`
+      `Please make sure you have edited ${bold(
+        'bottender.config.js'
+      )} before run the bot.`
     );
     print('');
     print('Inside that directory, you can run several commands:');

@@ -1,5 +1,7 @@
 import path from 'path';
 
+import stringifyObject from 'stringify-object';
+
 import init from '../init';
 
 jest.mock('inquirer');
@@ -48,7 +50,7 @@ describe('init', () => {
         server: 'micro',
       })
     );
-    const botJson = {
+    const botConfig = {
       telegram: {
         accessToken: '__PUT_YOUR_ACCESS_TOKEN_HERE__',
       },
@@ -59,12 +61,14 @@ describe('init', () => {
 
     expect(process.exit).not.toBeCalled();
     expect(fs.writeFileSync).lastCalledWith(
-      path.join(root, 'bot.json'),
-      JSON.stringify(botJson, null, 2)
+      path.join(root, 'bottender.config.js'),
+      `module.exports = ${stringifyObject(botConfig, {
+        indent: '  ',
+      })};`
     );
   });
 
-  it('should not create bot.json if select console as platform', async () => {
+  it('should not create bottender.config.js if select console as platform', async () => {
     inquirer.prompt.mockReturnValueOnce(
       Promise.resolve({
         name: 'newbot',
@@ -73,15 +77,17 @@ describe('init', () => {
         server: undefined,
       })
     );
-    const botJson = {};
+    const botConfig = {};
     const root = path.resolve('newbot');
 
     await init();
 
     expect(process.exit).not.toBeCalled();
     expect(fs.writeFileSync).not.lastCalledWith(
-      path.join(root, 'bot.json'),
-      JSON.stringify(botJson, null, 2)
+      path.join(root, 'bottender.config.js'),
+      `module.exports = ${stringifyObject(botConfig, {
+        indent: '  ',
+      })};`
     );
   });
 

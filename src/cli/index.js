@@ -37,7 +37,7 @@ program
   .description('get domain whitelist')
   .option(
     '-c, --config <config_file_path>',
-    'The config file path of your project. Default to `bot.json`'
+    'The config file path of your project. Default to `bottender.config.js`'
   )
   .action(({ config }) => {
     getDomainWhitelist(config);
@@ -53,7 +53,7 @@ program
   )
   .option(
     '-c, --config <config_file_path>',
-    'The config file path of your project. Default to `bot.json`'
+    'The config file path of your project. Default to `bottender.config.js`'
   )
   .action(({ config, domains }) => {
     invariant(domains, '-d <array of domain_name> is required but not found.');
@@ -66,7 +66,7 @@ program
   .description('delete domain whitelist')
   .option(
     '-c, --config <config_file_path>',
-    'The config file path of your project. Default to `bot.json`'
+    'The config file path of your project. Default to `bottender.config.js`'
   )
   .action(({ config }) => {
     deleteDomainWhitelist(config);
@@ -78,7 +78,7 @@ program
   .description('get persistent menu')
   .option(
     '-c, --config <config_file_path>',
-    'The config file path of your project. Default to `bot.json`'
+    'The config file path of your project. Default to `bottender.config.js`'
   )
   .action(({ config }) => {
     getPersistentMenu(config);
@@ -90,7 +90,7 @@ program
   .description('set persistent menu')
   .option(
     '-c, --config <config_file_path>',
-    'The config file path of your project. Default to `bot.json`'
+    'The config file path of your project. Default to `bottender.config.js`'
   )
   .action(({ config }) => {
     setPersistentMenu(config);
@@ -102,7 +102,7 @@ program
   .description('delete persistent menu')
   .option(
     '-c, --config <config_file_path>',
-    'The config file path of your project. Default to `bot.json`'
+    'The config file path of your project. Default to `bottender.config.js`'
   )
   .action(({ config }) => {
     deletePersistentMenu(config);
@@ -114,7 +114,7 @@ program
   .description('get get started button')
   .option(
     '-c, --config <config_file_path>',
-    'The config file path of your project. Default to `bot.json`'
+    'The config file path of your project. Default to `bottender.config.js`'
   )
   .action(({ config }) => {
     getGetStartedButton(config);
@@ -130,7 +130,7 @@ program
   )
   .option(
     '-c, --config <config_file_path>',
-    'The config file path of your project. Default to `bot.json`'
+    'The config file path of your project. Default to `bottender.config.js`'
   )
   .action(({ payload, config }) => {
     setGetStartedButton(payload, config);
@@ -142,7 +142,7 @@ program
   .description('delete get started button')
   .option(
     '-c, --config <config_file_path>',
-    'The config file path of your project. Default to `bot.json`'
+    'The config file path of your project. Default to `bottender.config.js`'
   )
   .action(({ config }) => {
     deleteGetStartedButton(config);
@@ -154,7 +154,7 @@ program
   .description('get greeting text')
   .option(
     '-c, --config <config_file_path>',
-    'The config file path of your project. Default to `bot.json`'
+    'The config file path of your project. Default to `bottender.config.js`'
   )
   .action(({ config }) => {
     getGreetingText(config);
@@ -167,7 +167,7 @@ program
   .option('-g, --greetingText <greeting_text>', 'The greeting text of the bot')
   .option(
     '-c, --config <config_file_path>',
-    'The config file path of your project. Default to `bot.json`'
+    'The config file path of your project. Default to `bottender.config.js`'
   )
   .action(({ config, greetingText }) => {
     invariant(greetingText, '-g <greeting_text> is required but not found.');
@@ -180,7 +180,7 @@ program
   .description('delete greeting text')
   .option(
     '-c, --config <config_file_path>',
-    'The config file path of your project. Default to `bot.json`'
+    'The config file path of your project. Default to `bottender.config.js`'
   )
   .action(({ config }) => {
     deleteGreetingText(config);
@@ -192,7 +192,7 @@ program
   .description('set messenger profile from config file')
   .option(
     '-c, --config <config_file_path>',
-    'The config file path of your project. Default to `bot.json`'
+    'The config file path of your project. Default to `bottender.config.js`'
   )
   .action(({ config }) => {
     setMessengerProfile(config);
@@ -205,7 +205,7 @@ program
   .option('-w, --webhook <webhook_url>', 'The callback url for webhook.')
   .option(
     '-c, --config <config_file_path>',
-    'The config file path of your project. Default to `bot.json`'
+    'The config file path of your project. Default to `bottender.config.js`'
   )
   .option(
     '-v, --verifyToken <verify_token>',
@@ -222,7 +222,7 @@ program
   .option('-w, --webhook <webhook_url>', 'The callback url for webhook.')
   .option(
     '-c, --config <config_file_path>',
-    'The config file path of your project. Default to `bot.json`'
+    'The config file path of your project. Default to `bottender.config.js`'
   )
   .action(({ webhook, config }) => {
     setTelegramWebhook(webhook, config);
