@@ -22,7 +22,7 @@ const getWebhookFromNgrok = async () => {
 export default (async function setTelegramWebhook(_webhook, _configPath) {
   try {
     const platform = 'telegram';
-    const configPath = _configPath || 'bot.json';
+    const configPath = _configPath || 'bottender.config.js';
     const { accessToken } = getConfig(configPath, platform);
     const webhook = _webhook || (await getWebhookFromNgrok());
 

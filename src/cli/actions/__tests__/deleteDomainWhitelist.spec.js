@@ -35,12 +35,12 @@ it('be defined', () => {
 });
 
 describe('#getConfig', () => {
-  it('will call `bot.json` and platform = messenger when NOT passed <config_path>', async () => {
+  it('will call `bottender.config.js` and platform = messenger when NOT passed <config_path>', async () => {
     _client.deleteDomainWhitelist.mockReturnValue(Promise.resolve());
 
     await deleteDomainWhitelist();
 
-    expect(getConfig).toBeCalledWith('bot.json', 'messenger');
+    expect(getConfig).toBeCalledWith('bottender.config.js', 'messenger');
   });
 
   it('call with configPath and platform = messenger', async () => {

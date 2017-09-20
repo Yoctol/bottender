@@ -35,12 +35,12 @@ it('be defined', () => {
 });
 
 describe('#getConfig', () => {
-  it('will call `bot.json` and platform = messenger when NOT passed <config_path>', async () => {
+  it('will call `bottender.config.js` and platform = messenger when NOT passed <config_path>', async () => {
     _client.deleteGetStartedButton.mockReturnValue(Promise.resolve());
 
     await deleteGetStartedButton();
 
-    expect(getConfig).toBeCalledWith('bot.json', 'messenger');
+    expect(getConfig).toBeCalledWith('bottender.config.js', 'messenger');
   });
 
   it('will call <config_path> when it was passed', async () => {

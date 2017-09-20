@@ -11,12 +11,10 @@ const requireServerLine = server => {
 
 const requireBotJSONLine = platform => {
   switch (platform) {
-    case 'line':
-      return `const config = require('./bot.json').LINE;`;
     case 'console':
       return '';
     default:
-      return `const config = require('./bot.json').${platform};`;
+      return `const config = require('./bottender.config.js').${platform};`;
   }
 };
 
