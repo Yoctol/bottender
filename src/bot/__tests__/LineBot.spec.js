@@ -7,7 +7,7 @@ it('should construct bot with LineConnector', () => {
     channelSecret: 'FAKE_SECRET',
   });
   expect(bot).toBeDefined();
-  expect(bot.handle).toBeDefined();
+  expect(bot.onEvent).toBeDefined();
   expect(bot.createRequestHandler).toBeDefined();
   expect(bot.connector).toBeDefined();
   expect(bot.connector).toBeInstanceOf(LineConnector);
