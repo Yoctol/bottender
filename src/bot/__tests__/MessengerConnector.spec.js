@@ -133,10 +133,16 @@ describe('#platform', () => {
   });
 });
 
-describe('#clinet', () => {
+describe('#client', () => {
   it('should be client', () => {
     const { connector, mockGraphAPIClient } = setup();
     expect(connector.client).toBe(mockGraphAPIClient);
+  });
+
+  it('support custom client', () => {
+    const client = {};
+    const connector = new MessengerConnector({ client });
+    expect(connector.client).toBe(client);
   });
 });
 
