@@ -145,11 +145,16 @@ export default class MessengerConnector
       const senderId = this.getUniqueSessionIdFromRequest(body);
       const user = await this._client.getUserProfile(senderId);
 
-      session.user = {
-        id: senderId,
-        platform: 'messenger',
-        ...user,
-      };
+      Object.defineProperty(session, 'user', {
+        configurable: false,
+        enumerable: true,
+        writable: false,
+        value: {
+          id: senderId,
+          platform: 'messenger',
+          ...user,
+        },
+      });
     }
   }
 

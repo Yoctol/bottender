@@ -104,25 +104,43 @@ export default class LineConnector
 
     if (source.type === 'group') {
       const memberIds = await this._client.getAllGroupMemberIds(source.groupId);
-      session.group = {
-        id: source.groupId,
-        members: memberIds.map(id => ({ id })),
-      };
+
+      Object.defineProperty(session, 'group', {
+        configurable: false,
+        enumerable: true,
+        writable: false,
+        value: {
+          id: source.groupId,
+          members: memberIds.map(id => ({ id })),
+        },
+      });
     } else if (source.type === 'room') {
       const memberIds = await this._client.getAllRoomMemberIds(source.roomId);
-      session.room = {
-        id: source.roomId,
-        members: memberIds.map(id => ({ id })),
-      };
+
+      Object.defineProperty(session, 'room', {
+        configurable: false,
+        enumerable: true,
+        writable: false,
+        value: {
+          id: source.roomId,
+          members: memberIds.map(id => ({ id })),
+        },
+      });
     }
 
     if (source.userId) {
       const user = await this._client.getUserProfile(source.userId);
-      session.user = {
-        id: source.userId,
-        platform: 'line',
-        ...user,
-      };
+
+      Object.defineProperty(session, 'user', {
+        configurable: false,
+        enumerable: true,
+        writable: false,
+        value: {
+          id: source.userId,
+          platform: 'line',
+          ...user,
+        },
+      });
     } else {
       session.user = null;
     }

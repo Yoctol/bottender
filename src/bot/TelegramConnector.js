@@ -69,10 +69,15 @@ export default class TelegramConnector
         user = body.callback_query.from;
       }
 
-      session.user = {
-        platform: 'telegram',
-        ...user,
-      };
+      Object.defineProperty(session, 'user', {
+        configurable: false,
+        enumerable: true,
+        writable: false,
+        value: {
+          platform: 'telegram',
+          ...user,
+        },
+      });
     }
   }
 

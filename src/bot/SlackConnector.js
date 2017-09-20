@@ -72,11 +72,17 @@ export default class SlackConnector
     const channelId = this.getUniqueSessionIdFromRequest(body);
     const senderId = body.event.user;
     const sender = await this._client.getUserInfo(senderId);
-    session.user = {
-      id: senderId,
-      platform: 'slack',
-      ...sender,
-    };
+
+    Object.defineProperty(session, 'user', {
+      configurable: false,
+      enumerable: true,
+      writable: false,
+      value: {
+        id: senderId,
+        platform: 'slack',
+        ...sender,
+      },
+    });
 
     // TODO: check join or leave events?
     if (
@@ -86,7 +92,13 @@ export default class SlackConnector
         session.channel.members.indexOf(senderId) < 0)
     ) {
       const channel = await this._client.getChannelInfo(channelId);
-      session.channel = channel;
+
+      Object.defineProperty(session, 'channel', {
+        configurable: false,
+        enumerable: true,
+        writable: false,
+        value: channel,
+      });
     }
 
     // TODO: how to know if user leave team?
@@ -98,9 +110,15 @@ export default class SlackConnector
         session.team.members.indexOf(senderId) < 0)
     ) {
       const allUsers = await this._client.getAllUserList();
-      session.team = {
-        members: allUsers,
-      };
+
+      Object.defineProperty(session, 'team', {
+        configurable: false,
+        enumerable: true,
+        writable: false,
+        value: {
+          members: allUsers,
+        },
+      });
     }
   }
 
