@@ -47,3 +47,21 @@ export { default as MemorySessionStore } from './session/MemorySessionStore';
 export { default as RedisSessionStore } from './session/RedisSessionStore';
 export { default as FileSessionStore } from './session/FileSessionStore';
 export { default as MongoSessionStore } from './session/MongoSessionStore';
+
+/**
+ * Private Exports (unstable)
+ */
+
+/* Context */
+export { default as ConsoleContext } from './context/ConsoleContext';
+export { default as MessengerContext } from './context/MessengerContext';
+export { default as LineContext } from './context/LineContext';
+export { default as SlackContext } from './context/SlackContext';
+export { default as TelegramContext } from './context/TelegramContext';
+
+/* Event */
+export { default as ConsoleEvent } from './context/ConsoleEvent';
+export { default as MessengerEvent } from './context/MessengerEvent';
+export { default as LineEvent } from './context/LineEvent';
+export { default as SlackEvent } from './context/SlackEvent';
+export { default as TelegramEvent } from './context/TelegramEvent';
