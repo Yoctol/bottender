@@ -153,36 +153,6 @@ class MessengerContext implements Context {
     return this._client.typingOff(this._session.user.id);
   }
 
-  turnTypingIndicatorsOn(): Promise<any> {
-    warning(
-      false,
-      '`turnTypingIndicatorsOn` is deprecated. Use `typingOn` instead'
-    );
-    if (!this._session) {
-      warning(
-        false,
-        'turnTypingIndicatorsOn: should not be called in context without session'
-      );
-      return Promise.resolve();
-    }
-    return this._client.typingOn(this._session.user.id);
-  }
-
-  turnTypingIndicatorsOff(): Promise<any> {
-    warning(
-      false,
-      '`turnTypingIndicatorsOff` is deprecated. Use `typingOff` instead'
-    );
-    if (!this._session) {
-      warning(
-        false,
-        'turnTypingIndicatorsOff: should not be called in context without session'
-      );
-      return Promise.resolve();
-    }
-    return this._client.typingOff(this._session.user.id);
-  }
-
   _enqueue(job: Object): Promise<any> {
     return new Promise((resolve, reject) => {
       this._jobQueue.enqueue({
