@@ -61,7 +61,8 @@ export default class TelegramConnector
     body: TelegramRequestBody
   ): Promise<void> {
     if (!session.user) {
-      let user = {};
+      // FIXME: refine user
+      let user;
 
       if (body.message !== undefined) {
         user = body.message.from;
@@ -69,16 +70,20 @@ export default class TelegramConnector
         user = body.callback_query.from;
       }
 
-      Object.defineProperty(session, 'user', {
-        configurable: false,
-        enumerable: true,
-        writable: false,
-        value: {
-          platform: 'telegram',
-          ...user,
-        },
-      });
+      // FIXME: refine user
+      // $FlowFixMe
+      user.platform = 'telegram';
+
+      session.user = user;
     }
+
+    Object.freeze(session.user);
+    Object.defineProperty(session, 'user', {
+      configurable: false,
+      enumerable: true,
+      writable: false,
+      value: session.user,
+    });
   }
 
   mapRequestToEvents(body: TelegramRequestBody): Array<TelegramEvent> {

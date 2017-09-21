@@ -72,17 +72,12 @@ export default class SlackConnector
     const channelId = this.getUniqueSessionIdFromRequest(body);
     const senderId = body.event.user;
     const sender = await this._client.getUserInfo(senderId);
-
-    Object.defineProperty(session, 'user', {
-      configurable: false,
-      enumerable: true,
-      writable: false,
-      value: {
-        id: senderId,
-        platform: 'slack',
-        ...sender,
-      },
-    });
+    // FIXME: refine user
+    session.user = {
+      id: senderId,
+      platform: 'slack',
+      ...sender,
+    };
 
     // TODO: check join or leave events?
     if (
@@ -91,14 +86,7 @@ export default class SlackConnector
         Array.isArray(session.channel.members) &&
         session.channel.members.indexOf(senderId) < 0)
     ) {
-      const channel = await this._client.getChannelInfo(channelId);
-
-      Object.defineProperty(session, 'channel', {
-        configurable: false,
-        enumerable: true,
-        writable: false,
-        value: channel,
-      });
+      session.channel = await this._client.getChannelInfo(channelId);
     }
 
     // TODO: how to know if user leave team?
@@ -110,14 +98,38 @@ export default class SlackConnector
         session.team.members.indexOf(senderId) < 0)
     ) {
       const allUsers = await this._client.getAllUserList();
+      session.team = {
+        members: allUsers,
+      };
+    }
 
+    if (session.user) {
+      Object.freeze(session.user);
+      Object.defineProperty(session, 'user', {
+        configurable: false,
+        enumerable: true,
+        writable: false,
+        value: session.user,
+      });
+    }
+
+    if (session.channel) {
+      Object.freeze(session.channel);
+      Object.defineProperty(session, 'channel', {
+        configurable: false,
+        enumerable: true,
+        writable: false,
+        value: session.channel,
+      });
+    }
+
+    if (session.team) {
+      Object.freeze(session.team);
       Object.defineProperty(session, 'team', {
         configurable: false,
         enumerable: true,
         writable: false,
-        value: {
-          members: allUsers,
-        },
+        value: session.team,
       });
     }
   }

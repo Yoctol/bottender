@@ -58,6 +58,36 @@ export default class LineConnector
 
   // FIXME: handling different type session
   async updateSession(session: Session, body: LineRequestBody): Promise<void> {
+    if (session.group) {
+      Object.freeze(session.group);
+      Object.defineProperty(session, 'group', {
+        configurable: false,
+        enumerable: true,
+        writable: false,
+        value: session.group,
+      });
+    }
+
+    if (session.room) {
+      Object.freeze(session.room);
+      Object.defineProperty(session, 'room', {
+        configurable: false,
+        enumerable: true,
+        writable: false,
+        value: session.room,
+      });
+    }
+
+    if (session.user) {
+      Object.freeze(session.user);
+      Object.defineProperty(session, 'user', {
+        configurable: false,
+        enumerable: true,
+        writable: false,
+        value: session.user,
+      });
+    }
+
     if (!session.type) {
       await this._updateSession(session, body);
       return;
@@ -104,45 +134,28 @@ export default class LineConnector
 
     if (source.type === 'group') {
       const memberIds = await this._client.getAllGroupMemberIds(source.groupId);
-
-      Object.defineProperty(session, 'group', {
-        configurable: false,
-        enumerable: true,
-        writable: false,
-        value: {
-          id: source.groupId,
-          members: memberIds.map(id => ({ id })),
-        },
-      });
+      session.group = {
+        id: source.groupId,
+        members: memberIds.map(id => ({ id })),
+      };
     } else if (source.type === 'room') {
       const memberIds = await this._client.getAllRoomMemberIds(source.roomId);
-
-      Object.defineProperty(session, 'room', {
-        configurable: false,
-        enumerable: true,
-        writable: false,
-        value: {
-          id: source.roomId,
-          members: memberIds.map(id => ({ id })),
-        },
-      });
+      session.room = {
+        id: source.roomId,
+        members: memberIds.map(id => ({ id })),
+      };
     }
 
     if (source.userId) {
       const user = await this._client.getUserProfile(source.userId);
-
-      Object.defineProperty(session, 'user', {
-        configurable: false,
-        enumerable: true,
-        writable: false,
-        value: {
-          id: source.userId,
-          platform: 'line',
-          ...user,
-        },
-      });
+      // FIXME: refine user
+      session.user = {
+        id: source.userId,
+        platform: 'line',
+        ...user,
+      };
     } else {
-      session.user = null;
+      session.user = null; // TODO: null or undefined?
     }
   }
 }
