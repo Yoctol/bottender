@@ -101,8 +101,18 @@ export default class Bot {
       if (sessionId) {
         sessionKey = `${platform}:${sessionId}`;
 
-        const data = await this._sessions.read(sessionKey);
-        session = data || Object.create(null);
+        // $FlowFixMe
+        session = await this._sessions.read(sessionKey);
+        session = session || Object.create(null);
+
+        if (!session.platform) session.platform = platform;
+
+        Object.defineProperty(session, 'platform', {
+          configurable: false,
+          enumerable: true,
+          writable: false,
+          value: session.platform,
+        });
 
         await this._connector.updateSession(session, body);
       }

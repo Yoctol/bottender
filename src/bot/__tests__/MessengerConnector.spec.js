@@ -187,10 +187,7 @@ describe('#updateSession', () => {
       '1412611362105802'
     );
     expect(session).toEqual({
-      user: {
-        platform: 'messenger',
-        ...user,
-      },
+      user,
     });
   });
 });
