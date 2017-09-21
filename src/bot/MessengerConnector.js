@@ -143,19 +143,21 @@ export default class MessengerConnector
   ): Promise<void> {
     if (!session.user) {
       const senderId = this.getUniqueSessionIdFromRequest(body);
+      // FIXME: refine user
       const user = await this._client.getUserProfile(senderId);
-
-      Object.defineProperty(session, 'user', {
-        configurable: false,
-        enumerable: true,
-        writable: false,
-        value: {
-          id: senderId,
-          platform: 'messenger',
-          ...user,
-        },
-      });
+      session.user = {
+        id: senderId,
+        platform: 'messenger',
+        ...user,
+      };
     }
+    Object.freeze(session.user);
+    Object.defineProperty(session, 'user', {
+      configurable: false,
+      enumerable: true,
+      writable: false,
+      value: session.user,
+    });
   }
 
   mapRequestToEvents(body: MessengerRequestBody): Array<MessengerEvent> {

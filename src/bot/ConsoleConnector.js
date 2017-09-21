@@ -51,17 +51,19 @@ export default class ConsoleConnector
 
   async updateSession(session: Session): Promise<void> {
     if (!session.user) {
-      Object.defineProperty(session, 'user', {
-        configurable: false,
-        enumerable: true,
-        writable: false,
-        value: {
-          id: '1',
-          platform: 'console',
-          name: 'you',
-        },
-      });
+      session.user = {
+        id: '1',
+        platform: 'console',
+        name: 'you',
+      };
     }
+    Object.freeze(session.user);
+    Object.defineProperty(session, 'user', {
+      configurable: false,
+      enumerable: true,
+      writable: false,
+      value: session.user,
+    });
   }
 
   mapRequestToEvents(body: ConsoleRequestBody): Array<ConsoleEvent> {
