@@ -110,7 +110,7 @@ describe('#createRequestHandler', () => {
 
     expect(handler).toBeCalledWith(
       expect.objectContaining({
-        session: { user: {} },
+        session: { platform: 'any', user: {} },
       })
     );
   });
@@ -173,6 +173,7 @@ describe('#createRequestHandler', () => {
     await Promise.resolve();
 
     expect(sessionStore.write).toBeCalledWith('any:__id__', {
+      platform: 'any',
       user: {},
       lastActivity: Date.now(),
     });

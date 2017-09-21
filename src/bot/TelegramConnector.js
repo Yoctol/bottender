@@ -70,10 +70,6 @@ export default class TelegramConnector
         user = body.callback_query.from;
       }
 
-      // FIXME: refine user
-      // $FlowFixMe
-      user.platform = 'telegram';
-
       session.user = user;
     }
 

@@ -130,10 +130,7 @@ describe('#updateSession', () => {
     await connector.updateSession(session, messageRequest.body);
 
     expect(session).toEqual({
-      user: {
-        platform: 'telegram',
-        ...user,
-      },
+      user,
     });
   });
 
@@ -153,10 +150,7 @@ describe('#updateSession', () => {
     await connector.updateSession(session, callbackQueryRequest.body);
 
     expect(session).toEqual({
-      user: {
-        platform: 'telegram',
-        ...user,
-      },
+      user,
     });
   });
 });

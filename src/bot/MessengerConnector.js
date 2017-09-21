@@ -147,7 +147,6 @@ export default class MessengerConnector
       const user = await this._client.getUserProfile(senderId);
       session.user = {
         id: senderId,
-        platform: 'messenger',
         ...user,
       };
     }

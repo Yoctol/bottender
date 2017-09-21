@@ -75,7 +75,6 @@ export default class SlackConnector
     // FIXME: refine user
     session.user = {
       id: senderId,
-      platform: 'slack',
       ...sender,
     };
 
