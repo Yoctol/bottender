@@ -65,6 +65,11 @@ it('get #event works', () => {
   expect(context.event).toBeInstanceOf(MessengerEvent);
 });
 
+it('get #client works', () => {
+  const { context, client } = setup();
+  expect(context.client).toBe(client);
+});
+
 it('#sendText put sendText to jobQueue', () => {
   const { context, client, session } = setup();
   context._jobQueue = {
@@ -382,15 +387,15 @@ it('#sendAirlineFlightUpdateTemplate put sendAirlineFlightUpdateTemplate to jobQ
   });
 });
 
-it('#turnTypingIndicatorsOn call client typingOn', () => {
+it('#typingOn call client typingOn', () => {
   const { context, client, session } = setup();
-  context.turnTypingIndicatorsOn();
+  context.typingOn();
   expect(client.typingOn).toBeCalledWith(session.user.id);
 });
 
-it('#turnTypingIndicatorsOff call client typingOff', () => {
+it('#typingOff call client typingOff', () => {
   const { context, client, session } = setup();
-  context.turnTypingIndicatorsOff();
+  context.typingOff();
   expect(client.typingOff).toBeCalledWith(session.user.id);
 });
 
@@ -409,44 +414,6 @@ it('use default message delay', () => {
     args: [session.user.id, 'yooooooo~'],
     delay: 1000,
     showIndicators: true,
-    onSuccess: expect.any(Function),
-    onError: expect.any(Function),
-  });
-});
-
-it('has send to methods', () => {
-  const { context } = setup();
-  expect(context.sendTextTo).toBeDefined();
-  expect(context.sendAttachment).toBeDefined();
-  expect(context.sendImageTo).toBeDefined();
-  expect(context.sendAudioTo).toBeDefined();
-  expect(context.sendVideoTo).toBeDefined();
-  expect(context.sendFileTo).toBeDefined();
-  expect(context.sendQuickRepliesTo).toBeDefined();
-  expect(context.sendGenericTemplateTo).toBeDefined();
-  expect(context.sendButtonTemplateTo).toBeDefined();
-  expect(context.sendListTemplateTo).toBeDefined();
-  expect(context.sendReceiptTemplateTo).toBeDefined();
-  expect(context.sendAirlineBoardingPassTemplateTo).toBeDefined();
-  expect(context.sendAirlineCheckinTemplateTo).toBeDefined();
-  expect(context.sendAirlineItineraryTemplateTo).toBeDefined();
-  expect(context.sendAirlineFlightUpdateTemplateTo).toBeDefined();
-});
-
-it('#sendTextTo put sendText to jobQueue', () => {
-  const { context, client } = setup();
-  context._jobQueue = {
-    enqueue: jest.fn(),
-  };
-
-  context.sendTextTo('uid_1', 'xxx.com');
-
-  expect(context._jobQueue.enqueue).toBeCalledWith({
-    instance: client,
-    method: 'sendText',
-    args: ['uid_1', 'xxx.com'],
-    delay: 0,
-    showIndicators: false,
     onSuccess: expect.any(Function),
     onError: expect.any(Function),
   });
@@ -496,14 +463,4 @@ it('show typing when sending', () => {
 
   expect(client.typingOn).toBeCalled();
   expect(client.typingOff).not.toBeCalled();
-});
-
-it('should not show typing when sending to others', () => {
-  jest.useFakeTimers();
-
-  const { context, client } = setup();
-
-  context.sendTextTo('uid_1', 'xxx.com');
-
-  expect(client.typingOn).not.toBeCalled();
 });

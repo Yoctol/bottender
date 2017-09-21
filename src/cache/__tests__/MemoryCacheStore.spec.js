@@ -16,17 +16,20 @@ describe('#get', () => {
 });
 
 describe('#put', () => {
-  xit('should store cache item for a given number of minutes', async () => {
-    jest.useFakeTimers();
+  it('should store cache item for a given number of minutes', async () => {
+    const _now = Date.now;
+    Date.now = jest.fn(() => 1234567891011);
 
     const store = new MemoryCacheStore(5);
 
     await store.put('x', 1, 5);
     expect(await store.get('x')).toBe(1);
 
-    jest.runTimersToTime(6 * 60 * 1000);
+    const now = Date.now();
+    Date.now = jest.fn(() => now + 6 * 60 * 1000);
 
     expect(await store.get('x')).toBeNull();
+    Date.now = _now;
   });
 
   it('can store mixed data types', async () => {

@@ -1,0 +1,13 @@
+{
+  "dependencies": {
+    "babel-register": "^6.24.1",
+    "luis-sdk": "^1.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  },
+  "scripts": {
+    "dev": "nodemon index.js",
+    "start": "node index.js"
+  }
+}

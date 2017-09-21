@@ -9,11 +9,11 @@ import type { MessengerSession } from '../bot/MessengerConnector';
 import type { Context } from './Context';
 import MessengerEvent from './MessengerEvent';
 
-type Options = {
+type Options = {|
   client: MessengerClient,
   event: MessengerEvent,
   session: ?MessengerSession,
-};
+|};
 
 class MessengerContext implements Context {
   _client: MessengerClient;
@@ -33,6 +33,14 @@ class MessengerContext implements Context {
    */
   get platform(): string {
     return 'messenger';
+  }
+
+  /**
+   * The client instance.
+   *
+   */
+  get client(): MessengerClient {
+    return this._client;
   }
 
   /**
@@ -64,9 +72,9 @@ class MessengerContext implements Context {
    *
    */
   async typing(milliseconds: number): Promise<void> {
-    await this.turnTypingIndicatorsOn();
+    await this.typingOn();
     await sleep(milliseconds);
-    await this.turnTypingIndicatorsOff();
+    await this.typingOff();
   }
 
   /**
@@ -81,8 +89,9 @@ class MessengerContext implements Context {
       );
       return;
     }
+    const session = this._session;
     await this.typing(this._messageDelay);
-    return this._client.sendText(this._session.user.id, text, options);
+    return this._client.sendText(session.user.id, text, options);
   }
 
   async sendTextWithDelay(delay: number, text: string): Promise<any> {
@@ -93,31 +102,27 @@ class MessengerContext implements Context {
       );
       return;
     }
+    const session = this._session;
     await this.typing(delay);
-    return this._client.sendText(this._session.user.id, text);
+    return this._client.sendText(session.user.id, text);
   }
 
-  // FIXME: rethink
-  sendTextTo(id: string, text: string): Promise<any> {
-    return this._client.sendText(id, text);
-  }
-
-  async turnTypingIndicatorsOn(): Promise<any> {
+  async typingOn(): Promise<any> {
     if (!this._session) {
       warning(
         false,
-        'turnTypingIndicatorsOn: should not be called in context without session'
+        'typingOn: should not be called in context without session'
       );
       return;
     }
     return this._client.typingOn(this._session.user.id);
   }
 
-  async turnTypingIndicatorsOff(): Promise<any> {
+  async typingOff(): Promise<any> {
     if (!this._session) {
       warning(
         false,
-        'turnTypingIndicatorsOff: should not be called in context without session'
+        'typingOff: should not be called in context without session'
       );
       return;
     }
@@ -157,16 +162,6 @@ sendMethods.forEach(method => {
       }
       await this.typing(this._messageDelay);
       return this._client[method](this._session.user.id, ...args);
-    },
-  });
-
-  // FIXME: rethink
-  Object.defineProperty(MessengerContext.prototype, `${method}To`, {
-    enumerable: false,
-    configurable: true,
-    writable: true,
-    value(id, ...rest) {
-      return this._client[method](id, ...rest);
     },
   });
 

@@ -1,6 +1,8 @@
 /* @flow */
 
 import { MongoClient } from 'mongodb';
+import isBefore from 'date-fns/is_before';
+import subMinutes from 'date-fns/sub_minutes';
 
 import type { Session } from './Session';
 import type { SessionStore } from './SessionStore';
@@ -15,52 +17,78 @@ type MongoConnection = {
   collection: (name: string) => MongoCollection,
 };
 
+const MINUTES_IN_ONE_YEAR = 365 * 24 * 60;
+
 export default class MongoSessionStore implements SessionStore {
   _url: string;
 
   _collectionName: string;
 
+  // The number of minutes to store the data in the session.
+  _expiresIn: number;
+
   _connection: ?MongoConnection;
 
-  constructor(url: string, options: { collectionName?: string } = {}) {
+  constructor(
+    url: string,
+    options: { collectionName?: string } = {},
+    expiresIn: number
+  ) {
     this._url = url;
     this._collectionName = options.collectionName || 'sessions';
+    this._expiresIn = expiresIn || MINUTES_IN_ONE_YEAR;
   }
 
   async init(): Promise<MongoSessionStore> {
     this._connection = await MongoClient.connect(this._url);
+    // $FlowFixMe
     return this;
   }
 
-  async read(key: string): Promise<Session> {
-    const [platform, id] = key.split(':');
-    const filter = {
-      'user.platform': platform,
-      'user.id': id,
-    };
-    return this._sessions.findOne(filter);
+  async read(key: string): Promise<Session | null> {
+    const filter = { id: key };
+    try {
+      const session = await this._sessions.findOne(filter);
+
+      if (session && this._expired(session)) {
+        return null;
+      }
+
+      return session;
+    } catch (e) {
+      console.error(e);
+      return null;
+    }
   }
 
-  // FIXME: maxAge
-  async write(key: string, sess: Session /* , maxAge */): Promise<void> {
-    const [platform, id] = key.split(':');
-    const filter = {
-      'user.platform': platform,
-      'user.id': id,
-    };
+  async write(key: string, sess: Session): Promise<void> {
+    const filter = { id: key };
 
-    await this._sessions.updateOne(filter, sess, {
-      upsert: true,
-    });
+    sess.lastActivity = Date.now();
+
+    try {
+      await this._sessions.updateOne(filter, sess, {
+        upsert: true,
+      });
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   async destroy(key: string): Promise<void> {
-    const [platform, id] = key.split(':');
-    const filter = {
-      'user.platform': platform,
-      'user.id': id,
-    };
-    await this._sessions.remove(filter);
+    const filter = { id: key };
+    try {
+      await this._sessions.remove(filter);
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  _expired(sess: Session): boolean {
+    return (
+      sess.lastActivity !== undefined &&
+      isBefore(sess.lastActivity, subMinutes(Date.now(), this._expiresIn))
+    );
   }
 
   get _sessions(): MongoCollection {

@@ -7,8 +7,8 @@ const pairs = [
   ['context/ConsoleEvent', 'ConsoleEvent'],
   ['context/MessengerContext', 'MessengerContext'],
   ['context/MessengerEvent', 'MessengerEvent'],
-  ['context/LINEContext', 'LINEContext'],
-  ['context/LINEEvent', 'LINEEvent'],
+  ['context/LineContext', 'LineContext'],
+  ['context/LineEvent', 'LineEvent'],
   ['context/SlackContext', 'SlackContext'],
   ['context/SlackEvent', 'SlackEvent'],
   ['context/TelegramContext', 'TelegramContext'],
@@ -23,7 +23,7 @@ pairs.forEach(pair => {
       // output is a string of Markdown data
       fs.writeFileSync(
         `${__dirname}/../docs/APIReference-${pair[1]}.md`,
-        output
+        `# ${pair[1]}\n\n${output}`
       );
     });
 });

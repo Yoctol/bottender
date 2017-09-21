@@ -9,11 +9,11 @@ import type { TelegramSession } from '../bot/TelegramConnector';
 import type { Context } from './Context';
 import TelegramEvent from './TelegramEvent';
 
-type Options = {
+type Options = {|
   client: TelegramClient,
   event: TelegramEvent,
   session: ?TelegramSession,
-};
+|};
 
 class TelegramContext implements Context {
   _client: TelegramClient;
@@ -33,6 +33,14 @@ class TelegramContext implements Context {
    */
   get platform(): string {
     return 'telegram';
+  }
+
+  /**
+   * The client instance.
+   *
+   */
+  get client(): TelegramClient {
+    return this._client;
   }
 
   /**
@@ -79,8 +87,9 @@ class TelegramContext implements Context {
       );
       return;
     }
+    const session = this._session;
     await this.typing(this._messageDelay);
-    return this._client.sendMessage(this._session.user.id, text);
+    return this._client.sendMessage(session.user.id, text);
   }
 
   async sendTextWithDelay(delay: number, text: string): Promise<any> {
@@ -93,8 +102,9 @@ class TelegramContext implements Context {
       );
       return;
     }
+    const session = this._session;
     await this.typing(delay);
-    return this._client.sendMessage(this._session.user.id, text);
+    return this._client.sendMessage(session.user.id, text);
   }
 }
 
@@ -128,15 +138,6 @@ sendMethods.forEach(method => {
       }
       await this.typing(this._messageDelay);
       return this._client[method](this._session.user.id, ...args);
-    },
-  });
-
-  Object.defineProperty(TelegramContext.prototype, `${method}To`, {
-    enumerable: false,
-    configurable: true,
-    writable: true,
-    value(id, ...rest) {
-      return this._client[method](id, ...rest);
     },
   });
 

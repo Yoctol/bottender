@@ -12,11 +12,9 @@ const bot = new MessengerBot({
 });
 
 const handler = new MessengerHandlerBuilder()
-  .onText(/Hi/i, 'Nice to see you!')
   .onText(/yo/i, context => {
     context.sendText('Hi there!');
   })
-  .onText(/Good morning/i, ['Good morning!', 'Morning!'])
   .onEvent(context => {
     context.sendText("I don't know what you say.");
   })

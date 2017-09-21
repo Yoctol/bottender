@@ -1,7 +1,6 @@
 /* @flow */
 
 import _debug from 'debug';
-import warning from 'warning';
 
 import MemoryCacheStore from '../cache/MemoryCacheStore';
 import CacheBasedSessionStore from '../session/CacheBasedSessionStore';
@@ -16,7 +15,7 @@ const MINUTES_IN_ONE_YEAR = 365 * 24 * 60;
 
 function createMemorySessionStore(): SessionStore {
   const cache = new MemoryCacheStore(500);
-  return new CacheBasedSessionStore(cache);
+  return new CacheBasedSessionStore(cache, MINUTES_IN_ONE_YEAR);
 }
 
 export type FunctionalHandler = (context: Context) => void | Promise<void>;
@@ -37,10 +36,10 @@ export default class Bot {
   constructor({
     connector,
     sessionStore = createMemorySessionStore(),
-  }: {
+  }: {|
     connector: Connector<any, any>,
     sessionStore: SessionStore,
-  }) {
+  |}) {
     this._sessions = sessionStore;
     this._initialized = false;
     this._connector = connector;
@@ -61,11 +60,6 @@ export default class Bot {
 
   onEvent(handler: FunctionalHandler): void {
     this._handler = handler;
-  }
-
-  handle(handler: FunctionalHandler): void {
-    warning(false, '`handle` is deprecated. Use `onEvent` instead.');
-    this.onEvent(handler);
   }
 
   extendContext(fn: Function): Bot {
@@ -98,7 +92,7 @@ export default class Bot {
         this._initialized = true;
       }
 
-      const platform = this._connector.platform;
+      const { platform } = this._connector;
       const sessionId = this._connector.getUniqueSessionIdFromRequest(body);
 
       // Create or retrieve session if possible
@@ -141,7 +135,9 @@ export default class Bot {
       )
         .then(() => {
           if (session) {
-            this._sessions.write(sessionKey, session, MINUTES_IN_ONE_YEAR);
+            // $FlowFixMe: suppressing this error until we can refactor
+            session.lastActivity = Date.now();
+            this._sessions.write(sessionKey, session);
           }
         })
         .catch(console.error);

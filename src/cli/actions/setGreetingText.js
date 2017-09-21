@@ -8,7 +8,7 @@ import { print, error, bold } from '../shared/log';
 export default (async function setGreetingText(_greetingText, _configPath) {
   try {
     const platform = 'messenger';
-    const configPath = _configPath || 'bot.json';
+    const configPath = _configPath || 'bottender.config.js';
     const config = getConfig(configPath, platform);
     const greetingText = _greetingText || config.greetingText;
 

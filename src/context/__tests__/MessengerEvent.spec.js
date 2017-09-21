@@ -245,6 +245,35 @@ const postback = {
   },
 };
 
+const payment = {
+  recipient: {
+    id: 'PAGE_ID',
+  },
+  timestamp: 1473208792799,
+  sender: {
+    id: 'USER_ID',
+  },
+  payment: {
+    payload: 'DEVELOPER_DEFINED_PAYLOAD',
+    requested_user_info: {
+      shipping_address: {},
+      contact_name: 'Peter Chang',
+      contact_email: 'peter@anemail.com',
+      contact_phone: '+15105551234',
+    },
+    payment_credential: {
+      provider_type: 'paypal',
+      charge_id: 'ch_18tmdBEoNIH3FPJHa60ep123',
+      fb_payment_id: '123456789',
+    },
+    amount: {
+      currency: 'USD',
+      amount: '29.62',
+    },
+    shipping_option_id: '123',
+  },
+};
+
 const policyEnforcement = {
   recipient: {
     id: '404217156637689',
@@ -306,6 +335,7 @@ it('#rawEvent', () => {
   );
   expect(new MessengerEvent(echoMessage).rawEvent).toEqual(echoMessage);
   expect(new MessengerEvent(postback).rawEvent).toEqual(postback);
+  expect(new MessengerEvent(payment).rawEvent).toEqual(payment);
 });
 
 it('#isMessage', () => {
@@ -315,6 +345,7 @@ it('#isMessage', () => {
   expect(new MessengerEvent(quickReplyMessage).isMessage).toEqual(true);
   expect(new MessengerEvent(echoMessage).isMessage).toEqual(true);
   expect(new MessengerEvent(postback).isMessage).toEqual(false);
+  expect(new MessengerEvent(payment).isMessage).toEqual(false);
 });
 
 it('#message', () => {
@@ -504,6 +535,7 @@ it('#isPostback', () => {
   expect(new MessengerEvent(quickReplyMessage).isPostback).toEqual(false);
   expect(new MessengerEvent(echoMessage).isPostback).toEqual(false);
   expect(new MessengerEvent(postback).isPostback).toEqual(true);
+  expect(new MessengerEvent(payment).isPostback).toEqual(false);
 });
 
 it('#postback', () => {
@@ -527,6 +559,39 @@ it('#postback', () => {
     'DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_RED'
   );
   expect(new MessengerEvent(textMessage).payload).toEqual(null);
+});
+
+it('#isPayment', () => {
+  expect(new MessengerEvent(textMessage).isPayment).toEqual(false);
+  expect(new MessengerEvent(imageMessage).isPayment).toEqual(false);
+  expect(new MessengerEvent(likeStickerMessage).isPayment).toEqual(false);
+  expect(new MessengerEvent(echoMessage).isPayment).toEqual(false);
+  expect(new MessengerEvent(quickReplyMessage).isPayment).toEqual(false);
+  expect(new MessengerEvent(postback).isPayment).toEqual(false);
+  expect(new MessengerEvent(payment).isPayment).toEqual(true);
+});
+
+it('#payment', () => {
+  expect(new MessengerEvent(textMessage).payment).toEqual(null);
+  expect(new MessengerEvent(payment).payment).toEqual({
+    payload: 'DEVELOPER_DEFINED_PAYLOAD',
+    requested_user_info: {
+      shipping_address: {},
+      contact_name: 'Peter Chang',
+      contact_email: 'peter@anemail.com',
+      contact_phone: '+15105551234',
+    },
+    payment_credential: {
+      provider_type: 'paypal',
+      charge_id: 'ch_18tmdBEoNIH3FPJHa60ep123',
+      fb_payment_id: '123456789',
+    },
+    amount: {
+      currency: 'USD',
+      amount: '29.62',
+    },
+    shipping_option_id: '123',
+  });
 });
 
 it('#isPolicyEnforcement', () => {

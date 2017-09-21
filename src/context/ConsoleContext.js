@@ -1,22 +1,25 @@
 /* @flow */
 import sleep from 'delay';
 
-import type { ConsoleSession } from '../bot/ConsoleConnector';
+import type { ConsoleSession, ConsoleClient } from '../bot/ConsoleConnector';
 
 import { type Context } from './Context';
 import ConsoleEvent from './ConsoleEvent';
 
-type Options = {
+type Options = {|
+  client: ConsoleClient,
   event: ConsoleEvent,
   session: ?ConsoleSession,
-};
+|};
 
 export default class ConsoleContext implements Context {
+  _client: ConsoleClient;
   _event: ConsoleEvent;
   _session: ?ConsoleSession;
   _messageDelay: number = 0;
 
-  constructor({ event, session }: Options) {
+  constructor({ client, event, session }: Options) {
+    this._client = client;
     this._event = event;
     this._session = session;
   }
@@ -27,6 +30,14 @@ export default class ConsoleContext implements Context {
    */
   get platform(): string {
     return 'console';
+  }
+
+  /**
+   * The client instance.
+   *
+   */
+  get client(): ConsoleClient {
+    return this._client;
   }
 
   /**
@@ -67,12 +78,12 @@ export default class ConsoleContext implements Context {
    */
   async sendText(text: string): Promise<void> {
     await this.typing(this._messageDelay);
-    this._sendText(text);
+    this._client.sendText(text);
   }
 
   async sendTextWithDelay(delay: number, text: string): Promise<void> {
     await this.typing(delay);
-    this._sendText(text);
+    this._client.sendText(text);
   }
 
   _sendText(text: string): void {

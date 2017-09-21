@@ -15,10 +15,12 @@ describe('browser', () => {
 
   it('export session stores', () => {
     expect(core.CacheBasedSessionStore).toBeDefined();
+    expect(core.MemorySessionStore).toBeDefined();
   });
 
   it('export handler builders', () => {
-    expect(core.BasicHandlerBuilder).toBeDefined();
+    expect(core.middleware).toBeDefined();
+    expect(core.HandlerBuilder).toBeDefined();
     expect(core.ClassifierHandlerBuilder).toBeDefined();
     expect(core.MiddlewareHandlerBuilder).toBeDefined();
   });

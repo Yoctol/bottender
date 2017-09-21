@@ -38,7 +38,7 @@ type Voice = {
   duration: number,
 };
 
-type VoiceNote = {
+type VideoNote = {
   file_id: string,
   length: number,
   duration: number,
@@ -49,10 +49,10 @@ type Contact = {
   first_name: string,
 };
 
-type Location = {
+type Location = {|
   longitude: number,
   latitude: number,
-};
+|};
 
 type Venue = {
   location: Location,
@@ -75,7 +75,7 @@ type Message = {
   },
   date: number,
   text: string,
-  entitiess: Array<{
+  entities: Array<{
     type: 'bot_command',
     offset: number,
     length: number,
@@ -86,7 +86,7 @@ type Message = {
   sticker?: Sticker,
   video?: Video,
   voice?: Voice,
-  voice_note?: VoiceNote,
+  video_note?: VideoNote,
   contact?: Contact,
   location?: Location,
   venue?: Venue,

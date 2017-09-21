@@ -18,7 +18,7 @@ const bot = new TelegramBot({
 
 const handler = (context, next) =>
   new TelegramHandlerBuilder()
-    .onText(/[\s\S]+/i, async ctx => {
+    .onText(async ctx => {
       ctx.sendMessage('Hi there 1!');
       await next();
       ctx.sendMessage('Hi there 3!');
@@ -26,7 +26,7 @@ const handler = (context, next) =>
     .build()(context);
 
 const nextHandler = new TelegramHandlerBuilder()
-  .onText(/[\s\S]+/i, context => {
+  .onText(context => {
     context.sendMessage('Hi there 2!');
   })
   .build();

@@ -9,11 +9,11 @@ import type { SlackSession } from '../bot/SlackConnector';
 import type { Context } from './Context';
 import SlackEvent from './SlackEvent';
 
-type Options = {
+type Options = {|
   client: SlackOAuthClient,
   event: SlackEvent,
   session: ?SlackSession,
-};
+|};
 
 export default class SlackContext implements Context {
   _client: SlackOAuthClient;
@@ -33,6 +33,14 @@ export default class SlackContext implements Context {
    */
   get platform(): string {
     return 'slack';
+  }
+
+  /**
+   * The client instance.
+   *
+   */
+  get client(): SlackOAuthClient {
+    return this._client;
   }
 
   /**

@@ -15,7 +15,7 @@ const MOCK_FILE_WITH_PLATFORM = {
   telegram: {
     accessToken: '__accessToken__',
   },
-  LINE: {},
+  line: {},
 };
 const configPath = 'bot.sample.json';
 
