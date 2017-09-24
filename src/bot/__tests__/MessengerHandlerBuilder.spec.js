@@ -1,4 +1,3 @@
-import * as constants from '../../constants';
 import MessengerHandlerBuilder from '../MessengerHandlerBuilder';
 
 const setup = () => {
@@ -211,46 +210,6 @@ describe('#onPayment', () => {
     builder.onPayment(predicate, handler);
     await builder.build()(context);
     expect(predicate).toBeCalledWith(context);
-    expect(handler).not.toBeCalled();
-  });
-});
-
-describe('#onGetStarted', () => {
-  it('should return this', async () => {
-    const { builder } = setup();
-    const handler = () => {};
-    expect(await builder.onGetStarted(handler)).toBe(builder);
-  });
-
-  it('should call handler when received GET_STARTED payload', async () => {
-    const { builder } = setup();
-    const handler = jest.fn();
-    const context = {
-      event: {
-        isPostback: true,
-        postback: {
-          payload: constants.payload.GET_STARTED,
-        },
-      },
-    };
-    builder.onGetStarted(handler);
-    await builder.build()(context);
-    expect(handler).toBeCalledWith(context);
-  });
-
-  it('should not call handler when received other payload', async () => {
-    const { builder } = setup();
-    const handler = jest.fn();
-    const context = {
-      event: {
-        isPostback: true,
-        postback: {
-          payload: 'finished',
-        },
-      },
-    };
-    builder.onGetStarted(handler);
-    await builder.build()(context);
     expect(handler).not.toBeCalled();
   });
 });

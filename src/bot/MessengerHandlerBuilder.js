@@ -1,8 +1,6 @@
 /* @flow */
 import warning from 'warning';
 
-import * as constants from '../constants';
-
 import HandlerBuilder, {
   type Predicate,
   type FunctionalHandler,
@@ -54,11 +52,6 @@ export default class MessengerHandlerBuilder extends HandlerBuilder {
 
   onPayment(predicate: Predicate, handler: FunctionalHandler) {
     this.on(context => context.event.isPayment && predicate(context), handler);
-    return this;
-  }
-
-  onGetStarted(handler: FunctionalHandler) {
-    this.onPayload(constants.payload.GET_STARTED, handler);
     return this;
   }
 
