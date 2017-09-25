@@ -5,7 +5,7 @@ import _debug from 'debug';
 import MemoryCacheStore from '../cache/MemoryCacheStore';
 import CacheBasedSessionStore from '../session/CacheBasedSessionStore';
 import type { SessionStore } from '../session/SessionStore';
-import type { Context } from '../context/Context';
+import type { PlatformContext } from '../context/PlatformContext';
 
 import type { Connector, SessionWithUser } from './Connector';
 
@@ -18,7 +18,9 @@ function createMemorySessionStore(): SessionStore {
   return new CacheBasedSessionStore(cache, MINUTES_IN_ONE_YEAR);
 }
 
-export type FunctionalHandler = (context: Context) => void | Promise<void>;
+export type FunctionalHandler = (
+  context: PlatformContext
+) => void | Promise<void>;
 
 type RequestHandler = (body: Object) => void | Promise<void>;
 

@@ -6,9 +6,10 @@ import { SlackOAuthClient } from 'messaging-api-slack';
 
 import type { SlackSession } from '../bot/SlackConnector';
 
-import type { Context } from './Context';
+import Context from './Context';
 import SlackEvent from './SlackEvent';
 import DelayableJobQueue from './DelayableJobQueue';
+import type { PlatformContext } from './PlatformContext';
 
 type Options = {|
   client: SlackOAuthClient,
@@ -16,19 +17,17 @@ type Options = {|
   session: ?SlackSession,
 |};
 
-export default class SlackContext implements Context {
+export default class SlackContext extends Context implements PlatformContext {
   _client: SlackOAuthClient;
   _event: SlackEvent;
   _session: ?SlackSession;
   _jobQueue: DelayableJobQueue;
-  _messageDelay: number = 1000;
 
   constructor({ client, event, session }: Options) {
-    this._client = client;
-    this._event = event;
-    this._session = session;
+    super({ client, event, session });
     this._jobQueue = new DelayableJobQueue();
     this._jobQueue.beforeEach(({ delay }) => sleep(delay));
+    this.setMessageDelay(1000);
   }
 
   /**
@@ -37,38 +36,6 @@ export default class SlackContext implements Context {
    */
   get platform(): string {
     return 'slack';
-  }
-
-  /**
-   * The client instance.
-   *
-   */
-  get client(): SlackOAuthClient {
-    return this._client;
-  }
-
-  /**
-   * The event instance.
-   *
-   */
-  get event(): SlackEvent {
-    return this._event;
-  }
-
-  /**
-   * The session state of the context.
-   *
-   */
-  get session(): ?SlackSession {
-    return this._session;
-  }
-
-  /**
-   * Set delay before sending every messages.
-   *
-   */
-  setMessageDelay(milliseconds: number): void {
-    this._messageDelay = milliseconds;
   }
 
   /**
