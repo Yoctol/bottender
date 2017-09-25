@@ -17,7 +17,7 @@ const MOCK_FILE_WITH_PLATFORM = {
     appSecret: '__APP_SECRET__',
     verifyToken: '__verifyToken__',
   },
-  LINE: {},
+  line: {},
 };
 const configPath = 'bot.sample.json';
 

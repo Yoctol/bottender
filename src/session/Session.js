@@ -1,3 +1,5 @@
 /* @flow */
 
-export type Session = { [key: string]: mixed };
+export type Session = {
+  [key: string]: any,
+};

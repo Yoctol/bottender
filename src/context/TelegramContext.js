@@ -10,11 +10,11 @@ import type { Context } from './Context';
 import TelegramEvent from './TelegramEvent';
 import DelayableJobQueue from './DelayableJobQueue';
 
-type Options = {
+type Options = {|
   client: TelegramClient,
   event: TelegramEvent,
   session: ?TelegramSession,
-};
+|};
 
 class TelegramContext implements Context {
   _client: TelegramClient;
@@ -37,6 +37,14 @@ class TelegramContext implements Context {
    */
   get platform(): string {
     return 'telegram';
+  }
+
+  /**
+   * The client instance.
+   *
+   */
+  get client(): TelegramClient {
+    return this._client;
   }
 
   /**

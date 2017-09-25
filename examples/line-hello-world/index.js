@@ -1,6 +1,6 @@
 require('babel-register');
 
-const { LINEBot } = require('../../src');
+const { LineBot } = require('../../src');
 const { createServer } = require('../../src/express');
 
 const config = {
@@ -8,7 +8,7 @@ const config = {
   accessToken: '__FILL_YOUR_TOKEN_HERE__',
 };
 
-const bot = new LINEBot({
+const bot = new LineBot({
   channelSecret: config.channelSecret,
   accessToken: config.accessToken,
 });

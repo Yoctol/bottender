@@ -49,6 +49,19 @@ describe('#platform', () => {
   });
 });
 
+describe('#client', () => {
+  it('should be client', () => {
+    const { connector, mockSlackOAuthClient } = setup();
+    expect(connector.client).toBe(mockSlackOAuthClient);
+  });
+
+  it('support custom client', () => {
+    const client = {};
+    const connector = new SlackConnector({ client });
+    expect(connector.client).toBe(client);
+  });
+});
+
 describe('#getUniqueSessionIdFromRequest', () => {
   it('extract correct sender id', () => {
     const { connector } = setup();
@@ -84,10 +97,7 @@ describe('#updateSession', () => {
     expect(mockSlackOAuthClient.getChannelInfo).toBeCalledWith('C6A9RJJ3F');
     expect(mockSlackOAuthClient.getAllUserList).toBeCalled();
     expect(session).toEqual({
-      user: {
-        platform: 'slack',
-        ...user,
-      },
+      user,
       channel,
       team: { members },
     });

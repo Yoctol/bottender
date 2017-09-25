@@ -135,6 +135,19 @@ describe('#platform', () => {
   });
 });
 
+describe('#client', () => {
+  it('should be client', () => {
+    const { connector, mockGraphAPIClient } = setup();
+    expect(connector.client).toBe(mockGraphAPIClient);
+  });
+
+  it('support custom client', () => {
+    const client = {};
+    const connector = new MessengerConnector({ client });
+    expect(connector.client).toBe(client);
+  });
+});
+
 describe('#getUniqueSessionIdFromRequest', () => {
   it('extract correct sender id', () => {
     const { connector } = setup();
@@ -176,10 +189,7 @@ describe('#updateSession', () => {
       '1412611362105802'
     );
     expect(session).toEqual({
-      user: {
-        platform: 'messenger',
-        ...user,
-      },
+      user,
     });
   });
 });

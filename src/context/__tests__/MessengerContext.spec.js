@@ -65,6 +65,11 @@ it('get #event works', () => {
   expect(context.event).toBeInstanceOf(MessengerEvent);
 });
 
+it('get #client works', () => {
+  const { context, client } = setup();
+  expect(context.client).toBe(client);
+});
+
 it('#sendText put sendText to jobQueue', () => {
   const { context, client, session } = setup();
   context._jobQueue = {
@@ -382,15 +387,15 @@ it('#sendAirlineFlightUpdateTemplate put sendAirlineFlightUpdateTemplate to jobQ
   });
 });
 
-it('#turnTypingIndicatorsOn call client typingOn', () => {
+it('#typingOn call client typingOn', () => {
   const { context, client, session } = setup();
-  context.turnTypingIndicatorsOn();
+  context.typingOn();
   expect(client.typingOn).toBeCalledWith(session.user.id);
 });
 
-it('#turnTypingIndicatorsOff call client typingOff', () => {
+it('#typingOff call client typingOff', () => {
   const { context, client, session } = setup();
-  context.turnTypingIndicatorsOff();
+  context.typingOff();
   expect(client.typingOff).toBeCalledWith(session.user.id);
 });
 

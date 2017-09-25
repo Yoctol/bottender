@@ -1,5 +1,7 @@
 import path from 'path';
 
+import stringifyObject from 'stringify-object';
+
 import init from '../init';
 
 jest.mock('inquirer');
@@ -48,7 +50,7 @@ describe('init', () => {
         server: 'micro',
       })
     );
-    const botJson = {
+    const botConfig = {
       telegram: {
         accessToken: '__PUT_YOUR_ACCESS_TOKEN_HERE__',
       },
@@ -59,36 +61,42 @@ describe('init', () => {
 
     expect(process.exit).not.toBeCalled();
     expect(fs.writeFileSync).lastCalledWith(
-      path.join(root, 'bot.json'),
-      JSON.stringify(botJson, null, 2)
+      path.join(root, 'bottender.config.js'),
+      `module.exports = ${stringifyObject(botConfig, {
+        indent: '  ',
+      })};`
     );
   });
 
-  it('should not create bot.json if select console as platform', async () => {
+  it('should not create bottender.config.js if select console as platform', async () => {
     inquirer.prompt.mockReturnValueOnce(
       Promise.resolve({
         name: 'newbot',
         platform: 'console',
         session: 'memory',
-        server: 'restify',
+        server: undefined,
       })
     );
-    const botJson = {};
+    const botConfig = {};
     const root = path.resolve('newbot');
 
     await init();
 
     expect(process.exit).not.toBeCalled();
     expect(fs.writeFileSync).not.lastCalledWith(
-      path.join(root, 'bot.json'),
-      JSON.stringify(botJson, null, 2)
+      path.join(root, 'bottender.config.js'),
+      `module.exports = ${stringifyObject(botConfig, {
+        indent: '  ',
+      })};`
     );
   });
 
   it('should catch error when inquirer.prompt reject response with status', async () => {
-    inquirer.prompt.mockReturnValueOnce(
-      Promise.reject({ response: { status: 'error status' } })
-    );
+    const err = new Error();
+    err.response = {
+      status: 'error status',
+    };
+    inquirer.prompt.mockReturnValueOnce(Promise.reject(err));
 
     await init();
 
@@ -97,9 +105,8 @@ describe('init', () => {
   });
 
   it('should catch error when inquirer.prompt reject with message', async () => {
-    inquirer.prompt.mockReturnValueOnce(
-      Promise.reject({ message: 'error message' })
-    );
+    const err = new Error('error message');
+    inquirer.prompt.mockReturnValueOnce(Promise.reject(err));
 
     await init();
 
@@ -182,7 +189,7 @@ describe('init', () => {
       await init();
 
       expect(error.mock.calls).toContainEqual([
-        '  yarnpkg add --dev nodemon has failed.',
+        '  yarnpkg add --dev --silent nodemon has failed.',
       ]);
       expect(print.mock.calls).toContainEqual([
         'Deleting generated file... package.json',
@@ -229,7 +236,7 @@ describe('init', () => {
 
       expect(spawn).toBeCalledWith(
         'yarnpkg',
-        ['add', '--exact', 'babel-register', 'toolbot-core-experiment'],
+        ['add', '--dev', '--silent', 'nodemon'],
         {
           stdio: 'inherit',
         }

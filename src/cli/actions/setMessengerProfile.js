@@ -7,7 +7,7 @@ import { print, error, bold } from '../shared/log';
 export default (async function setMessengerProfile(_configPath) {
   try {
     const platform = 'messenger';
-    const configPath = _configPath || 'bot.json';
+    const configPath = _configPath || 'bottender.config.js';
     const {
       accessToken,
       composerInputDisabled = false,

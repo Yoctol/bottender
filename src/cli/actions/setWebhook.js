@@ -29,7 +29,7 @@ const _getClientToken = async (clientId, clientSecret) => {
 export default (async function setWebhook(_webhook, _configPath, _verifyToken) {
   try {
     const platform = 'messenger';
-    const configPath = _configPath || 'bot.json';
+    const configPath = _configPath || 'bottender.config.js';
     const config = getConfig(configPath, platform);
     const defaultFields = [
       'messages',

@@ -15,12 +15,34 @@ type ConsoleUser = {
   name: string,
 };
 
+export type ConsoleClient = {
+  sendText(text: string): void,
+};
+
 export type ConsoleSession = SessionWithUser<ConsoleUser>;
+
+type ConstructorOptions = {|
+  client?: ConsoleClient,
+|};
 
 export default class ConsoleConnector
   implements Connector<ConsoleRequestBody, ConsoleUser> {
+  _client: ConsoleClient;
+
+  constructor({ client }: ConstructorOptions = {}) {
+    this._client = client || {
+      sendText: text => {
+        process.stdout.write(`Bot > ${text}\nYou > `);
+      },
+    };
+  }
+
   get platform(): string {
     return 'console';
+  }
+
+  get client(): ConsoleClient {
+    return this._client;
   }
 
   getUniqueSessionIdFromRequest(): string {
@@ -35,6 +57,13 @@ export default class ConsoleConnector
         name: 'you',
       };
     }
+    Object.freeze(session.user);
+    Object.defineProperty(session, 'user', {
+      configurable: false,
+      enumerable: true,
+      writable: false,
+      value: session.user,
+    });
   }
 
   mapRequestToEvents(body: ConsoleRequestBody): Array<ConsoleEvent> {
@@ -49,6 +78,7 @@ export default class ConsoleConnector
     session: ?ConsoleSession,
   }) {
     return new ConsoleContext({
+      client: this._client,
       event,
       session,
     });

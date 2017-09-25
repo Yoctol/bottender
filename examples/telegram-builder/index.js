@@ -13,7 +13,6 @@ const bot = new TelegramBot({
 });
 
 const handler = new TelegramHandlerBuilder()
-  .onText(/Hi/i, 'Nice to see you!')
   .onText(/yo/i, context => {
     const options = {
       parse_mode: 'Markdown',

@@ -77,19 +77,19 @@ type MessengerUser = {
 
 export type MessengerSession = SessionWithUser<MessengerUser>;
 
+type ConstructorOptions = {|
+  accessToken?: string,
+  appSecret?: string,
+  client?: MessengerClient,
+|};
+
 export default class MessengerConnector
   implements Connector<MessengerRequestBody, MessengerUser> {
   _client: MessengerClient;
-  _appSecret: string;
+  _appSecret: ?string;
 
-  constructor({
-    accessToken,
-    appSecret,
-  }: {
-    accessToken: string,
-    appSecret: string,
-  }) {
-    this._client = MessengerClient.connect(accessToken);
+  constructor({ accessToken, appSecret, client }: ConstructorOptions) {
+    this._client = client || MessengerClient.connect(accessToken);
     this._appSecret = appSecret;
   }
 
@@ -97,7 +97,7 @@ export default class MessengerConnector
     body: MessengerRequestBody
   ): Array<MessengerRawEvent> {
     if (body.entry) {
-      const entry = ((body: any): EntryRequestBody).entry;
+      const { entry } = ((body: any): EntryRequestBody);
 
       return entry
         .map(ent => {
@@ -128,6 +128,10 @@ export default class MessengerConnector
     return 'messenger';
   }
 
+  get client(): MessengerClient {
+    return this._client;
+  }
+
   getUniqueSessionIdFromRequest(body: MessengerRequestBody): ?string {
     const rawEvent = this._getRawEventsFromRequest(body)[0];
     if (rawEvent.message && rawEvent.message.is_echo && rawEvent.recipient) {
@@ -145,14 +149,20 @@ export default class MessengerConnector
   ): Promise<void> {
     if (!session.user) {
       const senderId = this.getUniqueSessionIdFromRequest(body);
+      // FIXME: refine user
       const user = await this._client.getUserProfile(senderId);
-
       session.user = {
         id: senderId,
-        platform: 'messenger',
         ...user,
       };
     }
+    Object.freeze(session.user);
+    Object.defineProperty(session, 'user', {
+      configurable: false,
+      enumerable: true,
+      writable: false,
+      value: session.user,
+    });
   }
 
   mapRequestToEvents(body: MessengerRequestBody): Array<MessengerEvent> {

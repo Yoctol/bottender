@@ -7,7 +7,8 @@ export { default as Bot } from './bot/Bot';
 export { default as Connector } from './bot/Connector';
 
 /* HandlerBuilder */
-export { default as BasicHandlerBuilder } from './bot/BasicHandlerBuilder';
+export { default as middleware } from './bot/middleware';
+export { default as HandlerBuilder } from './bot/HandlerBuilder';
 export {
   default as ClassifierHandlerBuilder,
 } from './bot/ClassifierHandlerBuilder';
@@ -22,3 +23,4 @@ export { default as MemoryCacheStore } from './cache/MemoryCacheStore';
 export {
   default as CacheBasedSessionStore,
 } from './session/CacheBasedSessionStore';
+export { default as MemorySessionStore } from './session/MemorySessionStore';

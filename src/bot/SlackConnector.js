@@ -28,12 +28,17 @@ export type SlackRequestBody = {
 
 export type SlackSession = SessionWithUser<SlackUser>;
 
+type ConstructorOptions = {|
+  accessToken?: string,
+  client?: SlackOAuthClient,
+|};
+
 export default class SlackConnector
   implements Connector<SlackRequestBody, SlackUser> {
   _client: SlackOAuthClient;
 
-  constructor({ accessToken: token }: { accessToken: string }) {
-    this._client = SlackOAuthClient.connect(token);
+  constructor({ accessToken, client }: ConstructorOptions) {
+    this._client = client || SlackOAuthClient.connect(accessToken);
   }
 
   _getRawEventFromRequest(body: SlackRequestBody): SlackRawEvent {
@@ -42,6 +47,10 @@ export default class SlackConnector
 
   get platform(): string {
     return 'slack';
+  }
+
+  get client(): SlackOAuthClient {
+    return this._client;
   }
 
   getUniqueSessionIdFromRequest(body: SlackRequestBody): string {
@@ -63,9 +72,9 @@ export default class SlackConnector
     const channelId = this.getUniqueSessionIdFromRequest(body);
     const senderId = body.event.user;
     const sender = await this._client.getUserInfo(senderId);
+    // FIXME: refine user
     session.user = {
       id: senderId,
-      platform: 'slack',
       ...sender,
     };
 
@@ -76,8 +85,7 @@ export default class SlackConnector
         Array.isArray(session.channel.members) &&
         session.channel.members.indexOf(senderId) < 0)
     ) {
-      const channel = await this._client.getChannelInfo(channelId);
-      session.channel = channel;
+      session.channel = await this._client.getChannelInfo(channelId);
     }
 
     // TODO: how to know if user leave team?
@@ -92,6 +100,36 @@ export default class SlackConnector
       session.team = {
         members: allUsers,
       };
+    }
+
+    if (session.user) {
+      Object.freeze(session.user);
+      Object.defineProperty(session, 'user', {
+        configurable: false,
+        enumerable: true,
+        writable: false,
+        value: session.user,
+      });
+    }
+
+    if (session.channel) {
+      Object.freeze(session.channel);
+      Object.defineProperty(session, 'channel', {
+        configurable: false,
+        enumerable: true,
+        writable: false,
+        value: session.channel,
+      });
+    }
+
+    if (session.team) {
+      Object.freeze(session.team);
+      Object.defineProperty(session, 'team', {
+        configurable: false,
+        enumerable: true,
+        writable: false,
+        value: session.team,
+      });
     }
   }
 

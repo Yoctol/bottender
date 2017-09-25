@@ -22,12 +22,17 @@ export type TelegramRequestBody = TelegramRawEvent;
 
 export type TelegramSession = SessionWithUser<TelegramUser>;
 
+type ConstructorOptions = {|
+  accessToken?: string,
+  client?: TelegramClient,
+|};
+
 export default class TelegramConnector
   implements Connector<TelegramRequestBody, TelegramUser> {
   _client: TelegramClient;
 
-  constructor({ accessToken }: { accessToken: string }) {
-    this._client = TelegramClient.connect(accessToken);
+  constructor({ accessToken, client }: ConstructorOptions) {
+    this._client = client || TelegramClient.connect(accessToken);
   }
 
   _getRawEventFromRequest(body: TelegramRequestBody): TelegramRawEvent {
@@ -38,16 +43,17 @@ export default class TelegramConnector
     return 'telegram';
   }
 
+  get client(): TelegramClient {
+    return this._client;
+  }
+
   getUniqueSessionIdFromRequest(body: TelegramRequestBody): string {
-    let id = '';
-
     if (body.message !== undefined) {
-      id = body.message.from.id;
+      return `${body.message.from.id}`;
     } else if (body.callback_query !== undefined) {
-      id = body.callback_query.from.id;
+      return `${body.callback_query.from.id}`;
     }
-
-    return `${id}`;
+    return '';
   }
 
   async updateSession(
@@ -55,7 +61,8 @@ export default class TelegramConnector
     body: TelegramRequestBody
   ): Promise<void> {
     if (!session.user) {
-      let user = {};
+      // FIXME: refine user
+      let user;
 
       if (body.message !== undefined) {
         user = body.message.from;
@@ -63,11 +70,16 @@ export default class TelegramConnector
         user = body.callback_query.from;
       }
 
-      session.user = {
-        platform: 'telegram',
-        ...user,
-      };
+      session.user = user;
     }
+
+    Object.freeze(session.user);
+    Object.defineProperty(session, 'user', {
+      configurable: false,
+      enumerable: true,
+      writable: false,
+      value: session.user,
+    });
   }
 
   mapRequestToEvents(body: TelegramRequestBody): Array<TelegramEvent> {

@@ -6,7 +6,7 @@ it('should construct bot with TelegramConnector', () => {
     accessToken: 'FAKE_TOKEN',
   });
   expect(bot).toBeDefined();
-  expect(bot.handle).toBeDefined();
+  expect(bot.onEvent).toBeDefined();
   expect(bot.createRequestHandler).toBeDefined();
   expect(bot.connector).toBeDefined();
   expect(bot.connector).toBeInstanceOf(TelegramConnector);

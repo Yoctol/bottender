@@ -10,11 +10,11 @@ import type { Context } from './Context';
 import MessengerEvent from './MessengerEvent';
 import DelayableJobQueue from './DelayableJobQueue';
 
-type Options = {
+type Options = {|
   client: MessengerClient,
   event: MessengerEvent,
   session: ?MessengerSession,
-};
+|};
 
 class MessengerContext implements Context {
   _client: MessengerClient;
@@ -30,13 +30,13 @@ class MessengerContext implements Context {
     this._jobQueue = new DelayableJobQueue();
     this._jobQueue.beforeEach(async ({ delay, showIndicators = true }) => {
       if (showIndicators) {
-        this.turnTypingIndicatorsOn();
+        this.typingOn();
       }
       await sleep(delay);
     });
     this._jobQueue.after(async ({ showIndicators = true }) => {
       if (showIndicators) {
-        this.turnTypingIndicatorsOff();
+        this.typingOff();
       }
     });
   }
@@ -47,6 +47,14 @@ class MessengerContext implements Context {
    */
   get platform(): string {
     return 'messenger';
+  }
+
+  /**
+   * The client instance.
+   *
+   */
+  get client(): MessengerClient {
+    return this._client;
   }
 
   /**
@@ -78,9 +86,9 @@ class MessengerContext implements Context {
    *
    */
   async typing(milliseconds: number): Promise<void> {
-    await this.turnTypingIndicatorsOn();
+    await this.typingOn();
     await sleep(milliseconds);
-    await this.turnTypingIndicatorsOff();
+    await this.typingOff();
   }
 
   /**
@@ -123,22 +131,22 @@ class MessengerContext implements Context {
     });
   }
 
-  turnTypingIndicatorsOn(): Promise<any> {
+  typingOn(): Promise<any> {
     if (!this._session) {
       warning(
         false,
-        'turnTypingIndicatorsOn: should not be called in context without session'
+        'typingOn: should not be called in context without session'
       );
       return Promise.resolve();
     }
     return this._client.typingOn(this._session.user.id);
   }
 
-  turnTypingIndicatorsOff(): Promise<any> {
+  typingOff(): Promise<any> {
     if (!this._session) {
       warning(
         false,
-        'turnTypingIndicatorsOff: should not be called in context without session'
+        'typingOff: should not be called in context without session'
       );
       return Promise.resolve();
     }

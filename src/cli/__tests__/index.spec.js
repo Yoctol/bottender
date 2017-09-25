@@ -1,5 +1,4 @@
 /* eslint-disable global-require */
-import path from 'path';
 
 jest.mock('didyoumean');
 jest.mock('../shared/log');
@@ -19,7 +18,6 @@ jest.mock('../actions/setMessengerProfile');
 jest.mock('../actions/setPersistentMenu');
 jest.mock('../actions/setWebhook');
 jest.mock('../actions/setTelegramWebhook');
-jest.mock('../actions/uploadImages');
 
 let log;
 let didYouMean;
@@ -323,73 +321,6 @@ describe('#setTelegramWebhook', () => {
       'http://test.com',
       undefined
     );
-  });
-});
-
-describe('#upload-images', () => {
-  it('to be called without passing any options', () => {
-    const uploadImages = require('../actions/uploadImages');
-    uploadImages.default = jest.fn();
-    process.argv = [
-      '/usr/local/bin/iojs',
-      '/usr/local/bin/toolbot',
-      'upload-images',
-      'fake-folder',
-    ];
-    require('../index');
-    expect(uploadImages.default).toBeCalledWith({
-      folderPath: path.resolve(
-        __dirname,
-        path.relative(__dirname, 'fake-folder')
-      ),
-      outputPath: undefined,
-      container: undefined,
-    });
-  });
-
-  it('to be called with outputPath', () => {
-    const uploadImages = require('../actions/uploadImages');
-    uploadImages.default = jest.fn();
-    process.argv = [
-      '/usr/local/bin/iojs',
-      '/usr/local/bin/toolbot',
-      'upload-images',
-      'fake-folder',
-      '-o',
-      'fake-output',
-    ];
-    require('../index');
-    expect(uploadImages.default).toBeCalledWith({
-      folderPath: path.resolve(
-        __dirname,
-        path.relative(__dirname, 'fake-folder')
-      ),
-      outputPath: 'fake-output',
-      container: undefined,
-    });
-  });
-
-  it('to be called with container name', () => {
-    const uploadImages = require('../actions/uploadImages');
-    uploadImages.default = jest.fn();
-    process.argv = [
-      '/usr/local/bin/iojs',
-      '/usr/local/bin/toolbot',
-      'upload-images',
-      'fake-folder',
-      '-c',
-      'fake-container',
-    ];
-    require('../index');
-    expect(uploadImages.default).toBeCalledWith({
-      folderPath: path.resolve(
-        __dirname,
-        path.relative(__dirname, 'fake-folder')
-      ),
-      outputPath: undefined,
-      container: 'fake-container',
-      delayMilliseconds: undefined,
-    });
   });
 });
 

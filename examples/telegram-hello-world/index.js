@@ -12,7 +12,7 @@ const bot = new TelegramBot({
 });
 
 bot.onEvent(context => {
-  context.sendMessage('Hello World');
+  context.sendText('Hello World');
 });
 
 const server = createServer(bot);
