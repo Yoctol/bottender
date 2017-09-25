@@ -6,6 +6,7 @@ import crypto from 'crypto';
 
 import { MessengerClient } from 'messaging-api-messenger';
 import warning from 'warning';
+import isBefore from 'date-fns/is_before';
 
 import MessengerContext from '../context/MessengerContext';
 import MessengerEvent, {
@@ -124,6 +125,19 @@ export default class MessengerConnector
     return !!entry.standby;
   }
 
+  _profilePicExpired(user: { profile_pic: string }): boolean {
+    try {
+      // Facebook CDN returns expiration time in the key `oe` in url params
+      // https://stackoverflow.com/questions/27595679/how-to-efficiently-retrieve-expiration-date-for-facebook-photo-url-and-renew-it/27596727#27596727
+      const oe = user.profile_pic.split('oe=')[1];
+      const timestamp = +`0x${oe}` * 1000;
+      const expireTime = new Date(timestamp);
+      return isBefore(expireTime, new Date());
+    } catch (e) {
+      return true;
+    }
+  }
+
   get platform(): string {
     return 'messenger';
   }
@@ -147,7 +161,7 @@ export default class MessengerConnector
     session: Session,
     body: MessengerRequestBody
   ): Promise<void> {
-    if (!session.user) {
+    if (!session.user || this._profilePicExpired(session.user)) {
       const senderId = this.getUniqueSessionIdFromRequest(body);
       // FIXME: refine user
       const user = await this._client.getUserProfile(senderId);

@@ -192,6 +192,34 @@ describe('#updateSession', () => {
       user,
     });
   });
+
+  it('update session when profile_pic expired', async () => {
+    const { connector, mockGraphAPIClient } = setup();
+    const user = {
+      id: '1412611362105802',
+      first_name: '薄餡',
+      last_name: '茱',
+      profile_pic: 'https://example.com/pic.png',
+      locale: 'en_US',
+      timezone: 8,
+      gender: 'male',
+    };
+    mockGraphAPIClient.getUserProfile.mockReturnValue(Promise.resolve(user));
+
+    const session = {
+      user: {
+        prifile_pic: 'https://example.com/pic.png?oe=386D4380', // expired at 2000-01-01T00:00:00.000Z
+      },
+    };
+    await connector.updateSession(session, request.body);
+
+    expect(mockGraphAPIClient.getUserProfile).toBeCalledWith(
+      '1412611362105802'
+    );
+    expect(session).toEqual({
+      user,
+    });
+  });
 });
 
 describe('#mapRequestToEvents', () => {
