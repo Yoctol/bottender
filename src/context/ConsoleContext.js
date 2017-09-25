@@ -42,15 +42,13 @@ export default class ConsoleContext extends Context implements PlatformContext {
    * Send text to the owner of then session.
    *
    */
-  sendText(text: string): void {
-    setTimeout(() => {
-      this._client.sendText(text);
-    }, this._messageDelay);
+  async sendText(text: string): Promise<void> {
+    await this.typing(this._messageDelay);
+    this._client.sendText(text);
   }
 
-  sendTextWithDelay(delay: number, text: string): void {
-    setTimeout(() => {
-      this._client.sendText(text);
-    }, delay);
+  async sendTextWithDelay(delay: number, text: string): Promise<void> {
+    await this.typing(delay);
+    this._client.sendText(text);
   }
 }

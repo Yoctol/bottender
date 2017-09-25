@@ -8,7 +8,6 @@ import type { SlackSession } from '../bot/SlackConnector';
 
 import Context from './Context';
 import SlackEvent from './SlackEvent';
-import DelayableJobQueue from './DelayableJobQueue';
 import type { PlatformContext } from './PlatformContext';
 
 type Options = {|
@@ -21,12 +20,9 @@ export default class SlackContext extends Context implements PlatformContext {
   _client: SlackOAuthClient;
   _event: SlackEvent;
   _session: ?SlackSession;
-  _jobQueue: DelayableJobQueue;
 
   constructor({ client, event, session }: Options) {
     super({ client, event, session });
-    this._jobQueue = new DelayableJobQueue();
-    this._jobQueue.beforeEach(({ delay }) => sleep(delay));
     this.setMessageDelay(1000);
   }
 
@@ -46,7 +42,7 @@ export default class SlackContext extends Context implements PlatformContext {
     await sleep(milliseconds);
   }
 
-  postMessage(text: string): Promise<any> {
+  async postMessage(text: string): Promise<any> {
     const channelId = this._getChannelIdFromSession();
 
     if (!channelId) {
@@ -54,20 +50,11 @@ export default class SlackContext extends Context implements PlatformContext {
         false,
         'postMessage: should not be called in context without session'
       );
-      return Promise.resolve();
+      return;
     }
 
-    return new Promise((resolve, reject) => {
-      this._enqueue({
-        instance: this._client,
-        method: 'postMessage',
-        args: [channelId, text, { as_user: true }],
-        delay: this._messageDelay,
-        showIndicators: true,
-        onSuccess: resolve,
-        onError: reject,
-      });
-    });
+    await this.typing(this._messageDelay);
+    return this._client.postMessage(channelId, text, { as_user: true });
   }
 
   /**
@@ -78,7 +65,7 @@ export default class SlackContext extends Context implements PlatformContext {
     return this.postMessage(text);
   }
 
-  sendTextWithDelay(delay: number, text: string): Promise<any> {
+  async sendTextWithDelay(delay: number, text: string): Promise<any> {
     warning(false, `sendTextWithDelay is deprecated.`);
 
     const channelId = this._getChannelIdFromSession();
@@ -88,30 +75,11 @@ export default class SlackContext extends Context implements PlatformContext {
         false,
         'sendTextWithDelay: should not be called in context without session'
       );
-      return Promise.resolve();
+      return;
     }
 
-    return new Promise((resolve, reject) => {
-      this._enqueue({
-        instance: this._client,
-        method: 'postMessage',
-        args: [channelId, text, { as_user: true }],
-        delay,
-        showIndicators: true,
-        onSuccess: resolve,
-        onError: reject,
-      });
-    });
-  }
-
-  _enqueue(job: Object): Promise<any> {
-    return new Promise((resolve, reject) => {
-      this._jobQueue.enqueue({
-        ...job,
-        onSuccess: resolve,
-        onError: reject,
-      });
-    });
+    await this.typing(delay);
+    return this._client.postMessage(channelId, text, { as_user: true });
   }
 
   // FIXME: this is to fix type checking

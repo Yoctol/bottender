@@ -8,7 +8,6 @@ import type { TelegramSession } from '../bot/TelegramConnector';
 
 import Context from './Context';
 import TelegramEvent from './TelegramEvent';
-import DelayableJobQueue from './DelayableJobQueue';
 import type { PlatformContext } from './PlatformContext';
 
 type Options = {|
@@ -21,12 +20,9 @@ class TelegramContext extends Context implements PlatformContext {
   _client: TelegramClient;
   _event: TelegramEvent;
   _session: ?TelegramSession;
-  _jobQueue: DelayableJobQueue;
 
   constructor({ client, event, session }: Options) {
     super({ client, event, session });
-    this._jobQueue = new DelayableJobQueue();
-    this._jobQueue.beforeEach(({ delay }) => sleep(delay));
     this.setMessageDelay(1000);
   }
 
@@ -50,24 +46,20 @@ class TelegramContext extends Context implements PlatformContext {
    * Send text to the owner of then session.
    *
    */
-  sendText(text: string): Promise<any> {
+  async sendText(text: string): Promise<any> {
     if (!this._session) {
       warning(
         false,
         'sendText: should not be called in context without session'
       );
-      return Promise.resolve();
+      return;
     }
-    return this._enqueue({
-      instance: this._client,
-      method: 'sendMessage',
-      args: [this._session.user.id, text],
-      delay: this._messageDelay,
-      showIndicators: true,
-    });
+    const session = this._session;
+    await this.typing(this._messageDelay);
+    return this._client.sendMessage(session.user.id, text);
   }
 
-  sendTextWithDelay(delay: number, text: string): Promise<any> {
+  async sendTextWithDelay(delay: number, text: string): Promise<any> {
     warning(false, `sendTextWithDelay is deprecated.`);
 
     if (!this._session) {
@@ -75,25 +67,11 @@ class TelegramContext extends Context implements PlatformContext {
         false,
         'sendText: should not be called in context without session'
       );
-      return Promise.resolve();
+      return;
     }
-    return this._enqueue({
-      instance: this._client,
-      method: 'sendMessage',
-      args: [this._session.user.id, text],
-      delay,
-      showIndicators: true,
-    });
-  }
-
-  _enqueue(job: Object): Promise<any> {
-    return new Promise((resolve, reject) => {
-      this._jobQueue.enqueue({
-        ...job,
-        onSuccess: resolve,
-        onError: reject,
-      });
-    });
+    const session = this._session;
+    await this.typing(delay);
+    return this._client.sendMessage(session.user.id, text);
   }
 }
 
@@ -117,21 +95,16 @@ sendMethods.forEach(method => {
     enumerable: false,
     configurable: true,
     writable: true,
-    value(...args) {
+    async value(...args) {
       if (!this._session) {
         warning(
           false,
           `${method}: should not be called in context without session`
         );
-        return Promise.resolve();
+        return;
       }
-      return this._enqueue({
-        instance: this._client,
-        method,
-        args: [this._session.user.id, ...args],
-        delay: this._messageDelay,
-        showIndicators: true,
-      });
+      await this.typing(this._messageDelay);
+      return this._client[method](this._session.user.id, ...args);
     },
   });
 
@@ -139,21 +112,17 @@ sendMethods.forEach(method => {
     enumerable: false,
     configurable: true,
     writable: true,
-    value(delay, ...rest) {
+    async value(delay, ...rest) {
       if (!this._session) {
         warning(
           false,
           `${method}WithDelay: should not be called in context without session`
         );
-        return Promise.resolve();
+        return;
       }
-      return this._enqueue({
-        instance: this._client,
-        method,
-        args: [this._session.user.id, ...rest],
-        delay,
-        showIndicators: true,
-      });
+
+      await this.typing(delay);
+      return this._client[method](this._session.user.id, ...rest);
     },
   });
 });
