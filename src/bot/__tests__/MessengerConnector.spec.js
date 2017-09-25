@@ -1,10 +1,12 @@
 import { MessengerClient } from 'messaging-api-messenger';
+import warning from 'warning';
 
 import MessengerConnector from '../MessengerConnector';
 import MessengerEvent from '../../context/MessengerEvent';
 import MessengerContext from '../../context/MessengerContext';
 
 jest.mock('messaging-api-messenger');
+jest.mock('warning');
 
 const ACCESS_TOKEN = 'FAKE_TOKEN';
 
@@ -224,5 +226,19 @@ describe('#createContext', () => {
 
     expect(context).toBeDefined();
     expect(context).toBeInstanceOf(MessengerContext);
+  });
+});
+
+describe('#verifySignature', () => {
+  it('should return true and show warning if app secret not set', () => {
+    const { connector } = setup();
+
+    const result = connector.verifySignature('rawBody', 'signature');
+
+    expect(result).toBe(true);
+    expect(warning).toBeCalledWith(
+      false,
+      'App secret is not set. Cannot perform Messenger signature validation!'
+    );
   });
 });

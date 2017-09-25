@@ -8,12 +8,14 @@ import MessengerConnector from './MessengerConnector';
 export default class MessengerBot extends Bot {
   constructor({
     accessToken,
+    appSecret,
     sessionStore,
   }: {
     accessToken: string,
+    appSecret: string,
     sessionStore: SessionStore,
   }) {
-    const connector = new MessengerConnector({ accessToken });
+    const connector = new MessengerConnector({ accessToken, appSecret });
     super({ connector, sessionStore });
   }
 }
