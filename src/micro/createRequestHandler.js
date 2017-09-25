@@ -1,6 +1,7 @@
 import { json, send } from 'micro';
 
 import verifyLineSignature from './verifyLineSignature';
+import verifyMessengerSignature from './verifyMessengerSignature';
 import verifyMessengerWebhook from './verifyMessengerWebhook';
 import verifySlackWebhook from './verifySlackWebhook';
 
@@ -18,9 +19,14 @@ function createRequestHandler(bot, config = {}) {
       ) {
         await verifySlackWebhook()(req, res);
       } else {
-        if (bot.connector.platform === 'line') {
-          const LineVerified = await verifyLineSignature(bot)(req, res);
-          if (!LineVerified) {
+        if (bot.connector.platform === 'messenger') {
+          const valid = await verifyMessengerSignature(bot)(req, res);
+          if (!valid) {
+            return;
+          }
+        } else if (bot.connector.platform === 'line') {
+          const valid = await verifyLineSignature(bot)(req, res);
+          if (!valid) {
             return;
           }
         }
