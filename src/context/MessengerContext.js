@@ -6,9 +6,10 @@ import { MessengerClient } from 'messaging-api-messenger';
 
 import type { MessengerSession } from '../bot/MessengerConnector';
 
-import type { Context } from './Context';
+import Context from './Context';
 import MessengerEvent from './MessengerEvent';
 import DelayableJobQueue from './DelayableJobQueue';
+import type { PlatformContext } from './PlatformContext';
 
 type Options = {|
   client: MessengerClient,
@@ -16,7 +17,7 @@ type Options = {|
   session: ?MessengerSession,
 |};
 
-class MessengerContext implements Context {
+class MessengerContext extends Context implements PlatformContext {
   _client: MessengerClient;
   _event: MessengerEvent;
   _session: ?MessengerSession;
@@ -24,6 +25,7 @@ class MessengerContext implements Context {
   _messageDelay: number = 1000;
 
   constructor({ client, event, session }: Options) {
+    super();
     this._client = client;
     this._event = event;
     this._session = session;

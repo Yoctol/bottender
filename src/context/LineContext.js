@@ -7,9 +7,10 @@ import { LineClient } from 'messaging-api-line';
 
 import type { LineSession } from '../bot/LineConnector';
 
-import type { Context } from './Context';
+import Context from './Context';
 import LineEvent from './LineEvent';
 import DelayableJobQueue from './DelayableJobQueue';
+import type { PlatformContext } from './PlatformContext';
 
 type Options = {|
   client: LineClient,
@@ -17,7 +18,7 @@ type Options = {|
   session: ?LineSession,
 |};
 
-class LineContext implements Context {
+class LineContext extends Context implements PlatformContext {
   _client: LineClient;
   _event: LineEvent;
   _session: ?LineSession;
@@ -27,6 +28,7 @@ class LineContext implements Context {
   _replied: boolean = false;
 
   constructor({ client, event, session }: Options) {
+    super();
     this._client = client;
     this._event = event;
     this._session = session;

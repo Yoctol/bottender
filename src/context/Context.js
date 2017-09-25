@@ -1,12 +1,13 @@
 /* @flow */
 
-import type { Event } from './Event';
+export default class Context {
+  _handled = false;
 
-export interface Context {
-  +platform: string,
-  +event: Event,
-  +session: ?{},
-  setMessageDelay(milliseconds: number): void,
-  +sendText: (text: string) => any,
-  +sendTextWithDelay: (seconds: number, text: string) => any,
+  markHandled(): void {
+    this._handled = true;
+  }
+
+  isHandled(): boolean {
+    return this._handled;
+  }
 }

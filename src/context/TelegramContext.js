@@ -6,9 +6,10 @@ import { TelegramClient } from 'messaging-api-telegram';
 
 import type { TelegramSession } from '../bot/TelegramConnector';
 
-import type { Context } from './Context';
+import Context from './Context';
 import TelegramEvent from './TelegramEvent';
 import DelayableJobQueue from './DelayableJobQueue';
+import type { PlatformContext } from './PlatformContext';
 
 type Options = {|
   client: TelegramClient,
@@ -16,7 +17,7 @@ type Options = {|
   session: ?TelegramSession,
 |};
 
-class TelegramContext implements Context {
+class TelegramContext extends Context implements PlatformContext {
   _client: TelegramClient;
   _event: TelegramEvent;
   _session: ?TelegramSession;
@@ -24,6 +25,7 @@ class TelegramContext implements Context {
   _messageDelay: number = 1000;
 
   constructor({ client, event, session }: Options) {
+    super();
     this._client = client;
     this._event = event;
     this._session = session;
