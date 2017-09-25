@@ -29,7 +29,7 @@ const request = {
             message: {
               mid: 'mid.1486464322190:cb04e5a654',
               seq: 339979,
-              text: '測試了',
+              text: 'text',
             },
           },
         ],
@@ -43,7 +43,7 @@ const echoRequest = {
     object: 'page',
     entry: [
       {
-        id: '1134713619900975', // 粉絲團 id
+        id: '1134713619900975', // page id
         time: 1492414608999.0,
         messaging: [
           {
@@ -51,7 +51,7 @@ const echoRequest = {
               id: '1134713619900975',
             },
             recipient: {
-              id: '1244813222196986', // 使用者 id
+              id: '1244813222196986', // user id
             },
             timestamp: 1492414608982.0,
             message: {
@@ -59,7 +59,7 @@ const echoRequest = {
               app_id: 1821152484774199,
               mid: 'mid.$cAARS90328R5hrBz-Vlbete17ftIb',
               seq: 661428,
-              text: '未來就是現在，引領未來商務的關鍵字，你壓寶哪一個？',
+              text: 'text',
             },
           },
         ],
@@ -87,7 +87,7 @@ const batchRequest = {
             message: {
               mid: 'mid.1486464322190:cb04e5a654',
               seq: 339979,
-              text: '測試1',
+              text: 'test 1',
             },
           },
         ],
@@ -107,7 +107,7 @@ const batchRequest = {
             message: {
               mid: 'mid.1486464322190:cb04e5a656',
               seq: 339979,
-              text: '測試2',
+              text: 'test 2',
             },
           },
         ],
@@ -173,8 +173,8 @@ describe('#updateSession', () => {
     const { connector, mockGraphAPIClient } = setup();
     const user = {
       id: '1412611362105802',
-      first_name: '薄餡',
-      last_name: '茱',
+      first_name: 'firstName',
+      last_name: 'lastName',
       profile_pic: 'https://example.com/pic.png',
       locale: 'en_US',
       timezone: 8,
@@ -197,8 +197,8 @@ describe('#updateSession', () => {
     const { connector, mockGraphAPIClient } = setup();
     const user = {
       id: '1412611362105802',
-      first_name: '薄餡',
-      last_name: '茱',
+      first_name: 'firstName',
+      last_name: 'lastName',
       profile_pic: 'https://example.com/pic.png',
       locale: 'en_US',
       timezone: 8,

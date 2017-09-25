@@ -16,7 +16,7 @@ const request = {
     event: {
       type: 'message',
       user: 'U13AGSN1X',
-      text: '你好',
+      text: 'hello',
       ts: '1500435914.425136',
       channel: 'C6A9RJJ3F',
       event_ts: '1500435914.425136',

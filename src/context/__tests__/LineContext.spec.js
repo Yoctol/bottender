@@ -141,14 +141,14 @@ it('#sendLocation to call client.pushLocation', async () => {
 
   await context.sendLocation({
     title: 'my location',
-    address: '〒150-0002 東京都渋谷区渋谷２丁目２１−１',
+    address: '〒150-0002 東京都渋谷区渋谷２丁目２１−１s',
     latitude: 35.65910807942215,
     longitude: 139.70372892916203,
   });
 
   expect(client.pushLocation).toBeCalledWith(session.user.id, {
     title: 'my location',
-    address: '〒150-0002 東京都渋谷区渋谷２丁目２１−１',
+    address: '〒150-0002 東京都渋谷区渋谷２丁目２１−１s',
     latitude: 35.65910807942215,
     longitude: 139.70372892916203,
   });
