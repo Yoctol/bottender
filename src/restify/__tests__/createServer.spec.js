@@ -7,7 +7,7 @@ import createServer from '../createServer';
 
 jest.mock('../../connectNgrok');
 
-function setup({ platform = 'messenger' } = { platform: 'messenger' }) {
+function setup({ platform }) {
   const requestHandler = jest.fn();
   const bot = {
     createRequestHandler: () => requestHandler,
@@ -28,7 +28,7 @@ afterEach(() => {
 });
 
 it('should handle token verification', async () => {
-  const { bot } = setup();
+  const { bot } = setup({ platform: 'messenger' });
   const verifyToken = '1qaz2wsx';
   const server = createServer(bot, { verifyToken });
   const { status, text } = await request(server)
@@ -59,7 +59,7 @@ it('should not handle token verification if platform is not messenger', async ()
 });
 
 it('should handle bot request', async () => {
-  const { bot, requestHandler } = setup();
+  const { bot, requestHandler } = setup({ platform: 'other' });
   requestHandler.mockReturnValue(Promise.resolve());
   const verifyToken = '1qaz2wsx';
   const server = createServer(bot, { verifyToken });
@@ -71,7 +71,7 @@ it('should handle bot request', async () => {
 });
 
 it('should run connectNgrok when server listen and ngrok option is provided', async () => {
-  const { bot, requestHandler } = setup();
+  const { bot, requestHandler } = setup({ platform: 'other' });
   requestHandler.mockReturnValue(Promise.resolve());
   const verifyToken = '1qaz2wsx';
   const server = createServer(bot, { verifyToken, ngrok: true });
