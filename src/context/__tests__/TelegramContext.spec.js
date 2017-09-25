@@ -4,6 +4,20 @@ import TelegramEvent from '../TelegramEvent';
 jest.mock('delay');
 jest.mock('messaging-api-messenger');
 
+const createMockTelegramClient = () => ({
+  sendMessage: jest.fn(),
+  sendPhoto: jest.fn(),
+  sendAudio: jest.fn(),
+  sendDocument: jest.fn(),
+  sendSticker: jest.fn(),
+  sendVideo: jest.fn(),
+  sendVoice: jest.fn(),
+  sendLocation: jest.fn(),
+  sendVenue: jest.fn(),
+  sendContact: jest.fn(),
+  sendChatAction: jest.fn(),
+});
+
 const rawEvent = {
   message: {
     message_id: 666,
@@ -26,7 +40,7 @@ const rawEvent = {
 };
 
 const setup = () => {
-  const client = {};
+  const client = createMockTelegramClient();
   const session = {
     user: {
       id: 'fakeUserId',
@@ -38,6 +52,7 @@ const setup = () => {
     session,
   };
   const context = new TelegramContext(args);
+  context.typing = jest.fn();
   return {
     context,
     session,
@@ -70,239 +85,101 @@ it('get #client works', () => {
   expect(context.client).toBe(client);
 });
 
-it('#sendMessage put sendMessage to jobQueue', () => {
+it('#sendMessage to call client.sendMessage', async () => {
   const { context, client, session } = setup();
-  context._jobQueue = {
-    enqueue: jest.fn(),
-  };
 
-  context.sendMessage('xxx.com');
+  await context.sendMessage('xxx.com');
 
-  expect(context._jobQueue.enqueue).toBeCalledWith({
-    instance: client,
-    method: 'sendMessage',
-    args: [session.user.id, 'xxx.com'],
-    delay: 1000,
-    showIndicators: true,
-    onSuccess: expect.any(Function),
-    onError: expect.any(Function),
-  });
+  expect(client.sendMessage).toBeCalledWith(session.user.id, 'xxx.com');
 });
 
-it('#sendPhoto put sendPhoto to jobQueue', () => {
+it('#sendPhoto to call client.sendPhoto', async () => {
   const { context, client, session } = setup();
-  context._jobQueue = {
-    enqueue: jest.fn(),
-  };
 
-  context.sendPhoto('xxx.png');
+  await context.sendPhoto('xxx.png');
 
-  expect(context._jobQueue.enqueue).toBeCalledWith({
-    instance: client,
-    method: 'sendPhoto',
-    args: [session.user.id, 'xxx.png'],
-    delay: 1000,
-    showIndicators: true,
-    onSuccess: expect.any(Function),
-    onError: expect.any(Function),
-  });
+  expect(client.sendPhoto).toBeCalledWith(session.user.id, 'xxx.png');
 });
 
-it('#sendAudio put sendAudio to jobQueue', () => {
+it('#sendAudio to call client.sendAudio', async () => {
   const { context, client, session } = setup();
-  context._jobQueue = {
-    enqueue: jest.fn(),
-  };
 
-  context.sendAudio('xxx.mp3');
+  await context.sendAudio('xxx.mp3');
 
-  expect(context._jobQueue.enqueue).toBeCalledWith({
-    instance: client,
-    method: 'sendAudio',
-    args: [session.user.id, 'xxx.mp3'],
-    delay: 1000,
-    showIndicators: true,
-    onSuccess: expect.any(Function),
-    onError: expect.any(Function),
-  });
+  expect(client.sendAudio).toBeCalledWith(session.user.id, 'xxx.mp3');
 });
 
-it('#sendDocument put sendDocument to jobQueue', () => {
+it('#sendDocument to call client.sendDocument', async () => {
   const { context, client, session } = setup();
-  context._jobQueue = {
-    enqueue: jest.fn(),
-  };
 
-  context.sendDocument('xxx.gif');
+  await context.sendDocument('xxx.gif');
 
-  expect(context._jobQueue.enqueue).toBeCalledWith({
-    instance: client,
-    method: 'sendDocument',
-    args: [session.user.id, 'xxx.gif'],
-    delay: 1000,
-    showIndicators: true,
-    onSuccess: expect.any(Function),
-    onError: expect.any(Function),
-  });
+  expect(client.sendDocument).toBeCalledWith(session.user.id, 'xxx.gif');
 });
 
-it('#sendSticker put sendSticker to jobQueue', () => {
+it('#sendSticker to call client.sendSticker', async () => {
   const { context, client, session } = setup();
-  context._jobQueue = {
-    enqueue: jest.fn(),
-  };
 
-  context.sendSticker('CAADAgADQAADyIsGAAE7MpzFPFQX5QI');
+  await context.sendSticker('CAADAgADQAADyIsGAAE7MpzFPFQX5QI');
 
-  expect(context._jobQueue.enqueue).toBeCalledWith({
-    instance: client,
-    method: 'sendSticker',
-    args: [session.user.id, 'CAADAgADQAADyIsGAAE7MpzFPFQX5QI'],
-    delay: 1000,
-    showIndicators: true,
-    onSuccess: expect.any(Function),
-    onError: expect.any(Function),
-  });
+  expect(client.sendSticker).toBeCalledWith(
+    session.user.id,
+    'CAADAgADQAADyIsGAAE7MpzFPFQX5QI'
+  );
 });
 
-it('#sendVideo put sendVideo to jobQueue', () => {
+it('#sendVideo to call client.sendVideo', async () => {
   const { context, client, session } = setup();
-  context._jobQueue = {
-    enqueue: jest.fn(),
-  };
 
-  context.sendVideo('xxx.mp4');
+  await context.sendVideo('xxx.mp4');
 
-  expect(context._jobQueue.enqueue).toBeCalledWith({
-    instance: client,
-    method: 'sendVideo',
-    args: [session.user.id, 'xxx.mp4'],
-    delay: 1000,
-    showIndicators: true,
-    onSuccess: expect.any(Function),
-    onError: expect.any(Function),
-  });
+  expect(client.sendVideo).toBeCalledWith(session.user.id, 'xxx.mp4');
 });
 
-it('#sendVoice put sendVoice to jobQueue', () => {
+it('#sendVoice to call client.sendVoice', async () => {
   const { context, client, session } = setup();
-  context._jobQueue = {
-    enqueue: jest.fn(),
-  };
 
-  context.sendVoice('xxx.ogg');
+  await context.sendVoice('xxx.ogg');
 
-  expect(context._jobQueue.enqueue).toBeCalledWith({
-    instance: client,
-    method: 'sendVoice',
-    args: [session.user.id, 'xxx.ogg'],
-    delay: 1000,
-    showIndicators: true,
-    onSuccess: expect.any(Function),
-    onError: expect.any(Function),
-  });
+  expect(client.sendVoice).toBeCalledWith(session.user.id, 'xxx.ogg');
 });
 
-it('#sendLocation put sendLocation to jobQueue', () => {
+it('#sendLocation to call client.sendLocation', async () => {
   const { context, client, session } = setup();
-  context._jobQueue = {
-    enqueue: jest.fn(),
-  };
 
   const location = {};
 
-  context.sendLocation(location);
+  await context.sendLocation(location);
 
-  expect(context._jobQueue.enqueue).toBeCalledWith({
-    instance: client,
-    method: 'sendLocation',
-    args: [session.user.id, location],
-    delay: 1000,
-    showIndicators: true,
-    onSuccess: expect.any(Function),
-    onError: expect.any(Function),
-  });
+  expect(client.sendLocation).toBeCalledWith(session.user.id, location);
 });
 
-it('#sendVenue put sendVenue to jobQueue', () => {
+it('#sendVenue to call client.sendVenue', async () => {
   const { context, client, session } = setup();
-  context._jobQueue = {
-    enqueue: jest.fn(),
-  };
 
   const venue = {};
 
-  context.sendVenue(venue);
+  await context.sendVenue(venue);
 
-  expect(context._jobQueue.enqueue).toBeCalledWith({
-    instance: client,
-    method: 'sendVenue',
-    args: [session.user.id, venue],
-    delay: 1000,
-    showIndicators: true,
-    onSuccess: expect.any(Function),
-    onError: expect.any(Function),
-  });
+  expect(client.sendVenue).toBeCalledWith(session.user.id, venue);
 });
 
-it('#sendContact put sendContact to jobQueue', () => {
+it('#sendContact to call client.sendContact', async () => {
   const { context, client, session } = setup();
-  context._jobQueue = {
-    enqueue: jest.fn(),
-  };
 
   const contact = {};
 
-  context.sendContact(contact);
+  await context.sendContact(contact);
 
-  expect(context._jobQueue.enqueue).toBeCalledWith({
-    instance: client,
-    method: 'sendContact',
-    args: [session.user.id, contact],
-    delay: 1000,
-    showIndicators: true,
-    onSuccess: expect.any(Function),
-    onError: expect.any(Function),
-  });
+  expect(client.sendContact).toBeCalledWith(session.user.id, contact);
 });
 
-it('#sendChatAction put sendChatAction to jobQueue', () => {
-  const { context, client, session } = setup();
-  context._jobQueue = {
-    enqueue: jest.fn(),
-  };
-
-  context.sendChatAction('typing');
-
-  expect(context._jobQueue.enqueue).toBeCalledWith({
-    instance: client,
-    method: 'sendChatAction',
-    args: [session.user.id, 'typing'],
-    delay: 1000,
-    showIndicators: true,
-    onSuccess: expect.any(Function),
-    onError: expect.any(Function),
-  });
-});
-
-it('use default message delay', () => {
+it('#sendChatAction to call client.sendChatAction', async () => {
   const { context, client, session } = setup();
 
-  context._jobQueue = {
-    enqueue: jest.fn(),
-  };
+  await context.sendChatAction('typing');
 
-  context.sendMessage('yooooooo~');
-
-  expect(context._jobQueue.enqueue).toBeCalledWith({
-    instance: client,
-    method: 'sendMessage',
-    args: [session.user.id, 'yooooooo~'],
-    delay: 1000,
-    showIndicators: true,
-    onSuccess: expect.any(Function),
-    onError: expect.any(Function),
-  });
+  expect(client.sendChatAction).toBeCalledWith(session.user.id, 'typing');
 });
 
 it('has send with delay methods', () => {
@@ -320,21 +197,11 @@ it('has send with delay methods', () => {
   expect(context.sendChatActionWithDelay).toBeDefined();
 });
 
-it('#sendMessageWithDelay put sendMessage to jobQueue', () => {
+it('#sendMessageWithDelay to call client.sendMessage', async () => {
   const { context, client, session } = setup();
-  context._jobQueue = {
-    enqueue: jest.fn(),
-  };
 
-  context.sendMessageWithDelay(3000, 'xxx.com');
+  await context.sendMessageWithDelay(3000, 'xxx.com');
 
-  expect(context._jobQueue.enqueue).toBeCalledWith({
-    instance: client,
-    method: 'sendMessage',
-    args: [session.user.id, 'xxx.com'],
-    delay: 3000,
-    showIndicators: true,
-    onSuccess: expect.any(Function),
-    onError: expect.any(Function),
-  });
+  expect(context.typing).toBeCalledWith(3000);
+  expect(client.sendMessage).toBeCalledWith(session.user.id, 'xxx.com');
 });

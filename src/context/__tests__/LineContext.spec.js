@@ -1,6 +1,7 @@
 import LineContext from '../LineContext';
 import LineEvent from '../LineEvent';
 
+jest.mock('delay');
 jest.mock('messaging-api-line');
 
 const rawEvent = {
@@ -19,7 +20,19 @@ const rawEvent = {
 };
 
 const setup = () => {
-  const client = {};
+  const client = {
+    replyText: jest.fn(),
+    pushText: jest.fn(),
+    pushImage: jest.fn(),
+    pushAudio: jest.fn(),
+    pushVideo: jest.fn(),
+    pushLocation: jest.fn(),
+    pushSticker: jest.fn(),
+    pushButtonTemplate: jest.fn(),
+    pushConfirmTemplate: jest.fn(),
+    pushImagemap: jest.fn(),
+    pushCarouselTemplate: jest.fn(),
+  };
   const session = {
     user: {
       id: 'fakeUserId',
@@ -30,6 +43,7 @@ const setup = () => {
     event: new LineEvent(rawEvent),
     session,
   });
+  context.typing = jest.fn();
   return {
     context,
     session,
@@ -63,170 +77,93 @@ it('get #client works', () => {
 });
 
 describe('#reply', () => {
-  it('#replyText put replyText to jobQueue', () => {
+  it('#replyText to call client.replayText', async () => {
     const { context, client } = setup();
-    context._jobQueue = {
-      enqueue: jest.fn(),
-    };
 
-    context.replyText('xxx.com');
+    await context.replyText('xxx.com');
 
-    expect(context._jobQueue.enqueue).toBeCalledWith({
-      instance: client,
-      method: 'replyText',
-      args: ['nHuyWiB7yP5Zw52FIkcQobQuGDXCTA', 'xxx.com'],
-      delay: 1000,
-      showIndicators: true,
-      onSuccess: expect.any(Function),
-      onError: expect.any(Function),
-    });
+    expect(client.replyText).toBeCalledWith(rawEvent.replyToken, 'xxx.com');
   });
 
-  it('should throw when reply mulitple times', () => {
+  it('should throw when reply mulitple times', async () => {
     const { context } = setup();
-    context._jobQueue = {
-      enqueue: jest.fn(),
-    };
 
-    context.replyText('xxx.com');
-    expect(() => {
-      context.replyText('xxx.com');
-    }).toThrow();
+    const error = new Error('Can not reply event mulitple times');
+    error.name = 'Invariant Violation';
+
+    await context.replyText('xxx.com');
+    await expect(context.replyText('xxx.com')).rejects.toEqual(error);
   });
 });
 
-it('#sendText put pushText to jobQueue', () => {
+it('#sendText to call client.pushText', async () => {
   const { context, client, session } = setup();
-  context._jobQueue = {
-    enqueue: jest.fn(),
-  };
 
-  context.sendText('xxx.com');
+  await context.sendText('xxx.com');
 
-  expect(context._jobQueue.enqueue).toBeCalledWith({
-    instance: client,
-    method: 'pushText',
-    args: [session.user.id, 'xxx.com'],
-    delay: 1000,
-    showIndicators: true,
-    onSuccess: expect.any(Function),
-    onError: expect.any(Function),
-  });
+  expect(client.pushText).toBeCalledWith(session.user.id, 'xxx.com');
 });
 
-it('#sendImage put pushImage to jobQueue', () => {
+it('#sendImage to call client.pushImage', async () => {
   const { context, client, session } = setup();
-  context._jobQueue = {
-    enqueue: jest.fn(),
-  };
 
-  context.sendImage('xxx.jpg', 'yyy.jpg');
+  await context.sendImage('xxx.jpg', 'yyy.jpg');
 
-  expect(context._jobQueue.enqueue).toBeCalledWith({
-    instance: client,
-    method: 'pushImage',
-    args: [session.user.id, 'xxx.jpg', 'yyy.jpg'],
-    delay: 1000,
-    showIndicators: true,
-    onSuccess: expect.any(Function),
-    onError: expect.any(Function),
-  });
+  expect(client.pushImage).toBeCalledWith(
+    session.user.id,
+    'xxx.jpg',
+    'yyy.jpg'
+  );
 });
 
-it('#sendAudio put pushAudio to jobQueue', () => {
+it('#sendAudio to call client.pushAudio', async () => {
   const { context, client, session } = setup();
-  context._jobQueue = {
-    enqueue: jest.fn(),
-  };
 
-  context.sendAudio('xxx.mp3', 240000);
+  await context.sendAudio('xxx.mp3', 240000);
 
-  expect(context._jobQueue.enqueue).toBeCalledWith({
-    instance: client,
-    method: 'pushAudio',
-    args: [session.user.id, 'xxx.mp3', 240000],
-    delay: 1000,
-    showIndicators: true,
-    onSuccess: expect.any(Function),
-    onError: expect.any(Function),
-  });
+  expect(client.pushAudio).toBeCalledWith(session.user.id, 'xxx.mp3', 240000);
 });
 
-it('#sendVideo put pushVideo to jobQueue', () => {
+it('#sendVideo to call client.pushVideo', async () => {
   const { context, client, session } = setup();
-  context._jobQueue = {
-    enqueue: jest.fn(),
-  };
 
-  context.sendVideo('xxx.mp4', 'yyy.jpg');
+  await context.sendVideo('xxx.mp4', 'yyy.jpg');
 
-  expect(context._jobQueue.enqueue).toBeCalledWith({
-    instance: client,
-    method: 'pushVideo',
-    args: [session.user.id, 'xxx.mp4', 'yyy.jpg'],
-    delay: 1000,
-    showIndicators: true,
-    onSuccess: expect.any(Function),
-    onError: expect.any(Function),
-  });
+  expect(client.pushVideo).toBeCalledWith(
+    session.user.id,
+    'xxx.mp4',
+    'yyy.jpg'
+  );
 });
 
-it('#sendLocation put pushLocation to jobQueue', () => {
+it('#sendLocation to call client.pushLocation', async () => {
   const { context, client, session } = setup();
-  context._jobQueue = {
-    enqueue: jest.fn(),
-  };
 
-  context.sendLocation({
+  await context.sendLocation({
     title: 'my location',
     address: '〒150-0002 東京都渋谷区渋谷２丁目２１−１',
     latitude: 35.65910807942215,
     longitude: 139.70372892916203,
   });
 
-  expect(context._jobQueue.enqueue).toBeCalledWith({
-    instance: client,
-    method: 'pushLocation',
-    args: [
-      session.user.id,
-      {
-        title: 'my location',
-        address: '〒150-0002 東京都渋谷区渋谷２丁目２１−１',
-        latitude: 35.65910807942215,
-        longitude: 139.70372892916203,
-      },
-    ],
-    delay: 1000,
-    showIndicators: true,
-    onSuccess: expect.any(Function),
-    onError: expect.any(Function),
+  expect(client.pushLocation).toBeCalledWith(session.user.id, {
+    title: 'my location',
+    address: '〒150-0002 東京都渋谷区渋谷２丁目２１−１',
+    latitude: 35.65910807942215,
+    longitude: 139.70372892916203,
   });
 });
 
-it('#sendSticker put pushSticker to jobQueue', () => {
+it('#sendSticker to call client.pushSticker', async () => {
   const { context, client, session } = setup();
-  context._jobQueue = {
-    enqueue: jest.fn(),
-  };
 
-  context.sendSticker('1', '1');
+  await context.sendSticker('1', '1');
 
-  expect(context._jobQueue.enqueue).toBeCalledWith({
-    instance: client,
-    method: 'pushSticker',
-    args: [session.user.id, '1', '1'],
-    delay: 1000,
-    showIndicators: true,
-    onSuccess: expect.any(Function),
-    onError: expect.any(Function),
-  });
+  expect(client.pushSticker).toBeCalledWith(session.user.id, '1', '1');
 });
 
-it('#sendImagemap put pushImagemap to jobQueue', () => {
+it('#sendImagemap to call client.pushImagemap', async () => {
   const { context, client, session } = setup();
-  context._jobQueue = {
-    enqueue: jest.fn(),
-  };
 
   const template = {
     baseUrl: 'https://example.com/bot/images/rm001',
@@ -256,24 +193,17 @@ it('#sendImagemap put pushImagemap to jobQueue', () => {
     ],
   };
 
-  context.sendImagemap('this is an imagemap', template);
+  await context.sendImagemap('this is an imagemap', template);
 
-  expect(context._jobQueue.enqueue).toBeCalledWith({
-    instance: client,
-    method: 'pushImagemap',
-    args: [session.user.id, 'this is an imagemap', template],
-    delay: 1000,
-    showIndicators: true,
-    onSuccess: expect.any(Function),
-    onError: expect.any(Function),
-  });
+  expect(client.pushImagemap).toBeCalledWith(
+    session.user.id,
+    'this is an imagemap',
+    template
+  );
 });
 
-it('#sendButtonTemplate put pushButtonTemplate to jobQueue', () => {
+it('#sendButtonTemplate to call client.pushButtonTemplate', async () => {
   const { context, client, session } = setup();
-  context._jobQueue = {
-    enqueue: jest.fn(),
-  };
 
   const template = {
     thumbnailImageUrl: 'https://example.com/bot/images/image.jpg',
@@ -298,24 +228,17 @@ it('#sendButtonTemplate put pushButtonTemplate to jobQueue', () => {
     ],
   };
 
-  context.sendButtonTemplate('this is a button template', template);
+  await context.sendButtonTemplate('this is a button template', template);
 
-  expect(context._jobQueue.enqueue).toBeCalledWith({
-    instance: client,
-    method: 'pushButtonTemplate',
-    args: [session.user.id, 'this is a button template', template],
-    delay: 1000,
-    showIndicators: true,
-    onSuccess: expect.any(Function),
-    onError: expect.any(Function),
-  });
+  expect(client.pushButtonTemplate).toBeCalledWith(
+    session.user.id,
+    'this is a button template',
+    template
+  );
 });
 
-it('#sendConfirmTemplate put pushConfirmTemplate to jobQueue', () => {
+it('#sendConfirmTemplate to call client.pushConfirmTemplate', async () => {
   const { context, client, session } = setup();
-  context._jobQueue = {
-    enqueue: jest.fn(),
-  };
 
   const template = {
     text: 'Are you sure?',
@@ -333,24 +256,17 @@ it('#sendConfirmTemplate put pushConfirmTemplate to jobQueue', () => {
     ],
   };
 
-  context.sendConfirmTemplate('this is a confirm template', template);
+  await context.sendConfirmTemplate('this is a confirm template', template);
 
-  expect(context._jobQueue.enqueue).toBeCalledWith({
-    instance: client,
-    method: 'pushConfirmTemplate',
-    args: [session.user.id, 'this is a confirm template', template],
-    delay: 1000,
-    showIndicators: true,
-    onSuccess: expect.any(Function),
-    onError: expect.any(Function),
-  });
+  expect(client.pushConfirmTemplate).toBeCalledWith(
+    session.user.id,
+    'this is a confirm template',
+    template
+  );
 });
 
-it('#sendCarouselTemplate put pushCarouselTemplate to jobQueue', () => {
+it('#sendCarouselTemplate to call client.pushCarouselTemplate', async () => {
   const { context, client, session } = setup();
-  context._jobQueue = {
-    enqueue: jest.fn(),
-  };
 
   const template = [
     {
@@ -399,37 +315,13 @@ it('#sendCarouselTemplate put pushCarouselTemplate to jobQueue', () => {
     },
   ];
 
-  context.sendCarouselTemplate('this is a carousel template', template);
+  await context.sendCarouselTemplate('this is a carousel template', template);
 
-  expect(context._jobQueue.enqueue).toBeCalledWith({
-    instance: client,
-    method: 'pushCarouselTemplate',
-    args: [session.user.id, 'this is a carousel template', template],
-    delay: 1000,
-    showIndicators: true,
-    onSuccess: expect.any(Function),
-    onError: expect.any(Function),
-  });
-});
-
-it('use default message delay', () => {
-  const { context, client, session } = setup();
-
-  context._jobQueue = {
-    enqueue: jest.fn(),
-  };
-
-  context.sendText('yooooooo~');
-
-  expect(context._jobQueue.enqueue).toBeCalledWith({
-    instance: client,
-    method: 'pushText',
-    args: [session.user.id, 'yooooooo~'],
-    delay: 1000,
-    showIndicators: true,
-    onSuccess: expect.any(Function),
-    onError: expect.any(Function),
-  });
+  expect(client.pushCarouselTemplate).toBeCalledWith(
+    session.user.id,
+    'this is a carousel template',
+    template
+  );
 });
 
 it('has delay with methods', () => {
@@ -446,21 +338,11 @@ it('has delay with methods', () => {
   expect(context.sendCarouselTemplateWithDelay).toBeDefined();
 });
 
-it('#sendTextWithDelay put pushText to jobQueue', () => {
+it('#sendTextWithDelay to call client.pushText', async () => {
   const { context, client, session } = setup();
-  context._jobQueue = {
-    enqueue: jest.fn(),
-  };
 
-  context.sendTextWithDelay(3000, 'xxx.com');
+  await context.sendTextWithDelay(3000, 'xxx.com');
 
-  expect(context._jobQueue.enqueue).toBeCalledWith({
-    instance: client,
-    method: 'pushText',
-    args: [session.user.id, 'xxx.com'],
-    delay: 3000,
-    showIndicators: true,
-    onSuccess: expect.any(Function),
-    onError: expect.any(Function),
-  });
+  expect(context.typing).toBeCalledWith(3000);
+  expect(client.pushText).toBeCalledWith(session.user.id, 'xxx.com');
 });

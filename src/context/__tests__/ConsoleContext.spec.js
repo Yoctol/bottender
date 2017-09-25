@@ -1,6 +1,12 @@
 import ConsoleContext from '../ConsoleContext';
 import ConsoleEvent from '../ConsoleEvent';
 
+jest.mock('delay');
+
+afterEach(() => {
+  jest.useFakeTimers();
+});
+
 const rawEvent = {
   message: {
     text: 'Hello, world',
@@ -22,6 +28,7 @@ const setup = () => {
     event: new ConsoleEvent(rawEvent),
     session,
   });
+  context.typing = jest.fn();
   return {
     client,
     context,
@@ -54,12 +61,10 @@ it('get #client works', () => {
   expect(context.client).toBe(client);
 });
 
-it('#sendText should write text to stdout', () => {
+it('#sendText should write text to stdout', async () => {
   const { context, client } = setup();
 
-  context.sendText('hello');
-
-  jest.runTimersToTime(0);
+  await context.sendText('hello');
 
   expect(client.sendText).toBeCalledWith('hello');
 });
@@ -69,12 +74,11 @@ it('has delay with methods', () => {
   expect(context.sendTextWithDelay).toBeDefined();
 });
 
-it('#sendTextWithDelay write text to stdout after delay', () => {
+it('#sendTextWithDelay write text to stdout after delay', async () => {
   const { context, client } = setup();
 
-  context.sendTextWithDelay(3000, 'hello');
+  await context.sendTextWithDelay(3000, 'hello');
 
-  jest.runTimersToTime(3000);
-
+  expect(context.typing).toBeCalledWith(3000);
   expect(client.sendText).toBeCalledWith('hello');
 });

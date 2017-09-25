@@ -87,7 +87,7 @@ class LineContext implements Context {
   }
 
   /**
-   * Send text to the owner of then session.
+   * Send text to the owner of the session.
    *
    */
   async sendText(text: string): Promise<any> {

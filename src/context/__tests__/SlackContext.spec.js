@@ -13,8 +13,12 @@ const rawEvent = {
   event_ts: '1500435914.425136',
 };
 
+const createMockSlackClient = () => ({
+  postMessage: jest.fn(),
+});
+
 const setup = () => {
-  const client = {};
+  const client = createMockSlackClient();
   const session = {
     user: {
       id: 'fakeUserId',
@@ -61,42 +65,13 @@ it('get #client works', () => {
   expect(context.client).toBe(client);
 });
 
-it('#sendText put sendText to jobQueue', () => {
-  const { context, client } = setup();
-  context._jobQueue = {
-    enqueue: jest.fn(),
-  };
-
-  context.sendText('xxx.com');
-
-  expect(context._jobQueue.enqueue).toBeCalledWith({
-    instance: client,
-    method: 'postMessage',
-    args: ['C6A9RJJ3F', 'xxx.com', { as_user: true }],
-    delay: 1000,
-    showIndicators: true,
-    onSuccess: expect.any(Function),
-    onError: expect.any(Function),
-  });
-});
-
-it('use default message delay', () => {
+it('#sendText to call client.postMessage', async () => {
   const { context, client } = setup();
 
-  context._jobQueue = {
-    enqueue: jest.fn(),
-  };
+  await context.postMessage('xxx.com');
 
-  context.sendText('yooooooo~');
-
-  expect(context._jobQueue.enqueue).toBeCalledWith({
-    instance: client,
-    method: 'postMessage',
-    args: ['C6A9RJJ3F', 'yooooooo~', { as_user: true }],
-    delay: 1000,
-    showIndicators: true,
-    onSuccess: expect.any(Function),
-    onError: expect.any(Function),
+  expect(client.postMessage).toBeCalledWith('C6A9RJJ3F', 'xxx.com', {
+    as_user: true,
   });
 });
 
@@ -105,21 +80,12 @@ it('has send with delay methods', () => {
   expect(context.sendTextWithDelay).toBeDefined();
 });
 
-it('#sendTextWithDelay put sendText to jobQueue', () => {
+it('#sendTextWithDelay to call client.postMessage', async () => {
   const { context, client } = setup();
-  context._jobQueue = {
-    enqueue: jest.fn(),
-  };
 
-  context.sendTextWithDelay(3000, 'xxx.com');
+  await context.sendTextWithDelay(3000, 'xxx.com');
 
-  expect(context._jobQueue.enqueue).toBeCalledWith({
-    instance: client,
-    method: 'postMessage',
-    args: ['C6A9RJJ3F', 'xxx.com', { as_user: true }],
-    delay: 3000,
-    showIndicators: true,
-    onSuccess: expect.any(Function),
-    onError: expect.any(Function),
+  expect(client.postMessage).toBeCalledWith('C6A9RJJ3F', 'xxx.com', {
+    as_user: true,
   });
 });
