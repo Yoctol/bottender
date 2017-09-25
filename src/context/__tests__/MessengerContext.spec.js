@@ -36,7 +36,7 @@ const rawEvent = {
   message: {
     mid: 'mid.$cAAE1UUyiiwthh0NPrVbVf4HFNDGl',
     seq: 348847,
-    text: '請給我背影',
+    text: 'There is no royal road to learning.',
   },
 };
 

@@ -7,7 +7,7 @@ const textMessage = {
   message: {
     mid: 'mid.$cAAE1UUyiiwthh0NPrVbVf4HFNDGl',
     seq: 348847,
-    text: '請給我背影',
+    text: 'Sharp tools make good work.',
   },
 };
 
@@ -228,7 +228,7 @@ const echoMessage = {
     app_id: 205552219930699,
     mid: 'mid.$cAAE1UUyiiwthh1yrIlbVhdisQW8M',
     seq: 348859,
-    text: '我與父親不相見已兩年餘，我最不能忘記的是他的背影。',
+    text: 'Difficult the first time, easy the second.',
   },
 };
 
@@ -352,7 +352,7 @@ it('#message', () => {
   expect(new MessengerEvent(textMessage).message).toEqual({
     mid: 'mid.$cAAE1UUyiiwthh0NPrVbVf4HFNDGl',
     seq: 348847,
-    text: '請給我背影',
+    text: 'Sharp tools make good work.',
   });
   expect(new MessengerEvent(imageMessage).message).toEqual({
     mid: 'mid.$cAAE1UUyiiwthh1ZAO1bVhDxGk2N0',

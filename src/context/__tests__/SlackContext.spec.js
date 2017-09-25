@@ -7,7 +7,7 @@ jest.mock('messaging-api-slack');
 const rawEvent = {
   type: 'message',
   user: 'U13AGSN1X',
-  text: '你好',
+  text: 'Experience is the best teacher.',
   ts: '1500435914.425136',
   channel: 'C6A9RJJ3F',
   event_ts: '1500435914.425136',
