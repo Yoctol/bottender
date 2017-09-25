@@ -26,7 +26,6 @@ class LineContext extends Context implements PlatformContext {
 
   constructor({ client, event, session }: Options) {
     super({ client, event, session });
-    this.setMessageDelay(1000);
   }
 
   /**
@@ -65,22 +64,7 @@ class LineContext extends Context implements PlatformContext {
       );
       return;
     }
-    const session = this._session;
-    await this.typing(this._messageDelay);
-    return this._client.pushText(session.user.id, text);
-  }
-
-  async sendTextWithDelay(delay: number, text: string): Promise<any> {
-    if (!this._session) {
-      warning(
-        false,
-        'sendTextWithDelay: should not be called in context without session'
-      );
-      return;
-    }
-    const session = this._session;
-    await this.typing(delay);
-    return this._client.pushText(session.user.id, text);
+    return this._client.pushText(this._session.user.id, text);
   }
 }
 
@@ -107,7 +91,6 @@ types.forEach(type => {
 
       this._replied = true;
 
-      await this.typing(this._messageDelay);
       return this._client[`reply${type}`](this._event.replyToken, ...args);
     },
   });
@@ -125,7 +108,6 @@ types.forEach(type => {
         return;
       }
 
-      await this.typing(this._messageDelay);
       return this._client[`push${type}`](this._session.user.id, ...args);
     },
   });
@@ -145,28 +127,7 @@ types.filter(type => type !== 'Text').forEach(type => {
         return;
       }
 
-      await this.typing(this._messageDelay);
       return this._client[`push${type}`](this._session.user.id, ...args);
-    },
-  });
-
-  Object.defineProperty(LineContext.prototype, `send${type}WithDelay`, {
-    enumerable: false,
-    configurable: true,
-    writable: true,
-    async value(delay, ...rest) {
-      warning(false, `send${type}WithDelay is deprecated.`);
-
-      if (!this._session) {
-        warning(
-          false,
-          `send${type}WithDelay: should not be called in context without session`
-        );
-        return;
-      }
-
-      await this.typing(delay);
-      return this._client[`push${type}`](this._session.user.id, ...rest);
     },
   });
 });

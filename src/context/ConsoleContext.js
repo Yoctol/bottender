@@ -43,12 +43,6 @@ export default class ConsoleContext extends Context implements PlatformContext {
    *
    */
   async sendText(text: string): Promise<void> {
-    await this.typing(this._messageDelay);
-    this._client.sendText(text);
-  }
-
-  async sendTextWithDelay(delay: number, text: string): Promise<void> {
-    await this.typing(delay);
     this._client.sendText(text);
   }
 }

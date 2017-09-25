@@ -23,7 +23,6 @@ class MessengerContext extends Context implements PlatformContext {
 
   constructor({ client, event, session }: Options) {
     super({ client, event, session });
-    this.setMessageDelay(1000);
   }
 
   /**
@@ -56,22 +55,7 @@ class MessengerContext extends Context implements PlatformContext {
       );
       return;
     }
-    const session = this._session;
-    await this.typing(this._messageDelay);
-    return this._client.sendText(session.user.id, text, options);
-  }
-
-  async sendTextWithDelay(delay: number, text: string): Promise<any> {
-    if (!this._session) {
-      warning(
-        false,
-        'sendTextWithDelay: should not be called in context without session'
-      );
-      return;
-    }
-    const session = this._session;
-    await this.typing(delay);
-    return this._client.sendText(session.user.id, text);
+    return this._client.sendText(this._session.user.id, text, options);
   }
 
   async typingOn(): Promise<any> {
@@ -127,27 +111,7 @@ sendMethods.forEach(method => {
         );
         return;
       }
-      await this.typing(this._messageDelay);
       return this._client[method](this._session.user.id, ...args);
-    },
-  });
-
-  Object.defineProperty(MessengerContext.prototype, `${method}WithDelay`, {
-    enumerable: false,
-    configurable: true,
-    writable: true,
-    async value(delay, ...rest) {
-      warning(false, `${method}WithDelay is deprecated.`);
-      if (!this._session) {
-        warning(
-          false,
-          `${method}WithDelay: should not be called in context without session`
-        );
-        return;
-      }
-
-      await this.typing(delay);
-      return this._client[method](this._session.user.id, ...rest);
     },
   });
 });
