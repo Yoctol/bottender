@@ -21,7 +21,6 @@ class LineContext extends Context implements PlatformContext {
   _client: LineClient;
   _event: LineEvent;
   _session: ?LineSession;
-  _messageDelay: number = 1000;
 
   _replied: boolean = false;
 

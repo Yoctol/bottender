@@ -20,7 +20,6 @@ class TelegramContext extends Context implements PlatformContext {
   _client: TelegramClient;
   _event: TelegramEvent;
   _session: ?TelegramSession;
-  _messageDelay: number = 1000;
 
   constructor({ client, event, session }: Options) {
     super({ client, event, session });

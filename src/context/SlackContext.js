@@ -20,7 +20,6 @@ export default class SlackContext extends Context implements PlatformContext {
   _client: SlackOAuthClient;
   _event: SlackEvent;
   _session: ?SlackSession;
-  _messageDelay: number = 1000;
 
   constructor({ client, event, session }: Options) {
     super({ client, event, session });

@@ -20,7 +20,6 @@ class MessengerContext extends Context implements PlatformContext {
   _client: MessengerClient;
   _event: MessengerEvent;
   _session: ?MessengerSession;
-  _messageDelay: number = 1000;
 
   constructor({ client, event, session }: Options) {
     super({ client, event, session });

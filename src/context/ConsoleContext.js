@@ -51,8 +51,4 @@ export default class ConsoleContext extends Context implements PlatformContext {
     await this.typing(delay);
     this._client.sendText(text);
   }
-
-  _sendText(text: string): void {
-    process.stdout.write(`Bot > ${text}\nYou > `);
-  }
 }
