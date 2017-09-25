@@ -6,8 +6,9 @@ import { TelegramClient } from 'messaging-api-telegram';
 
 import type { TelegramSession } from '../bot/TelegramConnector';
 
-import type { Context } from './Context';
+import Context from './Context';
 import TelegramEvent from './TelegramEvent';
+import type { PlatformContext } from './PlatformContext';
 
 type Options = {|
   client: TelegramClient,
@@ -15,16 +16,15 @@ type Options = {|
   session: ?TelegramSession,
 |};
 
-class TelegramContext implements Context {
+class TelegramContext extends Context implements PlatformContext {
   _client: TelegramClient;
   _event: TelegramEvent;
   _session: ?TelegramSession;
   _messageDelay: number = 1000;
 
   constructor({ client, event, session }: Options) {
-    this._client = client;
-    this._event = event;
-    this._session = session;
+    super({ client, event, session });
+    this.setMessageDelay(1000);
   }
 
   /**
@@ -33,38 +33,6 @@ class TelegramContext implements Context {
    */
   get platform(): string {
     return 'telegram';
-  }
-
-  /**
-   * The client instance.
-   *
-   */
-  get client(): TelegramClient {
-    return this._client;
-  }
-
-  /**
-   * The event instance.
-   *
-   */
-  get event(): TelegramEvent {
-    return this._event;
-  }
-
-  /**
-   * The session state of the context.
-   *
-   */
-  get session(): ?TelegramSession {
-    return this._session;
-  }
-
-  /**
-   * Set delay before sending every messages.
-   *
-   */
-  setMessageDelay(milliseconds: number): void {
-    this._messageDelay = milliseconds;
   }
 
   /**

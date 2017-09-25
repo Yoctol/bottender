@@ -3,8 +3,9 @@ import sleep from 'delay';
 
 import type { ConsoleSession, ConsoleClient } from '../bot/ConsoleConnector';
 
-import { type Context } from './Context';
+import Context from './Context';
 import ConsoleEvent from './ConsoleEvent';
+import type { PlatformContext } from './PlatformContext';
 
 type Options = {|
   client: ConsoleClient,
@@ -12,16 +13,13 @@ type Options = {|
   session: ?ConsoleSession,
 |};
 
-export default class ConsoleContext implements Context {
+export default class ConsoleContext extends Context implements PlatformContext {
   _client: ConsoleClient;
   _event: ConsoleEvent;
   _session: ?ConsoleSession;
-  _messageDelay: number = 0;
 
   constructor({ client, event, session }: Options) {
-    this._client = client;
-    this._event = event;
-    this._session = session;
+    super({ client, event, session });
   }
 
   /**
@@ -30,38 +28,6 @@ export default class ConsoleContext implements Context {
    */
   get platform(): string {
     return 'console';
-  }
-
-  /**
-   * The client instance.
-   *
-   */
-  get client(): ConsoleClient {
-    return this._client;
-  }
-
-  /**
-   * The event instance.
-   *
-   */
-  get event(): ConsoleEvent {
-    return this._event;
-  }
-
-  /**
-   * The session state of the context.
-   *
-   */
-  get session(): ?ConsoleSession {
-    return this._session;
-  }
-
-  /**
-   * Set delay before sending every messages.
-   *
-   */
-  setMessageDelay(milliseconds: number): void {
-    this._messageDelay = milliseconds;
   }
 
   /**

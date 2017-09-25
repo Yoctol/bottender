@@ -151,7 +151,6 @@ export default class LineConnector
       // FIXME: refine user
       session.user = {
         id: source.userId,
-        platform: 'line',
         ...user,
       };
     } else {

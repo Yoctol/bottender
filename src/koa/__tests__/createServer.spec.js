@@ -51,6 +51,18 @@ it('should not handle token verification if platform is not messenger', async ()
   expect(status).toBe(404);
 });
 
+it('should handle Messenger signature verification if platform is messenger', async () => {
+  const { bot, requestHandler } = setup({ platform: 'messenger' });
+  requestHandler.mockReturnValue(Promise.resolve());
+
+  const server = createServer(bot);
+  const { status } = await request(server.callback())
+    .post('/')
+    .send({});
+
+  expect(status).toBe(400);
+});
+
 it('should handle LINE signature verification if platform is LINE', async () => {
   const { bot, requestHandler } = setup({ platform: 'line' });
   requestHandler.mockReturnValue(Promise.resolve());
@@ -64,7 +76,7 @@ it('should handle LINE signature verification if platform is LINE', async () => 
 });
 
 it('should handle bot request', async () => {
-  const { bot, requestHandler } = setup();
+  const { bot, requestHandler } = setup({ platform: 'other' });
   requestHandler.mockReturnValue(Promise.resolve());
   const verifyToken = '1qaz2wsx';
   const server = createServer(bot, { verifyToken });

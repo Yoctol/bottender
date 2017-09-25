@@ -8,6 +8,7 @@ import connectNgrok from '../connectNgrok';
 import createMiddleware from './createMiddleware';
 import verifyLineSignature from './verifyLineSignature';
 import verifyMessengerWebhook from './verifyMessengerWebhook';
+import verifyMessengerSignature from './verifyMessengerSignature';
 import verifySlackWebhook from './verifySlackWebhook';
 
 function createServer(bot, config = {}) {
@@ -21,7 +22,7 @@ function createServer(bot, config = {}) {
   if (bot.connector.platform === 'messenger') {
     verifyToken = config.verifyToken || shortid.generate();
     router.get(path, verifyMessengerWebhook({ verifyToken }));
-    router.post(path, createMiddleware(bot));
+    router.post(path, verifyMessengerSignature(bot), createMiddleware(bot));
   } else if (bot.connector.platform === 'slack') {
     router.post(path, verifySlackWebhook(), createMiddleware(bot));
   } else if (bot.connector.platform === 'line') {

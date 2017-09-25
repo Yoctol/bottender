@@ -5,7 +5,7 @@ import _debug from 'debug';
 import MemoryCacheStore from '../cache/MemoryCacheStore';
 import CacheBasedSessionStore from '../session/CacheBasedSessionStore';
 import type { SessionStore } from '../session/SessionStore';
-import type { Context } from '../context/Context';
+import type { PlatformContext } from '../context/PlatformContext';
 
 import type { Connector, SessionWithUser } from './Connector';
 
@@ -18,7 +18,9 @@ function createMemorySessionStore(): SessionStore {
   return new CacheBasedSessionStore(cache, MINUTES_IN_ONE_YEAR);
 }
 
-export type FunctionalHandler = (context: Context) => void | Promise<void>;
+export type FunctionalHandler = (
+  context: PlatformContext
+) => void | Promise<void>;
 
 type RequestHandler = (body: Object) => void | Promise<void>;
 
@@ -101,8 +103,18 @@ export default class Bot {
       if (sessionId) {
         sessionKey = `${platform}:${sessionId}`;
 
-        const data = await this._sessions.read(sessionKey);
-        session = data || Object.create(null);
+        // $FlowFixMe
+        session = await this._sessions.read(sessionKey);
+        session = session || Object.create(null);
+
+        if (!session.platform) session.platform = platform;
+
+        Object.defineProperty(session, 'platform', {
+          configurable: false,
+          enumerable: true,
+          writable: false,
+          value: session.platform,
+        });
 
         await this._connector.updateSession(session, body);
       }

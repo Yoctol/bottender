@@ -6,8 +6,9 @@ import { MessengerClient } from 'messaging-api-messenger';
 
 import type { MessengerSession } from '../bot/MessengerConnector';
 
-import type { Context } from './Context';
+import Context from './Context';
 import MessengerEvent from './MessengerEvent';
+import type { PlatformContext } from './PlatformContext';
 
 type Options = {|
   client: MessengerClient,
@@ -15,16 +16,15 @@ type Options = {|
   session: ?MessengerSession,
 |};
 
-class MessengerContext implements Context {
+class MessengerContext extends Context implements PlatformContext {
   _client: MessengerClient;
   _event: MessengerEvent;
   _session: ?MessengerSession;
   _messageDelay: number = 1000;
 
   constructor({ client, event, session }: Options) {
-    this._client = client;
-    this._event = event;
-    this._session = session;
+    super({ client, event, session });
+    this.setMessageDelay(1000);
   }
 
   /**
@@ -33,38 +33,6 @@ class MessengerContext implements Context {
    */
   get platform(): string {
     return 'messenger';
-  }
-
-  /**
-   * The client instance.
-   *
-   */
-  get client(): MessengerClient {
-    return this._client;
-  }
-
-  /**
-   * The event instance.
-   *
-   */
-  get event(): MessengerEvent {
-    return this._event;
-  }
-
-  /**
-   * The session state of the context.
-   *
-   */
-  get session(): ?MessengerSession {
-    return this._session;
-  }
-
-  /**
-   * Set delay before sending every messages.
-   *
-   */
-  setMessageDelay(milliseconds: number): void {
-    this._messageDelay = milliseconds;
   }
 
   /**

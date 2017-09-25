@@ -97,10 +97,7 @@ describe('#updateSession', () => {
     expect(mockSlackOAuthClient.getChannelInfo).toBeCalledWith('C6A9RJJ3F');
     expect(mockSlackOAuthClient.getAllUserList).toBeCalled();
     expect(session).toEqual({
-      user: {
-        platform: 'slack',
-        ...user,
-      },
+      user,
       channel,
       team: { members },
     });

@@ -2,56 +2,15 @@
 
 import warning from 'warning';
 
-// FIXME: platform
 export type Context = {
   event: {
     isMessage: boolean,
     isTextMessage: boolean,
     message: {
       text: string,
-      is_echo: boolean,
-      quick_reply: {
-        payload: string,
-      },
+      [key: string]: any,
     },
-    postback: {
-      payload: string,
-      data: string,
-    },
-    attachments: [
-      {
-        type: string,
-      },
-    ],
-    callbackQuery: {
-      data: string,
-    },
-    isEcho: boolean,
-    isRead: boolean,
-    isDelivery: boolean,
-    isPostback: boolean,
-    isPayment: boolean,
-    isFollow: boolean,
-    isUnfollow: boolean,
-    isJoin: boolean,
-    isLeave: boolean,
-    isBeacon: boolean,
-    hasAttachment: boolean,
-    isImageMessage: boolean,
-    isLocationMessage: boolean,
-    isVideoMessage: boolean,
-    isAudioMessage: boolean,
-    isFileMessage: boolean,
-    isFallbackMessage: boolean,
-    isCallbackQuery: boolean,
-    isPhotoMessage: boolean,
-    isDocumentMessage: boolean,
-    isGameMessage: boolean,
-    isStickerMessage: boolean,
-    isVoiceMessage: boolean,
-    isVideoNoteMessage: boolean,
-    isContactMessage: boolean,
-    isVenueMessage: boolean,
+    [key: string]: any,
   },
   sendText: (text: string) => void,
 };
