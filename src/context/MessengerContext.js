@@ -22,13 +22,9 @@ class MessengerContext extends Context implements PlatformContext {
   _event: MessengerEvent;
   _session: ?MessengerSession;
   _jobQueue: DelayableJobQueue;
-  _messageDelay: number = 1000;
 
   constructor({ client, event, session }: Options) {
-    super();
-    this._client = client;
-    this._event = event;
-    this._session = session;
+    super({ client, event, session });
     this._jobQueue = new DelayableJobQueue();
     this._jobQueue.beforeEach(async ({ delay, showIndicators = true }) => {
       if (showIndicators) {
@@ -41,6 +37,7 @@ class MessengerContext extends Context implements PlatformContext {
         this.typingOff();
       }
     });
+    this.setMessageDelay(1000);
   }
 
   /**
@@ -49,38 +46,6 @@ class MessengerContext extends Context implements PlatformContext {
    */
   get platform(): string {
     return 'messenger';
-  }
-
-  /**
-   * The client instance.
-   *
-   */
-  get client(): MessengerClient {
-    return this._client;
-  }
-
-  /**
-   * The event instance.
-   *
-   */
-  get event(): MessengerEvent {
-    return this._event;
-  }
-
-  /**
-   * The session state of the context.
-   *
-   */
-  get session(): ?MessengerSession {
-    return this._session;
-  }
-
-  /**
-   * Set delay before sending every messages.
-   *
-   */
-  setMessageDelay(milliseconds: number): void {
-    this._messageDelay = milliseconds;
   }
 
   /**

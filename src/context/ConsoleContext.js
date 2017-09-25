@@ -17,13 +17,9 @@ export default class ConsoleContext extends Context implements PlatformContext {
   _client: ConsoleClient;
   _event: ConsoleEvent;
   _session: ?ConsoleSession;
-  _messageDelay: number = 0;
 
   constructor({ client, event, session }: Options) {
-    super();
-    this._client = client;
-    this._event = event;
-    this._session = session;
+    super({ client, event, session });
   }
 
   /**
@@ -32,38 +28,6 @@ export default class ConsoleContext extends Context implements PlatformContext {
    */
   get platform(): string {
     return 'console';
-  }
-
-  /**
-   * The client instance.
-   *
-   */
-  get client(): ConsoleClient {
-    return this._client;
-  }
-
-  /**
-   * The event instance.
-   *
-   */
-  get event(): ConsoleEvent {
-    return this._event;
-  }
-
-  /**
-   * The session state of the context.
-   *
-   */
-  get session(): ?ConsoleSession {
-    return this._session;
-  }
-
-  /**
-   * Set delay before sending every messages.
-   *
-   */
-  setMessageDelay(milliseconds: number): void {
-    this._messageDelay = milliseconds;
   }
 
   /**

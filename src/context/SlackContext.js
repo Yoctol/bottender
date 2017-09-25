@@ -22,15 +22,12 @@ export default class SlackContext extends Context implements PlatformContext {
   _event: SlackEvent;
   _session: ?SlackSession;
   _jobQueue: DelayableJobQueue;
-  _messageDelay: number = 1000;
 
   constructor({ client, event, session }: Options) {
-    super();
-    this._client = client;
-    this._event = event;
-    this._session = session;
+    super({ client, event, session });
     this._jobQueue = new DelayableJobQueue();
     this._jobQueue.beforeEach(({ delay }) => sleep(delay));
+    this.setMessageDelay(1000);
   }
 
   /**
@@ -39,38 +36,6 @@ export default class SlackContext extends Context implements PlatformContext {
    */
   get platform(): string {
     return 'slack';
-  }
-
-  /**
-   * The client instance.
-   *
-   */
-  get client(): SlackOAuthClient {
-    return this._client;
-  }
-
-  /**
-   * The event instance.
-   *
-   */
-  get event(): SlackEvent {
-    return this._event;
-  }
-
-  /**
-   * The session state of the context.
-   *
-   */
-  get session(): ?SlackSession {
-    return this._session;
-  }
-
-  /**
-   * Set delay before sending every messages.
-   *
-   */
-  setMessageDelay(milliseconds: number): void {
-    this._messageDelay = milliseconds;
   }
 
   /**

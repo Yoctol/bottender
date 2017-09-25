@@ -23,17 +23,14 @@ class LineContext extends Context implements PlatformContext {
   _event: LineEvent;
   _session: ?LineSession;
   _jobQueue: DelayableJobQueue;
-  _messageDelay: number = 1000;
 
   _replied: boolean = false;
 
   constructor({ client, event, session }: Options) {
-    super();
-    this._client = client;
-    this._event = event;
-    this._session = session;
+    super({ client, event, session });
     this._jobQueue = new DelayableJobQueue();
     this._jobQueue.beforeEach(({ delay }) => sleep(delay));
+    this.setMessageDelay(1000);
   }
 
   /**
@@ -45,43 +42,11 @@ class LineContext extends Context implements PlatformContext {
   }
 
   /**
-   * The client instance.
-   *
-   */
-  get client(): LineClient {
-    return this._client;
-  }
-
-  /**
-   * The event instance.
-   *
-   */
-  get event(): LineEvent {
-    return this._event;
-  }
-
-  /**
-   * The session state of the context.
-   *
-   */
-  get session(): ?LineSession {
-    return this._session;
-  }
-
-  /**
    * Determine if the reply token is already used.
    *
    */
   get replied(): boolean {
     return this._replied;
-  }
-
-  /**
-   * Set delay before sending every messages.
-   *
-   */
-  setMessageDelay(milliseconds: number): void {
-    this._messageDelay = milliseconds;
   }
 
   /**
