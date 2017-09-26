@@ -137,12 +137,14 @@ export default class LineConnector
       session.group = {
         id: source.groupId,
         members: memberIds.map(id => ({ id })),
+        _updatedAt: new Date().toISOString(),
       };
     } else if (source.type === 'room') {
       const memberIds = await this._client.getAllRoomMemberIds(source.roomId);
       session.room = {
         id: source.roomId,
         members: memberIds.map(id => ({ id })),
+        _updatedAt: new Date().toISOString(),
       };
     }
 
@@ -151,6 +153,7 @@ export default class LineConnector
       // FIXME: refine user
       session.user = {
         id: source.userId,
+        _updatedAt: new Date().toISOString(),
         ...user,
       };
     } else {

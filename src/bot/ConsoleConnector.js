@@ -55,8 +55,14 @@ export default class ConsoleConnector
         id: '1',
         platform: 'console',
         name: 'you',
+        _updatedAt: new Date().toISOString(),
       };
     }
+
+    if (!session.user._updatedAt) {
+      session.user._updatedAt = new Date().toISOString();
+    }
+
     Object.freeze(session.user);
     Object.defineProperty(session, 'user', {
       configurable: false,
