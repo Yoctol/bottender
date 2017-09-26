@@ -4,6 +4,12 @@ import TelegramEvent from '../TelegramEvent';
 jest.mock('delay');
 jest.mock('messaging-api-messenger');
 
+let sleep;
+
+beforeEach(() => {
+  sleep = require('delay'); // eslint-disable-line global-require
+});
+
 const createMockTelegramClient = () => ({
   sendMessage: jest.fn(),
   sendPhoto: jest.fn(),
@@ -204,4 +210,25 @@ it('#sendMessageWithDelay to call client.sendMessage', async () => {
 
   expect(context.typing).toBeCalledWith(3000);
   expect(client.sendMessage).toBeCalledWith(session.user.id, 'xxx.com');
+});
+
+describe('#typing', () => {
+  it('withDelay avoid delay 0', async () => {
+    const { context } = setup();
+
+    await context.sendTextWithDelay(0, 'xxx.com');
+
+    expect(context.typing).toBeCalledWith(0);
+    expect(sleep).not.toBeCalled();
+  });
+
+  it('setMessageDelay to 0ms avoid delay', async () => {
+    const { context } = setup();
+    context.setMessageDelay(0);
+
+    await context.sendText('xxx.com');
+
+    expect(context.typing).toBeCalledWith(0);
+    expect(sleep).not.toBeCalled();
+  });
 });
