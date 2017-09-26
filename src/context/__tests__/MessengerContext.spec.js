@@ -4,6 +4,12 @@ import MessengerEvent from '../MessengerEvent';
 jest.mock('delay');
 jest.mock('messaging-api-messenger');
 
+let sleep;
+
+beforeEach(() => {
+  sleep = require('delay'); // eslint-disable-line global-require
+});
+
 afterEach(() => {
   jest.useFakeTimers();
 });
@@ -308,11 +314,32 @@ it('#sendTextWithDelay to call client.sendText', async () => {
   expect(client.sendText).toBeCalledWith(session.user.id, 'xxx.com');
 });
 
-it('show typing when sending', async () => {
-  const { context, client } = setup();
+describe('#typing', () => {
+  it('show typing when sending', async () => {
+    const { context, client } = setup();
 
-  await context.sendText('xxx.com');
+    await context.sendText('xxx.com');
 
-  expect(client.typingOn).toBeCalled();
-  expect(client.typingOff).toBeCalled();
+    expect(client.typingOn).toBeCalled();
+    expect(client.typingOff).toBeCalled();
+  });
+
+  it('withDelay avoid delay 0', async () => {
+    const { context } = setup();
+
+    await context.sendTextWithDelay(0, 'xxx.com');
+
+    expect(context.typing).toBeCalledWith(0);
+    expect(sleep).not.toBeCalled();
+  });
+
+  it('setMessageDelay to 0ms avoid delay', async () => {
+    const { context } = setup();
+    context.setMessageDelay(0);
+
+    await context.sendText('xxx.com');
+
+    expect(context.typing).toBeCalledWith(0);
+    expect(sleep).not.toBeCalled();
+  });
 });

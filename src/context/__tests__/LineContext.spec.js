@@ -4,6 +4,12 @@ import LineEvent from '../LineEvent';
 jest.mock('delay');
 jest.mock('messaging-api-line');
 
+let sleep;
+
+beforeEach(() => {
+  sleep = require('delay'); // eslint-disable-line global-require
+});
+
 const rawEvent = {
   replyToken: 'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA',
   type: 'message',
@@ -345,4 +351,25 @@ it('#sendTextWithDelay to call client.pushText', async () => {
 
   expect(context.typing).toBeCalledWith(3000);
   expect(client.pushText).toBeCalledWith(session.user.id, 'xxx.com');
+});
+
+describe('#typing', () => {
+  it('withDelay avoid delay 0', async () => {
+    const { context } = setup();
+
+    await context.sendTextWithDelay(0, 'xxx.com');
+
+    expect(context.typing).toBeCalledWith(0);
+    expect(sleep).not.toBeCalled();
+  });
+
+  it('setMessageDelay to 0ms avoid delay', async () => {
+    const { context } = setup();
+    context.setMessageDelay(0);
+
+    await context.sendText('xxx.com');
+
+    expect(context.typing).toBeCalledWith(0);
+    expect(sleep).not.toBeCalled();
+  });
 });
