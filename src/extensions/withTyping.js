@@ -1,3 +1,5 @@
+import sleep from 'delay';
+
 const methods = [
   'sendText',
   'sendAttachment',
@@ -34,14 +36,20 @@ export default options => context => {
     if (context[methods[i]]) {
       const _method = context[methods[i]];
       /* eslint-disable func-names */
-      context[methods[i]] = function(...args) {
-        this.typing(options.delay);
-        return _method(...args);
+      context[methods[i]] = async function(...args) {
+        if (this.typingOn) {
+          await this.typingOn();
+        }
+        await sleep(options.delay);
+        return _method.call(context, ...args);
       };
 
-      context[`${methods[i]}WithDelay`] = function(delay, ...args) {
-        this.typing(delay);
-        return _method(...args);
+      context[`${methods[i]}WithDelay`] = async function(delay, ...args) {
+        if (this.typingOn) {
+          await this.typingOn();
+        }
+        await sleep(delay);
+        return _method.call(context, ...args);
       };
       /* eslint-enable func-names */
     }

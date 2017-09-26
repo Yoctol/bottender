@@ -24,3 +24,10 @@ export {
   default as CacheBasedSessionStore,
 } from './session/CacheBasedSessionStore';
 export { default as MemorySessionStore } from './session/MemorySessionStore';
+
+/**
+ * Private Exports (unstable)
+ */
+
+/* Extensions */
+export { default as withTyping } from './extensions/withTyping';
