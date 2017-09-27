@@ -97,9 +97,15 @@ describe('#updateSession', () => {
     expect(mockSlackOAuthClient.getChannelInfo).toBeCalledWith('C6A9RJJ3F');
     expect(mockSlackOAuthClient.getAllUserList).toBeCalled();
     expect(session).toEqual({
-      user,
-      channel,
-      team: { members },
+      user: {
+        _updatedAt: expect.any(String),
+        ...user,
+      },
+      channel: {
+        _updatedAt: expect.any(String),
+        ...channel,
+      },
+      team: { members, _updatedAt: expect.any(String) },
     });
   });
 });

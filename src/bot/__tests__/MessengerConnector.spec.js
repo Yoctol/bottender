@@ -189,7 +189,10 @@ describe('#updateSession', () => {
       '1412611362105802'
     );
     expect(session).toEqual({
-      user,
+      user: {
+        _updatedAt: expect.any(String),
+        ...user,
+      },
     });
   });
 
@@ -217,7 +220,10 @@ describe('#updateSession', () => {
       '1412611362105802'
     );
     expect(session).toEqual({
-      user,
+      user: {
+        _updatedAt: expect.any(String),
+        ...user,
+      },
     });
   });
 });

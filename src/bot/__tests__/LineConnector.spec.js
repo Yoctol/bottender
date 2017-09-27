@@ -139,6 +139,7 @@ describe('#updateSession', () => {
       userId: 'U206d25c2ea6bd87c17655609a1c37cb8',
       pictureUrl: 'http://obs.line-apps.com/...',
       statusMessage: 'Hello, LINE!',
+      _updatedAt: expect.any(String),
     };
     mockLineAPIClient.getUserProfile.mockReturnValue(Promise.resolve(user));
 
