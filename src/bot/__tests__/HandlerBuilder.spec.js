@@ -326,6 +326,44 @@ describe('#onText', () => {
   });
 });
 
+describe('#onUnhandled', () => {
+  it('should return this', () => {
+    const { builder } = setup();
+    const handler = () => {};
+    expect(builder.onUnhandled(handler)).toBe(builder);
+  });
+
+  it('should be call when context is not handled', async () => {
+    const { builder } = setup();
+    const handler = jest.fn();
+
+    const rootHandler = builder.onUnhandled(handler).build();
+
+    const context = {
+      handled: false,
+    };
+
+    await rootHandler(context);
+
+    expect(handler).toBeCalledWith(context);
+  });
+
+  it('should not be call when context was handled', async () => {
+    const { builder } = setup();
+    const handler = jest.fn();
+
+    const rootHandler = builder.onUnhandled(handler).build();
+
+    const context = {
+      handled: true,
+    };
+
+    await rootHandler(context);
+
+    expect(handler).not.toBeCalledWith(context);
+  });
+});
+
 describe('#onError', () => {
   it('should return this', () => {
     const { builder } = setup();

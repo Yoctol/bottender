@@ -54,6 +54,8 @@ export default class SlackContext extends Context implements PlatformContext {
       return;
     }
 
+    this._handled = true;
+
     return this._client.postMessage(channelId, text, { as_user: true });
   }
 

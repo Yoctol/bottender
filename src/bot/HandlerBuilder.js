@@ -13,6 +13,7 @@ export type Context = {
     [key: string]: any,
   },
   sendText: (text: string) => void,
+  +handled: boolean,
 };
 
 export type Predicate = (context: Context) => boolean | Promise<boolean>;
@@ -104,6 +105,14 @@ export default class HandlerBuilder {
       this.onMessage(context => context.event.isTextMessage, handler);
     }
 
+    return this;
+  }
+
+  onUnhandled(handler: FunctionalHandler) {
+    this._handlers.push({
+      predicate: context => !context.handled,
+      handler,
+    });
     return this;
   }
 

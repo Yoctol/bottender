@@ -55,19 +55,9 @@ class TelegramContext extends Context implements PlatformContext {
       );
       return;
     }
-    return this._client.sendMessage(this._session.user.id, text);
-  }
 
-  async sendTextWithDelay(delay: number, text: string): Promise<any> {
-    warning(false, `sendTextWithDelay is deprecated.`);
+    this._handled = true;
 
-    if (!this._session) {
-      warning(
-        false,
-        'sendText: should not be called in context without session'
-      );
-      return;
-    }
     return this._client.sendMessage(this._session.user.id, text);
   }
 }
@@ -100,6 +90,9 @@ sendMethods.forEach(method => {
         );
         return;
       }
+
+      this._handled = true;
+
       return this._client[method](this._session.user.id, ...args);
     },
   });

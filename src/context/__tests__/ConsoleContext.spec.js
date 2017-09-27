@@ -67,12 +67,22 @@ it('get #client works', () => {
   expect(context.client).toBe(client);
 });
 
-it('#sendText should write text to stdout', async () => {
-  const { context, client } = setup();
+describe('#sendText', () => {
+  it('should write text to stdout', async () => {
+    const { context, client } = setup();
 
-  await context.sendText('hello');
+    await context.sendText('hello');
 
-  expect(client.sendText).toBeCalledWith('hello');
+    expect(client.sendText).toBeCalledWith('hello');
+  });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    await context.sendText('hello');
+
+    expect(context.handled).toBe(true);
+  });
 });
 
 describe('#typing', () => {

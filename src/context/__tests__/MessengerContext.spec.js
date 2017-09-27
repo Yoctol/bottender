@@ -95,196 +95,399 @@ it('get #client works', () => {
   expect(context.client).toBe(client);
 });
 
-it('#sendText to call client.sendText', async () => {
-  const { context, client, session } = setup();
-  const option = undefined;
+describe('#sendText', () => {
+  it('should call client.sendText', async () => {
+    const { context, client, session } = setup();
+    const option = undefined;
 
-  await context.sendText('xxx.com');
+    await context.sendText('xxx.com');
 
-  expect(client.sendText).toBeCalledWith(session.user.id, 'xxx.com', option);
-});
-
-it('#sendAttachment to call client.sendAttachment', async () => {
-  const { context, client, session } = setup();
-
-  const attachment = {
-    type: 'image',
-    payload: {
-      url: 'https://example.com/pic.png',
-    },
-  };
-
-  await context.sendAttachment({
-    type: 'image',
-    payload: {
-      url: 'https://example.com/pic.png',
-    },
+    expect(client.sendText).toBeCalledWith(session.user.id, 'xxx.com', option);
   });
 
-  expect(client.sendAttachment).toBeCalledWith(session.user.id, attachment);
-});
+  it('should mark context as handled', async () => {
+    const { context } = setup();
 
-it('#sendImage to call client.sendImage', async () => {
-  const { context, client, session } = setup();
+    await context.sendText('xxx.com');
 
-  await context.sendImage('xxx.com');
-
-  expect(client.sendImage).toBeCalledWith(session.user.id, 'xxx.com');
-});
-
-it('#sendAudio to call client.sendAudio', async () => {
-  const { context, client, session } = setup();
-
-  await context.sendAudio('xxx.com');
-
-  expect(client.sendAudio).toBeCalledWith(session.user.id, 'xxx.com');
-});
-
-it('#sendVideo to call client.sendVideo', async () => {
-  const { context, client, session } = setup();
-
-  await context.sendVideo('xxx.com');
-
-  expect(client.sendVideo).toBeCalledWith(session.user.id, 'xxx.com');
-});
-
-it('#sendFile to call client.sendFile', async () => {
-  const { context, client, session } = setup();
-
-  await context.sendFile('xxx.com');
-
-  expect(client.sendFile).toBeCalledWith(session.user.id, 'xxx.com');
-});
-
-it('#sendQuickReplies to call client.sendQuickReplies', async () => {
-  const { context, client, session } = setup();
-
-  const quickReplies = [];
-
-  await context.sendQuickReplies({ text: 'xxx.com' }, quickReplies);
-
-  expect(client.sendQuickReplies).toBeCalledWith(
-    session.user.id,
-    { text: 'xxx.com' },
-    quickReplies
-  );
-});
-
-it('#sendGenericTemplate to call client.sendGenericTemplate', async () => {
-  const { context, client, session } = setup();
-
-  const elements = {};
-  const ratio = '';
-
-  await context.sendGenericTemplate(elements, { image_aspect_ratio: ratio });
-
-  expect(client.sendGenericTemplate).toBeCalledWith(session.user.id, elements, {
-    image_aspect_ratio: ratio,
+    expect(context.handled).toBe(true);
   });
 });
 
-it('#sendButtonTemplate to call client.sendButtonTemplate', async () => {
-  const { context, client, session } = setup();
+describe('#sendAttachment', () => {
+  it('should call client.sendAttachment', async () => {
+    const { context, client, session } = setup();
 
-  const buttons = [];
+    const attachment = {
+      type: 'image',
+      payload: {
+        url: 'https://example.com/pic.png',
+      },
+    };
 
-  await context.sendButtonTemplate('yayaya', buttons);
+    await context.sendAttachment({
+      type: 'image',
+      payload: {
+        url: 'https://example.com/pic.png',
+      },
+    });
 
-  expect(client.sendButtonTemplate).toBeCalledWith(
-    session.user.id,
-    'yayaya',
-    buttons
-  );
+    expect(client.sendAttachment).toBeCalledWith(session.user.id, attachment);
+  });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    await context.sendAttachment({
+      type: 'image',
+      payload: {
+        url: 'https://example.com/pic.png',
+      },
+    });
+
+    expect(context.handled).toBe(true);
+  });
 });
 
-it('#sendListTemplate to call client.sendListTemplate', async () => {
-  const { context, client, session } = setup();
+describe('#sendImage', () => {
+  it('should call client.sendImage', async () => {
+    const { context, client, session } = setup();
 
-  const elements = [];
-  const buttons = [];
+    await context.sendImage('xxx.com');
 
-  await context.sendListTemplate(elements, buttons, 'large');
+    expect(client.sendImage).toBeCalledWith(session.user.id, 'xxx.com');
+  });
 
-  expect(client.sendListTemplate).toBeCalledWith(
-    session.user.id,
-    elements,
-    buttons,
-    'large'
-  );
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    await context.sendImage('xxx.com');
+
+    expect(context.handled).toBe(true);
+  });
 });
 
-it('#sendReceiptTemplate to call client.sendReceiptTemplate', async () => {
-  const { context, client, session } = setup();
+describe('#sendAudio', () => {
+  it('should call client.sendAudio', async () => {
+    const { context, client, session } = setup();
 
-  const receipt = {};
+    await context.sendAudio('xxx.com');
 
-  await context.sendReceiptTemplate(receipt);
+    expect(client.sendAudio).toBeCalledWith(session.user.id, 'xxx.com');
+  });
 
-  expect(client.sendReceiptTemplate).toBeCalledWith(session.user.id, receipt);
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    await context.sendAudio('xxx.com');
+
+    expect(context.handled).toBe(true);
+  });
 });
 
-it('#sendAirlineBoardingPassTemplate to call client.sendAirlineBoardingPassTemplate', async () => {
-  const { context, client, session } = setup();
+describe('#sendVideo', () => {
+  it('should call client.sendVideo', async () => {
+    const { context, client, session } = setup();
 
-  const boardingPass = {};
+    await context.sendVideo('xxx.com');
 
-  await context.sendAirlineBoardingPassTemplate(boardingPass);
+    expect(client.sendVideo).toBeCalledWith(session.user.id, 'xxx.com');
+  });
 
-  expect(client.sendAirlineBoardingPassTemplate).toBeCalledWith(
-    session.user.id,
-    boardingPass
-  );
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    await context.sendVideo('xxx.com');
+
+    expect(context.handled).toBe(true);
+  });
 });
 
-it('#sendAirlineCheckinTemplate to call client.sendAirlineCheckinTemplate', async () => {
-  const { context, client, session } = setup();
+describe('#sendFile', () => {
+  it('should call client.sendFile', async () => {
+    const { context, client, session } = setup();
 
-  const checkin = {};
+    await context.sendFile('xxx.com');
 
-  await context.sendAirlineCheckinTemplate(checkin);
+    expect(client.sendFile).toBeCalledWith(session.user.id, 'xxx.com');
+  });
 
-  expect(client.sendAirlineCheckinTemplate).toBeCalledWith(
-    session.user.id,
-    checkin
-  );
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    await context.sendFile('xxx.com');
+
+    expect(context.handled).toBe(true);
+  });
 });
 
-it('#sendAirlineItineraryTemplate to call client.sendAirlineItineraryTemplate', async () => {
-  const { context, client, session } = setup();
+describe('#sendQuickReplies', () => {
+  it('should call client.sendQuickReplies', async () => {
+    const { context, client, session } = setup();
 
-  const itinerary = {};
+    const quickReplies = [];
 
-  await context.sendAirlineItineraryTemplate(itinerary);
+    await context.sendQuickReplies({ text: 'xxx.com' }, quickReplies);
 
-  expect(client.sendAirlineItineraryTemplate).toBeCalledWith(
-    session.user.id,
-    itinerary
-  );
+    expect(client.sendQuickReplies).toBeCalledWith(
+      session.user.id,
+      { text: 'xxx.com' },
+      quickReplies
+    );
+  });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    const quickReplies = [];
+
+    await context.sendQuickReplies({ text: 'xxx.com' }, quickReplies);
+
+    expect(context.handled).toBe(true);
+  });
 });
 
-it('#sendAirlineFlightUpdateTemplate to call client.sendAirlineFlightUpdateTemplate', async () => {
-  const { context, client, session } = setup();
+describe('#sendGenericTemplate', () => {
+  it('should call client.sendGenericTemplate', async () => {
+    const { context, client, session } = setup();
 
-  const flightUpdate = {};
+    const elements = {};
+    const ratio = '';
 
-  await context.sendAirlineFlightUpdateTemplate(flightUpdate);
+    await context.sendGenericTemplate(elements, { image_aspect_ratio: ratio });
 
-  expect(client.sendAirlineFlightUpdateTemplate).toBeCalledWith(
-    session.user.id,
-    flightUpdate
-  );
+    expect(client.sendGenericTemplate).toBeCalledWith(
+      session.user.id,
+      elements,
+      {
+        image_aspect_ratio: ratio,
+      }
+    );
+  });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    const elements = {};
+    const ratio = '';
+
+    await context.sendGenericTemplate(elements, { image_aspect_ratio: ratio });
+
+    expect(context.handled).toBe(true);
+  });
 });
 
-it('#typingOn call client typingOn', async () => {
-  const { context, client, session } = setup();
-  await context.typingOn();
-  expect(client.typingOn).toBeCalledWith(session.user.id);
+describe('#sendButtonTemplate', () => {
+  it('should call client.sendButtonTemplate', async () => {
+    const { context, client, session } = setup();
+
+    const buttons = [];
+
+    await context.sendButtonTemplate('yayaya', buttons);
+
+    expect(client.sendButtonTemplate).toBeCalledWith(
+      session.user.id,
+      'yayaya',
+      buttons
+    );
+  });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    const buttons = [];
+
+    await context.sendButtonTemplate('yayaya', buttons);
+
+    expect(context.handled).toBe(true);
+  });
 });
 
-it('#typingOff call client typingOff', async () => {
-  const { context, client, session } = setup();
-  await context.typingOff();
-  expect(client.typingOff).toBeCalledWith(session.user.id);
+describe('#sendListTemplate', () => {
+  it('should call client.sendListTemplate', async () => {
+    const { context, client, session } = setup();
+
+    const elements = [];
+    const buttons = [];
+
+    await context.sendListTemplate(elements, buttons, 'large');
+
+    expect(client.sendListTemplate).toBeCalledWith(
+      session.user.id,
+      elements,
+      buttons,
+      'large'
+    );
+  });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    const elements = [];
+    const buttons = [];
+
+    await context.sendListTemplate(elements, buttons, 'large');
+
+    expect(context.handled).toBe(true);
+  });
+});
+
+describe('#sendReceiptTemplate', () => {
+  it('should call client.sendReceiptTemplate', async () => {
+    const { context, client, session } = setup();
+
+    const receipt = {};
+
+    await context.sendReceiptTemplate(receipt);
+
+    expect(client.sendReceiptTemplate).toBeCalledWith(session.user.id, receipt);
+  });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    const receipt = {};
+
+    await context.sendReceiptTemplate(receipt);
+
+    expect(context.handled).toBe(true);
+  });
+});
+
+describe('#sendAirlineBoardingPassTemplate', () => {
+  it('should call client.sendAirlineBoardingPassTemplate', async () => {
+    const { context, client, session } = setup();
+
+    const boardingPass = {};
+
+    await context.sendAirlineBoardingPassTemplate(boardingPass);
+
+    expect(client.sendAirlineBoardingPassTemplate).toBeCalledWith(
+      session.user.id,
+      boardingPass
+    );
+  });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    const boardingPass = {};
+
+    await context.sendAirlineBoardingPassTemplate(boardingPass);
+
+    expect(context.handled).toBe(true);
+  });
+});
+
+describe('#sendAirlineCheckinTemplate', () => {
+  it('should call client.sendAirlineCheckinTemplate', async () => {
+    const { context, client, session } = setup();
+
+    const checkin = {};
+
+    await context.sendAirlineCheckinTemplate(checkin);
+
+    expect(client.sendAirlineCheckinTemplate).toBeCalledWith(
+      session.user.id,
+      checkin
+    );
+  });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    const checkin = {};
+
+    await context.sendAirlineCheckinTemplate(checkin);
+
+    expect(context.handled).toBe(true);
+  });
+});
+
+describe('#sendAirlineItineraryTemplate', () => {
+  it('should call client.sendAirlineItineraryTemplate', async () => {
+    const { context, client, session } = setup();
+
+    const itinerary = {};
+
+    await context.sendAirlineItineraryTemplate(itinerary);
+
+    expect(client.sendAirlineItineraryTemplate).toBeCalledWith(
+      session.user.id,
+      itinerary
+    );
+  });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    const itinerary = {};
+
+    await context.sendAirlineItineraryTemplate(itinerary);
+
+    expect(context.handled).toBe(true);
+  });
+});
+
+describe('#sendAirlineFlightUpdateTemplate', () => {
+  it('should call client.sendAirlineFlightUpdateTemplate', async () => {
+    const { context, client, session } = setup();
+
+    const flightUpdate = {};
+
+    await context.sendAirlineFlightUpdateTemplate(flightUpdate);
+
+    expect(client.sendAirlineFlightUpdateTemplate).toBeCalledWith(
+      session.user.id,
+      flightUpdate
+    );
+  });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    const flightUpdate = {};
+
+    await context.sendAirlineFlightUpdateTemplate(flightUpdate);
+
+    expect(context.handled).toBe(true);
+  });
+});
+
+describe('#typingOn', () => {
+  it('should call client typingOn', async () => {
+    const { context, client, session } = setup();
+
+    await context.typingOn();
+
+    expect(client.typingOn).toBeCalledWith(session.user.id);
+  });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    await context.typingOn();
+
+    expect(context.handled).toBe(true);
+  });
+});
+
+describe('#typingOff', () => {
+  it('should call client typingOff', async () => {
+    const { context, client, session } = setup();
+
+    await context.typingOff();
+
+    expect(client.typingOff).toBeCalledWith(session.user.id);
+  });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    await context.typingOff();
+
+    expect(context.handled).toBe(true);
+  });
 });
 
 describe('#typing', () => {

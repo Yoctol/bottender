@@ -57,6 +57,9 @@ class MessengerContext extends Context implements PlatformContext {
       );
       return;
     }
+
+    this._handled = true;
+
     return this._client.sendText(this._session.user.id, text, options);
   }
 
@@ -68,6 +71,9 @@ class MessengerContext extends Context implements PlatformContext {
       );
       return;
     }
+
+    this._handled = true;
+
     return this._client.typingOn(this._session.user.id);
   }
 
@@ -79,6 +85,9 @@ class MessengerContext extends Context implements PlatformContext {
       );
       return;
     }
+
+    this._handled = true;
+
     return this._client.typingOff(this._session.user.id);
   }
 }
@@ -113,6 +122,9 @@ sendMethods.forEach(method => {
         );
         return;
       }
+
+      this._handled = true;
+
       return this._client[method](this._session.user.id, ...args);
     },
   });
