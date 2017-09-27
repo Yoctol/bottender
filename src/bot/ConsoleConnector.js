@@ -53,7 +53,6 @@ export default class ConsoleConnector
     if (!session.user) {
       session.user = {
         id: '1',
-        platform: 'console',
         name: 'you',
         _updatedAt: new Date().toISOString(),
       };
