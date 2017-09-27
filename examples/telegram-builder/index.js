@@ -13,14 +13,14 @@ const bot = new TelegramBot({
 });
 
 const handler = new TelegramHandlerBuilder()
-  .onText(/yo/i, context => {
+  .onText(/yo/i, async context => {
     const options = {
       parse_mode: 'Markdown',
     };
-    context.sendMessage('*Hi* there!', options);
+    await context.sendMessage('*Hi* there!', options);
   })
-  .onEvent(context => {
-    context.sendMessage("Sorry, I don't know what you say.");
+  .onEvent(async context => {
+    await context.sendMessage("Sorry, I don't know what you say.");
   })
   .build();
 

@@ -3,7 +3,7 @@ require('babel-register');
 const {
   TelegramBot,
   TelegramHandlerBuilder,
-  MiddlewareHandlerBuilder,
+  middleware,
 } = require('../../src');
 const { createServer } = require('../../src/express');
 
@@ -19,27 +19,23 @@ const bot = new TelegramBot({
 const handler = (context, next) =>
   new TelegramHandlerBuilder()
     .onText(async ctx => {
-      ctx.sendMessage('Hi there 1!');
+      await ctx.sendMessage('Hi there 1!');
       await next();
-      ctx.sendMessage('Hi there 3!');
+      await ctx.sendMessage('Hi there 3!');
     })
     .build()(context);
 
 const nextHandler = new TelegramHandlerBuilder()
-  .onText(context => {
-    context.sendMessage('Hi there 2!');
+  .onText(async context => {
+    await context.sendMessage('Hi there 2!');
   })
   .build();
 
-const middlewareHandlerBuilder = new MiddlewareHandlerBuilder()
-  .use(handler)
-  .use(nextHandler);
-
-bot.onEvent(middlewareHandlerBuilder.build());
+bot.onEvent(middleware([handler, nextHandler]));
 
 const server = createServer(bot);
 
 server.listen(5000, () => {
-  bot.connector._client.setWebhook(config.url);
+  bot.connector.client.setWebhook(config.url);
   console.log('server is running on 5000 port...');
 });
