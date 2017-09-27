@@ -4,6 +4,7 @@ import _debug from 'debug';
 
 import MemoryCacheStore from '../cache/MemoryCacheStore';
 import CacheBasedSessionStore from '../session/CacheBasedSessionStore';
+import type { Session } from '../session/Session';
 import type { SessionStore } from '../session/SessionStore';
 import type { PlatformContext } from '../context/PlatformContext';
 
@@ -99,7 +100,7 @@ export default class Bot {
 
       // Create or retrieve session if possible
       let sessionKey;
-      let session;
+      let session: Session;
       if (sessionId) {
         sessionKey = `${platform}:${sessionId}`;
 
