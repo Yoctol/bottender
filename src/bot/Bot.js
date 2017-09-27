@@ -8,7 +8,7 @@ import type { Session } from '../session/Session';
 import type { SessionStore } from '../session/SessionStore';
 import type { PlatformContext } from '../context/PlatformContext';
 
-import type { Connector, SessionWithUser } from './Connector';
+import type { Connector } from './Connector';
 
 const debug = _debug('core/bot/Bot');
 
@@ -30,7 +30,7 @@ export default class Bot {
 
   _initialized: boolean;
 
-  _connector: Connector<any, any>;
+  _connector: Connector<any>;
 
   _handler: ?FunctionalHandler;
 
@@ -40,7 +40,7 @@ export default class Bot {
     connector,
     sessionStore = createMemorySessionStore(),
   }: {|
-    connector: Connector<any, any>,
+    connector: Connector<any>,
     sessionStore: SessionStore,
   |}) {
     this._sessions = sessionStore;
@@ -49,7 +49,7 @@ export default class Bot {
     this._handler = null;
   }
 
-  get connector(): Connector<any, any> {
+  get connector(): Connector<any> {
     return this._connector;
   }
 
@@ -125,7 +125,7 @@ export default class Bot {
       const contexts = events.map(event =>
         this._connector.createContext({
           event,
-          session: ((session: any): SessionWithUser<{}>),
+          session: ((session: any): Session),
         })
       );
 

@@ -4,7 +4,7 @@ import sleep from 'delay';
 import warning from 'warning';
 import { MessengerClient } from 'messaging-api-messenger';
 
-import type { MessengerSession } from '../bot/MessengerConnector';
+import type { Session } from '../session/Session';
 
 import Context from './Context';
 import MessengerEvent from './MessengerEvent';
@@ -13,13 +13,13 @@ import type { PlatformContext } from './PlatformContext';
 type Options = {|
   client: MessengerClient,
   event: MessengerEvent,
-  session: ?MessengerSession,
+  session: ?Session,
 |};
 
 class MessengerContext extends Context implements PlatformContext {
   _client: MessengerClient;
   _event: MessengerEvent;
-  _session: ?MessengerSession;
+  _session: ?Session;
 
   constructor({ client, event, session }: Options) {
     super({ client, event, session });

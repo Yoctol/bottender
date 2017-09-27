@@ -4,7 +4,7 @@ import sleep from 'delay';
 import warning from 'warning';
 import { TelegramClient } from 'messaging-api-telegram';
 
-import type { TelegramSession } from '../bot/TelegramConnector';
+import type { Session } from '../session/Session';
 
 import Context from './Context';
 import TelegramEvent from './TelegramEvent';
@@ -13,13 +13,13 @@ import type { PlatformContext } from './PlatformContext';
 type Options = {|
   client: TelegramClient,
   event: TelegramEvent,
-  session: ?TelegramSession,
+  session: ?Session,
 |};
 
 class TelegramContext extends Context implements PlatformContext {
   _client: TelegramClient;
   _event: TelegramEvent;
-  _session: ?TelegramSession;
+  _session: ?Session;
 
   constructor({ client, event, session }: Options) {
     super({ client, event, session });

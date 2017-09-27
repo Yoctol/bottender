@@ -5,7 +5,7 @@ import warning from 'warning';
 import invariant from 'invariant';
 import { LineClient } from 'messaging-api-line';
 
-import type { LineSession } from '../bot/LineConnector';
+import type { Session } from '../session/Session';
 
 import Context from './Context';
 import LineEvent from './LineEvent';
@@ -14,13 +14,13 @@ import type { PlatformContext } from './PlatformContext';
 type Options = {|
   client: LineClient,
   event: LineEvent,
-  session: ?LineSession,
+  session: ?Session,
 |};
 
 class LineContext extends Context implements PlatformContext {
   _client: LineClient;
   _event: LineEvent;
-  _session: ?LineSession;
+  _session: ?Session;
 
   _replied: boolean = false;
 

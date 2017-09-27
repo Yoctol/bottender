@@ -8,7 +8,7 @@ import TelegramContext from '../context/TelegramContext';
 import TelegramEvent, { type TelegramRawEvent } from '../context/TelegramEvent';
 import type { Session } from '../session/Session';
 
-import type { Connector, SessionWithUser } from './Connector';
+import type { Connector } from './Connector';
 
 export type TelegramUser = {
   id: number,
@@ -20,15 +20,13 @@ export type TelegramUser = {
 
 export type TelegramRequestBody = TelegramRawEvent;
 
-export type TelegramSession = SessionWithUser<TelegramUser>;
-
 type ConstructorOptions = {|
   accessToken?: string,
   client?: TelegramClient,
 |};
 
 export default class TelegramConnector
-  implements Connector<TelegramRequestBody, TelegramUser> {
+  implements Connector<TelegramRequestBody> {
   _client: TelegramClient;
 
   constructor({ accessToken, client }: ConstructorOptions) {
@@ -97,7 +95,7 @@ export default class TelegramConnector
     session,
   }: {
     event: TelegramEvent,
-    session: ?TelegramSession,
+    session: ?Session,
   }): TelegramContext {
     return new TelegramContext({
       client: this._client,

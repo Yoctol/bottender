@@ -8,7 +8,7 @@ import SlackContext from '../context/SlackContext';
 import SlackEvent, { type SlackRawEvent } from '../context/SlackEvent';
 import type { Session } from '../session/Session';
 
-import type { Connector, SessionWithUser } from './Connector';
+import type { Connector } from './Connector';
 
 // FIXME
 export type SlackUser = {
@@ -26,15 +26,12 @@ export type SlackRequestBody = {
   event_time: number,
 };
 
-export type SlackSession = SessionWithUser<SlackUser>;
-
 type ConstructorOptions = {|
   accessToken?: string,
   client?: SlackOAuthClient,
 |};
 
-export default class SlackConnector
-  implements Connector<SlackRequestBody, SlackUser> {
+export default class SlackConnector implements Connector<SlackRequestBody> {
   _client: SlackOAuthClient;
 
   constructor({ accessToken, client }: ConstructorOptions) {
@@ -151,7 +148,7 @@ export default class SlackConnector
     session,
   }: {
     event: SlackEvent,
-    session: ?SlackSession,
+    session: ?Session,
   }): SlackContext {
     return new SlackContext({
       client: this._client,
