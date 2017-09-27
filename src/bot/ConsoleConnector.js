@@ -59,10 +59,6 @@ export default class ConsoleConnector
       };
     }
 
-    if (!session.user._updatedAt) {
-      session.user._updatedAt = new Date().toISOString();
-    }
-
     Object.freeze(session.user);
     Object.defineProperty(session, 'user', {
       configurable: false,

@@ -73,6 +73,7 @@ export default class TelegramConnector
       session.user._updatedAt = new Date().toISOString();
     }
 
+    // TODO: remove later
     if (!session.user._updatedAt) {
       session.user._updatedAt = new Date().toISOString();
     }

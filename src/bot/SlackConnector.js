@@ -67,17 +67,6 @@ export default class SlackConnector
       session.user.id &&
       session.user.id === body.event.user
     ) {
-      if (!session.user._updatedAt) {
-        session.user._updatedAt = new Date().toISOString();
-      }
-      if (!session.channel._updatedAt) {
-        session.channel._updatedAt = new Date().toISOString();
-      }
-      if (!session.team._updatedAt) {
-        session.team._updatedAt = new Date().toISOString();
-      }
-
-      // FIXME: defineProperty?
       return;
     }
     const channelId = this.getUniqueSessionIdFromRequest(body);

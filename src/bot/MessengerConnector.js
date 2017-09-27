@@ -172,6 +172,7 @@ export default class MessengerConnector
       };
     }
 
+    // TODO: remove later
     if (!session.user._updatedAt) {
       session.user._updatedAt = new Date().toISOString();
     }
