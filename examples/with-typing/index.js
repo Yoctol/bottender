@@ -4,8 +4,7 @@ const { MessengerBot, withTyping } = require('../../src');
 const { createServer } = require('../../src/express');
 
 const config = {
-  accessToken:
-    'EAADEbNfFP2MBAAa47Cnol4J7CKq7cQSbbVf3J5gbz6aYArvxm6LunM5ZBF3YHMl8sYY04GIapK4bxXObZChqQBTbOGFX7TQQNELAeZCAn37XfVhpJjd2yVnxOLrlhHRJsuJ9wZCYPMFIWTwOkZAbstpqAGES4EANtZAcR7sJD5bOxGgrnfaybK',
+  accessToken: '__FILL_YOUR_TOKEN_HERE__',
 };
 
 const bot = new MessengerBot({

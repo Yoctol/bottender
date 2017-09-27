@@ -323,26 +323,3 @@ it('#sendCarouselTemplate to call client.pushCarouselTemplate', async () => {
     template
   );
 });
-
-it('has delay with methods', () => {
-  const { context } = setup();
-  expect(context.sendTextWithDelay).toBeDefined();
-  expect(context.sendImageWithDelay).toBeDefined();
-  expect(context.sendVideoWithDelay).toBeDefined();
-  expect(context.sendAudioWithDelay).toBeDefined();
-  expect(context.sendLocationWithDelay).toBeDefined();
-  expect(context.sendStickerWithDelay).toBeDefined();
-  expect(context.sendImagemapWithDelay).toBeDefined();
-  expect(context.sendButtonTemplateWithDelay).toBeDefined();
-  expect(context.sendConfirmTemplateWithDelay).toBeDefined();
-  expect(context.sendCarouselTemplateWithDelay).toBeDefined();
-});
-
-it('#sendTextWithDelay to call client.pushText', async () => {
-  const { context, client, session } = setup();
-
-  await context.sendTextWithDelay(3000, 'xxx.com');
-
-  expect(context.typing).toBeCalledWith(3000);
-  expect(client.pushText).toBeCalledWith(session.user.id, 'xxx.com');
-});

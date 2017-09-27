@@ -68,17 +68,3 @@ it('#sendText should write text to stdout', async () => {
 
   expect(client.sendText).toBeCalledWith('hello');
 });
-
-it('has delay with methods', () => {
-  const { context } = setup();
-  expect(context.sendTextWithDelay).toBeDefined();
-});
-
-it('#sendTextWithDelay write text to stdout after delay', async () => {
-  const { context, client } = setup();
-
-  await context.sendTextWithDelay(3000, 'hello');
-
-  expect(context.typing).toBeCalledWith(3000);
-  expect(client.sendText).toBeCalledWith('hello');
-});

@@ -74,18 +74,3 @@ it('#sendText to call client.postMessage', async () => {
     as_user: true,
   });
 });
-
-it('has send with delay methods', () => {
-  const { context } = setup();
-  expect(context.sendTextWithDelay).toBeDefined();
-});
-
-it('#sendTextWithDelay to call client.postMessage', async () => {
-  const { context, client } = setup();
-
-  await context.sendTextWithDelay(3000, 'xxx.com');
-
-  expect(client.postMessage).toBeCalledWith('C6A9RJJ3F', 'xxx.com', {
-    as_user: true,
-  });
-});

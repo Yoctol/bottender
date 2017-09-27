@@ -280,39 +280,3 @@ it('#typingOff call client typingOff', async () => {
   await context.typingOff();
   expect(client.typingOff).toBeCalledWith(session.user.id);
 });
-
-it('has send with delay methods', () => {
-  const { context } = setup();
-  expect(context.sendTextWithDelay).toBeDefined();
-  expect(context.sendImageWithDelay).toBeDefined();
-  expect(context.sendAudioWithDelay).toBeDefined();
-  expect(context.sendVideoWithDelay).toBeDefined();
-  expect(context.sendFileWithDelay).toBeDefined();
-  expect(context.sendQuickRepliesWithDelay).toBeDefined();
-  expect(context.sendGenericTemplateWithDelay).toBeDefined();
-  expect(context.sendButtonTemplateWithDelay).toBeDefined();
-  expect(context.sendListTemplateWithDelay).toBeDefined();
-  expect(context.sendReceiptTemplateWithDelay).toBeDefined();
-  expect(context.sendAirlineBoardingPassTemplateWithDelay).toBeDefined();
-  expect(context.sendAirlineCheckinTemplateWithDelay).toBeDefined();
-  expect(context.sendAirlineItineraryTemplateWithDelay).toBeDefined();
-  expect(context.sendAirlineFlightUpdateTemplateWithDelay).toBeDefined();
-});
-
-it('#sendTextWithDelay to call client.sendText', async () => {
-  const { context, client, session } = setup();
-
-  await context.sendTextWithDelay(3000, 'xxx.com');
-
-  expect(context.typing).toBeCalledWith(3000);
-  expect(client.sendText).toBeCalledWith(session.user.id, 'xxx.com');
-});
-
-it('show typing when sending', async () => {
-  const { context, client } = setup();
-
-  await context.sendText('xxx.com');
-
-  expect(client.typingOn).toBeCalled();
-  expect(client.typingOff).toBeCalled();
-});
