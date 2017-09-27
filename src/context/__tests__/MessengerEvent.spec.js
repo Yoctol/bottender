@@ -245,6 +245,19 @@ const postback = {
   },
 };
 
+const optin = {
+  sender: {
+    id: 'USER_ID',
+  },
+  recipient: {
+    id: 'PAGE_ID',
+  },
+  timestamp: 1234567890,
+  optin: {
+    ref: 'PASS_THROUGH_PARAM',
+  },
+};
+
 const payment = {
   recipient: {
     id: 'PAGE_ID',
@@ -271,6 +284,57 @@ const payment = {
       amount: '29.62',
     },
     shipping_option_id: '123',
+  },
+};
+
+const checkoutUpdate = {
+  recipient: {
+    id: 'PAGE_ID',
+  },
+  timestamp: 1473204787206,
+  sender: {
+    id: 'USER_ID',
+  },
+  checkout_update: {
+    payload: 'DEVELOPER_DEFINED_PAYLOAD',
+    shipping_address: {
+      id: 10105655000959552,
+      country: 'US',
+      city: 'MENLO PARK',
+      street1: '1 Hacker Way',
+      street2: '',
+      state: 'CA',
+      postal_code: '94025',
+    },
+  },
+};
+
+const preCheckout = {
+  recipient: {
+    id: 'PAGE_ID',
+  },
+  timestamp: 1473204787206,
+  sender: {
+    id: 'USER_ID',
+  },
+  pre_checkout: {
+    payload: 'xyz',
+    requested_user_info: {
+      shipping_address: {
+        name: 'Tao Jiang',
+        street_1: '600 Edgewater Blvd',
+        street_2: '',
+        city: 'Foster City',
+        state: 'CA',
+        country: 'US',
+        postal_code: '94404',
+      },
+      contact_name: 'Tao Jiang',
+    },
+    amount: {
+      currency: 'USD',
+      amount: '2.70',
+    },
   },
 };
 
@@ -561,6 +625,28 @@ it('#postback', () => {
   expect(new MessengerEvent(textMessage).payload).toEqual(null);
 });
 
+it('#isOptin', () => {
+  expect(new MessengerEvent(textMessage).isOptin).toEqual(false);
+  expect(new MessengerEvent(imageMessage).isOptin).toEqual(false);
+  expect(new MessengerEvent(likeStickerMessage).isOptin).toEqual(false);
+  expect(new MessengerEvent(echoMessage).isOptin).toEqual(false);
+  expect(new MessengerEvent(quickReplyMessage).isOptin).toEqual(false);
+  expect(new MessengerEvent(postback).isOptin).toEqual(false);
+  expect(new MessengerEvent(optin).isOptin).toEqual(true);
+});
+
+it('#optin', () => {
+  expect(new MessengerEvent(textMessage).optin).toEqual(null);
+  expect(new MessengerEvent(imageMessage).optin).toEqual(null);
+  expect(new MessengerEvent(likeStickerMessage).optin).toEqual(null);
+  expect(new MessengerEvent(echoMessage).optin).toEqual(null);
+  expect(new MessengerEvent(quickReplyMessage).optin).toEqual(null);
+  expect(new MessengerEvent(postback).optin).toEqual(null);
+  expect(new MessengerEvent(optin).optin).toEqual({
+    ref: 'PASS_THROUGH_PARAM',
+  });
+});
+
 it('#isPayment', () => {
   expect(new MessengerEvent(textMessage).isPayment).toEqual(false);
   expect(new MessengerEvent(imageMessage).isPayment).toEqual(false);
@@ -591,6 +677,77 @@ it('#payment', () => {
       amount: '29.62',
     },
     shipping_option_id: '123',
+  });
+});
+
+it('#isCheckoutUpdate', () => {
+  expect(new MessengerEvent(textMessage).isCheckoutUpdate).toEqual(false);
+  expect(new MessengerEvent(imageMessage).isCheckoutUpdate).toEqual(false);
+  expect(new MessengerEvent(likeStickerMessage).isCheckoutUpdate).toEqual(
+    false
+  );
+  expect(new MessengerEvent(echoMessage).isCheckoutUpdate).toEqual(false);
+  expect(new MessengerEvent(quickReplyMessage).isCheckoutUpdate).toEqual(false);
+  expect(new MessengerEvent(postback).isCheckoutUpdate).toEqual(false);
+  expect(new MessengerEvent(checkoutUpdate).isCheckoutUpdate).toEqual(true);
+});
+
+it('#checkoutUpdate', () => {
+  expect(new MessengerEvent(textMessage).checkoutUpdate).toEqual(null);
+  expect(new MessengerEvent(imageMessage).checkoutUpdate).toEqual(null);
+  expect(new MessengerEvent(likeStickerMessage).checkoutUpdate).toEqual(null);
+  expect(new MessengerEvent(echoMessage).checkoutUpdate).toEqual(null);
+  expect(new MessengerEvent(quickReplyMessage).checkoutUpdate).toEqual(null);
+  expect(new MessengerEvent(postback).checkoutUpdate).toEqual(null);
+  expect(new MessengerEvent(checkoutUpdate).checkoutUpdate).toEqual({
+    payload: 'DEVELOPER_DEFINED_PAYLOAD',
+    shipping_address: {
+      id: 10105655000959552,
+      country: 'US',
+      city: 'MENLO PARK',
+      street1: '1 Hacker Way',
+      street2: '',
+      state: 'CA',
+      postal_code: '94025',
+    },
+  });
+});
+
+it('#isPreCheckout', () => {
+  expect(new MessengerEvent(textMessage).isPreCheckout).toEqual(false);
+  expect(new MessengerEvent(imageMessage).isPreCheckout).toEqual(false);
+  expect(new MessengerEvent(likeStickerMessage).isPreCheckout).toEqual(false);
+  expect(new MessengerEvent(echoMessage).isPreCheckout).toEqual(false);
+  expect(new MessengerEvent(quickReplyMessage).isPreCheckout).toEqual(false);
+  expect(new MessengerEvent(postback).isPreCheckout).toEqual(false);
+  expect(new MessengerEvent(preCheckout).isPreCheckout).toEqual(true);
+});
+
+it('#preCheckout', () => {
+  expect(new MessengerEvent(textMessage).preCheckout).toEqual(null);
+  expect(new MessengerEvent(imageMessage).preCheckout).toEqual(null);
+  expect(new MessengerEvent(likeStickerMessage).preCheckout).toEqual(null);
+  expect(new MessengerEvent(echoMessage).preCheckout).toEqual(null);
+  expect(new MessengerEvent(quickReplyMessage).preCheckout).toEqual(null);
+  expect(new MessengerEvent(postback).preCheckout).toEqual(null);
+  expect(new MessengerEvent(preCheckout).preCheckout).toEqual({
+    payload: 'xyz',
+    requested_user_info: {
+      shipping_address: {
+        name: 'Tao Jiang',
+        street_1: '600 Edgewater Blvd',
+        street_2: '',
+        city: 'Foster City',
+        state: 'CA',
+        country: 'US',
+        postal_code: '94404',
+      },
+      contact_name: 'Tao Jiang',
+    },
+    amount: {
+      currency: 'USD',
+      amount: '2.70',
+    },
   });
 });
 

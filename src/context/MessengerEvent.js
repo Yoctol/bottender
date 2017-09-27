@@ -30,6 +30,10 @@ export type Postback = {
   payload: string,
 };
 
+export type Optin = {
+  ref: string,
+};
+
 export type Payment = {
   payload: string,
   requested_user_info: Object,
@@ -39,6 +43,39 @@ export type Payment = {
     amount: string,
   },
   shipping_option_id: string,
+};
+
+export type CheckoutUpdate = {
+  payload: string,
+  shipping_address: {
+    id: number,
+    street_1: string,
+    street_2: string,
+    city: string,
+    state: string,
+    country: string,
+    postal_code: string,
+  },
+};
+
+export type PreCheckout = {
+  payload: string,
+  requested_user_info: {
+    shipping_address: {
+      name: string,
+      street_1: string,
+      street_2: string,
+      city: string,
+      state: string,
+      country: string,
+      postal_code: string,
+    },
+    contact_name: string,
+  },
+  amount: {
+    currency: string,
+    amount: string,
+  },
 };
 
 export type PolicyEnforcement = {
@@ -66,7 +103,10 @@ export type MessengerRawEvent = {
   timestamp?: number,
   message?: Message,
   postback?: Postback,
+  optin?: Optin,
   payment?: Payment,
+  checkout_update?: CheckoutUpdate,
+  pre_checkout?: PreCheckout,
   'policy-enforcement'?: PolicyEnforcement,
   app_roles?: AppRoles,
   pass_thread_control?: PassThreadControl,
@@ -258,6 +298,22 @@ export default class MessengerEvent implements Event {
   }
 
   /**
+   * Determine if the event is an opt-in event.
+   *
+   */
+  get isOptin(): boolean {
+    return !!this._rawEvent.optin && typeof this._rawEvent.optin === 'object';
+  }
+
+  /**
+   * The optin object from Messenger raw event.
+   *
+   */
+  get optin(): ?Optin {
+    return this._rawEvent.optin || null;
+  }
+
+  /**
    * Determine if the event is a payment event.
    *
    */
@@ -273,6 +329,44 @@ export default class MessengerEvent implements Event {
    */
   get payment(): ?Payment {
     return this._rawEvent.payment || null;
+  }
+
+  /**
+   * Determine if the event is a checkout update event.
+   *
+   */
+  get isCheckoutUpdate(): boolean {
+    return (
+      !!this._rawEvent.checkout_update &&
+      typeof this._rawEvent.checkout_update === 'object'
+    );
+  }
+
+  /**
+   * The checkout_update object from Messenger raw event.
+   *
+   */
+  get checkoutUpdate(): ?CheckoutUpdate {
+    return this._rawEvent.checkout_update || null;
+  }
+
+  /**
+   * Determine if the event is a pre-checkout event.
+   *
+   */
+  get isPreCheckout(): boolean {
+    return (
+      !!this._rawEvent.pre_checkout &&
+      typeof this._rawEvent.pre_checkout === 'object'
+    );
+  }
+
+  /**
+   * The pre_checkout object from Messenger raw event.
+   *
+   */
+  get preCheckout(): ?PreCheckout {
+    return this._rawEvent.pre_checkout || null;
   }
 
   /**
