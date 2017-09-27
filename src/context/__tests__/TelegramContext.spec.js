@@ -91,101 +91,217 @@ it('get #client works', () => {
   expect(context.client).toBe(client);
 });
 
-it('#sendMessage to call client.sendMessage', async () => {
-  const { context, client, session } = setup();
+describe('#sendMessage', () => {
+  it('should call client.sendMessage', async () => {
+    const { context, client, session } = setup();
 
-  await context.sendMessage('xxx.com');
+    await context.sendMessage('xxx.com');
 
-  expect(client.sendMessage).toBeCalledWith(session.user.id, 'xxx.com');
+    expect(client.sendMessage).toBeCalledWith(session.user.id, 'xxx.com');
+  });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    await context.sendMessage('xxx.com');
+
+    expect(context.handled).toBe(true);
+  });
 });
 
-it('#sendPhoto to call client.sendPhoto', async () => {
-  const { context, client, session } = setup();
+describe('#sendPhoto', () => {
+  it('should call client.sendPhoto', async () => {
+    const { context, client, session } = setup();
 
-  await context.sendPhoto('xxx.png');
+    await context.sendPhoto('xxx.png');
 
-  expect(client.sendPhoto).toBeCalledWith(session.user.id, 'xxx.png');
+    expect(client.sendPhoto).toBeCalledWith(session.user.id, 'xxx.png');
+  });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    await context.sendPhoto('xxx.png');
+
+    expect(context.handled).toBe(true);
+  });
 });
 
-it('#sendAudio to call client.sendAudio', async () => {
-  const { context, client, session } = setup();
+describe('#sendAudio', () => {
+  it('should call client.sendAudio', async () => {
+    const { context, client, session } = setup();
 
-  await context.sendAudio('xxx.mp3');
+    await context.sendAudio('xxx.mp3');
 
-  expect(client.sendAudio).toBeCalledWith(session.user.id, 'xxx.mp3');
+    expect(client.sendAudio).toBeCalledWith(session.user.id, 'xxx.mp3');
+  });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    await context.sendAudio('xxx.mp3');
+
+    expect(context.handled).toBe(true);
+  });
 });
 
-it('#sendDocument to call client.sendDocument', async () => {
-  const { context, client, session } = setup();
+describe('#sendDocument', () => {
+  it('should call client.sendDocument', async () => {
+    const { context, client, session } = setup();
 
-  await context.sendDocument('xxx.gif');
+    await context.sendDocument('xxx.gif');
 
-  expect(client.sendDocument).toBeCalledWith(session.user.id, 'xxx.gif');
+    expect(client.sendDocument).toBeCalledWith(session.user.id, 'xxx.gif');
+  });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    await context.sendDocument('xxx.gif');
+
+    expect(context.handled).toBe(true);
+  });
 });
 
-it('#sendSticker to call client.sendSticker', async () => {
-  const { context, client, session } = setup();
+describe('#sendSticker', () => {
+  it('should call client.sendSticker', async () => {
+    const { context, client, session } = setup();
 
-  await context.sendSticker('CAADAgADQAADyIsGAAE7MpzFPFQX5QI');
+    await context.sendSticker('CAADAgADQAADyIsGAAE7MpzFPFQX5QI');
 
-  expect(client.sendSticker).toBeCalledWith(
-    session.user.id,
-    'CAADAgADQAADyIsGAAE7MpzFPFQX5QI'
-  );
+    expect(client.sendSticker).toBeCalledWith(
+      session.user.id,
+      'CAADAgADQAADyIsGAAE7MpzFPFQX5QI'
+    );
+  });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    await context.sendSticker('CAADAgADQAADyIsGAAE7MpzFPFQX5QI');
+
+    expect(context.handled).toBe(true);
+  });
 });
 
-it('#sendVideo to call client.sendVideo', async () => {
-  const { context, client, session } = setup();
+describe('#sendVideo', () => {
+  it('should call client.sendVideo', async () => {
+    const { context, client, session } = setup();
 
-  await context.sendVideo('xxx.mp4');
+    await context.sendVideo('xxx.mp4');
 
-  expect(client.sendVideo).toBeCalledWith(session.user.id, 'xxx.mp4');
+    expect(client.sendVideo).toBeCalledWith(session.user.id, 'xxx.mp4');
+  });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    await context.sendVideo('xxx.mp4');
+
+    expect(context.handled).toBe(true);
+  });
 });
 
-it('#sendVoice to call client.sendVoice', async () => {
-  const { context, client, session } = setup();
+describe('#sendVoice', () => {
+  it('should call client.sendVoice', async () => {
+    const { context, client, session } = setup();
 
-  await context.sendVoice('xxx.ogg');
+    await context.sendVoice('xxx.ogg');
 
-  expect(client.sendVoice).toBeCalledWith(session.user.id, 'xxx.ogg');
+    expect(client.sendVoice).toBeCalledWith(session.user.id, 'xxx.ogg');
+  });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    await context.sendVoice('xxx.ogg');
+
+    expect(context.handled).toBe(true);
+  });
 });
 
-it('#sendLocation to call client.sendLocation', async () => {
-  const { context, client, session } = setup();
+describe('#sendLocation', () => {
+  it('#sendLocation to call client.sendLocation', async () => {
+    const { context, client, session } = setup();
 
-  const location = {};
+    const location = {};
 
-  await context.sendLocation(location);
+    await context.sendLocation(location);
 
-  expect(client.sendLocation).toBeCalledWith(session.user.id, location);
+    expect(client.sendLocation).toBeCalledWith(session.user.id, location);
+  });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    const location = {};
+
+    await context.sendLocation(location);
+
+    expect(context.handled).toBe(true);
+  });
 });
 
-it('#sendVenue to call client.sendVenue', async () => {
-  const { context, client, session } = setup();
+describe('#sendVenue', () => {
+  it('should call client.sendVenue', async () => {
+    const { context, client, session } = setup();
 
-  const venue = {};
+    const venue = {};
 
-  await context.sendVenue(venue);
+    await context.sendVenue(venue);
 
-  expect(client.sendVenue).toBeCalledWith(session.user.id, venue);
+    expect(client.sendVenue).toBeCalledWith(session.user.id, venue);
+  });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    const venue = {};
+
+    await context.sendVenue(venue);
+
+    expect(context.handled).toBe(true);
+  });
 });
 
-it('#sendContact to call client.sendContact', async () => {
-  const { context, client, session } = setup();
+describe('#sendContact', () => {
+  it('should to call client.sendContact', async () => {
+    const { context, client, session } = setup();
 
-  const contact = {};
+    const contact = {};
 
-  await context.sendContact(contact);
+    await context.sendContact(contact);
 
-  expect(client.sendContact).toBeCalledWith(session.user.id, contact);
+    expect(client.sendContact).toBeCalledWith(session.user.id, contact);
+  });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    const contact = {};
+
+    await context.sendContact(contact);
+
+    expect(context.handled).toBe(true);
+  });
 });
 
-it('#sendChatAction to call client.sendChatAction', async () => {
-  const { context, client, session } = setup();
+describe('#sendChatAction', () => {
+  it('should to call client.sendChatAction', async () => {
+    const { context, client, session } = setup();
 
-  await context.sendChatAction('typing');
+    await context.sendChatAction('typing');
 
-  expect(client.sendChatAction).toBeCalledWith(session.user.id, 'typing');
+    expect(client.sendChatAction).toBeCalledWith(session.user.id, 'typing');
+  });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    await context.sendChatAction('typing');
+
+    expect(context.handled).toBe(true);
+  });
 });
 
 describe('#typing', () => {

@@ -72,13 +72,23 @@ it('get #client works', () => {
   expect(context.client).toBe(client);
 });
 
-it('#sendText to call client.postMessage', async () => {
-  const { context, client } = setup();
+describe('#sendText', () => {
+  it('should call client.postMessage', async () => {
+    const { context, client } = setup();
 
-  await context.postMessage('xxx.com');
+    await context.postMessage('xxx.com');
 
-  expect(client.postMessage).toBeCalledWith('C6A9RJJ3F', 'xxx.com', {
-    as_user: true,
+    expect(client.postMessage).toBeCalledWith('C6A9RJJ3F', 'xxx.com', {
+      as_user: true,
+    });
+  });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    await context.postMessage('xxx.com');
+
+    expect(context.handled).toBe(true);
   });
 });
 

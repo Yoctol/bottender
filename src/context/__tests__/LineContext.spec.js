@@ -100,234 +100,461 @@ describe('#reply', () => {
     await context.replyText('xxx.com');
     await expect(context.replyText('xxx.com')).rejects.toEqual(error);
   });
-});
 
-it('#sendText to call client.pushText', async () => {
-  const { context, client, session } = setup();
+  it('should mark context as handled', async () => {
+    const { context } = setup();
 
-  await context.sendText('xxx.com');
+    await context.replyText('hello');
 
-  expect(client.pushText).toBeCalledWith(session.user.id, 'xxx.com');
-});
-
-it('#sendImage to call client.pushImage', async () => {
-  const { context, client, session } = setup();
-
-  await context.sendImage('xxx.jpg', 'yyy.jpg');
-
-  expect(client.pushImage).toBeCalledWith(
-    session.user.id,
-    'xxx.jpg',
-    'yyy.jpg'
-  );
-});
-
-it('#sendAudio to call client.pushAudio', async () => {
-  const { context, client, session } = setup();
-
-  await context.sendAudio('xxx.mp3', 240000);
-
-  expect(client.pushAudio).toBeCalledWith(session.user.id, 'xxx.mp3', 240000);
-});
-
-it('#sendVideo to call client.pushVideo', async () => {
-  const { context, client, session } = setup();
-
-  await context.sendVideo('xxx.mp4', 'yyy.jpg');
-
-  expect(client.pushVideo).toBeCalledWith(
-    session.user.id,
-    'xxx.mp4',
-    'yyy.jpg'
-  );
-});
-
-it('#sendLocation to call client.pushLocation', async () => {
-  const { context, client, session } = setup();
-
-  await context.sendLocation({
-    title: 'my location',
-    address: '〒150-0002 東京都渋谷区渋谷２丁目２１−１',
-    latitude: 35.65910807942215,
-    longitude: 139.70372892916203,
-  });
-
-  expect(client.pushLocation).toBeCalledWith(session.user.id, {
-    title: 'my location',
-    address: '〒150-0002 東京都渋谷区渋谷２丁目２１−１',
-    latitude: 35.65910807942215,
-    longitude: 139.70372892916203,
+    expect(context.handled).toBe(true);
   });
 });
 
-it('#sendSticker to call client.pushSticker', async () => {
-  const { context, client, session } = setup();
+describe('#sendText', () => {
+  it('should call client.pushText', async () => {
+    const { context, client, session } = setup();
 
-  await context.sendSticker('1', '1');
+    await context.sendText('xxx.com');
 
-  expect(client.pushSticker).toBeCalledWith(session.user.id, '1', '1');
+    expect(client.pushText).toBeCalledWith(session.user.id, 'xxx.com');
+  });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    await context.sendText('xxx.com');
+
+    expect(context.handled).toBe(true);
+  });
 });
 
-it('#sendImagemap to call client.pushImagemap', async () => {
-  const { context, client, session } = setup();
+describe('#sendImage', () => {
+  it('should call client.pushImage', async () => {
+    const { context, client, session } = setup();
 
-  const template = {
-    baseUrl: 'https://example.com/bot/images/rm001',
-    baseHeight: 1040,
-    baseWidth: 1040,
-    actions: [
-      {
-        type: 'uri',
-        linkUri: 'https://example.com/',
-        area: {
-          x: 0,
-          y: 0,
-          width: 520,
-          height: 1040,
+    await context.sendImage('xxx.jpg', 'yyy.jpg');
+
+    expect(client.pushImage).toBeCalledWith(
+      session.user.id,
+      'xxx.jpg',
+      'yyy.jpg'
+    );
+  });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    await context.sendImage('xxx.jpg', 'yyy.jpg');
+
+    expect(context.handled).toBe(true);
+  });
+});
+
+describe('#sendAudio', () => {
+  it('should call client.pushAudio', async () => {
+    const { context, client, session } = setup();
+
+    await context.sendAudio('xxx.mp3', 240000);
+
+    expect(client.pushAudio).toBeCalledWith(session.user.id, 'xxx.mp3', 240000);
+  });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    await context.sendAudio('xxx.mp3', 240000);
+
+    expect(context.handled).toBe(true);
+  });
+});
+
+describe('#sendVideo', () => {
+  it('should call client.pushVideo', async () => {
+    const { context, client, session } = setup();
+
+    await context.sendVideo('xxx.mp4', 'yyy.jpg');
+
+    expect(client.pushVideo).toBeCalledWith(
+      session.user.id,
+      'xxx.mp4',
+      'yyy.jpg'
+    );
+  });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    await context.sendVideo('xxx.mp4', 'yyy.jpg');
+
+    expect(context.handled).toBe(true);
+  });
+});
+
+describe('#sendLocation', () => {
+  it('should call client.pushLocation', async () => {
+    const { context, client, session } = setup();
+
+    await context.sendLocation({
+      title: 'my location',
+      address: '〒150-0002 東京都渋谷区渋谷２丁目２１−１',
+      latitude: 35.65910807942215,
+      longitude: 139.70372892916203,
+    });
+
+    expect(client.pushLocation).toBeCalledWith(session.user.id, {
+      title: 'my location',
+      address: '〒150-0002 東京都渋谷区渋谷２丁目２１−１',
+      latitude: 35.65910807942215,
+      longitude: 139.70372892916203,
+    });
+  });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    await context.sendLocation({
+      title: 'my location',
+      address: '〒150-0002 東京都渋谷区渋谷２丁目２１−１',
+      latitude: 35.65910807942215,
+      longitude: 139.70372892916203,
+    });
+
+    expect(context.handled).toBe(true);
+  });
+});
+
+describe('#sendSticker', () => {
+  it('should call client.pushSticker', async () => {
+    const { context, client, session } = setup();
+
+    await context.sendSticker('1', '1');
+
+    expect(client.pushSticker).toBeCalledWith(session.user.id, '1', '1');
+  });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    await context.sendSticker('1', '1');
+
+    expect(context.handled).toBe(true);
+  });
+});
+
+describe('#sendImagemap', () => {
+  it('should call client.pushImagemap', async () => {
+    const { context, client, session } = setup();
+
+    const template = {
+      baseUrl: 'https://example.com/bot/images/rm001',
+      baseHeight: 1040,
+      baseWidth: 1040,
+      actions: [
+        {
+          type: 'uri',
+          linkUri: 'https://example.com/',
+          area: {
+            x: 0,
+            y: 0,
+            width: 520,
+            height: 1040,
+          },
         },
-      },
-      {
-        type: 'message',
-        text: 'hello',
-        area: {
-          x: 520,
-          y: 0,
-          width: 520,
-          height: 1040,
+        {
+          type: 'message',
+          text: 'hello',
+          area: {
+            x: 520,
+            y: 0,
+            width: 520,
+            height: 1040,
+          },
         },
-      },
-    ],
-  };
+      ],
+    };
 
-  await context.sendImagemap('this is an imagemap', template);
+    await context.sendImagemap('this is an imagemap', template);
 
-  expect(client.pushImagemap).toBeCalledWith(
-    session.user.id,
-    'this is an imagemap',
-    template
-  );
+    expect(client.pushImagemap).toBeCalledWith(
+      session.user.id,
+      'this is an imagemap',
+      template
+    );
+  });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    const template = {
+      baseUrl: 'https://example.com/bot/images/rm001',
+      baseHeight: 1040,
+      baseWidth: 1040,
+      actions: [
+        {
+          type: 'uri',
+          linkUri: 'https://example.com/',
+          area: {
+            x: 0,
+            y: 0,
+            width: 520,
+            height: 1040,
+          },
+        },
+        {
+          type: 'message',
+          text: 'hello',
+          area: {
+            x: 520,
+            y: 0,
+            width: 520,
+            height: 1040,
+          },
+        },
+      ],
+    };
+
+    await context.sendImagemap('this is an imagemap', template);
+
+    expect(context.handled).toBe(true);
+  });
 });
 
-it('#sendButtonTemplate to call client.pushButtonTemplate', async () => {
-  const { context, client, session } = setup();
+describe('#sendButtonTemplate', () => {
+  it('should call client.pushButtonTemplate', async () => {
+    const { context, client, session } = setup();
 
-  const template = {
-    thumbnailImageUrl: 'https://example.com/bot/images/image.jpg',
-    title: 'Menu',
-    text: 'Please select',
-    actions: [
-      {
-        type: 'postback',
-        label: 'Buy',
-        data: 'action=buy&itemid=123',
-      },
-      {
-        type: 'postback',
-        label: 'Add to cart',
-        data: 'action=add&itemid=123',
-      },
-      {
-        type: 'uri',
-        label: 'View detail',
-        uri: 'http://example.com/page/123',
-      },
-    ],
-  };
-
-  await context.sendButtonTemplate('this is a button template', template);
-
-  expect(client.pushButtonTemplate).toBeCalledWith(
-    session.user.id,
-    'this is a button template',
-    template
-  );
-});
-
-it('#sendConfirmTemplate to call client.pushConfirmTemplate', async () => {
-  const { context, client, session } = setup();
-
-  const template = {
-    text: 'Are you sure?',
-    actions: [
-      {
-        type: 'message',
-        label: 'Yes',
-        text: 'yes',
-      },
-      {
-        type: 'message',
-        label: 'No',
-        text: 'no',
-      },
-    ],
-  };
-
-  await context.sendConfirmTemplate('this is a confirm template', template);
-
-  expect(client.pushConfirmTemplate).toBeCalledWith(
-    session.user.id,
-    'this is a confirm template',
-    template
-  );
-});
-
-it('#sendCarouselTemplate to call client.pushCarouselTemplate', async () => {
-  const { context, client, session } = setup();
-
-  const template = [
-    {
-      thumbnailImageUrl: 'https://example.com/bot/images/item1.jpg',
-      title: 'this is menu',
-      text: 'description',
+    const template = {
+      thumbnailImageUrl: 'https://example.com/bot/images/image.jpg',
+      title: 'Menu',
+      text: 'Please select',
       actions: [
         {
           type: 'postback',
           label: 'Buy',
-          data: 'action=buy&itemid=111',
+          data: 'action=buy&itemid=123',
         },
         {
           type: 'postback',
           label: 'Add to cart',
-          data: 'action=add&itemid=111',
+          data: 'action=add&itemid=123',
         },
         {
           type: 'uri',
           label: 'View detail',
-          uri: 'http://example.com/page/111',
+          uri: 'http://example.com/page/123',
         },
       ],
-    },
-    {
-      thumbnailImageUrl: 'https://example.com/bot/images/item2.jpg',
-      title: 'this is menu',
-      text: 'description',
+    };
+
+    await context.sendButtonTemplate('this is a button template', template);
+
+    expect(client.pushButtonTemplate).toBeCalledWith(
+      session.user.id,
+      'this is a button template',
+      template
+    );
+  });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    const template = {
+      thumbnailImageUrl: 'https://example.com/bot/images/image.jpg',
+      title: 'Menu',
+      text: 'Please select',
       actions: [
         {
           type: 'postback',
           label: 'Buy',
-          data: 'action=buy&itemid=222',
+          data: 'action=buy&itemid=123',
         },
         {
           type: 'postback',
           label: 'Add to cart',
-          data: 'action=add&itemid=222',
+          data: 'action=add&itemid=123',
         },
         {
           type: 'uri',
           label: 'View detail',
-          uri: 'http://example.com/page/222',
+          uri: 'http://example.com/page/123',
         },
       ],
-    },
-  ];
+    };
 
-  await context.sendCarouselTemplate('this is a carousel template', template);
+    await context.sendButtonTemplate('this is a button template', template);
 
-  expect(client.pushCarouselTemplate).toBeCalledWith(
-    session.user.id,
-    'this is a carousel template',
-    template
-  );
+    expect(context.handled).toBe(true);
+  });
+});
+
+describe('#sendConfirmTemplate', () => {
+  it('should call client.pushConfirmTemplate', async () => {
+    const { context, client, session } = setup();
+
+    const template = {
+      text: 'Are you sure?',
+      actions: [
+        {
+          type: 'message',
+          label: 'Yes',
+          text: 'yes',
+        },
+        {
+          type: 'message',
+          label: 'No',
+          text: 'no',
+        },
+      ],
+    };
+
+    await context.sendConfirmTemplate('this is a confirm template', template);
+
+    expect(client.pushConfirmTemplate).toBeCalledWith(
+      session.user.id,
+      'this is a confirm template',
+      template
+    );
+  });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    const template = {
+      text: 'Are you sure?',
+      actions: [
+        {
+          type: 'message',
+          label: 'Yes',
+          text: 'yes',
+        },
+        {
+          type: 'message',
+          label: 'No',
+          text: 'no',
+        },
+      ],
+    };
+
+    await context.sendConfirmTemplate('this is a confirm template', template);
+
+    expect(context.handled).toBe(true);
+  });
+});
+
+describe('#sendCarouselTemplate', () => {
+  it('should call client.pushCarouselTemplate', async () => {
+    const { context, client, session } = setup();
+
+    const template = [
+      {
+        thumbnailImageUrl: 'https://example.com/bot/images/item1.jpg',
+        title: 'this is menu',
+        text: 'description',
+        actions: [
+          {
+            type: 'postback',
+            label: 'Buy',
+            data: 'action=buy&itemid=111',
+          },
+          {
+            type: 'postback',
+            label: 'Add to cart',
+            data: 'action=add&itemid=111',
+          },
+          {
+            type: 'uri',
+            label: 'View detail',
+            uri: 'http://example.com/page/111',
+          },
+        ],
+      },
+      {
+        thumbnailImageUrl: 'https://example.com/bot/images/item2.jpg',
+        title: 'this is menu',
+        text: 'description',
+        actions: [
+          {
+            type: 'postback',
+            label: 'Buy',
+            data: 'action=buy&itemid=222',
+          },
+          {
+            type: 'postback',
+            label: 'Add to cart',
+            data: 'action=add&itemid=222',
+          },
+          {
+            type: 'uri',
+            label: 'View detail',
+            uri: 'http://example.com/page/222',
+          },
+        ],
+      },
+    ];
+
+    await context.sendCarouselTemplate('this is a carousel template', template);
+
+    expect(client.pushCarouselTemplate).toBeCalledWith(
+      session.user.id,
+      'this is a carousel template',
+      template
+    );
+  });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    const template = [
+      {
+        thumbnailImageUrl: 'https://example.com/bot/images/item1.jpg',
+        title: 'this is menu',
+        text: 'description',
+        actions: [
+          {
+            type: 'postback',
+            label: 'Buy',
+            data: 'action=buy&itemid=111',
+          },
+          {
+            type: 'postback',
+            label: 'Add to cart',
+            data: 'action=add&itemid=111',
+          },
+          {
+            type: 'uri',
+            label: 'View detail',
+            uri: 'http://example.com/page/111',
+          },
+        ],
+      },
+      {
+        thumbnailImageUrl: 'https://example.com/bot/images/item2.jpg',
+        title: 'this is menu',
+        text: 'description',
+        actions: [
+          {
+            type: 'postback',
+            label: 'Buy',
+            data: 'action=buy&itemid=222',
+          },
+          {
+            type: 'postback',
+            label: 'Add to cart',
+            data: 'action=add&itemid=222',
+          },
+          {
+            type: 'uri',
+            label: 'View detail',
+            uri: 'http://example.com/page/222',
+          },
+        ],
+      },
+    ];
+
+    await context.sendCarouselTemplate('this is a carousel template', template);
+
+    expect(context.handled).toBe(true);
+  });
 });
 
 describe('#typing', () => {

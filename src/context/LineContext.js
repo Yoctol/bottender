@@ -66,6 +66,9 @@ class LineContext extends Context implements PlatformContext {
       );
       return;
     }
+
+    this._handled = true;
+
     return this._client.pushText(this._session.user.id, text);
   }
 }
@@ -92,6 +95,7 @@ types.forEach(type => {
       invariant(!this._replied, 'Can not reply event mulitple times');
 
       this._replied = true;
+      this._handled = true;
 
       return this._client[`reply${type}`](this._event.replyToken, ...args);
     },
@@ -109,6 +113,8 @@ types.forEach(type => {
         );
         return;
       }
+
+      this._handled = true;
 
       return this._client[`push${type}`](this._session.user.id, ...args);
     },
@@ -128,6 +134,8 @@ types.filter(type => type !== 'Text').forEach(type => {
         );
         return;
       }
+
+      this._handled = true;
 
       return this._client[`push${type}`](this._session.user.id, ...args);
     },

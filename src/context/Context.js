@@ -43,11 +43,7 @@ export default class Context {
     return this._session;
   }
 
-  get isHandled(): boolean {
+  get handled(): boolean {
     return this._handled;
-  }
-
-  markHandled(): void {
-    this._handled = true;
   }
 }

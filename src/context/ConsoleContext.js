@@ -45,6 +45,7 @@ export default class ConsoleContext extends Context implements PlatformContext {
    *
    */
   async sendText(text: string): Promise<void> {
+    this._handled = true;
     this._client.sendText(text);
   }
 }
