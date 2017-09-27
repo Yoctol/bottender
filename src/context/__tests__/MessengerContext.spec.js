@@ -4,6 +4,12 @@ import MessengerEvent from '../MessengerEvent';
 jest.mock('delay');
 jest.mock('messaging-api-messenger');
 
+let sleep;
+
+beforeEach(() => {
+  sleep = require('delay'); // eslint-disable-line global-require
+});
+
 afterEach(() => {
   jest.useFakeTimers();
 });
@@ -279,4 +285,14 @@ it('#typingOff call client typingOff', async () => {
   const { context, client, session } = setup();
   await context.typingOff();
   expect(client.typingOff).toBeCalledWith(session.user.id);
+});
+
+describe('#typing', () => {
+  it('avoid delay 0', async () => {
+    const { context } = setup();
+
+    await context.typing(0);
+
+    expect(sleep).not.toBeCalled();
+  });
 });

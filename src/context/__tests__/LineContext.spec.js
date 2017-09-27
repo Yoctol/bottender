@@ -4,6 +4,12 @@ import LineEvent from '../LineEvent';
 jest.mock('delay');
 jest.mock('messaging-api-line');
 
+let sleep;
+
+beforeEach(() => {
+  sleep = require('delay'); // eslint-disable-line global-require
+});
+
 const rawEvent = {
   replyToken: 'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA',
   type: 'message',
@@ -322,4 +328,14 @@ it('#sendCarouselTemplate to call client.pushCarouselTemplate', async () => {
     'this is a carousel template',
     template
   );
+});
+
+describe('#typing', () => {
+  it('avoid delay 0', async () => {
+    const { context } = setup();
+
+    await context.typing(0);
+
+    expect(sleep).not.toBeCalled();
+  });
 });

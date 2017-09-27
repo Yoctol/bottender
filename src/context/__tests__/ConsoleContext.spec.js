@@ -3,6 +3,12 @@ import ConsoleEvent from '../ConsoleEvent';
 
 jest.mock('delay');
 
+let sleep;
+
+beforeEach(() => {
+  sleep = require('delay'); // eslint-disable-line global-require
+});
+
 afterEach(() => {
   jest.useFakeTimers();
 });
@@ -67,4 +73,14 @@ it('#sendText should write text to stdout', async () => {
   await context.sendText('hello');
 
   expect(client.sendText).toBeCalledWith('hello');
+});
+
+describe('#typing', () => {
+  it('avoid delay 0', async () => {
+    const { context } = setup();
+
+    await context.typing(0);
+
+    expect(sleep).not.toBeCalled();
+  });
 });

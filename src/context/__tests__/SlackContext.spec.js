@@ -4,6 +4,12 @@ import SlackEvent from '../SlackEvent';
 jest.mock('delay');
 jest.mock('messaging-api-slack');
 
+let sleep;
+
+beforeEach(() => {
+  sleep = require('delay'); // eslint-disable-line global-require
+});
+
 const rawEvent = {
   type: 'message',
   user: 'U13AGSN1X',
@@ -33,6 +39,7 @@ const setup = () => {
     session,
   };
   const context = new SlackContext(args);
+  context.typing = jest.fn();
   return {
     context,
     session,
@@ -72,5 +79,15 @@ it('#sendText to call client.postMessage', async () => {
 
   expect(client.postMessage).toBeCalledWith('C6A9RJJ3F', 'xxx.com', {
     as_user: true,
+  });
+});
+
+describe('#typing', () => {
+  it('avoid delay 0', async () => {
+    const { context } = setup();
+
+    await context.typing(0);
+
+    expect(sleep).not.toBeCalled();
   });
 });

@@ -38,7 +38,9 @@ export default class SlackContext extends Context implements PlatformContext {
    *
    */
   async typing(milliseconds: number): Promise<void> {
-    await sleep(milliseconds);
+    if (milliseconds > 0) {
+      await sleep(milliseconds);
+    }
   }
 
   async postMessage(text: string): Promise<any> {
