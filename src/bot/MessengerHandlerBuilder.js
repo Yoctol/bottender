@@ -135,16 +135,4 @@ export default class MessengerHandlerBuilder extends HandlerBuilder {
     );
     return this;
   }
-
-  // FIXME
-  onEvent(handler: FunctionalHandler) {
-    this._handlers.push({
-      predicate: context =>
-        !context.event.isEcho &&
-        !context.event.isRead &&
-        !context.event.isDelivery,
-      handler,
-    });
-    return this;
-  }
 }
