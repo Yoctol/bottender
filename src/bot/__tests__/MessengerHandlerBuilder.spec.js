@@ -214,6 +214,165 @@ describe('#onPayment', () => {
   });
 });
 
+describe('#onOptin', () => {
+  it('should return this', async () => {
+    const { builder } = setup();
+    const predicate = () => true;
+    const handler = () => {};
+    expect(await builder.onOptin(predicate, handler)).toBe(builder);
+  });
+
+  it('should call predicate when received postback', async () => {
+    const { builder } = setup();
+    const predicate = jest.fn(() => true);
+    const handler = jest.fn();
+    const context = {
+      event: {
+        isOptin: true,
+      },
+    };
+    builder.onOptin(predicate, handler);
+    await builder.build()(context);
+    expect(predicate).toBeCalledWith(context);
+    expect(handler).toBeCalledWith(context);
+  });
+
+  it('should not call predicate when received not postback', async () => {
+    const { builder } = setup();
+    const predicate = jest.fn(() => true);
+    const handler = jest.fn();
+    const context = {
+      event: {
+        isOptin: false,
+      },
+    };
+    builder.onOptin(predicate, handler);
+    await builder.build()(context);
+    expect(predicate).not.toBeCalledWith(context);
+  });
+
+  it('should accept async predicate', async () => {
+    const { builder } = setup();
+    const predicate = jest.fn(() => Promise.resolve(false));
+    const handler = jest.fn();
+    const context = {
+      event: {
+        isOptin: true,
+      },
+    };
+    builder.onOptin(predicate, handler);
+    await builder.build()(context);
+    expect(predicate).toBeCalledWith(context);
+    expect(handler).not.toBeCalled();
+  });
+});
+
+describe('#onCheckoutUpdate', () => {
+  it('should return this', async () => {
+    const { builder } = setup();
+    const predicate = () => true;
+    const handler = () => {};
+    expect(await builder.onCheckoutUpdate(predicate, handler)).toBe(builder);
+  });
+
+  it('should call predicate when received postback', async () => {
+    const { builder } = setup();
+    const predicate = jest.fn(() => true);
+    const handler = jest.fn();
+    const context = {
+      event: {
+        isCheckoutUpdate: true,
+      },
+    };
+    builder.onCheckoutUpdate(predicate, handler);
+    await builder.build()(context);
+    expect(predicate).toBeCalledWith(context);
+    expect(handler).toBeCalledWith(context);
+  });
+
+  it('should not call predicate when received not postback', async () => {
+    const { builder } = setup();
+    const predicate = jest.fn(() => true);
+    const handler = jest.fn();
+    const context = {
+      event: {
+        isCheckoutUpdate: false,
+      },
+    };
+    builder.onCheckoutUpdate(predicate, handler);
+    await builder.build()(context);
+    expect(predicate).not.toBeCalledWith(context);
+  });
+
+  it('should accept async predicate', async () => {
+    const { builder } = setup();
+    const predicate = jest.fn(() => Promise.resolve(false));
+    const handler = jest.fn();
+    const context = {
+      event: {
+        isCheckoutUpdate: true,
+      },
+    };
+    builder.onCheckoutUpdate(predicate, handler);
+    await builder.build()(context);
+    expect(predicate).toBeCalledWith(context);
+    expect(handler).not.toBeCalled();
+  });
+});
+
+describe('#onPreCheckout', () => {
+  it('should return this', async () => {
+    const { builder } = setup();
+    const predicate = () => true;
+    const handler = () => {};
+    expect(await builder.onPreCheckout(predicate, handler)).toBe(builder);
+  });
+
+  it('should call predicate when received postback', async () => {
+    const { builder } = setup();
+    const predicate = jest.fn(() => true);
+    const handler = jest.fn();
+    const context = {
+      event: {
+        isPreCheckout: true,
+      },
+    };
+    builder.onPreCheckout(predicate, handler);
+    await builder.build()(context);
+    expect(predicate).toBeCalledWith(context);
+    expect(handler).toBeCalledWith(context);
+  });
+
+  it('should not call predicate when received not postback', async () => {
+    const { builder } = setup();
+    const predicate = jest.fn(() => true);
+    const handler = jest.fn();
+    const context = {
+      event: {
+        isPreCheckout: false,
+      },
+    };
+    builder.onPreCheckout(predicate, handler);
+    await builder.build()(context);
+    expect(predicate).not.toBeCalledWith(context);
+  });
+
+  it('should accept async predicate', async () => {
+    const { builder } = setup();
+    const predicate = jest.fn(() => Promise.resolve(false));
+    const handler = jest.fn();
+    const context = {
+      event: {
+        isPreCheckout: true,
+      },
+    };
+    builder.onPreCheckout(predicate, handler);
+    await builder.build()(context);
+    expect(predicate).toBeCalledWith(context);
+    expect(handler).not.toBeCalled();
+  });
+});
+
 describe('#onQuickReply', () => {
   it('should return this', async () => {
     const { builder } = setup();

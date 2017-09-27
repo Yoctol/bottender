@@ -55,6 +55,27 @@ export default class MessengerHandlerBuilder extends HandlerBuilder {
     return this;
   }
 
+  onOptin(predicate: Predicate, handler: FunctionalHandler) {
+    this.on(context => context.event.isOptin && predicate(context), handler);
+    return this;
+  }
+
+  onCheckoutUpdate(predicate: Predicate, handler: FunctionalHandler) {
+    this.on(
+      context => context.event.isCheckoutUpdate && predicate(context),
+      handler
+    );
+    return this;
+  }
+
+  onPreCheckout(predicate: Predicate, handler: FunctionalHandler) {
+    this.on(
+      context => context.event.isPreCheckout && predicate(context),
+      handler
+    );
+    return this;
+  }
+
   onQuickReply(predicate: Predicate, handler: FunctionalHandler) {
     this.onMessage(
       context => !!context.event.message.quick_reply && predicate(context),
