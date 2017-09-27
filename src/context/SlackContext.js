@@ -4,7 +4,7 @@ import sleep from 'delay';
 import warning from 'warning';
 import { SlackOAuthClient } from 'messaging-api-slack';
 
-import type { SlackSession } from '../bot/SlackConnector';
+import type { Session } from '../session/Session';
 
 import Context from './Context';
 import SlackEvent from './SlackEvent';
@@ -13,13 +13,13 @@ import type { PlatformContext } from './PlatformContext';
 type Options = {|
   client: SlackOAuthClient,
   event: SlackEvent,
-  session: ?SlackSession,
+  session: ?Session,
 |};
 
 export default class SlackContext extends Context implements PlatformContext {
   _client: SlackOAuthClient;
   _event: SlackEvent;
-  _session: ?SlackSession;
+  _session: ?Session;
 
   constructor({ client, event, session }: Options) {
     super({ client, event, session });

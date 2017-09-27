@@ -1,7 +1,8 @@
 /* @flow */
 import sleep from 'delay';
 
-import type { ConsoleSession, ConsoleClient } from '../bot/ConsoleConnector';
+import type { ConsoleClient } from '../bot/ConsoleConnector';
+import type { Session } from '../session/Session';
 
 import Context from './Context';
 import ConsoleEvent from './ConsoleEvent';
@@ -10,13 +11,13 @@ import type { PlatformContext } from './PlatformContext';
 type Options = {|
   client: ConsoleClient,
   event: ConsoleEvent,
-  session: ?ConsoleSession,
+  session: ?Session,
 |};
 
 export default class ConsoleContext extends Context implements PlatformContext {
   _client: ConsoleClient;
   _event: ConsoleEvent;
-  _session: ?ConsoleSession;
+  _session: ?Session;
 
   constructor({ client, event, session }: Options) {
     super({ client, event, session });

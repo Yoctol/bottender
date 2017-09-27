@@ -6,27 +6,19 @@ import ConsoleContext from '../context/ConsoleContext';
 import ConsoleEvent, { type ConsoleRawEvent } from '../context/ConsoleEvent';
 import type { Session } from '../session/Session';
 
-import type { Connector, SessionWithUser } from './Connector';
+import type { Connector } from './Connector';
 
 type ConsoleRequestBody = ConsoleRawEvent;
-
-type ConsoleUser = {
-  id: string,
-  name: string,
-};
 
 export type ConsoleClient = {
   sendText(text: string): void,
 };
 
-export type ConsoleSession = SessionWithUser<ConsoleUser>;
-
 type ConstructorOptions = {|
   client?: ConsoleClient,
 |};
 
-export default class ConsoleConnector
-  implements Connector<ConsoleRequestBody, ConsoleUser> {
+export default class ConsoleConnector implements Connector<ConsoleRequestBody> {
   _client: ConsoleClient;
 
   constructor({ client }: ConstructorOptions = {}) {
@@ -77,7 +69,7 @@ export default class ConsoleConnector
     session,
   }: {
     event: ConsoleEvent,
-    session: ?ConsoleSession,
+    session: ?Session,
   }) {
     return new ConsoleContext({
       client: this._client,

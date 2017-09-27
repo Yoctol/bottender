@@ -22,7 +22,7 @@ import MessengerEvent, {
 } from '../context/MessengerEvent';
 import type { Session } from '../session/Session';
 
-import type { Connector, SessionWithUser } from './Connector';
+import type { Connector } from './Connector';
 
 type Entry = {
   ['messaging' | 'standby']: Array<{
@@ -72,12 +72,6 @@ type MessengerRequestBody =
   | PassThreadControlRequestBody
   | TakeThreadControlRequestBody;
 
-type MessengerUser = {
-  id: string,
-};
-
-export type MessengerSession = SessionWithUser<MessengerUser>;
-
 type ConstructorOptions = {|
   accessToken?: string,
   appSecret?: string,
@@ -85,7 +79,7 @@ type ConstructorOptions = {|
 |};
 
 export default class MessengerConnector
-  implements Connector<MessengerRequestBody, MessengerUser> {
+  implements Connector<MessengerRequestBody> {
   _client: MessengerClient;
   _appSecret: ?string;
 
@@ -197,7 +191,7 @@ export default class MessengerConnector
     session,
   }: {
     event: MessengerEvent,
-    session: ?MessengerSession,
+    session: ?Session,
   }): MessengerContext {
     return new MessengerContext({
       client: this._client,

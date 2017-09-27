@@ -8,17 +8,11 @@ import LineContext from '../context/LineContext';
 import LineEvent, { type LineRawEvent } from '../context/LineEvent';
 import type { Session } from '../session/Session';
 
-import type { Connector, SessionWithUser } from './Connector';
+import type { Connector } from './Connector';
 
 type LineRequestBody = {
   events: Array<LineRawEvent>,
 };
-
-type LineUser = {
-  id: string,
-};
-
-export type LineSession = SessionWithUser<LineUser>;
 
 type ConstructorOptions = {|
   accessToken?: string,
@@ -26,8 +20,7 @@ type ConstructorOptions = {|
   client?: LineClient,
 |};
 
-export default class LineConnector
-  implements Connector<LineRequestBody, LineUser> {
+export default class LineConnector implements Connector<LineRequestBody> {
   _client: LineClient;
 
   constructor({ accessToken, channelSecret, client }: ConstructorOptions) {
@@ -151,7 +144,7 @@ export default class LineConnector
     session,
   }: {
     event: LineEvent,
-    session: ?LineSession,
+    session: ?Session,
   }): LineContext {
     return new LineContext({
       client: this._client,
