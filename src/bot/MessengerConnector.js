@@ -167,9 +167,16 @@ export default class MessengerConnector
       const user = await this._client.getUserProfile(senderId);
       session.user = {
         id: senderId,
+        _updatedAt: new Date().toISOString(),
         ...user,
       };
     }
+
+    // TODO: remove later
+    if (!session.user._updatedAt) {
+      session.user._updatedAt = new Date().toISOString();
+    }
+
     Object.freeze(session.user);
     Object.defineProperty(session, 'user', {
       configurable: false,

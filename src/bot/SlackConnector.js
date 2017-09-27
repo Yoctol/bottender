@@ -75,6 +75,7 @@ export default class SlackConnector
     // FIXME: refine user
     session.user = {
       id: senderId,
+      _updatedAt: new Date().toISOString(),
       ...sender,
     };
 
@@ -86,6 +87,7 @@ export default class SlackConnector
         session.channel.members.indexOf(senderId) < 0)
     ) {
       session.channel = await this._client.getChannelInfo(channelId);
+      session.channel._updatedAt = new Date().toISOString();
     }
 
     // TODO: how to know if user leave team?
@@ -99,6 +101,7 @@ export default class SlackConnector
       const allUsers = await this._client.getAllUserList();
       session.team = {
         members: allUsers,
+        _updatedAt: new Date().toISOString(),
       };
     }
 

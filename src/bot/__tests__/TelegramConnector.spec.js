@@ -130,7 +130,10 @@ describe('#updateSession', () => {
     await connector.updateSession(session, messageRequest.body);
 
     expect(session).toEqual({
-      user,
+      user: {
+        _updatedAt: expect.any(String),
+        ...user,
+      },
     });
   });
 
@@ -150,7 +153,10 @@ describe('#updateSession', () => {
     await connector.updateSession(session, callbackQueryRequest.body);
 
     expect(session).toEqual({
-      user,
+      user: {
+        _updatedAt: expect.any(String),
+        ...user,
+      },
     });
   });
 });

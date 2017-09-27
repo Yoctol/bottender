@@ -76,6 +76,7 @@ describe('#updateSession', () => {
         id: '1',
         platform: 'console',
         name: 'you',
+        _updatedAt: expect.any(String),
       },
     });
   });

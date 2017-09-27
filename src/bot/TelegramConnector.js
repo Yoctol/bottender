@@ -69,8 +69,13 @@ export default class TelegramConnector
       } else if (body.callback_query !== undefined) {
         user = body.callback_query.from;
       }
-
       session.user = user;
+      session.user._updatedAt = new Date().toISOString();
+    }
+
+    // TODO: remove later
+    if (!session.user._updatedAt) {
+      session.user._updatedAt = new Date().toISOString();
     }
 
     Object.freeze(session.user);
