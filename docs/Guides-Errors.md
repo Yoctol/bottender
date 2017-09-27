@@ -8,7 +8,7 @@ async/await
 bot.onEvent(async context => {
   try {
     await fetch('');
-    context.sendText('');
+    await context.sendText('');
   } catch (err) {
     // handle errors here...
   }
