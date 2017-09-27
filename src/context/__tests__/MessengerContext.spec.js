@@ -17,6 +17,7 @@ afterEach(() => {
 const createMockGraphAPIClient = () => ({
   typingOn: jest.fn(),
   typingOff: jest.fn(),
+  markSeen: jest.fn(),
   sendText: jest.fn(),
   sendAttachment: jest.fn(),
   sendImage: jest.fn(),
@@ -485,6 +486,24 @@ describe('#typingOff', () => {
     const { context } = setup();
 
     await context.typingOff();
+
+    expect(context.handled).toBe(true);
+  });
+});
+
+describe('#markSeen', () => {
+  it('should call client markSeen', async () => {
+    const { context, client, session } = setup();
+
+    await context.markSeen();
+
+    expect(client.markSeen).toBeCalledWith(session.user.id);
+  });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    await context.markSeen();
 
     expect(context.handled).toBe(true);
   });
