@@ -20,16 +20,16 @@ Bot  > Hello Tim
 
 
 ```js
-bot.onEvent(context => {
+bot.onEvent(async context => {
   if (context.session.nickname) {
-    context.sendText(`Hello ${context.session.nickname}`);
+    await context.sendText(`Hello ${context.session.nickname}`);
   } else if (context.session.asking && context.event.isTextMessage) {
     context.session.nickname = context.event.message.text;
     context.session.asking = false;
-    context.sendText('OK. I i will remember it.');
+    await context.sendText('OK. I i will remember it.');
   } else {
     context.session.asking = true;
-    context.sendText(`What's your nickname?`);
+    await context.sendText(`What's your nickname?`);
   }
 })
 ```

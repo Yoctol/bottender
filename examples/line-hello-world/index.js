@@ -13,8 +13,8 @@ const bot = new LineBot({
   accessToken: config.accessToken,
 });
 
-bot.onEvent(context => {
-  context.sendText('Hello World');
+bot.onEvent(async context => {
+  await context.sendText('Hello World');
 });
 
 const server = createServer(bot);

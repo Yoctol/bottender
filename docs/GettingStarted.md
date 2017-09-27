@@ -28,8 +28,8 @@ const { ConsoleBot } = require('toolbot-core-experiment');
 
 const bot = new ConsoleBot();
 
-bot.handle(context => {
-  context.sendText('Hello World');
+bot.handle(async context => {
+  await context.sendText('Hello World');
 });
 
 bot.createRuntime();
@@ -49,11 +49,11 @@ npm run dev
 Open the file and edit the follow lines of code:
 
 ```diff
-bot.handle(context => {
+bot.handle(async context => {
 - context.sendText('Hello World');
 + const { event } = context;
 + if (event.isTextMessage) {
-+   context.sendText(event.message.text);
++   await context.sendText(event.message.text);
 + }
 });
 ```

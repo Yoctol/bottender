@@ -23,7 +23,6 @@ export default class SlackContext extends Context implements PlatformContext {
 
   constructor({ client, event, session }: Options) {
     super({ client, event, session });
-    this.setMessageDelay(1000);
   }
 
   /**
@@ -55,7 +54,6 @@ export default class SlackContext extends Context implements PlatformContext {
       return;
     }
 
-    await this.typing(this._messageDelay);
     return this._client.postMessage(channelId, text, { as_user: true });
   }
 
@@ -65,23 +63,6 @@ export default class SlackContext extends Context implements PlatformContext {
    */
   sendText(text: string): Promise<any> {
     return this.postMessage(text);
-  }
-
-  async sendTextWithDelay(delay: number, text: string): Promise<any> {
-    warning(false, `sendTextWithDelay is deprecated.`);
-
-    const channelId = this._getChannelIdFromSession();
-
-    if (!channelId) {
-      warning(
-        false,
-        'sendTextWithDelay: should not be called in context without session'
-      );
-      return;
-    }
-
-    await this.typing(delay);
-    return this._client.postMessage(channelId, text, { as_user: true });
   }
 
   // FIXME: this is to fix type checking

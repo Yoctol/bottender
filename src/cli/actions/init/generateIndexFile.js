@@ -107,8 +107,8 @@ export default function generateIndexFile(answer) {
   const peerDepsGroup = requireBotJSONLine(platform);
   const newBotGroup = newBotLines(dependencies[0], platform, sessionStore);
   const handlerGroup = [
-    'bot.onEvent(context => {',
-    "  context.sendText('Hello World');",
+    'bot.onEvent(async context => {',
+    "  await context.sendText('Hello World');",
     '});',
   ].join('\n');
   const runBotGroup = runBotLines(platform, server);

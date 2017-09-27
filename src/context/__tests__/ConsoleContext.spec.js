@@ -75,37 +75,12 @@ it('#sendText should write text to stdout', async () => {
   expect(client.sendText).toBeCalledWith('hello');
 });
 
-it('has delay with methods', () => {
-  const { context } = setup();
-  expect(context.sendTextWithDelay).toBeDefined();
-});
-
-it('#sendTextWithDelay write text to stdout after delay', async () => {
-  const { context, client } = setup();
-
-  await context.sendTextWithDelay(3000, 'hello');
-
-  expect(context.typing).toBeCalledWith(3000);
-  expect(client.sendText).toBeCalledWith('hello');
-});
-
 describe('#typing', () => {
-  it('withDelay avoid delay 0', async () => {
+  it('avoid delay 0', async () => {
     const { context } = setup();
 
-    await context.sendTextWithDelay(0, 'xxx.com');
+    await context.typing(0);
 
-    expect(context.typing).toBeCalledWith(0);
-    expect(sleep).not.toBeCalled();
-  });
-
-  it('setMessageDelay to 0ms avoid delay', async () => {
-    const { context } = setup();
-    context.setMessageDelay(0);
-
-    await context.sendText('xxx.com');
-
-    expect(context.typing).toBeCalledWith(0);
     expect(sleep).not.toBeCalled();
   });
 });

@@ -82,38 +82,12 @@ it('#sendText to call client.postMessage', async () => {
   });
 });
 
-it('has send with delay methods', () => {
-  const { context } = setup();
-  expect(context.sendTextWithDelay).toBeDefined();
-});
-
-it('#sendTextWithDelay to call client.postMessage', async () => {
-  const { context, client } = setup();
-
-  await context.sendTextWithDelay(3000, 'xxx.com');
-
-  expect(client.postMessage).toBeCalledWith('C6A9RJJ3F', 'xxx.com', {
-    as_user: true,
-  });
-});
-
 describe('#typing', () => {
-  it('withDelay avoid delay 0', async () => {
+  it('avoid delay 0', async () => {
     const { context } = setup();
 
-    await context.sendTextWithDelay(0, 'xxx.com');
+    await context.typing(0);
 
-    expect(context.typing).toBeCalledWith(0);
-    expect(sleep).not.toBeCalled();
-  });
-
-  it('setMessageDelay to 0ms avoid delay', async () => {
-    const { context } = setup();
-    context.setMessageDelay(0);
-
-    await context.sendText('xxx.com');
-
-    expect(context.typing).toBeCalledWith(0);
     expect(sleep).not.toBeCalled();
   });
 });

@@ -23,7 +23,6 @@ class TelegramContext extends Context implements PlatformContext {
 
   constructor({ client, event, session }: Options) {
     super({ client, event, session });
-    this.setMessageDelay(1000);
   }
 
   /**
@@ -56,9 +55,7 @@ class TelegramContext extends Context implements PlatformContext {
       );
       return;
     }
-    const session = this._session;
-    await this.typing(this._messageDelay);
-    return this._client.sendMessage(session.user.id, text);
+    return this._client.sendMessage(this._session.user.id, text);
   }
 
   async sendTextWithDelay(delay: number, text: string): Promise<any> {
@@ -71,9 +68,7 @@ class TelegramContext extends Context implements PlatformContext {
       );
       return;
     }
-    const session = this._session;
-    await this.typing(delay);
-    return this._client.sendMessage(session.user.id, text);
+    return this._client.sendMessage(this._session.user.id, text);
   }
 }
 
@@ -105,26 +100,7 @@ sendMethods.forEach(method => {
         );
         return;
       }
-      await this.typing(this._messageDelay);
       return this._client[method](this._session.user.id, ...args);
-    },
-  });
-
-  Object.defineProperty(TelegramContext.prototype, `${method}WithDelay`, {
-    enumerable: false,
-    configurable: true,
-    writable: true,
-    async value(delay, ...rest) {
-      if (!this._session) {
-        warning(
-          false,
-          `${method}WithDelay: should not be called in context without session`
-        );
-        return;
-      }
-
-      await this.typing(delay);
-      return this._client[method](this._session.user.id, ...rest);
     },
   });
 });

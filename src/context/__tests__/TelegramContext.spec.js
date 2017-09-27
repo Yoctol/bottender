@@ -188,47 +188,12 @@ it('#sendChatAction to call client.sendChatAction', async () => {
   expect(client.sendChatAction).toBeCalledWith(session.user.id, 'typing');
 });
 
-it('has send with delay methods', () => {
-  const { context } = setup();
-  expect(context.sendMessageWithDelay).toBeDefined();
-  expect(context.sendPhotoWithDelay).toBeDefined();
-  expect(context.sendAudioWithDelay).toBeDefined();
-  expect(context.sendDocumentWithDelay).toBeDefined();
-  expect(context.sendStickerWithDelay).toBeDefined();
-  expect(context.sendVideoWithDelay).toBeDefined();
-  expect(context.sendVoiceWithDelay).toBeDefined();
-  expect(context.sendLocationWithDelay).toBeDefined();
-  expect(context.sendVenueWithDelay).toBeDefined();
-  expect(context.sendContactWithDelay).toBeDefined();
-  expect(context.sendChatActionWithDelay).toBeDefined();
-});
-
-it('#sendMessageWithDelay to call client.sendMessage', async () => {
-  const { context, client, session } = setup();
-
-  await context.sendMessageWithDelay(3000, 'xxx.com');
-
-  expect(context.typing).toBeCalledWith(3000);
-  expect(client.sendMessage).toBeCalledWith(session.user.id, 'xxx.com');
-});
-
 describe('#typing', () => {
-  it('withDelay avoid delay 0', async () => {
+  it('avoid delay 0', async () => {
     const { context } = setup();
 
-    await context.sendTextWithDelay(0, 'xxx.com');
+    await context.typing(0);
 
-    expect(context.typing).toBeCalledWith(0);
-    expect(sleep).not.toBeCalled();
-  });
-
-  it('setMessageDelay to 0ms avoid delay', async () => {
-    const { context } = setup();
-    context.setMessageDelay(0);
-
-    await context.sendText('xxx.com');
-
-    expect(context.typing).toBeCalledWith(0);
     expect(sleep).not.toBeCalled();
   });
 });

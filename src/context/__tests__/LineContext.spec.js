@@ -330,46 +330,12 @@ it('#sendCarouselTemplate to call client.pushCarouselTemplate', async () => {
   );
 });
 
-it('has delay with methods', () => {
-  const { context } = setup();
-  expect(context.sendTextWithDelay).toBeDefined();
-  expect(context.sendImageWithDelay).toBeDefined();
-  expect(context.sendVideoWithDelay).toBeDefined();
-  expect(context.sendAudioWithDelay).toBeDefined();
-  expect(context.sendLocationWithDelay).toBeDefined();
-  expect(context.sendStickerWithDelay).toBeDefined();
-  expect(context.sendImagemapWithDelay).toBeDefined();
-  expect(context.sendButtonTemplateWithDelay).toBeDefined();
-  expect(context.sendConfirmTemplateWithDelay).toBeDefined();
-  expect(context.sendCarouselTemplateWithDelay).toBeDefined();
-});
-
-it('#sendTextWithDelay to call client.pushText', async () => {
-  const { context, client, session } = setup();
-
-  await context.sendTextWithDelay(3000, 'xxx.com');
-
-  expect(context.typing).toBeCalledWith(3000);
-  expect(client.pushText).toBeCalledWith(session.user.id, 'xxx.com');
-});
-
 describe('#typing', () => {
-  it('withDelay avoid delay 0', async () => {
+  it('avoid delay 0', async () => {
     const { context } = setup();
 
-    await context.sendTextWithDelay(0, 'xxx.com');
+    await context.typing(0);
 
-    expect(context.typing).toBeCalledWith(0);
-    expect(sleep).not.toBeCalled();
-  });
-
-  it('setMessageDelay to 0ms avoid delay', async () => {
-    const { context } = setup();
-    context.setMessageDelay(0);
-
-    await context.sendText('xxx.com');
-
-    expect(context.typing).toBeCalledWith(0);
     expect(sleep).not.toBeCalled();
   });
 });

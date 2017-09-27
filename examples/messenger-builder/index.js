@@ -12,14 +12,14 @@ const bot = new MessengerBot({
 });
 
 const handler = new MessengerHandlerBuilder()
-  .onText(/yo/i, context => {
-    context.sendText('Hi there!');
+  .onText(/yo/i, async context => {
+    await context.sendText('Hi there!');
   })
-  .onEvent(context => {
-    context.sendText("I don't know what you say.");
+  .onEvent(async context => {
+    await context.sendText("I don't know what you say.");
   })
-  .onError(context => {
-    context.sendText('Something wrong happened.');
+  .onError(async context => {
+    await context.sendText('Something wrong happened.');
   })
   .build();
 

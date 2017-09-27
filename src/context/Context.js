@@ -13,8 +13,6 @@ export default class Context {
   _event: Object;
   _session: ?Object;
 
-  _messageDelay: number = 0;
-
   constructor({ client, event, session }: Options) {
     this._client = client;
     this._event = event;
@@ -51,13 +49,5 @@ export default class Context {
 
   markHandled(): void {
     this._handled = true;
-  }
-
-  /**
-   * Set delay before sending every messages.
-   *
-   */
-  setMessageDelay(milliseconds: number): void {
-    this._messageDelay = milliseconds;
   }
 }

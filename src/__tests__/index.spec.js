@@ -42,4 +42,8 @@ describe('core', () => {
     expect(core.SlackHandlerBuilder).toBeDefined();
     expect(core.TelegramHandlerBuilder).toBeDefined();
   });
+
+  it('export extensions', () => {
+    expect(core.withTyping).toBeDefined();
+  });
 });

@@ -14,8 +14,8 @@ const bot = new MessengerBot({
   accessToken: config.accessToken,
 });
 
-bot.onEvent(context => {
-  context.sendText('Hello World');
+bot.onEvent(async context => {
+  await context.sendText('Hello World');
 });
 
 async function createServerWithNext() {

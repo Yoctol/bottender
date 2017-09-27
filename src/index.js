@@ -52,6 +52,9 @@ export { default as MongoSessionStore } from './session/MongoSessionStore';
  * Private Exports (unstable)
  */
 
+/* Extensions */
+export { default as withTyping } from './extensions/withTyping';
+
 /* Context */
 export { default as ConsoleContext } from './context/ConsoleContext';
 export { default as MessengerContext } from './context/MessengerContext';

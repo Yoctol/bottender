@@ -12,8 +12,8 @@ const bot = new ConsoleBot({
   sessionStore: new CacheBasedSessionStore(cache),
 });
 
-bot.onEvent(context => {
-  context.sendText('Hello World');
+bot.onEvent(async context => {
+  await context.sendText('Hello World');
 });
 
 bot.createRuntime();

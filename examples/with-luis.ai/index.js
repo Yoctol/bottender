@@ -21,8 +21,8 @@ bot.onEvent(async context => {
         });
       });
 
-      context.sendText(`Top Intent: ${response.topScoringIntent.intent}`);
-      context.sendText(
+      await context.sendText(`Top Intent: ${response.topScoringIntent.intent}`);
+      await context.sendText(
         `Entities:\n${response.entities.map(item => item.entity).join(', ')}`
       );
     } catch (err) {
