@@ -90,6 +90,20 @@ class MessengerContext extends Context implements PlatformContext {
 
     return this._client.typingOff(this._session.user.id);
   }
+
+  async markSeen(): Promise<any> {
+    if (!this._session) {
+      warning(
+        false,
+        'markSeen: should not be called in context without session'
+      );
+      return;
+    }
+
+    this._handled = true;
+
+    return this._client.markSeen(this._session.user.id);
+  }
 }
 
 const sendMethods = [
