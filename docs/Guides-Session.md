@@ -31,7 +31,7 @@ bot.onEvent(async context => {
     context.session.asking = true;
     await context.sendText(`What's your nickname?`);
   }
-})
+});
 ```
 
 ## Expire
