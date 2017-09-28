@@ -6,6 +6,10 @@ export function print(msg: string): void {
   console.log(chalk.green(msg));
 }
 
+export function warn(msg: string): void {
+  console.log(chalk.magenta(msg));
+}
+
 export function error(msg: string): void {
   console.log(chalk.red(msg));
 }

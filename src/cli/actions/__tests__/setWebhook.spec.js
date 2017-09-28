@@ -5,8 +5,12 @@ import setWebhook, {
   localClient as _localClient,
 } from '../setWebhook';
 
+jest.mock('prompt-confirm');
+
 jest.mock('../../shared/log');
 jest.mock('../../shared/getConfig');
+
+const Confirm = require('prompt-confirm');
 
 const log = require('../../shared/log');
 const getConfig = require('../../shared/getConfig');
@@ -64,7 +68,9 @@ beforeEach(() => {
       },
     ],
   });
-
+  Confirm.mockImplementation(() => ({
+    run: jest.fn(() => Promise.resolve(true)),
+  }));
   log.print = jest.fn();
   log.error = jest.fn();
   log.bold = jest.fn(s => s);
@@ -84,8 +90,8 @@ describe('resolve', () => {
 
     await setWebhook(webhook, configPath);
 
-    expect(log.print).toHaveBeenCalledTimes(3);
-    expect(log.print.mock.calls[2]).toEqual(['Successfully set webhook']);
+    expect(log.print).toHaveBeenCalledTimes(5);
+    expect(log.print.mock.calls[2]).toEqual(['\nSuccessfully set webhook\n']);
   });
 
   it('use default fields to setup', async () => {
@@ -106,7 +112,7 @@ describe('resolve', () => {
 
     await setWebhook(webhook, configPath);
 
-    expect(log.print).toHaveBeenCalledTimes(3);
+    expect(log.print).toHaveBeenCalledTimes(5);
     expect(log.print.mock.calls[0][0]).toMatch(/messages/);
     expect(log.print.mock.calls[0][0]).toMatch(/messaging_postbacks/);
     expect(log.print.mock.calls[0][0]).toMatch(/messaging_referrals/);
@@ -126,7 +132,7 @@ describe('resolve', () => {
 
     await setWebhook(undefined, configPath);
 
-    expect(log.print).toHaveBeenCalledTimes(3);
+    expect(log.print).toHaveBeenCalledTimes(5);
     expect(log.print.mock.calls[0][0]).toMatch(/messages/);
     expect(log.print.mock.calls[0][0]).toMatch(/messaging_postbacks/);
     expect(log.print.mock.calls[0][0]).toMatch(/messaging_referrals/);
