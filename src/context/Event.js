@@ -1,8 +1,8 @@
 /* @flow */
 
 export interface Event {
-  +rawEvent: ?{},
-  +isMessage: boolean,
-  +isTextMessage: boolean,
-  +message: ?{},
+  +rawEvent: ?{};
+  +isMessage: boolean;
+  +isTextMessage: boolean;
+  +message: ?{};
 }
