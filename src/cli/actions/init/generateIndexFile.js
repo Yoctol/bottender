@@ -54,7 +54,7 @@ const runBotLines = (platform, server) => {
   return `const server = createServer(bot);
 
 server.listen(5000, () => {
-  console.log('server is running...');
+  console.log('server is running on 5000 port...');
 });`;
 };
 
