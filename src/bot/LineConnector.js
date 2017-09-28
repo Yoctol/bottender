@@ -53,51 +53,6 @@ export default class LineConnector implements Connector<LineRequestBody> {
   async updateSession(session: Session, body: LineRequestBody): Promise<void> {
     const { source } = body.events[0];
 
-    if (session.group) {
-      // TODO: remove later
-      if (!session.group._updatedAt) {
-        session.group._updatedAt = new Date().toISOString();
-      }
-
-      Object.freeze(session.group);
-      Object.defineProperty(session, 'group', {
-        configurable: false,
-        enumerable: true,
-        writable: false,
-        value: session.group,
-      });
-    }
-
-    if (session.room) {
-      // TODO: remove later
-      if (!session.room._updatedAt) {
-        session.room._updatedAt = new Date().toISOString();
-      }
-
-      Object.freeze(session.room);
-      Object.defineProperty(session, 'room', {
-        configurable: false,
-        enumerable: true,
-        writable: false,
-        value: session.room,
-      });
-    }
-
-    if (session.user) {
-      // TODO: remove later
-      if (!session.user._updatedAt) {
-        session.user._updatedAt = new Date().toISOString();
-      }
-
-      Object.freeze(session.user);
-      Object.defineProperty(session, 'user', {
-        configurable: false,
-        enumerable: true,
-        writable: false,
-        value: session.user,
-      });
-    }
-
     if (!session.type) {
       session.type = source.type;
     }
@@ -116,23 +71,64 @@ export default class LineConnector implements Connector<LineRequestBody> {
         members: memberIds.map(id => ({ id })),
         _updatedAt: new Date().toISOString(),
       };
-    } else if (session.type === 'user') {
-      if (session.user) {
-        return;
-      }
-      if (source.userId) {
-        const user = await this._client.getUserProfile(source.userId);
-        // FIXME: refine user
-        session.user = {
-          id: source.userId,
-          _updatedAt: new Date().toISOString(),
-          ...user,
-        };
-      } else {
-        // in group chat, some may not have userId
-        session.user = null; // TODO: null or undefined?
-      }
     }
+
+    if (
+      source.userId &&
+      (source.type !== 'user' || (session.type === 'user' && !session.user))
+    ) {
+      const user = await this._client.getUserProfile(source.userId);
+      session.user = {
+        id: source.userId,
+        _updatedAt: new Date().toISOString(),
+        ...user,
+      };
+    }
+
+    if (session.group) {
+      // TODO: remove later
+      if (!session.group._updatedAt) {
+        session.group._updatedAt = new Date().toISOString();
+      }
+
+      Object.freeze(session.group);
+    }
+    Object.defineProperty(session, 'group', {
+      configurable: false,
+      enumerable: true,
+      writable: false,
+      value: session.group,
+    });
+
+    if (session.room) {
+      // TODO: remove later
+      if (!session.room._updatedAt) {
+        session.room._updatedAt = new Date().toISOString();
+      }
+
+      Object.freeze(session.room);
+    }
+    Object.defineProperty(session, 'room', {
+      configurable: false,
+      enumerable: true,
+      writable: false,
+      value: session.room,
+    });
+
+    if (session.user) {
+      // TODO: remove later
+      if (!session.user._updatedAt) {
+        session.user._updatedAt = new Date().toISOString();
+      }
+
+      Object.freeze(session.user);
+    }
+    Object.defineProperty(session, 'user', {
+      configurable: false,
+      enumerable: true,
+      writable: false,
+      value: session.user,
+    });
   }
 
   mapRequestToEvents(body: LineRequestBody): Array<LineEvent> {
