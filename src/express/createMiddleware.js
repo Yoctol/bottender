@@ -6,8 +6,14 @@ function createMiddleware(bot) {
         'createMiddleware(): Missing body parser. Use `body-parser` or other similar package before this middleware.'
       );
     }
-    await requestHandler(req.body);
-    res.sendStatus(200);
+    const response = await requestHandler(req.body);
+    if (response) {
+      res.set(response.headers || {});
+      res.status(response.status || 200);
+      res.send(response.body || '');
+    } else {
+      res.sendStatus(200);
+    }
   };
 }
 
