@@ -1,9 +1,10 @@
 import axios from 'axios';
 import get from 'lodash/get';
 import invariant from 'invariant';
+import Confirm from 'prompt-confirm';
 
 import getConfig from '../shared/getConfig';
-import { print, error, bold } from '../shared/log';
+import { print, error, bold, warn } from '../shared/log';
 
 export const client = axios.create({
   baseURL: 'https://graph.facebook.com/v2.9/',
@@ -36,14 +37,27 @@ export default (async function setWebhook(_webhook, _configPath, _verifyToken) {
       'messaging_postbacks',
       'messaging_referrals',
     ];
-    const webhook = _webhook || (await getWebhookFromNgrok());
+
+    let webhook = _webhook;
+
+    if (!_webhook) {
+      warn('> We can not find the webhook URL you provided.');
+      const prompt = new Confirm(
+        'Are you using ngrok?\nWe will check dashboard on http://127.0.0.1:4040'
+      );
+      const result = await prompt.run();
+      if (result) {
+        webhook = await getWebhookFromNgrok();
+      }
+    }
+
     const verifyToken = _verifyToken || config.verifyToken;
 
     invariant(config.appId, '`appId` is not found in config file');
     invariant(config.appSecret, '`appSecret` is not found in config file');
     invariant(
       verifyToken,
-      'verifyToken is required but not found. using -v <verifyToken> to setup or list `verifyToken` key it in config file.'
+      '`verifyToken` is required but not found. using -v <verifyToken> to setup or list `verifyToken` key it in config file.'
     );
     invariant(
       webhook,
@@ -74,7 +88,13 @@ export default (async function setWebhook(_webhook, _configPath, _verifyToken) {
     );
     invariant(res.data.success, 'Setting for webhook is failed');
 
-    print('Successfully set webhook');
+    print('\nSuccessfully set webhook\n');
+    print(
+      `> Check callback URL on: https://developers.facebook.com/apps/${config.appId}/webhooks/`
+    );
+    print(
+      `> Check selected events on: https://developers.facebook.com/apps/${config.appId}/messenger/`
+    );
   } catch (err) {
     error('set webhook error with');
     if (err.response) {

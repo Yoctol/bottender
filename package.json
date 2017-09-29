@@ -95,6 +95,7 @@
     "micro": "^9.0.0",
     "mongodb": "^2.2.31",
     "pascal-case": "^2.0.1",
+    "prompt-confirm": "^1.2.0",
     "random-item": "^1.0.0",
     "readline": "^1.3.0",
     "restify": "^6.0.1",
