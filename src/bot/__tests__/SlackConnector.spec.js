@@ -10,19 +10,40 @@ const accessToken = 'SLACK_accessTOKEN';
 
 const request = {
   body: {
-    token: '6fB8oKXh4Rj5VpahroN0m99K',
-    team_id: 'T02RUPSBS',
-    api_app_id: 'A6AKK532Q',
+    token: 'xxxxxxxxxxxxxxxxxxxxxxxxxxx',
+    team_id: 'T02R00000',
+    api_app_id: 'A6A00000',
     event: {
       type: 'message',
-      user: 'U13AGSN1X',
+      user: 'U13A00000',
       text: 'hello',
       ts: '1500435914.425136',
-      channel: 'C6A9RJJ3F',
+      channel: 'C6A900000',
       event_ts: '1500435914.425136',
     },
     type: 'event_callback',
-    authed_users: ['U6AKQGXJ8'],
+    authed_users: ['U6AK00000'],
+    event_id: 'Ev6BEYTAK0',
+    event_time: 1500435914,
+  },
+};
+
+const botRequest = {
+  body: {
+    token: 'xxxxxxxxxxxxxxxxxxxxxxxxxxx',
+    team_id: 'T02R00000',
+    api_app_id: 'A6A00000',
+    event: {
+      type: 'message',
+      user: 'U13A00000',
+      text: 'hello',
+      bot_id: 'B6AK00000',
+      ts: '1500435914.425136',
+      channel: 'C6A900000',
+      event_ts: '1500435914.425136',
+    },
+    type: 'event_callback',
+    authed_users: ['U6AK00000'],
     event_id: 'Ev6BEYTAK0',
     event_time: 1500435914,
   },
@@ -66,7 +87,7 @@ describe('#getUniqueSessionIdFromRequest', () => {
   it('extract correct sender id', () => {
     const { connector } = setup();
     const channelId = connector.getUniqueSessionIdFromRequest(request.body);
-    expect(channelId).toBe('C6A9RJJ3F');
+    expect(channelId).toBe('C6A900000');
   });
 });
 
@@ -75,10 +96,10 @@ describe('#updateSession', () => {
     const { connector, mockSlackOAuthClient } = setup();
 
     const user = {
-      id: 'U13AGSN1X',
+      id: 'U13A00000',
     };
     const channel = {
-      id: 'C6A9RJJ3F',
+      id: 'C6A900000',
     };
     const members = [user];
     const session = {};
@@ -93,8 +114,8 @@ describe('#updateSession', () => {
 
     await connector.updateSession(session, request.body);
 
-    expect(mockSlackOAuthClient.getUserInfo).toBeCalledWith('U13AGSN1X');
-    expect(mockSlackOAuthClient.getChannelInfo).toBeCalledWith('C6A9RJJ3F');
+    expect(mockSlackOAuthClient.getUserInfo).toBeCalledWith('U13A00000');
+    expect(mockSlackOAuthClient.getChannelInfo).toBeCalledWith('C6A900000');
     expect(mockSlackOAuthClient.getAllUserList).toBeCalled();
     expect(session).toEqual({
       user: {
@@ -107,6 +128,19 @@ describe('#updateSession', () => {
       },
       team: { members, _updatedAt: expect.any(String) },
     });
+  });
+
+  it('not update session if it is bot event request', async () => {
+    const { connector, mockSlackOAuthClient } = setup();
+
+    const session = {};
+
+    await connector.updateSession(session, botRequest.body);
+
+    expect(mockSlackOAuthClient.getUserInfo).not.toBeCalled();
+    expect(mockSlackOAuthClient.getChannelInfo).not.toBeCalled();
+    expect(mockSlackOAuthClient.getAllUserList).not.toBeCalled();
+    expect(session).toEqual({});
   });
 });
 
