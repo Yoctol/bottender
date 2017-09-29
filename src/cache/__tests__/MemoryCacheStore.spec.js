@@ -50,6 +50,20 @@ describe('#put', () => {
     await store.put('x', [{ x: 1 }], 5);
     expect(await store.get('x')).toEqual([{ x: 1 }]);
   });
+
+  it('should not save as readonly', async () => {
+    const store = new MemoryCacheStore(5);
+
+    const obj = { x: 1 };
+    Object.freeze(obj);
+
+    await store.put('x', obj, 5);
+    const writable = await store.get('x');
+
+    writable.x = 2;
+
+    expect(writable.x).toBe(2);
+  });
 });
 
 describe('#forget', () => {
