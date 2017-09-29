@@ -1,6 +1,10 @@
 {
   "dependencies": {
-    "babel-register": "^6.24.1"
+    "babel-register": "^6.24.1",
+    "body-parser": "^1.18.2",
+    "come-from": "^0.1.0",
+    "express": "^4.16.0",
+    "shortid": "^2.2.8"
   },
   "devDependencies": {
     "nodemon": "^1.11.0"
