@@ -42,6 +42,14 @@ export default class SlackConnector implements Connector<SlackRequestBody> {
     return body.event;
   }
 
+  _isBotEventRequest(body: SlackRequestBody): boolean {
+    const rawEvent = this._getRawEventFromRequest(body);
+    return !!(
+      rawEvent.bot_id ||
+      (rawEvent.subtype && rawEvent.subtype === 'bot_message')
+    );
+  }
+
   get platform(): string {
     return 'slack';
   }
@@ -59,15 +67,21 @@ export default class SlackConnector implements Connector<SlackRequestBody> {
 
   async updateSession(session: Session, body: SlackRequestBody): Promise<void> {
     if (
-      typeof session.user === 'object' &&
-      session.user &&
-      session.user.id &&
-      session.user.id === body.event.user
+      (typeof session.user === 'object' &&
+        session.user &&
+        session.user.id &&
+        session.user.id === body.event.user) ||
+      this._isBotEventRequest(body)
     ) {
       return;
     }
     const channelId = this.getUniqueSessionIdFromRequest(body);
     const senderId = body.event.user;
+
+    if (!senderId) {
+      return;
+    }
+
     const sender = await this._client.getUserInfo(senderId);
     // FIXME: refine user
     session.user = {
@@ -136,7 +150,7 @@ export default class SlackConnector implements Connector<SlackRequestBody> {
   mapRequestToEvents(body: SlackRequestBody): Array<SlackEvent> {
     const rawEvent = this._getRawEventFromRequest(body);
 
-    if (rawEvent.bot_id || rawEvent.subtype === 'bot_message') {
+    if (this._isBotEventRequest(body)) {
       return []; // FIXME
     }
 
