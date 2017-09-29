@@ -6,21 +6,20 @@ const shortid = require('shortid');
 const comeFrom = require('come-from');
 
 const { MessengerBot, LineBot, TelegramBot, SlackBot } = require('../../src');
-const createMiddleware = require('../../src/express/createMiddleware').default;
-const verifyLineSignature = require('../../src/express/verifyLineSignature')
-  .default;
-const verifyMessengerSignature = require('../../src/express/verifyMessengerSignature')
-  .default;
-const verifyMessengerWebhook = require('../../src/express/verifyMessengerWebhook')
-  .default;
-const verifySlackWebhook = require('../../src/express/verifySlackWebhook')
-  .default;
+const {
+  createMiddleware,
+  verifyLineSignature,
+  verifyMessengerSignature,
+  verifyMessengerWebhook,
+  verifySlackWebhook,
+} = require('../../src/express');
 
 const handler = require('./handler');
 
 const config = {
   messenger: {
     accessToken: '__FILL_YOUR_TOKEN_HERE__',
+    appSecret: '__FILL_YOUR_SECRET_HERE__',
   },
   line: {
     channelSecret: '__FILL_YOUR_CHANNEL_SECRET_HERE__',
