@@ -28,6 +28,6 @@ bot.onEvent(handler);
 
 const server = createServer(bot);
 server.listen(5000, () => {
-  bot.connector._client.setWebhook(config.url);
+  bot.connector.client.setWebhook(config.url);
   console.log('server is running on 5000 port...');
 });
