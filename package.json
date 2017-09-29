@@ -21,7 +21,7 @@
     "build": "npm run clean && babel src -d lib --ignore __tests__",
     "clean": "rimraf lib",
     "check": "flow check",
-    "lint": "eslint bin src scripts",
+    "lint": "eslint bin src scripts examples",
     "lint:fix": "npm run lint -- --fix",
     "lint:staged": "lint-staged",
     "precommit": "lint-staged",

@@ -205,7 +205,7 @@ export default class MessengerConnector
     if (!this._appSecret) {
       warning(
         false,
-        'App secret is not set. Cannot perform Messenger signature validation!'
+        '`appSecret` is not set. Cannot perform Messenger signature validation!'
       );
       return true;
     }

@@ -5,10 +5,12 @@ const { createServer } = require('../../src/restify');
 
 const config = {
   accessToken: '__FILL_YOUR_TOKEN_HERE__',
+  appSecret: '__FILL_YOUR_SECRET_HERE__',
 };
 
 const bot = new MessengerBot({
   accessToken: config.accessToken,
+  appSecret: config.appSecret,
 });
 
 bot.onEvent(async context => {
