@@ -7,8 +7,12 @@ function createMiddleware(bot) {
       );
     }
 
-    await requestHandler(req.body);
-    res.send(200);
+    const response = await requestHandler(req.body);
+    if (response) {
+      res.send(response.status || 200, response.body || '', response.headers);
+    } else {
+      res.send(200);
+    }
     return next();
   };
 }

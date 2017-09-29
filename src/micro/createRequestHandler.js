@@ -30,8 +30,15 @@ function createRequestHandler(bot, config = {}) {
             return;
           }
         }
-        await requestHandler(body);
-        send(res, 200);
+        const response = await requestHandler(body);
+        if (response) {
+          Object.keys(response.headers).forEach(key => {
+            res.setHeader(key, response.headers[key]);
+          });
+          send(res, response.status || 200, response.body || '');
+        } else {
+          send(res, 200);
+        }
       }
     } else {
       send(res, 405);

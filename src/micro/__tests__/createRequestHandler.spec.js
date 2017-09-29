@@ -109,3 +109,32 @@ it('should response 200 when no error be thrown in requestHandler', async () => 
 
   expect(micro.send).toBeCalledWith(res, 200);
 });
+
+it('should overwrite response when provide', async () => {
+  const { bot, requestHandler } = setup({ platform: 'other' });
+  requestHandler.mockReturnValue(
+    Promise.resolve({
+      status: 400,
+      headers: {
+        'X-Header': 'x',
+      },
+      body: {
+        name: 'x',
+      },
+    })
+  );
+
+  const microRequestHandler = createRequestHandler(bot);
+
+  const req = { method: 'POST', body: {} };
+  const res = {
+    setHeader: jest.fn(),
+  };
+
+  await microRequestHandler(req, res);
+
+  expect(res.setHeader).toBeCalledWith('X-Header', 'x');
+  expect(micro.send).toBeCalledWith(res, 400, {
+    name: 'x',
+  });
+});

@@ -29,6 +29,34 @@ it('should response 200 when no error be thrown', async () => {
   expect(next).toBeCalled();
 });
 
+it('should overwrite response when provide', async () => {
+  const { bot, requestHandler } = setup();
+  requestHandler.mockReturnValue(
+    Promise.resolve({
+      status: 400,
+      headers: {
+        'X-Header': 'x',
+      },
+      body: {
+        name: 'x',
+      },
+    })
+  );
+
+  const middleware = createMiddleware(bot);
+
+  const req = { body: {} };
+  const res = {
+    send: jest.fn(),
+  };
+  const next = jest.fn();
+
+  await middleware(req, res, next);
+
+  expect(res.send).toBeCalledWith(400, { name: 'x' }, { 'X-Header': 'x' });
+  expect(next).toBeCalled();
+});
+
 it('should throw when no body exists', async () => {
   const { bot, requestHandler } = setup();
   requestHandler.mockReturnValue(Promise.resolve());
