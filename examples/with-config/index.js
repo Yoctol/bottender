@@ -7,6 +7,7 @@ const { messenger: config } = require('./bottender.config.js');
 
 const bot = new MessengerBot({
   accessToken: config.accessToken,
+  appSecret: config.appSecret,
 });
 
 bot.onEvent(async context => {
