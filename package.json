@@ -76,6 +76,7 @@
     "fs-extra": "^4.0.2",
     "glob": "^7.1.2",
     "hasha": "^3.0.0",
+    "import-fresh": "^2.0.0",
     "inquirer": "^3.3.0",
     "invariant": "^2.2.2",
     "ioredis": "^3.1.4",
