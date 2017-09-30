@@ -14,12 +14,12 @@ describe('console', () => {
 
   it('error', () => {
     error('error!');
-    expect(console.log).toBeCalledWith(chalk.red('error!'));
+    expect(console.log).toBeCalledWith(chalk.bold.red('❯ error!'));
   });
 
   it('print', () => {
     print('print!');
-    expect(console.log).toBeCalledWith(chalk.green('print!'));
+    expect(console.log).toBeCalledWith(chalk.green('❯ print!'));
   });
 
   it('bold', () => {

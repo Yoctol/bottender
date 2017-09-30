@@ -3,15 +3,15 @@
 import chalk from 'chalk';
 
 export function print(msg: string): void {
-  console.log(chalk.green(msg));
+  console.log(chalk.green(`❯ ${msg}`));
 }
 
 export function warn(msg: string): void {
-  console.log(chalk.magenta(msg));
+  console.log(chalk.yellow(`❯ ${msg}`));
 }
 
 export function error(msg: string): void {
-  console.log(chalk.red(msg));
+  console.log(chalk.bold.red(`❯ ${msg}`));
 }
 
 export function bold(msg: string): string {
