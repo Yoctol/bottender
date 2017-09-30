@@ -41,9 +41,9 @@ export default (async function setWebhook(_webhook, _configPath, _verifyToken) {
     let webhook = _webhook;
 
     if (!_webhook) {
-      warn('> We can not find the webhook URL you provided.');
+      warn('We can not find the webhook URL you provided.');
       const prompt = new Confirm(
-        'Are you using ngrok?\nWe will check dashboard on http://127.0.0.1:4040'
+        'Are you using ngrok?\n❯ We will check dashboard on http://127.0.0.1:4040'
       );
       const result = await prompt.run();
       if (result) {
@@ -88,22 +88,22 @@ export default (async function setWebhook(_webhook, _configPath, _verifyToken) {
     );
     invariant(res.data.success, 'Setting for webhook is failed');
 
-    print('\nSuccessfully set webhook\n');
+    print('Successfully set webhook');
     print(
-      `> Check callback URL on: https://developers.facebook.com/apps/${config.appId}/webhooks/`
+      `Check callback URL on: https://developers.facebook.com/apps/${config.appId}/webhooks/`
     );
     print(
-      `> Check selected events on: https://developers.facebook.com/apps/${config.appId}/messenger/`
+      `Check selected events on: https://developers.facebook.com/apps/${config.appId}/messenger/`
     );
   } catch (err) {
-    error('set webhook error with');
+    error('Failed to set messenger webhook');
     if (err.response) {
       error(`status: ${bold(err.response.status)}`);
       if (err.response.data) {
         error(`data: ${bold(JSON.stringify(err.response.data, null, 2))}`);
       }
     } else {
-      error(`message: ${bold(err.message)}`);
+      warn(err.message);
     }
     return process.exit(1);
   }
