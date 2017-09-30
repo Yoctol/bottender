@@ -3,12 +3,9 @@ require('babel-register');
 const { MessengerBot } = require('../../src');
 const { createServer } = require('../../src/express');
 
-const { messenger: config } = require('./bottender.config.js');
+const config = require('./bottender.config.js');
 
-const bot = new MessengerBot({
-  accessToken: config.accessToken,
-  appSecret: config.appSecret,
-});
+const bot = new MessengerBot(config.messenger);
 
 bot.onEvent(async context => {
   await context.sendText('Hello World');
