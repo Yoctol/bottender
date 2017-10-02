@@ -16,7 +16,7 @@ jest.mock('../actions/setGetStartedButton');
 jest.mock('../actions/setGreetingText');
 jest.mock('../actions/setMessengerProfile');
 jest.mock('../actions/setPersistentMenu');
-jest.mock('../actions/setWebhook');
+jest.mock('../actions/setMessengerWebhook');
 jest.mock('../actions/setTelegramWebhook');
 
 let log;
@@ -246,47 +246,51 @@ describe('#messenger-profile', () => {
   });
 });
 
-describe('#webhook', () => {
+describe('#setMessengerWebhook', () => {
   it('to be called without passing any options', () => {
-    const setWebhook = require('../actions/setWebhook');
-    setWebhook.default = jest.fn();
+    const setMessengerWebhook = require('../actions/setMessengerWebhook');
+    setMessengerWebhook.default = jest.fn();
     process.argv = [
       '/usr/local/bin/iojs',
       '/usr/local/bin/toolbot',
-      'set-webhook',
+      'set-messenger-webhook',
     ];
     require('../index');
-    expect(setWebhook.default).toBeCalledWith(undefined, undefined, undefined);
+    expect(setMessengerWebhook.default).toBeCalledWith(
+      undefined,
+      undefined,
+      undefined
+    );
   });
   it('to be called when passing webhook', () => {
-    const setWebhook = require('../actions/setWebhook');
-    setWebhook.default = jest.fn();
+    const setMessengerWebhook = require('../actions/setMessengerWebhook');
+    setMessengerWebhook.default = jest.fn();
     process.argv = [
       '/usr/local/bin/iojs',
       '/usr/local/bin/toolbot',
-      'set-webhook',
+      'set-messenger-webhook',
       '-w',
       'http://test.com',
     ];
     require('../index');
-    expect(setWebhook.default).toBeCalledWith(
+    expect(setMessengerWebhook.default).toBeCalledWith(
       'http://test.com',
       undefined,
       undefined
     );
   });
   it('to be called when passing webhook', () => {
-    const setWebhook = require('../actions/setWebhook');
-    setWebhook.default = jest.fn();
+    const setMessengerWebhook = require('../actions/setMessengerWebhook');
+    setMessengerWebhook.default = jest.fn();
     process.argv = [
       '/usr/local/bin/iojs',
       '/usr/local/bin/toolbot',
-      'set-webhook',
+      'set-messenger-webhook',
       '-v',
       '__FAKE_VERIFYTOKEN__',
     ];
     require('../index');
-    expect(setWebhook.default).toBeCalledWith(
+    expect(setMessengerWebhook.default).toBeCalledWith(
       undefined,
       undefined,
       '__FAKE_VERIFYTOKEN__'
