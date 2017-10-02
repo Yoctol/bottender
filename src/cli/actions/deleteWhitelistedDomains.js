@@ -5,7 +5,7 @@ import { MessengerClient } from 'messaging-api-messenger';
 import getConfig from '../shared/getConfig';
 import { print, error, bold } from '../shared/log';
 
-export default (async function deleteDomainWhitelist(_configPath) {
+export default (async function deleteWhitelistedDomains(_configPath) {
   try {
     const platform = 'messenger';
     const configPath = _configPath || 'bottender.config.js';
@@ -17,16 +17,16 @@ export default (async function deleteDomainWhitelist(_configPath) {
 
     await client.deleteDomainWhitelist();
 
-    print('delete whitelist successfully');
+    print('Successfully delete whitelisted domains');
   } catch (err) {
-    error('delete whitelist error with');
+    error('Failed to delete whitelisted domains');
     if (err.response) {
       error(`status: ${bold(err.response.status)}`);
       if (err.response.data) {
         error(`data: ${bold(JSON.stringify(err.response.data, null, 2))}`);
       }
     } else {
-      error(`message: ${bold(err.message)}`);
+      error(err.message);
     }
     return process.exit(1);
   }

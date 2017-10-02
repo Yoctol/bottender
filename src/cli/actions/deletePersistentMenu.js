@@ -17,16 +17,16 @@ export default (async function deletePersistentMenu(_configPath) {
 
     await client.deletePersistentMenu();
 
-    print('delete persistent menu successfully');
+    print('Successfully delete persistent menu');
   } catch (err) {
-    error('delete persistent menu error with');
+    error('Failed to delete persistent menu');
     if (err.response) {
       error(`status: ${bold(err.response.status)}`);
       if (err.response.data) {
         error(`data: ${bold(JSON.stringify(err.response.data, null, 2))}`);
       }
     } else {
-      error(`message: ${bold(err.message)}`);
+      error(err.message);
     }
     return process.exit(1);
   }

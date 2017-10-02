@@ -22,20 +22,20 @@ export default (async function setPersistentMenu(_configPath) {
     await client.setPersistentMenu(persistentMenu, { composerInputDisabled });
 
     print(
-      `successfully set persistent menu to with composerInputDisabled: ${composerInputDisabled}`
+      `Successfully set persistent menu to with composerInputDisabled: ${composerInputDisabled}`
     );
     persistentMenu.forEach(item => {
       print(`- ${item.title}`);
     });
   } catch (err) {
-    error('set persistent menu error with');
+    error('Failed to set persistent menu');
     if (err.response) {
       error(`status: ${bold(err.response.status)}`);
       if (err.response.data) {
         error(`data: ${bold(JSON.stringify(err.response.data, null, 2))}`);
       }
     } else {
-      error(`message: ${bold(err.message)}`);
+      error(err.message);
     }
     return process.exit(1);
   }

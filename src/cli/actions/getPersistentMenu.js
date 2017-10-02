@@ -31,17 +31,17 @@ export default (async function getPersistentMenu(_configPath) {
       });
       console.log(table.toString()); // eslint-disable-line no-console
     } else {
-      error('no persistent menu setting could be found');
+      error('Failed to find persistent menu setting');
     }
   } catch (err) {
-    error('get persistent menu error with');
+    error('Faile to get persistent menu');
     if (err.response) {
       error(`status: ${bold(err.response.status)}`);
       if (err.response.data) {
         error(`data: ${bold(JSON.stringify(err.response.data, null, 2))}`);
       }
     } else {
-      error(`message: ${bold(err.message)}`);
+      error(err.message);
     }
     return process.exit(1);
   }

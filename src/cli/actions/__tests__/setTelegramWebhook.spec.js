@@ -74,7 +74,7 @@ describe('resolve', () => {
     await setTelegramWebhook(webhook, configPath);
 
     expect(log.print).toHaveBeenCalledTimes(1);
-    expect(log.print.mock.calls[0]).toEqual(['Successfully set webhook']);
+    expect(log.print.mock.calls[0][0]).toMatch(/Successfully/);
   });
 
   it('use default fields to setup', async () => {
@@ -86,7 +86,7 @@ describe('resolve', () => {
     await setTelegramWebhook(webhook, configPath);
 
     expect(log.print).toHaveBeenCalledTimes(1);
-    expect(log.print.mock.calls[0]).toEqual(['Successfully set webhook']);
+    expect(log.print.mock.calls[0][0]).toMatch(/Successfully/);
   });
 
   it('get ngrok webhook to setup', async () => {
@@ -97,7 +97,7 @@ describe('resolve', () => {
     await setTelegramWebhook(undefined, configPath);
 
     expect(log.print).toHaveBeenCalledTimes(1);
-    expect(log.print.mock.calls[0]).toEqual(['Successfully set webhook']);
+    expect(log.print.mock.calls[0][0]).toMatch(/Successfully/);
   });
 });
 
@@ -109,7 +109,9 @@ describe('reject', () => {
 
     await setTelegramWebhook(webhook, configPath);
 
-    expect(log.error).toBeCalledWith('set webhook error with');
+    expect(log.error).toBeCalledWith(
+      '`accessToken` is not found in config file'
+    );
     expect(process.exit).toBeCalled();
   });
 

@@ -21,16 +21,16 @@ export default (async function setGreetingText(_greetingText, _configPath) {
     const client = MessengerClient.connect(config.accessToken);
     await client.setGreetingText(greetingText);
 
-    print(`set greeting text to ${bold(greetingText)} successfully`);
+    print(`Successfully set greeting text to ${bold(greetingText)}`);
   } catch (err) {
-    error('set greeting text error with');
+    error('Failed to set greeting text');
     if (err.response) {
       error(`status: ${bold(err.response.status)}`);
       if (err.response.data) {
         error(`data: ${bold(JSON.stringify(err.response.data, null, 2))}`);
       }
     } else {
-      error(`message: ${bold(err.message)}`);
+      error(err.message);
     }
     return process.exit(1);
   }

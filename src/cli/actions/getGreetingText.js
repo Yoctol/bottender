@@ -17,19 +17,19 @@ export default (async function getGreetingText(_configPath) {
 
     const { data } = await client.getGreetingText();
     if (data.length) {
-      print(`greeting text is: ${bold(data[0].greeting[0].text)}`);
+      print(`The greeting text is: ${bold(data[0].greeting[0].text)}`);
     } else {
-      error('no greeting text setting could be found');
+      error('Failed to find greeting text setting');
     }
   } catch (err) {
-    error('get greeting text error with');
+    error('Failed to get greeting text');
     if (err.response) {
       error(`status: ${bold(err.response.status)}`);
       if (err.response.data) {
         error(`data: ${bold(JSON.stringify(err.response.data, null, 2))}`);
       }
     } else {
-      error(`message: ${bold(err.message)}`);
+      error(err.message);
     }
     return process.exit(1);
   }

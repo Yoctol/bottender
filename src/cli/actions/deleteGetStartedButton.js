@@ -17,16 +17,16 @@ export default (async function deleteGetStartedButton(_configPath) {
 
     await client.deleteGetStartedButton();
 
-    print('delete get started button successfully');
+    print('Successfully delete `get started button`');
   } catch (err) {
-    error('delete get started button error with');
+    error('Failed to delete `get started button`');
     if (err.response) {
       error(`status: ${bold(err.response.status)}`);
       if (err.response.data) {
         error(`data: ${bold(JSON.stringify(err.response.data, null, 2))}`);
       }
     } else {
-      error(`message: ${bold(err.message)}`);
+      error(err.message);
     }
     return process.exit(1);
   }
