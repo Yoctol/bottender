@@ -27,7 +27,11 @@ const _getClientToken = async (clientId, clientSecret) => {
   return res.data.access_token;
 };
 
-export default (async function setWebhook(_webhook, _configPath, _verifyToken) {
+export default (async function setMessengerWebhook(
+  _webhook,
+  _configPath,
+  _verifyToken
+) {
   try {
     const platform = 'messenger';
     const configPath = _configPath || 'bottender.config.js';

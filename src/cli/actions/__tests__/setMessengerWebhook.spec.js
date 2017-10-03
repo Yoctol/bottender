@@ -3,7 +3,7 @@ import MockAdapter from 'axios-mock-adapter';
 import setWebhook, {
   client as _client,
   localClient as _localClient,
-} from '../setWebhook';
+} from '../setMessengerWebhook';
 
 jest.mock('prompt-confirm');
 
