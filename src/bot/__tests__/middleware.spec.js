@@ -1,4 +1,5 @@
 import middleware from '../middleware';
+import Handler from '../Handler';
 
 it('should let middleware to be called', () => {
   const m1 = jest.fn();
@@ -54,4 +55,18 @@ it('should work with async middleware', async () => {
 
   expect(m1.mock.calls[0][0]).toBe(context);
   expect(m2.mock.calls[0][0]).toBe(context);
+});
+
+it('should work with handler instance', async () => {
+  const m1 = jest.fn((context, next) => Promise.resolve().then(next));
+  const cb = jest.fn();
+  const m2 = new Handler().onEvent(cb);
+
+  const handler = middleware([m1, m2]);
+
+  const context = {};
+  await handler(context);
+
+  expect(m1.mock.calls[0][0]).toBe(context);
+  expect(cb).toBeCalledWith(context);
 });

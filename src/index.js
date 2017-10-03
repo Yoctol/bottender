@@ -18,8 +18,15 @@ export { default as TelegramConnector } from './bot/TelegramConnector';
 
 /* HandlerBuilder */
 export { default as middleware } from './bot/middleware';
-export { default as HandlerBuilder } from './bot/HandlerBuilder';
+export { default as Handler } from './bot/Handler';
+export { default as MessengerHandler } from './bot/MessengerHandler';
+export { default as LineHandler } from './bot/LineHandler';
+export { default as SlackHandler } from './bot/SlackHandler';
+export { default as TelegramHandler } from './bot/TelegramHandler';
+
+/* deprecated */
 export { default as BasicHandlerBuilder } from './bot/BasicHandlerBuilder';
+export { default as HandlerBuilder } from './bot/HandlerBuilder';
 export {
   default as ClassifierHandlerBuilder,
 } from './bot/ClassifierHandlerBuilder';

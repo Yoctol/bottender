@@ -1,6 +1,6 @@
 require('babel-register');
 
-const { SlackBot, SlackHandlerBuilder } = require('../../src');
+const { SlackBot, SlackHandler } = require('../../src');
 const { createServer } = require('../../src/express');
 
 const config = {
@@ -11,7 +11,7 @@ const bot = new SlackBot({
   accessToken: config.accessToken,
 });
 
-const handler = new SlackHandlerBuilder()
+const handler = new SlackHandler()
   .onText(/yo/i, async context => {
     await context.sendText('Hi there!');
   })
@@ -20,8 +20,7 @@ const handler = new SlackHandlerBuilder()
   })
   .onError(async context => {
     await context.sendText('Something wrong happened.');
-  })
-  .build();
+  });
 
 bot.onEvent(handler);
 

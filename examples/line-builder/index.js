@@ -1,6 +1,6 @@
 require('babel-register');
 
-const { LineBot, LineHandlerBuilder } = require('../../src');
+const { LineBot, LineHandler } = require('../../src');
 const { createServer } = require('../../src/express');
 
 const config = {
@@ -13,7 +13,7 @@ const bot = new LineBot({
   accessToken: config.accessToken,
 });
 
-const handler = new LineHandlerBuilder()
+const handler = new LineHandler()
   .onText(/yo/i, async context => {
     await context.sendText('Hi there!');
   })
@@ -22,8 +22,7 @@ const handler = new LineHandlerBuilder()
   })
   .onError(async context => {
     await context.sendText('Something wrong happened.');
-  })
-  .build();
+  });
 
 bot.onEvent(handler);
 

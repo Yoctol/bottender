@@ -1,10 +1,10 @@
-import ClassifierHandlerBuilder from '../ClassifierHandlerBuilder';
+import ClassifierHandler from '../ClassifierHandler';
 
 const setup = () => {
   const classifier = {
     predict: jest.fn(),
   };
-  const builder = new ClassifierHandlerBuilder(classifier, 0.3);
+  const builder = new ClassifierHandler(classifier, 0.3);
   return {
     builder,
     classifier,
@@ -14,8 +14,8 @@ const setup = () => {
 describe('#constructor', () => {
   it('should construct without error', () => {
     const { builder } = setup();
-    expect(ClassifierHandlerBuilder).toBeDefined();
-    expect(builder).toBeInstanceOf(ClassifierHandlerBuilder);
+    expect(ClassifierHandler).toBeDefined();
+    expect(builder).toBeInstanceOf(ClassifierHandler);
   });
 });
 

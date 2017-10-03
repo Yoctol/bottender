@@ -1,7 +1,7 @@
-import MessengerHandlerBuilder from '../MessengerHandlerBuilder';
+import MessengerHandler from '../MessengerHandler';
 
 const setup = () => {
-  const builder = new MessengerHandlerBuilder();
+  const builder = new MessengerHandler();
   return {
     builder,
   };
@@ -10,8 +10,8 @@ const setup = () => {
 describe('#constructor', () => {
   it('should construct without error', () => {
     const { builder } = setup();
-    expect(MessengerHandlerBuilder).toBeDefined();
-    expect(builder).toBeInstanceOf(MessengerHandlerBuilder);
+    expect(MessengerHandler).toBeDefined();
+    expect(builder).toBeInstanceOf(MessengerHandler);
   });
 });
 

@@ -34,6 +34,13 @@ describe('core', () => {
 
   it('export handler builders', () => {
     expect(core.middleware).toBeDefined();
+    expect(core.Handler).toBeDefined();
+    expect(core.MessengerHandler).toBeDefined();
+    expect(core.LineHandler).toBeDefined();
+    expect(core.SlackHandler).toBeDefined();
+    expect(core.TelegramHandler).toBeDefined();
+
+    expect(core.HandlerBuilder).toBeDefined();
     expect(core.BasicHandlerBuilder).toBeDefined();
     expect(core.ClassifierHandlerBuilder).toBeDefined();
     expect(core.MiddlewareHandlerBuilder).toBeDefined();

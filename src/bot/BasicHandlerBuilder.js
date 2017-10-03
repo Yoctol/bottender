@@ -1,13 +1,13 @@
 import warning from 'warning';
 
-import HandlerBuilder from './HandlerBuilder';
+import Handler from './Handler';
 
-export default class BasicHandlerBuilder extends HandlerBuilder {
+export default class BasicHandlerBuilder extends Handler {
   constructor() {
     super();
     warning(
       false,
-      '`BasicHandlerBuilder` is deprecated. use `HandlerBuilder` instead.'
+      '`BasicHandlerBuilder` is deprecated. use `Handler` instead.'
     );
   }
 }

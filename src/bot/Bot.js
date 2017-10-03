@@ -6,9 +6,9 @@ import MemoryCacheStore from '../cache/MemoryCacheStore';
 import CacheBasedSessionStore from '../session/CacheBasedSessionStore';
 import type { Session } from '../session/Session';
 import type { SessionStore } from '../session/SessionStore';
-import type { PlatformContext } from '../context/PlatformContext';
 
 import type { Connector } from './Connector';
+import type { FunctionalHandler, Builder } from './Handler';
 
 const debug = _debug('core/bot/Bot');
 
@@ -18,10 +18,6 @@ function createMemorySessionStore(): SessionStore {
   const cache = new MemoryCacheStore(500);
   return new CacheBasedSessionStore(cache, MINUTES_IN_ONE_YEAR);
 }
-
-export type FunctionalHandler = (
-  context: PlatformContext
-) => void | Promise<void>;
 
 type RequestHandler = (body: Object) => void | Promise<void>;
 
@@ -66,8 +62,8 @@ export default class Bot {
     return this._handler;
   }
 
-  onEvent(handler: FunctionalHandler): void {
-    this._handler = handler;
+  onEvent(handler: FunctionalHandler | Builder): void {
+    this._handler = handler.build ? handler.build() : handler;
   }
 
   extendContext(fn: Function): Bot {

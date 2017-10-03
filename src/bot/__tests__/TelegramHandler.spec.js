@@ -1,7 +1,7 @@
-import TelegramHandlerBuilder from '../TelegramHandlerBuilder';
+import TelegramHandler from '../TelegramHandler';
 
 const setup = () => {
-  const builder = new TelegramHandlerBuilder();
+  const builder = new TelegramHandler();
   return {
     builder,
   };
@@ -10,8 +10,8 @@ const setup = () => {
 describe('#constructor', () => {
   it('should construct without error', () => {
     const { builder } = setup();
-    expect(TelegramHandlerBuilder).toBeDefined();
-    expect(builder).toBeInstanceOf(TelegramHandlerBuilder);
+    expect(TelegramHandler).toBeDefined();
+    expect(builder).toBeInstanceOf(TelegramHandler);
   });
 });
 

@@ -1,7 +1,7 @@
-import HandlerBuilder from '../HandlerBuilder';
+import Handler from '../Handler';
 
 const setup = () => {
-  const builder = new HandlerBuilder();
+  const builder = new Handler();
   return {
     builder,
   };
@@ -10,8 +10,8 @@ const setup = () => {
 describe('#constructor', () => {
   it('should construct without error', () => {
     const { builder } = setup();
-    expect(HandlerBuilder).toBeDefined();
-    expect(builder).toBeInstanceOf(HandlerBuilder);
+    expect(Handler).toBeDefined();
+    expect(builder).toBeInstanceOf(Handler);
   });
 });
 
@@ -97,6 +97,18 @@ describe('#on', () => {
     await builder.build()(context);
     expect(predicate).toBeCalledWith(context);
     expect(handler).toBeCalledWith(context);
+  });
+
+  it('should work with handler instance', async () => {
+    const { builder } = setup();
+    const context = {};
+    const predicate = jest.fn(() => Promise.resolve(true));
+    const cb = jest.fn(() => Promise.resolve());
+    const handler = new Handler().on(predicate, cb);
+    builder.on(predicate, handler);
+    await builder.build()(context);
+    expect(predicate).toBeCalledWith(context);
+    expect(cb).toBeCalledWith(context);
   });
 });
 

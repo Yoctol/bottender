@@ -1,6 +1,6 @@
 require('babel-register');
 
-const { MessengerBot, MessengerHandlerBuilder } = require('../../src');
+const { MessengerBot, MessengerHandler } = require('../../src');
 const { createServer } = require('../../src/express');
 
 const config = {
@@ -13,7 +13,7 @@ const bot = new MessengerBot({
   appSecret: config.appSecret,
 });
 
-const handler = new MessengerHandlerBuilder()
+const handler = new MessengerHandler()
   .onText(/yo/i, async context => {
     await context.sendText('Hi there!');
   })
@@ -22,8 +22,7 @@ const handler = new MessengerHandlerBuilder()
   })
   .onError(async context => {
     await context.sendText('Something wrong happened.');
-  })
-  .build();
+  });
 
 bot.onEvent(handler);
 

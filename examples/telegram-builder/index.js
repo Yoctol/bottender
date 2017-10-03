@@ -1,6 +1,6 @@
 require('babel-register');
 
-const { TelegramBot, TelegramHandlerBuilder } = require('../../src');
+const { TelegramBot, TelegramHandler } = require('../../src');
 const { createServer } = require('../../src/express');
 
 const config = {
@@ -12,7 +12,7 @@ const bot = new TelegramBot({
   accessToken: config.accessToken,
 });
 
-const handler = new TelegramHandlerBuilder()
+const handler = new TelegramHandler()
   .onText(/yo/i, async context => {
     const options = {
       parse_mode: 'Markdown',
@@ -21,8 +21,7 @@ const handler = new TelegramHandlerBuilder()
   })
   .onEvent(async context => {
     await context.sendMessage("Sorry, I don't know what you say.");
-  })
-  .build();
+  });
 
 bot.onEvent(handler);
 
