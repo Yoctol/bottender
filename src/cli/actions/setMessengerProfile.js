@@ -81,17 +81,17 @@ export default (async function setMessengerProfile(_configPath) {
 
     if (domainWhitelist) {
       await graphAPIClient.setDomainWhitelist(domainWhitelist);
-      print('Successfully set domain whitelist');
+      print('Successfully set whitelisted domains');
     }
   } catch (err) {
-    error('set messenger profile error with');
+    error('Failed to set messenger profile');
     if (err.response) {
       error(`status: ${bold(err.response.status)}`);
       if (err.response.data) {
         error(`data: ${bold(JSON.stringify(err.response.data, null, 2))}`);
       }
     } else {
-      error(`message: ${bold(err.message)}`);
+      error(err.message);
     }
     return process.exit(1);
   }

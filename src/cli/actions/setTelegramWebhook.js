@@ -35,16 +35,16 @@ export default (async function setTelegramWebhook(_webhook, _configPath) {
     const res = await client.post(`/bot${accessToken}/setWebhook`);
     invariant(res.data.success, 'Setting for webhook is failed');
 
-    print('Successfully set webhook');
+    print('Successfully set Telegram webhook callback URL');
   } catch (err) {
-    error('set webhook error with');
+    error('Failed to set Telegram webhook');
     if (err.response) {
       error(`status: ${bold(err.response.status)}`);
       if (err.response.data) {
         error(`data: ${bold(JSON.stringify(err.response.data, null, 2))}`);
       }
     } else {
-      error(`message: ${bold(err.message)}`);
+      error(err.message);
     }
     return process.exit(1);
   }

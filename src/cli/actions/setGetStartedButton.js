@@ -22,16 +22,16 @@ export default (async function setGetStartedButton(_payload, _configPath) {
 
     await graphAPIClient.setGetStartedButton(payload);
 
-    print(`set get started button to ${bold(payload)} successfully`);
+    print(`Successfully set get started button to ${bold(payload)}`);
   } catch (err) {
-    error('set get started button error with');
+    error('Failed to set get started button');
     if (err.response) {
       error(`status: ${bold(err.response.status)}`);
       if (err.response.data) {
         error(`data: ${bold(JSON.stringify(err.response.data, null, 2))}`);
       }
     } else {
-      error(`message: ${bold(err.message)}`);
+      error(err.message);
     }
     return process.exit(1);
   }

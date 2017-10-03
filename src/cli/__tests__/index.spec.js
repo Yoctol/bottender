@@ -3,15 +3,15 @@
 jest.mock('didyoumean');
 jest.mock('../shared/log');
 jest.mock('../actions/init');
-jest.mock('../actions/deleteDomainWhitelist');
+jest.mock('../actions/deleteWhitelistedDomains');
 jest.mock('../actions/deleteGetStartedButton');
 jest.mock('../actions/deleteGreetingText');
 jest.mock('../actions/deletePersistentMenu');
-jest.mock('../actions/getDomainWhitelist');
+jest.mock('../actions/getWhitelistedDomains');
 jest.mock('../actions/getGetStartedButton');
 jest.mock('../actions/getGreetingText');
 jest.mock('../actions/getPersistentMenu');
-jest.mock('../actions/setDomainWhitelist');
+jest.mock('../actions/setWhitelistedDomains');
 jest.mock('../actions/setGetStartedButton');
 jest.mock('../actions/setGreetingText');
 jest.mock('../actions/setMessengerProfile');
@@ -41,50 +41,50 @@ it('#init', () => {
 
 describe('#domain-whilelist', () => {
   it('#get', () => {
-    const getDomainWhitelist = require('../actions/getDomainWhitelist');
-    getDomainWhitelist.default = jest.fn();
+    const getWhitelistedDomains = require('../actions/getWhitelistedDomains');
+    getWhitelistedDomains.default = jest.fn();
     process.argv = [
       '/usr/local/bin/iojs',
       '/usr/local/bin/toolbot',
-      'domain-whitelist:get',
+      'whitelisted-domains:get',
       '-c',
       'bot.sample.json',
     ];
     require('../index');
-    expect(getDomainWhitelist.default).toBeCalledWith('bot.sample.json');
+    expect(getWhitelistedDomains.default).toBeCalledWith('bot.sample.json');
   });
 
   it('#set', () => {
-    const setDomainWhitelist = require('../actions/setDomainWhitelist');
-    setDomainWhitelist.default = jest.fn();
+    const setWhitelistedDomains = require('../actions/setWhitelistedDomains');
+    setWhitelistedDomains.default = jest.fn();
     process.argv = [
       '/usr/local/bin/iojs',
       '/usr/local/bin/toolbot',
-      'domain-whitelist:set',
+      'whitelisted-domains:set',
       '-c',
       'bot.sample.json',
       '-d',
       'http://www.yoctol.com,http://www.facebook.com',
     ];
     require('../index');
-    expect(setDomainWhitelist.default).toBeCalledWith(
+    expect(setWhitelistedDomains.default).toBeCalledWith(
       ['http://www.yoctol.com', 'http://www.facebook.com'],
       'bot.sample.json'
     );
   });
 
   it('#delete', () => {
-    const deleteDomainWhitelist = require('../actions/deleteDomainWhitelist');
-    deleteDomainWhitelist.default = jest.fn();
+    const deleteWhitelistedDomains = require('../actions/deleteWhitelistedDomains');
+    deleteWhitelistedDomains.default = jest.fn();
     process.argv = [
       '/usr/local/bin/iojs',
       '/usr/local/bin/toolbot',
-      'domain-whitelist:delete',
+      'whitelisted-domains:delete',
       '-c',
       'bot.sample.json',
     ];
     require('../index');
-    expect(deleteDomainWhitelist.default).toBeCalledWith('bot.sample.json');
+    expect(deleteWhitelistedDomains.default).toBeCalledWith('bot.sample.json');
   });
 });
 

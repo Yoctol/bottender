@@ -17,20 +17,20 @@ export default (async function getGetStartedButton(_configPath) {
     const { data } = await graphAPIClient.getGetStartedButton();
     if (data.length) {
       print(
-        `get started button payload is: ${bold(data[0].get_started.payload)}`
+        `Get started button payload is: ${bold(data[0].get_started.payload)}`
       );
     } else {
-      error('no get started button setting could be found');
+      error('Failed to find get started button setting');
     }
   } catch (err) {
-    error('get get started button error with');
+    error('Failed to get `get started button`');
     if (err.response) {
       error(`status: ${bold(err.response.status)}`);
       if (err.response.data) {
         error(`data: ${bold(JSON.stringify(err.response.data, null, 2))}`);
       }
     } else {
-      error(`message: ${bold(err.message)}`);
+      error(err.message);
     }
     return process.exit(1);
   }

@@ -1,4 +1,4 @@
-import deleteDomainWhitelist from '../deleteDomainWhitelist';
+import deleteWhitelistedDomains from '../deleteWhitelistedDomains';
 
 jest.mock('messaging-api-messenger');
 
@@ -31,14 +31,14 @@ beforeEach(() => {
 });
 
 it('be defined', () => {
-  expect(deleteDomainWhitelist).toBeDefined();
+  expect(deleteWhitelistedDomains).toBeDefined();
 });
 
 describe('#getConfig', () => {
   it('will call `bottender.config.js` and platform = messenger when NOT passed <config_path>', async () => {
     _client.deleteDomainWhitelist.mockReturnValue(Promise.resolve());
 
-    await deleteDomainWhitelist();
+    await deleteWhitelistedDomains();
 
     expect(getConfig).toBeCalledWith('bottender.config.js', 'messenger');
   });
@@ -46,7 +46,7 @@ describe('#getConfig', () => {
   it('call with configPath and platform = messenger', async () => {
     _client.deleteDomainWhitelist.mockReturnValue(Promise.resolve());
 
-    await deleteDomainWhitelist(configPath);
+    await deleteWhitelistedDomains(configPath);
 
     expect(getConfig).toBeCalledWith('bot.sample.json', 'messenger');
   });
@@ -56,7 +56,7 @@ describe('resolved', () => {
   it('call deleteDomainWhitelist', async () => {
     _client.deleteDomainWhitelist.mockReturnValue(Promise.resolve());
 
-    await deleteDomainWhitelist(configPath);
+    await deleteWhitelistedDomains(configPath);
 
     expect(log.print).toHaveBeenCalledTimes(1);
     expect(_client.deleteDomainWhitelist).toBeCalled();
@@ -73,7 +73,7 @@ describe('reject', () => {
     _client.deleteDomainWhitelist.mockReturnValue(Promise.reject(error));
     process.exit = jest.fn();
 
-    await deleteDomainWhitelist(configPath);
+    await deleteWhitelistedDomains(configPath);
 
     expect(log.error).toHaveBeenCalledTimes(2);
     expect(process.exit).toBeCalled();
@@ -97,7 +97,7 @@ describe('reject', () => {
     _client.deleteDomainWhitelist.mockReturnValue(Promise.reject(error));
     process.exit = jest.fn();
 
-    await deleteDomainWhitelist(configPath);
+    await deleteWhitelistedDomains(configPath);
 
     expect(log.error).toHaveBeenCalledTimes(3);
     expect(log.error.mock.calls[2][0]).not.toMatch(/\[object Object\]/);
@@ -111,7 +111,7 @@ describe('reject', () => {
     _client.deleteDomainWhitelist.mockReturnValue(Promise.reject(error));
     process.exit = jest.fn();
 
-    await deleteDomainWhitelist(configPath);
+    await deleteWhitelistedDomains(configPath);
 
     expect(log.error).toHaveBeenCalledTimes(2);
     expect(process.exit).toBeCalled();

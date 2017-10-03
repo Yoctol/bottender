@@ -91,7 +91,7 @@ describe('resolve', () => {
     await setWebhook(webhook, configPath);
 
     expect(log.print).toHaveBeenCalledTimes(5);
-    expect(log.print.mock.calls[2]).toEqual(['Successfully set webhook']);
+    expect(log.print.mock.calls[2][0]).toMatch(/Successfully/);
   });
 
   it('use default fields to setup', async () => {

@@ -45,7 +45,7 @@ export default (async function setMessengerWebhook(
     let webhook = _webhook;
 
     if (!_webhook) {
-      warn('We can not find the webhook URL you provided.');
+      warn('We can not find the webhook callback url you provided.');
       const prompt = new Confirm(
         'Are you using ngrok?\n❯ We will check dashboard on http://127.0.0.1:4040'
       );
@@ -92,7 +92,7 @@ export default (async function setMessengerWebhook(
     );
     invariant(res.data.success, 'Setting for webhook is failed');
 
-    print('Successfully set webhook');
+    print('Successfully set Messenger webhook callback URL');
     print(
       `Check callback URL on: https://developers.facebook.com/apps/${config.appId}/webhooks/`
     );
@@ -100,7 +100,7 @@ export default (async function setMessengerWebhook(
       `Check selected events on: https://developers.facebook.com/apps/${config.appId}/messenger/`
     );
   } catch (err) {
-    error('Failed to set messenger webhook');
+    error('Failed to set Messenger webhook');
     if (err.response) {
       error(`status: ${bold(err.response.status)}`);
       if (err.response.data) {

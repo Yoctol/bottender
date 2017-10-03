@@ -17,16 +17,16 @@ export default (async function deleteGreetingText(_configPath) {
 
     await client.deleteGreetingText();
 
-    print('delete greeting text successfully');
+    print('Successfully delete greeting text');
   } catch (err) {
-    error('delete greeting text error with');
+    error('Failed to delete greeting text');
     if (err.response) {
       error(`status: ${bold(err.response.status)}`);
       if (err.response.data) {
         error(`data: ${bold(JSON.stringify(err.response.data, null, 2))}`);
       }
     } else {
-      error(`message: ${bold(err.message)}`);
+      error(err.message);
     }
     return process.exit(1);
   }
