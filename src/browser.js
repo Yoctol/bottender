@@ -9,6 +9,7 @@ export { default as Connector } from './bot/Connector';
 /* HandlerBuilder */
 export { default as middleware } from './bot/middleware';
 export { default as Handler } from './bot/Handler';
+export { default as ClassifierHandler } from './bot/ClassifierHandler';
 
 /* deprecated */
 export { default as HandlerBuilder } from './bot/HandlerBuilder';

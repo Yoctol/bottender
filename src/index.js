@@ -23,6 +23,7 @@ export { default as MessengerHandler } from './bot/MessengerHandler';
 export { default as LineHandler } from './bot/LineHandler';
 export { default as SlackHandler } from './bot/SlackHandler';
 export { default as TelegramHandler } from './bot/TelegramHandler';
+export { default as ClassifierHandler } from './bot/ClassifierHandler';
 
 /* deprecated */
 export { default as BasicHandlerBuilder } from './bot/BasicHandlerBuilder';

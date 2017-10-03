@@ -21,6 +21,7 @@ describe('browser', () => {
   it('export handler builders', () => {
     expect(core.middleware).toBeDefined();
     expect(core.Handler).toBeDefined();
+    expect(core.ClassifierHandler).toBeDefined();
 
     expect(core.HandlerBuilder).toBeDefined();
     expect(core.ClassifierHandlerBuilder).toBeDefined();
