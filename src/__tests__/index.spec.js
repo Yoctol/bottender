@@ -39,6 +39,7 @@ describe('core', () => {
     expect(core.LineHandler).toBeDefined();
     expect(core.SlackHandler).toBeDefined();
     expect(core.TelegramHandler).toBeDefined();
+    expect(core.ClassifierHandler).toBeDefined();
 
     expect(core.HandlerBuilder).toBeDefined();
     expect(core.BasicHandlerBuilder).toBeDefined();
