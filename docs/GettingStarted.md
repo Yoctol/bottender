@@ -50,7 +50,7 @@ Open the file and edit the follow lines of code:
 
 ```diff
 bot.handle(async context => {
-- context.sendText('Hello World');
+- await context.sendText('Hello World');
 + const { event } = context;
 + if (event.isTextMessage) {
 +   await context.sendText(event.message.text);
