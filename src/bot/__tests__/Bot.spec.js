@@ -109,11 +109,14 @@ describe('#createRequestHandler', () => {
     const body = {};
     await requestHandler(body);
 
-    expect(handler).toBeCalledWith(
-      expect.objectContaining({
-        session: { platform: 'any', user: {}, id: 'any:__id__' },
-      })
-    );
+    expect(handler).toBeCalledWith({
+      event: {},
+      session: expect.objectContaining({
+        id: 'any:__id__',
+        platform: 'any',
+        user: {},
+      }),
+    });
   });
 
   it('should return response in sync mode', async () => {

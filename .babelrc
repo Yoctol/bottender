@@ -1,3 +1,14 @@
 {
-  "presets": ["yoctol/koa"]
+  "presets": [
+    [
+      "env",
+      {
+        "targets": {
+          "node": "7.6"
+        }
+      }
+    ],
+    "flow"
+  ],
+  "plugins": ["transform-class-properties", "transform-object-rest-spread"]
 }
