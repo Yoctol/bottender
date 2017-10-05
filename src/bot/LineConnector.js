@@ -58,14 +58,32 @@ export default class LineConnector implements Connector<LineRequestBody> {
     }
 
     if (source.type === 'group') {
-      const memberIds = await this._client.getAllGroupMemberIds(source.groupId);
+      let memberIds = [];
+
+      try {
+        memberIds = await this._client.getAllGroupMemberIds(source.groupId);
+      } catch (e) {
+        // FIXME: handle no memberIds
+        // only LINE@ Approved accounts or official accounts can use this API
+        // https://developers.line.me/en/docs/messaging-api/reference/#get-group-member-user-ids
+      }
+
       session.group = {
         id: source.groupId,
         members: memberIds.map(id => ({ id })),
         _updatedAt: new Date().toISOString(),
       };
     } else if (source.type === 'room') {
-      const memberIds = await this._client.getAllRoomMemberIds(source.roomId);
+      let memberIds = [];
+
+      try {
+        memberIds = await this._client.getAllRoomMemberIds(source.roomId);
+      } catch (e) {
+        // FIXME: handle no memberIds
+        // only LINE@ Approved accounts or official accounts can use this API
+        // https://developers.line.me/en/docs/messaging-api/reference/#get-room-member-user-ids
+      }
+
       session.room = {
         id: source.roomId,
         members: memberIds.map(id => ({ id })),
