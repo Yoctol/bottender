@@ -1,6 +1,12 @@
 # Getting Started
 
-## Install Package
+## Requirements
+
+Bottender highly depends on [async function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function), so you must make sure your runtime meets the following requirements:
+
+- node >= 7.6
+
+## Installing Bottender
 
 Install `toolbot-core-experiment` package from the registry:
 
