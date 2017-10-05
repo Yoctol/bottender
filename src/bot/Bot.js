@@ -91,18 +91,19 @@ export default class Bot {
       }
 
       const { platform } = this._connector;
-      const sessionId = this._connector.getUniqueSessionIdFromRequest(body);
+      // TODO: getUniqueSessionIdFromRequest -> getUniqueSessionKeyFromRequest
+      const sessionKey = this._connector.getUniqueSessionIdFromRequest(body);
 
       // Create or retrieve session if possible
-      let sessionKey;
+      let sessionId;
       let session: Session;
-      if (sessionId) {
-        sessionKey = `${platform}:${sessionId}`;
+      if (sessionKey) {
+        sessionId = `${platform}:${sessionKey}`;
 
         // $FlowFixMe
-        session = await this._sessions.read(sessionKey);
+        session = await this._sessions.read(sessionId);
         session = session || Object.create(null);
-        session.id = session.id || sessionKey;
+        session.id = session.id || sessionId;
 
         if (!session.platform) session.platform = platform;
 
@@ -146,10 +147,10 @@ export default class Bot {
       if (this._sync) {
         try {
           await promises;
-          if (sessionKey && session) {
+          if (sessionId && session) {
             // $FlowFixMe: suppressing this error until we can refactor
             session.lastActivity = Date.now();
-            await this._sessions.write(sessionKey, session);
+            await this._sessions.write(sessionId, session);
           }
         } catch (err) {
           console.error(err);
@@ -160,10 +161,10 @@ export default class Bot {
       }
       promises
         .then(() => {
-          if (sessionKey && session) {
+          if (sessionId && session) {
             // $FlowFixMe: suppressing this error until we can refactor
             session.lastActivity = Date.now();
-            this._sessions.write(sessionKey, session);
+            this._sessions.write(sessionId, session);
           }
         })
         .catch(console.error);
