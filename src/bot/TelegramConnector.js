@@ -45,7 +45,7 @@ export default class TelegramConnector
     return this._client;
   }
 
-  getUniqueSessionIdFromRequest(body: TelegramRequestBody): string {
+  getUniqueSessionKey(body: TelegramRequestBody): string {
     if (body.message !== undefined) {
       return `${body.message.from.id}`;
     } else if (body.callback_query !== undefined) {

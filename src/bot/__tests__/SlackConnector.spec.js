@@ -83,10 +83,10 @@ describe('#client', () => {
   });
 });
 
-describe('#getUniqueSessionIdFromRequest', () => {
+describe('#getUniqueSessionKey', () => {
   it('extract correct sender id', () => {
     const { connector } = setup();
-    const channelId = connector.getUniqueSessionIdFromRequest(request.body);
+    const channelId = connector.getUniqueSessionKey(request.body);
     expect(channelId).toBe('C6A900000');
   });
 });

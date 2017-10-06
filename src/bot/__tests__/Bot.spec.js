@@ -3,7 +3,7 @@ import Bot from '../Bot';
 function setup({
   connector = {
     platform: 'any',
-    getUniqueSessionIdFromRequest: jest.fn(),
+    getUniqueSessionKey: jest.fn(),
     shouldSessionUpdate: jest.fn(),
     updateSession: jest.fn(),
     mapRequestToEvents: jest.fn(() => [{}]),
@@ -69,7 +69,7 @@ describe('#createRequestHandler', () => {
   it('should call updateSession with session and body', async () => {
     const { bot, connector, sessionStore } = setup({});
 
-    connector.getUniqueSessionIdFromRequest.mockReturnValue('__id__');
+    connector.getUniqueSessionKey.mockReturnValue('__id__');
     connector.shouldSessionUpdate.mockReturnValue(true);
     sessionStore.read.mockReturnValue(Promise.resolve(null));
 
@@ -89,7 +89,7 @@ describe('#createRequestHandler', () => {
     const session = { user: {} };
     const connector = {
       platform: 'any',
-      getUniqueSessionIdFromRequest: jest.fn(),
+      getUniqueSessionKey: jest.fn(),
       shouldSessionUpdate: jest.fn(),
       updateSession: jest.fn(),
       mapRequestToEvents: jest.fn(() => [event]),
@@ -98,7 +98,7 @@ describe('#createRequestHandler', () => {
 
     const { bot, sessionStore } = setup({ connector });
 
-    connector.getUniqueSessionIdFromRequest.mockReturnValue('__id__');
+    connector.getUniqueSessionKey.mockReturnValue('__id__');
     sessionStore.read.mockReturnValue(Promise.resolve(session));
 
     const handler = jest.fn();
@@ -133,7 +133,7 @@ describe('#createRequestHandler', () => {
     };
     const connector = {
       platform: 'any',
-      getUniqueSessionIdFromRequest: jest.fn(),
+      getUniqueSessionKey: jest.fn(),
       shouldSessionUpdate: jest.fn(),
       updateSession: jest.fn(),
       mapRequestToEvents: jest.fn(() => [event]),
@@ -142,7 +142,7 @@ describe('#createRequestHandler', () => {
 
     const { bot, sessionStore } = setup({ connector, sync: true });
 
-    connector.getUniqueSessionIdFromRequest.mockReturnValue('__id__');
+    connector.getUniqueSessionKey.mockReturnValue('__id__');
     sessionStore.read.mockReturnValue(Promise.resolve(session));
 
     const handler = ({ response }) => {
@@ -176,7 +176,7 @@ describe('#createRequestHandler', () => {
     const event = {};
     const connector = {
       platform: 'any',
-      getUniqueSessionIdFromRequest: jest.fn(),
+      getUniqueSessionKey: jest.fn(),
       shouldSessionUpdate: jest.fn(),
       updateSession: jest.fn(),
       mapRequestToEvents: jest.fn(() => [event]),
@@ -185,7 +185,7 @@ describe('#createRequestHandler', () => {
 
     const { bot } = setup({ connector });
 
-    connector.getUniqueSessionIdFromRequest.mockReturnValue(null);
+    connector.getUniqueSessionKey.mockReturnValue(null);
 
     const handler = jest.fn();
     bot.onEvent(handler);
@@ -209,7 +209,7 @@ describe('#createRequestHandler', () => {
     const session = { user: {} };
     const connector = {
       platform: 'any',
-      getUniqueSessionIdFromRequest: jest.fn(),
+      getUniqueSessionKey: jest.fn(),
       shouldSessionUpdate: jest.fn(),
       updateSession: jest.fn(),
       mapRequestToEvents: jest.fn(() => [event]),
@@ -218,7 +218,7 @@ describe('#createRequestHandler', () => {
 
     const { bot, sessionStore } = setup({ connector });
 
-    connector.getUniqueSessionIdFromRequest.mockReturnValue('__id__');
+    connector.getUniqueSessionKey.mockReturnValue('__id__');
     sessionStore.read.mockReturnValue(Promise.resolve(session));
 
     const handler = () => {};
@@ -244,7 +244,7 @@ describe('#extendContext', () => {
     const event = {};
     const connector = {
       platform: 'any',
-      getUniqueSessionIdFromRequest: jest.fn(),
+      getUniqueSessionKey: jest.fn(),
       shouldSessionUpdate: jest.fn(),
       updateSession: jest.fn(),
       mapRequestToEvents: jest.fn(() => [event]),
@@ -253,7 +253,7 @@ describe('#extendContext', () => {
 
     const { bot } = setup({ connector });
 
-    connector.getUniqueSessionIdFromRequest.mockReturnValue('__id__');
+    connector.getUniqueSessionKey.mockReturnValue('__id__');
 
     const monkeyPatchFn = jest.fn();
 

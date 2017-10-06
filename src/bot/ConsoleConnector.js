@@ -37,7 +37,7 @@ export default class ConsoleConnector implements Connector<ConsoleRequestBody> {
     return this._client;
   }
 
-  getUniqueSessionIdFromRequest(): string {
+  getUniqueSessionKey(): string {
     return '1';
   }
 

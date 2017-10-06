@@ -56,10 +56,10 @@ describe('#client', () => {
   });
 });
 
-describe('#getUniqueSessionIdFromRequest', () => {
+describe('#getUniqueSessionKey', () => {
   it('always return 1', () => {
     const { connector } = setup();
-    const senderId = connector.getUniqueSessionIdFromRequest(request.body);
+    const senderId = connector.getUniqueSessionKey(request.body);
     expect(senderId).toBe('1');
   });
 });

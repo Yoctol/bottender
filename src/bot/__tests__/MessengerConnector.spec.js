@@ -148,22 +148,22 @@ describe('#client', () => {
   });
 });
 
-describe('#getUniqueSessionIdFromRequest', () => {
+describe('#getUniqueSessionKey', () => {
   it('extract correct sender id', () => {
     const { connector } = setup();
-    const senderId = connector.getUniqueSessionIdFromRequest(request.body);
+    const senderId = connector.getUniqueSessionKey(request.body);
     expect(senderId).toBe('1412611362105802');
   });
 
   it('return recipient id when request is an echo event', () => {
     const { connector } = setup();
-    const senderId = connector.getUniqueSessionIdFromRequest(echoRequest.body);
+    const senderId = connector.getUniqueSessionKey(echoRequest.body);
     expect(senderId).toBe('1244813222196986');
   });
 
   it('extract sender id from first event', () => {
     const { connector } = setup();
-    const senderId = connector.getUniqueSessionIdFromRequest(batchRequest.body);
+    const senderId = connector.getUniqueSessionKey(batchRequest.body);
     expect(senderId).toBe('1412611362105802');
   });
 });

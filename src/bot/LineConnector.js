@@ -35,7 +35,7 @@ export default class LineConnector implements Connector<LineRequestBody> {
     return this._client;
   }
 
-  getUniqueSessionIdFromRequest(body: LineRequestBody): string {
+  getUniqueSessionKey(body: LineRequestBody): string {
     const { source } = body.events[0];
     if (source.type === 'user') {
       return source.userId;

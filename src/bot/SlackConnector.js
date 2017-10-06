@@ -58,7 +58,7 @@ export default class SlackConnector implements Connector<SlackRequestBody> {
     return this._client;
   }
 
-  getUniqueSessionIdFromRequest(body: SlackRequestBody): string {
+  getUniqueSessionKey(body: SlackRequestBody): string {
     if (body.event.channel && typeof body.event.channel === 'string') {
       return body.event.channel;
     }
@@ -75,7 +75,7 @@ export default class SlackConnector implements Connector<SlackRequestBody> {
     ) {
       return;
     }
-    const channelId = this.getUniqueSessionIdFromRequest(body);
+    const channelId = this.getUniqueSessionKey(body);
     const senderId = body.event.user;
 
     if (!senderId) {

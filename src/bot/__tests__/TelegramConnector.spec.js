@@ -96,20 +96,16 @@ describe('#client', () => {
   });
 });
 
-describe('#getUniqueSessionIdFromRequest', () => {
+describe('#getUniqueSessionKey', () => {
   it('extract correct sender id from messageRequest', () => {
     const { connector } = setup();
-    const senderId = connector.getUniqueSessionIdFromRequest(
-      messageRequest.body
-    );
+    const senderId = connector.getUniqueSessionKey(messageRequest.body);
     expect(senderId).toBe('313534466');
   });
 
   it('extract correct sender id from callbackQueryRequest', () => {
     const { connector } = setup();
-    const senderId = connector.getUniqueSessionIdFromRequest(
-      callbackQueryRequest.body
-    );
+    const senderId = connector.getUniqueSessionKey(callbackQueryRequest.body);
     expect(senderId).toBe('313534466');
   });
 });

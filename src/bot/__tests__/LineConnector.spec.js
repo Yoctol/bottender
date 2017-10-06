@@ -76,16 +76,16 @@ describe('#client', () => {
   });
 });
 
-describe('#getUniqueSessionIdFromRequest', () => {
+describe('#getUniqueSessionKey', () => {
   it('extract userId from user source', () => {
     const { connector } = setup();
-    const senderId = connector.getUniqueSessionIdFromRequest(request.body);
+    const senderId = connector.getUniqueSessionKey(request.body);
     expect(senderId).toBe('U206d25c2ea6bd87c17655609a1c37cb8');
   });
 
   it('extract groupId from user source', () => {
     const { connector } = setup();
-    const senderId = connector.getUniqueSessionIdFromRequest({
+    const senderId = connector.getUniqueSessionKey({
       events: [
         {
           replyToken: 'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA',
@@ -108,7 +108,7 @@ describe('#getUniqueSessionIdFromRequest', () => {
 
   it('extract roomId from user source', () => {
     const { connector } = setup();
-    const senderId = connector.getUniqueSessionIdFromRequest({
+    const senderId = connector.getUniqueSessionKey({
       events: [
         {
           replyToken: 'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA',

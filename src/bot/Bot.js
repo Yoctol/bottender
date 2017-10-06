@@ -91,8 +91,7 @@ export default class Bot {
       }
 
       const { platform } = this._connector;
-      // TODO: getUniqueSessionIdFromRequest -> getUniqueSessionKeyFromRequest
-      const sessionKey = this._connector.getUniqueSessionIdFromRequest(body);
+      const sessionKey = this._connector.getUniqueSessionKey(body);
 
       // Create or retrieve session if possible
       let sessionId;

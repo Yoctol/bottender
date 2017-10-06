@@ -140,7 +140,7 @@ export default class MessengerConnector
     return this._client;
   }
 
-  getUniqueSessionIdFromRequest(body: MessengerRequestBody): ?string {
+  getUniqueSessionKey(body: MessengerRequestBody): ?string {
     const rawEvent = this._getRawEventsFromRequest(body)[0];
     if (rawEvent.message && rawEvent.message.is_echo && rawEvent.recipient) {
       return rawEvent.recipient.id;
@@ -156,7 +156,7 @@ export default class MessengerConnector
     body: MessengerRequestBody
   ): Promise<void> {
     if (!session.user || this._profilePicExpired(session.user)) {
-      const senderId = this.getUniqueSessionIdFromRequest(body);
+      const senderId = this.getUniqueSessionKey(body);
       // FIXME: refine user
       const user = await this._client.getUserProfile(senderId);
       session.user = {
