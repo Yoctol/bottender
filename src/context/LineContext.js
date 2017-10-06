@@ -68,8 +68,8 @@ class LineContext extends Context implements PlatformContext {
     }
 
     this._handled = true;
-
-    return this._client.pushText(this._session.user.id, text);
+    const { type } = this._session;
+    return this._client.pushText(this._session[type].id, text);
   }
 }
 
@@ -115,8 +115,11 @@ types.forEach(type => {
       }
 
       this._handled = true;
-
-      return this._client[`push${type}`](this._session.user.id, ...args);
+      const sessionType = this._session.type;
+      return this._client[`push${type}`](
+        this._session[sessionType].id,
+        ...args
+      );
     },
   });
 });
@@ -136,8 +139,11 @@ types.filter(type => type !== 'Text').forEach(type => {
       }
 
       this._handled = true;
-
-      return this._client[`push${type}`](this._session.user.id, ...args);
+      const sessionType = this._session.type;
+      return this._client[`push${type}`](
+        this._session[sessionType].id,
+        ...args
+      );
     },
   });
 });

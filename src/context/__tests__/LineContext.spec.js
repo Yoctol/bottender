@@ -25,7 +25,7 @@ const rawEvent = {
   },
 };
 
-const setup = () => {
+const setup = ({ session } = {}) => {
   const client = {
     replyText: jest.fn(),
     pushText: jest.fn(),
@@ -39,7 +39,8 @@ const setup = () => {
     pushImagemap: jest.fn(),
     pushCarouselTemplate: jest.fn(),
   };
-  const session = {
+  const userSession = {
+    type: 'user',
     user: {
       id: 'fakeUserId',
     },
@@ -47,12 +48,12 @@ const setup = () => {
   const context = new LineContext({
     client,
     event: new LineEvent(rawEvent),
-    session,
+    session: session || userSession,
   });
   context.typing = jest.fn();
   return {
     context,
-    session,
+    session: session || userSession,
     client,
   };
 };
@@ -119,6 +120,26 @@ describe('#sendText', () => {
     expect(client.pushText).toBeCalledWith(session.user.id, 'xxx.com');
   });
 
+  it('should work with room session', async () => {
+    const { context, client, session } = setup({
+      session: { type: 'room', room: { id: 'room' } },
+    });
+
+    await context.sendText('xxx.com');
+
+    expect(client.pushText).toBeCalledWith(session.room.id, 'xxx.com');
+  });
+
+  it('should work with group session', async () => {
+    const { context, client, session } = setup({
+      session: { type: 'group', group: { id: 'group' } },
+    });
+
+    await context.sendText('xxx.com');
+
+    expect(client.pushText).toBeCalledWith(session.group.id, 'xxx.com');
+  });
+
   it('should mark context as handled', async () => {
     const { context } = setup();
 
@@ -136,6 +157,34 @@ describe('#sendImage', () => {
 
     expect(client.pushImage).toBeCalledWith(
       session.user.id,
+      'xxx.jpg',
+      'yyy.jpg'
+    );
+  });
+
+  it('should work with room session', async () => {
+    const { context, client, session } = setup({
+      session: { type: 'room', room: { id: 'room' } },
+    });
+
+    await context.sendImage('xxx.jpg', 'yyy.jpg');
+
+    expect(client.pushImage).toBeCalledWith(
+      session.room.id,
+      'xxx.jpg',
+      'yyy.jpg'
+    );
+  });
+
+  it('should work with group session', async () => {
+    const { context, client, session } = setup({
+      session: { type: 'group', group: { id: 'group' } },
+    });
+
+    await context.sendImage('xxx.jpg', 'yyy.jpg');
+
+    expect(client.pushImage).toBeCalledWith(
+      session.group.id,
       'xxx.jpg',
       'yyy.jpg'
     );
@@ -159,6 +208,30 @@ describe('#sendAudio', () => {
     expect(client.pushAudio).toBeCalledWith(session.user.id, 'xxx.mp3', 240000);
   });
 
+  it('should work with room session', async () => {
+    const { context, client, session } = setup({
+      session: { type: 'room', room: { id: 'room' } },
+    });
+
+    await context.sendAudio('xxx.mp3', 240000);
+
+    expect(client.pushAudio).toBeCalledWith(session.room.id, 'xxx.mp3', 240000);
+  });
+
+  it('should work with group session', async () => {
+    const { context, client, session } = setup({
+      session: { type: 'group', group: { id: 'group' } },
+    });
+
+    await context.sendAudio('xxx.mp3', 240000);
+
+    expect(client.pushAudio).toBeCalledWith(
+      session.group.id,
+      'xxx.mp3',
+      240000
+    );
+  });
+
   it('should mark context as handled', async () => {
     const { context } = setup();
 
@@ -176,6 +249,34 @@ describe('#sendVideo', () => {
 
     expect(client.pushVideo).toBeCalledWith(
       session.user.id,
+      'xxx.mp4',
+      'yyy.jpg'
+    );
+  });
+
+  it('should work with room session', async () => {
+    const { context, client, session } = setup({
+      session: { type: 'room', room: { id: 'room' } },
+    });
+
+    await context.sendVideo('xxx.mp4', 'yyy.jpg');
+
+    expect(client.pushVideo).toBeCalledWith(
+      session.room.id,
+      'xxx.mp4',
+      'yyy.jpg'
+    );
+  });
+
+  it('should work with group session', async () => {
+    const { context, client, session } = setup({
+      session: { type: 'group', group: { id: 'group' } },
+    });
+
+    await context.sendVideo('xxx.mp4', 'yyy.jpg');
+
+    expect(client.pushVideo).toBeCalledWith(
+      session.group.id,
       'xxx.mp4',
       'yyy.jpg'
     );
@@ -209,6 +310,46 @@ describe('#sendLocation', () => {
     });
   });
 
+  it('should work with room session', async () => {
+    const { context, client, session } = setup({
+      session: { type: 'room', room: { id: 'room' } },
+    });
+
+    await context.sendLocation({
+      title: 'my location',
+      address: '〒150-0002 東京都渋谷区渋谷２丁目２１−１',
+      latitude: 35.65910807942215,
+      longitude: 139.70372892916203,
+    });
+
+    expect(client.pushLocation).toBeCalledWith(session.room.id, {
+      title: 'my location',
+      address: '〒150-0002 東京都渋谷区渋谷２丁目２１−１',
+      latitude: 35.65910807942215,
+      longitude: 139.70372892916203,
+    });
+  });
+
+  it('should work with group session', async () => {
+    const { context, client, session } = setup({
+      session: { type: 'group', group: { id: 'group' } },
+    });
+
+    await context.sendLocation({
+      title: 'my location',
+      address: '〒150-0002 東京都渋谷区渋谷２丁目２１−１',
+      latitude: 35.65910807942215,
+      longitude: 139.70372892916203,
+    });
+
+    expect(client.pushLocation).toBeCalledWith(session.group.id, {
+      title: 'my location',
+      address: '〒150-0002 東京都渋谷区渋谷２丁目２１−１',
+      latitude: 35.65910807942215,
+      longitude: 139.70372892916203,
+    });
+  });
+
   it('should mark context as handled', async () => {
     const { context } = setup();
 
@@ -232,6 +373,26 @@ describe('#sendSticker', () => {
     expect(client.pushSticker).toBeCalledWith(session.user.id, '1', '1');
   });
 
+  it('should work with room session', async () => {
+    const { context, client, session } = setup({
+      session: { type: 'room', room: { id: 'room' } },
+    });
+
+    await context.sendSticker('1', '1');
+
+    expect(client.pushSticker).toBeCalledWith(session.room.id, '1', '1');
+  });
+
+  it('should work with group session', async () => {
+    const { context, client, session } = setup({
+      session: { type: 'group', group: { id: 'group' } },
+    });
+
+    await context.sendSticker('1', '1');
+
+    expect(client.pushSticker).toBeCalledWith(session.group.id, '1', '1');
+  });
+
   it('should mark context as handled', async () => {
     const { context } = setup();
 
@@ -242,36 +403,36 @@ describe('#sendSticker', () => {
 });
 
 describe('#sendImagemap', () => {
+  const template = {
+    baseUrl: 'https://example.com/bot/images/rm001',
+    baseHeight: 1040,
+    baseWidth: 1040,
+    actions: [
+      {
+        type: 'uri',
+        linkUri: 'https://example.com/',
+        area: {
+          x: 0,
+          y: 0,
+          width: 520,
+          height: 1040,
+        },
+      },
+      {
+        type: 'message',
+        text: 'hello',
+        area: {
+          x: 520,
+          y: 0,
+          width: 520,
+          height: 1040,
+        },
+      },
+    ],
+  };
+
   it('should call client.pushImagemap', async () => {
     const { context, client, session } = setup();
-
-    const template = {
-      baseUrl: 'https://example.com/bot/images/rm001',
-      baseHeight: 1040,
-      baseWidth: 1040,
-      actions: [
-        {
-          type: 'uri',
-          linkUri: 'https://example.com/',
-          area: {
-            x: 0,
-            y: 0,
-            width: 520,
-            height: 1040,
-          },
-        },
-        {
-          type: 'message',
-          text: 'hello',
-          area: {
-            x: 520,
-            y: 0,
-            width: 520,
-            height: 1040,
-          },
-        },
-      ],
-    };
 
     await context.sendImagemap('this is an imagemap', template);
 
@@ -282,36 +443,36 @@ describe('#sendImagemap', () => {
     );
   });
 
+  it('should work with room session', async () => {
+    const { context, client, session } = setup({
+      session: { type: 'room', room: { id: 'room' } },
+    });
+
+    await context.sendImagemap('this is an imagemap', template);
+
+    expect(client.pushImagemap).toBeCalledWith(
+      session.room.id,
+      'this is an imagemap',
+      template
+    );
+  });
+
+  it('should work with group session', async () => {
+    const { context, client, session } = setup({
+      session: { type: 'group', group: { id: 'group' } },
+    });
+
+    await context.sendImagemap('this is an imagemap', template);
+
+    expect(client.pushImagemap).toBeCalledWith(
+      session.group.id,
+      'this is an imagemap',
+      template
+    );
+  });
+
   it('should mark context as handled', async () => {
     const { context } = setup();
-
-    const template = {
-      baseUrl: 'https://example.com/bot/images/rm001',
-      baseHeight: 1040,
-      baseWidth: 1040,
-      actions: [
-        {
-          type: 'uri',
-          linkUri: 'https://example.com/',
-          area: {
-            x: 0,
-            y: 0,
-            width: 520,
-            height: 1040,
-          },
-        },
-        {
-          type: 'message',
-          text: 'hello',
-          area: {
-            x: 520,
-            y: 0,
-            width: 520,
-            height: 1040,
-          },
-        },
-      ],
-    };
 
     await context.sendImagemap('this is an imagemap', template);
 
@@ -320,31 +481,31 @@ describe('#sendImagemap', () => {
 });
 
 describe('#sendButtonTemplate', () => {
+  const template = {
+    thumbnailImageUrl: 'https://example.com/bot/images/image.jpg',
+    title: 'Menu',
+    text: 'Please select',
+    actions: [
+      {
+        type: 'postback',
+        label: 'Buy',
+        data: 'action=buy&itemid=123',
+      },
+      {
+        type: 'postback',
+        label: 'Add to cart',
+        data: 'action=add&itemid=123',
+      },
+      {
+        type: 'uri',
+        label: 'View detail',
+        uri: 'http://example.com/page/123',
+      },
+    ],
+  };
+
   it('should call client.pushButtonTemplate', async () => {
     const { context, client, session } = setup();
-
-    const template = {
-      thumbnailImageUrl: 'https://example.com/bot/images/image.jpg',
-      title: 'Menu',
-      text: 'Please select',
-      actions: [
-        {
-          type: 'postback',
-          label: 'Buy',
-          data: 'action=buy&itemid=123',
-        },
-        {
-          type: 'postback',
-          label: 'Add to cart',
-          data: 'action=add&itemid=123',
-        },
-        {
-          type: 'uri',
-          label: 'View detail',
-          uri: 'http://example.com/page/123',
-        },
-      ],
-    };
 
     await context.sendButtonTemplate('this is a button template', template);
 
@@ -355,31 +516,36 @@ describe('#sendButtonTemplate', () => {
     );
   });
 
+  it('should work with room session', async () => {
+    const { context, client, session } = setup({
+      session: { type: 'room', room: { id: 'room' } },
+    });
+
+    await context.sendButtonTemplate('this is a button template', template);
+
+    expect(client.pushButtonTemplate).toBeCalledWith(
+      session.room.id,
+      'this is a button template',
+      template
+    );
+  });
+
+  it('should work with group session', async () => {
+    const { context, client, session } = setup({
+      session: { type: 'group', group: { id: 'group' } },
+    });
+
+    await context.sendButtonTemplate('this is a button template', template);
+
+    expect(client.pushButtonTemplate).toBeCalledWith(
+      session.group.id,
+      'this is a button template',
+      template
+    );
+  });
+
   it('should mark context as handled', async () => {
     const { context } = setup();
-
-    const template = {
-      thumbnailImageUrl: 'https://example.com/bot/images/image.jpg',
-      title: 'Menu',
-      text: 'Please select',
-      actions: [
-        {
-          type: 'postback',
-          label: 'Buy',
-          data: 'action=buy&itemid=123',
-        },
-        {
-          type: 'postback',
-          label: 'Add to cart',
-          data: 'action=add&itemid=123',
-        },
-        {
-          type: 'uri',
-          label: 'View detail',
-          uri: 'http://example.com/page/123',
-        },
-      ],
-    };
 
     await context.sendButtonTemplate('this is a button template', template);
 
@@ -388,24 +554,24 @@ describe('#sendButtonTemplate', () => {
 });
 
 describe('#sendConfirmTemplate', () => {
+  const template = {
+    text: 'Are you sure?',
+    actions: [
+      {
+        type: 'message',
+        label: 'Yes',
+        text: 'yes',
+      },
+      {
+        type: 'message',
+        label: 'No',
+        text: 'no',
+      },
+    ],
+  };
+
   it('should call client.pushConfirmTemplate', async () => {
     const { context, client, session } = setup();
-
-    const template = {
-      text: 'Are you sure?',
-      actions: [
-        {
-          type: 'message',
-          label: 'Yes',
-          text: 'yes',
-        },
-        {
-          type: 'message',
-          label: 'No',
-          text: 'no',
-        },
-      ],
-    };
 
     await context.sendConfirmTemplate('this is a confirm template', template);
 
@@ -416,24 +582,36 @@ describe('#sendConfirmTemplate', () => {
     );
   });
 
+  it('should work with room session', async () => {
+    const { context, client, session } = setup({
+      session: { type: 'room', room: { id: 'room' } },
+    });
+
+    await context.sendConfirmTemplate('this is a confirm template', template);
+
+    expect(client.pushConfirmTemplate).toBeCalledWith(
+      session.room.id,
+      'this is a confirm template',
+      template
+    );
+  });
+
+  it('should work with group session', async () => {
+    const { context, client, session } = setup({
+      session: { type: 'group', group: { id: 'group' } },
+    });
+
+    await context.sendConfirmTemplate('this is a confirm template', template);
+
+    expect(client.pushConfirmTemplate).toBeCalledWith(
+      session.group.id,
+      'this is a confirm template',
+      template
+    );
+  });
+
   it('should mark context as handled', async () => {
     const { context } = setup();
-
-    const template = {
-      text: 'Are you sure?',
-      actions: [
-        {
-          type: 'message',
-          label: 'Yes',
-          text: 'yes',
-        },
-        {
-          type: 'message',
-          label: 'No',
-          text: 'no',
-        },
-      ],
-    };
 
     await context.sendConfirmTemplate('this is a confirm template', template);
 
@@ -442,55 +620,55 @@ describe('#sendConfirmTemplate', () => {
 });
 
 describe('#sendCarouselTemplate', () => {
+  const template = [
+    {
+      thumbnailImageUrl: 'https://example.com/bot/images/item1.jpg',
+      title: 'this is menu',
+      text: 'description',
+      actions: [
+        {
+          type: 'postback',
+          label: 'Buy',
+          data: 'action=buy&itemid=111',
+        },
+        {
+          type: 'postback',
+          label: 'Add to cart',
+          data: 'action=add&itemid=111',
+        },
+        {
+          type: 'uri',
+          label: 'View detail',
+          uri: 'http://example.com/page/111',
+        },
+      ],
+    },
+    {
+      thumbnailImageUrl: 'https://example.com/bot/images/item2.jpg',
+      title: 'this is menu',
+      text: 'description',
+      actions: [
+        {
+          type: 'postback',
+          label: 'Buy',
+          data: 'action=buy&itemid=222',
+        },
+        {
+          type: 'postback',
+          label: 'Add to cart',
+          data: 'action=add&itemid=222',
+        },
+        {
+          type: 'uri',
+          label: 'View detail',
+          uri: 'http://example.com/page/222',
+        },
+      ],
+    },
+  ];
+
   it('should call client.pushCarouselTemplate', async () => {
     const { context, client, session } = setup();
-
-    const template = [
-      {
-        thumbnailImageUrl: 'https://example.com/bot/images/item1.jpg',
-        title: 'this is menu',
-        text: 'description',
-        actions: [
-          {
-            type: 'postback',
-            label: 'Buy',
-            data: 'action=buy&itemid=111',
-          },
-          {
-            type: 'postback',
-            label: 'Add to cart',
-            data: 'action=add&itemid=111',
-          },
-          {
-            type: 'uri',
-            label: 'View detail',
-            uri: 'http://example.com/page/111',
-          },
-        ],
-      },
-      {
-        thumbnailImageUrl: 'https://example.com/bot/images/item2.jpg',
-        title: 'this is menu',
-        text: 'description',
-        actions: [
-          {
-            type: 'postback',
-            label: 'Buy',
-            data: 'action=buy&itemid=222',
-          },
-          {
-            type: 'postback',
-            label: 'Add to cart',
-            data: 'action=add&itemid=222',
-          },
-          {
-            type: 'uri',
-            label: 'View detail',
-            uri: 'http://example.com/page/222',
-          },
-        ],
-      },
-    ];
 
     await context.sendCarouselTemplate('this is a carousel template', template);
 
@@ -501,55 +679,36 @@ describe('#sendCarouselTemplate', () => {
     );
   });
 
+  it('should work with room session', async () => {
+    const { context, client, session } = setup({
+      session: { type: 'room', room: { id: 'room' } },
+    });
+
+    await context.sendConfirmTemplate('this is a carousel template', template);
+
+    expect(client.pushConfirmTemplate).toBeCalledWith(
+      session.room.id,
+      'this is a carousel template',
+      template
+    );
+  });
+
+  it('should work with group session', async () => {
+    const { context, client, session } = setup({
+      session: { type: 'group', group: { id: 'group' } },
+    });
+
+    await context.sendConfirmTemplate('this is a carousel template', template);
+
+    expect(client.pushConfirmTemplate).toBeCalledWith(
+      session.group.id,
+      'this is a carousel template',
+      template
+    );
+  });
+
   it('should mark context as handled', async () => {
     const { context } = setup();
-
-    const template = [
-      {
-        thumbnailImageUrl: 'https://example.com/bot/images/item1.jpg',
-        title: 'this is menu',
-        text: 'description',
-        actions: [
-          {
-            type: 'postback',
-            label: 'Buy',
-            data: 'action=buy&itemid=111',
-          },
-          {
-            type: 'postback',
-            label: 'Add to cart',
-            data: 'action=add&itemid=111',
-          },
-          {
-            type: 'uri',
-            label: 'View detail',
-            uri: 'http://example.com/page/111',
-          },
-        ],
-      },
-      {
-        thumbnailImageUrl: 'https://example.com/bot/images/item2.jpg',
-        title: 'this is menu',
-        text: 'description',
-        actions: [
-          {
-            type: 'postback',
-            label: 'Buy',
-            data: 'action=buy&itemid=222',
-          },
-          {
-            type: 'postback',
-            label: 'Add to cart',
-            data: 'action=add&itemid=222',
-          },
-          {
-            type: 'uri',
-            label: 'View detail',
-            uri: 'http://example.com/page/222',
-          },
-        ],
-      },
-    ];
 
     await context.sendCarouselTemplate('this is a carousel template', template);
 

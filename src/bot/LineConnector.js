@@ -58,6 +58,17 @@ export default class LineConnector implements Connector<LineRequestBody> {
     }
 
     if (source.type === 'group') {
+      const user = await this._client.getGroupMemberProfile(
+        source.groupId,
+        source.userId
+      );
+
+      session.user = {
+        id: source.userId,
+        _updatedAt: new Date().toISOString(),
+        ...user,
+      };
+
       let memberIds = [];
 
       try {
@@ -74,6 +85,17 @@ export default class LineConnector implements Connector<LineRequestBody> {
         _updatedAt: new Date().toISOString(),
       };
     } else if (source.type === 'room') {
+      const user = await this._client.getRoomMemberProfile(
+        source.roomId,
+        source.userId
+      );
+
+      session.user = {
+        id: source.userId,
+        _updatedAt: new Date().toISOString(),
+        ...user,
+      };
+
       let memberIds = [];
 
       try {
@@ -89,18 +111,15 @@ export default class LineConnector implements Connector<LineRequestBody> {
         members: memberIds.map(id => ({ id })),
         _updatedAt: new Date().toISOString(),
       };
-    }
-
-    if (
-      source.userId &&
-      (source.type !== 'user' || (session.type === 'user' && !session.user))
-    ) {
-      const user = await this._client.getUserProfile(source.userId);
-      session.user = {
-        id: source.userId,
-        _updatedAt: new Date().toISOString(),
-        ...user,
-      };
+    } else if (source.type === 'user') {
+      if (!session.user) {
+        const user = await this._client.getUserProfile(source.userId);
+        session.user = {
+          id: source.userId,
+          _updatedAt: new Date().toISOString(),
+          ...user,
+        };
+      }
     }
 
     if (session.group) {
