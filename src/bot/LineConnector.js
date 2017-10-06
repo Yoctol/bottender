@@ -49,7 +49,6 @@ export default class LineConnector implements Connector<LineRequestBody> {
     );
   }
 
-  // FIXME: handling different type session
   async updateSession(session: Session, body: LineRequestBody): Promise<void> {
     const { source } = body.events[0];
 
