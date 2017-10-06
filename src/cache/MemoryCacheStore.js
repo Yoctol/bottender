@@ -1,7 +1,7 @@
 /* @flow */
 
 import LRU from 'lru-cache';
-import cloneDeep from 'clone-deep';
+import cloneDeep from 'lodash/cloneDeep';
 
 import type { CacheStore } from './CacheStore';
 
