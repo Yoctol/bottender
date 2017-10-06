@@ -11,15 +11,6 @@ export { default as middleware } from './bot/middleware';
 export { default as Handler } from './bot/Handler';
 export { default as ClassifierHandler } from './bot/ClassifierHandler';
 
-/* deprecated */
-export { default as HandlerBuilder } from './bot/HandlerBuilder';
-export {
-  default as ClassifierHandlerBuilder,
-} from './bot/ClassifierHandlerBuilder';
-export {
-  default as MiddlewareHandlerBuilder,
-} from './bot/MiddlewareHandlerBuilder';
-
 /* Cache */
 export { default as MemoryCacheStore } from './cache/MemoryCacheStore';
 

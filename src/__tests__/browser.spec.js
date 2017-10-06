@@ -22,10 +22,6 @@ describe('browser', () => {
     expect(core.middleware).toBeDefined();
     expect(core.Handler).toBeDefined();
     expect(core.ClassifierHandler).toBeDefined();
-
-    expect(core.HandlerBuilder).toBeDefined();
-    expect(core.ClassifierHandlerBuilder).toBeDefined();
-    expect(core.MiddlewareHandlerBuilder).toBeDefined();
   });
 
   it('export extensions', () => {

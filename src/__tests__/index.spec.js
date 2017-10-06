@@ -40,15 +40,6 @@ describe('core', () => {
     expect(core.SlackHandler).toBeDefined();
     expect(core.TelegramHandler).toBeDefined();
     expect(core.ClassifierHandler).toBeDefined();
-
-    expect(core.HandlerBuilder).toBeDefined();
-    expect(core.BasicHandlerBuilder).toBeDefined();
-    expect(core.ClassifierHandlerBuilder).toBeDefined();
-    expect(core.MiddlewareHandlerBuilder).toBeDefined();
-    expect(core.MessengerHandlerBuilder).toBeDefined();
-    expect(core.LineHandlerBuilder).toBeDefined();
-    expect(core.SlackHandlerBuilder).toBeDefined();
-    expect(core.TelegramHandlerBuilder).toBeDefined();
   });
 
   it('export extensions', () => {

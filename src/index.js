@@ -25,24 +25,6 @@ export { default as SlackHandler } from './bot/SlackHandler';
 export { default as TelegramHandler } from './bot/TelegramHandler';
 export { default as ClassifierHandler } from './bot/ClassifierHandler';
 
-/* deprecated */
-export { default as BasicHandlerBuilder } from './bot/BasicHandlerBuilder';
-export { default as HandlerBuilder } from './bot/HandlerBuilder';
-export {
-  default as ClassifierHandlerBuilder,
-} from './bot/ClassifierHandlerBuilder';
-export {
-  default as MiddlewareHandlerBuilder,
-} from './bot/MiddlewareHandlerBuilder';
-export {
-  default as MessengerHandlerBuilder,
-} from './bot/MessengerHandlerBuilder';
-export { default as LineHandlerBuilder } from './bot/LineHandlerBuilder';
-export { default as SlackHandlerBuilder } from './bot/SlackHandlerBuilder';
-export {
-  default as TelegramHandlerBuilder,
-} from './bot/TelegramHandlerBuilder';
-
 /* Cache */
 export { default as MemoryCacheStore } from './cache/MemoryCacheStore';
 export { default as RedisCacheStore } from './cache/RedisCacheStore';
