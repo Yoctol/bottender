@@ -54,7 +54,7 @@ Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Refe
 
 ## sendText
 
-Send text to the owner of then session.
+Send text to the owner of the session.
 
 **Parameters**
 
