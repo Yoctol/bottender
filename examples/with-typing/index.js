@@ -13,7 +13,7 @@ const bot = new MessengerBot({
   appSecret: config.appSecret,
 });
 
-bot.extendContext(withTyping({ delay: 1000 }));
+bot.use(withTyping({ delay: 1000 }));
 
 bot.onEvent(async context => {
   await context.sendText('Hello World');
