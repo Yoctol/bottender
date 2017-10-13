@@ -66,6 +66,10 @@ export default class Bot {
     this._handler = handler.build ? handler.build() : handler;
   }
 
+  extendContext(fn: Function): Bot {
+    return this.use(fn);
+  }
+
   use(fn: Function): Bot {
     this._plugins.push(fn);
     return this;
