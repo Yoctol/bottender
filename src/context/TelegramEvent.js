@@ -137,6 +137,10 @@ export default class TelegramEvent implements Event {
     return this._rawEvent.message;
   }
 
+  /**
+   * The callback query from Telegram raw event.
+   *
+   */
   get callbackQuery(): ?CallbackQuery {
     return this._rawEvent.callback_query;
   }

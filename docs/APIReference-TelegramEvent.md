@@ -6,94 +6,100 @@
 
 Underlying raw event from Telegram.
 
-Returns **TelegramRawEvent** 
+Returns **TelegramRawEvent**
 
 ## isMessage
 
 Determine if the event is a message event.
 
-Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**
 
 ## message
 
-The message object from Telegram raw event.
+The Message object from Telegram raw event.
 
-Returns **Message?** 
+Returns **[Message](https://core.telegram.org/bots/api#message)**
 
 ## isTextMessage
 
 Determine if the event is a message event which includes text.
 
-Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**
 
 ## isAudioMessage
 
 Determine if the event is a message event which includes audio.
 
-Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**
 
 ## isDocumentMessage
 
 Determine if the event is a message event which includes document.
 
-Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**
 
 ## isGameMessage
 
 Determine if the event is a message event which includes game.
 
-Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**
 
 ## isPhotoMessage
 
 Determine if the event is a message event which includes photo.
 
-Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**
 
 ## isStickerMessage
 
 Determine if the event is a message event which includes sticker.
 
-Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**
 
 ## isVideoMessage
 
 Determine if the event is a message event which includes video.
 
-Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**
 
 ## isVoiceMessage
 
 Determine if the event is a message event which includes voice.
 
-Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**
 
 ## isVideoNoteMessage
 
 Determine if the event is a message event which includes video note.
 
-Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**
 
 ## isContactMessage
 
 Determine if the event is a message event which includes contact.
 
-Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**
 
 ## isLocationMessage
 
 Determine if the event is a message event which includes location.
 
-Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**
 
 ## isVenueMessage
 
 Determine if the event is a message event which includes venue.
 
-Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**
+
+## callbackQuery
+
+The callback query object from Telegram raw event.
+
+Returns **[CallbackQuery](https://core.telegram.org/bots/api#callbackquery)**
 
 ## isCallbackQuery
 
 Determine if the event is a callback query event.
 
-Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**
