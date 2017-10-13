@@ -272,7 +272,7 @@ describe('#verifySignature', () => {
     expect(result).toBe(true);
     expect(warning).toBeCalledWith(
       false,
-      '`appSecret` is not set. Cannot perform Messenger signature validation!'
+      '`appSecret` is not set. Will bypass Messenger signature validation.\nPass in `appSecret` to perform Messenger signature validation.'
     );
   });
 });

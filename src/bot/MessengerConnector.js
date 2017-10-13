@@ -86,6 +86,12 @@ export default class MessengerConnector
   constructor({ accessToken, appSecret, client }: ConstructorOptions) {
     this._client = client || MessengerClient.connect(accessToken);
     this._appSecret = appSecret;
+    if (!this._appSecret) {
+      warning(
+        false,
+        '`appSecret` is not set. Will bypass Messenger signature validation.\nPass in `appSecret` to perform Messenger signature validation.'
+      );
+    }
   }
 
   _getRawEventsFromRequest(
@@ -203,10 +209,6 @@ export default class MessengerConnector
   // https://developers.facebook.com/docs/messenger-platform/webhook#security
   verifySignature(rawBody: string, signature: string): boolean {
     if (!this._appSecret) {
-      warning(
-        false,
-        '`appSecret` is not set. Cannot perform Messenger signature validation!'
-      );
       return true;
     }
     return (
