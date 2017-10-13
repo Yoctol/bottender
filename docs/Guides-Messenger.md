@@ -41,7 +41,7 @@ const bot = new MessengerBot({
 });
 ```
 
-After you fill the accessToken and appSecret, run your server and try it out by talking to your Facebook Page! It works!
+After you fill the `accessToken` and `appSecret`, run your server and try it out by talking to your Facebook Page! It works!
 
 ### Full example
 
