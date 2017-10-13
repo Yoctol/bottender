@@ -30,7 +30,7 @@ export default class Bot {
 
   _handler: ?FunctionalHandler;
 
-  _contextExtensions: Array<Function> = [];
+  _plugins: Array<Function> = [];
 
   _sync: boolean;
 
@@ -67,7 +67,11 @@ export default class Bot {
   }
 
   extendContext(fn: Function): Bot {
-    this._contextExtensions.push(fn);
+    return this.use(fn);
+  }
+
+  use(fn: Function): Bot {
+    this._plugins.push(fn);
     return this;
   }
 
@@ -127,7 +131,7 @@ export default class Bot {
 
       // Call all of extension functions before passing to handler.
       contexts.forEach(context => {
-        this._contextExtensions.forEach(ext => {
+        this._plugins.forEach(ext => {
           ext(context);
         });
       });

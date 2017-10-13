@@ -42,8 +42,8 @@ export { default as MongoSessionStore } from './session/MongoSessionStore';
  * Private Exports (unstable)
  */
 
-/* Extensions */
-export { default as withTyping } from './extensions/withTyping';
+/* Plugins */
+export { default as withTyping } from './plugins/withTyping';
 
 /* Context */
 export { default as ConsoleContext } from './context/ConsoleContext';

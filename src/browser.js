@@ -24,5 +24,5 @@ export { default as MemorySessionStore } from './session/MemorySessionStore';
  * Private Exports (unstable)
  */
 
-/* Extensions */
-export { default as withTyping } from './extensions/withTyping';
+/* Plugins */
+export { default as withTyping } from './plugins/withTyping';

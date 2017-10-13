@@ -239,7 +239,7 @@ describe('#createRequestHandler', () => {
   });
 });
 
-describe('#extendContext', () => {
+describe('#use', () => {
   it('can extend function to context', async () => {
     const event = {};
     const connector = {
@@ -257,7 +257,7 @@ describe('#extendContext', () => {
 
     const monkeyPatchFn = jest.fn();
 
-    bot.extendContext(context => {
+    bot.use(context => {
       context.monkeyPatchFn = monkeyPatchFn;
     });
 
