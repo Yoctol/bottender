@@ -1,7 +1,6 @@
 /* @flow */
 
 import _debug from 'debug';
-import warning from 'warning';
 
 import MemoryCacheStore from '../cache/MemoryCacheStore';
 import CacheBasedSessionStore from '../session/CacheBasedSessionStore';
@@ -65,11 +64,6 @@ export default class Bot {
 
   onEvent(handler: FunctionalHandler | Builder): void {
     this._handler = handler.build ? handler.build() : handler;
-  }
-
-  extendContext(fn: Function): Bot {
-    warning(false, '`bot.extendContext` is deprecated. use `bot.use` instead.');
-    return this.use(fn);
   }
 
   use(fn: Function): Bot {
