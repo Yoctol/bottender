@@ -11,15 +11,9 @@ const {
 
 const botimizeMiddleware = require('./botimizeMiddleware');
 
-const config = {
+const bot = new MessengerBot({
   accessToken: '__FILL_YOUR_TOKEN_HERE__',
   appSecret: '__FILL_YOUR_SECRET_HERE__',
-  verifyToken: '__FILL_YOUR_VERIFY_TOKEN_HERE__',
-};
-
-const bot = new MessengerBot({
-  accessToken: config.accessToken,
-  appSecret: config.appSecret,
 });
 
 bot.onEvent(async context => {
@@ -35,7 +29,10 @@ server.use(
     },
   })
 );
-server.get('/', verifyMessengerWebhook({ verifyToken: config.verifyToken }));
+server.get(
+  '/',
+  verifyMessengerWebhook({ verifyToken: '__FILL_YOUR_VERIFY_TOKEN_HERE__' })
+);
 server.post(
   '/',
   verifyMessengerSignature(bot),

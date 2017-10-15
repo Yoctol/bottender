@@ -3,7 +3,7 @@ require('babel-register');
 const { MessengerBot } = require('../../src');
 const { createServer } = require('../../src/express');
 
-const config = require('./bottender.config.js');
+const config = require('./bottender.config');
 
 const bot = new MessengerBot(config.messenger);
 
