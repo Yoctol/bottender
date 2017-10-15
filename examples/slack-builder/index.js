@@ -3,12 +3,8 @@ require('babel-register');
 const { SlackBot, SlackHandler } = require('../../src');
 const { createServer } = require('../../src/express');
 
-const config = {
-  accessToken: '__FILL_YOUR_TOKEN_HERE__',
-};
-
 const bot = new SlackBot({
-  accessToken: config.accessToken,
+  accessToken: '__FILL_YOUR_TOKEN_HERE__',
 });
 
 const handler = new SlackHandler()

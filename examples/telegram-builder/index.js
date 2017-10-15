@@ -3,13 +3,10 @@ require('babel-register');
 const { TelegramBot, TelegramHandler } = require('../../src');
 const { createServer } = require('../../src/express');
 
-const config = {
-  accessToken: '__FILL_YOUR_TOKEN_HERE__',
-  url: '__FILL_URL_HERE__',
-};
+const url = '__FILL_URL_HERE__';
 
 const bot = new TelegramBot({
-  accessToken: config.accessToken,
+  accessToken: '__FILL_YOUR_TOKEN_HERE__',
 });
 
 const handler = new TelegramHandler()
@@ -27,6 +24,6 @@ bot.onEvent(handler);
 
 const server = createServer(bot);
 server.listen(5000, () => {
-  bot.connector.client.setWebhook(config.url);
+  bot.connector.client.setWebhook(url);
   console.log('server is running on 5000 port...');
 });
