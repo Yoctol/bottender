@@ -30,17 +30,10 @@ Your bot receives updates via an outgoing webhook which is a specific `URL`. Whe
 After setting up the webhook `URL` and getting the authorization token, you should fill them in [telegram-hello-world](https://github.com/Yoctol/toolbot-core-experiment/tree/master/examples/telegram-hello-world/index.js). The following is part of sample code.
 
 ```js
-// ...
+const url = '__FILL_URL_HERE__';
 
 const bot = new TelegramBot({
   accessToken: '__FILL_YOUR_TOKEN_HERE__',
-});
-
-// ...
-
-server.listen(5000, () => {
-  bot.connector.client.setWebhook('__FILL_URL_HERE__');
-  console.log('server is running on 5000 port...');
 });
 ```
 
@@ -51,8 +44,12 @@ Run your server and talk to the Telegram bot. It works!
 Here is the complete code for [telegram-hello-world](https://github.com/Yoctol/toolbot-core-experiment/tree/master/examples/telegram-hello-world/index.js)
 
 ```js
-const { TelegramBot } = require('toolbot-core-experiment');
-const { createServer } = require('toolbot-core-experiment/express');
+require('babel-register');
+
+const { TelegramBot } = require('../../src');
+const { createServer } = require('../../src/express');
+
+const url = '__FILL_URL_HERE__';
 
 const bot = new TelegramBot({
   accessToken: '__FILL_YOUR_TOKEN_HERE__',
@@ -65,7 +62,7 @@ bot.onEvent(async context => {
 const server = createServer(bot);
 
 server.listen(5000, () => {
-  bot.connector.client.setWebhook('__FILL_URL_HERE__');
+  bot.connector.client.setWebhook(url);
   console.log('server is running on 5000 port...');
 });
 ```
