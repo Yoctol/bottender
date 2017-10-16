@@ -1,7 +1,7 @@
 {
   "dependencies": {
-    "babel-register": "^6.24.1",
-    "micro": "^8.0.2"
+    "micro": "^8.0.2",
+    "toolbot-core-experiment": "latest"
   },
   "devDependencies": {
     "micro-dev": "^1.2.1"

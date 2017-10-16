@@ -1,10 +1,8 @@
-require('babel-register');
-
 const {
   ConsoleBot,
   RedisCacheStore,
   CacheBasedSessionStore,
-} = require('../../src');
+} = require('toolbot-core-experiment');
 
 const cache = new RedisCacheStore();
 

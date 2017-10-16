@@ -1,6 +1,4 @@
-require('babel-register');
-
-const { ConsoleBot, MongoSessionStore } = require('../../src');
+const { ConsoleBot, MongoSessionStore } = require('toolbot-core-experiment');
 
 const bot = new ConsoleBot({
   sessionStore: new MongoSessionStore('mongodb://localhost:27017/'),

@@ -1,7 +1,5 @@
-require('babel-register');
-
-const { LineBot, LineHandler } = require('../../src');
-const { createServer } = require('../../src/express');
+const { LineBot, LineHandler } = require('toolbot-core-experiment');
+const { createServer } = require('toolbot-core-experiment/express');
 
 const bot = new LineBot({
   channelSecret: '__FILL_YOUR_SECRET_HERE__',

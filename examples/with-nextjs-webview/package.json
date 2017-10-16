@@ -1,9 +1,9 @@
 {
   "dependencies": {
-    "babel-register": "^6.24.1",
     "next": "beta",
     "react": "^15.5.4",
-    "react-dom": "^15.5.4"
+    "react-dom": "^15.5.4",
+    "toolbot-core-experiment": "latest"
   },
   "devDependencies": {
     "nodemon": "^1.11.0"

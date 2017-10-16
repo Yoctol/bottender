@@ -1,6 +1,4 @@
-require('babel-register');
-
-const { ConsoleBot, FileSessionStore } = require('../../src');
+const { ConsoleBot, FileSessionStore } = require('toolbot-core-experiment');
 
 const bot = new ConsoleBot({
   sessionStore: new FileSessionStore(),

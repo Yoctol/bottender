@@ -1,7 +1,5 @@
-require('babel-register');
-
-const { SlackBot } = require('../../src');
-const { createServer } = require('../../src/express');
+const { SlackBot } = require('toolbot-core-experiment');
+const { createServer } = require('toolbot-core-experiment/express');
 
 const bot = new SlackBot({
   accessToken: '__FILL_YOUR_TOKEN_HERE__',

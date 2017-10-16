@@ -1,7 +1,5 @@
-require('babel-register');
-
-const { MessengerBot } = require('../../src');
-const { createRequestHandler } = require('../../src/micro');
+const { MessengerBot } = require('toolbot-core-experiment');
+const { createRequestHandler } = require('toolbot-core-experiment/micro');
 
 const bot = new MessengerBot({
   accessToken: '__FILL_YOUR_TOKEN_HERE__',

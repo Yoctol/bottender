@@ -1,6 +1,4 @@
-require('babel-register');
-
-const { ConsoleBot, middleware } = require('../../src');
+const { ConsoleBot, middleware } = require('toolbot-core-experiment');
 
 const bot = new ConsoleBot();
 

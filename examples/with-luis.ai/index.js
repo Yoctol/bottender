@@ -1,7 +1,5 @@
-require('babel-register');
 const LUISClient = require('luis-sdk');
-
-const { ConsoleBot } = require('../../src');
+const { ConsoleBot } = require('toolbot-core-experiment');
 
 const luis = new LUISClient({
   appId: process.env.APP_ID,

@@ -1,7 +1,7 @@
 {
   "dependencies": {
-    "babel-register": "^6.24.1",
-    "ngrok": "^2.2.15"
+    "ngrok": "^2.2.15",
+    "toolbot-core-experiment": "latest"
   },
   "devDependencies": {
     "nodemon": "^1.11.0"

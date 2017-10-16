@@ -1,9 +1,9 @@
 {
   "dependencies": {
-    "babel-register": "^6.24.1",
     "body-parser": "^1.18.2",
     "botimize": "^1.0.2",
-    "express": "^4.16.1"
+    "express": "^4.16.1",
+    "toolbot-core-experiment": "latest"
   },
   "devDependencies": {
     "nodemon": "^1.11.0"

@@ -1,8 +1,7 @@
-require('babel-register');
 const express = require('express');
 const bodyParser = require('body-parser');
+const { MessengerBot } = require('toolbot-core-experiment');
 
-const { MessengerBot } = require('../../src');
 const {
   verifyMessengerWebhook,
   verifyMessengerSignature,

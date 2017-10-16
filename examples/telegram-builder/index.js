@@ -1,7 +1,5 @@
-require('babel-register');
-
-const { TelegramBot, TelegramHandler } = require('../../src');
-const { createServer } = require('../../src/express');
+const { TelegramBot, TelegramHandler } = require('toolbot-core-experiment');
+const { createServer } = require('toolbot-core-experiment/express');
 
 const url = '__FILL_URL_HERE__';
 

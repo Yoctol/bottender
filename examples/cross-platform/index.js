@@ -1,11 +1,14 @@
-require('babel-register');
-
 const express = require('express');
 const bodyParser = require('body-parser');
 const shortid = require('shortid');
 const comeFrom = require('come-from');
+const {
+  MessengerBot,
+  LineBot,
+  TelegramBot,
+  SlackBot,
+} = require('toolbot-core-experiment');
 
-const { MessengerBot, LineBot, TelegramBot, SlackBot } = require('../../src');
 const {
   createMiddleware,
   verifyLineSignature,
