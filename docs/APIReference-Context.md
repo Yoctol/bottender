@@ -1,11 +1,15 @@
 # Context
 
+## Introduction
+
+A Bottender Context encapsulates many helpful methods into a single object like session, client from [messaging-apis](https://github.com/Yoctol/messaging-apis), event, etc. which makes you easiler to develop a chatbot system on different platform.
+
 ## General Methods
 | Property | Return | Description |
 |:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:------------------------------------------------------------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
 | platform | string | The name of the platform. |
-| client | Messenger: [MessengerClient](https://github.com/Yoctol/messaging-apis/tree/master/packages/messaging-api-messenger)<br> LINE: [LineClient](https://github.com/Yoctol/messaging-apis/tree/master/packages/messaging-api-line)<br> Slack: [SlackClient](https://github.com/Yoctol/messaging-apis/tree/master/packages/messaging-api-slack)<br> Telegram: [TelegramClient](https://github.com/Yoctol/messaging-apis/tree/master/packages/messaging-api-telegram)<br> Console: ConsoleClient  | The client instance. |
-| event | Messenger: MessengerEvent<br> LINE: LineEvent<br> Slack: SlackEvent<br> Telegram: TelegramEvent<br> Console: ConsoleEvent | The event instance. |
+| client | Messenger: [MessengerClient](https://github.com/Yoctol/messaging-apis/tree/master/packages/messaging-api-messenger)<br> LINE: [LineClient](https://github.com/Yoctol/messaging-apis/tree/master/packages/messaging-api-line)<br> Slack: [SlackClient](https://github.com/Yoctol/messaging-apis/tree/master/packages/messaging-api-slack)<br> Telegram: [TelegramClient](https://github.com/Yoctol/messaging-apis/tree/master/packages/messaging-api-telegram)<br> Console: ConsoleClient  | The client instance.<br> Return value depends on your platform. |
+| event | Messenger: MessengerEvent<br> LINE: LineEvent<br> Slack: SlackEvent<br> Telegram: TelegramEvent<br> Console: ConsoleEvent | The event instance.<br> Return value depends on your platform. |
 | session | Object | The session state of the context. |
 | [typing](https://github.com/Yoctol/toolbot-core-experiment/blob/docs-context/docs/APIReference-Context.md#typingmilliseconds) | Promise | Delay and show indicators for milliseconds. |
 | [sendText](https://github.com/Yoctol/toolbot-core-experiment/blob/docs-context/docs/APIReference-Context.md#sendtexttext-options) | Promise | Send text to the owner of the session. |
