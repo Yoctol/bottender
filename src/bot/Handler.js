@@ -60,8 +60,23 @@ export default class Handler {
     return this;
   }
 
-  onMessage(predicate: Predicate, handler: FunctionalHandler | Builder) {
-    this.on(context => context.event.isMessage && predicate(context), handler);
+  onMessage(
+    ...args:
+      | [Predicate, FunctionalHandler | Builder]
+      | [FunctionalHandler | Builder]
+  ) {
+    // FIXME: Can't refine tuple union - https://github.com/facebook/flow/issues/2389
+    if (args.length < 2) {
+      const _args: [FunctionalHandler | Builder] = (args: any);
+      this.on(context => context.event.isMessage, _args[0]);
+    } else {
+      const _args: [Predicate, FunctionalHandler | Builder] = (args: any);
+      this.on(
+        context => context.event.isMessage && _args[0](context),
+        _args[1]
+      );
+    }
+
     return this;
   }
 
