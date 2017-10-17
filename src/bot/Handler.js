@@ -67,13 +67,16 @@ export default class Handler {
   ) {
     // FIXME: Can't refine tuple union - https://github.com/facebook/flow/issues/2389
     if (args.length < 2) {
-      const _args: [FunctionalHandler | Builder] = (args: any);
-      this.on(context => context.event.isMessage, _args[0]);
+      const [handler]: [FunctionalHandler | Builder] = (args: any);
+      this.on(context => context.event.isMessage, handler);
     } else {
-      const _args: [Predicate, FunctionalHandler | Builder] = (args: any);
+      const [predicate, handler]: [
+        Predicate,
+        FunctionalHandler | Builder,
+      ] = (args: any);
       this.on(
-        context => context.event.isMessage && _args[0](context),
-        _args[1]
+        context => context.event.isMessage && predicate(context),
+        handler
       );
     }
 
@@ -81,14 +84,25 @@ export default class Handler {
   }
 
   onText(
-    arg1: Pattern | FunctionalHandler | Builder,
-    arg2?: FunctionalHandler | Builder
+    ...args:
+      | [Pattern, FunctionalHandler | Builder]
+      | [FunctionalHandler | Builder]
   ) {
-    let pattern;
-    let handler;
-    if (arg2) {
-      pattern = ((arg1: any): Pattern);
-      const _handler = (arg2.build ? arg2.build() : arg2: FunctionalHandler);
+    // FIXME: Can't refine tuple union - https://github.com/facebook/flow/issues/2389
+    if (args.length < 2) {
+      const [handler]: [FunctionalHandler | Builder] = (args: any);
+
+      this.onMessage(context => context.event.isTextMessage, handler);
+    } else {
+      // eslint-disable-next-line prefer-const
+      let [pattern, handler]: [
+        Pattern,
+        FunctionalHandler | Builder,
+      ] = (args: any);
+
+      if (handler.build) {
+        handler = handler.build();
+      }
 
       warning(
         typeof pattern === 'string' || pattern instanceof RegExp,
@@ -96,6 +110,7 @@ export default class Handler {
       );
 
       if (pattern instanceof RegExp) {
+        const _handler = handler;
         handler = context => {
           // $FlowFixMe
           const match = pattern.exec(context.event.message.text);
@@ -108,8 +123,6 @@ export default class Handler {
 
           return _handler(context, match);
         };
-      } else {
-        handler = _handler;
       }
 
       this.onMessage(
@@ -118,10 +131,6 @@ export default class Handler {
           matchPattern(pattern, context.event.message.text),
         handler
       );
-    } else {
-      handler = ((arg1: any): FunctionalHandler | Builder);
-
-      this.onMessage(context => context.event.isTextMessage, handler);
     }
 
     return this;
