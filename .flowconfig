@@ -1,5 +1,7 @@
 [ignore]
 .*/node-uuid/lib/sha1-browser.js
+.*/config-chain/test/broken.json
+.*/npm/test/fixtures/config/package.json
 .*/documentation
 
 [libs]
