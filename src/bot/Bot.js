@@ -102,7 +102,13 @@ export default class Bot {
         // $FlowFixMe
         session = await this._sessions.read(sessionId);
         session = session || Object.create(null);
-        session.id = session.id || sessionId;
+
+        Object.defineProperty(session, 'id', {
+          configurable: false,
+          enumerable: true,
+          writable: false,
+          value: session.id || sessionId,
+        });
 
         if (!session.platform) session.platform = platform;
 
