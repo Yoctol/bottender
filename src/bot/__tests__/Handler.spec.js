@@ -149,6 +149,41 @@ describe('#onMessage', () => {
     expect(await builder.onMessage(predicate, handler)).toBe(builder);
   });
 
+  describe('should support catch all handler', () => {
+    it('match', async () => {
+      const { builder } = setup();
+      const handler = jest.fn();
+      const context = {
+        event: {
+          isMessage: true,
+          isTextMessage: true,
+          message: {
+            id: '325708',
+            type: 'text',
+            text: 'awesome',
+          },
+        },
+      };
+      builder.onMessage(handler);
+      await builder.build()(context);
+      expect(handler).toBeCalledWith(context);
+    });
+
+    it('not match', async () => {
+      const { builder } = setup();
+      const handler = jest.fn();
+      const context = {
+        event: {
+          isMessage: false,
+          isTextMessage: false,
+        },
+      };
+      builder.onMessage(handler);
+      await builder.build()(context);
+      expect(handler).not.toBeCalled();
+    });
+  });
+
   it('should call predicate when received message', async () => {
     const { builder } = setup();
     const predicate = jest.fn(() => true);
