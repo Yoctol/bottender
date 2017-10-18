@@ -9,7 +9,6 @@ export { default as Connector } from './bot/Connector';
 /* HandlerBuilder */
 export { default as middleware } from './bot/middleware';
 export { default as Handler } from './bot/Handler';
-export { default as ClassifierHandler } from './bot/ClassifierHandler';
 
 /* Cache */
 export { default as MemoryCacheStore } from './cache/MemoryCacheStore';
@@ -23,6 +22,9 @@ export { default as MemorySessionStore } from './session/MemorySessionStore';
 /**
  * Private Exports (unstable)
  */
+
+/* HandlerBuilder */
+export { default as ClassifierHandler } from './bot/ClassifierHandler';
 
 /* Plugins */
 export { default as withTyping } from './plugins/withTyping';
