@@ -23,6 +23,19 @@ describe('#onPostback', () => {
     expect(await builder.onPostback(predicate, handler)).toBe(builder);
   });
 
+  it('should support catch all handler', async () => {
+    const { builder } = setup();
+    const handler = jest.fn();
+    const context = {
+      event: {
+        isPostback: true,
+      },
+    };
+    builder.onPostback(handler);
+    await builder.build()(context);
+    expect(handler).toBeCalledWith(context);
+  });
+
   it('should call predicate when received postback', async () => {
     const { builder } = setup();
     const predicate = jest.fn(() => true);
@@ -169,6 +182,19 @@ describe('#onPayment', () => {
     expect(await builder.onPayment(predicate, handler)).toBe(builder);
   });
 
+  it('should support catch all handler', async () => {
+    const { builder } = setup();
+    const handler = jest.fn();
+    const context = {
+      event: {
+        isPayment: true,
+      },
+    };
+    builder.onPayment(handler);
+    await builder.build()(context);
+    expect(handler).toBeCalledWith(context);
+  });
+
   it('should call predicate when received postback', async () => {
     const { builder } = setup();
     const predicate = jest.fn(() => true);
@@ -220,6 +246,19 @@ describe('#onOptin', () => {
     const predicate = () => true;
     const handler = () => {};
     expect(await builder.onOptin(predicate, handler)).toBe(builder);
+  });
+
+  it('should support catch all handler', async () => {
+    const { builder } = setup();
+    const handler = jest.fn();
+    const context = {
+      event: {
+        isOptin: true,
+      },
+    };
+    builder.onOptin(handler);
+    await builder.build()(context);
+    expect(handler).toBeCalledWith(context);
   });
 
   it('should call predicate when received postback', async () => {
@@ -275,6 +314,19 @@ describe('#onCheckoutUpdate', () => {
     expect(await builder.onCheckoutUpdate(predicate, handler)).toBe(builder);
   });
 
+  it('should support catch all handler', async () => {
+    const { builder } = setup();
+    const handler = jest.fn();
+    const context = {
+      event: {
+        isCheckoutUpdate: true,
+      },
+    };
+    builder.onCheckoutUpdate(handler);
+    await builder.build()(context);
+    expect(handler).toBeCalledWith(context);
+  });
+
   it('should call predicate when received postback', async () => {
     const { builder } = setup();
     const predicate = jest.fn(() => true);
@@ -326,6 +378,19 @@ describe('#onPreCheckout', () => {
     const predicate = () => true;
     const handler = () => {};
     expect(await builder.onPreCheckout(predicate, handler)).toBe(builder);
+  });
+
+  it('should support catch all handler', async () => {
+    const { builder } = setup();
+    const handler = jest.fn();
+    const context = {
+      event: {
+        isPreCheckout: true,
+      },
+    };
+    builder.onPreCheckout(handler);
+    await builder.build()(context);
+    expect(handler).toBeCalledWith(context);
   });
 
   it('should call predicate when received postback', async () => {
@@ -381,6 +446,27 @@ describe('#onQuickReply', () => {
     expect(await builder.onQuickReply(predicate, handler)).toBe(builder);
   });
 
+  it('should support catch all handler', async () => {
+    const { builder } = setup();
+    const handler = jest.fn();
+    const context = {
+      event: {
+        isMessage: true,
+        isTextMessage: true,
+        isQuickReply: true,
+        message: {
+          quick_reply: {
+            payload: 'so quick!',
+          },
+          text: 'wow',
+        },
+      },
+    };
+    builder.onQuickReply(handler);
+    await builder.build()(context);
+    expect(handler).toBeCalledWith(context);
+  });
+
   it('should call handler when received quick reply message', async () => {
     const { builder } = setup();
     const predicate = jest.fn(() => true);
@@ -388,6 +474,7 @@ describe('#onQuickReply', () => {
     const context = {
       event: {
         isMessage: true,
+        isTextMessage: true,
         isQuickReply: true,
         message: {
           quick_reply: {
@@ -453,6 +540,25 @@ describe('#onEcho', () => {
     expect(await builder.onEcho(predicate, handler)).toBe(builder);
   });
 
+  it('should support catch all handler', async () => {
+    const { builder } = setup();
+    const handler = jest.fn();
+    const context = {
+      event: {
+        isMessage: true,
+        isTextMessage: true,
+        isEcho: true,
+        message: {
+          is_echo: true,
+          text: 'wow',
+        },
+      },
+    };
+    builder.onEcho(handler);
+    await builder.build()(context);
+    expect(handler).toBeCalledWith(context);
+  });
+
   it('should call handler when received echo message', async () => {
     const { builder } = setup();
     const predicate = jest.fn(() => true);
@@ -460,6 +566,7 @@ describe('#onEcho', () => {
     const context = {
       event: {
         isMessage: true,
+        isTextMessage: true,
         isEcho: true,
         message: {
           is_echo: true,
@@ -520,12 +627,32 @@ describe('#onEchoText', () => {
     expect(await builder.onEchoText('some text', handler)).toBe(builder);
   });
 
+  it('should support catch all handler', async () => {
+    const { builder } = setup();
+    const handler = jest.fn();
+    const context = {
+      event: {
+        isMessage: true,
+        isTextMessage: true,
+        isEcho: true,
+        message: {
+          is_echo: true,
+          text: 'wow',
+        },
+      },
+    };
+    builder.onEchoText(handler);
+    await builder.build()(context);
+    expect(handler).toBeCalledWith(context);
+  });
+
   it('should call handler when received echo message', async () => {
     const { builder } = setup();
     const handler = jest.fn();
     const context = {
       event: {
         isMessage: true,
+        isTextMessage: true,
         isEcho: true,
         message: {
           is_echo: true,
@@ -544,6 +671,8 @@ describe('#onEchoText', () => {
     const context = {
       event: {
         isMessage: true,
+        isTextMessage: true,
+        isEcho: false,
         message: {
           text: 'wow',
         },
@@ -561,6 +690,23 @@ describe('#onRead', () => {
     const handler = () => {};
     const predicate = jest.fn(() => true);
     expect(await builder.onRead(predicate, handler)).toBe(builder);
+  });
+
+  it('should support catch all handler', async () => {
+    const { builder } = setup();
+    const handler = jest.fn();
+    const context = {
+      event: {
+        isRead: true,
+        read: {
+          watermark: 1458668856253,
+          seq: 38,
+        },
+      },
+    };
+    builder.onRead(handler);
+    await builder.build()(context);
+    expect(handler).toBeCalledWith(context);
   });
 
   it('should call handler when received read event', async () => {
@@ -626,6 +772,24 @@ describe('#onDelivery', () => {
     const handler = () => {};
     const predicate = jest.fn(() => true);
     expect(await builder.onDelivery(predicate, handler)).toBe(builder);
+  });
+
+  it('should support catch all handler', async () => {
+    const { builder } = setup();
+    const handler = jest.fn();
+    const context = {
+      event: {
+        isDelivery: true,
+        delivery: {
+          mids: ['mid.1458668856218:ed81099e15d3f4f233'],
+          watermark: 1458668856253,
+          seq: 37,
+        },
+      },
+    };
+    builder.onDelivery(handler);
+    await builder.build()(context);
+    expect(handler).toBeCalledWith(context);
   });
 
   it('should call handler when received delivery event', async () => {
@@ -697,13 +861,40 @@ describe('#onLocation', () => {
     expect(await builder.onLocation(predicate, handler)).toBe(builder);
   });
 
+  it('should support catch all handler', async () => {
+    const { builder } = setup();
+    const handler = jest.fn();
+    const context = {
+      event: {
+        isLocationMessage: true,
+        hasAttachments: true,
+        attachments: [
+          {
+            type: 'location',
+            payload: {
+              coordinates: {
+                lat: 0,
+                long: 0,
+              },
+            },
+          },
+        ],
+      },
+    };
+    builder.onLocation(handler);
+    await builder.build()(context);
+    expect(handler).toBeCalledWith(context);
+  });
+
   it('should call handler when received location event', async () => {
     const { builder } = setup();
     const handler = jest.fn();
     const predicate = jest.fn(() => true);
     const context = {
       event: {
+        isMessage: true,
         isLocationMessage: true,
+        hasAttachment: true,
         attachments: [
           {
             type: 'location',
@@ -729,6 +920,8 @@ describe('#onLocation', () => {
     const handler = jest.fn();
     const context = {
       event: {
+        isMessage: true,
+        isTextMessage: true,
         isLocationMessage: false,
         message: {
           text: 'wow',
@@ -747,7 +940,9 @@ describe('#onLocation', () => {
     const predicate = jest.fn(() => Promise.resolve(false));
     const context = {
       event: {
+        isMessage: true,
         isLocationMessage: true,
+        hasAttachment: true,
         attachments: [
           {
             type: 'location',
@@ -776,13 +971,41 @@ describe('#onImage', () => {
     expect(await builder.onImage(predicate, handler)).toBe(builder);
   });
 
+  it('should support catch all handler', async () => {
+    const { builder } = setup();
+    const handler = jest.fn();
+    const context = {
+      event: {
+        isMessage: true,
+        isLocationMessage: true,
+        hasAttachment: true,
+        attachments: [
+          {
+            type: 'location',
+            payload: {
+              coordinates: {
+                lat: 0,
+                long: 0,
+              },
+            },
+          },
+        ],
+      },
+    };
+    builder.onLocation(handler);
+    await builder.build()(context);
+    expect(handler).toBeCalledWith(context);
+  });
+
   it('should call handler when received image event', async () => {
     const { builder } = setup();
     const handler = jest.fn();
     const predicate = jest.fn(() => true);
     const context = {
       event: {
+        isMessage: true,
         isImageMessage: true,
+        hasAttachment: true,
         attachments: [
           {
             type: 'image',
@@ -823,7 +1046,9 @@ describe('#onImage', () => {
     const predicate = jest.fn(() => Promise.resolve(false));
     const context = {
       event: {
+        isMessage: true,
         isImageMessage: true,
+        hasAttachment: true,
         attachments: [
           {
             type: 'image',
@@ -849,13 +1074,38 @@ describe('#onAudio', () => {
     expect(await builder.onAudio(predicate, handler)).toBe(builder);
   });
 
+  it('should support catch all handler', async () => {
+    const { builder } = setup();
+    const handler = jest.fn();
+    const context = {
+      event: {
+        isMessage: true,
+        isAudioMessage: true,
+        hasAttachment: true,
+        attachments: [
+          {
+            type: 'audio',
+            payload: {
+              url: 'https://example.com/bot/audios/audio.mp3',
+            },
+          },
+        ],
+      },
+    };
+    builder.onAudio(handler);
+    await builder.build()(context);
+    expect(handler).toBeCalledWith(context);
+  });
+
   it('should call handler when received audio event', async () => {
     const { builder } = setup();
     const handler = jest.fn();
     const predicate = jest.fn(() => true);
     const context = {
       event: {
+        isMessage: true,
         isAudioMessage: true,
+        hasAttachment: true,
         attachments: [
           {
             type: 'audio',
@@ -878,7 +1128,9 @@ describe('#onAudio', () => {
     const handler = jest.fn();
     const context = {
       event: {
+        isMessage: true,
         isAudioMessage: false,
+        hasAttachment: false,
         message: {
           text: 'wow',
         },
@@ -922,13 +1174,38 @@ describe('#onVideo', () => {
     expect(await builder.onVideo(predicate, handler)).toBe(builder);
   });
 
+  it('should support catch all handler', async () => {
+    const { builder } = setup();
+    const handler = jest.fn();
+    const context = {
+      event: {
+        isMessage: true,
+        isVideoMessage: true,
+        hasAttachment: true,
+        attachments: [
+          {
+            type: 'video',
+            payload: {
+              url: 'https://example.com/bot/videos/video.mp4',
+            },
+          },
+        ],
+      },
+    };
+    builder.onVideo(handler);
+    await builder.build()(context);
+    expect(handler).toBeCalledWith(context);
+  });
+
   it('should call handler when received video event', async () => {
     const { builder } = setup();
     const handler = jest.fn();
     const predicate = jest.fn(() => true);
     const context = {
       event: {
+        isMessage: true,
         isVideoMessage: true,
+        hasAttachment: true,
         attachments: [
           {
             type: 'video',
@@ -995,13 +1272,38 @@ describe('#onFile', () => {
     expect(await builder.onFile(predicate, handler)).toBe(builder);
   });
 
+  it('should support catch all handler', async () => {
+    const { builder } = setup();
+    const handler = jest.fn();
+    const context = {
+      event: {
+        isMessage: true,
+        isFileMessage: true,
+        hasAttachment: true,
+        attachments: [
+          {
+            type: 'file',
+            payload: {
+              url: 'https://example.com/bot/files/file.doc',
+            },
+          },
+        ],
+      },
+    };
+    builder.onFile(handler);
+    await builder.build()(context);
+    expect(handler).toBeCalledWith(context);
+  });
+
   it('should call handler when received file event', async () => {
     const { builder } = setup();
     const handler = jest.fn();
     const predicate = jest.fn(() => true);
     const context = {
       event: {
+        isMessage: true,
         isFileMessage: true,
+        hasAttachment: true,
         attachments: [
           {
             type: 'file',
@@ -1068,13 +1370,38 @@ describe('#onFallback', () => {
     expect(await builder.onFallback(predicate, handler)).toBe(builder);
   });
 
+  it('should support catch all handler', async () => {
+    const { builder } = setup();
+    const handler = jest.fn();
+    const context = {
+      event: {
+        isMessage: true,
+        isFallbackMessage: true,
+        hasAttachment: true,
+        attachments: [
+          {
+            type: 'fallback',
+            payload: null,
+            title: 'TITLE_OF_THE_URL_ATTACHMENT',
+            URL: 'URL_OF_THE_ATTACHMENT',
+          },
+        ],
+      },
+    };
+    builder.onFallback(handler);
+    await builder.build()(context);
+    expect(handler).toBeCalledWith(context);
+  });
+
   it('should call handler when received fallback event', async () => {
     const { builder } = setup();
     const handler = jest.fn();
     const predicate = jest.fn(() => true);
     const context = {
       event: {
+        isMessage: true,
         isFallbackMessage: true,
+        hasAttachment: true,
         attachments: [
           {
             type: 'fallback',
