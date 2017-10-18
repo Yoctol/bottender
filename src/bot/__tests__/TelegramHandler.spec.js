@@ -15,7 +15,7 @@ describe('#constructor', () => {
   });
 });
 
-describe('#onCallbackQuery', () => {
+describe('#onPayload', () => {
   const contextWithCallbackQuery = {
     event: {
       isMessage: false,
@@ -32,7 +32,7 @@ describe('#onCallbackQuery', () => {
   it('should return this', async () => {
     const { builder } = setup();
     const handler = () => {};
-    expect(await builder.onCallbackQuery('text', handler)).toBe(builder);
+    expect(await builder.onPayload('text', handler)).toBe(builder);
   });
 
   describe('should support catch all handler', () => {
@@ -40,7 +40,7 @@ describe('#onCallbackQuery', () => {
       const { builder } = setup();
       const handler = jest.fn();
 
-      builder.onCallbackQuery(handler);
+      builder.onPayload(handler);
       await builder.build()(contextWithCallbackQuery);
       expect(handler).toBeCalledWith(contextWithCallbackQuery);
     });
@@ -49,7 +49,7 @@ describe('#onCallbackQuery', () => {
       const { builder } = setup();
       const handler = jest.fn();
 
-      builder.onCallbackQuery('awful', handler);
+      builder.onPayload(handler);
       await builder.build()({
         event: {
           isMessage: true,
@@ -65,7 +65,7 @@ describe('#onCallbackQuery', () => {
       const { builder } = setup();
       const handler = jest.fn();
 
-      builder.onCallbackQuery('data', handler);
+      builder.onPayload('data', handler);
       await builder.build()(contextWithCallbackQuery);
       expect(handler).toBeCalledWith(contextWithCallbackQuery);
     });
@@ -74,7 +74,7 @@ describe('#onCallbackQuery', () => {
       const { builder } = setup();
       const handler = jest.fn();
 
-      builder.onCallbackQuery('awful', handler);
+      builder.onPayload('awful', handler);
       await builder.build()(contextWithCallbackQuery);
       expect(handler).not.toBeCalled();
     });
@@ -84,16 +84,21 @@ describe('#onCallbackQuery', () => {
     it('match', async () => {
       const { builder } = setup();
       const handler = jest.fn();
-      builder.onCallbackQuery(/data/, handler);
+
+      const match = ['data'];
+      match.index = 0;
+      match.input = 'data';
+
+      builder.onPayload(/data/, handler);
       await builder.build()(contextWithCallbackQuery);
-      expect(handler).toBeCalledWith(contextWithCallbackQuery);
+      expect(handler).toBeCalledWith(contextWithCallbackQuery, match);
     });
 
     it('not match', async () => {
       const { builder } = setup();
       const handler = jest.fn();
 
-      builder.onCallbackQuery(/awful/, handler);
+      builder.onPayload(/awful/, handler);
       await builder.build()(contextWithCallbackQuery);
       expect(handler).not.toBeCalled();
     });
@@ -108,12 +113,42 @@ describe('#onPhoto', () => {
     expect(await builder.onPhoto(predicate, handler)).toBe(builder);
   });
 
+  it('should support catch all handler', async () => {
+    const { builder } = setup();
+    const handler = jest.fn();
+    const context = {
+      event: {
+        isMessage: true,
+        isPhotoMessage: true,
+        message: {
+          message_id: 666,
+          photo: [
+            {
+              file_id: '112',
+              width: 100,
+              height: 100,
+            },
+            {
+              file_id: '116',
+              width: 50,
+              height: 50,
+            },
+          ],
+        },
+      },
+    };
+    builder.onPhoto(handler);
+    await builder.build()(context);
+    expect(handler).toBeCalledWith(context);
+  });
+
   it('should call handler when received photo event', async () => {
     const { builder } = setup();
     const handler = jest.fn();
     const predicate = jest.fn(() => true);
     const context = {
       event: {
+        isMessage: true,
         isPhotoMessage: true,
         message: {
           message_id: 666,
@@ -195,12 +230,34 @@ describe('#onDocument', () => {
     expect(await builder.onDocument(predicate, handler)).toBe(builder);
   });
 
+  it('should support catch all handler', async () => {
+    const { builder } = setup();
+    const handler = jest.fn();
+    const context = {
+      event: {
+        isMessage: true,
+        isDocumentMessage: true,
+        message: {
+          message_id: 666,
+          document: {
+            file_id: '1234',
+            file_name: 'file',
+          },
+        },
+      },
+    };
+    builder.onDocument(handler);
+    await builder.build()(context);
+    expect(handler).toBeCalledWith(context);
+  });
+
   it('should call handler when received document event', async () => {
     const { builder } = setup();
     const handler = jest.fn();
     const predicate = jest.fn(() => true);
     const context = {
       event: {
+        isMessage: true,
         isDocumentMessage: true,
         message: {
           message_id: 666,
@@ -266,12 +323,35 @@ describe('#onAudio', () => {
     expect(await builder.onAudio(predicate, handler)).toBe(builder);
   });
 
+  it('should support catch all handler', async () => {
+    const { builder } = setup();
+    const handler = jest.fn();
+    const context = {
+      event: {
+        isMessage: true,
+        isAudioMessage: true,
+        message: {
+          message_id: 666,
+          audio: {
+            file_id: '321',
+            duration: 100,
+            title: 'audioooooooo',
+          },
+        },
+      },
+    };
+    builder.onAudio(handler);
+    await builder.build()(context);
+    expect(handler).toBeCalledWith(context);
+  });
+
   it('should call handler when received audio event', async () => {
     const { builder } = setup();
     const handler = jest.fn();
     const predicate = jest.fn(() => true);
     const context = {
       event: {
+        isMessage: true,
         isAudioMessage: true,
         message: {
           message_id: 666,
@@ -295,6 +375,8 @@ describe('#onAudio', () => {
     const handler = jest.fn();
     const context = {
       event: {
+        isMessage: true,
+        isTextMessage: true,
         isAudioMessage: false,
         message: {
           text: 'wow',
@@ -313,6 +395,7 @@ describe('#onAudio', () => {
     const predicate = jest.fn(() => Promise.resolve(false));
     const context = {
       event: {
+        isMessage: true,
         isAudioMessage: true,
         message: {
           message_id: 666,
@@ -339,12 +422,46 @@ describe('#onGame', () => {
     expect(await builder.onGame(predicate, handler)).toBe(builder);
   });
 
+  it('should support catch all handler', async () => {
+    const { builder } = setup();
+    const handler = jest.fn();
+    const context = {
+      event: {
+        isMessage: true,
+        isGameMessage: true,
+        message: {
+          message_id: 666,
+          game: {
+            title: 'gammmmmmmme',
+            description: 'Description of the game',
+            photo: [
+              {
+                file_id: '112',
+                width: 100,
+                height: 100,
+              },
+              {
+                file_id: '116',
+                width: 50,
+                height: 50,
+              },
+            ],
+          },
+        },
+      },
+    };
+    builder.onGame(handler);
+    await builder.build()(context);
+    expect(handler).toBeCalledWith(context);
+  });
+
   it('should call handler when received game event', async () => {
     const { builder } = setup();
     const handler = jest.fn();
     const predicate = jest.fn(() => true);
     const context = {
       event: {
+        isMessage: true,
         isGameMessage: true,
         message: {
           message_id: 666,
@@ -434,12 +551,35 @@ describe('#onSticker', () => {
     expect(await builder.onSticker(predicate, handler)).toBe(builder);
   });
 
+  it('should support catch all handler', async () => {
+    const { builder } = setup();
+    const handler = jest.fn();
+    const context = {
+      event: {
+        isMessage: true,
+        isStickerMessage: true,
+        message: {
+          message_id: 666,
+          sticker: {
+            file_id: '123',
+            width: 50,
+            height: 50,
+          },
+        },
+      },
+    };
+    builder.onSticker(handler);
+    await builder.build()(context);
+    expect(handler).toBeCalledWith(context);
+  });
+
   it('should call handler when received sticker event', async () => {
     const { builder } = setup();
     const handler = jest.fn();
     const predicate = jest.fn(() => true);
     const context = {
       event: {
+        isMessage: true,
         isStickerMessage: true,
         message: {
           message_id: 666,
@@ -463,6 +603,8 @@ describe('#onSticker', () => {
     const handler = jest.fn();
     const context = {
       event: {
+        isMessage: true,
+        isTextMessage: true,
         isStickerMessage: false,
         message: {
           text: 'wow',
@@ -481,6 +623,7 @@ describe('#onSticker', () => {
     const predicate = jest.fn(() => Promise.resolve(false));
     const context = {
       event: {
+        isMessage: true,
         isStickerMessage: true,
         message: {
           message_id: 666,
@@ -507,12 +650,36 @@ describe('#onVideo', () => {
     expect(await builder.onVideo(predicate, handler)).toBe(builder);
   });
 
+  it('should support catch all handler', async () => {
+    const { builder } = setup();
+    const handler = jest.fn();
+    const context = {
+      event: {
+        isMessage: true,
+        isVideoMessage: true,
+        message: {
+          message_id: 666,
+          video: {
+            file_id: '321',
+            width: 100,
+            height: 100,
+            duration: 199,
+          },
+        },
+      },
+    };
+    builder.onVideo(handler);
+    await builder.build()(context);
+    expect(handler).toBeCalledWith(context);
+  });
+
   it('should call handler when received video event', async () => {
     const { builder } = setup();
     const handler = jest.fn();
     const predicate = jest.fn(() => true);
     const context = {
       event: {
+        isMessage: true,
         isVideoMessage: true,
         message: {
           message_id: 666,
@@ -537,6 +704,8 @@ describe('#onVideo', () => {
     const handler = jest.fn();
     const context = {
       event: {
+        isMessage: true,
+        isTextMessage: true,
         isVideoMessage: false,
         message: {
           text: 'wow',
@@ -555,6 +724,7 @@ describe('#onVideo', () => {
     const predicate = jest.fn(() => Promise.resolve(false));
     const context = {
       event: {
+        isMessage: true,
         isVideoMessage: true,
         message: {
           message_id: 666,
@@ -582,12 +752,34 @@ describe('#onVoice', () => {
     expect(await builder.onVoice(predicate, handler)).toBe(builder);
   });
 
+  it('should support catch all handler', async () => {
+    const { builder } = setup();
+    const handler = jest.fn();
+    const context = {
+      event: {
+        isMessage: true,
+        isVoiceMessage: true,
+        message: {
+          message_id: 666,
+          voice: {
+            file_id: '543',
+            duration: 299,
+          },
+        },
+      },
+    };
+    builder.onVoice(handler);
+    await builder.build()(context);
+    expect(handler).toBeCalledWith(context);
+  });
+
   it('should call handler when received voice event', async () => {
     const { builder } = setup();
     const handler = jest.fn();
     const predicate = jest.fn(() => true);
     const context = {
       event: {
+        isMessage: true,
         isVoiceMessage: true,
         message: {
           message_id: 666,
@@ -610,6 +802,8 @@ describe('#onVoice', () => {
     const handler = jest.fn();
     const context = {
       event: {
+        isMessage: true,
+        isTextMessage: true,
         isVoiceMessage: false,
         message: {
           text: 'wow',
@@ -628,6 +822,7 @@ describe('#onVoice', () => {
     const predicate = jest.fn(() => Promise.resolve(false));
     const context = {
       event: {
+        isMessage: true,
         isVoiceMessage: true,
         message: {
           message_id: 666,
@@ -653,12 +848,35 @@ describe('#onVideoNote', () => {
     expect(await builder.onVideoNote(predicate, handler)).toBe(builder);
   });
 
+  it('should support catch all handler', async () => {
+    const { builder } = setup();
+    const handler = jest.fn();
+    const context = {
+      event: {
+        isMessage: true,
+        isVideoNoteMessage: true,
+        message: {
+          message_id: 666,
+          video_note: {
+            file_id: '654',
+            length: 100,
+            duration: 399,
+          },
+        },
+      },
+    };
+    builder.onVideoNote(handler);
+    await builder.build()(context);
+    expect(handler).toBeCalledWith(context);
+  });
+
   it('should call handler when received video_note event', async () => {
     const { builder } = setup();
     const handler = jest.fn();
     const predicate = jest.fn(() => true);
     const context = {
       event: {
+        isMessage: true,
         isVideoNoteMessage: true,
         message: {
           message_id: 666,
@@ -682,6 +900,8 @@ describe('#onVideoNote', () => {
     const handler = jest.fn();
     const context = {
       event: {
+        isMessage: true,
+        isTextMessage: true,
         isVideoNoteMessage: false,
         message: {
           text: 'wow',
@@ -700,6 +920,7 @@ describe('#onVideoNote', () => {
     const predicate = jest.fn(() => Promise.resolve(false));
     const context = {
       event: {
+        isMessage: true,
         isVideoNoteMessage: true,
         message: {
           message_id: 666,
@@ -726,12 +947,34 @@ describe('#onContact', () => {
     expect(await builder.onContact(predicate, handler)).toBe(builder);
   });
 
+  it('should support catch all handler', async () => {
+    const { builder } = setup();
+    const handler = jest.fn();
+    const context = {
+      event: {
+        isMessage: true,
+        isContactMessage: true,
+        message: {
+          message_id: 666,
+          contact: {
+            phone_number: '123456789',
+            first_name: 'first',
+          },
+        },
+      },
+    };
+    builder.onContact(handler);
+    await builder.build()(context);
+    expect(handler).toBeCalledWith(context);
+  });
+
   it('should call handler when received contact event', async () => {
     const { builder } = setup();
     const handler = jest.fn();
     const predicate = jest.fn(() => true);
     const context = {
       event: {
+        isMessage: true,
         isContactMessage: true,
         message: {
           message_id: 666,
@@ -754,6 +997,8 @@ describe('#onContact', () => {
     const handler = jest.fn();
     const context = {
       event: {
+        isMessage: true,
+        isTextMessage: true,
         isContactMessage: false,
         message: {
           text: 'wow',
@@ -772,6 +1017,7 @@ describe('#onContact', () => {
     const predicate = jest.fn(() => Promise.resolve(false));
     const context = {
       event: {
+        isMessage: true,
         isContactMessage: true,
         message: {
           message_id: 666,
@@ -797,12 +1043,34 @@ describe('#onLocation', () => {
     expect(await builder.onLocation(predicate, handler)).toBe(builder);
   });
 
+  it('should support catch all handler', async () => {
+    const { builder } = setup();
+    const handler = jest.fn();
+    const context = {
+      event: {
+        isMessage: true,
+        isLocationMessage: true,
+        message: {
+          message_id: 666,
+          location: {
+            longitude: '111.111',
+            latitude: '99.99',
+          },
+        },
+      },
+    };
+    builder.onLocation(handler);
+    await builder.build()(context);
+    expect(handler).toBeCalledWith(context);
+  });
+
   it('should call handler when received location event', async () => {
     const { builder } = setup();
     const handler = jest.fn();
     const predicate = jest.fn(() => true);
     const context = {
       event: {
+        isMessage: true,
         isLocationMessage: true,
         message: {
           message_id: 666,
@@ -825,6 +1093,8 @@ describe('#onLocation', () => {
     const handler = jest.fn();
     const context = {
       event: {
+        isMessage: true,
+        isTextMessage: true,
         isLocationMessage: false,
         message: {
           text: 'wow',
@@ -843,6 +1113,7 @@ describe('#onLocation', () => {
     const predicate = jest.fn(() => Promise.resolve(false));
     const context = {
       event: {
+        isMessage: true,
         isLocationMessage: true,
         message: {
           message_id: 666,
@@ -868,12 +1139,38 @@ describe('#onVenue', () => {
     expect(await builder.onVenue(predicate, handler)).toBe(builder);
   });
 
+  it('should support catch all handler', async () => {
+    const { builder } = setup();
+    const handler = jest.fn();
+    const context = {
+      event: {
+        isMessage: true,
+        isVenueMessage: true,
+        message: {
+          message_id: 666,
+          venue: {
+            location: {
+              longitude: '111.111',
+              latitude: '99.99',
+            },
+            title: 'title',
+            address: 'addressssss',
+          },
+        },
+      },
+    };
+    builder.onVenue(handler);
+    await builder.build()(context);
+    expect(handler).toBeCalledWith(context);
+  });
+
   it('should call handler when received venue event', async () => {
     const { builder } = setup();
     const handler = jest.fn();
     const predicate = jest.fn(() => true);
     const context = {
       event: {
+        isMessage: true,
         isVenueMessage: true,
         message: {
           message_id: 666,
@@ -900,6 +1197,8 @@ describe('#onVenue', () => {
     const handler = jest.fn();
     const context = {
       event: {
+        isMessage: true,
+        isTextMessage: true,
         isVenueMessage: false,
         message: {
           text: 'wow',
@@ -918,6 +1217,7 @@ describe('#onVenue', () => {
     const predicate = jest.fn(() => Promise.resolve(false));
     const context = {
       event: {
+        isMessage: true,
         isVenueMessage: true,
         message: {
           message_id: 666,
