@@ -10,8 +10,26 @@ import Handler, {
 } from './Handler';
 
 export default class MessengerHandler extends Handler {
-  onPostback(predicate: Predicate, handler: FunctionalHandler | Builder) {
-    this.on(context => context.event.isPostback && predicate(context), handler);
+  onPostback(
+    ...args:
+      | [Predicate, FunctionalHandler | Builder]
+      | [FunctionalHandler | Builder]
+  ) {
+    // FIXME: Can't refine tuple union - https://github.com/facebook/flow/issues/2389
+    if (args.length < 2) {
+      const [handler]: [FunctionalHandler | Builder] = (args: any);
+      this.on(context => context.event.isPostback, handler);
+    } else {
+      const [predicate, handler]: [
+        Predicate,
+        FunctionalHandler | Builder,
+      ] = (args: any);
+      this.on(
+        context => context.event.isPostback && predicate(context),
+        handler
+      );
+    }
+
     return this;
   }
 
@@ -51,110 +69,342 @@ export default class MessengerHandler extends Handler {
     return this;
   }
 
-  onPayment(predicate: Predicate, handler: FunctionalHandler | Builder) {
-    this.on(context => context.event.isPayment && predicate(context), handler);
+  onPayment(
+    ...args:
+      | [Predicate, FunctionalHandler | Builder]
+      | [FunctionalHandler | Builder]
+  ) {
+    // FIXME: Can't refine tuple union - https://github.com/facebook/flow/issues/2389
+    if (args.length < 2) {
+      const [handler]: [FunctionalHandler | Builder] = (args: any);
+      this.on(context => context.event.isPayment, handler);
+    } else {
+      const [predicate, handler]: [
+        Predicate,
+        FunctionalHandler | Builder,
+      ] = (args: any);
+      this.on(
+        context => context.event.isPayment && predicate(context),
+        handler
+      );
+    }
+
     return this;
   }
 
-  onOptin(predicate: Predicate, handler: FunctionalHandler | Builder) {
-    this.on(context => context.event.isOptin && predicate(context), handler);
+  onOptin(
+    ...args:
+      | [Predicate, FunctionalHandler | Builder]
+      | [FunctionalHandler | Builder]
+  ) {
+    // FIXME: Can't refine tuple union - https://github.com/facebook/flow/issues/2389
+    if (args.length < 2) {
+      const [handler]: [FunctionalHandler | Builder] = (args: any);
+      this.on(context => context.event.isOptin, handler);
+    } else {
+      const [predicate, handler]: [
+        Predicate,
+        FunctionalHandler | Builder,
+      ] = (args: any);
+      this.on(context => context.event.isOptin && predicate(context), handler);
+    }
+
     return this;
   }
 
-  onCheckoutUpdate(predicate: Predicate, handler: FunctionalHandler | Builder) {
-    this.on(
-      context => context.event.isCheckoutUpdate && predicate(context),
-      handler
-    );
+  onCheckoutUpdate(
+    ...args:
+      | [Predicate, FunctionalHandler | Builder]
+      | [FunctionalHandler | Builder]
+  ) {
+    // FIXME: Can't refine tuple union - https://github.com/facebook/flow/issues/2389
+    if (args.length < 2) {
+      const [handler]: [FunctionalHandler | Builder] = (args: any);
+      this.on(context => context.event.isCheckoutUpdate, handler);
+    } else {
+      const [predicate, handler]: [
+        Predicate,
+        FunctionalHandler | Builder,
+      ] = (args: any);
+      this.on(
+        context => context.event.isCheckoutUpdate && predicate(context),
+        handler
+      );
+    }
+
     return this;
   }
 
-  onPreCheckout(predicate: Predicate, handler: FunctionalHandler | Builder) {
-    this.on(
-      context => context.event.isPreCheckout && predicate(context),
-      handler
-    );
+  onPreCheckout(
+    ...args:
+      | [Predicate, FunctionalHandler | Builder]
+      | [FunctionalHandler | Builder]
+  ) {
+    // FIXME: Can't refine tuple union - https://github.com/facebook/flow/issues/2389
+    if (args.length < 2) {
+      const [handler]: [FunctionalHandler | Builder] = (args: any);
+      this.on(context => context.event.isPreCheckout, handler);
+    } else {
+      const [predicate, handler]: [
+        Predicate,
+        FunctionalHandler | Builder,
+      ] = (args: any);
+      this.on(
+        context => context.event.isPreCheckout && predicate(context),
+        handler
+      );
+    }
+
     return this;
   }
 
-  onQuickReply(predicate: Predicate, handler: FunctionalHandler | Builder) {
-    this.onMessage(
-      context => !!context.event.message.quick_reply && predicate(context),
-      handler
-    );
+  onQuickReply(
+    ...args:
+      | [Predicate, FunctionalHandler | Builder]
+      | [FunctionalHandler | Builder]
+  ) {
+    // FIXME: Can't refine tuple union - https://github.com/facebook/flow/issues/2389
+    if (args.length < 2) {
+      const [handler]: [FunctionalHandler | Builder] = (args: any);
+      this.on(context => context.event.isQuickReply, handler);
+    } else {
+      const [predicate, handler]: [
+        Predicate,
+        FunctionalHandler | Builder,
+      ] = (args: any);
+      this.on(
+        context => context.event.isQuickReply && predicate(context),
+        handler
+      );
+    }
+
     return this;
   }
 
-  onEcho(predicate: Predicate, handler: FunctionalHandler | Builder) {
-    this.on(context => context.event.isEcho && predicate(context), handler);
+  onEcho(
+    ...args:
+      | [Predicate, FunctionalHandler | Builder]
+      | [FunctionalHandler | Builder]
+  ) {
+    // FIXME: Can't refine tuple union - https://github.com/facebook/flow/issues/2389
+    if (args.length < 2) {
+      const [handler]: [FunctionalHandler | Builder] = (args: any);
+      this.on(context => context.event.isEcho, handler);
+    } else {
+      const [predicate, handler]: [
+        Predicate,
+        FunctionalHandler | Builder,
+      ] = (args: any);
+      this.on(context => context.event.isEcho && predicate(context), handler);
+    }
+
     return this;
   }
 
-  onEchoText(pattern: Pattern, handler: FunctionalHandler | Builder) {
-    this.on(
-      context =>
-        context.event.isEcho &&
-        matchPattern(pattern, context.event.message.text), // FIXME
-      handler
-    );
+  onEchoText(
+    ...args:
+      | [Pattern, FunctionalHandler | Builder]
+      | [FunctionalHandler | Builder]
+  ) {
+    // FIXME: Can't refine tuple union - https://github.com/facebook/flow/issues/2389
+    if (args.length < 2) {
+      const [handler]: [FunctionalHandler | Builder] = (args: any);
+      this.onEcho(context => context.event.isTextMessage, handler);
+    } else {
+      const [pattern, handler]: [
+        Pattern,
+        FunctionalHandler | Builder,
+      ] = (args: any);
+      // FIXME
+      this.onEcho(
+        context =>
+          context.event.isTextMessage &&
+          matchPattern(pattern, context.event.message.text),
+        handler
+      );
+    }
+
     return this;
   }
 
-  onRead(predicate: Predicate, handler: FunctionalHandler | Builder) {
-    this.on(context => context.event.isRead && predicate(context), handler);
+  onRead(
+    ...args:
+      | [Predicate, FunctionalHandler | Builder]
+      | [FunctionalHandler | Builder]
+  ) {
+    // FIXME: Can't refine tuple union - https://github.com/facebook/flow/issues/2389
+    if (args.length < 2) {
+      const [handler]: [FunctionalHandler | Builder] = (args: any);
+      this.on(context => context.event.isRead, handler);
+    } else {
+      const [predicate, handler]: [
+        Predicate,
+        FunctionalHandler | Builder,
+      ] = (args: any);
+      this.on(context => context.event.isRead && predicate(context), handler);
+    }
+
     return this;
   }
 
-  onDelivery(predicate: Predicate, handler: FunctionalHandler | Builder) {
-    this.on(context => context.event.isDelivery && predicate(context), handler);
+  onDelivery(
+    ...args:
+      | [Predicate, FunctionalHandler | Builder]
+      | [FunctionalHandler | Builder]
+  ) {
+    // FIXME: Can't refine tuple union - https://github.com/facebook/flow/issues/2389
+    if (args.length < 2) {
+      const [handler]: [FunctionalHandler | Builder] = (args: any);
+      this.on(context => context.event.isDelivery, handler);
+    } else {
+      const [predicate, handler]: [
+        Predicate,
+        FunctionalHandler | Builder,
+      ] = (args: any);
+      this.on(
+        context => context.event.isDelivery && predicate(context),
+        handler
+      );
+    }
+
     return this;
   }
 
-  onLocation(predicate: Predicate, handler: FunctionalHandler | Builder) {
-    this.on(
-      context => context.event.isLocationMessage && predicate(context),
-      handler
-    );
+  onLocation(
+    ...args:
+      | [Predicate, FunctionalHandler | Builder]
+      | [FunctionalHandler | Builder]
+  ) {
+    // FIXME: Can't refine tuple union - https://github.com/facebook/flow/issues/2389
+    if (args.length < 2) {
+      const [handler]: [FunctionalHandler | Builder] = (args: any);
+      this.on(context => context.event.isLocationMessage, handler);
+    } else {
+      const [predicate, handler]: [
+        Predicate,
+        FunctionalHandler | Builder,
+      ] = (args: any);
+      this.on(
+        context => context.event.isLocationMessage && predicate(context),
+        handler
+      );
+    }
+
     return this;
   }
 
-  onImage(predicate: Predicate, handler: FunctionalHandler | Builder) {
-    this.on(
-      context => context.event.isImageMessage && predicate(context),
-      handler
-    );
+  onImage(
+    ...args:
+      | [Predicate, FunctionalHandler | Builder]
+      | [FunctionalHandler | Builder]
+  ) {
+    // FIXME: Can't refine tuple union - https://github.com/facebook/flow/issues/2389
+    if (args.length < 2) {
+      const [handler]: [FunctionalHandler | Builder] = (args: any);
+      this.on(context => context.event.isImageMessage, handler);
+    } else {
+      const [predicate, handler]: [
+        Predicate,
+        FunctionalHandler | Builder,
+      ] = (args: any);
+      this.on(
+        context => context.event.isImageMessage && predicate(context),
+        handler
+      );
+    }
+
     return this;
   }
 
-  onAudio(predicate: Predicate, handler: FunctionalHandler | Builder) {
-    this.on(
-      context => context.event.isAudioMessage && predicate(context),
-      handler
-    );
+  onAudio(
+    ...args:
+      | [Predicate, FunctionalHandler | Builder]
+      | [FunctionalHandler | Builder]
+  ) {
+    // FIXME: Can't refine tuple union - https://github.com/facebook/flow/issues/2389
+    if (args.length < 2) {
+      const [handler]: [FunctionalHandler | Builder] = (args: any);
+      this.on(context => context.event.isAudioMessage, handler);
+    } else {
+      const [predicate, handler]: [
+        Predicate,
+        FunctionalHandler | Builder,
+      ] = (args: any);
+      this.on(
+        context => context.event.isAudioMessage && predicate(context),
+        handler
+      );
+    }
+
     return this;
   }
 
-  onVideo(predicate: Predicate, handler: FunctionalHandler | Builder) {
-    this.on(
-      context => context.event.isVideoMessage && predicate(context),
-      handler
-    );
+  onVideo(
+    ...args:
+      | [Predicate, FunctionalHandler | Builder]
+      | [FunctionalHandler | Builder]
+  ) {
+    // FIXME: Can't refine tuple union - https://github.com/facebook/flow/issues/2389
+    if (args.length < 2) {
+      const [handler]: [FunctionalHandler | Builder] = (args: any);
+      this.on(context => context.event.isVideoMessage, handler);
+    } else {
+      const [predicate, handler]: [
+        Predicate,
+        FunctionalHandler | Builder,
+      ] = (args: any);
+      this.on(
+        context => context.event.isVideoMessage && predicate(context),
+        handler
+      );
+    }
+
     return this;
   }
 
-  onFile(predicate: Predicate, handler: FunctionalHandler | Builder) {
-    this.on(
-      context => context.event.isFileMessage && predicate(context),
-      handler
-    );
+  onFile(
+    ...args:
+      | [Predicate, FunctionalHandler | Builder]
+      | [FunctionalHandler | Builder]
+  ) {
+    // FIXME: Can't refine tuple union - https://github.com/facebook/flow/issues/2389
+    if (args.length < 2) {
+      const [handler]: [FunctionalHandler | Builder] = (args: any);
+      this.on(context => context.event.isFileMessage, handler);
+    } else {
+      const [predicate, handler]: [
+        Predicate,
+        FunctionalHandler | Builder,
+      ] = (args: any);
+      this.on(
+        context => context.event.isFileMessage && predicate(context),
+        handler
+      );
+    }
+
     return this;
   }
 
-  onFallback(predicate: Predicate, handler: FunctionalHandler | Builder) {
-    this.on(
-      context => context.event.isFallbackMessage && predicate(context),
-      handler
-    );
+  onFallback(
+    ...args:
+      | [Predicate, FunctionalHandler | Builder]
+      | [FunctionalHandler | Builder]
+  ) {
+    // FIXME: Can't refine tuple union - https://github.com/facebook/flow/issues/2389
+    if (args.length < 2) {
+      const [handler]: [FunctionalHandler | Builder] = (args: any);
+      this.on(context => context.event.isFallbackMessage, handler);
+    } else {
+      const [predicate, handler]: [
+        Predicate,
+        FunctionalHandler | Builder,
+      ] = (args: any);
+      this.on(
+        context => context.event.isFallbackMessage && predicate(context),
+        handler
+      );
+    }
+
     return this;
   }
 }
