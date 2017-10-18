@@ -14,6 +14,7 @@ type Options = {|
   client: MessengerClient,
   event: MessengerEvent,
   session: ?Session,
+  initialState: ?Object,
 |};
 
 class MessengerContext extends Context implements PlatformContext {
@@ -21,8 +22,8 @@ class MessengerContext extends Context implements PlatformContext {
   _event: MessengerEvent;
   _session: ?Session;
 
-  constructor({ client, event, session }: Options) {
-    super({ client, event, session });
+  constructor({ client, event, session, initialState }: Options) {
+    super({ client, event, session, initialState });
   }
 
   /**

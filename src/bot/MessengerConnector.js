@@ -195,14 +195,17 @@ export default class MessengerConnector
   createContext({
     event,
     session,
+    initialState,
   }: {
     event: MessengerEvent,
     session: ?Session,
+    initialState: Object,
   }): MessengerContext {
     return new MessengerContext({
       client: this._client,
       event,
       session,
+      initialState,
     });
   }
 

@@ -66,14 +66,17 @@ export default class ConsoleConnector implements Connector<ConsoleRequestBody> {
   createContext({
     event,
     session,
+    initialState,
   }: {
     event: ConsoleEvent,
     session: ?Session,
+    initialState: Object,
   }) {
     return new ConsoleContext({
       client: this._client,
       event,
       session,
+      initialState,
     });
   }
 }

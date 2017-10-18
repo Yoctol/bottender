@@ -14,6 +14,7 @@ type Options = {|
   client: SlackOAuthClient,
   event: SlackEvent,
   session: ?Session,
+  initialState: ?Object,
 |};
 
 export default class SlackContext extends Context implements PlatformContext {
@@ -21,8 +22,8 @@ export default class SlackContext extends Context implements PlatformContext {
   _event: SlackEvent;
   _session: ?Session;
 
-  constructor({ client, event, session }: Options) {
-    super({ client, event, session });
+  constructor({ client, event, session, initialState }: Options) {
+    super({ client, event, session, initialState });
   }
 
   /**

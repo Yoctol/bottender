@@ -174,14 +174,17 @@ export default class LineConnector implements Connector<LineRequestBody> {
   createContext({
     event,
     session,
+    initialState,
   }: {
     event: LineEvent,
     session: ?Session,
+    initialState: Object,
   }): LineContext {
     return new LineContext({
       client: this._client,
       event,
       session,
+      initialState,
     });
   }
 

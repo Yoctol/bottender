@@ -30,6 +30,8 @@ export default class Bot {
 
   _handler: ?FunctionalHandler;
 
+  _initialState: Object = {};
+
   _plugins: Array<Function> = [];
 
   _sync: boolean;
@@ -64,6 +66,11 @@ export default class Bot {
 
   onEvent(handler: FunctionalHandler | Builder): void {
     this._handler = handler.build ? handler.build() : handler;
+  }
+
+  setInitialState(initialState: Object) {
+    this._initialState = initialState;
+    return this;
   }
 
   use(fn: Function): Bot {
@@ -128,6 +135,7 @@ export default class Bot {
         this._connector.createContext({
           event,
           session: ((session: any): Session),
+          initialState: this._initialState,
         })
       );
 

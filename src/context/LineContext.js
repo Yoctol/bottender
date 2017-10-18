@@ -15,6 +15,7 @@ type Options = {|
   client: LineClient,
   event: LineEvent,
   session: ?Session,
+  initialState: ?Object,
 |};
 
 class LineContext extends Context implements PlatformContext {
@@ -24,8 +25,8 @@ class LineContext extends Context implements PlatformContext {
 
   _replied: boolean = false;
 
-  constructor({ client, event, session }: Options) {
-    super({ client, event, session });
+  constructor({ client, event, session, initialState }: Options) {
+    super({ client, event, session, initialState });
   }
 
   /**

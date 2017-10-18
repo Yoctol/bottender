@@ -160,14 +160,17 @@ export default class SlackConnector implements Connector<SlackRequestBody> {
   createContext({
     event,
     session,
+    initialState,
   }: {
     event: SlackEvent,
     session: ?Session,
+    initialState: Object,
   }): SlackContext {
     return new SlackContext({
       client: this._client,
       event,
       session,
+      initialState,
     });
   }
 }

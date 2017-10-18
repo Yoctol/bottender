@@ -10,5 +10,6 @@ export interface Connector<B> {
   createContext(params: {
     event: any,
     session: ?Session,
+    initialState: Object,
   }): any;
 }

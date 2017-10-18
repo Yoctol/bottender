@@ -272,3 +272,46 @@ describe('#use', () => {
     expect(monkeyPatchFn).toBeCalled();
   });
 });
+
+describe('#setInitialState', () => {
+  it('initialState should be pass to createContext', async () => {
+    const event = {};
+    const connector = {
+      platform: 'any',
+      getUniqueSessionKey: jest.fn(),
+      shouldSessionUpdate: jest.fn(),
+      updateSession: jest.fn(),
+      mapRequestToEvents: jest.fn(() => [event]),
+      createContext: jest.fn(() => ({ event, session: undefined })),
+    };
+
+    const { bot } = setup({ connector });
+
+    connector.getUniqueSessionKey.mockReturnValue('__id__');
+
+    bot.setInitialState({
+      a: 1,
+      b: {
+        x: 2,
+      },
+    });
+
+    bot.onEvent(() => {});
+
+    const requestHandler = bot.createRequestHandler();
+
+    const body = {};
+    await requestHandler(body);
+
+    expect(connector.createContext).toBeCalledWith(
+      expect.objectContaining({
+        initialState: {
+          a: 1,
+          b: {
+            x: 2,
+          },
+        },
+      })
+    );
+  });
+});
