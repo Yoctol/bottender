@@ -64,11 +64,12 @@ export default class Bot {
     return this._handler;
   }
 
-  onEvent(handler: FunctionalHandler | Builder): void {
+  onEvent(handler: FunctionalHandler | Builder): Bot {
     this._handler = handler.build ? handler.build() : handler;
+    return this;
   }
 
-  setInitialState(initialState: Object) {
+  setInitialState(initialState: Object): Bot {
     this._initialState = initialState;
     return this;
   }

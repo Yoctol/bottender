@@ -240,6 +240,22 @@ describe('#createRequestHandler', () => {
 });
 
 describe('#use', () => {
+  it('should return this', () => {
+    const event = {};
+    const connector = {
+      platform: 'any',
+      getUniqueSessionKey: jest.fn(),
+      shouldSessionUpdate: jest.fn(),
+      updateSession: jest.fn(),
+      mapRequestToEvents: jest.fn(() => [event]),
+      createContext: jest.fn(() => ({ event, session: undefined })),
+    };
+
+    const { bot } = setup({ connector });
+
+    expect(bot.use(() => {})).toBe(bot);
+  });
+
   it('can extend function to context', async () => {
     const event = {};
     const connector = {
@@ -273,7 +289,41 @@ describe('#use', () => {
   });
 });
 
+describe('#onEvent', () => {
+  it('should return this', () => {
+    const event = {};
+    const connector = {
+      platform: 'any',
+      getUniqueSessionKey: jest.fn(),
+      shouldSessionUpdate: jest.fn(),
+      updateSession: jest.fn(),
+      mapRequestToEvents: jest.fn(() => [event]),
+      createContext: jest.fn(() => ({ event, session: undefined })),
+    };
+
+    const { bot } = setup({ connector });
+
+    expect(bot.onEvent(() => {})).toBe(bot);
+  });
+});
+
 describe('#setInitialState', () => {
+  it('should return this', () => {
+    const event = {};
+    const connector = {
+      platform: 'any',
+      getUniqueSessionKey: jest.fn(),
+      shouldSessionUpdate: jest.fn(),
+      updateSession: jest.fn(),
+      mapRequestToEvents: jest.fn(() => [event]),
+      createContext: jest.fn(() => ({ event, session: undefined })),
+    };
+
+    const { bot } = setup({ connector });
+
+    expect(bot.setInitialState({})).toBe(bot);
+  });
+
   it('initialState should be pass to createContext', async () => {
     const event = {};
     const connector = {
