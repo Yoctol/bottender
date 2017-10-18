@@ -10,25 +10,70 @@ import Handler, {
 } from './Handler';
 
 export default class LineHandler extends Handler {
-  onPostback(predicate: Predicate, handler: FunctionalHandler | Builder) {
-    this.on(context => context.event.isPostback && predicate(context), handler);
+  onPostback(
+    ...args:
+      | [Predicate, FunctionalHandler | Builder]
+      | [FunctionalHandler | Builder]
+  ) {
+    // FIXME: Can't refine tuple union - https://github.com/facebook/flow/issues/2389
+    if (args.length < 2) {
+      const [handler]: [FunctionalHandler | Builder] = (args: any);
+      this.on(context => context.event.isPostback, handler);
+    } else {
+      const [predicate, handler]: [
+        Predicate,
+        FunctionalHandler | Builder,
+      ] = (args: any);
+      this.on(
+        context => context.event.isPostback && predicate(context),
+        handler
+      );
+    }
+
     return this;
   }
 
   onPayload(
-    arg1: Pattern | FunctionalHandler | Builder,
-    arg2?: FunctionalHandler | Builder
+    ...args:
+      | [Pattern, FunctionalHandler | Builder]
+      | [FunctionalHandler | Builder]
   ) {
-    let pattern;
-    let handler;
-    if (arg2) {
-      pattern = ((arg1: any): Pattern);
-      handler = (arg2: FunctionalHandler | Builder);
+    // FIXME: Can't refine tuple union - https://github.com/facebook/flow/issues/2389
+    if (args.length < 2) {
+      const [handler]: [FunctionalHandler | Builder] = (args: any);
+
+      this.on(context => context.event.isPostback, handler);
+    } else {
+      // eslint-disable-next-line prefer-const
+      let [pattern, handler]: [
+        Pattern,
+        FunctionalHandler | Builder,
+      ] = (args: any);
+
+      if (handler.build) {
+        handler = handler.build();
+      }
 
       warning(
         typeof pattern === 'string' || pattern instanceof RegExp,
         `'onPayload' only accepts string or regex, but received ${typeof pattern}`
       );
+
+      if (pattern instanceof RegExp) {
+        const _handler = handler;
+        handler = context => {
+          // $FlowFixMe
+          const match = pattern.exec(context.event.postback.data);
+
+          if (!match) return _handler(context);
+
+          // reset index so we start at the beginning of the regex each time
+          // $FlowFixMe
+          pattern.lastIndex = 0;
+
+          return _handler(context, match);
+        };
+      }
 
       this.on(
         context =>
@@ -36,40 +81,114 @@ export default class LineHandler extends Handler {
           matchPattern(pattern, context.event.postback.data),
         handler
       );
-    } else {
-      handler = ((arg1: any): FunctionalHandler | Builder);
-
-      this.on(context => context.event.isPostback, handler);
     }
 
     return this;
   }
 
   // account is added as a friend (or unblocked).
-  onFollow(handler: FunctionalHandler | Builder) {
-    this.on(context => context.event.isFollow, handler);
+  onFollow(
+    ...args:
+      | [Predicate, FunctionalHandler | Builder]
+      | [FunctionalHandler | Builder]
+  ) {
+    // FIXME: Can't refine tuple union - https://github.com/facebook/flow/issues/2389
+    if (args.length < 2) {
+      const [handler]: [FunctionalHandler | Builder] = (args: any);
+      this.on(context => context.event.isFollow, handler);
+    } else {
+      const [predicate, handler]: [
+        Predicate,
+        FunctionalHandler | Builder,
+      ] = (args: any);
+      this.on(context => context.event.isFollow && predicate(context), handler);
+    }
+
     return this;
   }
 
-  onUnfollow(handler: FunctionalHandler | Builder) {
-    this.on(context => context.event.isUnfollow, handler);
+  onUnfollow(
+    ...args:
+      | [Predicate, FunctionalHandler | Builder]
+      | [FunctionalHandler | Builder]
+  ) {
+    // FIXME: Can't refine tuple union - https://github.com/facebook/flow/issues/2389
+    if (args.length < 2) {
+      const [handler]: [FunctionalHandler | Builder] = (args: any);
+      this.on(context => context.event.isUnfollow, handler);
+    } else {
+      const [predicate, handler]: [
+        Predicate,
+        FunctionalHandler | Builder,
+      ] = (args: any);
+      this.on(
+        context => context.event.isUnfollow && predicate(context),
+        handler
+      );
+    }
+
     return this;
   }
 
   // account joins a group or talk room.
-  onJoin(handler: FunctionalHandler | Builder) {
-    this.on(context => context.event.isJoin, handler);
+  onJoin(
+    ...args:
+      | [Predicate, FunctionalHandler | Builder]
+      | [FunctionalHandler | Builder]
+  ) {
+    // FIXME: Can't refine tuple union - https://github.com/facebook/flow/issues/2389
+    if (args.length < 2) {
+      const [handler]: [FunctionalHandler | Builder] = (args: any);
+      this.on(context => context.event.isJoin, handler);
+    } else {
+      const [predicate, handler]: [
+        Predicate,
+        FunctionalHandler | Builder,
+      ] = (args: any);
+      this.on(context => context.event.isJoin && predicate(context), handler);
+    }
+
     return this;
   }
 
   // account leaves a group.
-  onLeave(handler: FunctionalHandler | Builder) {
-    this.on(context => context.event.isLeave, handler);
+  onLeave(
+    ...args:
+      | [Predicate, FunctionalHandler | Builder]
+      | [FunctionalHandler | Builder]
+  ) {
+    // FIXME: Can't refine tuple union - https://github.com/facebook/flow/issues/2389
+    if (args.length < 2) {
+      const [handler]: [FunctionalHandler | Builder] = (args: any);
+      this.on(context => context.event.isLeave, handler);
+    } else {
+      const [predicate, handler]: [
+        Predicate,
+        FunctionalHandler | Builder,
+      ] = (args: any);
+      this.on(context => context.event.isLeave && predicate(context), handler);
+    }
+
     return this;
   }
 
-  onBeacon(predicate: Predicate, handler: FunctionalHandler | Builder) {
-    this.on(context => context.event.isBeacon && predicate(context), handler);
+  onBeacon(
+    ...args:
+      | [Predicate, FunctionalHandler | Builder]
+      | [FunctionalHandler | Builder]
+  ) {
+    // FIXME: Can't refine tuple union - https://github.com/facebook/flow/issues/2389
+    if (args.length < 2) {
+      const [handler]: [FunctionalHandler | Builder] = (args: any);
+      this.on(context => context.event.isBeacon, handler);
+    } else {
+      const [predicate, handler]: [
+        Predicate,
+        FunctionalHandler | Builder,
+      ] = (args: any);
+      this.on(context => context.event.isBeacon && predicate(context), handler);
+    }
+
     return this;
   }
 }

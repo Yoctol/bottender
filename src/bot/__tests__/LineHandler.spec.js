@@ -23,6 +23,19 @@ describe('#onPostback', () => {
     expect(await builder.onPostback(predicate, handler)).toBe(builder);
   });
 
+  it('should support catch all handler', async () => {
+    const { builder } = setup();
+    const handler = jest.fn();
+    const context = {
+      event: {
+        isPostback: true,
+      },
+    };
+    builder.onPostback(handler);
+    await builder.build()(context);
+    expect(handler).toBeCalledWith(context);
+  });
+
   it('should call predicate when received postback', async () => {
     const { builder } = setup();
     const predicate = jest.fn(() => true);
@@ -134,9 +147,14 @@ describe('#onPayload', () => {
         },
       },
     };
+
+    const match = ['cool'];
+    match.index = 0;
+    match.input = 'cool';
+
     builder.onPayload(/COOL/i, handler);
     await builder.build()(context);
-    expect(handler).toBeCalledWith(context);
+    expect(handler).toBeCalledWith(context, match);
   });
 });
 
@@ -147,7 +165,7 @@ describe('#onFollow', () => {
     expect(await builder.onFollow('payload', handler)).toBe(builder);
   });
 
-  it('should call predicate when received follow event', async () => {
+  it('should support catch all handler', async () => {
     const { builder } = setup();
     const handler = jest.fn();
     const context = {
@@ -161,6 +179,25 @@ describe('#onFollow', () => {
     };
     builder.onFollow(handler);
     await builder.build()(context);
+    expect(handler).toBeCalledWith(context);
+  });
+
+  it('should call predicate when received follow event', async () => {
+    const { builder } = setup();
+    const predicate = jest.fn(() => true);
+    const handler = jest.fn();
+    const context = {
+      event: {
+        isFollow: true,
+        source: {
+          type: 'user',
+          userId: 'U206d25c2ea6bd87c17655609a1c37cb8',
+        },
+      },
+    };
+    builder.onFollow(predicate, handler);
+    await builder.build()(context);
+    expect(predicate).toBeCalledWith(context);
     expect(handler).toBeCalledWith(context);
   });
 
@@ -185,7 +222,7 @@ describe('#onUnfollow', () => {
     expect(await builder.onUnfollow('payload', handler)).toBe(builder);
   });
 
-  it('should call predicate when received onUnfollow event', async () => {
+  it('should support catch all handler', async () => {
     const { builder } = setup();
     const handler = jest.fn();
     const context = {
@@ -199,6 +236,25 @@ describe('#onUnfollow', () => {
     };
     builder.onUnfollow(handler);
     await builder.build()(context);
+    expect(handler).toBeCalledWith(context);
+  });
+
+  it('should call predicate when received onUnfollow event', async () => {
+    const { builder } = setup();
+    const predicate = jest.fn(() => true);
+    const handler = jest.fn();
+    const context = {
+      event: {
+        isUnfollow: true,
+        source: {
+          type: 'user',
+          userId: 'U206d25c2ea6bd87c17655609a1c37cb8',
+        },
+      },
+    };
+    builder.onUnfollow(predicate, handler);
+    await builder.build()(context);
+    expect(predicate).toBeCalledWith(context);
     expect(handler).toBeCalledWith(context);
   });
 
@@ -223,7 +279,7 @@ describe('#onJoin', () => {
     expect(await builder.onJoin('payload', handler)).toBe(builder);
   });
 
-  it('should call predicate when received onJoin event', async () => {
+  it('should support catch all handler', async () => {
     const { builder } = setup();
     const handler = jest.fn();
     const context = {
@@ -237,6 +293,25 @@ describe('#onJoin', () => {
     };
     builder.onJoin(handler);
     await builder.build()(context);
+    expect(handler).toBeCalledWith(context);
+  });
+
+  it('should call predicate when received onJoin event', async () => {
+    const { builder } = setup();
+    const predicate = jest.fn(() => true);
+    const handler = jest.fn();
+    const context = {
+      event: {
+        isJoin: true,
+        source: {
+          type: 'group',
+          groupId: 'cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+        },
+      },
+    };
+    builder.onJoin(predicate, handler);
+    await builder.build()(context);
+    expect(predicate).toBeCalledWith(context);
     expect(handler).toBeCalledWith(context);
   });
 
@@ -261,7 +336,7 @@ describe('#onLeave', () => {
     expect(await builder.onLeave('payload', handler)).toBe(builder);
   });
 
-  it('should call predicate when received onLeave event', async () => {
+  it('should support catch all handler', async () => {
     const { builder } = setup();
     const handler = jest.fn();
     const context = {
@@ -275,6 +350,25 @@ describe('#onLeave', () => {
     };
     builder.onLeave(handler);
     await builder.build()(context);
+    expect(handler).toBeCalledWith(context);
+  });
+
+  it('should call predicate when received onLeave event', async () => {
+    const { builder } = setup();
+    const predicate = jest.fn(() => true);
+    const handler = jest.fn();
+    const context = {
+      event: {
+        isLeave: true,
+        source: {
+          type: 'group',
+          groupId: 'cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+        },
+      },
+    };
+    builder.onLeave(predicate, handler);
+    await builder.build()(context);
+    expect(predicate).toBeCalledWith(context);
     expect(handler).toBeCalledWith(context);
   });
 
@@ -299,10 +393,27 @@ describe('#onBeacon', () => {
     expect(await builder.onBeacon('payload', handler)).toBe(builder);
   });
 
-  it('should call predicate when received onBeacon event', async () => {
+  it('should support catch all handler', async () => {
     const { builder } = setup();
     const handler = jest.fn();
+    const context = {
+      event: {
+        isBeacon: true,
+        source: {
+          type: 'group',
+          groupId: 'cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+        },
+      },
+    };
+    builder.onBeacon(handler);
+    await builder.build()(context);
+    expect(handler).toBeCalledWith(context);
+  });
+
+  it('should call predicate when received onBeacon event', async () => {
+    const { builder } = setup();
     const predicate = jest.fn(() => true);
+    const handler = jest.fn();
     const context = {
       event: {
         isBeacon: true,
