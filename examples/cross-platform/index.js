@@ -8,14 +8,13 @@ const {
   TelegramBot,
   SlackBot,
 } = require('toolbot-core-experiment');
-
 const {
   createMiddleware,
   verifyLineSignature,
   verifyMessengerSignature,
   verifyMessengerWebhook,
   verifySlackWebhook,
-} = require('../../src/express');
+} = require('toolbot-core-experiment/express');
 
 const handler = require('./handler');
 

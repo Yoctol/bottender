@@ -44,10 +44,8 @@ Run your server and talk to the Telegram bot. It works!
 Here is the complete code for [telegram-hello-world](https://github.com/Yoctol/toolbot-core-experiment/tree/master/examples/telegram-hello-world/index.js)
 
 ```js
-require('babel-register');
-
-const { TelegramBot } = require('../../src');
-const { createServer } = require('../../src/express');
+const { TelegramBot } = require('toolbot-core-experiment');
+const { createServer } = require('toolbot-core-experiment/express');
 
 const url = '__FILL_URL_HERE__';
 
