@@ -88,6 +88,14 @@ export default class LineEvent implements Event {
   }
 
   /**
+   * The source object from LINE raw event.
+   *
+   */
+  get source(): ?Source {
+    return this._rawEvent.source || null;
+  }
+
+  /**
    * Determine if the event is a message event.
    *
    */
@@ -100,7 +108,7 @@ export default class LineEvent implements Event {
    *
    */
   get message(): ?Message {
-    return this._rawEvent.message;
+    return this._rawEvent.message || null;
   }
 
   /**
@@ -160,11 +168,33 @@ export default class LineEvent implements Event {
   }
 
   /**
+   * The source object from LINE raw event.
+   *
+   */
+  get follow(): ?Source {
+    if (this.isFollow) {
+      return this.source;
+    }
+    return null;
+  }
+
+  /**
    * Determine if the event is an unfollow event.
    *
    */
   get isUnfollow(): boolean {
     return this._rawEvent.type === 'unfollow';
+  }
+
+  /**
+   * The source object from LINE raw event.
+   *
+   */
+  get unfollow(): ?Source {
+    if (this.isUnfollow) {
+      return this.source;
+    }
+    return null;
   }
 
   /**
@@ -176,11 +206,33 @@ export default class LineEvent implements Event {
   }
 
   /**
+   * The source object from LINE raw event.
+   *
+   */
+  get join(): ?Source {
+    if (this.isJoin) {
+      return this.source;
+    }
+    return null;
+  }
+
+  /**
    * Determine if the event is a leave event.
    *
    */
   get isLeave(): boolean {
     return this._rawEvent.type === 'leave';
+  }
+
+  /**
+   * The source object from LINE raw event.
+   *
+   */
+  get leave(): ?Source {
+    if (this.isLeave) {
+      return this.source;
+    }
+    return null;
   }
 
   /**
