@@ -126,6 +126,10 @@
     "setupFiles": [
       "./test/setupJest.js"
     ],
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/examples/"
+    ],
     "testResultsProcessor": "./node_modules/jest-junit",
     "transformIgnorePatterns": [
       "/node_modules/"
