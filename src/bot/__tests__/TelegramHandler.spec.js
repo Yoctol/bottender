@@ -15,6 +15,99 @@ describe('#constructor', () => {
   });
 });
 
+describe('#onCallbackQuery', () => {
+  it('should return this', async () => {
+    const { builder } = setup();
+    const handler = () => {};
+    const predicate = jest.fn(() => true);
+    expect(await builder.onCallbackQuery(predicate, handler)).toBe(builder);
+  });
+
+  it('should support catch all handler', async () => {
+    const { builder } = setup();
+    const handler = jest.fn();
+    const context = {
+      event: {
+        isMessage: false,
+        isCallbackQuery: true,
+        callbackQuery: {
+          message: {
+            text: 'awesome',
+          },
+          data: 'data',
+        },
+      },
+    };
+    builder.onCallbackQuery(handler);
+    await builder.build()(context);
+    expect(handler).toBeCalledWith(context);
+  });
+
+  it('should call handler when received photo event', async () => {
+    const { builder } = setup();
+    const handler = jest.fn();
+    const predicate = jest.fn(() => true);
+    const context = {
+      event: {
+        isMessage: false,
+        isCallbackQuery: true,
+        callbackQuery: {
+          message: {
+            text: 'awesome',
+          },
+          data: 'data',
+        },
+      },
+    };
+    builder.onCallbackQuery(predicate, handler);
+    await builder.build()(context);
+    expect(predicate).toBeCalledWith(context);
+    expect(handler).toBeCalledWith(context);
+  });
+
+  it('should not call handler when received not photo event', async () => {
+    const { builder } = setup();
+    const predicate = jest.fn(() => true);
+    const handler = jest.fn();
+    const context = {
+      event: {
+        isMessage: true,
+        isTextMessage: true,
+        isPhotoMessage: false,
+        message: {
+          text: 'wow',
+        },
+      },
+    };
+    builder.onCallbackQuery(predicate, handler);
+    await builder.build()(context);
+    expect(predicate).not.toBeCalled();
+    expect(handler).not.toBeCalled();
+  });
+
+  it('should accept async predicate', async () => {
+    const { builder } = setup();
+    const handler = jest.fn();
+    const predicate = jest.fn(() => Promise.resolve(false));
+    const context = {
+      event: {
+        isMessage: false,
+        isCallbackQuery: true,
+        callbackQuery: {
+          message: {
+            text: 'awesome',
+          },
+          data: 'data',
+        },
+      },
+    };
+    builder.onCallbackQuery(predicate, handler);
+    await builder.build()(context);
+    expect(predicate).toBeCalledWith(context);
+    expect(handler).not.toBeCalled();
+  });
+});
+
 describe('#onPayload', () => {
   const contextWithCallbackQuery = {
     event: {
@@ -179,6 +272,8 @@ describe('#onPhoto', () => {
     const handler = jest.fn();
     const context = {
       event: {
+        isMessage: true,
+        isTextMessage: true,
         isPhotoMessage: false,
         message: {
           text: 'wow',
