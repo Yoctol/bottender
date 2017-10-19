@@ -111,7 +111,7 @@ describe('#sendText', () => {
 
     await context.sendText('xxx.com');
 
-    expect(context.handled).toBe(true);
+    expect(context.isHandled).toBe(true);
   });
 });
 
@@ -146,7 +146,7 @@ describe('#sendAttachment', () => {
       },
     });
 
-    expect(context.handled).toBe(true);
+    expect(context.isHandled).toBe(true);
   });
 });
 
@@ -164,7 +164,7 @@ describe('#sendImage', () => {
 
     await context.sendImage('xxx.com');
 
-    expect(context.handled).toBe(true);
+    expect(context.isHandled).toBe(true);
   });
 });
 
@@ -182,7 +182,7 @@ describe('#sendAudio', () => {
 
     await context.sendAudio('xxx.com');
 
-    expect(context.handled).toBe(true);
+    expect(context.isHandled).toBe(true);
   });
 });
 
@@ -200,7 +200,7 @@ describe('#sendVideo', () => {
 
     await context.sendVideo('xxx.com');
 
-    expect(context.handled).toBe(true);
+    expect(context.isHandled).toBe(true);
   });
 });
 
@@ -218,7 +218,7 @@ describe('#sendFile', () => {
 
     await context.sendFile('xxx.com');
 
-    expect(context.handled).toBe(true);
+    expect(context.isHandled).toBe(true);
   });
 });
 
@@ -244,7 +244,7 @@ describe('#sendQuickReplies', () => {
 
     await context.sendQuickReplies({ text: 'xxx.com' }, quickReplies);
 
-    expect(context.handled).toBe(true);
+    expect(context.isHandled).toBe(true);
   });
 });
 
@@ -274,7 +274,7 @@ describe('#sendGenericTemplate', () => {
 
     await context.sendGenericTemplate(elements, { image_aspect_ratio: ratio });
 
-    expect(context.handled).toBe(true);
+    expect(context.isHandled).toBe(true);
   });
 });
 
@@ -300,7 +300,7 @@ describe('#sendButtonTemplate', () => {
 
     await context.sendButtonTemplate('yayaya', buttons);
 
-    expect(context.handled).toBe(true);
+    expect(context.isHandled).toBe(true);
   });
 });
 
@@ -329,7 +329,7 @@ describe('#sendListTemplate', () => {
 
     await context.sendListTemplate(elements, buttons, 'large');
 
-    expect(context.handled).toBe(true);
+    expect(context.isHandled).toBe(true);
   });
 });
 
@@ -351,7 +351,7 @@ describe('#sendReceiptTemplate', () => {
 
     await context.sendReceiptTemplate(receipt);
 
-    expect(context.handled).toBe(true);
+    expect(context.isHandled).toBe(true);
   });
 });
 
@@ -376,7 +376,7 @@ describe('#sendAirlineBoardingPassTemplate', () => {
 
     await context.sendAirlineBoardingPassTemplate(boardingPass);
 
-    expect(context.handled).toBe(true);
+    expect(context.isHandled).toBe(true);
   });
 });
 
@@ -401,7 +401,7 @@ describe('#sendAirlineCheckinTemplate', () => {
 
     await context.sendAirlineCheckinTemplate(checkin);
 
-    expect(context.handled).toBe(true);
+    expect(context.isHandled).toBe(true);
   });
 });
 
@@ -426,7 +426,7 @@ describe('#sendAirlineItineraryTemplate', () => {
 
     await context.sendAirlineItineraryTemplate(itinerary);
 
-    expect(context.handled).toBe(true);
+    expect(context.isHandled).toBe(true);
   });
 });
 
@@ -451,7 +451,7 @@ describe('#sendAirlineFlightUpdateTemplate', () => {
 
     await context.sendAirlineFlightUpdateTemplate(flightUpdate);
 
-    expect(context.handled).toBe(true);
+    expect(context.isHandled).toBe(true);
   });
 });
 
@@ -469,7 +469,7 @@ describe('#typingOn', () => {
 
     await context.typingOn();
 
-    expect(context.handled).toBe(true);
+    expect(context.isHandled).toBe(true);
   });
 });
 
@@ -487,7 +487,7 @@ describe('#typingOff', () => {
 
     await context.typingOff();
 
-    expect(context.handled).toBe(true);
+    expect(context.isHandled).toBe(true);
   });
 });
 
@@ -505,7 +505,7 @@ describe('#markSeen', () => {
 
     await context.markSeen();
 
-    expect(context.handled).toBe(true);
+    expect(context.isHandled).toBe(true);
   });
 });
 

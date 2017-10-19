@@ -387,7 +387,7 @@ describe('#onUnhandled', () => {
     const rootHandler = builder.onUnhandled(handler).build();
 
     const context = {
-      handled: false,
+      isHandled: false,
     };
 
     await rootHandler(context);
@@ -402,7 +402,7 @@ describe('#onUnhandled', () => {
     const rootHandler = builder.onUnhandled(handler).build();
 
     const context = {
-      handled: true,
+      isHandled: true,
     };
 
     await rootHandler(context);

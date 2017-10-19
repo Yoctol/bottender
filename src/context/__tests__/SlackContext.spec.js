@@ -88,7 +88,7 @@ describe('#sendText', () => {
 
     await context.postMessage('xxx.com');
 
-    expect(context.handled).toBe(true);
+    expect(context.isHandled).toBe(true);
   });
 });
 

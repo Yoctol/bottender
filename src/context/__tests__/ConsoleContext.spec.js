@@ -81,7 +81,7 @@ describe('#sendText', () => {
 
     await context.sendText('hello');
 
-    expect(context.handled).toBe(true);
+    expect(context.isHandled).toBe(true);
   });
 });
 

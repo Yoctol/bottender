@@ -16,7 +16,7 @@ type Response = {
 };
 
 export default class Context {
-  _handled = false;
+  _isHandled = false;
 
   _client: Object;
   _event: Object;
@@ -66,8 +66,8 @@ export default class Context {
     return this._session;
   }
 
-  get handled(): boolean {
-    return this._handled;
+  get isHandled(): boolean {
+    return this._isHandled;
   }
 
   /**

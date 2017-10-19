@@ -57,7 +57,7 @@ class TelegramContext extends Context implements PlatformContext {
       return;
     }
 
-    this._handled = true;
+    this._isHandled = true;
 
     return this._client.sendMessage(this._session.user.id, text);
   }
@@ -92,7 +92,7 @@ sendMethods.forEach(method => {
         return;
       }
 
-      this._handled = true;
+      this._isHandled = true;
 
       return this._client[method](this._session.user.id, ...args);
     },

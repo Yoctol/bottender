@@ -107,7 +107,7 @@ describe('#reply', () => {
 
     await context.replyText('hello');
 
-    expect(context.handled).toBe(true);
+    expect(context.isHandled).toBe(true);
   });
 });
 
@@ -145,7 +145,7 @@ describe('#sendText', () => {
 
     await context.sendText('xxx.com');
 
-    expect(context.handled).toBe(true);
+    expect(context.isHandled).toBe(true);
   });
 });
 
@@ -195,7 +195,7 @@ describe('#sendImage', () => {
 
     await context.sendImage('xxx.jpg', 'yyy.jpg');
 
-    expect(context.handled).toBe(true);
+    expect(context.isHandled).toBe(true);
   });
 });
 
@@ -237,7 +237,7 @@ describe('#sendAudio', () => {
 
     await context.sendAudio('xxx.mp3', 240000);
 
-    expect(context.handled).toBe(true);
+    expect(context.isHandled).toBe(true);
   });
 });
 
@@ -287,7 +287,7 @@ describe('#sendVideo', () => {
 
     await context.sendVideo('xxx.mp4', 'yyy.jpg');
 
-    expect(context.handled).toBe(true);
+    expect(context.isHandled).toBe(true);
   });
 });
 
@@ -360,7 +360,7 @@ describe('#sendLocation', () => {
       longitude: 139.70372892916203,
     });
 
-    expect(context.handled).toBe(true);
+    expect(context.isHandled).toBe(true);
   });
 });
 
@@ -398,7 +398,7 @@ describe('#sendSticker', () => {
 
     await context.sendSticker('1', '1');
 
-    expect(context.handled).toBe(true);
+    expect(context.isHandled).toBe(true);
   });
 });
 
@@ -476,7 +476,7 @@ describe('#sendImagemap', () => {
 
     await context.sendImagemap('this is an imagemap', template);
 
-    expect(context.handled).toBe(true);
+    expect(context.isHandled).toBe(true);
   });
 });
 
@@ -549,7 +549,7 @@ describe('#sendButtonTemplate', () => {
 
     await context.sendButtonTemplate('this is a button template', template);
 
-    expect(context.handled).toBe(true);
+    expect(context.isHandled).toBe(true);
   });
 });
 
@@ -615,7 +615,7 @@ describe('#sendConfirmTemplate', () => {
 
     await context.sendConfirmTemplate('this is a confirm template', template);
 
-    expect(context.handled).toBe(true);
+    expect(context.isHandled).toBe(true);
   });
 });
 
@@ -712,7 +712,7 @@ describe('#sendCarouselTemplate', () => {
 
     await context.sendCarouselTemplate('this is a carousel template', template);
 
-    expect(context.handled).toBe(true);
+    expect(context.isHandled).toBe(true);
   });
 });
 

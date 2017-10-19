@@ -23,7 +23,7 @@ class LineContext extends Context implements PlatformContext {
   _event: LineEvent;
   _session: ?Session;
 
-  _replied: boolean = false;
+  _isReplied: boolean = false;
 
   constructor({ client, event, session, initialState }: Options) {
     super({ client, event, session, initialState });
@@ -41,8 +41,8 @@ class LineContext extends Context implements PlatformContext {
    * Determine if the reply token is already used.
    *
    */
-  get replied(): boolean {
-    return this._replied;
+  get isReplied(): boolean {
+    return this._isReplied;
   }
 
   /**
@@ -68,7 +68,7 @@ class LineContext extends Context implements PlatformContext {
       return;
     }
 
-    this._handled = true;
+    this._isHandled = true;
     const { type } = this._session;
     return this._client.pushText(this._session[type].id, text);
   }
@@ -93,10 +93,10 @@ types.forEach(type => {
     configurable: true,
     writable: true,
     async value(...args) {
-      invariant(!this._replied, 'Can not reply event mulitple times');
+      invariant(!this._isReplied, 'Can not reply event mulitple times');
 
-      this._replied = true;
-      this._handled = true;
+      this._isReplied = true;
+      this._isHandled = true;
 
       return this._client[`reply${type}`](this._event.replyToken, ...args);
     },
@@ -115,7 +115,7 @@ types.forEach(type => {
         return;
       }
 
-      this._handled = true;
+      this._isHandled = true;
       const sessionType = this._session.type;
       return this._client[`push${type}`](
         this._session[sessionType].id,
@@ -139,7 +139,7 @@ types.filter(type => type !== 'Text').forEach(type => {
         return;
       }
 
-      this._handled = true;
+      this._isHandled = true;
       const sessionType = this._session.type;
       return this._client[`push${type}`](
         this._session[sessionType].id,

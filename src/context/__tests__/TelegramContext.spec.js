@@ -105,7 +105,7 @@ describe('#sendMessage', () => {
 
     await context.sendMessage('xxx.com');
 
-    expect(context.handled).toBe(true);
+    expect(context.isHandled).toBe(true);
   });
 });
 
@@ -123,7 +123,7 @@ describe('#sendPhoto', () => {
 
     await context.sendPhoto('xxx.png');
 
-    expect(context.handled).toBe(true);
+    expect(context.isHandled).toBe(true);
   });
 });
 
@@ -141,7 +141,7 @@ describe('#sendAudio', () => {
 
     await context.sendAudio('xxx.mp3');
 
-    expect(context.handled).toBe(true);
+    expect(context.isHandled).toBe(true);
   });
 });
 
@@ -159,7 +159,7 @@ describe('#sendDocument', () => {
 
     await context.sendDocument('xxx.gif');
 
-    expect(context.handled).toBe(true);
+    expect(context.isHandled).toBe(true);
   });
 });
 
@@ -180,7 +180,7 @@ describe('#sendSticker', () => {
 
     await context.sendSticker('CAADAgADQAADyIsGAAE7MpzFPFQX5QI');
 
-    expect(context.handled).toBe(true);
+    expect(context.isHandled).toBe(true);
   });
 });
 
@@ -198,7 +198,7 @@ describe('#sendVideo', () => {
 
     await context.sendVideo('xxx.mp4');
 
-    expect(context.handled).toBe(true);
+    expect(context.isHandled).toBe(true);
   });
 });
 
@@ -216,7 +216,7 @@ describe('#sendVoice', () => {
 
     await context.sendVoice('xxx.ogg');
 
-    expect(context.handled).toBe(true);
+    expect(context.isHandled).toBe(true);
   });
 });
 
@@ -238,7 +238,7 @@ describe('#sendLocation', () => {
 
     await context.sendLocation(location);
 
-    expect(context.handled).toBe(true);
+    expect(context.isHandled).toBe(true);
   });
 });
 
@@ -260,7 +260,7 @@ describe('#sendVenue', () => {
 
     await context.sendVenue(venue);
 
-    expect(context.handled).toBe(true);
+    expect(context.isHandled).toBe(true);
   });
 });
 
@@ -282,7 +282,7 @@ describe('#sendContact', () => {
 
     await context.sendContact(contact);
 
-    expect(context.handled).toBe(true);
+    expect(context.isHandled).toBe(true);
   });
 });
 
@@ -300,7 +300,7 @@ describe('#sendChatAction', () => {
 
     await context.sendChatAction('typing');
 
-    expect(context.handled).toBe(true);
+    expect(context.isHandled).toBe(true);
   });
 });
 
