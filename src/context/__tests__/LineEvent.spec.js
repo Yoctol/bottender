@@ -448,3 +448,16 @@ it('#isBeacon', () => {
   expect(new LineEvent(postback).isBeacon).toEqual(false);
   expect(new LineEvent(beacon).isBeacon).toEqual(true);
 });
+
+it('#beacon', () => {
+  expect(new LineEvent(textMessage).beacon).toEqual(null);
+  expect(new LineEvent(follow).beacon).toEqual(null);
+  expect(new LineEvent(unfollow).beacon).toEqual(null);
+  expect(new LineEvent(join).beacon).toEqual(null);
+  expect(new LineEvent(leave).beacon).toEqual(null);
+  expect(new LineEvent(postback).beacon).toEqual(null);
+  expect(new LineEvent(beacon).beacon).toEqual({
+    hwid: 'd41d8cd98f',
+    type: 'enter',
+  });
+});
