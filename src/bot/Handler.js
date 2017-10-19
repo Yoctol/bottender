@@ -46,6 +46,7 @@ export function matchPattern(pattern: Pattern, text: string): boolean {
 export default class Handler {
   _handlers: Array<PredicateHandler> = [];
   _errorHandler: ?FunctionalHandler = null;
+  _unhandledHandler: ?FunctionalHandler = null;
 
   on(predicate: Predicate, handler: FunctionalHandler | Builder) {
     this._handlers.push({
@@ -137,7 +138,7 @@ export default class Handler {
   }
 
   onUnhandled(handler: FunctionalHandler | Builder) {
-    this.on(context => !context.isHandled, handler);
+    this._unhandledHandler = handler.build ? handler.build() : handler;
     return this;
   }
 
@@ -160,6 +161,9 @@ export default class Handler {
             await handler(context);
             break;
           }
+        }
+        if (this._unhandledHandler && !context.isHandled) {
+          await this._unhandledHandler(context);
         }
       } catch (err) {
         if (this._errorHandler) {

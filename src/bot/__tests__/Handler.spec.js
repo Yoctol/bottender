@@ -384,7 +384,10 @@ describe('#onUnhandled', () => {
     const { builder } = setup();
     const handler = jest.fn();
 
-    const rootHandler = builder.onUnhandled(handler).build();
+    const rootHandler = builder
+      .onEvent(() => {})
+      .onUnhandled(handler)
+      .build();
 
     const context = {
       isHandled: false,
