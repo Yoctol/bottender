@@ -1,4 +1,4 @@
-const verifyMessenferSignature = bot => (req, res, next) => {
+const verifyMessengerSignature = bot => (req, res, next) => {
   if (
     bot.connector.verifySignature(req.rawBody, req.headers['x-hub-signature'])
   ) {
@@ -18,4 +18,4 @@ const verifyMessenferSignature = bot => (req, res, next) => {
   res.send({ error });
 };
 
-export default verifyMessenferSignature;
+export default verifyMessengerSignature;

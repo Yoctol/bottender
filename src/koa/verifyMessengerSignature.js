@@ -1,4 +1,4 @@
-const verifyMessenferSignature = bot => ({ request, response }, next) => {
+const verifyMessengerSignature = bot => ({ request, response }, next) => {
   if (
     bot.connector.verifySignature(
       request.rawBody,
@@ -21,4 +21,4 @@ const verifyMessenferSignature = bot => ({ request, response }, next) => {
   response.body = { error };
 };
 
-export default verifyMessenferSignature;
+export default verifyMessengerSignature;
