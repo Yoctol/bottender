@@ -15,7 +15,22 @@ export default class TelegramHandler extends Handler {
       | [Pattern, FunctionalHandler | Builder]
       | [FunctionalHandler | Builder]
   ) {
-    return this.onPayload(...args);
+    // FIXME: Can't refine tuple union - https://github.com/facebook/flow/issues/2389
+    if (args.length < 2) {
+      const [handler]: [FunctionalHandler | Builder] = (args: any);
+      this.on(context => context.event.isCallbackQuery, handler);
+    } else {
+      const [predicate, handler]: [
+        Predicate,
+        FunctionalHandler | Builder,
+      ] = (args: any);
+      this.on(
+        context => context.event.isCallbackQuery && predicate(context),
+        handler
+      );
+    }
+
+    return this;
   }
 
   onPayload(
