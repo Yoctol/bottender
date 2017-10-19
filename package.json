@@ -1,7 +1,7 @@
 {
-  "name": "toolbot-core-experiment",
+  "name": "bottender",
   "version": "0.13.4",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "main": "lib/index.js",
   "browser": "lib/browser.js",
   "files": [
