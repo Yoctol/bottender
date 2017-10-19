@@ -2,7 +2,7 @@ const {
   ConsoleBot,
   RedisCacheStore,
   CacheBasedSessionStore,
-} = require('toolbot-core-experiment');
+} = require('bottender');
 
 const cache = new RedisCacheStore();
 

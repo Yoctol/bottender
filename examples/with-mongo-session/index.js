@@ -1,4 +1,4 @@
-const { ConsoleBot, MongoSessionStore } = require('toolbot-core-experiment');
+const { ConsoleBot, MongoSessionStore } = require('bottender');
 
 const bot = new ConsoleBot({
   sessionStore: new MongoSessionStore('mongodb://localhost:27017/'),

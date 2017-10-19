@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "luis-sdk": "^1.0.1",
-    "toolbot-core-experiment": "latest"
+    "bottender": "latest"
   },
   "devDependencies": {
     "nodemon": "^1.11.0"

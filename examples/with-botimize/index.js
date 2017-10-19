@@ -1,11 +1,11 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const { MessengerBot } = require('toolbot-core-experiment');
+const { MessengerBot } = require('bottender');
 const {
   verifyMessengerWebhook,
   verifyMessengerSignature,
   createMiddleware,
-} = require('toolbot-core-experiment/express');
+} = require('bottender/express');
 
 const botimizeMiddleware = require('./botimizeMiddleware');
 

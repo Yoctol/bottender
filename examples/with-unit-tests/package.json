@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "toolbot-core-experiment": "latest"
+    "bottender": "latest"
   },
   "devDependencies": {
     "jest": "^21.2.1",

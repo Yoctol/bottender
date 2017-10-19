@@ -3,7 +3,7 @@
     "next": "beta",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
-    "toolbot-core-experiment": "latest"
+    "bottender": "latest"
   },
   "devDependencies": {
     "nodemon": "^1.11.0"

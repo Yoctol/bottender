@@ -1,5 +1,5 @@
-const { TelegramBot } = require('toolbot-core-experiment');
-const { createServer } = require('toolbot-core-experiment/express');
+const { TelegramBot } = require('bottender');
+const { createServer } = require('bottender/express');
 
 const url = '__FILL_URL_HERE__';
 

@@ -1,5 +1,5 @@
-const { LineBot, LineHandler } = require('toolbot-core-experiment');
-const { createServer } = require('toolbot-core-experiment/express');
+const { LineBot, LineHandler } = require('bottender');
+const { createServer } = require('bottender/express');
 
 const bot = new LineBot({
   channelSecret: '__FILL_YOUR_SECRET_HERE__',

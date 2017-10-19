@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "micro": "^8.0.2",
-    "toolbot-core-experiment": "latest"
+    "bottender": "latest"
   },
   "devDependencies": {
     "micro-dev": "^1.2.1"

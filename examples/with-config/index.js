@@ -1,5 +1,5 @@
-const { MessengerBot } = require('toolbot-core-experiment');
-const { createServer } = require('toolbot-core-experiment/express');
+const { MessengerBot } = require('bottender');
+const { createServer } = require('bottender/express');
 
 const config = require('./bottender.config');
 

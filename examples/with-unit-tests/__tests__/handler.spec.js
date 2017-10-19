@@ -1,4 +1,4 @@
-const { ContextSimulator } = require('toolbot-core-experiment/test-utils');
+const { ContextSimulator } = require('bottender/test-utils');
 
 const handler = require('../handler');
 

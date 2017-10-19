@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "ngrok": "^2.2.15",
-    "toolbot-core-experiment": "latest"
+    "bottender": "latest"
   },
   "devDependencies": {
     "nodemon": "^1.11.0"

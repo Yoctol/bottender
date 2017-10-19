@@ -1,4 +1,4 @@
-const { ConsoleBot } = require('toolbot-core-experiment');
+const { ConsoleBot } = require('bottender');
 
 const handler = require('./handler');
 

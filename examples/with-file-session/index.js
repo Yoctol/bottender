@@ -1,4 +1,4 @@
-const { ConsoleBot, FileSessionStore } = require('toolbot-core-experiment');
+const { ConsoleBot, FileSessionStore } = require('bottender');
 
 const bot = new ConsoleBot({
   sessionStore: new FileSessionStore(),

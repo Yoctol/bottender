@@ -2,19 +2,14 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const shortid = require('shortid');
 const comeFrom = require('come-from');
-const {
-  MessengerBot,
-  LineBot,
-  TelegramBot,
-  SlackBot,
-} = require('toolbot-core-experiment');
+const { MessengerBot, LineBot, TelegramBot, SlackBot } = require('bottender');
 const {
   createMiddleware,
   verifyLineSignature,
   verifyMessengerSignature,
   verifyMessengerWebhook,
   verifySlackWebhook,
-} = require('toolbot-core-experiment/express');
+} = require('bottender/express');
 
 const handler = require('./handler');
 

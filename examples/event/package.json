@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "toolbot-core-experiment": "latest"
+    "bottender": "latest"
   },
   "devDependencies": {
     "nodemon": "^1.11.0"

@@ -1,5 +1,5 @@
 const LUISClient = require('luis-sdk');
-const { ConsoleBot } = require('toolbot-core-experiment');
+const { ConsoleBot } = require('bottender');
 
 const luis = new LUISClient({
   appId: process.env.APP_ID,

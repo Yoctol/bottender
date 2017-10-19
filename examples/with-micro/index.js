@@ -1,5 +1,5 @@
-const { MessengerBot } = require('toolbot-core-experiment');
-const { createRequestHandler } = require('toolbot-core-experiment/micro');
+const { MessengerBot } = require('bottender');
+const { createRequestHandler } = require('bottender/micro');
 
 const bot = new MessengerBot({
   accessToken: '__FILL_YOUR_TOKEN_HERE__',

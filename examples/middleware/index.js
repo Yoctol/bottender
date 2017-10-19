@@ -1,4 +1,4 @@
-const { ConsoleBot, middleware } = require('toolbot-core-experiment');
+const { ConsoleBot, middleware } = require('bottender');
 
 const bot = new ConsoleBot();
 
