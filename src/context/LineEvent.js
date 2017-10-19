@@ -48,6 +48,11 @@ type Postback = {|
   params?: PostbackParams,
 |};
 
+type Beacon = {|
+  hwid: string,
+  type: string,
+|};
+
 export type LineRawEvent = {
   // only message, follow, join, postback, beacon events have replyToken
   replyToken?: ReplyToken,
@@ -56,6 +61,7 @@ export type LineRawEvent = {
   source: Source,
   message?: Message,
   postback?: Postback,
+  beacon?: Beacon,
 };
 
 export default class LineEvent implements Event {
@@ -236,5 +242,13 @@ export default class LineEvent implements Event {
    */
   get isBeacon(): boolean {
     return this._rawEvent.type === 'beacon';
+  }
+
+  /**
+   * The beacon object from LINE raw event.
+   *
+   */
+  get beacon(): ?Beacon {
+    return this._rawEvent.beacon || null;
   }
 }
