@@ -13,7 +13,7 @@
 ## Examples
 
 ```js
-const { ConsoleBot } = require('toolbot-core-experiment');
+const { ConsoleBot } = require('bottender');
 
 const bot = new ConsoleBot();
 
@@ -29,13 +29,13 @@ See more in [examples](../examples) folder.
 ## Installation
 
 ```sh
-npm install -g toolbot-core-experiment
+npm install -g bottender
 ```
 
 or
 
 ```sh
-yarn global add toolbot-core-experiment
+yarn global add bottender
 ```
 
 ## Getting Started
