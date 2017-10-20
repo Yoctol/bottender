@@ -26,6 +26,17 @@ export type Message = {
   attachments?: Array<Attachment>,
 };
 
+export type Delivery = {
+  mids: Array<string>,
+  watermark: number,
+  seq: number,
+};
+
+export type Read = {
+  watermark: number,
+  seq: number,
+};
+
 export type Postback = {
   payload: string,
 };
@@ -102,6 +113,8 @@ export type MessengerRawEvent = {
   recipient?: Recipient,
   timestamp?: number,
   message?: Message,
+  read?: Read,
+  delivery?: Delivery,
   postback?: Postback,
   optin?: Optin,
   payment?: Payment,
@@ -378,6 +391,14 @@ export default class MessengerEvent implements Event {
   }
 
   /**
+   * The read object from Messenger raw event.
+   *
+   */
+  get read(): ?Read {
+    return this.isRead ? this._rawEvent.read : null;
+  }
+
+  /**
    * Determine if the event is a message delivery event.
    *
    */
@@ -385,6 +406,14 @@ export default class MessengerEvent implements Event {
     return (
       !!this._rawEvent.delivery && typeof this._rawEvent.delivery === 'object'
     );
+  }
+
+  /**
+   * The delivery object from Messenger raw event.
+   *
+   */
+  get delivery(): ?Delivery {
+    return this.isDelivery ? this._rawEvent.delivery : null;
   }
 
   /**
