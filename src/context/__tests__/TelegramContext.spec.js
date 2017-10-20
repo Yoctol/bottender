@@ -1,13 +1,19 @@
-import TelegramContext from '../TelegramContext';
-import TelegramEvent from '../TelegramEvent';
-
 jest.mock('delay');
 jest.mock('messaging-api-messenger');
+jest.mock('warning');
 
+let TelegramContext;
+let TelegramEvent;
 let sleep;
+let warning;
 
 beforeEach(() => {
-  sleep = require('delay'); // eslint-disable-line global-require
+  /* eslint-disable global-require */
+  TelegramContext = require('../TelegramContext').default;
+  TelegramEvent = require('../TelegramEvent').default;
+  sleep = require('delay');
+  warning = require('warning');
+  /* eslint-enable global-require */
 });
 
 const createMockTelegramClient = () => ({
@@ -45,20 +51,14 @@ const rawEvent = {
   },
 };
 
-const setup = () => {
+const setup = ({ session } = { session: { user: { id: 'fakeUserId' } } }) => {
   const client = createMockTelegramClient();
-  const session = {
-    user: {
-      id: 'fakeUserId',
-    },
-  };
   const args = {
     client,
     event: new TelegramEvent(rawEvent),
     session,
   };
   const context = new TelegramContext(args);
-  context.typing = jest.fn();
   return {
     context,
     session,
@@ -91,6 +91,33 @@ it('get #client works', () => {
   expect(context.client).toBe(client);
 });
 
+describe('#sendText', () => {
+  it('should call client.sendMessage', async () => {
+    const { context, client, session } = setup();
+
+    await context.sendText('xxx.com');
+
+    expect(client.sendMessage).toBeCalledWith(session.user.id, 'xxx.com');
+  });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    await context.sendText('xxx.com');
+
+    expect(context._isHandled).toBe(true);
+  });
+
+  it('should call warning and not to send if dont have session', async () => {
+    const { context, client } = setup({ session: false });
+
+    await context.sendText('xxx.com');
+
+    expect(warning).toBeCalled();
+    expect(client.sendMessage).not.toBeCalled();
+  });
+});
+
 describe('#sendMessage', () => {
   it('should call client.sendMessage', async () => {
     const { context, client, session } = setup();
@@ -106,6 +133,20 @@ describe('#sendMessage', () => {
     await context.sendMessage('xxx.com');
 
     expect(context.isHandled).toBe(true);
+  });
+
+  it('should not call send method if dont have session', async () => {
+    const { client, event } = setup();
+    const args = {
+      client,
+      event,
+      session: undefined,
+    };
+    const context = new TelegramContext(args);
+
+    await context.sendMessage('xxx.com');
+
+    expect(client.sendMessage).not.toBeCalled();
   });
 });
 
@@ -311,5 +352,13 @@ describe('#typing', () => {
     await context.typing(0);
 
     expect(sleep).not.toBeCalled();
+  });
+
+  it('should call sleep', async () => {
+    const { context } = setup();
+
+    await context.typing(10);
+
+    expect(sleep).toBeCalled();
   });
 });
