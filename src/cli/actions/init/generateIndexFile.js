@@ -1,11 +1,11 @@
 const requireServerLine = server => {
   switch (server) {
     case 'micro':
-      return `const { createRequestHandler } = require('toolbot-core-experiment/${server}');`;
+      return `const { createRequestHandler } = require('bottender/${server}');`;
     case undefined: // platform is console
       return '';
     default:
-      return `const { createServer } = require('toolbot-core-experiment/${server}');`;
+      return `const { createServer } = require('bottender/${server}');`;
   }
 };
 
@@ -100,7 +100,7 @@ export default function generateIndexFile(answer) {
 
   const dependenciesLine = `const { ${dependencies.join(
     ', '
-  )} } = require('toolbot-core-experiment');`;
+  )} } = require('bottender');`;
   const moduleDepsGroup = [dependenciesLine, requireServerLine(server)]
     .filter(s => !!s)
     .join('\n');

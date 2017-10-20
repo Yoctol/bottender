@@ -187,7 +187,7 @@ const install = (useYarn, allDependencies) =>
 const run = async (root, botName, answer, useYarn) => {
   try {
     const allDependencies = {
-      dependencies: ['toolbot-core-experiment'],
+      dependencies: ['bottender'],
       devDependencies: ['nodemon'],
     };
     print('Installing packages... This might take a couple of minutes.');
