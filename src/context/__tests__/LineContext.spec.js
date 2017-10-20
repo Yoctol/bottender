@@ -1,13 +1,19 @@
-import LineContext from '../LineContext';
-import LineEvent from '../LineEvent';
-
 jest.mock('delay');
 jest.mock('messaging-api-line');
+jest.mock('warning');
 
+let LineContext;
+let LineEvent;
 let sleep;
+let warning;
 
 beforeEach(() => {
-  sleep = require('delay'); // eslint-disable-line global-require
+  /* eslint-disable global-require */
+  LineContext = require('../LineContext').default;
+  LineEvent = require('../LineEvent').default;
+  sleep = require('delay');
+  warning = require('warning');
+  /* eslint-enable global-require */
 });
 
 const rawEvent = {
@@ -25,7 +31,13 @@ const rawEvent = {
   },
 };
 
-const setup = ({ session } = {}) => {
+const userSession = {
+  type: 'user',
+  user: {
+    id: 'fakeUserId',
+  },
+};
+const setup = ({ session } = { session: userSession }) => {
   const client = {
     replyText: jest.fn(),
     pushText: jest.fn(),
@@ -39,21 +51,14 @@ const setup = ({ session } = {}) => {
     pushImagemap: jest.fn(),
     pushCarouselTemplate: jest.fn(),
   };
-  const userSession = {
-    type: 'user',
-    user: {
-      id: 'fakeUserId',
-    },
-  };
   const context = new LineContext({
     client,
     event: new LineEvent(rawEvent),
-    session: session || userSession,
+    session,
   });
-  context.typing = jest.fn();
   return {
     context,
-    session: session || userSession,
+    session,
     client,
   };
 };
@@ -66,6 +71,11 @@ it('be defined', () => {
 it('#platform to be `line`', () => {
   const { context } = setup();
   expect(context.platform).toBe('line');
+});
+
+it('#isReplied default to be false', () => {
+  const { context } = setup();
+  expect(context.isReplied).toBe(false);
 });
 
 it('get #session works', () => {
@@ -84,7 +94,7 @@ it('get #client works', () => {
 });
 
 describe('#reply', () => {
-  it('#replyText to call client.replayText', async () => {
+  it('#replyText to call client.replyText', async () => {
     const { context, client } = setup();
 
     await context.replyText('xxx.com');
@@ -108,6 +118,15 @@ describe('#reply', () => {
     await context.replyText('hello');
 
     expect(context.isHandled).toBe(true);
+  });
+
+  it('should call warning and not to send if dont have session', async () => {
+    const { context, client } = setup({ session: false });
+
+    await context.sendText('xxx.com');
+
+    expect(warning).toBeCalled();
+    expect(client.pushText).not.toBeCalled();
   });
 });
 
@@ -146,6 +165,53 @@ describe('#sendText', () => {
     await context.sendText('xxx.com');
 
     expect(context.isHandled).toBe(true);
+  });
+});
+
+describe('#pushText', () => {
+  it('should call client.pushText', async () => {
+    const { context, client, session } = setup();
+
+    await context.pushText('xxx.com');
+
+    expect(client.pushText).toBeCalledWith(session.user.id, 'xxx.com');
+  });
+
+  it('should work with room session', async () => {
+    const { context, client, session } = setup({
+      session: { type: 'room', room: { id: 'room' } },
+    });
+
+    await context.pushText('xxx.com');
+
+    expect(client.pushText).toBeCalledWith(session.room.id, 'xxx.com');
+  });
+
+  it('should work with group session', async () => {
+    const { context, client, session } = setup({
+      session: { type: 'group', group: { id: 'group' } },
+    });
+
+    await context.pushText('xxx.com');
+
+    expect(client.pushText).toBeCalledWith(session.group.id, 'xxx.com');
+  });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    await context.pushText('xxx.com');
+
+    expect(context.isHandled).toBe(true);
+  });
+
+  it('should call warning and not to send if dont have session', async () => {
+    const { context, client } = setup({ session: false });
+
+    await context.pushText('xxx.com');
+
+    expect(warning).toBeCalled();
+    expect(client.pushText).not.toBeCalled();
   });
 });
 
@@ -196,6 +262,15 @@ describe('#sendImage', () => {
     await context.sendImage('xxx.jpg', 'yyy.jpg');
 
     expect(context.isHandled).toBe(true);
+  });
+
+  it('should call warning and not to send if dont have session', async () => {
+    const { context, client } = setup({ session: false });
+
+    await context.sendImage('xxx.jpg', 'yyy.jpg');
+
+    expect(warning).toBeCalled();
+    expect(client.pushImage).not.toBeCalled();
   });
 });
 
@@ -723,5 +798,13 @@ describe('#typing', () => {
     await context.typing(0);
 
     expect(sleep).not.toBeCalled();
+  });
+
+  it('should call sleep', async () => {
+    const { context } = setup();
+
+    await context.typing(10);
+
+    expect(sleep).toBeCalled();
   });
 });

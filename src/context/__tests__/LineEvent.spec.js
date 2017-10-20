@@ -204,6 +204,8 @@ const beacon = {
   },
 };
 
+const noSourceMessage = {};
+
 it('#rawEvent', () => {
   expect(new LineEvent(textMessage).rawEvent).toEqual(textMessage);
   expect(new LineEvent(imageMessage).rawEvent).toEqual(imageMessage);
@@ -268,6 +270,7 @@ it('#source', () => {
     type: 'user',
     userId: 'U206d25c2ea6bd87c17655609a1c37cb8',
   });
+  expect(new LineEvent(noSourceMessage).source).toEqual(null);
 });
 
 it('#isMessage', () => {
