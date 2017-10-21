@@ -493,6 +493,24 @@ it('#isImageMessage', () => {
   expect(new MessengerEvent(likeStickerMessage).isImageMessage).toEqual(true);
 });
 
+it('#image', () => {
+  expect(new MessengerEvent(textMessage).image).toEqual(null);
+  expect(new MessengerEvent(locationMessage).image).toEqual(null);
+  expect(new MessengerEvent(videoMessage).image).toEqual(null);
+  expect(new MessengerEvent(audioMessage).image).toEqual(null);
+  expect(new MessengerEvent(fileMessage).image).toEqual(null);
+  expect(new MessengerEvent(fallbackMessage).image).toEqual(null);
+  expect(new MessengerEvent(imageMessage).image).toEqual({
+    url:
+      'https://scontent.xx.fbcdn.net/v/t35.0-12/17887258_1429713783754592_1626047672_o.jpg?_nc_ad=z-m&oh=e44af5a4c973541ef56333202f160720&oe=58ECF78B',
+  });
+  expect(new MessengerEvent(likeStickerMessage).image).toEqual({
+    sticker_id: 369239263222822,
+    url:
+      'https://scontent.xx.fbcdn.net/v/t39.1997-6/851557_369239266556155_759568595_n.png?_nc_ad=z-m&oh=547beb90237e24a9682810a5144c9fba&oe=5988CFDC',
+  });
+});
+
 it('#isAudioMessage', () => {
   expect(new MessengerEvent(textMessage).isAudioMessage).toEqual(false);
   expect(new MessengerEvent(locationMessage).isAudioMessage).toEqual(false);
@@ -504,6 +522,19 @@ it('#isAudioMessage', () => {
   expect(new MessengerEvent(likeStickerMessage).isAudioMessage).toEqual(false);
 });
 
+it('#audio', () => {
+  expect(new MessengerEvent(textMessage).audio).toEqual(null);
+  expect(new MessengerEvent(locationMessage).audio).toEqual(null);
+  expect(new MessengerEvent(videoMessage).audio).toEqual(null);
+  expect(new MessengerEvent(audioMessage).audio).toEqual({
+    url: 'https://example.com/bot/audios/audio.mp3',
+  });
+  expect(new MessengerEvent(fileMessage).audio).toEqual(null);
+  expect(new MessengerEvent(fallbackMessage).audio).toEqual(null);
+  expect(new MessengerEvent(imageMessage).audio).toEqual(null);
+  expect(new MessengerEvent(likeStickerMessage).audio).toEqual(null);
+});
+
 it('#isVideoMessage', () => {
   expect(new MessengerEvent(textMessage).isVideoMessage).toEqual(false);
   expect(new MessengerEvent(locationMessage).isVideoMessage).toEqual(false);
@@ -513,6 +544,19 @@ it('#isVideoMessage', () => {
   expect(new MessengerEvent(fallbackMessage).isVideoMessage).toEqual(false);
   expect(new MessengerEvent(imageMessage).isVideoMessage).toEqual(false);
   expect(new MessengerEvent(likeStickerMessage).isVideoMessage).toEqual(false);
+});
+
+it('#video', () => {
+  expect(new MessengerEvent(textMessage).video).toEqual(null);
+  expect(new MessengerEvent(locationMessage).video).toEqual(null);
+  expect(new MessengerEvent(videoMessage).video).toEqual({
+    url: 'https://example.com/bot/videos/video.mp4',
+  });
+  expect(new MessengerEvent(audioMessage).video).toEqual(null);
+  expect(new MessengerEvent(fileMessage).video).toEqual(null);
+  expect(new MessengerEvent(fallbackMessage).video).toEqual(null);
+  expect(new MessengerEvent(imageMessage).video).toEqual(null);
+  expect(new MessengerEvent(likeStickerMessage).video).toEqual(null);
 });
 
 it('#isLocationMessage', () => {
@@ -528,6 +572,19 @@ it('#isLocationMessage', () => {
   );
 });
 
+it('#location', () => {
+  expect(new MessengerEvent(textMessage).location).toEqual(null);
+  expect(new MessengerEvent(locationMessage).location).toEqual({
+    coordinates: { lat: 0, long: 0 },
+  });
+  expect(new MessengerEvent(videoMessage).location).toEqual(null);
+  expect(new MessengerEvent(audioMessage).location).toEqual(null);
+  expect(new MessengerEvent(fileMessage).location).toEqual(null);
+  expect(new MessengerEvent(fallbackMessage).location).toEqual(null);
+  expect(new MessengerEvent(imageMessage).location).toEqual(null);
+  expect(new MessengerEvent(likeStickerMessage).location).toEqual(null);
+});
+
 it('#isFileMessage', () => {
   expect(new MessengerEvent(textMessage).isFileMessage).toEqual(false);
   expect(new MessengerEvent(locationMessage).isFileMessage).toEqual(false);
@@ -537,6 +594,19 @@ it('#isFileMessage', () => {
   expect(new MessengerEvent(fallbackMessage).isFileMessage).toEqual(false);
   expect(new MessengerEvent(imageMessage).isFileMessage).toEqual(false);
   expect(new MessengerEvent(likeStickerMessage).isFileMessage).toEqual(false);
+});
+
+it('#file', () => {
+  expect(new MessengerEvent(textMessage).file).toEqual(null);
+  expect(new MessengerEvent(locationMessage).file).toEqual(null);
+  expect(new MessengerEvent(videoMessage).file).toEqual(null);
+  expect(new MessengerEvent(audioMessage).file).toEqual(null);
+  expect(new MessengerEvent(fileMessage).file).toEqual({
+    url: 'https://example.com/bot/files/file.doc',
+  });
+  expect(new MessengerEvent(fallbackMessage).file).toEqual(null);
+  expect(new MessengerEvent(imageMessage).file).toEqual(null);
+  expect(new MessengerEvent(likeStickerMessage).file).toEqual(null);
 });
 
 it('#isFallbackMessage', () => {
@@ -552,12 +622,39 @@ it('#isFallbackMessage', () => {
   );
 });
 
+it('#fallback', () => {
+  expect(new MessengerEvent(textMessage).fallback).toEqual(null);
+  expect(new MessengerEvent(locationMessage).fallback).toEqual(null);
+  expect(new MessengerEvent(videoMessage).fallback).toEqual(null);
+  expect(new MessengerEvent(audioMessage).fallback).toEqual(null);
+  expect(new MessengerEvent(fileMessage).fallback).toEqual(null);
+  expect(new MessengerEvent(fallbackMessage).fallback).toEqual({
+    URL: 'URL_OF_THE_ATTACHMENT',
+    payload: null,
+    title: 'TITLE_OF_THE_URL_ATTACHMENT',
+    type: 'fallback',
+  });
+  expect(new MessengerEvent(imageMessage).fallback).toEqual(null);
+  expect(new MessengerEvent(likeStickerMessage).fallback).toEqual(null);
+});
+
 it('#isStickerMessage', () => {
   expect(new MessengerEvent(textMessage).isStickerMessage).toEqual(false);
   expect(new MessengerEvent(imageMessage).isStickerMessage).toEqual(false);
   expect(new MessengerEvent(likeStickerMessage).isStickerMessage).toEqual(true);
   expect(new MessengerEvent(largeLikeStickerMessage).isStickerMessage).toEqual(
     true
+  );
+});
+
+it('#sticker', () => {
+  expect(new MessengerEvent(textMessage).sticker).toEqual(null);
+  expect(new MessengerEvent(imageMessage).sticker).toEqual(null);
+  expect(new MessengerEvent(likeStickerMessage).sticker).toEqual(
+    369239263222822
+  );
+  expect(new MessengerEvent(largeLikeStickerMessage).sticker).toEqual(
+    369239343222814
   );
 });
 

@@ -14,9 +14,32 @@ type QuickReply = {
   payload: string,
 };
 
-type Attachment = {
-  type: string,
+type MediaAttachmentPayload = {|
+  url: string,
+|};
+
+type LocationAttachmentPayload = {|
+  coordinates: {
+    lat: number,
+    long: number,
+  },
+|};
+
+type AttachmentPayload = MediaAttachmentPayload | LocationAttachmentPayload;
+
+type FallbackAttachment = {
+  type: 'fallback',
+  payload: null,
+  title: string,
+  URL: string,
 };
+
+type MediaAttachment = {
+  type: string,
+  payload: AttachmentPayload,
+};
+
+type Attachment = MediaAttachment | FallbackAttachment;
 
 export type Message = {
   is_echo?: boolean,
@@ -192,11 +215,27 @@ export default class MessengerEvent implements Event {
   }
 
   /**
+   * The image attachment from Messenger raw event.
+   *
+   */
+  get image(): ?MediaAttachmentPayload {
+    return this.isImageMessage ? (this.attachments: any)[0].payload : null;
+  }
+
+  /**
    * Determine if the event is a message event which includes audio attachment.
    *
    */
   get isAudioMessage(): boolean {
     return this.hasAttachment && (this.attachments: any)[0].type === 'audio';
+  }
+
+  /**
+   * The audio attachment from Messenger raw event.
+   *
+   */
+  get audio(): ?MediaAttachmentPayload {
+    return this.isAudioMessage ? (this.attachments: any)[0].payload : null;
   }
 
   /**
@@ -208,11 +247,27 @@ export default class MessengerEvent implements Event {
   }
 
   /**
+   * The video attachment from Messenger raw event.
+   *
+   */
+  get video(): ?MediaAttachmentPayload {
+    return this.isVideoMessage ? (this.attachments: any)[0].payload : null;
+  }
+
+  /**
    * Determine if the event is a message event which includes location attachment.
    *
    */
   get isLocationMessage(): boolean {
     return this.hasAttachment && (this.attachments: any)[0].type === 'location';
+  }
+
+  /**
+   * The location attachment from Messenger raw event.
+   *
+   */
+  get location(): ?LocationAttachmentPayload {
+    return this.isLocationMessage ? (this.attachments: any)[0].payload : null;
   }
 
   /**
@@ -224,6 +279,14 @@ export default class MessengerEvent implements Event {
   }
 
   /**
+   * The file attachment from Messenger raw event.
+   *
+   */
+  get file(): ?MediaAttachmentPayload {
+    return this.isFileMessage ? (this.attachments: any)[0].payload : null;
+  }
+
+  /**
    * Determine if the event is a message event which includes fallback attachment.
    *
    */
@@ -232,11 +295,27 @@ export default class MessengerEvent implements Event {
   }
 
   /**
+   * The fallback attachment from Messenger raw event.
+   *
+   */
+  get fallback(): ?FallbackAttachment {
+    return this.isFallbackMessage ? (this.attachments: any)[0] : null;
+  }
+
+  /**
    * Determine if the event is a message event which includes sticker.
    *
    */
   get isStickerMessage(): boolean {
     return this.isMessage && typeof (this.message: any).sticker_id === 'number';
+  }
+
+  /**
+   * The sticker_id from Messenger raw event.
+   *
+   */
+  get sticker(): ?string {
+    return this.isStickerMessage ? (this.message: any).sticker_id : null;
   }
 
   /**
