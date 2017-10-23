@@ -42,13 +42,17 @@ it('should overwrite response when provided', async () => {
   const middleware = createMiddleware(bot);
 
   const request = { body: {} };
-  const response = {};
+  const response = {
+    headers: { 'content-type': 'text/plain; charset=utf-8' },
+    set: fields => Object.assign(response.headers, fields),
+  };
 
   await middleware({ request, response });
 
   expect(response.status).toBe(400);
   expect(response.headers).toEqual({
     'X-Header': 'x',
+    'content-type': 'text/plain; charset=utf-8',
   });
   expect(response.body).toEqual({
     name: 'x',

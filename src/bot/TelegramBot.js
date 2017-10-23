@@ -9,11 +9,13 @@ export default class TelegramBot extends Bot {
   constructor({
     accessToken,
     sessionStore,
+    sync,
   }: {
     accessToken: string,
     sessionStore: SessionStore,
+    sync?: boolean,
   }) {
     const connector = new TelegramConnector({ accessToken });
-    super({ connector, sessionStore });
+    super({ connector, sessionStore, sync });
   }
 }

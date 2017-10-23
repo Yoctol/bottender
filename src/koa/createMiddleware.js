@@ -9,7 +9,7 @@ function createMiddleware(bot) {
 
     const res = await requestHandler(request.body);
     if (res) {
-      response.headers = res.headers;
+      response.set(res.headers || {});
       response.status = res.status || 200;
       response.body = res.body || '';
     } else {
