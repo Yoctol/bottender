@@ -508,6 +508,7 @@ it('#attachments', () => {
       },
     },
   ]);
+  expect(new MessengerEvent(postback).attachments).toEqual(null);
 });
 
 it('#isImageMessage', () => {
@@ -707,6 +708,7 @@ it('#quickReply', () => {
   expect(new MessengerEvent(quickReplyMessage).quickReply).toEqual({
     payload: 'DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_RED',
   });
+  expect(new MessengerEvent(postback).quickReply).toEqual(null);
 });
 
 it('#isDelivery', () => {

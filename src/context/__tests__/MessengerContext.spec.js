@@ -1,13 +1,19 @@
-import MessengerContext from '../MessengerContext';
-import MessengerEvent from '../MessengerEvent';
-
 jest.mock('delay');
 jest.mock('messaging-api-messenger');
+jest.mock('warning');
 
+let MessengerContext;
+let MessengerEvent;
 let sleep;
+let warning;
 
 beforeEach(() => {
-  sleep = require('delay'); // eslint-disable-line global-require
+  /* eslint-disable global-require */
+  MessengerContext = require('../MessengerContext').default;
+  MessengerEvent = require('../MessengerEvent').default;
+  sleep = require('delay');
+  warning = require('warning');
+  /* eslint-enable global-require */
 });
 
 afterEach(() => {
@@ -47,23 +53,19 @@ const rawEvent = {
   },
 };
 
-const setup = () => {
+const userSession = {
+  user: {
+    id: 'fakeUserId',
+  },
+};
+const setup = ({ session } = { session: userSession }) => {
   const client = createMockGraphAPIClient();
-  const session = {
-    user: {
-      id: 'fakeUserId',
-    },
-  };
   const args = {
     client,
     event: new MessengerEvent(rawEvent),
     session,
   };
   const context = new MessengerContext(args);
-  context.typing = jest.fn(() => {
-    client.typingOn();
-    client.typingOff();
-  });
   return {
     context,
     session,
@@ -112,6 +114,15 @@ describe('#sendText', () => {
     await context.sendText('xxx.com');
 
     expect(context.isHandled).toBe(true);
+  });
+
+  it('should call warning and not to send if dont have session', async () => {
+    const { context, client } = setup({ session: false });
+
+    await context.sendText();
+
+    expect(warning).toBeCalled();
+    expect(client.sendText).not.toBeCalled();
   });
 });
 
@@ -165,6 +176,15 @@ describe('#sendImage', () => {
     await context.sendImage('xxx.com');
 
     expect(context.isHandled).toBe(true);
+  });
+
+  it('should call warning and not to send if dont have session', async () => {
+    const { context, client } = setup({ session: false });
+
+    await context.sendImage('xxx.com');
+
+    expect(warning).toBeCalled();
+    expect(client.sendImage).not.toBeCalled();
   });
 });
 
@@ -471,6 +491,14 @@ describe('#typingOn', () => {
 
     expect(context.isHandled).toBe(true);
   });
+  it('should call warning and not to send if dont have session', async () => {
+    const { context, client } = setup({ session: false });
+
+    await context.typingOn();
+
+    expect(warning).toBeCalled();
+    expect(client.typingOn).not.toBeCalled();
+  });
 });
 
 describe('#typingOff', () => {
@@ -488,6 +516,15 @@ describe('#typingOff', () => {
     await context.typingOff();
 
     expect(context.isHandled).toBe(true);
+  });
+
+  it('should call warning and not to send if dont have session', async () => {
+    const { context, client } = setup({ session: false });
+
+    await context.typingOff();
+
+    expect(warning).toBeCalled();
+    expect(client.typingOff).not.toBeCalled();
   });
 });
 
@@ -507,6 +544,15 @@ describe('#markSeen', () => {
 
     expect(context.isHandled).toBe(true);
   });
+
+  it('should call warning and not to send if dont have session', async () => {
+    const { context, client } = setup({ session: false });
+
+    await context.markSeen();
+
+    expect(warning).toBeCalled();
+    expect(client.markSeen).not.toBeCalled();
+  });
 });
 
 describe('#typing', () => {
@@ -516,5 +562,15 @@ describe('#typing', () => {
     await context.typing(0);
 
     expect(sleep).not.toBeCalled();
+  });
+
+  it('should call sleep', async () => {
+    const { context, client } = setup();
+
+    await context.typing(10);
+
+    expect(client.typingOn).toBeCalled();
+    expect(sleep).toBeCalledWith(10);
+    expect(client.typingOff).toBeCalled();
   });
 });
