@@ -1,4 +1,14 @@
-import Context from '../Context';
+jest.mock('warning');
+
+let warning;
+let Context;
+
+beforeEach(() => {
+  /* eslint-disable global-require */
+  warning = require('warning');
+  Context = require('../Context').default;
+  /* eslint-enable global-require */
+});
 
 function setup(
   { client = {}, event = {}, session = {}, initialState = {} } = {}
@@ -37,6 +47,13 @@ describe('state', () => {
 
       expect(context.state).toEqual(state);
     });
+
+    it('should call warning if dont have session', async () => {
+      const { context } = setup({ session: false });
+
+      expect(context.state).toEqual({});
+      expect(warning).toBeCalled();
+    });
   });
 
   describe('#setState', () => {
@@ -48,6 +65,14 @@ describe('state', () => {
       context.setState({ a: 3 });
 
       expect(context.state).toEqual({ a: 3, b: 2 });
+    });
+
+    it('should call warning if dont have session', async () => {
+      const { context } = setup({ session: false });
+
+      context.setState({ a: 3 });
+
+      expect(warning).toBeCalled();
     });
   });
 
@@ -71,6 +96,14 @@ describe('state', () => {
       context.resetState();
 
       expect(context.state).toEqual(initialState);
+    });
+
+    it('should call warning if dont have session', async () => {
+      const { context } = setup({ session: false });
+
+      context.resetState();
+
+      expect(warning).toBeCalled();
     });
   });
 });

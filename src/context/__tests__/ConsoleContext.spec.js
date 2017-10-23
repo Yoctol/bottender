@@ -1,12 +1,15 @@
-import ConsoleContext from '../ConsoleContext';
-import ConsoleEvent from '../ConsoleEvent';
-
 jest.mock('delay');
 
+let ConsoleContext;
+let ConsoleEvent;
 let sleep;
 
 beforeEach(() => {
-  sleep = require('delay'); // eslint-disable-line global-require
+  /* eslint-disable global-require */
+  ConsoleContext = require('../ConsoleContext').default;
+  ConsoleEvent = require('../ConsoleEvent').default;
+  sleep = require('delay');
+  /* eslint-enable global-require */
 });
 
 afterEach(() => {
@@ -19,22 +22,21 @@ const rawEvent = {
   },
 };
 
-const setup = () => {
+const userSession = {
+  user: {
+    id: '1',
+    name: 'you',
+  },
+};
+const setup = ({ session } = { session: userSession }) => {
   const client = {
     sendText: jest.fn(),
-  };
-  const session = {
-    user: {
-      id: '1',
-      name: 'you',
-    },
   };
   const context = new ConsoleContext({
     client,
     event: new ConsoleEvent(rawEvent),
     session,
   });
-  context.typing = jest.fn();
   return {
     client,
     context,
@@ -92,5 +94,13 @@ describe('#typing', () => {
     await context.typing(0);
 
     expect(sleep).not.toBeCalled();
+  });
+
+  it('should call sleep', async () => {
+    const { context } = setup();
+
+    await context.typing(10);
+
+    expect(sleep).toBeCalled();
   });
 });
