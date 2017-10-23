@@ -12,6 +12,7 @@ describe('restify', () => {
   it('export public apis', () => {
     expect(restify.createServer).toBeDefined();
     expect(restify.createMiddleware).toBeDefined();
+    expect(restify.registerRoutes).toBeDefined();
     expect(restify.verifyLineSignature).toBeDefined();
     expect(restify.verifyMessengerSignature).toBeDefined();
     expect(restify.verifyMessengerWebhook).toBeDefined();
