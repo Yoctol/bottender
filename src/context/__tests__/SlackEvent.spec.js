@@ -659,6 +659,16 @@ it('#isMessage', () => {
   expect(new SlackEvent(mpimMessage).isMessage).toEqual(true);
 });
 
+it('#isTextMessage', () => {
+  const event = new SlackEvent(message);
+  expect(event.isTextMessage).toEqual(event.isMessage);
+});
+
+it('#message', () => {
+  const event = new SlackEvent({ type: 'notMessage' });
+  expect(event.message).toEqual(undefined);
+});
+
 it('#isChannelsMessage', () => {
   expect(new SlackEvent(gridMigrationStarted).isChannelsMessage).toEqual(false);
   expect(new SlackEvent(channelsMessage).isChannelsMessage).toEqual(true);
