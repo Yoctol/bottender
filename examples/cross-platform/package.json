@@ -1,9 +1,7 @@
 {
   "dependencies": {
     "body-parser": "^1.18.2",
-    "come-from": "^0.1.0",
     "express": "^4.16.0",
-    "shortid": "^2.2.8",
     "bottender": "latest"
   },
   "devDependencies": {
