@@ -215,6 +215,34 @@ const quickReplyMessage = {
   },
 };
 
+const delivery = {
+  sender: {
+    id: '404217156637689',
+  },
+  recipient: {
+    id: '1423587017700273',
+  },
+  delivery: {
+    mids: ['mid.1458668856218:ed81099e15d3f4f233'],
+    watermark: 1458668856253,
+    seq: 37,
+  },
+};
+
+const read = {
+  sender: {
+    id: '404217156637689',
+  },
+  recipient: {
+    id: '1423587017700273',
+  },
+  timestamp: 1458668856463,
+  read: {
+    watermark: 1458668856253,
+    seq: 38,
+  },
+};
+
 const echoMessage = {
   sender: {
     id: '404217156637689',
@@ -679,6 +707,49 @@ it('#quickReply', () => {
   expect(new MessengerEvent(quickReplyMessage).quickReply).toEqual({
     payload: 'DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_RED',
   });
+});
+
+it('#isDelivery', () => {
+  expect(new MessengerEvent(textMessage).isDelivery).toEqual(false);
+  expect(new MessengerEvent(delivery).isDelivery).toEqual(true);
+  expect(new MessengerEvent(read).isDelivery).toEqual(false);
+  expect(new MessengerEvent(echoMessage).isDelivery).toEqual(false);
+  expect(new MessengerEvent(postback).isDelivery).toEqual(false);
+  expect(new MessengerEvent(payment).isDelivery).toEqual(false);
+});
+
+it('#delivery', () => {
+  expect(new MessengerEvent(textMessage).delivery).toEqual(null);
+  expect(new MessengerEvent(delivery).delivery).toEqual({
+    mids: ['mid.1458668856218:ed81099e15d3f4f233'],
+    seq: 37,
+    watermark: 1458668856253,
+  });
+  expect(new MessengerEvent(read).delivery).toEqual(null);
+  expect(new MessengerEvent(echoMessage).delivery).toEqual(null);
+  expect(new MessengerEvent(postback).delivery).toEqual(null);
+  expect(new MessengerEvent(payment).delivery).toEqual(null);
+});
+
+it('#isRead', () => {
+  expect(new MessengerEvent(textMessage).isRead).toEqual(false);
+  expect(new MessengerEvent(delivery).isRead).toEqual(false);
+  expect(new MessengerEvent(read).isRead).toEqual(true);
+  expect(new MessengerEvent(echoMessage).isRead).toEqual(false);
+  expect(new MessengerEvent(postback).isRead).toEqual(false);
+  expect(new MessengerEvent(payment).isRead).toEqual(false);
+});
+
+it('#read', () => {
+  expect(new MessengerEvent(textMessage).read).toEqual(null);
+  expect(new MessengerEvent(delivery).read).toEqual(null);
+  expect(new MessengerEvent(read).read).toEqual({
+    seq: 38,
+    watermark: 1458668856253,
+  });
+  expect(new MessengerEvent(echoMessage).read).toEqual(null);
+  expect(new MessengerEvent(postback).read).toEqual(null);
+  expect(new MessengerEvent(payment).read).toEqual(null);
 });
 
 it('#isEcho', () => {
