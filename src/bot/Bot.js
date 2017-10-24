@@ -6,9 +6,9 @@ import MemoryCacheStore from '../cache/MemoryCacheStore';
 import CacheBasedSessionStore from '../session/CacheBasedSessionStore';
 import type { Session } from '../session/Session';
 import type { SessionStore } from '../session/SessionStore';
+import type { FunctionalHandler, Builder } from '../handlers/Handler';
 
 import type { Connector } from './Connector';
-import type { FunctionalHandler, Builder } from './Handler';
 
 const debug = _debug('core/bot/Bot');
 

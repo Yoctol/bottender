@@ -17,12 +17,12 @@ export { default as SlackConnector } from './bot/SlackConnector';
 export { default as TelegramConnector } from './bot/TelegramConnector';
 
 /* HandlerBuilder */
-export { default as middleware } from './bot/middleware';
-export { default as Handler } from './bot/Handler';
-export { default as MessengerHandler } from './bot/MessengerHandler';
-export { default as LineHandler } from './bot/LineHandler';
-export { default as SlackHandler } from './bot/SlackHandler';
-export { default as TelegramHandler } from './bot/TelegramHandler';
+export { default as middleware } from './handlers/middleware';
+export { default as Handler } from './handlers/Handler';
+export { default as MessengerHandler } from './handlers/MessengerHandler';
+export { default as LineHandler } from './handlers/LineHandler';
+export { default as SlackHandler } from './handlers/SlackHandler';
+export { default as TelegramHandler } from './handlers/TelegramHandler';
 
 /* Cache */
 export { default as MemoryCacheStore } from './cache/MemoryCacheStore';
@@ -42,7 +42,7 @@ export { default as MongoSessionStore } from './session/MongoSessionStore';
  */
 
 /* HandlerBuilder */
-export { default as ClassifierHandler } from './bot/ClassifierHandler';
+export { default as ClassifierHandler } from './handlers/ClassifierHandler';
 
 /* Plugins */
 export { default as withTyping } from './plugins/withTyping';

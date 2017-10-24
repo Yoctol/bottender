@@ -7,8 +7,8 @@ export { default as Bot } from './bot/Bot';
 export { default as Connector } from './bot/Connector';
 
 /* HandlerBuilder */
-export { default as middleware } from './bot/middleware';
-export { default as Handler } from './bot/Handler';
+export { default as middleware } from './handlers/middleware';
+export { default as Handler } from './handlers/Handler';
 
 /* Cache */
 export { default as MemoryCacheStore } from './cache/MemoryCacheStore';
@@ -24,7 +24,7 @@ export { default as MemorySessionStore } from './session/MemorySessionStore';
  */
 
 /* HandlerBuilder */
-export { default as ClassifierHandler } from './bot/ClassifierHandler';
+export { default as ClassifierHandler } from './handlers/ClassifierHandler';
 
 /* Plugins */
 export { default as withTyping } from './plugins/withTyping';
