@@ -373,76 +373,76 @@ it('#message', () => {
   });
 });
 
-it('#isTextMessage', () => {
-  expect(new TelegramEvent(callbackQuery).isTextMessage).toEqual(false);
-  expect(new TelegramEvent(textMessage).isTextMessage).toEqual(true);
-  expect(new TelegramEvent(stickerMessage).isTextMessage).toEqual(false);
+it('#isText', () => {
+  expect(new TelegramEvent(callbackQuery).isText).toEqual(false);
+  expect(new TelegramEvent(textMessage).isText).toEqual(true);
+  expect(new TelegramEvent(stickerMessage).isText).toEqual(false);
 });
 
-it('#isAudioMessage', () => {
-  expect(new TelegramEvent(callbackQuery).isAudioMessage).toEqual(false);
-  expect(new TelegramEvent(textMessage).isAudioMessage).toEqual(false);
-  expect(new TelegramEvent(audioMessage).isAudioMessage).toEqual(true);
+it('#isAudio', () => {
+  expect(new TelegramEvent(callbackQuery).isAudio).toEqual(false);
+  expect(new TelegramEvent(textMessage).isAudio).toEqual(false);
+  expect(new TelegramEvent(audioMessage).isAudio).toEqual(true);
 });
 
-it('#isDocumentMessage', () => {
-  expect(new TelegramEvent(callbackQuery).isDocumentMessage).toEqual(false);
-  expect(new TelegramEvent(textMessage).isDocumentMessage).toEqual(false);
-  expect(new TelegramEvent(documentMessage).isDocumentMessage).toEqual(true);
+it('#isDocument', () => {
+  expect(new TelegramEvent(callbackQuery).isDocument).toEqual(false);
+  expect(new TelegramEvent(textMessage).isDocument).toEqual(false);
+  expect(new TelegramEvent(documentMessage).isDocument).toEqual(true);
 });
 
-it('#isGameMessage', () => {
-  expect(new TelegramEvent(callbackQuery).isGameMessage).toEqual(false);
-  expect(new TelegramEvent(textMessage).isGameMessage).toEqual(false);
-  expect(new TelegramEvent(gameMessage).isGameMessage).toEqual(true);
+it('#isGame', () => {
+  expect(new TelegramEvent(callbackQuery).isGame).toEqual(false);
+  expect(new TelegramEvent(textMessage).isGame).toEqual(false);
+  expect(new TelegramEvent(gameMessage).isGame).toEqual(true);
 });
 
-it('#isPhotoMessage', () => {
-  expect(new TelegramEvent(callbackQuery).isPhotoMessage).toEqual(false);
-  expect(new TelegramEvent(textMessage).isPhotoMessage).toEqual(false);
-  expect(new TelegramEvent(photoMessage).isPhotoMessage).toEqual(true);
+it('#isPhoto', () => {
+  expect(new TelegramEvent(callbackQuery).isPhoto).toEqual(false);
+  expect(new TelegramEvent(textMessage).isPhoto).toEqual(false);
+  expect(new TelegramEvent(photoMessage).isPhoto).toEqual(true);
 });
 
-it('#isStickerMessage', () => {
-  expect(new TelegramEvent(callbackQuery).isStickerMessage).toEqual(false);
-  expect(new TelegramEvent(textMessage).isStickerMessage).toEqual(false);
-  expect(new TelegramEvent(stickerMessage).isStickerMessage).toEqual(true);
+it('#isSticker', () => {
+  expect(new TelegramEvent(callbackQuery).isSticker).toEqual(false);
+  expect(new TelegramEvent(textMessage).isSticker).toEqual(false);
+  expect(new TelegramEvent(stickerMessage).isSticker).toEqual(true);
 });
 
-it('#isVideoMessage', () => {
-  expect(new TelegramEvent(callbackQuery).isVideoMessage).toEqual(false);
-  expect(new TelegramEvent(textMessage).isVideoMessage).toEqual(false);
-  expect(new TelegramEvent(videoMessage).isVideoMessage).toEqual(true);
+it('#isVideo', () => {
+  expect(new TelegramEvent(callbackQuery).isVideo).toEqual(false);
+  expect(new TelegramEvent(textMessage).isVideo).toEqual(false);
+  expect(new TelegramEvent(videoMessage).isVideo).toEqual(true);
 });
 
-it('#isVoiceMessage', () => {
-  expect(new TelegramEvent(callbackQuery).isVoiceMessage).toEqual(false);
-  expect(new TelegramEvent(textMessage).isVoiceMessage).toEqual(false);
-  expect(new TelegramEvent(voiceMessage).isVoiceMessage).toEqual(true);
+it('#isVoice', () => {
+  expect(new TelegramEvent(callbackQuery).isVoice).toEqual(false);
+  expect(new TelegramEvent(textMessage).isVoice).toEqual(false);
+  expect(new TelegramEvent(voiceMessage).isVoice).toEqual(true);
 });
 
-it('#isVideoNoteMessage', () => {
-  expect(new TelegramEvent(callbackQuery).isVideoNoteMessage).toEqual(false);
-  expect(new TelegramEvent(textMessage).isVideoNoteMessage).toEqual(false);
-  expect(new TelegramEvent(videoNoteMessage).isVideoNoteMessage).toEqual(true);
+it('#isVideoNote', () => {
+  expect(new TelegramEvent(callbackQuery).isVideoNote).toEqual(false);
+  expect(new TelegramEvent(textMessage).isVideoNote).toEqual(false);
+  expect(new TelegramEvent(videoNoteMessage).isVideoNote).toEqual(true);
 });
 
-it('#isContactMessage', () => {
-  expect(new TelegramEvent(callbackQuery).isContactMessage).toEqual(false);
-  expect(new TelegramEvent(textMessage).isContactMessage).toEqual(false);
-  expect(new TelegramEvent(contactMessage).isContactMessage).toEqual(true);
+it('#isContact', () => {
+  expect(new TelegramEvent(callbackQuery).isContact).toEqual(false);
+  expect(new TelegramEvent(textMessage).isContact).toEqual(false);
+  expect(new TelegramEvent(contactMessage).isContact).toEqual(true);
 });
 
-it('#isLocationMessage', () => {
-  expect(new TelegramEvent(callbackQuery).isLocationMessage).toEqual(false);
-  expect(new TelegramEvent(textMessage).isLocationMessage).toEqual(false);
-  expect(new TelegramEvent(locationMessage).isLocationMessage).toEqual(true);
+it('#isLocation', () => {
+  expect(new TelegramEvent(callbackQuery).isLocation).toEqual(false);
+  expect(new TelegramEvent(textMessage).isLocation).toEqual(false);
+  expect(new TelegramEvent(locationMessage).isLocation).toEqual(true);
 });
 
-it('#isVenueMessage', () => {
-  expect(new TelegramEvent(callbackQuery).isVenueMessage).toEqual(false);
-  expect(new TelegramEvent(textMessage).isVenueMessage).toEqual(false);
-  expect(new TelegramEvent(venueMessage).isVenueMessage).toEqual(true);
+it('#isVenue', () => {
+  expect(new TelegramEvent(callbackQuery).isVenue).toEqual(false);
+  expect(new TelegramEvent(textMessage).isVenue).toEqual(false);
+  expect(new TelegramEvent(venueMessage).isVenue).toEqual(true);
 });
 
 it('#isCallbackQuery', () => {

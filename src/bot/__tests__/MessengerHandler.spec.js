@@ -452,7 +452,7 @@ describe('#onQuickReply', () => {
     const context = {
       event: {
         isMessage: true,
-        isTextMessage: true,
+        isText: true,
         isQuickReply: true,
         message: {
           quick_reply: {
@@ -474,7 +474,7 @@ describe('#onQuickReply', () => {
     const context = {
       event: {
         isMessage: true,
-        isTextMessage: true,
+        isText: true,
         isQuickReply: true,
         message: {
           quick_reply: {
@@ -546,7 +546,7 @@ describe('#onEcho', () => {
     const context = {
       event: {
         isMessage: true,
-        isTextMessage: true,
+        isText: true,
         isEcho: true,
         message: {
           is_echo: true,
@@ -566,7 +566,7 @@ describe('#onEcho', () => {
     const context = {
       event: {
         isMessage: true,
-        isTextMessage: true,
+        isText: true,
         isEcho: true,
         message: {
           is_echo: true,
@@ -633,7 +633,7 @@ describe('#onEchoText', () => {
     const context = {
       event: {
         isMessage: true,
-        isTextMessage: true,
+        isText: true,
         isEcho: true,
         message: {
           is_echo: true,
@@ -652,7 +652,7 @@ describe('#onEchoText', () => {
     const context = {
       event: {
         isMessage: true,
-        isTextMessage: true,
+        isText: true,
         isEcho: true,
         message: {
           is_echo: true,
@@ -671,7 +671,7 @@ describe('#onEchoText', () => {
     const context = {
       event: {
         isMessage: true,
-        isTextMessage: true,
+        isText: true,
         isEcho: false,
         message: {
           text: 'wow',
@@ -866,7 +866,7 @@ describe('#onLocation', () => {
     const handler = jest.fn();
     const context = {
       event: {
-        isLocationMessage: true,
+        isLocation: true,
         hasAttachments: true,
         attachments: [
           {
@@ -893,7 +893,7 @@ describe('#onLocation', () => {
     const context = {
       event: {
         isMessage: true,
-        isLocationMessage: true,
+        isLocation: true,
         hasAttachment: true,
         attachments: [
           {
@@ -921,8 +921,8 @@ describe('#onLocation', () => {
     const context = {
       event: {
         isMessage: true,
-        isTextMessage: true,
-        isLocationMessage: false,
+        isText: true,
+        isLocation: false,
         message: {
           text: 'wow',
         },
@@ -941,7 +941,7 @@ describe('#onLocation', () => {
     const context = {
       event: {
         isMessage: true,
-        isLocationMessage: true,
+        isLocation: true,
         hasAttachment: true,
         attachments: [
           {
@@ -977,7 +977,7 @@ describe('#onImage', () => {
     const context = {
       event: {
         isMessage: true,
-        isLocationMessage: true,
+        isLocation: true,
         hasAttachment: true,
         attachments: [
           {
@@ -1004,7 +1004,7 @@ describe('#onImage', () => {
     const context = {
       event: {
         isMessage: true,
-        isImageMessage: true,
+        isImage: true,
         hasAttachment: true,
         attachments: [
           {
@@ -1028,7 +1028,7 @@ describe('#onImage', () => {
     const handler = jest.fn();
     const context = {
       event: {
-        isImageMessage: false,
+        isImage: false,
         message: {
           text: 'wow',
         },
@@ -1047,7 +1047,7 @@ describe('#onImage', () => {
     const context = {
       event: {
         isMessage: true,
-        isImageMessage: true,
+        isImage: true,
         hasAttachment: true,
         attachments: [
           {
@@ -1080,7 +1080,7 @@ describe('#onAudio', () => {
     const context = {
       event: {
         isMessage: true,
-        isAudioMessage: true,
+        isAudio: true,
         hasAttachment: true,
         attachments: [
           {
@@ -1104,7 +1104,7 @@ describe('#onAudio', () => {
     const context = {
       event: {
         isMessage: true,
-        isAudioMessage: true,
+        isAudio: true,
         hasAttachment: true,
         attachments: [
           {
@@ -1129,7 +1129,7 @@ describe('#onAudio', () => {
     const context = {
       event: {
         isMessage: true,
-        isAudioMessage: false,
+        isAudio: false,
         hasAttachment: false,
         message: {
           text: 'wow',
@@ -1148,7 +1148,7 @@ describe('#onAudio', () => {
     const predicate = jest.fn(() => Promise.resolve(false));
     const context = {
       event: {
-        isAudioMessage: true,
+        isAudio: true,
         attachments: [
           {
             type: 'audio',
@@ -1180,7 +1180,7 @@ describe('#onVideo', () => {
     const context = {
       event: {
         isMessage: true,
-        isVideoMessage: true,
+        isVideo: true,
         hasAttachment: true,
         attachments: [
           {
@@ -1204,7 +1204,7 @@ describe('#onVideo', () => {
     const context = {
       event: {
         isMessage: true,
-        isVideoMessage: true,
+        isVideo: true,
         hasAttachment: true,
         attachments: [
           {
@@ -1228,7 +1228,7 @@ describe('#onVideo', () => {
     const handler = jest.fn();
     const context = {
       event: {
-        isVideoMessage: false,
+        isVideo: false,
         message: {
           text: 'wow',
         },
@@ -1246,7 +1246,7 @@ describe('#onVideo', () => {
     const predicate = jest.fn(() => Promise.resolve(false));
     const context = {
       event: {
-        isVideoMessage: true,
+        isVideo: true,
         attachments: [
           {
             type: 'video',
@@ -1278,7 +1278,7 @@ describe('#onFile', () => {
     const context = {
       event: {
         isMessage: true,
-        isFileMessage: true,
+        isFile: true,
         hasAttachment: true,
         attachments: [
           {
@@ -1302,7 +1302,7 @@ describe('#onFile', () => {
     const context = {
       event: {
         isMessage: true,
-        isFileMessage: true,
+        isFile: true,
         hasAttachment: true,
         attachments: [
           {
@@ -1326,7 +1326,7 @@ describe('#onFile', () => {
     const handler = jest.fn();
     const context = {
       event: {
-        isFileMessage: false,
+        isFile: false,
         message: {
           text: 'wow',
         },
@@ -1344,7 +1344,7 @@ describe('#onFile', () => {
     const predicate = jest.fn(() => Promise.resolve(false));
     const context = {
       event: {
-        isFileMessage: true,
+        isFile: true,
         attachments: [
           {
             type: 'file',
@@ -1376,7 +1376,7 @@ describe('#onFallback', () => {
     const context = {
       event: {
         isMessage: true,
-        isFallbackMessage: true,
+        isFallback: true,
         hasAttachment: true,
         attachments: [
           {
@@ -1400,7 +1400,7 @@ describe('#onFallback', () => {
     const context = {
       event: {
         isMessage: true,
-        isFallbackMessage: true,
+        isFallback: true,
         hasAttachment: true,
         attachments: [
           {
@@ -1424,7 +1424,7 @@ describe('#onFallback', () => {
     const handler = jest.fn();
     const context = {
       event: {
-        isFallbackMessage: false,
+        isFallback: false,
         message: {
           text: 'wow',
         },
@@ -1442,7 +1442,7 @@ describe('#onFallback', () => {
     const predicate = jest.fn(() => Promise.resolve(false));
     const context = {
       event: {
-        isFallbackMessage: true,
+        isFallback: true,
         attachments: [
           {
             type: 'fallback',

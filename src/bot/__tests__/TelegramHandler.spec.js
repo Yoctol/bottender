@@ -72,8 +72,8 @@ describe('#onCallbackQuery', () => {
     const context = {
       event: {
         isMessage: true,
-        isTextMessage: true,
-        isPhotoMessage: false,
+        isText: true,
+        isPhoto: false,
         message: {
           text: 'wow',
         },
@@ -212,7 +212,7 @@ describe('#onPhoto', () => {
     const context = {
       event: {
         isMessage: true,
-        isPhotoMessage: true,
+        isPhoto: true,
         message: {
           message_id: 666,
           photo: [
@@ -242,7 +242,7 @@ describe('#onPhoto', () => {
     const context = {
       event: {
         isMessage: true,
-        isPhotoMessage: true,
+        isPhoto: true,
         message: {
           message_id: 666,
           photo: [
@@ -273,8 +273,8 @@ describe('#onPhoto', () => {
     const context = {
       event: {
         isMessage: true,
-        isTextMessage: true,
-        isPhotoMessage: false,
+        isText: true,
+        isPhoto: false,
         message: {
           text: 'wow',
         },
@@ -292,7 +292,7 @@ describe('#onPhoto', () => {
     const predicate = jest.fn(() => Promise.resolve(false));
     const context = {
       event: {
-        isPhotoMessage: true,
+        isPhoto: true,
         message: {
           message_id: 666,
           photo: [
@@ -331,7 +331,7 @@ describe('#onDocument', () => {
     const context = {
       event: {
         isMessage: true,
-        isDocumentMessage: true,
+        isDocument: true,
         message: {
           message_id: 666,
           document: {
@@ -353,7 +353,7 @@ describe('#onDocument', () => {
     const context = {
       event: {
         isMessage: true,
-        isDocumentMessage: true,
+        isDocument: true,
         message: {
           message_id: 666,
           document: {
@@ -375,7 +375,7 @@ describe('#onDocument', () => {
     const handler = jest.fn();
     const context = {
       event: {
-        isDocumentMessage: false,
+        isDocument: false,
         message: {
           text: 'wow',
         },
@@ -393,7 +393,7 @@ describe('#onDocument', () => {
     const predicate = jest.fn(() => Promise.resolve(false));
     const context = {
       event: {
-        isDocumentMessage: true,
+        isDocument: true,
         message: {
           message_id: 666,
           document: {
@@ -424,7 +424,7 @@ describe('#onAudio', () => {
     const context = {
       event: {
         isMessage: true,
-        isAudioMessage: true,
+        isAudio: true,
         message: {
           message_id: 666,
           audio: {
@@ -447,7 +447,7 @@ describe('#onAudio', () => {
     const context = {
       event: {
         isMessage: true,
-        isAudioMessage: true,
+        isAudio: true,
         message: {
           message_id: 666,
           audio: {
@@ -471,8 +471,8 @@ describe('#onAudio', () => {
     const context = {
       event: {
         isMessage: true,
-        isTextMessage: true,
-        isAudioMessage: false,
+        isText: true,
+        isAudio: false,
         message: {
           text: 'wow',
         },
@@ -491,7 +491,7 @@ describe('#onAudio', () => {
     const context = {
       event: {
         isMessage: true,
-        isAudioMessage: true,
+        isAudio: true,
         message: {
           message_id: 666,
           audio: {
@@ -523,7 +523,7 @@ describe('#onGame', () => {
     const context = {
       event: {
         isMessage: true,
-        isGameMessage: true,
+        isGame: true,
         message: {
           message_id: 666,
           game: {
@@ -557,7 +557,7 @@ describe('#onGame', () => {
     const context = {
       event: {
         isMessage: true,
-        isGameMessage: true,
+        isGame: true,
         message: {
           message_id: 666,
           game: {
@@ -591,7 +591,7 @@ describe('#onGame', () => {
     const handler = jest.fn();
     const context = {
       event: {
-        isGameMessage: false,
+        isGame: false,
         message: {
           text: 'wow',
         },
@@ -609,7 +609,7 @@ describe('#onGame', () => {
     const predicate = jest.fn(() => Promise.resolve(false));
     const context = {
       event: {
-        isGameMessage: true,
+        isGame: true,
         message: {
           message_id: 666,
           game: {
@@ -652,7 +652,7 @@ describe('#onSticker', () => {
     const context = {
       event: {
         isMessage: true,
-        isStickerMessage: true,
+        isSticker: true,
         message: {
           message_id: 666,
           sticker: {
@@ -675,7 +675,7 @@ describe('#onSticker', () => {
     const context = {
       event: {
         isMessage: true,
-        isStickerMessage: true,
+        isSticker: true,
         message: {
           message_id: 666,
           sticker: {
@@ -699,8 +699,8 @@ describe('#onSticker', () => {
     const context = {
       event: {
         isMessage: true,
-        isTextMessage: true,
-        isStickerMessage: false,
+        isText: true,
+        isSticker: false,
         message: {
           text: 'wow',
         },
@@ -719,7 +719,7 @@ describe('#onSticker', () => {
     const context = {
       event: {
         isMessage: true,
-        isStickerMessage: true,
+        isSticker: true,
         message: {
           message_id: 666,
           sticker: {
@@ -751,7 +751,7 @@ describe('#onVideo', () => {
     const context = {
       event: {
         isMessage: true,
-        isVideoMessage: true,
+        isVideo: true,
         message: {
           message_id: 666,
           video: {
@@ -775,7 +775,7 @@ describe('#onVideo', () => {
     const context = {
       event: {
         isMessage: true,
-        isVideoMessage: true,
+        isVideo: true,
         message: {
           message_id: 666,
           video: {
@@ -800,8 +800,8 @@ describe('#onVideo', () => {
     const context = {
       event: {
         isMessage: true,
-        isTextMessage: true,
-        isVideoMessage: false,
+        isText: true,
+        isVideo: false,
         message: {
           text: 'wow',
         },
@@ -820,7 +820,7 @@ describe('#onVideo', () => {
     const context = {
       event: {
         isMessage: true,
-        isVideoMessage: true,
+        isVideo: true,
         message: {
           message_id: 666,
           video: {
@@ -853,7 +853,7 @@ describe('#onVoice', () => {
     const context = {
       event: {
         isMessage: true,
-        isVoiceMessage: true,
+        isVoice: true,
         message: {
           message_id: 666,
           voice: {
@@ -875,7 +875,7 @@ describe('#onVoice', () => {
     const context = {
       event: {
         isMessage: true,
-        isVoiceMessage: true,
+        isVoice: true,
         message: {
           message_id: 666,
           voice: {
@@ -898,8 +898,8 @@ describe('#onVoice', () => {
     const context = {
       event: {
         isMessage: true,
-        isTextMessage: true,
-        isVoiceMessage: false,
+        isText: true,
+        isVoice: false,
         message: {
           text: 'wow',
         },
@@ -918,7 +918,7 @@ describe('#onVoice', () => {
     const context = {
       event: {
         isMessage: true,
-        isVoiceMessage: true,
+        isVoice: true,
         message: {
           message_id: 666,
           voice: {
@@ -949,7 +949,7 @@ describe('#onVideoNote', () => {
     const context = {
       event: {
         isMessage: true,
-        isVideoNoteMessage: true,
+        isVideoNote: true,
         message: {
           message_id: 666,
           video_note: {
@@ -972,7 +972,7 @@ describe('#onVideoNote', () => {
     const context = {
       event: {
         isMessage: true,
-        isVideoNoteMessage: true,
+        isVideoNote: true,
         message: {
           message_id: 666,
           video_note: {
@@ -996,8 +996,8 @@ describe('#onVideoNote', () => {
     const context = {
       event: {
         isMessage: true,
-        isTextMessage: true,
-        isVideoNoteMessage: false,
+        isText: true,
+        isVideoNote: false,
         message: {
           text: 'wow',
         },
@@ -1016,7 +1016,7 @@ describe('#onVideoNote', () => {
     const context = {
       event: {
         isMessage: true,
-        isVideoNoteMessage: true,
+        isVideoNote: true,
         message: {
           message_id: 666,
           video_note: {
@@ -1048,7 +1048,7 @@ describe('#onContact', () => {
     const context = {
       event: {
         isMessage: true,
-        isContactMessage: true,
+        isContact: true,
         message: {
           message_id: 666,
           contact: {
@@ -1070,7 +1070,7 @@ describe('#onContact', () => {
     const context = {
       event: {
         isMessage: true,
-        isContactMessage: true,
+        isContact: true,
         message: {
           message_id: 666,
           contact: {
@@ -1093,8 +1093,8 @@ describe('#onContact', () => {
     const context = {
       event: {
         isMessage: true,
-        isTextMessage: true,
-        isContactMessage: false,
+        isText: true,
+        isContact: false,
         message: {
           text: 'wow',
         },
@@ -1113,7 +1113,7 @@ describe('#onContact', () => {
     const context = {
       event: {
         isMessage: true,
-        isContactMessage: true,
+        isContact: true,
         message: {
           message_id: 666,
           contact: {
@@ -1144,7 +1144,7 @@ describe('#onLocation', () => {
     const context = {
       event: {
         isMessage: true,
-        isLocationMessage: true,
+        isLocation: true,
         message: {
           message_id: 666,
           location: {
@@ -1166,7 +1166,7 @@ describe('#onLocation', () => {
     const context = {
       event: {
         isMessage: true,
-        isLocationMessage: true,
+        isLocation: true,
         message: {
           message_id: 666,
           location: {
@@ -1189,8 +1189,8 @@ describe('#onLocation', () => {
     const context = {
       event: {
         isMessage: true,
-        isTextMessage: true,
-        isLocationMessage: false,
+        isText: true,
+        isLocation: false,
         message: {
           text: 'wow',
         },
@@ -1209,7 +1209,7 @@ describe('#onLocation', () => {
     const context = {
       event: {
         isMessage: true,
-        isLocationMessage: true,
+        isLocation: true,
         message: {
           message_id: 666,
           location: {
@@ -1240,7 +1240,7 @@ describe('#onVenue', () => {
     const context = {
       event: {
         isMessage: true,
-        isVenueMessage: true,
+        isVenue: true,
         message: {
           message_id: 666,
           venue: {
@@ -1266,7 +1266,7 @@ describe('#onVenue', () => {
     const context = {
       event: {
         isMessage: true,
-        isVenueMessage: true,
+        isVenue: true,
         message: {
           message_id: 666,
           venue: {
@@ -1293,8 +1293,8 @@ describe('#onVenue', () => {
     const context = {
       event: {
         isMessage: true,
-        isTextMessage: true,
-        isVenueMessage: false,
+        isText: true,
+        isVenue: false,
         message: {
           text: 'wow',
         },
@@ -1313,7 +1313,7 @@ describe('#onVenue', () => {
     const context = {
       event: {
         isMessage: true,
-        isVenueMessage: true,
+        isVenue: true,
         message: {
           message_id: 666,
           venue: {

@@ -21,7 +21,7 @@ export default class ClassifierHandler {
 
   build() {
     return async context => {
-      if (context.event.isTextMessage) {
+      if (context.event.isText) {
         const result = await this._classifier.predict(
           context.event.message.text
         );

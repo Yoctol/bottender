@@ -41,7 +41,7 @@ describe('#onIntent', () => {
     builder.onIntent('intent_1', handler1).onIntent('intent_2', handler2);
     const context = {
       event: {
-        isTextMessage: true,
+        isText: true,
         message: {
           text: 'Hello World',
         },
@@ -66,7 +66,7 @@ describe('#onIntent', () => {
     builder.onIntent('intent_2', handler2);
     const context = {
       event: {
-        isTextMessage: true,
+        isText: true,
         message: {
           text: 'Hello World',
         },
@@ -104,7 +104,7 @@ describe('#onUnmatched', () => {
     builder.onUnmatched(handler);
     const context = {
       event: {
-        isTextMessage: true,
+        isText: true,
         message: {
           text: 'Hello World',
         },
@@ -127,7 +127,7 @@ describe('#onUnmatched', () => {
     classifier.predict.mockReturnValue(Promise.resolve(result));
     const context = {
       event: {
-        isTextMessage: true,
+        isText: true,
         message: {
           text: 'Hello World',
         },

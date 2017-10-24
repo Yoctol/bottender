@@ -9,7 +9,7 @@ describe('#messenger', () => {
     const context = simulator.createTextContext('Awesome');
 
     expect(context.event.isMessage).toBe(true);
-    expect(context.event.isTextMessage).toBe(true);
+    expect(context.event.isText).toBe(true);
 
     expect(context.event.message.text).toBe('Awesome');
 

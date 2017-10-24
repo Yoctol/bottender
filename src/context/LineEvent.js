@@ -115,7 +115,7 @@ export default class LineEvent implements Event {
    * Determine if the event is a message event which includes text.
    *
    */
-  get isTextMessage(): boolean {
+  get isText(): boolean {
     return this.isMessage && (this.message: any).type === 'text';
   }
 
@@ -123,7 +123,7 @@ export default class LineEvent implements Event {
    * Determine if the event is a message event which includes image.
    *
    */
-  get isImageMessage(): boolean {
+  get isImage(): boolean {
     return this.isMessage && (this.message: any).type === 'image';
   }
 
@@ -132,7 +132,7 @@ export default class LineEvent implements Event {
    *
    */
   get image(): ?Message {
-    if (this.isImageMessage) {
+    if (this.isImage) {
       return this.message;
     }
     return null;
@@ -142,7 +142,7 @@ export default class LineEvent implements Event {
    * Determine if the event is a message event which includes video.
    *
    */
-  get isVideoMessage(): boolean {
+  get isVideo(): boolean {
     return this.isMessage && (this.message: any).type === 'video';
   }
 
@@ -151,7 +151,7 @@ export default class LineEvent implements Event {
    *
    */
   get video(): ?Message {
-    if (this.isVideoMessage) {
+    if (this.isVideo) {
       return this.message;
     }
     return null;
@@ -161,7 +161,7 @@ export default class LineEvent implements Event {
    * Determine if the event is a message event which includes audio.
    *
    */
-  get isAudioMessage(): boolean {
+  get isAudio(): boolean {
     return this.isMessage && (this.message: any).type === 'audio';
   }
 
@@ -170,7 +170,7 @@ export default class LineEvent implements Event {
    *
    */
   get audio(): ?Message {
-    if (this.isAudioMessage) {
+    if (this.isAudio) {
       return this.message;
     }
     return null;
@@ -180,7 +180,7 @@ export default class LineEvent implements Event {
    * Determine if the event is a message event which includes location.
    *
    */
-  get isLocationMessage(): boolean {
+  get isLocation(): boolean {
     return this.isMessage && (this.message: any).type === 'location';
   }
 
@@ -189,7 +189,7 @@ export default class LineEvent implements Event {
    *
    */
   get location(): ?Message {
-    if (this.isLocationMessage) {
+    if (this.isLocation) {
       return this.message;
     }
     return null;
@@ -199,7 +199,7 @@ export default class LineEvent implements Event {
    * Determine if the event is a message event which includes sticker.
    *
    */
-  get isStickerMessage(): boolean {
+  get isSticker(): boolean {
     return this.isMessage && (this.message: any).type === 'sticker';
   }
 
@@ -208,7 +208,7 @@ export default class LineEvent implements Event {
    *
    */
   get sticker(): ?Message {
-    if (this.isStickerMessage) {
+    if (this.isSticker) {
       return this.message;
     }
     return null;

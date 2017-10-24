@@ -318,22 +318,22 @@ it('#message', () => {
   expect(new LineEvent(beacon).message).toEqual(null);
 });
 
-it('#isTextMessage', () => {
-  expect(new LineEvent(textMessage).isTextMessage).toEqual(true);
-  expect(new LineEvent(imageMessage).isTextMessage).toEqual(false);
-  expect(new LineEvent(videoMessage).isTextMessage).toEqual(false);
-  expect(new LineEvent(audioMessage).isTextMessage).toEqual(false);
-  expect(new LineEvent(locationMessage).isTextMessage).toEqual(false);
-  expect(new LineEvent(stickerMessage).isTextMessage).toEqual(false);
+it('#isText', () => {
+  expect(new LineEvent(textMessage).isText).toEqual(true);
+  expect(new LineEvent(imageMessage).isText).toEqual(false);
+  expect(new LineEvent(videoMessage).isText).toEqual(false);
+  expect(new LineEvent(audioMessage).isText).toEqual(false);
+  expect(new LineEvent(locationMessage).isText).toEqual(false);
+  expect(new LineEvent(stickerMessage).isText).toEqual(false);
 });
 
-it('#isImageMessage', () => {
-  expect(new LineEvent(textMessage).isImageMessage).toEqual(false);
-  expect(new LineEvent(imageMessage).isImageMessage).toEqual(true);
-  expect(new LineEvent(videoMessage).isImageMessage).toEqual(false);
-  expect(new LineEvent(audioMessage).isImageMessage).toEqual(false);
-  expect(new LineEvent(locationMessage).isImageMessage).toEqual(false);
-  expect(new LineEvent(stickerMessage).isImageMessage).toEqual(false);
+it('#isImage', () => {
+  expect(new LineEvent(textMessage).isImage).toEqual(false);
+  expect(new LineEvent(imageMessage).isImage).toEqual(true);
+  expect(new LineEvent(videoMessage).isImage).toEqual(false);
+  expect(new LineEvent(audioMessage).isImage).toEqual(false);
+  expect(new LineEvent(locationMessage).isImage).toEqual(false);
+  expect(new LineEvent(stickerMessage).isImage).toEqual(false);
 });
 
 it('#image', () => {
@@ -348,13 +348,13 @@ it('#image', () => {
   expect(new LineEvent(stickerMessage).image).toEqual(null);
 });
 
-it('#isVideoMessage', () => {
-  expect(new LineEvent(textMessage).isVideoMessage).toEqual(false);
-  expect(new LineEvent(imageMessage).isVideoMessage).toEqual(false);
-  expect(new LineEvent(videoMessage).isVideoMessage).toEqual(true);
-  expect(new LineEvent(audioMessage).isVideoMessage).toEqual(false);
-  expect(new LineEvent(locationMessage).isVideoMessage).toEqual(false);
-  expect(new LineEvent(stickerMessage).isVideoMessage).toEqual(false);
+it('#isVideo', () => {
+  expect(new LineEvent(textMessage).isVideo).toEqual(false);
+  expect(new LineEvent(imageMessage).isVideo).toEqual(false);
+  expect(new LineEvent(videoMessage).isVideo).toEqual(true);
+  expect(new LineEvent(audioMessage).isVideo).toEqual(false);
+  expect(new LineEvent(locationMessage).isVideo).toEqual(false);
+  expect(new LineEvent(stickerMessage).isVideo).toEqual(false);
 });
 
 it('#video', () => {
@@ -369,13 +369,13 @@ it('#video', () => {
   expect(new LineEvent(stickerMessage).video).toEqual(null);
 });
 
-it('#isAudioMessage', () => {
-  expect(new LineEvent(textMessage).isAudioMessage).toEqual(false);
-  expect(new LineEvent(imageMessage).isAudioMessage).toEqual(false);
-  expect(new LineEvent(videoMessage).isAudioMessage).toEqual(false);
-  expect(new LineEvent(audioMessage).isAudioMessage).toEqual(true);
-  expect(new LineEvent(locationMessage).isAudioMessage).toEqual(false);
-  expect(new LineEvent(stickerMessage).isAudioMessage).toEqual(false);
+it('#isAudio', () => {
+  expect(new LineEvent(textMessage).isAudio).toEqual(false);
+  expect(new LineEvent(imageMessage).isAudio).toEqual(false);
+  expect(new LineEvent(videoMessage).isAudio).toEqual(false);
+  expect(new LineEvent(audioMessage).isAudio).toEqual(true);
+  expect(new LineEvent(locationMessage).isAudio).toEqual(false);
+  expect(new LineEvent(stickerMessage).isAudio).toEqual(false);
 });
 
 it('#audio', () => {
@@ -390,13 +390,13 @@ it('#audio', () => {
   expect(new LineEvent(stickerMessage).audio).toEqual(null);
 });
 
-it('#isLocationMessage', () => {
-  expect(new LineEvent(textMessage).isLocationMessage).toEqual(false);
-  expect(new LineEvent(imageMessage).isLocationMessage).toEqual(false);
-  expect(new LineEvent(videoMessage).isLocationMessage).toEqual(false);
-  expect(new LineEvent(audioMessage).isLocationMessage).toEqual(false);
-  expect(new LineEvent(locationMessage).isLocationMessage).toEqual(true);
-  expect(new LineEvent(stickerMessage).isLocationMessage).toEqual(false);
+it('#isLocation', () => {
+  expect(new LineEvent(textMessage).isLocation).toEqual(false);
+  expect(new LineEvent(imageMessage).isLocation).toEqual(false);
+  expect(new LineEvent(videoMessage).isLocation).toEqual(false);
+  expect(new LineEvent(audioMessage).isLocation).toEqual(false);
+  expect(new LineEvent(locationMessage).isLocation).toEqual(true);
+  expect(new LineEvent(stickerMessage).isLocation).toEqual(false);
 });
 
 it('#location', () => {
@@ -415,13 +415,13 @@ it('#location', () => {
   expect(new LineEvent(stickerMessage).location).toEqual(null);
 });
 
-it('#isStickerMessage', () => {
-  expect(new LineEvent(textMessage).isStickerMessage).toEqual(false);
-  expect(new LineEvent(imageMessage).isStickerMessage).toEqual(false);
-  expect(new LineEvent(videoMessage).isStickerMessage).toEqual(false);
-  expect(new LineEvent(audioMessage).isStickerMessage).toEqual(false);
-  expect(new LineEvent(locationMessage).isStickerMessage).toEqual(false);
-  expect(new LineEvent(stickerMessage).isStickerMessage).toEqual(true);
+it('#isSticker', () => {
+  expect(new LineEvent(textMessage).isSticker).toEqual(false);
+  expect(new LineEvent(imageMessage).isSticker).toEqual(false);
+  expect(new LineEvent(videoMessage).isSticker).toEqual(false);
+  expect(new LineEvent(audioMessage).isSticker).toEqual(false);
+  expect(new LineEvent(locationMessage).isSticker).toEqual(false);
+  expect(new LineEvent(stickerMessage).isSticker).toEqual(true);
 });
 
 it('#sticker', () => {

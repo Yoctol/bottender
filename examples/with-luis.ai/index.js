@@ -10,7 +10,7 @@ const luis = new LUISClient({
 const bot = new ConsoleBot();
 
 bot.onEvent(async context => {
-  if (context.event.isTextMessage) {
+  if (context.event.isText) {
     try {
       const response = await new Promise((resolve, reject) => {
         luis.predict(context.event.message.text, {

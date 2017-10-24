@@ -7,7 +7,7 @@ const bot = new MessengerBot({
 });
 
 bot.onEvent(async context => {
-  if (context.event.isTextMessage) {
+  if (context.event.isText) {
     await context.sendText('I know you sent text message.');
   } else {
     await context.sendText("I know you didn't send text message.");

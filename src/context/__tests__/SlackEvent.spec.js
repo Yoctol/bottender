@@ -659,9 +659,9 @@ it('#isMessage', () => {
   expect(new SlackEvent(mpimMessage).isMessage).toEqual(true);
 });
 
-it('#isTextMessage', () => {
+it('#isText', () => {
   const event = new SlackEvent(message);
-  expect(event.isTextMessage).toEqual(event.isMessage);
+  expect(event.isText).toEqual(event.isMessage);
 });
 
 it('#message', () => {

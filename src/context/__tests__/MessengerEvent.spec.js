@@ -476,10 +476,10 @@ it('#message', () => {
   });
 });
 
-it('#isTextMessage', () => {
-  expect(new MessengerEvent(textMessage).isTextMessage).toEqual(true);
-  expect(new MessengerEvent(imageMessage).isTextMessage).toEqual(false);
-  expect(new MessengerEvent(likeStickerMessage).isTextMessage).toEqual(false);
+it('#isText', () => {
+  expect(new MessengerEvent(textMessage).isText).toEqual(true);
+  expect(new MessengerEvent(imageMessage).isText).toEqual(false);
+  expect(new MessengerEvent(likeStickerMessage).isText).toEqual(false);
 });
 
 it('#hasAttachment', () => {
@@ -511,15 +511,15 @@ it('#attachments', () => {
   expect(new MessengerEvent(postback).attachments).toEqual(null);
 });
 
-it('#isImageMessage', () => {
-  expect(new MessengerEvent(textMessage).isImageMessage).toEqual(false);
-  expect(new MessengerEvent(locationMessage).isImageMessage).toEqual(false);
-  expect(new MessengerEvent(videoMessage).isImageMessage).toEqual(false);
-  expect(new MessengerEvent(audioMessage).isImageMessage).toEqual(false);
-  expect(new MessengerEvent(fileMessage).isImageMessage).toEqual(false);
-  expect(new MessengerEvent(fallbackMessage).isImageMessage).toEqual(false);
-  expect(new MessengerEvent(imageMessage).isImageMessage).toEqual(true);
-  expect(new MessengerEvent(likeStickerMessage).isImageMessage).toEqual(true);
+it('#isImage', () => {
+  expect(new MessengerEvent(textMessage).isImage).toEqual(false);
+  expect(new MessengerEvent(locationMessage).isImage).toEqual(false);
+  expect(new MessengerEvent(videoMessage).isImage).toEqual(false);
+  expect(new MessengerEvent(audioMessage).isImage).toEqual(false);
+  expect(new MessengerEvent(fileMessage).isImage).toEqual(false);
+  expect(new MessengerEvent(fallbackMessage).isImage).toEqual(false);
+  expect(new MessengerEvent(imageMessage).isImage).toEqual(true);
+  expect(new MessengerEvent(likeStickerMessage).isImage).toEqual(true);
 });
 
 it('#image', () => {
@@ -540,15 +540,15 @@ it('#image', () => {
   });
 });
 
-it('#isAudioMessage', () => {
-  expect(new MessengerEvent(textMessage).isAudioMessage).toEqual(false);
-  expect(new MessengerEvent(locationMessage).isAudioMessage).toEqual(false);
-  expect(new MessengerEvent(videoMessage).isAudioMessage).toEqual(false);
-  expect(new MessengerEvent(audioMessage).isAudioMessage).toEqual(true);
-  expect(new MessengerEvent(fileMessage).isAudioMessage).toEqual(false);
-  expect(new MessengerEvent(fallbackMessage).isAudioMessage).toEqual(false);
-  expect(new MessengerEvent(imageMessage).isAudioMessage).toEqual(false);
-  expect(new MessengerEvent(likeStickerMessage).isAudioMessage).toEqual(false);
+it('#isAudio', () => {
+  expect(new MessengerEvent(textMessage).isAudio).toEqual(false);
+  expect(new MessengerEvent(locationMessage).isAudio).toEqual(false);
+  expect(new MessengerEvent(videoMessage).isAudio).toEqual(false);
+  expect(new MessengerEvent(audioMessage).isAudio).toEqual(true);
+  expect(new MessengerEvent(fileMessage).isAudio).toEqual(false);
+  expect(new MessengerEvent(fallbackMessage).isAudio).toEqual(false);
+  expect(new MessengerEvent(imageMessage).isAudio).toEqual(false);
+  expect(new MessengerEvent(likeStickerMessage).isAudio).toEqual(false);
 });
 
 it('#audio', () => {
@@ -564,15 +564,15 @@ it('#audio', () => {
   expect(new MessengerEvent(likeStickerMessage).audio).toEqual(null);
 });
 
-it('#isVideoMessage', () => {
-  expect(new MessengerEvent(textMessage).isVideoMessage).toEqual(false);
-  expect(new MessengerEvent(locationMessage).isVideoMessage).toEqual(false);
-  expect(new MessengerEvent(videoMessage).isVideoMessage).toEqual(true);
-  expect(new MessengerEvent(audioMessage).isVideoMessage).toEqual(false);
-  expect(new MessengerEvent(fileMessage).isVideoMessage).toEqual(false);
-  expect(new MessengerEvent(fallbackMessage).isVideoMessage).toEqual(false);
-  expect(new MessengerEvent(imageMessage).isVideoMessage).toEqual(false);
-  expect(new MessengerEvent(likeStickerMessage).isVideoMessage).toEqual(false);
+it('#isVideo', () => {
+  expect(new MessengerEvent(textMessage).isVideo).toEqual(false);
+  expect(new MessengerEvent(locationMessage).isVideo).toEqual(false);
+  expect(new MessengerEvent(videoMessage).isVideo).toEqual(true);
+  expect(new MessengerEvent(audioMessage).isVideo).toEqual(false);
+  expect(new MessengerEvent(fileMessage).isVideo).toEqual(false);
+  expect(new MessengerEvent(fallbackMessage).isVideo).toEqual(false);
+  expect(new MessengerEvent(imageMessage).isVideo).toEqual(false);
+  expect(new MessengerEvent(likeStickerMessage).isVideo).toEqual(false);
 });
 
 it('#video', () => {
@@ -588,17 +588,15 @@ it('#video', () => {
   expect(new MessengerEvent(likeStickerMessage).video).toEqual(null);
 });
 
-it('#isLocationMessage', () => {
-  expect(new MessengerEvent(textMessage).isLocationMessage).toEqual(false);
-  expect(new MessengerEvent(locationMessage).isLocationMessage).toEqual(true);
-  expect(new MessengerEvent(videoMessage).isLocationMessage).toEqual(false);
-  expect(new MessengerEvent(audioMessage).isLocationMessage).toEqual(false);
-  expect(new MessengerEvent(fileMessage).isLocationMessage).toEqual(false);
-  expect(new MessengerEvent(fallbackMessage).isLocationMessage).toEqual(false);
-  expect(new MessengerEvent(imageMessage).isLocationMessage).toEqual(false);
-  expect(new MessengerEvent(likeStickerMessage).isLocationMessage).toEqual(
-    false
-  );
+it('#isLocation', () => {
+  expect(new MessengerEvent(textMessage).isLocation).toEqual(false);
+  expect(new MessengerEvent(locationMessage).isLocation).toEqual(true);
+  expect(new MessengerEvent(videoMessage).isLocation).toEqual(false);
+  expect(new MessengerEvent(audioMessage).isLocation).toEqual(false);
+  expect(new MessengerEvent(fileMessage).isLocation).toEqual(false);
+  expect(new MessengerEvent(fallbackMessage).isLocation).toEqual(false);
+  expect(new MessengerEvent(imageMessage).isLocation).toEqual(false);
+  expect(new MessengerEvent(likeStickerMessage).isLocation).toEqual(false);
 });
 
 it('#location', () => {
@@ -614,15 +612,15 @@ it('#location', () => {
   expect(new MessengerEvent(likeStickerMessage).location).toEqual(null);
 });
 
-it('#isFileMessage', () => {
-  expect(new MessengerEvent(textMessage).isFileMessage).toEqual(false);
-  expect(new MessengerEvent(locationMessage).isFileMessage).toEqual(false);
-  expect(new MessengerEvent(videoMessage).isFileMessage).toEqual(false);
-  expect(new MessengerEvent(audioMessage).isFileMessage).toEqual(false);
-  expect(new MessengerEvent(fileMessage).isFileMessage).toEqual(true);
-  expect(new MessengerEvent(fallbackMessage).isFileMessage).toEqual(false);
-  expect(new MessengerEvent(imageMessage).isFileMessage).toEqual(false);
-  expect(new MessengerEvent(likeStickerMessage).isFileMessage).toEqual(false);
+it('#isFile', () => {
+  expect(new MessengerEvent(textMessage).isFile).toEqual(false);
+  expect(new MessengerEvent(locationMessage).isFile).toEqual(false);
+  expect(new MessengerEvent(videoMessage).isFile).toEqual(false);
+  expect(new MessengerEvent(audioMessage).isFile).toEqual(false);
+  expect(new MessengerEvent(fileMessage).isFile).toEqual(true);
+  expect(new MessengerEvent(fallbackMessage).isFile).toEqual(false);
+  expect(new MessengerEvent(imageMessage).isFile).toEqual(false);
+  expect(new MessengerEvent(likeStickerMessage).isFile).toEqual(false);
 });
 
 it('#file', () => {
@@ -638,17 +636,15 @@ it('#file', () => {
   expect(new MessengerEvent(likeStickerMessage).file).toEqual(null);
 });
 
-it('#isFallbackMessage', () => {
-  expect(new MessengerEvent(textMessage).isFallbackMessage).toEqual(false);
-  expect(new MessengerEvent(locationMessage).isFallbackMessage).toEqual(false);
-  expect(new MessengerEvent(videoMessage).isFallbackMessage).toEqual(false);
-  expect(new MessengerEvent(audioMessage).isFallbackMessage).toEqual(false);
-  expect(new MessengerEvent(fileMessage).isFallbackMessage).toEqual(false);
-  expect(new MessengerEvent(fallbackMessage).isFallbackMessage).toEqual(true);
-  expect(new MessengerEvent(imageMessage).isFallbackMessage).toEqual(false);
-  expect(new MessengerEvent(likeStickerMessage).isFallbackMessage).toEqual(
-    false
-  );
+it('#isFallback', () => {
+  expect(new MessengerEvent(textMessage).isFallback).toEqual(false);
+  expect(new MessengerEvent(locationMessage).isFallback).toEqual(false);
+  expect(new MessengerEvent(videoMessage).isFallback).toEqual(false);
+  expect(new MessengerEvent(audioMessage).isFallback).toEqual(false);
+  expect(new MessengerEvent(fileMessage).isFallback).toEqual(false);
+  expect(new MessengerEvent(fallbackMessage).isFallback).toEqual(true);
+  expect(new MessengerEvent(imageMessage).isFallback).toEqual(false);
+  expect(new MessengerEvent(likeStickerMessage).isFallback).toEqual(false);
 });
 
 it('#fallback', () => {
@@ -667,13 +663,11 @@ it('#fallback', () => {
   expect(new MessengerEvent(likeStickerMessage).fallback).toEqual(null);
 });
 
-it('#isStickerMessage', () => {
-  expect(new MessengerEvent(textMessage).isStickerMessage).toEqual(false);
-  expect(new MessengerEvent(imageMessage).isStickerMessage).toEqual(false);
-  expect(new MessengerEvent(likeStickerMessage).isStickerMessage).toEqual(true);
-  expect(new MessengerEvent(largeLikeStickerMessage).isStickerMessage).toEqual(
-    true
-  );
+it('#isSticker', () => {
+  expect(new MessengerEvent(textMessage).isSticker).toEqual(false);
+  expect(new MessengerEvent(imageMessage).isSticker).toEqual(false);
+  expect(new MessengerEvent(likeStickerMessage).isSticker).toEqual(true);
+  expect(new MessengerEvent(largeLikeStickerMessage).isSticker).toEqual(true);
 });
 
 it('#sticker', () => {

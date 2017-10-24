@@ -107,7 +107,7 @@ export default class SlackEvent implements Event {
    * Determine if the event is a message event which includes text.
    *
    */
-  get isTextMessage(): boolean {
+  get isText(): boolean {
     return this.isMessage;
   }
 }

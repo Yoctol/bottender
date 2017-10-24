@@ -45,7 +45,7 @@ export default class ConsoleEvent implements Event {
    * Determine if the event is a message event which includes text.
    *
    */
-  get isTextMessage(): boolean {
+  get isText(): boolean {
     return true;
   }
 }

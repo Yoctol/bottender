@@ -195,7 +195,7 @@ export default class MessengerEvent implements Event {
    * Determine if the event is a message event which includes text.
    *
    */
-  get isTextMessage(): boolean {
+  get isText(): boolean {
     return this.isMessage && typeof (this.message: any).text === 'string';
   }
 
@@ -223,7 +223,7 @@ export default class MessengerEvent implements Event {
    * Determine if the event is a message event which includes image attachment.
    *
    */
-  get isImageMessage(): boolean {
+  get isImage(): boolean {
     return this.hasAttachment && (this.attachments: any)[0].type === 'image';
   }
 
@@ -232,14 +232,14 @@ export default class MessengerEvent implements Event {
    *
    */
   get image(): ?MediaAttachmentPayload {
-    return this.isImageMessage ? (this.attachments: any)[0].payload : null;
+    return this.isImage ? (this.attachments: any)[0].payload : null;
   }
 
   /**
    * Determine if the event is a message event which includes audio attachment.
    *
    */
-  get isAudioMessage(): boolean {
+  get isAudio(): boolean {
     return this.hasAttachment && (this.attachments: any)[0].type === 'audio';
   }
 
@@ -248,14 +248,14 @@ export default class MessengerEvent implements Event {
    *
    */
   get audio(): ?MediaAttachmentPayload {
-    return this.isAudioMessage ? (this.attachments: any)[0].payload : null;
+    return this.isAudio ? (this.attachments: any)[0].payload : null;
   }
 
   /**
    * Determine if the event is a message event which includes video attachment.
    *
    */
-  get isVideoMessage(): boolean {
+  get isVideo(): boolean {
     return this.hasAttachment && (this.attachments: any)[0].type === 'video';
   }
 
@@ -264,14 +264,14 @@ export default class MessengerEvent implements Event {
    *
    */
   get video(): ?MediaAttachmentPayload {
-    return this.isVideoMessage ? (this.attachments: any)[0].payload : null;
+    return this.isVideo ? (this.attachments: any)[0].payload : null;
   }
 
   /**
    * Determine if the event is a message event which includes location attachment.
    *
    */
-  get isLocationMessage(): boolean {
+  get isLocation(): boolean {
     return this.hasAttachment && (this.attachments: any)[0].type === 'location';
   }
 
@@ -280,14 +280,14 @@ export default class MessengerEvent implements Event {
    *
    */
   get location(): ?LocationAttachmentPayload {
-    return this.isLocationMessage ? (this.attachments: any)[0].payload : null;
+    return this.isLocation ? (this.attachments: any)[0].payload : null;
   }
 
   /**
    * Determine if the event is a message event which includes file attachment.
    *
    */
-  get isFileMessage(): boolean {
+  get isFile(): boolean {
     return this.hasAttachment && (this.attachments: any)[0].type === 'file';
   }
 
@@ -296,14 +296,14 @@ export default class MessengerEvent implements Event {
    *
    */
   get file(): ?MediaAttachmentPayload {
-    return this.isFileMessage ? (this.attachments: any)[0].payload : null;
+    return this.isFile ? (this.attachments: any)[0].payload : null;
   }
 
   /**
    * Determine if the event is a message event which includes fallback attachment.
    *
    */
-  get isFallbackMessage(): boolean {
+  get isFallback(): boolean {
     return this.hasAttachment && (this.attachments: any)[0].type === 'fallback';
   }
 
@@ -312,14 +312,14 @@ export default class MessengerEvent implements Event {
    *
    */
   get fallback(): ?FallbackAttachment {
-    return this.isFallbackMessage ? (this.attachments: any)[0] : null;
+    return this.isFallback ? (this.attachments: any)[0] : null;
   }
 
   /**
    * Determine if the event is a message event which includes sticker.
    *
    */
-  get isStickerMessage(): boolean {
+  get isSticker(): boolean {
     return this.isMessage && typeof (this.message: any).sticker_id === 'number';
   }
 
@@ -328,7 +328,7 @@ export default class MessengerEvent implements Event {
    *
    */
   get sticker(): ?string {
-    return this.isStickerMessage ? (this.message: any).sticker_id : null;
+    return this.isSticker ? (this.message: any).sticker_id : null;
   }
 
   /**
@@ -337,7 +337,7 @@ export default class MessengerEvent implements Event {
    */
   get isLikeSticker(): boolean {
     return (
-      this.isStickerMessage &&
+      this.isSticker &&
       ((this.message: any).sticker_id === 369239263222822 ||
         (this.message: any).sticker_id === 369239343222814)
     );

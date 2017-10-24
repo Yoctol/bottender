@@ -149,7 +149,7 @@ export default class TelegramEvent implements Event {
    * Determine if the event is a message event which includes text.
    *
    */
-  get isTextMessage(): boolean {
+  get isText(): boolean {
     return this.isMessage && typeof (this.message: any).text === 'string';
   }
 
@@ -157,7 +157,7 @@ export default class TelegramEvent implements Event {
    * Determine if the event is a message event which includes audio.
    *
    */
-  get isAudioMessage(): boolean {
+  get isAudio(): boolean {
     if (!this.isMessage) return false;
 
     const message: Message = (this.message: any);
@@ -169,7 +169,7 @@ export default class TelegramEvent implements Event {
    * Determine if the event is a message event which includes document.
    *
    */
-  get isDocumentMessage(): boolean {
+  get isDocument(): boolean {
     if (!this.isMessage) return false;
 
     const message: Message = (this.message: any);
@@ -181,7 +181,7 @@ export default class TelegramEvent implements Event {
    * Determine if the event is a message event which includes game.
    *
    */
-  get isGameMessage(): boolean {
+  get isGame(): boolean {
     if (!this.isMessage) return false;
 
     const message: Message = (this.message: any);
@@ -193,7 +193,7 @@ export default class TelegramEvent implements Event {
    * Determine if the event is a message event which includes photo.
    *
    */
-  get isPhotoMessage(): boolean {
+  get isPhoto(): boolean {
     if (!this.isMessage) return false;
 
     const message: Message = (this.message: any);
@@ -205,7 +205,7 @@ export default class TelegramEvent implements Event {
    * Determine if the event is a message event which includes sticker.
    *
    */
-  get isStickerMessage(): boolean {
+  get isSticker(): boolean {
     if (!this.isMessage) return false;
 
     const message: Message = (this.message: any);
@@ -217,7 +217,7 @@ export default class TelegramEvent implements Event {
    * Determine if the event is a message event which includes video.
    *
    */
-  get isVideoMessage(): boolean {
+  get isVideo(): boolean {
     if (!this.isMessage) return false;
 
     const message: Message = (this.message: any);
@@ -228,7 +228,7 @@ export default class TelegramEvent implements Event {
    * Determine if the event is a message event which includes voice.
    *
    */
-  get isVoiceMessage(): boolean {
+  get isVoice(): boolean {
     if (!this.isMessage) return false;
 
     const message: Message = (this.message: any);
@@ -240,7 +240,7 @@ export default class TelegramEvent implements Event {
    * Determine if the event is a message event which includes video note.
    *
    */
-  get isVideoNoteMessage(): boolean {
+  get isVideoNote(): boolean {
     if (!this.isMessage) return false;
 
     const message: Message = (this.message: any);
@@ -252,7 +252,7 @@ export default class TelegramEvent implements Event {
    * Determine if the event is a message event which includes contact.
    *
    */
-  get isContactMessage(): boolean {
+  get isContact(): boolean {
     if (!this.isMessage) return false;
 
     const message: Message = (this.message: any);
@@ -264,7 +264,7 @@ export default class TelegramEvent implements Event {
    * Determine if the event is a message event which includes location.
    *
    */
-  get isLocationMessage(): boolean {
+  get isLocation(): boolean {
     if (!this.isMessage) return false;
 
     const message: Message = (this.message: any);
@@ -276,7 +276,7 @@ export default class TelegramEvent implements Event {
    * Determine if the event is a message event which includes venue.
    *
    */
-  get isVenueMessage(): boolean {
+  get isVenue(): boolean {
     if (!this.isMessage) return false;
 
     const message: Message = (this.message: any);

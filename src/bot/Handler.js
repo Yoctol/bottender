@@ -5,7 +5,7 @@ import warning from 'warning';
 export type Context = {
   event: {
     isMessage: boolean,
-    isTextMessage: boolean,
+    isText: boolean,
     message: {
       text: string,
       [key: string]: any,
@@ -93,7 +93,7 @@ export default class Handler {
     if (args.length < 2) {
       const [handler]: [FunctionalHandler | Builder] = (args: any);
 
-      this.onMessage(context => context.event.isTextMessage, handler);
+      this.onMessage(context => context.event.isText, handler);
     } else {
       // eslint-disable-next-line prefer-const
       let [pattern, handler]: [
@@ -128,7 +128,7 @@ export default class Handler {
 
       this.onMessage(
         context =>
-          context.event.isTextMessage &&
+          context.event.isText &&
           matchPattern(pattern, context.event.message.text),
         handler
       );

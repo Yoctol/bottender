@@ -20,6 +20,6 @@ it('#message', () => {
   });
 });
 
-it('#isTextMessage', () => {
-  expect(new ConsoleEvent(textMessage).isTextMessage).toEqual(true);
+it('#isText', () => {
+  expect(new ConsoleEvent(textMessage).isText).toEqual(true);
 });

@@ -22,7 +22,7 @@ class ContextSimulator {
       },
       event: {
         isMessage: true,
-        isTextMessage: true,
+        isText: true,
         message: {
           text,
         },

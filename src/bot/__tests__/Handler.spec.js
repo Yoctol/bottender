@@ -156,7 +156,7 @@ describe('#onMessage', () => {
       const context = {
         event: {
           isMessage: true,
-          isTextMessage: true,
+          isText: true,
           message: {
             id: '325708',
             type: 'text',
@@ -175,7 +175,7 @@ describe('#onMessage', () => {
       const context = {
         event: {
           isMessage: false,
-          isTextMessage: false,
+          isText: false,
         },
       };
       builder.onMessage(handler);
@@ -243,7 +243,7 @@ describe('#onText', () => {
       const context = {
         event: {
           isMessage: true,
-          isTextMessage: true,
+          isText: true,
           message: {
             id: '325708',
             type: 'text',
@@ -262,7 +262,7 @@ describe('#onText', () => {
       const context = {
         event: {
           isMessage: false,
-          isTextMessage: false,
+          isText: false,
         },
       };
       builder.onText(handler);
@@ -278,7 +278,7 @@ describe('#onText', () => {
       const context = {
         event: {
           isMessage: true,
-          isTextMessage: true,
+          isText: true,
           message: {
             id: '325708',
             type: 'text',
@@ -297,7 +297,7 @@ describe('#onText', () => {
       const context = {
         event: {
           isMessage: true,
-          isTextMessage: true,
+          isText: true,
           message: {
             text: 'awesome',
           },
@@ -314,7 +314,7 @@ describe('#onText', () => {
       const context = {
         event: {
           isMessage: true,
-          isImageMessage: true,
+          isImage: true,
           message: {
             id: '325708',
             type: 'image',
@@ -334,7 +334,7 @@ describe('#onText', () => {
       const context = {
         event: {
           isMessage: true,
-          isTextMessage: true,
+          isText: true,
           message: {
             text: 'awesome',
           },
@@ -358,7 +358,7 @@ describe('#onText', () => {
       const context = {
         event: {
           isMessage: true,
-          isTextMessage: true,
+          isText: true,
           message: {
             text: 'awesome',
           },
