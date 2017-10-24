@@ -4,7 +4,7 @@ import type { TelegramUser } from '../bot/TelegramConnector';
 
 import type { Event } from './Event';
 
-type PhotoSize = Array<{
+type Photo = Array<{
   file_id: string,
   width: number,
   height: number,
@@ -64,6 +64,16 @@ type File = {
   file_id: string,
 };
 
+type Game = {
+  title: string,
+  description: string,
+  photo: Array<{
+    file_id: string,
+    width: number,
+    height: number,
+  }>,
+};
+
 type Message = {
   message_id: number,
   from: TelegramUser,
@@ -80,7 +90,8 @@ type Message = {
     offset: number,
     length: number,
   }>,
-  photo?: PhotoSize,
+  photo?: Photo,
+  game?: Game,
   audio?: Audio,
   document?: Document,
   sticker?: Sticker,
@@ -138,14 +149,6 @@ export default class TelegramEvent implements Event {
   }
 
   /**
-   * The callback query from Telegram raw event.
-   *
-   */
-  get callbackQuery(): ?CallbackQuery {
-    return this._rawEvent.callback_query;
-  }
-
-  /**
    * Determine if the event is a message event which includes text.
    *
    */
@@ -166,6 +169,17 @@ export default class TelegramEvent implements Event {
   }
 
   /**
+   * The audio object from Telegram raw event.
+   *
+   */
+  get audio(): ?Audio {
+    if (this.isAudio) {
+      return (this.message: any).audio;
+    }
+    return null;
+  }
+
+  /**
    * Determine if the event is a message event which includes document.
    *
    */
@@ -175,6 +189,17 @@ export default class TelegramEvent implements Event {
     const message: Message = (this.message: any);
 
     return !!message.document && typeof message.document === 'object';
+  }
+
+  /**
+   * The document object from Telegram raw event.
+   *
+   */
+  get document(): ?Document {
+    if (this.isDocument) {
+      return (this.message: any).document;
+    }
+    return null;
   }
 
   /**
@@ -190,6 +215,17 @@ export default class TelegramEvent implements Event {
   }
 
   /**
+   * The game object from Telegram raw event.
+   *
+   */
+  get game(): ?Game {
+    if (this.isGame) {
+      return (this.message: any).game;
+    }
+    return null;
+  }
+
+  /**
    * Determine if the event is a message event which includes photo.
    *
    */
@@ -199,6 +235,17 @@ export default class TelegramEvent implements Event {
     const message: Message = (this.message: any);
 
     return !!message.photo && message.photo.length > 0;
+  }
+
+  /**
+   * The photo object from Telegram raw event.
+   *
+   */
+  get photo(): ?Photo {
+    if (this.isPhoto) {
+      return (this.message: any).photo;
+    }
+    return null;
   }
 
   /**
@@ -214,6 +261,17 @@ export default class TelegramEvent implements Event {
   }
 
   /**
+   * The sticker object from Telegram raw event.
+   *
+   */
+  get sticker(): ?Sticker {
+    if (this.isSticker) {
+      return (this.message: any).sticker;
+    }
+    return null;
+  }
+
+  /**
    * Determine if the event is a message event which includes video.
    *
    */
@@ -222,6 +280,17 @@ export default class TelegramEvent implements Event {
 
     const message: Message = (this.message: any);
     return !!message.video && typeof message.video === 'object';
+  }
+
+  /**
+   * The video object from Telegram raw event.
+   *
+   */
+  get video(): ?Video {
+    if (this.isVideo) {
+      return (this.message: any).video;
+    }
+    return null;
   }
 
   /**
@@ -237,6 +306,17 @@ export default class TelegramEvent implements Event {
   }
 
   /**
+   * The voice object from Telegram raw event.
+   *
+   */
+  get voice(): ?Voice {
+    if (this.isVoice) {
+      return (this.message: any).voice;
+    }
+    return null;
+  }
+
+  /**
    * Determine if the event is a message event which includes video note.
    *
    */
@@ -246,6 +326,17 @@ export default class TelegramEvent implements Event {
     const message: Message = (this.message: any);
 
     return !!message.video_note && typeof message.video_note === 'object';
+  }
+
+  /**
+   * The video note object from Telegram raw event.
+   *
+   */
+  get videoNote(): ?VideoNote {
+    if (this.isVideoNote) {
+      return (this.message: any).video_note;
+    }
+    return null;
   }
 
   /**
@@ -261,6 +352,17 @@ export default class TelegramEvent implements Event {
   }
 
   /**
+   * The contact object from Telegram raw event.
+   *
+   */
+  get contact(): ?Contact {
+    if (this.isContact) {
+      return (this.message: any).contact;
+    }
+    return null;
+  }
+
+  /**
    * Determine if the event is a message event which includes location.
    *
    */
@@ -270,6 +372,17 @@ export default class TelegramEvent implements Event {
     const message: Message = (this.message: any);
 
     return !!message.location && typeof message.location === 'object';
+  }
+
+  /**
+   * The location object from Telegram raw event.
+   *
+   */
+  get location(): ?Location {
+    if (this.isLocation) {
+      return (this.message: any).location;
+    }
+    return null;
   }
 
   /**
@@ -285,10 +398,29 @@ export default class TelegramEvent implements Event {
   }
 
   /**
+   * The venue object from Telegram raw event.
+   *
+   */
+  get venue(): ?Venue {
+    if (this.isVenue) {
+      return (this.message: any).venue;
+    }
+    return null;
+  }
+
+  /**
    * Determine if the event is a callback query event.
    *
    */
   get isCallbackQuery(): boolean {
     return !!this.callbackQuery && typeof this.callbackQuery === 'object';
+  }
+
+  /**
+   * The callback query from Telegram raw event.
+   *
+   */
+  get callbackQuery(): ?CallbackQuery {
+    return this._rawEvent.callback_query;
   }
 }
