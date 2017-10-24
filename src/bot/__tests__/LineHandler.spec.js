@@ -156,6 +156,24 @@ describe('#onPayload', () => {
     await builder.build()(context);
     expect(handler).toBeCalledWith(context, match);
   });
+
+  it('should call handler build', async () => {
+    const { builder } = setup();
+    const build = jest.fn();
+    const handler = { build: jest.fn(() => build) };
+    const context = {
+      event: {
+        isPostback: true,
+        postback: {
+          data: 'cool',
+        },
+      },
+    };
+
+    builder.onPayload(/COOL/i, handler);
+    await builder.build()(context);
+    expect(handler.build()).toBeCalled();
+  });
 });
 
 describe('#onFollow', () => {

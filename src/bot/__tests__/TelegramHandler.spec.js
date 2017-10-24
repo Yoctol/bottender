@@ -196,6 +196,16 @@ describe('#onPayload', () => {
       expect(handler).not.toBeCalled();
     });
   });
+
+  it('should call handler build', async () => {
+    const { builder } = setup();
+    const build = jest.fn();
+    const handler = { build: jest.fn(() => build) };
+
+    builder.onPayload(/data/, handler);
+    await builder.build()(contextWithCallbackQuery);
+    expect(handler.build()).toBeCalled();
+  });
 });
 
 describe('#onPhoto', () => {

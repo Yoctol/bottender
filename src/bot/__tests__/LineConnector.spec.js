@@ -47,6 +47,10 @@ function setup() {
   const mockLineAPIClient = {
     getUserProfile: jest.fn(),
     isValidSignature: jest.fn(),
+    getGroupMemberProfile: jest.fn(),
+    getAllGroupMemberIds: jest.fn(),
+    getRoomMemberProfile: jest.fn(),
+    getAllRoomMemberIds: jest.fn(),
   };
   LineClient.connect = jest.fn();
   LineClient.connect.mockReturnValue(mockLineAPIClient);
@@ -128,6 +132,35 @@ describe('#getUniqueSessionKey', () => {
     });
     expect(senderId).toBe('U206d25c2ea6bd87c17655609a1c37cb8');
   });
+
+  it('should throw error if source.type is not user, group or room', () => {
+    const { connector } = setup();
+    let error;
+    try {
+      connector.getUniqueSessionKey({
+        events: [
+          {
+            replyToken: 'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA',
+            type: 'message',
+            timestamp: 1462629479859,
+            source: {
+              type: 'other', // other type
+              roomId: 'U206d25c2ea6bd87c17655609a1c37cb8',
+            },
+            message: {
+              id: '325708',
+              type: 'text',
+              text: 'Hello, world',
+            },
+          },
+        ],
+      });
+    } catch (err) {
+      error = err;
+    }
+
+    expect(error).toEqual(expect.any(TypeError));
+  });
 });
 
 describe('#updateSession', () => {
@@ -154,6 +187,229 @@ describe('#updateSession', () => {
     expect(session).toEqual({
       type: 'user',
       user,
+    });
+    expect(Object.isFrozen(session.user)).toBe(true);
+    expect(Object.getOwnPropertyDescriptor(session, 'user')).toEqual({
+      configurable: false,
+      enumerable: true,
+      writable: false,
+      value: session.user,
+    });
+  });
+
+  it('update session if session.user exists', async () => {
+    const { connector, mockLineAPIClient } = setup();
+    const user = {
+      id: 'U206d25c2ea6bd87c17655609a1c37cb8',
+      displayName: 'LINE taro',
+      userId: 'U206d25c2ea6bd87c17655609a1c37cb8',
+      pictureUrl: 'http://obs.line-apps.com/...',
+      statusMessage: 'Hello, LINE!',
+      _updatedAt: expect.any(String),
+    };
+
+    const session = { type: 'user', user };
+
+    await connector.updateSession(session, request.body);
+
+    expect(mockLineAPIClient.getUserProfile).not.toBeCalled();
+    expect(session).toEqual({
+      type: 'user',
+      user,
+    });
+    expect(Object.isFrozen(session.user)).toBe(true);
+    expect(Object.getOwnPropertyDescriptor(session, 'user')).toEqual({
+      configurable: false,
+      enumerable: true,
+      writable: false,
+      value: session.user,
+    });
+  });
+
+  it('update session with group type message', async () => {
+    const { connector, mockLineAPIClient } = setup();
+    const body = {
+      events: [
+        {
+          replyToken: 'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA',
+          type: 'message',
+          timestamp: 1462629479859,
+          source: {
+            type: 'group',
+            groupId: 'Ca56f94637cc4347f90a25382909b24b9',
+            userId: 'U206d25c2ea6bd87c17655609a1c37cb8',
+          },
+          message: {
+            id: '325708',
+            type: 'text',
+            text: 'Hello, world',
+          },
+        },
+      ],
+    };
+    const user = {
+      id: body.events[0].source.userId,
+      displayName: 'LINE taro',
+      userId: body.events[0].source.userId,
+      pictureUrl: 'http://obs.line-apps.com/...',
+      statusMessage: 'Hello, LINE!',
+      _updatedAt: expect.any(String),
+    };
+    const memberIds = [
+      'Uxxxxxxxxxxxxxx...1',
+      'Uxxxxxxxxxxxxxx...2',
+      'Uxxxxxxxxxxxxxx...3',
+    ];
+
+    mockLineAPIClient.getGroupMemberProfile.mockReturnValue(
+      Promise.resolve(user)
+    );
+    mockLineAPIClient.getAllGroupMemberIds.mockReturnValue(
+      Promise.resolve(memberIds)
+    );
+
+    const session = {};
+
+    await connector.updateSession(session, body);
+
+    expect(mockLineAPIClient.getGroupMemberProfile).toBeCalledWith(
+      'Ca56f94637cc4347f90a25382909b24b9',
+      'U206d25c2ea6bd87c17655609a1c37cb8'
+    );
+    expect(mockLineAPIClient.getAllGroupMemberIds).toBeCalledWith(
+      'Ca56f94637cc4347f90a25382909b24b9'
+    );
+
+    expect(session).toEqual({
+      type: 'group',
+      group: {
+        id: 'Ca56f94637cc4347f90a25382909b24b9',
+        members: [
+          { id: 'Uxxxxxxxxxxxxxx...1' },
+          { id: 'Uxxxxxxxxxxxxxx...2' },
+          { id: 'Uxxxxxxxxxxxxxx...3' },
+        ],
+        _updatedAt: expect.any(String),
+      },
+      user,
+    });
+    expect(Object.isFrozen(session.group)).toBe(true);
+    expect(Object.getOwnPropertyDescriptor(session, 'group')).toEqual({
+      configurable: false,
+      enumerable: true,
+      writable: false,
+      value: session.group,
+    });
+  });
+
+  it('update session with room type message', async () => {
+    const { connector, mockLineAPIClient } = setup();
+    const body = {
+      events: [
+        {
+          replyToken: 'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA',
+          type: 'message',
+          timestamp: 1462629479859,
+          source: {
+            type: 'room',
+            roomId: 'Ra8dbf4673c4c812cd491258042226c99',
+            userId: 'U206d25c2ea6bd87c17655609a1c37cb8',
+          },
+          message: {
+            id: '325708',
+            type: 'text',
+            text: 'Hello, world',
+          },
+        },
+      ],
+    };
+    const user = {
+      id: body.events[0].source.userId,
+      displayName: 'LINE taro',
+      userId: body.events[0].source.userId,
+      pictureUrl: 'http://obs.line-apps.com/...',
+      statusMessage: 'Hello, LINE!',
+      _updatedAt: expect.any(String),
+    };
+    const memberIds = [
+      'Uxxxxxxxxxxxxxx...1',
+      'Uxxxxxxxxxxxxxx...2',
+      'Uxxxxxxxxxxxxxx...3',
+    ];
+
+    mockLineAPIClient.getRoomMemberProfile.mockReturnValue(
+      Promise.resolve(user)
+    );
+    mockLineAPIClient.getAllRoomMemberIds.mockReturnValue(
+      Promise.resolve(memberIds)
+    );
+
+    const session = {};
+
+    await connector.updateSession(session, body);
+
+    expect(mockLineAPIClient.getRoomMemberProfile).toBeCalledWith(
+      'Ra8dbf4673c4c812cd491258042226c99',
+      'U206d25c2ea6bd87c17655609a1c37cb8'
+    );
+    expect(mockLineAPIClient.getAllRoomMemberIds).toBeCalledWith(
+      'Ra8dbf4673c4c812cd491258042226c99'
+    );
+
+    expect(session).toEqual({
+      type: 'room',
+      room: {
+        id: 'Ra8dbf4673c4c812cd491258042226c99',
+        members: [
+          { id: 'Uxxxxxxxxxxxxxx...1' },
+          { id: 'Uxxxxxxxxxxxxxx...2' },
+          { id: 'Uxxxxxxxxxxxxxx...3' },
+        ],
+        _updatedAt: expect.any(String),
+      },
+      user,
+    });
+    expect(Object.isFrozen(session.room)).toBe(true);
+    expect(Object.getOwnPropertyDescriptor(session, 'room')).toEqual({
+      configurable: false,
+      enumerable: true,
+      writable: false,
+      value: session.room,
+    });
+  });
+
+  it('update session with other type message', async () => {
+    const { connector } = setup();
+    const body = {
+      events: [
+        {
+          replyToken: 'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA',
+          type: 'message',
+          timestamp: 1462629479859,
+          source: {
+            type: 'other',
+          },
+          message: {
+            id: '325708',
+            type: 'text',
+            text: 'Hello, world',
+          },
+        },
+      ],
+    };
+
+    const session = {};
+
+    await connector.updateSession(session, body);
+
+    expect(session).toEqual({
+      type: 'other',
+    });
+    expect(Object.getOwnPropertyDescriptor(session, 'user')).toEqual({
+      configurable: false,
+      enumerable: true,
+      writable: false,
+      value: undefined,
     });
   });
 });

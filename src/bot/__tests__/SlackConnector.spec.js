@@ -142,6 +142,35 @@ describe('#updateSession', () => {
     expect(mockSlackOAuthClient.getAllUserList).not.toBeCalled();
     expect(session).toEqual({});
   });
+
+  it('not update session if no senderId in body', async () => {
+    const { connector, mockSlackOAuthClient } = setup();
+
+    const session = {};
+    const body = {
+      token: 'xxxxxxxxxxxxxxxxxxxxxxxxxxx',
+      team_id: 'T02R00000',
+      api_app_id: 'A6A00000',
+      event: {
+        type: 'message',
+        user: undefined,
+        text: 'hello',
+        ts: '1500435914.425136',
+        channel: 'C6A900000',
+        event_ts: '1500435914.425136',
+      },
+      type: 'event_callback',
+      authed_users: ['U6AK00000'],
+      event_id: 'Ev6BEYTAK0',
+      event_time: 1500435914,
+    };
+
+    await connector.updateSession(session, body);
+
+    expect(mockSlackOAuthClient.getUserInfo).not.toBeCalled();
+    expect(mockSlackOAuthClient.getChannelInfo).not.toBeCalled();
+    expect(mockSlackOAuthClient.getAllUserList).not.toBeCalled();
+  });
 });
 
 describe('#mapRequestToEvents', () => {

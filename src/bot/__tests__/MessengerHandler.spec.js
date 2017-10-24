@@ -977,22 +977,19 @@ describe('#onImage', () => {
     const context = {
       event: {
         isMessage: true,
-        isLocation: true,
+        isImage: true,
         hasAttachment: true,
         attachments: [
           {
-            type: 'location',
+            type: 'image',
             payload: {
-              coordinates: {
-                lat: 0,
-                long: 0,
-              },
+              url: 'https://example.com/bot/images/image.jpg',
             },
           },
         ],
       },
     };
-    builder.onLocation(handler);
+    builder.onImage(handler);
     await builder.build()(context);
     expect(handler).toBeCalledWith(context);
   });

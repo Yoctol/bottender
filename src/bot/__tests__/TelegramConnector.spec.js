@@ -108,6 +108,12 @@ describe('#getUniqueSessionKey', () => {
     const senderId = connector.getUniqueSessionKey(callbackQueryRequest.body);
     expect(senderId).toBe('313534466');
   });
+
+  it('return empty string if body is not messageRequest or callbackQueryRequest', () => {
+    const { connector } = setup();
+    const senderId = connector.getUniqueSessionKey({});
+    expect(senderId).toBe('');
+  });
 });
 
 describe('#updateSession', () => {
