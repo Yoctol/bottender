@@ -12,17 +12,19 @@ function registerRoutes(server, bot, config = {}) {
   const path = config.path || '/';
   let verifyToken;
 
+  const middleware = config.webhookMiddleware ? [config.webhookMiddleware] : [];
+
   if (bot.connector.platform === 'messenger') {
     verifyToken = config.verifyToken || shortid.generate();
     server.get(path, verifyMessengerWebhook({ verifyToken }));
-    server.post(path, verifyMessengerSignature(bot), createMiddleware(bot));
+    middleware.unshift(verifyMessengerSignature(bot));
   } else if (bot.connector.platform === 'slack') {
-    server.post(path, verifySlackWebhook(), createMiddleware(bot));
+    middleware.unshift(verifySlackWebhook(bot));
   } else if (bot.connector.platform === 'line') {
-    server.post(path, verifyLineSignature(bot), createMiddleware(bot));
-  } else {
-    server.post(path, createMiddleware(bot));
+    middleware.unshift(verifyLineSignature(bot));
   }
+
+  server.post(path, ...middleware, createMiddleware(bot));
 
   const _listen = server.listen.bind(server);
   server.listen = (...args) => {

@@ -1,11 +1,5 @@
-const express = require('express');
-const bodyParser = require('body-parser');
 const { MessengerBot } = require('bottender');
-const {
-  verifyMessengerWebhook,
-  verifyMessengerSignature,
-  createMiddleware,
-} = require('bottender/express');
+const { createServer } = require('bottender/express');
 
 const botimizeMiddleware = require('./botimizeMiddleware');
 
@@ -18,28 +12,13 @@ bot.onEvent(async context => {
   await context.sendText('Hello World');
 });
 
-const server = express();
-
-server.use(
-  bodyParser.json({
-    verify: (req, res, buf) => {
-      req.rawBody = buf.toString();
-    },
-  })
-);
-server.get(
-  '/',
-  verifyMessengerWebhook({ verifyToken: '__FILL_YOUR_VERIFY_TOKEN_HERE__' })
-);
-server.post(
-  '/',
-  verifyMessengerSignature(bot),
-  botimizeMiddleware(bot, {
+const server = createServer(bot, {
+  verifyToken: '__FILL_YOUR_VERIFY_TOKEN_HERE__',
+  webhookMiddleware: botimizeMiddleware(bot, {
     apiKey: '__FILL_YOUR_BOTIMIZE_KEY_HERE__',
     platform: 'facebook',
   }),
-  createMiddleware(bot)
-);
+});
 
 server.listen(5000, () => {
   console.log('server is running on 5000 port...');

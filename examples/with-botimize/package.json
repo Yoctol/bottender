@@ -1,8 +1,6 @@
 {
   "dependencies": {
-    "body-parser": "^1.18.2",
     "botimize": "^1.0.2",
-    "express": "^4.16.1",
     "bottender": "latest"
   },
   "devDependencies": {

@@ -79,3 +79,20 @@ it('should run connectNgrok when server listen and ngrok option is provided', as
 
   expect(connectNgrok).toBeCalled();
 });
+
+it('should work with additional webhook middleware', async () => {
+  const { bot, requestHandler } = setup({ platform: 'other' });
+  requestHandler.mockReturnValue(Promise.resolve());
+  const mockFn = jest.fn();
+  const webhookMiddleware = (req, res, next) => {
+    mockFn();
+    next();
+  };
+  const server = createServer(bot, { webhookMiddleware });
+  const { status } = await request(server)
+    .post('/')
+    .send({});
+
+  expect(status).toBe(200);
+  expect(mockFn).toBeCalled();
+});

@@ -15,17 +15,19 @@ function registerRoutes(server, bot, config = {}) {
 
   const router = new Router();
 
+  const middleware = config.webhookMiddleware ? [config.webhookMiddleware] : [];
+
   if (bot.connector.platform === 'messenger') {
     verifyToken = config.verifyToken || shortid.generate();
     router.get(path, verifyMessengerWebhook({ verifyToken }));
-    router.post(path, verifyMessengerSignature(bot), createMiddleware(bot));
+    middleware.unshift(verifyMessengerSignature(bot));
   } else if (bot.connector.platform === 'slack') {
-    router.post(path, verifySlackWebhook(), createMiddleware(bot));
+    middleware.unshift(verifySlackWebhook(bot));
   } else if (bot.connector.platform === 'line') {
-    router.post(path, verifyLineSignature(bot), createMiddleware(bot));
-  } else {
-    router.post(path, createMiddleware(bot));
+    middleware.unshift(verifyLineSignature(bot));
   }
+
+  router.post(path, ...middleware, createMiddleware(bot));
 
   server.use(router.routes());
 
