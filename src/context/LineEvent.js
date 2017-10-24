@@ -128,11 +128,33 @@ export default class LineEvent implements Event {
   }
 
   /**
+   * The image object from LINE raw event.
+   *
+   */
+  get image(): ?Message {
+    if (this.isImageMessage) {
+      return this.message;
+    }
+    return null;
+  }
+
+  /**
    * Determine if the event is a message event which includes video.
    *
    */
   get isVideoMessage(): boolean {
     return this.isMessage && (this.message: any).type === 'video';
+  }
+
+  /**
+   * The video object from LINE raw event.
+   *
+   */
+  get video(): ?Message {
+    if (this.isVideoMessage) {
+      return this.message;
+    }
+    return null;
   }
 
   /**
@@ -144,6 +166,17 @@ export default class LineEvent implements Event {
   }
 
   /**
+   * The audio object from LINE raw event.
+   *
+   */
+  get audio(): ?Message {
+    if (this.isAudioMessage) {
+      return this.message;
+    }
+    return null;
+  }
+
+  /**
    * Determine if the event is a message event which includes location.
    *
    */
@@ -152,11 +185,33 @@ export default class LineEvent implements Event {
   }
 
   /**
+   * The location object from LINE raw event.
+   *
+   */
+  get location(): ?Message {
+    if (this.isLocationMessage) {
+      return this.message;
+    }
+    return null;
+  }
+
+  /**
    * Determine if the event is a message event which includes sticker.
    *
    */
   get isStickerMessage(): boolean {
     return this.isMessage && (this.message: any).type === 'sticker';
+  }
+
+  /**
+   * The sticker object from LINE raw event.
+   *
+   */
+  get sticker(): ?Message {
+    if (this.isStickerMessage) {
+      return this.message;
+    }
+    return null;
   }
 
   /**

@@ -336,6 +336,18 @@ it('#isImageMessage', () => {
   expect(new LineEvent(stickerMessage).isImageMessage).toEqual(false);
 });
 
+it('#image', () => {
+  expect(new LineEvent(textMessage).image).toEqual(null);
+  expect(new LineEvent(imageMessage).image).toEqual({
+    id: '325708',
+    type: 'image',
+  });
+  expect(new LineEvent(videoMessage).image).toEqual(null);
+  expect(new LineEvent(audioMessage).image).toEqual(null);
+  expect(new LineEvent(locationMessage).image).toEqual(null);
+  expect(new LineEvent(stickerMessage).image).toEqual(null);
+});
+
 it('#isVideoMessage', () => {
   expect(new LineEvent(textMessage).isVideoMessage).toEqual(false);
   expect(new LineEvent(imageMessage).isVideoMessage).toEqual(false);
@@ -343,6 +355,18 @@ it('#isVideoMessage', () => {
   expect(new LineEvent(audioMessage).isVideoMessage).toEqual(false);
   expect(new LineEvent(locationMessage).isVideoMessage).toEqual(false);
   expect(new LineEvent(stickerMessage).isVideoMessage).toEqual(false);
+});
+
+it('#video', () => {
+  expect(new LineEvent(textMessage).video).toEqual(null);
+  expect(new LineEvent(imageMessage).video).toEqual(null);
+  expect(new LineEvent(videoMessage).video).toEqual({
+    id: '325708',
+    type: 'video',
+  });
+  expect(new LineEvent(audioMessage).video).toEqual(null);
+  expect(new LineEvent(locationMessage).video).toEqual(null);
+  expect(new LineEvent(stickerMessage).video).toEqual(null);
 });
 
 it('#isAudioMessage', () => {
@@ -354,6 +378,18 @@ it('#isAudioMessage', () => {
   expect(new LineEvent(stickerMessage).isAudioMessage).toEqual(false);
 });
 
+it('#audio', () => {
+  expect(new LineEvent(textMessage).audio).toEqual(null);
+  expect(new LineEvent(imageMessage).audio).toEqual(null);
+  expect(new LineEvent(videoMessage).audio).toEqual(null);
+  expect(new LineEvent(audioMessage).audio).toEqual({
+    id: '325708',
+    type: 'audio',
+  });
+  expect(new LineEvent(locationMessage).audio).toEqual(null);
+  expect(new LineEvent(stickerMessage).audio).toEqual(null);
+});
+
 it('#isLocationMessage', () => {
   expect(new LineEvent(textMessage).isLocationMessage).toEqual(false);
   expect(new LineEvent(imageMessage).isLocationMessage).toEqual(false);
@@ -363,6 +399,22 @@ it('#isLocationMessage', () => {
   expect(new LineEvent(stickerMessage).isLocationMessage).toEqual(false);
 });
 
+it('#location', () => {
+  expect(new LineEvent(textMessage).location).toEqual(null);
+  expect(new LineEvent(imageMessage).location).toEqual(null);
+  expect(new LineEvent(videoMessage).location).toEqual(null);
+  expect(new LineEvent(audioMessage).location).toEqual(null);
+  expect(new LineEvent(locationMessage).location).toEqual({
+    address: 'Golden Gate Bridge, San Francisco, CA, United States',
+    id: '325708',
+    latitude: 37.819722,
+    longitude: -122.478611,
+    title: 'my location',
+    type: 'location',
+  });
+  expect(new LineEvent(stickerMessage).location).toEqual(null);
+});
+
 it('#isStickerMessage', () => {
   expect(new LineEvent(textMessage).isStickerMessage).toEqual(false);
   expect(new LineEvent(imageMessage).isStickerMessage).toEqual(false);
@@ -370,6 +422,20 @@ it('#isStickerMessage', () => {
   expect(new LineEvent(audioMessage).isStickerMessage).toEqual(false);
   expect(new LineEvent(locationMessage).isStickerMessage).toEqual(false);
   expect(new LineEvent(stickerMessage).isStickerMessage).toEqual(true);
+});
+
+it('#sticker', () => {
+  expect(new LineEvent(textMessage).sticker).toEqual(null);
+  expect(new LineEvent(imageMessage).sticker).toEqual(null);
+  expect(new LineEvent(videoMessage).sticker).toEqual(null);
+  expect(new LineEvent(audioMessage).sticker).toEqual(null);
+  expect(new LineEvent(locationMessage).sticker).toEqual(null);
+  expect(new LineEvent(stickerMessage).sticker).toEqual({
+    id: '325708',
+    packageId: '1',
+    stickerId: '1',
+    type: 'sticker',
+  });
 });
 
 it('#isFollow', () => {
