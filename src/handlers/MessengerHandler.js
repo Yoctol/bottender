@@ -218,8 +218,7 @@ export default class MessengerHandler extends Handler {
       // FIXME
       this.onEcho(
         context =>
-          context.event.isText &&
-          matchPattern(pattern, context.event.message.text),
+          context.event.isText && matchPattern(pattern, context.event.text),
         handler
       );
     }

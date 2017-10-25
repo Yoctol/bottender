@@ -11,7 +11,7 @@ describe('#messenger', () => {
     expect(context.event.isMessage).toBe(true);
     expect(context.event.isText).toBe(true);
 
-    expect(context.event.message.text).toBe('Awesome');
+    expect(context.event.text).toBe('Awesome');
 
     expect(context.sendText).toBeDefined();
   });

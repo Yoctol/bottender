@@ -162,6 +162,7 @@ describe('#onMessage', () => {
             type: 'text',
             text: 'awesome',
           },
+          text: 'awesome',
         },
       };
       builder.onMessage(handler);
@@ -177,6 +178,8 @@ describe('#onMessage', () => {
           isMessage: false,
           isText: false,
         },
+        message: null,
+        text: null,
       };
       builder.onMessage(handler);
       await builder.build()(context);
@@ -284,6 +287,7 @@ describe('#onText', () => {
             type: 'text',
             text: 'awesome',
           },
+          text: 'awesome',
         },
       };
       builder.onText('awesome', handler);
@@ -338,6 +342,7 @@ describe('#onText', () => {
           message: {
             text: 'awesome',
           },
+          text: 'awesome',
         },
       };
 
@@ -362,6 +367,7 @@ describe('#onText', () => {
           message: {
             text: 'awesome',
           },
+          text: 'awesome',
         },
       };
       builder.onText(/awful/, handler);
