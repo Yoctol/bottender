@@ -639,6 +639,7 @@ describe('#onEchoText', () => {
           is_echo: true,
           text: 'wow',
         },
+        text: 'wow',
       },
     };
     builder.onEchoText(handler);
@@ -658,6 +659,7 @@ describe('#onEchoText', () => {
           is_echo: true,
           text: 'wow',
         },
+        text: 'wow',
       },
     };
     builder.onEchoText(/wow/, handler);
@@ -676,6 +678,7 @@ describe('#onEchoText', () => {
         message: {
           text: 'wow',
         },
+        text: 'wow',
       },
     };
     builder.onEcho(/wow/, handler);

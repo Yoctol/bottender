@@ -22,9 +22,7 @@ export default class ClassifierHandler {
   build() {
     return async context => {
       if (context.event.isText) {
-        const result = await this._classifier.predict(
-          context.event.message.text
-        );
+        const result = await this._classifier.predict(context.event.text);
         const intent = result.intents.sort((a, b) => {
           if (a.score > b.score) return -1;
           if (a.score < b.score) return 1;

@@ -26,6 +26,7 @@ class ContextSimulator {
         message: {
           text,
         },
+        text,
       },
       // $FlowExpect
       sendText: this._mockFn(),

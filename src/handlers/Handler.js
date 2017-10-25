@@ -114,7 +114,7 @@ export default class Handler {
         const _handler = handler;
         handler = context => {
           // $FlowFixMe
-          const match = pattern.exec(context.event.message.text);
+          const match = pattern.exec(context.event.text);
 
           if (!match) return _handler(context);
 
@@ -128,8 +128,7 @@ export default class Handler {
 
       this.onMessage(
         context =>
-          context.event.isText &&
-          matchPattern(pattern, context.event.message.text),
+          context.event.isText && matchPattern(pattern, context.event.text),
         handler
       );
     }

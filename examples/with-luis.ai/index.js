@@ -13,7 +13,7 @@ bot.onEvent(async context => {
   if (context.event.isText) {
     try {
       const response = await new Promise((resolve, reject) => {
-        luis.predict(context.event.message.text, {
+        luis.predict(context.event.text, {
           onSuccess: resolve,
           onFailure: reject,
         });
