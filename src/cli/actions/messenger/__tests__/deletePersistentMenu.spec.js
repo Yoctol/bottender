@@ -1,14 +1,14 @@
-import deleteGetStartedButton from '../deleteGetStartedButton';
+import { deletePersistentMenu } from '../persistent-menu';
 
 jest.mock('messaging-api-messenger');
 
-jest.mock('../../shared/log');
-jest.mock('../../shared/getConfig');
+jest.mock('../../../shared/log');
+jest.mock('../../../shared/getConfig');
 
 const { MessengerClient } = require('messaging-api-messenger');
 
-const log = require('../../shared/log');
-const getConfig = require('../../shared/getConfig');
+const log = require('../../../shared/log');
+const getConfig = require('../../../shared/getConfig');
 
 const MOCK_FILE_WITH_PLATFORM = {
   messenger: {
@@ -22,7 +22,7 @@ let _client;
 
 beforeEach(() => {
   _client = {
-    deleteGetStartedButton: jest.fn(),
+    deletePersistentMenu: jest.fn(),
   };
   MessengerClient.connect = jest.fn(() => _client);
   log.error = jest.fn();
@@ -31,35 +31,34 @@ beforeEach(() => {
 });
 
 it('be defined', () => {
-  expect(deleteGetStartedButton).toBeDefined();
+  expect(deletePersistentMenu).toBeDefined();
 });
 
 describe('#getConfig', () => {
   it('will call `bottender.config.js` and platform = messenger when NOT passed <config_path>', async () => {
-    _client.deleteGetStartedButton.mockReturnValue(Promise.resolve());
+    _client.deletePersistentMenu.mockReturnValue(Promise.resolve());
 
-    await deleteGetStartedButton();
+    await deletePersistentMenu();
 
     expect(getConfig).toBeCalledWith('bottender.config.js', 'messenger');
   });
 
   it('will call <config_path> when it was passed', async () => {
-    _client.deleteGetStartedButton.mockReturnValue(Promise.resolve());
+    _client.deletePersistentMenu.mockReturnValue(Promise.resolve());
 
-    await deleteGetStartedButton(configPath);
+    await deletePersistentMenu(configPath);
 
     expect(getConfig).toBeCalledWith('bot.sample.json', 'messenger');
   });
 });
 
 describe('resolved', () => {
-  it('call deleteGetStartedButton', async () => {
-    _client.deleteGetStartedButton.mockReturnValue(Promise.resolve());
+  it('call deletePersistentMenu', async () => {
+    _client.deletePersistentMenu.mockReturnValue(Promise.resolve());
 
-    await deleteGetStartedButton(configPath);
+    await deletePersistentMenu(configPath);
 
-    expect(log.print).toHaveBeenCalledTimes(1);
-    expect(_client.deleteGetStartedButton).toBeCalled();
+    expect(_client.deletePersistentMenu).toBeCalled();
   });
 });
 
@@ -70,13 +69,13 @@ describe('reject', () => {
         status: 400,
       },
     };
-    _client.deleteGetStartedButton.mockReturnValue(Promise.reject(error));
+    _client.deletePersistentMenu.mockReturnValue(Promise.reject(error));
 
     process.exit = jest.fn();
 
-    await deleteGetStartedButton(configPath);
+    await deletePersistentMenu(configPath);
 
-    expect(log.error).toHaveBeenCalledTimes(2);
+    expect(log.error).toBeCalled();
     expect(process.exit).toBeCalled();
   });
 
@@ -95,13 +94,13 @@ describe('reject', () => {
         },
       },
     };
-    _client.deleteGetStartedButton.mockReturnValue(Promise.reject(error));
+    _client.deletePersistentMenu.mockReturnValue(Promise.reject(error));
 
     process.exit = jest.fn();
 
-    await deleteGetStartedButton(configPath);
+    await deletePersistentMenu(configPath);
 
-    expect(log.error).toHaveBeenCalledTimes(3);
+    expect(log.error).toBeCalled();
     expect(log.error.mock.calls[2][0]).not.toMatch(/\[object Object\]/);
     expect(process.exit).toBeCalled();
   });
@@ -110,13 +109,13 @@ describe('reject', () => {
     const error = {
       message: 'something wrong happened',
     };
-    _client.deleteGetStartedButton.mockReturnValue(Promise.reject(error));
+    _client.deletePersistentMenu.mockReturnValue(Promise.reject(error));
 
     process.exit = jest.fn();
 
-    await deleteGetStartedButton(configPath);
+    await deletePersistentMenu(configPath);
 
-    expect(log.error).toHaveBeenCalledTimes(2);
+    expect(log.error).toBeCalled();
     expect(process.exit).toBeCalled();
   });
 });

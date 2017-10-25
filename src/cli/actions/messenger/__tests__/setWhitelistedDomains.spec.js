@@ -1,16 +1,16 @@
-import setGetStartedButton from '../setGetStartedButton';
+import { setWhitelistedDomains } from '../whitelisted-domains';
 
 jest.mock('messaging-api-messenger');
 
-jest.mock('../../shared/log');
-jest.mock('../../shared/getConfig');
+jest.mock('../../../shared/log');
+jest.mock('../../../shared/getConfig');
 
 const { MessengerClient } = require('messaging-api-messenger');
 
-const log = require('../../shared/log');
-const getConfig = require('../../shared/getConfig');
+const log = require('../../../shared/log');
+const getConfig = require('../../../shared/getConfig');
 
-const defaultPayload = '__GET_STARTED__';
+const domains = ['http://www.facebook.com'];
 const MOCK_FILE_WITH_PLATFORM = {
   messenger: {
     accessToken: '__FAKE_TOKEN__',
@@ -23,7 +23,7 @@ let _client;
 
 beforeEach(() => {
   _client = {
-    setGetStartedButton: jest.fn(),
+    setDomainWhitelist: jest.fn(),
   };
   MessengerClient.connect = jest.fn(() => _client);
   log.error = jest.fn();
@@ -32,58 +32,63 @@ beforeEach(() => {
 });
 
 it('be defined', () => {
-  expect(setGetStartedButton).toBeDefined();
+  expect(setWhitelistedDomains).toBeDefined();
 });
 
 describe('#getConfig', () => {
   it('will call `bottender.config.js` and platform = messenger when NOT passed <config_path>', async () => {
-    _client.setGetStartedButton.mockReturnValue(Promise.resolve());
+    _client.setDomainWhitelist.mockReturnValue(Promise.resolve());
 
-    await setGetStartedButton(defaultPayload);
+    await setWhitelistedDomains(domains);
 
     expect(getConfig).toBeCalledWith('bottender.config.js', 'messenger');
   });
 
   it('will call <config_path> when it was passed', async () => {
-    _client.setGetStartedButton.mockReturnValue(Promise.resolve());
+    _client.setDomainWhitelist.mockReturnValue(Promise.resolve());
 
-    await setGetStartedButton(defaultPayload, configPath);
+    await setWhitelistedDomains(domains, configPath);
 
     expect(getConfig).toBeCalledWith('bot.sample.json', 'messenger');
   });
 });
 
 describe('resolved', () => {
-  it('call setGetStartedButton with default payload', async () => {
-    _client.setGetStartedButton.mockReturnValue(Promise.resolve());
+  it('call setWhitelistedDomains with array of domains', async () => {
+    _client.setDomainWhitelist.mockReturnValue(Promise.resolve());
 
-    await setGetStartedButton(defaultPayload, configPath);
+    await setWhitelistedDomains(domains, configPath);
 
     expect(log.print).toHaveBeenCalledTimes(1);
-    expect(_client.setGetStartedButton).toBeCalledWith(defaultPayload);
+    expect(_client.setDomainWhitelist).toBeCalledWith([
+      'http://www.facebook.com',
+    ]);
   });
 
-  it('call setGetStartedButtonPayload in config file', async () => {
-    _client.setGetStartedButton.mockReturnValue(Promise.resolve());
+  it('call setWhitelistedDomains with array of domains from config file', async () => {
+    _client.setDomainWhitelist.mockReturnValue(Promise.resolve());
     getConfig.mockReturnValue({
       accessToken: '__FAKE_TOKEN__',
-      getStartedButtonPayload: '__PUT_YOUR_PAYLOAD_HERE__',
+      domainWhitelist: ['http://www.facebook.com', 'http://www.example.com'],
     });
 
-    await setGetStartedButton(undefined, configPath);
+    await setWhitelistedDomains(undefined, configPath);
 
     expect(log.print).toHaveBeenCalledTimes(1);
-    expect(_client.setGetStartedButton).toBeCalledWith(
-      '__PUT_YOUR_PAYLOAD_HERE__'
-    );
+    expect(_client.setDomainWhitelist).toBeCalledWith([
+      'http://www.facebook.com',
+      'http://www.example.com',
+    ]);
   });
 });
 
 describe('reject', () => {
-  it('handle error when no payload found', async () => {
+  it('handle error when not found domainWhitelist in args or config file', async () => {
     process.exit = jest.fn();
-    await setGetStartedButton(undefined, configPath);
-    expect(log.error).toHaveBeenCalledTimes(2);
+
+    await setWhitelistedDomains(undefined, configPath);
+
+    expect(log.error).toBeCalled();
     expect(process.exit).toBeCalled();
   });
 
@@ -93,13 +98,13 @@ describe('reject', () => {
         status: 400,
       },
     };
-    _client.setGetStartedButton.mockReturnValue(Promise.reject(error));
+    _client.setDomainWhitelist.mockReturnValue(Promise.reject(error));
 
     process.exit = jest.fn();
 
-    await setGetStartedButton(defaultPayload, configPath);
+    await setWhitelistedDomains(domains, configPath);
 
-    expect(log.error).toHaveBeenCalledTimes(2);
+    expect(log.error).toBeCalled();
     expect(process.exit).toBeCalled();
   });
 
@@ -118,13 +123,13 @@ describe('reject', () => {
         },
       },
     };
-    _client.setGetStartedButton.mockReturnValue(Promise.reject(error));
+    _client.setDomainWhitelist.mockReturnValue(Promise.reject(error));
 
     process.exit = jest.fn();
 
-    await setGetStartedButton(defaultPayload, configPath);
+    await setWhitelistedDomains(domains, configPath);
 
-    expect(log.error).toHaveBeenCalledTimes(3);
+    expect(log.error).toBeCalled();
     expect(log.error.mock.calls[2][0]).not.toMatch(/\[object Object\]/);
     expect(process.exit).toBeCalled();
   });
@@ -133,13 +138,13 @@ describe('reject', () => {
     const error = {
       message: 'something wrong happened',
     };
-    _client.setGetStartedButton.mockReturnValue(Promise.reject(error));
+    _client.setDomainWhitelist.mockReturnValue(Promise.reject(error));
 
     process.exit = jest.fn();
 
-    await setGetStartedButton(defaultPayload, configPath);
+    await setWhitelistedDomains(domains, configPath);
 
-    expect(log.error).toHaveBeenCalledTimes(2);
+    expect(log.error).toBeCalled();
     expect(process.exit).toBeCalled();
   });
 });

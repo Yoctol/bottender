@@ -1,14 +1,14 @@
-import getGreetingText from '../getGreetingText';
+import { deleteGetStarted } from '../get-started';
 
 jest.mock('messaging-api-messenger');
 
-jest.mock('../../shared/log');
-jest.mock('../../shared/getConfig');
+jest.mock('../../../shared/log');
+jest.mock('../../../shared/getConfig');
 
 const { MessengerClient } = require('messaging-api-messenger');
 
-const log = require('../../shared/log');
-const getConfig = require('../../shared/getConfig');
+const log = require('../../../shared/log');
+const getConfig = require('../../../shared/getConfig');
 
 const MOCK_FILE_WITH_PLATFORM = {
   messenger: {
@@ -22,7 +22,7 @@ let _client;
 
 beforeEach(() => {
   _client = {
-    getGreetingText: jest.fn(),
+    deleteGetStartedButton: jest.fn(),
   };
   MessengerClient.connect = jest.fn(() => _client);
   log.error = jest.fn();
@@ -31,72 +31,34 @@ beforeEach(() => {
 });
 
 it('be defined', () => {
-  expect(getGreetingText).toBeDefined();
+  expect(deleteGetStarted).toBeDefined();
 });
 
 describe('#getConfig', () => {
   it('will call `bottender.config.js` and platform = messenger when NOT passed <config_path>', async () => {
-    _client.getGreetingText.mockReturnValue(
-      Promise.resolve({
-        data: [
-          {
-            greeting: [{ text: 'hello' }],
-          },
-        ],
-      })
-    );
+    _client.deleteGetStartedButton.mockReturnValue(Promise.resolve());
 
-    await getGreetingText();
+    await deleteGetStarted();
 
     expect(getConfig).toBeCalledWith('bottender.config.js', 'messenger');
   });
 
   it('will call <config_path> when it was passed', async () => {
-    _client.getGreetingText.mockReturnValue(
-      Promise.resolve({
-        data: [
-          {
-            greeting: [{ text: 'hello' }],
-          },
-        ],
-      })
-    );
+    _client.deleteGetStartedButton.mockReturnValue(Promise.resolve());
 
-    await getGreetingText(configPath);
+    await deleteGetStarted(configPath);
 
     expect(getConfig).toBeCalledWith('bot.sample.json', 'messenger');
   });
 });
 
 describe('resolved', () => {
-  it('call getGreetingText', async () => {
-    _client.getGreetingText.mockReturnValue(
-      Promise.resolve({
-        data: [
-          {
-            greeting: [{ text: 'hello' }],
-          },
-        ],
-      })
-    );
+  it('call deleteGetStartedButton', async () => {
+    _client.deleteGetStartedButton.mockReturnValue(Promise.resolve());
 
-    await getGreetingText(configPath);
+    await deleteGetStarted(configPath);
 
-    expect(log.print).toHaveBeenCalledTimes(1);
-    expect(_client.getGreetingText).toBeCalled();
-  });
-
-  it('error when no config setting', async () => {
-    _client.getGreetingText.mockReturnValue(
-      Promise.resolve({
-        data: [],
-      })
-    );
-
-    await getGreetingText(configPath);
-
-    expect(log.error).toHaveBeenCalledTimes(1);
-    expect(_client.getGreetingText).toBeCalled();
+    expect(_client.deleteGetStartedButton).toBeCalled();
   });
 });
 
@@ -107,13 +69,13 @@ describe('reject', () => {
         status: 400,
       },
     };
-    _client.getGreetingText.mockReturnValue(Promise.reject(error));
+    _client.deleteGetStartedButton.mockReturnValue(Promise.reject(error));
 
     process.exit = jest.fn();
 
-    await getGreetingText(configPath);
+    await deleteGetStarted(configPath);
 
-    expect(log.error).toHaveBeenCalledTimes(2);
+    expect(log.error).toBeCalled();
     expect(process.exit).toBeCalled();
   });
 
@@ -132,13 +94,13 @@ describe('reject', () => {
         },
       },
     };
-    _client.getGreetingText.mockReturnValue(Promise.reject(error));
+    _client.deleteGetStartedButton.mockReturnValue(Promise.reject(error));
 
     process.exit = jest.fn();
 
-    await getGreetingText(configPath);
+    await deleteGetStarted(configPath);
 
-    expect(log.error).toHaveBeenCalledTimes(3);
+    expect(log.error).toBeCalled();
     expect(log.error.mock.calls[2][0]).not.toMatch(/\[object Object\]/);
     expect(process.exit).toBeCalled();
   });
@@ -147,13 +109,13 @@ describe('reject', () => {
     const error = {
       message: 'something wrong happened',
     };
-    _client.getGreetingText.mockReturnValue(Promise.reject(error));
+    _client.deleteGetStartedButton.mockReturnValue(Promise.reject(error));
 
     process.exit = jest.fn();
 
-    await getGreetingText(configPath);
+    await deleteGetStarted(configPath);
 
-    expect(log.error).toHaveBeenCalledTimes(2);
+    expect(log.error).toBeCalled();
     expect(process.exit).toBeCalled();
   });
 });

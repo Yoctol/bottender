@@ -1,14 +1,14 @@
-import setGreetingText from '../setGreetingText';
+import { setGreeting } from '../greeting';
 
 jest.mock('messaging-api-messenger');
 
-jest.mock('../../shared/log');
-jest.mock('../../shared/getConfig');
+jest.mock('../../../shared/log');
+jest.mock('../../../shared/getConfig');
 
 const { MessengerClient } = require('messaging-api-messenger');
 
-const log = require('../../shared/log');
-const getConfig = require('../../shared/getConfig');
+const log = require('../../../shared/log');
+const getConfig = require('../../../shared/getConfig');
 
 const MOCK_FILE_WITH_PLATFORM = {
   messenger: {
@@ -20,8 +20,10 @@ const configPath = 'bot.sample.json';
 const greetingText = '__FAKE_GREETING_TEXT__';
 
 let _client;
+const _exit = process.exit;
 
 beforeEach(() => {
+  process.exit = jest.fn();
   _client = {
     setGreetingText: jest.fn(),
   };
@@ -31,17 +33,20 @@ beforeEach(() => {
   getConfig.mockReturnValue(MOCK_FILE_WITH_PLATFORM.messenger);
 });
 
+afterEach(() => {
+  process.exit = _exit;
+});
+
 it('be defined', () => {
-  expect(setGreetingText).toBeDefined();
+  expect(setGreeting).toBeDefined();
 });
 
 describe('resolved', () => {
   it('call setGreetingText with text', async () => {
     _client.setGreetingText.mockReturnValue(Promise.resolve());
 
-    await setGreetingText(greetingText, configPath);
+    await setGreeting(greetingText, configPath);
 
-    expect(log.print).toHaveBeenCalledTimes(1);
     expect(_client.setGreetingText).toBeCalledWith('__FAKE_GREETING_TEXT__');
   });
 
@@ -49,12 +54,11 @@ describe('resolved', () => {
     _client.setGreetingText.mockReturnValue(Promise.resolve());
     getConfig.mockReturnValue({
       accessToken: '__FAKE_TOKEN__',
-      greetingText: '__FAKE_GREETING_TEXT_IN_TEST_CASE__',
+      greeting: '__FAKE_GREETING_TEXT_IN_TEST_CASE__',
     });
 
-    await setGreetingText(undefined, configPath);
+    await setGreeting(undefined, configPath);
 
-    expect(log.print).toHaveBeenCalledTimes(1);
     expect(_client.setGreetingText).toBeCalledWith(
       '__FAKE_GREETING_TEXT_IN_TEST_CASE__'
     );
@@ -65,9 +69,9 @@ describe('reject', () => {
   it('handle error thrown when no greetingText pass or find in config file', async () => {
     process.exit = jest.fn();
 
-    await setGreetingText(undefined, configPath);
+    await setGreeting(undefined, configPath);
 
-    expect(log.error).toHaveBeenCalledTimes(2);
+    expect(log.error).toBeCalled();
     expect(process.exit).toBeCalled();
   });
 
@@ -81,9 +85,9 @@ describe('reject', () => {
 
     process.exit = jest.fn();
 
-    await setGreetingText(greetingText, configPath);
+    await setGreeting(greetingText, configPath);
 
-    expect(log.error).toHaveBeenCalledTimes(2);
+    expect(log.error).toBeCalled();
     expect(process.exit).toBeCalled();
   });
 
@@ -106,9 +110,9 @@ describe('reject', () => {
 
     process.exit = jest.fn();
 
-    await setGreetingText(greetingText, configPath);
+    await setGreeting(greetingText, configPath);
 
-    expect(log.error).toHaveBeenCalledTimes(3);
+    expect(log.error).toBeCalled();
     expect(log.error.mock.calls[2][0]).not.toMatch(/\[object Object\]/);
     expect(process.exit).toBeCalled();
   });
@@ -121,9 +125,9 @@ describe('reject', () => {
 
     process.exit = jest.fn();
 
-    await setGreetingText(greetingText, configPath);
+    await setGreeting(greetingText, configPath);
 
-    expect(log.error).toHaveBeenCalledTimes(2);
+    expect(log.error).toBeCalled();
     expect(process.exit).toBeCalled();
   });
 });

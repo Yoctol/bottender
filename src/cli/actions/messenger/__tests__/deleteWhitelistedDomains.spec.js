@@ -1,14 +1,14 @@
-import deletePersistentMenu from '../deletePersistentMenu';
+import { deleteWhitelistedDomains } from '../whitelisted-domains';
 
 jest.mock('messaging-api-messenger');
 
-jest.mock('../../shared/log');
-jest.mock('../../shared/getConfig');
+jest.mock('../../../shared/log');
+jest.mock('../../../shared/getConfig');
 
 const { MessengerClient } = require('messaging-api-messenger');
 
-const log = require('../../shared/log');
-const getConfig = require('../../shared/getConfig');
+const log = require('../../../shared/log');
+const getConfig = require('../../../shared/getConfig');
 
 const MOCK_FILE_WITH_PLATFORM = {
   messenger: {
@@ -22,7 +22,7 @@ let _client;
 
 beforeEach(() => {
   _client = {
-    deletePersistentMenu: jest.fn(),
+    deleteDomainWhitelist: jest.fn(),
   };
   MessengerClient.connect = jest.fn(() => _client);
   log.error = jest.fn();
@@ -31,35 +31,34 @@ beforeEach(() => {
 });
 
 it('be defined', () => {
-  expect(deletePersistentMenu).toBeDefined();
+  expect(deleteWhitelistedDomains).toBeDefined();
 });
 
 describe('#getConfig', () => {
   it('will call `bottender.config.js` and platform = messenger when NOT passed <config_path>', async () => {
-    _client.deletePersistentMenu.mockReturnValue(Promise.resolve());
+    _client.deleteDomainWhitelist.mockReturnValue(Promise.resolve());
 
-    await deletePersistentMenu();
+    await deleteWhitelistedDomains();
 
     expect(getConfig).toBeCalledWith('bottender.config.js', 'messenger');
   });
 
-  it('will call <config_path> when it was passed', async () => {
-    _client.deletePersistentMenu.mockReturnValue(Promise.resolve());
+  it('call with configPath and platform = messenger', async () => {
+    _client.deleteDomainWhitelist.mockReturnValue(Promise.resolve());
 
-    await deletePersistentMenu(configPath);
+    await deleteWhitelistedDomains(configPath);
 
     expect(getConfig).toBeCalledWith('bot.sample.json', 'messenger');
   });
 });
 
 describe('resolved', () => {
-  it('call deletePersistentMenu', async () => {
-    _client.deletePersistentMenu.mockReturnValue(Promise.resolve());
+  it('call deleteDomainWhitelist', async () => {
+    _client.deleteDomainWhitelist.mockReturnValue(Promise.resolve());
 
-    await deletePersistentMenu(configPath);
+    await deleteWhitelistedDomains(configPath);
 
-    expect(log.print).toHaveBeenCalledTimes(1);
-    expect(_client.deletePersistentMenu).toBeCalled();
+    expect(_client.deleteDomainWhitelist).toBeCalled();
   });
 });
 
@@ -70,13 +69,12 @@ describe('reject', () => {
         status: 400,
       },
     };
-    _client.deletePersistentMenu.mockReturnValue(Promise.reject(error));
-
+    _client.deleteDomainWhitelist.mockReturnValue(Promise.reject(error));
     process.exit = jest.fn();
 
-    await deletePersistentMenu(configPath);
+    await deleteWhitelistedDomains(configPath);
 
-    expect(log.error).toHaveBeenCalledTimes(2);
+    expect(log.error).toBeCalled();
     expect(process.exit).toBeCalled();
   });
 
@@ -95,13 +93,12 @@ describe('reject', () => {
         },
       },
     };
-    _client.deletePersistentMenu.mockReturnValue(Promise.reject(error));
-
+    _client.deleteDomainWhitelist.mockReturnValue(Promise.reject(error));
     process.exit = jest.fn();
 
-    await deletePersistentMenu(configPath);
+    await deleteWhitelistedDomains(configPath);
 
-    expect(log.error).toHaveBeenCalledTimes(3);
+    expect(log.error).toBeCalled();
     expect(log.error.mock.calls[2][0]).not.toMatch(/\[object Object\]/);
     expect(process.exit).toBeCalled();
   });
@@ -110,13 +107,12 @@ describe('reject', () => {
     const error = {
       message: 'something wrong happened',
     };
-    _client.deletePersistentMenu.mockReturnValue(Promise.reject(error));
-
+    _client.deleteDomainWhitelist.mockReturnValue(Promise.reject(error));
     process.exit = jest.fn();
 
-    await deletePersistentMenu(configPath);
+    await deleteWhitelistedDomains(configPath);
 
-    expect(log.error).toHaveBeenCalledTimes(2);
+    expect(log.error).toBeCalled();
     expect(process.exit).toBeCalled();
   });
 });

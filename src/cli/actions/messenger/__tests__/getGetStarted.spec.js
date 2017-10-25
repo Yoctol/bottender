@@ -1,14 +1,14 @@
-import getWhitelistedDomains from '../getWhitelistedDomains';
+import { getGetStarted } from '../get-started';
 
 jest.mock('messaging-api-messenger');
 
-jest.mock('../../shared/log');
-jest.mock('../../shared/getConfig');
+jest.mock('../../../shared/log');
+jest.mock('../../../shared/getConfig');
 
 const { MessengerClient } = require('messaging-api-messenger');
 
-const log = require('../../shared/log');
-const getConfig = require('../../shared/getConfig');
+const log = require('../../../shared/log');
+const getConfig = require('../../../shared/getConfig');
 
 const MOCK_FILE_WITH_PLATFORM = {
   messenger: {
@@ -22,7 +22,7 @@ let _client;
 
 beforeEach(() => {
   _client = {
-    getDomainWhitelist: jest.fn(),
+    getGetStartedButton: jest.fn(),
   };
   MessengerClient.connect = jest.fn(() => _client);
   log.error = jest.fn();
@@ -31,79 +31,77 @@ beforeEach(() => {
 });
 
 it('be defined', () => {
-  expect(getWhitelistedDomains).toBeDefined();
+  expect(getGetStarted).toBeDefined();
 });
 
 describe('#getConfig', () => {
   it('will call `bottender.config.js` and platform = messenger when NOT passed <config_path>', async () => {
-    _client.getDomainWhitelist.mockReturnValue(
+    _client.getGetStartedButton.mockReturnValue(
       Promise.resolve({
         data: [
           {
-            whitelisted_domains: [
-              'http://www.facebook.com',
-              'http://www.yoctol.com',
-            ],
+            get_started: {
+              payload: 'get started yo!',
+            },
           },
         ],
       })
     );
 
-    await getWhitelistedDomains();
+    await getGetStarted();
+
     expect(getConfig).toBeCalledWith('bottender.config.js', 'messenger');
   });
 
   it('will call <config_path> when it was passed', async () => {
-    _client.getDomainWhitelist.mockReturnValue(
+    _client.getGetStartedButton.mockReturnValue(
       Promise.resolve({
         data: [
           {
-            whitelisted_domains: [
-              'http://www.facebook.com',
-              'http://www.yoctol.com',
-            ],
+            get_started: {
+              payload: 'get started yo!',
+            },
           },
         ],
       })
     );
 
-    await getWhitelistedDomains(configPath);
+    await getGetStarted(configPath);
+
     expect(getConfig).toBeCalledWith('bot.sample.json', 'messenger');
   });
 });
 
 describe('resolved', () => {
-  it('call getDomainWhitelist', async () => {
-    _client.getDomainWhitelist.mockReturnValue(
+  it('call getGetStartedButton', async () => {
+    _client.getGetStartedButton.mockReturnValue(
       Promise.resolve({
         data: [
           {
-            whitelisted_domains: [
-              'http://www.facebook.com',
-              'http://www.yoctol.com',
-            ],
+            get_started: {
+              payload: 'get started yo!',
+            },
           },
         ],
       })
     );
 
-    await getWhitelistedDomains(configPath);
+    await getGetStarted(configPath);
 
-    expect(log.print).toHaveBeenCalledTimes(2);
-    expect(_client.getDomainWhitelist).toBeCalled();
+    expect(_client.getGetStartedButton).toBeCalled();
   });
 
   it('error when no config setting', async () => {
-    _client.getDomainWhitelist.mockReturnValue(
+    _client.getGetStartedButton.mockReturnValue(
       Promise.resolve({
         data: [],
       })
     );
 
-    await getWhitelistedDomains(configPath);
+    await getGetStarted(configPath);
 
-    expect(log.error).toHaveBeenCalledTimes(1);
-    expect(_client.getDomainWhitelist).toBeCalled();
+    expect(log.error).toBeCalled();
+    expect(_client.getGetStartedButton).toBeCalled();
   });
 });
 
@@ -114,13 +112,13 @@ describe('reject', () => {
         status: 400,
       },
     };
-    _client.getDomainWhitelist.mockReturnValue(Promise.reject(error));
+    _client.getGetStartedButton.mockReturnValue(Promise.reject(error));
 
     process.exit = jest.fn();
 
-    await getWhitelistedDomains(configPath);
+    await getGetStarted(configPath);
 
-    expect(log.error).toHaveBeenCalledTimes(2);
+    expect(log.error).toBeCalled();
     expect(process.exit).toBeCalled();
   });
 
@@ -139,13 +137,13 @@ describe('reject', () => {
         },
       },
     };
-    _client.getDomainWhitelist.mockReturnValue(Promise.reject(error));
+    _client.getGetStartedButton.mockReturnValue(Promise.reject(error));
 
     process.exit = jest.fn();
 
-    await getWhitelistedDomains(configPath);
+    await getGetStarted(configPath);
 
-    expect(log.error).toHaveBeenCalledTimes(3);
+    expect(log.error).toBeCalled();
     expect(log.error.mock.calls[2][0]).not.toMatch(/\[object Object\]/);
     expect(process.exit).toBeCalled();
   });
@@ -154,13 +152,13 @@ describe('reject', () => {
     const error = {
       message: 'something wrong happened',
     };
-    _client.getDomainWhitelist.mockReturnValue(Promise.reject(error));
+    _client.getGetStartedButton.mockReturnValue(Promise.reject(error));
 
     process.exit = jest.fn();
 
-    await getWhitelistedDomains(configPath);
+    await getGetStarted(configPath);
 
-    expect(log.error).toHaveBeenCalledTimes(2);
+    expect(log.error).toBeCalled();
     expect(process.exit).toBeCalled();
   });
 });

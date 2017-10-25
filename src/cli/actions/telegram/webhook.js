@@ -2,8 +2,8 @@ import axios from 'axios';
 import get from 'lodash/get';
 import invariant from 'invariant';
 
-import getConfig from '../shared/getConfig';
-import { print, error, bold } from '../shared/log';
+import getConfig from '../../shared/getConfig';
+import { print, error, bold } from '../../shared/log';
 
 export const client = axios.create({
   baseURL: `https://api.telegram.org`,
@@ -19,11 +19,9 @@ const getWebhookFromNgrok = async () => {
   return get(res, 'data.tunnels[1].public_url'); // tunnels[1] return `https` protocol
 };
 
-export default (async function setTelegramWebhook(_webhook, _configPath) {
+export async function setWebhook(_webhook, configPath = 'bottender.config.js') {
   try {
-    const platform = 'telegram';
-    const configPath = _configPath || 'bottender.config.js';
-    const { accessToken } = getConfig(configPath, platform);
+    const { accessToken } = getConfig(configPath, 'telegram');
     const webhook = _webhook || (await getWebhookFromNgrok());
 
     invariant(accessToken, '`accessToken` is not found in config file');
@@ -48,4 +46,4 @@ export default (async function setTelegramWebhook(_webhook, _configPath) {
     }
     return process.exit(1);
   }
-});
+}

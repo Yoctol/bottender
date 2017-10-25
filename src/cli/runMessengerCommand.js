@@ -1,20 +1,28 @@
 import invariant from 'invariant';
 
 import { error, bold } from './shared/log';
-import deleteWhitelistedDomains from './actions/deleteWhitelistedDomains';
-import deleteGetStartedButton from './actions/deleteGetStartedButton';
-import deleteGreetingText from './actions/deleteGreetingText';
-import deletePersistentMenu from './actions/deletePersistentMenu';
-import getWhitelistedDomains from './actions/getWhitelistedDomains';
-import getGetStartedButton from './actions/getGetStartedButton';
-import getGreetingText from './actions/getGreetingText';
-import getPersistentMenu from './actions/getPersistentMenu';
-import setWhitelistedDomains from './actions/setWhitelistedDomains';
-import setGetStartedButton from './actions/setGetStartedButton';
-import setGreetingText from './actions/setGreetingText';
-import setMessengerProfile from './actions/setMessengerProfile';
-import setPersistentMenu from './actions/setPersistentMenu';
-import setMessengerWebhook from './actions/setMessengerWebhook';
+import { setWebhook } from './actions/messenger/webhook';
+import {
+  getGetStarted,
+  setGetStarted,
+  deleteGetStarted,
+} from './actions/messenger/get-started';
+import {
+  getPersistentMenu,
+  setPersistentMenu,
+  deletePersistentMenu,
+} from './actions/messenger/persistent-menu';
+import {
+  getGreeting,
+  setGreeting,
+  deleteGreeting,
+} from './actions/messenger/greeting';
+import {
+  getWhitelistedDomains,
+  setWhitelistedDomains,
+  deleteWhitelistedDomains,
+} from './actions/messenger/whitelisted-domains';
+import { setProfile } from './actions/messenger/profile';
 
 export default (function runMessengerCommand(command, action, options) {
   const { config } = options;
@@ -37,7 +45,7 @@ export default (function runMessengerCommand(command, action, options) {
         '-v --verifyToken <verify_token> is required but not found.'
       );
 
-      setMessengerWebhook(webhook, config, verifyToken);
+      setWebhook(webhook, config, verifyToken);
       break;
     }
     case 'whitelisted-domains': {
@@ -87,11 +95,11 @@ export default (function runMessengerCommand(command, action, options) {
         const { payload } = options;
 
         if (action === 'get') {
-          getGetStartedButton(config);
+          getGetStarted(config);
         } else if (action === 'set') {
-          setGetStartedButton(payload, config);
+          setGetStarted(payload, config);
         } else {
-          deleteGetStartedButton(config);
+          deleteGetStarted(config);
         }
       } else {
         error(`messenger get-started ${action} is not supported.`);
@@ -101,19 +109,19 @@ export default (function runMessengerCommand(command, action, options) {
     }
     case 'greeting-text': {
       if (['get', 'set', 'delete'].indexOf(action) > -1) {
-        const { greetingText } = options;
+        const { greeting } = options;
 
         if (action === 'get') {
-          getGreetingText(config);
+          getGreeting(config);
         } else if (action === 'set') {
           invariant(
-            greetingText,
-            '-g --greetingText <greeting_text> is required but not found.'
+            greeting,
+            '-g --greeting <greeting_text> is required but not found.'
           );
 
-          setGreetingText(greetingText, config);
+          setGreeting(greeting, config);
         } else {
-          deleteGreetingText(config);
+          deleteGreeting(config);
         }
       } else {
         error(`messenger greeting-text ${action} is not supported.`);
@@ -123,7 +131,7 @@ export default (function runMessengerCommand(command, action, options) {
     }
     case 'profile': {
       if (action === 'set') {
-        setMessengerProfile(config);
+        setProfile(config);
       } else {
         error(`messenger profile ${action} is not supported.`);
         process.exit(1);

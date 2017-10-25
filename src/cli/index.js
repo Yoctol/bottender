@@ -6,7 +6,7 @@ import pkg from '../../package.json';
 import runMessengerCommand from './runMessengerCommand';
 import { error, bold } from './shared/log';
 import init from './actions/init';
-import setTelegramWebhook from './actions/setTelegramWebhook';
+import { setWebhook as setTelegramWebhook } from './actions/telegram/webhook';
 
 program.version(pkg.version);
 
@@ -52,7 +52,7 @@ program
     '-p, --payload <payload>',
     'The payload to set for get started button'
   )
-  .option('-g, --greetingText <greeting_text>', 'The greeting text of the bot')
+  .option('-g, --greeting <greeting_text>', 'The greeting text of the bot')
   .option('-w, --webhook <webhook_url>', 'The callback URL for webhook.')
   .option(
     '-v, --verifyToken <verify_token>',

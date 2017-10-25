@@ -1,15 +1,16 @@
 import MockAdapter from 'axios-mock-adapter';
 
-import setTelegramWebhook, {
+import {
+  setWebhook,
   client as _client,
   localClient as _localClient,
-} from '../setTelegramWebhook';
+} from '../webhook';
 
-jest.mock('../../shared/log');
-jest.mock('../../shared/getConfig');
+jest.mock('../../../shared/log');
+jest.mock('../../../shared/getConfig');
 
-const log = require('../../shared/log');
-const getConfig = require('../../shared/getConfig');
+const log = require('../../../shared/log');
+const getConfig = require('../../../shared/getConfig');
 
 const MOCK_FILE_WITH_PLATFORM = {
   telegram: {
@@ -64,14 +65,14 @@ afterEach(() => {
 });
 
 it('be defined', () => {
-  expect(setTelegramWebhook).toBeDefined();
+  expect(setWebhook).toBeDefined();
 });
 
 describe('resolve', () => {
   it('successfully set webhook', async () => {
     const { webhook } = setup();
 
-    await setTelegramWebhook(webhook, configPath);
+    await setWebhook(webhook, configPath);
 
     expect(log.print).toHaveBeenCalledTimes(1);
     expect(log.print.mock.calls[0][0]).toMatch(/Successfully/);
@@ -83,7 +84,7 @@ describe('resolve', () => {
     });
     client.onPost(postUrl).reply(200, { success: true });
 
-    await setTelegramWebhook(webhook, configPath);
+    await setWebhook(webhook, configPath);
 
     expect(log.print).toHaveBeenCalledTimes(1);
     expect(log.print.mock.calls[0][0]).toMatch(/Successfully/);
@@ -94,7 +95,7 @@ describe('resolve', () => {
 
     client.onPost(postUrl).reply(200, { success: true });
 
-    await setTelegramWebhook(undefined, configPath);
+    await setWebhook(undefined, configPath);
 
     expect(log.print).toHaveBeenCalledTimes(1);
     expect(log.print.mock.calls[0][0]).toMatch(/Successfully/);
@@ -107,7 +108,7 @@ describe('reject', () => {
     getConfig.mockReturnValue({});
     process.exit = jest.fn();
 
-    await setTelegramWebhook(webhook, configPath);
+    await setWebhook(webhook, configPath);
 
     expect(log.error).toBeCalledWith(
       '`accessToken` is not found in config file'
@@ -118,6 +119,6 @@ describe('reject', () => {
   it('reject when telegram return not success', () => {
     const { postUrl, webhook } = setup();
     client.onPost(postUrl).reply(400, { success: false });
-    expect(setTelegramWebhook(webhook, configPath).then).toThrow();
+    expect(setWebhook(webhook, configPath).then).toThrow();
   });
 });

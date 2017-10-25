@@ -3,21 +3,13 @@
 jest.mock('didyoumean');
 jest.mock('../shared/log');
 jest.mock('../actions/init');
-jest.mock('../actions/deleteWhitelistedDomains');
-jest.mock('../actions/deleteGetStartedButton');
-jest.mock('../actions/deleteGreetingText');
-jest.mock('../actions/deletePersistentMenu');
-jest.mock('../actions/getWhitelistedDomains');
-jest.mock('../actions/getGetStartedButton');
-jest.mock('../actions/getGreetingText');
-jest.mock('../actions/getPersistentMenu');
-jest.mock('../actions/setWhitelistedDomains');
-jest.mock('../actions/setGetStartedButton');
-jest.mock('../actions/setGreetingText');
-jest.mock('../actions/setMessengerProfile');
-jest.mock('../actions/setPersistentMenu');
-jest.mock('../actions/setMessengerWebhook');
-jest.mock('../actions/setTelegramWebhook');
+jest.mock('../actions/messenger/whitelisted-domains');
+jest.mock('../actions/messenger/get-started');
+jest.mock('../actions/messenger/greeting');
+jest.mock('../actions/messenger/persistent-menu');
+jest.mock('../actions/messenger/profile');
+jest.mock('../actions/messenger/webhook');
+jest.mock('../actions/telegram/webhook');
 
 let log;
 let didYouMean;
@@ -42,8 +34,9 @@ it('#init', () => {
 describe('messenger', () => {
   describe('domain-whilelist', () => {
     it('#get', () => {
-      const getWhitelistedDomains = require('../actions/getWhitelistedDomains');
-      getWhitelistedDomains.default = jest.fn();
+      const {
+        getWhitelistedDomains,
+      } = require('../actions/messenger/whitelisted-domains');
       process.argv = [
         '/usr/local/bin/iojs',
         '/usr/local/bin/bottender',
@@ -54,14 +47,13 @@ describe('messenger', () => {
         'bottender.config.js',
       ];
       require('../index');
-      expect(getWhitelistedDomains.default).toBeCalledWith(
-        'bottender.config.js'
-      );
+      expect(getWhitelistedDomains).toBeCalledWith('bottender.config.js');
     });
 
     it('#set', () => {
-      const setWhitelistedDomains = require('../actions/setWhitelistedDomains');
-      setWhitelistedDomains.default = jest.fn();
+      const {
+        setWhitelistedDomains,
+      } = require('../actions/messenger/whitelisted-domains');
       process.argv = [
         '/usr/local/bin/iojs',
         '/usr/local/bin/bottender',
@@ -74,15 +66,16 @@ describe('messenger', () => {
         'http://www.yoctol.com,http://www.facebook.com',
       ];
       require('../index');
-      expect(setWhitelistedDomains.default).toBeCalledWith(
+      expect(setWhitelistedDomains).toBeCalledWith(
         ['http://www.yoctol.com', 'http://www.facebook.com'],
         'bottender.config.js'
       );
     });
 
     it('#delete', () => {
-      const deleteWhitelistedDomains = require('../actions/deleteWhitelistedDomains');
-      deleteWhitelistedDomains.default = jest.fn();
+      const {
+        deleteWhitelistedDomains,
+      } = require('../actions/messenger/whitelisted-domains');
       process.argv = [
         '/usr/local/bin/iojs',
         '/usr/local/bin/bottender',
@@ -93,16 +86,13 @@ describe('messenger', () => {
         'bottender.config.js',
       ];
       require('../index');
-      expect(deleteWhitelistedDomains.default).toBeCalledWith(
-        'bottender.config.js'
-      );
+      expect(deleteWhitelistedDomains).toBeCalledWith('bottender.config.js');
     });
   });
 
   describe('get-started', () => {
     it('#get', () => {
-      const getGetStartedButton = require('../actions/getGetStartedButton');
-      getGetStartedButton.default = jest.fn();
+      const { getGetStarted } = require('../actions/messenger/get-started');
       process.argv = [
         '/usr/local/bin/iojs',
         '/usr/local/bin/bottender',
@@ -113,12 +103,11 @@ describe('messenger', () => {
         'bottender.config.js',
       ];
       require('../index');
-      expect(getGetStartedButton.default).toBeCalledWith('bottender.config.js');
+      expect(getGetStarted).toBeCalledWith('bottender.config.js');
     });
 
     it('#set', () => {
-      const setGetStartedButton = require('../actions/setGetStartedButton');
-      setGetStartedButton.default = jest.fn();
+      const { setGetStarted } = require('../actions/messenger/get-started');
       process.argv = [
         '/usr/local/bin/iojs',
         '/usr/local/bin/bottender',
@@ -131,15 +120,14 @@ describe('messenger', () => {
         '__PAYLOAD__',
       ];
       require('../index');
-      expect(setGetStartedButton.default).toBeCalledWith(
+      expect(setGetStarted).toBeCalledWith(
         '__PAYLOAD__',
         'bottender.config.js'
       );
     });
 
     it('#delete', () => {
-      const deleteGetStartedButton = require('../actions/deleteGetStartedButton');
-      deleteGetStartedButton.default = jest.fn();
+      const { deleteGetStarted } = require('../actions/messenger/get-started');
       process.argv = [
         '/usr/local/bin/iojs',
         '/usr/local/bin/bottender',
@@ -150,16 +138,13 @@ describe('messenger', () => {
         'bottender.config.js',
       ];
       require('../index');
-      expect(deleteGetStartedButton.default).toBeCalledWith(
-        'bottender.config.js'
-      );
+      expect(deleteGetStarted).toBeCalledWith('bottender.config.js');
     });
   });
 
-  describe('greeting-text', () => {
+  describe('greeting', () => {
     it('#get', () => {
-      const getGreetingText = require('../actions/getGreetingText');
-      getGreetingText.default = jest.fn();
+      const { getGreeting } = require('../actions/messenger/greeting');
       process.argv = [
         '/usr/local/bin/iojs',
         '/usr/local/bin/bottender',
@@ -170,12 +155,11 @@ describe('messenger', () => {
         'bottender.config.js',
       ];
       require('../index');
-      expect(getGreetingText.default).toBeCalledWith('bottender.config.js');
+      expect(getGreeting).toBeCalledWith('bottender.config.js');
     });
 
     it('#set', () => {
-      const setGreetingText = require('../actions/setGreetingText');
-      setGreetingText.default = jest.fn();
+      const { setGreeting } = require('../actions/messenger/greeting');
       process.argv = [
         '/usr/local/bin/iojs',
         '/usr/local/bin/bottender',
@@ -188,15 +172,14 @@ describe('messenger', () => {
         '__greeting_text__',
       ];
       require('../index');
-      expect(setGreetingText.default).toBeCalledWith(
+      expect(setGreeting).toBeCalledWith(
         '__greeting_text__',
         'bottender.config.js'
       );
     });
 
     it('#delete', () => {
-      const deleteGreetingText = require('../actions/deleteGreetingText');
-      deleteGreetingText.default = jest.fn();
+      const { deleteGreeting } = require('../actions/messenger/greeting');
       process.argv = [
         '/usr/local/bin/iojs',
         '/usr/local/bin/bottender',
@@ -207,14 +190,15 @@ describe('messenger', () => {
         'bottender.config.js',
       ];
       require('../index');
-      expect(deleteGreetingText.default).toBeCalledWith('bottender.config.js');
+      expect(deleteGreeting).toBeCalledWith('bottender.config.js');
     });
   });
 
   describe('persistent-menu', () => {
     it('#get', () => {
-      const getPersistentMenu = require('../actions/getPersistentMenu');
-      getPersistentMenu.default = jest.fn();
+      const {
+        getPersistentMenu,
+      } = require('../actions/messenger/persistent-menu');
       process.argv = [
         '/usr/local/bin/iojs',
         '/usr/local/bin/bottender',
@@ -225,12 +209,13 @@ describe('messenger', () => {
         'bottender.config.js',
       ];
       require('../index');
-      expect(getPersistentMenu.default).toBeCalledWith('bottender.config.js');
+      expect(getPersistentMenu).toBeCalledWith('bottender.config.js');
     });
 
     it('#set', () => {
-      const setPersistentMenu = require('../actions/setPersistentMenu');
-      setPersistentMenu.default = jest.fn();
+      const {
+        setPersistentMenu,
+      } = require('../actions/messenger/persistent-menu');
       process.argv = [
         '/usr/local/bin/iojs',
         '/usr/local/bin/bottender',
@@ -241,12 +226,13 @@ describe('messenger', () => {
         'bottender.config.js',
       ];
       require('../index');
-      expect(setPersistentMenu.default).toBeCalledWith('bottender.config.js');
+      expect(setPersistentMenu).toBeCalledWith('bottender.config.js');
     });
 
     it('#delete', () => {
-      const deletePersistentMenu = require('../actions/deletePersistentMenu');
-      deletePersistentMenu.default = jest.fn();
+      const {
+        deletePersistentMenu,
+      } = require('../actions/messenger/persistent-menu');
       process.argv = [
         '/usr/local/bin/iojs',
         '/usr/local/bin/bottender',
@@ -257,16 +243,13 @@ describe('messenger', () => {
         'bottender.config.js',
       ];
       require('../index');
-      expect(deletePersistentMenu.default).toBeCalledWith(
-        'bottender.config.js'
-      );
+      expect(deletePersistentMenu).toBeCalledWith('bottender.config.js');
     });
   });
 
   describe('profile', () => {
     it('#set', () => {
-      const setMessengerProfile = require('../actions/setMessengerProfile');
-      setMessengerProfile.default = jest.fn();
+      const { setProfile } = require('../actions/messenger/profile');
       process.argv = [
         '/usr/local/bin/iojs',
         '/usr/local/bin/bottender',
@@ -277,14 +260,13 @@ describe('messenger', () => {
         'bottender.config.js',
       ];
       require('../index');
-      expect(setMessengerProfile.default).toBeCalledWith('bottender.config.js');
+      expect(setProfile).toBeCalledWith('bottender.config.js');
     });
   });
 
   describe('webhook set', () => {
     it('to be called when passing options', () => {
-      const setMessengerWebhook = require('../actions/setMessengerWebhook');
-      setMessengerWebhook.default = jest.fn();
+      const { setWebhook } = require('../actions/messenger/webhook');
       process.argv = [
         '/usr/local/bin/iojs',
         '/usr/local/bin/bottender',
@@ -297,7 +279,7 @@ describe('messenger', () => {
         '__FAKE_VERIFYTOKEN__',
       ];
       require('../index');
-      expect(setMessengerWebhook.default).toBeCalledWith(
+      expect(setWebhook).toBeCalledWith(
         'http://test.com',
         undefined,
         '__FAKE_VERIFYTOKEN__'
@@ -309,8 +291,7 @@ describe('messenger', () => {
 describe('telegram', () => {
   describe('webhook set', () => {
     it('to be called when passing options', () => {
-      const setTelegramWebhook = require('../actions/setTelegramWebhook');
-      setTelegramWebhook.default = jest.fn();
+      const { setWebhook } = require('../actions/telegram/webhook');
       process.argv = [
         '/usr/local/bin/iojs',
         '/usr/local/bin/bottender',
@@ -321,10 +302,7 @@ describe('telegram', () => {
         'http://test.com',
       ];
       require('../index');
-      expect(setTelegramWebhook.default).toBeCalledWith(
-        'http://test.com',
-        undefined
-      );
+      expect(setWebhook).toBeCalledWith('http://test.com', undefined);
     });
   });
 });
@@ -341,7 +319,7 @@ describe('*', () => {
     expect(log.error).toBeCalledWith(
       `unknown command: ${log.bold('unknown-command')}`
     );
-    expect(process.exit).toBeCalledWith(1);
+    expect(process.exit).toBeCalled();
   });
 
   it('call error unknown command', () => {
@@ -356,7 +334,7 @@ describe('*', () => {
       `unknown command: ${log.bold('unknown-command')}`
     );
     expect(log.error).lastCalledWith(`did you mean ${log.bold('help')}?`);
-    expect(process.exit).toBeCalledWith(1);
+    expect(process.exit).toBeCalled();
   });
 });
 
@@ -367,6 +345,6 @@ it('not warn when there is no any close match', () => {
     'abcdefghijk',
   ];
   require('../index');
-  expect(log.error).toHaveBeenCalledTimes(1);
-  expect(process.exit).toBeCalledWith(1);
+  expect(log.error).toBeCalled();
+  expect(process.exit).toBeCalled();
 });

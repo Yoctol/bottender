@@ -3,8 +3,8 @@ import get from 'lodash/get';
 import invariant from 'invariant';
 import Confirm from 'prompt-confirm';
 
-import getConfig from '../shared/getConfig';
-import { print, error, bold, warn } from '../shared/log';
+import getConfig from '../../shared/getConfig';
+import { print, error, bold, warn } from '../../shared/log';
 
 export const client = axios.create({
   baseURL: 'https://graph.facebook.com/v2.9/',
@@ -27,15 +27,10 @@ const _getClientToken = async (clientId, clientSecret) => {
   return res.data.access_token;
 };
 
-export default (async function setMessengerWebhook(
-  _webhook,
-  _configPath,
-  _verifyToken
-) {
+export async function setWebhook(_webhook, _configPath, _verifyToken) {
   try {
-    const platform = 'messenger';
     const configPath = _configPath || 'bottender.config.js';
-    const config = getConfig(configPath, platform);
+    const config = getConfig(configPath, 'messenger');
     const defaultFields = [
       'messages',
       'messaging_postbacks',
@@ -111,4 +106,4 @@ export default (async function setMessengerWebhook(
     }
     return process.exit(1);
   }
-});
+}

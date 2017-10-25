@@ -1,14 +1,14 @@
-import deleteGreetingText from '../deleteGreetingText';
+import { deleteGreeting } from '../greeting';
 
 jest.mock('messaging-api-messenger');
 
-jest.mock('../../shared/log');
-jest.mock('../../shared/getConfig');
+jest.mock('../../../shared/log');
+jest.mock('../../../shared/getConfig');
 
 const { MessengerClient } = require('messaging-api-messenger');
 
-const log = require('../../shared/log');
-const getConfig = require('../../shared/getConfig');
+const log = require('../../../shared/log');
+const getConfig = require('../../../shared/getConfig');
 
 const MOCK_FILE_WITH_PLATFORM = {
   messenger: {
@@ -31,14 +31,14 @@ beforeEach(() => {
 });
 
 it('be defined', () => {
-  expect(deleteGreetingText).toBeDefined();
+  expect(deleteGreeting).toBeDefined();
 });
 
 describe('#getConfig', () => {
   it('will call `bottender.config.js` and platform = messenger when NOT passed <config_path>', async () => {
     _client.deleteGreetingText.mockReturnValue(Promise.resolve());
 
-    await deleteGreetingText();
+    await deleteGreeting();
 
     expect(getConfig).toBeCalledWith('bottender.config.js', 'messenger');
   });
@@ -46,19 +46,18 @@ describe('#getConfig', () => {
   it('will call <config_path> when it was passed', async () => {
     _client.deleteGreetingText.mockReturnValue(Promise.resolve());
 
-    await deleteGreetingText(configPath);
+    await deleteGreeting(configPath);
 
     expect(getConfig).toBeCalledWith('bot.sample.json', 'messenger');
   });
 });
 
 describe('resolved', () => {
-  it('call deleteGreetingText', async () => {
+  it('call deleteGreeting', async () => {
     _client.deleteGreetingText.mockReturnValue(Promise.resolve());
 
-    await deleteGreetingText(configPath);
+    await deleteGreeting(configPath);
 
-    expect(log.print).toHaveBeenCalledTimes(1);
     expect(_client.deleteGreetingText).toBeCalled();
   });
 });
@@ -74,9 +73,9 @@ describe('reject', () => {
 
     process.exit = jest.fn();
 
-    await deleteGreetingText(configPath);
+    await deleteGreeting(configPath);
 
-    expect(log.error).toHaveBeenCalledTimes(2);
+    expect(log.error).toBeCalled();
     expect(process.exit).toBeCalled();
   });
 
@@ -99,9 +98,9 @@ describe('reject', () => {
 
     process.exit = jest.fn();
 
-    await deleteGreetingText(configPath);
+    await deleteGreeting(configPath);
 
-    expect(log.error).toHaveBeenCalledTimes(3);
+    expect(log.error).toBeCalled();
     expect(log.error.mock.calls[2][0]).not.toMatch(/\[object Object\]/);
     expect(process.exit).toBeCalled();
   });
@@ -114,9 +113,9 @@ describe('reject', () => {
 
     process.exit = jest.fn();
 
-    await deleteGreetingText(configPath);
+    await deleteGreeting(configPath);
 
-    expect(log.error).toHaveBeenCalledTimes(2);
+    expect(log.error).toBeCalled();
     expect(process.exit).toBeCalled();
   });
 });

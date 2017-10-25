@@ -1,14 +1,14 @@
-import setPersistentMenu from '../setPersistentMenu';
+import { setPersistentMenu } from '../persistent-menu';
 
 jest.mock('messaging-api-messenger');
 
-jest.mock('../../shared/log');
-jest.mock('../../shared/getConfig');
+jest.mock('../../../shared/log');
+jest.mock('../../../shared/getConfig');
 
 const { MessengerClient } = require('messaging-api-messenger');
 
-const log = require('../../shared/log');
-const getConfig = require('../../shared/getConfig');
+const log = require('../../../shared/log');
+const getConfig = require('../../../shared/getConfig');
 
 const MOCK_FILE_WITH_PLATFORM = {
   messenger: {
@@ -60,8 +60,8 @@ describe('resolve', () => {
         composerInputDisabled: false,
       }
     );
-    expect(log.print).toHaveBeenCalledTimes(2);
   });
+
   it('disable user input in persistent menu', async () => {
     getConfig.mockReturnValue({
       accessToken: '__FAKE_TOKEN__',
@@ -89,7 +89,6 @@ describe('resolve', () => {
         composerInputDisabled: true,
       }
     );
-    expect(log.print).toHaveBeenCalledTimes(2);
   });
 });
 
@@ -106,7 +105,7 @@ describe('reject', () => {
 
     await setPersistentMenu(configPath);
 
-    expect(log.error).toHaveBeenCalledTimes(2);
+    expect(log.error).toBeCalled();
     expect(process.exit).toBeCalled();
   });
 
@@ -131,7 +130,7 @@ describe('reject', () => {
 
     await setPersistentMenu(configPath);
 
-    expect(log.error).toHaveBeenCalledTimes(3);
+    expect(log.error).toBeCalled();
     expect(log.error.mock.calls[2][0]).not.toMatch(/\[object Object\]/);
     expect(process.exit).toBeCalled();
   });
@@ -146,7 +145,7 @@ describe('reject', () => {
 
     await setPersistentMenu(configPath);
 
-    expect(log.error).toHaveBeenCalledTimes(2);
+    expect(log.error).toBeCalled();
     expect(process.exit).toBeCalled();
   });
 });

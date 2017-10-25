@@ -1,14 +1,14 @@
-import getPersistentMenu from '../getPersistentMenu';
+import { getPersistentMenu } from '../persistent-menu';
 
 jest.mock('messaging-api-messenger');
 
-jest.mock('../../shared/log');
-jest.mock('../../shared/getConfig');
+jest.mock('../../../shared/log');
+jest.mock('../../../shared/getConfig');
 
 const { MessengerClient } = require('messaging-api-messenger');
 
-const log = require('../../shared/log');
-const getConfig = require('../../shared/getConfig');
+const log = require('../../../shared/log');
+const getConfig = require('../../../shared/getConfig');
 
 const MOCK_FILE_WITH_PLATFORM = {
   messenger: {
@@ -115,7 +115,6 @@ describe('resolved', () => {
 
     await getPersistentMenu(configPath);
 
-    expect(log.print).toHaveBeenCalledTimes(2);
     expect(_client.getPersistentMenu).toBeCalled();
   });
 
@@ -128,7 +127,7 @@ describe('resolved', () => {
 
     await getPersistentMenu(configPath);
 
-    expect(log.error).toHaveBeenCalledTimes(1);
+    expect(log.error).toBeCalled();
     expect(_client.getPersistentMenu).toBeCalled();
   });
 });
@@ -146,7 +145,7 @@ describe('reject', () => {
 
     await getPersistentMenu(configPath);
 
-    expect(log.error).toHaveBeenCalledTimes(2);
+    expect(log.error).toBeCalled();
     expect(process.exit).toBeCalled();
   });
 
@@ -171,7 +170,7 @@ describe('reject', () => {
 
     await getPersistentMenu(configPath);
 
-    expect(log.error).toHaveBeenCalledTimes(3);
+    expect(log.error).toBeCalled();
     expect(log.error.mock.calls[2][0]).not.toMatch(/\[object Object\]/);
     expect(process.exit).toBeCalled();
   });
@@ -186,7 +185,7 @@ describe('reject', () => {
 
     await getPersistentMenu(configPath);
 
-    expect(log.error).toHaveBeenCalledTimes(2);
+    expect(log.error).toBeCalled();
     expect(process.exit).toBeCalled();
   });
 });

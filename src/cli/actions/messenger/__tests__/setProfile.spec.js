@@ -1,15 +1,15 @@
-import setMessengerProfile from '../setMessengerProfile';
+import { setProfile } from '../profile';
 
 jest.mock('messaging-api-messenger');
 jest.mock('warning');
 
-jest.mock('../../shared/log');
-jest.mock('../../shared/getConfig');
+jest.mock('../../../shared/log');
+jest.mock('../../../shared/getConfig');
 
 const { MessengerClient } = require('messaging-api-messenger');
 
-const log = require('../../shared/log');
-const getConfig = require('../../shared/getConfig');
+const log = require('../../../shared/log');
+const getConfig = require('../../../shared/getConfig');
 
 const MOCK_FILE_WITH_PLATFORM = {
   messenger: {
@@ -49,12 +49,12 @@ afterEach(() => {
 });
 
 it('be defined', () => {
-  expect(setMessengerProfile).toBeDefined();
+  expect(setProfile).toBeDefined();
 });
 
 describe('resolve', () => {
   it('delete persistent_menu, get_started, greeting for messenger profile', async () => {
-    await setMessengerProfile(configPath);
+    await setProfile(configPath);
 
     expect(_client.deleteMessengerProfile.mock.calls[0][0]).toEqual([
       'persistent_menu',
@@ -66,7 +66,7 @@ describe('resolve', () => {
   });
 
   it('successfully set persistent menu', async () => {
-    await setMessengerProfile(configPath);
+    await setProfile(configPath);
 
     expect(_client.setPersistentMenu).toBeCalledWith([
       {
@@ -94,7 +94,7 @@ describe('resolve', () => {
       composerInputDisabled: true,
     });
 
-    await setMessengerProfile(configPath);
+    await setProfile(configPath);
 
     expect(_client.setPersistentMenu).toBeCalledWith(
       [
@@ -127,7 +127,7 @@ describe('resolve', () => {
       ],
     });
 
-    await setMessengerProfile(configPath);
+    await setProfile(configPath);
 
     expect(_client.setPersistentMenu).toBeCalledWith([
       {
@@ -148,7 +148,7 @@ describe('resolve', () => {
       domainWhitelist: ['http://www.awesome.com'],
     });
 
-    await setMessengerProfile(configPath);
+    await setProfile(configPath);
 
     expect(_client.setDomainWhitelist).toBeCalledWith([
       'http://www.awesome.com',
@@ -172,9 +172,9 @@ describe('reject', () => {
 
     process.exit = jest.fn();
 
-    await setMessengerProfile(configPath);
+    await setProfile(configPath);
 
-    expect(log.error).toHaveBeenCalledTimes(2);
+    expect(log.error).toBeCalled();
     expect(process.exit).toBeCalled();
   });
 
@@ -197,9 +197,9 @@ describe('reject', () => {
 
     process.exit = jest.fn();
 
-    await setMessengerProfile(configPath);
+    await setProfile(configPath);
 
-    expect(log.error).toHaveBeenCalledTimes(3);
+    expect(log.error).toBeCalled();
     expect(log.error.mock.calls[2][0]).not.toMatch(/\[object Object\]/);
     expect(process.exit).toBeCalled();
   });

@@ -1,19 +1,20 @@
 import MockAdapter from 'axios-mock-adapter';
 
-import setWebhook, {
+import {
+  setWebhook,
   client as _client,
   localClient as _localClient,
-} from '../setMessengerWebhook';
+} from '../webhook';
 
 jest.mock('prompt-confirm');
 
-jest.mock('../../shared/log');
-jest.mock('../../shared/getConfig');
+jest.mock('../../../shared/log');
+jest.mock('../../../shared/getConfig');
 
 const Confirm = require('prompt-confirm');
 
-const log = require('../../shared/log');
-const getConfig = require('../../shared/getConfig');
+const log = require('../../../shared/log');
+const getConfig = require('../../../shared/getConfig');
 
 const MOCK_FILE_WITH_PLATFORM = {
   messenger: {
