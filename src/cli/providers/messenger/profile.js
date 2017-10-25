@@ -4,6 +4,8 @@ import { MessengerClient } from 'messaging-api-messenger';
 import getConfig from '../../shared/getConfig';
 import { print, error, bold } from '../../shared/log';
 
+export async function getProfile() {}
+
 export async function setProfile() {
   try {
     const {
@@ -92,6 +94,21 @@ export async function setProfile() {
   }
 }
 
+export async function deleteProfile() {}
+
 export default async function main(ctx) {
-  console.log(ctx);
+  const subcommand = ctx.argv._[2];
+  switch (subcommand) {
+    case 'get':
+      getProfile();
+      break;
+    case 'set':
+      setProfile();
+      break;
+    case 'delete':
+    case 'del':
+      deleteProfile();
+      break;
+    default:
+  }
 }

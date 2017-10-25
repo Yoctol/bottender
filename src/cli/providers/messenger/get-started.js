@@ -58,5 +58,15 @@ export async function deleteGetStarted() {
 }
 
 export default async function main(ctx) {
-  console.log(ctx);
+  const subcommand = ctx.argv._[2];
+  switch (subcommand) {
+    case 'get':
+      getGetStarted();
+      break;
+    case 'delete':
+    case 'del':
+      deleteGetStarted();
+      break;
+    default:
+  }
 }

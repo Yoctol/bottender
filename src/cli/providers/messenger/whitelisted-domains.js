@@ -63,5 +63,15 @@ export async function deleteWhitelistedDomains() {
 }
 
 export default async function main(ctx) {
-  console.log(ctx);
+  const subcommand = ctx.argv._[2];
+  switch (subcommand) {
+    case 'get':
+      getWhitelistedDomains();
+      break;
+    case 'delete':
+    case 'del':
+      deleteWhitelistedDomains();
+      break;
+    default:
+  }
 }

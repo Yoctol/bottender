@@ -71,5 +71,15 @@ export async function deletePersistentMenu() {
 }
 
 export default async function main(ctx) {
-  console.log(ctx);
+  const subcommand = ctx.argv._[2];
+  switch (subcommand) {
+    case 'get':
+      getPersistentMenu();
+      break;
+    case 'delete':
+    case 'del':
+      deletePersistentMenu();
+      break;
+    default:
+  }
 }

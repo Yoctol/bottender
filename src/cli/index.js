@@ -1,4 +1,5 @@
 import minimist from 'minimist';
+import camelCase from 'camel-case';
 import didYouMean from 'didyoumean'; // FIXME
 
 import providers from './providers';
@@ -32,7 +33,7 @@ const main = async argv => {
   const provider = providers[providerName];
 
   try {
-    await provider[subcommand](ctx);
+    await provider[camelCase(subcommand)](ctx);
   } catch (err) {
     console.error(
       error(

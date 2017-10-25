@@ -59,5 +59,15 @@ export async function deleteGreeting() {
 }
 
 export default async function main(ctx) {
-  console.log(ctx);
+  const subcommand = ctx.argv._[2];
+  switch (subcommand) {
+    case 'get':
+      getGreeting();
+      break;
+    case 'delete':
+    case 'del':
+      deleteGreeting();
+      break;
+    default:
+  }
 }
