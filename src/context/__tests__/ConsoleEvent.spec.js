@@ -23,3 +23,7 @@ it('#message', () => {
 it('#isText', () => {
   expect(new ConsoleEvent(textMessage).isText).toEqual(true);
 });
+
+it('text', () => {
+  expect(new ConsoleEvent(textMessage).text).toEqual('Hello, world');
+});

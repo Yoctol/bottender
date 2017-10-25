@@ -327,6 +327,15 @@ it('#isText', () => {
   expect(new LineEvent(stickerMessage).isText).toEqual(false);
 });
 
+it('#text', () => {
+  expect(new LineEvent(textMessage).text).toEqual('Hello, world');
+  expect(new LineEvent(imageMessage).text).toEqual(null);
+  expect(new LineEvent(videoMessage).text).toEqual(null);
+  expect(new LineEvent(audioMessage).text).toEqual(null);
+  expect(new LineEvent(locationMessage).text).toEqual(null);
+  expect(new LineEvent(stickerMessage).text).toEqual(null);
+});
+
 it('#isImage', () => {
   expect(new LineEvent(textMessage).isImage).toEqual(false);
   expect(new LineEvent(imageMessage).isImage).toEqual(true);

@@ -48,4 +48,12 @@ export default class ConsoleEvent implements Event {
   get isText(): boolean {
     return true;
   }
+
+  /**
+   * The text string from Console raw event.
+   *
+   */
+  get text(): string {
+    return (this.message: any).text;
+  }
 }

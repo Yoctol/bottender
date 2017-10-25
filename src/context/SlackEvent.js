@@ -110,6 +110,17 @@ export default class SlackEvent implements Event {
   get isText(): boolean {
     return this.isMessage;
   }
+
+  /**
+   * The text string from Slack raw event.
+   *
+   */
+  get text(): ?string {
+    if (this.isText) {
+      return (this.message: any).text;
+    }
+    return null;
+  }
 }
 
 // https://api.slack.com/events

@@ -157,6 +157,17 @@ export default class TelegramEvent implements Event {
   }
 
   /**
+   * The text string from Telegram raw event.
+   *
+   */
+  get text(): ?string {
+    if (this.isText) {
+      return (this.message: any).text;
+    }
+    return null;
+  }
+
+  /**
    * Determine if the event is a message event which includes audio.
    *
    */

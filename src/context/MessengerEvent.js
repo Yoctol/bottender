@@ -200,6 +200,17 @@ export default class MessengerEvent implements Event {
   }
 
   /**
+   * The text string from Messenger raw event.
+   *
+   */
+  get text(): ?string {
+    if (this.isText) {
+      return (this.message: any).text;
+    }
+    return null;
+  }
+
+  /**
    * Determine if the event has any attachments.
    *
    */

@@ -482,6 +482,14 @@ it('#isText', () => {
   expect(new MessengerEvent(likeStickerMessage).isText).toEqual(false);
 });
 
+it('#text', () => {
+  expect(new MessengerEvent(textMessage).text).toEqual(
+    'Sharp tools make good work.'
+  );
+  expect(new MessengerEvent(imageMessage).text).toEqual(null);
+  expect(new MessengerEvent(likeStickerMessage).text).toEqual(null);
+});
+
 it('#hasAttachment', () => {
   expect(new MessengerEvent(textMessage).hasAttachment).toEqual(false);
   expect(new MessengerEvent(imageMessage).hasAttachment).toEqual(true);

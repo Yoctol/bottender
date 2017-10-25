@@ -661,7 +661,12 @@ it('#isMessage', () => {
 
 it('#isText', () => {
   const event = new SlackEvent(message);
-  expect(event.isText).toEqual(event.isMessage);
+  expect(event.isText).toEqual(true);
+});
+
+it('#text', () => {
+  const event = new SlackEvent(message);
+  expect(event.text).toEqual('Hello world');
 });
 
 it('#message', () => {

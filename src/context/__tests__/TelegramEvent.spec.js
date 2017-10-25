@@ -379,6 +379,12 @@ it('#isText', () => {
   expect(new TelegramEvent(stickerMessage).isText).toEqual(false);
 });
 
+it('#text', () => {
+  expect(new TelegramEvent(callbackQuery).text).toEqual(null);
+  expect(new TelegramEvent(textMessage).text).toEqual('text');
+  expect(new TelegramEvent(stickerMessage).text).toEqual(null);
+});
+
 it('#isAudio', () => {
   expect(new TelegramEvent(callbackQuery).isAudio).toEqual(false);
   expect(new TelegramEvent(textMessage).isAudio).toEqual(false);
