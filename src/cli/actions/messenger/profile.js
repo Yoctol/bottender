@@ -4,7 +4,7 @@ import { MessengerClient } from 'messaging-api-messenger';
 import getConfig from '../../shared/getConfig';
 import { print, error, bold } from '../../shared/log';
 
-export async function setProfile(configPath = 'bottender.config.js') {
+export async function setProfile() {
   try {
     const {
       accessToken,
@@ -13,7 +13,7 @@ export async function setProfile(configPath = 'bottender.config.js') {
       greetingText,
       persistentMenu,
       getStartedButtonPayload,
-    } = getConfig(configPath, 'messenger');
+    } = getConfig('bottender.config.js', 'messenger');
 
     const valid = {
       composerInputDisabled: !!composerInputDisabled,

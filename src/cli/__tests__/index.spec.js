@@ -43,33 +43,9 @@ describe('messenger', () => {
         'messenger',
         'whitelisted-domains',
         'get',
-        '-c',
-        'bottender.config.js',
       ];
       require('../index');
-      expect(getWhitelistedDomains).toBeCalledWith('bottender.config.js');
-    });
-
-    it('#set', () => {
-      const {
-        setWhitelistedDomains,
-      } = require('../actions/messenger/whitelisted-domains');
-      process.argv = [
-        '/usr/local/bin/iojs',
-        '/usr/local/bin/bottender',
-        'messenger',
-        'whitelisted-domains',
-        'set',
-        '-c',
-        'bottender.config.js',
-        '-d',
-        'http://www.yoctol.com,http://www.facebook.com',
-      ];
-      require('../index');
-      expect(setWhitelistedDomains).toBeCalledWith(
-        ['http://www.yoctol.com', 'http://www.facebook.com'],
-        'bottender.config.js'
-      );
+      expect(getWhitelistedDomains).toBeCalled();
     });
 
     it('#delete', () => {
@@ -82,11 +58,9 @@ describe('messenger', () => {
         'messenger',
         'whitelisted-domains',
         'delete',
-        '-c',
-        'bottender.config.js',
       ];
       require('../index');
-      expect(deleteWhitelistedDomains).toBeCalledWith('bottender.config.js');
+      expect(deleteWhitelistedDomains).toBeCalled();
     });
   });
 
@@ -99,31 +73,9 @@ describe('messenger', () => {
         'messenger',
         'get-started',
         'get',
-        '-c',
-        'bottender.config.js',
       ];
       require('../index');
-      expect(getGetStarted).toBeCalledWith('bottender.config.js');
-    });
-
-    it('#set', () => {
-      const { setGetStarted } = require('../actions/messenger/get-started');
-      process.argv = [
-        '/usr/local/bin/iojs',
-        '/usr/local/bin/bottender',
-        'messenger',
-        'get-started',
-        'set',
-        '-c',
-        'bottender.config.js',
-        '-p',
-        '__PAYLOAD__',
-      ];
-      require('../index');
-      expect(setGetStarted).toBeCalledWith(
-        '__PAYLOAD__',
-        'bottender.config.js'
-      );
+      expect(getGetStarted).toBeCalled();
     });
 
     it('#delete', () => {
@@ -134,11 +86,9 @@ describe('messenger', () => {
         'messenger',
         'get-started',
         'delete',
-        '-c',
-        'bottender.config.js',
       ];
       require('../index');
-      expect(deleteGetStarted).toBeCalledWith('bottender.config.js');
+      expect(deleteGetStarted).toBeCalled();
     });
   });
 
@@ -149,33 +99,11 @@ describe('messenger', () => {
         '/usr/local/bin/iojs',
         '/usr/local/bin/bottender',
         'messenger',
-        'greeting-text',
+        'greeting',
         'get',
-        '-c',
-        'bottender.config.js',
       ];
       require('../index');
-      expect(getGreeting).toBeCalledWith('bottender.config.js');
-    });
-
-    it('#set', () => {
-      const { setGreeting } = require('../actions/messenger/greeting');
-      process.argv = [
-        '/usr/local/bin/iojs',
-        '/usr/local/bin/bottender',
-        'messenger',
-        'greeting-text',
-        'set',
-        '-c',
-        'bottender.config.js',
-        '-g',
-        '__greeting_text__',
-      ];
-      require('../index');
-      expect(setGreeting).toBeCalledWith(
-        '__greeting_text__',
-        'bottender.config.js'
-      );
+      expect(getGreeting).toBeCalled();
     });
 
     it('#delete', () => {
@@ -184,13 +112,11 @@ describe('messenger', () => {
         '/usr/local/bin/iojs',
         '/usr/local/bin/bottender',
         'messenger',
-        'greeting-text',
+        'greeting',
         'delete',
-        '-c',
-        'bottender.config.js',
       ];
       require('../index');
-      expect(deleteGreeting).toBeCalledWith('bottender.config.js');
+      expect(deleteGreeting).toBeCalled();
     });
   });
 
@@ -205,28 +131,9 @@ describe('messenger', () => {
         'messenger',
         'persistent-menu',
         'get',
-        '-c',
-        'bottender.config.js',
       ];
       require('../index');
-      expect(getPersistentMenu).toBeCalledWith('bottender.config.js');
-    });
-
-    it('#set', () => {
-      const {
-        setPersistentMenu,
-      } = require('../actions/messenger/persistent-menu');
-      process.argv = [
-        '/usr/local/bin/iojs',
-        '/usr/local/bin/bottender',
-        'messenger',
-        'persistent-menu',
-        'set',
-        '-c',
-        'bottender.config.js',
-      ];
-      require('../index');
-      expect(setPersistentMenu).toBeCalledWith('bottender.config.js');
+      expect(getPersistentMenu).toBeCalled();
     });
 
     it('#delete', () => {
@@ -239,11 +146,9 @@ describe('messenger', () => {
         'messenger',
         'persistent-menu',
         'delete',
-        '-c',
-        'bottender.config.js',
       ];
       require('../index');
-      expect(deletePersistentMenu).toBeCalledWith('bottender.config.js');
+      expect(deletePersistentMenu).toBeCalled();
     });
   });
 
@@ -256,11 +161,9 @@ describe('messenger', () => {
         'messenger',
         'profile',
         'set',
-        '-c',
-        'bottender.config.js',
       ];
       require('../index');
-      expect(setProfile).toBeCalledWith('bottender.config.js');
+      expect(setProfile).toBeCalled();
     });
   });
 
@@ -281,7 +184,6 @@ describe('messenger', () => {
       require('../index');
       expect(setWebhook).toBeCalledWith(
         'http://test.com',
-        undefined,
         '__FAKE_VERIFYTOKEN__'
       );
     });

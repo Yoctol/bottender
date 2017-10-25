@@ -5,11 +5,9 @@ import { MessengerClient } from 'messaging-api-messenger';
 import getConfig from '../../shared/getConfig';
 import { print, error, bold } from '../../shared/log';
 
-export async function getWhitelistedDomains(
-  configPath = 'bottender.config.js'
-) {
+export async function getWhitelistedDomains() {
   try {
-    const config = getConfig(configPath, 'messenger');
+    const config = getConfig('bottender.config.js', 'messenger');
 
     invariant(config.accessToken, 'accessToken is not found in config file');
 
@@ -39,11 +37,9 @@ export async function getWhitelistedDomains(
   }
 }
 
-export async function deleteWhitelistedDomains(
-  configPath = 'bottender.config.js'
-) {
+export async function deleteWhitelistedDomains() {
   try {
-    const config = getConfig(configPath, 'messenger');
+    const config = getConfig('bottender.config.js', 'messenger');
 
     invariant(config.accessToken, 'accessToken is not found in config file');
 

@@ -16,7 +16,6 @@ const MOCK_FILE_WITH_PLATFORM = {
   },
   line: {},
 };
-const configPath = 'bot.sample.json';
 
 let _client;
 
@@ -42,21 +41,13 @@ describe('#getConfig', () => {
 
     expect(getConfig).toBeCalledWith('bottender.config.js', 'messenger');
   });
-
-  it('call with configPath and platform = messenger', async () => {
-    _client.deleteDomainWhitelist.mockReturnValue(Promise.resolve());
-
-    await deleteWhitelistedDomains(configPath);
-
-    expect(getConfig).toBeCalledWith('bot.sample.json', 'messenger');
-  });
 });
 
 describe('resolved', () => {
   it('call deleteDomainWhitelist', async () => {
     _client.deleteDomainWhitelist.mockReturnValue(Promise.resolve());
 
-    await deleteWhitelistedDomains(configPath);
+    await deleteWhitelistedDomains();
 
     expect(_client.deleteDomainWhitelist).toBeCalled();
   });
@@ -72,7 +63,7 @@ describe('reject', () => {
     _client.deleteDomainWhitelist.mockReturnValue(Promise.reject(error));
     process.exit = jest.fn();
 
-    await deleteWhitelistedDomains(configPath);
+    await deleteWhitelistedDomains();
 
     expect(log.error).toBeCalled();
     expect(process.exit).toBeCalled();
@@ -96,7 +87,7 @@ describe('reject', () => {
     _client.deleteDomainWhitelist.mockReturnValue(Promise.reject(error));
     process.exit = jest.fn();
 
-    await deleteWhitelistedDomains(configPath);
+    await deleteWhitelistedDomains();
 
     expect(log.error).toBeCalled();
     expect(log.error.mock.calls[2][0]).not.toMatch(/\[object Object\]/);
@@ -110,7 +101,7 @@ describe('reject', () => {
     _client.deleteDomainWhitelist.mockReturnValue(Promise.reject(error));
     process.exit = jest.fn();
 
-    await deleteWhitelistedDomains(configPath);
+    await deleteWhitelistedDomains();
 
     expect(log.error).toBeCalled();
     expect(process.exit).toBeCalled();

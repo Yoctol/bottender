@@ -45,10 +45,6 @@ program
     'All domains to set whitelisted domains, should separate by comma(,)'
   )
   .option(
-    '-c, --config <config_file_path>',
-    'The config file path of your project. Default to `bottender.config.js`'
-  )
-  .option(
     '-p, --payload <payload>',
     'The payload to set for get started button'
   )
@@ -66,10 +62,6 @@ program
   .command('telegram <command> <action>')
   .description('Telegram commands')
   .option('-w, --webhook <webhook_url>', 'The callback URL for webhook.')
-  .option(
-    '-c, --config <config_file_path>',
-    'The config file path of your project. Default to `bottender.config.js`'
-  )
   .action((command, action, { webhook, config }) => {
     setTelegramWebhook(webhook, config);
   });

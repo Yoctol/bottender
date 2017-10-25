@@ -16,7 +16,6 @@ const MOCK_FILE_WITH_PLATFORM = {
   },
   line: {},
 };
-const configPath = 'bot.sample.json';
 
 let _client;
 
@@ -50,22 +49,6 @@ describe('#getConfig', () => {
 
     expect(getConfig).toBeCalledWith('bottender.config.js', 'messenger');
   });
-
-  it('will call <config_path> when it was passed', async () => {
-    _client.getGreetingText.mockReturnValue(
-      Promise.resolve({
-        data: [
-          {
-            greeting: [{ text: 'hello' }],
-          },
-        ],
-      })
-    );
-
-    await getGreeting(configPath);
-
-    expect(getConfig).toBeCalledWith('bot.sample.json', 'messenger');
-  });
 });
 
 describe('resolved', () => {
@@ -80,7 +63,7 @@ describe('resolved', () => {
       })
     );
 
-    await getGreeting(configPath);
+    await getGreeting();
 
     expect(_client.getGreetingText).toBeCalled();
   });
@@ -92,7 +75,7 @@ describe('resolved', () => {
       })
     );
 
-    await getGreeting(configPath);
+    await getGreeting();
 
     expect(log.error).toBeCalled();
     expect(_client.getGreetingText).toBeCalled();
@@ -110,7 +93,7 @@ describe('reject', () => {
 
     process.exit = jest.fn();
 
-    await getGreeting(configPath);
+    await getGreeting();
 
     expect(log.error).toBeCalled();
     expect(process.exit).toBeCalled();
@@ -135,7 +118,7 @@ describe('reject', () => {
 
     process.exit = jest.fn();
 
-    await getGreeting(configPath);
+    await getGreeting();
 
     expect(log.error).toBeCalled();
     expect(log.error.mock.calls[2][0]).not.toMatch(/\[object Object\]/);
@@ -150,7 +133,7 @@ describe('reject', () => {
 
     process.exit = jest.fn();
 
-    await getGreeting(configPath);
+    await getGreeting();
 
     expect(log.error).toBeCalled();
     expect(process.exit).toBeCalled();

@@ -6,9 +6,9 @@ import { MessengerClient } from 'messaging-api-messenger';
 import getConfig from '../../shared/getConfig';
 import { print, error, bold } from '../../shared/log';
 
-export async function getPersistentMenu(configPath = 'bottender.config.js') {
+export async function getPersistentMenu() {
   try {
-    const config = getConfig(configPath, 'messenger');
+    const config = getConfig('bottender.config.js', 'messenger');
 
     invariant(config.accessToken, 'accessToken is not found in config file');
 
@@ -45,9 +45,9 @@ export async function getPersistentMenu(configPath = 'bottender.config.js') {
   }
 }
 
-export async function deletePersistentMenu(configPath = 'bottender.config.js') {
+export async function deletePersistentMenu() {
   try {
-    const config = getConfig(configPath, 'messenger');
+    const config = getConfig('bottender.config.js', 'messenger');
 
     invariant(config.accessToken, 'accessToken is not found in config file');
 

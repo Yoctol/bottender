@@ -5,9 +5,9 @@ import { MessengerClient } from 'messaging-api-messenger';
 import getConfig from '../../shared/getConfig';
 import { print, error, bold } from '../../shared/log';
 
-export async function getGetStarted(configPath = 'bottender.config.js') {
+export async function getGetStarted() {
   try {
-    const config = getConfig(configPath, 'messenger');
+    const config = getConfig('bottender.config.js', 'messenger');
 
     invariant(config.accessToken, 'accessToken is not found in config file');
 
@@ -32,9 +32,9 @@ export async function getGetStarted(configPath = 'bottender.config.js') {
   }
 }
 
-export async function deleteGetStarted(configPath = 'bottender.config.js') {
+export async function deleteGetStarted() {
   try {
-    const config = getConfig(configPath, 'messenger');
+    const config = getConfig('bottender.config.js', 'messenger');
 
     invariant(config.accessToken, 'accessToken is not found in config file');
 

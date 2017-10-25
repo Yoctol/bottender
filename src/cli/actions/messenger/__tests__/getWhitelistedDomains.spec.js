@@ -16,7 +16,6 @@ const MOCK_FILE_WITH_PLATFORM = {
   },
   line: {},
 };
-const configPath = 'bot.sample.json';
 
 let _client;
 
@@ -52,24 +51,6 @@ describe('#getConfig', () => {
     await getWhitelistedDomains();
     expect(getConfig).toBeCalledWith('bottender.config.js', 'messenger');
   });
-
-  it('will call <config_path> when it was passed', async () => {
-    _client.getDomainWhitelist.mockReturnValue(
-      Promise.resolve({
-        data: [
-          {
-            whitelisted_domains: [
-              'http://www.facebook.com',
-              'http://www.yoctol.com',
-            ],
-          },
-        ],
-      })
-    );
-
-    await getWhitelistedDomains(configPath);
-    expect(getConfig).toBeCalledWith('bot.sample.json', 'messenger');
-  });
 });
 
 describe('resolved', () => {
@@ -87,7 +68,7 @@ describe('resolved', () => {
       })
     );
 
-    await getWhitelistedDomains(configPath);
+    await getWhitelistedDomains();
 
     expect(_client.getDomainWhitelist).toBeCalled();
   });
@@ -99,7 +80,7 @@ describe('resolved', () => {
       })
     );
 
-    await getWhitelistedDomains(configPath);
+    await getWhitelistedDomains();
 
     expect(log.error).toBeCalled();
     expect(_client.getDomainWhitelist).toBeCalled();
@@ -117,7 +98,7 @@ describe('reject', () => {
 
     process.exit = jest.fn();
 
-    await getWhitelistedDomains(configPath);
+    await getWhitelistedDomains();
 
     expect(log.error).toBeCalled();
     expect(process.exit).toBeCalled();
@@ -142,7 +123,7 @@ describe('reject', () => {
 
     process.exit = jest.fn();
 
-    await getWhitelistedDomains(configPath);
+    await getWhitelistedDomains();
 
     expect(log.error).toBeCalled();
     expect(log.error.mock.calls[2][0]).not.toMatch(/\[object Object\]/);
@@ -157,7 +138,7 @@ describe('reject', () => {
 
     process.exit = jest.fn();
 
-    await getWhitelistedDomains(configPath);
+    await getWhitelistedDomains();
 
     expect(log.error).toBeCalled();
     expect(process.exit).toBeCalled();

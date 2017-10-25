@@ -18,8 +18,6 @@ import {
 import { setProfile } from './actions/messenger/profile';
 
 export default (function runMessengerCommand(command, action, options) {
-  const { config } = options;
-
   switch (command) {
     case 'webhook': {
       const { webhook, verifyToken } = options;
@@ -38,16 +36,16 @@ export default (function runMessengerCommand(command, action, options) {
         '-v --verifyToken <verify_token> is required but not found.'
       );
 
-      setWebhook(webhook, config, verifyToken);
+      setWebhook(webhook, verifyToken);
       break;
     }
 
     case 'whitelisted-domains': {
       if (['get', 'delete'].indexOf(action) > -1) {
         if (action === 'get') {
-          getWhitelistedDomains(config);
+          getWhitelistedDomains();
         } else if (action === 'delete') {
-          deleteWhitelistedDomains(config);
+          deleteWhitelistedDomains();
         }
       } else {
         error(`messenger whitelisted-domains ${action} is not supported.`);
@@ -58,15 +56,10 @@ export default (function runMessengerCommand(command, action, options) {
 
     case 'persistent-menu': {
       if (['get', 'delete'].indexOf(action) > -1) {
-        invariant(
-          config,
-          '-c --config <config_file_path> is required but not found.'
-        );
-
         if (action === 'get') {
-          getPersistentMenu(config);
+          getPersistentMenu();
         } else if (action === 'delete') {
-          deletePersistentMenu(config);
+          deletePersistentMenu();
         }
       } else {
         error(`messenger persistent-menu ${action} is not supported.`);
@@ -78,9 +71,9 @@ export default (function runMessengerCommand(command, action, options) {
     case 'get-started': {
       if (['get', 'delete'].indexOf(action) > -1) {
         if (action === 'get') {
-          getGetStarted(config);
+          getGetStarted();
         } else if (action === 'delete') {
-          deleteGetStarted(config);
+          deleteGetStarted();
         }
       } else {
         error(`messenger get-started ${action} is not supported.`);
@@ -92,9 +85,9 @@ export default (function runMessengerCommand(command, action, options) {
     case 'greeting': {
       if (['get', 'delete'].indexOf(action) > -1) {
         if (action === 'get') {
-          getGreeting(config);
+          getGreeting();
         } else if (action === 'delete') {
-          deleteGreeting(config);
+          deleteGreeting();
         }
       } else {
         error(`messenger greeting-text ${action} is not supported.`);
@@ -105,7 +98,7 @@ export default (function runMessengerCommand(command, action, options) {
 
     case 'profile': {
       if (action === 'set') {
-        setProfile(config);
+        setProfile();
       } else {
         error(`messenger profile ${action} is not supported.`);
         process.exit(1);

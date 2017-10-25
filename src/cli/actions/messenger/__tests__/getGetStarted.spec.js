@@ -16,7 +16,6 @@ const MOCK_FILE_WITH_PLATFORM = {
   },
   line: {},
 };
-const configPath = 'bot.sample.json';
 
 let _client;
 
@@ -52,24 +51,6 @@ describe('#getConfig', () => {
 
     expect(getConfig).toBeCalledWith('bottender.config.js', 'messenger');
   });
-
-  it('will call <config_path> when it was passed', async () => {
-    _client.getGetStartedButton.mockReturnValue(
-      Promise.resolve({
-        data: [
-          {
-            get_started: {
-              payload: 'get started yo!',
-            },
-          },
-        ],
-      })
-    );
-
-    await getGetStarted(configPath);
-
-    expect(getConfig).toBeCalledWith('bot.sample.json', 'messenger');
-  });
 });
 
 describe('resolved', () => {
@@ -86,7 +67,7 @@ describe('resolved', () => {
       })
     );
 
-    await getGetStarted(configPath);
+    await getGetStarted();
 
     expect(_client.getGetStartedButton).toBeCalled();
   });
@@ -98,7 +79,7 @@ describe('resolved', () => {
       })
     );
 
-    await getGetStarted(configPath);
+    await getGetStarted();
 
     expect(log.error).toBeCalled();
     expect(_client.getGetStartedButton).toBeCalled();
@@ -116,7 +97,7 @@ describe('reject', () => {
 
     process.exit = jest.fn();
 
-    await getGetStarted(configPath);
+    await getGetStarted();
 
     expect(log.error).toBeCalled();
     expect(process.exit).toBeCalled();
@@ -141,7 +122,7 @@ describe('reject', () => {
 
     process.exit = jest.fn();
 
-    await getGetStarted(configPath);
+    await getGetStarted();
 
     expect(log.error).toBeCalled();
     expect(log.error.mock.calls[2][0]).not.toMatch(/\[object Object\]/);
@@ -156,7 +137,7 @@ describe('reject', () => {
 
     process.exit = jest.fn();
 
-    await getGetStarted(configPath);
+    await getGetStarted();
 
     expect(log.error).toBeCalled();
     expect(process.exit).toBeCalled();

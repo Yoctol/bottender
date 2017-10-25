@@ -16,7 +16,6 @@ const MOCK_FILE_WITH_PLATFORM = {
   },
   line: {},
 };
-const configPath = 'bot.sample.json';
 
 let _client;
 
@@ -61,33 +60,6 @@ describe('#getConfig', () => {
 
     expect(getConfig).toBeCalledWith('bottender.config.js', 'messenger');
   });
-
-  it('will call <config_path> when it was passed', async () => {
-    _client.getPersistentMenu.mockReturnValue(
-      Promise.resolve({
-        data: [
-          {
-            persistent_menu: [
-              {
-                composer_input_disabled: false,
-                call_to_actions: [
-                  {
-                    type: 'postback',
-                    title: 'RESTART',
-                    payload: 'RESTART',
-                  },
-                ],
-              },
-            ],
-          },
-        ],
-      })
-    );
-
-    await getPersistentMenu(configPath);
-
-    expect(getConfig).toBeCalledWith('bot.sample.json', 'messenger');
-  });
 });
 
 describe('resolved', () => {
@@ -113,7 +85,7 @@ describe('resolved', () => {
       })
     );
 
-    await getPersistentMenu(configPath);
+    await getPersistentMenu();
 
     expect(_client.getPersistentMenu).toBeCalled();
   });
@@ -125,7 +97,7 @@ describe('resolved', () => {
       })
     );
 
-    await getPersistentMenu(configPath);
+    await getPersistentMenu();
 
     expect(log.error).toBeCalled();
     expect(_client.getPersistentMenu).toBeCalled();
@@ -143,7 +115,7 @@ describe('reject', () => {
 
     process.exit = jest.fn();
 
-    await getPersistentMenu(configPath);
+    await getPersistentMenu();
 
     expect(log.error).toBeCalled();
     expect(process.exit).toBeCalled();
@@ -168,7 +140,7 @@ describe('reject', () => {
 
     process.exit = jest.fn();
 
-    await getPersistentMenu(configPath);
+    await getPersistentMenu();
 
     expect(log.error).toBeCalled();
     expect(log.error.mock.calls[2][0]).not.toMatch(/\[object Object\]/);
@@ -183,7 +155,7 @@ describe('reject', () => {
 
     process.exit = jest.fn();
 
-    await getPersistentMenu(configPath);
+    await getPersistentMenu();
 
     expect(log.error).toBeCalled();
     expect(process.exit).toBeCalled();

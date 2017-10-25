@@ -27,10 +27,9 @@ const _getClientToken = async (clientId, clientSecret) => {
   return res.data.access_token;
 };
 
-export async function setWebhook(_webhook, _configPath, _verifyToken) {
+export async function setWebhook(_webhook, _verifyToken) {
   try {
-    const configPath = _configPath || 'bottender.config.js';
-    const config = getConfig(configPath, 'messenger');
+    const config = getConfig('bottender.config.js', 'messenger');
     const defaultFields = [
       'messages',
       'messaging_postbacks',
