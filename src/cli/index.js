@@ -5,7 +5,7 @@ import pkg from '../../package.json';
 
 import runMessengerCommand from './runMessengerCommand';
 import { error, bold } from './shared/log';
-import init from './actions/init';
+import init from './actions/sh/init';
 import { setWebhook as setTelegramWebhook } from './actions/telegram/webhook';
 
 program.version(pkg.version);

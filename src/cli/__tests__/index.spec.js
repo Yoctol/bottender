@@ -2,7 +2,7 @@
 
 jest.mock('didyoumean');
 jest.mock('../shared/log');
-jest.mock('../actions/init');
+jest.mock('../actions/sh/init');
 jest.mock('../actions/messenger/whitelisted-domains');
 jest.mock('../actions/messenger/get-started');
 jest.mock('../actions/messenger/greeting');
@@ -24,7 +24,7 @@ beforeEach(() => {
 });
 
 it('#init', () => {
-  const init = require('../actions/init');
+  const init = require('../actions/sh/init');
   init.default = jest.fn();
   process.argv = ['/usr/local/bin/iojs', '/usr/local/bin/bottender', 'init'];
   require('../index');
