@@ -33,17 +33,56 @@ export default class MessengerHandler extends Handler {
     return this;
   }
 
-  onPayload(arg1: Pattern | FunctionalHandler, arg2?: FunctionalHandler) {
-    let pattern;
-    let handler;
-    if (arg2) {
-      pattern = ((arg1: any): Pattern);
-      handler = (arg2: FunctionalHandler);
+  onPayload(
+    ...args:
+      | [Pattern, FunctionalHandler | Builder]
+      | [FunctionalHandler | Builder]
+  ) {
+    if (args.length < 2) {
+      const [handler]: [FunctionalHandler | Builder] = (args: any);
+
+      this.on(
+        ({ event }) =>
+          event.isPostback || (event.isMessage && !!event.message.quick_reply),
+        handler
+      );
+    } else {
+      // eslint-disable-next-line prefer-const
+      let [pattern, handler]: [
+        Pattern,
+        FunctionalHandler | Builder,
+      ] = (args: any);
+
+      if (handler.build) {
+        handler = handler.build();
+      }
 
       warning(
         typeof pattern === 'string' || pattern instanceof RegExp,
         `'onPayload' only accepts string or regex, but received ${typeof pattern}`
       );
+
+      if (pattern instanceof RegExp) {
+        const _handler = handler;
+        handler = context => {
+          let message;
+          if (context.event.isPostback) {
+            message = context.event.postback.payload;
+          } else {
+            message = context.event.message.quick_reply.payload;
+          }
+          // $FlowFixMe
+          const match = pattern.exec(message);
+
+          if (!match) return _handler(context);
+
+          // reset index so we start at the beginning of the regex each time
+          // $FlowFixMe
+          pattern.lastIndex = 0;
+
+          return _handler(context, match);
+        };
+      }
 
       this.on(({ event }) => {
         if (event.isPostback && matchPattern(pattern, event.postback.payload)) {
@@ -57,14 +96,6 @@ export default class MessengerHandler extends Handler {
         }
         return false;
       }, handler);
-    } else {
-      handler = ((arg1: any): FunctionalHandler);
-
-      this.on(
-        ({ event }) =>
-          event.isPostback || (event.isMessage && !!event.message.quick_reply),
-        handler
-      );
     }
     return this;
   }

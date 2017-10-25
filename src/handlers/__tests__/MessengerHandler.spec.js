@@ -145,6 +145,22 @@ describe('#onPayload', () => {
     const handler = jest.fn();
     const context = {
       event: {
+        isPostback: false,
+        postback: {
+          payload: 'cool',
+        },
+      },
+    };
+    builder.onPayload('cool', handler);
+    await builder.build()(context);
+    expect(handler).not.toBeCalled();
+  });
+
+  it('should not call handler when received no payload message', async () => {
+    const { builder } = setup();
+    const handler = jest.fn();
+    const context = {
+      event: {
         isMessage: true,
         isQuickReply: false,
         message: {
@@ -152,14 +168,63 @@ describe('#onPayload', () => {
         },
       },
     };
-    builder.onPayload('wow', handler);
+    builder.onPayload(handler); // no pattern
     await builder.build()(context);
     expect(handler).not.toBeCalled();
   });
 
-  it('should support regex', async () => {
+  describe('should support regex', async () => {
+    it('when received postback', async () => {
+      const { builder } = setup();
+      const handler = jest.fn();
+      const context = {
+        event: {
+          isPostback: true,
+          postback: {
+            payload: 'cool',
+          },
+        },
+      };
+
+      const match = ['cool'];
+      match.index = 0;
+      match.input = 'cool';
+
+      builder.onPayload(/COOL/i, handler);
+      await builder.build()(context);
+      expect(handler).toBeCalledWith(context, match);
+    });
+
+    it('when received quick reply message', async () => {
+      const { builder } = setup();
+      const handler = jest.fn();
+      const context = {
+        event: {
+          isMessage: true,
+          isQuickReply: true,
+          message: {
+            quick_reply: {
+              payload: 'so quick!',
+            },
+            text: 'wow',
+          },
+        },
+      };
+
+      const match = ['so quick!'];
+      match.index = 0;
+      match.input = 'so quick!';
+
+      builder.onPayload(/so quick!/i, handler);
+      await builder.build()(context);
+      expect(handler).toBeCalledWith(context, match);
+    });
+  });
+
+  it('should call handler build', async () => {
     const { builder } = setup();
-    const handler = jest.fn();
+    const build = jest.fn();
+    const handler = { build: jest.fn(() => build) };
     const context = {
       event: {
         isPostback: true,
@@ -168,9 +233,10 @@ describe('#onPayload', () => {
         },
       },
     };
+
     builder.onPayload(/COOL/i, handler);
     await builder.build()(context);
-    expect(handler).toBeCalledWith(context);
+    expect(handler.build()).toBeCalled();
   });
 });
 

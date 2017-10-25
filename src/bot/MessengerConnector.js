@@ -6,7 +6,8 @@ import crypto from 'crypto';
 
 import { MessengerClient } from 'messaging-api-messenger';
 import warning from 'warning';
-import isBefore from 'date-fns/is_before';
+import isAfter from 'date-fns/is_after';
+import isValid from 'date-fns/is_valid';
 
 import MessengerContext from '../context/MessengerContext';
 import MessengerEvent, {
@@ -132,7 +133,7 @@ export default class MessengerConnector
       const oe = user.profile_pic.split('oe=')[1];
       const timestamp = +`0x${oe}` * 1000;
       const expireTime = new Date(timestamp);
-      return isBefore(expireTime, new Date());
+      return !(isValid(expireTime) && isAfter(expireTime, new Date()));
     } catch (e) {
       return true;
     }
