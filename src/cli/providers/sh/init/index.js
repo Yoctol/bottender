@@ -282,7 +282,7 @@ const createBot = async (answer, root, useYarn) => {
   await run(root, botName, answer, useYarn);
 };
 
-export default (async function init() {
+export async function init() {
   try {
     const answer = await inquirer.prompt(questions);
 
@@ -336,4 +336,8 @@ export default (async function init() {
     }
     return process.exit(1);
   }
-});
+}
+
+export default async function main(ctx) {
+  console.log(ctx);
+}

@@ -1,3 +1,8 @@
 #!/usr/bin/env node
 
-require('../lib/cli');
+if (process.env.NODE_ENV === 'development') {
+  require('babel-register');
+  require('../src/cli');
+} else {
+  require('../lib/cli');
+}

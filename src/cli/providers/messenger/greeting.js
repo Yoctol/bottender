@@ -57,3 +57,7 @@ export async function deleteGreeting() {
     return process.exit(1);
   }
 }
+
+export default async function main(ctx) {
+  console.log(ctx);
+}

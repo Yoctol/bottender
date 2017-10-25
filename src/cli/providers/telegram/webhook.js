@@ -19,9 +19,9 @@ const getWebhookFromNgrok = async () => {
   return get(res, 'data.tunnels[1].public_url'); // tunnels[1] return `https` protocol
 };
 
-export async function setWebhook(_webhook, configPath = 'bottender.config.js') {
+export async function setWebhook(_webhook) {
   try {
-    const { accessToken } = getConfig(configPath, 'telegram');
+    const { accessToken } = getConfig('bottender.config.js', 'telegram');
     const webhook = _webhook || (await getWebhookFromNgrok());
 
     invariant(accessToken, '`accessToken` is not found in config file');
@@ -46,4 +46,8 @@ export async function setWebhook(_webhook, configPath = 'bottender.config.js') {
     }
     return process.exit(1);
   }
+}
+
+export default async function main(ctx) {
+  console.log(ctx);
 }

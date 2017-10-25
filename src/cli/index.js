@@ -1,87 +1,68 @@
-import program from 'commander';
-import didYouMean from 'didyoumean';
+import minimist from 'minimist';
+import didYouMean from 'didyoumean'; // FIXME
 
-import pkg from '../../package.json';
+import providers from './providers';
+import { error } from './shared/log';
 
-import runMessengerCommand from './runMessengerCommand';
-import { error, bold } from './shared/log';
-import init from './actions/sh/init';
-import { setWebhook as setTelegramWebhook } from './actions/telegram/webhook';
+import pkg from '../../package.json'; // FIXME
 
-program.version(pkg.version);
+const main = async argv => {
+  console.log(argv);
 
-program
-  .command('init')
-  .description('Initialize your bot')
-  .action(() => {
-    init();
-  });
+  // the context object to supply to the providers or the commands
+  const ctx = {
+    config: null, // FIXME
+    argv,
+  };
 
-program
-  .command('messenger')
-  .option('-h, --messengerHelp', 'Messenger-specific help')
-  .action(options => {
-    if (options.messengerHelp) {
-      console.log('This is Messenger-specific help');
-      process.exit(1);
+  let providerName;
+  let subcommand;
+
+  switch (argv._[0]) {
+    case 'messenger':
+    case 'telegram':
+      providerName = argv._[0];
+      subcommand = argv._[1];
+      break;
+    default:
+      providerName = 'sh';
+      subcommand = argv._[0];
+  }
+
+  const provider = providers[providerName];
+
+  try {
+    await provider[subcommand](ctx);
+  } catch (err) {
+    console.error(
+      error(
+        `An unexpected error occurred in provider ${subcommand}: ${err.stack}`
+      )
+    );
+  }
+};
+
+const handleUnexpected = err => {
+  console.error(
+    error(`An unexpected error occurred!\n  ${err.stack} ${err.stack}`)
+  );
+  process.exit(1);
+};
+
+const handleRejection = err => {
+  if (err) {
+    if (err instanceof Error) {
+      handleUnexpected(err);
+    } else {
+      console.error(error(`An unexpected rejection occurred\n  ${err}`));
     }
-  });
-
-program
-  .command('telegram')
-  .option('-h, --telegramHelp', 'Telegram-specific help')
-  .action(options => {
-    if (options.messengerHelp) {
-      console.log('This is Telegram-specific help');
-      process.exit(1);
-    }
-  });
-
-program
-  .command('messenger <command> <action>')
-  .description('Messenger commands')
-  .option(
-    '-d, --domains <array of domain_name>',
-    'All domains to set whitelisted domains, should separate by comma(,)'
-  )
-  .option(
-    '-p, --payload <payload>',
-    'The payload to set for get started button'
-  )
-  .option('-g, --greeting <greeting_text>', 'The greeting text of the bot')
-  .option('-w, --webhook <webhook_url>', 'The callback URL for webhook.')
-  .option(
-    '-v, --verifyToken <verify_token>',
-    'The verify token for webhook usage.'
-  )
-  .action((command, action, options) => {
-    runMessengerCommand(command, action, options);
-  });
-
-program
-  .command('telegram <command> <action>')
-  .description('Telegram commands')
-  .option('-w, --webhook <webhook_url>', 'The callback URL for webhook.')
-  .action((command, action, { webhook, config }) => {
-    setTelegramWebhook(webhook, config);
-  });
-
-program.on('--help', () => {
-  console.log('');
-  console.log('  This is Bottender help');
-});
-
-program.command('*').action(command => {
-  error(`unknown command: ${bold(command)}`);
-  const commandNames = program.commands
-    .map(c => c._name)
-    .filter(name => name !== '*');
-
-  const closeMatch = didYouMean(command, commandNames);
-  if (closeMatch) {
-    error(`did you mean ${bold(closeMatch)}?`);
+  } else {
+    console.error(error('An unexpected empty rejection occurred'));
   }
   process.exit(1);
-});
+};
 
-program.parse(process.argv);
+process.on('unhandledRejection', handleRejection);
+process.on('uncaughtException', handleUnexpected);
+
+main(minimist(process.argv.slice(2))).catch(handleUnexpected);

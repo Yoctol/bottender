@@ -69,3 +69,7 @@ export async function deletePersistentMenu() {
     return process.exit(1);
   }
 }
+
+export default async function main(ctx) {
+  console.log(ctx);
+}
