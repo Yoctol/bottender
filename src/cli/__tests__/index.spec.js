@@ -34,297 +34,298 @@ beforeEach(() => {
 it('#init', () => {
   const init = require('../actions/init');
   init.default = jest.fn();
-  process.argv = ['/usr/local/bin/iojs', '/usr/local/bin/toolbot', 'init'];
+  process.argv = ['/usr/local/bin/iojs', '/usr/local/bin/bottender', 'init'];
   require('../index');
   expect(init.default).toHaveBeenCalledTimes(1);
 });
 
-describe('#domain-whilelist', () => {
-  it('#get', () => {
-    const getWhitelistedDomains = require('../actions/getWhitelistedDomains');
-    getWhitelistedDomains.default = jest.fn();
-    process.argv = [
-      '/usr/local/bin/iojs',
-      '/usr/local/bin/toolbot',
-      'whitelisted-domains:get',
-      '-c',
-      'bot.sample.json',
-    ];
-    require('../index');
-    expect(getWhitelistedDomains.default).toBeCalledWith('bot.sample.json');
+describe('messenger', () => {
+  describe('domain-whilelist', () => {
+    it('#get', () => {
+      const getWhitelistedDomains = require('../actions/getWhitelistedDomains');
+      getWhitelistedDomains.default = jest.fn();
+      process.argv = [
+        '/usr/local/bin/iojs',
+        '/usr/local/bin/bottender',
+        'messenger',
+        'whitelisted-domains',
+        'get',
+        '-c',
+        'bottender.config.js',
+      ];
+      require('../index');
+      expect(getWhitelistedDomains.default).toBeCalledWith(
+        'bottender.config.js'
+      );
+    });
+
+    it('#set', () => {
+      const setWhitelistedDomains = require('../actions/setWhitelistedDomains');
+      setWhitelistedDomains.default = jest.fn();
+      process.argv = [
+        '/usr/local/bin/iojs',
+        '/usr/local/bin/bottender',
+        'messenger',
+        'whitelisted-domains',
+        'set',
+        '-c',
+        'bottender.config.js',
+        '-d',
+        'http://www.yoctol.com,http://www.facebook.com',
+      ];
+      require('../index');
+      expect(setWhitelistedDomains.default).toBeCalledWith(
+        ['http://www.yoctol.com', 'http://www.facebook.com'],
+        'bottender.config.js'
+      );
+    });
+
+    it('#delete', () => {
+      const deleteWhitelistedDomains = require('../actions/deleteWhitelistedDomains');
+      deleteWhitelistedDomains.default = jest.fn();
+      process.argv = [
+        '/usr/local/bin/iojs',
+        '/usr/local/bin/bottender',
+        'messenger',
+        'whitelisted-domains',
+        'delete',
+        '-c',
+        'bottender.config.js',
+      ];
+      require('../index');
+      expect(deleteWhitelistedDomains.default).toBeCalledWith(
+        'bottender.config.js'
+      );
+    });
   });
 
-  it('#set', () => {
-    const setWhitelistedDomains = require('../actions/setWhitelistedDomains');
-    setWhitelistedDomains.default = jest.fn();
-    process.argv = [
-      '/usr/local/bin/iojs',
-      '/usr/local/bin/toolbot',
-      'whitelisted-domains:set',
-      '-c',
-      'bot.sample.json',
-      '-d',
-      'http://www.yoctol.com,http://www.facebook.com',
-    ];
-    require('../index');
-    expect(setWhitelistedDomains.default).toBeCalledWith(
-      ['http://www.yoctol.com', 'http://www.facebook.com'],
-      'bot.sample.json'
-    );
+  describe('get-started', () => {
+    it('#get', () => {
+      const getGetStartedButton = require('../actions/getGetStartedButton');
+      getGetStartedButton.default = jest.fn();
+      process.argv = [
+        '/usr/local/bin/iojs',
+        '/usr/local/bin/bottender',
+        'messenger',
+        'get-started',
+        'get',
+        '-c',
+        'bottender.config.js',
+      ];
+      require('../index');
+      expect(getGetStartedButton.default).toBeCalledWith('bottender.config.js');
+    });
+
+    it('#set', () => {
+      const setGetStartedButton = require('../actions/setGetStartedButton');
+      setGetStartedButton.default = jest.fn();
+      process.argv = [
+        '/usr/local/bin/iojs',
+        '/usr/local/bin/bottender',
+        'messenger',
+        'get-started',
+        'set',
+        '-c',
+        'bottender.config.js',
+        '-p',
+        '__PAYLOAD__',
+      ];
+      require('../index');
+      expect(setGetStartedButton.default).toBeCalledWith(
+        '__PAYLOAD__',
+        'bottender.config.js'
+      );
+    });
+
+    it('#delete', () => {
+      const deleteGetStartedButton = require('../actions/deleteGetStartedButton');
+      deleteGetStartedButton.default = jest.fn();
+      process.argv = [
+        '/usr/local/bin/iojs',
+        '/usr/local/bin/bottender',
+        'messenger',
+        'get-started',
+        'delete',
+        '-c',
+        'bottender.config.js',
+      ];
+      require('../index');
+      expect(deleteGetStartedButton.default).toBeCalledWith(
+        'bottender.config.js'
+      );
+    });
   });
 
-  it('#delete', () => {
-    const deleteWhitelistedDomains = require('../actions/deleteWhitelistedDomains');
-    deleteWhitelistedDomains.default = jest.fn();
-    process.argv = [
-      '/usr/local/bin/iojs',
-      '/usr/local/bin/toolbot',
-      'whitelisted-domains:delete',
-      '-c',
-      'bot.sample.json',
-    ];
-    require('../index');
-    expect(deleteWhitelistedDomains.default).toBeCalledWith('bot.sample.json');
+  describe('greeting-text', () => {
+    it('#get', () => {
+      const getGreetingText = require('../actions/getGreetingText');
+      getGreetingText.default = jest.fn();
+      process.argv = [
+        '/usr/local/bin/iojs',
+        '/usr/local/bin/bottender',
+        'messenger',
+        'greeting-text',
+        'get',
+        '-c',
+        'bottender.config.js',
+      ];
+      require('../index');
+      expect(getGreetingText.default).toBeCalledWith('bottender.config.js');
+    });
+
+    it('#set', () => {
+      const setGreetingText = require('../actions/setGreetingText');
+      setGreetingText.default = jest.fn();
+      process.argv = [
+        '/usr/local/bin/iojs',
+        '/usr/local/bin/bottender',
+        'messenger',
+        'greeting-text',
+        'set',
+        '-c',
+        'bottender.config.js',
+        '-g',
+        '__greeting_text__',
+      ];
+      require('../index');
+      expect(setGreetingText.default).toBeCalledWith(
+        '__greeting_text__',
+        'bottender.config.js'
+      );
+    });
+
+    it('#delete', () => {
+      const deleteGreetingText = require('../actions/deleteGreetingText');
+      deleteGreetingText.default = jest.fn();
+      process.argv = [
+        '/usr/local/bin/iojs',
+        '/usr/local/bin/bottender',
+        'messenger',
+        'greeting-text',
+        'delete',
+        '-c',
+        'bottender.config.js',
+      ];
+      require('../index');
+      expect(deleteGreetingText.default).toBeCalledWith('bottender.config.js');
+    });
+  });
+
+  describe('persistent-menu', () => {
+    it('#get', () => {
+      const getPersistentMenu = require('../actions/getPersistentMenu');
+      getPersistentMenu.default = jest.fn();
+      process.argv = [
+        '/usr/local/bin/iojs',
+        '/usr/local/bin/bottender',
+        'messenger',
+        'persistent-menu',
+        'get',
+        '-c',
+        'bottender.config.js',
+      ];
+      require('../index');
+      expect(getPersistentMenu.default).toBeCalledWith('bottender.config.js');
+    });
+
+    it('#set', () => {
+      const setPersistentMenu = require('../actions/setPersistentMenu');
+      setPersistentMenu.default = jest.fn();
+      process.argv = [
+        '/usr/local/bin/iojs',
+        '/usr/local/bin/bottender',
+        'messenger',
+        'persistent-menu',
+        'set',
+        '-c',
+        'bottender.config.js',
+      ];
+      require('../index');
+      expect(setPersistentMenu.default).toBeCalledWith('bottender.config.js');
+    });
+
+    it('#delete', () => {
+      const deletePersistentMenu = require('../actions/deletePersistentMenu');
+      deletePersistentMenu.default = jest.fn();
+      process.argv = [
+        '/usr/local/bin/iojs',
+        '/usr/local/bin/bottender',
+        'messenger',
+        'persistent-menu',
+        'delete',
+        '-c',
+        'bottender.config.js',
+      ];
+      require('../index');
+      expect(deletePersistentMenu.default).toBeCalledWith(
+        'bottender.config.js'
+      );
+    });
+  });
+
+  describe('profile', () => {
+    it('#set', () => {
+      const setMessengerProfile = require('../actions/setMessengerProfile');
+      setMessengerProfile.default = jest.fn();
+      process.argv = [
+        '/usr/local/bin/iojs',
+        '/usr/local/bin/bottender',
+        'messenger',
+        'profile',
+        'set',
+        '-c',
+        'bottender.config.js',
+      ];
+      require('../index');
+      expect(setMessengerProfile.default).toBeCalledWith('bottender.config.js');
+    });
+  });
+
+  describe('webhook set', () => {
+    it('to be called when passing options', () => {
+      const setMessengerWebhook = require('../actions/setMessengerWebhook');
+      setMessengerWebhook.default = jest.fn();
+      process.argv = [
+        '/usr/local/bin/iojs',
+        '/usr/local/bin/bottender',
+        'messenger',
+        'webhook',
+        'set',
+        '-w',
+        'http://test.com',
+        '-v',
+        '__FAKE_VERIFYTOKEN__',
+      ];
+      require('../index');
+      expect(setMessengerWebhook.default).toBeCalledWith(
+        'http://test.com',
+        undefined,
+        '__FAKE_VERIFYTOKEN__'
+      );
+    });
   });
 });
 
-describe('#get-started-button', () => {
-  it('#get', () => {
-    const getGetStartedButton = require('../actions/getGetStartedButton');
-    getGetStartedButton.default = jest.fn();
-    process.argv = [
-      '/usr/local/bin/iojs',
-      '/usr/local/bin/toolbot',
-      'get-started:get',
-      '-c',
-      'bot.sample.json',
-    ];
-    require('../index');
-    expect(getGetStartedButton.default).toBeCalledWith('bot.sample.json');
-  });
-
-  it('#set', () => {
-    const setGetStartedButton = require('../actions/setGetStartedButton');
-    setGetStartedButton.default = jest.fn();
-    process.argv = [
-      '/usr/local/bin/iojs',
-      '/usr/local/bin/toolbot',
-      'get-started:set',
-      '-c',
-      'bot.sample.json',
-      '-p',
-      '__PAYLOAD__',
-    ];
-    require('../index');
-    expect(setGetStartedButton.default).toBeCalledWith(
-      '__PAYLOAD__',
-      'bot.sample.json'
-    );
-  });
-
-  it('#delete', () => {
-    const deleteGetStartedButton = require('../actions/deleteGetStartedButton');
-    deleteGetStartedButton.default = jest.fn();
-    process.argv = [
-      '/usr/local/bin/iojs',
-      '/usr/local/bin/toolbot',
-      'get-started:delete',
-      '-c',
-      'bot.sample.json',
-    ];
-    require('../index');
-    expect(deleteGetStartedButton.default).toBeCalledWith('bot.sample.json');
-  });
-});
-
-describe('#greeting-text', () => {
-  it('#get', () => {
-    const getGreetingText = require('../actions/getGreetingText');
-    getGreetingText.default = jest.fn();
-    process.argv = [
-      '/usr/local/bin/iojs',
-      '/usr/local/bin/toolbot',
-      'greeting-text:get',
-      '-c',
-      'bot.sample.json',
-    ];
-    require('../index');
-    expect(getGreetingText.default).toBeCalledWith('bot.sample.json');
-  });
-
-  it('#set', () => {
-    const setGreetingText = require('../actions/setGreetingText');
-    setGreetingText.default = jest.fn();
-    process.argv = [
-      '/usr/local/bin/iojs',
-      '/usr/local/bin/toolbot',
-      'greeting-text:set',
-      '-c',
-      'bot.sample.json',
-      '-g',
-      '__greeting_text__',
-    ];
-    require('../index');
-    expect(setGreetingText.default).toBeCalledWith(
-      '__greeting_text__',
-      'bot.sample.json'
-    );
-  });
-
-  it('#delete', () => {
-    const deleteGreetingText = require('../actions/deleteGreetingText');
-    deleteGreetingText.default = jest.fn();
-    process.argv = [
-      '/usr/local/bin/iojs',
-      '/usr/local/bin/toolbot',
-      'greeting-text:delete',
-      '-c',
-      'bot.sample.json',
-    ];
-    require('../index');
-    expect(deleteGreetingText.default).toBeCalledWith('bot.sample.json');
-  });
-});
-
-describe('#persistent-menu', () => {
-  it('#get', () => {
-    const getPersistentMenu = require('../actions/getPersistentMenu');
-    getPersistentMenu.default = jest.fn();
-    process.argv = [
-      '/usr/local/bin/iojs',
-      '/usr/local/bin/toolbot',
-      'persistent-menu:get',
-      '-c',
-      'bot.sample.json',
-    ];
-    require('../index');
-    expect(getPersistentMenu.default).toBeCalledWith('bot.sample.json');
-  });
-
-  it('#set', () => {
-    const setPersistentMenu = require('../actions/setPersistentMenu');
-    setPersistentMenu.default = jest.fn();
-    process.argv = [
-      '/usr/local/bin/iojs',
-      '/usr/local/bin/toolbot',
-      'persistent-menu:set',
-      '-c',
-      'bot.sample.json',
-    ];
-    require('../index');
-    expect(setPersistentMenu.default).toBeCalledWith('bot.sample.json');
-  });
-
-  it('#delete', () => {
-    const deletePersistentMenu = require('../actions/deletePersistentMenu');
-    deletePersistentMenu.default = jest.fn();
-    process.argv = [
-      '/usr/local/bin/iojs',
-      '/usr/local/bin/toolbot',
-      'persistent-menu:delete',
-      '-c',
-      'bot.sample.json',
-    ];
-    require('../index');
-    expect(deletePersistentMenu.default).toBeCalledWith('bot.sample.json');
-  });
-});
-
-describe('#messenger-profile', () => {
-  it('#set', () => {
-    const setMessengerProfile = require('../actions/setMessengerProfile');
-    setMessengerProfile.default = jest.fn();
-    process.argv = [
-      '/usr/local/bin/iojs',
-      '/usr/local/bin/toolbot',
-      'messenger-profile:set',
-      '-c',
-      'bot.sample.json',
-    ];
-    require('../index');
-    expect(setMessengerProfile.default).toBeCalledWith('bot.sample.json');
-  });
-});
-
-describe('#setMessengerWebhook', () => {
-  it('to be called without passing any options', () => {
-    const setMessengerWebhook = require('../actions/setMessengerWebhook');
-    setMessengerWebhook.default = jest.fn();
-    process.argv = [
-      '/usr/local/bin/iojs',
-      '/usr/local/bin/toolbot',
-      'set-messenger-webhook',
-    ];
-    require('../index');
-    expect(setMessengerWebhook.default).toBeCalledWith(
-      undefined,
-      undefined,
-      undefined
-    );
-  });
-  it('to be called when passing webhook', () => {
-    const setMessengerWebhook = require('../actions/setMessengerWebhook');
-    setMessengerWebhook.default = jest.fn();
-    process.argv = [
-      '/usr/local/bin/iojs',
-      '/usr/local/bin/toolbot',
-      'set-messenger-webhook',
-      '-w',
-      'http://test.com',
-    ];
-    require('../index');
-    expect(setMessengerWebhook.default).toBeCalledWith(
-      'http://test.com',
-      undefined,
-      undefined
-    );
-  });
-  it('to be called when passing webhook', () => {
-    const setMessengerWebhook = require('../actions/setMessengerWebhook');
-    setMessengerWebhook.default = jest.fn();
-    process.argv = [
-      '/usr/local/bin/iojs',
-      '/usr/local/bin/toolbot',
-      'set-messenger-webhook',
-      '-v',
-      '__FAKE_VERIFYTOKEN__',
-    ];
-    require('../index');
-    expect(setMessengerWebhook.default).toBeCalledWith(
-      undefined,
-      undefined,
-      '__FAKE_VERIFYTOKEN__'
-    );
-  });
-});
-
-describe('#setTelegramWebhook', () => {
-  it('to be called without passing any options', () => {
-    const setTelegramWebhook = require('../actions/setTelegramWebhook');
-    setTelegramWebhook.default = jest.fn();
-    process.argv = [
-      '/usr/local/bin/iojs',
-      '/usr/local/bin/toolbot',
-      'set-telegram-webhook',
-    ];
-    require('../index');
-    expect(setTelegramWebhook.default).toBeCalledWith(undefined, undefined);
-  });
-  it('to be called when passing webhook', () => {
-    const setTelegramWebhook = require('../actions/setTelegramWebhook');
-    setTelegramWebhook.default = jest.fn();
-    process.argv = [
-      '/usr/local/bin/iojs',
-      '/usr/local/bin/toolbot',
-      'set-telegram-webhook',
-      '-w',
-      'http://test.com',
-    ];
-    require('../index');
-    expect(setTelegramWebhook.default).toBeCalledWith(
-      'http://test.com',
-      undefined
-    );
+describe('telegram', () => {
+  describe('webhook set', () => {
+    it('to be called when passing options', () => {
+      const setTelegramWebhook = require('../actions/setTelegramWebhook');
+      setTelegramWebhook.default = jest.fn();
+      process.argv = [
+        '/usr/local/bin/iojs',
+        '/usr/local/bin/bottender',
+        'telegram',
+        'webhook',
+        'set',
+        '-w',
+        'http://test.com',
+      ];
+      require('../index');
+      expect(setTelegramWebhook.default).toBeCalledWith(
+        'http://test.com',
+        undefined
+      );
+    });
   });
 });
 
@@ -332,7 +333,7 @@ describe('*', () => {
   it('call error unknown command', () => {
     process.argv = [
       '/usr/local/bin/iojs',
-      '/usr/local/bin/toolbot',
+      '/usr/local/bin/bottender',
       'unknown-command',
     ];
     didYouMean.mockReturnValueOnce(null);
@@ -346,17 +347,15 @@ describe('*', () => {
   it('call error unknown command', () => {
     process.argv = [
       '/usr/local/bin/iojs',
-      '/usr/local/bin/toolbot',
+      '/usr/local/bin/bottender',
       'unknown-command',
     ];
-    didYouMean.mockReturnValueOnce('set-webhook');
+    didYouMean.mockReturnValueOnce('help');
     require('../index');
     expect(log.error).toBeCalledWith(
       `unknown command: ${log.bold('unknown-command')}`
     );
-    expect(log.error).lastCalledWith(
-      `did you mean ${log.bold('set-webhook')}?`
-    );
+    expect(log.error).lastCalledWith(`did you mean ${log.bold('help')}?`);
     expect(process.exit).toBeCalledWith(1);
   });
 });
@@ -364,7 +363,7 @@ describe('*', () => {
 it('not warn when there is no any close match', () => {
   process.argv = [
     '/usr/local/bin/iojs',
-    '/usr/local/bin/toolbot',
+    '/usr/local/bin/bottender',
     'abcdefghijk',
   ];
   require('../index');
