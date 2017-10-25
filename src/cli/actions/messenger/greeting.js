@@ -33,38 +33,6 @@ export async function getGreeting(configPath = 'bottender.config.js') {
   }
 }
 
-export async function setGreeting(
-  _greeting,
-  configPath = 'bottender.config.js'
-) {
-  try {
-    const config = getConfig(configPath, 'messenger');
-    const greeting = _greeting || config.greeting;
-
-    invariant(config.accessToken, 'accessToken is not found in config file');
-    invariant(
-      greeting,
-      'greeting is required but not found. using -g <greeting> to setup or list `greeting` key it in config file.'
-    );
-
-    const client = MessengerClient.connect(config.accessToken);
-    await client.setGreetingText(greeting);
-
-    print(`Successfully set greeting to ${bold(greeting)}`);
-  } catch (err) {
-    error('Failed to set greeting');
-    if (err.response) {
-      error(`status: ${bold(err.response.status)}`);
-      if (err.response.data) {
-        error(`data: ${bold(JSON.stringify(err.response.data, null, 2))}`);
-      }
-    } else {
-      error(err.message);
-    }
-    return process.exit(1);
-  }
-}
-
 export async function deleteGreeting(configPath = 'bottender.config.js') {
   try {
     const config = getConfig(configPath, 'messenger');

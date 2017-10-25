@@ -4,22 +4,15 @@ import { error, bold } from './shared/log';
 import { setWebhook } from './actions/messenger/webhook';
 import {
   getGetStarted,
-  setGetStarted,
   deleteGetStarted,
 } from './actions/messenger/get-started';
 import {
   getPersistentMenu,
-  setPersistentMenu,
   deletePersistentMenu,
 } from './actions/messenger/persistent-menu';
-import {
-  getGreeting,
-  setGreeting,
-  deleteGreeting,
-} from './actions/messenger/greeting';
+import { getGreeting, deleteGreeting } from './actions/messenger/greeting';
 import {
   getWhitelistedDomains,
-  setWhitelistedDomains,
   deleteWhitelistedDomains,
 } from './actions/messenger/whitelisted-domains';
 import { setProfile } from './actions/messenger/profile';
@@ -48,20 +41,12 @@ export default (function runMessengerCommand(command, action, options) {
       setWebhook(webhook, config, verifyToken);
       break;
     }
-    case 'whitelisted-domains': {
-      if (['get', 'set', 'delete'].indexOf(action) > -1) {
-        const { domains } = options;
 
+    case 'whitelisted-domains': {
+      if (['get', 'delete'].indexOf(action) > -1) {
         if (action === 'get') {
           getWhitelistedDomains(config);
-        } else if (action === 'set') {
-          invariant(
-            domains,
-            '-d --domains <array of domain_name> is required but not found.'
-          );
-
-          setWhitelistedDomains(domains.split(','), config);
-        } else {
+        } else if (action === 'delete') {
           deleteWhitelistedDomains(config);
         }
       } else {
@@ -70,8 +55,9 @@ export default (function runMessengerCommand(command, action, options) {
       }
       break;
     }
+
     case 'persistent-menu': {
-      if (['get', 'set', 'delete'].indexOf(action) > -1) {
+      if (['get', 'delete'].indexOf(action) > -1) {
         invariant(
           config,
           '-c --config <config_file_path> is required but not found.'
@@ -79,9 +65,7 @@ export default (function runMessengerCommand(command, action, options) {
 
         if (action === 'get') {
           getPersistentMenu(config);
-        } else if (action === 'set') {
-          setPersistentMenu(config);
-        } else {
+        } else if (action === 'delete') {
           deletePersistentMenu(config);
         }
       } else {
@@ -90,15 +74,12 @@ export default (function runMessengerCommand(command, action, options) {
       }
       break;
     }
-    case 'get-started': {
-      if (['get', 'set', 'delete'].indexOf(action) > -1) {
-        const { payload } = options;
 
+    case 'get-started': {
+      if (['get', 'delete'].indexOf(action) > -1) {
         if (action === 'get') {
           getGetStarted(config);
-        } else if (action === 'set') {
-          setGetStarted(payload, config);
-        } else {
+        } else if (action === 'delete') {
           deleteGetStarted(config);
         }
       } else {
@@ -107,20 +88,12 @@ export default (function runMessengerCommand(command, action, options) {
       }
       break;
     }
-    case 'greeting-text': {
-      if (['get', 'set', 'delete'].indexOf(action) > -1) {
-        const { greeting } = options;
 
+    case 'greeting': {
+      if (['get', 'delete'].indexOf(action) > -1) {
         if (action === 'get') {
           getGreeting(config);
-        } else if (action === 'set') {
-          invariant(
-            greeting,
-            '-g --greeting <greeting_text> is required but not found.'
-          );
-
-          setGreeting(greeting, config);
-        } else {
+        } else if (action === 'delete') {
           deleteGreeting(config);
         }
       } else {
@@ -129,6 +102,7 @@ export default (function runMessengerCommand(command, action, options) {
       }
       break;
     }
+
     case 'profile': {
       if (action === 'set') {
         setProfile(config);

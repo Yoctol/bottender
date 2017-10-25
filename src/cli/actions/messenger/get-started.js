@@ -32,39 +32,6 @@ export async function getGetStarted(configPath = 'bottender.config.js') {
   }
 }
 
-export async function setGetStarted(
-  _payload,
-  configPath = 'bottender.config.js'
-) {
-  try {
-    const config = getConfig(configPath, 'messenger');
-    const payload = _payload || config.getStartedPayload;
-
-    invariant(config.accessToken, 'accessToken is not found in config file');
-    invariant(
-      payload,
-      'payload is not found, using -p <YOUR_PAYLOAD> to setup or list `getStartedPayload` key it in config file.'
-    );
-
-    const client = MessengerClient.connect(config.accessToken);
-
-    await client.setGetStartedButton(payload);
-
-    print(`Successfully set get started to ${bold(payload)}`);
-  } catch (err) {
-    error('Failed to set get started');
-    if (err.response) {
-      error(`status: ${bold(err.response.status)}`);
-      if (err.response.data) {
-        error(`data: ${bold(JSON.stringify(err.response.data, null, 2))}`);
-      }
-    } else {
-      error(err.message);
-    }
-    return process.exit(1);
-  }
-}
-
 export async function deleteGetStarted(configPath = 'bottender.config.js') {
   try {
     const config = getConfig(configPath, 'messenger');
