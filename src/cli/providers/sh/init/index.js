@@ -338,6 +338,6 @@ export async function init() {
   }
 }
 
-export default async function main(ctx) {
-  console.log(ctx);
+export default async function main() {
+  await init();
 }
