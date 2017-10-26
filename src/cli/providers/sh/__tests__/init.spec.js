@@ -2,13 +2,13 @@ import path from 'path';
 
 import stringifyObject from 'stringify-object';
 
-import init from '../init';
+import { init } from '../init';
 
 jest.mock('inquirer');
 jest.mock('child_process');
 jest.mock('fs-extra');
 jest.mock('cross-spawn');
-jest.mock('../../shared/log');
+jest.mock('../../../shared/log');
 
 const { execSync } = require('child_process');
 
@@ -16,7 +16,7 @@ const inquirer = require('inquirer');
 const fs = require('fs-extra');
 const spawn = require('cross-spawn');
 
-const { print, error } = require('../../shared/log');
+const { print, error } = require('../../../shared/log');
 
 describe('init', () => {
   beforeEach(() => {

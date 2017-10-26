@@ -11,7 +11,9 @@ module.exports = {
   rules: {
     'class-methods-use-this': 'off',
     'consistent-return': 'off',
+    'global-require': 'off',
     'no-param-reassign': 'off',
+    'prefer-destructuring': 'off',
     'prettier/prettier': [
       'error',
       {

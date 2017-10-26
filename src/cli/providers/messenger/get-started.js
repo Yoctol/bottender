@@ -5,9 +5,9 @@ import { MessengerClient } from 'messaging-api-messenger';
 import getConfig from '../../shared/getConfig';
 import { print, error, bold } from '../../shared/log';
 
-export async function getGetStarted(configPath = 'bottender.config.js') {
+export async function getGetStarted() {
   try {
-    const config = getConfig(configPath, 'messenger');
+    const config = getConfig('bottender.config.js', 'messenger');
 
     invariant(config.accessToken, 'accessToken is not found in config file');
 
@@ -32,42 +32,9 @@ export async function getGetStarted(configPath = 'bottender.config.js') {
   }
 }
 
-export async function setGetStarted(
-  _payload,
-  configPath = 'bottender.config.js'
-) {
+export async function deleteGetStarted() {
   try {
-    const config = getConfig(configPath, 'messenger');
-    const payload = _payload || config.getStartedPayload;
-
-    invariant(config.accessToken, 'accessToken is not found in config file');
-    invariant(
-      payload,
-      'payload is not found, using -p <YOUR_PAYLOAD> to setup or list `getStartedPayload` key it in config file.'
-    );
-
-    const client = MessengerClient.connect(config.accessToken);
-
-    await client.setGetStartedButton(payload);
-
-    print(`Successfully set get started to ${bold(payload)}`);
-  } catch (err) {
-    error('Failed to set get started');
-    if (err.response) {
-      error(`status: ${bold(err.response.status)}`);
-      if (err.response.data) {
-        error(`data: ${bold(JSON.stringify(err.response.data, null, 2))}`);
-      }
-    } else {
-      error(err.message);
-    }
-    return process.exit(1);
-  }
-}
-
-export async function deleteGetStarted(configPath = 'bottender.config.js') {
-  try {
-    const config = getConfig(configPath, 'messenger');
+    const config = getConfig('bottender.config.js', 'messenger');
 
     invariant(config.accessToken, 'accessToken is not found in config file');
 
@@ -87,5 +54,19 @@ export async function deleteGetStarted(configPath = 'bottender.config.js') {
       error(err.message);
     }
     return process.exit(1);
+  }
+}
+
+export default async function main(ctx) {
+  const subcommand = ctx.argv._[2];
+  switch (subcommand) {
+    case 'get':
+      await getGetStarted();
+      break;
+    case 'delete':
+    case 'del':
+      await deleteGetStarted();
+      break;
+    default:
   }
 }

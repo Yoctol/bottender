@@ -1,4 +1,4 @@
-import { deleteGreeting } from '../greeting';
+import { getPersistentMenu } from '../persistent-menu';
 
 jest.mock('messaging-api-messenger');
 
@@ -16,13 +16,12 @@ const MOCK_FILE_WITH_PLATFORM = {
   },
   line: {},
 };
-const configPath = 'bot.sample.json';
 
 let _client;
 
 beforeEach(() => {
   _client = {
-    deleteGreetingText: jest.fn(),
+    getPersistentMenu: jest.fn(),
   };
   MessengerClient.connect = jest.fn(() => _client);
   log.error = jest.fn();
@@ -31,34 +30,77 @@ beforeEach(() => {
 });
 
 it('be defined', () => {
-  expect(deleteGreeting).toBeDefined();
+  expect(getPersistentMenu).toBeDefined();
 });
 
 describe('#getConfig', () => {
   it('will call `bottender.config.js` and platform = messenger when NOT passed <config_path>', async () => {
-    _client.deleteGreetingText.mockReturnValue(Promise.resolve());
+    _client.getPersistentMenu.mockReturnValue(
+      Promise.resolve({
+        data: [
+          {
+            persistent_menu: [
+              {
+                composer_input_disabled: false,
+                call_to_actions: [
+                  {
+                    type: 'postback',
+                    title: 'RESTART',
+                    payload: 'RESTART',
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      })
+    );
 
-    await deleteGreeting();
+    await getPersistentMenu();
 
     expect(getConfig).toBeCalledWith('bottender.config.js', 'messenger');
-  });
-
-  it('will call <config_path> when it was passed', async () => {
-    _client.deleteGreetingText.mockReturnValue(Promise.resolve());
-
-    await deleteGreeting(configPath);
-
-    expect(getConfig).toBeCalledWith('bot.sample.json', 'messenger');
   });
 });
 
 describe('resolved', () => {
-  it('call deleteGreeting', async () => {
-    _client.deleteGreetingText.mockReturnValue(Promise.resolve());
+  it('call getPersistentMenu', async () => {
+    _client.getPersistentMenu.mockReturnValue(
+      Promise.resolve({
+        data: [
+          {
+            persistent_menu: [
+              {
+                composer_input_disabled: false,
+                call_to_actions: [
+                  {
+                    type: 'postback',
+                    title: 'RESTART',
+                    payload: 'RESTART',
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      })
+    );
 
-    await deleteGreeting(configPath);
+    await getPersistentMenu();
 
-    expect(_client.deleteGreetingText).toBeCalled();
+    expect(_client.getPersistentMenu).toBeCalled();
+  });
+
+  it('error when no config setting', async () => {
+    _client.getPersistentMenu.mockReturnValue(
+      Promise.resolve({
+        data: [],
+      })
+    );
+
+    await getPersistentMenu();
+
+    expect(log.error).toBeCalled();
+    expect(_client.getPersistentMenu).toBeCalled();
   });
 });
 
@@ -69,11 +111,11 @@ describe('reject', () => {
         status: 400,
       },
     };
-    _client.deleteGreetingText.mockReturnValue(Promise.reject(error));
+    _client.getPersistentMenu.mockReturnValue(Promise.reject(error));
 
     process.exit = jest.fn();
 
-    await deleteGreeting(configPath);
+    await getPersistentMenu();
 
     expect(log.error).toBeCalled();
     expect(process.exit).toBeCalled();
@@ -94,11 +136,11 @@ describe('reject', () => {
         },
       },
     };
-    _client.deleteGreetingText.mockReturnValue(Promise.reject(error));
+    _client.getPersistentMenu.mockReturnValue(Promise.reject(error));
 
     process.exit = jest.fn();
 
-    await deleteGreeting(configPath);
+    await getPersistentMenu();
 
     expect(log.error).toBeCalled();
     expect(log.error.mock.calls[2][0]).not.toMatch(/\[object Object\]/);
@@ -109,11 +151,11 @@ describe('reject', () => {
     const error = {
       message: 'something wrong happened',
     };
-    _client.deleteGreetingText.mockReturnValue(Promise.reject(error));
+    _client.getPersistentMenu.mockReturnValue(Promise.reject(error));
 
     process.exit = jest.fn();
 
-    await deleteGreeting(configPath);
+    await getPersistentMenu();
 
     expect(log.error).toBeCalled();
     expect(process.exit).toBeCalled();

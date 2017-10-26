@@ -6,9 +6,9 @@ import { MessengerClient } from 'messaging-api-messenger';
 import getConfig from '../../shared/getConfig';
 import { print, error, bold } from '../../shared/log';
 
-export async function getPersistentMenu(configPath = 'bottender.config.js') {
+export async function getPersistentMenu() {
   try {
-    const config = getConfig(configPath, 'messenger');
+    const config = getConfig('bottender.config.js', 'messenger');
 
     invariant(config.accessToken, 'accessToken is not found in config file');
 
@@ -45,43 +45,9 @@ export async function getPersistentMenu(configPath = 'bottender.config.js') {
   }
 }
 
-export async function setPersistentMenu(configPath = 'bottender.config.js') {
+export async function deletePersistentMenu() {
   try {
-    const {
-      accessToken,
-      persistentMenu,
-      composerInputDisabled = false,
-    } = getConfig(configPath, 'messenger');
-
-    invariant(accessToken, '`accessToken` is not found in config file.');
-    invariant(persistentMenu, '`persistentMenu` is not found in config file.');
-
-    const client = MessengerClient.connect(accessToken);
-    await client.setPersistentMenu(persistentMenu, { composerInputDisabled });
-
-    print(
-      `Successfully set persistent menu to with composerInputDisabled: ${composerInputDisabled}`
-    );
-    persistentMenu.forEach(item => {
-      print(`- ${item.title}`);
-    });
-  } catch (err) {
-    error('Failed to set persistent menu');
-    if (err.response) {
-      error(`status: ${bold(err.response.status)}`);
-      if (err.response.data) {
-        error(`data: ${bold(JSON.stringify(err.response.data, null, 2))}`);
-      }
-    } else {
-      error(err.message);
-    }
-    return process.exit(1);
-  }
-}
-
-export async function deletePersistentMenu(configPath = 'bottender.config.js') {
-  try {
-    const config = getConfig(configPath, 'messenger');
+    const config = getConfig('bottender.config.js', 'messenger');
 
     invariant(config.accessToken, 'accessToken is not found in config file');
 
@@ -101,5 +67,19 @@ export async function deletePersistentMenu(configPath = 'bottender.config.js') {
       error(err.message);
     }
     return process.exit(1);
+  }
+}
+
+export default async function main(ctx) {
+  const subcommand = ctx.argv._[2];
+  switch (subcommand) {
+    case 'get':
+      await getPersistentMenu();
+      break;
+    case 'delete':
+    case 'del':
+      await deletePersistentMenu();
+      break;
+    default:
   }
 }

@@ -1,4 +1,4 @@
-import { deletePersistentMenu } from '../persistent-menu';
+import { deleteWhitelistedDomains } from '../whitelisted-domains';
 
 jest.mock('messaging-api-messenger');
 
@@ -16,13 +16,12 @@ const MOCK_FILE_WITH_PLATFORM = {
   },
   line: {},
 };
-const configPath = 'bot.sample.json';
 
 let _client;
 
 beforeEach(() => {
   _client = {
-    deletePersistentMenu: jest.fn(),
+    deleteDomainWhitelist: jest.fn(),
   };
   MessengerClient.connect = jest.fn(() => _client);
   log.error = jest.fn();
@@ -31,34 +30,26 @@ beforeEach(() => {
 });
 
 it('be defined', () => {
-  expect(deletePersistentMenu).toBeDefined();
+  expect(deleteWhitelistedDomains).toBeDefined();
 });
 
 describe('#getConfig', () => {
   it('will call `bottender.config.js` and platform = messenger when NOT passed <config_path>', async () => {
-    _client.deletePersistentMenu.mockReturnValue(Promise.resolve());
+    _client.deleteDomainWhitelist.mockReturnValue(Promise.resolve());
 
-    await deletePersistentMenu();
+    await deleteWhitelistedDomains();
 
     expect(getConfig).toBeCalledWith('bottender.config.js', 'messenger');
-  });
-
-  it('will call <config_path> when it was passed', async () => {
-    _client.deletePersistentMenu.mockReturnValue(Promise.resolve());
-
-    await deletePersistentMenu(configPath);
-
-    expect(getConfig).toBeCalledWith('bot.sample.json', 'messenger');
   });
 });
 
 describe('resolved', () => {
-  it('call deletePersistentMenu', async () => {
-    _client.deletePersistentMenu.mockReturnValue(Promise.resolve());
+  it('call deleteDomainWhitelist', async () => {
+    _client.deleteDomainWhitelist.mockReturnValue(Promise.resolve());
 
-    await deletePersistentMenu(configPath);
+    await deleteWhitelistedDomains();
 
-    expect(_client.deletePersistentMenu).toBeCalled();
+    expect(_client.deleteDomainWhitelist).toBeCalled();
   });
 });
 
@@ -69,11 +60,10 @@ describe('reject', () => {
         status: 400,
       },
     };
-    _client.deletePersistentMenu.mockReturnValue(Promise.reject(error));
-
+    _client.deleteDomainWhitelist.mockReturnValue(Promise.reject(error));
     process.exit = jest.fn();
 
-    await deletePersistentMenu(configPath);
+    await deleteWhitelistedDomains();
 
     expect(log.error).toBeCalled();
     expect(process.exit).toBeCalled();
@@ -94,11 +84,10 @@ describe('reject', () => {
         },
       },
     };
-    _client.deletePersistentMenu.mockReturnValue(Promise.reject(error));
-
+    _client.deleteDomainWhitelist.mockReturnValue(Promise.reject(error));
     process.exit = jest.fn();
 
-    await deletePersistentMenu(configPath);
+    await deleteWhitelistedDomains();
 
     expect(log.error).toBeCalled();
     expect(log.error.mock.calls[2][0]).not.toMatch(/\[object Object\]/);
@@ -109,11 +98,10 @@ describe('reject', () => {
     const error = {
       message: 'something wrong happened',
     };
-    _client.deletePersistentMenu.mockReturnValue(Promise.reject(error));
-
+    _client.deleteDomainWhitelist.mockReturnValue(Promise.reject(error));
     process.exit = jest.fn();
 
-    await deletePersistentMenu(configPath);
+    await deleteWhitelistedDomains();
 
     expect(log.error).toBeCalled();
     expect(process.exit).toBeCalled();

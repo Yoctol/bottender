@@ -1,4 +1,4 @@
-import { setGreeting } from '../greeting';
+import { deleteGetStarted } from '../get-started';
 
 jest.mock('messaging-api-messenger');
 
@@ -16,16 +16,12 @@ const MOCK_FILE_WITH_PLATFORM = {
   },
   line: {},
 };
-const configPath = 'bot.sample.json';
-const greetingText = '__FAKE_GREETING_TEXT__';
 
 let _client;
-const _exit = process.exit;
 
 beforeEach(() => {
-  process.exit = jest.fn();
   _client = {
-    setGreetingText: jest.fn(),
+    deleteGetStartedButton: jest.fn(),
   };
   MessengerClient.connect = jest.fn(() => _client);
   log.error = jest.fn();
@@ -33,59 +29,42 @@ beforeEach(() => {
   getConfig.mockReturnValue(MOCK_FILE_WITH_PLATFORM.messenger);
 });
 
-afterEach(() => {
-  process.exit = _exit;
+it('be defined', () => {
+  expect(deleteGetStarted).toBeDefined();
 });
 
-it('be defined', () => {
-  expect(setGreeting).toBeDefined();
+describe('#getConfig', () => {
+  it('will call `bottender.config.js` and platform = messenger when NOT passed <config_path>', async () => {
+    _client.deleteGetStartedButton.mockReturnValue(Promise.resolve());
+
+    await deleteGetStarted();
+
+    expect(getConfig).toBeCalledWith('bottender.config.js', 'messenger');
+  });
 });
 
 describe('resolved', () => {
-  it('call setGreetingText with text', async () => {
-    _client.setGreetingText.mockReturnValue(Promise.resolve());
+  it('call deleteGetStartedButton', async () => {
+    _client.deleteGetStartedButton.mockReturnValue(Promise.resolve());
 
-    await setGreeting(greetingText, configPath);
+    await deleteGetStarted();
 
-    expect(_client.setGreetingText).toBeCalledWith('__FAKE_GREETING_TEXT__');
-  });
-
-  it('use config file greetingText', async () => {
-    _client.setGreetingText.mockReturnValue(Promise.resolve());
-    getConfig.mockReturnValue({
-      accessToken: '__FAKE_TOKEN__',
-      greeting: '__FAKE_GREETING_TEXT_IN_TEST_CASE__',
-    });
-
-    await setGreeting(undefined, configPath);
-
-    expect(_client.setGreetingText).toBeCalledWith(
-      '__FAKE_GREETING_TEXT_IN_TEST_CASE__'
-    );
+    expect(_client.deleteGetStartedButton).toBeCalled();
   });
 });
 
 describe('reject', () => {
-  it('handle error thrown when no greetingText pass or find in config file', async () => {
-    process.exit = jest.fn();
-
-    await setGreeting(undefined, configPath);
-
-    expect(log.error).toBeCalled();
-    expect(process.exit).toBeCalled();
-  });
-
   it('handle error thrown with only status', async () => {
     const error = {
       response: {
         status: 400,
       },
     };
-    _client.setGreetingText.mockReturnValue(Promise.reject(error));
+    _client.deleteGetStartedButton.mockReturnValue(Promise.reject(error));
 
     process.exit = jest.fn();
 
-    await setGreeting(greetingText, configPath);
+    await deleteGetStarted();
 
     expect(log.error).toBeCalled();
     expect(process.exit).toBeCalled();
@@ -106,11 +85,11 @@ describe('reject', () => {
         },
       },
     };
-    _client.setGreetingText.mockReturnValue(Promise.reject(error));
+    _client.deleteGetStartedButton.mockReturnValue(Promise.reject(error));
 
     process.exit = jest.fn();
 
-    await setGreeting(greetingText, configPath);
+    await deleteGetStarted();
 
     expect(log.error).toBeCalled();
     expect(log.error.mock.calls[2][0]).not.toMatch(/\[object Object\]/);
@@ -121,11 +100,11 @@ describe('reject', () => {
     const error = {
       message: 'something wrong happened',
     };
-    _client.setGreetingText.mockReturnValue(Promise.reject(error));
+    _client.deleteGetStartedButton.mockReturnValue(Promise.reject(error));
 
     process.exit = jest.fn();
 
-    await setGreeting(greetingText, configPath);
+    await deleteGetStarted();
 
     expect(log.error).toBeCalled();
     expect(process.exit).toBeCalled();

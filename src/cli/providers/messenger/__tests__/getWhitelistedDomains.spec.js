@@ -1,4 +1,4 @@
-import { deleteWhitelistedDomains } from '../whitelisted-domains';
+import { getWhitelistedDomains } from '../whitelisted-domains';
 
 jest.mock('messaging-api-messenger');
 
@@ -16,13 +16,12 @@ const MOCK_FILE_WITH_PLATFORM = {
   },
   line: {},
 };
-const configPath = 'bot.sample.json';
 
 let _client;
 
 beforeEach(() => {
   _client = {
-    deleteDomainWhitelist: jest.fn(),
+    getDomainWhitelist: jest.fn(),
   };
   MessengerClient.connect = jest.fn(() => _client);
   log.error = jest.fn();
@@ -31,34 +30,60 @@ beforeEach(() => {
 });
 
 it('be defined', () => {
-  expect(deleteWhitelistedDomains).toBeDefined();
+  expect(getWhitelistedDomains).toBeDefined();
 });
 
 describe('#getConfig', () => {
   it('will call `bottender.config.js` and platform = messenger when NOT passed <config_path>', async () => {
-    _client.deleteDomainWhitelist.mockReturnValue(Promise.resolve());
+    _client.getDomainWhitelist.mockReturnValue(
+      Promise.resolve({
+        data: [
+          {
+            whitelisted_domains: [
+              'http://www.facebook.com',
+              'http://www.yoctol.com',
+            ],
+          },
+        ],
+      })
+    );
 
-    await deleteWhitelistedDomains();
-
+    await getWhitelistedDomains();
     expect(getConfig).toBeCalledWith('bottender.config.js', 'messenger');
-  });
-
-  it('call with configPath and platform = messenger', async () => {
-    _client.deleteDomainWhitelist.mockReturnValue(Promise.resolve());
-
-    await deleteWhitelistedDomains(configPath);
-
-    expect(getConfig).toBeCalledWith('bot.sample.json', 'messenger');
   });
 });
 
 describe('resolved', () => {
-  it('call deleteDomainWhitelist', async () => {
-    _client.deleteDomainWhitelist.mockReturnValue(Promise.resolve());
+  it('call getDomainWhitelist', async () => {
+    _client.getDomainWhitelist.mockReturnValue(
+      Promise.resolve({
+        data: [
+          {
+            whitelisted_domains: [
+              'http://www.facebook.com',
+              'http://www.yoctol.com',
+            ],
+          },
+        ],
+      })
+    );
 
-    await deleteWhitelistedDomains(configPath);
+    await getWhitelistedDomains();
 
-    expect(_client.deleteDomainWhitelist).toBeCalled();
+    expect(_client.getDomainWhitelist).toBeCalled();
+  });
+
+  it('error when no config setting', async () => {
+    _client.getDomainWhitelist.mockReturnValue(
+      Promise.resolve({
+        data: [],
+      })
+    );
+
+    await getWhitelistedDomains();
+
+    expect(log.error).toBeCalled();
+    expect(_client.getDomainWhitelist).toBeCalled();
   });
 });
 
@@ -69,10 +94,11 @@ describe('reject', () => {
         status: 400,
       },
     };
-    _client.deleteDomainWhitelist.mockReturnValue(Promise.reject(error));
+    _client.getDomainWhitelist.mockReturnValue(Promise.reject(error));
+
     process.exit = jest.fn();
 
-    await deleteWhitelistedDomains(configPath);
+    await getWhitelistedDomains();
 
     expect(log.error).toBeCalled();
     expect(process.exit).toBeCalled();
@@ -93,10 +119,11 @@ describe('reject', () => {
         },
       },
     };
-    _client.deleteDomainWhitelist.mockReturnValue(Promise.reject(error));
+    _client.getDomainWhitelist.mockReturnValue(Promise.reject(error));
+
     process.exit = jest.fn();
 
-    await deleteWhitelistedDomains(configPath);
+    await getWhitelistedDomains();
 
     expect(log.error).toBeCalled();
     expect(log.error.mock.calls[2][0]).not.toMatch(/\[object Object\]/);
@@ -107,10 +134,11 @@ describe('reject', () => {
     const error = {
       message: 'something wrong happened',
     };
-    _client.deleteDomainWhitelist.mockReturnValue(Promise.reject(error));
+    _client.getDomainWhitelist.mockReturnValue(Promise.reject(error));
+
     process.exit = jest.fn();
 
-    await deleteWhitelistedDomains(configPath);
+    await getWhitelistedDomains();
 
     expect(log.error).toBeCalled();
     expect(process.exit).toBeCalled();

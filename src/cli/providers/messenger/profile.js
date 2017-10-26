@@ -4,7 +4,11 @@ import { MessengerClient } from 'messaging-api-messenger';
 import getConfig from '../../shared/getConfig';
 import { print, error, bold } from '../../shared/log';
 
-export async function setProfile(configPath = 'bottender.config.js') {
+export async function getProfile() {
+  console.log('FIXME');
+}
+
+export async function setProfile() {
   try {
     const {
       accessToken,
@@ -13,7 +17,7 @@ export async function setProfile(configPath = 'bottender.config.js') {
       greetingText,
       persistentMenu,
       getStartedButtonPayload,
-    } = getConfig(configPath, 'messenger');
+    } = getConfig('bottender.config.js', 'messenger');
 
     const valid = {
       composerInputDisabled: !!composerInputDisabled,
@@ -89,5 +93,26 @@ export async function setProfile(configPath = 'bottender.config.js') {
       error(err.message);
     }
     return process.exit(1);
+  }
+}
+
+export async function deleteProfile() {
+  console.log('FIXME');
+}
+
+export default async function main(ctx) {
+  const subcommand = ctx.argv._[2];
+  switch (subcommand) {
+    case 'get':
+      await getProfile();
+      break;
+    case 'set':
+      await setProfile();
+      break;
+    case 'delete':
+    case 'del':
+      await deleteProfile();
+      break;
+    default:
   }
 }

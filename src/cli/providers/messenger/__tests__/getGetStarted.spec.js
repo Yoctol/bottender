@@ -1,4 +1,4 @@
-import { getPersistentMenu } from '../persistent-menu';
+import { getGetStarted } from '../get-started';
 
 jest.mock('messaging-api-messenger');
 
@@ -16,13 +16,12 @@ const MOCK_FILE_WITH_PLATFORM = {
   },
   line: {},
 };
-const configPath = 'bot.sample.json';
 
 let _client;
 
 beforeEach(() => {
   _client = {
-    getPersistentMenu: jest.fn(),
+    getGetStartedButton: jest.fn(),
   };
   MessengerClient.connect = jest.fn(() => _client);
   log.error = jest.fn();
@@ -31,104 +30,59 @@ beforeEach(() => {
 });
 
 it('be defined', () => {
-  expect(getPersistentMenu).toBeDefined();
+  expect(getGetStarted).toBeDefined();
 });
 
 describe('#getConfig', () => {
   it('will call `bottender.config.js` and platform = messenger when NOT passed <config_path>', async () => {
-    _client.getPersistentMenu.mockReturnValue(
+    _client.getGetStartedButton.mockReturnValue(
       Promise.resolve({
         data: [
           {
-            persistent_menu: [
-              {
-                composer_input_disabled: false,
-                call_to_actions: [
-                  {
-                    type: 'postback',
-                    title: 'RESTART',
-                    payload: 'RESTART',
-                  },
-                ],
-              },
-            ],
+            get_started: {
+              payload: 'get started yo!',
+            },
           },
         ],
       })
     );
 
-    await getPersistentMenu();
+    await getGetStarted();
 
     expect(getConfig).toBeCalledWith('bottender.config.js', 'messenger');
-  });
-
-  it('will call <config_path> when it was passed', async () => {
-    _client.getPersistentMenu.mockReturnValue(
-      Promise.resolve({
-        data: [
-          {
-            persistent_menu: [
-              {
-                composer_input_disabled: false,
-                call_to_actions: [
-                  {
-                    type: 'postback',
-                    title: 'RESTART',
-                    payload: 'RESTART',
-                  },
-                ],
-              },
-            ],
-          },
-        ],
-      })
-    );
-
-    await getPersistentMenu(configPath);
-
-    expect(getConfig).toBeCalledWith('bot.sample.json', 'messenger');
   });
 });
 
 describe('resolved', () => {
-  it('call getPersistentMenu', async () => {
-    _client.getPersistentMenu.mockReturnValue(
+  it('call getGetStartedButton', async () => {
+    _client.getGetStartedButton.mockReturnValue(
       Promise.resolve({
         data: [
           {
-            persistent_menu: [
-              {
-                composer_input_disabled: false,
-                call_to_actions: [
-                  {
-                    type: 'postback',
-                    title: 'RESTART',
-                    payload: 'RESTART',
-                  },
-                ],
-              },
-            ],
+            get_started: {
+              payload: 'get started yo!',
+            },
           },
         ],
       })
     );
 
-    await getPersistentMenu(configPath);
+    await getGetStarted();
 
-    expect(_client.getPersistentMenu).toBeCalled();
+    expect(_client.getGetStartedButton).toBeCalled();
   });
 
   it('error when no config setting', async () => {
-    _client.getPersistentMenu.mockReturnValue(
+    _client.getGetStartedButton.mockReturnValue(
       Promise.resolve({
         data: [],
       })
     );
 
-    await getPersistentMenu(configPath);
+    await getGetStarted();
 
     expect(log.error).toBeCalled();
-    expect(_client.getPersistentMenu).toBeCalled();
+    expect(_client.getGetStartedButton).toBeCalled();
   });
 });
 
@@ -139,11 +93,11 @@ describe('reject', () => {
         status: 400,
       },
     };
-    _client.getPersistentMenu.mockReturnValue(Promise.reject(error));
+    _client.getGetStartedButton.mockReturnValue(Promise.reject(error));
 
     process.exit = jest.fn();
 
-    await getPersistentMenu(configPath);
+    await getGetStarted();
 
     expect(log.error).toBeCalled();
     expect(process.exit).toBeCalled();
@@ -164,11 +118,11 @@ describe('reject', () => {
         },
       },
     };
-    _client.getPersistentMenu.mockReturnValue(Promise.reject(error));
+    _client.getGetStartedButton.mockReturnValue(Promise.reject(error));
 
     process.exit = jest.fn();
 
-    await getPersistentMenu(configPath);
+    await getGetStarted();
 
     expect(log.error).toBeCalled();
     expect(log.error.mock.calls[2][0]).not.toMatch(/\[object Object\]/);
@@ -179,11 +133,11 @@ describe('reject', () => {
     const error = {
       message: 'something wrong happened',
     };
-    _client.getPersistentMenu.mockReturnValue(Promise.reject(error));
+    _client.getGetStartedButton.mockReturnValue(Promise.reject(error));
 
     process.exit = jest.fn();
 
-    await getPersistentMenu(configPath);
+    await getGetStarted();
 
     expect(log.error).toBeCalled();
     expect(process.exit).toBeCalled();
