@@ -389,6 +389,7 @@ describe('#onText', () => {
         message: {
           text: 'awesome',
         },
+        text: 'awesome',
       },
     };
     builder.onText(/awesome/, handler);
