@@ -472,9 +472,9 @@ aws4@^1.2.1:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/aws4/-/aws4-1.6.0.tgz#83ef5ca860b2b32e4a0deedee8c771b9db57471e"
 
-axios-error@^0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/axios-error/-/axios-error-0.5.0.tgz#b8656a00656e05ccb08544463584a3285aa5d8b6"
+axios-error@^0.5.2:
+  version "0.5.2"
+  resolved "https://registry.yarnpkg.com/axios-error/-/axios-error-0.5.2.tgz#60cfa895422ce0537b270a4da80a4e121cceb061"
 
 axios-mock-adapter@^1.9.0:
   version "1.9.0"
@@ -482,9 +482,9 @@ axios-mock-adapter@^1.9.0:
   dependencies:
     deep-equal "^1.0.1"
 
-axios@^0.16.2:
-  version "0.16.2"
-  resolved "https://registry.yarnpkg.com/axios/-/axios-0.16.2.tgz#ba4f92f17167dfbab40983785454b9ac149c3c6d"
+axios@^0.17.0:
+  version "0.17.0"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-0.17.0.tgz#7da747916db803f761651d6091d708789b953c6a"
   dependencies:
     follow-redirects "^1.2.3"
     is-buffer "^1.1.5"
@@ -1725,9 +1725,9 @@ chalk@^2.0.0, chalk@^2.0.1, chalk@^2.1.0:
     escape-string-regexp "^1.0.5"
     supports-color "^4.0.0"
 
-chalk@^2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/chalk/-/chalk-2.2.0.tgz#477b3bf2f9b8fd5ca9e429747e37f724ee7af240"
+chalk@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/chalk/-/chalk-2.3.0.tgz#b5ea48efc9c1793dccc9b4767c93914d3f2d52ba"
   dependencies:
     ansi-styles "^3.1.0"
     escape-string-regexp "^1.0.5"
@@ -3526,9 +3526,9 @@ invert-kv@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/invert-kv/-/invert-kv-1.0.0.tgz#104a8e4aaca6d3d8cd157a8ef8bfab2d7a3ffdb6"
 
-ioredis@^3.1.4:
-  version "3.1.4"
-  resolved "https://registry.yarnpkg.com/ioredis/-/ioredis-3.1.4.tgz#8688293f5f2f1757e1c812ad17cce49f46d811bc"
+ioredis@^3.2.1:
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/ioredis/-/ioredis-3.2.1.tgz#4c10bcce9659fdb0af923b0e7915208fe023d3f0"
   dependencies:
     bluebird "^3.3.4"
     cluster-key-slot "^1.0.6"
@@ -4758,41 +4758,41 @@ merge@^1.1.3:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/merge/-/merge-1.2.0.tgz#7531e39d4949c281a66b8c5a6e0265e8b05894da"
 
-messaging-api-line@^0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/messaging-api-line/-/messaging-api-line-0.5.0.tgz#c40d35bd4eb803859053e00aada04e6836697147"
+messaging-api-line@^0.5.2:
+  version "0.5.2"
+  resolved "https://registry.yarnpkg.com/messaging-api-line/-/messaging-api-line-0.5.2.tgz#91a5a0514ff2f534e16efab40ffdcb877c670a8f"
   dependencies:
-    axios "^0.16.2"
-    axios-error "^0.5.0"
+    axios "^0.17.0"
+    axios-error "^0.5.2"
     warning "^3.0.0"
 
-messaging-api-messenger@^0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/messaging-api-messenger/-/messaging-api-messenger-0.5.0.tgz#0faf20c9f5f93db816119b23681b67ff0b6e4741"
+messaging-api-messenger@^0.5.2:
+  version "0.5.2"
+  resolved "https://registry.yarnpkg.com/messaging-api-messenger/-/messaging-api-messenger-0.5.2.tgz#fd5d5b1679a65b0833dec7ed8455e6d84cadb962"
   dependencies:
-    axios "^0.16.2"
-    axios-error "^0.5.0"
+    axios "^0.17.0"
+    axios-error "^0.5.2"
     form-data "^2.3.1"
     invariant "^2.2.2"
     is-plain-object "^2.0.4"
     lodash.omit "^4.5.0"
     warning "^3.0.0"
 
-messaging-api-slack@^0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/messaging-api-slack/-/messaging-api-slack-0.5.0.tgz#5dddda215c493d2ad3b377de8d520eb48dfe8673"
+messaging-api-slack@^0.5.2:
+  version "0.5.2"
+  resolved "https://registry.yarnpkg.com/messaging-api-slack/-/messaging-api-slack-0.5.2.tgz#21a6342aa0cc53956df17fb32d08576c6c4efe96"
   dependencies:
-    axios "^0.16.2"
-    axios-error "^0.5.0"
+    axios "^0.17.0"
+    axios-error "^0.5.2"
     invariant "^2.2.2"
     warning "^3.0.0"
 
-messaging-api-telegram@^0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/messaging-api-telegram/-/messaging-api-telegram-0.5.0.tgz#1ef033e5ac9768724f72609c4c465895dad5b0d5"
+messaging-api-telegram@^0.5.2:
+  version "0.5.2"
+  resolved "https://registry.yarnpkg.com/messaging-api-telegram/-/messaging-api-telegram-0.5.2.tgz#1d8f3dc01347a64c8969ec85d8eac5e90e98e9dc"
   dependencies:
-    axios "^0.16.2"
-    axios-error "^0.5.0"
+    axios "^0.17.0"
+    axios-error "^0.5.2"
     warning "^3.0.0"
 
 methods@^1.0.1, methods@^1.1.1, methods@~1.1.2:
