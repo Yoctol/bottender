@@ -7,15 +7,22 @@ import providers from './providers';
 import { error } from './shared/log';
 
 const main = async argv => {
-  console.log(argv);
-
   if (argv.v || argv.version || argv._[0] === 'version') {
     console.log(pkg.version);
     process.exit(0);
   }
 
-  if (argv.h || argv.help || argv._[0] === 'help') {
-    // FIXME
+  if (argv.h || argv.help) {
+    let provider;
+    if (argv._.length === 0) {
+      // bottender -h
+      provider = providers.sh;
+    } else {
+      // bottender [provider] -h
+      const providerName = argv._[0];
+      provider = providers[providerName];
+    }
+    provider.help();
     process.exit(0);
   }
 
