@@ -14,28 +14,33 @@ const getConfig = require('../../../shared/getConfig');
 const MOCK_FILE_WITH_PLATFORM = {
   messenger: {
     accessToken: '__FAKE_TOKEN__',
-    persistentMenu: [
-      {
-        type: 'web_url',
-        title: 'Powered by Example',
-        url: 'https://www.example.com/',
-      },
-    ],
+    profile: {
+      persistent_menu: [
+        {
+          locale: 'default',
+          composer_input_disabled: false,
+          call_to_actions: [
+            {
+              type: 'web_url',
+              title: 'Powered by Example',
+              url: 'https://www.example.com/',
+            },
+          ],
+        },
+      ],
+    },
   },
   line: {},
 };
-const configPath = 'bot.sample.json';
 
 let _client;
+const _exit = process.exit;
 
 beforeEach(() => {
   process.NODE_ENV = 'test';
+  process.exit = jest.fn();
   _client = {
-    deleteMessengerProfile: jest.fn(),
-    setDomainWhitelist: jest.fn(),
-    setGetStarted: jest.fn(),
-    setGreeting: jest.fn(),
-    setPersistentMenu: jest.fn(),
+    setMessengerProfile: jest.fn(),
   };
   MessengerClient.connect = jest.fn(() => _client);
   log.print = jest.fn();
@@ -45,6 +50,7 @@ beforeEach(() => {
 });
 
 afterEach(() => {
+  process.exit = _exit;
   jest.resetAllMocks();
 });
 
@@ -53,110 +59,24 @@ it('be defined', () => {
 });
 
 describe('resolve', () => {
-  it('delete persistent_menu, get_started, greeting for messenger profile', async () => {
-    await setMessengerProfile(configPath);
-
-    expect(_client.deleteMessengerProfile.mock.calls[0][0]).toEqual([
-      'persistent_menu',
-      'get_started',
-    ]);
-    expect(_client.deleteMessengerProfile.mock.calls[1][0]).toEqual([
-      'greeting',
-    ]);
-  });
-
   it('successfully set persistent menu', async () => {
-    await setMessengerProfile(configPath);
+    await setMessengerProfile();
 
-    expect(_client.setPersistentMenu).toBeCalledWith([
-      {
-        type: 'web_url',
-        title: 'Powered by Example',
-        url: 'https://www.example.com/',
-      },
-    ]);
-
-    expect(_client.setDomainWhitelist).not.toBeCalled();
-    expect(_client.setGetStarted).not.toBeCalled();
-    expect(_client.setGreeting).not.toBeCalled();
-  });
-
-  it('successfully set persistent menu with composerInputDisabled: true', async () => {
-    getConfig.mockReturnValue({
-      accessToken: '__FAKE_TOKEN__',
-      persistentMenu: [
+    expect(_client.setMessengerProfile).toBeCalledWith({
+      persistent_menu: [
         {
-          type: 'web_url',
-          title: 'Powered by Example',
-          url: 'https://www.example.com/',
-        },
-      ],
-      composerInputDisabled: true,
-    });
-
-    await setMessengerProfile(configPath);
-
-    expect(_client.setPersistentMenu).toBeCalledWith(
-      [
-        {
-          type: 'web_url',
-          title: 'Powered by Example',
-          url: 'https://www.example.com/',
-        },
-      ],
-      {
-        composerInputDisabled: true,
-      }
-    );
-
-    expect(_client.setDomainWhitelist).not.toBeCalled();
-    expect(_client.setGetStarted).not.toBeCalled();
-    expect(_client.setGreeting).not.toBeCalled();
-  });
-
-  it('successfully set greetingText', async () => {
-    getConfig.mockReturnValue({
-      accessToken: '__FAKE_TOKEN__',
-      greetingText: 'Now you see me.',
-      persistentMenu: [
-        {
-          type: 'web_url',
-          title: 'Powered by Example',
-          url: 'https://www.example.com/',
+          locale: 'default',
+          composer_input_disabled: false,
+          call_to_actions: [
+            {
+              type: 'web_url',
+              title: 'Powered by Example',
+              url: 'https://www.example.com/',
+            },
+          ],
         },
       ],
     });
-
-    await setMessengerProfile(configPath);
-
-    expect(_client.setPersistentMenu).toBeCalledWith([
-      {
-        type: 'web_url',
-        title: 'Powered by Example',
-        url: 'https://www.example.com/',
-      },
-    ]);
-    expect(_client.setGreeting).toBeCalledWith('Now you see me.');
-
-    expect(_client.setDomainWhitelist).not.toBeCalled();
-    expect(_client.setGetStarted).not.toBeCalled();
-  });
-
-  it('successfully set domain whitelist', async () => {
-    getConfig.mockReturnValue({
-      accessToken: '__FAKE_TOKEN__',
-      domainWhitelist: ['http://www.awesome.com'],
-    });
-
-    await setMessengerProfile(configPath);
-
-    expect(_client.setDomainWhitelist).toBeCalledWith([
-      'http://www.awesome.com',
-    ]);
-
-    expect(_client.setGetStarted).not.toBeCalled();
-    expect(_client.setGreeting).not.toBeCalled();
-    expect(_client.setPersistentMenu).not.toBeCalled();
   });
 });
 
@@ -168,11 +88,11 @@ describe('reject', () => {
       },
     };
 
-    _client.deleteMessengerProfile.mockReturnValue(Promise.reject(error));
+    _client.setMessengerProfile.mockReturnValue(Promise.reject(error));
 
     process.exit = jest.fn();
 
-    await setMessengerProfile(configPath);
+    await setMessengerProfile();
 
     expect(log.error).toBeCalled();
     expect(process.exit).toBeCalled();
@@ -193,11 +113,11 @@ describe('reject', () => {
         },
       },
     };
-    _client.deleteMessengerProfile.mockReturnValue(Promise.reject(error));
+    _client.setMessengerProfile.mockReturnValue(Promise.reject(error));
 
     process.exit = jest.fn();
 
-    await setMessengerProfile(configPath);
+    await setMessengerProfile();
 
     expect(log.error).toBeCalled();
     expect(log.error.mock.calls[2][0]).not.toMatch(/\[object Object\]/);

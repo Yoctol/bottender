@@ -11,80 +11,20 @@ export async function getMessengerProfile() {
 
 export async function setMessengerProfile() {
   try {
-    const {
-      accessToken,
-      composerInputDisabled = false,
-      domainWhitelist,
-      greetingText,
-      persistentMenu,
-      getStartedButtonPayload,
-    } = getConfig('bottender.config.js', 'messenger');
-
-    const valid = {
-      composerInputDisabled: !!composerInputDisabled,
-      domainWhitelist: !!domainWhitelist,
-      greetingText: !!greetingText,
-      persistentMenu: !!persistentMenu,
-      getStartedButtonPayload: !!getStartedButtonPayload,
-    };
-
-    const positive = [];
-    const negative = [];
-
-    Object.keys(valid).forEach(
-      key =>
-        valid[key]
-          ? positive.push(`<${bold(key)}>`)
-          : negative.push(`<${bold(key)}>`)
+    const { accessToken, profile } = getConfig(
+      'bottender.config.js',
+      'messenger'
     );
 
-    if (positive.length > 0) {
-      print(
-        `We found ${positive.join(
-          ', '
-        )} in your config file and we are trying to setup this value.`
-      );
-    }
-
-    if (negative.length > 0) {
-      print(`And we also support ${negative.join(', ')} in config file.`);
-    }
+    invariant(accessToken, 'accessToken is not found in config file');
 
     const client = MessengerClient.connect(accessToken);
 
-    await client.deleteMessengerProfile(['persistent_menu', 'get_started']);
-    // need to seperate 'gretting' fields to another API call
-    await client.deleteMessengerProfile(['greeting']);
+    await client.setMessengerProfile(profile);
 
-    if (getStartedButtonPayload) {
-      await client.setGetStarted(getStartedButtonPayload);
-      print('Successfully set getStartedButton');
-    }
-
-    if (Array.isArray(persistentMenu)) {
-      if (composerInputDisabled) {
-        await client.setPersistentMenu(persistentMenu, {
-          composerInputDisabled,
-        });
-      } else {
-        await client.setPersistentMenu(persistentMenu);
-      }
-      print(
-        `Successfully set persistentMenu with composerInputDisabled: ${composerInputDisabled}`
-      );
-    }
-
-    if (greetingText) {
-      await client.setGreeting(greetingText);
-      print('Successfully set greetingText');
-    }
-
-    if (domainWhitelist) {
-      await client.setDomainWhitelist(domainWhitelist);
-      print('Successfully set whitelisted domains');
-    }
+    print(`Successfully set ${bold('messenger_profile')} settings`);
   } catch (err) {
-    error('Failed to set messenger profile');
+    error(`Failed to set ${bold('messenger_profile')} settings`);
     if (err.response) {
       error(`status: ${bold(err.response.status)}`);
       if (err.response.data) {
