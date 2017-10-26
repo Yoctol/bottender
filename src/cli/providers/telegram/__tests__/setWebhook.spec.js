@@ -1,13 +1,12 @@
 import MockAdapter from 'axios-mock-adapter';
 
-import {
-  setWebhook,
-  client as _client,
-  localClient as _localClient,
-} from '../webhook';
+import { setWebhook, localClient as _localClient } from '../webhook';
 
+jest.mock('messaging-api-telegram');
 jest.mock('../../../shared/log');
 jest.mock('../../../shared/getConfig');
+
+const { TelegramClient } = require('messaging-api-telegram');
 
 const log = require('../../../shared/log');
 const getConfig = require('../../../shared/getConfig');
@@ -18,30 +17,21 @@ const MOCK_FILE_WITH_PLATFORM = {
   },
   line: {},
 };
-const configPath = 'bot.sample.json';
+const _exit = process.exit;
 
-let client;
 let localClient;
 
 const setup = (
-  {
-    accessToken = MOCK_FILE_WITH_PLATFORM.telegram.accessToken,
-    webhook = 'http://example.com/webhook',
-  } = {
-    accessToken: MOCK_FILE_WITH_PLATFORM.telegram.accessToken,
+  { webhook = 'http://example.com/webhook' } = {
     webhook: 'http://example.com/webhook',
   }
 ) => ({
-  postUrl: `/bot${accessToken}/setWebhook`,
   webhook,
 });
 
 beforeEach(() => {
-  const { postUrl } = setup();
+  process.exit = jest.fn();
   getConfig.mockReturnValue(MOCK_FILE_WITH_PLATFORM.telegram);
-
-  client = new MockAdapter(_client);
-  client.onPost(postUrl).reply(200, { success: true });
 
   localClient = new MockAdapter(_localClient);
   localClient.onGet('/api/tunnels').reply(200, {
@@ -58,9 +48,24 @@ beforeEach(() => {
   log.print = jest.fn();
   log.error = jest.fn();
   log.bold = jest.fn(s => s);
+
+  TelegramClient.connect.mockReturnValue({
+    setWebhook: jest.fn(() => ({
+      data: {
+        ok: true,
+        result: {
+          url: 'https://4a16faff.ngrok.io/',
+          has_custom_certificate: false,
+          pending_update_count: 0,
+          max_connections: 40,
+        },
+      },
+    })),
+  });
 });
 
 afterEach(() => {
+  process.exit = _exit;
   jest.resetAllMocks();
 });
 
@@ -72,30 +77,14 @@ describe('resolve', () => {
   it('successfully set webhook', async () => {
     const { webhook } = setup();
 
-    await setWebhook(webhook, configPath);
-
-    expect(log.print).toHaveBeenCalledTimes(1);
-    expect(log.print.mock.calls[0][0]).toMatch(/Successfully/);
-  });
-
-  it('use default fields to setup', async () => {
-    const { postUrl, webhook } = setup({
-      webhook: 'http://fakeurl.com',
-    });
-    client.onPost(postUrl).reply(200, { success: true });
-
-    await setWebhook(webhook, configPath);
+    await setWebhook(webhook);
 
     expect(log.print).toHaveBeenCalledTimes(1);
     expect(log.print.mock.calls[0][0]).toMatch(/Successfully/);
   });
 
   it('get ngrok webhook to setup', async () => {
-    const { postUrl } = setup();
-
-    client.onPost(postUrl).reply(200, { success: true });
-
-    await setWebhook(undefined, configPath);
+    await setWebhook(undefined);
 
     expect(log.print).toHaveBeenCalledTimes(1);
     expect(log.print.mock.calls[0][0]).toMatch(/Successfully/);
@@ -108,7 +97,7 @@ describe('reject', () => {
     getConfig.mockReturnValue({});
     process.exit = jest.fn();
 
-    await setWebhook(webhook, configPath);
+    await setWebhook(webhook);
 
     expect(log.error).toBeCalledWith(
       '`accessToken` is not found in config file'
@@ -117,8 +106,12 @@ describe('reject', () => {
   });
 
   it('reject when telegram return not success', () => {
-    const { postUrl, webhook } = setup();
-    client.onPost(postUrl).reply(400, { success: false });
-    expect(setWebhook(webhook, configPath).then).toThrow();
+    const { webhook } = setup();
+    TelegramClient.connect().setWebhook.mockReturnValueOnce({
+      data: {
+        ok: false,
+      },
+    });
+    expect(setWebhook(webhook).then).toThrow();
   });
 });
