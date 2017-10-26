@@ -21,7 +21,7 @@ let _client;
 
 beforeEach(() => {
   _client = {
-    deleteDomainWhitelist: jest.fn(),
+    deleteWhitelistedDomains: jest.fn(),
   };
   MessengerClient.connect = jest.fn(() => _client);
   log.error = jest.fn();
@@ -33,23 +33,13 @@ it('be defined', () => {
   expect(deleteWhitelistedDomains).toBeDefined();
 });
 
-describe('#getConfig', () => {
-  it('will call `bottender.config.js` and platform = messenger when NOT passed <config_path>', async () => {
-    _client.deleteDomainWhitelist.mockReturnValue(Promise.resolve());
-
-    await deleteWhitelistedDomains();
-
-    expect(getConfig).toBeCalledWith('bottender.config.js', 'messenger');
-  });
-});
-
 describe('resolved', () => {
-  it('call deleteDomainWhitelist', async () => {
-    _client.deleteDomainWhitelist.mockReturnValue(Promise.resolve());
+  it('call deleteWhitelistedDomains', async () => {
+    _client.deleteWhitelistedDomains.mockReturnValue(Promise.resolve());
 
     await deleteWhitelistedDomains();
 
-    expect(_client.deleteDomainWhitelist).toBeCalled();
+    expect(_client.deleteWhitelistedDomains).toBeCalled();
   });
 });
 
@@ -60,7 +50,7 @@ describe('reject', () => {
         status: 400,
       },
     };
-    _client.deleteDomainWhitelist.mockReturnValue(Promise.reject(error));
+    _client.deleteWhitelistedDomains.mockReturnValue(Promise.reject(error));
     process.exit = jest.fn();
 
     await deleteWhitelistedDomains();
@@ -84,7 +74,7 @@ describe('reject', () => {
         },
       },
     };
-    _client.deleteDomainWhitelist.mockReturnValue(Promise.reject(error));
+    _client.deleteWhitelistedDomains.mockReturnValue(Promise.reject(error));
     process.exit = jest.fn();
 
     await deleteWhitelistedDomains();
@@ -98,7 +88,7 @@ describe('reject', () => {
     const error = {
       message: 'something wrong happened',
     };
-    _client.deleteDomainWhitelist.mockReturnValue(Promise.reject(error));
+    _client.deleteWhitelistedDomains.mockReturnValue(Promise.reject(error));
     process.exit = jest.fn();
 
     await deleteWhitelistedDomains();

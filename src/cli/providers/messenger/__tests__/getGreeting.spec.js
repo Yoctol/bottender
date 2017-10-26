@@ -21,7 +21,7 @@ let _client;
 
 beforeEach(() => {
   _client = {
-    getGreetingText: jest.fn(),
+    getGreeting: jest.fn(),
   };
   MessengerClient.connect = jest.fn(() => _client);
   log.error = jest.fn();
@@ -33,52 +33,22 @@ it('be defined', () => {
   expect(getGreeting).toBeDefined();
 });
 
-describe('#getConfig', () => {
-  it('will call `bottender.config.js` and platform = messenger when NOT passed <config_path>', async () => {
-    _client.getGreetingText.mockReturnValue(
-      Promise.resolve({
-        data: [
-          {
-            greeting: [{ text: 'hello' }],
-          },
-        ],
-      })
-    );
-
-    await getGreeting();
-
-    expect(getConfig).toBeCalledWith('bottender.config.js', 'messenger');
-  });
-});
-
 describe('resolved', () => {
-  it('call getGreetingText', async () => {
-    _client.getGreetingText.mockReturnValue(
-      Promise.resolve({
-        data: [
-          {
-            greeting: [{ text: 'hello' }],
-          },
-        ],
-      })
-    );
+  it('call getGreeting', async () => {
+    _client.getGreeting.mockReturnValue(Promise.resolve([{ text: 'hello' }]));
 
     await getGreeting();
 
-    expect(_client.getGreetingText).toBeCalled();
+    expect(_client.getGreeting).toBeCalled();
   });
 
   it('error when no config setting', async () => {
-    _client.getGreetingText.mockReturnValue(
-      Promise.resolve({
-        data: [],
-      })
-    );
+    _client.getGreeting.mockReturnValue(Promise.resolve([]));
 
     await getGreeting();
 
     expect(log.error).toBeCalled();
-    expect(_client.getGreetingText).toBeCalled();
+    expect(_client.getGreeting).toBeCalled();
   });
 });
 
@@ -89,7 +59,7 @@ describe('reject', () => {
         status: 400,
       },
     };
-    _client.getGreetingText.mockReturnValue(Promise.reject(error));
+    _client.getGreeting.mockReturnValue(Promise.reject(error));
 
     process.exit = jest.fn();
 
@@ -114,7 +84,7 @@ describe('reject', () => {
         },
       },
     };
-    _client.getGreetingText.mockReturnValue(Promise.reject(error));
+    _client.getGreeting.mockReturnValue(Promise.reject(error));
 
     process.exit = jest.fn();
 
@@ -129,7 +99,7 @@ describe('reject', () => {
     const error = {
       message: 'something wrong happened',
     };
-    _client.getGreetingText.mockReturnValue(Promise.reject(error));
+    _client.getGreeting.mockReturnValue(Promise.reject(error));
 
     process.exit = jest.fn();
 

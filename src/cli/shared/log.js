@@ -11,7 +11,7 @@ export function warn(msg: string): void {
 }
 
 export function error(msg: string): void {
-  console.log(chalk.bold.red(`❯ ${msg}`));
+  console.log(chalk.red(`❯ ${msg}`));
 }
 
 export function bold(msg: string): string {

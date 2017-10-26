@@ -56,7 +56,7 @@ export async function setProfile() {
     await client.deleteMessengerProfile(['greeting']);
 
     if (getStartedButtonPayload) {
-      await client.setGetStartedButton(getStartedButtonPayload);
+      await client.setGetStarted(getStartedButtonPayload);
       print('Successfully set getStartedButton');
     }
 
@@ -74,7 +74,7 @@ export async function setProfile() {
     }
 
     if (greetingText) {
-      await client.setGreetingText(greetingText);
+      await client.setGreeting(greetingText);
       print('Successfully set greetingText');
     }
 

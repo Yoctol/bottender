@@ -13,14 +13,14 @@ export async function getGreeting() {
 
     const client = MessengerClient.connect(config.accessToken);
 
-    const { data } = await client.getGreetingText();
-    if (data.length) {
-      print(`The greeting is: ${bold(data[0].greeting[0].text)}`);
+    const greeting = await client.getGreeting();
+    if (greeting && greeting[0] && greeting[0].text) {
+      print(`The greeting is: ${bold(greeting[0].text)}`);
     } else {
-      error('Failed to find greeting setting');
+      error(`Failed to find ${bold('greeting')} setting`);
     }
   } catch (err) {
-    error('Failed to get greeting');
+    error(`Failed to get ${bold('greeting')} setting`);
     if (err.response) {
       error(`status: ${bold(err.response.status)}`);
       if (err.response.data) {
@@ -41,11 +41,11 @@ export async function deleteGreeting() {
 
     const client = MessengerClient.connect(config.accessToken);
 
-    await client.deleteGreetingText();
+    await client.deleteGreeting();
 
-    print('Successfully delete greeting');
+    print(`Successfully delete ${bold('greeting')} setting`);
   } catch (err) {
-    error('Failed to delete greeting');
+    error(`Failed to delete ${bold('greeting')} setting`);
     if (err.response) {
       error(`status: ${bold(err.response.status)}`);
       if (err.response.data) {

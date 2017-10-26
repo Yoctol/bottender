@@ -33,8 +33,8 @@ beforeEach(() => {
   _client = {
     deleteMessengerProfile: jest.fn(),
     setDomainWhitelist: jest.fn(),
-    setGetStartedButton: jest.fn(),
-    setGreetingText: jest.fn(),
+    setGetStarted: jest.fn(),
+    setGreeting: jest.fn(),
     setPersistentMenu: jest.fn(),
   };
   MessengerClient.connect = jest.fn(() => _client);
@@ -77,8 +77,8 @@ describe('resolve', () => {
     ]);
 
     expect(_client.setDomainWhitelist).not.toBeCalled();
-    expect(_client.setGetStartedButton).not.toBeCalled();
-    expect(_client.setGreetingText).not.toBeCalled();
+    expect(_client.setGetStarted).not.toBeCalled();
+    expect(_client.setGreeting).not.toBeCalled();
   });
 
   it('successfully set persistent menu with composerInputDisabled: true', async () => {
@@ -110,8 +110,8 @@ describe('resolve', () => {
     );
 
     expect(_client.setDomainWhitelist).not.toBeCalled();
-    expect(_client.setGetStartedButton).not.toBeCalled();
-    expect(_client.setGreetingText).not.toBeCalled();
+    expect(_client.setGetStarted).not.toBeCalled();
+    expect(_client.setGreeting).not.toBeCalled();
   });
 
   it('successfully set greetingText', async () => {
@@ -136,10 +136,10 @@ describe('resolve', () => {
         url: 'https://www.example.com/',
       },
     ]);
-    expect(_client.setGreetingText).toBeCalledWith('Now you see me.');
+    expect(_client.setGreeting).toBeCalledWith('Now you see me.');
 
     expect(_client.setDomainWhitelist).not.toBeCalled();
-    expect(_client.setGetStartedButton).not.toBeCalled();
+    expect(_client.setGetStarted).not.toBeCalled();
   });
 
   it('successfully set domain whitelist', async () => {
@@ -154,8 +154,8 @@ describe('resolve', () => {
       'http://www.awesome.com',
     ]);
 
-    expect(_client.setGetStartedButton).not.toBeCalled();
-    expect(_client.setGreetingText).not.toBeCalled();
+    expect(_client.setGetStarted).not.toBeCalled();
+    expect(_client.setGreeting).not.toBeCalled();
     expect(_client.setPersistentMenu).not.toBeCalled();
   });
 });

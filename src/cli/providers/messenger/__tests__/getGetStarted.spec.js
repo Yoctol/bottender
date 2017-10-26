@@ -21,7 +21,7 @@ let _client;
 
 beforeEach(() => {
   _client = {
-    getGetStartedButton: jest.fn(),
+    getGetStarted: jest.fn(),
   };
   MessengerClient.connect = jest.fn(() => _client);
   log.error = jest.fn();
@@ -33,56 +33,26 @@ it('be defined', () => {
   expect(getGetStarted).toBeDefined();
 });
 
-describe('#getConfig', () => {
-  it('will call `bottender.config.js` and platform = messenger when NOT passed <config_path>', async () => {
-    _client.getGetStartedButton.mockReturnValue(
-      Promise.resolve({
-        data: [
-          {
-            get_started: {
-              payload: 'get started yo!',
-            },
-          },
-        ],
-      })
-    );
-
-    await getGetStarted();
-
-    expect(getConfig).toBeCalledWith('bottender.config.js', 'messenger');
-  });
-});
-
 describe('resolved', () => {
-  it('call getGetStartedButton', async () => {
-    _client.getGetStartedButton.mockReturnValue(
+  it('call getGetStarted', async () => {
+    _client.getGetStarted.mockReturnValue(
       Promise.resolve({
-        data: [
-          {
-            get_started: {
-              payload: 'get started yo!',
-            },
-          },
-        ],
+        payload: 'get started yo!',
       })
     );
 
     await getGetStarted();
 
-    expect(_client.getGetStartedButton).toBeCalled();
+    expect(_client.getGetStarted).toBeCalled();
   });
 
   it('error when no config setting', async () => {
-    _client.getGetStartedButton.mockReturnValue(
-      Promise.resolve({
-        data: [],
-      })
-    );
+    _client.getGetStarted.mockReturnValue(Promise.resolve(null));
 
     await getGetStarted();
 
     expect(log.error).toBeCalled();
-    expect(_client.getGetStartedButton).toBeCalled();
+    expect(_client.getGetStarted).toBeCalled();
   });
 });
 
@@ -93,7 +63,7 @@ describe('reject', () => {
         status: 400,
       },
     };
-    _client.getGetStartedButton.mockReturnValue(Promise.reject(error));
+    _client.getGetStarted.mockReturnValue(Promise.reject(error));
 
     process.exit = jest.fn();
 
@@ -118,7 +88,7 @@ describe('reject', () => {
         },
       },
     };
-    _client.getGetStartedButton.mockReturnValue(Promise.reject(error));
+    _client.getGetStarted.mockReturnValue(Promise.reject(error));
 
     process.exit = jest.fn();
 
@@ -133,7 +103,7 @@ describe('reject', () => {
     const error = {
       message: 'something wrong happened',
     };
-    _client.getGetStartedButton.mockReturnValue(Promise.reject(error));
+    _client.getGetStarted.mockReturnValue(Promise.reject(error));
 
     process.exit = jest.fn();
 

@@ -14,7 +14,7 @@ describe('console', () => {
 
   it('error', () => {
     error('error!');
-    expect(console.log).toBeCalledWith(chalk.bold.red('❯ error!'));
+    expect(console.log).toBeCalledWith(chalk.red('❯ error!'));
   });
 
   it('print', () => {
