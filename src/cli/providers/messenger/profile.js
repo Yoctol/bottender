@@ -5,8 +5,46 @@ import invariant from 'invariant';
 import getConfig from '../../shared/getConfig';
 import { print, error, bold } from '../../shared/log';
 
+const FIELDS = [
+  'account_linking_url',
+  'persistent_menu',
+  'get_started',
+  'greeting',
+  'whitelisted_domains',
+  'payment_settings',
+  'target_audience',
+  'home_url',
+];
+
 export async function getMessengerProfile() {
-  console.log('FIXME');
+  try {
+    const config = getConfig('bottender.config.js', 'messenger');
+
+    invariant(config.accessToken, 'accessToken is not found in config file');
+
+    const client = MessengerClient.connect(config.accessToken);
+
+    const profile = await client.getMessengerProfile(FIELDS);
+
+    if (profile) {
+      print('The profile is:');
+
+      print(`\n${JSON.stringify(profile, null, 2)}`);
+    } else {
+      error(`Failed to find ${bold('messenger_profile')} setting`);
+    }
+  } catch (err) {
+    error(`Failed to get ${bold('messenger_profile')} settings`);
+    if (err.response) {
+      error(`status: ${bold(err.response.status)}`);
+      if (err.response.data) {
+        error(`data: ${bold(JSON.stringify(err.response.data, null, 2))}`);
+      }
+    } else {
+      error(err.message);
+    }
+    return process.exit(1);
+  }
 }
 
 export async function setMessengerProfile() {
@@ -45,16 +83,7 @@ export async function deleteMessengerProfile() {
 
     const client = MessengerClient.connect(config.accessToken);
 
-    await client.deleteMessengerProfile([
-      'account_linking_url',
-      'persistent_menu',
-      'get_started',
-      'greeting',
-      'whitelisted_domains',
-      'payment_settings',
-      'target_audience',
-      'home_url',
-    ]);
+    await client.deleteMessengerProfile(FIELDS);
 
     print(`Successfully delete ${bold('messenger_profile')} settings`);
   } catch (err) {
