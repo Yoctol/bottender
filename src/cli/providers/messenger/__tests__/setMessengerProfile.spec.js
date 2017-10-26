@@ -1,4 +1,4 @@
-import { setProfile } from '../profile';
+import { setMessengerProfile } from '../profile';
 
 jest.mock('messaging-api-messenger');
 jest.mock('warning');
@@ -49,12 +49,12 @@ afterEach(() => {
 });
 
 it('be defined', () => {
-  expect(setProfile).toBeDefined();
+  expect(setMessengerProfile).toBeDefined();
 });
 
 describe('resolve', () => {
   it('delete persistent_menu, get_started, greeting for messenger profile', async () => {
-    await setProfile(configPath);
+    await setMessengerProfile(configPath);
 
     expect(_client.deleteMessengerProfile.mock.calls[0][0]).toEqual([
       'persistent_menu',
@@ -66,7 +66,7 @@ describe('resolve', () => {
   });
 
   it('successfully set persistent menu', async () => {
-    await setProfile(configPath);
+    await setMessengerProfile(configPath);
 
     expect(_client.setPersistentMenu).toBeCalledWith([
       {
@@ -94,7 +94,7 @@ describe('resolve', () => {
       composerInputDisabled: true,
     });
 
-    await setProfile(configPath);
+    await setMessengerProfile(configPath);
 
     expect(_client.setPersistentMenu).toBeCalledWith(
       [
@@ -127,7 +127,7 @@ describe('resolve', () => {
       ],
     });
 
-    await setProfile(configPath);
+    await setMessengerProfile(configPath);
 
     expect(_client.setPersistentMenu).toBeCalledWith([
       {
@@ -148,7 +148,7 @@ describe('resolve', () => {
       domainWhitelist: ['http://www.awesome.com'],
     });
 
-    await setProfile(configPath);
+    await setMessengerProfile(configPath);
 
     expect(_client.setDomainWhitelist).toBeCalledWith([
       'http://www.awesome.com',
@@ -172,7 +172,7 @@ describe('reject', () => {
 
     process.exit = jest.fn();
 
-    await setProfile(configPath);
+    await setMessengerProfile(configPath);
 
     expect(log.error).toBeCalled();
     expect(process.exit).toBeCalled();
@@ -197,7 +197,7 @@ describe('reject', () => {
 
     process.exit = jest.fn();
 
-    await setProfile(configPath);
+    await setMessengerProfile(configPath);
 
     expect(log.error).toBeCalled();
     expect(log.error.mock.calls[2][0]).not.toMatch(/\[object Object\]/);
