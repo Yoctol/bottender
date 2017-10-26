@@ -1,5 +1,6 @@
 import minimist from 'minimist';
 import camelCase from 'camel-case';
+import get from 'lodash/get';
 
 import pkg from '../../package.json';
 
@@ -49,7 +50,14 @@ const main = async argv => {
   const provider = providers[providerName];
 
   try {
-    await provider[camelCase(subcommand)](ctx);
+    const method = get(provider, camelCase(subcommand));
+    if (method) {
+      await provider[camelCase(subcommand)](ctx);
+    } else {
+      const subcommands = Array.from(provider.subcommands).join(', ');
+      error(`Please specify a valid subcommand: ${subcommands}`);
+      provider.help();
+    }
   } catch (err) {
     console.error(
       error(

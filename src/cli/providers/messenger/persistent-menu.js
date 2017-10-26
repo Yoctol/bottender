@@ -6,6 +6,8 @@ import { MessengerClient } from 'messaging-api-messenger';
 import getConfig from '../../shared/getConfig';
 import { print, error, bold } from '../../shared/log';
 
+import help from './help';
+
 export async function getPersistentMenu() {
   try {
     const config = getConfig('bottender.config.js', 'messenger');
@@ -81,5 +83,7 @@ export default async function main(ctx) {
       await deletePersistentMenu();
       break;
     default:
+      error(`Please specify a valid subcommand: get, delete`);
+      help();
   }
 }

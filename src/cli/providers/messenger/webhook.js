@@ -6,6 +6,8 @@ import Confirm from 'prompt-confirm';
 import getConfig from '../../shared/getConfig';
 import { print, error, bold, warn } from '../../shared/log';
 
+import help from './help';
+
 export const client = axios.create({
   baseURL: 'https://graph.facebook.com/v2.9/',
   headers: { 'Content-Type': 'application/json' },
@@ -113,5 +115,8 @@ export default async function main(ctx) {
     const webhook = ctx.argv.w;
     const verifyToken = ctx.argv.v;
     await setWebhook(webhook, verifyToken);
+  } else {
+    error(`Please specify a valid subcommand: set`);
+    help();
   }
 }

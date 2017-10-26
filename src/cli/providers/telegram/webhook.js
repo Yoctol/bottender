@@ -5,6 +5,8 @@ import invariant from 'invariant';
 import getConfig from '../../shared/getConfig';
 import { print, error, bold } from '../../shared/log';
 
+import help from './help';
+
 export const client = axios.create({
   baseURL: `https://api.telegram.org`,
   headers: { 'Content-Type': 'application/json' },
@@ -53,5 +55,8 @@ export default async function main(ctx) {
   if (subcommand === 'set') {
     const webhook = ctx.argv.w;
     await setWebhook(webhook);
+  } else {
+    error(`Please specify a valid subcommand: set`);
+    help();
   }
 }

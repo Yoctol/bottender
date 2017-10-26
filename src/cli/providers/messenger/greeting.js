@@ -5,6 +5,8 @@ import { MessengerClient } from 'messaging-api-messenger';
 import getConfig from '../../shared/getConfig';
 import { print, error, bold } from '../../shared/log';
 
+import help from './help';
+
 export async function getGreeting() {
   try {
     const config = getConfig('bottender.config.js', 'messenger');
@@ -69,5 +71,7 @@ export default async function main(ctx) {
       await deleteGreeting();
       break;
     default:
+      error(`Please specify a valid subcommand: get, delete`);
+      help();
   }
 }

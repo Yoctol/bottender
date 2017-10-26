@@ -5,6 +5,8 @@ import invariant from 'invariant';
 import getConfig from '../../shared/getConfig';
 import { print, error, bold } from '../../shared/log';
 
+import help from './help';
+
 const FIELDS = [
   'account_linking_url',
   'persistent_menu',
@@ -114,5 +116,7 @@ export default async function main(ctx) {
       await deleteMessengerProfile();
       break;
     default:
+      error(`Please specify a valid subcommand: get, set, delete`);
+      help();
   }
 }
