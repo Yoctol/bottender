@@ -42,9 +42,9 @@ export async function deleteGetStarted() {
 
     await client.deleteGetStarted();
 
-    print('Successfully delete get_started setting');
+    print(`Successfully ${bold('get_started')} setting`);
   } catch (err) {
-    error('Failed to delete get_started setting');
+    error(`Failed to ${bold('get_started')} setting`);
     if (err.response) {
       error(`status: ${bold(err.response.status)}`);
       if (err.response.data) {
