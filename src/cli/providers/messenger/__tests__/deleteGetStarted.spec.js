@@ -21,7 +21,7 @@ let _client;
 
 beforeEach(() => {
   _client = {
-    deleteGetStartedButton: jest.fn(),
+    deleteGetStarted: jest.fn(),
   };
   MessengerClient.connect = jest.fn(() => _client);
   log.error = jest.fn();
@@ -35,7 +35,7 @@ it('be defined', () => {
 
 describe('#getConfig', () => {
   it('will call `bottender.config.js` and platform = messenger when NOT passed <config_path>', async () => {
-    _client.deleteGetStartedButton.mockReturnValue(Promise.resolve());
+    _client.deleteGetStarted.mockReturnValue(Promise.resolve());
 
     await deleteGetStarted();
 
@@ -44,12 +44,12 @@ describe('#getConfig', () => {
 });
 
 describe('resolved', () => {
-  it('call deleteGetStartedButton', async () => {
-    _client.deleteGetStartedButton.mockReturnValue(Promise.resolve());
+  it('call deleteGetStarted', async () => {
+    _client.deleteGetStarted.mockReturnValue(Promise.resolve());
 
     await deleteGetStarted();
 
-    expect(_client.deleteGetStartedButton).toBeCalled();
+    expect(_client.deleteGetStarted).toBeCalled();
   });
 });
 
@@ -60,7 +60,7 @@ describe('reject', () => {
         status: 400,
       },
     };
-    _client.deleteGetStartedButton.mockReturnValue(Promise.reject(error));
+    _client.deleteGetStarted.mockReturnValue(Promise.reject(error));
 
     process.exit = jest.fn();
 
@@ -85,7 +85,7 @@ describe('reject', () => {
         },
       },
     };
-    _client.deleteGetStartedButton.mockReturnValue(Promise.reject(error));
+    _client.deleteGetStarted.mockReturnValue(Promise.reject(error));
 
     process.exit = jest.fn();
 
@@ -100,7 +100,7 @@ describe('reject', () => {
     const error = {
       message: 'something wrong happened',
     };
-    _client.deleteGetStartedButton.mockReturnValue(Promise.reject(error));
+    _client.deleteGetStarted.mockReturnValue(Promise.reject(error));
 
     process.exit = jest.fn();
 

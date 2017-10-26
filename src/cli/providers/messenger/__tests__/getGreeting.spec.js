@@ -21,7 +21,7 @@ let _client;
 
 beforeEach(() => {
   _client = {
-    getGreetingText: jest.fn(),
+    getGreeting: jest.fn(),
   };
   MessengerClient.connect = jest.fn(() => _client);
   log.error = jest.fn();
@@ -35,7 +35,7 @@ it('be defined', () => {
 
 describe('#getConfig', () => {
   it('will call `bottender.config.js` and platform = messenger when NOT passed <config_path>', async () => {
-    _client.getGreetingText.mockReturnValue(
+    _client.getGreeting.mockReturnValue(
       Promise.resolve({
         data: [
           {
@@ -52,8 +52,8 @@ describe('#getConfig', () => {
 });
 
 describe('resolved', () => {
-  it('call getGreetingText', async () => {
-    _client.getGreetingText.mockReturnValue(
+  it('call getGreeting', async () => {
+    _client.getGreeting.mockReturnValue(
       Promise.resolve({
         data: [
           {
@@ -65,11 +65,11 @@ describe('resolved', () => {
 
     await getGreeting();
 
-    expect(_client.getGreetingText).toBeCalled();
+    expect(_client.getGreeting).toBeCalled();
   });
 
   it('error when no config setting', async () => {
-    _client.getGreetingText.mockReturnValue(
+    _client.getGreeting.mockReturnValue(
       Promise.resolve({
         data: [],
       })
@@ -78,7 +78,7 @@ describe('resolved', () => {
     await getGreeting();
 
     expect(log.error).toBeCalled();
-    expect(_client.getGreetingText).toBeCalled();
+    expect(_client.getGreeting).toBeCalled();
   });
 });
 
@@ -89,7 +89,7 @@ describe('reject', () => {
         status: 400,
       },
     };
-    _client.getGreetingText.mockReturnValue(Promise.reject(error));
+    _client.getGreeting.mockReturnValue(Promise.reject(error));
 
     process.exit = jest.fn();
 
@@ -114,7 +114,7 @@ describe('reject', () => {
         },
       },
     };
-    _client.getGreetingText.mockReturnValue(Promise.reject(error));
+    _client.getGreeting.mockReturnValue(Promise.reject(error));
 
     process.exit = jest.fn();
 
@@ -129,7 +129,7 @@ describe('reject', () => {
     const error = {
       message: 'something wrong happened',
     };
-    _client.getGreetingText.mockReturnValue(Promise.reject(error));
+    _client.getGreeting.mockReturnValue(Promise.reject(error));
 
     process.exit = jest.fn();
 

@@ -14,10 +14,10 @@ export async function getPersistentMenu() {
 
     const client = MessengerClient.connect(config.accessToken);
 
-    const { data } = await client.getPersistentMenu();
+    const persistentMenu = await client.getPersistentMenu();
 
-    if (data.length) {
-      const menu = data[0].persistent_menu[0];
+    if (persistentMenu && persistentMenu[0]) {
+      const menu = persistentMenu[0];
       print(`input disabled: ${menu.composer_input_disabled}`);
       print('actions:');
       const table = new Table({
@@ -29,10 +29,10 @@ export async function getPersistentMenu() {
       });
       console.log(table.toString()); // eslint-disable-line no-console
     } else {
-      error('Failed to find persistent menu setting');
+      error(`Failed to find ${bold('persistent_menu')} setting`);
     }
   } catch (err) {
-    error('Faile to get persistent menu');
+    error(`Faile to get ${bold('persistent_menu')} setting`);
     if (err.response) {
       error(`status: ${bold(err.response.status)}`);
       if (err.response.data) {
@@ -55,9 +55,9 @@ export async function deletePersistentMenu() {
 
     await client.deletePersistentMenu();
 
-    print('Successfully delete persistent menu');
+    print(`Successfully delete ${bold('persistent_menu')} setting`);
   } catch (err) {
-    error('Failed to delete persistent menu');
+    error(`Failed to delete ${bold('persistent_menu')} setting`);
     if (err.response) {
       error(`status: ${bold(err.response.status)}`);
       if (err.response.data) {

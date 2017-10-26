@@ -21,7 +21,7 @@ let _client;
 
 beforeEach(() => {
   _client = {
-    deleteGreetingText: jest.fn(),
+    deleteGreeting: jest.fn(),
   };
   MessengerClient.connect = jest.fn(() => _client);
   log.error = jest.fn();
@@ -35,7 +35,7 @@ it('be defined', () => {
 
 describe('#getConfig', () => {
   it('will call `bottender.config.js` and platform = messenger when NOT passed <config_path>', async () => {
-    _client.deleteGreetingText.mockReturnValue(Promise.resolve());
+    _client.deleteGreeting.mockReturnValue(Promise.resolve());
 
     await deleteGreeting();
 
@@ -45,11 +45,11 @@ describe('#getConfig', () => {
 
 describe('resolved', () => {
   it('call deleteGreeting', async () => {
-    _client.deleteGreetingText.mockReturnValue(Promise.resolve());
+    _client.deleteGreeting.mockReturnValue(Promise.resolve());
 
     await deleteGreeting();
 
-    expect(_client.deleteGreetingText).toBeCalled();
+    expect(_client.deleteGreeting).toBeCalled();
   });
 });
 
@@ -60,7 +60,7 @@ describe('reject', () => {
         status: 400,
       },
     };
-    _client.deleteGreetingText.mockReturnValue(Promise.reject(error));
+    _client.deleteGreeting.mockReturnValue(Promise.reject(error));
 
     process.exit = jest.fn();
 
@@ -85,7 +85,7 @@ describe('reject', () => {
         },
       },
     };
-    _client.deleteGreetingText.mockReturnValue(Promise.reject(error));
+    _client.deleteGreeting.mockReturnValue(Promise.reject(error));
 
     process.exit = jest.fn();
 
@@ -100,7 +100,7 @@ describe('reject', () => {
     const error = {
       message: 'something wrong happened',
     };
-    _client.deleteGreetingText.mockReturnValue(Promise.reject(error));
+    _client.deleteGreeting.mockReturnValue(Promise.reject(error));
 
     process.exit = jest.fn();
 

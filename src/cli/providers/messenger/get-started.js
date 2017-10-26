@@ -12,14 +12,14 @@ export async function getGetStarted() {
     invariant(config.accessToken, 'accessToken is not found in config file');
 
     const client = MessengerClient.connect(config.accessToken);
-    const { data } = await client.getGetStartedButton();
-    if (data.length) {
-      print(`Get started payload is: ${bold(data[0].get_started.payload)}`);
+    const getStarted = await client.getGetStarted();
+    if (getStarted && getStarted.payload) {
+      print(`Get started payload is: ${bold(getStarted.payload)}`);
     } else {
-      error('Failed to find get started setting');
+      error(`Failed to find ${bold('get_started')} setting`);
     }
   } catch (err) {
-    error('Failed to get `get started`');
+    error(`Failed to get ${bold('get_started')} setting`);
     if (err.response) {
       error(`status: ${bold(err.response.status)}`);
       if (err.response.data) {
@@ -40,11 +40,11 @@ export async function deleteGetStarted() {
 
     const client = MessengerClient.connect(config.accessToken);
 
-    await client.deleteGetStartedButton();
+    await client.deleteGetStarted();
 
-    print('Successfully delete `get started`');
+    print('Successfully delete get_started setting');
   } catch (err) {
-    error('Failed to delete `get started`');
+    error('Failed to delete get_started setting');
     if (err.response) {
       error(`status: ${bold(err.response.status)}`);
       if (err.response.data) {

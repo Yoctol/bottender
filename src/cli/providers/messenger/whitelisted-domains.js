@@ -13,18 +13,16 @@ export async function getWhitelistedDomains() {
 
     const client = MessengerClient.connect(config.accessToken);
 
-    const { data } = await client.getDomainWhitelist();
-    if (data.length) {
-      for (let i = 0; i < data[0].whitelisted_domains.length; i++) {
-        print(
-          `The whitelisted domains is: ${bold(data[0].whitelisted_domains[i])}`
-        );
+    const whitelistedDomains = await client.getWhitelistedDomains();
+    if (whitelistedDomains) {
+      for (let i = 0; i < whitelistedDomains.length; i++) {
+        print(`The whitelisted domains is: ${bold(whitelistedDomains[i])}`);
       }
     } else {
-      error('Failed to find whitelisted domains setting');
+      error(`Failed to find ${bold('whitelisted-domains')} setting`);
     }
   } catch (err) {
-    error('Failed to get whitelisted domains');
+    error(`Failed to get ${bold('whitelisted-domains')} setting`);
     if (err.response) {
       error(`status: ${bold(err.response.status)}`);
       if (err.response.data) {
@@ -45,11 +43,11 @@ export async function deleteWhitelistedDomains() {
 
     const client = MessengerClient.connect(config.accessToken);
 
-    await client.deleteDomainWhitelist();
+    await client.deleteWhitelistedDomains();
 
-    print('Successfully delete whitelisted domains');
+    print(`Successfully delete ${bold('whitelisted-domains')} setting`);
   } catch (err) {
-    error('Failed to delete whitelisted domains');
+    error(`Failed to delete ${bold('whitelisted-domains')} setting`);
     if (err.response) {
       error(`status: ${bold(err.response.status)}`);
       if (err.response.data) {
