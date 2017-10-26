@@ -8,7 +8,16 @@ import { error } from './shared/log';
 
 const main = async argv => {
   console.log(argv);
-  console.log(pkg.version);
+
+  if (argv.v || argv.version || argv._[0] === 'version') {
+    console.log(pkg.version);
+    process.exit(0);
+  }
+
+  if (argv.h || argv.help || argv._[0] === 'help') {
+    // FIXME
+    process.exit(0);
+  }
 
   // the context object to supply to the providers or the commands
   const ctx = {

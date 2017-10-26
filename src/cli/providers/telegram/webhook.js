@@ -27,7 +27,7 @@ export async function setWebhook(_webhook) {
     invariant(accessToken, '`accessToken` is not found in config file');
     invariant(
       webhook,
-      '`webhook` is required but not found. Use telegram webhook set <webhook> to setup or make sure you are running ngrok server.'
+      '`webhook` is required but not found. Use -w <webhook> to setup or make sure you are running ngrok server.'
     );
 
     const res = await client.post(`/bot${accessToken}/setWebhook`);
@@ -51,7 +51,7 @@ export async function setWebhook(_webhook) {
 export default async function main(ctx) {
   const subcommand = ctx.argv._[2];
   if (subcommand === 'set') {
-    const webhook = ctx.argv._[3];
+    const webhook = ctx.argv.w;
     await setWebhook(webhook);
   }
 }

@@ -110,6 +110,8 @@ export async function setWebhook(_webhook, _verifyToken) {
 export default async function main(ctx) {
   const subcommand = ctx.argv._[2];
   if (subcommand === 'set') {
-    console.log(ctx);
+    const webhook = ctx.argv.w;
+    const verifyToken = ctx.argv.v;
+    await setWebhook(webhook, verifyToken);
   }
 }
