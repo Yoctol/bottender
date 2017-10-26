@@ -18,12 +18,10 @@ const MOCK_FILE_WITH_PLATFORM = {
 };
 
 let _client;
-const _exit = process.exit;
 
 beforeEach(() => {
-  process.exit = jest.fn();
   _client = {
-    getDomainWhitelist: jest.fn(),
+    getWhitelistedDomains: jest.fn(),
   };
   MessengerClient.connect = jest.fn(() => _client);
   log.error = jest.fn();
@@ -31,65 +29,28 @@ beforeEach(() => {
   getConfig.mockReturnValue(MOCK_FILE_WITH_PLATFORM.messenger);
 });
 
-afterEach(() => {
-  process.exit = _exit;
-});
-
 it('be defined', () => {
   expect(getWhitelistedDomains).toBeDefined();
 });
 
-describe('#getConfig', () => {
-  it('will call `bottender.config.js` and platform = messenger when NOT passed <config_path>', async () => {
-    _client.getDomainWhitelist.mockReturnValue(
-      Promise.resolve({
-        data: [
-          {
-            whitelisted_domains: [
-              'http://www.facebook.com',
-              'http://www.yoctol.com',
-            ],
-          },
-        ],
-      })
-    );
-
-    await getWhitelistedDomains();
-    expect(getConfig).toBeCalledWith('bottender.config.js', 'messenger');
-  });
-});
-
 describe('resolved', () => {
-  it('call getDomainWhitelist', async () => {
-    _client.getDomainWhitelist.mockReturnValue(
-      Promise.resolve({
-        data: [
-          {
-            whitelisted_domains: [
-              'http://www.facebook.com',
-              'http://www.yoctol.com',
-            ],
-          },
-        ],
-      })
+  it('call getWhitelistedDomains', async () => {
+    _client.getWhitelistedDomains.mockReturnValue(
+      Promise.resolve(['http://www.facebook.com', 'http://www.yoctol.com'])
     );
 
     await getWhitelistedDomains();
 
-    expect(_client.getDomainWhitelist).toBeCalled();
+    expect(_client.getWhitelistedDomains).toBeCalled();
   });
 
   it('error when no config setting', async () => {
-    _client.getDomainWhitelist.mockReturnValue(
-      Promise.resolve({
-        data: [],
-      })
-    );
+    _client.getWhitelistedDomains.mockReturnValue(Promise.resolve(null));
 
     await getWhitelistedDomains();
 
     expect(log.error).toBeCalled();
-    expect(_client.getDomainWhitelist).toBeCalled();
+    expect(_client.getWhitelistedDomains).toBeCalled();
   });
 });
 
@@ -100,7 +61,7 @@ describe('reject', () => {
         status: 400,
       },
     };
-    _client.getDomainWhitelist.mockReturnValue(Promise.reject(error));
+    _client.getWhitelistedDomains.mockReturnValue(Promise.reject(error));
 
     process.exit = jest.fn();
 
@@ -125,7 +86,7 @@ describe('reject', () => {
         },
       },
     };
-    _client.getDomainWhitelist.mockReturnValue(Promise.reject(error));
+    _client.getWhitelistedDomains.mockReturnValue(Promise.reject(error));
 
     process.exit = jest.fn();
 
@@ -140,7 +101,7 @@ describe('reject', () => {
     const error = {
       message: 'something wrong happened',
     };
-    _client.getDomainWhitelist.mockReturnValue(Promise.reject(error));
+    _client.getWhitelistedDomains.mockReturnValue(Promise.reject(error));
 
     process.exit = jest.fn();
 

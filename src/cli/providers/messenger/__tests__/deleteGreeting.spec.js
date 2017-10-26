@@ -33,16 +33,6 @@ it('be defined', () => {
   expect(deleteGreeting).toBeDefined();
 });
 
-describe('#getConfig', () => {
-  it('will call `bottender.config.js` and platform = messenger when NOT passed <config_path>', async () => {
-    _client.deleteGreeting.mockReturnValue(Promise.resolve());
-
-    await deleteGreeting();
-
-    expect(getConfig).toBeCalledWith('bottender.config.js', 'messenger');
-  });
-});
-
 describe('resolved', () => {
   it('call deleteGreeting', async () => {
     _client.deleteGreeting.mockReturnValue(Promise.resolve());

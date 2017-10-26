@@ -33,16 +33,6 @@ it('be defined', () => {
   expect(deleteGetStarted).toBeDefined();
 });
 
-describe('#getConfig', () => {
-  it('will call `bottender.config.js` and platform = messenger when NOT passed <config_path>', async () => {
-    _client.deleteGetStarted.mockReturnValue(Promise.resolve());
-
-    await deleteGetStarted();
-
-    expect(getConfig).toBeCalledWith('bottender.config.js', 'messenger');
-  });
-});
-
 describe('resolved', () => {
   it('call deleteGetStarted', async () => {
     _client.deleteGetStarted.mockReturnValue(Promise.resolve());

@@ -33,16 +33,6 @@ it('be defined', () => {
   expect(deletePersistentMenu).toBeDefined();
 });
 
-describe('#getConfig', () => {
-  it('will call `bottender.config.js` and platform = messenger when NOT passed <config_path>', async () => {
-    _client.deletePersistentMenu.mockReturnValue(Promise.resolve());
-
-    await deletePersistentMenu();
-
-    expect(getConfig).toBeCalledWith('bottender.config.js', 'messenger');
-  });
-});
-
 describe('resolved', () => {
   it('call deletePersistentMenu', async () => {
     _client.deletePersistentMenu.mockReturnValue(Promise.resolve());

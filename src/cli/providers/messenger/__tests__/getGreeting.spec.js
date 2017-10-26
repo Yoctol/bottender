@@ -33,35 +33,9 @@ it('be defined', () => {
   expect(getGreeting).toBeDefined();
 });
 
-describe('#getConfig', () => {
-  it('will call `bottender.config.js` and platform = messenger when NOT passed <config_path>', async () => {
-    _client.getGreeting.mockReturnValue(
-      Promise.resolve({
-        data: [
-          {
-            greeting: [{ text: 'hello' }],
-          },
-        ],
-      })
-    );
-
-    await getGreeting();
-
-    expect(getConfig).toBeCalledWith('bottender.config.js', 'messenger');
-  });
-});
-
 describe('resolved', () => {
   it('call getGreeting', async () => {
-    _client.getGreeting.mockReturnValue(
-      Promise.resolve({
-        data: [
-          {
-            greeting: [{ text: 'hello' }],
-          },
-        ],
-      })
-    );
+    _client.getGreeting.mockReturnValue(Promise.resolve([{ text: 'hello' }]));
 
     await getGreeting();
 
@@ -69,11 +43,7 @@ describe('resolved', () => {
   });
 
   it('error when no config setting', async () => {
-    _client.getGreeting.mockReturnValue(
-      Promise.resolve({
-        data: [],
-      })
-    );
+    _client.getGreeting.mockReturnValue(Promise.resolve([]));
 
     await getGreeting();
 

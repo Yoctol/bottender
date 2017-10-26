@@ -33,56 +33,21 @@ it('be defined', () => {
   expect(getPersistentMenu).toBeDefined();
 });
 
-describe('#getConfig', () => {
-  it('will call `bottender.config.js` and platform = messenger when NOT passed <config_path>', async () => {
-    _client.getPersistentMenu.mockReturnValue(
-      Promise.resolve({
-        data: [
-          {
-            persistent_menu: [
-              {
-                composer_input_disabled: false,
-                call_to_actions: [
-                  {
-                    type: 'postback',
-                    title: 'RESTART',
-                    payload: 'RESTART',
-                  },
-                ],
-              },
-            ],
-          },
-        ],
-      })
-    );
-
-    await getPersistentMenu();
-
-    expect(getConfig).toBeCalledWith('bottender.config.js', 'messenger');
-  });
-});
-
 describe('resolved', () => {
   it('call getPersistentMenu', async () => {
     _client.getPersistentMenu.mockReturnValue(
-      Promise.resolve({
-        data: [
-          {
-            persistent_menu: [
-              {
-                composer_input_disabled: false,
-                call_to_actions: [
-                  {
-                    type: 'postback',
-                    title: 'RESTART',
-                    payload: 'RESTART',
-                  },
-                ],
-              },
-            ],
-          },
-        ],
-      })
+      Promise.resolve([
+        {
+          composer_input_disabled: false,
+          call_to_actions: [
+            {
+              type: 'postback',
+              title: 'RESTART',
+              payload: 'RESTART',
+            },
+          ],
+        },
+      ])
     );
 
     await getPersistentMenu();
@@ -91,11 +56,7 @@ describe('resolved', () => {
   });
 
   it('error when no config setting', async () => {
-    _client.getPersistentMenu.mockReturnValue(
-      Promise.resolve({
-        data: [],
-      })
-    );
+    _client.getPersistentMenu.mockReturnValue(Promise.resolve([]));
 
     await getPersistentMenu();
 
