@@ -1,4 +1,4 @@
-import Handler from '../Handler';
+import Handler, { matchPattern } from '../Handler';
 
 const setup = () => {
   const builder = new Handler();
@@ -377,6 +377,24 @@ describe('#onText', () => {
       expect(handler).not.toBeCalled();
     });
   });
+
+  it('should call handler build', async () => {
+    const { builder } = setup();
+    const build = jest.fn();
+    const handler = { build: jest.fn(() => build) };
+    const context = {
+      event: {
+        isMessage: true,
+        isText: true,
+        message: {
+          text: 'awesome',
+        },
+      },
+    };
+    builder.onText(/awesome/, handler);
+    await builder.build()(context);
+    expect(handler.build()).toBeCalled();
+  });
 });
 
 describe('#onUnhandled', () => {
@@ -417,6 +435,20 @@ describe('#onUnhandled', () => {
     await rootHandler(context);
 
     expect(handler).not.toBeCalledWith(context);
+  });
+
+  it('should call handler build', async () => {
+    const { builder } = setup();
+    const build = jest.fn();
+    const handler = { build: jest.fn(() => build) };
+    const rootHandler = builder.onUnhandled(handler).build();
+
+    const context = {
+      isHandled: false,
+    };
+
+    await rootHandler(context);
+    expect(handler.build()).toBeCalled();
   });
 });
 
@@ -476,11 +508,52 @@ describe('#onError', () => {
 
     expect(errorHandler).toBeCalledWith(context, error);
   });
+
+  it('should call handler build', async () => {
+    const { builder } = setup();
+    const context = {
+      sendText: jest.fn(),
+    };
+    const build = jest.fn();
+    const handler = { build: jest.fn(() => build) };
+    const rootHandler = builder
+      .onEvent(() => {
+        throw new Error('Boom!');
+      })
+      .onError(handler)
+      .build();
+
+    await rootHandler(context);
+    expect(handler.build()).toBeCalled();
+  });
 });
 
 describe('#build', () => {
   it('should return a function', () => {
     const { builder } = setup();
     expect(builder.build()).toBeInstanceOf(Function);
+  });
+});
+
+describe('#matchPattern', () => {
+  it('should return pattern === text', () => {
+    const pattern = '123';
+    const text = '12345';
+
+    expect(matchPattern(pattern, text)).toBe(false);
+  });
+
+  it('should return true if text match pattern ', () => {
+    const pattern = /123/;
+    const text = '12345';
+
+    expect(matchPattern(pattern, text)).toBe(true);
+  });
+
+  it('should return false if pattern is not string or RegExp', () => {
+    const pattern = 123;
+    const text = '123';
+
+    expect(matchPattern(pattern, text)).toBe(false);
   });
 });

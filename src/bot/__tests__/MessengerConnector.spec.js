@@ -9,6 +9,7 @@ jest.mock('messaging-api-messenger');
 jest.mock('warning');
 
 const ACCESS_TOKEN = 'FAKE_TOKEN';
+const APP_SECRET = 'FAKE_SECRET';
 
 const request = {
   body: {
@@ -116,7 +117,38 @@ const batchRequest = {
   },
 };
 
-function setup() {
+const standbyRequest = {
+  body: {
+    object: 'page',
+    entry: [
+      {
+        id: '<PAGE_ID>',
+        time: 1458692752478,
+        standby: [
+          {
+            sender: {
+              id: '<USER_ID>',
+            },
+            recipient: {
+              id: '<PAGE_ID>',
+            },
+
+            // FIXME: standby is still beta
+            // https://developers.facebook.com/docs/messenger-platform/reference/webhook-events/standby
+            /* ... */
+          },
+        ],
+      },
+    ],
+  },
+};
+
+function setup(
+  { accessToken, appSecret } = {
+    accessToken: ACCESS_TOKEN,
+    appSecret: APP_SECRET,
+  }
+) {
   const mockGraphAPIClient = {
     getUserProfile: jest.fn(),
   };
@@ -124,7 +156,10 @@ function setup() {
   MessengerClient.connect.mockReturnValue(mockGraphAPIClient);
   return {
     mockGraphAPIClient,
-    connector: new MessengerConnector(ACCESS_TOKEN),
+    connector: new MessengerConnector({
+      accessToken,
+      appSecret,
+    }),
   };
 }
 
@@ -165,6 +200,12 @@ describe('#getUniqueSessionKey', () => {
     const { connector } = setup();
     const senderId = connector.getUniqueSessionKey(batchRequest.body);
     expect(senderId).toBe('1412611362105802');
+  });
+
+  it('return null if is not first event or echo event', () => {
+    const { connector } = setup();
+    const senderId = connector.getUniqueSessionKey({});
+    expect(senderId).toBe(null);
   });
 });
 
@@ -211,7 +252,69 @@ describe('#updateSession', () => {
 
     const session = {
       user: {
-        prifile_pic: 'https://example.com/pic.png?oe=386D4380', // expired at 2000-01-01T00:00:00.000Z
+        profile_pic: 'https://example.com/pic.png?oe=386D4380', // expired at 2000-01-01T00:00:00.000Z
+      },
+    };
+    await connector.updateSession(session, request.body);
+
+    expect(mockGraphAPIClient.getUserProfile).toBeCalledWith(
+      '1412611362105802'
+    );
+    expect(session).toEqual({
+      user: {
+        _updatedAt: expect.any(String),
+        ...user,
+      },
+    });
+  });
+
+  it('update session when expired date is invalid', async () => {
+    const { connector, mockGraphAPIClient } = setup();
+    const user = {
+      id: '1412611362105802',
+      first_name: 'firstName',
+      last_name: 'lastName',
+      profile_pic: 'https://example.com/pic.png',
+      locale: 'en_US',
+      timezone: 8,
+      gender: 'male',
+    };
+    mockGraphAPIClient.getUserProfile.mockReturnValue(Promise.resolve(user));
+
+    const session = {
+      user: {
+        profile_pic: 'https://example.com/pic.png?oe=abc666666666', // wrong timestamp
+      },
+    };
+    await connector.updateSession(session, request.body);
+
+    expect(mockGraphAPIClient.getUserProfile).toBeCalledWith(
+      '1412611362105802'
+    );
+    expect(session).toEqual({
+      user: {
+        _updatedAt: expect.any(String),
+        ...user,
+      },
+    });
+  });
+
+  it('update session when something wrong', async () => {
+    const { connector, mockGraphAPIClient } = setup();
+    const user = {
+      id: '1412611362105802',
+      first_name: 'firstName',
+      last_name: 'lastName',
+      profile_pic: 'https://example.com/pic.png',
+      locale: 'en_US',
+      timezone: 8,
+      gender: 'male',
+    };
+    mockGraphAPIClient.getUserProfile.mockReturnValue(Promise.resolve(user));
+
+    const session = {
+      user: {
+        profile_pic123: 'https://example.com/pic.png?oe=386D4380', // wrong name
       },
     };
     await connector.updateSession(session, request.body);
@@ -237,13 +340,50 @@ describe('#mapRequestToEvents', () => {
     expect(events[0]).toBeInstanceOf(MessengerEvent);
   });
 
-  it('should wroks with batch entry', () => {
+  it('should work with batch entry', () => {
     const { connector } = setup();
     const events = connector.mapRequestToEvents(batchRequest.body);
 
     expect(events).toHaveLength(2);
     expect(events[0]).toBeInstanceOf(MessengerEvent);
     expect(events[1]).toBeInstanceOf(MessengerEvent);
+  });
+
+  it('should map request to standby MessengerEvents', () => {
+    const { connector } = setup();
+    const events = connector.mapRequestToEvents(standbyRequest.body);
+
+    expect(events).toHaveLength(1);
+    expect(events[0]).toBeInstanceOf(MessengerEvent);
+    expect(events[0].isStandby).toBe(true);
+  });
+
+  it('should be filtered if body is not messaging or standby', () => {
+    const otherRequest = {
+      body: {
+        object: 'page',
+        entry: [
+          {
+            id: '<PAGE_ID>',
+            time: 1458692752478,
+            other: [
+              {
+                sender: {
+                  id: '<USER_ID>',
+                },
+                recipient: {
+                  id: '<PAGE_ID>',
+                },
+              },
+            ],
+          },
+        ],
+      },
+    };
+    const { connector } = setup();
+    const events = connector.mapRequestToEvents(otherRequest.body);
+
+    expect(events).toHaveLength(0);
   });
 });
 
@@ -265,7 +405,10 @@ describe('#createContext', () => {
 
 describe('#verifySignature', () => {
   it('should return true and show warning if app secret not set', () => {
-    const { connector } = setup();
+    const { connector } = setup({
+      accessToken: ACCESS_TOKEN,
+      appSecret: undefined,
+    });
 
     const result = connector.verifySignature('rawBody', 'signature');
 
@@ -274,5 +417,16 @@ describe('#verifySignature', () => {
       false,
       '`appSecret` is not set. Will bypass Messenger signature validation.\nPass in `appSecret` to perform Messenger signature validation.'
     );
+  });
+
+  it('should return true if signature is equal app sercret after crypto', () => {
+    const { connector } = setup();
+
+    const result = connector.verifySignature(
+      'rawBody',
+      'sha1=0d814d436b45c33ef664a317ff4b8dc2d3d8fe2a'
+    );
+
+    expect(result).toBe(true);
   });
 });
