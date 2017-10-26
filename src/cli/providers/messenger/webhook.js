@@ -43,7 +43,7 @@ export async function setWebhook(_webhook, _verifyToken) {
     if (!_webhook) {
       warn('We can not find the webhook callback url you provided.');
       const prompt = new Confirm(
-        'Are you using ngrok?\n❯ We will check dashboard on http://127.0.0.1:4040'
+        'Are you using ngrok (get url from ngrok server on http://127.0.0.1:4040)?'
       );
       const result = await prompt.run();
       if (result) {
