@@ -90,7 +90,7 @@
     "lodash": "^4.17.4",
     "lru-cache": "^4.1.1",
     "messaging-api-line": "^0.5.2",
-    "messaging-api-messenger": "^0.5.2",
+    "messaging-api-messenger": "^0.5.3",
     "messaging-api-slack": "^0.5.2",
     "messaging-api-telegram": "^0.5.2",
     "micro": "^9.0.0",

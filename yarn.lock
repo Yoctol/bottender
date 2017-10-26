@@ -4766,9 +4766,9 @@ messaging-api-line@^0.5.2:
     axios-error "^0.5.2"
     warning "^3.0.0"
 
-messaging-api-messenger@^0.5.2:
-  version "0.5.2"
-  resolved "https://registry.yarnpkg.com/messaging-api-messenger/-/messaging-api-messenger-0.5.2.tgz#fd5d5b1679a65b0833dec7ed8455e6d84cadb962"
+messaging-api-messenger@^0.5.3:
+  version "0.5.3"
+  resolved "https://registry.yarnpkg.com/messaging-api-messenger/-/messaging-api-messenger-0.5.3.tgz#85ac1ec65f9c49bbc7f86929551bf06b56eeb71e"
   dependencies:
     axios "^0.17.0"
     axios-error "^0.5.2"
