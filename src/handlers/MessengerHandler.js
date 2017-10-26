@@ -201,31 +201,6 @@ export default class MessengerHandler extends Handler {
     return this;
   }
 
-  onEchoText(
-    ...args:
-      | [Pattern, FunctionalHandler | Builder]
-      | [FunctionalHandler | Builder]
-  ) {
-    // FIXME: Can't refine tuple union - https://github.com/facebook/flow/issues/2389
-    if (args.length < 2) {
-      const [handler]: [FunctionalHandler | Builder] = (args: any);
-      this.onEcho(context => context.event.isText, handler);
-    } else {
-      const [pattern, handler]: [
-        Pattern,
-        FunctionalHandler | Builder,
-      ] = (args: any);
-      // FIXME
-      this.onEcho(
-        context =>
-          context.event.isText && matchPattern(pattern, context.event.text),
-        handler
-      );
-    }
-
-    return this;
-  }
-
   onRead(
     ...args:
       | [Predicate, FunctionalHandler | Builder]
