@@ -62,11 +62,11 @@ export default async function main(ctx) {
   const subcommand = ctx.argv._[2];
   switch (subcommand) {
     case 'get':
-      getGreeting();
+      await getGreeting();
       break;
     case 'delete':
     case 'del':
-      deleteGreeting();
+      await deleteGreeting();
       break;
     default:
   }

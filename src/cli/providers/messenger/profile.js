@@ -4,7 +4,9 @@ import { MessengerClient } from 'messaging-api-messenger';
 import getConfig from '../../shared/getConfig';
 import { print, error, bold } from '../../shared/log';
 
-export async function getProfile() {}
+export async function getProfile() {
+  console.log('FIXME');
+}
 
 export async function setProfile() {
   try {
@@ -94,20 +96,22 @@ export async function setProfile() {
   }
 }
 
-export async function deleteProfile() {}
+export async function deleteProfile() {
+  console.log('FIXME');
+}
 
 export default async function main(ctx) {
   const subcommand = ctx.argv._[2];
   switch (subcommand) {
     case 'get':
-      getProfile();
+      await getProfile();
       break;
     case 'set':
-      setProfile();
+      await setProfile();
       break;
     case 'delete':
     case 'del':
-      deleteProfile();
+      await deleteProfile();
       break;
     default:
   }

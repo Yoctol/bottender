@@ -66,11 +66,11 @@ export default async function main(ctx) {
   const subcommand = ctx.argv._[2];
   switch (subcommand) {
     case 'get':
-      getWhitelistedDomains();
+      await getWhitelistedDomains();
       break;
     case 'delete':
     case 'del':
-      deleteWhitelistedDomains();
+      await deleteWhitelistedDomains();
       break;
     default:
   }

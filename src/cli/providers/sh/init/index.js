@@ -7,7 +7,7 @@ import fs from 'fs-extra';
 import spawn from 'cross-spawn';
 import stringifyObject from 'stringify-object';
 
-import { print, error, bold } from '../../shared/log';
+import { print, error, bold } from '../../../shared/log';
 
 import generateIndexFile from './generateIndexFile';
 

@@ -1,22 +1,19 @@
 /* eslint-disable global-require */
 
-jest.mock('didyoumean');
 jest.mock('../shared/log');
-jest.mock('../actions/sh/init');
-jest.mock('../actions/messenger/whitelisted-domains');
-jest.mock('../actions/messenger/get-started');
-jest.mock('../actions/messenger/greeting');
-jest.mock('../actions/messenger/persistent-menu');
-jest.mock('../actions/messenger/profile');
-jest.mock('../actions/messenger/webhook');
-jest.mock('../actions/telegram/webhook');
+jest.mock('../providers/sh/init');
+jest.mock('../providers/messenger/whitelisted-domains');
+jest.mock('../providers/messenger/get-started');
+jest.mock('../providers/messenger/greeting');
+jest.mock('../providers/messenger/persistent-menu');
+jest.mock('../providers/messenger/profile');
+jest.mock('../providers/messenger/webhook');
+jest.mock('../providers/telegram/webhook');
 
 let log;
-let didYouMean;
 
 beforeEach(() => {
   jest.resetModules();
-  didYouMean = require('didyoumean');
   log = require('../shared/log');
   log.error = jest.fn();
   log.bold = str => str;
@@ -24,7 +21,7 @@ beforeEach(() => {
 });
 
 it('#init', () => {
-  const init = require('../actions/sh/init');
+  const init = require('../providers/sh/init');
   init.default = jest.fn();
   process.argv = ['/usr/local/bin/iojs', '/usr/local/bin/bottender', 'init'];
   require('../index');
@@ -36,7 +33,7 @@ describe('messenger', () => {
     it('#get', () => {
       const {
         getWhitelistedDomains,
-      } = require('../actions/messenger/whitelisted-domains');
+      } = require('../providers/messenger/whitelisted-domains');
       process.argv = [
         '/usr/local/bin/iojs',
         '/usr/local/bin/bottender',
@@ -51,7 +48,7 @@ describe('messenger', () => {
     it('#delete', () => {
       const {
         deleteWhitelistedDomains,
-      } = require('../actions/messenger/whitelisted-domains');
+      } = require('../providers/messenger/whitelisted-domains');
       process.argv = [
         '/usr/local/bin/iojs',
         '/usr/local/bin/bottender',
@@ -66,7 +63,7 @@ describe('messenger', () => {
 
   describe('get-started', () => {
     it('#get', () => {
-      const { getGetStarted } = require('../actions/messenger/get-started');
+      const { getGetStarted } = require('../providers/messenger/get-started');
       process.argv = [
         '/usr/local/bin/iojs',
         '/usr/local/bin/bottender',
@@ -79,7 +76,9 @@ describe('messenger', () => {
     });
 
     it('#delete', () => {
-      const { deleteGetStarted } = require('../actions/messenger/get-started');
+      const {
+        deleteGetStarted,
+      } = require('../providers/messenger/get-started');
       process.argv = [
         '/usr/local/bin/iojs',
         '/usr/local/bin/bottender',
@@ -94,7 +93,7 @@ describe('messenger', () => {
 
   describe('greeting', () => {
     it('#get', () => {
-      const { getGreeting } = require('../actions/messenger/greeting');
+      const { getGreeting } = require('../providers/messenger/greeting');
       process.argv = [
         '/usr/local/bin/iojs',
         '/usr/local/bin/bottender',
@@ -107,7 +106,7 @@ describe('messenger', () => {
     });
 
     it('#delete', () => {
-      const { deleteGreeting } = require('../actions/messenger/greeting');
+      const { deleteGreeting } = require('../providers/messenger/greeting');
       process.argv = [
         '/usr/local/bin/iojs',
         '/usr/local/bin/bottender',
@@ -124,7 +123,7 @@ describe('messenger', () => {
     it('#get', () => {
       const {
         getPersistentMenu,
-      } = require('../actions/messenger/persistent-menu');
+      } = require('../providers/messenger/persistent-menu');
       process.argv = [
         '/usr/local/bin/iojs',
         '/usr/local/bin/bottender',
@@ -139,7 +138,7 @@ describe('messenger', () => {
     it('#delete', () => {
       const {
         deletePersistentMenu,
-      } = require('../actions/messenger/persistent-menu');
+      } = require('../providers/messenger/persistent-menu');
       process.argv = [
         '/usr/local/bin/iojs',
         '/usr/local/bin/bottender',
@@ -154,7 +153,7 @@ describe('messenger', () => {
 
   describe('profile', () => {
     it('#set', () => {
-      const { setProfile } = require('../actions/messenger/profile');
+      const { setProfile } = require('../providers/messenger/profile');
       process.argv = [
         '/usr/local/bin/iojs',
         '/usr/local/bin/bottender',
@@ -169,7 +168,7 @@ describe('messenger', () => {
 
   describe('webhook set', () => {
     it('to be called when passing options', () => {
-      const { setWebhook } = require('../actions/messenger/webhook');
+      const { setWebhook } = require('../providers/messenger/webhook');
       process.argv = [
         '/usr/local/bin/iojs',
         '/usr/local/bin/bottender',
@@ -193,7 +192,7 @@ describe('messenger', () => {
 describe('telegram', () => {
   describe('webhook set', () => {
     it('to be called when passing options', () => {
-      const { setWebhook } = require('../actions/telegram/webhook');
+      const { setWebhook } = require('../providers/telegram/webhook');
       process.argv = [
         '/usr/local/bin/iojs',
         '/usr/local/bin/bottender',
@@ -216,26 +215,10 @@ describe('*', () => {
       '/usr/local/bin/bottender',
       'unknown-command',
     ];
-    didYouMean.mockReturnValueOnce(null);
     require('../index');
     expect(log.error).toBeCalledWith(
       `unknown command: ${log.bold('unknown-command')}`
     );
-    expect(process.exit).toBeCalled();
-  });
-
-  it('call error unknown command', () => {
-    process.argv = [
-      '/usr/local/bin/iojs',
-      '/usr/local/bin/bottender',
-      'unknown-command',
-    ];
-    didYouMean.mockReturnValueOnce('help');
-    require('../index');
-    expect(log.error).toBeCalledWith(
-      `unknown command: ${log.bold('unknown-command')}`
-    );
-    expect(log.error).lastCalledWith(`did you mean ${log.bold('help')}?`);
     expect(process.exit).toBeCalled();
   });
 });

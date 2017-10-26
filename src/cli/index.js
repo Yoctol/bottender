@@ -1,14 +1,14 @@
 import minimist from 'minimist';
 import camelCase from 'camel-case';
-import didYouMean from 'didyoumean'; // FIXME
+
+import pkg from '../../package.json';
 
 import providers from './providers';
 import { error } from './shared/log';
 
-import pkg from '../../package.json'; // FIXME
-
 const main = async argv => {
   console.log(argv);
+  console.log(pkg.version);
 
   // the context object to supply to the providers or the commands
   const ctx = {
