@@ -30,4 +30,12 @@ export default {
   get help() {
     return require('./help').default;
   },
+
+  // alias
+  get menu() {
+    return this.persistentMenu;
+  },
+  get domains() {
+    return this.whitelistedDomains;
+  },
 };
