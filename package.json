@@ -83,6 +83,7 @@
     "ioredis": "^3.2.1",
     "is-image": "^2.0.0",
     "jfs": "^0.2.6",
+    "joi": "11.3.4",
     "jsonfile": "^4.0.0",
     "koa": "^2.3.0",
     "koa-bodyparser": "^4.2.0",
