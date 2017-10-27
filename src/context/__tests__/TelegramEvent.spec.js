@@ -455,3 +455,44 @@ it('#isCallbackQuery', () => {
   expect(new TelegramEvent(textMessage).isCallbackQuery).toEqual(false);
   expect(new TelegramEvent(callbackQuery).isCallbackQuery).toEqual(true);
 });
+
+it('#callbackQuery', () => {
+  expect(new TelegramEvent(textMessage).callbackQuery).toEqual(null);
+  expect(new TelegramEvent(callbackQuery).callbackQuery).toEqual({
+    id: '123',
+    from: {
+      id: 427770117,
+      first_name: 'user_first',
+      last_name: 'user_last',
+      language_code: 'en',
+    },
+    message: {
+      message_id: 666,
+      from: {
+        id: 313534466,
+        first_name: 'bot_first',
+        username: 'bot_name',
+      },
+      chat: {
+        id: 427770117,
+        first_name: 'first',
+        last_name: 'last',
+        type: 'private',
+      },
+      date: 1499402829,
+      text: 'text',
+    },
+    chat_instance: '-1828607021492040088',
+    data: 'data',
+  });
+});
+
+it('#isPayload', () => {
+  expect(new TelegramEvent(textMessage).isPayload).toEqual(false);
+  expect(new TelegramEvent(callbackQuery).isPayload).toEqual(true);
+});
+
+it('#payload', () => {
+  expect(new TelegramEvent(textMessage).payload).toEqual(null);
+  expect(new TelegramEvent(callbackQuery).payload).toEqual('data');
+});

@@ -16,7 +16,12 @@ export type Context = {
   +isHandled: boolean,
 };
 
-export type Predicate = (context: Context) => boolean | Promise<boolean>;
+type ContextPredicate = (context: Context) => boolean | Promise<boolean>;
+
+export type Predicate = (
+  arg1: any,
+  context: Context
+) => boolean | Promise<boolean>;
 
 export type FunctionalHandler = (
   context: Context,
@@ -27,10 +32,10 @@ export type Builder = {
   build: () => FunctionalHandler,
 };
 
-export type Pattern = string | RegExp;
+export type Pattern = string | RegExp | Predicate;
 
 type PredicateHandler = {
-  predicate: Predicate,
+  predicate: ContextPredicate,
   handler: FunctionalHandler,
 };
 
@@ -48,7 +53,7 @@ export default class Handler {
   _errorHandler: ?FunctionalHandler = null;
   _unhandledHandler: ?FunctionalHandler = null;
 
-  on(predicate: Predicate, handler: FunctionalHandler | Builder) {
+  on(predicate: ContextPredicate, handler: FunctionalHandler | Builder) {
     this._handlers.push({
       predicate,
       handler: handler.build ? handler.build() : handler,
@@ -76,7 +81,8 @@ export default class Handler {
         FunctionalHandler | Builder,
       ] = (args: any);
       this.on(
-        context => context.event.isMessage && predicate(context),
+        context =>
+          context.event.isMessage && predicate(context.event.message, context),
         handler
       );
     }
@@ -93,7 +99,7 @@ export default class Handler {
     if (args.length < 2) {
       const [handler]: [FunctionalHandler | Builder] = (args: any);
 
-      this.onMessage(context => context.event.isText, handler);
+      this.on(context => context.event.isText, handler);
     } else {
       // eslint-disable-next-line prefer-const
       let [pattern, handler]: [
@@ -106,31 +112,42 @@ export default class Handler {
       }
 
       warning(
-        typeof pattern === 'string' || pattern instanceof RegExp,
-        `'onText' only accepts string or regex, but received ${typeof pattern}`
+        typeof pattern === 'function' ||
+          typeof pattern === 'string' ||
+          pattern instanceof RegExp,
+        `'onText' only accepts string, regex or function, but received ${typeof pattern}`
       );
 
-      if (pattern instanceof RegExp) {
-        const _handler = handler;
-        handler = context => {
-          // $FlowFixMe
-          const match = pattern.exec(context.event.text);
+      if (typeof pattern === 'function') {
+        const predicate: Predicate = pattern;
+        this.on(
+          context =>
+            context.event.isText && predicate(context.event.text, context),
+          handler
+        );
+      } else {
+        if (pattern instanceof RegExp) {
+          const _handler = handler;
+          handler = context => {
+            // $FlowFixMe
+            const match = pattern.exec(context.event.text);
 
-          if (!match) return _handler(context);
+            if (!match) return _handler(context);
 
-          // reset index so we start at the beginning of the regex each time
-          // $FlowFixMe
-          pattern.lastIndex = 0;
+            // reset index so we start at the beginning of the regex each time
+            // $FlowFixMe
+            pattern.lastIndex = 0;
 
-          return _handler(context, match);
-        };
+            return _handler(context, match);
+          };
+        }
+
+        this.on(
+          context =>
+            context.event.isText && matchPattern(pattern, context.event.text),
+          handler
+        );
       }
-
-      this.onMessage(
-        context =>
-          context.event.isText && matchPattern(pattern, context.event.text),
-        handler
-      );
     }
 
     return this;
@@ -154,8 +171,8 @@ export default class Handler {
         for (let i = 0; i < handlers.length; i++) {
           const { predicate, handler } = handlers[i];
           // eslint-disable-next-line no-await-in-loop
-          const predicateReturn = await predicate(context);
-          if (typeof predicateReturn === 'boolean' && predicateReturn) {
+          const predicateResult = await predicate(context);
+          if (typeof predicateResult === 'boolean' && predicateResult) {
             // eslint-disable-next-line no-await-in-loop
             await handler(context);
             break;

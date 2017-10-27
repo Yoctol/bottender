@@ -577,6 +577,35 @@ it('#postback', () => {
   });
 });
 
+it('#isPayload', () => {
+  expect(new LineEvent(textMessage).isPayload).toEqual(false);
+  expect(new LineEvent(follow).isPayload).toEqual(false);
+  expect(new LineEvent(unfollow).isPayload).toEqual(false);
+  expect(new LineEvent(join).isPayload).toEqual(false);
+  expect(new LineEvent(leave).isPayload).toEqual(false);
+  expect(new LineEvent(postback).isPayload).toEqual(true);
+  expect(new LineEvent(datePostback).isPayload).toEqual(true);
+  expect(new LineEvent(timePostback).isPayload).toEqual(true);
+  expect(new LineEvent(datetimePostback).isPayload).toEqual(true);
+  expect(new LineEvent(beacon).isPayload).toEqual(false);
+});
+
+it('#payload', () => {
+  expect(new LineEvent(textMessage).payload).toEqual(null);
+  expect(new LineEvent(postback).payload).toEqual(
+    'action=buyItem&itemId=123123&color=red'
+  );
+  expect(new LineEvent(datePostback).payload).toEqual(
+    'action=buyItem&itemId=123123&color=red'
+  );
+  expect(new LineEvent(timePostback).payload).toEqual(
+    'action=buyItem&itemId=123123&color=red'
+  );
+  expect(new LineEvent(datetimePostback).payload).toEqual(
+    'action=buyItem&itemId=123123&color=red'
+  );
+});
+
 it('#date', () => {
   expect(new LineEvent(textMessage).date).toEqual(null);
   expect(new LineEvent(postback).date).toEqual(null);

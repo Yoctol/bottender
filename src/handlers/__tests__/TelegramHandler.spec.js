@@ -47,21 +47,22 @@ describe('#onCallbackQuery', () => {
     const { builder } = setup();
     const handler = jest.fn();
     const predicate = jest.fn(() => true);
+    const callbackQuery = {
+      message: {
+        text: 'awesome',
+      },
+      data: 'data',
+    };
     const context = {
       event: {
         isMessage: false,
         isCallbackQuery: true,
-        callbackQuery: {
-          message: {
-            text: 'awesome',
-          },
-          data: 'data',
-        },
+        callbackQuery,
       },
     };
     builder.onCallbackQuery(predicate, handler);
     await builder.build()(context);
-    expect(predicate).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(callbackQuery, context);
     expect(handler).toBeCalledWith(context);
   });
 
@@ -89,21 +90,22 @@ describe('#onCallbackQuery', () => {
     const { builder } = setup();
     const handler = jest.fn();
     const predicate = jest.fn(() => Promise.resolve(false));
+    const callbackQuery = {
+      message: {
+        text: 'awesome',
+      },
+      data: 'data',
+    };
     const context = {
       event: {
         isMessage: false,
         isCallbackQuery: true,
-        callbackQuery: {
-          message: {
-            text: 'awesome',
-          },
-          data: 'data',
-        },
+        callbackQuery,
       },
     };
     builder.onCallbackQuery(predicate, handler);
     await builder.build()(context);
-    expect(predicate).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(callbackQuery, context);
     expect(handler).not.toBeCalled();
   });
 });
@@ -113,12 +115,14 @@ describe('#onPayload', () => {
     event: {
       isMessage: false,
       isCallbackQuery: true,
+      isPayload: true,
       callbackQuery: {
         message: {
           text: 'awesome',
         },
         data: 'data',
       },
+      payload: 'data',
     },
   };
 
@@ -197,6 +201,26 @@ describe('#onPayload', () => {
     });
   });
 
+  describe('should support function predicate', () => {
+    it('match', async () => {
+      const { builder } = setup();
+      const handler = jest.fn();
+
+      builder.onPayload(payload => payload === 'data', handler);
+      await builder.build()(contextWithCallbackQuery);
+      expect(handler).toBeCalledWith(contextWithCallbackQuery);
+    });
+
+    it('not match', async () => {
+      const { builder } = setup();
+      const handler = jest.fn();
+
+      builder.onPayload(payload => payload === 'awful', handler);
+      await builder.build()(contextWithCallbackQuery);
+      expect(handler).not.toBeCalled();
+    });
+  });
+
   it('should call handler build', async () => {
     const { builder } = setup();
     const build = jest.fn();
@@ -249,30 +273,31 @@ describe('#onPhoto', () => {
     const { builder } = setup();
     const handler = jest.fn();
     const predicate = jest.fn(() => true);
+    const photo = [
+      {
+        file_id: '112',
+        width: 100,
+        height: 100,
+      },
+      {
+        file_id: '116',
+        width: 50,
+        height: 50,
+      },
+    ];
     const context = {
       event: {
-        isMessage: true,
         isPhoto: true,
         message: {
           message_id: 666,
-          photo: [
-            {
-              file_id: '112',
-              width: 100,
-              height: 100,
-            },
-            {
-              file_id: '116',
-              width: 50,
-              height: 50,
-            },
-          ],
+          photo,
         },
+        photo,
       },
     };
     builder.onPhoto(predicate, handler);
     await builder.build()(context);
-    expect(predicate).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(photo, context);
     expect(handler).toBeCalledWith(context);
   });
 
@@ -300,29 +325,31 @@ describe('#onPhoto', () => {
     const { builder } = setup();
     const handler = jest.fn();
     const predicate = jest.fn(() => Promise.resolve(false));
+    const photo = [
+      {
+        file_id: '112',
+        width: 100,
+        height: 100,
+      },
+      {
+        file_id: '116',
+        width: 50,
+        height: 50,
+      },
+    ];
     const context = {
       event: {
         isPhoto: true,
         message: {
           message_id: 666,
-          photo: [
-            {
-              file_id: '112',
-              width: 100,
-              height: 100,
-            },
-            {
-              file_id: '116',
-              width: 50,
-              height: 50,
-            },
-          ],
+          photo,
         },
+        photo,
       },
     };
     builder.onPhoto(predicate, handler);
     await builder.build()(context);
-    expect(predicate).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(photo, context);
     expect(handler).not.toBeCalled();
   });
 });
@@ -360,22 +387,23 @@ describe('#onDocument', () => {
     const { builder } = setup();
     const handler = jest.fn();
     const predicate = jest.fn(() => true);
+    const document = {
+      file_id: '1234',
+      file_name: 'file',
+    };
     const context = {
       event: {
-        isMessage: true,
         isDocument: true,
         message: {
           message_id: 666,
-          document: {
-            file_id: '1234',
-            file_name: 'file',
-          },
+          document,
         },
+        document,
       },
     };
     builder.onDocument(predicate, handler);
     await builder.build()(context);
-    expect(predicate).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(document, context);
     expect(handler).toBeCalledWith(context);
   });
 
@@ -401,21 +429,23 @@ describe('#onDocument', () => {
     const { builder } = setup();
     const handler = jest.fn();
     const predicate = jest.fn(() => Promise.resolve(false));
+    const document = {
+      file_id: '1234',
+      file_name: 'file',
+    };
     const context = {
       event: {
         isDocument: true,
         message: {
           message_id: 666,
-          document: {
-            file_id: '1234',
-            file_name: 'file',
-          },
+          document,
         },
+        document,
       },
     };
     builder.onDocument(predicate, handler);
     await builder.build()(context);
-    expect(predicate).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(document, context);
     expect(handler).not.toBeCalled();
   });
 });
@@ -454,23 +484,25 @@ describe('#onAudio', () => {
     const { builder } = setup();
     const handler = jest.fn();
     const predicate = jest.fn(() => true);
+    const audio = {
+      file_id: '321',
+      duration: 100,
+      title: 'audioooooooo',
+    };
     const context = {
       event: {
         isMessage: true,
         isAudio: true,
         message: {
           message_id: 666,
-          audio: {
-            file_id: '321',
-            duration: 100,
-            title: 'audioooooooo',
-          },
+          audio,
         },
+        audio,
       },
     };
     builder.onAudio(predicate, handler);
     await builder.build()(context);
-    expect(predicate).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(audio, context);
     expect(handler).toBeCalledWith(context);
   });
 
@@ -498,23 +530,25 @@ describe('#onAudio', () => {
     const { builder } = setup();
     const handler = jest.fn();
     const predicate = jest.fn(() => Promise.resolve(false));
+    const audio = {
+      file_id: '321',
+      duration: 100,
+      title: 'audioooooooo',
+    };
     const context = {
       event: {
         isMessage: true,
         isAudio: true,
         message: {
           message_id: 666,
-          audio: {
-            file_id: '321',
-            duration: 100,
-            title: 'audioooooooo',
-          },
+          audio,
         },
+        audio,
       },
     };
     builder.onAudio(predicate, handler);
     await builder.build()(context);
-    expect(predicate).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(audio, context);
     expect(handler).not.toBeCalled();
   });
 });
@@ -564,34 +598,35 @@ describe('#onGame', () => {
     const { builder } = setup();
     const handler = jest.fn();
     const predicate = jest.fn(() => true);
+    const game = {
+      title: 'gammmmmmmme',
+      description: 'Description of the game',
+      photo: [
+        {
+          file_id: '112',
+          width: 100,
+          height: 100,
+        },
+        {
+          file_id: '116',
+          width: 50,
+          height: 50,
+        },
+      ],
+    };
     const context = {
       event: {
-        isMessage: true,
         isGame: true,
         message: {
           message_id: 666,
-          game: {
-            title: 'gammmmmmmme',
-            description: 'Description of the game',
-            photo: [
-              {
-                file_id: '112',
-                width: 100,
-                height: 100,
-              },
-              {
-                file_id: '116',
-                width: 50,
-                height: 50,
-              },
-            ],
-          },
+          game,
         },
+        game,
       },
     };
     builder.onGame(predicate, handler);
     await builder.build()(context);
-    expect(predicate).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(game, context);
     expect(handler).toBeCalledWith(context);
   });
 
@@ -617,33 +652,35 @@ describe('#onGame', () => {
     const { builder } = setup();
     const handler = jest.fn();
     const predicate = jest.fn(() => Promise.resolve(false));
+    const game = {
+      title: 'gammmmmmmme',
+      description: 'Description of the game',
+      photo: [
+        {
+          file_id: '112',
+          width: 100,
+          height: 100,
+        },
+        {
+          file_id: '116',
+          width: 50,
+          height: 50,
+        },
+      ],
+    };
     const context = {
       event: {
         isGame: true,
         message: {
           message_id: 666,
-          game: {
-            title: 'gammmmmmmme',
-            description: 'Description of the game',
-            photo: [
-              {
-                file_id: '112',
-                width: 100,
-                height: 100,
-              },
-              {
-                file_id: '116',
-                width: 50,
-                height: 50,
-              },
-            ],
-          },
+          game,
         },
+        game,
       },
     };
     builder.onGame(predicate, handler);
     await builder.build()(context);
-    expect(predicate).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(game, context);
     expect(handler).not.toBeCalled();
   });
 });
@@ -682,23 +719,25 @@ describe('#onSticker', () => {
     const { builder } = setup();
     const handler = jest.fn();
     const predicate = jest.fn(() => true);
+    const sticker = {
+      file_id: '123',
+      width: 50,
+      height: 50,
+    };
     const context = {
       event: {
         isMessage: true,
         isSticker: true,
         message: {
           message_id: 666,
-          sticker: {
-            file_id: '123',
-            width: 50,
-            height: 50,
-          },
+          sticker,
         },
+        sticker,
       },
     };
     builder.onSticker(predicate, handler);
     await builder.build()(context);
-    expect(predicate).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(sticker, context);
     expect(handler).toBeCalledWith(context);
   });
 
@@ -726,23 +765,25 @@ describe('#onSticker', () => {
     const { builder } = setup();
     const handler = jest.fn();
     const predicate = jest.fn(() => Promise.resolve(false));
+    const sticker = {
+      file_id: '123',
+      width: 50,
+      height: 50,
+    };
     const context = {
       event: {
         isMessage: true,
         isSticker: true,
         message: {
           message_id: 666,
-          sticker: {
-            file_id: '123',
-            width: 50,
-            height: 50,
-          },
+          sticker,
         },
+        sticker,
       },
     };
     builder.onSticker(predicate, handler);
     await builder.build()(context);
-    expect(predicate).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(sticker, context);
     expect(handler).not.toBeCalled();
   });
 });
@@ -782,24 +823,26 @@ describe('#onVideo', () => {
     const { builder } = setup();
     const handler = jest.fn();
     const predicate = jest.fn(() => true);
+    const video = {
+      file_id: '321',
+      width: 100,
+      height: 100,
+      duration: 199,
+    };
     const context = {
       event: {
         isMessage: true,
         isVideo: true,
         message: {
           message_id: 666,
-          video: {
-            file_id: '321',
-            width: 100,
-            height: 100,
-            duration: 199,
-          },
+          video,
         },
+        video,
       },
     };
     builder.onVideo(predicate, handler);
     await builder.build()(context);
-    expect(predicate).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(video, context);
     expect(handler).toBeCalledWith(context);
   });
 
@@ -827,24 +870,26 @@ describe('#onVideo', () => {
     const { builder } = setup();
     const handler = jest.fn();
     const predicate = jest.fn(() => Promise.resolve(false));
+    const video = {
+      file_id: '321',
+      width: 100,
+      height: 100,
+      duration: 199,
+    };
     const context = {
       event: {
         isMessage: true,
         isVideo: true,
         message: {
           message_id: 666,
-          video: {
-            file_id: '321',
-            width: 100,
-            height: 100,
-            duration: 199,
-          },
+          video,
         },
+        video,
       },
     };
     builder.onVideo(predicate, handler);
     await builder.build()(context);
-    expect(predicate).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(video, context);
     expect(handler).not.toBeCalled();
   });
 });
@@ -882,22 +927,24 @@ describe('#onVoice', () => {
     const { builder } = setup();
     const handler = jest.fn();
     const predicate = jest.fn(() => true);
+    const voice = {
+      file_id: '543',
+      duration: 299,
+    };
     const context = {
       event: {
         isMessage: true,
         isVoice: true,
         message: {
           message_id: 666,
-          voice: {
-            file_id: '543',
-            duration: 299,
-          },
+          voice,
         },
+        voice,
       },
     };
     builder.onVoice(predicate, handler);
     await builder.build()(context);
-    expect(predicate).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(voice, context);
     expect(handler).toBeCalledWith(context);
   });
 
@@ -925,22 +972,24 @@ describe('#onVoice', () => {
     const { builder } = setup();
     const handler = jest.fn();
     const predicate = jest.fn(() => Promise.resolve(false));
+    const voice = {
+      file_id: '543',
+      duration: 299,
+    };
     const context = {
       event: {
         isMessage: true,
         isVoice: true,
         message: {
           message_id: 666,
-          voice: {
-            file_id: '543',
-            duration: 299,
-          },
+          voice,
         },
+        voice,
       },
     };
     builder.onVoice(predicate, handler);
     await builder.build()(context);
-    expect(predicate).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(voice, context);
     expect(handler).not.toBeCalled();
   });
 });
@@ -979,23 +1028,25 @@ describe('#onVideoNote', () => {
     const { builder } = setup();
     const handler = jest.fn();
     const predicate = jest.fn(() => true);
+    const videoNote = {
+      file_id: '654',
+      length: 100,
+      duration: 399,
+    };
     const context = {
       event: {
         isMessage: true,
         isVideoNote: true,
         message: {
           message_id: 666,
-          video_note: {
-            file_id: '654',
-            length: 100,
-            duration: 399,
-          },
+          video_note: videoNote,
         },
+        videoNote,
       },
     };
     builder.onVideoNote(predicate, handler);
     await builder.build()(context);
-    expect(predicate).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(videoNote, context);
     expect(handler).toBeCalledWith(context);
   });
 
@@ -1023,23 +1074,25 @@ describe('#onVideoNote', () => {
     const { builder } = setup();
     const handler = jest.fn();
     const predicate = jest.fn(() => Promise.resolve(false));
+    const videoNote = {
+      file_id: '654',
+      length: 100,
+      duration: 399,
+    };
     const context = {
       event: {
         isMessage: true,
         isVideoNote: true,
         message: {
           message_id: 666,
-          video_note: {
-            file_id: '654',
-            length: 100,
-            duration: 399,
-          },
+          video_note: videoNote,
         },
+        videoNote,
       },
     };
     builder.onVideoNote(predicate, handler);
     await builder.build()(context);
-    expect(predicate).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(videoNote, context);
     expect(handler).not.toBeCalled();
   });
 });
@@ -1077,22 +1130,24 @@ describe('#onContact', () => {
     const { builder } = setup();
     const handler = jest.fn();
     const predicate = jest.fn(() => true);
+    const contact = {
+      phone_number: '123456789',
+      first_name: 'first',
+    };
     const context = {
       event: {
         isMessage: true,
         isContact: true,
         message: {
           message_id: 666,
-          contact: {
-            phone_number: '123456789',
-            first_name: 'first',
-          },
+          contact,
         },
+        contact,
       },
     };
     builder.onContact(predicate, handler);
     await builder.build()(context);
-    expect(predicate).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(contact, context);
     expect(handler).toBeCalledWith(context);
   });
 
@@ -1120,22 +1175,24 @@ describe('#onContact', () => {
     const { builder } = setup();
     const handler = jest.fn();
     const predicate = jest.fn(() => Promise.resolve(false));
+    const contact = {
+      phone_number: '123456789',
+      first_name: 'first',
+    };
     const context = {
       event: {
         isMessage: true,
         isContact: true,
         message: {
           message_id: 666,
-          contact: {
-            phone_number: '123456789',
-            first_name: 'first',
-          },
+          contact,
         },
+        contact,
       },
     };
     builder.onContact(predicate, handler);
     await builder.build()(context);
-    expect(predicate).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(contact, context);
     expect(handler).not.toBeCalled();
   });
 });
@@ -1173,22 +1230,24 @@ describe('#onLocation', () => {
     const { builder } = setup();
     const handler = jest.fn();
     const predicate = jest.fn(() => true);
+    const location = {
+      longitude: '111.111',
+      latitude: '99.99',
+    };
     const context = {
       event: {
         isMessage: true,
         isLocation: true,
         message: {
           message_id: 666,
-          location: {
-            longitude: '111.111',
-            latitude: '99.99',
-          },
+          location,
         },
+        location,
       },
     };
     builder.onLocation(predicate, handler);
     await builder.build()(context);
-    expect(predicate).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(location, context);
     expect(handler).toBeCalledWith(context);
   });
 
@@ -1204,6 +1263,7 @@ describe('#onLocation', () => {
         message: {
           text: 'wow',
         },
+        text: 'wow',
       },
     };
     builder.onLocation(predicate, handler);
@@ -1216,22 +1276,24 @@ describe('#onLocation', () => {
     const { builder } = setup();
     const handler = jest.fn();
     const predicate = jest.fn(() => Promise.resolve(false));
+    const location = {
+      longitude: '111.111',
+      latitude: '99.99',
+    };
     const context = {
       event: {
         isMessage: true,
         isLocation: true,
         message: {
           message_id: 666,
-          location: {
-            longitude: '111.111',
-            latitude: '99.99',
-          },
+          location,
         },
+        location,
       },
     };
     builder.onLocation(predicate, handler);
     await builder.build()(context);
-    expect(predicate).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(location, context);
     expect(handler).not.toBeCalled();
   });
 });
@@ -1273,26 +1335,28 @@ describe('#onVenue', () => {
     const { builder } = setup();
     const handler = jest.fn();
     const predicate = jest.fn(() => true);
+    const venue = {
+      location: {
+        longitude: '111.111',
+        latitude: '99.99',
+      },
+      title: 'title',
+      address: 'addressssss',
+    };
     const context = {
       event: {
         isMessage: true,
         isVenue: true,
         message: {
           message_id: 666,
-          venue: {
-            location: {
-              longitude: '111.111',
-              latitude: '99.99',
-            },
-            title: 'title',
-            address: 'addressssss',
-          },
+          venue,
         },
+        venue,
       },
     };
     builder.onVenue(predicate, handler);
     await builder.build()(context);
-    expect(predicate).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(venue, context);
     expect(handler).toBeCalledWith(context);
   });
 
@@ -1308,6 +1372,7 @@ describe('#onVenue', () => {
         message: {
           text: 'wow',
         },
+        text: 'wow',
       },
     };
     builder.onVenue(predicate, handler);
@@ -1320,26 +1385,28 @@ describe('#onVenue', () => {
     const { builder } = setup();
     const handler = jest.fn();
     const predicate = jest.fn(() => Promise.resolve(false));
+    const venue = {
+      location: {
+        longitude: '111.111',
+        latitude: '99.99',
+      },
+      title: 'title',
+      address: 'addressssss',
+    };
     const context = {
       event: {
         isMessage: true,
         isVenue: true,
         message: {
           message_id: 666,
-          venue: {
-            location: {
-              longitude: '111.111',
-              latitude: '99.99',
-            },
-            title: 'title',
-            address: 'addressssss',
-          },
+          venue,
         },
+        venue,
       },
     };
     builder.onVenue(predicate, handler);
     await builder.build()(context);
-    expect(predicate).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(venue, context);
     expect(handler).not.toBeCalled();
   });
 });

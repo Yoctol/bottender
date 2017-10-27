@@ -25,7 +25,9 @@ export default class MessengerHandler extends Handler {
         FunctionalHandler | Builder,
       ] = (args: any);
       this.on(
-        context => context.event.isPostback && predicate(context),
+        context =>
+          context.event.isPostback &&
+          predicate(context.event.postback, context),
         handler
       );
     }
@@ -58,44 +60,49 @@ export default class MessengerHandler extends Handler {
       }
 
       warning(
-        typeof pattern === 'string' || pattern instanceof RegExp,
+        typeof pattern === 'function' ||
+          typeof pattern === 'string' ||
+          pattern instanceof RegExp,
         `'onPayload' only accepts string or regex, but received ${typeof pattern}`
       );
 
-      if (pattern instanceof RegExp) {
-        const _handler = handler;
-        handler = context => {
-          let message;
-          if (context.event.isPostback) {
-            message = context.event.postback.payload;
-          } else {
-            message = context.event.message.quick_reply.payload;
-          }
-          // $FlowFixMe
-          const match = pattern.exec(message);
+      if (typeof pattern === 'function') {
+        const predicate: Predicate = pattern;
+        this.on(
+          context =>
+            context.event.isPayload &&
+            predicate(context.event.payload, context),
+          handler
+        );
+      } else {
+        if (pattern instanceof RegExp) {
+          const _handler = handler;
+          handler = context => {
+            let message;
+            if (context.event.isPostback) {
+              message = context.event.postback.payload;
+            } else {
+              message = context.event.message.quick_reply.payload;
+            }
+            // $FlowFixMe
+            const match = pattern.exec(message);
 
-          if (!match) return _handler(context);
+            if (!match) return _handler(context);
 
-          // reset index so we start at the beginning of the regex each time
-          // $FlowFixMe
-          pattern.lastIndex = 0;
+            // reset index so we start at the beginning of the regex each time
+            // $FlowFixMe
+            pattern.lastIndex = 0;
 
-          return _handler(context, match);
-        };
-      }
-
-      this.on(({ event }) => {
-        if (event.isPostback && matchPattern(pattern, event.postback.payload)) {
-          return true;
-        } else if (
-          event.isMessage &&
-          event.message.quick_reply &&
-          matchPattern(pattern, event.message.quick_reply.payload)
-        ) {
-          return true;
+            return _handler(context, match);
+          };
         }
-        return false;
-      }, handler);
+
+        this.on(
+          ({ event }) =>
+            event.isPayload && matchPattern(pattern, event.payload),
+          handler
+        );
+      }
     }
     return this;
   }
@@ -115,7 +122,8 @@ export default class MessengerHandler extends Handler {
         FunctionalHandler | Builder,
       ] = (args: any);
       this.on(
-        context => context.event.isPayment && predicate(context),
+        context =>
+          context.event.isPayment && predicate(context.event.payment, context),
         handler
       );
     }
@@ -137,7 +145,11 @@ export default class MessengerHandler extends Handler {
         Predicate,
         FunctionalHandler | Builder,
       ] = (args: any);
-      this.on(context => context.event.isOptin && predicate(context), handler);
+      this.on(
+        context =>
+          context.event.isOptin && predicate(context.event.optin, context),
+        handler
+      );
     }
 
     return this;
@@ -158,7 +170,9 @@ export default class MessengerHandler extends Handler {
         FunctionalHandler | Builder,
       ] = (args: any);
       this.on(
-        context => context.event.isCheckoutUpdate && predicate(context),
+        context =>
+          context.event.isCheckoutUpdate &&
+          predicate(context.event.checkoutUpdate, context),
         handler
       );
     }
@@ -181,7 +195,9 @@ export default class MessengerHandler extends Handler {
         FunctionalHandler | Builder,
       ] = (args: any);
       this.on(
-        context => context.event.isPreCheckout && predicate(context),
+        context =>
+          context.event.isPreCheckout &&
+          predicate(context.event.preCheckout, context),
         handler
       );
     }
@@ -204,7 +220,9 @@ export default class MessengerHandler extends Handler {
         FunctionalHandler | Builder,
       ] = (args: any);
       this.on(
-        context => context.event.isQuickReply && predicate(context),
+        context =>
+          context.event.isQuickReply &&
+          predicate(context.event.quickReply, context),
         handler
       );
     }
@@ -226,7 +244,11 @@ export default class MessengerHandler extends Handler {
         Predicate,
         FunctionalHandler | Builder,
       ] = (args: any);
-      this.on(context => context.event.isEcho && predicate(context), handler);
+      this.on(
+        context =>
+          context.event.isEcho && predicate(context.event.message, context),
+        handler
+      );
     }
 
     return this;
@@ -246,7 +268,11 @@ export default class MessengerHandler extends Handler {
         Predicate,
         FunctionalHandler | Builder,
       ] = (args: any);
-      this.on(context => context.event.isRead && predicate(context), handler);
+      this.on(
+        context =>
+          context.event.isRead && predicate(context.event.read, context),
+        handler
+      );
     }
 
     return this;
@@ -267,7 +293,9 @@ export default class MessengerHandler extends Handler {
         FunctionalHandler | Builder,
       ] = (args: any);
       this.on(
-        context => context.event.isDelivery && predicate(context),
+        context =>
+          context.event.isDelivery &&
+          predicate(context.event.delivery, context),
         handler
       );
     }
@@ -290,7 +318,9 @@ export default class MessengerHandler extends Handler {
         FunctionalHandler | Builder,
       ] = (args: any);
       this.on(
-        context => context.event.isLocation && predicate(context),
+        context =>
+          context.event.isLocation &&
+          predicate(context.event.location, context),
         handler
       );
     }
@@ -312,7 +342,11 @@ export default class MessengerHandler extends Handler {
         Predicate,
         FunctionalHandler | Builder,
       ] = (args: any);
-      this.on(context => context.event.isImage && predicate(context), handler);
+      this.on(
+        context =>
+          context.event.isImage && predicate(context.event.image, context),
+        handler
+      );
     }
 
     return this;
@@ -332,7 +366,11 @@ export default class MessengerHandler extends Handler {
         Predicate,
         FunctionalHandler | Builder,
       ] = (args: any);
-      this.on(context => context.event.isAudio && predicate(context), handler);
+      this.on(
+        context =>
+          context.event.isAudio && predicate(context.event.audio, context),
+        handler
+      );
     }
 
     return this;
@@ -352,7 +390,11 @@ export default class MessengerHandler extends Handler {
         Predicate,
         FunctionalHandler | Builder,
       ] = (args: any);
-      this.on(context => context.event.isVideo && predicate(context), handler);
+      this.on(
+        context =>
+          context.event.isVideo && predicate(context.event.video, context),
+        handler
+      );
     }
 
     return this;
@@ -372,7 +414,11 @@ export default class MessengerHandler extends Handler {
         Predicate,
         FunctionalHandler | Builder,
       ] = (args: any);
-      this.on(context => context.event.isFile && predicate(context), handler);
+      this.on(
+        context =>
+          context.event.isFile && predicate(context.event.file, context),
+        handler
+      );
     }
 
     return this;
@@ -393,7 +439,9 @@ export default class MessengerHandler extends Handler {
         FunctionalHandler | Builder,
       ] = (args: any);
       this.on(
-        context => context.event.isFallback && predicate(context),
+        context =>
+          context.event.isFallback &&
+          predicate(context.event.fallback, context),
         handler
       );
     }

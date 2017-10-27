@@ -25,7 +25,9 @@ export default class LineHandler extends Handler {
         FunctionalHandler | Builder,
       ] = (args: any);
       this.on(
-        context => context.event.isPostback && predicate(context),
+        context =>
+          context.event.isPostback &&
+          predicate(context.event.postback, context),
         handler
       );
     }
@@ -42,7 +44,7 @@ export default class LineHandler extends Handler {
     if (args.length < 2) {
       const [handler]: [FunctionalHandler | Builder] = (args: any);
 
-      this.on(context => context.event.isPostback, handler);
+      this.on(context => context.event.isPayload, handler);
     } else {
       // eslint-disable-next-line prefer-const
       let [pattern, handler]: [
@@ -55,32 +57,44 @@ export default class LineHandler extends Handler {
       }
 
       warning(
-        typeof pattern === 'string' || pattern instanceof RegExp,
-        `'onPayload' only accepts string or regex, but received ${typeof pattern}`
+        typeof pattern === 'function' ||
+          typeof pattern === 'string' ||
+          pattern instanceof RegExp,
+        `'onPayload' only accepts string, regex or function, but received ${typeof pattern}`
       );
 
-      if (pattern instanceof RegExp) {
-        const _handler = handler;
-        handler = context => {
-          // $FlowFixMe
-          const match = pattern.exec(context.event.postback.data);
+      if (typeof pattern === 'function') {
+        const predicate: Predicate = pattern;
+        this.on(
+          context =>
+            context.event.isPayload &&
+            predicate(context.event.payload, context),
+          handler
+        );
+      } else {
+        if (pattern instanceof RegExp) {
+          const _handler = handler;
+          handler = context => {
+            // $FlowFixMe
+            const match = pattern.exec(context.event.payload);
 
-          if (!match) return _handler(context);
+            if (!match) return _handler(context);
 
-          // reset index so we start at the beginning of the regex each time
-          // $FlowFixMe
-          pattern.lastIndex = 0;
+            // reset index so we start at the beginning of the regex each time
+            // $FlowFixMe
+            pattern.lastIndex = 0;
 
-          return _handler(context, match);
-        };
+            return _handler(context, match);
+          };
+        }
+
+        this.on(
+          context =>
+            context.event.isPayload &&
+            matchPattern(pattern, context.event.payload),
+          handler
+        );
       }
-
-      this.on(
-        context =>
-          context.event.isPostback &&
-          matchPattern(pattern, context.event.postback.data),
-        handler
-      );
     }
 
     return this;
@@ -101,7 +115,11 @@ export default class LineHandler extends Handler {
         Predicate,
         FunctionalHandler | Builder,
       ] = (args: any);
-      this.on(context => context.event.isFollow && predicate(context), handler);
+      this.on(
+        context =>
+          context.event.isFollow && predicate(context.event.follow, context),
+        handler
+      );
     }
 
     return this;
@@ -122,7 +140,9 @@ export default class LineHandler extends Handler {
         FunctionalHandler | Builder,
       ] = (args: any);
       this.on(
-        context => context.event.isUnfollow && predicate(context),
+        context =>
+          context.event.isUnfollow &&
+          predicate(context.event.unfollow, context),
         handler
       );
     }
@@ -145,7 +165,11 @@ export default class LineHandler extends Handler {
         Predicate,
         FunctionalHandler | Builder,
       ] = (args: any);
-      this.on(context => context.event.isJoin && predicate(context), handler);
+      this.on(
+        context =>
+          context.event.isJoin && predicate(context.event.join, context),
+        handler
+      );
     }
 
     return this;
@@ -166,7 +190,11 @@ export default class LineHandler extends Handler {
         Predicate,
         FunctionalHandler | Builder,
       ] = (args: any);
-      this.on(context => context.event.isLeave && predicate(context), handler);
+      this.on(
+        context =>
+          context.event.isLeave && predicate(context.event.leave, context),
+        handler
+      );
     }
 
     return this;
@@ -186,7 +214,11 @@ export default class LineHandler extends Handler {
         Predicate,
         FunctionalHandler | Builder,
       ] = (args: any);
-      this.on(context => context.event.isBeacon && predicate(context), handler);
+      this.on(
+        context =>
+          context.event.isBeacon && predicate(context.event.beacon, context),
+        handler
+      );
     }
 
     return this;

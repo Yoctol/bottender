@@ -29,6 +29,9 @@ describe('#onPostback', () => {
     const context = {
       event: {
         isPostback: true,
+        postback: {
+          data: 'data',
+        },
       },
     };
     builder.onPostback(handler);
@@ -40,14 +43,18 @@ describe('#onPostback', () => {
     const { builder } = setup();
     const predicate = jest.fn(() => true);
     const handler = jest.fn();
+    const postback = {
+      data: 'data',
+    };
     const context = {
       event: {
         isPostback: true,
+        postback,
       },
     };
     builder.onPostback(predicate, handler);
     await builder.build()(context);
-    expect(predicate).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(postback, context);
     expect(handler).toBeCalledWith(context);
   });
 
@@ -58,6 +65,7 @@ describe('#onPostback', () => {
     const context = {
       event: {
         isPostback: false,
+        postback: null,
       },
     };
     builder.onPostback(predicate, handler);
@@ -69,14 +77,18 @@ describe('#onPostback', () => {
     const { builder } = setup();
     const predicate = jest.fn(() => Promise.resolve(false));
     const handler = jest.fn();
+    const postback = {
+      data: 'data',
+    };
     const context = {
       event: {
         isPostback: true,
+        postback,
       },
     };
     builder.onPostback(predicate, handler);
     await builder.build()(context);
-    expect(predicate).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(postback, context);
     expect(handler).not.toBeCalled();
   });
 });
@@ -94,9 +106,11 @@ describe('#onPayload', () => {
     const context = {
       event: {
         isPostback: true,
+        isPayload: true,
         postback: {
           data: 'cool',
         },
+        payload: 'cool',
       },
     };
     builder.onPayload(handler);
@@ -110,9 +124,11 @@ describe('#onPayload', () => {
     const context = {
       event: {
         isPostback: true,
+        isPayload: true,
         postback: {
           data: 'cool',
         },
+        payload: 'cool',
       },
     };
     builder.onPayload('cool', handler);
@@ -129,6 +145,7 @@ describe('#onPayload', () => {
         message: {
           text: 'wow',
         },
+        text: 'wow',
       },
     };
     builder.onPayload('wow', handler);
@@ -142,9 +159,11 @@ describe('#onPayload', () => {
     const context = {
       event: {
         isPostback: true,
+        isPayload: true,
         postback: {
           data: 'cool',
         },
+        payload: 'cool',
       },
     };
 
@@ -157,6 +176,25 @@ describe('#onPayload', () => {
     expect(handler).toBeCalledWith(context, match);
   });
 
+  it('should support function predicate', async () => {
+    const { builder } = setup();
+    const handler = jest.fn();
+    const context = {
+      event: {
+        isPostback: true,
+        isPayload: true,
+        postback: {
+          data: 'cool',
+        },
+        payload: 'cool',
+      },
+    };
+
+    builder.onPayload(payload => payload === 'cool', handler);
+    await builder.build()(context);
+    expect(handler).toBeCalledWith(context);
+  });
+
   it('should call handler build', async () => {
     const { builder } = setup();
     const build = jest.fn();
@@ -164,9 +202,11 @@ describe('#onPayload', () => {
     const context = {
       event: {
         isPostback: true,
+        isPayload: true,
         postback: {
           data: 'cool',
         },
+        payload: 'cool',
       },
     };
 
@@ -204,18 +244,20 @@ describe('#onFollow', () => {
     const { builder } = setup();
     const predicate = jest.fn(() => true);
     const handler = jest.fn();
+    const source = {
+      type: 'user',
+      userId: 'U206d25c2ea6bd87c17655609a1c37cb8',
+    };
     const context = {
       event: {
         isFollow: true,
-        source: {
-          type: 'user',
-          userId: 'U206d25c2ea6bd87c17655609a1c37cb8',
-        },
+        source,
+        follow: source,
       },
     };
     builder.onFollow(predicate, handler);
     await builder.build()(context);
-    expect(predicate).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(source, context);
     expect(handler).toBeCalledWith(context);
   });
 
@@ -225,6 +267,7 @@ describe('#onFollow', () => {
     const context = {
       event: {
         isFollow: false,
+        follow: null,
       },
     };
     builder.onFollow(handler);
@@ -261,18 +304,20 @@ describe('#onUnfollow', () => {
     const { builder } = setup();
     const predicate = jest.fn(() => true);
     const handler = jest.fn();
+    const source = {
+      type: 'user',
+      userId: 'U206d25c2ea6bd87c17655609a1c37cb8',
+    };
     const context = {
       event: {
         isUnfollow: true,
-        source: {
-          type: 'user',
-          userId: 'U206d25c2ea6bd87c17655609a1c37cb8',
-        },
+        source,
+        unfollow: source,
       },
     };
     builder.onUnfollow(predicate, handler);
     await builder.build()(context);
-    expect(predicate).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(source, context);
     expect(handler).toBeCalledWith(context);
   });
 
@@ -282,6 +327,7 @@ describe('#onUnfollow', () => {
     const context = {
       event: {
         isUnfollow: false,
+        unfollow: null,
       },
     };
     builder.onUnfollow(handler);
@@ -318,18 +364,20 @@ describe('#onJoin', () => {
     const { builder } = setup();
     const predicate = jest.fn(() => true);
     const handler = jest.fn();
+    const source = {
+      type: 'group',
+      groupId: 'cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+    };
     const context = {
       event: {
         isJoin: true,
-        source: {
-          type: 'group',
-          groupId: 'cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
-        },
+        source,
+        join: source,
       },
     };
     builder.onJoin(predicate, handler);
     await builder.build()(context);
-    expect(predicate).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(source, context);
     expect(handler).toBeCalledWith(context);
   });
 
@@ -375,18 +423,20 @@ describe('#onLeave', () => {
     const { builder } = setup();
     const predicate = jest.fn(() => true);
     const handler = jest.fn();
+    const source = {
+      type: 'group',
+      groupId: 'cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+    };
     const context = {
       event: {
         isLeave: true,
-        source: {
-          type: 'group',
-          groupId: 'cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
-        },
+        source,
+        leave: source,
       },
     };
     builder.onLeave(predicate, handler);
     await builder.build()(context);
-    expect(predicate).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(source, context);
     expect(handler).toBeCalledWith(context);
   });
 
@@ -432,6 +482,10 @@ describe('#onBeacon', () => {
     const { builder } = setup();
     const predicate = jest.fn(() => true);
     const handler = jest.fn();
+    const beacon = {
+      hwid: 'd41d8cd98f',
+      type: 'enter',
+    };
     const context = {
       event: {
         isBeacon: true,
@@ -439,11 +493,12 @@ describe('#onBeacon', () => {
           type: 'group',
           groupId: 'cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
         },
+        beacon,
       },
     };
     builder.onBeacon(predicate, handler);
     await builder.build()(context);
-    expect(predicate).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(beacon, context);
     expect(handler).toBeCalledWith(context);
   });
 
@@ -455,6 +510,7 @@ describe('#onBeacon', () => {
       event: {
         isBeacon: false,
       },
+      beacon: null,
     };
     builder.onBeacon(predicate, handler);
     await builder.build()(context);

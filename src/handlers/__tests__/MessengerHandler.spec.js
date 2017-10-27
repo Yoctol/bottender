@@ -29,6 +29,9 @@ describe('#onPostback', () => {
     const context = {
       event: {
         isPostback: true,
+        postback: {
+          payload: 'payload',
+        },
       },
     };
     builder.onPostback(handler);
@@ -40,14 +43,20 @@ describe('#onPostback', () => {
     const { builder } = setup();
     const predicate = jest.fn(() => true);
     const handler = jest.fn();
+    const postback = {
+      payload: 'payload',
+    };
     const context = {
       event: {
         isPostback: true,
+        postback: {
+          payload: 'payload',
+        },
       },
     };
     builder.onPostback(predicate, handler);
     await builder.build()(context);
-    expect(predicate).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(postback, context);
     expect(handler).toBeCalledWith(context);
   });
 
@@ -58,25 +67,30 @@ describe('#onPostback', () => {
     const context = {
       event: {
         isPostback: false,
+        payload: null,
       },
     };
     builder.onPostback(predicate, handler);
     await builder.build()(context);
-    expect(predicate).not.toBeCalledWith(context);
+    expect(predicate).not.toBeCalled();
   });
 
   it('should accept async predicate', async () => {
     const { builder } = setup();
     const predicate = jest.fn(() => Promise.resolve(false));
     const handler = jest.fn();
+    const postback = {
+      payload: 'payload',
+    };
     const context = {
       event: {
         isPostback: true,
+        postback,
       },
     };
     builder.onPostback(predicate, handler);
     await builder.build()(context);
-    expect(predicate).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(postback, context);
     expect(handler).not.toBeCalled();
   });
 });
@@ -110,9 +124,11 @@ describe('#onPayload', () => {
     const context = {
       event: {
         isPostback: true,
+        isPayload: true,
         postback: {
           payload: 'cool',
         },
+        payload: 'cool',
       },
     };
     builder.onPayload('cool', handler);
@@ -127,12 +143,18 @@ describe('#onPayload', () => {
       event: {
         isMessage: true,
         isQuickReply: true,
+        isPayload: true,
         message: {
           quick_reply: {
             payload: 'so quick!',
           },
           text: 'wow',
         },
+        quick_reply: {
+          payload: 'so quick!',
+        },
+        text: 'wow',
+        payload: 'so quick!',
       },
     };
     builder.onPayload('so quick!', handler);
@@ -146,9 +168,7 @@ describe('#onPayload', () => {
     const context = {
       event: {
         isPostback: false,
-        postback: {
-          payload: 'cool',
-        },
+        postback: null,
       },
     };
     builder.onPayload('cool', handler);
@@ -166,6 +186,7 @@ describe('#onPayload', () => {
         message: {
           text: 'wow',
         },
+        text: 'wow',
       },
     };
     builder.onPayload(handler); // no pattern
@@ -180,9 +201,11 @@ describe('#onPayload', () => {
       const context = {
         event: {
           isPostback: true,
+          isPayload: true,
           postback: {
             payload: 'cool',
           },
+          payload: 'cool',
         },
       };
 
@@ -198,16 +221,21 @@ describe('#onPayload', () => {
     it('when received quick reply message', async () => {
       const { builder } = setup();
       const handler = jest.fn();
+      const quickReply = {
+        payload: 'so quick!',
+      };
       const context = {
         event: {
           isMessage: true,
+          isPayload: true,
           isQuickReply: true,
           message: {
-            quick_reply: {
-              payload: 'so quick!',
-            },
+            quick_reply: quickReply,
             text: 'wow',
           },
+          quickReply,
+          text: 'wow',
+          payload: 'so quick!',
         },
       };
 
@@ -221,6 +249,53 @@ describe('#onPayload', () => {
     });
   });
 
+  describe('should support function predicate', async () => {
+    it('when received postback', async () => {
+      const { builder } = setup();
+      const handler = jest.fn();
+      const context = {
+        event: {
+          isPostback: true,
+          isPayload: true,
+          postback: {
+            payload: 'cool',
+          },
+          payload: 'cool',
+        },
+      };
+
+      builder.onPayload(payload => payload === 'cool', handler);
+      await builder.build()(context);
+      expect(handler).toBeCalledWith(context);
+    });
+
+    it('when received quick reply message', async () => {
+      const { builder } = setup();
+      const handler = jest.fn();
+      const quickReply = {
+        payload: 'so quick!',
+      };
+      const context = {
+        event: {
+          isMessage: true,
+          isQuickReply: true,
+          isPayload: true,
+          message: {
+            quick_reply: quickReply,
+            text: 'wow',
+          },
+          quickReply,
+          text: 'wow',
+          payload: 'so quick!',
+        },
+      };
+
+      builder.onPayload(payload => payload === 'so quick!', handler);
+      await builder.build()(context);
+      expect(handler).toBeCalledWith(context);
+    });
+  });
+
   it('should call handler build', async () => {
     const { builder } = setup();
     const build = jest.fn();
@@ -228,9 +303,11 @@ describe('#onPayload', () => {
     const context = {
       event: {
         isPostback: true,
+        isPayload: true,
         postback: {
           payload: 'cool',
         },
+        payload: 'cool',
       },
     };
 
@@ -254,6 +331,7 @@ describe('#onPayment', () => {
     const context = {
       event: {
         isPayment: true,
+        payment: {},
       },
     };
     builder.onPayment(handler);
@@ -265,14 +343,16 @@ describe('#onPayment', () => {
     const { builder } = setup();
     const predicate = jest.fn(() => true);
     const handler = jest.fn();
+    const payment = {};
     const context = {
       event: {
         isPayment: true,
+        payment,
       },
     };
     builder.onPayment(predicate, handler);
     await builder.build()(context);
-    expect(predicate).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(payment, context);
     expect(handler).toBeCalledWith(context);
   });
 
@@ -283,25 +363,28 @@ describe('#onPayment', () => {
     const context = {
       event: {
         isPayment: false,
+        payment: null,
       },
     };
     builder.onPayment(predicate, handler);
     await builder.build()(context);
-    expect(predicate).not.toBeCalledWith(context);
+    expect(predicate).not.toBeCalled();
   });
 
   it('should accept async predicate', async () => {
     const { builder } = setup();
     const predicate = jest.fn(() => Promise.resolve(false));
     const handler = jest.fn();
+    const payment = {};
     const context = {
       event: {
         isPayment: true,
+        payment,
       },
     };
     builder.onPayment(predicate, handler);
     await builder.build()(context);
-    expect(predicate).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(payment, context);
     expect(handler).not.toBeCalled();
   });
 });
@@ -320,6 +403,7 @@ describe('#onOptin', () => {
     const context = {
       event: {
         isOptin: true,
+        optin: {},
       },
     };
     builder.onOptin(handler);
@@ -331,14 +415,16 @@ describe('#onOptin', () => {
     const { builder } = setup();
     const predicate = jest.fn(() => true);
     const handler = jest.fn();
+    const optin = {};
     const context = {
       event: {
         isOptin: true,
+        optin,
       },
     };
     builder.onOptin(predicate, handler);
     await builder.build()(context);
-    expect(predicate).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(optin, context);
     expect(handler).toBeCalledWith(context);
   });
 
@@ -349,25 +435,28 @@ describe('#onOptin', () => {
     const context = {
       event: {
         isOptin: false,
+        optin: null,
       },
     };
     builder.onOptin(predicate, handler);
     await builder.build()(context);
-    expect(predicate).not.toBeCalledWith(context);
+    expect(predicate).not.toBeCalled();
   });
 
   it('should accept async predicate', async () => {
     const { builder } = setup();
     const predicate = jest.fn(() => Promise.resolve(false));
     const handler = jest.fn();
+    const optin = {};
     const context = {
       event: {
         isOptin: true,
+        optin,
       },
     };
     builder.onOptin(predicate, handler);
     await builder.build()(context);
-    expect(predicate).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(optin, context);
     expect(handler).not.toBeCalled();
   });
 });
@@ -386,6 +475,7 @@ describe('#onCheckoutUpdate', () => {
     const context = {
       event: {
         isCheckoutUpdate: true,
+        checkoutUpdate: {},
       },
     };
     builder.onCheckoutUpdate(handler);
@@ -397,14 +487,16 @@ describe('#onCheckoutUpdate', () => {
     const { builder } = setup();
     const predicate = jest.fn(() => true);
     const handler = jest.fn();
+    const checkoutUpdate = {};
     const context = {
       event: {
         isCheckoutUpdate: true,
+        checkoutUpdate,
       },
     };
     builder.onCheckoutUpdate(predicate, handler);
     await builder.build()(context);
-    expect(predicate).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(checkoutUpdate, context);
     expect(handler).toBeCalledWith(context);
   });
 
@@ -415,25 +507,28 @@ describe('#onCheckoutUpdate', () => {
     const context = {
       event: {
         isCheckoutUpdate: false,
+        checkoutUpdate: null,
       },
     };
     builder.onCheckoutUpdate(predicate, handler);
     await builder.build()(context);
-    expect(predicate).not.toBeCalledWith(context);
+    expect(predicate).not.toBeCalled();
   });
 
   it('should accept async predicate', async () => {
     const { builder } = setup();
     const predicate = jest.fn(() => Promise.resolve(false));
     const handler = jest.fn();
+    const checkoutUpdate = {};
     const context = {
       event: {
         isCheckoutUpdate: true,
+        checkoutUpdate,
       },
     };
     builder.onCheckoutUpdate(predicate, handler);
     await builder.build()(context);
-    expect(predicate).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(checkoutUpdate, context);
     expect(handler).not.toBeCalled();
   });
 });
@@ -452,6 +547,7 @@ describe('#onPreCheckout', () => {
     const context = {
       event: {
         isPreCheckout: true,
+        preCheckout: {},
       },
     };
     builder.onPreCheckout(handler);
@@ -463,14 +559,16 @@ describe('#onPreCheckout', () => {
     const { builder } = setup();
     const predicate = jest.fn(() => true);
     const handler = jest.fn();
+    const preCheckout = {};
     const context = {
       event: {
         isPreCheckout: true,
+        preCheckout,
       },
     };
     builder.onPreCheckout(predicate, handler);
     await builder.build()(context);
-    expect(predicate).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(preCheckout, context);
     expect(handler).toBeCalledWith(context);
   });
 
@@ -481,25 +579,28 @@ describe('#onPreCheckout', () => {
     const context = {
       event: {
         isPreCheckout: false,
+        preCheckout: null,
       },
     };
     builder.onPreCheckout(predicate, handler);
     await builder.build()(context);
-    expect(predicate).not.toBeCalledWith(context);
+    expect(predicate).not.toBeCalled();
   });
 
   it('should accept async predicate', async () => {
     const { builder } = setup();
     const predicate = jest.fn(() => Promise.resolve(false));
     const handler = jest.fn();
+    const preCheckout = {};
     const context = {
       event: {
         isPreCheckout: true,
+        preCheckout,
       },
     };
     builder.onPreCheckout(predicate, handler);
     await builder.build()(context);
-    expect(predicate).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(preCheckout, context);
     expect(handler).not.toBeCalled();
   });
 });
@@ -520,12 +621,15 @@ describe('#onQuickReply', () => {
         isMessage: true,
         isText: true,
         isQuickReply: true,
+        isPayload: true,
         message: {
           quick_reply: {
             payload: 'so quick!',
           },
           text: 'wow',
         },
+        text: 'wow',
+        payload: 'so quick!',
       },
     };
     builder.onQuickReply(handler);
@@ -537,22 +641,27 @@ describe('#onQuickReply', () => {
     const { builder } = setup();
     const predicate = jest.fn(() => true);
     const handler = jest.fn();
+    const quickReply = {
+      payload: 'so quick!',
+    };
     const context = {
       event: {
         isMessage: true,
         isText: true,
         isQuickReply: true,
+        isPayload: true,
         message: {
-          quick_reply: {
-            payload: 'so quick!',
-          },
+          quick_reply: quickReply,
           text: 'wow',
         },
+        quickReply,
+        text: 'wow',
+        payload: 'so quick!',
       },
     };
     builder.onQuickReply(predicate, handler);
     await builder.build()(context);
-    expect(predicate).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(quickReply, context);
     expect(handler).toBeCalledWith(context);
   });
 
@@ -564,9 +673,11 @@ describe('#onQuickReply', () => {
       event: {
         isMessage: true,
         isQuickReply: false,
+        isPayload: false,
         message: {
           text: 'wow',
         },
+        text: 'wow',
       },
     };
     builder.onQuickReply(predicate, handler);
@@ -579,21 +690,26 @@ describe('#onQuickReply', () => {
     const { builder } = setup();
     const predicate = jest.fn(() => Promise.resolve(false));
     const handler = jest.fn();
+    const quickReply = {
+      payload: 'so quick!',
+    };
     const context = {
       event: {
         isMessage: true,
         isQuickReply: true,
+        isPayload: true,
         message: {
-          quick_reply: {
-            payload: 'so quick!',
-          },
+          quick_reply: quickReply,
           text: 'wow',
         },
+        quickReply,
+        text: 'wow',
+        payload: 'so quick!',
       },
     };
     builder.onQuickReply(predicate, handler);
     await builder.build()(context);
-    expect(predicate).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(quickReply, context);
     expect(handler).not.toBeCalled();
   });
 });
@@ -618,6 +734,7 @@ describe('#onEcho', () => {
           is_echo: true,
           text: 'wow',
         },
+        text: 'wow',
       },
     };
     builder.onEcho(handler);
@@ -629,20 +746,22 @@ describe('#onEcho', () => {
     const { builder } = setup();
     const predicate = jest.fn(() => true);
     const handler = jest.fn();
+    const message = {
+      is_echo: true,
+      text: 'wow',
+    };
     const context = {
       event: {
         isMessage: true,
         isText: true,
         isEcho: true,
-        message: {
-          is_echo: true,
-          text: 'wow',
-        },
+        message,
+        text: 'wow',
       },
     };
     builder.onEcho(predicate, handler);
     await builder.build()(context);
-    expect(predicate).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(message, context);
     expect(handler).toBeCalledWith(context);
   });
 
@@ -657,6 +776,7 @@ describe('#onEcho', () => {
         message: {
           text: 'wow',
         },
+        text: 'wow',
       },
     };
     builder.onEcho(predicate, handler);
@@ -669,19 +789,21 @@ describe('#onEcho', () => {
     const { builder } = setup();
     const predicate = jest.fn(() => Promise.resolve(false));
     const handler = jest.fn();
+    const message = {
+      is_echo: true,
+      text: 'wow',
+    };
     const context = {
       event: {
         isMessage: true,
         isEcho: true,
-        message: {
-          is_echo: true,
-          text: 'wow',
-        },
+        message,
+        text: 'wow',
       },
     };
     builder.onEcho(predicate, handler);
     await builder.build()(context);
-    expect(predicate).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(message, context);
     expect(handler).not.toBeCalled();
   });
 });
@@ -715,18 +837,19 @@ describe('#onRead', () => {
     const { builder } = setup();
     const handler = jest.fn();
     const predicate = jest.fn(() => true);
+    const read = {
+      watermark: 1458668856253,
+      seq: 38,
+    };
     const context = {
       event: {
         isRead: true,
-        read: {
-          watermark: 1458668856253,
-          seq: 38,
-        },
+        read,
       },
     };
     builder.onRead(predicate, handler);
     await builder.build()(context);
-    expect(predicate).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(read, context);
     expect(handler).toBeCalledWith(context);
   });
 
@@ -740,6 +863,7 @@ describe('#onRead', () => {
         message: {
           text: 'wow',
         },
+        text: 'wow',
       },
     };
     builder.onRead(predicate, handler);
@@ -752,18 +876,19 @@ describe('#onRead', () => {
     const { builder } = setup();
     const handler = jest.fn();
     const predicate = jest.fn(() => Promise.resolve(false));
+    const read = {
+      watermark: 1458668856253,
+      seq: 38,
+    };
     const context = {
       event: {
         isRead: true,
-        read: {
-          watermark: 1458668856253,
-          seq: 38,
-        },
+        read,
       },
     };
     builder.onRead(predicate, handler);
     await builder.build()(context);
-    expect(predicate).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(read, context);
     expect(handler).not.toBeCalled();
   });
 });
@@ -798,19 +923,20 @@ describe('#onDelivery', () => {
     const { builder } = setup();
     const handler = jest.fn();
     const predicate = jest.fn(() => true);
+    const delivery = {
+      mids: ['mid.1458668856218:ed81099e15d3f4f233'],
+      watermark: 1458668856253,
+      seq: 37,
+    };
     const context = {
       event: {
         isDelivery: true,
-        delivery: {
-          mids: ['mid.1458668856218:ed81099e15d3f4f233'],
-          watermark: 1458668856253,
-          seq: 37,
-        },
+        delivery,
       },
     };
     builder.onDelivery(predicate, handler);
     await builder.build()(context);
-    expect(predicate).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(delivery, context);
     expect(handler).toBeCalledWith(context);
   });
 
@@ -821,11 +947,7 @@ describe('#onDelivery', () => {
     const context = {
       event: {
         isDelivery: false,
-        delivery: {
-          mids: ['mid.1458668856218:ed81099e15d3f4f233'],
-          watermark: 1458668856253,
-          seq: 37,
-        },
+        delivery: null,
       },
     };
     builder.onDelivery(predicate, handler);
@@ -838,19 +960,20 @@ describe('#onDelivery', () => {
     const { builder } = setup();
     const handler = jest.fn();
     const predicate = jest.fn(() => Promise.resolve(false));
+    const delivery = {
+      mids: ['mid.1458668856218:ed81099e15d3f4f233'],
+      watermark: 1458668856253,
+      seq: 37,
+    };
     const context = {
       event: {
         isDelivery: true,
-        delivery: {
-          mids: ['mid.1458668856218:ed81099e15d3f4f233'],
-          watermark: 1458668856253,
-          seq: 37,
-        },
+        delivery,
       },
     };
     builder.onDelivery(predicate, handler);
     await builder.build()(context);
-    expect(predicate).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(delivery, context);
     expect(handler).not.toBeCalled();
   });
 });
@@ -892,6 +1015,12 @@ describe('#onLocation', () => {
     const { builder } = setup();
     const handler = jest.fn();
     const predicate = jest.fn(() => true);
+    const location = {
+      coordinates: {
+        lat: 0,
+        long: 0,
+      },
+    };
     const context = {
       event: {
         isMessage: true,
@@ -900,19 +1029,15 @@ describe('#onLocation', () => {
         attachments: [
           {
             type: 'location',
-            payload: {
-              coordinates: {
-                lat: 0,
-                long: 0,
-              },
-            },
+            payload: location,
           },
         ],
+        location,
       },
     };
     builder.onLocation(predicate, handler);
     await builder.build()(context);
-    expect(predicate).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(location, context);
     expect(handler).toBeCalledWith(context);
   });
 
@@ -928,6 +1053,7 @@ describe('#onLocation', () => {
         message: {
           text: 'wow',
         },
+        text: 'wow',
       },
     };
     builder.onLocation(predicate, handler);
@@ -940,6 +1066,12 @@ describe('#onLocation', () => {
     const { builder } = setup();
     const handler = jest.fn();
     const predicate = jest.fn(() => Promise.resolve(false));
+    const location = {
+      coordinates: {
+        lat: 0,
+        long: 0,
+      },
+    };
     const context = {
       event: {
         isMessage: true,
@@ -948,19 +1080,15 @@ describe('#onLocation', () => {
         attachments: [
           {
             type: 'location',
-            payload: {
-              coordinates: {
-                lat: 0,
-                long: 0,
-              },
-            },
+            payload: location,
           },
         ],
+        location,
       },
     };
     builder.onLocation(predicate, handler);
     await builder.build()(context);
-    expect(predicate).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(location, context);
     expect(handler).not.toBeCalled();
   });
 });
@@ -1000,6 +1128,9 @@ describe('#onImage', () => {
     const { builder } = setup();
     const handler = jest.fn();
     const predicate = jest.fn(() => true);
+    const image = {
+      url: 'https://example.com/bot/images/image.jpg',
+    };
     const context = {
       event: {
         isMessage: true,
@@ -1008,16 +1139,15 @@ describe('#onImage', () => {
         attachments: [
           {
             type: 'image',
-            payload: {
-              url: 'https://example.com/bot/images/image.jpg',
-            },
+            payload: image,
           },
         ],
+        image,
       },
     };
     builder.onImage(predicate, handler);
     await builder.build()(context);
-    expect(predicate).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(image, context);
     expect(handler).toBeCalledWith(context);
   });
 
@@ -1031,6 +1161,7 @@ describe('#onImage', () => {
         message: {
           text: 'wow',
         },
+        text: 'wow',
       },
     };
     builder.onImage(predicate, handler);
@@ -1043,6 +1174,9 @@ describe('#onImage', () => {
     const { builder } = setup();
     const handler = jest.fn();
     const predicate = jest.fn(() => Promise.resolve(false));
+    const image = {
+      url: 'https://example.com/bot/images/image.jpg',
+    };
     const context = {
       event: {
         isMessage: true,
@@ -1051,16 +1185,15 @@ describe('#onImage', () => {
         attachments: [
           {
             type: 'image',
-            payload: {
-              url: 'https://example.com/bot/images/image.jpg',
-            },
+            payload: image,
           },
         ],
+        image,
       },
     };
     builder.onImage(predicate, handler);
     await builder.build()(context);
-    expect(predicate).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(image, context);
     expect(handler).not.toBeCalled();
   });
 });
@@ -1100,6 +1233,9 @@ describe('#onAudio', () => {
     const { builder } = setup();
     const handler = jest.fn();
     const predicate = jest.fn(() => true);
+    const audio = {
+      url: 'https://example.com/bot/audios/audio.mp3',
+    };
     const context = {
       event: {
         isMessage: true,
@@ -1108,16 +1244,15 @@ describe('#onAudio', () => {
         attachments: [
           {
             type: 'audio',
-            payload: {
-              url: 'https://example.com/bot/audios/audio.mp3',
-            },
+            payload: audio,
           },
         ],
+        audio,
       },
     };
     builder.onAudio(predicate, handler);
     await builder.build()(context);
-    expect(predicate).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(audio, context);
     expect(handler).toBeCalledWith(context);
   });
 
@@ -1133,6 +1268,7 @@ describe('#onAudio', () => {
         message: {
           text: 'wow',
         },
+        text: 'wow',
       },
     };
     builder.onAudio(predicate, handler);
@@ -1145,22 +1281,24 @@ describe('#onAudio', () => {
     const { builder } = setup();
     const handler = jest.fn();
     const predicate = jest.fn(() => Promise.resolve(false));
+    const audio = {
+      url: 'https://example.com/bot/audios/audio.mp3',
+    };
     const context = {
       event: {
         isAudio: true,
         attachments: [
           {
             type: 'audio',
-            payload: {
-              url: 'https://example.com/bot/audios/audio.mp3',
-            },
+            payload: audio,
           },
         ],
+        audio,
       },
     };
     builder.onAudio(predicate, handler);
     await builder.build()(context);
-    expect(predicate).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(audio, context);
     expect(handler).not.toBeCalled();
   });
 });
@@ -1200,6 +1338,9 @@ describe('#onVideo', () => {
     const { builder } = setup();
     const handler = jest.fn();
     const predicate = jest.fn(() => true);
+    const video = {
+      url: 'https://example.com/bot/videos/video.mp4',
+    };
     const context = {
       event: {
         isMessage: true,
@@ -1208,16 +1349,15 @@ describe('#onVideo', () => {
         attachments: [
           {
             type: 'video',
-            payload: {
-              url: 'https://example.com/bot/videos/video.mp4',
-            },
+            payload: video,
           },
         ],
+        video,
       },
     };
     builder.onVideo(predicate, handler);
     await builder.build()(context);
-    expect(predicate).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(video, context);
     expect(handler).toBeCalledWith(context);
   });
 
@@ -1227,10 +1367,13 @@ describe('#onVideo', () => {
     const handler = jest.fn();
     const context = {
       event: {
+        isMessage: true,
+        isText: true,
         isVideo: false,
         message: {
           text: 'wow',
         },
+        text: 'wow',
       },
     };
     builder.onVideo(predicate, handler);
@@ -1243,22 +1386,24 @@ describe('#onVideo', () => {
     const { builder } = setup();
     const handler = jest.fn();
     const predicate = jest.fn(() => Promise.resolve(false));
+    const video = {
+      url: 'https://example.com/bot/videos/video.mp4',
+    };
     const context = {
       event: {
         isVideo: true,
         attachments: [
           {
             type: 'video',
-            payload: {
-              url: 'https://example.com/bot/videos/video.mp4',
-            },
+            payload: video,
           },
         ],
+        video,
       },
     };
     builder.onVideo(predicate, handler);
     await builder.build()(context);
-    expect(predicate).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(video, context);
     expect(handler).not.toBeCalled();
   });
 });
@@ -1298,6 +1443,9 @@ describe('#onFile', () => {
     const { builder } = setup();
     const handler = jest.fn();
     const predicate = jest.fn(() => true);
+    const file = {
+      url: 'https://example.com/bot/files/file.doc',
+    };
     const context = {
       event: {
         isMessage: true,
@@ -1306,16 +1454,15 @@ describe('#onFile', () => {
         attachments: [
           {
             type: 'file',
-            payload: {
-              url: 'https://example.com/bot/files/file.doc',
-            },
+            payload: file,
           },
         ],
+        file,
       },
     };
     builder.onFile(predicate, handler);
     await builder.build()(context);
-    expect(predicate).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(file, context);
     expect(handler).toBeCalledWith(context);
   });
 
@@ -1325,10 +1472,13 @@ describe('#onFile', () => {
     const handler = jest.fn();
     const context = {
       event: {
+        isMessage: true,
+        isText: true,
         isFile: false,
         message: {
           text: 'wow',
         },
+        text: 'wow',
       },
     };
     builder.onFile(predicate, handler);
@@ -1341,22 +1491,24 @@ describe('#onFile', () => {
     const { builder } = setup();
     const handler = jest.fn();
     const predicate = jest.fn(() => Promise.resolve(false));
+    const file = {
+      url: 'https://example.com/bot/files/file.doc',
+    };
     const context = {
       event: {
         isFile: true,
         attachments: [
           {
             type: 'file',
-            payload: {
-              url: 'https://example.com/bot/files/file.doc',
-            },
+            payload: file,
           },
         ],
+        file,
       },
     };
     builder.onFile(predicate, handler);
     await builder.build()(context);
-    expect(predicate).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(file, context);
     expect(handler).not.toBeCalled();
   });
 });
@@ -1396,24 +1548,24 @@ describe('#onFallback', () => {
     const { builder } = setup();
     const handler = jest.fn();
     const predicate = jest.fn(() => true);
+    const fallback = {
+      type: 'fallback',
+      payload: null,
+      title: 'TITLE_OF_THE_URL_ATTACHMENT',
+      URL: 'URL_OF_THE_ATTACHMENT',
+    };
     const context = {
       event: {
         isMessage: true,
         isFallback: true,
         hasAttachment: true,
-        attachments: [
-          {
-            type: 'fallback',
-            payload: null,
-            title: 'TITLE_OF_THE_URL_ATTACHMENT',
-            URL: 'URL_OF_THE_ATTACHMENT',
-          },
-        ],
+        attachments: [fallback],
+        fallback,
       },
     };
     builder.onFallback(predicate, handler);
     await builder.build()(context);
-    expect(predicate).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(fallback, context);
     expect(handler).toBeCalledWith(context);
   });
 
@@ -1427,6 +1579,7 @@ describe('#onFallback', () => {
         message: {
           text: 'wow',
         },
+        text: 'wow',
       },
     };
     builder.onFallback(predicate, handler);
@@ -1439,22 +1592,22 @@ describe('#onFallback', () => {
     const { builder } = setup();
     const handler = jest.fn();
     const predicate = jest.fn(() => Promise.resolve(false));
+    const fallback = {
+      type: 'fallback',
+      payload: null,
+      title: 'TITLE_OF_THE_URL_ATTACHMENT',
+      URL: 'URL_OF_THE_ATTACHMENT',
+    };
     const context = {
       event: {
         isFallback: true,
-        attachments: [
-          {
-            type: 'fallback',
-            payload: null,
-            title: 'TITLE_OF_THE_URL_ATTACHMENT',
-            URL: 'URL_OF_THE_ATTACHMENT',
-          },
-        ],
+        attachments: [fallback],
+        fallback,
       },
     };
     builder.onFallback(predicate, handler);
     await builder.build()(context);
-    expect(predicate).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(fallback, context);
     expect(handler).not.toBeCalled();
   });
 });

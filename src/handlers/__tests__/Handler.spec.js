@@ -191,14 +191,22 @@ describe('#onMessage', () => {
     const { builder } = setup();
     const predicate = jest.fn(() => true);
     const handler = jest.fn();
+    const message = {
+      id: '325708',
+      type: 'text',
+      text: 'awesome',
+    };
     const context = {
       event: {
         isMessage: true,
+        isText: true,
+        message,
+        text: 'awesome',
       },
     };
     builder.onMessage(predicate, handler);
     await builder.build()(context);
-    expect(predicate).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(message, context);
     expect(handler).toBeCalledWith(context);
   });
 
@@ -220,14 +228,22 @@ describe('#onMessage', () => {
     const { builder } = setup();
     const predicate = jest.fn(() => Promise.resolve(false));
     const handler = jest.fn();
+    const message = {
+      id: '325708',
+      type: 'text',
+      text: 'awesome',
+    };
     const context = {
       event: {
         isMessage: true,
+        isText: true,
+        message,
+        text: 'awesome',
       },
     };
     builder.onMessage(predicate, handler);
     await builder.build()(context);
-    expect(predicate).toBeCalledWith(context);
+    expect(predicate).toBeCalledWith(message, context);
     expect(handler).not.toBeCalled();
   });
 });
@@ -374,6 +390,46 @@ describe('#onText', () => {
 
       await builder.build()(context);
 
+      expect(handler).not.toBeCalled();
+    });
+  });
+
+  describe('should support predicate function', () => {
+    it('match', async () => {
+      const { builder } = setup();
+      const handler = jest.fn();
+      const context = {
+        event: {
+          isMessage: true,
+          isText: true,
+          message: {
+            id: '325708',
+            type: 'text',
+            text: 'awesome',
+          },
+          text: 'awesome',
+        },
+      };
+      builder.onText(text => text === 'awesome', handler);
+      await builder.build()(context);
+      expect(handler).toBeCalledWith(context);
+    });
+
+    it('not match', async () => {
+      const { builder } = setup();
+      const handler = jest.fn();
+      const context = {
+        event: {
+          isMessage: true,
+          isText: true,
+          message: {
+            text: 'awesome',
+          },
+          text: 'awesome',
+        },
+      };
+      builder.onText(text => text !== 'awesome', handler);
+      await builder.build()(context);
       expect(handler).not.toBeCalled();
     });
   });

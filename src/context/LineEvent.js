@@ -318,6 +318,25 @@ export default class LineEvent implements Event {
   }
 
   /**
+   * Determine if the event is a postback event.
+   *
+   */
+  get isPayload(): boolean {
+    return this.isPostback;
+  }
+
+  /**
+   * The payload string from LINE raw event.
+   *
+   */
+  get payload(): ?string {
+    if (this.isPayload) {
+      return (this.postback: any).data;
+    }
+    return null;
+  }
+
+  /**
    * The date string from LINE postback event.
    *
    */

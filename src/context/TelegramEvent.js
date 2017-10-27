@@ -432,6 +432,25 @@ export default class TelegramEvent implements Event {
    *
    */
   get callbackQuery(): ?CallbackQuery {
-    return this._rawEvent.callback_query;
+    return this._rawEvent.callback_query || null;
+  }
+
+  /**
+   * Determine if the event is a callback query event.
+   *
+   */
+  get isPayload(): boolean {
+    return this.isCallbackQuery;
+  }
+
+  /**
+   * The payload string from Telegram raw event.
+   *
+   */
+  get payload(): ?string {
+    if (this.isPayload) {
+      return (this.callbackQuery: any).data;
+    }
+    return null;
   }
 }
