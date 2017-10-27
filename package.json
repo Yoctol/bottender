@@ -58,7 +58,6 @@
     "supertest": "^3.0.0"
   },
   "dependencies": {
-    "@yoctol/static": "^0.0.2",
     "axios": "^0.17.0",
     "babel-register": "^6.26.0",
     "body-parser": "^1.18.2",
