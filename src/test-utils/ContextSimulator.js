@@ -339,7 +339,7 @@ class ContextSimulator {
           isGroupArchive: false,
           isGroupClose: false,
           isGroupHistoryChanged: false,
-          isGroup_open: false,
+          isGroupOpen: false,
           isGroupRename: false,
           isGroupUnarchive: false,
           isImClose: false,
