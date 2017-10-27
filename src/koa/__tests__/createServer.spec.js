@@ -20,6 +20,16 @@ function setup({ platform }) {
   };
 }
 
+const _consoleError = console.error;
+
+beforeEach(() => {
+  console.error = jest.fn();
+});
+
+afterEach(() => {
+  console.error = _consoleError;
+});
+
 it('should handle token verification', async () => {
   const { bot } = setup({ platform: 'messenger' });
   const verifyToken = '1qaz2wsx';

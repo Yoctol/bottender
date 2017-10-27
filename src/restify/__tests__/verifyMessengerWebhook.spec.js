@@ -18,6 +18,16 @@ const createReqRes = ({ verifyToken }) => [
   },
 ];
 
+const _consoleError = console.error;
+
+beforeEach(() => {
+  console.error = jest.fn();
+});
+
+afterEach(() => {
+  console.error = _consoleError;
+});
+
 it('should correctly response the challenge when verifyToken is same', () => {
   const [req, res] = createReqRes({ verifyToken: '1qaz2wsx' });
   const next = jest.fn();

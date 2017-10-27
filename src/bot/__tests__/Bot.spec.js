@@ -25,6 +25,16 @@ function setup({
   };
 }
 
+const _consoleError = console.error;
+
+beforeEach(() => {
+  console.error = jest.fn();
+});
+
+afterEach(() => {
+  console.error = _consoleError;
+});
+
 describe('#connector', () => {
   it('can be access', () => {
     const { bot, connector } = setup({});

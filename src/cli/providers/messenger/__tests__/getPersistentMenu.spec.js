@@ -18,6 +18,7 @@ const MOCK_FILE_WITH_PLATFORM = {
 };
 
 let _client;
+const _consoleLog = console.log;
 
 beforeEach(() => {
   _client = {
@@ -26,7 +27,12 @@ beforeEach(() => {
   MessengerClient.connect = jest.fn(() => _client);
   log.error = jest.fn();
   log.print = jest.fn();
+  console.log = jest.fn();
   getConfig.mockReturnValue(MOCK_FILE_WITH_PLATFORM.messenger);
+});
+
+afterEach(() => {
+  console.log = _consoleLog;
 });
 
 it('be defined', () => {
