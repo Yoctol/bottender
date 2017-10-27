@@ -147,15 +147,14 @@ export default class Bot {
         });
       });
 
+      if (this._handler == null) {
+        throw new Error(
+          'Bot: Missing event handler function. You should assign it using onEvent(...)'
+        );
+      }
+      const handler: FunctionalHandler = this._handler;
       const promises = Promise.all(
-        contexts.map(context => {
-          if (this._handler == null) {
-            throw new Error(
-              'Bot: Missing event handler function. You should assign it using onEvent(...)'
-            );
-          }
-          return this._handler(context);
-        })
+        contexts.map(context => Promise.resolve().then(() => handler(context)))
       );
 
       if (this._sync) {
