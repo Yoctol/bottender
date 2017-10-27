@@ -19,6 +19,16 @@ function setup({ platform }) {
   };
 }
 
+const _consoleLog = console.log;
+
+beforeEach(() => {
+  console.log = jest.fn();
+});
+
+afterEach(() => {
+  console.log = _consoleLog;
+});
+
 it('should handle token verification', async () => {
   const { bot } = setup({ platform: 'messenger' });
   const verifyToken = '1qaz2wsx';
