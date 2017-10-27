@@ -1,17 +1,26 @@
 /* @flow */
 /* eslint-disable no-console */
 import chalk from 'chalk';
+import figures from 'figures';
+
+export function log(
+  msg: string,
+  color: string = 'blue',
+  icon: string = 'pointer'
+): void {
+  console.log(`${chalk[color](figures[icon])} ${msg}`);
+}
 
 export function print(msg: string): void {
-  console.log(chalk.green(`❯ ${msg}`));
+  log(msg, 'green');
 }
 
 export function warn(msg: string): void {
-  console.log(chalk.yellow(`❯ ${msg}`));
+  log(msg, 'yellow', 'warning');
 }
 
 export function error(msg: string): void {
-  console.log(chalk.red(`❯ ${msg}`));
+  log(msg, 'red', 'cross');
 }
 
 export function bold(msg: string): string {
