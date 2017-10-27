@@ -41,7 +41,6 @@
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-flow": "^6.23.0",
-    "documentation": "^5.3.3",
     "eslint": "^4.9.0",
     "eslint-config-prettier": "^2.6.0",
     "eslint-config-yoctol-base": "^0.14.1",
