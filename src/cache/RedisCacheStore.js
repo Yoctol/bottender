@@ -1,6 +1,6 @@
 /* @flow */
 import Redis from 'ioredis';
-import { isNumber } from 'lodash';
+import isNumber from 'lodash/isNumber';
 
 import type { CacheStore } from './CacheStore';
 
