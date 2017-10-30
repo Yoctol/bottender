@@ -6,8 +6,11 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 - **Flexible** - Declare handlers as any JavaScript function.
+
 - **Modern** - Source written with ES6/ES7 syntax and great async await supports.
+
 - **Modular** - Use session stores, server framework adapters and platform connectors with same interface.
+
 - **Learn Once, Write Anywhere** - Handle multiple platforms with unified development experience.
 
 Bottender is built on top of [Messaging APIs](https://github.com/Yoctol/messaging-apis).
