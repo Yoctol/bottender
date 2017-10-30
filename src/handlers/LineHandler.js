@@ -24,6 +24,12 @@ export default class LineHandler extends Handler {
         Predicate,
         FunctionalHandler | Builder,
       ] = (args: any);
+
+      warning(
+        typeof predicate === 'function',
+        `'onPostback' only accepts function, but received ${typeof predicate}`
+      );
+
       this.on(
         context =>
           context.event.isPostback &&
@@ -115,6 +121,12 @@ export default class LineHandler extends Handler {
         Predicate,
         FunctionalHandler | Builder,
       ] = (args: any);
+
+      warning(
+        typeof predicate === 'function',
+        `'onFollow' only accepts function, but received ${typeof predicate}`
+      );
+
       this.on(
         context =>
           context.event.isFollow && predicate(context.event.follow, context),
@@ -139,6 +151,12 @@ export default class LineHandler extends Handler {
         Predicate,
         FunctionalHandler | Builder,
       ] = (args: any);
+
+      warning(
+        typeof predicate === 'function',
+        `'onUnfollow' only accepts function, but received ${typeof predicate}`
+      );
+
       this.on(
         context =>
           context.event.isUnfollow &&
@@ -165,6 +183,12 @@ export default class LineHandler extends Handler {
         Predicate,
         FunctionalHandler | Builder,
       ] = (args: any);
+
+      warning(
+        typeof predicate === 'function',
+        `'onJoin' only accepts function, but received ${typeof predicate}`
+      );
+
       this.on(
         context =>
           context.event.isJoin && predicate(context.event.join, context),
@@ -190,6 +214,12 @@ export default class LineHandler extends Handler {
         Predicate,
         FunctionalHandler | Builder,
       ] = (args: any);
+
+      warning(
+        typeof predicate === 'function',
+        `'onLeave' only accepts function, but received ${typeof predicate}`
+      );
+
       this.on(
         context =>
           context.event.isLeave && predicate(context.event.leave, context),
@@ -214,6 +244,12 @@ export default class LineHandler extends Handler {
         Predicate,
         FunctionalHandler | Builder,
       ] = (args: any);
+
+      warning(
+        typeof predicate === 'function',
+        `'onBeacon' only accepts function, but received ${typeof predicate}`
+      );
+
       this.on(
         context =>
           context.event.isBeacon && predicate(context.event.beacon, context),

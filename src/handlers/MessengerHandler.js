@@ -24,6 +24,12 @@ export default class MessengerHandler extends Handler {
         Predicate,
         FunctionalHandler | Builder,
       ] = (args: any);
+
+      warning(
+        typeof predicate === 'function',
+        `'onPostback' only accepts function, but received ${typeof predicate}`
+      );
+
       this.on(
         context =>
           context.event.isPostback &&
@@ -63,7 +69,7 @@ export default class MessengerHandler extends Handler {
         typeof pattern === 'function' ||
           typeof pattern === 'string' ||
           pattern instanceof RegExp,
-        `'onPayload' only accepts string or regex, but received ${typeof pattern}`
+        `'onPayload' only accepts string, regex or function, but received ${typeof pattern}`
       );
 
       if (typeof pattern === 'function') {
@@ -121,6 +127,12 @@ export default class MessengerHandler extends Handler {
         Predicate,
         FunctionalHandler | Builder,
       ] = (args: any);
+
+      warning(
+        typeof predicate === 'function',
+        `'onPayment' only accepts function, but received ${typeof predicate}`
+      );
+
       this.on(
         context =>
           context.event.isPayment && predicate(context.event.payment, context),
@@ -145,6 +157,12 @@ export default class MessengerHandler extends Handler {
         Predicate,
         FunctionalHandler | Builder,
       ] = (args: any);
+
+      warning(
+        typeof predicate === 'function',
+        `'onOptin' only accepts function, but received ${typeof predicate}`
+      );
+
       this.on(
         context =>
           context.event.isOptin && predicate(context.event.optin, context),
@@ -169,6 +187,12 @@ export default class MessengerHandler extends Handler {
         Predicate,
         FunctionalHandler | Builder,
       ] = (args: any);
+
+      warning(
+        typeof predicate === 'function',
+        `'onCheckoutUpdate' only accepts function, but received ${typeof predicate}`
+      );
+
       this.on(
         context =>
           context.event.isCheckoutUpdate &&
@@ -194,6 +218,12 @@ export default class MessengerHandler extends Handler {
         Predicate,
         FunctionalHandler | Builder,
       ] = (args: any);
+
+      warning(
+        typeof predicate === 'function',
+        `'onPreCheckout' only accepts function, but received ${typeof predicate}`
+      );
+
       this.on(
         context =>
           context.event.isPreCheckout &&
@@ -219,6 +249,12 @@ export default class MessengerHandler extends Handler {
         Predicate,
         FunctionalHandler | Builder,
       ] = (args: any);
+
+      warning(
+        typeof predicate === 'function',
+        `'onQuickReply' only accepts function, but received ${typeof predicate}`
+      );
+
       this.on(
         context =>
           context.event.isQuickReply &&
@@ -268,6 +304,12 @@ export default class MessengerHandler extends Handler {
         Predicate,
         FunctionalHandler | Builder,
       ] = (args: any);
+
+      warning(
+        typeof predicate === 'function',
+        `'onRead' only accepts function, but received ${typeof predicate}`
+      );
+
       this.on(
         context =>
           context.event.isRead && predicate(context.event.read, context),
@@ -292,6 +334,12 @@ export default class MessengerHandler extends Handler {
         Predicate,
         FunctionalHandler | Builder,
       ] = (args: any);
+
+      warning(
+        typeof predicate === 'function',
+        `'onDelivery' only accepts function, but received ${typeof predicate}`
+      );
+
       this.on(
         context =>
           context.event.isDelivery &&
@@ -317,6 +365,12 @@ export default class MessengerHandler extends Handler {
         Predicate,
         FunctionalHandler | Builder,
       ] = (args: any);
+
+      warning(
+        typeof predicate === 'function',
+        `'onLocation' only accepts function, but received ${typeof predicate}`
+      );
+
       this.on(
         context =>
           context.event.isLocation &&
@@ -342,6 +396,12 @@ export default class MessengerHandler extends Handler {
         Predicate,
         FunctionalHandler | Builder,
       ] = (args: any);
+
+      warning(
+        typeof predicate === 'function',
+        `'onImage' only accepts function, but received ${typeof predicate}`
+      );
+
       this.on(
         context =>
           context.event.isImage && predicate(context.event.image, context),
@@ -366,6 +426,12 @@ export default class MessengerHandler extends Handler {
         Predicate,
         FunctionalHandler | Builder,
       ] = (args: any);
+
+      warning(
+        typeof predicate === 'function',
+        `'onAudio' only accepts function, but received ${typeof predicate}`
+      );
+
       this.on(
         context =>
           context.event.isAudio && predicate(context.event.audio, context),
@@ -390,6 +456,12 @@ export default class MessengerHandler extends Handler {
         Predicate,
         FunctionalHandler | Builder,
       ] = (args: any);
+
+      warning(
+        typeof predicate === 'function',
+        `'onVideo' only accepts function, but received ${typeof predicate}`
+      );
+
       this.on(
         context =>
           context.event.isVideo && predicate(context.event.video, context),
@@ -414,6 +486,12 @@ export default class MessengerHandler extends Handler {
         Predicate,
         FunctionalHandler | Builder,
       ] = (args: any);
+
+      warning(
+        typeof predicate === 'function',
+        `'onFile' only accepts function, but received ${typeof predicate}`
+      );
+
       this.on(
         context =>
           context.event.isFile && predicate(context.event.file, context),
@@ -438,6 +516,12 @@ export default class MessengerHandler extends Handler {
         Predicate,
         FunctionalHandler | Builder,
       ] = (args: any);
+
+      warning(
+        typeof predicate === 'function',
+        `'onFallback' only accepts function, but received ${typeof predicate}`
+      );
+
       this.on(
         context =>
           context.event.isFallback &&

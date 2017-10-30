@@ -80,6 +80,12 @@ export default class Handler {
         Predicate,
         FunctionalHandler | Builder,
       ] = (args: any);
+
+      warning(
+        typeof predicate === 'function',
+        `'onMessage' only accepts function, but received ${typeof predicate}`
+      );
+
       this.on(
         context =>
           context.event.isMessage && predicate(context.event.message, context),

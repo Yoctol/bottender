@@ -24,6 +24,12 @@ export default class TelegramHandler extends Handler {
         Predicate,
         FunctionalHandler | Builder,
       ] = (args: any);
+
+      warning(
+        typeof predicate === 'function',
+        `'onCallbackQuery' only accepts function, but received ${typeof predicate}`
+      );
+
       this.on(
         context =>
           context.event.isCallbackQuery &&
@@ -113,6 +119,12 @@ export default class TelegramHandler extends Handler {
         Predicate,
         FunctionalHandler | Builder,
       ] = (args: any);
+
+      warning(
+        typeof predicate === 'function',
+        `'onPhoto' only accepts function, but received ${typeof predicate}`
+      );
+
       this.on(
         context =>
           context.event.isPhoto && predicate(context.event.photo, context),
@@ -137,6 +149,12 @@ export default class TelegramHandler extends Handler {
         Predicate,
         FunctionalHandler | Builder,
       ] = (args: any);
+
+      warning(
+        typeof predicate === 'function',
+        `'onDocument' only accepts function, but received ${typeof predicate}`
+      );
+
       this.on(
         context =>
           context.event.isDocument &&
@@ -162,6 +180,12 @@ export default class TelegramHandler extends Handler {
         Predicate,
         FunctionalHandler | Builder,
       ] = (args: any);
+
+      warning(
+        typeof predicate === 'function',
+        `'onAudio' only accepts function, but received ${typeof predicate}`
+      );
+
       this.on(
         context =>
           context.event.isAudio && predicate(context.event.audio, context),
@@ -186,6 +210,12 @@ export default class TelegramHandler extends Handler {
         Predicate,
         FunctionalHandler | Builder,
       ] = (args: any);
+
+      warning(
+        typeof predicate === 'function',
+        `'onGame' only accepts function, but received ${typeof predicate}`
+      );
+
       this.on(
         context =>
           context.event.isGame && predicate(context.event.game, context),
@@ -210,6 +240,12 @@ export default class TelegramHandler extends Handler {
         Predicate,
         FunctionalHandler | Builder,
       ] = (args: any);
+
+      warning(
+        typeof predicate === 'function',
+        `'onSticker' only accepts function, but received ${typeof predicate}`
+      );
+
       this.on(
         context =>
           context.event.isSticker && predicate(context.event.sticker, context),
@@ -234,6 +270,12 @@ export default class TelegramHandler extends Handler {
         Predicate,
         FunctionalHandler | Builder,
       ] = (args: any);
+
+      warning(
+        typeof predicate === 'function',
+        `'onVideo' only accepts function, but received ${typeof predicate}`
+      );
+
       this.on(
         context =>
           context.event.isVideo && predicate(context.event.video, context),
@@ -258,6 +300,12 @@ export default class TelegramHandler extends Handler {
         Predicate,
         FunctionalHandler | Builder,
       ] = (args: any);
+
+      warning(
+        typeof predicate === 'function',
+        `'onVoice' only accepts function, but received ${typeof predicate}`
+      );
+
       this.on(
         context =>
           context.event.isVoice && predicate(context.event.voice, context),
@@ -282,6 +330,12 @@ export default class TelegramHandler extends Handler {
         Predicate,
         FunctionalHandler | Builder,
       ] = (args: any);
+
+      warning(
+        typeof predicate === 'function',
+        `'onVideoNote' only accepts function, but received ${typeof predicate}`
+      );
+
       this.on(
         context =>
           context.event.isVideoNote &&
@@ -307,6 +361,12 @@ export default class TelegramHandler extends Handler {
         Predicate,
         FunctionalHandler | Builder,
       ] = (args: any);
+
+      warning(
+        typeof predicate === 'function',
+        `'onContact' only accepts function, but received ${typeof predicate}`
+      );
+
       this.on(
         context =>
           context.event.isContact && predicate(context.event.contact, context),
@@ -331,6 +391,12 @@ export default class TelegramHandler extends Handler {
         Predicate,
         FunctionalHandler | Builder,
       ] = (args: any);
+
+      warning(
+        typeof predicate === 'function',
+        `'onLocation' only accepts function, but received ${typeof predicate}`
+      );
+
       this.on(
         context =>
           context.event.isLocation &&
@@ -356,6 +422,12 @@ export default class TelegramHandler extends Handler {
         Predicate,
         FunctionalHandler | Builder,
       ] = (args: any);
+
+      warning(
+        typeof predicate === 'function',
+        `'onVenue' only accepts function, but received ${typeof predicate}`
+      );
+
       this.on(
         context =>
           context.event.isVenue && predicate(context.event.venue, context),
