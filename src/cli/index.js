@@ -8,31 +8,6 @@ import providers from './providers';
 import { error } from './shared/log';
 
 const main = async argv => {
-  if (argv.v || argv.version || argv._[0] === 'version') {
-    console.log(pkg.version);
-    process.exit(0);
-  }
-
-  if (argv.h || argv.help) {
-    let provider;
-    if (argv._.length === 0) {
-      // bottender -h
-      provider = providers.sh;
-    } else {
-      // bottender [provider] -h
-      const providerName = argv._[0];
-      provider = providers[providerName];
-    }
-    provider.help();
-    process.exit(0);
-  }
-
-  // the context object to supply to the providers or the commands
-  const ctx = {
-    config: null, // FIXME
-    argv,
-  };
-
   let providerName;
   let subcommand;
 
@@ -47,7 +22,23 @@ const main = async argv => {
       subcommand = argv._[0];
   }
 
+  if (argv.v || argv.version || argv._[0] === 'version') {
+    console.log(pkg.version);
+    process.exit(0);
+  }
+
   const provider = providers[providerName];
+
+  if (argv.h || argv.help) {
+    provider.help();
+    process.exit(0);
+  }
+
+  // the context object to supply to the providers or the commands
+  const ctx = {
+    config: null, // FIXME
+    argv,
+  };
 
   try {
     const method = get(provider, camelCase(subcommand));
