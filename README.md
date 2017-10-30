@@ -64,7 +64,28 @@ npm install bottender
 
 ## Contributing
 
-TODO
+Pull Requests and issue reports are welcome. You can follow steps below to submit your pull requests:  
+
+Fork, then clone the repo:
+
+```sh
+git clone git@github.com:your-username/bottender.git
+```
+
+Install the dependencies:
+
+```sh
+cd bottender
+yarn
+```
+
+Make sure the tests pass (including eslint, flow checks and jest tests):
+
+```sh
+yarn test
+```
+
+Make your changes and tests, and make sure the tests pass.
 
 ## License
 
