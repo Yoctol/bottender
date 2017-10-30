@@ -25,6 +25,24 @@ it('should response 200 when no error be thrown', async () => {
   expect(response.status).toBe(200);
 });
 
+it('should response 200 if there is response return from requestHandler', async () => {
+  const { bot, requestHandler } = setup();
+  requestHandler.mockReturnValue(Promise.resolve({}));
+
+  const middleware = createMiddleware(bot);
+
+  const request = { body: {} };
+  const response = {
+    set: jest.fn(),
+  };
+
+  await middleware({ request, response });
+
+  expect(response.set).toBeCalledWith({});
+  expect(response.status).toBe(200);
+  expect(response.body).toBe('');
+});
+
 it('should overwrite response when provided', async () => {
   const { bot, requestHandler } = setup();
   requestHandler.mockReturnValue(

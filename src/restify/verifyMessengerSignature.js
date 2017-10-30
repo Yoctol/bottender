@@ -1,6 +1,6 @@
-const verifyMessenferSignature = bot => (req, res, next) => {
+const verifyMessengerSignature = bot => (req, res, next) => {
   if (
-    bot.connector.verifySignature(req.rawBody, req.header['x-hub-signature'])
+    bot.connector.verifySignature(req.rawBody, req.headers['x-hub-signature'])
   ) {
     return next();
   }
@@ -9,7 +9,7 @@ const verifyMessenferSignature = bot => (req, res, next) => {
     request: {
       rawBody: req.rawBody,
       headers: {
-        'x-hub-signature': req.header['x-hub-signature'],
+        'x-hub-signature': req.headers['x-hub-signature'],
       },
     },
   };
@@ -18,4 +18,4 @@ const verifyMessenferSignature = bot => (req, res, next) => {
   res.send({ error });
 };
 
-export default verifyMessenferSignature;
+export default verifyMessengerSignature;

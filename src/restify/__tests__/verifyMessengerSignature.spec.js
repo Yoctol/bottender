@@ -8,45 +8,46 @@ const bot = {
 
 const middleware = verifyMessengerSignature(bot);
 
-const createContext = () => ({
-  request: {
+const createReqRes = () => [
+  {
     rawBody: 'raw body from messenger',
     headers: {
       'x-hub-signature': 'signature from messenger',
     },
   },
-  response: {},
-});
-
-const _consoleError = console.error;
-
-beforeEach(() => {
-  console.error = jest.fn();
-});
-
-afterEach(() => {
-  console.error = _consoleError;
-});
+  {
+    send: jest.fn(),
+    status: jest.fn(),
+  },
+];
 
 it('should call next when verification pass', () => {
-  const ctx = createContext();
+  const [req, res] = createReqRes();
   const next = jest.fn();
   bot.connector.verifySignature.mockReturnValueOnce(true);
 
-  middleware(ctx, next);
+  middleware(req, res, next);
 
   expect(next).toBeCalled();
 });
 
 it('should send 400 when verification fail', () => {
-  const ctx = createContext();
+  const [req, res] = createReqRes();
   const next = jest.fn();
   bot.connector.verifySignature.mockReturnValueOnce(false);
 
-  middleware(ctx, next);
+  middleware(req, res, next);
 
-  expect(ctx.response.status).toBe(400);
-  expect(ctx.response.body.error.message).toBe(
-    'Messenger Signature Validation Failed!'
-  );
+  expect(res.status).toBeCalledWith(400);
+  expect(res.send).toBeCalledWith({
+    error: {
+      message: 'Messenger Signature Validation Failed!',
+      request: {
+        rawBody: req.rawBody,
+        headers: {
+          'x-hub-signature': req.headers['x-hub-signature'],
+        },
+      },
+    },
+  });
 });

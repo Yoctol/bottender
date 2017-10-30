@@ -2,11 +2,15 @@ import micro from 'micro';
 
 import createRequestHandler from '../createRequestHandler';
 import verifyMessengerWebhook from '../verifyMessengerWebhook';
+import verifySlackWebhook from '../verifySlackWebhook';
 import verifyLineSignature from '../verifyLineSignature';
+import verifyMessengerSignature from '../verifyMessengerSignature';
 
 jest.mock('micro');
 jest.mock('../verifyMessengerWebhook');
+jest.mock('../verifySlackWebhook');
 jest.mock('../verifyLineSignature');
+jest.mock('../verifyMessengerSignature');
 
 function setup({ platform }) {
   const requestHandler = jest.fn();
@@ -41,6 +45,24 @@ it('should call verifyMessengerWebhook when GET', async () => {
   expect(middleware).toBeCalled();
 });
 
+it('should call verifySlackWebhook when POST and body with type', async () => {
+  const { bot } = setup({ platform: 'slack' });
+  const middleware = jest.fn();
+  verifySlackWebhook.mockReturnValue(middleware);
+
+  const microRequestHandler = createRequestHandler(bot);
+  micro.json.mockImplementationOnce(req => req.body);
+
+  const req = { method: 'POST', body: { type: 'url_verification' } };
+  const res = {
+    sendStatus: jest.fn(),
+  };
+
+  await microRequestHandler(req, res);
+
+  expect(verifySlackWebhook()).toBeCalled();
+});
+
 it('should not call verifyMessengerWebhook when GET if platform is not messenger', async () => {
   const { bot, requestHandler } = setup({ platform: 'line' });
   const middleware = jest.fn();
@@ -58,6 +80,42 @@ it('should not call verifyMessengerWebhook when GET if platform is not messenger
 
   expect(middleware).not.toBeCalled();
   expect(micro.send).toBeCalledWith(res, 405);
+});
+
+it('should call verifyMessengerSignature if platform is Messenger', async () => {
+  const { bot, requestHandler } = setup({ platform: 'messenger' });
+  const middleware = jest.fn();
+  middleware.mockReturnValue(Promise.resolve(true));
+  verifyMessengerSignature.mockReturnValue(middleware);
+  requestHandler.mockReturnValue(Promise.resolve());
+
+  const microRequestHandler = createRequestHandler(bot);
+
+  const req = { method: 'POST' };
+  const res = {};
+
+  await microRequestHandler(req, res);
+
+  expect(middleware).toBeCalled();
+  expect(micro.send).toBeCalledWith(res, 200);
+});
+
+it('should not send 200 if verifyMessengerSignature fail if platform is Messenger', async () => {
+  const { bot, requestHandler } = setup({ platform: 'messenger' });
+  const middleware = jest.fn();
+  middleware.mockReturnValue(Promise.resolve(false));
+  verifyMessengerSignature.mockReturnValue(middleware);
+  requestHandler.mockReturnValue(Promise.resolve());
+
+  const microRequestHandler = createRequestHandler(bot);
+
+  const req = { method: 'POST' };
+  const res = {};
+
+  await microRequestHandler(req, res);
+
+  expect(middleware).toBeCalled();
+  expect(micro.send).not.toBeCalled();
 });
 
 it('should call verifyLineSignature if platform is Line', async () => {
@@ -108,6 +166,20 @@ it('should response 200 when no error be thrown in requestHandler', async () => 
   await microRequestHandler(req, res);
 
   expect(micro.send).toBeCalledWith(res, 200);
+});
+
+it('should response 200 if there is response return from requestHandler', async () => {
+  const { bot, requestHandler } = setup({ platform: 'other' });
+  requestHandler.mockReturnValue(Promise.resolve({ headers: {} }));
+
+  const microRequestHandler = createRequestHandler(bot);
+
+  const req = { method: 'POST', body: {} };
+  const res = {};
+
+  await microRequestHandler(req, res);
+
+  expect(micro.send).toBeCalledWith(res, 200, '');
 });
 
 it('should overwrite response when provide', async () => {

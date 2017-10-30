@@ -2,7 +2,7 @@ const verifyMessengerSignature = bot => ({ request, response }, next) => {
   if (
     bot.connector.verifySignature(
       request.rawBody,
-      request.header['x-hub-signature']
+      request.headers['x-hub-signature']
     )
   ) {
     return next();
@@ -11,8 +11,8 @@ const verifyMessengerSignature = bot => ({ request, response }, next) => {
     message: 'Messenger Signature Validation Failed!',
     request: {
       rawBody: request.rawBody,
-      header: {
-        'x-hub-signature': request.header['x-hub-signature'],
+      headers: {
+        'x-hub-signature': request.headers['x-hub-signature'],
       },
     },
   };

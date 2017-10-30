@@ -11,7 +11,7 @@ const middleware = verifyLineSignature(bot);
 const createContext = () => ({
   request: {
     rawBody: 'raw body from line',
-    header: {
+    headers: {
       'x-line-signature': 'signature from line',
     },
   },

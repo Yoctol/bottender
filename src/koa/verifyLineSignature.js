@@ -2,7 +2,7 @@ const verifyLineSignature = bot => ({ request, response }, next) => {
   if (
     bot.connector.verifySignature(
       request.rawBody,
-      request.header['x-line-signature']
+      request.headers['x-line-signature']
     )
   ) {
     return next();
@@ -11,8 +11,8 @@ const verifyLineSignature = bot => ({ request, response }, next) => {
     message: 'LINE Signature Validation Failed!',
     request: {
       rawBody: request.rawBody,
-      header: {
-        'x-line-signature': request.header['x-line-signature'],
+      headers: {
+        'x-line-signature': request.headers['x-line-signature'],
       },
     },
   };

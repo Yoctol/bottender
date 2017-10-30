@@ -1,6 +1,6 @@
 import { text, send } from 'micro';
 
-const verifyMessenferSignature = bot => async (req, res) => {
+const verifyMessengerSignature = bot => async (req, res) => {
   const rawBody = await text(req);
 
   const verified = bot.connector.verifySignature(
@@ -24,4 +24,4 @@ const verifyMessenferSignature = bot => async (req, res) => {
   return verified;
 };
 
-export default verifyMessenferSignature;
+export default verifyMessengerSignature;
