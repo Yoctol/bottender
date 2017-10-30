@@ -24,8 +24,9 @@ Supported platforms:
 You can find the Bottender documentation on the website.
 
 - [Getting Started](https://yoctol.github.io/bottender-docs/docs/GettingStarted)
-- [Guides](https://yoctol.github.io/bottender-docs/docs/GettingStarted) TODO
-- [API Reference](https://yoctol.github.io/bottender-docs/docs/GettingStarted) TODO
+- [Platforms](https://yoctol.github.io/bottender-docs/docs/Platforms-Messenger)
+- [Guides](https://yoctol.github.io/bottender-docs/docs/Guides-Commands)
+- [API Reference](https://yoctol.github.io/bottender-docs/docs/APIReference-Context)
 
 ## Examples
 
