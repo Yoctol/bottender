@@ -5,6 +5,8 @@
 [![coverage](https://codecov.io/gh/Yoctol/bottender/branch/master/graph/badge.svg)](https://codecov.io/gh/Yoctol/bottender)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
+![](https://user-images.githubusercontent.com/3382565/32216617-85cb703a-bdf3-11e7-9a0b-0e084b47c39e.png)
+
 - **Flexible** - Declare handlers as any JavaScript function.
 
 - **Modern** - Source written with ES6/ES7 syntax and great async await supports.
@@ -14,10 +16,6 @@
 - **Learn Once, Write Anywhere** - Handle multiple platforms with unified development experience.
 
 Bottender is built on top of [Messaging APIs](https://github.com/Yoctol/messaging-apis).
-
-Supported platforms:
-
-<img src="https://static.xx.fbcdn.net/rsrc.php/v3/y8/r/R_1BAhxMP5I.png" alt="Messenger" width="100" /><img src="http://is5.mzstatic.com/image/thumb/Purple117/v4/01/c2/4d/01c24d99-4aae-71ea-24e2-d0b68f8c53d2/source/1200x630bb.jpg" alt="LINE" width="100" /><img src="https://cdn-images-1.medium.com/max/1200/1*TiKyhAN2gx4PpbOsiBhYcw.png" alt="Slack" width="100" /><img src="https://telegram.org/img/t_logo.png" alt="Telegram" width="90" />
 
 ## Documentation
 
