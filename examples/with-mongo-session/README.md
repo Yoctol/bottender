@@ -1,0 +1,23 @@
+# MongoDB Session
+
+## Install and Run
+
+Download this example or clone [bottender](https://github.com/Yoctol/bottender).
+
+```
+curl https://codeload.github.com/Yoctol/bottender/tar.gz/master | tar -xz --strip=2 bottender-master/examples/with-mongo-session
+cd with-mongo-session
+npm install
+npm run dev
+```
+
+## Idea of this example
+
+This example shows how to use Session to store some information from users and store sessions in your MongoDB.
+For more information, check our [session guide](https://yoctol.github.io/bottender-docs/docs/Guides-Session).
+
+## Related examples
+
+- [with-memory-session](../with-memory-session)
+- [with-file-session](../with-file-session)
+- [with-redis-session](../with-redis-session)
