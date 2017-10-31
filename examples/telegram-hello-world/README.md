@@ -13,7 +13,7 @@ npm run dev
 
 ## Idea of this example
 
-This example is a simple bot running on [Telegram](https://telegram.org/). You have to get `accessToken` and a webhook `url` before run this bot.  
+This example is a simple bot running on [Telegram](https://telegram.org/). You have to get `accessToken` and a webhook `url` before running this bot.  
 For more information, check our [Telegram guides](https://yoctol.github.io/bottender-docs/docs/Platforms-Telegram).  
 
 ## Related examples

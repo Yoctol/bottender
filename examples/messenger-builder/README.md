@@ -13,7 +13,7 @@ npm run dev
 
 ## Idea of this example
 
-This example shows how to combine [handler](https://yoctol.github.io/bottender-docs/docs/APIReference-Handler) with [Messenger](https://www.messenger.com/) bot. You have to get `accessToken` and `appSecret` before run this bot.  
+This example shows how to combine [handler](https://yoctol.github.io/bottender-docs/docs/APIReference-Handler) with [Messenger](https://www.messenger.com/) bot. You have to get `accessToken` and `appSecret` before running this bot.  
 For more information, check our [Messenger guides](https://yoctol.github.io/bottender-docs/docs/Platforms-Messenger).  
 
 ## Related examples
