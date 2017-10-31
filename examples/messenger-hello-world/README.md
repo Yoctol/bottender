@@ -18,7 +18,7 @@ For more information, check our [Messenger guides](https://yoctol.github.io/bott
 
 ## Related examples
 
-- [messenger-handler](../messenger-handler)
+- [messenger-builder](../messenger-builder)
 - [console-hello-world](../console-hello-world)
 - [line-hello-world](../line-hello-world)
 - [slack-hello-world](../slack-hello-world)

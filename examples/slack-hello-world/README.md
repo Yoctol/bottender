@@ -18,7 +18,7 @@ For more information, check our [Slack guides](https://yoctol.github.io/bottende
 
 ## Related examples
 
-- [slack-handler](../slack-handler)
+- [slack-builder](../slack-builder)
 - [console-hello-world](../console-hello-world)
 - [messenger-hello-world](../messenger-hello-world)
 - [slack-hello-world](../slack-hello-world)

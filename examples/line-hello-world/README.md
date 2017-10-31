@@ -18,7 +18,7 @@ For more information, check our [LINE guides](https://yoctol.github.io/bottender
 
 ## Related examples
 
-- [line-handler](../line-handler)
+- [line-builder](../line-builder)
 - [console-hello-world](../console-hello-world)
 - [slack-hello-world](../slack-hello-world)
 - [telegram-hello-world](../telegram-hello-world)

@@ -20,4 +20,4 @@ It is just way too much trouble when you handle lots of platform configs separat
 - [cross-platform](../cross-platform)
 - [with-express](../with-express)
 - [messenger-hello-world](../messenger-hello-world)
-- [messenger-handler](../messenger-handler)
+- [messenger-builder](../messenger-builder)
