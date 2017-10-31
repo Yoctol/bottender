@@ -19,6 +19,6 @@ The best feature of this example is that you can only develop one handler for fo
 ## Related examples
 
 - [messenger-builder](../messenger-builder)
-- [line-handler](../line-handler)
+- [line-builder](../line-builder)
 - [slack-builder](../slack-builder)
 - [telegram-builder](../telegram-builder)

@@ -18,7 +18,7 @@ For more information, check our [Telegram guides](https://yoctol.github.io/botte
 
 ## Related examples
 
-- [telegram-handler](../telegram-handler)
+- [telegram-builder](../telegram-builder)
 - [console-hello-world](../console-hello-world)
 - [messenger-hello-world](../messenger-hello-world)
 - [line-hello-world](../line-hello-world)
