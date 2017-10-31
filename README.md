@@ -13,7 +13,7 @@
 
 - **Modular** - Use session stores, server framework adapters and platform connectors with same interface.
 
-- **Learn Once, Write Anywhere** - Handle multiple platforms with unified development experience.
+- **Learn Once, Write Anywhere** - Handle multiple platforms with consistent development experience.
 
 Bottender is built on top of [Messaging APIs](https://github.com/Yoctol/messaging-apis).
 
