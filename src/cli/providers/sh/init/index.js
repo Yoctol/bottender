@@ -310,7 +310,7 @@ export async function init() {
     print(
       `Please make sure you have edited ${bold(
         'bottender.config.js'
-      )} before run the bot.`
+      )} before running the bot.`
     );
     print('');
     print('Inside that directory, you can run several commands:');
