@@ -167,9 +167,9 @@ export default class MessengerConnector
       // FIXME: refine user
       const user = await this._client.getUserProfile(senderId);
       session.user = {
-        id: senderId,
         _updatedAt: new Date().toISOString(),
         ...user,
+        id: senderId,
       };
     }
 
