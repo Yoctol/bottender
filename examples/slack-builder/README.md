@@ -13,8 +13,8 @@ npm run dev
 
 ## Idea of this example
 
-This example shows how to combine [handler](https://yoctol.github.io/bottender-docs/docs/APIReference-Handler) with [Slack](https://slack.com/) bot. You have to get `accessToken` before running this bot.  
-For more information, check our [Slack guides](https://yoctol.github.io/bottender-docs/docs/Platforms-Slack).  
+This example shows how to combine [handler](https://bottender.js.org/docs/APIReference-Handler) with [Slack](https://slack.com/) bot. You have to get `accessToken` before running this bot.  
+For more information, check our [Slack guides](https://bottender.js.org/docs/Platforms-Slack).  
 
 ## Related examples
 

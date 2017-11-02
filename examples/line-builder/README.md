@@ -13,8 +13,8 @@ npm run dev
 
 ## Idea of this example
 
-This example shows how to combine [handler](https://yoctol.github.io/bottender-docs/docs/APIReference-Handler) with [LINE](https://line.me/) bot.
-For more information, check our [LINE guides](https://yoctol.github.io/bottender-docs/docs/Platforms-LINE).  
+This example shows how to combine [handler](https://bottender.js.org/docs/APIReference-Handler) with [LINE](https://line.me/) bot.
+For more information, check our [LINE guides](https://bottender.js.org/docs/Platforms-LINE).  
 
 ## Related examples
 

@@ -14,7 +14,7 @@ npm run dev
 ## Idea of this example
 
 This example is a simple bot running on [Messenger](https://www.messenger.com/). You have to get `accessToken` and `appSecret` before running this bot.  
-For more information, check our [Messenger guides](https://yoctol.github.io/bottender-docs/docs/Platforms-Messenger).  
+For more information, check our [Messenger guides](https://bottender.js.org/docs/Platforms-Messenger).  
 
 ## Related examples
 

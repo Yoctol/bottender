@@ -14,7 +14,7 @@ npm run dev
 ## Idea of this example
 
 This example shows how to use Session to store some information from users and store sessions in your local file.
-For more information, check our [session guide](https://yoctol.github.io/bottender-docs/docs/Guides-Session).
+For more information, check our [session guide](https://bottender.js.org/docs/Guides-Session).
 
 ## Related examples
 

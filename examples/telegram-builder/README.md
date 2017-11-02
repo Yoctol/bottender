@@ -13,8 +13,8 @@ npm run dev
 
 ## Idea of this example
 
-This example shows how to combine [handler](https://yoctol.github.io/bottender-docs/docs/APIReference-Handler) with [Telegram](https://telegram.org/) bot. You have to get `accessToken` and a webhook `url` before running this bot.  
-For more information, check our [Telegram guides](https://yoctol.github.io/bottender-docs/docs/Platforms-Telegram).  
+This example shows how to combine [handler](https://bottender.js.org/docs/APIReference-Handler) with [Telegram](https://telegram.org/) bot. You have to get `accessToken` and a webhook `url` before running this bot.  
+For more information, check our [Telegram guides](https://bottender.js.org/docs/Platforms-Telegram).  
 
 ## Related examples
 

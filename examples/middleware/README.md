@@ -13,8 +13,8 @@ npm run dev
 
 ## Idea of this example
 
-The feature of this example is using [handler](https://yoctol.github.io/bottender-docs/docs/APIReference-Handler) as middleware, so you are able to combine two handlers into one.  
-For more information, check our [Middleware guides](https://yoctol.github.io/bottender-docs/docs/Guides-Middleware).  
+The feature of this example is using [handler](https://bottender.js.org/docs/APIReference-Handler) as middleware, so you are able to combine two handlers into one.  
+For more information, check our [Middleware guides](https://bottender.js.org/docs/Guides-Middleware).  
 
 
 ## Related examples

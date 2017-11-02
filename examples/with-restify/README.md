@@ -14,7 +14,7 @@ npm run dev
 ## Idea of this example
 
 This is a simple example of creating an [restify](https://github.com/restify/node-restify) server as your bot's server.  
-Check our [server guide](https://yoctol.github.io/bottender-docs/docs/Guides-Server) for more information.
+Check our [server guide](https://bottender.js.org/docs/Guides-Server) for more information.
 
 ## Related examples
 

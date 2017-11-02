@@ -15,7 +15,7 @@ npm run dev
 
 This example shows how to combine your bot with **bot analytics tool**. In this case, we take [Botimize](https://www.getbotimize.com/) as an example.  
 
-The following code is the main part of this example which demonstrates the way to connect your bot with [Botimize](https://www.getbotimize.com/). Furthermore, You have better check [middleware guide](https://yoctol.github.io/bottender-docs/docs/Guides-Middleware) if you don't understand what is middleware.
+The following code is the main part of this example which demonstrates the way to connect your bot with [Botimize](https://www.getbotimize.com/). Furthermore, You have better check [middleware guide](https://bottender.js.org/docs/Guides-Middleware) if you don't understand what is middleware.
 
 ```js
 const server = createServer(bot, {
