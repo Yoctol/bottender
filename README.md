@@ -28,7 +28,7 @@ You can find the Bottender documentation on the website.
 
 ## Examples
 
-We have a bunch of examples in the [examples](../examples) folder. Here is the first one to get you started:
+We have a bunch of examples in the [examples](https://github.com/Yoctol/bottender/tree/master/examples) folder. Here is the first one to get you started:
 
 ```js
 const { ConsoleBot } = require('bottender');
