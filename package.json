@@ -4,6 +4,21 @@
   "license": "MIT",
   "main": "lib/index.js",
   "browser": "lib/browser.js",
+  "keywords": [
+    "messaging",
+    "messenger",
+    "line",
+    "slack",
+    "telegram",
+    "bot",
+    "chatbot",
+    "framework"
+  ],
+  "homepage": "https://bottender.js.org/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Yoctol/bottender.git"
+  },
   "files": [
     "bin",
     "lib",
