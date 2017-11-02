@@ -21,10 +21,10 @@ Bottender is built on top of [Messaging APIs](https://github.com/Yoctol/messagin
 
 You can find the Bottender documentation on the website.
 
-- [Getting Started](https://yoctol.github.io/bottender-docs/docs/GettingStarted)
-- [Platforms](https://yoctol.github.io/bottender-docs/docs/Platforms-Messenger)
-- [Guides](https://yoctol.github.io/bottender-docs/docs/Guides-Commands)
-- [API Reference](https://yoctol.github.io/bottender-docs/docs/APIReference-Context)
+- [Getting Started](https://bottender.js.org/docs/GettingStarted)
+- [Platforms](https://bottender.js.org/docs/Platforms-Messenger)
+- [Guides](https://bottender.js.org/docs/Guides-Commands)
+- [API Reference](https://bottender.js.org/docs/APIReference-Context)
 
 ## Examples
 
