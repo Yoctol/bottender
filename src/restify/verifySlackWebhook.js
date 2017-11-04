@@ -1,7 +1,12 @@
 const verifySlackWebhook = () => (req, res, next) => {
-  if (req.params.type === 'url_verification') {
+  const { body, params } = req;
+
+  if (params && params.type && params.type === 'url_verification') {
     res.end(req.params.challenge);
+  } else if (body && body.type && body.type === 'url_verification') {
+    res.end(req.body.challenge);
   }
+
   return next();
 };
 
