@@ -1,28 +1,28 @@
 version: 2
 # Reference variables.
 references:
-  docker_default: &docker_7
-    working_directory: /tmp/app
-    docker:
-      - image: node:7
-    environment:
-      TZ: "/usr/share/zoneinfo/Asia/Taipei"
   docker_default: &docker_8
     working_directory: /tmp/app
     docker:
       - image: node:8
     environment:
       TZ: "/usr/share/zoneinfo/Asia/Taipei"
+  docker_default: &docker_9
+    working_directory: /tmp/app
+    docker:
+      - image: node:9
+    environment:
+      TZ: "/usr/share/zoneinfo/Asia/Taipei"
 
 jobs:
-  build-node-7:
-    <<: *docker_7
+  build-node-9:
+    <<: *docker_9
     steps:
       - checkout
       - restore_cache:
           keys:
-            - node-7-cache-{{checksum "yarn.lock"}}
-            - node-7-cache
+            - node-9-cache-{{checksum "yarn.lock"}}
+            - node-9-cache
       - run:
           name: install dependencies
           command: |
@@ -32,7 +32,7 @@ jobs:
           name: build
           command: npm run build
       - save_cache:
-          key: node-7-cache-{{checksum "yarn.lock"}}
+          key: node-9-cache-{{checksum "yarn.lock"}}
           paths:
             - .yarn-cache
             - ./node_modules
@@ -41,8 +41,8 @@ jobs:
           paths:
             - node_modules
             - lib
-  test-node-7:
-    <<: *docker_7
+  test-node-9:
+    <<: *docker_9
     steps:
       - checkout
       - attach_workspace:
@@ -120,12 +120,12 @@ jobs:
 
 workflows:
   version: 2
-  test-on-node-7-and-8:
+  test-on-node-8-and-9:
     jobs:
-      - build-node-7
-      - test-node-7:
+      - build-node-9
+      - test-node-9:
           requires:
-            - build-node-7
+            - build-node-9
       - build-node-8
       - lint-node-8:
           requires:
