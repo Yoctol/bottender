@@ -31,7 +31,7 @@ it('should correctly response the challenge is an url_verification event', () =>
   expect(response.end).toBeCalledWith(
     'kImeZUaSI0jJLowDasma5WEiffaScgsjnINWDlpapA9fB7uCB36d'
   );
-  expect(next).toBeCalled();
+  expect(next).not.toBeCalled();
 });
 
 it('responds with success to url_verification event in body', () => {
@@ -45,7 +45,7 @@ it('responds with success to url_verification event in body', () => {
   expect(response.end).toBeCalledWith(
     'kImeZUaSI0jJLowDasma5WEiffaScgsjnINWDlpapA9fB7uCB36d'
   );
-  expect(next).toBeCalled();
+  expect(next).not.toBeCalled();
 });
 
 it('should only call next when request is not an url_verification event', () => {
