@@ -97,7 +97,10 @@ export default class SlackConnector implements Connector<SlackRequestBody> {
         Array.isArray(session.channel.members) &&
         session.channel.members.indexOf(senderId) < 0)
     ) {
-      session.channel = await this._client.getChannelInfo(channelId);
+      session.channel = await this._client.getConversationInfo(channelId);
+      session.channel.members = await this._client.getAllConversationMembers(
+        channelId
+      );
       session.channel._updatedAt = new Date().toISOString();
     }
 

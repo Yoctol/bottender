@@ -52,7 +52,8 @@ const botRequest = {
 function setup() {
   const mockSlackOAuthClient = {
     getUserInfo: jest.fn(),
-    getChannelInfo: jest.fn(),
+    getConversationInfo: jest.fn(),
+    getAllConversationMembers: jest.fn(),
     getAllUserList: jest.fn(),
   };
   SlackOAuthClient.connect = jest.fn();
@@ -105,8 +106,11 @@ describe('#updateSession', () => {
     const session = {};
 
     mockSlackOAuthClient.getUserInfo.mockReturnValue(Promise.resolve(user));
-    mockSlackOAuthClient.getChannelInfo.mockReturnValue(
+    mockSlackOAuthClient.getConversationInfo.mockReturnValue(
       Promise.resolve(channel)
+    );
+    mockSlackOAuthClient.getAllConversationMembers.mockReturnValue(
+      Promise.resolve(members)
     );
     mockSlackOAuthClient.getAllUserList.mockReturnValue(
       Promise.resolve(members)
@@ -115,7 +119,12 @@ describe('#updateSession', () => {
     await connector.updateSession(session, request.body);
 
     expect(mockSlackOAuthClient.getUserInfo).toBeCalledWith('U13A00000');
-    expect(mockSlackOAuthClient.getChannelInfo).toBeCalledWith('C6A900000');
+    expect(mockSlackOAuthClient.getConversationInfo).toBeCalledWith(
+      'C6A900000'
+    );
+    expect(mockSlackOAuthClient.getAllConversationMembers).toBeCalledWith(
+      'C6A900000'
+    );
     expect(mockSlackOAuthClient.getAllUserList).toBeCalled();
     expect(session).toEqual({
       user: {
@@ -124,6 +133,7 @@ describe('#updateSession', () => {
       },
       channel: {
         _updatedAt: expect.any(String),
+        members,
         ...channel,
       },
       team: { members, _updatedAt: expect.any(String) },
@@ -138,7 +148,8 @@ describe('#updateSession', () => {
     await connector.updateSession(session, botRequest.body);
 
     expect(mockSlackOAuthClient.getUserInfo).not.toBeCalled();
-    expect(mockSlackOAuthClient.getChannelInfo).not.toBeCalled();
+    expect(mockSlackOAuthClient.getConversationInfo).not.toBeCalled();
+    expect(mockSlackOAuthClient.getAllConversationMembers).not.toBeCalled();
     expect(mockSlackOAuthClient.getAllUserList).not.toBeCalled();
     expect(session).toEqual({});
   });
@@ -168,7 +179,8 @@ describe('#updateSession', () => {
     await connector.updateSession(session, body);
 
     expect(mockSlackOAuthClient.getUserInfo).not.toBeCalled();
-    expect(mockSlackOAuthClient.getChannelInfo).not.toBeCalled();
+    expect(mockSlackOAuthClient.getConversationInfo).not.toBeCalled();
+    expect(mockSlackOAuthClient.getAllConversationMembers).not.toBeCalled();
     expect(mockSlackOAuthClient.getAllUserList).not.toBeCalled();
   });
 });
