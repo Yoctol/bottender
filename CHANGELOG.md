@@ -1,4 +1,4 @@
-0.14.1 / 2017-11-07
+0.14.2 / 2017-11-07
 ===================
 ### slack
 - [fix] Slack `url_verification` fails with restify [#4](https://github.com/Yoctol/bottender/issues/4)
