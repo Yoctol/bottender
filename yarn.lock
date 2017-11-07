@@ -436,6 +436,10 @@ axios-error@^0.5.2:
   version "0.5.2"
   resolved "https://registry.yarnpkg.com/axios-error/-/axios-error-0.5.2.tgz#60cfa895422ce0537b270a4da80a4e121cceb061"
 
+axios-error@^0.5.4:
+  version "0.5.4"
+  resolved "https://registry.yarnpkg.com/axios-error/-/axios-error-0.5.4.tgz#f86af6b09df20366c65748e2f0e0b27cf993f8ba"
+
 axios-mock-adapter@^1.9.0:
   version "1.9.0"
   resolved "https://registry.yarnpkg.com/axios-mock-adapter/-/axios-mock-adapter-1.9.0.tgz#0e387666fceaf3f91262109a3956f588bc6af2d1"
@@ -3860,12 +3864,12 @@ messaging-api-messenger@^0.5.3:
     lodash.omit "^4.5.0"
     warning "^3.0.0"
 
-messaging-api-slack@^0.5.2:
-  version "0.5.2"
-  resolved "https://registry.yarnpkg.com/messaging-api-slack/-/messaging-api-slack-0.5.2.tgz#21a6342aa0cc53956df17fb32d08576c6c4efe96"
+messaging-api-slack@^0.5.6:
+  version "0.5.6"
+  resolved "https://registry.yarnpkg.com/messaging-api-slack/-/messaging-api-slack-0.5.6.tgz#ba86381b5fd017e157a2aebf57f9711e531e7e99"
   dependencies:
     axios "^0.17.0"
-    axios-error "^0.5.2"
+    axios-error "^0.5.4"
     invariant "^2.2.2"
     warning "^3.0.0"
 
