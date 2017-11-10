@@ -109,6 +109,27 @@ describe('#sendText', () => {
     });
   });
 
+  it('can call with tag', async () => {
+    const { context, client, session } = setup();
+
+    await context.sendText('xxx.com', { tag: 'ISSUE_RESOLUTION' });
+
+    expect(client.sendText).toBeCalledWith(session.user.id, 'xxx.com', {
+      messaging_type: 'MESSAGE_TAG',
+      tag: 'ISSUE_RESOLUTION',
+    });
+  });
+
+  it('can call with custom messaging_type', async () => {
+    const { context, client, session } = setup();
+
+    await context.sendText('xxx.com', { messaging_type: 'UPDATE' });
+
+    expect(client.sendText).toBeCalledWith(session.user.id, 'xxx.com', {
+      messaging_type: 'UPDATE',
+    });
+  });
+
   it('should mark context as handled', async () => {
     const { context } = setup();
 
@@ -297,6 +318,39 @@ describe('#sendGenericTemplate', () => {
       {
         image_aspect_ratio: ratio,
         messaging_type: 'RESPONSE',
+      }
+    );
+  });
+
+  it('can call with tag', async () => {
+    const { context, client, session } = setup();
+
+    const elements = {};
+
+    await context.sendGenericTemplate(elements, { tag: 'ISSUE_RESOLUTION' });
+
+    expect(client.sendGenericTemplate).toBeCalledWith(
+      session.user.id,
+      elements,
+      {
+        messaging_type: 'MESSAGE_TAG',
+        tag: 'ISSUE_RESOLUTION',
+      }
+    );
+  });
+
+  it('can call with custom messaging_type', async () => {
+    const { context, client, session } = setup();
+
+    const elements = {};
+
+    await context.sendGenericTemplate(elements, { messaging_type: 'UPDATE' });
+
+    expect(client.sendGenericTemplate).toBeCalledWith(
+      session.user.id,
+      elements,
+      {
+        messaging_type: 'UPDATE',
       }
     );
   });
