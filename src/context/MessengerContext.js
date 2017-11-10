@@ -110,6 +110,55 @@ class MessengerContext extends Context implements PlatformContext {
 
     return this._client.markSeen(this._session.user.id);
   }
+
+  async passThreadControl(
+    targetAppId: number,
+    metadata?: string
+  ): Promise<any> {
+    if (!this._session) {
+      warning(
+        false,
+        'passThreadControl: should not be called in context without session'
+      );
+      return;
+    }
+
+    this._isHandled = true;
+
+    return this._client.passThreadControl(
+      this._session.user.id,
+      targetAppId,
+      metadata
+    );
+  }
+
+  async passThreadControlToPageInbox(): Promise<any> {
+    if (!this._session) {
+      warning(
+        false,
+        'passThreadControlToPageInbox: should not be called in context without session'
+      );
+      return;
+    }
+
+    this._isHandled = true;
+
+    return this._client.passThreadControlToPageInbox(this._session.user.id);
+  }
+
+  async takeThreadControl(): Promise<any> {
+    if (!this._session) {
+      warning(
+        false,
+        'takeThreadControl: should not be called in context without session'
+      );
+      return;
+    }
+
+    this._isHandled = true;
+
+    return this._client.takeThreadControl(this._session.user.id);
+  }
 }
 
 const sendMethods = [
