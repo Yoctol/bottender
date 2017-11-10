@@ -101,11 +101,12 @@ it('get #client works', () => {
 describe('#sendText', () => {
   it('should call client.sendText', async () => {
     const { context, client, session } = setup();
-    const option = undefined;
 
     await context.sendText('xxx.com');
 
-    expect(client.sendText).toBeCalledWith(session.user.id, 'xxx.com', option);
+    expect(client.sendText).toBeCalledWith(session.user.id, 'xxx.com', {
+      messaging_type: 'RESPONSE',
+    });
   });
 
   it('should mark context as handled', async () => {
@@ -144,7 +145,9 @@ describe('#sendAttachment', () => {
       },
     });
 
-    expect(client.sendAttachment).toBeCalledWith(session.user.id, attachment);
+    expect(client.sendAttachment).toBeCalledWith(session.user.id, attachment, {
+      messaging_type: 'RESPONSE',
+    });
   });
 
   it('should mark context as handled', async () => {
@@ -167,7 +170,9 @@ describe('#sendImage', () => {
 
     await context.sendImage('xxx.com');
 
-    expect(client.sendImage).toBeCalledWith(session.user.id, 'xxx.com');
+    expect(client.sendImage).toBeCalledWith(session.user.id, 'xxx.com', {
+      messaging_type: 'RESPONSE',
+    });
   });
 
   it('should mark context as handled', async () => {
@@ -194,7 +199,9 @@ describe('#sendAudio', () => {
 
     await context.sendAudio('xxx.com');
 
-    expect(client.sendAudio).toBeCalledWith(session.user.id, 'xxx.com');
+    expect(client.sendAudio).toBeCalledWith(session.user.id, 'xxx.com', {
+      messaging_type: 'RESPONSE',
+    });
   });
 
   it('should mark context as handled', async () => {
@@ -212,7 +219,9 @@ describe('#sendVideo', () => {
 
     await context.sendVideo('xxx.com');
 
-    expect(client.sendVideo).toBeCalledWith(session.user.id, 'xxx.com');
+    expect(client.sendVideo).toBeCalledWith(session.user.id, 'xxx.com', {
+      messaging_type: 'RESPONSE',
+    });
   });
 
   it('should mark context as handled', async () => {
@@ -230,7 +239,9 @@ describe('#sendFile', () => {
 
     await context.sendFile('xxx.com');
 
-    expect(client.sendFile).toBeCalledWith(session.user.id, 'xxx.com');
+    expect(client.sendFile).toBeCalledWith(session.user.id, 'xxx.com', {
+      messaging_type: 'RESPONSE',
+    });
   });
 
   it('should mark context as handled', async () => {
@@ -253,7 +264,10 @@ describe('#sendQuickReplies', () => {
     expect(client.sendQuickReplies).toBeCalledWith(
       session.user.id,
       { text: 'xxx.com' },
-      quickReplies
+      quickReplies,
+      {
+        messaging_type: 'RESPONSE',
+      }
     );
   });
 
@@ -282,6 +296,7 @@ describe('#sendGenericTemplate', () => {
       elements,
       {
         image_aspect_ratio: ratio,
+        messaging_type: 'RESPONSE',
       }
     );
   });
@@ -309,7 +324,10 @@ describe('#sendButtonTemplate', () => {
     expect(client.sendButtonTemplate).toBeCalledWith(
       session.user.id,
       'yayaya',
-      buttons
+      buttons,
+      {
+        messaging_type: 'RESPONSE',
+      }
     );
   });
 
@@ -331,13 +349,18 @@ describe('#sendListTemplate', () => {
     const elements = [];
     const buttons = [];
 
-    await context.sendListTemplate(elements, buttons, 'large');
+    await context.sendListTemplate(elements, buttons, {
+      top_element_style: 'large',
+    });
 
     expect(client.sendListTemplate).toBeCalledWith(
       session.user.id,
       elements,
       buttons,
-      'large'
+      {
+        top_element_style: 'large',
+        messaging_type: 'RESPONSE',
+      }
     );
   });
 
@@ -361,7 +384,13 @@ describe('#sendReceiptTemplate', () => {
 
     await context.sendReceiptTemplate(receipt);
 
-    expect(client.sendReceiptTemplate).toBeCalledWith(session.user.id, receipt);
+    expect(client.sendReceiptTemplate).toBeCalledWith(
+      session.user.id,
+      receipt,
+      {
+        messaging_type: 'RESPONSE',
+      }
+    );
   });
 
   it('should mark context as handled', async () => {
@@ -385,7 +414,10 @@ describe('#sendAirlineBoardingPassTemplate', () => {
 
     expect(client.sendAirlineBoardingPassTemplate).toBeCalledWith(
       session.user.id,
-      boardingPass
+      boardingPass,
+      {
+        messaging_type: 'RESPONSE',
+      }
     );
   });
 
@@ -410,7 +442,10 @@ describe('#sendAirlineCheckinTemplate', () => {
 
     expect(client.sendAirlineCheckinTemplate).toBeCalledWith(
       session.user.id,
-      checkin
+      checkin,
+      {
+        messaging_type: 'RESPONSE',
+      }
     );
   });
 
@@ -435,7 +470,10 @@ describe('#sendAirlineItineraryTemplate', () => {
 
     expect(client.sendAirlineItineraryTemplate).toBeCalledWith(
       session.user.id,
-      itinerary
+      itinerary,
+      {
+        messaging_type: 'RESPONSE',
+      }
     );
   });
 
@@ -460,7 +498,10 @@ describe('#sendAirlineFlightUpdateTemplate', () => {
 
     expect(client.sendAirlineFlightUpdateTemplate).toBeCalledWith(
       session.user.id,
-      flightUpdate
+      flightUpdate,
+      {
+        messaging_type: 'RESPONSE',
+      }
     );
   });
 

@@ -61,7 +61,12 @@ class MessengerContext extends Context implements PlatformContext {
 
     this._isHandled = true;
 
-    return this._client.sendText(this._session.user.id, text, options);
+    const messageType = options && options.tag ? 'MESSAGE_TAG' : 'RESPONSE';
+
+    return this._client.sendText(this._session.user.id, text, {
+      messaging_type: messageType,
+      ...options,
+    });
   }
 
   async typingOn(): Promise<any> {
@@ -108,23 +113,24 @@ class MessengerContext extends Context implements PlatformContext {
 }
 
 const sendMethods = [
-  'sendAttachment',
-  'sendImage',
-  'sendAudio',
-  'sendVideo',
-  'sendFile',
-  'sendQuickReplies',
-  'sendGenericTemplate',
-  'sendButtonTemplate',
-  'sendListTemplate',
-  'sendReceiptTemplate',
-  'sendAirlineBoardingPassTemplate',
-  'sendAirlineCheckinTemplate',
-  'sendAirlineItineraryTemplate',
-  'sendAirlineFlightUpdateTemplate',
+  // method name, arguments length
+  ['sendAttachment', 3],
+  ['sendImage', 3],
+  ['sendAudio', 3],
+  ['sendVideo', 3],
+  ['sendFile', 3],
+  ['sendQuickReplies', 4],
+  ['sendGenericTemplate', 3],
+  ['sendButtonTemplate', 4],
+  ['sendListTemplate', 4],
+  ['sendReceiptTemplate', 3],
+  ['sendAirlineBoardingPassTemplate', 3],
+  ['sendAirlineCheckinTemplate', 3],
+  ['sendAirlineItineraryTemplate', 3],
+  ['sendAirlineFlightUpdateTemplate', 3],
 ];
 
-sendMethods.forEach(method => {
+sendMethods.forEach(([method, len]) => {
   Object.defineProperty(MessengerContext.prototype, `${method}`, {
     enumerable: false,
     configurable: true,
@@ -139,6 +145,14 @@ sendMethods.forEach(method => {
       }
 
       this._isHandled = true;
+
+      const options = args[len - 2];
+      const messageType = options && options.tag ? 'MESSAGE_TAG' : 'RESPONSE';
+
+      args[len - 2] = {
+        messaging_type: messageType,
+        ...options,
+      };
 
       return this._client[method](this._session.user.id, ...args);
     },
