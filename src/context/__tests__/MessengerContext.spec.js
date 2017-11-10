@@ -40,6 +40,9 @@ const createMockGraphAPIClient = () => ({
   sendAirlineItineraryTemplate: jest.fn(),
   sendAirlineFlightUpdateTemplate: jest.fn(),
   sendTextWithDelay: jest.fn(),
+  passThreadControl: jest.fn(),
+  passThreadControlToPageInbox: jest.fn(),
+  takeThreadControl: jest.fn(),
 });
 
 const rawEvent = {
@@ -667,5 +670,66 @@ describe('#typing', () => {
     expect(client.typingOn).toBeCalled();
     expect(sleep).toBeCalledWith(10);
     expect(client.typingOff).toBeCalled();
+  });
+});
+
+describe('#passThreadControl', () => {
+  it('should call to pass user thread control to other app', async () => {
+    const { context, client, session } = setup();
+
+    await context.passThreadControl(263902037430900, 'metadata');
+
+    expect(client.passThreadControl).toBeCalledWith(
+      session.user.id,
+      263902037430900,
+      'metadata'
+    );
+  });
+
+  it('should call warning if dont have session', async () => {
+    const { context, client } = setup({ session: false });
+
+    await context.passThreadControl(263902037430900, 'metadata');
+
+    expect(warning).toBeCalled();
+    expect(client.passThreadControl).not.toBeCalled();
+  });
+});
+
+describe('#passThreadControlToPageInbox', () => {
+  it('should call to pass user thread control to page inbox', async () => {
+    const { context, client, session } = setup();
+
+    await context.passThreadControlToPageInbox();
+
+    expect(client.passThreadControlToPageInbox).toBeCalledWith(session.user.id);
+  });
+
+  it('should call warning if dont have session', async () => {
+    const { context, client } = setup({ session: false });
+
+    await context.passThreadControlToPageInbox();
+
+    expect(warning).toBeCalled();
+    expect(client.passThreadControlToPageInbox).not.toBeCalled();
+  });
+});
+
+describe('#takeThreadControl', () => {
+  it('should call to take user thread control back', async () => {
+    const { context, client, session } = setup();
+
+    await context.takeThreadControl();
+
+    expect(client.takeThreadControl).toBeCalledWith(session.user.id);
+  });
+
+  it('should call warning if dont have session', async () => {
+    const { context, client } = setup({ session: false });
+
+    await context.takeThreadControl();
+
+    expect(warning).toBeCalled();
+    expect(client.takeThreadControl).not.toBeCalled();
   });
 });
