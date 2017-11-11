@@ -43,6 +43,9 @@ const createMockGraphAPIClient = () => ({
   passThreadControl: jest.fn(),
   passThreadControlToPageInbox: jest.fn(),
   takeThreadControl: jest.fn(),
+  associateLabel: jest.fn(),
+  dissociateLabel: jest.fn(),
+  getAssociatedLabels: jest.fn(),
 });
 
 const rawEvent = {
@@ -731,5 +734,89 @@ describe('#takeThreadControl', () => {
 
     expect(warning).toBeCalled();
     expect(client.takeThreadControl).not.toBeCalled();
+  });
+});
+
+describe('#associateLabel', () => {
+  it('should call api to associate label to the user', async () => {
+    const { context, client, session } = setup();
+
+    await context.associateLabel(1712444532121303);
+
+    expect(client.associateLabel).toBeCalledWith(
+      session.user.id,
+      1712444532121303
+    );
+  });
+
+  it('should call warning if dont have session', async () => {
+    const { context, client } = setup({ session: false });
+
+    await context.associateLabel(1712444532121303);
+
+    expect(warning).toBeCalled();
+    expect(client.associateLabel).not.toBeCalled();
+  });
+});
+
+describe('#dissociateLabel', () => {
+  it('should call api to dissociate label from the user', async () => {
+    const { context, client, session } = setup();
+
+    await context.dissociateLabel(1712444532121303);
+
+    expect(client.dissociateLabel).toBeCalledWith(
+      session.user.id,
+      1712444532121303
+    );
+  });
+
+  it('should call warning if dont have session', async () => {
+    const { context, client } = setup({ session: false });
+
+    await context.dissociateLabel(1712444532121303);
+
+    expect(warning).toBeCalled();
+    expect(client.dissociateLabel).not.toBeCalled();
+  });
+});
+
+describe('#getAssociatedLabels', () => {
+  it('should call api to dissociate label from the user', async () => {
+    const { context, client, session } = setup();
+
+    client.getAssociatedLabels.mockReturnValue({
+      data: [
+        {
+          name: 'myLabel',
+          id: '1001200005003',
+        },
+        {
+          name: 'myOtherLabel',
+          id: '1001200005002',
+        },
+      ],
+      paging: {
+        cursors: {
+          before:
+            'QVFIUmx1WTBpMGpJWXprYzVYaVhabW55dVpycko4U2xURGE5ODNtNFZAPal94a1hTUnNVMUtoMVVoTzlzSDktUkMtQkUzWEFLSXlMS3ZALYUw3TURLelZAPOGVR',
+          after:
+            'QVFIUmItNkpTbjVzakxFWGRydzdaVUFNNnNPaUl0SmwzVHN5ZAWZAEQ3lZANDAzTXFIM0NHbHdYSkQ5OG1GaEozdjkzRmxpUFhxTDl4ZAlBibnE4LWt1eGlTa3Bn',
+        },
+      },
+    });
+
+    await context.getAssociatedLabels();
+
+    expect(client.getAssociatedLabels).toBeCalledWith(session.user.id);
+  });
+
+  it('should call warning if dont have session', async () => {
+    const { context, client } = setup({ session: false });
+
+    await context.getAssociatedLabels();
+
+    expect(warning).toBeCalled();
+    expect(client.getAssociatedLabels).not.toBeCalled();
   });
 });
