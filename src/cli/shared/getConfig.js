@@ -18,7 +18,9 @@ const getConfig = (configPath, platform) => {
   const result = get(config, platform, undefined);
   invariant(
     result,
-    `Could not find \`${platform}\` key, please check your config file is in the correct format.`
+    `Could not find \`${
+      platform
+    }\` key, please check your config file is in the correct format.`
   );
   return result;
 };

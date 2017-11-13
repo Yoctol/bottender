@@ -24,7 +24,9 @@ const getWebhookFromNgrok = async () => {
 
 const _getClientToken = async (clientId, clientSecret) => {
   const res = await client.get(
-    `/oauth/access_token?client_id=${clientId}&client_secret=${clientSecret}&grant_type=client_credentials`
+    `/oauth/access_token?client_id=${clientId}&client_secret=${
+      clientSecret
+    }&grant_type=client_credentials`
   );
   return res.data.access_token;
 };
@@ -90,10 +92,14 @@ export async function setWebhook(_webhook, _verifyToken) {
 
     print('Successfully set Messenger webhook callback URL');
     print(
-      `Check callback URL on: https://developers.facebook.com/apps/${config.appId}/webhooks/`
+      `Check callback URL on: https://developers.facebook.com/apps/${
+        config.appId
+      }/webhooks/`
     );
     print(
-      `Check selected events on: https://developers.facebook.com/apps/${config.appId}/messenger/`
+      `Check selected events on: https://developers.facebook.com/apps/${
+        config.appId
+      }/messenger/`
     );
   } catch (err) {
     error('Failed to set Messenger webhook');
