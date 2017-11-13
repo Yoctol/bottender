@@ -69,6 +69,15 @@ class MessengerContext extends Context implements PlatformContext {
     });
   }
 
+  /**
+   * Sender Actions
+   *
+   * https://github.com/Yoctol/messaging-apis/tree/master/packages/messaging-api-messenger#sender-actions
+   */
+
+  /**
+   * https://github.com/Yoctol/messaging-apis/tree/master/packages/messaging-api-messenger#typingonuserid
+   */
   async typingOn(): Promise<any> {
     if (!this._session) {
       warning(
@@ -83,6 +92,9 @@ class MessengerContext extends Context implements PlatformContext {
     return this._client.typingOn(this._session.user.id);
   }
 
+  /**
+   * https://github.com/Yoctol/messaging-apis/tree/master/packages/messaging-api-messenger#typingoffuserid
+   */
   async typingOff(): Promise<any> {
     if (!this._session) {
       warning(
@@ -97,6 +109,9 @@ class MessengerContext extends Context implements PlatformContext {
     return this._client.typingOff(this._session.user.id);
   }
 
+  /**
+   * https://github.com/Yoctol/messaging-apis/tree/master/packages/messaging-api-messenger#markseenuserid
+   */
   async markSeen(): Promise<any> {
     if (!this._session) {
       warning(
@@ -111,6 +126,15 @@ class MessengerContext extends Context implements PlatformContext {
     return this._client.markSeen(this._session.user.id);
   }
 
+  /**
+   * Handover Protocol
+   *
+   * https://github.com/Yoctol/messaging-apis/tree/master/packages/messaging-api-messenger#handover-protocol-api
+   */
+
+  /**
+   * https://github.com/Yoctol/messaging-apis/tree/master/packages/messaging-api-messenger#passthreadcontroluserid-targetappid-metadata---official-docs
+   */
   async passThreadControl(
     targetAppId: number,
     metadata?: string
@@ -132,6 +156,9 @@ class MessengerContext extends Context implements PlatformContext {
     );
   }
 
+  /**
+   * https://github.com/Yoctol/messaging-apis/tree/master/packages/messaging-api-messenger#passthreadcontroltopageinboxuserid-metadata---official-docs
+   */
   async passThreadControlToPageInbox(): Promise<any> {
     if (!this._session) {
       warning(
@@ -146,6 +173,9 @@ class MessengerContext extends Context implements PlatformContext {
     return this._client.passThreadControlToPageInbox(this._session.user.id);
   }
 
+  /**
+   * https://github.com/Yoctol/messaging-apis/tree/master/packages/messaging-api-messenger#takethreadcontroluserid-metadata---official-docs
+   */
   async takeThreadControl(): Promise<any> {
     if (!this._session) {
       warning(
@@ -158,6 +188,57 @@ class MessengerContext extends Context implements PlatformContext {
     this._isHandled = true;
 
     return this._client.takeThreadControl(this._session.user.id);
+  }
+
+  /**
+   * Targeting Broadcast Messages
+   *
+   * https://github.com/Yoctol/messaging-apis/tree/master/packages/messaging-api-messenger#targeting-broadcast-messages---official-docs
+   */
+
+  /**
+   * https://github.com/Yoctol/messaging-apis/tree/master/packages/messaging-api-messenger#associatelabeluserid-labelid
+   */
+  async associateLabel(labelId: number): Promise<any> {
+    if (!this._session) {
+      warning(
+        false,
+        'associateLabel: should not be called in context without session'
+      );
+      return;
+    }
+
+    return this._client.associateLabel(this._session.user.id, labelId);
+  }
+
+  /**
+   * https://github.com/Yoctol/messaging-apis/tree/master/packages/messaging-api-messenger#dissociatelabeluserid-labelid
+   */
+  async dissociateLabel(labelId: number): Promise<any> {
+    if (!this._session) {
+      warning(
+        false,
+        'dissociateLabel: should not be called in context without session'
+      );
+      return;
+    }
+
+    return this._client.dissociateLabel(this._session.user.id, labelId);
+  }
+
+  /**
+   * https://github.com/Yoctol/messaging-apis/tree/master/packages/messaging-api-messenger#getassociatedlabelsuserid
+   */
+  async getAssociatedLabels(): Promise<any> {
+    if (!this._session) {
+      warning(
+        false,
+        'dissociateLabel: should not be called in context without session'
+      );
+      return;
+    }
+
+    return this._client.getAssociatedLabels(this._session.user.id);
   }
 }
 
