@@ -42,7 +42,9 @@ const setup = (
     webhook: 'http://example.com/webhook',
   }
 ) => ({
-  getUrl: `/oauth/access_token?client_id=${clientId}&client_secret=${clientSecret}&grant_type=client_credentials`,
+  getUrl: `/oauth/access_token?client_id=${clientId}&client_secret=${
+    clientSecret
+  }&grant_type=client_credentials`,
   postUrl: `/${clientId}/subscriptions?access_token=${accessToken}`,
   webhook,
   accessToken,
