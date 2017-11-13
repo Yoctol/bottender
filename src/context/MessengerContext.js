@@ -244,15 +244,19 @@ class MessengerContext extends Context implements PlatformContext {
 
 const sendMethods = [
   // method name, arguments length
+  ['sendMessage', 3],
   ['sendAttachment', 3],
   ['sendImage', 3],
   ['sendAudio', 3],
   ['sendVideo', 3],
   ['sendFile', 3],
   ['sendQuickReplies', 4],
+  ['sendTemplate', 3],
   ['sendGenericTemplate', 3],
   ['sendButtonTemplate', 4],
   ['sendListTemplate', 4],
+  ['sendOpenGraphTemplate', 3],
+  ['sendMediaTemplate', 3],
   ['sendReceiptTemplate', 3],
   ['sendAirlineBoardingPassTemplate', 3],
   ['sendAirlineCheckinTemplate', 3],

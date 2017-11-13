@@ -24,6 +24,7 @@ const createMockGraphAPIClient = () => ({
   typingOn: jest.fn(),
   typingOff: jest.fn(),
   markSeen: jest.fn(),
+  sendMessage: jest.fn(),
   sendText: jest.fn(),
   sendAttachment: jest.fn(),
   sendImage: jest.fn(),
@@ -31,9 +32,12 @@ const createMockGraphAPIClient = () => ({
   sendVideo: jest.fn(),
   sendFile: jest.fn(),
   sendQuickReplies: jest.fn(),
+  sendTemplate: jest.fn(),
   sendGenericTemplate: jest.fn(),
   sendButtonTemplate: jest.fn(),
   sendListTemplate: jest.fn(),
+  sendOpenGraphTemplate: jest.fn(),
+  sendMediaTemplate: jest.fn(),
   sendReceiptTemplate: jest.fn(),
   sendAirlineBoardingPassTemplate: jest.fn(),
   sendAirlineCheckinTemplate: jest.fn(),
@@ -102,6 +106,26 @@ it('get #event works', () => {
 it('get #client works', () => {
   const { context, client } = setup();
   expect(context.client).toBe(client);
+});
+
+describe('#sendMessage', () => {
+  it('should call client.sendMessage', async () => {
+    const { context, client, session } = setup();
+
+    await context.sendMessage({
+      text: 'Hello!',
+    });
+
+    expect(client.sendMessage).toBeCalledWith(
+      session.user.id,
+      {
+        text: 'Hello!',
+      },
+      {
+        messaging_type: 'RESPONSE',
+      }
+    );
+  });
 });
 
 describe('#sendText', () => {
@@ -309,6 +333,42 @@ describe('#sendQuickReplies', () => {
   });
 });
 
+describe('#sendTemplate', () => {
+  it('should call client.sendTemplate', async () => {
+    const { context, client, session } = setup();
+
+    await context.sendTemplate({
+      template_type: 'button',
+      text: 'title',
+      buttons: [
+        {
+          type: 'postback',
+          title: 'Start Chatting',
+          payload: 'USER_DEFINED_PAYLOAD',
+        },
+      ],
+    });
+
+    expect(client.sendTemplate).toBeCalledWith(
+      session.user.id,
+      {
+        template_type: 'button',
+        text: 'title',
+        buttons: [
+          {
+            type: 'postback',
+            title: 'Start Chatting',
+            payload: 'USER_DEFINED_PAYLOAD',
+          },
+        ],
+      },
+      {
+        messaging_type: 'RESPONSE',
+      }
+    );
+  });
+});
+
 describe('#sendGenericTemplate', () => {
   it('should call client.sendGenericTemplate', async () => {
     const { context, client, session } = setup();
@@ -433,6 +493,84 @@ describe('#sendListTemplate', () => {
     await context.sendListTemplate(elements, buttons, 'large');
 
     expect(context.isHandled).toBe(true);
+  });
+});
+
+describe('#sendOpenGraphTemplate', () => {
+  it('should call client.sendOpenGraphTemplate', async () => {
+    const { context, client, session } = setup();
+
+    await context.sendOpenGraphTemplate([
+      {
+        media_type: 'image',
+        attachment_id: '1854626884821032',
+        buttons: [
+          {
+            type: 'web_url',
+            url: 'https://en.wikipedia.org/wiki/Rickrolling',
+            title: 'View Website',
+          },
+        ],
+      },
+    ]);
+
+    expect(client.sendOpenGraphTemplate).toBeCalledWith(
+      session.user.id,
+      [
+        {
+          media_type: 'image',
+          attachment_id: '1854626884821032',
+          buttons: [
+            {
+              type: 'web_url',
+              url: 'https://en.wikipedia.org/wiki/Rickrolling',
+              title: 'View Website',
+            },
+          ],
+        },
+      ],
+      {
+        messaging_type: 'RESPONSE',
+      }
+    );
+  });
+});
+
+describe('#sendMediaTemplate', () => {
+  it('should call client.sendMediaTemplate', async () => {
+    const { context, client, session } = setup();
+
+    await context.sendMediaTemplate([
+      {
+        url: 'https://open.spotify.com/track/7GhIk7Il098yCjg4BQjzvb',
+        buttons: [
+          {
+            type: 'web_url',
+            url: 'https://en.wikipedia.org/wiki/Rickrolling',
+            title: 'View More',
+          },
+        ],
+      },
+    ]);
+
+    expect(client.sendMediaTemplate).toBeCalledWith(
+      session.user.id,
+      [
+        {
+          url: 'https://open.spotify.com/track/7GhIk7Il098yCjg4BQjzvb',
+          buttons: [
+            {
+              type: 'web_url',
+              url: 'https://en.wikipedia.org/wiki/Rickrolling',
+              title: 'View More',
+            },
+          ],
+        },
+      ],
+      {
+        messaging_type: 'RESPONSE',
+      }
+    );
   });
 });
 
