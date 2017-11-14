@@ -2602,9 +2602,9 @@ hoek@2.x.x:
   version "2.16.3"
   resolved "https://registry.yarnpkg.com/hoek/-/hoek-2.16.3.tgz#20bb7403d3cea398e91dc4710a8ff1b8274a25ed"
 
-hoek@5.x.x:
-  version "5.0.2"
-  resolved "https://registry.yarnpkg.com/hoek/-/hoek-5.0.2.tgz#d2f2c95d36fe7189cf8aa8c237abc1950eca1378"
+hoek@4.x.x:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/hoek/-/hoek-4.2.0.tgz#72d9d0754f7fe25ca2d01ad8f8f9a9449a89526d"
 
 home-or-tmp@^2.0.0:
   version "2.0.0"
@@ -3383,13 +3383,13 @@ jfs@^0.3.0:
     mkdirp "~0.5.1"
     uuid "^3.1.0"
 
-joi@^13.0.2:
-  version "13.0.2"
-  resolved "https://registry.yarnpkg.com/joi/-/joi-13.0.2.tgz#8cc57a573b7c0b64108fa6fd85061c20fcb0d6b0"
+joi@11.3.4:
+  version "11.3.4"
+  resolved "https://registry.yarnpkg.com/joi/-/joi-11.3.4.tgz#c25fc2598c3847865f92c51b5249b519af3e51cb"
   dependencies:
-    hoek "5.x.x"
+    hoek "4.x.x"
     isemail "3.x.x"
-    topo "3.x.x"
+    topo "2.x.x"
 
 js-tokens@^3.0.0, js-tokens@^3.0.2:
   version "3.0.2"
@@ -5500,11 +5500,11 @@ toggle-array@^1.0.1:
   dependencies:
     isobject "^3.0.0"
 
-topo@3.x.x:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/topo/-/topo-3.0.0.tgz#37e48c330efeac784538e0acd3e62ca5e231fe7a"
+topo@2.x.x:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/topo/-/topo-2.0.2.tgz#cd5615752539057c0dc0491a621c3bc6fbe1d182"
   dependencies:
-    hoek "5.x.x"
+    hoek "4.x.x"
 
 touch@0.0.3:
   version "0.0.3"

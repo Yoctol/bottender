@@ -91,7 +91,7 @@
     "invariant": "^2.2.2",
     "ioredis": "^3.2.1",
     "jfs": "^0.3.0",
-    "joi": "^13.0.2",
+    "joi": "11.3.4",
     "koa": "^2.4.1",
     "koa-bodyparser": "^4.2.0",
     "koa-compose": "^4.0.0",
