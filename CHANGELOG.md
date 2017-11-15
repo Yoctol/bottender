@@ -1,3 +1,11 @@
+0.14.4 / 2017-11-15
+===================
+# line
+- [new] Implement richmenu api methods on context [#23](https://github.com/Yoctol/bottender/pull/23)
+  + `context.getLinkedRichMenu()`
+  + `context.linkRichMenu(richMenuId)`
+  + `context.getLinkedRichMenu()`
+
 0.14.3 / 2017-11-14
 ===================
 ### messenger
