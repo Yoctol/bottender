@@ -3244,9 +3244,9 @@ jest-jasmine2@^21.2.1:
     jest-snapshot "^21.2.1"
     p-cancelable "^0.3.0"
 
-jest-junit@^3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/jest-junit/-/jest-junit-3.1.0.tgz#3bd0b7a8bfd5b91f86376d44ff0f4c7f136f4287"
+jest-junit@^3.2.1:
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/jest-junit/-/jest-junit-3.2.1.tgz#e58f06979e5a8d551fedb5f8e11f942fc35a00e9"
   dependencies:
     mkdirp "^0.5.1"
     strip-ansi "^4.0.0"
@@ -3897,9 +3897,9 @@ messaging-api-line@^0.5.7:
     image-type "^3.0.0"
     warning "^3.0.0"
 
-messaging-api-messenger@^0.5.8:
-  version "0.5.8"
-  resolved "https://registry.yarnpkg.com/messaging-api-messenger/-/messaging-api-messenger-0.5.8.tgz#4f7ee6d521ca30dd061a4fc0f6906cfbfac0c585"
+messaging-api-messenger@^0.5.9:
+  version "0.5.9"
+  resolved "https://registry.yarnpkg.com/messaging-api-messenger/-/messaging-api-messenger-0.5.9.tgz#6f11c7de09ef4539417dc8b55ee7522eeb407d45"
   dependencies:
     axios "^0.17.0"
     axios-error "^0.5.4"
