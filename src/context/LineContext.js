@@ -72,6 +72,48 @@ class LineContext extends Context implements PlatformContext {
     const { type } = this._session;
     return this._client.pushText(this._session[type].id, text);
   }
+
+  /**
+   * Gets the ID of the rich menu linked to the user.
+   *
+   */
+  async getLinkedRichMenu(): Promise<any> {
+    if (this._session && this._session.user) {
+      return this._client.getLinkedRichMenu(this._session.user.id);
+    }
+    warning(
+      false,
+      'getLinkedRichMenu: should not be called in context without session user'
+    );
+  }
+
+  /**
+   * Links a rich menu to the user.
+   *
+   */
+  async linkRichMenu(richMenuId: string): Promise<any> {
+    if (this._session && this._session.user) {
+      return this._client.linkRichMenu(this._session.user.id, richMenuId);
+    }
+    warning(
+      false,
+      'linkRichMenu: should not be called in context without session user'
+    );
+  }
+
+  /**
+   * Unlinks a rich menu from the user.
+   *
+   */
+  async unlinkRichMenu(): Promise<any> {
+    if (this._session && this._session.user) {
+      return this._client.unlinkRichMenu(this._session.user.id);
+    }
+    warning(
+      false,
+      'unlinkRichMenu: should not be called in context without session user'
+    );
+  }
 }
 
 const types = [
