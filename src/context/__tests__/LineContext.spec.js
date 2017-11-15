@@ -50,6 +50,9 @@ const setup = ({ session } = { session: userSession }) => {
     pushConfirmTemplate: jest.fn(),
     pushImagemap: jest.fn(),
     pushCarouselTemplate: jest.fn(),
+    getLinkedRichMenu: jest.fn(),
+    linkRichMenu: jest.fn(),
+    unlinkRichMenu: jest.fn(),
   };
   const context = new LineContext({
     client,
@@ -788,6 +791,67 @@ describe('#sendCarouselTemplate', () => {
     await context.sendCarouselTemplate('this is a carousel template', template);
 
     expect(context.isHandled).toBe(true);
+  });
+});
+
+describe('#getLinkedRichMenu', () => {
+  it('should call client.getLinkedRichMenu', async () => {
+    const { context, client, session } = setup();
+
+    client.getLinkedRichMenu.mockReturnValue(
+      Promise.resolve({
+        richMenuId: 'richMenuId',
+      })
+    );
+
+    const result = await context.getLinkedRichMenu();
+
+    expect(client.getLinkedRichMenu).toBeCalledWith(session.user.id);
+    expect(result.richMenuId).toEqual('richMenuId');
+  });
+
+  it('should warn without user', async () => {
+    const { context } = setup({ session: {} });
+
+    await context.getLinkedRichMenu();
+
+    expect(warning).toBeCalled();
+  });
+});
+
+describe('#linkRichMenu', () => {
+  it('should call client.linkRichMenu', async () => {
+    const { context, client, session } = setup();
+
+    await context.linkRichMenu('richMenuId');
+
+    expect(client.linkRichMenu).toBeCalledWith(session.user.id, 'richMenuId');
+  });
+
+  it('should warn without user', async () => {
+    const { context } = setup({ session: {} });
+
+    await context.linkRichMenu('richMenuId');
+
+    expect(warning).toBeCalled();
+  });
+});
+
+describe('#unlinkRichMenu', () => {
+  it('should call client.unlinkRichMenu', async () => {
+    const { context, client, session } = setup();
+
+    await context.unlinkRichMenu();
+
+    expect(client.unlinkRichMenu).toBeCalledWith(session.user.id);
+  });
+
+  it('should warn without user', async () => {
+    const { context } = setup({ session: {} });
+
+    await context.unlinkRichMenu();
+
+    expect(warning).toBeCalled();
   });
 });
 
