@@ -44,7 +44,7 @@ export default class SlackContext extends Context implements PlatformContext {
     }
   }
 
-  async postMessage(text: string): Promise<any> {
+  postMessage(text: string, options?: {}): Promise<any> {
     const channelId = this._getChannelIdFromSession();
 
     if (!channelId) {
@@ -52,12 +52,15 @@ export default class SlackContext extends Context implements PlatformContext {
         false,
         'postMessage: should not be called in context without session'
       );
-      return;
+      return Promise.resolve();
     }
 
     this._isHandled = true;
 
-    return this._client.postMessage(channelId, text, { as_user: true });
+    return this._client.postMessage(channelId, text, {
+      as_user: true,
+      ...options,
+    });
   }
 
   /**
