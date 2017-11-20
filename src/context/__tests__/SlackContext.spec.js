@@ -96,6 +96,17 @@ describe('#postMessage', () => {
     });
   });
 
+  it('should support overwrite options', async () => {
+    const { context, client } = setup();
+
+    await context.postMessage('xxx.com', { attachments: [], as_user: false });
+
+    expect(client.postMessage).toBeCalledWith('C6A9RJJ3F', 'xxx.com', {
+      attachments: [],
+      as_user: false,
+    });
+  });
+
   it('should mark context as handled', async () => {
     const { context } = setup();
 
