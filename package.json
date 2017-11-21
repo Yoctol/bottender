@@ -101,7 +101,7 @@
     "lru-cache": "^4.1.1",
     "messaging-api-line": "^0.5.7",
     "messaging-api-messenger": "^0.5.9",
-    "messaging-api-slack": "^0.5.7",
+    "messaging-api-slack": "^0.5.10",
     "messaging-api-telegram": "^0.5.4",
     "micro": "^9.0.1",
     "minimist": "^1.2.0",
