@@ -3909,9 +3909,9 @@ messaging-api-messenger@^0.5.9:
     lodash.omit "^4.5.0"
     warning "^3.0.0"
 
-messaging-api-slack@^0.5.7:
-  version "0.5.7"
-  resolved "https://registry.yarnpkg.com/messaging-api-slack/-/messaging-api-slack-0.5.7.tgz#e54fd07d946e4a03ba08dacf944adf03d04e1c73"
+messaging-api-slack@^0.5.10:
+  version "0.5.10"
+  resolved "https://registry.yarnpkg.com/messaging-api-slack/-/messaging-api-slack-0.5.10.tgz#da4e196b28d59bc55dfcf6b89c36d8eda249b6d7"
   dependencies:
     axios "^0.17.0"
     axios-error "^0.5.4"
