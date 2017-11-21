@@ -4,7 +4,7 @@ module.exports = function chatbaseMiddleware(bot, { apiKey, platform }) {
   const chatbase = _chatbase.setApiKey(apiKey).setPlatform(platform);
 
   const { client } = bot.connector;
-  const axios = client.getHTTPClient();
+  const axios = client.axios;
 
   // Add a response interceptor
   axios.interceptors.response.use(response => {

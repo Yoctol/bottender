@@ -5,7 +5,7 @@ module.exports = function botimizeMiddleware(bot, { apiKey, platform }) {
 
   const { client } = bot.connector;
   const accessToken = client._accessToken;
-  const axios = client.getHTTPClient();
+  const axios = client.axios;
 
   // Add a response interceptor
   axios.interceptors.response.use(response => {
