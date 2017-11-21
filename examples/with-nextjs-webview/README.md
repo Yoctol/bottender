@@ -13,13 +13,13 @@ npm run dev
 
 ## Idea of this example
 
-This example shows how to use next.js to serve static webview in your bot.
-Due to the next.js file system routing, you can access static page `/hello`.
-For more information, check [next.js official docs](https://zeit.co/blog/next4).
+This example shows how to use next.js to serve static webview in your bot. Due
+to the next.js file system routing, you can access static page `/hello`. For
+more information, check [next.js official docs](https://zeit.co/blog/next4).
 
 ## Related examples
 
-- [with-express](../with-express)
-- [with-koa](../with-koa)
-- [with-micro](../with-micro)
-- [with-restify](../with-restify)
+* [with-express](../with-express)
+* [with-koa](../with-koa)
+* [with-micro](../with-micro)
+* [with-restify](../with-restify)

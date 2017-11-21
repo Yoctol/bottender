@@ -13,8 +13,9 @@ npm run dev
 
 ## Idea of this example
 
-This example shows how to write a simple bot without imperative conditional statements using Ramda.js.
+This example shows how to write a simple bot without imperative conditional
+statements using Ramda.js.
 
 ## Related examples
 
-- [console-hello-world](../console-hello-world)
+* [console-hello-world](../console-hello-world)

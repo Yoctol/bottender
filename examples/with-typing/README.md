@@ -13,10 +13,13 @@ npm run dev
 
 ## Idea of this example
 
-This example shows using `withTyping` to make your bot user experience better. It will show typing indicator and delay all your send request for seconds. For example, this is [Messenger sender action](https://developers.facebook.com/docs/messenger-platform/send-messages/sender-actions/).
+This example shows using `withTyping` to make your bot user experience better.
+It will show typing indicator and delay all your send request for seconds. For
+example, this is
+[Messenger sender action](https://developers.facebook.com/docs/messenger-platform/send-messages/sender-actions/).
 Notice that the unit of optional number of delay seconds is **millisecond**.
 
 ## Related examples
 
-- [with-express](../with-express)
-- [messenger-hello-world](../messenger-hello-world)
+* [with-express](../with-express)
+* [messenger-hello-world](../messenger-hello-world)

@@ -13,13 +13,14 @@ npm run dev
 
 ## Idea of this example
 
-This example is a simple bot running on [Telegram](https://telegram.org/). You have to get `accessToken` and a webhook `url` before running this bot.  
-For more information, check our [Telegram guides](https://bottender.js.org/docs/Platforms-Telegram).  
+This example is a simple bot running on [Telegram](https://telegram.org/). You
+have to get `accessToken` and a webhook `url` before running this bot.\
+For more information, check our [Telegram guides](https://bottender.js.org/docs/Platforms-Telegram).
 
 ## Related examples
 
-- [telegram-builder](../telegram-builder)
-- [console-hello-world](../console-hello-world)
-- [messenger-hello-world](../messenger-hello-world)
-- [line-hello-world](../line-hello-world)
-- [slack-hello-world](../slack-hello-world)
+* [telegram-builder](../telegram-builder)
+* [console-hello-world](../console-hello-world)
+* [messenger-hello-world](../messenger-hello-world)
+* [line-hello-world](../line-hello-world)
+* [slack-hello-world](../slack-hello-world)

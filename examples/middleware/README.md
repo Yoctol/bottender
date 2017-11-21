@@ -13,13 +13,14 @@ npm run dev
 
 ## Idea of this example
 
-The feature of this example is using [handler](https://bottender.js.org/docs/APIReference-Handler) as middleware, so you are able to combine two handlers into one.  
-For more information, check our [Middleware guides](https://bottender.js.org/docs/Guides-Middleware).  
-
+The feature of this example is using
+[handler](https://bottender.js.org/docs/APIReference-Handler) as middleware, so
+you are able to combine two handlers into one.\
+For more information, check our [Middleware guides](https://bottender.js.org/docs/Guides-Middleware).
 
 ## Related examples
 
-- [messenger-builder](../messenger-builder)
-- [line-builder](../line-builder)
-- [slack-builder](../slack-builder)
-- [telegram-builder](../telegram-builder)
+* [messenger-builder](../messenger-builder)
+* [line-builder](../line-builder)
+* [slack-builder](../slack-builder)
+* [telegram-builder](../telegram-builder)

@@ -13,12 +13,13 @@ npm run dev
 
 ## Idea of this example
 
-This is a simple example of creating an [express](https://github.com/expressjs/express) server as your bot's server.  
+This is a simple example of creating an
+[express](https://github.com/expressjs/express) server as your bot's server.\
 Check our [server guide](https://bottender.js.org/docs/Guides-Server) for more information.
 
 ## Related examples
 
-- [with-koa](../with-koa)
-- [with-micro](../with-micro)
-- [with-restify](../with-restify)
-- [messenger-hello-world](../messenger-hello-world)
+* [with-koa](../with-koa)
+* [with-micro](../with-micro)
+* [with-restify](../with-restify)
+* [messenger-hello-world](../messenger-hello-world)
