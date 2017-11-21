@@ -9,7 +9,7 @@ import schema from './schema';
 
 const getConfig = (configPath, platform) => {
   const config = importFresh(path.resolve(configPath));
-  const validateResult = Joi.validate(config, schema);
+  const validateResult = Joi.validate(config, schema, { allowUnknown: true });
   invariant(
     !validateResult.error,
     validateResult.error &&
