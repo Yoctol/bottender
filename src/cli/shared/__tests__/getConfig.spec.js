@@ -57,8 +57,11 @@ const setup = () => {
 
 let getConfig;
 let importFresh;
+let Joi;
+
 beforeEach(() => {
   importFresh = require('import-fresh'); // eslint-disable-line global-require
+  Joi = require('joi'); // eslint-disable-line global-require
   getConfig = require('../getConfig'); // eslint-disable-line global-require
 });
 
@@ -109,5 +112,45 @@ it('read the config file with platform key', () => {
       ],
       whitelisted_domains: ['http://example.com'],
     },
+  });
+});
+
+describe('Joi validate', () => {
+  it('should validate as default', () => {
+    const { MOCK_FILE_WITH_PLATFORM } = setup();
+    importFresh.mockReturnValue(MOCK_FILE_WITH_PLATFORM);
+    const configPath = 'bottender.config.js';
+    const platform = 'messenger';
+
+    const spy = jest.spyOn(Joi, 'validate');
+    getConfig(configPath, platform);
+
+    expect(spy).toBeCalled();
+
+    spy.mockReset();
+    spy.mockRestore();
+  });
+
+  it('should pass validate when with `--skip-validate`', () => {
+    const { MOCK_FILE_WITH_PLATFORM } = setup();
+    importFresh.mockReturnValue(MOCK_FILE_WITH_PLATFORM);
+    process.argv = [
+      'node',
+      'cli/index.js',
+      'messenger',
+      'profile',
+      'set',
+      '--skip-validate',
+    ];
+    const configPath = 'bottender.config.js';
+    const platform = 'messenger';
+
+    const spy = jest.spyOn(Joi, 'validate');
+    getConfig(configPath, platform);
+
+    expect(spy).not.toBeCalled();
+
+    spy.mockReset();
+    spy.mockRestore();
   });
 });
