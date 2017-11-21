@@ -1,5 +1,6 @@
 {
   "name": "bottender",
+  "description": "Make Bots in Your Way, Fast and Flexibly",
   "version": "0.14.4",
   "license": "MIT",
   "main": "lib/index.js",
