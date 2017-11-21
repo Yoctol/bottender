@@ -91,9 +91,7 @@ describe('#postMessage', () => {
 
     await context.postMessage('xxx.com');
 
-    expect(client.postMessage).toBeCalledWith('C6A9RJJ3F', 'xxx.com', {
-      as_user: true,
-    });
+    expect(client.postMessage).toBeCalledWith('C6A9RJJ3F', 'xxx.com', {});
   });
 
   it('should support overwrite options', async () => {
@@ -130,9 +128,7 @@ describe('#postMessage', () => {
 
     await context.postMessage('xxx.com');
 
-    expect(client.postMessage).toBeCalledWith(id, 'xxx.com', {
-      as_user: true,
-    });
+    expect(client.postMessage).toBeCalledWith(id, 'xxx.com', {});
   });
 
   it('should get null channelId and call warning if no session', async () => {
