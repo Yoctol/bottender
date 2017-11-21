@@ -1,0 +1,13 @@
+{
+  "dependencies": {
+    "botanalytics": "^2.0.2",
+    "bottender": "latest"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  },
+  "scripts": {
+    "dev": "nodemon index.js",
+    "start": "node index.js"
+  }
+}
