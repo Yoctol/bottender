@@ -32,6 +32,7 @@ const server = createServer(bot, {
 ## Related examples
 
 * [with-chatbase](../with-chatbase)
+* [with-dashbot](../with-dashbot)
 * [with-botimize](../with-botimize)
 * [with-express](../with-express)
 * [messenger-hello-world](../messenger-hello-world)
