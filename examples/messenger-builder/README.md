@@ -13,12 +13,15 @@ npm run dev
 
 ## Idea of this example
 
-This example shows how to combine [handler](https://bottender.js.org/docs/APIReference-Handler) with [Messenger](https://www.messenger.com/) bot. You have to get `accessToken` and `appSecret` before running this bot.  
-For more information, check our [Messenger guides](https://bottender.js.org/docs/Platforms-Messenger).  
+This example shows how to combine
+[handler](https://bottender.js.org/docs/APIReference-Handler) with
+[Messenger](https://www.messenger.com/) bot. You have to get `accessToken` and
+`appSecret` before running this bot.\
+For more information, check our [Messenger guides](https://bottender.js.org/docs/Platforms-Messenger).
 
 ## Related examples
 
-- [messenger-hello-world](../messenger-hello-world)
-- [line-builder](../line-builder)
-- [slack-builder](../slack-builder)
-- [telegram-builder](../telegram-builder)
+* [messenger-hello-world](../messenger-hello-world)
+* [line-builder](../line-builder)
+* [slack-builder](../slack-builder)
+* [telegram-builder](../telegram-builder)

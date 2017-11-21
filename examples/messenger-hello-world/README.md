@@ -13,13 +13,14 @@ npm run dev
 
 ## Idea of this example
 
-This example is a simple bot running on [Messenger](https://www.messenger.com/). You have to get `accessToken` and `appSecret` before running this bot.  
-For more information, check our [Messenger guides](https://bottender.js.org/docs/Platforms-Messenger).  
+This example is a simple bot running on [Messenger](https://www.messenger.com/).
+You have to get `accessToken` and `appSecret` before running this bot.\
+For more information, check our [Messenger guides](https://bottender.js.org/docs/Platforms-Messenger).
 
 ## Related examples
 
-- [messenger-builder](../messenger-builder)
-- [console-hello-world](../console-hello-world)
-- [line-hello-world](../line-hello-world)
-- [slack-hello-world](../slack-hello-world)
-- [telegram-hello-world](../telegram-hello-world)
+* [messenger-builder](../messenger-builder)
+* [console-hello-world](../console-hello-world)
+* [line-hello-world](../line-hello-world)
+* [slack-hello-world](../slack-hello-world)
+* [telegram-hello-world](../telegram-hello-world)

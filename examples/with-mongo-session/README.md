@@ -13,11 +13,12 @@ npm run dev
 
 ## Idea of this example
 
-This example shows how to use Session to store some information from users and store sessions in your MongoDB.
-For more information, check our [session guide](https://bottender.js.org/docs/Guides-Session).
+This example shows how to use Session to store some information from users and
+store sessions in your MongoDB. For more information, check our
+[session guide](https://bottender.js.org/docs/Guides-Session).
 
 ## Related examples
 
-- [with-memory-session](../with-memory-session)
-- [with-file-session](../with-file-session)
-- [with-redis-session](../with-redis-session)
+* [with-memory-session](../with-memory-session)
+* [with-file-session](../with-file-session)
+* [with-redis-session](../with-redis-session)

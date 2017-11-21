@@ -37,8 +37,9 @@ now -e ACCESS_TOKEN=@access-token -e APP_SECRET=@app-secret -e VERIFY_TOKEN=@ver
 
 ## Idea of this example
 
-This example is a simple bot show how to deploy with [zeit/now](https://zeit.co/now).
+This example is a simple bot show how to deploy with
+[zeit/now](https://zeit.co/now).
 
 ## Related examples
 
-- [messenger-hello-world](../messenger-hello-world)
+* [messenger-hello-world](../messenger-hello-world)

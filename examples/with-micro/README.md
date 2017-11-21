@@ -13,12 +13,13 @@ npm run dev
 
 ## Idea of this example
 
-This is a simple example of creating an [micro](https://github.com/zeit/micro) server as your bot's server.  
+This is a simple example of creating an [micro](https://github.com/zeit/micro)
+server as your bot's server.\
 Check our [server guide](https://bottender.js.org/docs/Guides-Server) for more information.
 
 ## Related examples
 
-- [with-express](../with-express)
-- [with-koa](../with-koa)
-- [with-restify](../with-restify)
-- [messenger-hello-world](../messenger-hello-world)
+* [with-express](../with-express)
+* [with-koa](../with-koa)
+* [with-restify](../with-restify)
+* [messenger-hello-world](../messenger-hello-world)

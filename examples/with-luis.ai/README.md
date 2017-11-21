@@ -13,9 +13,11 @@ npm run dev
 
 ## Idea of this example
 
-This example shows how to combine your bot with **semantic analysis tool**. In this case, we take [LUIS.ai](https://www.luis.ai/) as an example. Before you run this example, make sure you have got `appId` and `appKey` from [LUIS.ai](https://www.luis.ai/).  
-
+This example shows how to combine your bot with **semantic analysis tool**. In
+this case, we take [LUIS.ai](https://www.luis.ai/) as an example. Before you run
+this example, make sure you have got `appId` and `appKey` from
+[LUIS.ai](https://www.luis.ai/).
 
 ## Related examples
 
-- [console-hello-world](../console-hello-world)
+* [console-hello-world](../console-hello-world)
