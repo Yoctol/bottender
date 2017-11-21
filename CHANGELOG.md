@@ -1,6 +1,29 @@
+0.14.5 / 2017-11-21
+===================
+### messenger
+- [new] Add `--skip-validate` cli option to skip `Joi` schema validation [#31](https://github.com/Yoctol/bottender/pull/31)
+- [fix] Allow unknow keys in config and fix schema rules [#29](https://github.com/Yoctol/bottender/pull/29)
+
+### slack
+- [new] Add options for `postMessage` [#25](https://github.com/Yoctol/bottender/pull/25)
+
+You can use it to send additional attachments, like below:
+
+```js
+context.postMessage('I am a test message', {
+  attachments: [
+    {
+      text: "And here's an attachment!"
+    },
+  ],
+});
+```
+
+See [official docs](https://api.slack.com/methods/chat.postMessage) for more available options.
+
 0.14.4 / 2017-11-15
 ===================
-# line
+### line
 - [new] Implement richmenu api methods on context [#23](https://github.com/Yoctol/bottender/pull/23)
   + `context.getLinkedRichMenu()`
   + `context.linkRichMenu(richMenuId)`
