@@ -7,17 +7,23 @@ import Joi from 'joi';
 import minimist from 'minimist';
 
 import schema from './schema';
+import { bold } from './log';
 
 const getConfig = (configPath, platform) => {
   const argv = minimist(process.argv);
   const config = importFresh(path.resolve(configPath));
   if (!argv['skip-validate']) {
     const validateResult = Joi.validate(config, schema, { allowUnknown: true });
-    invariant(
-      !validateResult.error,
-      validateResult.error &&
-        `The config format is not valid. ${validateResult.error.message}`
-    );
+
+    if (validateResult.error) {
+      const { message, type } = validateResult.error.details[0];
+      const errorPath = validateResult.error.details[0].path.join('.');
+      throw new Error(
+        `The config format is not valid.\nmessage: ${message}\npath: ${bold(
+          errorPath
+        )}\ntype: ${type}`
+      );
+    }
   }
   const result = get(config, platform, undefined);
   invariant(
