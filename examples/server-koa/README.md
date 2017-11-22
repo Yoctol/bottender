@@ -1,12 +1,12 @@
-# With Koa
+# Server: Koa
 
 ## Install and Run
 
 Download this example or clone [bottender](https://github.com/Yoctol/bottender).
 
 ```
-curl https://codeload.github.com/Yoctol/bottender/tar.gz/master | tar -xz --strip=2 bottender-master/examples/with-koa
-cd with-koa
+curl https://codeload.github.com/Yoctol/bottender/tar.gz/master | tar -xz --strip=2 bottender-master/examples/server-koa
+cd server-koa
 npm install
 npm run dev
 ```
@@ -19,7 +19,7 @@ Check our [server guide](https://bottender.js.org/docs/Guides-Server) for more i
 
 ## Related examples
 
-* [with-express](../with-express)
-* [with-micro](../with-micro)
-* [with-restify](../with-restify)
+* [server-express](../server-express)
+* [server-micro](../server-micro)
+* [server-restify](../server-restify)
 * [messenger-hello-world](../messenger-hello-world)

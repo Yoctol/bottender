@@ -1,12 +1,12 @@
-# With Botimize
+# Analytics: Botimize
 
 ## Install and Run
 
 Download this example or clone [Bottender](https://github.com/Yoctol/bottender).
 
 ```
-curl https://codeload.github.com/Yoctol/bottender/tar.gz/master | tar -xz --strip=2 bottender-master/examples/with-botimize
-cd with-botimize
+curl https://codeload.github.com/Yoctol/bottender/tar.gz/master | tar -xz --strip=2 bottender-master/examples/analytics-botimize
+cd analytics-botimize
 npm install
 npm run dev
 ```
@@ -18,7 +18,7 @@ case, we take [Botimize](https://www.getbotimize.com/) as an example.
 
 The following code is the main part of this example which demonstrates the way
 to connect your bot with [Botimize](https://www.getbotimize.com/). Furthermore,
-it will be better to check [with-express example](../with-express) first.
+it will be better to check [server-express example](../server-express) first.
 
 ```js
 const server = createServer(bot, {
@@ -32,8 +32,8 @@ const server = createServer(bot, {
 
 ## Related examples
 
-* [with-chatbase](../with-chatbase)
-* [with-dashbot](../with-dashbot)
-* [with-botanalytics](../with-botanalytics)
-* [with-express](../with-express)
+* [analytics-chatbase](../analytics-chatbase)
+* [analytics-dashbot](../analytics-dashbot)
+* [analytics-botanalytics](../analytics-botanalytics)
+* [server-express](../server-express)
 * [messenger-hello-world](../messenger-hello-world)

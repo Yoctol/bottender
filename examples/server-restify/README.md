@@ -1,12 +1,12 @@
-# With Express
+# Server: Restify
 
 ## Install and Run
 
 Download this example or clone [bottender](https://github.com/Yoctol/bottender).
 
 ```
-curl https://codeload.github.com/Yoctol/bottender/tar.gz/master | tar -xz --strip=2 bottender-master/examples/with-express
-cd with-express
+curl https://codeload.github.com/Yoctol/bottender/tar.gz/master | tar -xz --strip=2 bottender-master/examples/server-micro
+cd server-micro
 npm install
 npm run dev
 ```
@@ -14,12 +14,12 @@ npm run dev
 ## Idea of this example
 
 This is a simple example of creating an
-[express](https://github.com/expressjs/express) server as your bot's server.\
+[restify](https://github.com/restify/node-restify) server as your bot's server.\
 Check our [server guide](https://bottender.js.org/docs/Guides-Server) for more information.
 
 ## Related examples
 
-* [with-koa](../with-koa)
-* [with-micro](../with-micro)
-* [with-restify](../with-restify)
+* [server-express](../server-express)
+* [server-koa](../server-koa)
+* [server-micro](../server-micro)
 * [messenger-hello-world](../messenger-hello-world)

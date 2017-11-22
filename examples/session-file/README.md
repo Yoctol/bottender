@@ -1,12 +1,12 @@
-# File Session
+# Session: File
 
 ## Install and Run
 
 Download this example or clone [bottender](https://github.com/Yoctol/bottender).
 
 ```
-curl https://codeload.github.com/Yoctol/bottender/tar.gz/master | tar -xz --strip=2 bottender-master/examples/with-file-session
-cd with-file-session
+curl https://codeload.github.com/Yoctol/bottender/tar.gz/master | tar -xz --strip=2 bottender-master/examples/session-file
+cd session-file
 npm install
 npm run dev
 ```
@@ -19,6 +19,6 @@ store sessions in your local file. For more information, check our
 
 ## Related examples
 
-* [with-memory-session](../with-memory-session)
-* [with-mongo-session](../with-mongo-session)
-* [with-redis-session](../with-redis-session)
+* [session-memory](../session-memory)
+* [session-mongo](../session-mongo)
+* [session-redis](../session-redis)
