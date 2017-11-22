@@ -23,7 +23,7 @@ to worry about finding a public url for your server.
 
 ## Related examples
 
-* [with-express](../with-express)
-* [with-koa](../with-koa)
-* [with-restify](../with-restify)
+* [server-express](../server-express)
+* [server-koa](../server-koa)
+* [server-restify](../server-restify)
 * [messenger-hello-world](../messenger-hello-world)

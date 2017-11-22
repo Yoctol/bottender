@@ -1,14 +1,14 @@
-[![Deploy to now](https://deploy.now.sh/static/button.svg)](https://deploy.now.sh/?repo=https://github.com/Yoctol/bottender/tree/master/examples/with-now-deployment)
+[![Deploy to now](https://deploy.now.sh/static/button.svg)](https://deploy.now.sh/?repo=https://github.com/Yoctol/bottender/tree/master/examples/deployment-now)
 
-# With now deployment
+# Deployment: now
 
 ## Install and Run
 
 Download this example or clone [bottender](https://github.com/Yoctol/bottender).
 
 ```
-curl https://codeload.github.com/Yoctol/bottender/tar.gz/master | tar -xz --strip=2 bottender-master/examples/with-now-deployment
-cd with-now-deployment
+curl https://codeload.github.com/Yoctol/bottender/tar.gz/master | tar -xz --strip=2 bottender-master/examples/deployment-now
+cd deployment-now
 npm install
 ACCESS_TOKEN=<YOUR_TOKEN> APP_SECRET=<YOUR_SECRET> VERIFY_TOKEN=<YOUR_VERIFY_TOKEN> npm run dev
 ```

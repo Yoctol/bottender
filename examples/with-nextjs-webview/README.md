@@ -19,7 +19,7 @@ more information, check [next.js official docs](https://zeit.co/blog/next4).
 
 ## Related examples
 
-* [with-express](../with-express)
-* [with-koa](../with-koa)
-* [with-micro](../with-micro)
-* [with-restify](../with-restify)
+* [server-express](../server-express)
+* [server-koa](../server-koa)
+* [server-micro](../server-micro)
+* [server-restify](../server-restify)

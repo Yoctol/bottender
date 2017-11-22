@@ -1,12 +1,12 @@
-# With Chatbase
+# Analytics: Chatbase
 
 ## Install and Run
 
 Download this example or clone [Bottender](https://github.com/Yoctol/bottender).
 
 ```
-curl https://codeload.github.com/Yoctol/bottender/tar.gz/master | tar -xz --strip=2 bottender-master/examples/with-chatbase
-cd with-chatbase
+curl https://codeload.github.com/Yoctol/bottender/tar.gz/master | tar -xz --strip=2 bottender-master/examples/analytics-chatbase
+cd analytics-chatbase
 npm install
 npm run dev
 ```
@@ -19,7 +19,7 @@ as an example.
 
 The following code is the main part of this example which demonstrates the way
 to connect your bot with [Chatbase](https://chatbase.com/welcome). Furthermore,
-it will be better to check [with-express example](../with-express) first.
+it will be better to check [server-express example](../server-express) first.
 
 ```js
 const server = createServer(bot, {
@@ -33,8 +33,8 @@ const server = createServer(bot, {
 
 ## Related examples
 
-* [with-dashbot](../with-dashbot)
-* [with-botimize](../with-botimize)
-* [with-botanalytics](../with-botanalytics)
-* [with-express](../with-express)
+* [analytics-dashbot](../analytics-dashbot)
+* [analytics-botimize](../analytics-botimize)
+* [analytics-botanalytics](../analytics-botanalytics)
+* [server-express](../server-express)
 * [messenger-hello-world](../messenger-hello-world)

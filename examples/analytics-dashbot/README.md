@@ -1,12 +1,12 @@
-# With Dashbot
+# Analytics: Dashbot
 
 ## Install and Run
 
 Download this example or clone [Bottender](https://github.com/Yoctol/bottender).
 
 ```
-curl https://codeload.github.com/Yoctol/bottender/tar.gz/master | tar -xz --strip=2 bottender-master/examples/with-dashbot
-cd with-dashbot
+curl https://codeload.github.com/Yoctol/bottender/tar.gz/master | tar -xz --strip=2 bottender-master/examples/analytics-dashbot
+cd analytics-dashbot
 npm install
 npm run dev
 ```
@@ -18,7 +18,7 @@ case, we take [Dashbot](https://www.dashbot.io/) as an example.
 
 The following code is the main part of this example which demonstrates the way
 to connect your bot with [Dashbot](https://www.dashbot.io/). Furthermore, it
-will be better to check [with-express example](../with-express) first.
+will be better to check [server-express example](../server-express) first.
 
 ```js
 const server = createServer(bot, {
@@ -32,8 +32,8 @@ const server = createServer(bot, {
 
 ## Related examples
 
-* [with-chatbase](../with-chatbase)
-* [with-botimize](../with-botimize)
-* [with-botanalytics](../with-botanalytics)
-* [with-express](../with-express)
+* [analytics-chatbase](../analytics-chatbase)
+* [analytics-botimize](../analytics-botimize)
+* [analytics-botanalytics](../analytics-botanalytics)
+* [server-express](../server-express)
 * [messenger-hello-world](../messenger-hello-world)
