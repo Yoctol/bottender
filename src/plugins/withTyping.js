@@ -2,15 +2,19 @@ import sleep from 'delay';
 
 const methods = [
   'sendText',
+  'sendMessage',
   'sendAttachment',
   'sendImage',
   'sendAudio',
   'sendVideo',
   'sendFile',
   'sendQuickReplies',
+  'sendTemplate',
   'sendGenericTemplate',
   'sendButtonTemplate',
   'sendListTemplate',
+  'sendOpenGraphTemplate',
+  'sendMediaTemplate',
   'sendReceiptTemplate',
   'sendAirlineBoardingPassTemplate',
   'sendAirlineCheckinTemplate',
@@ -28,7 +32,6 @@ const methods = [
   'sendVoice',
   'sendVenue',
   'sendContact',
-  'sendChatAction',
 ];
 
 export default options => context => {
