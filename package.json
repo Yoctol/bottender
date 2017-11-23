@@ -83,6 +83,7 @@
     "cross-spawn": "^5.1.0",
     "date-fns": "^1.29.0",
     "debug": "^3.1.0",
+    "deep-object-diff": "^1.0.4",
     "delay": "^2.0.0",
     "express": "^4.16.2",
     "figures": "^2.0.0",
