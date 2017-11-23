@@ -15,6 +15,9 @@ const MOCK_FILE_WITH_PLATFORM = {
   messenger: {
     accessToken: '__FAKE_TOKEN__',
     profile: {
+      get_started: {
+        payload: '<GET_STARTED_PAYLOAD>',
+      },
       persistent_menu: [
         {
           locale: 'default',
@@ -41,11 +44,27 @@ beforeEach(() => {
   process.exit = jest.fn();
   _client = {
     setMessengerProfile: jest.fn(),
+    deleteMessengerProfile: jest.fn(),
+    getMessengerProfile: jest.fn(),
   };
+  _client.getMessengerProfile.mockReturnValue([
+    {
+      persistent_menu: [
+        {
+          locale: 'default',
+          composer_input_disabled: false,
+          call_to_actions: [
+            {
+              type: 'web_url',
+              title: 'Powered by Example',
+              url: 'https://www.example.com/',
+            },
+          ],
+        },
+      ],
+    },
+  ]);
   MessengerClient.connect = jest.fn(() => _client);
-  log.print = jest.fn();
-  log.error = jest.fn();
-  log.bold = jest.fn();
   getConfig.mockReturnValue(MOCK_FILE_WITH_PLATFORM.messenger);
 });
 
@@ -59,10 +78,25 @@ it('be defined', () => {
 });
 
 describe('resolve', () => {
-  it('successfully set persistent menu', async () => {
-    await setMessengerProfile();
-
+  it('--fource update will delete all fields and set profile', async () => {
+    const ctx = {
+      argv: { force: true },
+    };
+    await setMessengerProfile(ctx);
+    expect(_client.deleteMessengerProfile).toBeCalledWith([
+      'account_linking_url',
+      'persistent_menu',
+      'get_started',
+      'greeting',
+      'whitelisted_domains',
+      'payment_settings',
+      'target_audience',
+      'home_url',
+    ]);
     expect(_client.setMessengerProfile).toBeCalledWith({
+      get_started: {
+        payload: '<GET_STARTED_PAYLOAD>',
+      },
       persistent_menu: [
         {
           locale: 'default',
@@ -78,6 +112,79 @@ describe('resolve', () => {
       ],
     });
   });
+  it('successfully set diff fileds `get_started`', async () => {
+    const ctx = {
+      argv: {},
+    };
+    await setMessengerProfile(ctx);
+
+    expect(_client.setMessengerProfile).toBeCalledWith({
+      get_started: {
+        payload: '<GET_STARTED_PAYLOAD>',
+      },
+    });
+  });
+  it('successfully delete diff fileds `whitelisted_domains`', async () => {
+    _client.getMessengerProfile.mockReturnValue([
+      {
+        persistent_menu: [
+          {
+            locale: 'default',
+            composer_input_disabled: false,
+            call_to_actions: [
+              {
+                type: 'web_url',
+                title: 'Powered by Example',
+                url: 'https://www.example.com/',
+              },
+            ],
+          },
+        ],
+        whitelisted_domains: [
+          'https://www.facebook.com/',
+          'https://www.google.com/',
+        ],
+      },
+    ]);
+    const ctx = {
+      argv: {},
+    };
+    await setMessengerProfile(ctx);
+    expect(_client.deleteMessengerProfile).toBeCalledWith([
+      'whitelisted_domains',
+    ]);
+  });
+  it('do nothing and log info', async () => {
+    _client.getMessengerProfile.mockReturnValue([
+      {
+        get_started: {
+          payload: '<GET_STARTED_PAYLOAD>',
+        },
+        persistent_menu: [
+          {
+            locale: 'default',
+            composer_input_disabled: false,
+            call_to_actions: [
+              {
+                type: 'web_url',
+                title: 'Powered by Example',
+                url: 'https://www.example.com/',
+              },
+            ],
+          },
+        ],
+      },
+    ]);
+    const ctx = {
+      argv: {},
+    };
+    await setMessengerProfile(ctx);
+    expect(_client.deleteMessengerProfile).not.toBeCalled();
+    expect(_client.setMessengerProfile).not.toBeCalled();
+    expect(log.print).toHaveBeenCalledWith(
+      `No change apply because the profile settings is the same.`
+    );
+  });
 });
 
 describe('reject', () => {
@@ -87,12 +194,15 @@ describe('reject', () => {
         status: 400,
       },
     };
+    const ctx = {
+      argv: {},
+    };
 
     _client.setMessengerProfile.mockReturnValue(Promise.reject(error));
 
     process.exit = jest.fn();
 
-    await setMessengerProfile();
+    await setMessengerProfile(ctx);
 
     expect(log.error).toBeCalled();
     expect(process.exit).toBeCalled();
@@ -113,11 +223,14 @@ describe('reject', () => {
         },
       },
     };
+    const ctx = {
+      argv: {},
+    };
     _client.setMessengerProfile.mockReturnValue(Promise.reject(error));
 
     process.exit = jest.fn();
 
-    await setMessengerProfile();
+    await setMessengerProfile(ctx);
 
     expect(log.error).toBeCalled();
     expect(log.error.mock.calls[2][0]).not.toMatch(/\[object Object\]/);
