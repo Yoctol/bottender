@@ -2,11 +2,10 @@
 import { MessengerClient } from 'messaging-api-messenger';
 import invariant from 'invariant';
 import { diff, addedDiff, deletedDiff, updatedDiff } from 'deep-object-diff';
+import chalk from 'chalk';
 
 import getConfig from '../../shared/getConfig';
 import { print, error, bold, log } from '../../shared/log';
-
-import help from './help';
 
 const FIELDS = [
   'account_linking_url',
@@ -18,6 +17,33 @@ const FIELDS = [
   'target_audience',
   'home_url',
 ];
+
+export const help = () => {
+  console.log(`
+    bottender messenger profile <action> [option]
+
+    ${chalk.dim('Actions:')}
+
+      get           Get the messenger profile
+      set           Set the messenger profile by diff
+      del, delete   Delete all the messenger profile fields
+      help          Show this help
+
+    ${chalk.dim('Options:')}
+
+      --force       Force update the messenger profile by config
+
+    ${chalk.dim('Examples:')}
+
+    ${chalk.dim('-')} Set the messenger profile
+
+      ${chalk.cyan('$ bottender messenger profile set')}
+
+    ${chalk.dim('-')} Force update the messenger profile
+
+      ${chalk.cyan('$ bottender messenger profile set --force')}
+  `);
+};
 
 export const trimDomain = profile => {
   const clone = Object.assign({}, profile);
@@ -167,8 +193,11 @@ export default async function main(ctx) {
     case 'del':
       await deleteMessengerProfile();
       break;
+    case 'help':
+      help();
+      break;
     default:
-      error(`Please specify a valid subcommand: get, set, delete`);
+      error(`Please specify a valid subcommand: get, set, delete, help`);
       help();
   }
 }
