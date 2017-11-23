@@ -12,7 +12,8 @@ function createMiddleware(bot) {
       res.status(response.status || 200);
       res.send(response.body || '');
     } else {
-      res.sendStatus(200);
+      res.status(200);
+      res.send('');
     }
   };
 }

@@ -3884,7 +3884,7 @@ map-visit@^1.0.0:
   dependencies:
     object-visit "^1.0.0"
 
-media-typer@0.3.0:
+media-typer@0.3.0, media-typer@^0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/media-typer/-/media-typer-0.3.0.tgz#8710d7af0aa626f8fffa1ce00168545263255748"
 
@@ -4633,7 +4633,7 @@ q@^1.1.2:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/q/-/q-1.5.0.tgz#dd01bac9d06d30e6f219aecb8253ee9ebdc308f1"
 
-qs@6.5.1, qs@^6.5.1:
+qs@6.5.1, qs@^6.2.1, qs@^6.5.1:
   version "6.5.1"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.5.1.tgz#349cdf6eef89ec45c12d7d5eb3fc0c870343a6d8"
 
@@ -4664,7 +4664,7 @@ range-parser@~1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/range-parser/-/range-parser-1.2.0.tgz#f49be6b487894ddc40dcc94a322f611092e00d5e"
 
-raw-body@2.3.2:
+raw-body@2.3.2, raw-body@^2.1.7:
   version "2.3.2"
   resolved "https://registry.yarnpkg.com/raw-body/-/raw-body-2.3.2.tgz#bcd60c77d3eb93cde0050295c3f379389bc88f89"
   dependencies:
@@ -5642,6 +5642,14 @@ upper-case@^1.1.1:
 urijs@^1.19.0:
   version "1.19.0"
   resolved "https://registry.yarnpkg.com/urijs/-/urijs-1.19.0.tgz#d8aa284d0e7469703a6988ad045c4cbfdf08ada0"
+
+urlencoded-body-parser@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/urlencoded-body-parser/-/urlencoded-body-parser-2.0.1.tgz#a8a0d51da10dc901702116e47c1432f892ba0f4a"
+  dependencies:
+    media-typer "^0.3.0"
+    qs "^6.2.1"
+    raw-body "^2.1.7"
 
 user-home@^1.1.1:
   version "1.1.1"

@@ -13,6 +13,7 @@ function createMiddleware(bot) {
       response.status = res.status || 200;
       response.body = res.body || '';
     } else {
+      response.body = '';
       response.status = 200;
     }
   };

@@ -2,10 +2,67 @@
 
 import pascalCase from 'pascal-case';
 
+import type { SlackEventSource } from '../bot/SlackConnector';
+
 import type { Event } from './Event';
 
+export type EventAPITypes =
+  | 'message'
+  | 'app_uninstalled'
+  | 'channel_archive'
+  | 'channel_created'
+  | 'channel_deleted'
+  | 'channel_history_changed'
+  | 'channel_rename'
+  | 'channel_unarchive'
+  | 'dnd_updated'
+  | 'dnd_updated_user'
+  | 'email_domain_changed'
+  | 'emoji_changed'
+  | 'file_change'
+  | 'file_comment_added'
+  | 'file_comment_deleted'
+  | 'file_comment_edited'
+  | 'file_created'
+  | 'file_deleted'
+  | 'file_public'
+  | 'file_shared'
+  | 'file_unshared'
+  | 'grid_migration_finished'
+  | 'grid_migration_started'
+  | 'group_archive'
+  | 'group_close'
+  | 'group_history_changed'
+  | 'group_open'
+  | 'group_rename'
+  | 'group_unarchive'
+  | 'im_close'
+  | 'im_created'
+  | 'im_history_changed'
+  | 'im_open'
+  | 'link_shared'
+  | 'member_joined_channel'
+  | 'member_left_channel'
+  | 'pin_added'
+  | 'pin_removed'
+  | 'reaction_added'
+  | 'reaction_removed'
+  | 'star_added'
+  | 'star_removed'
+  | 'subteam_created'
+  | 'subteam_members_changed'
+  | 'subteam_self_added'
+  | 'subteam_self_removed'
+  | 'subteam_updated'
+  | 'team_domain_change'
+  | 'team_join'
+  | 'team_rename'
+  | 'tokens_revoked'
+  | 'url_verification'
+  | 'user_change';
+
 export type Message = {
-  type: string,
+  type: EventAPITypes,
   subtype?: string,
   channel: string,
   user: string,
@@ -13,15 +70,36 @@ export type Message = {
   ts: string,
 };
 
-export type SlackRawEvent =
-  | {
-      type: string,
-      user: string, // FIXME: this is to fix type checking
-    }
-  | Message;
+export type InteractiveMessageEvent = {
+  type: 'interactive_message',
+  actions: Array<{}>,
+  callback_id: string,
+  team: {
+    id: string,
+    domain: string,
+  },
+  channel: {
+    id: string,
+    name: string,
+  },
+  user: {
+    id: string,
+    name: string,
+  },
+  action_ts: string,
+  message_ts: string,
+  attachment_id: string,
+  token: string,
+  original_message: Message,
+  response_url: string,
+  trigger_id: string,
+};
+
+export type SlackRawEvent = Message | InteractiveMessageEvent;
 
 export default class SlackEvent implements Event {
   _rawEvent: SlackRawEvent;
+  _source: SlackEventSource;
 
   constructor(rawEvent: SlackRawEvent) {
     this._rawEvent = rawEvent;
@@ -48,9 +126,9 @@ export default class SlackEvent implements Event {
    *
    */
   get isChannelsMessage(): boolean {
-    if (!this.isMessage) return false;
+    if (!this.isMessage || !this.message) return false;
 
-    const message: Message = (this.message: any);
+    const message = this.message;
 
     return message.channel.startsWith('C');
   }
@@ -60,9 +138,9 @@ export default class SlackEvent implements Event {
    *
    */
   get isGroupsMessage(): boolean {
-    if (!this.isMessage) return false;
+    if (!this.isMessage || !this.message) return false;
 
-    const message: Message = (this.message: any);
+    const message = this.message;
 
     return message.channel.startsWith('G');
   }
@@ -72,9 +150,9 @@ export default class SlackEvent implements Event {
    *
    */
   get isImMessage(): boolean {
-    if (!this.isMessage) return false;
+    if (!this.isMessage || !this.message) return false;
 
-    const message: Message = (this.message: any);
+    const message = this.message;
 
     return message.channel.startsWith('D');
   }
@@ -84,9 +162,9 @@ export default class SlackEvent implements Event {
    *
    */
   get isMpimMessage(): boolean {
-    if (!this.isMessage) return false;
+    if (!this.isMessage || !this.message) return false;
 
-    const message: Message = (this.message: any);
+    const message = this.message;
 
     return message.channel.startsWith('G');
   }
@@ -98,7 +176,7 @@ export default class SlackEvent implements Event {
   get message(): ?Message {
     if (!this.isMessage) return;
 
-    const message: Message = (this._rawEvent: any);
+    const message = ((this._rawEvent: any): Message);
 
     return message;
   }
@@ -117,7 +195,37 @@ export default class SlackEvent implements Event {
    */
   get text(): ?string {
     if (this.isText) {
-      return (this.message: any).text;
+      return ((this.message: any): Message).text;
+    }
+    return null;
+  }
+
+  /**
+   * Determine if the event is a interactive message (button/menu) event.
+   *
+   */
+  get isInteractiveMessage(): boolean {
+    return this._rawEvent.type === 'interactive_message';
+  }
+
+  /**
+   * The callback_id from Slack interactive message.
+   *
+   */
+  get callbackId(): ?string {
+    if (this.isInteractiveMessage) {
+      return ((this._rawEvent: any): InteractiveMessageEvent).callback_id;
+    }
+    return null;
+  }
+
+  /**
+   * The action from Slack interactive message.
+   *
+   */
+  get action(): ?{} {
+    if (this.isInteractiveMessage) {
+      return ((this._rawEvent: any): InteractiveMessageEvent).actions[0];
     }
     return null;
   }

@@ -1,4 +1,5 @@
 import { json, send } from 'micro';
+import parseUrlencoded from 'urlencoded-body-parser';
 
 import verifyLineSignature from './verifyLineSignature';
 import verifyMessengerSignature from './verifyMessengerSignature';
@@ -11,7 +12,12 @@ function createRequestHandler(bot, config = {}) {
     if (req.method === 'GET' && bot.connector.platform === 'messenger') {
       verifyMessengerWebhook({ verifyToken: config.verifyToken })(req, res);
     } else if (req.method === 'POST') {
-      const body = await json(req);
+      let body;
+      if (req.headers['content-type'] === 'application/x-www-form-urlencoded') {
+        body = await parseUrlencoded(req);
+      } else {
+        body = await json(req);
+      }
 
       if (
         bot.connector.platform === 'slack' &&
