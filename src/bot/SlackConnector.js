@@ -5,7 +5,12 @@
 import { SlackOAuthClient } from 'messaging-api-slack';
 
 import SlackContext from '../context/SlackContext';
-import SlackEvent, { type SlackRawEvent } from '../context/SlackEvent';
+import SlackEvent, {
+  type EventAPITypes,
+  type SlackRawEvent,
+  type Message,
+  type InteractiveMessageEvent,
+} from '../context/SlackEvent';
 import type { Session } from '../session/Session';
 
 import type { Connector } from './Connector';
@@ -15,16 +20,23 @@ export type SlackUser = {
   id: string,
 };
 
-export type SlackRequestBody = {
+type EventsAPIBody = {
   token: string,
   team_id: string,
   api_app_id: string,
-  type: string,
-  event: SlackRawEvent,
+  type: EventAPITypes,
+  event: Message,
   authed_users: Array<string>,
   event_id: string,
   event_time: number,
 };
+
+export type SlackRequestBody = EventsAPIBody | { payload: string };
+
+export type SlackEventSource =
+  | 'EventsAPI'
+  | 'InteractiveMessage'
+  | typeof undefined;
 
 type ConstructorOptions = {|
   accessToken?: string,
@@ -39,7 +51,11 @@ export default class SlackConnector implements Connector<SlackRequestBody> {
   }
 
   _getRawEventFromRequest(body: SlackRequestBody): SlackRawEvent {
-    return body.event;
+    if (body.event) {
+      return (((body: any): EventsAPIBody).event: Message);
+    }
+    // body.payload && typeof body.payload === 'string'
+    return (JSON.parse(body.payload): InteractiveMessageEvent);
   }
 
   _isBotEventRequest(body: SlackRequestBody): boolean {
@@ -59,24 +75,38 @@ export default class SlackConnector implements Connector<SlackRequestBody> {
   }
 
   getUniqueSessionKey(body: SlackRequestBody): string {
-    if (body.event.channel && typeof body.event.channel === 'string') {
-      return body.event.channel;
+    const rawEvent = this._getRawEventFromRequest(body);
+
+    if (rawEvent.type === 'interactive_message') {
+      return rawEvent.channel.id;
     }
-    return 'U000000000'; // FIXME
+
+    return ((rawEvent: any): Message).channel;
   }
 
   async updateSession(session: Session, body: SlackRequestBody): Promise<void> {
+    if (this._isBotEventRequest(body)) {
+      return;
+    }
+
+    const rawEvent = this._getRawEventFromRequest(body);
+    let userFromBody;
+    if (rawEvent.type === 'interactive_message') {
+      userFromBody = rawEvent.user.id;
+    } else {
+      userFromBody = ((rawEvent: any): Message).user;
+    }
+
     if (
-      (typeof session.user === 'object' &&
-        session.user &&
-        session.user.id &&
-        session.user.id === body.event.user) ||
-      this._isBotEventRequest(body)
+      typeof session.user === 'object' &&
+      session.user &&
+      session.user.id &&
+      session.user.id === userFromBody
     ) {
       return;
     }
     const channelId = this.getUniqueSessionKey(body);
-    const senderId = body.event.user;
+    const senderId = userFromBody;
 
     if (!senderId) {
       return;

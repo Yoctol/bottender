@@ -53,7 +53,11 @@ it('should call verifySlackWebhook when POST and body with type', async () => {
   const microRequestHandler = createRequestHandler(bot);
   micro.json.mockImplementationOnce(req => req.body);
 
-  const req = { method: 'POST', body: { type: 'url_verification' } };
+  const req = {
+    method: 'POST',
+    body: { type: 'url_verification' },
+    headers: { 'content-type': 'application/json' },
+  };
   const res = {
     sendStatus: jest.fn(),
   };
@@ -91,7 +95,10 @@ it('should call verifyMessengerSignature if platform is Messenger', async () => 
 
   const microRequestHandler = createRequestHandler(bot);
 
-  const req = { method: 'POST' };
+  const req = {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+  };
   const res = {};
 
   await microRequestHandler(req, res);
@@ -109,7 +116,10 @@ it('should not send 200 if verifyMessengerSignature fail if platform is Messenge
 
   const microRequestHandler = createRequestHandler(bot);
 
-  const req = { method: 'POST' };
+  const req = {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+  };
   const res = {};
 
   await microRequestHandler(req, res);
@@ -127,7 +137,10 @@ it('should call verifyLineSignature if platform is Line', async () => {
 
   const microRequestHandler = createRequestHandler(bot);
 
-  const req = { method: 'POST' };
+  const req = {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+  };
   const res = {};
 
   await microRequestHandler(req, res);
@@ -145,7 +158,10 @@ it('should not send 200 if verifyLineSignature fail if platform is Line', async 
 
   const microRequestHandler = createRequestHandler(bot);
 
-  const req = { method: 'POST' };
+  const req = {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+  };
   const res = {};
 
   await microRequestHandler(req, res);
@@ -160,7 +176,11 @@ it('should response 200 when no error be thrown in requestHandler', async () => 
 
   const microRequestHandler = createRequestHandler(bot);
 
-  const req = { method: 'POST', body: {} };
+  const req = {
+    method: 'POST',
+    body: {},
+    headers: { 'content-type': 'application/json' },
+  };
   const res = {};
 
   await microRequestHandler(req, res);
@@ -174,7 +194,11 @@ it('should response 200 if there is response return from requestHandler', async 
 
   const microRequestHandler = createRequestHandler(bot);
 
-  const req = { method: 'POST', body: {} };
+  const req = {
+    method: 'POST',
+    body: {},
+    headers: { 'content-type': 'application/json' },
+  };
   const res = {};
 
   await microRequestHandler(req, res);
@@ -198,7 +222,11 @@ it('should overwrite response when provide', async () => {
 
   const microRequestHandler = createRequestHandler(bot);
 
-  const req = { method: 'POST', body: {} };
+  const req = {
+    method: 'POST',
+    body: {},
+    headers: { 'content-type': 'application/json' },
+  };
   const res = {
     setHeader: jest.fn(),
   };
