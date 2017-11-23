@@ -1,6 +1,7 @@
 export default {
   title: 'Bottender',
   subcommands: new Set([
+    'attachment',
     'help',
     'get-started',
     'greeting',
@@ -9,6 +10,9 @@ export default {
     'webhook',
     'whitelisted-domains',
   ]),
+  get attachment() {
+    return require('./attachment').default;
+  },
   get getStarted() {
     return require('./get-started').default;
   },
