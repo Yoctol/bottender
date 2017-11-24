@@ -1,5 +1,7 @@
 /* @flow */
 
+import * as utils from './utils';
+
 /* Bot */
 export { default as Bot } from './bot/Bot';
 export { default as ConsoleBot } from './bot/ConsoleBot';
@@ -60,3 +62,6 @@ export { default as MessengerEvent } from './context/MessengerEvent';
 export { default as LineEvent } from './context/LineEvent';
 export { default as SlackEvent } from './context/SlackEvent';
 export { default as TelegramEvent } from './context/TelegramEvent';
+
+/* Utils */
+export { utils };
