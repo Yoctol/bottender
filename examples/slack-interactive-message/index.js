@@ -8,8 +8,8 @@ const bot = new SlackBot({
 bot.onEvent(async context => {
   if (context.event.isText && context.event.text === 'heyo') {
     // send a message with buttons and menu
-    await context.postMessage(undefined, {
-      attachments: JSON.stringify([
+    await context.postMessage(null, {
+      attachments: [
         {
           text: 'Choose a game to play',
           fallback: 'You are unable to choose a game',
@@ -89,7 +89,7 @@ bot.onEvent(async context => {
             },
           ],
         },
-      ]),
+      ],
     });
     // check if an event is from interacitve message
   } else if (context.event.isInteractiveMessage) {

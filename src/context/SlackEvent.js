@@ -2,8 +2,6 @@
 
 import pascalCase from 'pascal-case';
 
-import type { SlackEventSource } from '../bot/SlackConnector';
-
 import type { Event } from './Event';
 
 export type EventAPITypes =
@@ -99,7 +97,6 @@ export type SlackRawEvent = Message | InteractiveMessageEvent;
 
 export default class SlackEvent implements Event {
   _rawEvent: SlackRawEvent;
-  _source: SlackEventSource;
 
   constructor(rawEvent: SlackRawEvent) {
     this._rawEvent = rawEvent;
