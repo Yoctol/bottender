@@ -2597,6 +2597,12 @@ has@^1.0.1:
   dependencies:
     function-bind "^1.0.2"
 
+hasha@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/hasha/-/hasha-3.0.0.tgz#52a32fab8569d41ca69a61ff1a214f8eb7c8bd39"
+  dependencies:
+    is-stream "^1.0.1"
+
 hawk@~3.1.3:
   version "3.1.3"
   resolved "https://registry.yarnpkg.com/hawk/-/hawk-3.1.3.tgz#078444bd7c1640b0fe540d2c9b73d59678e8e1c4"
@@ -3017,7 +3023,7 @@ is-resolvable@^1.0.0:
   dependencies:
     tryit "^1.0.1"
 
-is-stream@1.1.0, is-stream@^1.1.0:
+is-stream@1.1.0, is-stream@^1.0.1, is-stream@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/is-stream/-/is-stream-1.1.0.tgz#12d4a3dd4e68e0b79ceb8dbc84173ae80d91ca44"
 
@@ -3905,9 +3911,9 @@ messaging-api-line@^0.5.7:
     image-type "^3.0.0"
     warning "^3.0.0"
 
-messaging-api-messenger@^0.5.9:
-  version "0.5.9"
-  resolved "https://registry.yarnpkg.com/messaging-api-messenger/-/messaging-api-messenger-0.5.9.tgz#6f11c7de09ef4539417dc8b55ee7522eeb407d45"
+messaging-api-messenger@^0.5.12:
+  version "0.5.12"
+  resolved "https://registry.yarnpkg.com/messaging-api-messenger/-/messaging-api-messenger-0.5.12.tgz#f85817caf2ffa18fad6e92f36c589d85d79e9ee3"
   dependencies:
     axios "^0.17.0"
     axios-error "^0.5.4"
