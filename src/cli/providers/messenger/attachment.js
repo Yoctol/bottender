@@ -9,22 +9,39 @@ import readChunk from 'read-chunk';
 import inquirer from 'inquirer';
 import jsonfile from 'jsonfile';
 import hasha from 'hasha';
+import chalk from 'chalk';
 
 import getConfig from '../../shared/getConfig';
 import { error, warn, print, bold, log } from '../../shared/log';
 
-import help from './help';
+const help = () => {
+  console.log(`
+    bottender messenger attachment <command>
+
+    ${chalk.dim('Commands:')}
+
+      upload    Upload all the files in assets folder.
+                Bottender will also create a bottender-lock.json file.
+
+    ${chalk.dim('Examples:')}
+
+    ${chalk.dim('-')} Upload the assets to messenger
+
+      ${chalk.cyan('$ bottender messenger attachment upload')}
+  `);
+};
 
 const getFileType = file => {
   const imageType = ['jpg', 'png', 'jpeg', 'gif'];
   const videoType = ['avi', 'mp4', 'm4v'];
   const audioType = ['mp3', 'mid', 'm4a', 'wav'];
 
+  const LENGTH_OF_FILE_MAGIC_NUMBERS = 4100;
+  const buffer = readChunk.sync(file, 0, LENGTH_OF_FILE_MAGIC_NUMBERS);
+
   let type = 'file';
-
-  const buffer = readChunk.sync(file, 0, 4100);
-
   const typeResult = fileType(buffer);
+
   if (typeResult) {
     const { ext } = typeResult;
     if (imageType.includes(ext)) {
@@ -69,7 +86,7 @@ export async function uploadAttachment() {
 
     const client = MessengerClient.connect(config.accessToken);
 
-    const files = await readdir('assets'); // FIXME: filter ignore file
+    const files = await readdir('assets', ['.*']);
 
     files.forEach(print);
 
@@ -165,6 +182,9 @@ export default async function main(ctx) {
   switch (subcommand) {
     case 'upload':
       await uploadAttachment();
+      break;
+    case 'help':
+      help();
       break;
     default:
       error(`Please specify a valid subcommand: upload`);
