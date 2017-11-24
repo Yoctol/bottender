@@ -33,11 +33,6 @@ type EventsAPIBody = {
 
 export type SlackRequestBody = EventsAPIBody | { payload: string };
 
-export type SlackEventSource =
-  | 'EventsAPI'
-  | 'InteractiveMessage'
-  | typeof undefined;
-
 type ConstructorOptions = {|
   accessToken?: string,
   client?: SlackOAuthClient,
