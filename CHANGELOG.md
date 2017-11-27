@@ -1,3 +1,28 @@
+0.14.6 / 2017-11-27
+===================
+### messenger
+- [new] A new command to upload your messenger attachments from `/assets` directory (in beta):
+
+```sh
+$ bottender messenger attachment upload
+```
+
+Then, you can import them with `getAttachment` util function:
+
+```js
+const { getAttachment } = require('bottender/utils');
+
+console.log(getAttachment('mypic.jpg').id); // '1591074914293017'
+```
+
+- [new] Add `--force` option to `bottender messenger profile set` (delete all and set all)
+- [fix] Fix file export for `test-utils.js` [#44](https://github.com/Yoctol/bottender/pull/44)
+- [fix] Refined affected methods in `withTyping` [#35](https://github.com/Yoctol/bottender/pull/35)
+
+### slack
+- [fix] Stop passing `as_user: true` [#33](https://github.com/Yoctol/bottender/pull/33)
+
+
 0.14.5 / 2017-11-21
 ===================
 ### messenger
