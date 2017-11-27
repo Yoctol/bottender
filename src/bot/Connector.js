@@ -11,5 +11,6 @@ export interface Connector<B> {
     event: any,
     session: ?Session,
     initialState: Object,
+    customAccessToken: ?string,
   }): any;
 }

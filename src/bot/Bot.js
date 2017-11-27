@@ -36,20 +36,25 @@ export default class Bot {
 
   _sync: boolean;
 
+  _getAccessToken: ?(pageId: string) => Promise<string>;
+
   constructor({
     connector,
     sessionStore = createMemorySessionStore(),
     sync = false,
+    getAccessToken,
   }: {|
     connector: Connector<any>,
     sessionStore: SessionStore,
     sync?: boolean,
+    getAccessToken?: (pageId: string) => Promise<string>,
   |}) {
     this._sessions = sessionStore;
     this._initialized = false;
     this._connector = connector;
     this._handler = null;
     this._sync = sync;
+    this._getAccessToken = getAccessToken;
   }
 
   get connector(): Connector<any> {
@@ -132,11 +137,18 @@ export default class Bot {
 
       const events = this._connector.mapRequestToEvents(body);
 
+      let customAccessToken;
+
+      if (this._getAccessToken) {
+        customAccessToken = await this._getAccessToken(body.entry[0].id);
+      }
+
       const contexts = events.map(event =>
         this._connector.createContext({
           event,
           session: ((session: any): Session),
           initialState: this._initialState,
+          customAccessToken,
         })
       );
 
