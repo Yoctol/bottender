@@ -33,7 +33,6 @@
     "btd": "bin/cli.js"
   },
   "scripts": {
-    "build:docs": "node scripts/build-docs",
     "build": "npm run clean && babel src -d lib --ignore __tests__",
     "clean": "rimraf lib",
     "check": "flow check",
