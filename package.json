@@ -27,7 +27,8 @@
     "koa.js",
     "micro.js",
     "restify.js",
-    "test-utils.js"
+    "test-utils.js",
+    "utils.js"
   ],
   "bin": {
     "bottender": "bin/cli.js",
