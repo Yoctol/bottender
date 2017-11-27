@@ -11,13 +11,15 @@ export default class MessengerBot extends Bot {
     appSecret,
     sessionStore,
     sync,
+    getAccessToken,
   }: {
     accessToken: string,
     appSecret: string,
     sessionStore: SessionStore,
     sync?: boolean,
+    getAccessToken?: (pageId: string) => Promise<string>,
   }) {
     const connector = new MessengerConnector({ accessToken, appSecret });
-    super({ connector, sessionStore, sync });
+    super({ connector, sessionStore, sync, getAccessToken });
   }
 }

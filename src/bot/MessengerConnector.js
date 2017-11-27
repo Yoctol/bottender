@@ -197,16 +197,19 @@ export default class MessengerConnector
     event,
     session,
     initialState,
+    customAccessToken,
   }: {
     event: MessengerEvent,
     session: ?Session,
     initialState: Object,
+    customAccessToken: ?string,
   }): MessengerContext {
     return new MessengerContext({
       client: this._client,
       event,
       session,
       initialState,
+      customAccessToken,
     });
   }
 

@@ -15,15 +15,24 @@ type Options = {|
   event: MessengerEvent,
   session: ?Session,
   initialState: ?Object,
+  customAccessToken: ?string,
 |};
 
 class MessengerContext extends Context implements PlatformContext {
   _client: MessengerClient;
   _event: MessengerEvent;
   _session: ?Session;
+  _customAccessToken: ?string;
 
-  constructor({ client, event, session, initialState }: Options) {
+  constructor({
+    client,
+    event,
+    session,
+    initialState,
+    customAccessToken,
+  }: Options) {
     super({ client, event, session, initialState });
+    this._customAccessToken = customAccessToken;
   }
 
   /**
@@ -66,6 +75,7 @@ class MessengerContext extends Context implements PlatformContext {
     return this._client.sendText(this._session.user.id, text, {
       messaging_type: messageType,
       ...options,
+      access_token: this._customAccessToken,
     });
   }
 
@@ -286,6 +296,7 @@ sendMethods.forEach(([method, len]) => {
       args[len - 2] = {
         messaging_type: messageType,
         ...options,
+        access_token: this._customAccessToken,
       };
 
       return this._client[method](this._session.user.id, ...args);
