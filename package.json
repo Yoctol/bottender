@@ -26,7 +26,8 @@
     "express.js",
     "koa.js",
     "micro.js",
-    "restify.js"
+    "restify.js",
+    "test-utils.js"
   ],
   "bin": {
     "bottender": "bin/cli.js",
