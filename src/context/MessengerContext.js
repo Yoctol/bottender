@@ -103,7 +103,9 @@ class MessengerContext extends Context implements PlatformContext {
 
     this._isHandled = true;
 
-    return this._client.typingOn(this._session.user.id);
+    return this._client.typingOn(this._session.user.id, {
+      access_token: this._customAccessToken,
+    });
   }
 
   /**
@@ -120,7 +122,9 @@ class MessengerContext extends Context implements PlatformContext {
 
     this._isHandled = true;
 
-    return this._client.typingOff(this._session.user.id);
+    return this._client.typingOff(this._session.user.id, {
+      access_token: this._customAccessToken,
+    });
   }
 
   /**
@@ -137,7 +141,9 @@ class MessengerContext extends Context implements PlatformContext {
 
     this._isHandled = true;
 
-    return this._client.markSeen(this._session.user.id);
+    return this._client.markSeen(this._session.user.id, {
+      access_token: this._customAccessToken,
+    });
   }
 
   /**
@@ -166,7 +172,10 @@ class MessengerContext extends Context implements PlatformContext {
     return this._client.passThreadControl(
       this._session.user.id,
       targetAppId,
-      metadata
+      metadata,
+      {
+        access_token: this._customAccessToken,
+      }
     );
   }
 
@@ -184,7 +193,9 @@ class MessengerContext extends Context implements PlatformContext {
 
     this._isHandled = true;
 
-    return this._client.passThreadControlToPageInbox(this._session.user.id);
+    return this._client.passThreadControlToPageInbox(this._session.user.id, {
+      access_token: this._customAccessToken,
+    });
   }
 
   /**
@@ -201,7 +212,9 @@ class MessengerContext extends Context implements PlatformContext {
 
     this._isHandled = true;
 
-    return this._client.takeThreadControl(this._session.user.id);
+    return this._client.takeThreadControl(this._session.user.id, {
+      access_token: this._customAccessToken,
+    });
   }
 
   /**
@@ -222,7 +235,9 @@ class MessengerContext extends Context implements PlatformContext {
       return;
     }
 
-    return this._client.associateLabel(this._session.user.id, labelId);
+    return this._client.associateLabel(this._session.user.id, labelId, {
+      access_token: this._customAccessToken,
+    });
   }
 
   /**
@@ -237,7 +252,9 @@ class MessengerContext extends Context implements PlatformContext {
       return;
     }
 
-    return this._client.dissociateLabel(this._session.user.id, labelId);
+    return this._client.dissociateLabel(this._session.user.id, labelId, {
+      access_token: this._customAccessToken,
+    });
   }
 
   /**
@@ -252,7 +269,9 @@ class MessengerContext extends Context implements PlatformContext {
       return;
     }
 
-    return this._client.getAssociatedLabels(this._session.user.id);
+    return this._client.getAssociatedLabels(this._session.user.id, {
+      access_token: this._customAccessToken,
+    });
   }
 }
 

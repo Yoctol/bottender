@@ -101,7 +101,9 @@ describe('#createRequestHandler', () => {
     const body = {};
     await requestHandler(body);
 
-    expect(connector.updateSession).toBeCalledWith(expect.any(Object), body);
+    expect(connector.updateSession).toBeCalledWith(expect.any(Object), body, {
+      customAccessToken: undefined,
+    });
   });
 
   it('should call handler', async () => {

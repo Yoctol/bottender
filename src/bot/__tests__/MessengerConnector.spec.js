@@ -224,10 +224,13 @@ describe('#updateSession', () => {
     mockGraphAPIClient.getUserProfile.mockReturnValue(Promise.resolve(user));
 
     const session = {};
-    await connector.updateSession(session, request.body);
+    await connector.updateSession(session, request.body, {
+      customAccessToken: undefined,
+    });
 
     expect(mockGraphAPIClient.getUserProfile).toBeCalledWith(
-      '1412611362105802'
+      '1412611362105802',
+      { access_token: undefined }
     );
     expect(session).toEqual({
       user: {
@@ -255,10 +258,13 @@ describe('#updateSession', () => {
         profile_pic: 'https://example.com/pic.png?oe=386D4380', // expired at 2000-01-01T00:00:00.000Z
       },
     };
-    await connector.updateSession(session, request.body);
+    await connector.updateSession(session, request.body, {
+      customAccessToken: undefined,
+    });
 
     expect(mockGraphAPIClient.getUserProfile).toBeCalledWith(
-      '1412611362105802'
+      '1412611362105802',
+      { access_token: undefined }
     );
     expect(session).toEqual({
       user: {
@@ -286,10 +292,13 @@ describe('#updateSession', () => {
         profile_pic: 'https://example.com/pic.png?oe=abc666666666', // wrong timestamp
       },
     };
-    await connector.updateSession(session, request.body);
+    await connector.updateSession(session, request.body, {
+      customAccessToken: undefined,
+    });
 
     expect(mockGraphAPIClient.getUserProfile).toBeCalledWith(
-      '1412611362105802'
+      '1412611362105802',
+      { access_token: undefined }
     );
     expect(session).toEqual({
       user: {
@@ -317,10 +326,13 @@ describe('#updateSession', () => {
         profile_pic123: 'https://example.com/pic.png?oe=386D4380', // wrong name
       },
     };
-    await connector.updateSession(session, request.body);
+    await connector.updateSession(session, request.body, {
+      customAccessToken: undefined,
+    });
 
     expect(mockGraphAPIClient.getUserProfile).toBeCalledWith(
-      '1412611362105802'
+      '1412611362105802',
+      { access_token: undefined }
     );
     expect(session).toEqual({
       user: {

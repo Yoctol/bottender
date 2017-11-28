@@ -160,12 +160,15 @@ export default class MessengerConnector
 
   async updateSession(
     session: Session,
-    body: MessengerRequestBody
+    body: MessengerRequestBody,
+    { customAccessToken }: { customAccessToken: ?string }
   ): Promise<void> {
     if (!session.user || this._profilePicExpired(session.user)) {
       const senderId = this.getUniqueSessionKey(body);
       // FIXME: refine user
-      const user = await this._client.getUserProfile(senderId);
+      const user = await this._client.getUserProfile(senderId, {
+        access_token: customAccessToken,
+      });
       session.user = {
         _updatedAt: new Date().toISOString(),
         ...user,
