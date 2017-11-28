@@ -1,8 +1,10 @@
 import request from 'supertest';
+import parseUrlencoded from 'urlencoded-body-parser';
 
 import connectNgrok from '../../connectNgrok';
 import createServer from '../createServer';
 
+jest.mock('urlencoded-body-parser');
 jest.mock('../../connectNgrok');
 
 function setup({ platform }) {
@@ -70,6 +72,20 @@ it('should handle bot request', async () => {
     .send({});
 
   expect(status).toBe(200);
+});
+
+it('should handle x-www-form-urlencoded request', async () => {
+  const { bot, requestHandler } = setup({ platform: 'other' });
+  requestHandler.mockReturnValue(Promise.resolve());
+  const verifyToken = '1qaz2wsx';
+  const server = createServer(bot, { verifyToken });
+  const { status } = await request(server)
+    .post('/')
+    .set('content-type', 'application/x-www-form-urlencoded')
+    .send({});
+
+  expect(status).toBe(200);
+  expect(parseUrlencoded).toBeCalled();
 });
 
 it('should run connectNgrok when server listen and ngrok option is provided', async () => {

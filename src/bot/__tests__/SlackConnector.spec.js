@@ -49,6 +49,13 @@ const botRequest = {
   },
 };
 
+const interactiveMessageRequest = {
+  body: {
+    payload:
+      '{"type":"interactive_message","actions":[{"name":"game","type":"button","value":"chess"}],"callback_id":"wopr_game","team":{"id":"T056K3CM5","domain":"ricebug"},"channel":{"id":"D7WTL9ECE","name":"directmessage"},"user":{"id":"U056K3CN1","name":"tw0517tw"},"action_ts":"1511153911.446899","message_ts":"1511153905.000093","attachment_id":"1","token":"n8uIomPoBtc7fSnbHbQcmwdy","is_app_unfurl":false,"original_message":{"type":"message","user":"U7W1PH7MY","text":"Would you like to play a game?","bot_id":"B7VUVQTK5","attachments":[{"callback_id":"wopr_game","fallback":"You are unable to choose a game","text":"Choose a game to play","id":1,"color":"3AA3E3","actions":[{"id":"1","name":"game","text":"Chess","type":"button","value":"chess","style":""},{"id":"2","name":"game","text":"Falken\'s Maze","type":"button","value":"maze","style":""},{"id":"3","name":"game","text":"Thermonuclear War","type":"button","value":"war","style":"danger","confirm":{"text":"Wouldn\'t you prefer a good game of chess?","title":"Are you sure?","ok_text":"Yes","dismiss_text":"No"}}]}],"ts":"1511153905.000093"},"response_url":"https:\\/\\/hooks.slack.com\\/actions\\/T056K3CM5\\/274366307953\\/73rSfbP0LcVPWfAYB3GicEdD","trigger_id":"274927463524.5223114719.95a5b9f6d3b30dc7e07dec6bfa4610e5"}',
+  },
+};
+
 function setup() {
   const mockSlackOAuthClient = {
     getUserInfo: jest.fn(),
@@ -85,10 +92,18 @@ describe('#client', () => {
 });
 
 describe('#getUniqueSessionKey', () => {
-  it('extract correct sender id', () => {
+  it('extract correct channel id', () => {
     const { connector } = setup();
     const channelId = connector.getUniqueSessionKey(request.body);
     expect(channelId).toBe('C6A900000');
+  });
+
+  it('extract correct channel id from interactive message request', () => {
+    const { connector } = setup();
+    const channelId = connector.getUniqueSessionKey(
+      interactiveMessageRequest.body
+    );
+    expect(channelId).toBe('D7WTL9ECE');
   });
 });
 
@@ -182,6 +197,53 @@ describe('#updateSession', () => {
     expect(mockSlackOAuthClient.getConversationInfo).not.toBeCalled();
     expect(mockSlackOAuthClient.getAllConversationMembers).not.toBeCalled();
     expect(mockSlackOAuthClient.getAllUserList).not.toBeCalled();
+  });
+
+  it('update session with data needed when receiving interactive message request', async () => {
+    const { connector, mockSlackOAuthClient } = setup();
+
+    const user = {
+      id: 'U056K3CN1',
+    };
+    const channel = {
+      id: 'D7WTL9ECE',
+    };
+    const members = [user];
+    const session = {};
+
+    mockSlackOAuthClient.getUserInfo.mockReturnValue(Promise.resolve(user));
+    mockSlackOAuthClient.getConversationInfo.mockReturnValue(
+      Promise.resolve(channel)
+    );
+    mockSlackOAuthClient.getAllConversationMembers.mockReturnValue(
+      Promise.resolve(members)
+    );
+    mockSlackOAuthClient.getAllUserList.mockReturnValue(
+      Promise.resolve(members)
+    );
+
+    await connector.updateSession(session, interactiveMessageRequest.body);
+
+    expect(mockSlackOAuthClient.getUserInfo).toBeCalledWith('U056K3CN1');
+    expect(mockSlackOAuthClient.getConversationInfo).toBeCalledWith(
+      'D7WTL9ECE'
+    );
+    expect(mockSlackOAuthClient.getAllConversationMembers).toBeCalledWith(
+      'D7WTL9ECE'
+    );
+    expect(mockSlackOAuthClient.getAllUserList).toBeCalled();
+    expect(session).toEqual({
+      user: {
+        _updatedAt: expect.any(String),
+        ...user,
+      },
+      channel: {
+        _updatedAt: expect.any(String),
+        members,
+        ...channel,
+      },
+      team: { members, _updatedAt: expect.any(String) },
+    });
   });
 });
 
