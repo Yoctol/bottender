@@ -43,6 +43,10 @@ class MessengerContext extends Context implements PlatformContext {
     return 'messenger';
   }
 
+  get customAccessToken(): ?string {
+    return this._customAccessToken;
+  }
+
   /**
    * Delay and show indicators for milliseconds.
    *

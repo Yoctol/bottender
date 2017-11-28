@@ -69,6 +69,10 @@ export default class Bot {
     return this._handler;
   }
 
+  get getAccessToken(): ?(pageId: string) => Promise<string> {
+    return this._getAccessToken;
+  }
+
   onEvent(handler: FunctionalHandler | Builder): Bot {
     this._handler = handler.build ? handler.build() : handler;
     return this;
@@ -140,7 +144,8 @@ export default class Bot {
       let customAccessToken;
 
       if (this._getAccessToken) {
-        customAccessToken = await this._getAccessToken(body.entry[0].id);
+        const pageId = body.entry[0].id;
+        customAccessToken = await this._getAccessToken(pageId);
       }
 
       const contexts = events.map(event =>

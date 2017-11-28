@@ -401,6 +401,21 @@ describe('#createContext', () => {
     expect(context).toBeDefined();
     expect(context).toBeInstanceOf(MessengerContext);
   });
+
+  it('should create MessengerContext and has customAccessToken', () => {
+    const { connector } = setup();
+    const event = {};
+    const session = {};
+
+    const context = connector.createContext({
+      event,
+      session,
+      customAccessToken: 'anyToken',
+    });
+
+    expect(context).toBeDefined();
+    expect(context.customAccessToken).toBe('anyToken');
+  });
 });
 
 describe('#verifySignature', () => {
