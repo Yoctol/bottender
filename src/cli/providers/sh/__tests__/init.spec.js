@@ -2,7 +2,7 @@ import path from 'path';
 
 import stringifyObject from 'stringify-object';
 
-import { init } from '../init';
+import init from '../init';
 
 jest.mock('inquirer');
 jest.mock('child_process');

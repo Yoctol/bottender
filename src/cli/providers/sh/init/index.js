@@ -284,7 +284,7 @@ const createBot = async (answer, root, useYarn) => {
   await run(root, botName, answer, useYarn);
 };
 
-export async function init() {
+const init = async () => {
   try {
     const answer = await inquirer.prompt(questions);
 
@@ -338,8 +338,6 @@ export async function init() {
     }
     return process.exit(1);
   }
-}
+};
 
-export default async function main() {
-  await init();
-}
+export default init;

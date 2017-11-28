@@ -1,5 +1,5 @@
 export default {
-  title: 'Line',
+  title: 'LINE',
   subcommands: new Set(['menu']),
   get menu() {
     return require('./menu').default;
