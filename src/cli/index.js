@@ -14,6 +14,7 @@ const main = async argv => {
   switch (argv._[0]) {
     case 'messenger':
     case 'telegram':
+    case 'line':
       providerName = argv._[0];
       subcommand = argv._[1];
       break;
