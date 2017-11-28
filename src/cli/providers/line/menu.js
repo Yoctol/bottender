@@ -12,7 +12,7 @@ import { print, error, bold, log } from '../../shared/log';
 const generateDeleteQuestions = richMenus => [
   {
     name: 'deletedRichMenuNames',
-    message: 'Which rich menus do you want to delete ?',
+    message: 'Which rich menu do you want to delete?',
     type: 'checkbox',
     choices: richMenus.map(richMenu => richMenu.name),
   },
@@ -24,9 +24,9 @@ export const help = () => {
 
     ${chalk.dim('Actions:')}
 
-      get           Get the LINE rich menu
+      get           Get the LINE rich menus
       set           Set the LINE rich menu by diff
-      del, delete   Delete all the LINE rich menu
+      del, delete   Delete all the LINE rich menus
       help          Show this help
 
     ${chalk.dim('Options:')}
@@ -45,16 +45,6 @@ export const help = () => {
   `);
 };
 
-export const trimDomain = profile => {
-  const clone = Object.assign({}, profile);
-  if (clone.whitelisted_domains) {
-    clone.whitelisted_domains = clone.whitelisted_domains.map(domain =>
-      domain.replace(/\/$/, '')
-    );
-  }
-  return clone;
-};
-
 export async function getLineMenu() {
   try {
     const config = getConfig('bottender.config.js', 'line');
@@ -66,7 +56,7 @@ export async function getLineMenu() {
     const richMenus = await client.getRichMenuList();
 
     if (richMenus) {
-      print('The rich menu is:');
+      print('The rich menus are:');
 
       print(`\n${JSON.stringify(richMenus, null, 2)}`);
     } else {
@@ -89,7 +79,7 @@ export async function getLineMenu() {
 export async function setLineMenus(ctx) {
   const { force } = ctx.argv;
   try {
-    const { accessToken, richMenus: _richMenus } = getConfig(
+    const { accessToken, richMenus: localRichMenus } = getConfig(
       'bottender.config.js',
       'line'
     );
@@ -98,14 +88,17 @@ export async function setLineMenus(ctx) {
 
     const client = LineClient.connect(accessToken);
 
-    const richMenus = await client.getRichMenuList();
+    const onlineRichMenus = await client.getRichMenuList();
 
-    invariant(richMenus, `Failed to get ${bold('LINE rich menu')} response.`);
+    invariant(
+      onlineRichMenus,
+      `Failed to get ${bold('LINE rich menu')} response.`
+    );
 
     if (force) {
-      if (richMenus.length !== 0) {
+      if (onlineRichMenus.length !== 0) {
         await pMap(
-          richMenus,
+          onlineRichMenus,
           async richMenu => {
             await client.deleteRichMenu(richMenu.richMenuId);
           },
@@ -113,21 +106,21 @@ export async function setLineMenus(ctx) {
         );
       }
 
-      await pMap(_richMenus, client.createRichMenu, { concurrency: 5 });
+      await pMap(localRichMenus, client.createRichMenu, { concurrency: 5 });
 
       print(`Successfully set ${bold('LINE rich menu')}.`);
     } else {
-      const existedRichMenus = richMenus.map(richMenu =>
+      const existedRichMenus = onlineRichMenus.map(richMenu =>
         omit(richMenu, 'richMenuId')
       );
 
       const shouldDeleteRichMenus = differenceWith(
         existedRichMenus,
-        _richMenus,
+        localRichMenus,
         isEqual
       );
       const shouldAddRichMenus = differenceWith(
-        _richMenus,
+        localRichMenus,
         existedRichMenus,
         isEqual
       );
@@ -144,8 +137,8 @@ export async function setLineMenus(ctx) {
           await pMap(
             shouldDeleteRichMenus,
             async shouldDeleteRichMenu => {
-              const { richMenuId } = richMenus[
-                findIndex(richMenus, shouldDeleteRichMenu)
+              const { richMenuId } = onlineRichMenus[
+                findIndex(onlineRichMenus, shouldDeleteRichMenu)
               ];
 
               await client.deleteRichMenu(richMenuId);
@@ -264,7 +257,7 @@ export default async function main(ctx) {
       help();
       break;
     default:
-      error(`Please specify a valid subcommand: get, set, delete, help.`);
+      error('Please specify a valid subcommand: get, set, delete, help.');
       help();
   }
 }

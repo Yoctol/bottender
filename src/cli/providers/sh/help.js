@@ -10,6 +10,7 @@ const help = () => {
 
         messenger   <command>   Manage your Messenger command
         telegram    <command>   Manage your Telegram command
+        line        <command>   Manage your LINE command
 
       ${chalk.dim('Global')}
 
