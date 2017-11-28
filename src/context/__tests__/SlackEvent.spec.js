@@ -461,6 +461,86 @@ const userChange = {
   user: {},
 };
 
+const interactiveMessageEvent = {
+  type: 'interactive_message',
+  actions: [
+    {
+      name: 'game',
+      type: 'button',
+      value: 'chess',
+    },
+  ],
+  callback_id: 'wopr_game',
+  team: {
+    id: 'T056K3CM5',
+    domain: 'ricebug',
+  },
+  channel: {
+    id: 'D7WTL9ECE',
+    name: 'directmessage',
+  },
+  user: {
+    id: 'U056K3CN1',
+    name: 'tw0517tw',
+  },
+  action_ts: '1511153911.446899',
+  message_ts: '1511153905.000093',
+  attachment_id: '1',
+  token: 'n8uIomPoBtc7fSnbHbQcmwdy',
+  is_app_unfurl: false,
+  original_message: {
+    type: 'message',
+    user: 'U7W1PH7MY',
+    text: 'Would you like to play a game?',
+    bot_id: 'B7VUVQTK5',
+    attachments: [
+      {
+        callback_id: 'wopr_game',
+        fallback: 'You are unable to choose a game',
+        text: 'Choose a game to play',
+        id: 1,
+        color: '3AA3E3',
+        actions: [
+          {
+            id: '1',
+            name: 'game',
+            text: 'Chess',
+            type: 'button',
+            value: 'chess',
+            style: '',
+          },
+          {
+            id: '2',
+            name: 'game',
+            text: "Falken's Maze",
+            type: 'button',
+            value: 'maze',
+            style: '',
+          },
+          {
+            id: '3',
+            name: 'game',
+            text: 'Thermonuclear War',
+            type: 'button',
+            value: 'war',
+            style: 'danger',
+            confirm: {
+              text: "Wouldn't you prefer a good game of chess?",
+              title: 'Are you sure?',
+              ok_text: 'Yes',
+              dismiss_text: 'No',
+            },
+          },
+        ],
+      },
+    ],
+    ts: '1511153905.000093',
+  },
+  response_url:
+    'https://hooks.slack.com/actions/T056K3CM5/274366307953/73rSfbP0LcVPWfAYB3GicEdD',
+  trigger_id: '274927463524.5223114719.95a5b9f6d3b30dc7e07dec6bfa4610e5',
+};
+
 it('#rawEvent', () => {
   expect(new SlackEvent(message).rawEvent).toEqual(message);
 });
@@ -657,21 +737,30 @@ it('#isMessage', () => {
   expect(new SlackEvent(groupsMessage).isMessage).toEqual(true);
   expect(new SlackEvent(imMessage).isMessage).toEqual(true);
   expect(new SlackEvent(mpimMessage).isMessage).toEqual(true);
+  expect(new SlackEvent(interactiveMessageEvent).isMessage).toEqual(false);
 });
 
 it('#isText', () => {
   const event = new SlackEvent(message);
   expect(event.isText).toEqual(true);
+  expect(new SlackEvent(interactiveMessageEvent).isText).toEqual(false);
 });
 
 it('#text', () => {
-  const event = new SlackEvent(message);
-  expect(event.text).toEqual('Hello world');
+  expect(new SlackEvent(message).text).toEqual('Hello world');
+  expect(new SlackEvent(interactiveMessageEvent).text).toEqual(null);
 });
 
 it('#message', () => {
-  const event = new SlackEvent({ type: 'notMessage' });
-  expect(event.message).toEqual(undefined);
+  expect(new SlackEvent(message).message).toEqual({
+    channel: 'C2147483705',
+    text: 'Hello world',
+    ts: '1355517523.000005',
+    type: 'message',
+    user: 'U2147483697',
+  });
+  expect(new SlackEvent({ type: 'notMessage' }).message).toEqual(undefined);
+  expect(new SlackEvent(interactiveMessageEvent).message).toEqual(undefined);
 });
 
 it('#isChannelsMessage', () => {
@@ -779,4 +868,29 @@ it('#isUrlVerification', () => {
 it('#isUserChange', () => {
   expect(new SlackEvent(userChange).isUserChange).toEqual(true);
   expect(new SlackEvent(message).isUserChange).toEqual(false);
+});
+
+describe('interactive message event', () => {
+  it('#isInteractiveMessage', () => {
+    expect(
+      new SlackEvent(interactiveMessageEvent).isInteractiveMessage
+    ).toEqual(true);
+    expect(new SlackEvent(message).isInteractiveMessage).toEqual(false);
+  });
+
+  it('#callbackId', () => {
+    expect(new SlackEvent(interactiveMessageEvent).callbackId).toEqual(
+      'wopr_game'
+    );
+    expect(new SlackEvent(message).callbackId).toEqual(null);
+  });
+
+  it('#action', () => {
+    expect(new SlackEvent(interactiveMessageEvent).action).toEqual({
+      name: 'game',
+      type: 'button',
+      value: 'chess',
+    });
+    expect(new SlackEvent(message).action).toEqual(null);
+  });
 });
