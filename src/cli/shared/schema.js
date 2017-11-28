@@ -65,6 +65,49 @@ const schema = Joi.object().keys({
   line: Joi.object().keys({
     channelSecret: Joi.string().required(),
     accessToken: Joi.string().required(),
+    richMenus: Joi.array().items(
+      Joi.object().keys({
+        size: Joi.object()
+          .keys({
+            width: Joi.number()
+              .integer()
+              .required(),
+            height: Joi.number()
+              .integer()
+              .required(),
+          })
+          .required(),
+        selected: Joi.boolean().required(),
+        name: Joi.string().required(),
+        chatBarText: Joi.string().required(),
+        areas: Joi.array()
+          .items(
+            Joi.object().keys({
+              bounds: Joi.object()
+                .keys({
+                  x: Joi.number()
+                    .integer()
+                    .required(),
+                  y: Joi.number()
+                    .integer()
+                    .required(),
+                  width: Joi.number()
+                    .integer()
+                    .required(),
+                  height: Joi.number()
+                    .integer()
+                    .required(),
+                })
+                .required(),
+              action: Joi.object().keys({
+                type: Joi.string().required(),
+                data: Joi.string().required(),
+              }),
+            })
+          )
+          .required(),
+      })
+    ),
   }),
   telegram: Joi.object().keys({
     accessToken: Joi.string().required(),
