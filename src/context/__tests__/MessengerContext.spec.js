@@ -68,12 +68,18 @@ const userSession = {
     id: 'fakeUserId',
   },
 };
-const setup = ({ session } = { session: userSession }) => {
+const setup = (
+  { session, customAccessToken } = {
+    session: userSession,
+    customAccessToken: undefined,
+  }
+) => {
   const client = createMockGraphAPIClient();
   const args = {
     client,
     event: new MessengerEvent(rawEvent),
     session,
+    customAccessToken,
   };
   const context = new MessengerContext(args);
   return {
@@ -720,7 +726,22 @@ describe('#typingOn', () => {
 
     await context.typingOn();
 
-    expect(client.typingOn).toBeCalledWith(session.user.id);
+    expect(client.typingOn).toBeCalledWith(session.user.id, {
+      access_token: undefined,
+    });
+  });
+
+  it('should use custom access token', async () => {
+    const { context, client, session } = setup({
+      session: userSession,
+      customAccessToken: 'anyToken',
+    });
+
+    await context.typingOn();
+
+    expect(client.typingOn).toBeCalledWith(session.user.id, {
+      access_token: 'anyToken',
+    });
   });
 
   it('should mark context as handled', async () => {
@@ -746,7 +767,22 @@ describe('#typingOff', () => {
 
     await context.typingOff();
 
-    expect(client.typingOff).toBeCalledWith(session.user.id);
+    expect(client.typingOff).toBeCalledWith(session.user.id, {
+      access_token: undefined,
+    });
+  });
+
+  it('should use custom access token', async () => {
+    const { context, client, session } = setup({
+      session: userSession,
+      customAccessToken: 'anyToken',
+    });
+
+    await context.typingOff();
+
+    expect(client.typingOff).toBeCalledWith(session.user.id, {
+      access_token: 'anyToken',
+    });
   });
 
   it('should mark context as handled', async () => {
@@ -773,7 +809,22 @@ describe('#markSeen', () => {
 
     await context.markSeen();
 
-    expect(client.markSeen).toBeCalledWith(session.user.id);
+    expect(client.markSeen).toBeCalledWith(session.user.id, {
+      access_token: undefined,
+    });
+  });
+
+  it('should use custom access token', async () => {
+    const { context, client, session } = setup({
+      session: userSession,
+      customAccessToken: 'anyToken',
+    });
+
+    await context.markSeen();
+
+    expect(client.markSeen).toBeCalledWith(session.user.id, {
+      access_token: 'anyToken',
+    });
   });
 
   it('should mark context as handled', async () => {
@@ -823,7 +874,28 @@ describe('#passThreadControl', () => {
     expect(client.passThreadControl).toBeCalledWith(
       session.user.id,
       263902037430900,
-      'metadata'
+      'metadata',
+      {
+        access_token: undefined,
+      }
+    );
+  });
+
+  it('should use custom access token', async () => {
+    const { context, client, session } = setup({
+      session: userSession,
+      customAccessToken: 'anyToken',
+    });
+
+    await context.passThreadControl(263902037430900, 'metadata');
+
+    expect(client.passThreadControl).toBeCalledWith(
+      session.user.id,
+      263902037430900,
+      'metadata',
+      {
+        access_token: 'anyToken',
+      }
     );
   });
 
@@ -843,7 +915,28 @@ describe('#passThreadControlToPageInbox', () => {
 
     await context.passThreadControlToPageInbox();
 
-    expect(client.passThreadControlToPageInbox).toBeCalledWith(session.user.id);
+    expect(client.passThreadControlToPageInbox).toBeCalledWith(
+      session.user.id,
+      {
+        access_token: undefined,
+      }
+    );
+  });
+
+  it('should use custom access token', async () => {
+    const { context, client, session } = setup({
+      session: userSession,
+      customAccessToken: 'anyToken',
+    });
+
+    await context.passThreadControlToPageInbox();
+
+    expect(client.passThreadControlToPageInbox).toBeCalledWith(
+      session.user.id,
+      {
+        access_token: 'anyToken',
+      }
+    );
   });
 
   it('should call warning if dont have session', async () => {
@@ -862,7 +955,9 @@ describe('#takeThreadControl', () => {
 
     await context.takeThreadControl();
 
-    expect(client.takeThreadControl).toBeCalledWith(session.user.id);
+    expect(client.takeThreadControl).toBeCalledWith(session.user.id, {
+      access_token: undefined,
+    });
   });
 
   it('should call warning if dont have session', async () => {
@@ -883,7 +978,23 @@ describe('#associateLabel', () => {
 
     expect(client.associateLabel).toBeCalledWith(
       session.user.id,
-      1712444532121303
+      1712444532121303,
+      { access_token: undefined }
+    );
+  });
+
+  it('should use custom access token', async () => {
+    const { context, client, session } = setup({
+      session: userSession,
+      customAccessToken: 'anyToken',
+    });
+
+    await context.associateLabel(1712444532121303);
+
+    expect(client.associateLabel).toBeCalledWith(
+      session.user.id,
+      1712444532121303,
+      { access_token: 'anyToken' }
     );
   });
 
@@ -905,7 +1016,23 @@ describe('#dissociateLabel', () => {
 
     expect(client.dissociateLabel).toBeCalledWith(
       session.user.id,
-      1712444532121303
+      1712444532121303,
+      { access_token: undefined }
+    );
+  });
+
+  it('should use custom access token', async () => {
+    const { context, client, session } = setup({
+      session: userSession,
+      customAccessToken: 'anyToken',
+    });
+
+    await context.dissociateLabel(1712444532121303);
+
+    expect(client.dissociateLabel).toBeCalledWith(
+      session.user.id,
+      1712444532121303,
+      { access_token: 'anyToken' }
     );
   });
 
@@ -946,7 +1073,43 @@ describe('#getAssociatedLabels', () => {
 
     await context.getAssociatedLabels();
 
-    expect(client.getAssociatedLabels).toBeCalledWith(session.user.id);
+    expect(client.getAssociatedLabels).toBeCalledWith(session.user.id, {
+      access_token: undefined,
+    });
+  });
+
+  it('should use custom access token', async () => {
+    const { context, client, session } = setup({
+      session: userSession,
+      customAccessToken: 'anyToken',
+    });
+
+    client.getAssociatedLabels.mockReturnValue({
+      data: [
+        {
+          name: 'myLabel',
+          id: '1001200005003',
+        },
+        {
+          name: 'myOtherLabel',
+          id: '1001200005002',
+        },
+      ],
+      paging: {
+        cursors: {
+          before:
+            'QVFIUmx1WTBpMGpJWXprYzVYaVhabW55dVpycko4U2xURGE5ODNtNFZAPal94a1hTUnNVMUtoMVVoTzlzSDktUkMtQkUzWEFLSXlMS3ZALYUw3TURLelZAPOGVR',
+          after:
+            'QVFIUmItNkpTbjVzakxFWGRydzdaVUFNNnNPaUl0SmwzVHN5ZAWZAEQ3lZANDAzTXFIM0NHbHdYSkQ5OG1GaEozdjkzRmxpUFhxTDl4ZAlBibnE4LWt1eGlTa3Bn',
+        },
+      },
+    });
+
+    await context.getAssociatedLabels();
+
+    expect(client.getAssociatedLabels).toBeCalledWith(session.user.id, {
+      access_token: 'anyToken',
+    });
   });
 
   it('should call warning if dont have session', async () => {

@@ -110,6 +110,13 @@ export default class Bot {
       const { platform } = this._connector;
       const sessionKey = this._connector.getUniqueSessionKey(body);
 
+      let customAccessToken;
+
+      if (this._getAccessToken) {
+        const pageId = body.entry[0].id;
+        customAccessToken = await this._getAccessToken(pageId);
+      }
+
       // Create or retrieve session if possible
       let sessionId;
       let session: Session;
@@ -136,17 +143,12 @@ export default class Bot {
           value: session.platform,
         });
 
-        await this._connector.updateSession(session, body);
+        await this._connector.updateSession(session, body, {
+          customAccessToken,
+        });
       }
 
       const events = this._connector.mapRequestToEvents(body);
-
-      let customAccessToken;
-
-      if (this._getAccessToken) {
-        const pageId = body.entry[0].id;
-        customAccessToken = await this._getAccessToken(pageId);
-      }
 
       const contexts = events.map(event =>
         this._connector.createContext({
