@@ -16,15 +16,15 @@ function setup({
     write: jest.fn(),
   },
   sync = false,
-  getAccessToken,
+  mapPageToAccessToken,
 }) {
-  const bot = new Bot({ connector, sessionStore, sync, getAccessToken });
+  const bot = new Bot({ connector, sessionStore, sync, mapPageToAccessToken });
 
   return {
     bot,
     connector,
     sessionStore,
-    getAccessToken,
+    mapPageToAccessToken,
   };
 }
 
@@ -141,7 +141,7 @@ describe('#createRequestHandler', () => {
     });
   });
 
-  it('should call getAccessToken when pass in bot', async () => {
+  it('should call mapPageToAccessToken when pass in bot', async () => {
     const event = {};
     const session = { user: {} };
     const connector = {
@@ -152,9 +152,9 @@ describe('#createRequestHandler', () => {
       mapRequestToEvents: jest.fn(() => [event]),
       createContext: jest.fn(() => ({ event, session })),
     };
-    const getAccessToken = jest.fn(() => Promise.resolve('anyToken'));
+    const mapPageToAccessToken = jest.fn(() => Promise.resolve('anyToken'));
 
-    const { bot, sessionStore } = setup({ connector, getAccessToken });
+    const { bot, sessionStore } = setup({ connector, mapPageToAccessToken });
 
     connector.getUniqueSessionKey.mockReturnValue('__id__');
     sessionStore.read.mockReturnValue(Promise.resolve(session));
@@ -169,7 +169,7 @@ describe('#createRequestHandler', () => {
     };
     await requestHandler(body);
 
-    expect(getAccessToken).toBeCalledWith('anyPageId');
+    expect(mapPageToAccessToken).toBeCalledWith('anyPageId');
     expect(connector.createContext).toBeCalledWith({
       customAccessToken: 'anyToken',
       event: {},
