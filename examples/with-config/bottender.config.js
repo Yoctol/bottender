@@ -38,6 +38,31 @@ module.exports = {
   line: {
     channelSecret: '__PUT_YOUR_CHANNEL_SECRET_HERE__',
     accessToken: '__PUT_YOUR_ACCESS_TOKEN_HERE__',
+    richMenus: [
+      {
+        size: {
+          width: 2500,
+          height: 1686,
+        },
+        selected: false,
+        name: 'Nice richmenu',
+        chatBarText: 'Tap here',
+        areas: [
+          {
+            bounds: {
+              x: 0,
+              y: 0,
+              width: 2500,
+              height: 1686,
+            },
+            action: {
+              type: 'postback',
+              data: 'action=buy&itemid=123',
+            },
+          },
+        ],
+      },
+    ],
   },
   telegram: {
     accessToken: '__PUT_YOUR_ACCESS_TOKEN_HERE__',
