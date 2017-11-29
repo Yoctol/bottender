@@ -26,12 +26,12 @@ export const help = () => {
 
       get           Get the LINE rich menus
       set           Set the LINE rich menu by diff
-      del, delete   Delete all the LINE rich menus
+      del, delete   Delete the LINE rich menus
       help          Show this help
 
     ${chalk.dim('Options:')}
 
-      --force       Force update the LINE rich menu by config
+      --force       With action del, force delete ${bold('ALL')} LINE rich menus
 
     ${chalk.dim('Examples:')}
 
@@ -76,8 +76,7 @@ export async function getLineMenu() {
   }
 }
 
-export async function setLineMenus(ctx) {
-  const { force } = ctx.argv;
+export async function setLineMenus() {
   try {
     const { accessToken, richMenus: localRichMenus } = getConfig(
       'bottender.config.js',
@@ -95,66 +94,47 @@ export async function setLineMenus(ctx) {
       `Failed to get ${bold('LINE rich menu')} response.`
     );
 
-    if (force) {
-      if (onlineRichMenus.length !== 0) {
+    const existedRichMenus = onlineRichMenus.map(richMenu =>
+      omit(richMenu, 'richMenuId')
+    );
+
+    const shouldDeleteRichMenus = differenceWith(
+      existedRichMenus,
+      localRichMenus,
+      isEqual
+    );
+    const shouldAddRichMenus = differenceWith(
+      localRichMenus,
+      existedRichMenus,
+      isEqual
+    );
+
+    if (shouldDeleteRichMenus.length === 0 && shouldAddRichMenus.length === 0) {
+      print(
+        `No change apply, because online rich menu is same as local settings.`
+      );
+    } else {
+      if (shouldDeleteRichMenus.length !== 0) {
         await pMap(
-          onlineRichMenus,
-          async richMenu => {
-            await client.deleteRichMenu(richMenu.richMenuId);
+          shouldDeleteRichMenus,
+          async shouldDeleteRichMenu => {
+            const { richMenuId } = onlineRichMenus[
+              findIndex(onlineRichMenus, shouldDeleteRichMenu)
+            ];
+
+            await client.deleteRichMenu(richMenuId);
           },
           { concurrency: 5 }
         );
       }
 
-      await pMap(localRichMenus, client.createRichMenu, { concurrency: 5 });
+      if (shouldAddRichMenus.length !== 0) {
+        await pMap(shouldAddRichMenus, client.createRichMenu, {
+          concurrency: 5,
+        });
+      }
 
       print(`Successfully set ${bold('LINE rich menu')}.`);
-    } else {
-      const existedRichMenus = onlineRichMenus.map(richMenu =>
-        omit(richMenu, 'richMenuId')
-      );
-
-      const shouldDeleteRichMenus = differenceWith(
-        existedRichMenus,
-        localRichMenus,
-        isEqual
-      );
-      const shouldAddRichMenus = differenceWith(
-        localRichMenus,
-        existedRichMenus,
-        isEqual
-      );
-
-      if (
-        shouldDeleteRichMenus.length === 0 &&
-        shouldAddRichMenus.length === 0
-      ) {
-        print(
-          `No change apply, because online rich menu is same as local settings.`
-        );
-      } else {
-        if (shouldDeleteRichMenus.length !== 0) {
-          await pMap(
-            shouldDeleteRichMenus,
-            async shouldDeleteRichMenu => {
-              const { richMenuId } = onlineRichMenus[
-                findIndex(onlineRichMenus, shouldDeleteRichMenu)
-              ];
-
-              await client.deleteRichMenu(richMenuId);
-            },
-            { concurrency: 5 }
-          );
-        }
-
-        if (shouldAddRichMenus.length !== 0) {
-          await pMap(shouldAddRichMenus, client.createRichMenu, {
-            concurrency: 5,
-          });
-        }
-
-        print(`Successfully set ${bold('LINE rich menu')}.`);
-      }
     }
 
     log(
