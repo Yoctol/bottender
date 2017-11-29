@@ -36,25 +36,25 @@ export default class Bot {
 
   _sync: boolean;
 
-  _getAccessToken: ?(pageId: string) => Promise<string>;
+  _mapPageToAccessToken: ?(pageId: string) => Promise<string>;
 
   constructor({
     connector,
     sessionStore = createMemorySessionStore(),
     sync = false,
-    getAccessToken,
+    mapPageToAccessToken,
   }: {|
     connector: Connector<any>,
     sessionStore: SessionStore,
     sync?: boolean,
-    getAccessToken?: (pageId: string) => Promise<string>,
+    mapPageToAccessToken?: (pageId: string) => Promise<string>,
   |}) {
     this._sessions = sessionStore;
     this._initialized = false;
     this._connector = connector;
     this._handler = null;
     this._sync = sync;
-    this._getAccessToken = getAccessToken;
+    this._mapPageToAccessToken = mapPageToAccessToken;
   }
 
   get connector(): Connector<any> {
@@ -69,8 +69,8 @@ export default class Bot {
     return this._handler;
   }
 
-  get getAccessToken(): ?(pageId: string) => Promise<string> {
-    return this._getAccessToken;
+  get mapPageToAccessToken(): ?(pageId: string) => Promise<string> {
+    return this._mapPageToAccessToken;
   }
 
   onEvent(handler: FunctionalHandler | Builder): Bot {
@@ -112,9 +112,9 @@ export default class Bot {
 
       let customAccessToken;
 
-      if (this._getAccessToken) {
+      if (this._mapPageToAccessToken) {
         const pageId = body.entry[0].id;
-        customAccessToken = await this._getAccessToken(pageId);
+        customAccessToken = await this._mapPageToAccessToken(pageId);
       }
 
       // Create or retrieve session if possible
