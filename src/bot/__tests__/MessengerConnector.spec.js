@@ -144,9 +144,10 @@ const standbyRequest = {
 };
 
 function setup(
-  { accessToken, appSecret } = {
+  { accessToken, appSecret, mapPageToAccessToken } = {
     accessToken: ACCESS_TOKEN,
     appSecret: APP_SECRET,
+    mapPageToAccessToken: jest.fn(),
   }
 ) {
   const mockGraphAPIClient = {
@@ -159,6 +160,7 @@ function setup(
     connector: new MessengerConnector({
       accessToken,
       appSecret,
+      mapPageToAccessToken,
     }),
   };
 }
@@ -224,9 +226,7 @@ describe('#updateSession', () => {
     mockGraphAPIClient.getUserProfile.mockReturnValue(Promise.resolve(user));
 
     const session = {};
-    await connector.updateSession(session, request.body, {
-      customAccessToken: undefined,
-    });
+    await connector.updateSession(session, request.body);
 
     expect(mockGraphAPIClient.getUserProfile).toBeCalledWith(
       '1412611362105802',
@@ -258,9 +258,7 @@ describe('#updateSession', () => {
         profile_pic: 'https://example.com/pic.png?oe=386D4380', // expired at 2000-01-01T00:00:00.000Z
       },
     };
-    await connector.updateSession(session, request.body, {
-      customAccessToken: undefined,
-    });
+    await connector.updateSession(session, request.body);
 
     expect(mockGraphAPIClient.getUserProfile).toBeCalledWith(
       '1412611362105802',
@@ -292,9 +290,7 @@ describe('#updateSession', () => {
         profile_pic: 'https://example.com/pic.png?oe=abc666666666', // wrong timestamp
       },
     };
-    await connector.updateSession(session, request.body, {
-      customAccessToken: undefined,
-    });
+    await connector.updateSession(session, request.body);
 
     expect(mockGraphAPIClient.getUserProfile).toBeCalledWith(
       '1412611362105802',
@@ -326,9 +322,7 @@ describe('#updateSession', () => {
         profile_pic123: 'https://example.com/pic.png?oe=386D4380', // wrong name
       },
     };
-    await connector.updateSession(session, request.body, {
-      customAccessToken: undefined,
-    });
+    await connector.updateSession(session, request.body);
 
     expect(mockGraphAPIClient.getUserProfile).toBeCalledWith(
       '1412611362105802',
@@ -400,12 +394,18 @@ describe('#mapRequestToEvents', () => {
 });
 
 describe('#createContext', () => {
-  it('should create MessengerContext', () => {
+  it('should create MessengerContext', async () => {
     const { connector } = setup();
-    const event = {};
+    const event = {
+      rawEvent: {
+        recipient: {
+          id: 'anyPageId',
+        },
+      },
+    };
     const session = {};
 
-    const context = connector.createContext({
+    const context = await connector.createContext({
       event,
       session,
     });
@@ -414,19 +414,25 @@ describe('#createContext', () => {
     expect(context).toBeInstanceOf(MessengerContext);
   });
 
-  it('should create MessengerContext and has customAccessToken', () => {
-    const { connector } = setup();
-    const event = {};
+  it('should create MessengerContext and has customAccessToken', async () => {
+    const mapPageToAccessToken = jest.fn(() => Promise.resolve('anyToken'));
+    const { connector } = setup({ mapPageToAccessToken });
+    const event = {
+      rawEvent: {
+        recipient: {
+          id: 'anyPageId',
+        },
+      },
+    };
     const session = {};
 
-    const context = connector.createContext({
+    const context = await connector.createContext({
       event,
       session,
-      customAccessToken: 'anyToken',
     });
 
     expect(context).toBeDefined();
-    expect(context.customAccessToken).toBe('anyToken');
+    expect(context.accessToken).toBe('anyToken');
   });
 });
 

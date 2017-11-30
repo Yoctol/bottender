@@ -77,16 +77,24 @@ type ConstructorOptions = {|
   accessToken?: string,
   appSecret?: string,
   client?: MessengerClient,
+  mapPageToAccessToken?: (pageId: string) => Promise<string>,
 |};
 
 export default class MessengerConnector
   implements Connector<MessengerRequestBody> {
   _client: MessengerClient;
   _appSecret: ?string;
+  _mapPageToAccessToken: ?(pageId: string) => ?Promise<string>;
 
-  constructor({ accessToken, appSecret, client }: ConstructorOptions) {
+  constructor({
+    accessToken,
+    appSecret,
+    client,
+    mapPageToAccessToken,
+  }: ConstructorOptions) {
     this._client = client || MessengerClient.connect(accessToken);
     this._appSecret = appSecret;
+    this._mapPageToAccessToken = mapPageToAccessToken;
     if (!this._appSecret) {
       warning(
         false,
@@ -160,15 +168,37 @@ export default class MessengerConnector
 
   async updateSession(
     session: Session,
-    body: MessengerRequestBody,
-    { customAccessToken }: { customAccessToken: ?string }
+    body: MessengerRequestBody
   ): Promise<void> {
     if (!session.user || this._profilePicExpired(session.user)) {
       const senderId = this.getUniqueSessionKey(body);
+
+      let customAccessToken;
+      if (this._mapPageToAccessToken != null) {
+        const mapPageToAccessToken = this._mapPageToAccessToken;
+
+        const rawEvent = this._getRawEventsFromRequest(body)[0];
+
+        let pageId;
+
+        if (rawEvent.message && rawEvent.message.is_echo && rawEvent.sender) {
+          pageId = rawEvent.sender.id;
+        } else if (rawEvent.recipient) {
+          pageId = rawEvent.recipient.id;
+        }
+
+        if (!pageId) {
+          warning(false, 'Could not find pageId from request body.');
+        } else {
+          customAccessToken = await mapPageToAccessToken(pageId);
+        }
+      }
+
       // FIXME: refine user
       const user = await this._client.getUserProfile(senderId, {
         access_token: customAccessToken,
       });
+
       session.user = {
         _updatedAt: new Date().toISOString(),
         ...user,
@@ -196,17 +226,33 @@ export default class MessengerConnector
     return rawEvents.map(event => new MessengerEvent(event, { isStandby }));
   }
 
-  createContext({
+  async createContext({
     event,
     session,
     initialState,
-    customAccessToken,
   }: {
     event: MessengerEvent,
     session: ?Session,
     initialState: Object,
-    customAccessToken: ?string,
-  }): MessengerContext {
+  }): Promise<MessengerContext> {
+    let customAccessToken;
+    if (this._mapPageToAccessToken) {
+      const { rawEvent } = event;
+
+      let pageId = null;
+
+      if (rawEvent.message && rawEvent.message.is_echo && rawEvent.sender) {
+        pageId = rawEvent.sender.id;
+      } else if (rawEvent.recipient) {
+        pageId = rawEvent.recipient.id;
+      }
+
+      if (!pageId) {
+        warning(false, 'Could not find pageId from request body.');
+      } else {
+        customAccessToken = await this._mapPageToAccessToken(pageId);
+      }
+    }
     return new MessengerContext({
       client: this._client,
       event,

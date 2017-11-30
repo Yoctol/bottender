@@ -21,13 +21,3 @@ it('should construct bot with MessengerConnector', () => {
   expect(bot.connector).toBeDefined();
   expect(bot.connector).toBeInstanceOf(MessengerConnector);
 });
-
-it('should construct bot with mapPageToAccessToken when passed in', () => {
-  const mapPageToAccessToken = jest.fn();
-  const bot = new MessengerBot({
-    accessToken: 'FAKE_TOKEN',
-    mapPageToAccessToken,
-  });
-  expect(bot).toBeDefined();
-  expect(bot.mapPageToAccessToken).toBeDefined();
-});
