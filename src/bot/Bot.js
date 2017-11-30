@@ -1,6 +1,7 @@
 /* @flow */
 
 import _debug from 'debug';
+import pMap from 'p-map';
 
 import MemoryCacheStore from '../cache/MemoryCacheStore';
 import CacheBasedSessionStore from '../session/CacheBasedSessionStore';
@@ -36,25 +37,20 @@ export default class Bot {
 
   _sync: boolean;
 
-  _mapPageToAccessToken: ?(pageId: string) => Promise<string>;
-
   constructor({
     connector,
     sessionStore = createMemorySessionStore(),
     sync = false,
-    mapPageToAccessToken,
   }: {|
     connector: Connector<any>,
     sessionStore: SessionStore,
     sync?: boolean,
-    mapPageToAccessToken?: (pageId: string) => Promise<string>,
   |}) {
     this._sessions = sessionStore;
     this._initialized = false;
     this._connector = connector;
     this._handler = null;
     this._sync = sync;
-    this._mapPageToAccessToken = mapPageToAccessToken;
   }
 
   get connector(): Connector<any> {
@@ -67,10 +63,6 @@ export default class Bot {
 
   get handler(): ?FunctionalHandler {
     return this._handler;
-  }
-
-  get mapPageToAccessToken(): ?(pageId: string) => Promise<string> {
-    return this._mapPageToAccessToken;
   }
 
   onEvent(handler: FunctionalHandler | Builder): Bot {
@@ -110,13 +102,6 @@ export default class Bot {
       const { platform } = this._connector;
       const sessionKey = this._connector.getUniqueSessionKey(body);
 
-      let customAccessToken;
-
-      if (this._mapPageToAccessToken) {
-        const pageId = body.entry[0].id;
-        customAccessToken = await this._mapPageToAccessToken(pageId);
-      }
-
       // Create or retrieve session if possible
       let sessionId;
       let session: Session;
@@ -143,20 +128,22 @@ export default class Bot {
           value: session.platform,
         });
 
-        await this._connector.updateSession(session, body, {
-          customAccessToken,
-        });
+        await this._connector.updateSession(session, body);
       }
 
       const events = this._connector.mapRequestToEvents(body);
 
-      const contexts = events.map(event =>
-        this._connector.createContext({
-          event,
-          session: ((session: any): Session),
-          initialState: this._initialState,
-          customAccessToken,
-        })
+      const contexts = await pMap(
+        events,
+        event =>
+          this._connector.createContext({
+            event,
+            session: ((session: any): Session),
+            initialState: this._initialState,
+          }),
+        {
+          concurrency: 5,
+        }
       );
 
       // Call all of extension functions before passing to handler.

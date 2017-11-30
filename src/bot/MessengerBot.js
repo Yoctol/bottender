@@ -19,7 +19,11 @@ export default class MessengerBot extends Bot {
     sync?: boolean,
     mapPageToAccessToken?: (pageId: string) => Promise<string>,
   }) {
-    const connector = new MessengerConnector({ accessToken, appSecret });
-    super({ connector, sessionStore, sync, mapPageToAccessToken });
+    const connector = new MessengerConnector({
+      accessToken,
+      appSecret,
+      mapPageToAccessToken,
+    });
+    super({ connector, sessionStore, sync });
   }
 }
