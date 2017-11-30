@@ -111,7 +111,7 @@ export async function setLineMenus() {
 
     if (shouldDeleteRichMenus.length === 0 && shouldAddRichMenus.length === 0) {
       print(
-        `No change apply, because online rich menu is same as local settings.`
+        'No change apply, because online rich menu is same as local settings.'
       );
     } else {
       if (shouldDeleteRichMenus.length !== 0) {
