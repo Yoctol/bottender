@@ -117,6 +117,7 @@ class LineContext extends Context implements PlatformContext {
 }
 
 const types = [
+  '',
   'Text',
   'Image',
   'Video',
@@ -167,7 +168,7 @@ types.forEach(type => {
   });
 });
 
-types.filter(type => type !== 'Text').forEach(type => {
+types.filter(type => type !== 'Text' && type !== '').forEach(type => {
   Object.defineProperty(LineContext.prototype, `send${type}`, {
     enumerable: false,
     configurable: true,
