@@ -39,7 +39,9 @@ const userSession = {
 };
 const setup = ({ session } = { session: userSession }) => {
   const client = {
+    reply: jest.fn(),
     replyText: jest.fn(),
+    push: jest.fn(),
     pushText: jest.fn(),
     pushImage: jest.fn(),
     pushAudio: jest.fn(),
@@ -97,6 +99,24 @@ it('get #client works', () => {
 });
 
 describe('#reply', () => {
+  it('#reply to call client.reply', async () => {
+    const { context, client } = setup();
+
+    await context.reply([
+      {
+        type: 'text',
+        text: 'xxx.com',
+      },
+    ]);
+
+    expect(client.reply).toBeCalledWith(rawEvent.replyToken, [
+      {
+        type: 'text',
+        text: 'xxx.com',
+      },
+    ]);
+  });
+
   it('#replyText to call client.replyText', async () => {
     const { context, client } = setup();
 
@@ -130,6 +150,14 @@ describe('#reply', () => {
 
     expect(warning).toBeCalled();
     expect(client.pushText).not.toBeCalled();
+  });
+});
+
+describe('#send', () => {
+  it('is not defined', () => {
+    const { context } = setup();
+
+    expect(context.send).not.toBeDefined();
   });
 });
 
@@ -168,6 +196,26 @@ describe('#sendText', () => {
     await context.sendText('xxx.com');
 
     expect(context.isHandled).toBe(true);
+  });
+});
+
+describe('#push', () => {
+  it('should call client.push', async () => {
+    const { context, client, session } = setup();
+
+    await context.push([
+      {
+        type: 'text',
+        text: 'xxx.com',
+      },
+    ]);
+
+    expect(client.push).toBeCalledWith(session.user.id, [
+      {
+        type: 'text',
+        text: 'xxx.com',
+      },
+    ]);
   });
 });
 
