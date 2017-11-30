@@ -11,7 +11,7 @@ import type { FunctionalHandler, Builder } from '../handlers/Handler';
 
 import type { Connector } from './Connector';
 
-const debug = _debug('core/bot/Bot');
+const debug = _debug('bottender/bot/Bot');
 
 const MINUTES_IN_ONE_YEAR = 365 * 24 * 60;
 
