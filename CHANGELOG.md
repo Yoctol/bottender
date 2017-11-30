@@ -1,3 +1,36 @@
+0.14.7 / 2017-11-30
+===================
+### messenger
+- [new] Add `mapPageToAccessToken` to support multiple pages (Experimental) [#47](https://github.com/Yoctol/bottender/pull/47)
+
+```js
+new MessengerBot({
+  appSecret:  '__FILL_YOUR_SECRET_HERE__',
+  mapPageToAccessToken: (pageId) => accessToken,
+});
+```
+
+> Note: API may changes between any versions.
+
+### line
+- [new] Export `context.reply` and `context.push` methods. [#52](https://github.com/Yoctol/bottender/pull/52)
+- [new] New CLI commands to sync LINE rich menus: [#50](https://github.com/Yoctol/bottender/pull/50)
+
+```sh
+$ bottender line menu get
+$ bottender line menu set
+$ bottender line menu delete
+```
+
+### slack
+- [new] Add support to interactive messages, and you can get action from it: [#41](https://github.com/Yoctol/bottender/pull/41)
+
+```js
+if (context.event.isInteractiveMessage) {
+  console.log(context.event.action);
+}
+```
+
 0.14.6 / 2017-11-27
 ===================
 ### messenger
