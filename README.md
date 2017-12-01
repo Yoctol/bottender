@@ -21,6 +21,20 @@
 Bottender is built on top of
 [Messaging APIs](https://github.com/Yoctol/messaging-apis).
 
+## Installation
+
+You can install Bottender globally to use the cli tools:
+
+```sh
+npm install -g bottender
+```
+
+Or install it locally to use it programmatically:
+
+```sh
+npm install bottender
+```
+
 ## Documentation
 
 You can find the Bottender documentation on the website.
@@ -53,19 +67,9 @@ This will create and run a bot which always reply "Hello World" in the console.
 You'll notice that there is an async function to be passed to the `onEvent`
 method, we call it handler. You can put your bot logic in there.
 
-## Installation
+## Introduction Video
 
-You can install Bottender globally to use the cli tools:
-
-```sh
-npm install -g bottender
-```
-
-Or install it locally to use it programmatically:
-
-```sh
-npm install bottender
-```
+[![](https://user-images.githubusercontent.com/3382565/33467982-cc8a0e42-d693-11e7-9134-2d42ec135e19.png)](https://www.youtube.com/watch?v=C_OBHmbXCsE)
 
 ## Contributing
 
