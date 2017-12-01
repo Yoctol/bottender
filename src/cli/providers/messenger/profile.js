@@ -24,6 +24,7 @@ export const help = () => {
 
     ${chalk.dim('Actions:')}
 
+      check         Check if messenger profile setting in bottender.config.js valids
       get           Get the messenger profile
       set           Set the messenger profile by diff
       del, delete   Delete all the messenger profile fields
@@ -54,6 +55,16 @@ export const trimDomain = profile => {
   }
   return clone;
 };
+
+export function checkMessengerProfile() {
+  try {
+    getConfig('bottender.config.js', 'messenger');
+    print('Messenger profile check done.');
+  } catch (e) {
+    error(e.message);
+    return process.exit(1);
+  }
+}
 
 export async function getMessengerProfile() {
   try {
@@ -183,6 +194,9 @@ export async function deleteMessengerProfile() {
 export default async function main(ctx) {
   const subcommand = ctx.argv._[2];
   switch (subcommand) {
+    case 'check':
+      checkMessengerProfile();
+      break;
     case 'get':
       await getMessengerProfile();
       break;
@@ -197,7 +211,7 @@ export default async function main(ctx) {
       help();
       break;
     default:
-      error(`Please specify a valid subcommand: get, set, delete, help`);
+      error(`Please specify a valid subcommand: check, get, set, delete, help`);
       help();
   }
 }
