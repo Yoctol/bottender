@@ -24,6 +24,7 @@ export const help = () => {
 
     ${chalk.dim('Actions:')}
 
+      check         Check if LINE rich menus setting in bottender.config.js valids
       get           Get the LINE rich menus
       set           Set the LINE rich menu by diff
       del, delete   Delete the LINE rich menus
@@ -44,6 +45,16 @@ export const help = () => {
       ${chalk.cyan('$ bottender line menu set --force')}
   `);
 };
+
+export function checkLineMenu() {
+  try {
+    getConfig('bottender.config.js', 'line');
+    print('LINE rich menu check done.');
+  } catch (e) {
+    error(e.message);
+    return process.exit(1);
+  }
+}
 
 export async function getLineMenu() {
   try {
@@ -223,6 +234,9 @@ export async function deleteLineMenu(ctx) {
 export default async function main(ctx) {
   const subcommand = ctx.argv._[2];
   switch (subcommand) {
+    case 'check':
+      checkLineMenu();
+      break;
     case 'get':
       await getLineMenu();
       break;
@@ -237,7 +251,9 @@ export default async function main(ctx) {
       help();
       break;
     default:
-      error('Please specify a valid subcommand: get, set, delete, help.');
+      error(
+        'Please specify a valid subcommand: check, get, set, delete, help.'
+      );
       help();
   }
 }
