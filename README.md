@@ -67,6 +67,37 @@ This will create and run a bot which always reply "Hello World" in the console.
 You'll notice that there is an async function to be passed to the `onEvent`
 method, we call it handler. You can put your bot logic in there.
 
+## Notable Features
+
+### Messenger
+
+* Messenger Profile Sync
+* Attachment Upload
+* Handover Protocol
+* Targeting Broadcast Messages
+* Built-in NLP
+* Multiple Pages
+
+### LINE
+
+* Reply, Push, Multicast
+* Imagemap
+* Rich Menu
+* Room, Group Chat
+* Beacon
+
+### Slack
+
+* Channel Chat
+* Interactive Message
+
+### Telegram
+
+* Update, Delete Messages
+* Keyboard
+* Message Live Location
+* Payment
+
 ## Introduction Video
 
 [![](https://user-images.githubusercontent.com/3382565/33467982-cc8a0e42-d693-11e7-9134-2d42ec135e19.png)](https://www.youtube.com/watch?v=C_OBHmbXCsE)
