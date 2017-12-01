@@ -92,7 +92,7 @@ export default class MessengerConnector
     client,
     mapPageToAccessToken,
   }: ConstructorOptions) {
-    this._client = client || MessengerClient.connect(accessToken);
+    this._client = client || MessengerClient.connect(accessToken || '');
     this._appSecret = appSecret;
     this._mapPageToAccessToken = mapPageToAccessToken;
     if (!this._appSecret) {
