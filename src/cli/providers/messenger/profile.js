@@ -126,18 +126,28 @@ export async function setMessengerProfile(ctx) {
       const existedProfile = trimDomain(_existedProfile);
 
       const diffResult = diff(existedProfile, profile);
+
       if (Object.keys(diffResult).length !== 0) {
-        const shouldDeleteProfile = deletedDiff(existedProfile, profile);
-        const shouldSetProfile = {
-          ...addedDiff(existedProfile, profile),
-          ...updatedDiff(existedProfile, profile),
-        };
-        if (Object.keys(shouldDeleteProfile).length > 0) {
-          await client.deleteMessengerProfile(Object.keys(shouldDeleteProfile));
-          const deleteFileds = Object.keys(shouldDeleteProfile).join(', ');
+        const shouldDeleteFields = Object.keys(
+          deletedDiff(existedProfile, profile)
+        );
+
+        const shouldSetFields = [
+          ...Object.keys(addedDiff(existedProfile, profile)),
+          ...Object.keys(updatedDiff(existedProfile, profile)),
+        ];
+
+        if (shouldDeleteFields.length > 0) {
+          await client.deleteMessengerProfile(shouldDeleteFields);
+          const deleteFileds = shouldDeleteFields.join(', ');
           print(`Successfully delete ${bold(deleteFileds)} settings`);
         }
-        if (Object.keys(shouldSetProfile).length > 0) {
+
+        if (shouldSetFields.length > 0) {
+          const shouldSetProfile = {};
+          shouldSetFields.forEach(field => {
+            shouldSetProfile[field] = profile[field];
+          });
           await client.setMessengerProfile(shouldSetProfile);
           const setFields = Object.keys(shouldSetProfile).join(', ');
           print(`Successfully set ${bold(setFields)} settings`);
