@@ -1,7 +1,5 @@
-/*
-  eslint-disable class-methods-use-this
-  @flow
-*/
+/* @flow */
+
 import { TelegramClient } from 'messaging-api-telegram';
 
 import TelegramContext from '../context/TelegramContext';

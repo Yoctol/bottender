@@ -1,7 +1,5 @@
-/*
-  eslint-disable class-methods-use-this
-  @flow
-*/
+/* @flow */
+
 import { LineClient } from 'messaging-api-line';
 
 import LineContext from '../context/LineContext';

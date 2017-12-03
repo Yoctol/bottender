@@ -1,7 +1,5 @@
-/*
-  eslint-disable class-methods-use-this
-  @flow
-*/
+/* @flow */
+
 import ConsoleContext from '../context/ConsoleContext';
 import ConsoleEvent, { type ConsoleRawEvent } from '../context/ConsoleEvent';
 import type { Session } from '../session/Session';

@@ -1,7 +1,5 @@
-/*
-  eslint-disable class-methods-use-this
-  @flow
-*/
+/* @flow */
+
 import { SlackOAuthClient } from 'messaging-api-slack';
 
 import SlackContext from '../context/SlackContext';

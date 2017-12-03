@@ -1,7 +1,5 @@
-/*
-  eslint-disable class-methods-use-this
-  @flow
-*/
+/* @flow */
+
 import crypto from 'crypto';
 
 import { MessengerClient } from 'messaging-api-messenger';
