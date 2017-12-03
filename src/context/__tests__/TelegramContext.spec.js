@@ -1,5 +1,5 @@
 jest.mock('delay');
-jest.mock('messaging-api-messenger');
+jest.mock('messaging-api-telegram');
 jest.mock('warning');
 
 let TelegramContext;
