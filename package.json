@@ -111,6 +111,7 @@
     "messaging-api-messenger": "^0.5.16",
     "messaging-api-slack": "^0.5.16",
     "messaging-api-telegram": "^0.5.16",
+    "messaging-api-viber": "^0.5.16",
     "micro": "^9.0.2",
     "minimist": "^1.2.0",
     "mongodb": "^2.2.33",

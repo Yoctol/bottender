@@ -3957,6 +3957,14 @@ messaging-api-telegram@^0.5.16:
     axios-error "^0.5.4"
     warning "^3.0.0"
 
+messaging-api-viber@^0.5.16:
+  version "0.5.16"
+  resolved "https://registry.yarnpkg.com/messaging-api-viber/-/messaging-api-viber-0.5.16.tgz#f002977d947337addfd96f9c93dc313040b7a38c"
+  dependencies:
+    axios "^0.17.0"
+    axios-error "^0.5.4"
+    warning "^3.0.0"
+
 methods@^1.0.1, methods@^1.1.1, methods@~1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/methods/-/methods-1.1.2.tgz#5529a4d67654134edcc5266656835b0f851afcee"

@@ -8,6 +8,7 @@ describe('core', () => {
     expect(core.LineBot).toBeDefined();
     expect(core.SlackBot).toBeDefined();
     expect(core.TelegramBot).toBeDefined();
+    expect(core.ViberBot).toBeDefined();
   });
 
   it('export connectors', () => {
@@ -17,6 +18,7 @@ describe('core', () => {
     expect(core.LineConnector).toBeDefined();
     expect(core.SlackConnector).toBeDefined();
     expect(core.TelegramConnector).toBeDefined();
+    expect(core.ViberConnector).toBeDefined();
   });
 
   it('export cache implements', () => {
