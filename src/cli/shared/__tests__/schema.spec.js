@@ -204,6 +204,36 @@ const nestedConfig = {
   ngrok: true,
 };
 
+const tooManyLineRichMenusConfig = {
+  line: {
+    channelSecret: '__PUT_YOUR_CHANNEL_SECRET_HERE__',
+    accessToken: '__PUT_YOUR_ACCESS_TOKEN_HERE__',
+    richMenus: Array.from(new Array(11), (_, index) => ({
+      size: {
+        width: 1250,
+        height: 1686,
+      },
+      selected: false,
+      name: `Nice richmenu ${index}`,
+      chatBarText: 'Tap here',
+      areas: [
+        {
+          bounds: {
+            x: index * 5,
+            y: index * 5,
+            width: 5,
+            height: 5,
+          },
+          action: {
+            type: 'postback',
+            data: `action=buy&itemid=${index}`,
+          },
+        },
+      ],
+    })),
+  },
+};
+
 it('should valid', () => {
   const validateResult = Joi.validate(config, schema);
   expect(validateResult.error).toBeNull();
@@ -212,4 +242,12 @@ it('should valid', () => {
 it('should valid nested config', () => {
   const validateResult = Joi.validate(nestedConfig, schema);
   expect(validateResult.error).toBeNull();
+});
+
+it('should check too many LINE rich menus', () => {
+  const validateResult = Joi.validate(tooManyLineRichMenusConfig, schema);
+  expect(validateResult.error).not.toBeNull();
+  expect(validateResult.error.message).toBe(
+    'child "line" fails because [child "richMenus" fails because ["richMenus" must contain less than or equal to 10 items]]'
+  );
 });
