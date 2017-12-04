@@ -197,6 +197,31 @@ const largeLikeStickerMessage = {
   },
 };
 
+const hugeLikeStickerMessage = {
+  sender: {
+    id: '1423587017700273',
+  },
+  recipient: {
+    id: '404217156637689',
+  },
+  timestamp: 1491797086506,
+  message: {
+    mid: 'mid.$cAAE1UUyiiwthh05ZKlbVgkOobi32',
+    seq: 348853,
+    sticker_id: 369239383222810,
+    attachments: [
+      {
+        type: 'image',
+        payload: {
+          url:
+            'https://scontent.xx.fbcdn.net/v/t39.1997-6/p100x100/851587_369239346556147_162929011_n.png?_nc_ad=z-m&oh=2008c832edbd2376b09a1008358b8fd9&oe=598FC1B0',
+          sticker_id: 369239383222810,
+        },
+      },
+    ],
+  },
+};
+
 const quickReplyMessage = {
   sender: {
     id: '1423587017700273',
@@ -695,6 +720,7 @@ it('#isSticker', () => {
   expect(new MessengerEvent(imageMessage).isSticker).toEqual(false);
   expect(new MessengerEvent(likeStickerMessage).isSticker).toEqual(true);
   expect(new MessengerEvent(largeLikeStickerMessage).isSticker).toEqual(true);
+  expect(new MessengerEvent(hugeLikeStickerMessage).isSticker).toEqual(true);
 });
 
 it('#sticker', () => {
@@ -706,6 +732,9 @@ it('#sticker', () => {
   expect(new MessengerEvent(largeLikeStickerMessage).sticker).toEqual(
     369239343222814
   );
+  expect(new MessengerEvent(hugeLikeStickerMessage).sticker).toEqual(
+    369239383222810
+  );
 });
 
 it('#isLikeSticker', () => {
@@ -713,6 +742,9 @@ it('#isLikeSticker', () => {
   expect(new MessengerEvent(imageMessage).isLikeSticker).toEqual(false);
   expect(new MessengerEvent(likeStickerMessage).isLikeSticker).toEqual(true);
   expect(new MessengerEvent(largeLikeStickerMessage).isLikeSticker).toEqual(
+    true
+  );
+  expect(new MessengerEvent(hugeLikeStickerMessage).isLikeSticker).toEqual(
     true
   );
 });

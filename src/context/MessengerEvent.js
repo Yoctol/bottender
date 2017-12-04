@@ -349,13 +349,16 @@ export default class MessengerEvent implements Event {
 
   /**
    * Determine if the event is a message event which includes 'like' sticker.
-   *
+   * id 369239263222822 is a small like sticker
+   * id 369239263222814 is a large like sticker
+   * id 369239263222810 is a huge like sticker
    */
   get isLikeSticker(): boolean {
     return (
       this.isSticker &&
       ((this.message: any).sticker_id === 369239263222822 ||
-        (this.message: any).sticker_id === 369239343222814)
+        (this.message: any).sticker_id === 369239343222814 ||
+        (this.message: any).sticker_id === 369239383222810)
     );
   }
 
