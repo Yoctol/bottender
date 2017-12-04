@@ -208,14 +208,14 @@ const hugeLikeStickerMessage = {
   message: {
     mid: 'mid.$cAAE1UUyiiwthh05ZKlbVgkOobi32',
     seq: 348853,
-    sticker_id: 369239343222810,
+    sticker_id: 369239383222810,
     attachments: [
       {
         type: 'image',
         payload: {
           url:
             'https://scontent.xx.fbcdn.net/v/t39.1997-6/p100x100/851587_369239346556147_162929011_n.png?_nc_ad=z-m&oh=2008c832edbd2376b09a1008358b8fd9&oe=598FC1B0',
-          sticker_id: 369239343222810,
+          sticker_id: 369239383222810,
         },
       },
     ],
@@ -714,7 +714,7 @@ it('#sticker', () => {
     369239343222814
   );
   expect(new MessengerEvent(hugeLikeStickerMessage).sticker).toEqual(
-    369239343222810
+    369239383222810
   );
 });
 
