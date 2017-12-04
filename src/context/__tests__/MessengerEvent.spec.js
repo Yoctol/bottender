@@ -416,6 +416,22 @@ const takeThreadControl = {
   },
 };
 
+const textMessageFromCustomerChatPlugin = {
+  sender: { id: '1423587017700273' },
+  recipient: { id: '404217156637689' },
+  timestamp: 1491796363181,
+  message: {
+    mid: 'mid.$cAAE1UUyiiwthh0NPrVbVf4HFNDGl',
+    seq: 348847,
+    text: 'Sharp tools make good work.',
+    tags: [
+      {
+        source: 'customer_chat_plugin',
+      },
+    ],
+  },
+};
+
 it('#rawEvent', () => {
   expect(new MessengerEvent(textMessage).rawEvent).toEqual(textMessage);
   expect(new MessengerEvent(imageMessage).rawEvent).toEqual(imageMessage);
@@ -435,6 +451,9 @@ it('#isMessage', () => {
   expect(new MessengerEvent(imageMessage).isMessage).toEqual(true);
   expect(new MessengerEvent(likeStickerMessage).isMessage).toEqual(true);
   expect(new MessengerEvent(quickReplyMessage).isMessage).toEqual(true);
+  expect(
+    new MessengerEvent(textMessageFromCustomerChatPlugin).isMessage
+  ).toEqual(true);
   expect(new MessengerEvent(echoMessage).isMessage).toEqual(true);
   expect(new MessengerEvent(postback).isMessage).toEqual(false);
   expect(new MessengerEvent(payment).isMessage).toEqual(false);
@@ -997,4 +1016,15 @@ it('#takeThreadControl', () => {
     metadata: 'additional content that the caller wants to set',
     previous_owner_app_id: '123456789',
   });
+});
+
+it('#isFromCustomerChatPlugin', () => {
+  expect(new MessengerEvent(textMessage).isFromCustomerChatPlugin).toEqual(
+    false
+  );
+  expect(new MessengerEvent(postback).isFromCustomerChatPlugin).toEqual(false);
+  expect(
+    new MessengerEvent(textMessageFromCustomerChatPlugin)
+      .isFromCustomerChatPlugin
+  ).toEqual(true);
 });
