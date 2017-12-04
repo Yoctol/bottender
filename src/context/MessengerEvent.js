@@ -350,7 +350,8 @@ export default class MessengerEvent implements Event {
     return (
       this.isSticker &&
       ((this.message: any).sticker_id === 369239263222822 ||
-        (this.message: any).sticker_id === 369239343222814)
+        (this.message: any).sticker_id === 369239343222814 ||
+        (this.message: any).sticker_id === 369239383222810)
     );
   }
 
