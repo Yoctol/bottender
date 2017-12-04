@@ -41,12 +41,17 @@ type MediaAttachment = {
 
 type Attachment = MediaAttachment | FallbackAttachment;
 
+type Tag = {|
+  source: string,
+|};
+
 export type Message = {
   is_echo?: boolean,
   text?: string,
   sticker_id?: number,
   quick_reply?: QuickReply,
   attachments?: Array<Attachment>,
+  tags?: Array<Tag>,
 };
 
 export type Delivery = {
@@ -611,5 +616,20 @@ export default class MessengerEvent implements Event {
    */
   get takeThreadControl(): ?TakeThreadControl {
     return this._rawEvent.take_thread_control || null;
+  }
+
+  /**
+   * Determine if the event is from custome chat plugin.
+   *
+   */
+  get isFromCustomerChatPlugin(): boolean {
+    return (
+      this.isMessage &&
+      !!(this.message: any).tags &&
+      (this.message: any).tags.length !== 0 &&
+      (this.message: any).tags.some(
+        tag => tag.source === 'customer_chat_plugin'
+      )
+    );
   }
 }
