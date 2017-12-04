@@ -1,5 +1,7 @@
 import LineHandler from '../LineHandler';
 
+jest.mock('warning');
+
 const setup = () => {
   const builder = new LineHandler();
   return {

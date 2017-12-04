@@ -23,9 +23,11 @@ function setup({ platform }) {
 }
 
 const _consoleLog = console.log;
+const _consoleError = console.error;
 
 beforeEach(() => {
   console.log = jest.fn();
+  console.error = jest.fn();
 });
 
 afterEach(() => {
@@ -33,6 +35,7 @@ afterEach(() => {
   // https://github.com/restify/node-restify/blob/1430644b53b08051066e8d1798a90a18527d541d/lib/request.js#L261-L273
   delete IncomingMessage.prototype.query;
   console.log = _consoleLog;
+  console.error = _consoleError;
 });
 
 it('should handle token verification', async () => {
