@@ -16,18 +16,26 @@ import { error, warn, print, bold, log } from '../../shared/log';
 
 const help = () => {
   console.log(`
-    bottender messenger attachment <command>
+    bottender messenger attachment <command> [option]
 
     ${chalk.dim('Commands:')}
 
       upload    Upload all the files in assets folder.
                 Bottender will also create a bottender-lock.json file.
 
+    ${chalk.dim('Options:')}
+
+      --force   Upload all assets and regenerate bottender-lock.json.
+
     ${chalk.dim('Examples:')}
 
     ${chalk.dim('-')} Upload the assets to messenger
 
       ${chalk.cyan('$ bottender messenger attachment upload')}
+
+    ${chalk.dim('-')} Force upload all assets
+
+      ${chalk.cyan('$ bottender messenger attachment upload --force')}
   `);
 };
 
@@ -72,7 +80,8 @@ const logUploadInfo = uploadInfo => {
   }
 };
 
-export async function uploadAttachment() {
+export async function uploadAttachment(ctx) {
+  const { force } = ctx.argv;
   try {
     warn(
       `${bold(
@@ -93,14 +102,16 @@ export async function uploadAttachment() {
     const promptResult = await inquirer.prompt([
       {
         type: 'confirm',
-        message: 'Is it correct for uploading?',
+        message: force
+          ? 'Are you sure you want to force upload all assets?'
+          : 'Is it correct for uploading?',
         name: 'confirm',
       },
     ]);
 
     if (!promptResult.confirm) {
       print('bye');
-      process.exit(0);
+      return process.exit(0);
     }
 
     const pathOfMappingFile = path.resolve('bottender-lock.json'); // TODO: output path?
@@ -130,8 +141,7 @@ export async function uploadAttachment() {
       const checksum = hasha.fromFileSync(name);
 
       let pageId;
-
-      if (!fileMeta || checksum !== fileMeta.checksum) {
+      if (force || !fileMeta || checksum !== fileMeta.checksum) {
         try {
           if (!pageId) {
             // eslint-disable-next-line no-await-in-loop
@@ -181,7 +191,7 @@ export default async function main(ctx) {
   const subcommand = ctx.argv._[2];
   switch (subcommand) {
     case 'upload':
-      await uploadAttachment();
+      await uploadAttachment(ctx);
       break;
     case 'help':
       help();
