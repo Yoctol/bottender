@@ -112,10 +112,56 @@ describe('resolve', () => {
       ],
     });
   });
-  it('successfully set diff fileds `get_started`', async () => {
+
+  it('successfully set diff fields `persistent_menu`', async () => {
     const ctx = {
       argv: {},
     };
+    _client.getMessengerProfile.mockReturnValue([
+      {
+        persistent_menu: [
+          {
+            locale: 'default',
+            composer_input_disabled: false,
+            call_to_actions: [
+              {
+                type: 'web_url',
+                title: 'Powered by Facebook',
+                url: 'https://www.facebook.com/',
+              },
+            ],
+          },
+        ],
+      },
+    ]);
+
+    await setMessengerProfile(ctx);
+
+    expect(_client.setMessengerProfile).toBeCalledWith({
+      get_started: {
+        payload: '<GET_STARTED_PAYLOAD>',
+      },
+      persistent_menu: [
+        {
+          locale: 'default',
+          composer_input_disabled: false,
+          call_to_actions: [
+            {
+              type: 'web_url',
+              title: 'Powered by Example',
+              url: 'https://www.example.com/',
+            },
+          ],
+        },
+      ],
+    });
+  });
+
+  it('successfully set diff fields `get_started`', async () => {
+    const ctx = {
+      argv: {},
+    };
+
     await setMessengerProfile(ctx);
 
     expect(_client.setMessengerProfile).toBeCalledWith({
@@ -124,7 +170,8 @@ describe('resolve', () => {
       },
     });
   });
-  it('successfully delete diff fileds `whitelisted_domains`', async () => {
+
+  it('successfully delete diff fields `whitelisted_domains`', async () => {
     _client.getMessengerProfile.mockReturnValue([
       {
         persistent_menu: [
@@ -149,11 +196,14 @@ describe('resolve', () => {
     const ctx = {
       argv: {},
     };
+
     await setMessengerProfile(ctx);
+
     expect(_client.deleteMessengerProfile).toBeCalledWith([
       'whitelisted_domains',
     ]);
   });
+
   it('do nothing and log info', async () => {
     _client.getMessengerProfile.mockReturnValue([
       {
@@ -178,7 +228,9 @@ describe('resolve', () => {
     const ctx = {
       argv: {},
     };
+
     await setMessengerProfile(ctx);
+
     expect(_client.deleteMessengerProfile).not.toBeCalled();
     expect(_client.setMessengerProfile).not.toBeCalled();
     expect(log.print).toHaveBeenCalledWith(
