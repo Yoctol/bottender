@@ -215,7 +215,7 @@ const hugeLikeStickerMessage = {
         payload: {
           url:
             'https://scontent.xx.fbcdn.net/v/t39.1997-6/p100x100/851587_369239346556147_162929011_n.png?_nc_ad=z-m&oh=2008c832edbd2376b09a1008358b8fd9&oe=598FC1B0',
-          sticker_id: 369239343222814,
+          sticker_id: 369239343222810,
         },
       },
     ],
