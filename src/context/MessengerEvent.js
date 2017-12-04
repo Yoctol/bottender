@@ -619,7 +619,7 @@ export default class MessengerEvent implements Event {
   }
 
   /**
-   * Determine if the event is from custome chat plugin.
+   * Determine if the event is from customer chat plugin.
    *
    */
   get isFromCustomerChatPlugin(): boolean {
