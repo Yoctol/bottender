@@ -8,7 +8,7 @@ const bot = new SlackBot({
 bot.onEvent(async context => {
   if (context.event.isText && context.event.text === 'heyo') {
     // send a message with buttons and menu
-    await context.postMessage(null, {
+    await context.postMessage({
       attachments: [
         {
           text: 'Choose a game to play',
