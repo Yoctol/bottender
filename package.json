@@ -1,7 +1,7 @@
 {
   "name": "bottender",
   "description": "Make Bots in Your Way, Fast and Flexibly",
-  "version": "0.14.7",
+  "version": "0.14.8",
   "license": "MIT",
   "engines": {
     "node": ">=7.6"
@@ -162,6 +162,9 @@
     "resetMocks": true
   },
   "lint-staged": {
-    "*.js": ["eslint --fix", "git add"]
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ]
   }
 }
