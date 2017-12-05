@@ -3919,18 +3919,18 @@ merge@^1.1.3:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/merge/-/merge-1.2.0.tgz#7531e39d4949c281a66b8c5a6e0265e8b05894da"
 
-messaging-api-line@^0.5.14:
-  version "0.5.14"
-  resolved "https://registry.yarnpkg.com/messaging-api-line/-/messaging-api-line-0.5.14.tgz#5de8714b13f19569c455826edf243bc6961003fd"
+messaging-api-line@^0.5.16:
+  version "0.5.16"
+  resolved "https://registry.yarnpkg.com/messaging-api-line/-/messaging-api-line-0.5.16.tgz#462f4dea99ba72fa1caabb62102a1978bda12caf"
   dependencies:
     axios "^0.17.0"
     axios-error "^0.5.4"
     image-type "^3.0.0"
     warning "^3.0.0"
 
-messaging-api-messenger@^0.5.14:
-  version "0.5.14"
-  resolved "https://registry.yarnpkg.com/messaging-api-messenger/-/messaging-api-messenger-0.5.14.tgz#4f49daee3e28a3d57ee957e44fe873f7af761d23"
+messaging-api-messenger@^0.5.16:
+  version "0.5.16"
+  resolved "https://registry.yarnpkg.com/messaging-api-messenger/-/messaging-api-messenger-0.5.16.tgz#795d810c46e05d2c5fcfed77ccb0d891318aa464"
   dependencies:
     axios "^0.17.0"
     axios-error "^0.5.4"
@@ -3940,18 +3940,18 @@ messaging-api-messenger@^0.5.14:
     lodash.omit "^4.5.0"
     warning "^3.0.0"
 
-messaging-api-slack@^0.5.15:
-  version "0.5.15"
-  resolved "https://registry.yarnpkg.com/messaging-api-slack/-/messaging-api-slack-0.5.15.tgz#ab7cf4ac8b2b9d0831f02b05190d64e118dcb8a0"
+messaging-api-slack@^0.5.16:
+  version "0.5.16"
+  resolved "https://registry.yarnpkg.com/messaging-api-slack/-/messaging-api-slack-0.5.16.tgz#7b6dfb78372789802074ebd28e02cf3031d11284"
   dependencies:
     axios "^0.17.0"
     axios-error "^0.5.4"
     invariant "^2.2.2"
     warning "^3.0.0"
 
-messaging-api-telegram@^0.5.4:
-  version "0.5.4"
-  resolved "https://registry.yarnpkg.com/messaging-api-telegram/-/messaging-api-telegram-0.5.4.tgz#5ff40a48279491069f72f02f0b64b20753462995"
+messaging-api-telegram@^0.5.16:
+  version "0.5.16"
+  resolved "https://registry.yarnpkg.com/messaging-api-telegram/-/messaging-api-telegram-0.5.16.tgz#d002435c423a672910a64e424afab6dcf816f390"
   dependencies:
     axios "^0.17.0"
     axios-error "^0.5.4"
