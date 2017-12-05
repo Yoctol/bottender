@@ -209,6 +209,16 @@ const run = async (root, botName, answer, useYarn) => {
         })};`
       );
     }
+
+    const gitignore = fs.readFileSync(
+      path.resolve(__dirname, './template/gitignore')
+    );
+    fs.writeFileSync(path.join(root, '.gitignore'), gitignore);
+
+    const readme = fs.readFileSync(
+      path.resolve(__dirname, './template/README.md')
+    );
+    fs.writeFileSync(path.join(root, 'README.md'), readme);
   } catch (reason) {
     print('');
     print('Aborting installation.');
