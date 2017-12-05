@@ -16,7 +16,7 @@ npm run dev
 
 This example shows how to use [dotenv](https://github.com/motdotla/dotenv)
 package in `bottender.config.js` to prevent from committing sensitive information into source control system.\
-You have to get `ACCESS_TOKEN`, `VERIFY_TOKEN`, `APP_SECRET`, and `APP_ID` into `.env` file before running this bot.
+You have to put `ACCESS_TOKEN`, `VERIFY_TOKEN`, `APP_SECRET`, and `APP_ID` into `.env` file before running this bot.
 
 ## Related examples
 
