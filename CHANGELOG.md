@@ -1,3 +1,18 @@
+0.14.8 / 2017-12-05
+===================
+- [new] Create `README.md` and `.gitignore` when `bottender init`
+- [deps] Update messaging-apis to `v0.5.16`
+
+### messenger
+- [new] Add `event.isFromCustomerChatPlugin` getter
+- [new] Implement CLI attachment force upload [#70](https://github.com/Yoctol/bottender/pull/70)
+- [fix] Fix CLI profile bug
+- [fix] Add huge like sticker support to isLikeSticker [#67](https://github.com/Yoctol/bottender/pull/67)
+- [fix] Use timingSafeEqual to validate signature [#79](https://github.com/Yoctol/bottender/pull/79)
+
+### line
+- [fix] Use timingSafeEqual to validate signature [#79](https://github.com/Yoctol/bottender/pull/79)
+
 0.14.7 / 2017-11-30
 ===================
 ### messenger
