@@ -16,9 +16,10 @@ npm run dev
 
 This example shows how to use [dotenv](https://github.com/motdotla/dotenv)
 package to prevent from committing sensitive information into source control
-system. You have to get `accessToken` and `appSecret` into `.env` file before
+system. You have to put `accessToken` and `appSecret` into `.env` file before
 running this bot.
 
 ## Related examples
 
 * [messenger-hello-world](../messenger-hello-world)
+* [with-config-env](../with-config-env)
