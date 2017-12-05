@@ -56,15 +56,29 @@ describe('init', () => {
       },
     };
     const root = path.resolve('newbot');
+    const gitignore = fs.readFileSync(
+      path.resolve(__dirname, '../init/template/gitignore')
+    );
+    const readme = fs.readFileSync(
+      path.resolve(__dirname, '../init/template/README.md')
+    );
 
     await init();
 
     expect(process.exit).not.toBeCalled();
-    expect(fs.writeFileSync).lastCalledWith(
+    expect(fs.writeFileSync).toBeCalledWith(
       path.join(root, 'bottender.config.js'),
       `module.exports = ${stringifyObject(botConfig, {
         indent: '  ',
       })};`
+    );
+    expect(fs.writeFileSync).toBeCalledWith(
+      path.join(root, '.gitignore'),
+      gitignore
+    );
+    expect(fs.writeFileSync).toBeCalledWith(
+      path.join(root, 'README.md'),
+      readme
     );
   });
 
