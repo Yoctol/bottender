@@ -81,7 +81,7 @@ type ConstructorOptions = {|
 export default class MessengerConnector
   implements Connector<MessengerRequestBody> {
   _client: MessengerClient;
-  _appSecret: ?string;
+  _appSecret: string;
   _mapPageToAccessToken: ?(pageId: string) => ?Promise<string>;
 
   constructor({
@@ -91,7 +91,7 @@ export default class MessengerConnector
     mapPageToAccessToken,
   }: ConstructorOptions) {
     this._client = client || MessengerClient.connect(accessToken || '');
-    this._appSecret = appSecret;
+    this._appSecret = appSecret || '';
     this._mapPageToAccessToken = mapPageToAccessToken;
     if (!this._appSecret) {
       warning(
@@ -263,14 +263,26 @@ export default class MessengerConnector
   // https://developers.facebook.com/docs/messenger-platform/webhook#security
   verifySignature(rawBody: string, signature: string): boolean {
     if (!this._appSecret) {
+      // TODO: deprecate this bypassing
       return true;
     }
-    return (
-      signature ===
-      `sha1=${crypto
-        .createHmac('sha1', this._appSecret)
-        .update(rawBody, 'utf8')
-        .digest('hex')}`
-    );
+
+    const bufferFromSignature = Buffer.from(signature.split('sha1=')[1], 'hex');
+
+    const hashBufferFromBody = crypto
+      .createHmac('sha1', this._appSecret)
+      .update(rawBody, 'utf8')
+      .digest();
+
+    // return early here if buffer lengths are not equal since timingSafeEqual
+    // will throw if buffer lengths are not equal
+    if (bufferFromSignature.length !== hashBufferFromBody.length) {
+      return false;
+    }
+
+    // wait this PR to be merged
+    // https://github.com/facebook/flow/pull/4974
+    // $FlowExpectedError
+    return crypto.timingSafeEqual(bufferFromSignature, hashBufferFromBody);
   }
 }

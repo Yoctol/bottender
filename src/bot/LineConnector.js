@@ -1,5 +1,7 @@
 /* @flow */
 
+import crypto from 'crypto';
+
 import { LineClient } from 'messaging-api-line';
 
 import LineContext from '../context/LineContext';
@@ -20,9 +22,11 @@ type ConstructorOptions = {|
 
 export default class LineConnector implements Connector<LineRequestBody> {
   _client: LineClient;
+  _channelSecret: string;
 
   constructor({ accessToken, channelSecret, client }: ConstructorOptions) {
-    this._client = client || LineClient.connect(accessToken, channelSecret);
+    this._client = client || LineClient.connect(accessToken);
+    this._channelSecret = channelSecret || '';
   }
 
   get platform(): string {
@@ -187,6 +191,22 @@ export default class LineConnector implements Connector<LineRequestBody> {
   }
 
   verifySignature(rawBody: string, signature: string): boolean {
-    return this._client.isValidSignature(rawBody, signature);
+    const hashBufferFromBody = crypto
+      .createHmac('sha256', this._channelSecret)
+      .update(rawBody, 'utf8')
+      .digest();
+
+    const bufferFromSignature = Buffer.from(signature, 'base64');
+
+    // return early here if buffer lengths are not equal since timingSafeEqual
+    // will throw if buffer lengths are not equal
+    if (bufferFromSignature.length !== hashBufferFromBody.length) {
+      return false;
+    }
+
+    // wait this PR to be merged
+    // https://github.com/facebook/flow/pull/4974
+    // $FlowExpectedError
+    return crypto.timingSafeEqual(bufferFromSignature, hashBufferFromBody);
   }
 }

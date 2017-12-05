@@ -56,7 +56,10 @@ function setup() {
   LineClient.connect.mockReturnValue(mockLineAPIClient);
   return {
     mockLineAPIClient,
-    connector: new LineConnector({ ACCESS_TOKEN, CHANNEL_SECRET }),
+    connector: new LineConnector({
+      accessToken: ACCESS_TOKEN,
+      channelSecret: CHANNEL_SECRET,
+    }),
   };
 }
 
@@ -442,17 +445,14 @@ describe('#createContext', () => {
 });
 
 describe('#verifySignature', () => {
-  it('call client verify function with rawbody and signature', () => {
-    const { connector, mockLineAPIClient } = setup();
+  it('should return true if signature is equal app sercret after crypto', () => {
+    const { connector } = setup();
 
-    connector.verifySignature(
-      request.rawBody,
-      request.header['x-line-signature']
+    const result = connector.verifySignature(
+      'rawBody',
+      'XtFE4w+/e5cw8ys6BSALGj3ZCYgRtBdCBxyEfrkgLPc='
     );
 
-    expect(mockLineAPIClient.isValidSignature).toBeCalledWith(
-      'fake_raw_body',
-      'fake_signature'
-    );
+    expect(result).toBe(true);
   });
 });
