@@ -1,7 +1,6 @@
 const { MessengerBot } = require('bottender');
 const { createServer } = require('bottender/express');
-
-const chatbaseMiddleware = require('./chatbaseMiddleware');
+const chatbaseMiddleware = require('bottender-chatbase/express');
 
 const bot = new MessengerBot({
   accessToken: '__FILL_YOUR_TOKEN_HERE__',

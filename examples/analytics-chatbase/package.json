@@ -1,7 +1,7 @@
 {
   "dependencies": {
-    "@google/chatbase": "^1.0.0",
-    "bottender": "latest"
+    "bottender": "latest",
+    "bottender-chatbase": "^0.1.0"
   },
   "devDependencies": {
     "nodemon": "^1.11.0"

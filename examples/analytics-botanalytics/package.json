@@ -1,7 +1,7 @@
 {
   "dependencies": {
-    "botanalytics": "^2.0.2",
-    "bottender": "latest"
+    "bottender": "latest",
+    "bottender-botanalytics": "^0.1.0"
   },
   "devDependencies": {
     "nodemon": "^1.11.0"
