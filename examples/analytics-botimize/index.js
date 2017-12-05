@@ -1,7 +1,6 @@
 const { MessengerBot } = require('bottender');
 const { createServer } = require('bottender/express');
-
-const botimizeMiddleware = require('./botimizeMiddleware');
+const botimizeMiddleware = require('bottender-botimize/express');
 
 const bot = new MessengerBot({
   accessToken: '__FILL_YOUR_TOKEN_HERE__',

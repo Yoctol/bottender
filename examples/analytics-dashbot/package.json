@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "bottender": "latest",
-    "dashbot": "^9.4.1"
+    "bottender-dashbot": "^0.1.0"
   },
   "devDependencies": {
     "nodemon": "^1.11.0"
