@@ -20,7 +20,7 @@ async function createServerWithNext() {
 
   const handle = nextApp.getRequestHandler();
 
-  await nextApp.prepare(); // eslint-disable-line no-await-in-loop
+  await nextApp.prepare();
 
   const server = createServer(bot);
 
