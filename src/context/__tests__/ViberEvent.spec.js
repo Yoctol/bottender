@@ -75,11 +75,6 @@ const textMessage = {
   message: {
     type: 'text',
     text: 'a message to the service',
-    media: 'http://example.com',
-    location: {
-      lat: 50.76891,
-      lon: 6.11499,
-    },
     tracking_data: 'tracking data',
   },
 };
@@ -258,11 +253,6 @@ it('#message', () => {
   expect(new ViberEvent(textMessage).message).toEqual({
     type: 'text',
     text: 'a message to the service',
-    media: 'http://example.com',
-    location: {
-      lat: 50.76891,
-      lon: 6.11499,
-    },
     tracking_data: 'tracking data',
   });
   expect(new ViberEvent(pictureMessage).message).toEqual({
