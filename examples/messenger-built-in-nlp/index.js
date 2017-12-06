@@ -7,7 +7,6 @@ const bot = new MessengerBot({
 });
 
 bot.onEvent(async context => {
-  /* eslint-disable no-console */
   console.log(context.event.message.nlp.entities);
   const entities = context.event.message.nlp.entities;
   if (entities.datetime && entities.datetime[0].type === 'value') {
