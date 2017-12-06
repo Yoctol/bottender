@@ -13,7 +13,7 @@ npm run dev
 
 ## Idea of this example
 
-This example is a simple bot running on [Messenger] (https://www.messenger.com/) with `buit-in NLP` enabled.
+This example is a simple bot running on [Messenger](https://www.messenger.com/) with `buit-in NLP` enabled.
 You have to get `accessToken` and `appSecret` before running this bot.\
 For more information, check the official docs [Messenger Built-in NLP](https://developers.facebook.com/docs/messenger-platform/built-in-nlp/).
 
