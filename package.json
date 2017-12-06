@@ -1,7 +1,7 @@
 {
   "name": "bottender",
   "description": "Make Bots in Your Way, Fast and Flexibly",
-  "version": "0.14.8",
+  "version": "0.14.9",
   "license": "MIT",
   "engines": {
     "node": ">=7.6"
