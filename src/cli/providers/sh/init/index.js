@@ -133,9 +133,7 @@ const checkBotName = botName => {
   const validationResult = validateProjectName(botName);
   if (!validationResult.validForNewPackages) {
     error(
-      `Could not create a project called "${
-        botName
-      }" because of npm naming restrictions:`
+      `Could not create a project called "${botName}" because of npm naming restrictions:`
     );
     printValidationResults(validationResult.errors);
     printValidationResults(validationResult.warnings);
