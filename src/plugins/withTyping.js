@@ -32,6 +32,9 @@ const methods = [
   'sendVoice',
   'sendVenue',
   'sendContact',
+  'sendPicture',
+  'sendURL',
+  'sendCarouselContent',
 ];
 
 export default options => context => {
