@@ -65,8 +65,15 @@ export type Read = {
   seq: number,
 };
 
+export type Referral = {
+  ref: string,
+  source: string,
+  type: string,
+};
+
 export type Postback = {
   payload: string,
+  referral?: Referral,
 };
 
 export type Optin = {
@@ -152,6 +159,7 @@ export type MessengerRawEvent = {
   app_roles?: AppRoles,
   pass_thread_control?: PassThreadControl,
   take_thread_control?: TakeThreadControl,
+  referral?: Referral,
 };
 
 type MessengerEventOptions = {
@@ -633,6 +641,47 @@ export default class MessengerEvent implements Event {
       (this.message: any).tags.some(
         tag => tag.source === 'customer_chat_plugin'
       )
+    );
+  }
+
+  /**
+   * Determine if the event is a referral event.
+   *
+   */
+  get isReferral(): boolean {
+    return (
+      !!this._rawEvent.referral ||
+      !!(this._rawEvent.postback && this._rawEvent.postback.referral)
+    );
+  }
+
+  /**
+   * The referral object from Messenger event.
+   *
+   */
+  get referral(): ?Referral {
+    if (!this.isReferral) {
+      return null;
+    }
+    return (
+      this._rawEvent.referral ||
+      (this._rawEvent.postback && this._rawEvent.postback.referral)
+    );
+  }
+
+  /**
+   * The ref string from Messenger event.
+   *
+   */
+  get ref(): ?string {
+    if (!this.isReferral) {
+      return null;
+    }
+    return (
+      (this._rawEvent.referral && this._rawEvent.referral.ref) ||
+      (this._rawEvent.postback &&
+        this._rawEvent.postback.referral &&
+        this._rawEvent.postback.referral.ref)
     );
   }
 }
