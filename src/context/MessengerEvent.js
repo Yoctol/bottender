@@ -126,8 +126,8 @@ export type PreCheckout = {
 };
 
 export type PolicyEnforcement = {
-  action: String,
-  reason: String,
+  action: string,
+  reason: string,
 };
 
 export type AppRoles = {
@@ -135,13 +135,13 @@ export type AppRoles = {
 };
 
 export type PassThreadControl = {
-  new_owner_app_id: String,
-  metadata: String,
+  new_owner_app_id: string,
+  metadata: string,
 };
 
 export type TakeThreadControl = {
-  previous_owner_app_id: String,
-  metadata: String,
+  previous_owner_app_id: string,
+  metadata: string,
 };
 
 export type MessengerRawEvent = {
