@@ -5,8 +5,8 @@
 Download this example or clone [bottender](https://github.com/Yoctol/bottender).
 
 ```
-curl https://codeload.github.com/Yoctol/bottender/tar.gz/master | tar -xz --strip=2 bottender-master/examples/messenger-hello-world
-cd messenger-hello-world
+curl https://codeload.github.com/Yoctol/bottender/tar.gz/master | tar -xz --strip=2 bottender-master/examples/messenger-built-in-nlp
+cd messenger-built-in-nlp
 npm install
 npm run dev
 ```
