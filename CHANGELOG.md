@@ -1,3 +1,15 @@
+0.14.9 / 2017-12-06
+===================
+- [new] Add referral getters for `MessengerEvent`:
+
+```js
+event.isReferral // true or false
+event.referral // { source: 'SHORTLINK', type: 'OPEN_THREAD', ref: 'my_ref' }
+event.ref // 'my_ref'
+```
+
+- [fix] `bottender init` bug introduced by [#81](https://github.com/Yoctol/bottender/pull/81). Issue: [#86](https://github.com/Yoctol/bottender/issues/86)
+
 0.14.8 / 2017-12-05
 ===================
 - [new] Create `README.md` and `.gitignore` when `bottender init`
@@ -100,7 +112,7 @@ See [official docs](https://api.slack.com/methods/chat.postMessage) for more ava
 - [new] Implement richmenu api methods on context [#23](https://github.com/Yoctol/bottender/pull/23)
   + `context.getLinkedRichMenu()`
   + `context.linkRichMenu(richMenuId)`
-  + `context.getLinkedRichMenu()`
+  + `context.unlinkRichMenu()`
 
 0.14.3 / 2017-11-14
 ===================
