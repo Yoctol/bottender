@@ -457,6 +457,52 @@ const textMessageFromCustomerChatPlugin = {
   },
 };
 
+const linkReferral = {
+  recipient: {
+    id: '701111199441168',
+  },
+  timestamp: 1511111143921,
+  sender: {
+    id: '1476077111119289',
+  },
+  referral: {
+    ref: 'aaaa',
+    source: 'SHORTLINK',
+    type: 'OPEN_THREAD',
+  },
+};
+
+const postbackReferral = {
+  recipient: {
+    id: '707356222221168',
+  },
+  timestamp: 1522222894827,
+  sender: {
+    id: '1476077422222289',
+  },
+  postback: {
+    payload: '__GET_STARTED__',
+    referral: {
+      source: 'SHORTLINK',
+      type: 'OPEN_THREAD',
+      ref: 'aaaa',
+    },
+    title: 'Get Started',
+  },
+};
+
+const customerChatPluginReferral = {
+  recipient: { id: '693344444818699' },
+  timestamp: 1512552044444,
+  sender: { id: '1242684444404904' },
+  referral: {
+    ref: 'bbbb',
+    source: 'CUSTOMER_CHAT_PLUGIN',
+    type: 'OPEN_THREAD',
+    origin_domain: 'https://test.domain.tw/',
+  },
+};
+
 it('#rawEvent', () => {
   expect(new MessengerEvent(textMessage).rawEvent).toEqual(textMessage);
   expect(new MessengerEvent(imageMessage).rawEvent).toEqual(imageMessage);
@@ -1059,4 +1105,46 @@ it('#isFromCustomerChatPlugin', () => {
     new MessengerEvent(textMessageFromCustomerChatPlugin)
       .isFromCustomerChatPlugin
   ).toEqual(true);
+  expect(
+    new MessengerEvent(customerChatPluginReferral).isFromCustomerChatPlugin
+  ).toEqual(true);
+});
+
+it('#isReferral', () => {
+  expect(new MessengerEvent(linkReferral).isReferral).toEqual(true);
+  expect(new MessengerEvent(postbackReferral).isReferral).toEqual(true);
+  expect(new MessengerEvent(customerChatPluginReferral).isReferral).toEqual(
+    true
+  );
+  expect(new MessengerEvent(postback).isReferral).toEqual(false);
+  expect(new MessengerEvent(textMessage).isReferral).toEqual(false);
+});
+
+it('#referral', () => {
+  expect(new MessengerEvent(linkReferral).referral).toEqual({
+    ref: 'aaaa',
+    source: 'SHORTLINK',
+    type: 'OPEN_THREAD',
+  });
+  expect(new MessengerEvent(postbackReferral).referral).toEqual({
+    ref: 'aaaa',
+    source: 'SHORTLINK',
+    type: 'OPEN_THREAD',
+  });
+  expect(new MessengerEvent(customerChatPluginReferral).referral).toEqual({
+    ref: 'bbbb',
+    source: 'CUSTOMER_CHAT_PLUGIN',
+    type: 'OPEN_THREAD',
+    origin_domain: 'https://test.domain.tw/',
+  });
+  expect(new MessengerEvent(postback).referral).toEqual(null);
+  expect(new MessengerEvent(textMessage).referral).toEqual(null);
+});
+
+it('#ref', () => {
+  expect(new MessengerEvent(linkReferral).ref).toEqual('aaaa');
+  expect(new MessengerEvent(postbackReferral).ref).toEqual('aaaa');
+  expect(new MessengerEvent(customerChatPluginReferral).ref).toEqual('bbbb');
+  expect(new MessengerEvent(postback).ref).toEqual(null);
+  expect(new MessengerEvent(textMessage).ref).toEqual(null);
 });
