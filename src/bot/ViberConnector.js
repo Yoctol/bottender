@@ -1,6 +1,7 @@
 /* @flow */
 
 import { ViberClient } from 'messaging-api-viber';
+import { addedDiff } from 'deep-object-diff';
 
 import ViberContext from '../context/ViberContext';
 import ViberEvent, { type ViberRawEvent } from '../context/ViberEvent';
@@ -35,17 +36,50 @@ export default class ViberConnector implements Connector<ViberRequestBody> {
   }
 
   getUniqueSessionKey(body: ViberRequestBody): string {
-    // TODO
+    switch (body.event) {
+      case 'subscribed':
+      case 'conversation_started':
+        return body.user.id;
+      case 'unsubscribed':
+      case 'delivered':
+      case 'seen':
+      case 'failed':
+        return body.user_id;
+      case 'message':
+        return body.sender.id;
+      default:
+        return '';
+    }
   }
 
   async updateSession(session: Session, body: ViberRequestBody): Promise<void> {
-    if (!session.user) {
-      // FIXME: refine user
-      let user;
+    let user;
 
-      // TODO
+    switch (body.event) {
+      case 'subscribed':
+      case 'conversation_started':
+        user = body.user;
+        break;
+      case 'unsubscribed':
+      case 'delivered':
+      case 'seen':
+      case 'failed':
+        user = {
+          id: body.user_id,
+        };
+        break;
+      case 'message':
+        user = body.sender;
+        break;
+      default:
+        break;
+    }
 
-      session.user = user;
+    if (Object.keys(addedDiff(session.user || {}, user)).length > 0) {
+      session.user = {
+        ...session.user,
+        ...user,
+      };
       session.user._updatedAt = new Date().toISOString();
     }
 
