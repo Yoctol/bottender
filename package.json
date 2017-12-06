@@ -38,7 +38,7 @@
     "btd": "bin/cli.js"
   },
   "scripts": {
-    "build": "npm run clean && babel src -d lib --ignore __tests__",
+    "build": "npm run clean && babel src -d lib --ignore __tests__ --copy-files",
     "clean": "rimraf lib",
     "check": "flow check",
     "lint": "eslint bin src scripts examples",
