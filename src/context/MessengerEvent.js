@@ -69,6 +69,7 @@ export type Referral = {
   ref: string,
   source: string,
   type: string,
+  origin_domain?: string,
 };
 
 export type Postback = {
@@ -634,7 +635,7 @@ export default class MessengerEvent implements Event {
    *
    */
   get isFromCustomerChatPlugin(): boolean {
-    return (
+    const isMessageFromCustomerChatPlugin = !!(
       this.isMessage &&
       !!(this.message: any).tags &&
       (this.message: any).tags.length !== 0 &&
@@ -642,6 +643,14 @@ export default class MessengerEvent implements Event {
         tag => tag.source === 'customer_chat_plugin'
       )
     );
+
+    const isReferralFromCustomerChatPlugin = !!(
+      this.isReferral &&
+      this.referral &&
+      this.referral.source === 'CUSTOMER_CHAT_PLUGIN'
+    );
+
+    return isMessageFromCustomerChatPlugin || isReferralFromCustomerChatPlugin;
   }
 
   /**
@@ -649,9 +658,9 @@ export default class MessengerEvent implements Event {
    *
    */
   get isReferral(): boolean {
-    return (
-      !!this._rawEvent.referral ||
-      !!(this._rawEvent.postback && this._rawEvent.postback.referral)
+    return !!(
+      this._rawEvent.referral ||
+      (this._rawEvent.postback && this._rawEvent.postback.referral)
     );
   }
 
@@ -677,11 +686,6 @@ export default class MessengerEvent implements Event {
     if (!this.isReferral) {
       return null;
     }
-    return (
-      (this._rawEvent.referral && this._rawEvent.referral.ref) ||
-      (this._rawEvent.postback &&
-        this._rawEvent.postback.referral &&
-        this._rawEvent.postback.referral.ref)
-    );
+    return this.referral && this.referral.ref;
   }
 }

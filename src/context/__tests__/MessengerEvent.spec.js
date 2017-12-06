@@ -491,6 +491,18 @@ const postbackReferral = {
   },
 };
 
+const customerChatPluginReferral = {
+  recipient: { id: '693344444818699' },
+  timestamp: 1512552044444,
+  sender: { id: '1242684444404904' },
+  referral: {
+    ref: 'bbbb',
+    source: 'CUSTOMER_CHAT_PLUGIN',
+    type: 'OPEN_THREAD',
+    origin_domain: 'https://test.domain.tw/',
+  },
+};
+
 it('#rawEvent', () => {
   expect(new MessengerEvent(textMessage).rawEvent).toEqual(textMessage);
   expect(new MessengerEvent(imageMessage).rawEvent).toEqual(imageMessage);
@@ -1093,11 +1105,17 @@ it('#isFromCustomerChatPlugin', () => {
     new MessengerEvent(textMessageFromCustomerChatPlugin)
       .isFromCustomerChatPlugin
   ).toEqual(true);
+  expect(
+    new MessengerEvent(customerChatPluginReferral).isFromCustomerChatPlugin
+  ).toEqual(true);
 });
 
 it('#isReferral', () => {
   expect(new MessengerEvent(linkReferral).isReferral).toEqual(true);
   expect(new MessengerEvent(postbackReferral).isReferral).toEqual(true);
+  expect(new MessengerEvent(customerChatPluginReferral).isReferral).toEqual(
+    true
+  );
   expect(new MessengerEvent(postback).isReferral).toEqual(false);
   expect(new MessengerEvent(textMessage).isReferral).toEqual(false);
 });
@@ -1113,6 +1131,12 @@ it('#referral', () => {
     source: 'SHORTLINK',
     type: 'OPEN_THREAD',
   });
+  expect(new MessengerEvent(customerChatPluginReferral).referral).toEqual({
+    ref: 'bbbb',
+    source: 'CUSTOMER_CHAT_PLUGIN',
+    type: 'OPEN_THREAD',
+    origin_domain: 'https://test.domain.tw/',
+  });
   expect(new MessengerEvent(postback).referral).toEqual(null);
   expect(new MessengerEvent(textMessage).referral).toEqual(null);
 });
@@ -1120,6 +1144,7 @@ it('#referral', () => {
 it('#ref', () => {
   expect(new MessengerEvent(linkReferral).ref).toEqual('aaaa');
   expect(new MessengerEvent(postbackReferral).ref).toEqual('aaaa');
+  expect(new MessengerEvent(customerChatPluginReferral).ref).toEqual('bbbb');
   expect(new MessengerEvent(postback).ref).toEqual(null);
   expect(new MessengerEvent(textMessage).ref).toEqual(null);
 });
