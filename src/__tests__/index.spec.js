@@ -41,6 +41,7 @@ describe('core', () => {
     expect(core.LineHandler).toBeDefined();
     expect(core.SlackHandler).toBeDefined();
     expect(core.TelegramHandler).toBeDefined();
+    expect(core.ViberHandler).toBeDefined();
     expect(core.ClassifierHandler).toBeDefined();
   });
 

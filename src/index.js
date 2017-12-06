@@ -27,6 +27,7 @@ export { default as MessengerHandler } from './handlers/MessengerHandler';
 export { default as LineHandler } from './handlers/LineHandler';
 export { default as SlackHandler } from './handlers/SlackHandler';
 export { default as TelegramHandler } from './handlers/TelegramHandler';
+export { default as ViberHandler } from './handlers/ViberHandler';
 
 /* Cache */
 export { default as MemoryCacheStore } from './cache/MemoryCacheStore';
