@@ -3,6 +3,7 @@ import { MessengerClient } from 'messaging-api-messenger';
 import invariant from 'invariant';
 import { diff, addedDiff, deletedDiff, updatedDiff } from 'deep-object-diff';
 import chalk from 'chalk';
+import { pick, omit } from 'lodash';
 
 import getConfig from '../../shared/getConfig';
 import { print, error, bold, log } from '../../shared/log';
@@ -116,8 +117,12 @@ export async function setMessengerProfile(ctx) {
           'messenger_profile'
         )} settings due to ${bold('--force')} option`
       );
-
-      await client.setMessengerProfile(_profile);
+      if (_profile.whitelisted_domains) {
+        await client.setMessengerProfile(pick(_profile, 'whitelisted_domains'));
+        await client.setMessengerProfile(omit(_profile, 'whitelisted_domains'));
+      } else {
+        await client.setMessengerProfile(_profile);
+      }
       print(`Successfully set ${bold('messenger_profile')} settings`);
     } else {
       const [_existedProfile] = await client.getMessengerProfile(FIELDS);
@@ -144,11 +149,18 @@ export async function setMessengerProfile(ctx) {
         }
 
         if (shouldSetFields.length > 0) {
-          const shouldSetProfile = {};
-          shouldSetFields.forEach(field => {
-            shouldSetProfile[field] = profile[field];
-          });
-          await client.setMessengerProfile(shouldSetProfile);
+          const shouldSetProfile = pick(profile, shouldSetFields);
+
+          if (shouldSetFields.includes('whitelisted_domains')) {
+            await client.setMessengerProfile(
+              pick(shouldSetProfile, 'whitelisted_domains')
+            );
+            await client.setMessengerProfile(
+              omit(shouldSetProfile, 'whitelisted_domains')
+            );
+          } else {
+            await client.setMessengerProfile(shouldSetProfile);
+          }
           const setFields = Object.keys(shouldSetProfile).join(', ');
           print(`Successfully set ${bold(setFields)} settings`);
         }
