@@ -3,6 +3,7 @@ const { createServer } = require('bottender/express');
 
 const bot = new SlackBot({
   accessToken: '__FILL_YOUR_TOKEN_HERE__',
+  verificationToken: '__FILL_YOUR_VERIFICATION_TOKEN_HERE__',
 });
 
 const handler = new SlackHandler()

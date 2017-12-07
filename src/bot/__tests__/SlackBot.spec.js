@@ -3,7 +3,7 @@ import SlackConnector from '../SlackConnector';
 
 it('should construct bot with SlackConnector', () => {
   const bot = new SlackBot({
-    webhookURL: 'https://hooks.slack.com/services/XXXXXXXX/YYYYYYYY/zzzzzZZZZZ',
+    accessToken: 'zzzzzZZZZZ',
   });
   expect(bot).toBeDefined();
   expect(bot.onEvent).toBeDefined();

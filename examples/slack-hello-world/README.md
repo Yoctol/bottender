@@ -14,7 +14,7 @@ npm run dev
 ## Idea of this example
 
 This example is a simple bot running on [Slack](https://slack.com/). You have to
-get `accessToken` before running this bot.\
+get `accessToken` and `verificationToken` before running this bot.\
 For more information, check our [Slack guides](https://bottender.js.org/docs/Platforms-Slack).
 
 ## Related examples

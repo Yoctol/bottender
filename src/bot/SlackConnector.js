@@ -1,6 +1,8 @@
 /* @flow */
+import crypto from 'crypto';
 
 import { SlackOAuthClient } from 'messaging-api-slack';
+import warning from 'warning';
 
 import SlackContext from '../context/SlackContext';
 import SlackEvent, {
@@ -34,13 +36,23 @@ export type SlackRequestBody = EventsAPIBody | { payload: string };
 type ConstructorOptions = {|
   accessToken?: string,
   client?: SlackOAuthClient,
+  verificationToken?: string,
 |};
 
 export default class SlackConnector implements Connector<SlackRequestBody> {
   _client: SlackOAuthClient;
+  _verificationToken: string;
 
-  constructor({ accessToken, client }: ConstructorOptions) {
+  constructor({ accessToken, client, verificationToken }: ConstructorOptions) {
     this._client = client || SlackOAuthClient.connect(accessToken);
+    this._verificationToken = verificationToken || '';
+
+    if (!this._verificationToken) {
+      warning(
+        false,
+        '`verificationToken` is not set. Will bypass Slack event verification.\nPass in `verificationToken` to perform Slack event verification.'
+      );
+    }
   }
 
   _getRawEventFromRequest(body: SlackRequestBody): SlackRawEvent {
@@ -198,5 +210,26 @@ export default class SlackConnector implements Connector<SlackRequestBody> {
       session,
       initialState,
     });
+  }
+
+  verifySignature(tokenFromBody: string): boolean {
+    if (!this._verificationToken) {
+      // TODO: deprecate this bypassing
+      return true;
+    }
+
+    const bufferFromBot = Buffer.from(this._verificationToken);
+    const bufferFromBody = Buffer.from(tokenFromBody);
+
+    // return early here if buffer lengths are not equal since timingSafeEqual
+    // will throw if buffer lengths are not equal
+    if (bufferFromBot.length !== bufferFromBody.length) {
+      return false;
+    }
+
+    // wait this PR to be merged
+    // https://github.com/facebook/flow/pull/4974
+    // $FlowExpectedError
+    return crypto.timingSafeEqual(bufferFromBot, bufferFromBody);
   }
 }

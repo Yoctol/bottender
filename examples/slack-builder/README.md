@@ -15,7 +15,7 @@ npm run dev
 
 This example shows how to combine
 [handler](https://bottender.js.org/docs/APIReference-Handler) with
-[Slack](https://slack.com/) bot. You have to get `accessToken` before running
+[Slack](https://slack.com/) bot. You have to get `accessToken` and `verificationToken` before running
 this bot.\
 For more information, check our [Slack guides](https://bottender.js.org/docs/Platforms-Slack).
 

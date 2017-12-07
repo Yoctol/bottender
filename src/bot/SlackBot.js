@@ -10,12 +10,14 @@ export default class SlackBot extends Bot {
     accessToken,
     sessionStore,
     sync,
+    verificationToken,
   }: {
     accessToken: string,
     sessionStore: SessionStore,
     sync?: boolean,
+    verificationToken?: string,
   }) {
-    const connector = new SlackConnector({ accessToken });
+    const connector = new SlackConnector({ accessToken, verificationToken });
     super({ connector, sessionStore, sync });
   }
 }
