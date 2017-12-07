@@ -12,10 +12,6 @@
       font-size: 50px;
     }
   </style>
-  <script
-    src="https://code.jquery.com/jquery-3.2.1.min.js"
-    integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-    crossorigin="anonymous"></script>
 </head>
 
 <body class="body">
@@ -45,7 +41,7 @@
               {
                 title: 'Do you want to Facebook?',
                 image_url: 'https://fbnewsroomus.files.wordpress.com/2015/07/fbwm_cw_07.jpg?w=800',
-                subtitle: '',
+                subtitle: 'try it?',
                 default_action: {
                   type: 'web_url',
                   url: 'https://www.facebook.com',
@@ -64,7 +60,7 @@
       };
 
       // Click to Share
-      $('#share').on('click', () => {
+      document.getElementById('share').addEventListener('click', () => {
         MessengerExtensions.beginShareFlow(
           response => {
             // User dismissed without error, but did they
