@@ -51,14 +51,14 @@ it('should check too many messenger menu second layer items', () => {
   const errorPath = validateResult.error.details[0].path.join('.');
 
   expect(message).toBe(
-    '"call_to_actions" must contain less than or equal to 5 items'
+    '"call_to_actions" at position 0 does not match any of the allowed types'
   );
-  expect(type).toBe('array.max');
+  expect(type).toBe('array.includes');
   expect(errorPath).toBe(
-    'messenger.profile.persistent_menu.0.call_to_actions.0.call_to_actions'
+    'messenger.profile.persistent_menu.0.call_to_actions.0'
   );
   expect(validateResult.error.message).toBe(
-    'child "messenger" fails because [child "profile" fails because [child "persistent_menu" fails because ["persistent_menu" at position 0 fails because [child "call_to_actions" fails because ["call_to_actions" at position 0 fails because [child "call_to_actions" fails because ["call_to_actions" must contain less than or equal to 5 items]]]]]]]'
+    'child "messenger" fails because [child "profile" fails because [child "persistent_menu" fails because ["persistent_menu" at position 0 fails because [child "call_to_actions" fails because ["call_to_actions" at position 0 does not match any of the allowed types]]]]]'
   );
 });
 
@@ -71,14 +71,14 @@ it('should check too many messenger menu third layer items', () => {
   const errorPath = validateResult.error.details[0].path.join('.');
 
   expect(message).toBe(
-    '"call_to_actions" must contain less than or equal to 5 items'
+    '"call_to_actions" at position 0 does not match any of the allowed types'
   );
-  expect(type).toBe('array.max');
+  expect(type).toBe('array.includes');
   expect(errorPath).toBe(
-    'messenger.profile.persistent_menu.0.call_to_actions.0.call_to_actions.1.call_to_actions'
+    'messenger.profile.persistent_menu.0.call_to_actions.0'
   );
   expect(validateResult.error.message).toBe(
-    'child "messenger" fails because [child "profile" fails because [child "persistent_menu" fails because ["persistent_menu" at position 0 fails because [child "call_to_actions" fails because ["call_to_actions" at position 0 fails because [child "call_to_actions" fails because ["call_to_actions" at position 1 fails because [child "call_to_actions" fails because ["call_to_actions" must contain less than or equal to 5 items]]]]]]]]]'
+    'child "messenger" fails because [child "profile" fails because [child "persistent_menu" fails because ["persistent_menu" at position 0 fails because [child "call_to_actions" fails because ["call_to_actions" at position 0 does not match any of the allowed types]]]]]'
   );
 });
 
