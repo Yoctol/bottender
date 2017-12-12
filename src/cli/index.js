@@ -1,6 +1,7 @@
 import minimist from 'minimist';
 import camelCase from 'camel-case';
 import get from 'lodash/get';
+import updateNotifier from 'update-notifier';
 
 import pkg from '../../package.json';
 
@@ -10,6 +11,8 @@ import { error } from './shared/log';
 const main = async argv => {
   let providerName;
   let subcommand;
+
+  updateNotifier({ pkg }).notify({ defer: false });
 
   switch (argv._[0]) {
     case 'messenger':
