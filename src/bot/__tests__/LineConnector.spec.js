@@ -43,6 +43,42 @@ const request = {
   },
 };
 
+const webhookVerifyRequest = {
+  body: {
+    events: [
+      {
+        replyToken: '00000000000000000000000000000000',
+        type: 'message',
+        timestamp: 1513065174862,
+        source: {
+          type: 'user',
+          userId: 'Udeadbeefdeadbeefdeadbeefdeadbeef',
+        },
+        message: {
+          id: '100001',
+          type: 'text',
+          text: 'Hello, world',
+        },
+      },
+      {
+        replyToken: 'ffffffffffffffffffffffffffffffff',
+        type: 'message',
+        timestamp: 1513065174862,
+        source: {
+          type: 'user',
+          userId: 'Udeadbeefdeadbeefdeadbeefdeadbeef',
+        },
+        message: {
+          id: '100002',
+          type: 'sticker',
+          packageId: '1',
+          stickerId: '1',
+        },
+      },
+    ],
+  },
+};
+
 function setup() {
   const mockLineAPIClient = {
     getUserProfile: jest.fn(),
@@ -134,6 +170,12 @@ describe('#getUniqueSessionKey', () => {
       ],
     });
     expect(senderId).toBe('U206d25c2ea6bd87c17655609a1c37cb8');
+  });
+
+  it('extract empty string from webhook verify request', () => {
+    const { connector } = setup();
+    const senderId = connector.getUniqueSessionKey(webhookVerifyRequest.body);
+    expect(senderId).toBe('');
   });
 
   it('should throw error if source.type is not user, group or room', () => {
@@ -415,6 +457,16 @@ describe('#updateSession', () => {
       value: undefined,
     });
   });
+
+  it('do nothing with webhook verify request', async () => {
+    const { connector } = setup();
+
+    const session = {};
+
+    await connector.updateSession(session, webhookVerifyRequest.body);
+
+    expect(session).toEqual({});
+  });
 });
 
 describe('#mapRequestToEvents', () => {
@@ -425,6 +477,13 @@ describe('#mapRequestToEvents', () => {
     expect(events).toHaveLength(2);
     expect(events[0]).toBeInstanceOf(LineEvent);
     expect(events[1]).toBeInstanceOf(LineEvent);
+  });
+
+  it('should map webhook verify request to empty array', () => {
+    const { connector } = setup();
+    const events = connector.mapRequestToEvents(webhookVerifyRequest.body);
+
+    expect(events).toEqual([]);
   });
 });
 

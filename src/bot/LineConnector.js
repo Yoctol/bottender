@@ -29,6 +29,17 @@ export default class LineConnector implements Connector<LineRequestBody> {
     this._channelSecret = channelSecret || '';
   }
 
+  _isWebhookVerifyEvent(event: LineRawEvent): boolean {
+    return (
+      event.replyToken === '00000000000000000000000000000000' ||
+      event.replyToken === 'ffffffffffffffffffffffffffffffff'
+    );
+  }
+
+  _isWebhookVerifyRequest(body: LineRequestBody): boolean {
+    return body.events.every(this._isWebhookVerifyEvent);
+  }
+
   get platform(): string {
     return 'line';
   }
@@ -38,6 +49,9 @@ export default class LineConnector implements Connector<LineRequestBody> {
   }
 
   getUniqueSessionKey(body: LineRequestBody): string {
+    if (this._isWebhookVerifyRequest(body)) {
+      return '';
+    }
     const { source } = body.events[0];
     if (source.type === 'user') {
       return source.userId;
@@ -52,6 +66,9 @@ export default class LineConnector implements Connector<LineRequestBody> {
   }
 
   async updateSession(session: Session, body: LineRequestBody): Promise<void> {
+    if (this._isWebhookVerifyRequest(body)) {
+      return;
+    }
     const { source } = body.events[0];
 
     if (!session.type) {
@@ -170,7 +187,9 @@ export default class LineConnector implements Connector<LineRequestBody> {
   }
 
   mapRequestToEvents(body: LineRequestBody): Array<LineEvent> {
-    return body.events.map(e => new LineEvent(e));
+    return body.events
+      .filter(e => !this._isWebhookVerifyEvent(e))
+      .map(e => new LineEvent(e));
   }
 
   createContext({
