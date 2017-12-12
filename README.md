@@ -5,7 +5,7 @@
 [![coverage](https://codecov.io/gh/Yoctol/bottender/branch/master/graph/badge.svg)](https://codecov.io/gh/Yoctol/bottender)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-![](https://user-images.githubusercontent.com/3382565/32216617-85cb703a-bdf3-11e7-9a0b-0e084b47c39e.png)
+![](https://user-images.githubusercontent.com/3382565/33872101-6cbd07d8-df50-11e7-9c80-d1415448122a.png)
 
 * **Flexible** - Declare handlers as any JavaScript function.
 
@@ -45,6 +45,7 @@ You can find the Bottender documentation on the website.
   * [LINE](https://bottender.js.org/docs/Platforms-LINE)
   * [Slack](https://bottender.js.org/docs/Platforms-Slack)
   * [Telegram](https://bottender.js.org/docs/Platforms-Telegram)
+  * [Viber](https://bottender.js.org/docs/Platforms-Viber)
 * [Guides](https://bottender.js.org/docs/Guides-Commands)
 * [API Reference](https://bottender.js.org/docs/APIReference-Context)
 
@@ -101,6 +102,11 @@ method, we call it handler. You can put your bot logic in there.
 * Keyboard
 * Message Live Location
 * Payment
+
+### Viber
+
+* Subscribed, Unsubscribed Event
+* Delivered, Seen Event
 
 ## Introduction Video
 
