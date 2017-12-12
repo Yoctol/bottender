@@ -21,7 +21,7 @@ const questions = [
     name: 'platform',
     message: 'What platform of bot do you want to create?',
     type: 'list',
-    choices: ['console', 'messenger', 'line', 'slack', 'telegram'],
+    choices: ['console', 'messenger', 'line', 'slack', 'telegram', 'viber'],
   },
   {
     name: 'session',
@@ -57,6 +57,12 @@ const generateBotConfig = platform => {
     case 'telegram':
       return {
         telegram: {
+          accessToken,
+        },
+      };
+    case 'viber':
+      return {
+        viber: {
           accessToken,
         },
       };
