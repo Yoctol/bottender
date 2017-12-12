@@ -288,7 +288,7 @@ describe('#verifySignature', () => {
     );
   });
 
-  it('should return true if signature is equal verificationttoken', () => {
+  it('should return true if signature is equal to verification token', () => {
     const { connector } = setup({ verificationToken: 'mytoken' });
 
     const result = connector.verifySignature('mytoken');
