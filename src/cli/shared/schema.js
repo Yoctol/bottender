@@ -17,16 +17,31 @@ const subMenuItemSchema = Joi.object().keys({
   webview_share_button: Joi.string(),
 });
 
-const menuItemSchema = Joi.object()
+const secondLayerMenuItemSchema = Joi.object()
   .keys({
     call_to_actions: Joi.array()
       .items()
       .when('type', {
         is: 'nested',
-        then: Joi.array().items(subMenuItemSchema),
+        then: Joi.array()
+          .items(subMenuItemSchema)
+          .max(5),
       }),
   })
   .concat(subMenuItemSchema);
+
+const firstLayerMenuItemSchema = Joi.object()
+  .keys({
+    call_to_actions: Joi.array()
+      .items()
+      .when('type', {
+        is: 'nested',
+        then: Joi.array()
+          .items(secondLayerMenuItemSchema)
+          .max(5),
+      }),
+  })
+  .concat(secondLayerMenuItemSchema);
 
 const schema = Joi.object().keys({
   messenger: Joi.object().keys({
@@ -44,11 +59,13 @@ const schema = Joi.object().keys({
           locale: Joi.string(),
           composer_input_disabled: Joi.boolean(),
           call_to_actions: Joi.array()
-            .items(menuItemSchema)
+            .items(firstLayerMenuItemSchema)
+            .max(3)
             .when('composer_input_disabled', {
               is: true,
               then: Joi.array()
-                .items(menuItemSchema)
+                .items(firstLayerMenuItemSchema)
+                .max(3)
                 .required(),
             }),
         })
