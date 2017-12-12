@@ -1,82 +1,42 @@
 {
   "name": "bottender",
   "description": "Make Bots in Your Way, Fast and Flexibly",
-  "version": "0.14.9",
   "license": "MIT",
-  "engines": {
-    "node": ">=7.6"
-  },
-  "main": "lib/index.js",
-  "browser": "lib/browser.js",
-  "keywords": [
-    "messaging",
-    "messenger",
-    "line",
-    "slack",
-    "telegram",
-    "viber",
-    "bot",
-    "chatbot",
-    "framework"
-  ],
   "homepage": "https://bottender.js.org/",
   "repository": {
     "type": "git",
     "url": "https://github.com/Yoctol/bottender.git"
   },
+  "version": "0.14.9",
+  "main": "lib/index.js",
+  "bin": {
+    "bottender": "bin/cli.js",
+    "btd": "bin/cli.js"
+  },
   "files": [
     "bin",
-    "lib",
     "express.js",
     "koa.js",
+    "lib",
     "micro.js",
     "restify.js",
     "test-utils.js",
     "utils.js"
   ],
-  "bin": {
-    "bottender": "bin/cli.js",
-    "btd": "bin/cli.js"
-  },
   "scripts": {
     "build": "npm run clean && babel src -d lib --ignore __tests__ --copy-files",
-    "clean": "rimraf lib",
     "check": "flow check",
+    "clean": "rimraf lib",
+    "precommit": "lint-staged",
     "lint": "eslint bin src scripts examples",
     "lint:fix": "npm run lint -- --fix",
     "lint:staged": "lint-staged",
-    "precommit": "lint-staged",
+    "prepublish": "npm run build",
     "test": "npm run lint:fix && npm run check && npm run testonly",
     "testonly": "jest",
     "testonly:cov": "jest --coverage --runInBand --forceExit",
     "testonly:watch": "jest --watch",
-    "preversion": "npm test",
-    "prepublish": "npm run build"
-  },
-  "devDependencies": {
-    "axios-mock-adapter": "^1.10.0",
-    "babel-cli": "^6.26.0",
-    "babel-eslint": "^8.0.3",
-    "babel-jest": "^21.2.0",
-    "babel-plugin-transform-class-properties": "^6.24.1",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-preset-env": "^1.6.1",
-    "babel-preset-flow": "^6.23.0",
-    "eslint": "^4.13.1",
-    "eslint-config-prettier": "^2.9.0",
-    "eslint-config-yoctol-base": "^0.14.1",
-    "eslint-plugin-flowtype": "^2.40.1",
-    "eslint-plugin-import": "^2.8.0",
-    "eslint-plugin-prettier": "^2.3.1",
-    "flow-bin": "^0.61.0",
-    "husky": "^0.14.3",
-    "jest": "^21.2.1",
-    "jest-junit": "^3.4.0",
-    "lint-staged": "^6.0.0",
-    "ngrok": "^2.2.24",
-    "prettier": "^1.9.2",
-    "rimraf": "^2.6.2",
-    "supertest": "^3.0.0"
+    "preversion": "npm test"
   },
   "dependencies": {
     "axios": "^0.17.1",
@@ -132,6 +92,47 @@
     "validate-npm-package-name": "^3.0.0",
     "warning": "^3.0.0"
   },
+  "devDependencies": {
+    "axios-mock-adapter": "^1.10.0",
+    "babel-cli": "^6.26.0",
+    "babel-eslint": "^8.0.3",
+    "babel-jest": "^21.2.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-flow": "^6.23.0",
+    "eslint": "^4.13.1",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-config-yoctol-base": "^0.14.1",
+    "eslint-plugin-flowtype": "^2.40.1",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-prettier": "^2.3.1",
+    "flow-bin": "^0.61.0",
+    "husky": "^0.14.3",
+    "jest": "^21.2.1",
+    "jest-junit": "^3.4.0",
+    "lint-staged": "^6.0.0",
+    "ngrok": "^2.2.24",
+    "prettier": "^1.9.2",
+    "prettier-package-json": "^1.4.0",
+    "rimraf": "^2.6.2",
+    "supertest": "^3.0.0"
+  },
+  "keywords": [
+    "bot",
+    "chatbot",
+    "framework",
+    "line",
+    "messaging",
+    "messenger",
+    "slack",
+    "telegram",
+    "viber"
+  ],
+  "engines": {
+    "node": ">=7.6"
+  },
+  "browser": "lib/browser.js",
   "jest": {
     "collectCoverageFrom": [
       "src/**/*.js"
@@ -167,6 +168,10 @@
   "lint-staged": {
     "*.js": [
       "eslint --fix",
+      "git add"
+    ],
+    "package.json": [
+      "prettier-package-json --write",
       "git add"
     ]
   }
