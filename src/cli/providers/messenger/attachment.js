@@ -151,7 +151,10 @@ export async function uploadAttachment(ctx) {
           // eslint-disable-next-line no-await-in-loop
           const data = await client.uploadAttachment(
             getFileType(name),
-            fs.createReadStream(name)
+            fs.createReadStream(name),
+            {
+              is_reusable: true,
+            }
           );
           jsonfile.writeFileSync(
             pathOfMappingFile,

@@ -10,9 +10,12 @@ beforeEach(() => {
   /* eslint-enable global-require */
 });
 
-function setup(
-  { client = {}, event = {}, session = {}, initialState = {} } = {}
-) {
+function setup({
+  client = {},
+  event = {},
+  session = {},
+  initialState = {},
+} = {}) {
   const context = new Context({
     client,
     event,

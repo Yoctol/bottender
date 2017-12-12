@@ -10,9 +10,7 @@ const middleware = verifyMessengerWebhook({ verifyToken: VERIFY_TOKEN });
 
 const createReqRes = ({ verifyToken }) => [
   {
-    url: `http://example.com/?hub.mode=subscribe&hub.verify_token=${
-      verifyToken
-    }&hub.challenge=chatbot%20is%20awesome`,
+    url: `http://example.com/?hub.mode=subscribe&hub.verify_token=${verifyToken}&hub.challenge=chatbot%20is%20awesome`,
   },
   {
     send: jest.fn(),
