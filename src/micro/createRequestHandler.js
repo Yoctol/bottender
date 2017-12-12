@@ -4,6 +4,7 @@ import parseUrlencoded from 'urlencoded-body-parser';
 import verifyLineSignature from './verifyLineSignature';
 import verifyMessengerSignature from './verifyMessengerSignature';
 import verifyMessengerWebhook from './verifyMessengerWebhook';
+import verifySlackSignature from './verifySlackSignature';
 import verifySlackWebhook from './verifySlackWebhook';
 
 function createRequestHandler(bot, config = {}) {
@@ -32,6 +33,11 @@ function createRequestHandler(bot, config = {}) {
           }
         } else if (bot.connector.platform === 'line') {
           const valid = await verifyLineSignature(bot)(req, res);
+          if (!valid) {
+            return;
+          }
+        } else if (bot.connector.platform === 'slack') {
+          const valid = await verifySlackSignature(bot)(req, res);
           if (!valid) {
             return;
           }

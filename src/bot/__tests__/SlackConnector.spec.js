@@ -1,10 +1,12 @@
 import { SlackOAuthClient } from 'messaging-api-slack';
+import warning from 'warning';
 
 import SlackConnector from '../SlackConnector';
 import SlackEvent from '../../context/SlackEvent';
 import SlackContext from '../../context/SlackContext';
 
 jest.mock('messaging-api-slack');
+jest.mock('warning');
 
 const accessToken = 'SLACK_accessTOKEN';
 
@@ -56,7 +58,7 @@ const interactiveMessageRequest = {
   },
 };
 
-function setup() {
+function setup({ verificationToken } = {}) {
   const mockSlackOAuthClient = {
     getUserInfo: jest.fn(),
     getConversationInfo: jest.fn(),
@@ -66,7 +68,7 @@ function setup() {
   SlackOAuthClient.connect = jest.fn();
   SlackOAuthClient.connect.mockReturnValue(mockSlackOAuthClient);
   return {
-    connector: new SlackConnector({ accessToken }),
+    connector: new SlackConnector({ accessToken, verificationToken }),
     mockSlackOAuthClient,
   };
 }
@@ -270,5 +272,27 @@ describe('#createContext', () => {
 
     expect(context).toBeDefined();
     expect(context).toBeInstanceOf(SlackContext);
+  });
+});
+
+describe('#verifySignature', () => {
+  it('should return true and show warning if verification token not set', () => {
+    const { connector } = setup();
+
+    const result = connector.verifySignature('signature');
+
+    expect(result).toBe(true);
+    expect(warning).toBeCalledWith(
+      false,
+      '`verificationToken` is not set. Will bypass Slack event verification.\nPass in `verificationToken` to perform Slack event verification.'
+    );
+  });
+
+  it('should return true if signature is equal to verification token', () => {
+    const { connector } = setup({ verificationToken: 'mytoken' });
+
+    const result = connector.verifySignature('mytoken');
+
+    expect(result).toBe(true);
   });
 });

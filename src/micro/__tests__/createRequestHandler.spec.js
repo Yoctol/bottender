@@ -5,12 +5,14 @@ import verifyMessengerWebhook from '../verifyMessengerWebhook';
 import verifySlackWebhook from '../verifySlackWebhook';
 import verifyLineSignature from '../verifyLineSignature';
 import verifyMessengerSignature from '../verifyMessengerSignature';
+import verifySlackSignature from '../verifySlackSignature';
 
 jest.mock('micro');
 jest.mock('../verifyMessengerWebhook');
 jest.mock('../verifySlackWebhook');
 jest.mock('../verifyLineSignature');
 jest.mock('../verifyMessengerSignature');
+jest.mock('../verifySlackSignature');
 
 function setup({ platform }) {
   const requestHandler = jest.fn();
@@ -161,6 +163,52 @@ it('should not send 200 if verifyLineSignature fail if platform is Line', async 
   const req = {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
+  };
+  const res = {};
+
+  await microRequestHandler(req, res);
+
+  expect(middleware).toBeCalled();
+  expect(micro.send).not.toBeCalled();
+});
+
+it('should call verifySlackSignature if platform is Slack', async () => {
+  const { bot, requestHandler } = setup({ platform: 'slack' });
+  const middleware = jest.fn();
+  middleware.mockReturnValue(Promise.resolve(true));
+  verifySlackSignature.mockReturnValue(middleware);
+  requestHandler.mockReturnValue(Promise.resolve());
+  micro.json.mockImplementationOnce(req => req.body);
+
+  const microRequestHandler = createRequestHandler(bot);
+
+  const req = {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: { token: 'mytoken' },
+  };
+  const res = {};
+
+  await microRequestHandler(req, res);
+
+  expect(middleware).toBeCalled();
+  expect(micro.send).toBeCalledWith(res, 200);
+});
+
+it('should not send 200 if verifySlackSignature fail and if platform is Slack', async () => {
+  const { bot, requestHandler } = setup({ platform: 'slack' });
+  const middleware = jest.fn();
+  middleware.mockReturnValue(Promise.resolve(false));
+  verifySlackSignature.mockReturnValue(middleware);
+  requestHandler.mockReturnValue(Promise.resolve());
+  micro.json.mockImplementationOnce(req => req.body);
+
+  const microRequestHandler = createRequestHandler(bot);
+
+  const req = {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: { token: 'mytoken' },
   };
   const res = {};
 
