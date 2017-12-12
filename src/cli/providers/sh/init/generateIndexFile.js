@@ -73,6 +73,9 @@ export default function generateIndexFile(answer) {
     case 'telegram':
       dependencies.push('TelegramBot');
       break;
+    case 'viber':
+      dependencies.push('ViberBot');
+      break;
     case 'console':
     default:
       dependencies.push('ConsoleBot');
