@@ -23,3 +23,4 @@ For more information, check our [LINE guides](https://bottender.js.org/docs/Plat
 * [console-hello-world](../console-hello-world)
 * [slack-hello-world](../slack-hello-world)
 * [telegram-hello-world](../telegram-hello-world)
+* [viber-hello-world](../viber-hello-world)
