@@ -45,7 +45,7 @@ You can find the Bottender documentation on the website.
   * [LINE](https://bottender.js.org/docs/Platforms-LINE)
   * [Slack](https://bottender.js.org/docs/Platforms-Slack)
   * [Telegram](https://bottender.js.org/docs/Platforms-Telegram)
-  * Viber
+  * [Viber](https://bottender.js.org/docs/Platforms-Viber)
 * [Guides](https://bottender.js.org/docs/Guides-Commands)
 * [API Reference](https://bottender.js.org/docs/APIReference-Context)
 
