@@ -195,7 +195,7 @@ it('should call verifySlackSignature if platform is Slack', async () => {
   expect(micro.send).toBeCalledWith(res, 200);
 });
 
-it('should not send 200 if verifySlackSignature fail if platform is Slack', async () => {
+it('should not send 200 if verifySlackSignature fail and if platform is Slack', async () => {
   const { bot, requestHandler } = setup({ platform: 'slack' });
   const middleware = jest.fn();
   middleware.mockReturnValue(Promise.resolve(false));
