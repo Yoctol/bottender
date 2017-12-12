@@ -44,7 +44,7 @@ class MessengerContext extends Context implements PlatformContext {
   }
 
   get accessToken(): ?string {
-    return this._customAccessToken || this._client._accessToken; // FIXME
+    return this._customAccessToken || this._client.accessToken;
   }
 
   /**

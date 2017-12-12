@@ -1960,9 +1960,9 @@ eslint-module-utils@^2.1.1:
     debug "^2.6.8"
     pkg-dir "^1.0.0"
 
-eslint-plugin-flowtype@^2.39.1:
-  version "2.39.1"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-flowtype/-/eslint-plugin-flowtype-2.39.1.tgz#b5624622a0388bcd969f4351131232dcb9649cd5"
+eslint-plugin-flowtype@^2.40.1:
+  version "2.40.1"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-flowtype/-/eslint-plugin-flowtype-2.40.1.tgz#f78a8e6a4cc6da831dd541eb61e803ff0279b796"
   dependencies:
     lodash "^4.15.0"
 
@@ -1999,9 +1999,9 @@ eslint-scope@^3.7.1:
     esrecurse "^4.1.0"
     estraverse "^4.1.1"
 
-eslint@^4.12.1:
-  version "4.12.1"
-  resolved "https://registry.yarnpkg.com/eslint/-/eslint-4.12.1.tgz#5ec1973822b4a066b353770c3c6d69a2a188e880"
+eslint@^4.13.1:
+  version "4.13.1"
+  resolved "https://registry.yarnpkg.com/eslint/-/eslint-4.13.1.tgz#0055e0014464c7eb7878caf549ef2941992b444f"
   dependencies:
     ajv "^5.3.0"
     babel-code-frame "^6.22.0"
@@ -2336,9 +2336,9 @@ flexbuffer@0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/flexbuffer/-/flexbuffer-0.0.6.tgz#039fdf23f8823e440c38f3277e6fef1174215b30"
 
-flow-bin@^0.60.1:
-  version "0.60.1"
-  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.60.1.tgz#0f4fa7b49be2a916f18cd946fc4a51e32ffe4b48"
+flow-bin@^0.61.0:
+  version "0.61.0"
+  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.61.0.tgz#d0473a8c35dbbf4de573823f4932124397d32d35"
 
 follow-redirects@^1.2.3:
   version "1.2.4"
@@ -2412,9 +2412,9 @@ fresh@0.5.2, fresh@^0.5.2:
   version "0.5.2"
   resolved "https://registry.yarnpkg.com/fresh/-/fresh-0.5.2.tgz#3d8cadd90d976569fa835ab1f8e4b23a105605a7"
 
-fs-extra@^4.0.2:
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-4.0.2.tgz#f91704c53d1b461f893452b0c307d9997647ab6b"
+fs-extra@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-5.0.0.tgz#414d0110cdd06705734d055652c5411260c31abd"
   dependencies:
     graceful-fs "^4.1.2"
     jsonfile "^4.0.0"
@@ -3274,9 +3274,9 @@ jest-jasmine2@^21.2.1:
     jest-snapshot "^21.2.1"
     p-cancelable "^0.3.0"
 
-jest-junit@^3.3.0:
-  version "3.3.0"
-  resolved "https://registry.yarnpkg.com/jest-junit/-/jest-junit-3.3.0.tgz#473b8c00d171a84a61ad6e456a29936ee0b64f40"
+jest-junit@^3.4.0:
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/jest-junit/-/jest-junit-3.4.0.tgz#a12d0a61c1fa401376ccf95ec907c50c96d497dc"
   dependencies:
     mkdirp "^0.5.1"
     strip-ansi "^4.0.0"
@@ -3919,18 +3919,18 @@ merge@^1.1.3:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/merge/-/merge-1.2.0.tgz#7531e39d4949c281a66b8c5a6e0265e8b05894da"
 
-messaging-api-line@^0.5.16:
-  version "0.5.16"
-  resolved "https://registry.yarnpkg.com/messaging-api-line/-/messaging-api-line-0.5.16.tgz#462f4dea99ba72fa1caabb62102a1978bda12caf"
+messaging-api-line@^0.6.1:
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/messaging-api-line/-/messaging-api-line-0.6.1.tgz#e567d255354164465be5296b048fccacbe598109"
   dependencies:
     axios "^0.17.0"
     axios-error "^0.5.4"
     image-type "^3.0.0"
     warning "^3.0.0"
 
-messaging-api-messenger@^0.5.16:
-  version "0.5.16"
-  resolved "https://registry.yarnpkg.com/messaging-api-messenger/-/messaging-api-messenger-0.5.16.tgz#795d810c46e05d2c5fcfed77ccb0d891318aa464"
+messaging-api-messenger@^0.6.3:
+  version "0.6.3"
+  resolved "https://registry.yarnpkg.com/messaging-api-messenger/-/messaging-api-messenger-0.6.3.tgz#de7b120cf3b70014367c402a1dbea7e5de0d6a66"
   dependencies:
     axios "^0.17.0"
     axios-error "^0.5.4"
@@ -3940,30 +3940,26 @@ messaging-api-messenger@^0.5.16:
     lodash.omit "^4.5.0"
     warning "^3.0.0"
 
-messaging-api-slack@^0.5.16:
-  version "0.5.16"
-  resolved "https://registry.yarnpkg.com/messaging-api-slack/-/messaging-api-slack-0.5.16.tgz#7b6dfb78372789802074ebd28e02cf3031d11284"
+messaging-api-slack@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/messaging-api-slack/-/messaging-api-slack-0.6.0.tgz#8e379a1bbf6ab937f0923922463fec4a0a8133a4"
   dependencies:
     axios "^0.17.0"
     axios-error "^0.5.4"
-    invariant "^2.2.2"
-    warning "^3.0.0"
 
-messaging-api-telegram@^0.5.16:
-  version "0.5.16"
-  resolved "https://registry.yarnpkg.com/messaging-api-telegram/-/messaging-api-telegram-0.5.16.tgz#d002435c423a672910a64e424afab6dcf816f390"
+messaging-api-telegram@^0.6.2:
+  version "0.6.2"
+  resolved "https://registry.yarnpkg.com/messaging-api-telegram/-/messaging-api-telegram-0.6.2.tgz#aa3663eb9a458d145e119fd383047557bd588bd0"
   dependencies:
     axios "^0.17.0"
     axios-error "^0.5.4"
-    warning "^3.0.0"
 
-messaging-api-viber@^0.5.16:
-  version "0.5.16"
-  resolved "https://registry.yarnpkg.com/messaging-api-viber/-/messaging-api-viber-0.5.16.tgz#f002977d947337addfd96f9c93dc313040b7a38c"
+messaging-api-viber@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/messaging-api-viber/-/messaging-api-viber-0.6.0.tgz#7f61818cdaeb21b79ae17f173e29c95d7057a174"
   dependencies:
     axios "^0.17.0"
     axios-error "^0.5.4"
-    warning "^3.0.0"
 
 methods@^1.0.1, methods@^1.1.1, methods@~1.1.2:
   version "1.1.2"
@@ -4538,9 +4534,9 @@ preserve@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/preserve/-/preserve-0.2.0.tgz#815ed1f6ebc65926f865b310c0713bcb3315ce4b"
 
-prettier@^1.8.2:
-  version "1.8.2"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.8.2.tgz#bff83e7fd573933c607875e5ba3abbdffb96aeb8"
+prettier@^1.9.2:
+  version "1.9.2"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.9.2.tgz#96bc2132f7a32338e6078aeb29727178c6335827"
 
 pretty-format@^21.1.0:
   version "21.1.0"

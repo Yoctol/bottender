@@ -7,9 +7,10 @@ import Bot from './Bot';
 import ConsoleConnector from './ConsoleConnector';
 
 export default class ConsoleBot extends Bot {
-  constructor(
-    { sessionStore, sync }: { sessionStore: SessionStore, sync?: boolean } = {}
-  ) {
+  constructor({
+    sessionStore,
+    sync,
+  }: { sessionStore: SessionStore, sync?: boolean } = {}) {
     const connector = new ConsoleConnector();
     super({ connector, sessionStore, sync });
   }

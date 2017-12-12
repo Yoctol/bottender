@@ -24,9 +24,7 @@ const getWebhookFromNgrok = async () => {
 
 const _getClientToken = async (clientId, clientSecret) => {
   const res = await client.get(
-    `/oauth/access_token?client_id=${clientId}&client_secret=${
-      clientSecret
-    }&grant_type=client_credentials`
+    `/oauth/access_token?client_id=${clientId}&client_secret=${clientSecret}&grant_type=client_credentials`
   );
   return res.data.access_token;
 };
