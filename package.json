@@ -77,6 +77,7 @@
     "minimist": "^1.2.0",
     "mongodb": "^2.2.33",
     "p-map": "^1.2.0",
+    "p-props": "^1.1.0",
     "pascal-case": "^2.0.1",
     "pkg-dir": "^2.0.0",
     "prompt-confirm": "^1.2.0",
