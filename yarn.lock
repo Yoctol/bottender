@@ -4530,6 +4530,10 @@ p-map@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/p-map/-/p-map-1.2.0.tgz#e4e94f311eabbc8633a1e79908165fca26241b6b"
 
+p-props@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/p-props/-/p-props-1.1.0.tgz#8e6a5af26cca539f3ff9a9fb162c629405b2e8a8"
+
 package-json@^4.0.0:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/package-json/-/package-json-4.0.1.tgz#8869a0401253661c4c4ca3da6c2121ed555f5eed"

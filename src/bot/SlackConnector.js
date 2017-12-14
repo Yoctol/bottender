@@ -3,6 +3,7 @@ import crypto from 'crypto';
 
 import { SlackOAuthClient } from 'messaging-api-slack';
 import warning from 'warning';
+import pProps from 'p-props';
 
 import SlackContext from '../context/SlackContext';
 import SlackEvent, {
@@ -117,12 +118,8 @@ export default class SlackConnector implements Connector<SlackRequestBody> {
       return;
     }
 
-    const sender = await this._client.getUserInfo(senderId);
-    // FIXME: refine user
-    session.user = {
-      id: senderId,
-      _updatedAt: new Date().toISOString(),
-      ...sender,
+    const promises: Object = {
+      sender: this._client.getUserInfo(senderId),
     };
 
     // TODO: check join or leave events?
@@ -132,11 +129,10 @@ export default class SlackConnector implements Connector<SlackRequestBody> {
         Array.isArray(session.channel.members) &&
         session.channel.members.indexOf(senderId) < 0)
     ) {
-      session.channel = await this._client.getConversationInfo(channelId);
-      session.channel.members = await this._client.getAllConversationMembers(
+      promises.channel = this._client.getConversationInfo(channelId);
+      promises.channelMembers = this._client.getAllConversationMembers(
         channelId
       );
-      session.channel._updatedAt = new Date().toISOString();
     }
 
     // TODO: how to know if user leave team?
@@ -147,24 +143,32 @@ export default class SlackConnector implements Connector<SlackRequestBody> {
         Array.isArray(session.team.members) &&
         session.team.members.indexOf(senderId) < 0)
     ) {
-      const allUsers = await this._client.getAllUserList();
-      session.team = {
-        members: allUsers,
+      promises.allUsers = this._client.getAllUserList();
+    }
+
+    const results = await pProps(promises);
+
+    // FIXME: refine user
+    session.user = {
+      id: senderId,
+      _updatedAt: new Date().toISOString(),
+      ...results.sender,
+    };
+    Object.freeze(session.user);
+    Object.defineProperty(session, 'user', {
+      configurable: false,
+      enumerable: true,
+      writable: false,
+      value: session.user,
+    });
+
+    if (promises.channel) {
+      session.channel = {
+        ...results.channel,
+        members: results.channelMembers,
         _updatedAt: new Date().toISOString(),
       };
-    }
 
-    if (session.user) {
-      Object.freeze(session.user);
-      Object.defineProperty(session, 'user', {
-        configurable: false,
-        enumerable: true,
-        writable: false,
-        value: session.user,
-      });
-    }
-
-    if (session.channel) {
       Object.freeze(session.channel);
       Object.defineProperty(session, 'channel', {
         configurable: false,
@@ -174,7 +178,12 @@ export default class SlackConnector implements Connector<SlackRequestBody> {
       });
     }
 
-    if (session.team) {
+    if (promises.allUsers) {
+      session.team = {
+        members: results.allUsers,
+        _updatedAt: new Date().toISOString(),
+      };
+
       Object.freeze(session.team);
       Object.defineProperty(session, 'team', {
         configurable: false,
