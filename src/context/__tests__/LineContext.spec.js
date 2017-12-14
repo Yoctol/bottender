@@ -37,6 +37,21 @@ const userSession = {
     id: 'fakeUserId',
   },
 };
+
+const roomSession = {
+  type: 'room',
+  room: {
+    id: 'fakeRoomId',
+  },
+};
+
+const groupSession = {
+  type: 'group',
+  group: {
+    id: 'fakeGroupId',
+  },
+};
+
 const setup = ({ session } = { session: userSession }) => {
   const client = {
     reply: jest.fn(),
@@ -55,6 +70,8 @@ const setup = ({ session } = { session: userSession }) => {
     getLinkedRichMenu: jest.fn(),
     linkRichMenu: jest.fn(),
     unlinkRichMenu: jest.fn(),
+    leaveGroup: jest.fn(),
+    leaveRoom: jest.fn(),
   };
   const context = new LineContext({
     client,
@@ -96,6 +113,48 @@ it('get #event works', () => {
 it('get #client works', () => {
   const { context, client } = setup();
   expect(context.client).toBe(client);
+});
+
+describe('#leave', () => {
+  it('not leave no session', async () => {
+    const { context, client } = setup({ session: null });
+
+    await context.leave();
+
+    expect(client.leaveGroup).not.toBeCalled();
+    expect(client.leaveRoom).not.toBeCalled();
+    expect(warning).toBeCalled();
+    expect(context.isHandled).toBe(false);
+  });
+
+  it('leave group', async () => {
+    const { context, client } = setup({ session: groupSession });
+
+    await context.leave();
+
+    expect(client.leaveGroup).toBeCalledWith('fakeGroupId');
+    expect(context.isHandled).toBe(true);
+  });
+
+  it('leave room', async () => {
+    const { context, client } = setup({ session: roomSession });
+
+    await context.leave();
+
+    expect(client.leaveRoom).toBeCalledWith('fakeRoomId');
+    expect(context.isHandled).toBe(true);
+  });
+
+  it('not leave user', async () => {
+    const { context, client } = setup({ session: userSession });
+
+    await context.leave();
+
+    expect(client.leaveGroup).not.toBeCalled();
+    expect(client.leaveRoom).not.toBeCalled();
+    expect(warning).toBeCalled();
+    expect(context.isHandled).toBe(false);
+  });
 });
 
 describe('#reply', () => {

@@ -74,6 +74,31 @@ class LineContext extends Context implements PlatformContext {
   }
 
   /**
+   * Leave room or group depending on type of the session.
+   *
+   */
+  async leave(): Promise<any> {
+    if (!this._session) {
+      warning(false, 'leave: should not be called in context without session');
+      return;
+    }
+
+    switch (this._session.type) {
+      case 'room':
+        this._isHandled = true;
+        return this._client.leaveRoom(this._session.room.id);
+      case 'group':
+        this._isHandled = true;
+        return this._client.leaveGroup(this._session.group.id);
+      default:
+        warning(
+          false,
+          'leave: should not be called in context which is not room or group session'
+        );
+    }
+  }
+
+  /**
    * Gets the ID of the rich menu linked to the user.
    *
    */
