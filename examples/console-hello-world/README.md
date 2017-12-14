@@ -22,3 +22,4 @@ It shows how to build a most basic console bot.
 * [line-hello-world](../line-hello-world)
 * [slack-hello-world](../slack-hello-world)
 * [telegram-hello-world](../telegram-hello-world)
+* [viber-hello-world](../viber-hello-world)

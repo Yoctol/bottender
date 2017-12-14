@@ -24,3 +24,4 @@ This example shows how to combine
 * [messenger-builder](../messenger-builder)
 * [slack-builder](../slack-builder)
 * [telegram-builder](../telegram-builder)
+* [viber-builder](../viber-builder)

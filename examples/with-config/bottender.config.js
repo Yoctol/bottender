@@ -71,5 +71,8 @@ module.exports = {
     accessToken: '__PUT_YOUR_ACCESS_TOKEN_HERE__',
     verificationToken: '__FILL_YOUR_VERIFICATION_TOKEN_HERE__',
   },
+  viber: {
+    accessToken: '__PUT_YOUR_ACCESS_TOKEN_HERE__',
+  },
   ngrok: true,
 };

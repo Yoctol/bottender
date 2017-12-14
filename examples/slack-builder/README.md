@@ -25,3 +25,4 @@ For more information, check our [Slack guides](https://bottender.js.org/docs/Pla
 * [messenger-builder](../messenger-builder)
 * [line-builder](../line-builder)
 * [telegram-builder](../telegram-builder)
+* [viber-builder](../viber-builder)
