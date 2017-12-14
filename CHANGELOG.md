@@ -1,3 +1,48 @@
+0.14.10 / 2017-12-14
+====================
+
+Introducing Viber Support to Bottender!
+
+![](https://user-images.githubusercontent.com/3382565/31753411-0be75dfc-b456-11e7-9eea-b976d21fcc53.png)
+
+```js
+const { ViberBot } = require('bottender');
+const { createServer } = require('bottender/express');
+
+const bot = new ViberBot({
+  accessToken: '__FILL_YOUR_TOKEN_HERE__',
+});
+
+bot.onEvent(async context => {
+  if (context.event.isMessage) {
+    await context.sendText('Hello World');
+  }
+});
+
+const server = createServer(bot);
+
+server.listen(5000, () => {
+  console.log('server is running on 5000 port...');
+});
+```
+
+See [viber-hello-world](https://github.com/Yoctol/bottender/tree/master/examples/viber-hello-world) for more details.
+
+- [new] Add `update-notifier` in CLI [#99](https://github.com/Yoctol/bottender/pull/99)
+- [deps] Update messaging API clients to `v0.6.x`.
+
+### messenger
+- [fix] Fix domain whitelisting usage
+- [fix] Check messenger menu item length [#71](https://github.com/Yoctol/bottender/pull/71)
+
+### line
+- [fix] Handle LINE webhook verify request in LineConnector [#100](https://github.com/Yoctol/bottender/pull/100)
+
+### slack
+- [new] Add Slack signature validation [#94](https://github.com/Yoctol/bottender/pull/94)
+- [improve] Let slack connector handle promises parallelly [#105](https://github.com/Yoctol/bottender/pull/105)
+
+
 0.14.9 / 2017-12-06
 ===================
 - [new] Add referral getters for `MessengerEvent`:
