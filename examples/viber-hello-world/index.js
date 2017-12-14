@@ -1,6 +1,5 @@
-require('babel-register');
-const { ViberBot } = require('../../src');
-const { createServer } = require('../../src/express');
+const { ViberBot } = require('bottender');
+const { createServer } = require('bottender/express');
 
 const bot = new ViberBot({
   accessToken: '__FILL_YOUR_TOKEN_HERE__',

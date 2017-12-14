@@ -1,6 +1,5 @@
 {
   "dependencies": {
-    "babel-register": "^6.26.0",
     "bottender": "latest"
   },
   "devDependencies": {
