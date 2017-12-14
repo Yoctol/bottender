@@ -1,4 +1,4 @@
-import { TelegramClient } from 'messaging-api-telegram';
+import { ViberClient } from 'messaging-api-viber';
 import axios from 'axios';
 import get from 'lodash/get';
 import invariant from 'invariant';
@@ -17,38 +17,13 @@ const getWebhookFromNgrok = async () => {
   return get(res, 'data.tunnels[1].public_url'); // tunnels[1] return `https` protocol
 };
 
-export async function getWebhook() {
+export async function setWebhook(_webhook, eventTypes = []) {
   try {
-    const { accessToken } = getConfig('bottender.config.js', 'telegram');
+    const { accessToken } = getConfig('bottender.config.js', 'viber');
 
     invariant(accessToken, '`accessToken` is not found in config file');
 
-    const client = TelegramClient.connect(accessToken);
-    const { data: { ok, result } } = await client.getWebhookInfo();
-    invariant(ok, 'Getting Telegram webhook is failed');
-
-    Object.keys(result).forEach(key => print(`${key}: ${result[key]}`));
-  } catch (err) {
-    error('Failed to get Telegram webhook');
-    if (err.response) {
-      error(`status: ${bold(err.response.status)}`);
-      if (err.response.data) {
-        error(`data: ${bold(JSON.stringify(err.response.data, null, 2))}`);
-      }
-    } else {
-      error(err.message);
-    }
-    return process.exit(1);
-  }
-}
-
-export async function setWebhook(_webhook) {
-  try {
-    const { accessToken } = getConfig('bottender.config.js', 'telegram');
-
-    invariant(accessToken, '`accessToken` is not found in config file');
-
-    const client = TelegramClient.connect(accessToken);
+    const client = ViberClient.connect(accessToken);
     const webhook = _webhook || (await getWebhookFromNgrok());
 
     invariant(
@@ -56,12 +31,11 @@ export async function setWebhook(_webhook) {
       '`webhook` is required but not found. Use -w <webhook> to setup or make sure you are running ngrok server.'
     );
 
-    const { data: { ok } } = await client.setWebhook(webhook);
-    invariant(ok, 'Setting for webhook is failed');
+    await client.setWebhook(webhook, eventTypes);
 
-    print('Successfully set Telegram webhook callback URL');
+    print('Successfully set Viber webhook callback URL');
   } catch (err) {
-    error('Failed to set Telegram webhook');
+    error('Failed to set Viber webhook');
     if (err.response) {
       error(`status: ${bold(err.response.status)}`);
       if (err.response.data) {
@@ -76,17 +50,17 @@ export async function setWebhook(_webhook) {
 
 export async function deleteWebhook() {
   try {
-    const { accessToken } = getConfig('bottender.config.js', 'telegram');
+    const { accessToken } = getConfig('bottender.config.js', 'viber');
 
     invariant(accessToken, '`accessToken` is not found in config file');
 
-    const client = TelegramClient.connect(accessToken);
-    const { data: { ok } } = await client.deleteWebhook();
-    invariant(ok, 'Deleting Telegram webhook is failed');
+    const client = ViberClient.connect(accessToken);
 
-    print('Successfully delete Telegram webhook');
+    await client.removeWebhook();
+
+    print('Successfully delete Viber webhook');
   } catch (err) {
-    error('Failed to delete Telegram webhook');
+    error('Failed to delete Viber webhook');
     if (err.response) {
       error(`status: ${bold(err.response.status)}`);
       if (err.response.data) {
@@ -103,12 +77,16 @@ export default async function main(ctx) {
   const subcommand = ctx.argv._[2];
 
   switch (subcommand) {
-    case 'get':
-      await getWebhook();
-      break;
     case 'set': {
       const webhook = ctx.argv.w;
-      await setWebhook(webhook);
+
+      if (typeof ctx.argv.e === 'string') {
+        const eventTypes = ctx.argv.e.split(',');
+        await setWebhook(webhook, eventTypes);
+      } else {
+        await setWebhook(webhook);
+      }
+
       break;
     }
     case 'delete':
@@ -116,7 +94,7 @@ export default async function main(ctx) {
       await deleteWebhook();
       break;
     default:
-      error(`Please specify a valid subcommand: get, set, delete`);
+      error(`Please specify a valid subcommand: set, delete`);
       help();
   }
 }

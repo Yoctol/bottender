@@ -4,6 +4,7 @@ jest.mock('../sh');
 jest.mock('../messenger');
 jest.mock('../telegram');
 jest.mock('../line');
+jest.mock('../viber');
 
 describe('providers', () => {
   it('should exist', () => {
@@ -28,5 +29,10 @@ describe('providers', () => {
   it('should return line', () => {
     const line = require('../line').default;
     expect(providers.line).toEqual(line);
+  });
+
+  it('should return viber', () => {
+    const viber = require('../viber').default;
+    expect(providers.viber).toEqual(viber);
   });
 });

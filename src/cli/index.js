@@ -18,6 +18,7 @@ const main = async argv => {
     case 'messenger':
     case 'telegram':
     case 'line':
+    case 'viber':
       providerName = argv._[0];
       subcommand = argv._[1];
       break;

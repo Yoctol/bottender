@@ -2,7 +2,7 @@ import chalk from 'chalk';
 
 const help = () => {
   console.log(`
-    bottender telegram <command> <action> [options]
+    bottender viber <command> <action> [options]
 
     ${chalk.dim('Commands:')}
 
@@ -10,19 +10,21 @@ const help = () => {
 
     ${chalk.dim('Actions:')}
 
-      get                   Get the webhook information
       set                   Set the property you request
       del, delete           Delete the webhook
 
     ${chalk.dim('Options:')}
 
       -w                    Webhook callback URL
+      -e                    The types of Viber events. Seperate events by comma (e.g. delivered,seen)
 
     ${chalk.dim('Examples:')}
 
-    ${chalk.dim('-')} Set telegram webhook
+    ${chalk.dim('-')} Set viber webhook
 
-      ${chalk.cyan('$ bottender telegram webhook set -w http://example.com')}
+      ${chalk.cyan(
+        '$ bottender viber webhook set -w http://example.com -e delivered,seen'
+      )}
   `);
 };
 
