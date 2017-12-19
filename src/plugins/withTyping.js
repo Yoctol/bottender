@@ -101,14 +101,18 @@ export default options => context => {
       const _method = context[method];
       /* eslint-disable func-names */
       context[method] = async function(...args) {
-        const methodOptions = args[len - 2] || {};
+        const methodOptions = args[len - 1];
 
         const delay =
+          methodOptions &&
+          typeof methodOptions === 'object' &&
           typeof methodOptions.delay === 'number'
             ? methodOptions.delay
             : options.delay;
 
-        args[len - 2] = omit(methodOptions, ['delay']);
+        if (methodOptions) {
+          args[len - 1] = omit(methodOptions, ['delay']);
+        }
 
         if (this.typingOn) {
           await this.typingOn();
@@ -122,9 +126,7 @@ export default options => context => {
       context[`${method}WithDelay`] = async function(delay, ...args) {
         warning(
           false,
-          `\`${method}WithDelay\` is deprecated. Use ${
-            methods[i]
-          } with \`options.delay\` instead`
+          `\`${method}WithDelay\` is deprecated. Use ${method} with \`options.delay\` instead`
         );
         if (this.typingOn) {
           await this.typingOn();
