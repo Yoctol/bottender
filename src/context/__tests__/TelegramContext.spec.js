@@ -24,6 +24,8 @@ const createMockTelegramClient = () => ({
   sendSticker: jest.fn(),
   sendVideo: jest.fn(),
   sendVoice: jest.fn(),
+  sendVideoNote: jest.fn(),
+  sendMediaGroup: jest.fn(),
   sendLocation: jest.fn(),
   sendVenue: jest.fn(),
   sendContact: jest.fn(),
@@ -256,6 +258,48 @@ describe('#sendVoice', () => {
     const { context } = setup();
 
     await context.sendVoice('xxx.ogg');
+
+    expect(context.isHandled).toBe(true);
+  });
+});
+
+describe('#sendVideoNote', () => {
+  it('should call client.sendVideoNote', async () => {
+    const { context, client, session } = setup();
+
+    await context.sendVideoNote('xxx.mp4');
+
+    expect(client.sendVideoNote).toBeCalledWith(session.user.id, 'xxx.mp4');
+  });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    await context.sendVideoNote('xxx.mp4');
+
+    expect(context.isHandled).toBe(true);
+  });
+});
+
+describe('#sendMediaGroup', () => {
+  it('should call client.sendMediaGroup', async () => {
+    const { context, client, session } = setup();
+
+    await context.sendMediaGroup([
+      { type: 'photo', media: 'BQADBAADApYAAgcZZAfj2-xeidueWwI' },
+    ]);
+
+    expect(client.sendMediaGroup).toBeCalledWith(session.user.id, [
+      { type: 'photo', media: 'BQADBAADApYAAgcZZAfj2-xeidueWwI' },
+    ]);
+  });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    await context.sendMediaGroup([
+      { type: 'photo', media: 'BQADBAADApYAAgcZZAfj2-xeidueWwI' },
+    ]);
 
     expect(context.isHandled).toBe(true);
   });

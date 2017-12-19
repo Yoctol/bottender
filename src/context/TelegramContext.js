@@ -72,6 +72,7 @@ const sendMethods = [
   'sendVideo',
   'sendVoice',
   'sendVideoNote',
+  'sendMediaGroup',
   'sendLocation',
   'sendVenue',
   'sendContact',
