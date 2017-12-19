@@ -115,7 +115,7 @@ class ContextSimulator {
 
       isHandled: false,
 
-      sendState: this._mockFn(),
+      setState: this._mockFn(),
       resetState: this._mockFn(),
       sendText: this._mockFn(),
       typing: this._mockFn(),
