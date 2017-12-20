@@ -406,7 +406,7 @@ describe('#sendInvoice', () => {
       { label: 'tax', amount: 11000 },
     ],
   };
-  it('should to call client.Invoice', async () => {
+  it('should to call client.sendInvoice', async () => {
     const { context, client, session } = setup();
 
     await context.sendInvoice(invoice);
@@ -424,7 +424,7 @@ describe('#sendInvoice', () => {
 });
 
 describe('#sendGame', () => {
-  it('should to call client.Invoice', async () => {
+  it('should to call client.sendGame', async () => {
     const { context, client, session } = setup();
 
     await context.sendGame('Mario Bros.');
@@ -442,7 +442,7 @@ describe('#sendGame', () => {
 });
 
 describe('#setGameScore', () => {
-  it('should to call client.Invoice', async () => {
+  it('should to call client.setGameScore', async () => {
     const { context, client, session } = setup();
 
     await context.setGameScore(999);
@@ -460,7 +460,7 @@ describe('#setGameScore', () => {
 });
 
 describe('#getGameHighScores', () => {
-  it('should to call client.Invoice', async () => {
+  it('should to call client.getGameHighScores', async () => {
     const { context, client, session } = setup();
 
     const response = {
