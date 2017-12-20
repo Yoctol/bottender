@@ -30,6 +30,10 @@ const createMockTelegramClient = () => ({
   sendVenue: jest.fn(),
   sendContact: jest.fn(),
   sendChatAction: jest.fn(),
+  sendInvoice: jest.fn(),
+  sendGame: jest.fn(),
+  setGameScore: jest.fn(),
+  getGameHighScores: jest.fn(),
 });
 
 const rawEvent = {
@@ -384,6 +388,108 @@ describe('#sendChatAction', () => {
     const { context } = setup();
 
     await context.sendChatAction('typing');
+
+    expect(context.isHandled).toBe(true);
+  });
+});
+
+describe('#sendInvoice', () => {
+  const invoice = {
+    title: 'product name',
+    description: 'product description',
+    payload: 'bot-defined invoice payload',
+    provider_token: 'PROVIDER_TOKEN',
+    start_parameter: 'pay',
+    currency: 'USD',
+    prices: [
+      { label: 'product', amount: 11000 },
+      { label: 'tax', amount: 11000 },
+    ],
+  };
+  it('should to call client.Invoice', async () => {
+    const { context, client, session } = setup();
+
+    await context.sendInvoice(invoice);
+
+    expect(client.sendInvoice).toBeCalledWith(session.user.id, invoice);
+  });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    await context.sendInvoice(invoice);
+
+    expect(context.isHandled).toBe(true);
+  });
+});
+
+describe('#sendGame', () => {
+  it('should to call client.Invoice', async () => {
+    const { context, client, session } = setup();
+
+    await context.sendGame('Mario Bros.');
+
+    expect(client.sendGame).toBeCalledWith(session.user.id, 'Mario Bros.');
+  });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    await context.sendGame('Mario Bros.');
+
+    expect(context.isHandled).toBe(true);
+  });
+});
+
+describe('#setGameScore', () => {
+  it('should to call client.Invoice', async () => {
+    const { context, client, session } = setup();
+
+    await context.setGameScore(999);
+
+    expect(client.setGameScore).toBeCalledWith(session.user.id, 999);
+  });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    await context.setGameScore(999);
+
+    expect(context.isHandled).toBe(true);
+  });
+});
+
+describe('#getGameHighScores', () => {
+  it('should to call client.Invoice', async () => {
+    const { context, client, session } = setup();
+
+    const response = {
+      ok: true,
+      result: [
+        {
+          position: 1,
+          user: {
+            id: 427770117,
+            is_bot: false,
+            first_name: 'first',
+          },
+          score: 999,
+        },
+      ],
+    };
+
+    client.getGameHighScores.mockReturnValue(Promise.resolve(response));
+
+    const result = await context.getGameHighScores();
+
+    expect(client.getGameHighScores).toBeCalledWith(session.user.id);
+    expect(result).toEqual(response);
+  });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    await context.getGameHighScores();
 
     expect(context.isHandled).toBe(true);
   });
