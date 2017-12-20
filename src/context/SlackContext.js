@@ -66,8 +66,8 @@ export default class SlackContext extends Context implements PlatformContext {
    * Send text to the owner of then session.
    *
    */
-  sendText(text: string): Promise<any> {
-    return this.postMessage(text);
+  sendText(text: string, options?: {}): Promise<any> {
+    return this.postMessage(text, options);
   }
 
   // FIXME: this is to fix type checking
