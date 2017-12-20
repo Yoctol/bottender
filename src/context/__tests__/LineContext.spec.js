@@ -231,7 +231,7 @@ describe('#sendText', () => {
 
   it('should work with room session', async () => {
     const { context, client, session } = setup({
-      session: { type: 'room', room: { id: 'room' } },
+      session: roomSession,
     });
 
     await context.sendText('xxx.com');
@@ -241,7 +241,7 @@ describe('#sendText', () => {
 
   it('should work with group session', async () => {
     const { context, client, session } = setup({
-      session: { type: 'group', group: { id: 'group' } },
+      session: groupSession,
     });
 
     await context.sendText('xxx.com');
@@ -289,7 +289,7 @@ describe('#pushText', () => {
 
   it('should work with room session', async () => {
     const { context, client, session } = setup({
-      session: { type: 'room', room: { id: 'room' } },
+      session: roomSession,
     });
 
     await context.pushText('xxx.com');
@@ -299,7 +299,7 @@ describe('#pushText', () => {
 
   it('should work with group session', async () => {
     const { context, client, session } = setup({
-      session: { type: 'group', group: { id: 'group' } },
+      session: groupSession,
     });
 
     await context.pushText('xxx.com');
@@ -340,7 +340,7 @@ describe('#sendImage', () => {
 
   it('should work with room session', async () => {
     const { context, client, session } = setup({
-      session: { type: 'room', room: { id: 'room' } },
+      session: roomSession,
     });
 
     await context.sendImage('xxx.jpg', 'yyy.jpg');
@@ -354,7 +354,7 @@ describe('#sendImage', () => {
 
   it('should work with group session', async () => {
     const { context, client, session } = setup({
-      session: { type: 'group', group: { id: 'group' } },
+      session: groupSession,
     });
 
     await context.sendImage('xxx.jpg', 'yyy.jpg');
@@ -395,7 +395,7 @@ describe('#sendAudio', () => {
 
   it('should work with room session', async () => {
     const { context, client, session } = setup({
-      session: { type: 'room', room: { id: 'room' } },
+      session: roomSession,
     });
 
     await context.sendAudio('xxx.mp3', 240000);
@@ -405,7 +405,7 @@ describe('#sendAudio', () => {
 
   it('should work with group session', async () => {
     const { context, client, session } = setup({
-      session: { type: 'group', group: { id: 'group' } },
+      session: groupSession,
     });
 
     await context.sendAudio('xxx.mp3', 240000);
@@ -441,7 +441,7 @@ describe('#sendVideo', () => {
 
   it('should work with room session', async () => {
     const { context, client, session } = setup({
-      session: { type: 'room', room: { id: 'room' } },
+      session: roomSession,
     });
 
     await context.sendVideo('xxx.mp4', 'yyy.jpg');
@@ -455,7 +455,7 @@ describe('#sendVideo', () => {
 
   it('should work with group session', async () => {
     const { context, client, session } = setup({
-      session: { type: 'group', group: { id: 'group' } },
+      session: groupSession,
     });
 
     await context.sendVideo('xxx.mp4', 'yyy.jpg');
@@ -497,7 +497,7 @@ describe('#sendLocation', () => {
 
   it('should work with room session', async () => {
     const { context, client, session } = setup({
-      session: { type: 'room', room: { id: 'room' } },
+      session: roomSession,
     });
 
     await context.sendLocation({
@@ -517,7 +517,7 @@ describe('#sendLocation', () => {
 
   it('should work with group session', async () => {
     const { context, client, session } = setup({
-      session: { type: 'group', group: { id: 'group' } },
+      session: groupSession,
     });
 
     await context.sendLocation({
@@ -560,7 +560,7 @@ describe('#sendSticker', () => {
 
   it('should work with room session', async () => {
     const { context, client, session } = setup({
-      session: { type: 'room', room: { id: 'room' } },
+      session: roomSession,
     });
 
     await context.sendSticker('1', '1');
@@ -570,7 +570,7 @@ describe('#sendSticker', () => {
 
   it('should work with group session', async () => {
     const { context, client, session } = setup({
-      session: { type: 'group', group: { id: 'group' } },
+      session: groupSession,
     });
 
     await context.sendSticker('1', '1');
@@ -630,7 +630,7 @@ describe('#sendImagemap', () => {
 
   it('should work with room session', async () => {
     const { context, client, session } = setup({
-      session: { type: 'room', room: { id: 'room' } },
+      session: roomSession,
     });
 
     await context.sendImagemap('this is an imagemap', template);
@@ -644,7 +644,7 @@ describe('#sendImagemap', () => {
 
   it('should work with group session', async () => {
     const { context, client, session } = setup({
-      session: { type: 'group', group: { id: 'group' } },
+      session: groupSession,
     });
 
     await context.sendImagemap('this is an imagemap', template);
@@ -703,7 +703,7 @@ describe('#sendButtonTemplate', () => {
 
   it('should work with room session', async () => {
     const { context, client, session } = setup({
-      session: { type: 'room', room: { id: 'room' } },
+      session: roomSession,
     });
 
     await context.sendButtonTemplate('this is a button template', template);
@@ -717,7 +717,7 @@ describe('#sendButtonTemplate', () => {
 
   it('should work with group session', async () => {
     const { context, client, session } = setup({
-      session: { type: 'group', group: { id: 'group' } },
+      session: groupSession,
     });
 
     await context.sendButtonTemplate('this is a button template', template);
@@ -769,7 +769,7 @@ describe('#sendConfirmTemplate', () => {
 
   it('should work with room session', async () => {
     const { context, client, session } = setup({
-      session: { type: 'room', room: { id: 'room' } },
+      session: roomSession,
     });
 
     await context.sendConfirmTemplate('this is a confirm template', template);
@@ -783,7 +783,7 @@ describe('#sendConfirmTemplate', () => {
 
   it('should work with group session', async () => {
     const { context, client, session } = setup({
-      session: { type: 'group', group: { id: 'group' } },
+      session: groupSession,
     });
 
     await context.sendConfirmTemplate('this is a confirm template', template);
@@ -866,7 +866,7 @@ describe('#sendCarouselTemplate', () => {
 
   it('should work with room session', async () => {
     const { context, client, session } = setup({
-      session: { type: 'room', room: { id: 'room' } },
+      session: roomSession,
     });
 
     await context.sendConfirmTemplate('this is a carousel template', template);
@@ -880,7 +880,7 @@ describe('#sendCarouselTemplate', () => {
 
   it('should work with group session', async () => {
     const { context, client, session } = setup({
-      session: { type: 'group', group: { id: 'group' } },
+      session: groupSession,
     });
 
     await context.sendConfirmTemplate('this is a carousel template', template);
