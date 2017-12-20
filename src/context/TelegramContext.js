@@ -64,6 +64,7 @@ class TelegramContext extends Context implements PlatformContext {
 }
 
 const sendMethods = [
+  // Send API
   'sendMessage',
   'sendPhoto',
   'sendAudio',
@@ -77,6 +78,14 @@ const sendMethods = [
   'sendVenue',
   'sendContact',
   'sendChatAction',
+
+  // Payments API
+  'sendInvoice',
+
+  // Game API
+  'sendGame',
+  'setGameScore',
+  'getGameHighScores',
 ];
 
 sendMethods.forEach(method => {
