@@ -27,7 +27,7 @@ npm run dev
 
 ## Idea of this example
 
-This example shows how to use CLI tool which support messenger attachements uploading. And then use util function to get the right attachmentId for bot using.
+This example shows how to use CLI tool which support messenger attachments uploading. And then use util function to get the right attachmentId for bot using.
 
 ## Related examples
 

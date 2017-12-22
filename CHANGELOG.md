@@ -209,7 +209,7 @@ console.log(getAttachment('mypic.jpg').id); // '1591074914293017'
 ### messenger
 
 * [new] Add `--skip-validate` cli option to skip `Joi` schema validation [#31](https://github.com/Yoctol/bottender/pull/31)
-* [fix] Allow unknow keys in config and fix schema rules [#29](https://github.com/Yoctol/bottender/pull/29)
+* [fix] Allow unknown keys in config and fix schema rules [#29](https://github.com/Yoctol/bottender/pull/29)
 
 ### slack
 
