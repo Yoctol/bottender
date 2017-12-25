@@ -45,13 +45,9 @@ beforeEach(() => {
     ],
   });
 
-  log.print = jest.fn();
-  log.error = jest.fn();
-  log.bold = jest.fn(s => s);
-
   TelegramClient.connect.mockReturnValue({
-    setWebhook: jest.fn(() => ({
-      data: {
+    setWebhook: jest.fn(() =>
+      Promise.resolve({
         ok: true,
         result: {
           url: 'https://4a16faff.ngrok.io/',
@@ -59,8 +55,8 @@ beforeEach(() => {
           pending_update_count: 0,
           max_connections: 40,
         },
-      },
-    })),
+      })
+    ),
   });
 });
 
@@ -107,11 +103,11 @@ describe('reject', () => {
 
   it('reject when telegram return not success', () => {
     const { webhook } = setup();
-    TelegramClient.connect().setWebhook.mockReturnValueOnce({
-      data: {
+    TelegramClient.connect().setWebhook.mockImplementationOnce(
+      Promise.resolve({
         ok: false,
-      },
-    });
+      })
+    );
     expect(setWebhook(webhook).then).toThrow();
   });
 });

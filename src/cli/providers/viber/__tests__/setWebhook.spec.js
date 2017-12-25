@@ -48,18 +48,16 @@ beforeEach(() => {
 
   ViberClient.connect.mockReturnValue({
     setWebhook: jest.fn(() => ({
-      data: {
-        status: 0,
-        status_message: 'ok',
-        event_types: [
-          'delivered',
-          'seen',
-          'failed',
-          'subscribed',
-          'unsubscribed',
-          'conversation_started',
-        ],
-      },
+      status: 0,
+      status_message: 'ok',
+      event_types: [
+        'delivered',
+        'seen',
+        'failed',
+        'subscribed',
+        'unsubscribed',
+        'conversation_started',
+      ],
     })),
   });
 });

@@ -22,10 +22,8 @@ beforeEach(() => {
 
   ViberClient.connect.mockReturnValue({
     removeWebhook: jest.fn(() => ({
-      data: {
-        status: 0,
-        status_message: 'ok',
-      },
+      status: 0,
+      status_message: 'ok',
     })),
   });
 });
@@ -50,7 +48,7 @@ describe('resolve', () => {
 describe('reject', () => {
   it('reject when Viber return not success', async () => {
     ViberClient.connect().removeWebhook.mockImplementation(() =>
-      Promise.reject()
+      Promise.reject(new Error('removeWebhook failed'))
     );
 
     expect(deleteWebhook().then).toThrow();
