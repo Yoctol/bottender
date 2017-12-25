@@ -111,7 +111,7 @@ class ContextSimulator {
       },
 
       event,
-      state,
+      state: state || {},
 
       isHandled: false,
 
