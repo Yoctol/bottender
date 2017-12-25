@@ -13,8 +13,8 @@ describe('setLineMenus', () => {
   beforeEach(() => {
     LineClient.connect.mockReturnValue({
       getRichMenuList: jest.fn(),
-      deleteRichMenu: jest.fn().mockImplementation(() => Promise.resolve(true)),
-      createRichMenu: jest.fn().mockImplementation(() => Promise.resolve(true)),
+      deleteRichMenu: jest.fn().mockReturnValue(Promise.resolve(true)),
+      createRichMenu: jest.fn().mockReturnValue(Promise.resolve(true)),
     });
     process.exit = jest.fn();
     getConfig.mockReturnValue({
@@ -63,7 +63,7 @@ describe('setLineMenus', () => {
   });
 
   it('should exit when client.getRichMenuList failed', async () => {
-    LineClient.connect().getRichMenuList.mockImplementationOnce(() =>
+    LineClient.connect().getRichMenuList.mockReturnValueOnce(
       Promise.reject(new Error('getRichMenuList failed'))
     );
 
@@ -74,7 +74,7 @@ describe('setLineMenus', () => {
   });
 
   it('should exit when failed to find rich menu', async () => {
-    LineClient.connect().getRichMenuList.mockImplementationOnce(() =>
+    LineClient.connect().getRichMenuList.mockReturnValueOnce(
       Promise.resolve(null)
     );
 
@@ -85,7 +85,7 @@ describe('setLineMenus', () => {
   });
 
   it('should not call deleteRichMenu when online rich menus and local rich menus are same', async () => {
-    LineClient.connect().getRichMenuList.mockImplementationOnce(() =>
+    LineClient.connect().getRichMenuList.mockReturnValueOnce(
       Promise.resolve([
         {
           richMenuId: '1234567890',
@@ -123,7 +123,7 @@ describe('setLineMenus', () => {
   });
 
   it('should delete one online rich menus if it has one shouldDeleteRichMenus', async () => {
-    LineClient.connect().getRichMenuList.mockImplementationOnce(() =>
+    LineClient.connect().getRichMenuList.mockReturnValueOnce(
       Promise.resolve([
         {
           richMenuId: '1234567890',
@@ -184,7 +184,7 @@ describe('setLineMenus', () => {
   });
 
   it('should delete two online rich menus and add one local rich menu if it has two shouldDeleteRichMenus and one shouldAddRichMenus', async () => {
-    LineClient.connect().getRichMenuList.mockImplementationOnce(() =>
+    LineClient.connect().getRichMenuList.mockReturnValueOnce(
       Promise.resolve([
         {
           richMenuId: '1234567890',

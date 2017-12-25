@@ -21,7 +21,7 @@ describe('deleteLineMenu', () => {
   beforeEach(() => {
     LineClient.connect.mockReturnValue({
       getRichMenuList: jest.fn(),
-      deleteRichMenu: jest.fn().mockImplementation(() => Promise.resolve(true)),
+      deleteRichMenu: jest.fn().mockReturnValue(Promise.resolve(true)),
     });
     process.exit = jest.fn();
     getConfig.mockReturnValue({
@@ -74,7 +74,7 @@ describe('deleteLineMenu', () => {
   it('should exit when client.getRichMenuList failed', async () => {
     const ctx = setup(false);
 
-    LineClient.connect().getRichMenuList.mockImplementationOnce(() =>
+    LineClient.connect().getRichMenuList.mockReturnValueOnce(
       Promise.reject(new Error('getRichMenuList failed'))
     );
 
@@ -87,7 +87,7 @@ describe('deleteLineMenu', () => {
   it('should exit when failed to find rich menu', async () => {
     const ctx = setup(false);
 
-    LineClient.connect().getRichMenuList.mockImplementationOnce(() =>
+    LineClient.connect().getRichMenuList.mockReturnValueOnce(
       Promise.resolve(null)
     );
 
@@ -100,7 +100,7 @@ describe('deleteLineMenu', () => {
   it('should delete all online rich menus if using force', async () => {
     const ctx = setup(true);
 
-    LineClient.connect().getRichMenuList.mockImplementationOnce(() =>
+    LineClient.connect().getRichMenuList.mockReturnValueOnce(
       Promise.resolve([
         {
           richMenuId: '1234567890',
@@ -120,7 +120,7 @@ describe('deleteLineMenu', () => {
   it('should delete all online rich menus if not using force', async () => {
     const ctx = setup(false);
 
-    LineClient.connect().getRichMenuList.mockImplementationOnce(() =>
+    LineClient.connect().getRichMenuList.mockReturnValueOnce(
       Promise.resolve([
         {
           richMenuId: '1234567890',
@@ -148,7 +148,7 @@ describe('deleteLineMenu', () => {
         },
       ])
     );
-    inquirer.prompt.mockImplementationOnce(() =>
+    inquirer.prompt.mockReturnValueOnce(
       Promise.resolve({ deletedRichMenuNames: ['Nice richmenu'] })
     );
 
@@ -163,7 +163,7 @@ describe('deleteLineMenu', () => {
   it('should exit if not selecting any rich menu', async () => {
     const ctx = setup(false);
 
-    LineClient.connect().getRichMenuList.mockImplementationOnce(() =>
+    LineClient.connect().getRichMenuList.mockReturnValueOnce(
       Promise.resolve([
         {
           richMenuId: '1234567890',
@@ -191,7 +191,7 @@ describe('deleteLineMenu', () => {
         },
       ])
     );
-    inquirer.prompt.mockImplementationOnce(() =>
+    inquirer.prompt.mockReturnValueOnce(
       Promise.resolve({ deletedRichMenuNames: [] })
     );
 

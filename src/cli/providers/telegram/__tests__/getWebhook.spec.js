@@ -55,7 +55,7 @@ describe('resolve', () => {
 
 describe('reject', () => {
   it('reject when Telegram return not success', async () => {
-    TelegramClient.connect().getWebhookInfo.mockImplementationOnce(
+    TelegramClient.connect().getWebhookInfo.mockReturnValueOnce(
       Promise.resolve({
         ok: false,
       })

@@ -114,8 +114,8 @@ describe('reject', () => {
 
   it('reject when viber return not success', () => {
     const { webhook } = setup();
-    ViberClient.connect().setWebhook.mockReturnValueOnce(() =>
-      Promise.reject()
+    ViberClient.connect().setWebhook.mockReturnValueOnce(
+      Promise.reject(new Error('setWebhook failed'))
     );
 
     expect(setWebhook(webhook).then).toThrow();

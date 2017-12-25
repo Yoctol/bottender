@@ -47,7 +47,7 @@ describe('resolve', () => {
 
 describe('reject', () => {
   it('reject when Viber return not success', async () => {
-    ViberClient.connect().removeWebhook.mockImplementation(() =>
+    ViberClient.connect().removeWebhook.mockReturnValueOnce(
       Promise.reject(new Error('removeWebhook failed'))
     );
 
