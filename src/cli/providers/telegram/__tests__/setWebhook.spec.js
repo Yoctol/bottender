@@ -103,7 +103,7 @@ describe('reject', () => {
 
   it('reject when telegram return not success', () => {
     const { webhook } = setup();
-    TelegramClient.connect().setWebhook.mockImplementationOnce(
+    TelegramClient.connect().setWebhook.mockReturnValueOnce(
       Promise.resolve({
         ok: false,
       })

@@ -61,7 +61,7 @@ describe('getLineMenu', () => {
   });
 
   it('should exit when client.getRichMenuList failed', async () => {
-    LineClient.connect().getRichMenuList.mockImplementationOnce(() =>
+    LineClient.connect().getRichMenuList.mockReturnValueOnce(
       Promise.reject(new Error('getRichMenuList failed'))
     );
 
@@ -72,7 +72,7 @@ describe('getLineMenu', () => {
   });
 
   it('should print rich menus', async () => {
-    LineClient.connect().getRichMenuList.mockImplementationOnce(() =>
+    LineClient.connect().getRichMenuList.mockReturnValueOnce(
       Promise.resolve([
         {
           richMenuId: '1234567890',
@@ -107,7 +107,7 @@ describe('getLineMenu', () => {
   });
 
   it('should call error when failed to find rich menu', async () => {
-    LineClient.connect().getRichMenuList.mockImplementationOnce(() =>
+    LineClient.connect().getRichMenuList.mockReturnValueOnce(
       Promise.resolve(null)
     );
 
