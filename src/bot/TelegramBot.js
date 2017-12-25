@@ -1,7 +1,5 @@
 /* @flow */
 
-import omit from 'lodash/omit';
-
 import type { SessionStore } from '../session/SessionStore';
 
 import Bot from './Bot';
@@ -31,7 +29,7 @@ export default class TelegramBot extends Bot {
     super({ connector, sessionStore, sync });
   }
 
-  get offset() {
+  get offset(): ?number {
     return this._offset;
   }
 
@@ -44,17 +42,26 @@ export default class TelegramBot extends Bot {
     /* eslint-disable no-await-in-loop */
     while (this._shouldGetUpdates) {
       try {
-        const params = this._offset ? options : omit(options, ['offset']);
+        const params = this._offset
+          ? {
+              ...options,
+              offset: this._offset,
+            }
+          : options;
         const data = await (this.connector: any).client.getUpdates(params);
         const updates = data.result;
-        for (let i = 0; i < updates.length; i++) {
-          await handler(updates[i]);
-        }
 
-        const highestUpdateId = Math.max(
-          updates.map(update => update.update_id)
-        );
-        this._offset = highestUpdateId + 1;
+        if (updates.length > 0) {
+          for (let i = 0; i < updates.length; i++) {
+            await handler(updates[i]);
+          }
+
+          const highestUpdateId = Math.max(
+            ...updates.map(update => update.update_id)
+          );
+
+          this._offset = highestUpdateId + 1;
+        }
       } catch (err) {
         console.error(err);
       }
@@ -62,7 +69,7 @@ export default class TelegramBot extends Bot {
     /* eslint-enable no-await-in-loop */
   }
 
-  async stop() {
+  stop() {
     this._shouldGetUpdates = false;
   }
 }
