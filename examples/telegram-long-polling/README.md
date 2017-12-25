@@ -1,12 +1,12 @@
-# Telegram get updates
+# Telegram long polling
 
 ## Install and Run
 
 Download this example or clone [bottender](https://github.com/Yoctol/bottender).
 
 ```
-curl https://codeload.github.com/Yoctol/bottender/tar.gz/master | tar -xz --strip=2 bottender-master/examples/telegram-get-updates
-cd telegram-get-updates
+curl https://codeload.github.com/Yoctol/bottender/tar.gz/master | tar -xz --strip=2 bottender-master/examples/telegram-long-polling
+cd telegram-long-polling
 npm install
 npm run dev
 ```
