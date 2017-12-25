@@ -1,8 +1,10 @@
 const { ViberBot } = require('bottender');
 const { createServer } = require('bottender/express');
 
+const config = require('./bottender.config').viber;
+
 const bot = new ViberBot({
-  accessToken: '__FILL_YOUR_TOKEN_HERE__',
+  accessToken: config.accessToken,
 });
 
 bot.onEvent(async context => {
