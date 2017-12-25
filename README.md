@@ -101,6 +101,7 @@ method, we call it handler. You can put your bot logic in there.
 
 ### Telegram
 
+* Webhook, Long Polling
 * Update, Delete Messages
 * Keyboard
 * Message Live Location
