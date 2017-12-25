@@ -19,12 +19,13 @@ export default class TelegramBot extends Bot {
     super({ connector, sessionStore, sync });
   }
 
-  async createLongPollingRuntime(options) {
+  async createLongPollingRuntime(options = {}) {
     const handler = this.createRequestHandler();
 
     /* eslint-disable no-await-in-loop */
     while (true) {
-      const updates = await this.connector.client.getUpdates(options);
+      const data = await (this.connector.client: any).getUpdates(options);
+      const updates = data.result;
       for (let i = 0; i < updates.length; i++) {
         await handler(updates[i]);
       }
