@@ -47,6 +47,9 @@ You can find the Bottender documentation on the website.
   * [Telegram](https://bottender.js.org/docs/Platforms-Telegram)
   * [Viber](https://bottender.js.org/docs/Platforms-Viber)
 * [Guides](https://bottender.js.org/docs/Guides-Commands)
+  * [CLI commands](https://bottender.js.org/docs/Guides-Commands)
+  * [Server](https://bottender.js.org/docs/Guides-Server)
+  * [Session](https://bottender.js.org/docs/Guides-Session)
 * [API Reference](https://bottender.js.org/docs/APIReference-Context)
 
 ## Examples
