@@ -1,3 +1,31 @@
+# 0.14.12 / 2017-12-25
+
+### telegram
+
+* [new] Support running Telegram bots with long polling [#117](https://github.com/Yoctol/bottender/pull/117)
+
+```js
+const { TelegramBot } = require('bottender');
+
+const bot = new TelegramBot({
+  accessToken: '__FILL_YOUR_TOKEN_HERE__',
+});
+
+bot.onEvent(async context => {
+  await context.sendText('Hello World');
+});
+
+bot.createLongPollingRuntime({
+  limit: 100,
+  timeout: 60,
+  allowed_updates: ['message', 'callback_query'],
+});
+```
+
+See more details in [examples/telegram-long-polling](https://github.com/Yoctol/bottender/tree/master/examples/telegram-long-polling)
+
+* [fix] Result destructing bugs in Telegram webhook commands
+
 # 0.14.11 / 2017-12-20
 
 * [fix] ContextSimulator: sendState to setState [#108](https://github.com/Yoctol/bottender/pull/108)
