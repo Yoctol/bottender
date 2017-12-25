@@ -13,11 +13,13 @@ const help = () => {
       webhook                 <action>    Manage webhook
       domains,
       whitelisted-domains     <action>    Manage whitelisted-domains
+      attachment              <action>    Manage attachment
 
     ${chalk.dim('Actions:')}
 
       set           Set the property you request
       del, delete   Delete the property you request
+      help          Show more detail usage for the command
 
     ${chalk.dim('Examples:')}
 
@@ -28,6 +30,10 @@ const help = () => {
     ${chalk.dim('-')} Delete the persistent-menu
 
       ${chalk.cyan('$ bottender messenger persistent-menu del')}
+
+    ${chalk.dim('-')} Show attachment command usage
+
+      ${chalk.cyan('$ bottender messenger attachment help')}
   `);
 };
 
