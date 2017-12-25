@@ -99,7 +99,7 @@ class ContextSimulator {
     }
   }
 
-  createContext({ event, state }: { event: Object, state: Object }): Object {
+  createContext({ event, state }: { event: Object, state?: Object }): Object {
     const base = {
       platform: 'other',
 
