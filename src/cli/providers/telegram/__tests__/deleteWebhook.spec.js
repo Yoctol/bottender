@@ -21,13 +21,9 @@ beforeEach(() => {
   process.exit = jest.fn();
   getConfig.mockReturnValue(MOCK_FILE_WITH_PLATFORM.telegram);
 
-  log.print = jest.fn();
-  log.error = jest.fn();
-  log.bold = jest.fn(s => s);
-
   TelegramClient.connect.mockReturnValue({
-    deleteWebhook: jest.fn(() => ({
-      data: {
+    deleteWebhook: jest.fn(() =>
+      Promise.resolve({
         ok: true,
         result: {
           url: 'https://4a16faff.ngrok.io/',
@@ -35,8 +31,8 @@ beforeEach(() => {
           pending_update_count: 0,
           max_connections: 40,
         },
-      },
-    })),
+      })
+    ),
   });
 });
 
@@ -60,11 +56,11 @@ describe('resolve', () => {
 
 describe('reject', () => {
   it('reject when Telegram return not success', async () => {
-    TelegramClient.connect().deleteWebhook.mockReturnValueOnce({
-      data: {
+    TelegramClient.connect().deleteWebhook.mockImplementationOnce(
+      Promise.resolve({
         ok: false,
-      },
-    });
+      })
+    );
     await deleteWebhook();
     expect(deleteWebhook().then).toThrow();
   });

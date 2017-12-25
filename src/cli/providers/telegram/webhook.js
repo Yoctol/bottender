@@ -24,7 +24,7 @@ export async function getWebhook() {
     invariant(accessToken, '`accessToken` is not found in config file');
 
     const client = TelegramClient.connect(accessToken);
-    const { data: { ok, result } } = await client.getWebhookInfo();
+    const { ok, result } = await client.getWebhookInfo();
     invariant(ok, 'Getting Telegram webhook is failed');
 
     Object.keys(result).forEach(key => print(`${key}: ${result[key]}`));
@@ -56,7 +56,7 @@ export async function setWebhook(_webhook) {
       '`webhook` is required but not found. Use -w <webhook> to setup or make sure you are running ngrok server.'
     );
 
-    const { data: { ok } } = await client.setWebhook(webhook);
+    const { ok } = await client.setWebhook(webhook);
     invariant(ok, 'Setting for webhook is failed');
 
     print('Successfully set Telegram webhook callback URL');
@@ -81,7 +81,7 @@ export async function deleteWebhook() {
     invariant(accessToken, '`accessToken` is not found in config file');
 
     const client = TelegramClient.connect(accessToken);
-    const { data: { ok } } = await client.deleteWebhook();
+    const { ok } = await client.deleteWebhook();
     invariant(ok, 'Deleting Telegram webhook is failed');
 
     print('Successfully delete Telegram webhook');
