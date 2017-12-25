@@ -15,6 +15,9 @@ type PollingOptions = {
 };
 
 export default class TelegramBot extends Bot {
+  _offset: ?number;
+  _shouldGetUpdates: boolean = false;
+
   constructor({
     accessToken,
     sessionStore,
@@ -28,15 +31,20 @@ export default class TelegramBot extends Bot {
     super({ connector, sessionStore, sync });
   }
 
+  get offset() {
+    return this._offset;
+  }
+
   async createLongPollingRuntime(options: PollingOptions = {}) {
+    this._shouldGetUpdates = true;
+    this._offset = options.offset;
+
     const handler = this.createRequestHandler();
 
-    let offset = options.offset;
-
     /* eslint-disable no-await-in-loop */
-    while (true) {
+    while (this._shouldGetUpdates) {
       try {
-        const params = offset ? options : omit(options, ['offset']);
+        const params = this._offset ? options : omit(options, ['offset']);
         const data = await (this.connector: any).client.getUpdates(params);
         const updates = data.result;
         for (let i = 0; i < updates.length; i++) {
@@ -46,11 +54,15 @@ export default class TelegramBot extends Bot {
         const highestUpdateId = Math.max(
           updates.map(update => update.update_id)
         );
-        offset = highestUpdateId + 1;
+        this._offset = highestUpdateId + 1;
       } catch (err) {
         console.error(err);
       }
     }
     /* eslint-enable no-await-in-loop */
+  }
+
+  async stop() {
+    this._shouldGetUpdates = false;
   }
 }
