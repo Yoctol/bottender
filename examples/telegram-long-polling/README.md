@@ -7,14 +7,27 @@ Download this example or clone [bottender](https://github.com/Yoctol/bottender).
 ```
 curl https://codeload.github.com/Yoctol/bottender/tar.gz/master | tar -xz --strip=2 bottender-master/examples/telegram-long-polling
 cd telegram-long-polling
+```
+
+Install it:
+
+```
 npm install
+```
+
+You must put `accessToken` into `index.js`.
+
+After that, you can run the bot with this npm script:
+
+```
 npm run dev
 ```
 
+This command will start a development bot server at `http://localhost:5000`.
+
 ## Idea of this example
 
-This example is a simple bot running on [Telegram](https://telegram.org/) using [getUpdates](https://core.telegram.org/bots/api#getupdates) API (long polling). You
-have to get `accessToken` before running this bot.\
+This example is a simple bot running on [Telegram](https://telegram.org/) using [getUpdates](https://core.telegram.org/bots/api#getupdates) API (long polling).
 For more information, check our [Telegram guides](https://bottender.js.org/docs/Platforms-Telegram).
 
 ## Related examples

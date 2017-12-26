@@ -1,8 +1,10 @@
 const { TelegramBot, TelegramHandler } = require('bottender');
 const { createServer } = require('bottender/express');
 
+const config = require('./bottender.config').telegram;
+
 const bot = new TelegramBot({
-  accessToken: '__FILL_YOUR_TOKEN_HERE__',
+  accessToken: config.accessToken,
 });
 
 const handler = new TelegramHandler()
