@@ -25,7 +25,8 @@ const help = () => {
 
     ${chalk.dim('Options:')}
 
-      --force   Upload all assets and regenerate bottender-lock.json.
+      -f, --force   Upload all assets and regenerate bottender-lock.json.
+      -y, --yes     Skip prompt confirmation for uploading assets.
 
     ${chalk.dim('Examples:')}
 
@@ -81,7 +82,10 @@ const logUploadInfo = uploadInfo => {
 };
 
 export async function uploadAttachment(ctx) {
-  const { force } = ctx.argv;
+  const { f, force: _force, y, yes: _yes } = ctx.argv;
+  const force = f || _force;
+  const yes = y || _yes;
+
   try {
     warn(
       `${bold(
@@ -99,17 +103,21 @@ export async function uploadAttachment(ctx) {
 
     files.forEach(print);
 
-    const promptResult = await inquirer.prompt([
-      {
-        type: 'confirm',
-        message: force
-          ? 'Are you sure you want to force upload all assets?'
-          : 'Is it correct for uploading?',
-        name: 'confirm',
-      },
-    ]);
+    let confirm = true;
+    if (!yes) {
+      const promptResult = await inquirer.prompt([
+        {
+          type: 'confirm',
+          message: force
+            ? 'Are you sure you want to force upload all assets?'
+            : 'Is it correct for uploading?',
+          name: 'confirm',
+        },
+      ]);
+      confirm = promptResult.confirm;
+    }
 
-    if (!promptResult.confirm) {
+    if (!confirm) {
       print('bye');
       return process.exit(0);
     }
