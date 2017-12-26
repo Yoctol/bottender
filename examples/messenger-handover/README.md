@@ -1,12 +1,12 @@
-# Messenger attachment upload
+# Messenger handover
 
 ## Install and Run
 
 Download this example or clone [bottender](https://github.com/Yoctol/bottender).
 
 ```
-curl https://codeload.github.com/Yoctol/bottender/tar.gz/master | tar -xz --strip=2 bottender-master/examples/messenger-attachment-upload
-cd messenger-attachment-upload
+curl https://codeload.github.com/Yoctol/bottender/tar.gz/master | tar -xz --strip=2 bottender-master/examples/messenger-handover
+cd messenger-handover
 ```
 
 Install dependencies:
@@ -16,14 +16,6 @@ npm install
 ```
 
 You must put `accessToken`, `appSecret` and `verifyToken` into `bottender.config.js`.
-
-To upload attachment, run following command with global `bottender`:
-
-```
-bottender messenger attachment upload
-```
-
-> Note: Will auto create a bottender-lock.json file.
 
 After that, you can run the bot with this npm script:
 
@@ -47,12 +39,9 @@ If you want to expose the server on your local development machine and get a sec
 
 ## Idea of this example
 
-This example shows how to use CLI tool which support messenger attachments uploading. And then use util function to get the right attachmentId for bot using.
+This example shows how to use [Messenger Handover Protocol](https://developers.facebook.com/docs/messenger-platform/handover-protocol) in Bottender bots.
+For more information, check our [Messenger guides](https://bottender.js.org/docs/Platforms-Messenger).
 
 ## Related examples
 
-* [with-config](../with-config)
-* [console-hello-world](../console-hello-world)
-* [line-hello-world](../line-hello-world)
-* [slack-hello-world](../slack-hello-world)
-* [telegram-hello-world](../telegram-hello-world)
+* [messenger-hello-world](../messenger-hello-world)
