@@ -3,15 +3,18 @@ const path = require('path');
 const { MessengerBot } = require('bottender');
 const { createServer } = require('bottender/express');
 
-const config = require('./bottender.config');
+const config = require('./bottender.config').messenger;
 
-const bot = new MessengerBot(config.messenger);
+const bot = new MessengerBot({
+  accessToken: config.accessToken,
+  appSecret: config.appSecret,
+});
 
 bot.onEvent(async context => {
   await context.sendText('Hello World');
 });
 
-const server = createServer(bot, config.messenger);
+const server = createServer(bot, { verifyToken: config.verifyToken });
 
 // https://developers.facebook.com/docs/messenger-platform/webview/extensions#webview_on_web
 // To support Messenger Extensions SDK on desktop Messenger client, server must return X-Frame-Options header.

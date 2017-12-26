@@ -1,11 +1,9 @@
-require('dotenv').config();
-
 module.exports = {
   messenger: {
-    accessToken: process.env.ACCESS_TOKEN,
-    verifyToken: process.env.VERIFY_TOKEN,
-    appId: process.env.APP_ID,
-    appSecret: process.env.APP_SECRET,
+    appId: '__PUT_YOUR_APP_ID_HERE__',
+    appSecret: '__PUT_YOUR_APP_SECRET_HERE__',
+    accessToken: '__PUT_YOUR_ACCESS_TOKEN_HERE__',
+    verifyToken: '__PUT_YOUR_VERITY_TOKEN_HERE__',
     profile: {
       get_started: {
         payload: 'GET_STARTED',
@@ -22,12 +20,6 @@ module.exports = {
               messenger_extensions: true,
             },
           ],
-        },
-      ],
-      greeting: [
-        {
-          locale: 'default',
-          text: 'Hello! Welcome to use this bot!',
         },
       ],
       whitelisted_domains: ['https://your.domain.tw'],

@@ -1,9 +1,11 @@
 const { MessengerBot } = require('bottender');
 const { createServer } = require('bottender/express');
 
+const config = require('./bottender.config').messenger;
+
 const bot = new MessengerBot({
-  accessToken: '__FILL_YOUR_TOKEN_HERE__',
-  appSecret: '__FILL_YOUR_SECRET_HERE__',
+  accessToken: config.accessToken,
+  appSecret: config.appSecret,
 });
 
 bot.onEvent(async context => {
@@ -27,7 +29,7 @@ bot.onEvent(async context => {
   }
 });
 
-const server = createServer(bot);
+const server = createServer(bot, { verifyToken: config.verifyToken });
 
 server.listen(5000, () => {
   console.log('server is running on 5000 port...');

@@ -1,13 +1,12 @@
 {
-  "dependencies": {
-    "bottender": "latest",
-    "dotenv": "^4.0.0"
-  },
-  "devDependencies": {
-    "nodemon": "^1.11.0"
-  },
   "scripts": {
     "dev": "nodemon index.js",
     "start": "node index.js"
+  },
+  "dependencies": {
+    "bottender": "latest"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
   }
 }

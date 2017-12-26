@@ -11,7 +11,7 @@ bot.use(withTyping({ delay: 1000 }));
 bot.onEvent(async context => {
   await context.sendText('Hello World');
   await context.sendText('Hello World');
-  await context.sendTextWithDelay(2000, 'Hello World~~~~~~~~~~');
+  await context.sendText('Hello World~~~~~~~~~~', { delay: 2000 });
 });
 
 const server = createServer(bot);
