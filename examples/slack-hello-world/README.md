@@ -7,14 +7,27 @@ Download this example or clone [bottender](https://github.com/Yoctol/bottender).
 ```
 curl https://codeload.github.com/Yoctol/bottender/tar.gz/master | tar -xz --strip=2 bottender-master/examples/slack-hello-world
 cd slack-hello-world
+```
+
+Install it:
+
+```
 npm install
+```
+
+You must put `accessToken` and `verificationToken` into `index.js`.
+
+After that, you can run the bot with this npm script:
+
+```
 npm run dev
 ```
 
+This command will start a development bot server at `http://localhost:5000`.
+
 ## Idea of this example
 
-This example is a simple bot running on [Slack](https://slack.com/). You have to
-get `accessToken` and `verificationToken` before running this bot.\
+This example is a simple bot running on [Slack](https://slack.com/).
 For more information, check our [Slack guides](https://bottender.js.org/docs/Platforms-Slack).
 
 ## Related examples
