@@ -9,7 +9,7 @@ curl https://codeload.github.com/Yoctol/bottender/tar.gz/master | tar -xz --stri
 cd telegram-builder
 ```
 
-Install it:
+Install dependencies:
 
 ```
 npm install
@@ -23,11 +23,11 @@ After that, you can run the bot with this npm script:
 npm run dev
 ```
 
-This command will start a development bot server at `http://localhost:5000`.
+This command will start server for bot developing at `http://localhost:5000`.
 
 ## Set webhook
 
-To set the webhook, run the following command with global `bottender`:
+While the server running, you can run following command with global `bottender` to set up the webhook:
 
 ```
 bottender telegram webhook set -w <YOUR_WEBHOOK_URL>

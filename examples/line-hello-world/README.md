@@ -9,7 +9,7 @@ curl https://codeload.github.com/Yoctol/bottender/tar.gz/master | tar -xz --stri
 cd line-hello-world
 ```
 
-Install it:
+Install dependencies:
 
 ```
 npm install
@@ -23,7 +23,7 @@ After that, you can run the bot with this npm script:
 npm run dev
 ```
 
-This command will start a development bot server at `http://localhost:5000`.
+This command will start server for bot developing at `http://localhost:5000`.
 
 ## Set webhook
 
