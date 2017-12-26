@@ -1,15 +1,26 @@
 /* @flow */
 
+import Context from '../context/Context';
+
 declare var jest: any;
 
 class ContextSimulator {
   _platform: string;
+  _initialState: Object;
 
   _mockFn: Function;
 
-  constructor({ platform, mockFn }: { platform: string, mockFn?: Function }) {
+  constructor({
+    platform,
+    initialState,
+    mockFn,
+  }: {
+    platform: string,
+    initialState?: Object,
+    mockFn?: Function,
+  }) {
     this._platform = platform;
-
+    this._initialState = initialState || {};
     this._mockFn = mockFn || jest.fn;
   }
 
@@ -100,115 +111,124 @@ class ContextSimulator {
   }
 
   createContext({ event, state }: { event: Object, state?: Object }): Object {
-    const base = {
-      platform: 'other',
-
+    const context: any = new Context({
       client: this.createClient(),
-
+      event: this.createEvent(event),
       session: {
         id: '__ID__',
         user: this.createUser(),
+        _state: state || {},
       },
+      initialState: this._initialState,
+    });
 
-      event,
-      state: state || {},
-
-      isHandled: false,
-
-      setState: this._mockFn(),
-      resetState: this._mockFn(),
-      sendText: this._mockFn(),
-      typing: this._mockFn(),
-    };
+    context.platform = 'other';
+    context.setState = this._mockFn(context.setState.bind(context));
+    context.resetState = this._mockFn(context.resetState.bind(context));
+    context.sendText = this._mockFn();
+    context.typing = this._mockFn();
 
     switch (this._platform) {
       case 'messenger':
-        return {
-          ...base,
-          platform: 'messenger',
-          typingOn: this._mockFn(),
-          typingOff: this._mockFn(),
-          markSeen: this._mockFn(),
-          sendAttachment: this._mockFn(),
-          sendImage: this._mockFn(),
-          sendAudio: this._mockFn(),
-          sendVideo: this._mockFn(),
-          sendFile: this._mockFn(),
-          sendQuickReplies: this._mockFn(),
-          sendGenericTemplate: this._mockFn(),
-          sendButtonTemplate: this._mockFn(),
-          sendListTemplate: this._mockFn(),
-          sendReceiptTemplate: this._mockFn(),
-          sendAirlineBoardingPassTemplate: this._mockFn(),
-          sendAirlineCheckinTemplate: this._mockFn(),
-          sendAirlineItineraryTemplate: this._mockFn(),
-          sendAirlineFlightUpdateTemplate: this._mockFn(),
-        };
+        context.platform = 'messenger';
+        context.sendMessage = this._mockFn();
+        context.sendAttachment = this._mockFn();
+        context.sendImage = this._mockFn();
+        context.sendAudio = this._mockFn();
+        context.sendVideo = this._mockFn();
+        context.sendFile = this._mockFn();
+        context.sendQuickReplies = this._mockFn();
+        context.sendTemplate = this._mockFn();
+        context.sendGenericTemplate = this._mockFn();
+        context.sendButtonTemplate = this._mockFn();
+        context.sendListTemplate = this._mockFn();
+        context.sendOpenGraphTemplate = this._mockFn();
+        context.sendMediaTemplate = this._mockFn();
+        context.sendReceiptTemplate = this._mockFn();
+        context.sendAirlineBoardingPassTemplate = this._mockFn();
+        context.sendAirlineCheckinTemplate = this._mockFn();
+        context.sendAirlineItineraryTemplate = this._mockFn();
+        context.sendAirlineFlightUpdateTemplate = this._mockFn();
+        context.typingOn = this._mockFn();
+        context.typingOff = this._mockFn();
+        context.markSeen = this._mockFn();
+        context.passThreadControl = this._mockFn();
+        context.passThreadControlToPageInbox = this._mockFn();
+        context.takeThreadControl = this._mockFn();
+        context.associateLabel = this._mockFn();
+        context.dissociateLabel = this._mockFn();
+        context.getAssociatedLabels = this._mockFn();
+        break;
       case 'line':
-        return {
-          ...base,
-          platform: 'line',
-          isReplied: false,
-          sendText: this._mockFn(),
-          sendImage: this._mockFn(),
-          sendVideo: this._mockFn(),
-          sendAudio: this._mockFn(),
-          sendLocation: this._mockFn(),
-          sendSticker: this._mockFn(),
-          sendImagemap: this._mockFn(),
-          sendButtonTemplate: this._mockFn(),
-          sendConfirmTemplate: this._mockFn(),
-          sendCarouselTemplate: this._mockFn(),
-          sendImageCarouselTemplate: this._mockFn(),
-          replyText: this._mockFn(),
-          replyImage: this._mockFn(),
-          replyVideo: this._mockFn(),
-          replyAudio: this._mockFn(),
-          replyLocation: this._mockFn(),
-          replySticker: this._mockFn(),
-          replyImagemap: this._mockFn(),
-          replyButtonTemplate: this._mockFn(),
-          replyConfirmTemplate: this._mockFn(),
-          replyCarouselTemplate: this._mockFn(),
-          replyImageCarouselTemplate: this._mockFn(),
-          pushText: this._mockFn(),
-          pushImage: this._mockFn(),
-          pushVideo: this._mockFn(),
-          pushAudio: this._mockFn(),
-          pushLocation: this._mockFn(),
-          pushSticker: this._mockFn(),
-          pushImagemap: this._mockFn(),
-          pushButtonTemplate: this._mockFn(),
-          pushConfirmTemplate: this._mockFn(),
-          pushCarouselTemplate: this._mockFn(),
-          pushImageCarouselTemplate: this._mockFn(),
-        };
+        context.platform = 'line';
+        context.isReplied = false;
+        context.sendText = this._mockFn();
+        context.sendImage = this._mockFn();
+        context.sendVideo = this._mockFn();
+        context.sendAudio = this._mockFn();
+        context.sendLocation = this._mockFn();
+        context.sendSticker = this._mockFn();
+        context.sendImagemap = this._mockFn();
+        context.sendButtonTemplate = this._mockFn();
+        context.sendConfirmTemplate = this._mockFn();
+        context.sendCarouselTemplate = this._mockFn();
+        context.sendImageCarouselTemplate = this._mockFn();
+        context.reply = this._mockFn();
+        context.replyText = this._mockFn();
+        context.replyImage = this._mockFn();
+        context.replyVideo = this._mockFn();
+        context.replyAudio = this._mockFn();
+        context.replyLocation = this._mockFn();
+        context.replySticker = this._mockFn();
+        context.replyImagemap = this._mockFn();
+        context.replyButtonTemplate = this._mockFn();
+        context.replyConfirmTemplate = this._mockFn();
+        context.replyCarouselTemplate = this._mockFn();
+        context.replyImageCarouselTemplate = this._mockFn();
+        context.push = this._mockFn();
+        context.pushText = this._mockFn();
+        context.pushImage = this._mockFn();
+        context.pushVideo = this._mockFn();
+        context.pushAudio = this._mockFn();
+        context.pushLocation = this._mockFn();
+        context.pushSticker = this._mockFn();
+        context.pushImagemap = this._mockFn();
+        context.pushButtonTemplate = this._mockFn();
+        context.pushConfirmTemplate = this._mockFn();
+        context.pushCarouselTemplate = this._mockFn();
+        context.pushImageCarouselTemplate = this._mockFn();
+        context.leave = this._mockFn();
+        context.getLinkedRichMenu = this._mockFn();
+        context.linkRichMenu = this._mockFn();
+        context.unlinkRichMenu = this._mockFn();
+        break;
       case 'slack':
-        return {
-          ...base,
-          platform: 'slack',
-          postMessage: this._mockFn(),
-        };
+        context.platform = 'slack';
+        context.postMessage = this._mockFn();
+        break;
       case 'telegram':
-        return {
-          ...base,
-          platform: 'telegram',
-          sendMessage: this._mockFn(),
-          sendPhoto: this._mockFn(),
-          sendAudio: this._mockFn(),
-          sendDocument: this._mockFn(),
-          sendSticker: this._mockFn(),
-          sendVideo: this._mockFn(),
-          sendVoice: this._mockFn(),
-          sendVideoNote: this._mockFn(),
-          sendLocation: this._mockFn(),
-          sendVenue: this._mockFn(),
-          sendContact: this._mockFn(),
-          sendChatAction: this._mockFn(),
-        };
+        context.platform = 'telegram';
+        context.sendMessage = this._mockFn();
+        context.sendPhoto = this._mockFn();
+        context.sendAudio = this._mockFn();
+        context.sendDocument = this._mockFn();
+        context.sendSticker = this._mockFn();
+        context.sendVideo = this._mockFn();
+        context.sendVoice = this._mockFn();
+        context.sendVideoNote = this._mockFn();
+        context.sendMediaGroup = this._mockFn();
+        context.sendLocation = this._mockFn();
+        context.sendVenue = this._mockFn();
+        context.sendContact = this._mockFn();
+        context.sendChatAction = this._mockFn();
+        context.sendInvoice = this._mockFn();
+        context.sendGame = this._mockFn();
+        context.setGameScore = this._mockFn();
+        context.getGameHighScores = this._mockFn();
+        break;
       default:
-        return base;
     }
+    return context;
   }
 
   createEvent(properties: Object = {}): Object {
@@ -413,7 +433,7 @@ class ContextSimulator {
     }
   }
 
-  createTextContext(text: string) {
+  createTextContext(text: string, options?: Object) {
     return this.createContext({
       event: {
         isMessage: true,
@@ -423,6 +443,7 @@ class ContextSimulator {
         },
         text,
       },
+      ...options,
     });
   }
 }
