@@ -2,10 +2,6 @@ import Redis from 'ioredis';
 
 import RedisCacheStore from '../RedisCacheStore';
 
-beforeEach(() => {
-  jest.resetAllMocks();
-});
-
 describe('#constructor', () => {
   it('can call without any arguments', () => {
     const store = new RedisCacheStore(); // eslint-disable-line no-unused-vars

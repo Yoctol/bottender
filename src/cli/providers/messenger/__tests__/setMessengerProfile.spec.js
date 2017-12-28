@@ -33,7 +33,6 @@ const MOCK_FILE_WITH_PLATFORM = {
       ],
     },
   },
-  line: {},
 };
 
 let _client;
@@ -70,7 +69,6 @@ beforeEach(() => {
 
 afterEach(() => {
   process.exit = _exit;
-  jest.resetAllMocks();
 });
 
 it('be defined', () => {

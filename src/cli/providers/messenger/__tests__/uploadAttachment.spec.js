@@ -22,7 +22,6 @@ const MOCK_FILE_WITH_PLATFORM = {
     appSecret: '__APP_SECRET__',
     verifyToken: '__verifyToken__',
   },
-  line: {},
 };
 
 let _client;
