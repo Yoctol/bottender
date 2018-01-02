@@ -24,12 +24,14 @@ import type { Session } from '../session/Session';
 import type { Connector } from './Connector';
 
 type Entry = {
-  ['messaging' | 'standby']: Array<{
+  ['messaging' | 'standby' | 'changes']: Array<{
     sender: Sender,
     recipient: Recipient,
     timestamp: number,
     postback?: Postback,
     message?: Message,
+    field?: String,
+    value?: Object,
   }>,
 };
 
@@ -116,6 +118,12 @@ export default class MessengerConnector
           if (ent.standby) {
             return ((ent.standby[0]: any): MessengerRawEvent);
           }
+
+          // for Webhook Test button request and other page events
+          if (ent.changes) {
+            return ((ent.changes[0]: any): MessengerRawEvent);
+          }
+
           // $FlowExpectedError
           return null;
         })
@@ -155,10 +163,15 @@ export default class MessengerConnector
 
   getUniqueSessionKey(body: MessengerRequestBody): ?string {
     const rawEvent = this._getRawEventsFromRequest(body)[0];
-    if (rawEvent.message && rawEvent.message.is_echo && rawEvent.recipient) {
+    if (
+      rawEvent &&
+      rawEvent.message &&
+      rawEvent.message.is_echo &&
+      rawEvent.recipient
+    ) {
       return rawEvent.recipient.id;
     }
-    if (rawEvent.sender) {
+    if (rawEvent && rawEvent.sender) {
       return rawEvent.sender.id;
     }
     return null;
