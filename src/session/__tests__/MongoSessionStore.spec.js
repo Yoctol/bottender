@@ -9,7 +9,6 @@ const { MongoClient } = require('mongodb');
 const MINUTES_IN_ONE_YEAR = 365 * 24 * 60;
 
 function setup(options = {}) {
-  jest.resetAllMocks();
   const sessions = {
     findOne: jest.fn(),
     updateOne: jest.fn(),

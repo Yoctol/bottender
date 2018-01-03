@@ -1,65 +1,45 @@
 import MockAdapter from 'axios-mock-adapter';
 
-import {
-  setWebhook,
-  client as _client,
-  localClient as _localClient,
-} from '../webhook';
+import { setWebhook, ngrokClient } from '../webhook';
 
+jest.mock('messaging-api-messenger');
 jest.mock('prompt-confirm');
 
 jest.mock('../../../shared/log');
 jest.mock('../../../shared/getConfig');
 
 const Confirm = require('prompt-confirm');
+const { MessengerClient } = require('messaging-api-messenger');
 
 const log = require('../../../shared/log');
 const getConfig = require('../../../shared/getConfig');
 
+const APP_ID = '__APP_ID__';
+const APP_SECRET = '__APP_SECRET__';
+const VERIFY_TOKEN = '__VERIFY_TOKEN__';
+const WEBHOOK = 'http://example.com/webhook';
+
 const MOCK_FILE_WITH_PLATFORM = {
   messenger: {
-    appId: '__APP_ID__',
-    appSecret: '__APP_SECRET__',
-    verifyToken: '__verifyToken__',
+    appId: APP_ID,
+    appSecret: APP_SECRET,
+    verifyToken: VERIFY_TOKEN,
   },
-  line: {},
 };
-const configPath = 'bot.sample.json';
 
-let client;
-let localClient;
-
-const setup = (
-  {
-    clientId = MOCK_FILE_WITH_PLATFORM.messenger.appId,
-    clientSecret = MOCK_FILE_WITH_PLATFORM.messenger.appSecret,
-    accessToken = '__FAKE_TOKEN__',
-    webhook = 'http://example.com/webhook',
-  } = {
-    clientId: MOCK_FILE_WITH_PLATFORM.messenger.appId,
-    clientSecret: MOCK_FILE_WITH_PLATFORM.messenger.appSecret,
-    accessToken: '__FAKE_TOKEN__',
-    webhook: 'http://example.com/webhook',
-  }
-) => ({
-  getUrl: `/oauth/access_token?client_id=${clientId}&client_secret=${clientSecret}&grant_type=client_credentials`,
-  postUrl: `/${clientId}/subscriptions?access_token=${accessToken}`,
-  webhook,
-  accessToken,
-});
-
-beforeEach(() => {
-  const { getUrl, postUrl, accessToken } = setup();
+function setup({ success = true } = {}) {
   getConfig.mockReturnValue(MOCK_FILE_WITH_PLATFORM.messenger);
 
-  client = new MockAdapter(_client);
-  client.onGet(getUrl).reply(200, {
-    access_token: accessToken,
-  });
-  client.onPost(postUrl).reply(200, { success: true });
+  const client = {
+    createSubscription: jest.fn(),
+  };
 
-  localClient = new MockAdapter(_localClient);
-  localClient.onGet('/api/tunnels').reply(200, {
+  client.createSubscription.mockReturnValue(Promise.resolve({ success }));
+
+  MessengerClient.connect = jest.fn(() => client);
+
+  const ngrokClientMock = new MockAdapter(ngrokClient);
+  ngrokClientMock.onGet('/api/tunnels').reply(200, {
     tunnels: [
       {
         public_url: 'http://fakeDomain.ngrok.io',
@@ -69,107 +49,119 @@ beforeEach(() => {
       },
     ],
   });
+
   Confirm.mockImplementation(() => ({
     run: jest.fn(() => Promise.resolve(true)),
   }));
+
   log.print = jest.fn();
   log.error = jest.fn();
   log.bold = jest.fn(s => s);
-});
 
-afterEach(() => {
-  jest.resetAllMocks();
-});
+  process.exit = jest.fn();
+
+  return {
+    client,
+    ngrokClientMock,
+  };
+}
 
 it('be defined', () => {
   expect(setWebhook).toBeDefined();
 });
 
 describe('resolve', () => {
-  it('successfully set webhook', async () => {
-    const { webhook } = setup();
+  it('successfully set webhook and show messages', async () => {
+    setup();
 
-    await setWebhook(webhook, configPath);
+    await setWebhook(WEBHOOK, VERIFY_TOKEN);
 
-    expect(log.print).toHaveBeenCalledTimes(5);
-    expect(log.print.mock.calls[2][0]).toMatch(/Successfully/);
+    const logs = log.print.mock.calls.map(call => call[0]);
+
+    expect(log.print).toBeCalled();
+    expect(logs.some(text => /Successfully/.test(text))).toBe(true);
   });
 
   it('use default fields to setup', async () => {
-    const { getUrl, postUrl, webhook, accessToken } = setup({
-      webhook: 'http://fakeurl.com',
-    });
-    client.onGet(getUrl).reply(200, {
-      access_token: accessToken,
-    });
-    client
-      .onPost(postUrl, {
-        object: 'page',
-        callback_url: 'http://fakeurl.com',
-        verify_token: '__verifyToken__',
-        fields: ['messages', 'messaging_postbacks', 'messaging_referrals'],
-      })
-      .reply(200, { success: true });
+    const { client } = setup();
 
-    await setWebhook(webhook, configPath);
+    await setWebhook(WEBHOOK, VERIFY_TOKEN);
 
-    expect(log.print).toHaveBeenCalledTimes(5);
-    expect(log.print.mock.calls[0][0]).toMatch(/messages/);
-    expect(log.print.mock.calls[0][0]).toMatch(/messaging_postbacks/);
-    expect(log.print.mock.calls[0][0]).toMatch(/messaging_referrals/);
+    expect(client.createSubscription).toBeCalledWith({
+      app_id: '__APP_ID__',
+      access_token: '__APP_ID__|__APP_SECRET__',
+      callback_url: 'http://example.com/webhook',
+      fields: [
+        'messages',
+        'messaging_postbacks',
+        'messaging_optins',
+        'messaging_referrals',
+        'messaging_handovers',
+        'messaging_policy_enforcement',
+      ],
+      object: 'page',
+      verify_token: '__VERIFY_TOKEN__',
+    });
   });
 
   it('get ngrok webhook to setup', async () => {
-    const { postUrl } = setup();
+    const { client } = setup();
 
-    client
-      .onPost(postUrl, {
-        object: 'page',
-        callback_url: 'https://fakeDomain.ngrok.io',
-        verify_token: '__verifyToken__',
-        fields: ['messages', 'messaging_postbacks', 'messaging_referrals'],
-      })
-      .reply(200, { success: true });
+    await setWebhook(undefined, VERIFY_TOKEN);
 
-    await setWebhook(undefined, configPath);
-
-    expect(log.print).toHaveBeenCalledTimes(5);
-    expect(log.print.mock.calls[0][0]).toMatch(/messages/);
-    expect(log.print.mock.calls[0][0]).toMatch(/messaging_postbacks/);
-    expect(log.print.mock.calls[0][0]).toMatch(/messaging_referrals/);
+    expect(client.createSubscription).toBeCalledWith({
+      app_id: '__APP_ID__',
+      access_token: '__APP_ID__|__APP_SECRET__',
+      callback_url: 'https://fakeDomain.ngrok.io',
+      fields: [
+        'messages',
+        'messaging_postbacks',
+        'messaging_optins',
+        'messaging_referrals',
+        'messaging_handovers',
+        'messaging_policy_enforcement',
+      ],
+      object: 'page',
+      verify_token: '__VERIFY_TOKEN__',
+    });
   });
 });
 
 describe('reject', () => {
   it('reject when `appId` not found in config file', async () => {
-    const { webhook } = setup();
+    setup();
+
     getConfig.mockReturnValue({
       appSecret: '__APP_SECRET__',
       verifyToken: '__verifyToken__',
     });
-    process.exit = jest.fn();
 
-    await setWebhook(webhook, configPath);
+    await setWebhook(WEBHOOK, VERIFY_TOKEN);
 
+    expect(log.error).toBeCalled();
     expect(process.exit).toBeCalled();
   });
 
   it('reject when `appSecret` not found in config file', async () => {
-    const { webhook } = setup();
+    setup();
+
     getConfig.mockReturnValue({
       appId: '__APP_ID__',
       verifyToken: '__verifyToken__',
     });
-    process.exit = jest.fn();
 
-    await setWebhook(webhook, configPath);
+    await setWebhook(WEBHOOK, VERIFY_TOKEN);
 
+    expect(log.error).toBeCalled();
     expect(process.exit).toBeCalled();
   });
 
-  it('reject when messenger return not success', () => {
-    const { postUrl, webhook } = setup();
-    client.onPost(postUrl).reply(400, { success: false });
-    expect(setWebhook(webhook, configPath).then).toThrow();
+  it('reject when messenger return not success', async () => {
+    setup({ success: false });
+
+    await setWebhook(WEBHOOK, VERIFY_TOKEN);
+
+    expect(log.error).toBeCalled();
+    expect(process.exit).toBeCalled();
   });
 });

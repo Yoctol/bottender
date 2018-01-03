@@ -1,3 +1,4 @@
+import { MessengerClient } from 'messaging-api-messenger';
 import axios from 'axios';
 import get from 'lodash/get';
 import invariant from 'invariant';
@@ -8,39 +9,31 @@ import { print, error, bold, warn } from '../../shared/log';
 
 import help from './help';
 
-export const client = axios.create({
-  baseURL: 'https://graph.facebook.com/v2.9/',
-  headers: { 'Content-Type': 'application/json' },
-});
-
-export const localClient = axios.create({
+export const ngrokClient = axios.create({
   baseURL: 'http://localhost:4040',
 });
 
 const getWebhookFromNgrok = async () => {
-  const res = await localClient.get('/api/tunnels');
+  const res = await ngrokClient.get('/api/tunnels');
   return get(res, 'data.tunnels[1].public_url'); // tunnels[1] return `https` protocol
 };
 
-const _getClientToken = async (clientId, clientSecret) => {
-  const res = await client.get(
-    `/oauth/access_token?client_id=${clientId}&client_secret=${clientSecret}&grant_type=client_credentials`
-  );
-  return res.data.access_token;
-};
-
-export async function setWebhook(_webhook, _verifyToken) {
+export async function setWebhook(webhook, verifyToken) {
   try {
     const config = getConfig('bottender.config.js', 'messenger');
+
+    const client = MessengerClient.connect(config.accessToken);
+
     const defaultFields = [
       'messages',
       'messaging_postbacks',
+      'messaging_optins',
       'messaging_referrals',
+      'messaging_handovers',
+      'messaging_policy_enforcement',
     ];
 
-    let webhook = _webhook;
-
-    if (!_webhook) {
+    if (!webhook) {
       warn('We can not find the webhook callback url you provided.');
       const prompt = new Confirm(
         'Are you using ngrok (get url from ngrok server on http://127.0.0.1:4040)?'
@@ -51,7 +44,7 @@ export async function setWebhook(_webhook, _verifyToken) {
       }
     }
 
-    const verifyToken = _verifyToken || config.verifyToken;
+    verifyToken = verifyToken || config.verifyToken;
 
     invariant(config.appId, '`appId` is not found in config file');
     invariant(config.appSecret, '`appSecret` is not found in config file');
@@ -71,22 +64,21 @@ export async function setWebhook(_webhook, _verifyToken) {
         )} to setup.`
       );
       print(
-        'See more on: https://developers.facebook.com/docs/graph-api/reference/v2.9/app/subscriptions'
+        'See more on: https://developers.facebook.com/docs/graph-api/reference/app/subscriptions'
       );
     }
+
     const fields = config.fields || defaultFields;
 
-    const token = await _getClientToken(config.appId, config.appSecret);
-    const res = await client.post(
-      `/${config.appId}/subscriptions?access_token=${token}`,
-      {
-        object: 'page',
-        callback_url: webhook,
-        verify_token: verifyToken,
-        fields,
-      }
-    );
-    invariant(res.data.success, 'Setting for webhook is failed');
+    const { success } = await client.createSubscription({
+      app_id: config.appId,
+      object: 'page',
+      callback_url: webhook,
+      verify_token: verifyToken,
+      fields,
+      access_token: `${config.appId}|${config.appSecret}`,
+    });
+    invariant(success, 'Setting for webhook is failed');
 
     print('Successfully set Messenger webhook callback URL');
     print(

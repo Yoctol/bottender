@@ -62,7 +62,6 @@ beforeEach(() => {
 
 afterEach(() => {
   process.exit = _exit;
-  jest.resetAllMocks();
 });
 
 it('be defined', () => {
