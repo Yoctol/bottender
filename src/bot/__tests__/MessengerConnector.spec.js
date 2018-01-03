@@ -143,6 +143,26 @@ const standbyRequest = {
   },
 };
 
+const webhookTestRequest = {
+  body: {
+    entry: [
+      {
+        changes: [
+          {
+            field: 'messages',
+            value: {
+              page_id: '<PAGE_ID>',
+            },
+          },
+        ],
+        id: '0',
+        time: 1514862760,
+      },
+    ],
+    object: 'page',
+  },
+};
+
 function setup(
   { accessToken, appSecret, mapPageToAccessToken } = {
     accessToken: ACCESS_TOKEN,
@@ -207,6 +227,12 @@ describe('#getUniqueSessionKey', () => {
   it('return null if is not first event or echo event', () => {
     const { connector } = setup();
     const senderId = connector.getUniqueSessionKey({});
+    expect(senderId).toBe(null);
+  });
+
+  it('return null if is webhook test event or other null rawEvent requests', () => {
+    const { connector } = setup();
+    const senderId = connector.getUniqueSessionKey(webhookTestRequest.body);
     expect(senderId).toBe(null);
   });
 });
