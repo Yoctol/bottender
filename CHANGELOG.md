@@ -1,3 +1,12 @@
+# 0.14.13 / 2018-01-03
+
+### messenger
+
+* [new] Add optional `--yes` for Messenger force upload attachment [#127](https://github.com/Yoctol/bottender/pull/127)
+* [new] Initial State in test-utils [#126](https://github.com/Yoctol/bottender/pull/126)
+* [fix] Improve context simulator and add some tests [#131](https://github.com/Yoctol/bottender/pull/131)
+* [fix] Support Messenger webhook test requests [#139](https://github.com/Yoctol/bottender/pull/139)
+
 # 0.14.12 / 2017-12-25
 
 ### telegram
