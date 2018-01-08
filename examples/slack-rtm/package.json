@@ -1,0 +1,12 @@
+{
+  "scripts": {
+    "dev": "nodemon index.js",
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "bottender": "latest"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  }
+}
