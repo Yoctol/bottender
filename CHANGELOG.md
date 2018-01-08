@@ -1,3 +1,7 @@
+# 0.14.14 / 2018-01-08
+
+* [fix] Improve error handling in express middleware [#142](https://github.com/Yoctol/bottender/pull/142)
+
 # 0.14.13 / 2018-01-03
 
 ### messenger
