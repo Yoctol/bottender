@@ -22,11 +22,13 @@ it('should response 200 when no error be thrown', async () => {
     send: jest.fn(),
     status: jest.fn(),
   };
+  const next = jest.fn();
 
-  await middleware(req, res);
+  await middleware(req, res, next);
 
   expect(res.status).toBeCalledWith(200);
   expect(res.send).toBeCalledWith('');
+  expect(next).not.toBeCalled();
 });
 
 it('should response 200 if there is response return from requestHandler', async () => {
@@ -87,14 +89,34 @@ it('should throw when no body exists', async () => {
 
   const req = {};
   const res = {};
+  const next = jest.fn();
 
-  let error;
-  try {
-    await middleware(req, res);
-  } catch (err) {
-    error = err;
-  }
+  await middleware(req, res, next);
+
+  expect(next).toBeCalled();
+  const error = next.mock.calls[0][0];
 
   expect(error).toBeDefined();
   expect(error.message).toMatch(/Missing body parser/);
+});
+
+it('should catch error when requestHandler error', async () => {
+  const { bot, requestHandler } = setup();
+  requestHandler.mockReturnValue(
+    Promise.reject(new Error('requestHandler error'))
+  );
+
+  const middleware = createMiddleware(bot);
+
+  const req = { body: {} };
+  const res = {};
+  const next = jest.fn();
+
+  await middleware(req, res, next);
+
+  expect(next).toBeCalled();
+  const error = next.mock.calls[0][0];
+
+  expect(error).toBeDefined();
+  expect(error.message).toMatch(/requestHandler error/);
 });

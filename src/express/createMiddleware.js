@@ -1,6 +1,9 @@
 function createMiddleware(bot) {
   const requestHandler = bot.createRequestHandler();
-  return async (req, res) => {
+
+  const wrapper = fn => (req, res, next) =>
+    fn(req, res).catch(err => next(err));
+  return wrapper(async (req, res) => {
     if (!req.body) {
       throw new Error(
         'createMiddleware(): Missing body parser. Use `body-parser` or other similar package before this middleware.'
@@ -15,7 +18,7 @@ function createMiddleware(bot) {
       res.status(200);
       res.send('');
     }
-  };
+  });
 }
 
 export default createMiddleware;
