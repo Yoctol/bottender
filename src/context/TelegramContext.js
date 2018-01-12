@@ -48,7 +48,7 @@ class TelegramContext extends Context implements PlatformContext {
    * Send text to the owner of then session.
    *
    */
-  async sendText(text: string): Promise<any> {
+  async sendText(text: string, options?: {}): Promise<any> {
     if (!this._session) {
       warning(
         false,
@@ -59,7 +59,25 @@ class TelegramContext extends Context implements PlatformContext {
 
     this._isHandled = true;
 
-    return this._client.sendMessage(this._session.user.id, text);
+    const chatId = this._getChatId();
+
+    return this._client.sendMessage(chatId, text, options);
+  }
+
+  _getChatId() {
+    if (this._event.isMessage) {
+      return (this._event.message: any).chat.id;
+    }
+    if (
+      this._event.isCallbackQuery &&
+      (this._event.callbackQuery: any).message
+    ) {
+      return (this._event.callbackQuery: any).message.chat.id;
+    }
+    if (this._session) {
+      return this._session.user.id;
+    }
+    return null;
   }
 }
 
@@ -104,7 +122,9 @@ sendMethods.forEach(method => {
 
       this._isHandled = true;
 
-      return this._client[method](this._session.user.id, ...args);
+      const chatId = this._getChatId();
+
+      return this._client[method](chatId, ...args);
     },
   });
 });

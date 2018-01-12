@@ -36,7 +36,7 @@ const createMockTelegramClient = () => ({
   getGameHighScores: jest.fn(),
 });
 
-const rawEvent = {
+const _rawEvent = {
   message: {
     message_id: 666,
     from: {
@@ -57,7 +57,10 @@ const rawEvent = {
   },
 };
 
-const setup = ({ session } = { session: { user: { id: 'fakeUserId' } } }) => {
+const setup = ({
+  session = { user: { id: 313534466 } },
+  rawEvent = _rawEvent,
+} = {}) => {
   const client = createMockTelegramClient();
   const args = {
     client,
@@ -99,11 +102,11 @@ it('get #client works', () => {
 
 describe('#sendText', () => {
   it('should call client.sendMessage', async () => {
-    const { context, client, session } = setup();
+    const { context, client } = setup();
 
     await context.sendText('xxx.com');
 
-    expect(client.sendMessage).toBeCalledWith(session.user.id, 'xxx.com');
+    expect(client.sendMessage).toBeCalledWith(427770117, 'xxx.com', undefined);
   });
 
   it('should mark context as handled', async () => {
@@ -126,11 +129,11 @@ describe('#sendText', () => {
 
 describe('#sendMessage', () => {
   it('should call client.sendMessage', async () => {
-    const { context, client, session } = setup();
+    const { context, client } = setup();
 
     await context.sendMessage('xxx.com');
 
-    expect(client.sendMessage).toBeCalledWith(session.user.id, 'xxx.com');
+    expect(client.sendMessage).toBeCalledWith(427770117, 'xxx.com');
   });
 
   it('should mark context as handled', async () => {
@@ -158,11 +161,11 @@ describe('#sendMessage', () => {
 
 describe('#sendPhoto', () => {
   it('should call client.sendPhoto', async () => {
-    const { context, client, session } = setup();
+    const { context, client } = setup();
 
     await context.sendPhoto('xxx.png');
 
-    expect(client.sendPhoto).toBeCalledWith(session.user.id, 'xxx.png');
+    expect(client.sendPhoto).toBeCalledWith(427770117, 'xxx.png');
   });
 
   it('should mark context as handled', async () => {
@@ -176,11 +179,11 @@ describe('#sendPhoto', () => {
 
 describe('#sendAudio', () => {
   it('should call client.sendAudio', async () => {
-    const { context, client, session } = setup();
+    const { context, client } = setup();
 
     await context.sendAudio('xxx.mp3');
 
-    expect(client.sendAudio).toBeCalledWith(session.user.id, 'xxx.mp3');
+    expect(client.sendAudio).toBeCalledWith(427770117, 'xxx.mp3');
   });
 
   it('should mark context as handled', async () => {
@@ -194,11 +197,11 @@ describe('#sendAudio', () => {
 
 describe('#sendDocument', () => {
   it('should call client.sendDocument', async () => {
-    const { context, client, session } = setup();
+    const { context, client } = setup();
 
     await context.sendDocument('xxx.gif');
 
-    expect(client.sendDocument).toBeCalledWith(session.user.id, 'xxx.gif');
+    expect(client.sendDocument).toBeCalledWith(427770117, 'xxx.gif');
   });
 
   it('should mark context as handled', async () => {
@@ -212,12 +215,12 @@ describe('#sendDocument', () => {
 
 describe('#sendSticker', () => {
   it('should call client.sendSticker', async () => {
-    const { context, client, session } = setup();
+    const { context, client } = setup();
 
     await context.sendSticker('CAADAgADQAADyIsGAAE7MpzFPFQX5QI');
 
     expect(client.sendSticker).toBeCalledWith(
-      session.user.id,
+      427770117,
       'CAADAgADQAADyIsGAAE7MpzFPFQX5QI'
     );
   });
@@ -233,11 +236,11 @@ describe('#sendSticker', () => {
 
 describe('#sendVideo', () => {
   it('should call client.sendVideo', async () => {
-    const { context, client, session } = setup();
+    const { context, client } = setup();
 
     await context.sendVideo('xxx.mp4');
 
-    expect(client.sendVideo).toBeCalledWith(session.user.id, 'xxx.mp4');
+    expect(client.sendVideo).toBeCalledWith(427770117, 'xxx.mp4');
   });
 
   it('should mark context as handled', async () => {
@@ -251,11 +254,11 @@ describe('#sendVideo', () => {
 
 describe('#sendVoice', () => {
   it('should call client.sendVoice', async () => {
-    const { context, client, session } = setup();
+    const { context, client } = setup();
 
     await context.sendVoice('xxx.ogg');
 
-    expect(client.sendVoice).toBeCalledWith(session.user.id, 'xxx.ogg');
+    expect(client.sendVoice).toBeCalledWith(427770117, 'xxx.ogg');
   });
 
   it('should mark context as handled', async () => {
@@ -269,11 +272,11 @@ describe('#sendVoice', () => {
 
 describe('#sendVideoNote', () => {
   it('should call client.sendVideoNote', async () => {
-    const { context, client, session } = setup();
+    const { context, client } = setup();
 
     await context.sendVideoNote('xxx.mp4');
 
-    expect(client.sendVideoNote).toBeCalledWith(session.user.id, 'xxx.mp4');
+    expect(client.sendVideoNote).toBeCalledWith(427770117, 'xxx.mp4');
   });
 
   it('should mark context as handled', async () => {
@@ -287,13 +290,13 @@ describe('#sendVideoNote', () => {
 
 describe('#sendMediaGroup', () => {
   it('should call client.sendMediaGroup', async () => {
-    const { context, client, session } = setup();
+    const { context, client } = setup();
 
     await context.sendMediaGroup([
       { type: 'photo', media: 'BQADBAADApYAAgcZZAfj2-xeidueWwI' },
     ]);
 
-    expect(client.sendMediaGroup).toBeCalledWith(session.user.id, [
+    expect(client.sendMediaGroup).toBeCalledWith(427770117, [
       { type: 'photo', media: 'BQADBAADApYAAgcZZAfj2-xeidueWwI' },
     ]);
   });
@@ -311,13 +314,13 @@ describe('#sendMediaGroup', () => {
 
 describe('#sendLocation', () => {
   it('#sendLocation to call client.sendLocation', async () => {
-    const { context, client, session } = setup();
+    const { context, client } = setup();
 
     const location = {};
 
     await context.sendLocation(location);
 
-    expect(client.sendLocation).toBeCalledWith(session.user.id, location);
+    expect(client.sendLocation).toBeCalledWith(427770117, location);
   });
 
   it('should mark context as handled', async () => {
@@ -333,13 +336,13 @@ describe('#sendLocation', () => {
 
 describe('#sendVenue', () => {
   it('should call client.sendVenue', async () => {
-    const { context, client, session } = setup();
+    const { context, client } = setup();
 
     const venue = {};
 
     await context.sendVenue(venue);
 
-    expect(client.sendVenue).toBeCalledWith(session.user.id, venue);
+    expect(client.sendVenue).toBeCalledWith(427770117, venue);
   });
 
   it('should mark context as handled', async () => {
@@ -355,13 +358,13 @@ describe('#sendVenue', () => {
 
 describe('#sendContact', () => {
   it('should to call client.sendContact', async () => {
-    const { context, client, session } = setup();
+    const { context, client } = setup();
 
     const contact = {};
 
     await context.sendContact(contact);
 
-    expect(client.sendContact).toBeCalledWith(session.user.id, contact);
+    expect(client.sendContact).toBeCalledWith(427770117, contact);
   });
 
   it('should mark context as handled', async () => {
@@ -377,11 +380,11 @@ describe('#sendContact', () => {
 
 describe('#sendChatAction', () => {
   it('should to call client.sendChatAction', async () => {
-    const { context, client, session } = setup();
+    const { context, client } = setup();
 
     await context.sendChatAction('typing');
 
-    expect(client.sendChatAction).toBeCalledWith(session.user.id, 'typing');
+    expect(client.sendChatAction).toBeCalledWith(427770117, 'typing');
   });
 
   it('should mark context as handled', async () => {
@@ -407,11 +410,11 @@ describe('#sendInvoice', () => {
     ],
   };
   it('should to call client.sendInvoice', async () => {
-    const { context, client, session } = setup();
+    const { context, client } = setup();
 
     await context.sendInvoice(invoice);
 
-    expect(client.sendInvoice).toBeCalledWith(session.user.id, invoice);
+    expect(client.sendInvoice).toBeCalledWith(427770117, invoice);
   });
 
   it('should mark context as handled', async () => {
@@ -425,11 +428,11 @@ describe('#sendInvoice', () => {
 
 describe('#sendGame', () => {
   it('should to call client.sendGame', async () => {
-    const { context, client, session } = setup();
+    const { context, client } = setup();
 
     await context.sendGame('Mario Bros.');
 
-    expect(client.sendGame).toBeCalledWith(session.user.id, 'Mario Bros.');
+    expect(client.sendGame).toBeCalledWith(427770117, 'Mario Bros.');
   });
 
   it('should mark context as handled', async () => {
@@ -443,11 +446,11 @@ describe('#sendGame', () => {
 
 describe('#setGameScore', () => {
   it('should to call client.setGameScore', async () => {
-    const { context, client, session } = setup();
+    const { context, client } = setup();
 
     await context.setGameScore(999);
 
-    expect(client.setGameScore).toBeCalledWith(session.user.id, 999);
+    expect(client.setGameScore).toBeCalledWith(427770117, 999);
   });
 
   it('should mark context as handled', async () => {
@@ -461,7 +464,7 @@ describe('#setGameScore', () => {
 
 describe('#getGameHighScores', () => {
   it('should to call client.getGameHighScores', async () => {
-    const { context, client, session } = setup();
+    const { context, client } = setup();
 
     const response = {
       ok: true,
@@ -482,7 +485,7 @@ describe('#getGameHighScores', () => {
 
     const result = await context.getGameHighScores();
 
-    expect(client.getGameHighScores).toBeCalledWith(session.user.id);
+    expect(client.getGameHighScores).toBeCalledWith(427770117);
     expect(result).toEqual(response);
   });
 
@@ -510,5 +513,78 @@ describe('#typing', () => {
     await context.typing(10);
 
     expect(sleep).toBeCalled();
+  });
+});
+
+describe('group chat', () => {
+  it('should call method with chat id when receiving message', async () => {
+    const { context, client } = setup({
+      rawEvent: {
+        update_id: 241921684,
+        message: {
+          message_id: 334,
+          from: {
+            id: 227770118,
+            is_bot: false,
+            first_name: 'Chen-Tsu',
+            last_name: 'Lin',
+            language_code: 'zh-TW',
+          },
+          chat: {
+            id: -325456176,
+            title: 'Bottender',
+            type: 'group',
+            all_members_are_administrators: true,
+          },
+          date: 1415736470,
+          text: 'hi',
+        },
+      },
+    });
+
+    await context.sendText('hello');
+
+    expect(client.sendMessage).toBeCalledWith(-325456176, 'hello', undefined);
+  });
+
+  it('should call method with chat id when receiving callback query', async () => {
+    const { context, client } = setup({
+      rawEvent: {
+        update_id: 131921685,
+        callback_query: {
+          id: '1737258669604245426',
+          from: {
+            id: 327770118,
+            is_bot: false,
+            first_name: 'Chen-Tsu',
+            last_name: 'Lin',
+            language_code: 'zh-TW',
+          },
+          message: {
+            message_id: 235,
+            from: {
+              id: 213534466,
+              is_bot: true,
+              first_name: 'already_taken',
+              username: 'alreadytaken1_bot',
+            },
+            chat: {
+              id: -325456176,
+              title: 'Bottender',
+              type: 'group',
+              all_members_are_administrators: true,
+            },
+            date: 1415736471,
+            text: 'Hello World',
+          },
+          chat_instance: '-582211693826679000',
+          data: '123',
+        },
+      },
+    });
+
+    await context.sendText('hello');
+
+    expect(client.sendMessage).toBeCalledWith(-325456176, 'hello', undefined);
   });
 });
