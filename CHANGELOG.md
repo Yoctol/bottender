@@ -1,3 +1,19 @@
+# 0.14.15 / 2018-01-12
+
+### slack
+
+* [new] Add `context.postEphemeral`:
+
+```js
+context.postEphemeral({ text: 'hello' });
+```
+
+* [fix] Reply to thread instead of channel when receiving events in thread [#145](https://github.com/Yoctol/bottender/pull/145)
+
+### telegram
+
+* [fix] Use `message.chat.id` to reply [#148](https://github.com/Yoctol/bottender/pull/148)
+
 # 0.14.14 / 2018-01-08
 
 * [fix] Improve error handling in express middleware [#142](https://github.com/Yoctol/bottender/pull/142)
