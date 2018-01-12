@@ -104,6 +104,7 @@ method, we call it handler. You can put your bot logic in there.
 * Webhook, Long Polling
 * Update, Delete Messages
 * Keyboard
+* Group Chat
 * Message Live Location
 * Payment
 
