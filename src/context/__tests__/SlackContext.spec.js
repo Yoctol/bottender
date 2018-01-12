@@ -38,6 +38,7 @@ const threadRawEvent = {
 
 const createMockSlackClient = () => ({
   postMessage: jest.fn(),
+  postEphemeral: jest.fn(),
 });
 
 const userSession = {
@@ -170,6 +171,21 @@ describe('#postMessage', () => {
 
     expect(warning).toBeCalled();
     expect(client.postMessage).not.toBeCalled();
+  });
+});
+
+describe('#postEphemeral', () => {
+  it('should call client.postEphemeral', async () => {
+    const { context, client } = setup();
+
+    await context.postEphemeral('xxx.com');
+
+    expect(client.postEphemeral).toBeCalledWith(
+      'C6A9RJJ3F',
+      'fakeUserId',
+      'xxx.com',
+      {}
+    );
   });
 });
 
