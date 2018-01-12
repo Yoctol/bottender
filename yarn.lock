@@ -4234,9 +4234,9 @@ messaging-api-line@^0.6.7:
     image-type "^3.0.0"
     warning "^3.0.0"
 
-messaging-api-messenger@^0.6.6:
-  version "0.6.6"
-  resolved "https://registry.yarnpkg.com/messaging-api-messenger/-/messaging-api-messenger-0.6.6.tgz#1013d7091fcec1b0141ba070f6ee2a5bce6d7632"
+messaging-api-messenger@^0.6.9:
+  version "0.6.9"
+  resolved "https://registry.yarnpkg.com/messaging-api-messenger/-/messaging-api-messenger-0.6.9.tgz#82ccc9a3b2f484cd30051de9ff07e0efc066d313"
   dependencies:
     axios "^0.17.0"
     axios-error "^0.5.4"
@@ -4246,9 +4246,9 @@ messaging-api-messenger@^0.6.6:
     lodash.omit "^4.5.0"
     warning "^3.0.0"
 
-messaging-api-slack@^0.6.0:
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/messaging-api-slack/-/messaging-api-slack-0.6.0.tgz#8e379a1bbf6ab937f0923922463fec4a0a8133a4"
+messaging-api-slack@^0.6.10:
+  version "0.6.10"
+  resolved "https://registry.yarnpkg.com/messaging-api-slack/-/messaging-api-slack-0.6.10.tgz#857f5f361072336252dc40dc80eb821b2903a517"
   dependencies:
     axios "^0.17.0"
     axios-error "^0.5.4"

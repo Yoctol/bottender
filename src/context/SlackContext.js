@@ -44,7 +44,15 @@ export default class SlackContext extends Context implements PlatformContext {
     }
   }
 
-  postMessage(text: string, options?: {}): Promise<any> {
+  /**
+   * Sends a message to the channel of the session.
+   *
+   * https://api.slack.com/methods/chat.postMessage
+   */
+  postMessage(
+    message: { text?: string, attachments?: [] | string } | string,
+    options?: {}
+  ): Promise<any> {
     const channelId = this._getChannelIdFromSession();
 
     if (!channelId) {
@@ -57,14 +65,44 @@ export default class SlackContext extends Context implements PlatformContext {
 
     this._isHandled = true;
 
-    return this._client.postMessage(channelId, text, {
+    return this._client.postMessage(channelId, message, {
       thread_ts: this._event.rawEvent.thread_ts,
       ...options,
     });
   }
 
   /**
-   * Send text to the owner of then session.
+   * Sends an ephemeral message to the session owner.
+   *
+   * https://api.slack.com/methods/chat.postMessage
+   */
+  postEphemeral(
+    message: { text?: string, attachments?: [] | string } | string,
+    options?: {} = {}
+  ): Promise<any> {
+    const channelId = this._getChannelIdFromSession();
+
+    if (!channelId) {
+      warning(
+        false,
+        'postMessage: should not be called in context without session'
+      );
+      return Promise.resolve();
+    }
+
+    this._isHandled = true;
+
+    return this._client.postEphemeral(
+      channelId,
+      // $FlowFixMe
+      this._session.user.id,
+      message,
+      options
+    );
+  }
+
+  /**
+   * Send text to the owner of the session.
    *
    */
   sendText(text: string, options?: {}): Promise<any> {
