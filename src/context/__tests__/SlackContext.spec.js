@@ -16,13 +16,24 @@ beforeEach(() => {
   /* eslint-enable global-require */
 });
 
-const rawEvent = {
+const messageRawEvent = {
   type: 'message',
   user: 'U13AGSN1X',
   text: 'Experience is the best teacher.',
   ts: '1500435914.425136',
   channel: 'C6A9RJJ3F',
   event_ts: '1500435914.425136',
+};
+
+const threadRawEvent = {
+  type: 'message',
+  channel: 'C6A9RJJ3F',
+  user: 'U056KAAAA',
+  text: 'in a thread',
+  ts: '1515480368.000083',
+  source_team: 'T056KAAAA',
+  team: 'T056KAAAA',
+  thread_ts: '1515479974.000115',
 };
 
 const createMockSlackClient = () => ({
@@ -37,7 +48,9 @@ const userSession = {
     id: 'C6A9RJJ3F',
   },
 };
-const setup = ({ session } = { session: userSession }) => {
+const setup = ({ session: _session, rawEvent: _rawEvent } = {}) => {
+  const session = _session === undefined ? userSession : _session;
+  const rawEvent = _rawEvent === undefined ? messageRawEvent : _rawEvent;
   const client = createMockSlackClient();
   const args = {
     client,
@@ -92,6 +105,16 @@ describe('#postMessage', () => {
     await context.postMessage('xxx.com');
 
     expect(client.postMessage).toBeCalledWith('C6A9RJJ3F', 'xxx.com', {});
+  });
+
+  it('should set thread_ts if event is in a thread', async () => {
+    const { context, client } = setup({ rawEvent: threadRawEvent });
+
+    await context.postMessage('xxx.com');
+
+    expect(client.postMessage).toBeCalledWith('C6A9RJJ3F', 'xxx.com', {
+      thread_ts: '1515479974.000115',
+    });
   });
 
   it('should support overwrite options', async () => {

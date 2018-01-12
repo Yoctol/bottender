@@ -66,6 +66,7 @@ export type Message = {
   user: string,
   text: string,
   ts: string,
+  thread_ts?: string,
 };
 
 export type InteractiveMessageEvent = {
@@ -91,6 +92,7 @@ export type InteractiveMessageEvent = {
   original_message: Message,
   response_url: string,
   trigger_id: string,
+  thread_ts?: string,
 };
 
 export type SlackRawEvent = Message | InteractiveMessageEvent;
