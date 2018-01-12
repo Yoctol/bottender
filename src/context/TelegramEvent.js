@@ -201,7 +201,7 @@ export default class TelegramEvent implements Event {
    *
    */
   get message(): ?Message {
-    return this._rawEvent.message;
+    return this._rawEvent.message || null;
   }
 
   /**
