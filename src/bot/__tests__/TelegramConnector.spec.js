@@ -14,10 +14,10 @@ const messageRequest = {
     message: {
       message_id: 666,
       from: {
-        id: 313534466,
+        id: 427770117,
+        is_bot: false,
         first_name: 'first',
         last_name: 'last',
-        username: 'username',
         language_code: 'en',
       },
       chat: {
@@ -181,10 +181,10 @@ const callbackQueryRequest = {
     callback_query: {
       id: '1068230107531367617',
       from: {
-        id: 313534466,
+        id: 427770117,
+        is_bot: false,
         first_name: 'first',
         last_name: 'last',
-        username: 'username',
         language_code: 'en',
       },
       message: {
@@ -322,7 +322,7 @@ describe('#getUniqueSessionKey', () => {
   it('extract correct sender id from messageRequest', () => {
     const { connector } = setup();
     const senderId = connector.getUniqueSessionKey(messageRequest.body);
-    expect(senderId).toBe('313534466');
+    expect(senderId).toBe('427770117');
   });
 
   it('extract correct sender id from groupMessageRequest', () => {
@@ -412,10 +412,10 @@ describe('#updateSession', () => {
   it('update session with data needed from messageRequest', async () => {
     const { connector } = setup();
     const user = {
-      id: 313534466,
+      id: 427770117,
+      is_bot: false,
       first_name: 'first',
       last_name: 'last',
-      username: 'username',
       language_code: 'en',
     };
 
@@ -434,11 +434,10 @@ describe('#updateSession', () => {
   it('update session with data needed from callbackQueryRequest', async () => {
     const { connector } = setup();
     const user = {
-      id: 313534466,
-
+      id: 427770117,
+      is_bot: false,
       first_name: 'first',
       last_name: 'last',
-      username: 'username',
       language_code: 'en',
     };
 

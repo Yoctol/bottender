@@ -45,9 +45,26 @@ export default class TelegramConnector
 
   getUniqueSessionKey(body: TelegramRequestBody): string {
     if (body.message !== undefined) {
-      return `${body.message.from.id}`;
+      return `${body.message.chat.id}`;
+    } else if (body.edited_message !== undefined) {
+      return `${body.edited_message.chat.id}`;
+    } else if (body.channel_post !== undefined) {
+      return `${body.channel_post.chat.id}`;
+    } else if (body.edited_channel_post !== undefined) {
+      return `${body.edited_channel_post.chat.id}`;
+    } else if (body.inline_query !== undefined) {
+      return `${body.inline_query.from.id}`;
+    } else if (body.chosen_inline_result !== undefined) {
+      return `${body.chosen_inline_result.from.id}`;
     } else if (body.callback_query !== undefined) {
+      if (body.callback_query.message) {
+        return `${body.callback_query.message.chat.id}`;
+      }
       return `${body.callback_query.from.id}`;
+    } else if (body.shipping_query !== undefined) {
+      return `${body.shipping_query.from.id}`;
+    } else if (body.pre_checkout_query !== undefined) {
+      return `${body.pre_checkout_query.from.id}`;
     }
     return '';
   }
