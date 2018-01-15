@@ -444,6 +444,7 @@ const chosenInlineResult = {
 };
 
 const callbackQuery = {
+  update_id: 141921690,
   callback_query: {
     id: '123',
     from: {
