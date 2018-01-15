@@ -16,8 +16,8 @@ const messageRequest = {
       from: {
         id: 427770117,
         is_bot: false,
-        first_name: 'first',
-        last_name: 'last',
+        first_name: 'user_first',
+        last_name: 'user_last',
         language_code: 'en',
       },
       chat: {
@@ -183,23 +183,22 @@ const callbackQueryRequest = {
       from: {
         id: 427770117,
         is_bot: false,
-        first_name: 'first',
-        last_name: 'last',
+        first_name: 'user_first',
+        last_name: 'user_last',
         language_code: 'en',
       },
       message: {
         message_id: 3300,
         from: {
           id: 313534466,
-          first_name: 'first',
-          last_name: 'last',
-          username: 'username',
-          language_code: 'en',
+          is_bot: true,
+          first_name: 'bot_first',
+          username: 'bot_name',
         },
         chat: {
           id: 427770117,
-          first_name: 'first',
-          last_name: 'last',
+          first_name: 'user_first',
+          last_name: 'user_last',
           type: 'private',
         },
         date: 1502371827,
@@ -411,44 +410,258 @@ describe('#getUniqueSessionKey', () => {
 describe('#updateSession', () => {
   it('update session with data needed from messageRequest', async () => {
     const { connector } = setup();
-    const user = {
-      id: 427770117,
-      is_bot: false,
-      first_name: 'first',
-      last_name: 'last',
-      language_code: 'en',
-    };
 
     const session = {};
 
     await connector.updateSession(session, messageRequest.body);
 
     expect(session).toEqual({
+      channel: undefined,
+      group: undefined,
       user: {
+        id: 427770117,
+        is_bot: false,
+        first_name: 'user_first',
+        last_name: 'user_last',
+        language_code: 'en',
         _updatedAt: expect.any(String),
-        ...user,
+      },
+    });
+  });
+
+  it('update session with data needed from groupMessageRequest', async () => {
+    const { connector } = setup();
+
+    const session = {};
+
+    await connector.updateSession(session, groupMessageRequest.body);
+
+    expect(session).toEqual({
+      channel: undefined,
+      group: {
+        id: -225456171,
+        title: 'Bottender',
+        type: 'group',
+        all_members_are_administrators: true,
+        _updatedAt: expect.any(String),
+      },
+      user: {
+        id: 427770117,
+        is_bot: false,
+        first_name: 'user_first',
+        last_name: 'user_last',
+        language_code: 'en',
+        _updatedAt: expect.any(String),
+      },
+    });
+  });
+
+  it('update session with data needed from editedMessageRequest', async () => {
+    const { connector } = setup();
+
+    const session = {};
+
+    await connector.updateSession(session, editedMessageRequest.body);
+
+    expect(session).toEqual({
+      channel: undefined,
+      group: undefined,
+      user: {
+        id: 427770117,
+        is_bot: false,
+        first_name: 'user_first',
+        last_name: 'user_last',
+        language_code: 'en',
+        _updatedAt: expect.any(String),
+      },
+    });
+  });
+
+  it('update session with data needed from groupEditedMessageRequest', async () => {
+    const { connector } = setup();
+
+    const session = {};
+
+    await connector.updateSession(session, groupEditedMessageRequest.body);
+
+    expect(session).toEqual({
+      channel: undefined,
+      group: {
+        id: -225456171,
+        title: 'Bottender',
+        type: 'group',
+        all_members_are_administrators: true,
+        _updatedAt: expect.any(String),
+      },
+      user: {
+        id: 427770117,
+        is_bot: false,
+        first_name: 'user_first',
+        last_name: 'user_last',
+        language_code: 'en',
+        _updatedAt: expect.any(String),
+      },
+    });
+  });
+
+  it('update session with data needed from channelPostRequest', async () => {
+    const { connector } = setup();
+
+    const session = {};
+
+    await connector.updateSession(session, channelPostRequest.body);
+
+    expect(session).toEqual({
+      group: undefined,
+      user: undefined,
+      channel: {
+        id: -1001305240521,
+        title: 'channel_12345',
+        type: 'channel',
+        _updatedAt: expect.any(String),
+      },
+    });
+  });
+
+  it('update session with data needed from editedChannelPostRequest', async () => {
+    const { connector } = setup();
+
+    const session = {};
+
+    await connector.updateSession(session, editedChannelPostRequest.body);
+
+    expect(session).toEqual({
+      group: undefined,
+      user: undefined,
+      channel: {
+        id: -1001305240521,
+        title: 'channel_12345',
+        type: 'channel',
+        _updatedAt: expect.any(String),
+      },
+    });
+  });
+
+  it('update session with data needed from inlineQueryRequest', async () => {
+    const { connector } = setup();
+    const session = {};
+
+    await connector.updateSession(session, inlineQueryRequest.body);
+
+    expect(session).toEqual({
+      channel: undefined,
+      group: undefined,
+      user: {
+        id: 427770117,
+        is_bot: false,
+        first_name: 'user_first',
+        last_name: 'user_last',
+        language_code: 'en',
+        _updatedAt: expect.any(String),
+      },
+    });
+  });
+
+  it('update session with data needed from chosenInlineResultRequest', async () => {
+    const { connector } = setup();
+    const session = {};
+
+    await connector.updateSession(session, chosenInlineResultRequest.body);
+
+    expect(session).toEqual({
+      channel: undefined,
+      group: undefined,
+      user: {
+        id: 427770117,
+        is_bot: false,
+        first_name: 'user_first',
+        last_name: 'user_last',
+        language_code: 'en',
+        _updatedAt: expect.any(String),
       },
     });
   });
 
   it('update session with data needed from callbackQueryRequest', async () => {
     const { connector } = setup();
-    const user = {
-      id: 427770117,
-      is_bot: false,
-      first_name: 'first',
-      last_name: 'last',
-      language_code: 'en',
-    };
-
     const session = {};
 
     await connector.updateSession(session, callbackQueryRequest.body);
 
     expect(session).toEqual({
+      channel: undefined,
+      group: undefined,
       user: {
+        id: 427770117,
+        is_bot: false,
+        first_name: 'user_first',
+        last_name: 'user_last',
+        language_code: 'en',
         _updatedAt: expect.any(String),
-        ...user,
+      },
+    });
+  });
+
+  it('update session with data needed from groupCallbackQueryRequest', async () => {
+    const { connector } = setup();
+    const session = {};
+
+    await connector.updateSession(session, groupCallbackQueryRequest.body);
+
+    expect(session).toEqual({
+      channel: undefined,
+      group: {
+        id: -225456171,
+        title: 'Bottender',
+        type: 'group',
+        all_members_are_administrators: true,
+        _updatedAt: expect.any(String),
+      },
+      user: {
+        id: 427770117,
+        is_bot: false,
+        first_name: 'user_first',
+        last_name: 'user_last',
+        language_code: 'en',
+        _updatedAt: expect.any(String),
+      },
+    });
+  });
+
+  it('update session with data needed from shippingQueryRequest', async () => {
+    const { connector } = setup();
+    const session = {};
+
+    await connector.updateSession(session, shippingQueryRequest.body);
+
+    expect(session).toEqual({
+      channel: undefined,
+      group: undefined,
+      user: {
+        id: 427770117,
+        first_name: 'user_first',
+        last_name: 'user_last',
+        language_code: 'en',
+        _updatedAt: expect.any(String),
+      },
+    });
+  });
+
+  it('update session with data needed from preCheckoutQueryRequest', async () => {
+    const { connector } = setup();
+    const session = {};
+
+    await connector.updateSession(session, preCheckoutQueryRequest.body);
+
+    expect(session).toEqual({
+      channel: undefined,
+      group: undefined,
+      user: {
+        id: 427770117,
+        first_name: 'user_first',
+        last_name: 'user_last',
+        language_code: 'en',
+        _updatedAt: expect.any(String),
       },
     });
   });
