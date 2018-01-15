@@ -104,6 +104,22 @@ type Message = {
   file?: File,
 };
 
+type InlineQuery = {
+  id: string,
+  from: TelegramUser,
+  location?: Location,
+  query: string,
+  offset: string,
+};
+
+type ChosenInlineResult = {
+  result_id: string,
+  from: TelegramUser,
+  location?: Location,
+  inline_message_id?: string,
+  query: string,
+};
+
 type CallbackQuery = {
   from: TelegramUser,
   message: Message,
@@ -111,10 +127,50 @@ type CallbackQuery = {
   data: string,
 };
 
+type ShippingAddress = {
+  country_code: string,
+  state: string,
+  city: string,
+  street_line1: string,
+  street_line2: string,
+  post_code: string,
+};
+
+type ShippingQuery = {
+  id: string,
+  from: TelegramUser,
+  invoice_payload: string,
+  shipping_address: ShippingAddress,
+};
+
+type OrderInfo = {
+  name?: string,
+  phone_number?: string,
+  email?: string,
+  shipping_address?: ShippingAddress,
+};
+
+type PreCheckoutQuery = {
+  id: string,
+  from: TelegramUser,
+  currency: string,
+  total_amount: number,
+  invoice_payload: string,
+  shipping_option_id?: string,
+  order_info?: OrderInfo,
+};
+
 export type TelegramRawEvent = {
   update_id: number,
   message?: Message,
+  edited_message?: Message,
+  channel_post?: Message,
+  edited_channel_post?: Message,
+  inline_query?: InlineQuery,
+  chosen_inline_result?: ChosenInlineResult,
   callback_query?: CallbackQuery,
+  shipping_query?: ShippingQuery,
+  pre_checkout_query?: PreCheckoutQuery,
 };
 
 export default class TelegramEvent implements Event {
@@ -145,7 +201,7 @@ export default class TelegramEvent implements Event {
    *
    */
   get message(): ?Message {
-    return this._rawEvent.message;
+    return this._rawEvent.message || null;
   }
 
   /**
@@ -420,6 +476,90 @@ export default class TelegramEvent implements Event {
   }
 
   /**
+   * Determine if the event is an edited message event.
+   *
+   */
+  get isEditedMessage(): boolean {
+    return !!this.editedMessage && typeof this.editedMessage === 'object';
+  }
+
+  /**
+   * The edited message from Telegram raw event.
+   *
+   */
+  get editedMessage(): ?Message {
+    return this._rawEvent.edited_message || null;
+  }
+
+  /**
+   * Determine if the event is a channel post event.
+   *
+   */
+  get isChannelPost(): boolean {
+    return !!this.channelPost && typeof this.channelPost === 'object';
+  }
+
+  /**
+   * The channel post from Telegram raw event.
+   *
+   */
+  get channelPost(): ?Message {
+    return this._rawEvent.channel_post || null;
+  }
+
+  /**
+   * Determine if the event is an edited channel post event.
+   *
+   */
+  get isEditedChannelPost(): boolean {
+    return (
+      !!this.editedChannelPost && typeof this.editedChannelPost === 'object'
+    );
+  }
+
+  /**
+   * The edited channel post from Telegram raw event.
+   *
+   */
+  get editedChannelPost(): ?Message {
+    return this._rawEvent.edited_channel_post || null;
+  }
+
+  /**
+   * Determine if the event is an inline query event.
+   *
+   */
+  get isInlineQuery(): boolean {
+    return !!this.inlineQuery && typeof this.inlineQuery === 'object';
+  }
+
+  /**
+   * The inline query from Telegram raw event.
+   *
+   */
+  get inlineQuery(): ?InlineQuery {
+    return this._rawEvent.inline_query || null;
+  }
+
+  /**
+   * Determine if the event is a chosen inline result event.
+   *
+   */
+  get isChosenInlineResult(): boolean {
+    return (
+      !!this.chosenInlineResult && typeof this.chosenInlineResult === 'object'
+    );
+  }
+
+  /**
+   * The chosen inline result from Telegram raw event.
+   *
+   */
+  get chosenInlineResult(): ?ChosenInlineResult {
+    return this._rawEvent.chosen_inline_result || null;
+  }
+
+  /**
    * Determine if the event is a callback query event.
    *
    */
@@ -452,5 +592,37 @@ export default class TelegramEvent implements Event {
       return (this.callbackQuery: any).data;
     }
     return null;
+  }
+
+  /**
+   * Determine if the event is a shipping query event.
+   *
+   */
+  get isShippingQuery(): boolean {
+    return !!this.shippingQuery && typeof this.shippingQuery === 'object';
+  }
+
+  /**
+   * The shipping query from Telegram raw event.
+   *
+   */
+  get shippingQuery(): ?ShippingQuery {
+    return this._rawEvent.shipping_query || null;
+  }
+
+  /**
+   * Determine if the event is a pre checkout query event.
+   *
+   */
+  get isPreCheckoutQuery(): boolean {
+    return !!this.preCheckoutQuery && typeof this.preCheckoutQuery === 'object';
+  }
+
+  /**
+   * The pre checkout query from Telegram raw event.
+   *
+   */
+  get preCheckoutQuery(): ?PreCheckoutQuery {
+    return this._rawEvent.pre_checkout_query || null;
   }
 }
