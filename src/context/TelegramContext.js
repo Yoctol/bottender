@@ -68,11 +68,32 @@ class TelegramContext extends Context implements PlatformContext {
     if (this._event.isMessage) {
       return (this._event.message: any).chat.id;
     }
+    if (this._event.isEditedMessage) {
+      return (this._event.editedMessage: any).chat.id;
+    }
+    if (this._event.isChannelPost) {
+      return (this._event.channelPost: any).chat.id;
+    }
+    if (this._event.isEditedChannelPost) {
+      return (this._event.editedChannelPost: any).chat.id;
+    }
+    if (this._event.isInlineQuery) {
+      return (this._event.inlineQuery: any).from.id;
+    }
+    if (this._event.isChosenInlineResult) {
+      return (this._event.chosenInlineResult: any).from.id;
+    }
     if (
       this._event.isCallbackQuery &&
       (this._event.callbackQuery: any).message
     ) {
       return (this._event.callbackQuery: any).message.chat.id;
+    }
+    if (this._event.isShippingQuery) {
+      return (this._event.shippingQuery: any).from.id;
+    }
+    if (this._event.isPreCheckoutQuery) {
+      return (this._event.preCheckoutQuery: any).from.id;
     }
     if (this._session) {
       return this._session.user.id;
