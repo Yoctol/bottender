@@ -185,6 +185,16 @@ function setup(
   };
 }
 
+const _consoleError = console.error;
+
+beforeEach(() => {
+  console.error = jest.fn();
+});
+
+afterEach(() => {
+  console.error = _consoleError;
+});
+
 describe('#platform', () => {
   it('should be messenger', () => {
     const { connector } = setup();
@@ -360,6 +370,32 @@ describe('#updateSession', () => {
         ...user,
       },
     });
+  });
+
+  it('update session when getUserProfile() failed', async () => {
+    const { connector, mockGraphAPIClient } = setup();
+    const error = new Error('fail');
+
+    mockGraphAPIClient.getUserProfile.mockReturnValue(Promise.reject(error));
+
+    const session = {};
+    await connector.updateSession(session, request.body);
+
+    expect(mockGraphAPIClient.getUserProfile).toBeCalledWith(
+      '1412611362105802',
+      { access_token: undefined }
+    );
+    expect(session).toEqual({
+      user: {
+        _updatedAt: expect.any(String),
+        id: '1412611362105802',
+      },
+    });
+    expect(warning).toBeCalledWith(
+      false,
+      'getUserProfile() failed, `session.user` will only have `id`'
+    );
+    expect(console.error).toBeCalledWith(error);
   });
 });
 

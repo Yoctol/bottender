@@ -206,9 +206,18 @@ export default class MessengerConnector
       }
 
       // FIXME: refine user
-      const user = await this._client.getUserProfile(senderId, {
-        access_token: customAccessToken,
-      });
+      let user = {};
+      try {
+        user = await this._client.getUserProfile(senderId, {
+          access_token: customAccessToken,
+        });
+      } catch (e) {
+        warning(
+          false,
+          'getUserProfile() failed, `session.user` will only have `id`'
+        );
+        console.error(e);
+      }
 
       session.user = {
         _updatedAt: new Date().toISOString(),
