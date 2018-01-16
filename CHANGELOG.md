@@ -1,3 +1,32 @@
+# 0.14.16 / 2018-01-16
+
+### messenger
+
+* [new] Better handle Messenger getUserProfile failure [#155](https://github.com/Yoctol/bottender/pull/155)
+
+If `getUserProfile` throw error, `session.user` will fallback to have only `id` and `_updatedAt` keys.
+
+### telegram
+
+* [new] Added more event parser and getter to telegram event [#150](https://github.com/Yoctol/bottender/pull/150)
+
+```
+event.isEditedMessage
+event.editedMessage
+event.isChannelPost
+event.channelPost
+event.isEditedChannelPost
+event.editedChannelPost
+event.isInlineQuery
+event.inlineQuery
+event.isChosenInlineResult
+event.chosenInlineResult
+event.isShippingQuery
+event.shippingQuery
+event.isPreCheckoutQuery
+event.preCheckoutQuery
+```
+
 # 0.14.15 / 2018-01-12
 
 ### slack
