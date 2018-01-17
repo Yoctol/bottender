@@ -58,6 +58,16 @@ const interactiveMessageRequest = {
   },
 };
 
+const RtmMessage = {
+  type: 'message',
+  channel: 'G7W5WAAAA',
+  user: 'U056KAAAA',
+  text: 'Awesome!!!',
+  ts: '1515405044.000352',
+  source_team: 'T056KAAAA',
+  team: 'T056KAAAA',
+};
+
 function setup({ verificationToken } = {}) {
   const mockSlackOAuthClient = {
     getUserInfo: jest.fn(),
@@ -106,6 +116,12 @@ describe('#getUniqueSessionKey', () => {
       interactiveMessageRequest.body
     );
     expect(channelId).toBe('D7WTL9ECE');
+  });
+
+  it('extract correct channel id from RTM WebSocket message', () => {
+    const { connector } = setup();
+    const channelId = connector.getUniqueSessionKey(RtmMessage);
+    expect(channelId).toBe('G7W5WAAAA');
   });
 });
 

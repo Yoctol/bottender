@@ -39,6 +39,7 @@
     "preversion": "npm test"
   },
   "dependencies": {
+    "@slack/client": "^3.15.0",
     "axios": "^0.17.1",
     "body-parser": "^1.18.2",
     "camel-case": "^3.0.0",
