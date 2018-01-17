@@ -44,10 +44,27 @@ export default class TelegramConnector
   }
 
   getUniqueSessionKey(body: TelegramRequestBody): string {
-    if (body.message !== undefined) {
-      return `${body.message.from.id}`;
-    } else if (body.callback_query !== undefined) {
+    if (body.message) {
+      return `${body.message.chat.id}`;
+    } else if (body.edited_message) {
+      return `${body.edited_message.chat.id}`;
+    } else if (body.channel_post) {
+      return `${body.channel_post.chat.id}`;
+    } else if (body.edited_channel_post) {
+      return `${body.edited_channel_post.chat.id}`;
+    } else if (body.inline_query) {
+      return `${body.inline_query.from.id}`;
+    } else if (body.chosen_inline_result) {
+      return `${body.chosen_inline_result.from.id}`;
+    } else if (body.callback_query) {
+      if (body.callback_query.message) {
+        return `${body.callback_query.message.chat.id}`;
+      }
       return `${body.callback_query.from.id}`;
+    } else if (body.shipping_query) {
+      return `${body.shipping_query.from.id}`;
+    } else if (body.pre_checkout_query) {
+      return `${body.pre_checkout_query.from.id}`;
     }
     return '';
   }
@@ -56,25 +73,67 @@ export default class TelegramConnector
     session: Session,
     body: TelegramRequestBody
   ): Promise<void> {
-    if (!session.user) {
-      // FIXME: refine user
-      let user;
+    if (body.channel_post) {
+      session.channel = body.channel_post.chat;
+    } else if (body.edited_channel_post) {
+      session.channel = body.edited_channel_post.chat;
+    }
+    if (session.channel) {
+      session.channel._updatedAt = new Date().toISOString();
+      Object.freeze(session.channel);
+    }
+    Object.defineProperty(session, 'channel', {
+      configurable: false,
+      enumerable: true,
+      writable: false,
+      value: session.channel,
+    });
 
-      if (body.message !== undefined) {
-        user = body.message.from;
-      } else if (body.callback_query !== undefined) {
-        user = body.callback_query.from;
-      }
-      session.user = user;
-      session.user._updatedAt = new Date().toISOString();
+    if (body.message && body.message.chat.type === 'group') {
+      session.group = body.message.chat;
+    } else if (
+      body.edited_message &&
+      body.edited_message.chat.type === 'group'
+    ) {
+      session.group = body.edited_message.chat;
+    } else if (
+      body.callback_query &&
+      body.callback_query.message &&
+      body.callback_query.message.chat.type === 'group'
+    ) {
+      session.group = body.callback_query.message.chat;
+    }
+    if (session.group) {
+      session.group._updatedAt = new Date().toISOString();
+      Object.freeze(session.group);
+    }
+    Object.defineProperty(session, 'group', {
+      configurable: false,
+      enumerable: true,
+      writable: false,
+      value: session.group,
+    });
+
+    if (body.message) {
+      session.user = body.message.from;
+    } else if (body.edited_message) {
+      session.user = body.edited_message.from;
+    } else if (body.inline_query) {
+      session.user = body.inline_query.from;
+    } else if (body.chosen_inline_result) {
+      session.user = body.chosen_inline_result.from;
+    } else if (body.callback_query) {
+      session.user = body.callback_query.from;
+    } else if (body.shipping_query) {
+      session.user = body.shipping_query.from;
+    } else if (body.pre_checkout_query) {
+      session.user = body.pre_checkout_query.from;
     }
 
-    // TODO: remove later
-    if (!session.user._updatedAt) {
+    if (session.user) {
       session.user._updatedAt = new Date().toISOString();
+      Object.freeze(session.user);
     }
-
-    Object.freeze(session.user);
     Object.defineProperty(session, 'user', {
       configurable: false,
       enumerable: true,

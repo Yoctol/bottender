@@ -4,10 +4,10 @@ const textMessage = {
   message: {
     message_id: 666,
     from: {
-      id: 313534466,
+      id: 427770117,
+      is_bot: false,
       first_name: 'first',
       last_name: 'last',
-      username: 'username',
       language_code: 'en',
     },
     chat: {
@@ -25,10 +25,10 @@ const stickerMessage = {
   message: {
     message_id: 666,
     from: {
-      id: 313534466,
+      id: 427770117,
+      is_bot: false,
       first_name: 'first',
       last_name: 'last',
-      username: 'username',
       language_code: 'en',
     },
     chat: {
@@ -51,9 +51,9 @@ const videoMessage = {
     message_id: 666,
     from: {
       id: 313534466,
+      is_bot: false,
       first_name: 'first',
       last_name: 'last',
-      username: 'username',
       language_code: 'en',
     },
     chat: {
@@ -76,10 +76,10 @@ const voiceMessage = {
   message: {
     message_id: 666,
     from: {
-      id: 313534466,
+      id: 427770117,
+      is_bot: false,
       first_name: 'first',
       last_name: 'last',
-      username: 'username',
       language_code: 'en',
     },
     chat: {
@@ -100,10 +100,10 @@ const videoNoteMessage = {
   message: {
     message_id: 666,
     from: {
-      id: 313534466,
+      id: 427770117,
+      is_bot: false,
       first_name: 'first',
       last_name: 'last',
-      username: 'username',
       language_code: 'en',
     },
     chat: {
@@ -125,10 +125,10 @@ const contactMessage = {
   message: {
     message_id: 666,
     from: {
-      id: 313534466,
+      id: 427770117,
+      is_bot: false,
       first_name: 'first',
       last_name: 'last',
-      username: 'username',
       language_code: 'en',
     },
     chat: {
@@ -149,10 +149,11 @@ const photoMessage = {
   message: {
     message_id: 666,
     from: {
-      id: 313534466,
+      id: 427770117,
+      is_bot: false,
+
       first_name: 'first',
       last_name: 'last',
-      username: 'username',
       language_code: 'en',
     },
     chat: {
@@ -181,10 +182,10 @@ const audioMessage = {
   message: {
     message_id: 666,
     from: {
-      id: 313534466,
+      id: 427770117,
+      is_bot: false,
       first_name: 'first',
       last_name: 'last',
-      username: 'username',
       language_code: 'en',
     },
     chat: {
@@ -206,10 +207,10 @@ const locationMessage = {
   message: {
     message_id: 666,
     from: {
-      id: 313534466,
+      id: 427770117,
+      is_bot: false,
       first_name: 'first',
       last_name: 'last',
-      username: 'username',
       language_code: 'en',
     },
     chat: {
@@ -230,10 +231,10 @@ const venueMessage = {
   message: {
     message_id: 666,
     from: {
-      id: 313534466,
+      id: 427770117,
+      is_bot: false,
       first_name: 'first',
       last_name: 'last',
-      username: 'username',
       language_code: 'en',
     },
     chat: {
@@ -258,10 +259,10 @@ const documentMessage = {
   message: {
     message_id: 666,
     from: {
-      id: 313534466,
+      id: 427770117,
+      is_bot: false,
       first_name: 'first',
       last_name: 'last',
-      username: 'username',
       language_code: 'en',
     },
     chat: {
@@ -282,10 +283,10 @@ const gameMessage = {
   message: {
     message_id: 666,
     from: {
-      id: 313534466,
+      id: 427770117,
+      is_bot: false,
       first_name: 'first',
       last_name: 'last',
-      username: 'username',
       language_code: 'en',
     },
     chat: {
@@ -444,10 +445,12 @@ const chosenInlineResult = {
 };
 
 const callbackQuery = {
+  update_id: 141921690,
   callback_query: {
     id: '123',
     from: {
       id: 427770117,
+      is_bot: false,
       first_name: 'user_first',
       last_name: 'user_last',
       language_code: 'en',
@@ -456,6 +459,7 @@ const callbackQuery = {
       message_id: 666,
       from: {
         id: 313534466,
+        is_bot: true,
         first_name: 'bot_first',
         username: 'bot_name',
       },
@@ -579,10 +583,10 @@ it('#message', () => {
   expect(new TelegramEvent(textMessage).message).toEqual({
     message_id: 666,
     from: {
-      id: 313534466,
+      id: 427770117,
+      is_bot: false,
       first_name: 'first',
       last_name: 'last',
-      username: 'username',
       language_code: 'en',
     },
     chat: {
@@ -1063,6 +1067,7 @@ it('#callbackQuery', () => {
     id: '123',
     from: {
       id: 427770117,
+      is_bot: false,
       first_name: 'user_first',
       last_name: 'user_last',
       language_code: 'en',
@@ -1071,6 +1076,7 @@ it('#callbackQuery', () => {
       message_id: 666,
       from: {
         id: 313534466,
+        is_bot: true,
         first_name: 'bot_first',
         username: 'bot_name',
       },
