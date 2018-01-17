@@ -1,3 +1,39 @@
+# 0.14.17 / 2018-01-17
+
+* [changed] Improve config schema validation.
+
+### slack
+
+* [experimental] add Slack RTM API support:
+
+```js
+const { SlackBot } = require('bottender');
+
+const bot = new SlackBot({
+  accessToken: '__FILL_YOUR_TOKEN_HERE__',
+});
+
+bot.onEvent(async context => {
+  await context.sendText('Hello World');
+});
+
+bot.createRtmRuntime();
+```
+
+### telegram
+
+* [new] Handle all of telegram event types includes:
+  * `message`
+  * `edited_message`
+  * `channel_post`
+  * `edited_channel_post`
+  * `inline_query`
+  * `chosen_inline_result`
+  * `callback_query`
+  * `shipping_query`
+  * `pre_checkout_query`
+* [new] Support group chat events.
+
 # 0.14.16 / 2018-01-16
 
 ### messenger
