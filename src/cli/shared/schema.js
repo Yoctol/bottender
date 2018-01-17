@@ -45,7 +45,7 @@ const firstLayerMenuItemSchema = Joi.object()
 
 const schema = Joi.object().keys({
   messenger: Joi.object().keys({
-    accessToken: Joi.string().required(),
+    accessToken: Joi.string(),
     verifyToken: Joi.string(),
     appId: Joi.string(),
     appSecret: Joi.string(),
@@ -132,6 +132,10 @@ const schema = Joi.object().keys({
     accessToken: Joi.string().required(),
   }),
   slack: Joi.object().keys({
+    accessToken: Joi.string().required(),
+    verificationToken: Joi.string(),
+  }),
+  viber: Joi.object().keys({
     accessToken: Joi.string().required(),
   }),
   ngrok: Joi.boolean(),
