@@ -105,6 +105,7 @@ method, we call it handler. You can put your bot logic in there.
 * Update, Delete Messages
 * Keyboard
 * Group Chat
+* Inline Query
 * Message Live Location
 * Payment
 
