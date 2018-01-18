@@ -147,12 +147,27 @@ const RtmMessage = {
   team: 'T056KAAAA',
 };
 
+const slashCommandMessage = {
+  token: 'xxxxxxxxxxxxxxxxxxxxxxxx',
+  team_id: 'T056K0000',
+  team_domain: 'domain',
+  channel_id: 'G7W5W0000',
+  channel_name: 'channel_name',
+  user_id: 'U056K0000',
+  user_name: 'user_name',
+  command: '/command',
+  text: 'arguments',
+  response_url:
+    'https://hooks.slack.com/commands/T056K0000/300680000000/xxxxxxxxxxxxxxxxxxxxxxxx',
+  trigger_id: '300680200000.5223100000.e4f5ce4d607d59005675000000000000',
+};
+
 function setup({
   verificationToken = 'xxxxxxxxxxxxxxxxxxxxxxxxxxx',
   skipLegacyProfile,
   includeBotMessages,
 } = {}) {
-  const mockSlackOAuthClient = {
+    const mockSlackOAuthClient = {
     getUserInfo: jest.fn(),
     getConversationInfo: jest.fn(),
     getAllConversationMembers: jest.fn(),
@@ -222,6 +237,11 @@ describe('#getUniqueSessionKey', () => {
     const { connector } = setup();
     const channelId = connector.getUniqueSessionKey(PinAddedRequest.body);
     expect(channelId).toBe('C02ELGNBH');
+
+  it('extract correct channel id from slash command', () => {
+    const { connector } = setup();
+    const channelId = connector.getUniqueSessionKey(slashCommandMessage);
+    expect(channelId).toBe('G7W5W0000');
   });
 
   it("extract correct channel id from view event's private_metadata", () => {

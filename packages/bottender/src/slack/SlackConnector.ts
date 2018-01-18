@@ -17,8 +17,9 @@ import SlackEvent, {
   InteractiveMessageEvent,
   Message,
   SlackRawEvent,
+  SlashCommandEvent,
+  UIEvent,
 } from './SlackEvent';
-
 // FIXME
 export type SlackUser = {
   id: string;
@@ -115,15 +116,14 @@ export default class SlackConnector
       }
       return payload as BlockActionEvent;
     }
-
-    // for RTM WebSocket messages
+    // for RTM WebSocket messages and Slach Command messages
     return (body as any) as Message;
   }
 
   _isBotEventRequest(body: SlackRequestBody): boolean {
     const rawEvent = this._getRawEventFromRequest(body);
     return !!(
-      rawEvent.botId ||
+      (rawEvent as Message).botId ||
       ('subtype' in rawEvent && rawEvent.subtype === 'bot_message')
     );
   }
@@ -168,7 +168,11 @@ export default class SlackConnector
       return rawEvent.item.channel;
     }
 
-    return (rawEvent as Message).channel;
+    if (rawEvent.type === 'interactive_message') {
+      return (rawEvent as InteractiveMessageEvent).channel.id;
+    }
+
+    return (rawEvent as Message).channel || (rawEvent as SlashCommandEvent).channelId;
   }
 
   async updateSession(session: Session, body: SlackRequestBody): Promise<void> {
@@ -184,9 +188,9 @@ export default class SlackConnector
       rawEvent.type === 'view_submission' ||
       rawEvent.type === 'view_closed'
     ) {
-      userFromBody = rawEvent.user.id;
+      userFromBody = (rawEvent as UIEvent).user.id;
     } else {
-      userFromBody = (rawEvent as Message).user;
+      userFromBody = (rawEvent as Message).user || (rawEvent as SlashCommandEvent).userId;
     }
 
     if (
