@@ -34,6 +34,7 @@ const createMockTelegramClient = () => ({
   sendGame: jest.fn(),
   setGameScore: jest.fn(),
   getGameHighScores: jest.fn(),
+  answerInlineQuery: jest.fn(),
 });
 
 const _rawEvent = {
@@ -145,13 +146,7 @@ describe('#sendMessage', () => {
   });
 
   it('should not call send method if dont have session', async () => {
-    const { client, event } = setup();
-    const args = {
-      client,
-      event,
-      session: undefined,
-    };
-    const context = new TelegramContext(args);
+    const { context, client } = setup({ session: null });
 
     await context.sendMessage('xxx.com');
 
@@ -495,6 +490,127 @@ describe('#getGameHighScores', () => {
     await context.getGameHighScores();
 
     expect(context.isHandled).toBe(true);
+  });
+});
+
+describe('#answerInlineQuery', () => {
+  const inlineQuery = {
+    update_id: 141921700,
+    inline_query: {
+      id: '1837258670654537434',
+      from: {
+        id: 427770117,
+        is_bot: false,
+        first_name: 'user_first',
+        last_name: 'user_last',
+        language_code: 'en',
+      },
+      query: '123',
+      offset: '',
+    },
+  };
+  it('should to call client.answerInlineQuery', async () => {
+    const { context, client } = setup({ rawEvent: inlineQuery });
+
+    const response = {
+      ok: true,
+    };
+
+    client.answerInlineQuery.mockReturnValue(Promise.resolve(response));
+
+    const result = await context.answerInlineQuery(
+      [
+        {
+          type: 'photo',
+          id: 'UNIQUE_ID',
+          photo_file_id: 'FILE_ID',
+          title: 'PHOTO_TITLE',
+        },
+        {
+          type: 'audio',
+          id: 'UNIQUE_ID',
+          audio_file_id: 'FILE_ID',
+          caption: 'AUDIO_TITLE',
+        },
+      ],
+      {
+        cache_time: 1000,
+      }
+    );
+
+    expect(client.answerInlineQuery).toBeCalledWith(
+      '1837258670654537434',
+      [
+        {
+          type: 'photo',
+          id: 'UNIQUE_ID',
+          photo_file_id: 'FILE_ID',
+          title: 'PHOTO_TITLE',
+        },
+        {
+          type: 'audio',
+          id: 'UNIQUE_ID',
+          audio_file_id: 'FILE_ID',
+          caption: 'AUDIO_TITLE',
+        },
+      ],
+      {
+        cache_time: 1000,
+      }
+    );
+    expect(result).toEqual(response);
+  });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup({ rawEvent: inlineQuery });
+
+    await context.answerInlineQuery(
+      [
+        {
+          type: 'photo',
+          id: 'UNIQUE_ID',
+          photo_file_id: 'FILE_ID',
+          title: 'PHOTO_TITLE',
+        },
+        {
+          type: 'audio',
+          id: 'UNIQUE_ID',
+          audio_file_id: 'FILE_ID',
+          caption: 'AUDIO_TITLE',
+        },
+      ],
+      {
+        cache_time: 1000,
+      }
+    );
+
+    expect(context.isHandled).toBe(true);
+  });
+
+  it('should not call answerInlineQuery method if event type is not InlineQuery', async () => {
+    const { context, client } = setup();
+
+    await context.answerInlineQuery(
+      [
+        {
+          type: 'photo',
+          id: 'UNIQUE_ID',
+          photo_file_id: 'FILE_ID',
+          title: 'PHOTO_TITLE',
+        },
+        {
+          type: 'audio',
+          id: 'UNIQUE_ID',
+          audio_file_id: 'FILE_ID',
+          caption: 'AUDIO_TITLE',
+        },
+      ],
+      {
+        cache_time: 1000,
+      }
+    );
+
+    expect(client.answerInlineQuery).not.toBeCalled();
   });
 });
 
