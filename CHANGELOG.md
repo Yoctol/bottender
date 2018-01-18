@@ -1,3 +1,33 @@
+# 0.14.18 / 2018-01-18
+
+* [fix] Prevent applying any mutations to `initialState` [#164](https://github.com/Yoctol/bottender/pull/164)
+
+### telegram
+
+* [new] Added `context.answerInlineQuery` for Telegram [#165](https://github.com/Yoctol/bottender/pull/165):
+
+```js
+context.answerInlineQuery(
+  [
+    {
+      type: 'photo',
+      id: 'UNIQUE_ID',
+      photo_file_id: 'FILE_ID',
+      title: 'PHOTO_TITLE',
+    },
+    {
+      type: 'audio',
+      id: 'UNIQUE_ID',
+      audio_file_id: 'FILE_ID',
+      caption: 'AUDIO_TITLE',
+    },
+  ],
+  {
+    cache_time: 1000,
+  }
+);
+```
+
 # 0.14.17 / 2018-01-17
 
 * [changed] Improve config schema validation.
