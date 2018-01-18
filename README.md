@@ -3,7 +3,8 @@
 [![npm](https://img.shields.io/npm/v/bottender.svg?style=flat-square)](https://www.npmjs.com/package/bottender)
 [![CircleCI](https://circleci.com/gh/Yoctol/bottender.svg?style=shield)](https://circleci.com/gh/Yoctol/bottender)
 [![coverage](https://codecov.io/gh/Yoctol/bottender/branch/master/graph/badge.svg)](https://codecov.io/gh/Yoctol/bottender)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/Yoctol/bottender#contributing)
 
 ![](https://user-images.githubusercontent.com/3382565/33872101-6cbd07d8-df50-11e7-9c80-d1415448122a.png)
 
