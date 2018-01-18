@@ -107,18 +107,18 @@ export type ViewEvent = UIEvent & {
 };
 
 export type SlashCommandEvent = {
-  type: string | null,
-  token: string,
-  teamId: string,
-  teamDomain: string,
-  channelId: string,
-  channelName: string,
-  userId: string,
-  userName: string,
-  command: string,
-  text: string,
-  responseUrl: string,
-  triggerId: string,
+  type: string | null;
+  token: string;
+  teamId: string;
+  teamDomain: string;
+  channelId: string;
+  channelName: string;
+  userId: string;
+  userName: string;
+  command: string;
+  text: string;
+  responseUrl: string;
+  triggerId: string;
 };
 
 export type SlackRawEvent =
@@ -148,10 +148,7 @@ export default class SlackEvent implements Event<SlackRawEvent> {
    *
    */
   get isMessage(): boolean {
-    return (
-      ((this._rawEvent as any) as Message | InteractiveMessageEvent).type ===
-      'message'
-    );
+    return this._rawEvent.type === 'message';
   }
 
   /**
@@ -219,7 +216,7 @@ export default class SlackEvent implements Event<SlackRawEvent> {
    *
    */
   get isText(): boolean {
-    return !!((this._rawEvent as any) as Message | SlashCommandEvent).text;
+    return this.isMessage || !!(this._rawEvent as SlashCommandEvent).text;
   }
 
   /**
@@ -228,8 +225,9 @@ export default class SlackEvent implements Event<SlackRawEvent> {
    */
   get text(): string | null {
     if (this.isText) {
-      return ((this.message as any) as Message).text;
+      return (this._rawEvent as Message).text;
     }
+
     return null;
   }
 
@@ -238,10 +236,7 @@ export default class SlackEvent implements Event<SlackRawEvent> {
    *
    */
   get isInteractiveMessage(): boolean {
-    return (
-      ((this._rawEvent as any) as Message | InteractiveMessageEvent).type ===
-      'interactive_message'
-    );
+    return this._rawEvent.type === 'interactive_message';
   }
 
   /**
@@ -249,7 +244,7 @@ export default class SlackEvent implements Event<SlackRawEvent> {
    *
    */
   get isBlockAction(): boolean {
-    return (this._rawEvent as BlockActionEvent).type === 'block_actions';
+    return this._rawEvent.type === 'block_actions';
   }
 
   /**
@@ -257,7 +252,7 @@ export default class SlackEvent implements Event<SlackRawEvent> {
    *
    */
   get isViewSubmission(): boolean {
-    return (this._rawEvent as ViewEvent).type === 'view_submission';
+    return this._rawEvent.type === 'view_submission';
   }
 
   /**
@@ -265,7 +260,7 @@ export default class SlackEvent implements Event<SlackRawEvent> {
    *
    */
   get isViewClosed(): boolean {
-    return (this._rawEvent as ViewEvent).type === 'view_closed';
+    return this._rawEvent.type === 'view_closed';
   }
 
   /**
@@ -311,7 +306,7 @@ export default class SlackEvent implements Event<SlackRawEvent> {
    *
    */
   get isSlashCommand(): boolean {
-    return !!((this._rawEvent as any) as SlashCommandEvent).command;
+    return !!(this._rawEvent as SlashCommandEvent).command;
   }
 
   /**
@@ -319,7 +314,7 @@ export default class SlackEvent implements Event<SlackRawEvent> {
    *
    */
   get slashCommand(): string | null {
-    return ((this._rawEvent as any) as SlashCommandEvent).command || null;
+    return (this._rawEvent as SlashCommandEvent).command || null;
   }
 }
 

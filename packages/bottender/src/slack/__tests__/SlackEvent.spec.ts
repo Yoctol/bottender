@@ -553,17 +553,17 @@ const interactiveMessageEvent = {
 
 const slashCommandMessageEvent = {
   token: 'xxxxxxxxxxxxxxxxxxxxxxxx',
-  team_id: 'T056K0000',
-  team_domain: 'domain',
-  channel_id: 'G7W5W0000',
-  channel_name: 'channel_name',
-  user_id: 'U056K0000',
-  user_name: 'user_name',
+  teamId: 'T056K0000',
+  teamDomain: 'domain',
+  channelId: 'G7W5W0000',
+  channelName: 'channel_name',
+  userId: 'U056K0000',
+  userName: 'user_name',
   command: '/command',
   text: 'arguments',
-  response_url:
+  responseUrl:
     'https://hooks.slack.com/commands/T056K0000/300680000000/xxxxxxxxxxxxxxxxxxxxxxxx',
-  trigger_id: '300680200000.5223100000.e4f5ce4d607d59005675000000000000',
+  triggerId: '300680200000.5223100000.e4f5ce4d607d59005675000000000000',
 };
 
 it('#rawEvent', () => {

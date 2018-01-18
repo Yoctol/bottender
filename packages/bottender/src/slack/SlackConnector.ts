@@ -116,7 +116,7 @@ export default class SlackConnector
       }
       return payload as BlockActionEvent;
     }
-    // for RTM WebSocket messages and Slach Command messages
+    // for RTM WebSocket messages and Slash Command messages
     return (body as any) as Message;
   }
 
@@ -168,11 +168,9 @@ export default class SlackConnector
       return rawEvent.item.channel;
     }
 
-    if (rawEvent.type === 'interactive_message') {
-      return (rawEvent as InteractiveMessageEvent).channel.id;
-    }
-
-    return (rawEvent as Message).channel || (rawEvent as SlashCommandEvent).channelId;
+    return (
+      (rawEvent as Message).channel || (rawEvent as SlashCommandEvent).channelId
+    );
   }
 
   async updateSession(session: Session, body: SlackRequestBody): Promise<void> {
@@ -190,7 +188,8 @@ export default class SlackConnector
     ) {
       userFromBody = (rawEvent as UIEvent).user.id;
     } else {
-      userFromBody = (rawEvent as Message).user || (rawEvent as SlashCommandEvent).userId;
+      userFromBody =
+        (rawEvent as Message).user || (rawEvent as SlashCommandEvent).userId;
     }
 
     if (
