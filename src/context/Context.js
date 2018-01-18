@@ -1,6 +1,7 @@
 /* @flow */
 
 import warning from 'warning';
+import cloneDeep from 'lodash/cloneDeep';
 
 type Options = {|
   client: any,
@@ -32,7 +33,8 @@ export default class Context {
     this._initialState = initialState || {};
 
     if (this._session && !this._session._state) {
-      this._session._state = this._initialState;
+      const sess = this._session;
+      sess._state = cloneDeep(this._initialState);
     }
 
     this.response = {
@@ -109,7 +111,8 @@ export default class Context {
    */
   resetState(): void {
     if (this._session) {
-      this._session._state = this._initialState;
+      const sess = this._session;
+      sess._state = cloneDeep(this._initialState);
     } else {
       warning(
         false,

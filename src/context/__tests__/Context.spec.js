@@ -43,6 +43,15 @@ describe('state', () => {
       expect(context.state).toEqual(initialState);
     });
 
+    it('should not reference to the initialState', () => {
+      const initialState = { a: 1 };
+
+      const { context } = setup({ initialState });
+
+      expect(context.state).toEqual(initialState);
+      expect(context.state).not.toBe(initialState);
+    });
+
     it('should not do initialize when state exists', () => {
       const state = { a: 1 };
 
@@ -99,6 +108,18 @@ describe('state', () => {
       context.resetState();
 
       expect(context.state).toEqual(initialState);
+    });
+
+    it('should not reference to initialState', () => {
+      const state = { a: 2 };
+      const initialState = { a: 1 };
+
+      const { context } = setup({ session: { _state: state }, initialState });
+
+      context.resetState();
+
+      expect(context.state).toEqual(initialState);
+      expect(context.state).not.toBe(initialState);
     });
 
     it('should call warning if dont have session', async () => {
