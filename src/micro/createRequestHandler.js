@@ -6,6 +6,7 @@ import verifyMessengerSignature from './verifyMessengerSignature';
 import verifyMessengerWebhook from './verifyMessengerWebhook';
 import verifySlackSignature from './verifySlackSignature';
 import verifySlackWebhook from './verifySlackWebhook';
+import verifyViberSignature from './verifyViberSignature';
 
 function createRequestHandler(bot, config = {}) {
   const requestHandler = bot.createRequestHandler();
@@ -38,6 +39,11 @@ function createRequestHandler(bot, config = {}) {
           }
         } else if (bot.connector.platform === 'slack') {
           const valid = await verifySlackSignature(bot)(req, res);
+          if (!valid) {
+            return;
+          }
+        } else if (bot.connector.platform === 'viber') {
+          const valid = await verifyViberSignature(bot)(req, res);
           if (!valid) {
             return;
           }

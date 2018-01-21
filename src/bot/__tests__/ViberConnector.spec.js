@@ -373,3 +373,16 @@ describe('#createContext', () => {
     expect(context).toBeInstanceOf(ViberContext);
   });
 });
+
+describe('#verifySignature', () => {
+  it('should return true if signature is equal app sercret after crypto', () => {
+    const { connector } = setup();
+
+    const result = connector.verifySignature(
+      'rawBody',
+      '250a5136d2f241195d4cb981a7293958434ec3ba9e50ed20788e9b030a1dd878='
+    );
+
+    expect(result).toBe(true);
+  });
+});

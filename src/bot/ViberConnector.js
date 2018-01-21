@@ -1,4 +1,5 @@
 /* @flow */
+import crypto from 'crypto';
 
 import { ViberClient } from 'messaging-api-viber';
 import { addedDiff } from 'deep-object-diff';
@@ -17,9 +18,11 @@ type ConstructorOptions = {|
 |};
 
 export default class ViberConnector implements Connector<ViberRequestBody> {
+  _accessToken: ?string;
   _client: ViberClient;
 
   constructor({ accessToken, client }: ConstructorOptions) {
+    this._accessToken = accessToken;
     this._client = client || ViberClient.connect(accessToken);
   }
 
@@ -112,5 +115,25 @@ export default class ViberConnector implements Connector<ViberRequestBody> {
       session,
       initialState,
     });
+  }
+
+  verifySignature(rawBody: string, signature: string): boolean {
+    const hashBufferFromBody = crypto
+      .createHmac('sha256', this._accessToken || '')
+      .update(rawBody)
+      .digest();
+
+    const bufferFromSignature = Buffer.from(signature, 'hex');
+
+    // return early here if buffer lengths are not equal since timingSafeEqual
+    // will throw if buffer lengths are not equal
+    if (bufferFromSignature.length !== hashBufferFromBody.length) {
+      return false;
+    }
+
+    // wait this PR to be merged
+    // https://github.com/facebook/flow/pull/4974
+    // $FlowExpectedError
+    return crypto.timingSafeEqual(bufferFromSignature, hashBufferFromBody);
   }
 }

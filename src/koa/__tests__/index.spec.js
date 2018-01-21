@@ -8,6 +8,8 @@ describe('koa', () => {
     expect(koa.verifyLineSignature).toBeDefined();
     expect(koa.verifyMessengerSignature).toBeDefined();
     expect(koa.verifyMessengerWebhook).toBeDefined();
+    expect(koa.verifySlackSignature).toBeDefined();
     expect(koa.verifySlackWebhook).toBeDefined();
+    expect(koa.verifyViberSignature).toBeDefined();
   });
 });
