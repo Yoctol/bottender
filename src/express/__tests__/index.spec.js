@@ -8,6 +8,8 @@ describe('express', () => {
     expect(express.verifyLineSignature).toBeDefined();
     expect(express.verifyMessengerSignature).toBeDefined();
     expect(express.verifyMessengerWebhook).toBeDefined();
+    expect(express.verifySlackSignature).toBeDefined();
     expect(express.verifySlackWebhook).toBeDefined();
+    expect(express.verifyViberSignature).toBeDefined();
   });
 });

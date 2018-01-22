@@ -16,6 +16,8 @@ describe('restify', () => {
     expect(restify.verifyLineSignature).toBeDefined();
     expect(restify.verifyMessengerSignature).toBeDefined();
     expect(restify.verifyMessengerWebhook).toBeDefined();
+    expect(restify.verifySlackSignature).toBeDefined();
     expect(restify.verifySlackWebhook).toBeDefined();
+    expect(restify.verifyViberSignature).toBeDefined();
   });
 });

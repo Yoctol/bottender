@@ -9,6 +9,7 @@ import verifyMessengerWebhook from './verifyMessengerWebhook';
 import verifyMessengerSignature from './verifyMessengerSignature';
 import verifySlackWebhook from './verifySlackWebhook';
 import verifySlackSignature from './verifySlackSignature';
+import verifyViberSignature from './verifyViberSignature';
 
 function registerRoutes(server, bot, config = {}) {
   const path = config.path || '/';
@@ -27,6 +28,8 @@ function registerRoutes(server, bot, config = {}) {
     middleware.unshift(verifySlackSignature(bot));
   } else if (bot.connector.platform === 'line') {
     middleware.unshift(verifyLineSignature(bot));
+  } else if (bot.connector.platform === 'viber') {
+    middleware.unshift(verifyViberSignature(bot));
   }
 
   router.post(path, ...middleware, createMiddleware(bot));
