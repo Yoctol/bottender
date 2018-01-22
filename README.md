@@ -5,7 +5,7 @@
 [![coverage](https://codecov.io/gh/Yoctol/bottender/branch/master/graph/badge.svg)](https://codecov.io/gh/Yoctol/bottender)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/Yoctol/bottender#contributing)
-
+[![join chat](https://img.shields.io/badge/discord-join%20chat-green.svg)](https://discord.gg/unmFzmR)
 ![](https://user-images.githubusercontent.com/3382565/33872101-6cbd07d8-df50-11e7-9c80-d1415448122a.png)
 
 * **Flexible** - Declare handlers as any JavaScript function.
@@ -52,6 +52,12 @@ You can find the Bottender documentation on the website.
   * [Server](https://bottender.js.org/docs/Guides-Server)
   * [Session](https://bottender.js.org/docs/Guides-Session)
 * [API Reference](https://bottender.js.org/docs/APIReference-Context)
+
+## Community
+
+[![join chat](https://img.shields.io/badge/discord-join%20chat-green.svg)](https://discord.gg/unmFzmR)
+
+You can discuss anything about Bottender or chatbot development in our [Discord](https://discordapp.com/) Server. [Join now!](https://discord.gg/unmFzmR)
 
 ## Examples
 
