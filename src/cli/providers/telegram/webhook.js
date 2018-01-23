@@ -1,21 +1,12 @@
 import { TelegramClient } from 'messaging-api-telegram';
-import axios from 'axios';
-import get from 'lodash/get';
 import invariant from 'invariant';
+import Confirm from 'prompt-confirm';
 
+import getWebhookFromNgrok from '../../shared/getWebhookFromNgrok';
 import getConfig from '../../shared/getConfig';
-import { print, error, bold } from '../../shared/log';
+import { print, error, bold, warn } from '../../shared/log';
 
 import help from './help';
-
-export const localClient = axios.create({
-  baseURL: 'http://localhost:4040',
-});
-
-const getWebhookFromNgrok = async () => {
-  const res = await localClient.get('/api/tunnels');
-  return get(res, 'data.tunnels[1].public_url'); // tunnels[1] return `https` protocol
-};
 
 export async function getWebhook() {
   try {
@@ -42,14 +33,24 @@ export async function getWebhook() {
   }
 }
 
-export async function setWebhook(_webhook) {
+export async function setWebhook(webhook, ngrokPort = '4040') {
   try {
     const { accessToken } = getConfig('bottender.config.js', 'telegram');
 
     invariant(accessToken, '`accessToken` is not found in config file');
 
     const client = TelegramClient.connect(accessToken);
-    const webhook = _webhook || (await getWebhookFromNgrok());
+
+    if (!webhook) {
+      warn('We can not find the webhook callback url you provided.');
+      const prompt = new Confirm(
+        `Are you using ngrok (get url from ngrok server on http://127.0.0.1:${ngrokPort})?`
+      );
+      const result = await prompt.run();
+      if (result) {
+        webhook = await getWebhookFromNgrok(ngrokPort);
+      }
+    }
 
     invariant(
       webhook,
@@ -108,7 +109,8 @@ export default async function main(ctx) {
       break;
     case 'set': {
       const webhook = ctx.argv.w;
-      await setWebhook(webhook);
+      const ngrokPort = ctx.argv['ngrok-port'];
+      await setWebhook(webhook, ngrokPort);
       break;
     }
     case 'delete':

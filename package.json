@@ -95,7 +95,7 @@
     "warning": "^3.0.0"
   },
   "devDependencies": {
-    "axios-mock-adapter": "^1.10.0",
+    "axios-mock-adapter": "^1.11.0",
     "babel-cli": "^6.26.0",
     "babel-eslint": "~8.0.3",
     "babel-plugin-transform-class-properties": "^6.24.1",

@@ -548,9 +548,9 @@ axios-error@^0.5.4:
   version "0.5.4"
   resolved "https://registry.yarnpkg.com/axios-error/-/axios-error-0.5.4.tgz#f86af6b09df20366c65748e2f0e0b27cf993f8ba"
 
-axios-mock-adapter@^1.10.0:
-  version "1.10.0"
-  resolved "https://registry.yarnpkg.com/axios-mock-adapter/-/axios-mock-adapter-1.10.0.tgz#3ccee65466439a2c7567e932798fc0377d39209d"
+axios-mock-adapter@^1.11.0:
+  version "1.11.0"
+  resolved "https://registry.yarnpkg.com/axios-mock-adapter/-/axios-mock-adapter-1.11.0.tgz#96e4bb2702cf6900f2ae5f9bdbef6e5dc86669e2"
   dependencies:
     deep-equal "^1.0.1"
 

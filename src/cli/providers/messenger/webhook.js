@@ -1,24 +1,14 @@
 import { MessengerClient } from 'messaging-api-messenger';
-import axios from 'axios';
-import get from 'lodash/get';
 import invariant from 'invariant';
 import Confirm from 'prompt-confirm';
 
+import getWebhookFromNgrok from '../../shared/getWebhookFromNgrok';
 import getConfig from '../../shared/getConfig';
 import { print, error, bold, warn } from '../../shared/log';
 
 import help from './help';
 
-export const ngrokClient = axios.create({
-  baseURL: 'http://localhost:4040',
-});
-
-const getWebhookFromNgrok = async () => {
-  const res = await ngrokClient.get('/api/tunnels');
-  return get(res, 'data.tunnels[1].public_url'); // tunnels[1] return `https` protocol
-};
-
-export async function setWebhook(webhook, verifyToken) {
+export async function setWebhook(webhook, verifyToken, ngrokPort = '4040') {
   try {
     const config = getConfig('bottender.config.js', 'messenger');
 
@@ -36,11 +26,11 @@ export async function setWebhook(webhook, verifyToken) {
     if (!webhook) {
       warn('We can not find the webhook callback url you provided.');
       const prompt = new Confirm(
-        'Are you using ngrok (get url from ngrok server on http://127.0.0.1:4040)?'
+        `Are you using ngrok (get url from ngrok server on http://127.0.0.1:${ngrokPort})?`
       );
       const result = await prompt.run();
       if (result) {
-        webhook = await getWebhookFromNgrok();
+        webhook = await getWebhookFromNgrok(ngrokPort);
       }
     }
 
@@ -110,7 +100,8 @@ export default async function main(ctx) {
   if (subcommand === 'set') {
     const webhook = ctx.argv.w;
     const verifyToken = ctx.argv.v;
-    await setWebhook(webhook, verifyToken);
+    const ngrokPort = ctx.argv['ngrok-port'];
+    await setWebhook(webhook, verifyToken, ngrokPort);
   } else {
     error(`Please specify a valid subcommand: set`);
     help();
