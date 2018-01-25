@@ -1,3 +1,19 @@
+# 0.14.19 / 2018-01-25
+
+* [new] Support `--ngrok-port` when setting webhook [#171](https://github.com/Yoctol/bottender/pull/171). For example:
+
+```
+bottender messenger webhook set --ngrok-port 1234
+bottender telegram webhook set --ngrok-port 1234
+bottender viber webhook set --ngrok-port 1234
+```
+
+* [deps] Update part of dependencies.
+
+### viber
+
+* [new] Implement signature verify for viber
+
 # 0.14.18 / 2018-01-18
 
 * [fix] Prevent applying any mutations to `initialState` [#164](https://github.com/Yoctol/bottender/pull/164)
