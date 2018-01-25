@@ -1,24 +1,38 @@
 import { MessengerClient } from 'messaging-api-messenger';
-import axios from 'axios';
-import get from 'lodash/get';
 import invariant from 'invariant';
 import Confirm from 'prompt-confirm';
+import chalk from 'chalk';
 
+import getWebhookFromNgrok from '../../shared/getWebhookFromNgrok';
 import getConfig from '../../shared/getConfig';
 import { print, error, bold, warn } from '../../shared/log';
 
-import help from './help';
+const help = () => {
+  console.log(`
+    bottender messenger webhook <command> [option]
 
-export const ngrokClient = axios.create({
-  baseURL: 'http://localhost:4040',
-});
+    ${chalk.dim('Commands:')}
 
-const getWebhookFromNgrok = async () => {
-  const res = await ngrokClient.get('/api/tunnels');
-  return get(res, 'data.tunnels[1].public_url'); // tunnels[1] return `https` protocol
+      set                   Set Messenger webhook.
+
+    ${chalk.dim('Options:')}
+      -w                    Webhook callback URL
+      -v                    Verify token
+      --ngrok-port          Ngrok port(default: 4040)
+
+    ${chalk.dim('Examples:')}
+
+    ${chalk.dim('-')} Set Messenger webhook url
+
+      ${chalk.cyan('$ bottender messenger webhook set -w http://example.com')}
+
+    ${chalk.dim('-')} Set verify token
+
+      ${chalk.cyan('$ bottender messenger webhook set -v abc123')}
+  `);
 };
 
-export async function setWebhook(webhook, verifyToken) {
+export async function setWebhook(webhook, verifyToken, ngrokPort = '4040') {
   try {
     const config = getConfig('bottender.config.js', 'messenger');
 
@@ -36,11 +50,11 @@ export async function setWebhook(webhook, verifyToken) {
     if (!webhook) {
       warn('We can not find the webhook callback url you provided.');
       const prompt = new Confirm(
-        'Are you using ngrok (get url from ngrok server on http://127.0.0.1:4040)?'
+        `Are you using ngrok (get url from ngrok server on http://127.0.0.1:${ngrokPort})?`
       );
       const result = await prompt.run();
       if (result) {
-        webhook = await getWebhookFromNgrok();
+        webhook = await getWebhookFromNgrok(ngrokPort);
       }
     }
 
@@ -107,12 +121,19 @@ export async function setWebhook(webhook, verifyToken) {
 
 export default async function main(ctx) {
   const subcommand = ctx.argv._[2];
-  if (subcommand === 'set') {
-    const webhook = ctx.argv.w;
-    const verifyToken = ctx.argv.v;
-    await setWebhook(webhook, verifyToken);
-  } else {
-    error(`Please specify a valid subcommand: set`);
-    help();
+  switch (subcommand) {
+    case 'set': {
+      const webhook = ctx.argv.w;
+      const verifyToken = ctx.argv.v;
+      const ngrokPort = ctx.argv['ngrok-port'];
+      await setWebhook(webhook, verifyToken, ngrokPort);
+      break;
+    }
+    case 'help':
+      help();
+      break;
+    default:
+      error(`Please specify a valid subcommand: set`);
+      help();
   }
 }

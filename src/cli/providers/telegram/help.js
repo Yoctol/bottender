@@ -17,6 +17,7 @@ const help = () => {
     ${chalk.dim('Options:')}
 
       -w                    Webhook callback URL
+      --ngrok-port          Ngrok port(default: 4040)
 
     ${chalk.dim('Examples:')}
 

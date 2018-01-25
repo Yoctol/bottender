@@ -1,16 +1,17 @@
-import MockAdapter from 'axios-mock-adapter';
-
-import { setWebhook, ngrokClient } from '../webhook';
+import { setWebhook } from '../webhook';
 
 jest.mock('messaging-api-messenger');
 jest.mock('prompt-confirm');
 
+jest.mock('../../../shared/getWebhookFromNgrok');
 jest.mock('../../../shared/log');
 jest.mock('../../../shared/getConfig');
 
 const Confirm = require('prompt-confirm');
 const { MessengerClient } = require('messaging-api-messenger');
 
+const getWebhookFromNgrok = require('../../../shared/getWebhookFromNgrok')
+  .default;
 const log = require('../../../shared/log');
 const getConfig = require('../../../shared/getConfig');
 
@@ -28,6 +29,10 @@ const MOCK_FILE_WITH_PLATFORM = {
 };
 
 function setup({ success = true } = {}) {
+  getWebhookFromNgrok.mockReturnValue(
+    Promise.resolve('https://fakeDomain.ngrok.io')
+  );
+
   getConfig.mockReturnValue(MOCK_FILE_WITH_PLATFORM.messenger);
 
   const client = {
@@ -37,18 +42,6 @@ function setup({ success = true } = {}) {
   client.createSubscription.mockReturnValue(Promise.resolve({ success }));
 
   MessengerClient.connect = jest.fn(() => client);
-
-  const ngrokClientMock = new MockAdapter(ngrokClient);
-  ngrokClientMock.onGet('/api/tunnels').reply(200, {
-    tunnels: [
-      {
-        public_url: 'http://fakeDomain.ngrok.io',
-      },
-      {
-        public_url: 'https://fakeDomain.ngrok.io',
-      },
-    ],
-  });
 
   Confirm.mockImplementation(() => ({
     run: jest.fn(() => Promise.resolve(true)),
@@ -62,7 +55,6 @@ function setup({ success = true } = {}) {
 
   return {
     client,
-    ngrokClientMock,
   };
 }
 
@@ -109,6 +101,7 @@ describe('resolve', () => {
 
     await setWebhook(undefined, VERIFY_TOKEN);
 
+    expect(getWebhookFromNgrok).toBeCalledWith('4040');
     expect(client.createSubscription).toBeCalledWith({
       app_id: '__APP_ID__',
       access_token: '__APP_ID__|__APP_SECRET__',
@@ -124,6 +117,14 @@ describe('resolve', () => {
       object: 'page',
       verify_token: '__VERIFY_TOKEN__',
     });
+  });
+
+  it('set ngrok webhook port', async () => {
+    setup();
+
+    await setWebhook(undefined, VERIFY_TOKEN, '5555');
+
+    expect(getWebhookFromNgrok).toBeCalledWith('5555');
   });
 });
 

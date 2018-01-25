@@ -1,13 +1,17 @@
-import MockAdapter from 'axios-mock-adapter';
-
-import { setWebhook, localClient as _localClient } from '../webhook';
+import { setWebhook } from '../webhook';
 
 jest.mock('messaging-api-telegram');
+jest.mock('prompt-confirm');
+
+jest.mock('../../../shared/getWebhookFromNgrok');
 jest.mock('../../../shared/log');
 jest.mock('../../../shared/getConfig');
 
+const Confirm = require('prompt-confirm');
 const { TelegramClient } = require('messaging-api-telegram');
 
+const getWebhookFromNgrok = require('../../../shared/getWebhookFromNgrok')
+  .default;
 const log = require('../../../shared/log');
 const getConfig = require('../../../shared/getConfig');
 
@@ -18,8 +22,6 @@ const MOCK_FILE_WITH_PLATFORM = {
   line: {},
 };
 const _exit = process.exit;
-
-let localClient;
 
 const setup = (
   { webhook = 'http://example.com/webhook' } = {
@@ -33,17 +35,13 @@ beforeEach(() => {
   process.exit = jest.fn();
   getConfig.mockReturnValue(MOCK_FILE_WITH_PLATFORM.telegram);
 
-  localClient = new MockAdapter(_localClient);
-  localClient.onGet('/api/tunnels').reply(200, {
-    tunnels: [
-      {
-        public_url: 'http://fakeDomain.ngrok.io',
-      },
-      {
-        public_url: 'https://fakeDomain.ngrok.io',
-      },
-    ],
-  });
+  getWebhookFromNgrok.mockReturnValue(
+    Promise.resolve('https://fakeDomain.ngrok.io')
+  );
+
+  Confirm.mockImplementation(() => ({
+    run: jest.fn(() => Promise.resolve(true)),
+  }));
 
   TelegramClient.connect.mockReturnValue({
     setWebhook: jest.fn(() =>
@@ -81,8 +79,15 @@ describe('resolve', () => {
   it('get ngrok webhook to setup', async () => {
     await setWebhook(undefined);
 
+    expect(getWebhookFromNgrok).toBeCalledWith('4040');
     expect(log.print).toHaveBeenCalledTimes(1);
     expect(log.print.mock.calls[0][0]).toMatch(/Successfully/);
+  });
+
+  it('set ngrok webhook port', async () => {
+    await setWebhook(undefined, '5555');
+
+    expect(getWebhookFromNgrok).toBeCalledWith('5555');
   });
 });
 
