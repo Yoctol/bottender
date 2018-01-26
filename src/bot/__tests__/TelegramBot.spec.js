@@ -1,6 +1,16 @@
 import TelegramBot from '../TelegramBot';
 import TelegramConnector from '../TelegramConnector';
 
+const _consoleError = console.error;
+
+beforeEach(() => {
+  console.error = jest.fn();
+});
+
+afterEach(() => {
+  console.error = _consoleError;
+});
+
 it('should construct bot with TelegramConnector', () => {
   const bot = new TelegramBot({
     accessToken: 'FAKE_TOKEN',
@@ -114,6 +124,7 @@ describe('#createLongPollingRuntime', () => {
           limit: 100,
           timeout: 0,
           allowed_updates: ['message', 'edited_channel_post', 'callback_query'],
+          offset: 1,
         });
         expect(handler).toBeCalledWith(expect.any(Object));
         done();
@@ -123,6 +134,9 @@ describe('#createLongPollingRuntime', () => {
       limit: 100,
       timeout: 0,
       allowed_updates: ['message', 'edited_channel_post', 'callback_query'],
+      offset: 1,
     });
+
+    expect(bot.offset).toBe(1);
   });
 });

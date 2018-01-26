@@ -156,6 +156,27 @@ describe('Joi validate', () => {
     spy.mockRestore();
   });
 
+  it('should throw error if validate failed', () => {
+    const { MOCK_FILE_WITH_PLATFORM } = setup();
+    // slack.accessToken should be string type originally
+    MOCK_FILE_WITH_PLATFORM.slack.accessToken = 12345;
+
+    importFresh.mockReturnValue(MOCK_FILE_WITH_PLATFORM);
+
+    const configPath = 'bottender.config.js';
+    const platform = 'messenger';
+
+    const spy = jest.spyOn(Joi, 'validate');
+
+    expect(() => {
+      getConfig(configPath, platform);
+    }).toThrow();
+    expect(spy).toHaveBeenCalled();
+
+    spy.mockReset();
+    spy.mockRestore();
+  });
+
   it('should pass validate when with `--skip-validate`', () => {
     const { MOCK_FILE_WITH_PLATFORM } = setup();
     importFresh.mockReturnValue(MOCK_FILE_WITH_PLATFORM);

@@ -25,6 +25,7 @@ const _consoleLog = console.log;
 
 beforeEach(() => {
   console.log = jest.fn();
+  connectNgrok.mockImplementation((arg, fn) => fn('error', 'localhost:1234'));
 });
 
 afterEach(() => {
@@ -96,4 +97,5 @@ it('should run connectNgrok when server listen and ngrok option is provided', as
   server.listen();
 
   expect(connectNgrok).toBeCalled();
+  expect(console.log).toBeCalledWith('webhook url: localhost:1234/');
 });
