@@ -16,6 +16,7 @@ const help = () => {
       set                   Set Messenger webhook.
 
     ${chalk.dim('Options:')}
+
       -w                    Webhook callback URL
       -v                    Verify token
       --ngrok-port          Ngrok port(default: 4040)
@@ -29,6 +30,10 @@ const help = () => {
     ${chalk.dim('-')} Set verify token
 
       ${chalk.cyan('$ bottender messenger webhook set -v abc123')}
+
+    ${chalk.dim('-')} Use specific ngrok port
+
+      ${chalk.cyan('$ bottender messenger webhook set --ngrok-port 4041')}
   `);
 };
 
