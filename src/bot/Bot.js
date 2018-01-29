@@ -1,6 +1,7 @@
 /* @flow */
 
 import _debug from 'debug';
+import invariant from 'invariant';
 import pMap from 'p-map';
 
 import MemoryCacheStore from '../cache/MemoryCacheStore';
@@ -66,6 +67,10 @@ export default class Bot {
   }
 
   onEvent(handler: FunctionalHandler | Builder): Bot {
+    invariant(
+      handler,
+      'onEvent: Can not pass `undefined`, `null` or any falsy value as handler'
+    );
     this._handler = handler.build ? handler.build() : handler;
     return this;
   }
