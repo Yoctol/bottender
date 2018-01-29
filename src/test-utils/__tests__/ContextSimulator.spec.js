@@ -226,3 +226,20 @@ describe('#telegram', () => {
     expect(context.event.text).toBe('Awesome');
   });
 });
+
+describe('unknown platform', () => {
+  const simulator = new ContextSimulator({
+    platform: undefined,
+  });
+
+  it('should define mock methods', () => {
+    const context = simulator.createContext({
+      event: {},
+    });
+
+    expect(context.setState).toBeDefined();
+    expect(context.resetState).toBeDefined();
+    expect(context.typing).toBeDefined();
+    expect(context.sendText).toBeDefined();
+  });
+});

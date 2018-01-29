@@ -496,6 +496,25 @@ describe('#createContext', () => {
     expect(context).toBeDefined();
     expect(context.accessToken).toBe('anyToken');
   });
+
+  it('should call warning if it could not find pageId', async () => {
+    const mapPageToAccessToken = jest.fn(() => Promise.resolve('anyToken'));
+    const { connector } = setup({ mapPageToAccessToken });
+    const event = {
+      rawEvent: {},
+    };
+    const session = {};
+
+    await connector.createContext({
+      event,
+      session,
+    });
+
+    expect(warning).toBeCalledWith(
+      false,
+      'Could not find pageId from request body.'
+    );
+  });
 });
 
 describe('#verifySignature', () => {
