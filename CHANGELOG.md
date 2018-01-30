@@ -1,3 +1,7 @@
+# 0.14.20 / 2018-01-30
+
+* [fix] Use sync mode in `ConsoleBot` to fix some format issue.
+
 # 0.14.19 / 2018-01-25
 
 * [new] Support `--ngrok-port` when setting webhook [#171](https://github.com/Yoctol/bottender/pull/171). For example:
