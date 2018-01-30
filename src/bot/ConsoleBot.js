@@ -7,12 +7,9 @@ import Bot from './Bot';
 import ConsoleConnector from './ConsoleConnector';
 
 export default class ConsoleBot extends Bot {
-  constructor({
-    sessionStore,
-    sync,
-  }: { sessionStore: SessionStore, sync?: boolean } = {}) {
+  constructor({ sessionStore }: { sessionStore: SessionStore } = {}) {
     const connector = new ConsoleConnector();
-    super({ connector, sessionStore, sync });
+    super({ connector, sessionStore, sync: true });
   }
 
   createRuntime() {
@@ -22,19 +19,25 @@ export default class ConsoleBot extends Bot {
       output: process.stdout,
     });
 
-    process.stdout.write('You > ');
-
-    rl.on('line', async (line: string = '') => {
+    const handleLine = async (line: string = '') => {
       if (line.toLowerCase() === '/quit') {
         rl.close();
         process.exit();
       }
 
-      requestHandler({
-        message: {
-          text: line,
-        },
-      });
-    });
+      await Promise.resolve(
+        requestHandler({
+          message: {
+            text: line,
+          },
+        })
+      );
+
+      process.stdout.write('You > ');
+      rl.once('line', handleLine);
+    };
+
+    process.stdout.write('You > ');
+    rl.once('line', handleLine);
   }
 }

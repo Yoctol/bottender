@@ -52,7 +52,6 @@ describe('#client', () => {
       jest.runTimersToTime(0);
 
       expect(process.stdout.write).toHaveBeenCalledWith('Bot > hello\n');
-      expect(process.stdout.write).toHaveBeenCalledWith('You > ');
     });
   });
 });

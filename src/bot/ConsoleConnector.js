@@ -18,16 +18,11 @@ type ConstructorOptions = {|
 
 export default class ConsoleConnector implements Connector<ConsoleRequestBody> {
   _client: ConsoleClient;
-  _timeoutId: TimeoutID; // eslint-disable-line no-undef
 
   constructor({ client }: ConstructorOptions = {}) {
     this._client = client || {
       sendText: text => {
-        if (this._timeoutId) {
-          clearTimeout(this._timeoutId);
-        }
         process.stdout.write(`Bot > ${text}\n`);
-        this._timeoutId = setTimeout(() => process.stdout.write(`You > `), 0);
       },
     };
   }
