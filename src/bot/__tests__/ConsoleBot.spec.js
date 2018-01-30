@@ -1,5 +1,7 @@
 import readline from 'readline';
 
+import once from 'once';
+
 import ConsoleBot from '../ConsoleBot';
 import ConsoleConnector from '../ConsoleConnector';
 
@@ -28,10 +30,12 @@ describe('createRuntime', () => {
   it('should work', () => {
     const bot = new ConsoleBot();
     const handler = jest.fn();
+
     bot.onEvent(handler);
 
     readline.createInterface.mockReturnValue({
-      on: (string, fn) => fn(),
+      once: once((string, fn) => fn()),
+      close: jest.fn(),
     });
 
     bot.createRuntime();
@@ -46,10 +50,11 @@ describe('createRuntime', () => {
   it('should exit when entering /quit', () => {
     const bot = new ConsoleBot();
     const handler = jest.fn();
+
     bot.onEvent(handler);
 
     readline.createInterface.mockReturnValue({
-      on: (string, fn) => fn('/quit'),
+      once: once((string, fn) => fn('/quit')),
       close: jest.fn(),
     });
 

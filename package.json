@@ -114,6 +114,7 @@
     "jest-junit": "^3.4.1",
     "lint-staged": "^6.0.1",
     "ngrok": "^2.2.25",
+    "once": "^1.4.0",
     "prettier": "^1.10.2",
     "prettier-package-json": "^1.4.0",
     "rimraf": "^2.6.2",

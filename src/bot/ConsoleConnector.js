@@ -22,7 +22,7 @@ export default class ConsoleConnector implements Connector<ConsoleRequestBody> {
   constructor({ client }: ConstructorOptions = {}) {
     this._client = client || {
       sendText: text => {
-        process.stdout.write(`Bot > ${text}\nYou > `);
+        process.stdout.write(`Bot > ${text}\n`);
       },
     };
   }
