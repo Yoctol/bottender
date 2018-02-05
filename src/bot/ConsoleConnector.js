@@ -14,17 +14,20 @@ export type ConsoleClient = {
 
 type ConstructorOptions = {|
   client?: ConsoleClient,
+  fallbackMethods?: boolean,
 |};
 
 export default class ConsoleConnector implements Connector<ConsoleRequestBody> {
   _client: ConsoleClient;
+  _fallbackMethods: boolean;
 
-  constructor({ client }: ConstructorOptions = {}) {
+  constructor({ client, fallbackMethods }: ConstructorOptions = {}) {
     this._client = client || {
       sendText: text => {
         process.stdout.write(`Bot > ${text}\n`);
       },
     };
+    this._fallbackMethods = fallbackMethods || false;
   }
 
   get platform(): string {
@@ -75,6 +78,7 @@ export default class ConsoleConnector implements Connector<ConsoleRequestBody> {
       event,
       session,
       initialState,
+      fallbackMethods: this._fallbackMethods,
     });
   }
 }

@@ -28,7 +28,8 @@ const userSession = {
     name: 'you',
   },
 };
-const setup = ({ session } = { session: userSession }) => {
+
+const setup = ({ session, fallbackMethods } = { session: userSession }) => {
   const client = {
     sendText: jest.fn(),
   };
@@ -36,6 +37,7 @@ const setup = ({ session } = { session: userSession }) => {
     client,
     event: new ConsoleEvent(rawEvent),
     session,
+    fallbackMethods: fallbackMethods || false,
   });
   return {
     client,
@@ -82,6 +84,24 @@ describe('#sendText', () => {
     const { context } = setup();
 
     await context.sendText('hello');
+
+    expect(context.isHandled).toBe(true);
+  });
+});
+
+describe('method missing', () => {
+  it('should write text to stdout', async () => {
+    const { context, client } = setup({ fallbackMethods: true });
+
+    await context.sendABC('hello', { json: true });
+
+    expect(client.sendText).toBeCalledWith('sendABC: ["hello",{"json":true}]');
+  });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup({ fallbackMethods: true });
+
+    await context.sendABC('hello');
 
     expect(context.isHandled).toBe(true);
   });

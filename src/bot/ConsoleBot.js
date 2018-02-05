@@ -7,8 +7,11 @@ import Bot from './Bot';
 import ConsoleConnector from './ConsoleConnector';
 
 export default class ConsoleBot extends Bot {
-  constructor({ sessionStore }: { sessionStore: SessionStore } = {}) {
-    const connector = new ConsoleConnector();
+  constructor({
+    sessionStore,
+    fallbackMethods,
+  }: { sessionStore: SessionStore, fallbackMethods?: boolean } = {}) {
+    const connector = new ConsoleConnector({ fallbackMethods });
     super({ connector, sessionStore, sync: true });
   }
 
