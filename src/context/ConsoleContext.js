@@ -13,6 +13,7 @@ type Options = {|
   event: ConsoleEvent,
   session: ?Session,
   initialState: ?Object,
+  fallbackMethods: boolean,
 |};
 
 export default class ConsoleContext extends Context implements PlatformContext {
@@ -20,8 +21,29 @@ export default class ConsoleContext extends Context implements PlatformContext {
   _event: ConsoleEvent;
   _session: ?Session;
 
-  constructor({ client, event, session, initialState }: Options) {
+  constructor({
+    client,
+    event,
+    session,
+    initialState,
+    fallbackMethods,
+  }: Options) {
     super({ client, event, session, initialState });
+    if (fallbackMethods) {
+      // $FlowExpectedError
+      return new Proxy(this, {
+        get(target, key) {
+          if (target[key]) {
+            return target[key];
+          }
+          // should return undefined when check if it is a promise
+          if (key === 'then') return;
+          return async (...args) => {
+            await target._methodMissing(key, args);
+          };
+        },
+      });
+    }
   }
 
   /**
@@ -49,5 +71,10 @@ export default class ConsoleContext extends Context implements PlatformContext {
   async sendText(text: string): Promise<void> {
     this._isHandled = true;
     this._client.sendText(text);
+  }
+
+  async _methodMissing(method: string, args: Array<any>): Promise<void> {
+    this._isHandled = true;
+    this._client.sendText(`${method}: ${JSON.stringify(args)}`);
   }
 }
