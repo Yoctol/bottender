@@ -174,6 +174,10 @@ export default class Bot {
           if (sessionId && session) {
             // $FlowFixMe: suppressing this error until we can refactor
             session.lastActivity = Date.now();
+            contexts.forEach(context => {
+              context.isSessionWritten = true;
+            });
+
             await this._sessions.write(sessionId, session);
           }
         } catch (err) {
@@ -188,6 +192,10 @@ export default class Bot {
           if (sessionId && session) {
             // $FlowFixMe: suppressing this error until we can refactor
             session.lastActivity = Date.now();
+            contexts.forEach(context => {
+              context.isSessionWritten = true;
+            });
+
             return this._sessions.write(sessionId, session);
           }
         })

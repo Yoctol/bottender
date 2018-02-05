@@ -86,6 +86,19 @@ describe('state', () => {
 
       expect(warning).toBeCalled();
     });
+
+    it('should call warning if session has been written', async () => {
+      const state = { a: 1 };
+      const { context } = setup({ session: { _state: state } });
+
+      context.setState({ b: 2 });
+      expect(warning.mock.calls[0][0]).toBe(true);
+
+      context.isSessionWritten = true;
+
+      context.setState({ c: 3 });
+      expect(warning.mock.calls[1][0]).toBe(false);
+    });
   });
 
   describe('#resetState', () => {
@@ -128,6 +141,19 @@ describe('state', () => {
       context.resetState();
 
       expect(warning).toBeCalled();
+    });
+
+    it('should call warning if session has been written', async () => {
+      const state = { a: 1 };
+      const { context } = setup({ session: { _state: state } });
+
+      context.resetState();
+      expect(warning.mock.calls[0][0]).toBe(true);
+
+      context.isSessionWritten = true;
+
+      context.resetState();
+      expect(warning.mock.calls[1][0]).toBe(false);
     });
   });
 });
