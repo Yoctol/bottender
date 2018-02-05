@@ -188,7 +188,7 @@ export default class Bot {
           if (sessionId && session) {
             // $FlowFixMe: suppressing this error until we can refactor
             session.lastActivity = Date.now();
-            this._sessions.write(sessionId, session);
+            return this._sessions.write(sessionId, session);
           }
         })
         .catch(console.error);
