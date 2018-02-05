@@ -1,3 +1,39 @@
+# 0.14.21 / 2018-02-05
+
+* [new] Support all of methods on `ConsoleContext` with `fallbackMethods: true` [#184](https://github.com/Yoctol/bottender/pull/184), for example:
+
+```js
+const bot = new ConsoleBot({ fallbackMethods: true });
+
+bot.onEvent(async context => {
+  await context.sendText('Hello World');
+  await context.sendImage('https://example.com/vr.jpg');
+  await context.sendButtonTemplate('What do you want to do next?', [
+    {
+      type: 'web_url',
+      url: 'https://petersapparel.parseapp.com',
+      title: 'Show Website',
+    },
+    {
+      type: 'postback',
+      title: 'Start Chatting',
+      payload: 'USER_DEFINED_PAYLOAD',
+    },
+  ]);
+});
+```
+
+Result:
+
+```
+Bot > Hello World
+Bot > sendImage: ["https://example.com/vr.jpg"]
+Bot > sendButtonTemplate: ["What do you want to do next?",[{"type":"web_url","url":"https://petersapparel.parseapp.com","title":"Show Website"},{"type":"postback","title":"Start Chatting","payload":"USER_DEFINED_PAYLOAD"}]]
+```
+
+* [fix] Catch write session error in async mode [#185](https://github.com/Yoctol/bottender/pull/185)
+* [improve] Show warning when calling `setState` or `resetState` after session have been written [#186](https://github.com/Yoctol/bottender/pull/186)
+
 # 0.14.20 / 2018-01-30
 
 * [fix] Use sync mode in `ConsoleBot` to fix some format issue.
