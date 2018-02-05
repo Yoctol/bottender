@@ -18,6 +18,7 @@ type Response = {
 
 export default class Context {
   _isHandled = false;
+  _isSessionWritten = false;
 
   _client: Object;
   _event: Object;
@@ -72,6 +73,13 @@ export default class Context {
     return this._isHandled;
   }
 
+  get isSessionWritten(): boolean {
+    return this._isSessionWritten;
+  }
+  set isSessionWritten(bool: boolean): void {
+    this._isSessionWritten = bool;
+  }
+
   /**
    * The state in the conversation context.
    *
@@ -93,8 +101,14 @@ export default class Context {
    */
   setState(state: Object): void {
     if (this._session) {
-      this._session._state = {
-        ...this._session._state,
+      const sess = this._session;
+
+      warning(
+        !this._isSessionWritten,
+        'Calling `context.setState` after session has been written. Some changes to state will not be saved.\nDid you forget to await any async function?'
+      );
+      sess._state = {
+        ...sess._state,
         ...state,
       };
     } else {
@@ -112,6 +126,11 @@ export default class Context {
   resetState(): void {
     if (this._session) {
       const sess = this._session;
+
+      warning(
+        !this._isSessionWritten,
+        'Calling `context.resetState` after session has been written. Some changes to state will not be saved.\nDid you forget to await any async function?'
+      );
       sess._state = cloneDeep(this._initialState);
     } else {
       warning(
