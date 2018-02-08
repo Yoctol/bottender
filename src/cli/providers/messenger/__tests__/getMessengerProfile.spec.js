@@ -33,10 +33,35 @@ it('be defined', () => {
 });
 
 describe('resolved', () => {
+  it('--token should work', async () => {
+    const ctx = {
+      argv: { token: '12345' },
+    };
+
+    await getMessengerProfile(ctx);
+
+    expect(MessengerClient.connect).toBeCalledWith('12345');
+  });
+
+  it('Abbreviational options should work', async () => {
+    const ctx = {
+      argv: { t: '12345' },
+    };
+
+    await getMessengerProfile(ctx);
+
+    expect(MessengerClient.connect).toBeCalledWith('12345');
+    expect(_client.getMessengerProfile).toBeCalled();
+  });
+
   it('call getMessengerProfile', async () => {
+    const ctx = {
+      argv: {},
+    };
+
     _client.getMessengerProfile.mockReturnValue(Promise.resolve({}));
 
-    await getMessengerProfile();
+    await getMessengerProfile(ctx);
 
     expect(_client.getMessengerProfile).toBeCalledWith([
       'account_linking_url',
@@ -51,9 +76,13 @@ describe('resolved', () => {
   });
 
   it('error when no config setting', async () => {
+    const ctx = {
+      argv: {},
+    };
+
     _client.getMessengerProfile.mockReturnValue(Promise.resolve(null));
 
-    await getMessengerProfile();
+    await getMessengerProfile(ctx);
 
     expect(log.error).toBeCalled();
     expect(_client.getMessengerProfile).toBeCalled();
@@ -62,6 +91,9 @@ describe('resolved', () => {
 
 describe('reject', () => {
   it('handle error thrown with only status', async () => {
+    const ctx = {
+      argv: {},
+    };
     const error = {
       response: {
         status: 400,
@@ -71,13 +103,16 @@ describe('reject', () => {
 
     process.exit = jest.fn();
 
-    await getMessengerProfile();
+    await getMessengerProfile(ctx);
 
     expect(log.error).toBeCalled();
     expect(process.exit).toBeCalled();
   });
 
   it('handle error thrown by messenger', async () => {
+    const ctx = {
+      argv: {},
+    };
     const error = {
       response: {
         status: 400,
@@ -96,7 +131,7 @@ describe('reject', () => {
 
     process.exit = jest.fn();
 
-    await getMessengerProfile();
+    await getMessengerProfile(ctx);
 
     expect(log.error).toBeCalled();
     expect(log.error.mock.calls[2][0]).not.toMatch(/\[object Object\]/);
@@ -104,6 +139,9 @@ describe('reject', () => {
   });
 
   it('handle error thrown by ourselves', async () => {
+    const ctx = {
+      argv: {},
+    };
     const error = {
       message: 'something wrong happened',
     };
@@ -111,7 +149,7 @@ describe('reject', () => {
 
     process.exit = jest.fn();
 
-    await getMessengerProfile();
+    await getMessengerProfile(ctx);
 
     expect(log.error).toBeCalled();
     expect(process.exit).toBeCalled();

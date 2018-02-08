@@ -39,10 +39,35 @@ it('be defined', () => {
 });
 
 describe('resolved', () => {
+  it('--token should work', async () => {
+    const ctx = {
+      argv: { token: '12345' },
+    };
+
+    await deleteMessengerProfile(ctx);
+
+    expect(MessengerClient.connect).toBeCalledWith('12345');
+  });
+
+  it('Abbreviational options should work', async () => {
+    const ctx = {
+      argv: { t: '12345' },
+    };
+
+    await deleteMessengerProfile(ctx);
+
+    expect(MessengerClient.connect).toBeCalledWith('12345');
+    expect(_client.deleteMessengerProfile).toBeCalled();
+  });
+
   it('call deleteMessengerProfile', async () => {
+    const ctx = {
+      argv: {},
+    };
+
     _client.deleteMessengerProfile.mockReturnValue(Promise.resolve());
 
-    await deleteMessengerProfile();
+    await deleteMessengerProfile(ctx);
 
     expect(_client.deleteMessengerProfile).toBeCalledWith([
       'account_linking_url',
@@ -59,6 +84,9 @@ describe('resolved', () => {
 
 describe('reject', () => {
   it('handle error thrown with only status', async () => {
+    const ctx = {
+      argv: {},
+    };
     const error = {
       response: {
         status: 400,
@@ -66,13 +94,16 @@ describe('reject', () => {
     };
     _client.deleteMessengerProfile.mockReturnValue(Promise.reject(error));
 
-    await deleteMessengerProfile();
+    await deleteMessengerProfile(ctx);
 
     expect(log.error).toBeCalled();
     expect(process.exit).toBeCalled();
   });
 
   it('handle error thrown by messenger', async () => {
+    const ctx = {
+      argv: {},
+    };
     const error = {
       response: {
         status: 400,
@@ -89,7 +120,7 @@ describe('reject', () => {
     };
     _client.deleteMessengerProfile.mockReturnValue(Promise.reject(error));
 
-    await deleteMessengerProfile();
+    await deleteMessengerProfile(ctx);
 
     expect(log.error).toBeCalled();
     expect(log.error.mock.calls[2][0]).not.toMatch(/\[object Object\]/);
@@ -97,12 +128,15 @@ describe('reject', () => {
   });
 
   it('handle error thrown by ourselves', async () => {
+    const ctx = {
+      argv: {},
+    };
     const error = {
       message: 'something wrong happened',
     };
     _client.deleteMessengerProfile.mockReturnValue(Promise.reject(error));
 
-    await deleteMessengerProfile();
+    await deleteMessengerProfile(ctx);
 
     expect(log.error).toBeCalled();
     expect(process.exit).toBeCalled();

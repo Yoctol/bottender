@@ -34,6 +34,7 @@ export const help = () => {
     ${chalk.dim('Options:')}
 
       --force       Force update the messenger profile by config
+      -t, --token   Specify Messenger access token.
 
     ${chalk.dim('Examples:')}
 
@@ -67,13 +68,23 @@ export function checkMessengerProfile() {
   }
 }
 
-export async function getMessengerProfile() {
+export async function getMessengerProfile(ctx) {
+  const { t, token: _token } = ctx.argv;
+
+  let accessToken;
+
   try {
-    const config = getConfig('bottender.config.js', 'messenger');
+    if (t || _token) {
+      accessToken = t || _token;
+    } else {
+      const config = getConfig('bottender.config.js', 'messenger');
 
-    invariant(config.accessToken, 'accessToken is not found in config file');
+      invariant(config.accessToken, 'accessToken is not found in config file');
 
-    const client = MessengerClient.connect(config.accessToken);
+      accessToken = config.accessToken;
+    }
+
+    const client = MessengerClient.connect(accessToken);
 
     const profile = await client.getMessengerProfile(FIELDS);
 
@@ -99,14 +110,22 @@ export async function getMessengerProfile() {
 }
 
 export async function setMessengerProfile(ctx) {
-  const { force } = ctx.argv;
-  try {
-    const { accessToken, profile: _profile } = getConfig(
-      'bottender.config.js',
-      'messenger'
-    );
+  const { force, t, token: _token } = ctx.argv;
 
-    invariant(accessToken, 'accessToken is not found in config file');
+  let accessToken;
+
+  try {
+    if (t || _token) {
+      accessToken = t || _token;
+    } else {
+      const config = getConfig('bottender.config.js', 'messenger');
+
+      invariant(config.accessToken, 'accessToken is not found in config file');
+
+      accessToken = config.accessToken;
+    }
+
+    const { profile: _profile } = getConfig('bottender.config.js', 'messenger');
 
     const client = MessengerClient.connect(accessToken);
 
@@ -188,13 +207,23 @@ export async function setMessengerProfile(ctx) {
   }
 }
 
-export async function deleteMessengerProfile() {
+export async function deleteMessengerProfile(ctx) {
+  const { t, token: _token } = ctx.argv;
+
+  let accessToken;
+
   try {
-    const config = getConfig('bottender.config.js', 'messenger');
+    if (t || _token) {
+      accessToken = t || _token;
+    } else {
+      const config = getConfig('bottender.config.js', 'messenger');
 
-    invariant(config.accessToken, 'accessToken is not found in config file');
+      invariant(config.accessToken, 'accessToken is not found in config file');
 
-    const client = MessengerClient.connect(config.accessToken);
+      accessToken = config.accessToken;
+    }
+
+    const client = MessengerClient.connect(accessToken);
 
     await client.deleteMessengerProfile(FIELDS);
 
@@ -220,14 +249,14 @@ export default async function main(ctx) {
       checkMessengerProfile();
       break;
     case 'get':
-      await getMessengerProfile();
+      await getMessengerProfile(ctx);
       break;
     case 'set':
       await setMessengerProfile(ctx);
       break;
     case 'delete':
     case 'del':
-      await deleteMessengerProfile();
+      await deleteMessengerProfile(ctx);
       break;
     case 'help':
       help();

@@ -33,10 +33,35 @@ it('be defined', () => {
 });
 
 describe('resolved', () => {
+  it('--token should work', async () => {
+    const ctx = {
+      argv: { token: '12345' },
+    };
+
+    await deleteWhitelistedDomains(ctx);
+
+    expect(MessengerClient.connect).toBeCalledWith('12345');
+  });
+
+  it('Abbreviational options should work', async () => {
+    const ctx = {
+      argv: { t: '12345' },
+    };
+
+    await deleteWhitelistedDomains(ctx);
+
+    expect(MessengerClient.connect).toBeCalledWith('12345');
+    expect(_client.deleteWhitelistedDomains).toBeCalled();
+  });
+
   it('call deleteWhitelistedDomains', async () => {
+    const ctx = {
+      argv: {},
+    };
+
     _client.deleteWhitelistedDomains.mockReturnValue(Promise.resolve());
 
-    await deleteWhitelistedDomains();
+    await deleteWhitelistedDomains(ctx);
 
     expect(_client.deleteWhitelistedDomains).toBeCalled();
   });
@@ -44,6 +69,9 @@ describe('resolved', () => {
 
 describe('reject', () => {
   it('handle error thrown with only status', async () => {
+    const ctx = {
+      argv: {},
+    };
     const error = {
       response: {
         status: 400,
@@ -52,13 +80,16 @@ describe('reject', () => {
     _client.deleteWhitelistedDomains.mockReturnValue(Promise.reject(error));
     process.exit = jest.fn();
 
-    await deleteWhitelistedDomains();
+    await deleteWhitelistedDomains(ctx);
 
     expect(log.error).toBeCalled();
     expect(process.exit).toBeCalled();
   });
 
   it('handle error thrown by messenger', async () => {
+    const ctx = {
+      argv: {},
+    };
     const error = {
       response: {
         status: 400,
@@ -76,7 +107,7 @@ describe('reject', () => {
     _client.deleteWhitelistedDomains.mockReturnValue(Promise.reject(error));
     process.exit = jest.fn();
 
-    await deleteWhitelistedDomains();
+    await deleteWhitelistedDomains(ctx);
 
     expect(log.error).toBeCalled();
     expect(log.error.mock.calls[2][0]).not.toMatch(/\[object Object\]/);
@@ -84,13 +115,16 @@ describe('reject', () => {
   });
 
   it('handle error thrown by ourselves', async () => {
+    const ctx = {
+      argv: {},
+    };
     const error = {
       message: 'something wrong happened',
     };
     _client.deleteWhitelistedDomains.mockReturnValue(Promise.reject(error));
     process.exit = jest.fn();
 
-    await deleteWhitelistedDomains();
+    await deleteWhitelistedDomains(ctx);
 
     expect(log.error).toBeCalled();
     expect(process.exit).toBeCalled();

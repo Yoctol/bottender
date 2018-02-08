@@ -1,20 +1,58 @@
 /* eslint-disable consistent-return */
 import invariant from 'invariant';
 import { MessengerClient } from 'messaging-api-messenger';
+import chalk from 'chalk';
 
 import getConfig from '../../shared/getConfig';
 import { print, error, bold } from '../../shared/log';
 
-import help from './help';
+const help = () => {
+  console.log(`
+    bottender messenger get-started <command> [option]
 
-export async function getGetStarted() {
+    ${chalk.dim('Commands:')}
+
+      get               Get get_started setting.
+      del, delete       Delete get_started setting.
+
+    ${chalk.dim('Options:')}
+
+      -t, --token       Specify Messenger access token.
+
+    ${chalk.dim('Examples:')}
+
+    ${chalk.dim('-')} Get get_started setting
+
+      ${chalk.cyan('$ bottender messenger get-started get')}
+
+    ${chalk.dim('-')} Delete get_started setting with specific access token
+
+      ${chalk.cyan(
+        '$ bottender messenger get-started delete --token __FAKE_TOKEN__'
+      )}
+  `);
+};
+
+export async function getGetStarted(ctx) {
+  const { t, token: _token } = ctx.argv;
+
+  let accessToken;
+
   try {
-    const config = getConfig('bottender.config.js', 'messenger');
+    if (t || _token) {
+      accessToken = t || _token;
+    } else {
+      const config = getConfig('bottender.config.js', 'messenger');
 
-    invariant(config.accessToken, 'accessToken is not found in config file');
+      invariant(config.accessToken, 'accessToken is not found in config file');
 
-    const client = MessengerClient.connect(config.accessToken);
+      accessToken = config.accessToken;
+    }
+
+    const client = MessengerClient.connect(accessToken);
+
     const getStarted = await client.getGetStarted();
+
     if (getStarted && getStarted.payload) {
       print(`Get started payload is: ${bold(getStarted.payload)}`);
     } else {
@@ -34,19 +72,29 @@ export async function getGetStarted() {
   }
 }
 
-export async function deleteGetStarted() {
+export async function deleteGetStarted(ctx) {
+  const { t, token: _token } = ctx.argv;
+
+  let accessToken;
+
   try {
-    const config = getConfig('bottender.config.js', 'messenger');
+    if (t || _token) {
+      accessToken = t || _token;
+    } else {
+      const config = getConfig('bottender.config.js', 'messenger');
 
-    invariant(config.accessToken, 'accessToken is not found in config file');
+      invariant(config.accessToken, 'accessToken is not found in config file');
 
-    const client = MessengerClient.connect(config.accessToken);
+      accessToken = config.accessToken;
+    }
+
+    const client = MessengerClient.connect(accessToken);
 
     await client.deleteGetStarted();
 
-    print(`Successfully ${bold('get_started')} setting`);
+    print(`Successfully delete ${bold('get_started')} setting`);
   } catch (err) {
-    error(`Failed to ${bold('get_started')} setting`);
+    error(`Failed to delete ${bold('get_started')} setting`);
     if (err.response) {
       error(`status: ${bold(err.response.status)}`);
       if (err.response.data) {
@@ -63,11 +111,11 @@ export default async function main(ctx) {
   const subcommand = ctx.argv._[2];
   switch (subcommand) {
     case 'get':
-      await getGetStarted();
+      await getGetStarted(ctx);
       break;
     case 'delete':
     case 'del':
-      await deleteGetStarted();
+      await deleteGetStarted(ctx);
       break;
     default:
       error(`Please specify a valid subcommand: get, delete`);

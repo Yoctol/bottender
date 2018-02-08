@@ -20,6 +20,7 @@ const help = () => {
       -w                    Webhook callback URL
       -v                    Verify token
       --ngrok-port          Ngrok port(default: 4040)
+      -t, --token           Specify Messenger access token
 
     ${chalk.dim('Examples:')}
 
@@ -31,17 +32,29 @@ const help = () => {
 
       ${chalk.cyan('$ bottender messenger webhook set -v abc123')}
 
-    ${chalk.dim('-')} Use specific ngrok port
+    ${chalk.dim('-')} Use specific ngrok port and access token
 
-      ${chalk.cyan('$ bottender messenger webhook set --ngrok-port 4041')}
+      ${chalk.cyan(
+        '$ bottender messenger webhook set --ngrok-port 4041 -token __FAKE_TOKEN__'
+      )}
   `);
 };
 
-export async function setWebhook(webhook, verifyToken, ngrokPort = '4040') {
+export async function setWebhook(
+  accessToken,
+  webhook,
+  verifyToken,
+  ngrokPort = '4040'
+) {
   try {
     const config = getConfig('bottender.config.js', 'messenger');
 
-    const client = MessengerClient.connect(config.accessToken);
+    if (accessToken === undefined) {
+      invariant(config.accessToken, 'accessToken is not found in config file');
+      accessToken = config.accessToken;
+    }
+
+    const client = MessengerClient.connect(accessToken);
 
     const defaultFields = [
       'messages',
@@ -128,10 +141,12 @@ export default async function main(ctx) {
   const subcommand = ctx.argv._[2];
   switch (subcommand) {
     case 'set': {
+      const accessToken = ctx.argv.t || ctx.argv.token;
       const webhook = ctx.argv.w;
       const verifyToken = ctx.argv.v;
       const ngrokPort = ctx.argv['ngrok-port'];
-      await setWebhook(webhook, verifyToken, ngrokPort);
+
+      await setWebhook(accessToken, webhook, verifyToken, ngrokPort);
       break;
     }
     case 'help':

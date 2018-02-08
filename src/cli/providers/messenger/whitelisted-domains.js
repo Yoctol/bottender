@@ -1,19 +1,55 @@
 /* eslint-disable consistent-return */
 import invariant from 'invariant';
 import { MessengerClient } from 'messaging-api-messenger';
+import chalk from 'chalk';
 
 import getConfig from '../../shared/getConfig';
 import { print, error, bold } from '../../shared/log';
 
-import help from './help';
+const help = () => {
+  console.log(`
+    bottender messenger whitelisted-domains <command> [option]
 
-export async function getWhitelistedDomains() {
+    ${chalk.dim('Commands:')}
+
+      get               Get whitelisted-domains setting.
+      del, delete       Delete whitelisted-domains setting.
+
+    ${chalk.dim('Options:')}
+
+      -t, --token       Specify Messenger access token.
+
+    ${chalk.dim('Examples:')}
+
+    ${chalk.dim('-')} Get whitelisted-domains setting
+
+      ${chalk.cyan('$ bottender messenger whitelisted-domains get')}
+
+    ${chalk.dim('-')} Delete persistent-menu setting with specific access token
+
+      ${chalk.cyan(
+        '$ bottender messenger persistent-menu delete --token __FAKE_TOKEN__'
+      )}
+  `);
+};
+
+export async function getWhitelistedDomains(ctx) {
+  const { t, token: _token } = ctx.argv;
+
+  let accessToken;
+
   try {
-    const config = getConfig('bottender.config.js', 'messenger');
+    if (t || _token) {
+      accessToken = t || _token;
+    } else {
+      const config = getConfig('bottender.config.js', 'messenger');
 
-    invariant(config.accessToken, 'accessToken is not found in config file');
+      invariant(config.accessToken, 'accessToken is not found in config file');
 
-    const client = MessengerClient.connect(config.accessToken);
+      accessToken = config.accessToken;
+    }
+
+    const client = MessengerClient.connect(accessToken);
 
     const whitelistedDomains = await client.getWhitelistedDomains();
     if (whitelistedDomains) {
@@ -37,13 +73,23 @@ export async function getWhitelistedDomains() {
   }
 }
 
-export async function deleteWhitelistedDomains() {
+export async function deleteWhitelistedDomains(ctx) {
+  const { t, token: _token } = ctx.argv;
+
+  let accessToken;
+
   try {
-    const config = getConfig('bottender.config.js', 'messenger');
+    if (t || _token) {
+      accessToken = t || _token;
+    } else {
+      const config = getConfig('bottender.config.js', 'messenger');
 
-    invariant(config.accessToken, 'accessToken is not found in config file');
+      invariant(config.accessToken, 'accessToken is not found in config file');
 
-    const client = MessengerClient.connect(config.accessToken);
+      accessToken = config.accessToken;
+    }
+
+    const client = MessengerClient.connect(accessToken);
 
     await client.deleteWhitelistedDomains();
 
@@ -66,11 +112,11 @@ export default async function main(ctx) {
   const subcommand = ctx.argv._[2];
   switch (subcommand) {
     case 'get':
-      await getWhitelistedDomains();
+      await getWhitelistedDomains(ctx);
       break;
     case 'delete':
     case 'del':
-      await deleteWhitelistedDomains();
+      await deleteWhitelistedDomains(ctx);
       break;
     default:
       error(`Please specify a valid subcommand: get, delete`);

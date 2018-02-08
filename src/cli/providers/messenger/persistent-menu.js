@@ -2,19 +2,55 @@
 import Table from 'cli-table2';
 import invariant from 'invariant';
 import { MessengerClient } from 'messaging-api-messenger';
+import chalk from 'chalk';
 
 import getConfig from '../../shared/getConfig';
 import { print, error, bold } from '../../shared/log';
 
-import help from './help';
+const help = () => {
+  console.log(`
+    bottender messenger persistent-menu <command> [option]
 
-export async function getPersistentMenu() {
+    ${chalk.dim('Commands:')}
+
+      get               Get persistent-menu setting.
+      del, delete       Delete persistent-menu setting.
+
+    ${chalk.dim('Options:')}
+
+      -t, --token       Specify Messenger access token.
+
+    ${chalk.dim('Examples:')}
+
+    ${chalk.dim('-')} Get persistent-menu setting
+
+      ${chalk.cyan('$ bottender messenger persistent-menu get')}
+
+    ${chalk.dim('-')} Delete persistent-menu setting with specific access token
+
+      ${chalk.cyan(
+        '$ bottender messenger persistent-menu delete --token __FAKE_TOKEN__'
+      )}
+  `);
+};
+
+export async function getPersistentMenu(ctx) {
+  const { t, token: _token } = ctx.argv;
+
+  let accessToken;
+
   try {
-    const config = getConfig('bottender.config.js', 'messenger');
+    if (t || _token) {
+      accessToken = t || _token;
+    } else {
+      const config = getConfig('bottender.config.js', 'messenger');
 
-    invariant(config.accessToken, 'accessToken is not found in config file');
+      invariant(config.accessToken, 'accessToken is not found in config file');
 
-    const client = MessengerClient.connect(config.accessToken);
+      accessToken = config.accessToken;
+    }
+
+    const client = MessengerClient.connect(accessToken);
 
     const persistentMenu = await client.getPersistentMenu();
 
@@ -47,13 +83,23 @@ export async function getPersistentMenu() {
   }
 }
 
-export async function deletePersistentMenu() {
+export async function deletePersistentMenu(ctx) {
+  const { t, token: _token } = ctx.argv;
+
+  let accessToken;
+
   try {
-    const config = getConfig('bottender.config.js', 'messenger');
+    if (t || _token) {
+      accessToken = t || _token;
+    } else {
+      const config = getConfig('bottender.config.js', 'messenger');
 
-    invariant(config.accessToken, 'accessToken is not found in config file');
+      invariant(config.accessToken, 'accessToken is not found in config file');
 
-    const client = MessengerClient.connect(config.accessToken);
+      accessToken = config.accessToken;
+    }
+
+    const client = MessengerClient.connect(accessToken);
 
     await client.deletePersistentMenu();
 
@@ -76,11 +122,11 @@ export default async function main(ctx) {
   const subcommand = ctx.argv._[2];
   switch (subcommand) {
     case 'get':
-      await getPersistentMenu();
+      await getPersistentMenu(ctx);
       break;
     case 'delete':
     case 'del':
-      await deletePersistentMenu();
+      await deletePersistentMenu(ctx);
       break;
     default:
       error(`Please specify a valid subcommand: get, delete`);
