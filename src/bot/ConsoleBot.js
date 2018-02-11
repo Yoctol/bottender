@@ -28,13 +28,23 @@ export default class ConsoleBot extends Bot {
         process.exit();
       }
 
-      await Promise.resolve(
-        requestHandler({
+      let rawEvent;
+
+      if (/^\/payload /.test(line)) {
+        const payload = line.split('/payload ')[1];
+
+        rawEvent = {
+          payload,
+        };
+      } else {
+        rawEvent = {
           message: {
             text: line,
           },
-        })
-      );
+        };
+      }
+
+      await Promise.resolve(requestHandler(rawEvent));
 
       process.stdout.write('You > ');
       rl.once('line', handleLine);
