@@ -4354,18 +4354,18 @@ merge@^1.1.3:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/merge/-/merge-1.2.0.tgz#7531e39d4949c281a66b8c5a6e0265e8b05894da"
 
-messaging-api-line@^0.6.7:
-  version "0.6.7"
-  resolved "https://registry.yarnpkg.com/messaging-api-line/-/messaging-api-line-0.6.7.tgz#8c5fc0a4f192bd1f53c63829bdf2b4eed8693a88"
+messaging-api-line@^0.6.13:
+  version "0.6.13"
+  resolved "https://registry.yarnpkg.com/messaging-api-line/-/messaging-api-line-0.6.13.tgz#4775356aa805046099537d8dd87b45cd41f67631"
   dependencies:
     axios "^0.17.0"
     axios-error "^0.5.4"
     image-type "^3.0.0"
     warning "^3.0.0"
 
-messaging-api-messenger@^0.6.9:
-  version "0.6.9"
-  resolved "https://registry.yarnpkg.com/messaging-api-messenger/-/messaging-api-messenger-0.6.9.tgz#82ccc9a3b2f484cd30051de9ff07e0efc066d313"
+messaging-api-messenger@^0.6.13:
+  version "0.6.13"
+  resolved "https://registry.yarnpkg.com/messaging-api-messenger/-/messaging-api-messenger-0.6.13.tgz#8023be45ab3c229c2f690ea765c13462a7eab699"
   dependencies:
     axios "^0.17.0"
     axios-error "^0.5.4"
@@ -4375,23 +4375,23 @@ messaging-api-messenger@^0.6.9:
     lodash.omit "^4.5.0"
     warning "^3.0.0"
 
-messaging-api-slack@^0.6.10:
-  version "0.6.10"
-  resolved "https://registry.yarnpkg.com/messaging-api-slack/-/messaging-api-slack-0.6.10.tgz#857f5f361072336252dc40dc80eb821b2903a517"
+messaging-api-slack@^0.6.13:
+  version "0.6.13"
+  resolved "https://registry.yarnpkg.com/messaging-api-slack/-/messaging-api-slack-0.6.13.tgz#091e681f28b1452d3f98bd8e6d24ca08b17c3716"
   dependencies:
     axios "^0.17.0"
     axios-error "^0.5.4"
 
-messaging-api-telegram@^0.6.8:
-  version "0.6.8"
-  resolved "https://registry.yarnpkg.com/messaging-api-telegram/-/messaging-api-telegram-0.6.8.tgz#2fd87a0f0d59209f2829fe862d95297f59ca34e3"
+messaging-api-telegram@^0.6.13:
+  version "0.6.13"
+  resolved "https://registry.yarnpkg.com/messaging-api-telegram/-/messaging-api-telegram-0.6.13.tgz#61b2137d80bbc34ff7e6c0b252f5bab14ecd2547"
   dependencies:
     axios "^0.17.0"
     axios-error "^0.5.4"
 
-messaging-api-viber@^0.6.11:
-  version "0.6.11"
-  resolved "https://registry.yarnpkg.com/messaging-api-viber/-/messaging-api-viber-0.6.11.tgz#c453e5a4397f54ea4839433fae683ec53bb383b5"
+messaging-api-viber@^0.6.13:
+  version "0.6.13"
+  resolved "https://registry.yarnpkg.com/messaging-api-viber/-/messaging-api-viber-0.6.13.tgz#4b36e5c7e3086af6333b349e2ecfd505ab3860ba"
   dependencies:
     axios "^0.17.0"
     axios-error "^0.5.4"
