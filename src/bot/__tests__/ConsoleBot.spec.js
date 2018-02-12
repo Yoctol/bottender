@@ -62,4 +62,46 @@ describe('createRuntime', () => {
 
     expect(process.exit).toBeCalled();
   });
+
+  it('should call handler with text event when receive random text', async () => {
+    const bot = new ConsoleBot();
+
+    let context;
+    bot.onEvent(ctx => {
+      context = ctx;
+    });
+
+    readline.createInterface.mockReturnValue({
+      once: once((string, fn) => fn('random text')),
+      close: jest.fn(),
+    });
+
+    bot.createRuntime();
+
+    await new Promise(process.nextTick);
+
+    expect(context.event.isText).toBe(true);
+    expect(context.event.text).toBe('random text');
+  });
+
+  it('should call handler with payload event when receive /payload <payload>', async () => {
+    const bot = new ConsoleBot();
+
+    let context;
+    bot.onEvent(ctx => {
+      context = ctx;
+    });
+
+    readline.createInterface.mockReturnValue({
+      once: once((string, fn) => fn('/payload A_PAYLOAD')),
+      close: jest.fn(),
+    });
+
+    bot.createRuntime();
+
+    await new Promise(process.nextTick);
+
+    expect(context.event.isPayload).toBe(true);
+    expect(context.event.payload).toBe('A_PAYLOAD');
+  });
 });
