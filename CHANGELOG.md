@@ -1,3 +1,27 @@
+# 0.14.22 / 2018-02-12
+
+* [deps] bump messaging-apis to v0.6.13
+
+### console
+
+* [new] Support trigger payload in `ConsoleBot`
+
+```
+You > /payload PAYLOAD
+```
+
+Receive event:
+
+```js
+context.event.isMessage; // false
+context.event.message; // null
+context.event.isText; // false
+context.event.text; // null
+
+context.event.isPayload; // true
+context.event.payload; // PAYLOAD
+```
+
 # 0.14.21 / 2018-02-05
 
 * [new] Support all of methods on `ConsoleContext` with `fallbackMethods: true` [#184](https://github.com/Yoctol/bottender/pull/184), for example:
