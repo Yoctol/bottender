@@ -13,15 +13,12 @@ bot.onEvent(async context => {
   if (context.event.isText && !context.event.isEcho) {
     if (context.event.isStandby) {
       if (context.event.text === '/back') {
-        await context.client.takeThreadControl(context.session.user.id);
+        await context.takeThreadControl();
         await context.sendText('Taking thread control back.');
       }
     } else if (context.event.text === '/help') {
       await context.sendText('Passing thread control to the page inbox.');
-      await context.client.passThreadControl(
-        context.session.user.id,
-        263902037430900 // target_app_id of Page Inbox
-      );
+      await context.passThreadControlToPageInbox();
     } else {
       await context.sendText('Respond by bot.');
     }
