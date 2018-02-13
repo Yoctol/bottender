@@ -11,9 +11,12 @@ const inquirer = require('inquirer');
 const { print, error } = require('../../../shared/log');
 const getConfig = require('../../../shared/getConfig');
 
-const setup = force => ({
+const setup = (force, token = undefined) => ({
   argv: {
+    f: force,
     force,
+    t: token,
+    token,
   },
 });
 
@@ -58,7 +61,15 @@ describe('deleteLineMenu', () => {
     expect(deleteLineMenu).toBeDefined();
   });
 
-  it('should exit when accessToken is not found in config file', async () => {
+  it('-t, --token should work', async () => {
+    const ctx = setup(false, '12345');
+
+    await deleteLineMenu(ctx);
+
+    expect(LineClient.connect).toBeCalledWith('12345');
+  });
+
+  it('should exit when accessToken is not found in config file and not pass token option', async () => {
     const ctx = setup(false);
 
     getConfig.mockReturnValueOnce({

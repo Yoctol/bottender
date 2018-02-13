@@ -23,12 +23,18 @@ const MOCK_FILE_WITH_PLATFORM = {
 const _exit = process.exit;
 
 const setup = (
-  { webhook = 'http://example.com/webhook', eventTypes = [] } = {
+  {
+    webhook = 'http://example.com/webhook',
+    eventTypes = [],
+    accessToken = undefined,
+  } = {
     webhook: 'http://example.com/webhook',
     eventTypes: [],
+    accessToken: undefined,
   }
 ) => ({
   webhook,
+  accessToken,
   eventTypes,
 });
 
@@ -70,11 +76,11 @@ it('be defined', () => {
 
 describe('resolve', () => {
   it('successfully set webhook', async () => {
-    const { webhook, eventTypes } = setup({
+    const { webhook, accessToken, eventTypes } = setup({
       eventTypes: ['delivered', 'seen'],
     });
 
-    await setWebhook(webhook, undefined, eventTypes);
+    await setWebhook(webhook, undefined, accessToken, eventTypes);
 
     expect(ViberClient.connect().setWebhook).toBeCalledWith(
       webhook,
@@ -82,6 +88,14 @@ describe('resolve', () => {
     );
     expect(log.print).toHaveBeenCalledTimes(1);
     expect(log.print.mock.calls[0][0]).toMatch(/Successfully/);
+  });
+
+  it('-t --token should work', async () => {
+    const { webhook, accessToken } = setup({ accessToken: '12345' });
+
+    await setWebhook(webhook, undefined, accessToken);
+
+    expect(ViberClient.connect).toBeCalledWith('12345');
   });
 
   it('get ngrok webhook to setup', async () => {
@@ -104,16 +118,14 @@ describe('resolve', () => {
 });
 
 describe('reject', () => {
-  it('reject when `accessToken` not found in config file', async () => {
+  it('reject when accessToken not found in config file', async () => {
     const { webhook } = setup();
     getConfig.mockReturnValue({});
     process.exit = jest.fn();
 
     await setWebhook(webhook);
 
-    expect(log.error).toBeCalledWith(
-      '`accessToken` is not found in config file'
-    );
+    expect(log.error).toBeCalledWith('accessToken is not found in config file');
     expect(process.exit).toBeCalled();
   });
 

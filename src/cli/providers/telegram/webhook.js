@@ -8,11 +8,21 @@ import { print, error, bold, warn } from '../../shared/log';
 
 import help from './help';
 
-export async function getWebhook() {
-  try {
-    const { accessToken } = getConfig('bottender.config.js', 'telegram');
+export async function getWebhook(ctx) {
+  const { t, token: _token } = ctx.argv;
 
-    invariant(accessToken, '`accessToken` is not found in config file');
+  let accessToken;
+
+  try {
+    if (t || _token) {
+      accessToken = t || _token;
+    } else {
+      const config = getConfig('bottender.config.js', 'telegram');
+
+      invariant(config.accessToken, 'accessToken is not found in config file');
+
+      accessToken = config.accessToken;
+    }
 
     const client = TelegramClient.connect(accessToken);
     const { ok, result } = await client.getWebhookInfo();
@@ -33,11 +43,23 @@ export async function getWebhook() {
   }
 }
 
-export async function setWebhook(webhook, ngrokPort = '4040') {
-  try {
-    const { accessToken } = getConfig('bottender.config.js', 'telegram');
+export async function setWebhook(ctx) {
+  const { t, token: _token } = ctx.argv;
+  const ngrokPort = ctx.argv['ngrok-port'] || '4040';
 
-    invariant(accessToken, '`accessToken` is not found in config file');
+  let { w: webhook } = ctx.argv;
+  let accessToken;
+
+  try {
+    if (t || _token) {
+      accessToken = t || _token;
+    } else {
+      const config = getConfig('bottender.config.js', 'telegram');
+
+      invariant(config.accessToken, 'accessToken is not found in config file');
+
+      accessToken = config.accessToken;
+    }
 
     const client = TelegramClient.connect(accessToken);
 
@@ -75,11 +97,21 @@ export async function setWebhook(webhook, ngrokPort = '4040') {
   }
 }
 
-export async function deleteWebhook() {
-  try {
-    const { accessToken } = getConfig('bottender.config.js', 'telegram');
+export async function deleteWebhook(ctx) {
+  const { t, token: _token } = ctx.argv;
 
-    invariant(accessToken, '`accessToken` is not found in config file');
+  let accessToken;
+
+  try {
+    if (t || _token) {
+      accessToken = t || _token;
+    } else {
+      const config = getConfig('bottender.config.js', 'telegram');
+
+      invariant(config.accessToken, 'accessToken is not found in config file');
+
+      accessToken = config.accessToken;
+    }
 
     const client = TelegramClient.connect(accessToken);
     const { ok } = await client.deleteWebhook();
@@ -105,17 +137,15 @@ export default async function main(ctx) {
 
   switch (subcommand) {
     case 'get':
-      await getWebhook();
+      await getWebhook(ctx);
       break;
     case 'set': {
-      const webhook = ctx.argv.w;
-      const ngrokPort = ctx.argv['ngrok-port'];
-      await setWebhook(webhook, ngrokPort);
+      await setWebhook(ctx);
       break;
     }
     case 'delete':
     case 'del':
-      await deleteWebhook();
+      await deleteWebhook(ctx);
       break;
     default:
       error(`Please specify a valid subcommand: get, set, delete`);

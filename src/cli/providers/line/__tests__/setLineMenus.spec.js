@@ -9,6 +9,13 @@ const { LineClient } = require('messaging-api-line');
 const { print, error, log } = require('../../../shared/log');
 const getConfig = require('../../../shared/getConfig');
 
+const setup = (token = undefined) => ({
+  argv: {
+    t: token,
+    token,
+  },
+});
+
 describe('setLineMenus', () => {
   beforeEach(() => {
     LineClient.connect.mockReturnValue({
@@ -51,40 +58,56 @@ describe('setLineMenus', () => {
     expect(setLineMenus).toBeDefined();
   });
 
+  it('-t, --token should work', async () => {
+    const ctx = setup('12345');
+
+    await setLineMenus(ctx);
+
+    expect(LineClient.connect).toBeCalledWith('12345');
+  });
+
   it('should exit when accessToken is not found in config file', async () => {
+    const ctx = setup();
+
     getConfig.mockReturnValueOnce({
       accessToken: undefined,
     });
 
-    await setLineMenus();
+    await setLineMenus(ctx);
 
     expect(error).toBeCalled();
     expect(process.exit).toBeCalled();
   });
 
   it('should exit when client.getRichMenuList failed', async () => {
+    const ctx = setup();
+
     LineClient.connect().getRichMenuList.mockReturnValueOnce(
       Promise.reject(new Error('getRichMenuList failed'))
     );
 
-    await setLineMenus();
+    await setLineMenus(ctx);
 
     expect(error).toBeCalled();
     expect(process.exit).toBeCalled();
   });
 
   it('should exit when failed to find rich menu', async () => {
+    const ctx = setup();
+
     LineClient.connect().getRichMenuList.mockReturnValueOnce(
       Promise.resolve(null)
     );
 
-    await setLineMenus();
+    await setLineMenus(ctx);
 
     expect(error).toBeCalled();
     expect(process.exit).toBeCalled();
   });
 
   it('should not call deleteRichMenu when online rich menus and local rich menus are same', async () => {
+    const ctx = setup();
+
     LineClient.connect().getRichMenuList.mockReturnValueOnce(
       Promise.resolve([
         {
@@ -114,7 +137,7 @@ describe('setLineMenus', () => {
       ])
     );
 
-    await setLineMenus();
+    await setLineMenus(ctx);
 
     expect(LineClient.connect().deleteRichMenu).not.toBeCalled();
     expect(print).toBeCalledWith(
@@ -123,6 +146,8 @@ describe('setLineMenus', () => {
   });
 
   it('should delete one online rich menus if it has one shouldDeleteRichMenus', async () => {
+    const ctx = setup();
+
     LineClient.connect().getRichMenuList.mockReturnValueOnce(
       Promise.resolve([
         {
@@ -176,7 +201,7 @@ describe('setLineMenus', () => {
       ])
     );
 
-    await setLineMenus();
+    await setLineMenus(ctx);
 
     expect(LineClient.connect().deleteRichMenu.mock.calls.length).toBe(1);
     expect(print.mock.calls.length).toBe(1);
@@ -184,6 +209,8 @@ describe('setLineMenus', () => {
   });
 
   it('should delete two online rich menus and add one local rich menu if it has two shouldDeleteRichMenus and one shouldAddRichMenus', async () => {
+    const ctx = setup();
+
     LineClient.connect().getRichMenuList.mockReturnValueOnce(
       Promise.resolve([
         {
@@ -237,7 +264,7 @@ describe('setLineMenus', () => {
       ])
     );
 
-    await setLineMenus();
+    await setLineMenus(ctx);
 
     expect(LineClient.connect().deleteRichMenu.mock.calls.length).toBe(2);
     expect(LineClient.connect().createRichMenu.mock.calls.length).toBe(1);

@@ -45,27 +45,58 @@ it('be defined', () => {
 });
 
 describe('resolve', () => {
+  it('--token should work', async () => {
+    const ctx = {
+      argv: { token: '12345' },
+    };
+
+    await getWebhook(ctx);
+
+    expect(TelegramClient.connect).toBeCalledWith('12345');
+  });
+
+  it('Abbreviational options should work', async () => {
+    const ctx = {
+      argv: { t: '12345' },
+    };
+
+    await getWebhook(ctx);
+
+    expect(TelegramClient.connect).toBeCalledWith('12345');
+  });
+
   it('successfully get webhook', async () => {
-    await getWebhook();
+    const ctx = {
+      argv: {},
+    };
+
+    await getWebhook(ctx);
 
     expect(log.print).toHaveBeenCalledTimes(4);
   });
 });
 
 describe('reject', () => {
-  it('reject when Telegram return not success', async () => {
+  it('reject when Telegram return not success', () => {
+    const ctx = {
+      argv: {},
+    };
     TelegramClient.connect().getWebhookInfo.mockReturnValueOnce(
       Promise.resolve({
         ok: false,
       })
     );
-    await getWebhook();
-    expect(getWebhook().then).toThrow();
+
+    expect(getWebhook(ctx).then).toThrow();
   });
 
-  it('reject when `accessToken` is not found in config file', async () => {
-    getConfig.mockReturnValueOnce(null);
-    await getWebhook();
-    expect(getWebhook().then).toThrow();
+  it('reject when accessToken is not found in config file', () => {
+    const ctx = {
+      argv: {},
+    };
+
+    getConfig.mockReturnValueOnce({});
+
+    expect(getWebhook(ctx).then).toThrow();
   });
 });
