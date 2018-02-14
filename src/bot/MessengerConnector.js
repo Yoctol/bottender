@@ -289,7 +289,13 @@ export default class MessengerConnector
       return true;
     }
 
-    const bufferFromSignature = Buffer.from(signature.split('sha1=')[1], 'hex');
+    if (typeof signature !== 'string') return false;
+
+    const sha1 = signature.split('sha1=')[1];
+
+    if (!sha1) return false;
+
+    const bufferFromSignature = Buffer.from(sha1, 'hex');
 
     const hashBufferFromBody = crypto
       .createHmac('sha1', this._appSecret)

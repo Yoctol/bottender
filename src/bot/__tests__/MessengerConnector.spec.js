@@ -543,4 +543,20 @@ describe('#verifySignature', () => {
 
     expect(result).toBe(true);
   });
+
+  it('should return false if signature is undefined', () => {
+    const { connector } = setup();
+
+    const result = connector.verifySignature('rawBody', undefined);
+
+    expect(result).toBe(false);
+  });
+
+  it('should return false if signature dont have a sha1= prefix', () => {
+    const { connector } = setup();
+
+    const result = connector.verifySignature('rawBody', 'sha256!!!');
+
+    expect(result).toBe(false);
+  });
 });
