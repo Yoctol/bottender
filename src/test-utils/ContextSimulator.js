@@ -117,7 +117,7 @@ class ContextSimulator {
       session: {
         id: '__ID__',
         user: this.createUser(),
-        _state: state || {},
+        _state: state || this._initialState,
       },
       initialState: this._initialState,
     });

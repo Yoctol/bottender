@@ -6,6 +6,14 @@ describe('#state', () => {
     initialState: { z: 1 },
   });
 
+  it('should work with initialState', () => {
+    const context = simulator.createContext({
+      event: {},
+    });
+
+    expect(context.state).toEqual({ z: 1 });
+  });
+
   it('should work with setState', () => {
     const context = simulator.createContext({
       event: {},
