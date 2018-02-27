@@ -47,6 +47,7 @@ const createMockGraphAPIClient = () => ({
   passThreadControl: jest.fn(),
   passThreadControlToPageInbox: jest.fn(),
   takeThreadControl: jest.fn(),
+  requestThreadControl: jest.fn(),
   associateLabel: jest.fn(),
   dissociateLabel: jest.fn(),
   getAssociatedLabels: jest.fn(),
@@ -967,6 +968,27 @@ describe('#takeThreadControl', () => {
 
     expect(warning).toBeCalled();
     expect(client.takeThreadControl).not.toBeCalled();
+  });
+});
+
+describe('#requestThreadControl', () => {
+  it('should call to request user thread control', async () => {
+    const { context, client, session } = setup();
+
+    await context.requestThreadControl();
+
+    expect(client.requestThreadControl).toBeCalledWith(session.user.id, {
+      access_token: undefined,
+    });
+  });
+
+  it('should call warning if dont have session', async () => {
+    const { context, client } = setup({ session: false });
+
+    await context.requestThreadControl();
+
+    expect(warning).toBeCalled();
+    expect(client.requestThreadControl).not.toBeCalled();
   });
 });
 

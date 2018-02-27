@@ -651,7 +651,7 @@ export default class MessengerEvent implements Event {
    * The take thread control object from Messenger raw event.
    *
    */
-  get requestThreadControl(): ?TakeThreadControl {
+  get requestThreadControl(): ?RequestThreadControl {
     return this._rawEvent.request_thread_control || null;
   }
 

@@ -4357,7 +4357,7 @@ messaging-api-line@^0.6.13:
     image-type "^3.0.0"
     warning "^3.0.0"
 
-messaging-api-messenger@^0.6.13:
+messaging-api-messenger@^0.6.15:
   version "0.6.15"
   resolved "https://registry.yarnpkg.com/messaging-api-messenger/-/messaging-api-messenger-0.6.15.tgz#e44e039481cf629ef6d868f9cdf30c7906c452c4"
   dependencies:
