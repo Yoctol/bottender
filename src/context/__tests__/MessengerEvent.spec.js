@@ -441,6 +441,20 @@ const takeThreadControl = {
   },
 };
 
+const requestThreadControl = {
+  sender: {
+    id: '404217156637689',
+  },
+  recipient: {
+    id: '1423587017700273',
+  },
+  timestamp: 1458692752478,
+  request_thread_control: {
+    requested_owner_app_id: '123456789',
+    metadata: 'additional content that the caller wants to set',
+  },
+};
+
 const textMessageFromCustomerChatPlugin = {
   sender: { id: '1423587017700273' },
   recipient: { id: '404217156637689' },
@@ -1094,6 +1108,33 @@ it('#takeThreadControl', () => {
     metadata: 'additional content that the caller wants to set',
     previous_owner_app_id: '123456789',
   });
+});
+
+it('#isTakeThreadControl', () => {
+  expect(new MessengerEvent(textMessage).isTakeThreadControl).toEqual(false);
+  expect(new MessengerEvent(postback).isTakeThreadControl).toEqual(false);
+  expect(new MessengerEvent(takeThreadControl).isTakeThreadControl).toEqual(
+    true
+  );
+});
+
+it('#isRequestThreadControl', () => {
+  expect(new MessengerEvent(textMessage).isRequestThreadControl).toEqual(false);
+  expect(new MessengerEvent(postback).isRequestThreadControl).toEqual(false);
+  expect(
+    new MessengerEvent(requestThreadControl).isRequestThreadControl
+  ).toEqual(true);
+});
+
+it('#requestThreadControl', () => {
+  expect(new MessengerEvent(textMessage).requestThreadControl).toEqual(null);
+  expect(new MessengerEvent(postback).requestThreadControl).toEqual(null);
+  expect(new MessengerEvent(requestThreadControl).requestThreadControl).toEqual(
+    {
+      metadata: 'additional content that the caller wants to set',
+      requested_owner_app_id: '123456789',
+    }
+  );
 });
 
 it('#isFromCustomerChatPlugin', () => {
