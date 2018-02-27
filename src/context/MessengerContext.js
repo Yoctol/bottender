@@ -218,6 +218,25 @@ class MessengerContext extends Context implements PlatformContext {
   }
 
   /**
+   * https://github.com/Yoctol/messaging-apis/blob/master/packages/messaging-api-messenger/README.md#requestthreadcontroluserid-metadata---official-docs
+   */
+  async requestThreadControl(): Promise<any> {
+    if (!this._session) {
+      warning(
+        false,
+        'requestThreadControl: should not be called in context without session'
+      );
+      return;
+    }
+
+    this._isHandled = true;
+
+    return this._client.requestThreadControl(this._session.user.id, {
+      access_token: this._customAccessToken,
+    });
+  }
+
+  /**
    * Targeting Broadcast Messages
    *
    * https://github.com/Yoctol/messaging-apis/tree/master/packages/messaging-api-messenger#targeting-broadcast-messages---official-docs

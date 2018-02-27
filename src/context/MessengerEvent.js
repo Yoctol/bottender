@@ -144,6 +144,11 @@ export type TakeThreadControl = {
   metadata: string,
 };
 
+export type RequestThreadControl = {
+  requested_owner_app_id: string,
+  metadata: string,
+};
+
 export type MessengerRawEvent = {
   sender?: Sender,
   recipient?: Recipient,
@@ -160,6 +165,7 @@ export type MessengerRawEvent = {
   app_roles?: AppRoles,
   pass_thread_control?: PassThreadControl,
   take_thread_control?: TakeThreadControl,
+  request_thread_control?: RequestThreadControl,
   referral?: Referral,
 };
 
@@ -628,6 +634,25 @@ export default class MessengerEvent implements Event {
    */
   get takeThreadControl(): ?TakeThreadControl {
     return this._rawEvent.take_thread_control || null;
+  }
+
+  /**
+   * Determine if the event is a request thread control event.
+   *
+   */
+  get isRequestThreadControl(): boolean {
+    return (
+      !!this._rawEvent.request_thread_control &&
+      typeof this._rawEvent.request_thread_control === 'object'
+    );
+  }
+
+  /**
+   * The take thread control object from Messenger raw event.
+   *
+   */
+  get requestThreadControl(): ?RequestThreadControl {
+    return this._rawEvent.request_thread_control || null;
   }
 
   /**
