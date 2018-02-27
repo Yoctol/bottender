@@ -1,3 +1,25 @@
+# 0.14.23 / 2018-02-27
+
+* [fix] fix context simulator initialState (#198)
+
+### messenger
+
+* [new] Support request thread control:
+
+```js
+context.requestThreadControl();
+context.event.isRequestThreadControl; // true or false
+context.event.requestThreadControl;
+/*
+  {
+      metadata: 'additional content that the caller wants to set',
+      requested_owner_app_id: '123456789',
+  }
+*/
+```
+
+* [fix] fix error when verifying facebook signature.
+
 # 0.14.22 / 2018-02-12
 
 * [deps] bump messaging-apis to v0.6.13
