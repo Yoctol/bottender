@@ -18,7 +18,7 @@ context.event.requestThreadControl;
 */
 ```
 
-* [fix] fix error when verifying facebook signature.
+* [fix] fix error on verifying facebook signature.
 
 # 0.14.22 / 2018-02-12
 
