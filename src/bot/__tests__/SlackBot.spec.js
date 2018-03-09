@@ -1,4 +1,4 @@
-import { RtmClient } from '@slack/client';
+import { RTMClient } from '@slack/client';
 
 import SlackBot from '../SlackBot';
 import SlackConnector from '../SlackConnector';
@@ -35,7 +35,7 @@ describe('createRtmRuntime', () => {
     const on = jest.fn();
     const handler = jest.fn();
 
-    RtmClient.mockImplementation(() => ({
+    RTMClient.mockImplementation(() => ({
       on,
       start,
     }));
