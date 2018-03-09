@@ -1,5 +1,5 @@
 /* @flow */
-import { RtmClient } from '@slack/client';
+import { RTMClient } from '@slack/client';
 
 import type { SessionStore } from '../session/SessionStore';
 
@@ -26,10 +26,7 @@ export default class SlackBot extends Bot {
   }
 
   createRtmRuntime() {
-    const rtm = new RtmClient(this._accessToken, {
-      useRtmConnect: true,
-      dataStore: false,
-    });
+    const rtm = new RTMClient(this._accessToken);
     const handler = this.createRequestHandler();
 
     rtm.on('message', handler);
