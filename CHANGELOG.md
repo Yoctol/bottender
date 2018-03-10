@@ -1,3 +1,7 @@
+# 0.14.24 / 2018-03-11
+
+* [fix] Upgrade `@slack/client` deps to fix security vulnerability
+
 # 0.14.23 / 2018-02-27
 
 * [fix] fix context simulator initialState (#198)
