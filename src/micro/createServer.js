@@ -6,7 +6,8 @@ import connectNgrok from '../connectNgrok';
 import createRequestHandler from './createRequestHandler';
 
 function createServer(bot, config = {}) {
-  config.verifyToken = config.verifyToken || shortid.generate();
+  config.verifyToken =
+    config.verifyToken || bot.connector.verifyToken || shortid.generate();
 
   const server = micro(createRequestHandler(bot, config));
 

@@ -78,6 +78,7 @@ type ConstructorOptions = {|
   appSecret?: string,
   client?: MessengerClient,
   mapPageToAccessToken?: (pageId: string) => Promise<string>,
+  verifyToken?: ?string,
 |};
 
 export default class MessengerConnector
@@ -85,16 +86,19 @@ export default class MessengerConnector
   _client: MessengerClient;
   _appSecret: string;
   _mapPageToAccessToken: ?(pageId: string) => ?Promise<string>;
+  _verifyToken: ?string;
 
   constructor({
     accessToken,
     appSecret,
     client,
     mapPageToAccessToken,
+    verifyToken,
   }: ConstructorOptions) {
     this._client = client || MessengerClient.connect(accessToken || '');
     this._appSecret = appSecret || '';
     this._mapPageToAccessToken = mapPageToAccessToken;
+    this._verifyToken = verifyToken;
     if (!this._appSecret) {
       warning(
         false,
@@ -159,6 +163,10 @@ export default class MessengerConnector
 
   get client(): MessengerClient {
     return this._client;
+  }
+
+  get verifyToken(): ?string {
+    return this._verifyToken;
   }
 
   getUniqueSessionKey(body: MessengerRequestBody): ?string {

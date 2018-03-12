@@ -164,10 +164,11 @@ const webhookTestRequest = {
 };
 
 function setup(
-  { accessToken, appSecret, mapPageToAccessToken } = {
+  { accessToken, appSecret, mapPageToAccessToken, verifyToken } = {
     accessToken: ACCESS_TOKEN,
     appSecret: APP_SECRET,
     mapPageToAccessToken: jest.fn(),
+    verifyToken: undefined,
   }
 ) {
   const mockGraphAPIClient = {
@@ -181,6 +182,7 @@ function setup(
       accessToken,
       appSecret,
       mapPageToAccessToken,
+      verifyToken,
     }),
   };
 }
@@ -199,6 +201,18 @@ describe('#platform', () => {
   it('should be messenger', () => {
     const { connector } = setup();
     expect(connector.platform).toBe('messenger');
+  });
+});
+
+describe('#verifyToken', () => {
+  it('should be undefined when not be provided', () => {
+    const { connector } = setup();
+    expect(connector.verifyToken).toBe(undefined);
+  });
+
+  it('should equal when be provided', () => {
+    const { connector } = setup({ verifyToken: '1234' });
+    expect(connector.verifyToken).toBe('1234');
   });
 });
 

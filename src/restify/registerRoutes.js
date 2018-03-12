@@ -17,7 +17,8 @@ function registerRoutes(server, bot, config = {}) {
   const middleware = config.webhookMiddleware ? [config.webhookMiddleware] : [];
 
   if (bot.connector.platform === 'messenger') {
-    verifyToken = config.verifyToken || shortid.generate();
+    verifyToken =
+      config.verifyToken || bot.connector.verifyToken || shortid.generate();
     server.get(path, verifyMessengerWebhook({ verifyToken }));
     middleware.unshift(verifyMessengerSignature(bot));
   } else if (bot.connector.platform === 'slack') {
