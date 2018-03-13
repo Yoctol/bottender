@@ -1,3 +1,42 @@
+# 0.14.25 / 2018-03-13
+
+### console
+
+* [new] Support using `/exit` to exit
+
+### messenger
+
+* [new] Support passing `verifyToken` to `MessengerBot` or `MessengerConnector` (#204)
+
+Support both:
+
+* pass verifyToken in server config
+
+```js
+const bot = new MessengerBot({
+  accessToken: config.accessToken,
+  appSecret: config.appSecret,
+});
+
+const server = createServer(bot, { verifyToken: config.verifyToken });
+```
+
+* pass verifyToken in bot config
+
+```js
+const bot = new MessengerBot({
+  accessToken: config.accessToken,
+  appSecret: config.appSecret,
+  verifyToken: config.verifyToken,
+});
+
+const server = createServer(bot);
+```
+
+### line
+
+* [fix] Fix LINE join, leave events which do not have userId will fail get profile (#206)
+
 # 0.14.24 / 2018-03-11
 
 * [fix] Upgrade `@slack/client` deps to fix security vulnerability
