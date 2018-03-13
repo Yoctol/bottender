@@ -42,8 +42,8 @@ You can find the Bottender documentation on the website.
 
 * [Getting Started](https://bottender.js.org/docs/GettingStarted)
 * [Platforms](https://bottender.js.org/docs/Platforms-Messenger)
-  * [Console](https://bottender.js.org/docs/Platforms-Console)
-  * [Messenger](https://bottender.js.org/docs/Platforms-Messenger)
+  * [Console](https://bottender.js.org/docs/Platforms-Console)
+  * [Messenger](https://bottender.js.org/docs/Platforms-Messenger)
   * [LINE](https://bottender.js.org/docs/Platforms-LINE)
   * [Slack](https://bottender.js.org/docs/Platforms-Slack)
   * [Telegram](https://bottender.js.org/docs/Platforms-Telegram)
