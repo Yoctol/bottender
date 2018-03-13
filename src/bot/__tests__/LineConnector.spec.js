@@ -347,6 +347,63 @@ describe('#updateSession', () => {
     });
   });
 
+  it('update session with group type event without userId', async () => {
+    const { connector, mockLineAPIClient } = setup();
+    const body = {
+      events: [
+        {
+          replyToken: 'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA',
+          type: 'join',
+          timestamp: 1462629479859,
+          source: {
+            type: 'group',
+            groupId: 'Ca56f94637cc4347f90a25382909b24b9',
+          },
+        },
+      ],
+    };
+    const user = null;
+    const memberIds = [
+      'Uxxxxxxxxxxxxxx...1',
+      'Uxxxxxxxxxxxxxx...2',
+      'Uxxxxxxxxxxxxxx...3',
+    ];
+
+    mockLineAPIClient.getAllGroupMemberIds.mockReturnValue(
+      Promise.resolve(memberIds)
+    );
+
+    const session = {};
+
+    await connector.updateSession(session, body);
+
+    expect(mockLineAPIClient.getGroupMemberProfile).not.toBeCalled();
+    expect(mockLineAPIClient.getAllGroupMemberIds).toBeCalledWith(
+      'Ca56f94637cc4347f90a25382909b24b9'
+    );
+
+    expect(session).toEqual({
+      type: 'group',
+      group: {
+        id: 'Ca56f94637cc4347f90a25382909b24b9',
+        members: [
+          { id: 'Uxxxxxxxxxxxxxx...1' },
+          { id: 'Uxxxxxxxxxxxxxx...2' },
+          { id: 'Uxxxxxxxxxxxxxx...3' },
+        ],
+        _updatedAt: expect.any(String),
+      },
+      user,
+    });
+    expect(Object.isFrozen(session.group)).toBe(true);
+    expect(Object.getOwnPropertyDescriptor(session, 'group')).toEqual({
+      configurable: false,
+      enumerable: true,
+      writable: false,
+      value: session.group,
+    });
+  });
+
   it('update session with room type message', async () => {
     const { connector, mockLineAPIClient } = setup();
     const body = {
@@ -397,6 +454,63 @@ describe('#updateSession', () => {
       'Ra8dbf4673c4c812cd491258042226c99',
       'U206d25c2ea6bd87c17655609a1c37cb8'
     );
+    expect(mockLineAPIClient.getAllRoomMemberIds).toBeCalledWith(
+      'Ra8dbf4673c4c812cd491258042226c99'
+    );
+
+    expect(session).toEqual({
+      type: 'room',
+      room: {
+        id: 'Ra8dbf4673c4c812cd491258042226c99',
+        members: [
+          { id: 'Uxxxxxxxxxxxxxx...1' },
+          { id: 'Uxxxxxxxxxxxxxx...2' },
+          { id: 'Uxxxxxxxxxxxxxx...3' },
+        ],
+        _updatedAt: expect.any(String),
+      },
+      user,
+    });
+    expect(Object.isFrozen(session.room)).toBe(true);
+    expect(Object.getOwnPropertyDescriptor(session, 'room')).toEqual({
+      configurable: false,
+      enumerable: true,
+      writable: false,
+      value: session.room,
+    });
+  });
+
+  it('update session with room type event without userId', async () => {
+    const { connector, mockLineAPIClient } = setup();
+    const body = {
+      events: [
+        {
+          replyToken: 'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA',
+          type: 'join',
+          timestamp: 1462629479859,
+          source: {
+            type: 'room',
+            roomId: 'Ra8dbf4673c4c812cd491258042226c99',
+          },
+        },
+      ],
+    };
+    const user = null;
+    const memberIds = [
+      'Uxxxxxxxxxxxxxx...1',
+      'Uxxxxxxxxxxxxxx...2',
+      'Uxxxxxxxxxxxxxx...3',
+    ];
+
+    mockLineAPIClient.getAllRoomMemberIds.mockReturnValue(
+      Promise.resolve(memberIds)
+    );
+
+    const session = {};
+
+    await connector.updateSession(session, body);
+
+    expect(mockLineAPIClient.getRoomMemberProfile).not.toBeCalled();
     expect(mockLineAPIClient.getAllRoomMemberIds).toBeCalledWith(
       'Ra8dbf4673c4c812cd491258042226c99'
     );

@@ -76,16 +76,20 @@ export default class LineConnector implements Connector<LineRequestBody> {
     }
 
     if (source.type === 'group') {
-      const user = await this._client.getGroupMemberProfile(
-        source.groupId,
-        source.userId
-      );
+      let user = null;
 
-      session.user = {
-        id: source.userId,
-        _updatedAt: new Date().toISOString(),
-        ...user,
-      };
+      if (source.userId) {
+        user = {
+          id: source.userId,
+          _updatedAt: new Date().toISOString(),
+          ...(await this._client.getGroupMemberProfile(
+            source.groupId,
+            source.userId
+          )),
+        };
+      }
+
+      session.user = user;
 
       let memberIds = [];
 
@@ -103,16 +107,20 @@ export default class LineConnector implements Connector<LineRequestBody> {
         _updatedAt: new Date().toISOString(),
       };
     } else if (source.type === 'room') {
-      const user = await this._client.getRoomMemberProfile(
-        source.roomId,
-        source.userId
-      );
+      let user = null;
 
-      session.user = {
-        id: source.userId,
-        _updatedAt: new Date().toISOString(),
-        ...user,
-      };
+      if (source.userId) {
+        user = {
+          id: source.userId,
+          _updatedAt: new Date().toISOString(),
+          ...(await this._client.getRoomMemberProfile(
+            source.roomId,
+            source.userId
+          )),
+        };
+      }
+
+      session.user = user;
 
       let memberIds = [];
 
