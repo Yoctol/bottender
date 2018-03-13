@@ -23,7 +23,8 @@ export default class ConsoleBot extends Bot {
     });
 
     const handleLine = async (line: string = '') => {
-      if (line.toLowerCase() === '/quit') {
+      const lowerCaseLine = line.toLowerCase();
+      if (lowerCaseLine === '/quit' || lowerCaseLine === '/exit') {
         rl.close();
         process.exit();
       }

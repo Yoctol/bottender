@@ -63,6 +63,22 @@ describe('createRuntime', () => {
     expect(process.exit).toBeCalled();
   });
 
+  it('should exit when entering /exit', () => {
+    const bot = new ConsoleBot();
+    const handler = jest.fn();
+
+    bot.onEvent(handler);
+
+    readline.createInterface.mockReturnValue({
+      once: once((string, fn) => fn('/exit')),
+      close: jest.fn(),
+    });
+
+    bot.createRuntime();
+
+    expect(process.exit).toBeCalled();
+  });
+
   it('should call handler with text event when receive random text', async () => {
     const bot = new ConsoleBot();
 
