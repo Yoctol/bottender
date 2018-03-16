@@ -182,7 +182,7 @@ class MessengerContext extends Context implements PlatformContext {
   /**
    * https://github.com/Yoctol/messaging-apis/tree/master/packages/messaging-api-messenger#passthreadcontroltopageinboxuserid-metadata---official-docs
    */
-  async passThreadControlToPageInbox(): Promise<any> {
+  async passThreadControlToPageInbox(metadata?: string): Promise<any> {
     if (!this._session) {
       warning(
         false,
@@ -193,15 +193,19 @@ class MessengerContext extends Context implements PlatformContext {
 
     this._isHandled = true;
 
-    return this._client.passThreadControlToPageInbox(this._session.user.id, {
-      access_token: this._customAccessToken,
-    });
+    return this._client.passThreadControlToPageInbox(
+      this._session.user.id,
+      metadata,
+      {
+        access_token: this._customAccessToken,
+      }
+    );
   }
 
   /**
    * https://github.com/Yoctol/messaging-apis/tree/master/packages/messaging-api-messenger#takethreadcontroluserid-metadata---official-docs
    */
-  async takeThreadControl(): Promise<any> {
+  async takeThreadControl(metadata?: string): Promise<any> {
     if (!this._session) {
       warning(
         false,
@@ -212,7 +216,7 @@ class MessengerContext extends Context implements PlatformContext {
 
     this._isHandled = true;
 
-    return this._client.takeThreadControl(this._session.user.id, {
+    return this._client.takeThreadControl(this._session.user.id, metadata, {
       access_token: this._customAccessToken,
     });
   }
@@ -220,7 +224,7 @@ class MessengerContext extends Context implements PlatformContext {
   /**
    * https://github.com/Yoctol/messaging-apis/blob/master/packages/messaging-api-messenger/README.md#requestthreadcontroluserid-metadata---official-docs
    */
-  async requestThreadControl(): Promise<any> {
+  async requestThreadControl(metadata?: string): Promise<any> {
     if (!this._session) {
       warning(
         false,
@@ -231,7 +235,7 @@ class MessengerContext extends Context implements PlatformContext {
 
     this._isHandled = true;
 
-    return this._client.requestThreadControl(this._session.user.id, {
+    return this._client.requestThreadControl(this._session.user.id, metadata, {
       access_token: this._customAccessToken,
     });
   }
