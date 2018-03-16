@@ -21,6 +21,8 @@ afterEach(() => {
 });
 
 const createMockGraphAPIClient = () => ({
+  getUserProfile: jest.fn(),
+  sendSenderAction: jest.fn(),
   typingOn: jest.fn(),
   typingOff: jest.fn(),
   markSeen: jest.fn(),
@@ -69,6 +71,7 @@ const userSession = {
     id: 'fakeUserId',
   },
 };
+
 const setup = (
   { session, customAccessToken } = {
     session: userSession,
@@ -721,6 +724,114 @@ describe('#sendAirlineFlightUpdateTemplate', () => {
   });
 });
 
+describe('#getUserProfile', () => {
+  it('should call client sendSenderAction', async () => {
+    const { context, client, session } = setup();
+
+    const user = {
+      first_name: 'Kevin',
+      last_name: 'Durant',
+      profile_pic: 'https://example.com/pic.png',
+      locale: 'en_US',
+      timezone: 8,
+      gender: 'male',
+    };
+
+    client.getUserProfile.mockReturnValue(Promise.resolve(user));
+
+    const result = await context.getUserProfile();
+
+    expect(client.getUserProfile).toBeCalledWith(session.user.id, {
+      access_token: undefined,
+    });
+    expect(result).toEqual(user);
+  });
+
+  it('should use custom access token', async () => {
+    const { context, client, session } = setup({
+      session: userSession,
+      customAccessToken: 'anyToken',
+    });
+
+    const user = {
+      first_name: 'Kevin',
+      last_name: 'Durant',
+      profile_pic: 'https://example.com/pic.png',
+      locale: 'en_US',
+      timezone: 8,
+      gender: 'male',
+    };
+
+    client.getUserProfile.mockReturnValue(Promise.resolve(user));
+
+    const result = await context.getUserProfile();
+
+    expect(client.getUserProfile).toBeCalledWith(session.user.id, {
+      access_token: 'anyToken',
+    });
+    expect(result).toEqual(user);
+  });
+
+  it('should call warning and not to send if dont have session', async () => {
+    const { context, client } = setup({ session: false });
+
+    await context.getUserProfile();
+
+    expect(warning).toBeCalled();
+    expect(client.getUserProfile).not.toBeCalled();
+  });
+});
+
+describe('#sendSenderAction', () => {
+  it('should call client sendSenderAction', async () => {
+    const { context, client, session } = setup();
+
+    await context.sendSenderAction('typing_on');
+
+    expect(client.sendSenderAction).toBeCalledWith(
+      session.user.id,
+      'typing_on',
+      {
+        access_token: undefined,
+      }
+    );
+  });
+
+  it('should use custom access token', async () => {
+    const { context, client, session } = setup({
+      session: userSession,
+      customAccessToken: 'anyToken',
+    });
+
+    await context.sendSenderAction('typing_on');
+
+    expect(client.sendSenderAction).toBeCalledWith(
+      session.user.id,
+      'typing_on',
+      {
+        access_token: 'anyToken',
+      }
+    );
+  });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    await context.sendSenderAction('typing_on');
+
+    expect(context.isHandled).toBe(true);
+  });
+
+  it('should call warning and not to send if dont have session', async () => {
+    const { context, client } = setup({ session: false });
+
+    await context.sendSenderAction('typing_on');
+
+    expect(warning).toBeCalled();
+    expect(client.sendSenderAction).not.toBeCalled();
+  });
+});
+
 describe('#typingOn', () => {
   it('should call client typingOn', async () => {
     const { context, client, session } = setup();
@@ -752,6 +863,7 @@ describe('#typingOn', () => {
 
     expect(context.isHandled).toBe(true);
   });
+
   it('should call warning and not to send if dont have session', async () => {
     const { context, client } = setup({ session: false });
 
