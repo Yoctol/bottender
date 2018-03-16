@@ -903,7 +903,7 @@ describe('#passThreadControl', () => {
   it('should call warning if dont have session', async () => {
     const { context, client } = setup({ session: false });
 
-    await context.passThreadControl(263902037430900, 'metadata');
+    await context.passThreadControl(263902037430900);
 
     expect(warning).toBeCalled();
     expect(client.passThreadControl).not.toBeCalled();
@@ -914,10 +914,11 @@ describe('#passThreadControlToPageInbox', () => {
   it('should call to pass user thread control to page inbox', async () => {
     const { context, client, session } = setup();
 
-    await context.passThreadControlToPageInbox();
+    await context.passThreadControlToPageInbox('metadata');
 
     expect(client.passThreadControlToPageInbox).toBeCalledWith(
       session.user.id,
+      'metadata',
       {
         access_token: undefined,
       }
@@ -934,6 +935,7 @@ describe('#passThreadControlToPageInbox', () => {
 
     expect(client.passThreadControlToPageInbox).toBeCalledWith(
       session.user.id,
+      undefined,
       {
         access_token: 'anyToken',
       }
@@ -954,11 +956,15 @@ describe('#takeThreadControl', () => {
   it('should call to take user thread control back', async () => {
     const { context, client, session } = setup();
 
-    await context.takeThreadControl();
+    await context.takeThreadControl('metadata');
 
-    expect(client.takeThreadControl).toBeCalledWith(session.user.id, {
-      access_token: undefined,
-    });
+    expect(client.takeThreadControl).toBeCalledWith(
+      session.user.id,
+      'metadata',
+      {
+        access_token: undefined,
+      }
+    );
   });
 
   it('should call warning if dont have session', async () => {
@@ -975,11 +981,15 @@ describe('#requestThreadControl', () => {
   it('should call to request user thread control', async () => {
     const { context, client, session } = setup();
 
-    await context.requestThreadControl();
+    await context.requestThreadControl('metadata');
 
-    expect(client.requestThreadControl).toBeCalledWith(session.user.id, {
-      access_token: undefined,
-    });
+    expect(client.requestThreadControl).toBeCalledWith(
+      session.user.id,
+      'metadata',
+      {
+        access_token: undefined,
+      }
+    );
   });
 
   it('should call warning if dont have session', async () => {
