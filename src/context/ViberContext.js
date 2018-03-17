@@ -61,6 +61,18 @@ class ViberContext extends Context implements PlatformContext {
 
     return this._client.sendText(this._session.user.id, text, options);
   }
+
+  async getUserDetails(): Promise<?Object> {
+    if (!this._session) {
+      warning(
+        false,
+        'getUserDetails: should not be called in context without session'
+      );
+      return null;
+    }
+
+    return this._client.getUserDetails(this._session.user.id);
+  }
 }
 
 const sendMethods = [

@@ -17,6 +17,7 @@ beforeEach(() => {
 });
 
 const createMockViberClient = () => ({
+  getUserDetails: jest.fn(),
   sendMessage: jest.fn(),
   sendText: jest.fn(),
   sendPicture: jest.fn(),
@@ -492,7 +493,42 @@ describe('#sendCarouselContent', () => {
 
     await context.sendCarouselContent(richMedia);
 
-    expect(client.sendSticker).not.toBeCalled();
+    expect(client.sendCarouselContent).not.toBeCalled();
+  });
+});
+
+describe('#getUserDetails', () => {
+  it('should call client.getUserDetails', async () => {
+    const { context, client, session } = setup();
+
+    const user = {
+      id: '01234567890A=',
+      name: 'John McClane',
+      avatar: 'http://avatar.example.com',
+      country: 'UK',
+      language: 'en',
+      primary_device_os: 'android 7.1',
+      api_version: 1,
+      viber_version: '6.5.0',
+      mcc: 1,
+      mnc: 1,
+      device_type: 'iPhone9,4',
+    };
+
+    client.getUserDetails.mockReturnValue(Promise.resolve(user));
+
+    const result = await context.getUserDetails();
+
+    expect(client.getUserDetails).toBeCalledWith(session.user.id);
+    expect(result).toEqual(user);
+  });
+
+  it('should not call send method if dont have session', async () => {
+    const { context, client } = setup({ session: undefined });
+
+    await context.getUserDetails();
+
+    expect(client.getUserDetails).not.toBeCalled();
   });
 });
 
