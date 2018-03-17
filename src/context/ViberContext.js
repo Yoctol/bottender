@@ -45,7 +45,7 @@ class ViberContext extends Context implements PlatformContext {
   }
 
   /**
-   * Send text to the owner of then session.
+   * Send text to the owner of the session.
    *
    */
   async sendText(text: string, options?: Object): Promise<any> {
@@ -62,6 +62,10 @@ class ViberContext extends Context implements PlatformContext {
     return this._client.sendText(this._session.user.id, text, options);
   }
 
+  /**
+   * Get user details from the owner of the session.
+   *
+   */
   async getUserDetails(): Promise<?Object> {
     if (!this._session) {
       warning(
@@ -72,6 +76,23 @@ class ViberContext extends Context implements PlatformContext {
     }
 
     return this._client.getUserDetails(this._session.user.id);
+  }
+
+  /**
+   * Get user online status from the owner of the session.
+   *
+   */
+  async getOnlineStatus(): Promise<?Object> {
+    if (!this._session) {
+      warning(
+        false,
+        'getOnlineStatus: should not be called in context without session'
+      );
+      return null;
+    }
+
+    const status = await this._client.getOnlineStatus([this._session.user.id]);
+    return status[0];
   }
 }
 

@@ -28,6 +28,7 @@ const createMockViberClient = () => ({
   sendURL: jest.fn(),
   sendSticker: jest.fn(),
   sendCarouselContent: jest.fn(),
+  getOnlineStatus: jest.fn(),
 });
 
 const rawEvent = {
@@ -529,6 +530,33 @@ describe('#getUserDetails', () => {
     await context.getUserDetails();
 
     expect(client.getUserDetails).not.toBeCalled();
+  });
+});
+
+describe('#getOnlineStatus', () => {
+  it('should call client.getOnlineStatus', async () => {
+    const { context, client, session } = setup();
+
+    const user = {
+      id: '01234567890=',
+      online_status: 0,
+      online_status_message: 'online',
+    };
+
+    client.getOnlineStatus.mockReturnValue(Promise.resolve([user]));
+
+    const result = await context.getOnlineStatus();
+
+    expect(client.getOnlineStatus).toBeCalledWith([session.user.id]);
+    expect(result).toEqual(user);
+  });
+
+  it('should not call send method if dont have session', async () => {
+    const { context, client } = setup({ session: undefined });
+
+    await context.getOnlineStatus();
+
+    expect(client.getOnlineStatus).not.toBeCalled();
   });
 });
 
