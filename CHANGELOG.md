@@ -1,3 +1,63 @@
+# 0.14.26 / 2018-03-17
+
+### messenger
+
+* [new] Implement `context.getUserProfile`:
+
+```js
+const user = await context.getUserProfile();
+// {
+//   first_name: 'Kevin',
+//   last_name: 'Durant',
+//   profile_pic: 'https://example.com/pic.png',
+//   locale: 'en_US',
+//   timezone: 8,
+//   gender: 'male',
+// };
+```
+
+* [new] Implement `context.sendSenderAction`:
+
+```js
+context.sendSenderAction('typing_on');
+// same as
+context.typingOn();
+```
+
+* [fix] Fix metadata argument in handover methods (#208)
+
+### viber
+
+* [new] Implement `context.getUserDetails`:
+
+```js
+const user = await context.getUserDetails();
+// {
+//   id: '01234567890A=',
+//   name: 'John McClane',
+//   avatar: 'http://avatar.example.com',
+//   country: 'UK',
+//   language: 'en',
+//   primary_device_os: 'android 7.1',
+//   api_version: 1,
+//   viber_version: '6.5.0',
+//   mcc: 1,
+//   mnc: 1,
+//   device_type: 'iPhone9,4',
+// };
+```
+
+* [new] Implement `context.getOnlineStatus`:
+
+```js
+const status = await context.getOnlineStatus();
+// {
+//   id: '01234567890=',
+//   online_status: 0,
+//   online_status_message: 'online',
+// }
+```
+
 # 0.14.25 / 2018-03-13
 
 ### console
