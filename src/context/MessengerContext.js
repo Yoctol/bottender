@@ -92,6 +92,48 @@ class MessengerContext extends Context implements PlatformContext {
   /**
    * https://github.com/Yoctol/messaging-apis/tree/master/packages/messaging-api-messenger#typingonuserid
    */
+  async getUserProfile(): Promise<?Object> {
+    if (!this._session) {
+      warning(
+        false,
+        'getUserProfile: should not be called in context without session'
+      );
+      return null;
+    }
+
+    return this._client.getUserProfile(this._session.user.id, {
+      access_token: this._customAccessToken,
+    });
+  }
+
+  /**
+   * Sender Actions
+   *
+   * https://github.com/Yoctol/messaging-apis/tree/master/packages/messaging-api-messenger#sender-actions
+   */
+
+  /**
+   * https://github.com/Yoctol/messaging-apis/tree/master/packages/messaging-api-messenger#sendsenderactionuserid-action
+   */
+  async sendSenderAction(action: string): Promise<any> {
+    if (!this._session) {
+      warning(
+        false,
+        'sendSenderAction: should not be called in context without session'
+      );
+      return;
+    }
+
+    this._isHandled = true;
+
+    return this._client.sendSenderAction(this._session.user.id, action, {
+      access_token: this._customAccessToken,
+    });
+  }
+
+  /**
+   * https://github.com/Yoctol/messaging-apis/tree/master/packages/messaging-api-messenger#typingonuserid
+   */
   async typingOn(): Promise<any> {
     if (!this._session) {
       warning(
