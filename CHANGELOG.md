@@ -1,3 +1,29 @@
+# 0.14.28 / 2018-03-20
+
+### telegram
+
+* [new] Add new Group APIs to `TelegramContext`:
+
+- [`context.kickChatMember`](https://bottender.js.org/docs/APIReference-TelegramContext#kickchatmemberuserid--options---official-docs)
+- [`context.unbanChatMember`](https://bottender.js.org/docs/APIReference-TelegramContext#unbanchatmemberuserid---official-docs)
+- [`context.restrictChatMember`](https://bottender.js.org/docs/APIReference-TelegramContext#restrictchatmemberuserid--options---official-docs)
+- [`context.promoteChatMember`](https://bottender.js.org/docs/APIReference-TelegramContext#promotechatmemberuserid--options---official-docs)
+- [`context.exportChatInviteLink`](https://bottender.js.org/docs/APIReference-TelegramContext#exportchatinvitelink---official-docs)
+- [`context.setChatPhoto`](https://bottender.js.org/docs/APIReference-TelegramContext#setchatphotophoto---official-docs)
+- [`context.deleteChatPhoto`](https://bottender.js.org/docs/APIReference-TelegramContext#deletechatphoto---official-docs)
+- [`context.setChatTitle`](https://bottender.js.org/docs/APIReference-TelegramContext#setchattitletitle---official-docs)
+- [`context.setChatDescription`](https://bottender.js.org/docs/APIReference-TelegramContext#setchatdescriptiondescription---official-docs)
+- [`context.setChatStickerSet`](https://bottender.js.org/docs/APIReference-TelegramContext#setchatstickersetstickersetname---official-docs)
+- [`context.deleteChatStickerSet`](https://bottender.js.org/docs/APIReference-TelegramContext#deletechatstickersetchatid---official-docs)
+- [`context.pinChatMessage`](https://bottender.js.org/docs/APIReference-TelegramContext#pinchatmessagemessageid--options---official-docs)
+- [`context.unpinChatMessage`](https://bottender.js.org/docs/APIReference-TelegramContext#unpinchatmessage---official-docs)
+- [`context.leaveChat`](https://bottender.js.org/docs/APIReference-TelegramContext#leavechat---official-docs)
+
+* [new] Add new Payment APIs to `TelegramContext`:
+
+- [`context.answerShippingQuery`](https://bottender.js.org/docs/APIReference-TelegramContext#answershippingqueryok--options---official-docs)
+- [`context.answerPreCheckoutQuery`](https://bottender.js.org/docs/APIReference-TelegramContext#answerprecheckoutqueryok--options---official-docs)
+
 # 0.14.27 / 2018-03-19
 
 ### line
