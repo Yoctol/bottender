@@ -101,6 +101,38 @@ class TelegramContext extends Context implements PlatformContext {
     return null;
   }
 
+  async answerShippingQuery(ok: boolean, options?: {}) {
+    if (!this._event.isShippingQuery) {
+      warning(
+        false,
+        'answerShippingQuery: should only be called to answer ShippingQuery event'
+      );
+      return;
+    }
+
+    this._isHandled = true;
+
+    const shippingQueryId = (this._event.shippingQuery: any).id;
+
+    return this._client.answerShippingQuery(shippingQueryId, ok, options);
+  }
+
+  async answerPreCheckoutQuery(ok: boolean, options?: {}) {
+    if (!this._event.isPreCheckoutQuery) {
+      warning(
+        false,
+        'answerPreCheckoutQuery: should only be called to answer PreCheckoutQuery event'
+      );
+      return;
+    }
+
+    this._isHandled = true;
+
+    const preCheckoutQueryId = (this._event.preCheckoutQuery: any).id;
+
+    return this._client.answerPreCheckoutQuery(preCheckoutQueryId, ok, options);
+  }
+
   async answerInlineQuery(results: Array<Object>, options?: {}) {
     if (!this._event.isInlineQuery) {
       warning(
