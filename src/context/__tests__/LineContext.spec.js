@@ -43,12 +43,18 @@ const roomSession = {
   room: {
     id: 'fakeRoomId',
   },
+  user: {
+    id: 'fakeUserId',
+  },
 };
 
 const groupSession = {
   type: 'group',
   group: {
     id: 'fakeGroupId',
+  },
+  user: {
+    id: 'fakeUserId',
   },
 };
 
@@ -67,6 +73,13 @@ const setup = ({ session } = { session: userSession }) => {
     pushConfirmTemplate: jest.fn(),
     pushImagemap: jest.fn(),
     pushCarouselTemplate: jest.fn(),
+    getUserProfile: jest.fn(),
+    getGroupMemberProfile: jest.fn(),
+    getRoomMemberProfile: jest.fn(),
+    getGroupMemberIds: jest.fn(),
+    getAllGroupMemberIds: jest.fn(),
+    getRoomMemberIds: jest.fn(),
+    getAllRoomMemberIds: jest.fn(),
     getLinkedRichMenu: jest.fn(),
     linkRichMenu: jest.fn(),
     unlinkRichMenu: jest.fn(),
@@ -212,52 +225,6 @@ describe('#reply', () => {
   });
 });
 
-describe('#send', () => {
-  it('is not defined', () => {
-    const { context } = setup();
-
-    expect(context.send).not.toBeDefined();
-  });
-});
-
-describe('#sendText', () => {
-  it('should call client.pushText', async () => {
-    const { context, client, session } = setup();
-
-    await context.sendText('xxx.com');
-
-    expect(client.pushText).toBeCalledWith(session.user.id, 'xxx.com');
-  });
-
-  it('should work with room session', async () => {
-    const { context, client, session } = setup({
-      session: roomSession,
-    });
-
-    await context.sendText('xxx.com');
-
-    expect(client.pushText).toBeCalledWith(session.room.id, 'xxx.com');
-  });
-
-  it('should work with group session', async () => {
-    const { context, client, session } = setup({
-      session: groupSession,
-    });
-
-    await context.sendText('xxx.com');
-
-    expect(client.pushText).toBeCalledWith(session.group.id, 'xxx.com');
-  });
-
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    await context.sendText('xxx.com');
-
-    expect(context.isHandled).toBe(true);
-  });
-});
-
 describe('#push', () => {
   it('should call client.push', async () => {
     const { context, client, session } = setup();
@@ -325,640 +292,908 @@ describe('#pushText', () => {
   });
 });
 
-describe('#sendImage', () => {
-  it('should call client.pushImage', async () => {
-    const { context, client, session } = setup();
+describe('send APIs', () => {
+  describe('#send', () => {
+    it('is not defined', () => {
+      const { context } = setup();
 
-    await context.sendImage('xxx.jpg', 'yyy.jpg');
-
-    expect(client.pushImage).toBeCalledWith(
-      session.user.id,
-      'xxx.jpg',
-      'yyy.jpg'
-    );
-  });
-
-  it('should work with room session', async () => {
-    const { context, client, session } = setup({
-      session: roomSession,
-    });
-
-    await context.sendImage('xxx.jpg', 'yyy.jpg');
-
-    expect(client.pushImage).toBeCalledWith(
-      session.room.id,
-      'xxx.jpg',
-      'yyy.jpg'
-    );
-  });
-
-  it('should work with group session', async () => {
-    const { context, client, session } = setup({
-      session: groupSession,
-    });
-
-    await context.sendImage('xxx.jpg', 'yyy.jpg');
-
-    expect(client.pushImage).toBeCalledWith(
-      session.group.id,
-      'xxx.jpg',
-      'yyy.jpg'
-    );
-  });
-
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    await context.sendImage('xxx.jpg', 'yyy.jpg');
-
-    expect(context.isHandled).toBe(true);
-  });
-
-  it('should call warning and not to send if dont have session', async () => {
-    const { context, client } = setup({ session: false });
-
-    await context.sendImage('xxx.jpg', 'yyy.jpg');
-
-    expect(warning).toBeCalled();
-    expect(client.pushImage).not.toBeCalled();
-  });
-});
-
-describe('#sendAudio', () => {
-  it('should call client.pushAudio', async () => {
-    const { context, client, session } = setup();
-
-    await context.sendAudio('xxx.mp3', 240000);
-
-    expect(client.pushAudio).toBeCalledWith(session.user.id, 'xxx.mp3', 240000);
-  });
-
-  it('should work with room session', async () => {
-    const { context, client, session } = setup({
-      session: roomSession,
-    });
-
-    await context.sendAudio('xxx.mp3', 240000);
-
-    expect(client.pushAudio).toBeCalledWith(session.room.id, 'xxx.mp3', 240000);
-  });
-
-  it('should work with group session', async () => {
-    const { context, client, session } = setup({
-      session: groupSession,
-    });
-
-    await context.sendAudio('xxx.mp3', 240000);
-
-    expect(client.pushAudio).toBeCalledWith(
-      session.group.id,
-      'xxx.mp3',
-      240000
-    );
-  });
-
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    await context.sendAudio('xxx.mp3', 240000);
-
-    expect(context.isHandled).toBe(true);
-  });
-});
-
-describe('#sendVideo', () => {
-  it('should call client.pushVideo', async () => {
-    const { context, client, session } = setup();
-
-    await context.sendVideo('xxx.mp4', 'yyy.jpg');
-
-    expect(client.pushVideo).toBeCalledWith(
-      session.user.id,
-      'xxx.mp4',
-      'yyy.jpg'
-    );
-  });
-
-  it('should work with room session', async () => {
-    const { context, client, session } = setup({
-      session: roomSession,
-    });
-
-    await context.sendVideo('xxx.mp4', 'yyy.jpg');
-
-    expect(client.pushVideo).toBeCalledWith(
-      session.room.id,
-      'xxx.mp4',
-      'yyy.jpg'
-    );
-  });
-
-  it('should work with group session', async () => {
-    const { context, client, session } = setup({
-      session: groupSession,
-    });
-
-    await context.sendVideo('xxx.mp4', 'yyy.jpg');
-
-    expect(client.pushVideo).toBeCalledWith(
-      session.group.id,
-      'xxx.mp4',
-      'yyy.jpg'
-    );
-  });
-
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    await context.sendVideo('xxx.mp4', 'yyy.jpg');
-
-    expect(context.isHandled).toBe(true);
-  });
-});
-
-describe('#sendLocation', () => {
-  it('should call client.pushLocation', async () => {
-    const { context, client, session } = setup();
-
-    await context.sendLocation({
-      title: 'my location',
-      address: '〒150-0002 東京都渋谷区渋谷２丁目２１−１',
-      latitude: 35.65910807942215,
-      longitude: 139.70372892916203,
-    });
-
-    expect(client.pushLocation).toBeCalledWith(session.user.id, {
-      title: 'my location',
-      address: '〒150-0002 東京都渋谷区渋谷２丁目２１−１',
-      latitude: 35.65910807942215,
-      longitude: 139.70372892916203,
+      expect(context.send).not.toBeDefined();
     });
   });
 
-  it('should work with room session', async () => {
-    const { context, client, session } = setup({
-      session: roomSession,
+  describe('#sendText', () => {
+    it('should call client.pushText', async () => {
+      const { context, client, session } = setup();
+
+      await context.sendText('xxx.com');
+
+      expect(client.pushText).toBeCalledWith(session.user.id, 'xxx.com');
     });
 
-    await context.sendLocation({
-      title: 'my location',
-      address: '〒150-0002 東京都渋谷区渋谷２丁目２１−１',
-      latitude: 35.65910807942215,
-      longitude: 139.70372892916203,
+    it('should work with room session', async () => {
+      const { context, client, session } = setup({
+        session: roomSession,
+      });
+
+      await context.sendText('xxx.com');
+
+      expect(client.pushText).toBeCalledWith(session.room.id, 'xxx.com');
     });
 
-    expect(client.pushLocation).toBeCalledWith(session.room.id, {
-      title: 'my location',
-      address: '〒150-0002 東京都渋谷区渋谷２丁目２１−１',
-      latitude: 35.65910807942215,
-      longitude: 139.70372892916203,
-    });
-  });
+    it('should work with group session', async () => {
+      const { context, client, session } = setup({
+        session: groupSession,
+      });
 
-  it('should work with group session', async () => {
-    const { context, client, session } = setup({
-      session: groupSession,
+      await context.sendText('xxx.com');
+
+      expect(client.pushText).toBeCalledWith(session.group.id, 'xxx.com');
     });
 
-    await context.sendLocation({
-      title: 'my location',
-      address: '〒150-0002 東京都渋谷区渋谷２丁目２１−１',
-      latitude: 35.65910807942215,
-      longitude: 139.70372892916203,
-    });
+    it('should mark context as handled', async () => {
+      const { context } = setup();
 
-    expect(client.pushLocation).toBeCalledWith(session.group.id, {
-      title: 'my location',
-      address: '〒150-0002 東京都渋谷区渋谷２丁目２１−１',
-      latitude: 35.65910807942215,
-      longitude: 139.70372892916203,
+      await context.sendText('xxx.com');
+
+      expect(context.isHandled).toBe(true);
     });
   });
 
-  it('should mark context as handled', async () => {
-    const { context } = setup();
+  describe('#sendImage', () => {
+    it('should call client.pushImage', async () => {
+      const { context, client, session } = setup();
 
-    await context.sendLocation({
-      title: 'my location',
-      address: '〒150-0002 東京都渋谷区渋谷２丁目２１−１',
-      latitude: 35.65910807942215,
-      longitude: 139.70372892916203,
+      await context.sendImage('xxx.jpg', 'yyy.jpg');
+
+      expect(client.pushImage).toBeCalledWith(
+        session.user.id,
+        'xxx.jpg',
+        'yyy.jpg'
+      );
     });
 
-    expect(context.isHandled).toBe(true);
-  });
-});
+    it('should work with room session', async () => {
+      const { context, client, session } = setup({
+        session: roomSession,
+      });
 
-describe('#sendSticker', () => {
-  it('should call client.pushSticker', async () => {
-    const { context, client, session } = setup();
+      await context.sendImage('xxx.jpg', 'yyy.jpg');
 
-    await context.sendSticker('1', '1');
-
-    expect(client.pushSticker).toBeCalledWith(session.user.id, '1', '1');
-  });
-
-  it('should work with room session', async () => {
-    const { context, client, session } = setup({
-      session: roomSession,
+      expect(client.pushImage).toBeCalledWith(
+        session.room.id,
+        'xxx.jpg',
+        'yyy.jpg'
+      );
     });
 
-    await context.sendSticker('1', '1');
+    it('should work with group session', async () => {
+      const { context, client, session } = setup({
+        session: groupSession,
+      });
 
-    expect(client.pushSticker).toBeCalledWith(session.room.id, '1', '1');
-  });
+      await context.sendImage('xxx.jpg', 'yyy.jpg');
 
-  it('should work with group session', async () => {
-    const { context, client, session } = setup({
-      session: groupSession,
+      expect(client.pushImage).toBeCalledWith(
+        session.group.id,
+        'xxx.jpg',
+        'yyy.jpg'
+      );
     });
 
-    await context.sendSticker('1', '1');
+    it('should mark context as handled', async () => {
+      const { context } = setup();
 
-    expect(client.pushSticker).toBeCalledWith(session.group.id, '1', '1');
+      await context.sendImage('xxx.jpg', 'yyy.jpg');
+
+      expect(context.isHandled).toBe(true);
+    });
+
+    it('should call warning and not to send if dont have session', async () => {
+      const { context, client } = setup({ session: false });
+
+      await context.sendImage('xxx.jpg', 'yyy.jpg');
+
+      expect(warning).toBeCalled();
+      expect(client.pushImage).not.toBeCalled();
+    });
   });
 
-  it('should mark context as handled', async () => {
-    const { context } = setup();
+  describe('#sendAudio', () => {
+    it('should call client.pushAudio', async () => {
+      const { context, client, session } = setup();
 
-    await context.sendSticker('1', '1');
+      await context.sendAudio('xxx.mp3', 240000);
 
-    expect(context.isHandled).toBe(true);
+      expect(client.pushAudio).toBeCalledWith(
+        session.user.id,
+        'xxx.mp3',
+        240000
+      );
+    });
+
+    it('should work with room session', async () => {
+      const { context, client, session } = setup({
+        session: roomSession,
+      });
+
+      await context.sendAudio('xxx.mp3', 240000);
+
+      expect(client.pushAudio).toBeCalledWith(
+        session.room.id,
+        'xxx.mp3',
+        240000
+      );
+    });
+
+    it('should work with group session', async () => {
+      const { context, client, session } = setup({
+        session: groupSession,
+      });
+
+      await context.sendAudio('xxx.mp3', 240000);
+
+      expect(client.pushAudio).toBeCalledWith(
+        session.group.id,
+        'xxx.mp3',
+        240000
+      );
+    });
+
+    it('should mark context as handled', async () => {
+      const { context } = setup();
+
+      await context.sendAudio('xxx.mp3', 240000);
+
+      expect(context.isHandled).toBe(true);
+    });
   });
-});
 
-describe('#sendImagemap', () => {
-  const template = {
-    baseUrl: 'https://example.com/bot/images/rm001',
-    baseHeight: 1040,
-    baseWidth: 1040,
-    actions: [
-      {
-        type: 'uri',
-        linkUri: 'https://example.com/',
-        area: {
-          x: 0,
-          y: 0,
-          width: 520,
-          height: 1040,
+  describe('#sendVideo', () => {
+    it('should call client.pushVideo', async () => {
+      const { context, client, session } = setup();
+
+      await context.sendVideo('xxx.mp4', 'yyy.jpg');
+
+      expect(client.pushVideo).toBeCalledWith(
+        session.user.id,
+        'xxx.mp4',
+        'yyy.jpg'
+      );
+    });
+
+    it('should work with room session', async () => {
+      const { context, client, session } = setup({
+        session: roomSession,
+      });
+
+      await context.sendVideo('xxx.mp4', 'yyy.jpg');
+
+      expect(client.pushVideo).toBeCalledWith(
+        session.room.id,
+        'xxx.mp4',
+        'yyy.jpg'
+      );
+    });
+
+    it('should work with group session', async () => {
+      const { context, client, session } = setup({
+        session: groupSession,
+      });
+
+      await context.sendVideo('xxx.mp4', 'yyy.jpg');
+
+      expect(client.pushVideo).toBeCalledWith(
+        session.group.id,
+        'xxx.mp4',
+        'yyy.jpg'
+      );
+    });
+
+    it('should mark context as handled', async () => {
+      const { context } = setup();
+
+      await context.sendVideo('xxx.mp4', 'yyy.jpg');
+
+      expect(context.isHandled).toBe(true);
+    });
+  });
+
+  describe('#sendLocation', () => {
+    it('should call client.pushLocation', async () => {
+      const { context, client, session } = setup();
+
+      await context.sendLocation({
+        title: 'my location',
+        address: '〒150-0002 東京都渋谷区渋谷２丁目２１−１',
+        latitude: 35.65910807942215,
+        longitude: 139.70372892916203,
+      });
+
+      expect(client.pushLocation).toBeCalledWith(session.user.id, {
+        title: 'my location',
+        address: '〒150-0002 東京都渋谷区渋谷２丁目２１−１',
+        latitude: 35.65910807942215,
+        longitude: 139.70372892916203,
+      });
+    });
+
+    it('should work with room session', async () => {
+      const { context, client, session } = setup({
+        session: roomSession,
+      });
+
+      await context.sendLocation({
+        title: 'my location',
+        address: '〒150-0002 東京都渋谷区渋谷２丁目２１−１',
+        latitude: 35.65910807942215,
+        longitude: 139.70372892916203,
+      });
+
+      expect(client.pushLocation).toBeCalledWith(session.room.id, {
+        title: 'my location',
+        address: '〒150-0002 東京都渋谷区渋谷２丁目２１−１',
+        latitude: 35.65910807942215,
+        longitude: 139.70372892916203,
+      });
+    });
+
+    it('should work with group session', async () => {
+      const { context, client, session } = setup({
+        session: groupSession,
+      });
+
+      await context.sendLocation({
+        title: 'my location',
+        address: '〒150-0002 東京都渋谷区渋谷２丁目２１−１',
+        latitude: 35.65910807942215,
+        longitude: 139.70372892916203,
+      });
+
+      expect(client.pushLocation).toBeCalledWith(session.group.id, {
+        title: 'my location',
+        address: '〒150-0002 東京都渋谷区渋谷２丁目２１−１',
+        latitude: 35.65910807942215,
+        longitude: 139.70372892916203,
+      });
+    });
+
+    it('should mark context as handled', async () => {
+      const { context } = setup();
+
+      await context.sendLocation({
+        title: 'my location',
+        address: '〒150-0002 東京都渋谷区渋谷２丁目２１−１',
+        latitude: 35.65910807942215,
+        longitude: 139.70372892916203,
+      });
+
+      expect(context.isHandled).toBe(true);
+    });
+  });
+
+  describe('#sendSticker', () => {
+    it('should call client.pushSticker', async () => {
+      const { context, client, session } = setup();
+
+      await context.sendSticker('1', '1');
+
+      expect(client.pushSticker).toBeCalledWith(session.user.id, '1', '1');
+    });
+
+    it('should work with room session', async () => {
+      const { context, client, session } = setup({
+        session: roomSession,
+      });
+
+      await context.sendSticker('1', '1');
+
+      expect(client.pushSticker).toBeCalledWith(session.room.id, '1', '1');
+    });
+
+    it('should work with group session', async () => {
+      const { context, client, session } = setup({
+        session: groupSession,
+      });
+
+      await context.sendSticker('1', '1');
+
+      expect(client.pushSticker).toBeCalledWith(session.group.id, '1', '1');
+    });
+
+    it('should mark context as handled', async () => {
+      const { context } = setup();
+
+      await context.sendSticker('1', '1');
+
+      expect(context.isHandled).toBe(true);
+    });
+  });
+
+  describe('#sendImagemap', () => {
+    const template = {
+      baseUrl: 'https://example.com/bot/images/rm001',
+      baseHeight: 1040,
+      baseWidth: 1040,
+      actions: [
+        {
+          type: 'uri',
+          linkUri: 'https://example.com/',
+          area: {
+            x: 0,
+            y: 0,
+            width: 520,
+            height: 1040,
+          },
         },
-      },
-      {
-        type: 'message',
-        text: 'hello',
-        area: {
-          x: 520,
-          y: 0,
-          width: 520,
-          height: 1040,
+        {
+          type: 'message',
+          text: 'hello',
+          area: {
+            x: 520,
+            y: 0,
+            width: 520,
+            height: 1040,
+          },
         },
-      },
-    ],
-  };
+      ],
+    };
 
-  it('should call client.pushImagemap', async () => {
-    const { context, client, session } = setup();
+    it('should call client.pushImagemap', async () => {
+      const { context, client, session } = setup();
 
-    await context.sendImagemap('this is an imagemap', template);
+      await context.sendImagemap('this is an imagemap', template);
 
-    expect(client.pushImagemap).toBeCalledWith(
-      session.user.id,
-      'this is an imagemap',
-      template
-    );
-  });
-
-  it('should work with room session', async () => {
-    const { context, client, session } = setup({
-      session: roomSession,
+      expect(client.pushImagemap).toBeCalledWith(
+        session.user.id,
+        'this is an imagemap',
+        template
+      );
     });
 
-    await context.sendImagemap('this is an imagemap', template);
+    it('should work with room session', async () => {
+      const { context, client, session } = setup({
+        session: roomSession,
+      });
 
-    expect(client.pushImagemap).toBeCalledWith(
-      session.room.id,
-      'this is an imagemap',
-      template
-    );
-  });
+      await context.sendImagemap('this is an imagemap', template);
 
-  it('should work with group session', async () => {
-    const { context, client, session } = setup({
-      session: groupSession,
+      expect(client.pushImagemap).toBeCalledWith(
+        session.room.id,
+        'this is an imagemap',
+        template
+      );
     });
 
-    await context.sendImagemap('this is an imagemap', template);
+    it('should work with group session', async () => {
+      const { context, client, session } = setup({
+        session: groupSession,
+      });
 
-    expect(client.pushImagemap).toBeCalledWith(
-      session.group.id,
-      'this is an imagemap',
-      template
-    );
-  });
+      await context.sendImagemap('this is an imagemap', template);
 
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    await context.sendImagemap('this is an imagemap', template);
-
-    expect(context.isHandled).toBe(true);
-  });
-});
-
-describe('#sendButtonTemplate', () => {
-  const template = {
-    thumbnailImageUrl: 'https://example.com/bot/images/image.jpg',
-    title: 'Menu',
-    text: 'Please select',
-    actions: [
-      {
-        type: 'postback',
-        label: 'Buy',
-        data: 'action=buy&itemid=123',
-      },
-      {
-        type: 'postback',
-        label: 'Add to cart',
-        data: 'action=add&itemid=123',
-      },
-      {
-        type: 'uri',
-        label: 'View detail',
-        uri: 'http://example.com/page/123',
-      },
-    ],
-  };
-
-  it('should call client.pushButtonTemplate', async () => {
-    const { context, client, session } = setup();
-
-    await context.sendButtonTemplate('this is a button template', template);
-
-    expect(client.pushButtonTemplate).toBeCalledWith(
-      session.user.id,
-      'this is a button template',
-      template
-    );
-  });
-
-  it('should work with room session', async () => {
-    const { context, client, session } = setup({
-      session: roomSession,
+      expect(client.pushImagemap).toBeCalledWith(
+        session.group.id,
+        'this is an imagemap',
+        template
+      );
     });
 
-    await context.sendButtonTemplate('this is a button template', template);
+    it('should mark context as handled', async () => {
+      const { context } = setup();
 
-    expect(client.pushButtonTemplate).toBeCalledWith(
-      session.room.id,
-      'this is a button template',
-      template
-    );
-  });
+      await context.sendImagemap('this is an imagemap', template);
 
-  it('should work with group session', async () => {
-    const { context, client, session } = setup({
-      session: groupSession,
+      expect(context.isHandled).toBe(true);
     });
-
-    await context.sendButtonTemplate('this is a button template', template);
-
-    expect(client.pushButtonTemplate).toBeCalledWith(
-      session.group.id,
-      'this is a button template',
-      template
-    );
   });
 
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    await context.sendButtonTemplate('this is a button template', template);
-
-    expect(context.isHandled).toBe(true);
-  });
-});
-
-describe('#sendConfirmTemplate', () => {
-  const template = {
-    text: 'Are you sure?',
-    actions: [
-      {
-        type: 'message',
-        label: 'Yes',
-        text: 'yes',
-      },
-      {
-        type: 'message',
-        label: 'No',
-        text: 'no',
-      },
-    ],
-  };
-
-  it('should call client.pushConfirmTemplate', async () => {
-    const { context, client, session } = setup();
-
-    await context.sendConfirmTemplate('this is a confirm template', template);
-
-    expect(client.pushConfirmTemplate).toBeCalledWith(
-      session.user.id,
-      'this is a confirm template',
-      template
-    );
-  });
-
-  it('should work with room session', async () => {
-    const { context, client, session } = setup({
-      session: roomSession,
-    });
-
-    await context.sendConfirmTemplate('this is a confirm template', template);
-
-    expect(client.pushConfirmTemplate).toBeCalledWith(
-      session.room.id,
-      'this is a confirm template',
-      template
-    );
-  });
-
-  it('should work with group session', async () => {
-    const { context, client, session } = setup({
-      session: groupSession,
-    });
-
-    await context.sendConfirmTemplate('this is a confirm template', template);
-
-    expect(client.pushConfirmTemplate).toBeCalledWith(
-      session.group.id,
-      'this is a confirm template',
-      template
-    );
-  });
-
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    await context.sendConfirmTemplate('this is a confirm template', template);
-
-    expect(context.isHandled).toBe(true);
-  });
-});
-
-describe('#sendCarouselTemplate', () => {
-  const template = [
-    {
-      thumbnailImageUrl: 'https://example.com/bot/images/item1.jpg',
-      title: 'this is menu',
-      text: 'description',
+  describe('#sendButtonTemplate', () => {
+    const template = {
+      thumbnailImageUrl: 'https://example.com/bot/images/image.jpg',
+      title: 'Menu',
+      text: 'Please select',
       actions: [
         {
           type: 'postback',
           label: 'Buy',
-          data: 'action=buy&itemid=111',
+          data: 'action=buy&itemid=123',
         },
         {
           type: 'postback',
           label: 'Add to cart',
-          data: 'action=add&itemid=111',
+          data: 'action=add&itemid=123',
         },
         {
           type: 'uri',
           label: 'View detail',
-          uri: 'http://example.com/page/111',
+          uri: 'http://example.com/page/123',
         },
       ],
-    },
-    {
-      thumbnailImageUrl: 'https://example.com/bot/images/item2.jpg',
-      title: 'this is menu',
-      text: 'description',
+    };
+
+    it('should call client.pushButtonTemplate', async () => {
+      const { context, client, session } = setup();
+
+      await context.sendButtonTemplate('this is a button template', template);
+
+      expect(client.pushButtonTemplate).toBeCalledWith(
+        session.user.id,
+        'this is a button template',
+        template
+      );
+    });
+
+    it('should work with room session', async () => {
+      const { context, client, session } = setup({
+        session: roomSession,
+      });
+
+      await context.sendButtonTemplate('this is a button template', template);
+
+      expect(client.pushButtonTemplate).toBeCalledWith(
+        session.room.id,
+        'this is a button template',
+        template
+      );
+    });
+
+    it('should work with group session', async () => {
+      const { context, client, session } = setup({
+        session: groupSession,
+      });
+
+      await context.sendButtonTemplate('this is a button template', template);
+
+      expect(client.pushButtonTemplate).toBeCalledWith(
+        session.group.id,
+        'this is a button template',
+        template
+      );
+    });
+
+    it('should mark context as handled', async () => {
+      const { context } = setup();
+
+      await context.sendButtonTemplate('this is a button template', template);
+
+      expect(context.isHandled).toBe(true);
+    });
+  });
+
+  describe('#sendConfirmTemplate', () => {
+    const template = {
+      text: 'Are you sure?',
       actions: [
         {
-          type: 'postback',
-          label: 'Buy',
-          data: 'action=buy&itemid=222',
+          type: 'message',
+          label: 'Yes',
+          text: 'yes',
         },
         {
-          type: 'postback',
-          label: 'Add to cart',
-          data: 'action=add&itemid=222',
-        },
-        {
-          type: 'uri',
-          label: 'View detail',
-          uri: 'http://example.com/page/222',
+          type: 'message',
+          label: 'No',
+          text: 'no',
         },
       ],
-    },
-  ];
+    };
 
-  it('should call client.pushCarouselTemplate', async () => {
-    const { context, client, session } = setup();
+    it('should call client.pushConfirmTemplate', async () => {
+      const { context, client, session } = setup();
 
-    await context.sendCarouselTemplate('this is a carousel template', template);
+      await context.sendConfirmTemplate('this is a confirm template', template);
 
-    expect(client.pushCarouselTemplate).toBeCalledWith(
-      session.user.id,
-      'this is a carousel template',
-      template
-    );
-  });
-
-  it('should work with room session', async () => {
-    const { context, client, session } = setup({
-      session: roomSession,
+      expect(client.pushConfirmTemplate).toBeCalledWith(
+        session.user.id,
+        'this is a confirm template',
+        template
+      );
     });
 
-    await context.sendConfirmTemplate('this is a carousel template', template);
+    it('should work with room session', async () => {
+      const { context, client, session } = setup({
+        session: roomSession,
+      });
 
-    expect(client.pushConfirmTemplate).toBeCalledWith(
-      session.room.id,
-      'this is a carousel template',
-      template
-    );
-  });
+      await context.sendConfirmTemplate('this is a confirm template', template);
 
-  it('should work with group session', async () => {
-    const { context, client, session } = setup({
-      session: groupSession,
+      expect(client.pushConfirmTemplate).toBeCalledWith(
+        session.room.id,
+        'this is a confirm template',
+        template
+      );
     });
 
-    await context.sendConfirmTemplate('this is a carousel template', template);
+    it('should work with group session', async () => {
+      const { context, client, session } = setup({
+        session: groupSession,
+      });
 
-    expect(client.pushConfirmTemplate).toBeCalledWith(
-      session.group.id,
-      'this is a carousel template',
-      template
-    );
+      await context.sendConfirmTemplate('this is a confirm template', template);
+
+      expect(client.pushConfirmTemplate).toBeCalledWith(
+        session.group.id,
+        'this is a confirm template',
+        template
+      );
+    });
+
+    it('should mark context as handled', async () => {
+      const { context } = setup();
+
+      await context.sendConfirmTemplate('this is a confirm template', template);
+
+      expect(context.isHandled).toBe(true);
+    });
   });
 
-  it('should mark context as handled', async () => {
-    const { context } = setup();
+  describe('#sendCarouselTemplate', () => {
+    const template = [
+      {
+        thumbnailImageUrl: 'https://example.com/bot/images/item1.jpg',
+        title: 'this is menu',
+        text: 'description',
+        actions: [
+          {
+            type: 'postback',
+            label: 'Buy',
+            data: 'action=buy&itemid=111',
+          },
+          {
+            type: 'postback',
+            label: 'Add to cart',
+            data: 'action=add&itemid=111',
+          },
+          {
+            type: 'uri',
+            label: 'View detail',
+            uri: 'http://example.com/page/111',
+          },
+        ],
+      },
+      {
+        thumbnailImageUrl: 'https://example.com/bot/images/item2.jpg',
+        title: 'this is menu',
+        text: 'description',
+        actions: [
+          {
+            type: 'postback',
+            label: 'Buy',
+            data: 'action=buy&itemid=222',
+          },
+          {
+            type: 'postback',
+            label: 'Add to cart',
+            data: 'action=add&itemid=222',
+          },
+          {
+            type: 'uri',
+            label: 'View detail',
+            uri: 'http://example.com/page/222',
+          },
+        ],
+      },
+    ];
 
-    await context.sendCarouselTemplate('this is a carousel template', template);
+    it('should call client.pushCarouselTemplate', async () => {
+      const { context, client, session } = setup();
 
-    expect(context.isHandled).toBe(true);
+      await context.sendCarouselTemplate(
+        'this is a carousel template',
+        template
+      );
+
+      expect(client.pushCarouselTemplate).toBeCalledWith(
+        session.user.id,
+        'this is a carousel template',
+        template
+      );
+    });
+
+    it('should work with room session', async () => {
+      const { context, client, session } = setup({
+        session: roomSession,
+      });
+
+      await context.sendConfirmTemplate(
+        'this is a carousel template',
+        template
+      );
+
+      expect(client.pushConfirmTemplate).toBeCalledWith(
+        session.room.id,
+        'this is a carousel template',
+        template
+      );
+    });
+
+    it('should work with group session', async () => {
+      const { context, client, session } = setup({
+        session: groupSession,
+      });
+
+      await context.sendConfirmTemplate(
+        'this is a carousel template',
+        template
+      );
+
+      expect(client.pushConfirmTemplate).toBeCalledWith(
+        session.group.id,
+        'this is a carousel template',
+        template
+      );
+    });
+
+    it('should mark context as handled', async () => {
+      const { context } = setup();
+
+      await context.sendCarouselTemplate(
+        'this is a carousel template',
+        template
+      );
+
+      expect(context.isHandled).toBe(true);
+    });
   });
 });
 
-describe('#getLinkedRichMenu', () => {
-  it('should call client.getLinkedRichMenu', async () => {
-    const { context, client, session } = setup();
+describe('profile APIs', () => {
+  describe('#getUserProfile', () => {
+    it('not get profile without session', async () => {
+      const { context, client } = setup({ session: null });
 
-    client.getLinkedRichMenu.mockReturnValue(
-      Promise.resolve({
-        richMenuId: 'richMenuId',
-      })
-    );
+      await context.getUserProfile();
 
-    const result = await context.getLinkedRichMenu();
+      expect(client.getUserProfile).not.toBeCalled();
+      expect(client.getGroupMemberProfile).not.toBeCalled();
+      expect(client.getRoomMemberProfile).not.toBeCalled();
+      expect(warning).toBeCalled();
+      expect(context.isHandled).toBe(false);
+    });
 
-    expect(client.getLinkedRichMenu).toBeCalledWith(session.user.id);
-    expect(result.richMenuId).toEqual('richMenuId');
+    it('not get profile without user in session', async () => {
+      const { context, client } = setup({
+        type: 'room',
+        room: {
+          id: 'fakeRoomId',
+        },
+        user: null,
+      });
+
+      await context.getUserProfile();
+
+      expect(client.getUserProfile).not.toBeCalled();
+      expect(client.getGroupMemberProfile).not.toBeCalled();
+      expect(client.getRoomMemberProfile).not.toBeCalled();
+      expect(warning).toBeCalled();
+      expect(context.isHandled).toBe(false);
+    });
+
+    it('get user profile in group', async () => {
+      const { context, client } = setup({ session: groupSession });
+
+      await context.getUserProfile();
+
+      expect(client.getGroupMemberProfile).toBeCalledWith(
+        'fakeGroupId',
+        'fakeUserId'
+      );
+    });
+
+    it('get user profile in room', async () => {
+      const { context, client } = setup({ session: roomSession });
+
+      await context.getUserProfile();
+
+      expect(client.getRoomMemberProfile).toBeCalledWith(
+        'fakeRoomId',
+        'fakeUserId'
+      );
+    });
+
+    it('get user profile', async () => {
+      const { context, client } = setup({ session: userSession });
+
+      await context.getUserProfile();
+
+      expect(client.getUserProfile).toBeCalledWith('fakeUserId');
+    });
   });
 
-  it('should warn without user', async () => {
-    const { context } = setup({ session: {} });
+  describe('#getMemberProfile', () => {
+    it('not get profile without session', async () => {
+      const { context, client } = setup({ session: null });
 
-    await context.getLinkedRichMenu();
+      await context.getMemberProfile('anotherUser');
 
-    expect(warning).toBeCalled();
+      expect(client.getGroupMemberProfile).not.toBeCalled();
+      expect(client.getRoomMemberProfile).not.toBeCalled();
+      expect(warning).toBeCalled();
+      expect(context.isHandled).toBe(false);
+    });
+
+    it('get member profile in group', async () => {
+      const { context, client } = setup({ session: groupSession });
+
+      await context.getMemberProfile('anotherUser');
+
+      expect(client.getGroupMemberProfile).toBeCalledWith(
+        'fakeGroupId',
+        'anotherUser'
+      );
+    });
+
+    it('get member profile in room', async () => {
+      const { context, client } = setup({ session: roomSession });
+
+      await context.getMemberProfile('anotherUser');
+
+      expect(client.getRoomMemberProfile).toBeCalledWith(
+        'fakeRoomId',
+        'anotherUser'
+      );
+    });
+
+    it('not get member profile in user session', async () => {
+      const { context, client } = setup({ session: userSession });
+
+      await context.getMemberProfile('anotherUser');
+
+      expect(client.getGroupMemberProfile).not.toBeCalled();
+      expect(client.getRoomMemberProfile).not.toBeCalled();
+      expect(warning).toBeCalled();
+      expect(context.isHandled).toBe(false);
+    });
   });
 });
 
-describe('#linkRichMenu', () => {
-  it('should call client.linkRichMenu', async () => {
-    const { context, client, session } = setup();
+describe('member IDs APIs', () => {
+  describe('#getMemberIds', () => {
+    it('not get memeber ids without session', async () => {
+      const { context, client } = setup({ session: null });
 
-    await context.linkRichMenu('richMenuId');
+      await context.getMemberIds('startToken');
 
-    expect(client.linkRichMenu).toBeCalledWith(session.user.id, 'richMenuId');
+      expect(client.getRoomMemberIds).not.toBeCalled();
+      expect(client.getGroupMemberIds).not.toBeCalled();
+      expect(warning).toBeCalled();
+      expect(context.isHandled).toBe(false);
+    });
+
+    it('get memeber ids in group', async () => {
+      const { context, client } = setup({ session: groupSession });
+
+      await context.getMemberIds('startToken');
+
+      expect(client.getGroupMemberIds).toBeCalledWith(
+        'fakeGroupId',
+        'startToken'
+      );
+    });
+
+    it('get memeber ids in room', async () => {
+      const { context, client } = setup({ session: roomSession });
+
+      await context.getMemberIds('startToken');
+
+      expect(client.getRoomMemberIds).toBeCalledWith(
+        'fakeRoomId',
+        'startToken'
+      );
+    });
+
+    it('not get user profile in user session', async () => {
+      const { context, client } = setup({ session: userSession });
+
+      await context.getMemberIds('startToken');
+
+      expect(client.getRoomMemberIds).not.toBeCalled();
+      expect(client.getGroupMemberIds).not.toBeCalled();
+      expect(warning).toBeCalled();
+      expect(context.isHandled).toBe(false);
+    });
   });
 
-  it('should warn without user', async () => {
-    const { context } = setup({ session: {} });
+  describe('#getAllMemberIds', () => {
+    it('not get memeber ids without session', async () => {
+      const { context, client } = setup({ session: null });
 
-    await context.linkRichMenu('richMenuId');
+      await context.getAllMemberIds();
 
-    expect(warning).toBeCalled();
+      expect(client.getAllRoomMemberIds).not.toBeCalled();
+      expect(client.getAllGroupMemberIds).not.toBeCalled();
+      expect(warning).toBeCalled();
+      expect(context.isHandled).toBe(false);
+    });
+
+    it('get memeber ids in group', async () => {
+      const { context, client } = setup({ session: groupSession });
+
+      await context.getAllMemberIds();
+
+      expect(client.getAllGroupMemberIds).toBeCalledWith('fakeGroupId');
+    });
+
+    it('get memeber ids in room', async () => {
+      const { context, client } = setup({ session: roomSession });
+
+      await context.getAllMemberIds();
+
+      expect(client.getAllRoomMemberIds).toBeCalledWith('fakeRoomId');
+    });
+
+    it('not get user profile in user session', async () => {
+      const { context, client } = setup({ session: userSession });
+
+      await context.getAllMemberIds();
+
+      expect(client.getAllRoomMemberIds).not.toBeCalled();
+      expect(client.getAllGroupMemberIds).not.toBeCalled();
+      expect(warning).toBeCalled();
+      expect(context.isHandled).toBe(false);
+    });
   });
 });
 
-describe('#unlinkRichMenu', () => {
-  it('should call client.unlinkRichMenu', async () => {
-    const { context, client, session } = setup();
+describe('ruchmenu APIs', () => {
+  describe('#getLinkedRichMenu', () => {
+    it('should call client.getLinkedRichMenu', async () => {
+      const { context, client, session } = setup();
 
-    await context.unlinkRichMenu();
+      client.getLinkedRichMenu.mockReturnValue(
+        Promise.resolve({
+          richMenuId: 'richMenuId',
+        })
+      );
 
-    expect(client.unlinkRichMenu).toBeCalledWith(session.user.id);
+      const result = await context.getLinkedRichMenu();
+
+      expect(client.getLinkedRichMenu).toBeCalledWith(session.user.id);
+      expect(result.richMenuId).toEqual('richMenuId');
+    });
+
+    it('should warn without user', async () => {
+      const { context } = setup({ session: {} });
+
+      await context.getLinkedRichMenu();
+
+      expect(warning).toBeCalled();
+    });
   });
 
-  it('should warn without user', async () => {
-    const { context } = setup({ session: {} });
+  describe('#linkRichMenu', () => {
+    it('should call client.linkRichMenu', async () => {
+      const { context, client, session } = setup();
 
-    await context.unlinkRichMenu();
+      await context.linkRichMenu('richMenuId');
 
-    expect(warning).toBeCalled();
+      expect(client.linkRichMenu).toBeCalledWith(session.user.id, 'richMenuId');
+    });
+
+    it('should warn without user', async () => {
+      const { context } = setup({ session: {} });
+
+      await context.linkRichMenu('richMenuId');
+
+      expect(warning).toBeCalled();
+    });
+  });
+
+  describe('#unlinkRichMenu', () => {
+    it('should call client.unlinkRichMenu', async () => {
+      const { context, client, session } = setup();
+
+      await context.unlinkRichMenu();
+
+      expect(client.unlinkRichMenu).toBeCalledWith(session.user.id);
+    });
+
+    it('should warn without user', async () => {
+      const { context } = setup({ session: {} });
+
+      await context.unlinkRichMenu();
+
+      expect(warning).toBeCalled();
+    });
   });
 });
 

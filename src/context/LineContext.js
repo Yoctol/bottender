@@ -99,6 +99,133 @@ class LineContext extends Context implements PlatformContext {
   }
 
   /**
+   * Gets profile information of current user.
+   *
+   */
+  async getUserProfile(): Promise<?Object> {
+    if (!this._session) {
+      warning(
+        false,
+        'getUserProfile: should not be called in context without session'
+      );
+      return null;
+    }
+
+    if (!this._session.user) {
+      warning(
+        false,
+        'getUserProfile: should not be called in context without user in session'
+      );
+      return null;
+    }
+
+    switch (this._session.type) {
+      case 'room':
+        return this._client.getRoomMemberProfile(
+          this._session.room.id,
+          this._session.user.id
+        );
+      case 'group':
+        return this._client.getGroupMemberProfile(
+          this._session.group.id,
+          this._session.user.id
+        );
+      case 'user':
+      default:
+        return this._client.getUserProfile(this._session.user.id);
+    }
+  }
+
+  /**
+   * Gets the user profile of a member of the group/room that the bot is in.
+   * This includes the user IDs of users who has not added the bot as a friend or has blocked the bot.
+   *
+   */
+  async getMemberProfile(userId: string): Promise<?Object> {
+    if (!this._session) {
+      warning(
+        false,
+        'getMemberProfile: should not be called in context without session'
+      );
+      return null;
+    }
+
+    switch (this._session.type) {
+      case 'room':
+        return this._client.getRoomMemberProfile(this._session.room.id, userId);
+      case 'group':
+        return this._client.getGroupMemberProfile(
+          this._session.group.id,
+          userId
+        );
+      default:
+        warning(
+          false,
+          'getMemberProfile: should not be called in context which is not room or group session'
+        );
+        return null;
+    }
+  }
+
+  /**
+   * Gets the ID of the users of the members of the group/room that the bot is in.
+   * This includes the user IDs of users who have not added the bot as a friend or has blocked the bot.
+   *
+   * This feature is only available for LINE@ Approved accounts or official accounts.
+   *
+   */
+  async getMemberIds(start: string): Promise<?Object> {
+    if (!this._session) {
+      warning(
+        false,
+        'getMemberIds: should not be called in context without session'
+      );
+      return null;
+    }
+
+    switch (this._session.type) {
+      case 'room':
+        return this._client.getRoomMemberIds(this._session.room.id, start);
+      case 'group':
+        return this._client.getGroupMemberIds(this._session.group.id, start);
+      default:
+        warning(
+          false,
+          'getMemberIds: should not be called in context which is not room or group session'
+        );
+        return null;
+    }
+  }
+
+  /**
+   * Recursively gets the ID of the users of the members of the group/room that the bot is in using cursors.
+   *
+   * This feature is only available for LINE@ Approved accounts or official accounts.
+   *
+   */
+  async getAllMemberIds(): Promise<?Object> {
+    if (!this._session) {
+      warning(
+        false,
+        'getAllMemberIds: should not be called in context without session'
+      );
+      return;
+    }
+
+    switch (this._session.type) {
+      case 'room':
+        return this._client.getAllRoomMemberIds(this._session.room.id);
+      case 'group':
+        return this._client.getAllGroupMemberIds(this._session.group.id);
+      default:
+        warning(
+          false,
+          'getAllMemberIds: should not be called in context which is not room or group session'
+        );
+    }
+  }
+
+  /**
    * Gets the ID of the rich menu linked to the user.
    *
    */
