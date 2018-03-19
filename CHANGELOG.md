@@ -1,3 +1,68 @@
+# 0.14.27 / 2018-03-19
+
+### line
+
+* [new] Add new `LineContext` methods:
+
+- [`context.getUserProfile`](https://bottender.js.org/docs/APIReference-LineContext#getuserprofile):
+
+```js
+context.getUserProfile().then(profile => {
+  console.log(profile);
+  // {
+  //   displayName: 'LINE taro',
+  //   userId: USER_ID,
+  //   pictureUrl: 'http://obs.line-apps.com/...',
+  //   statusMessage: 'Hello, LINE!',
+  // }
+});
+```
+
+* [`context.getMemberProfile`](https://bottender.js.org/docs/APIReference-LineContext#getmemberprofileuserid):
+
+```js
+context.getMemberProfile(USER_ID).then(member => {
+  console.log(member);
+  // {
+  //   "displayName":"LINE taro",
+  //   "userId":"Uxxxxxxxxxxxxxx...",
+  //   "pictureUrl":"http://obs.line-apps.com/..."
+  // }
+});
+```
+
+* [`context.getMemberIds`](https://bottender.js.org/docs/APIReference-LineContext#getmemberidsstart):
+
+```js
+context.getMemberIds(CURSOR).then(res => {
+  console.log(res);
+  // {
+  //   memberIds: [
+  //     'Uxxxxxxxxxxxxxx...',
+  //     'Uxxxxxxxxxxxxxx...',
+  //     'Uxxxxxxxxxxxxxx...'
+  //   ],
+  //   next: 'jxEWCEEP...'
+  // }
+});
+```
+
+* [`context.getAllMemberIds`](https://bottender.js.org/docs/APIReference-LineContext#getallmemberids):
+
+```js
+context.getAllMemberIds().then(ids => {
+  console.log(ids);
+  // [
+  //   'Uxxxxxxxxxxxxxx..1',
+  //   'Uxxxxxxxxxxxxxx..2',
+  //   'Uxxxxxxxxxxxxxx..3',
+  //   'Uxxxxxxxxxxxxxx..4',
+  //   'Uxxxxxxxxxxxxxx..5',
+  //   'Uxxxxxxxxxxxxxx..6',
+  // ]
+});
+```
+
 # 0.14.26 / 2018-03-17
 
 ### messenger
