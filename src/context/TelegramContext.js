@@ -166,6 +166,22 @@ const sendMethods = [
   'sendContact',
   'sendChatAction',
 
+  // Group API
+  'kickChatMember',
+  'unbanChatMember',
+  'restrictChatMember',
+  'promoteChatMember',
+  'exportChatInviteLink',
+  'setChatPhoto',
+  'deleteChatPhoto',
+  'setChatTitle',
+  'setChatDescription',
+  'setChatStickerSet',
+  'deleteChatStickerSet',
+  'pinChatMessage',
+  'unpinChatMessage',
+  'leaveChat',
+
   // Payments API
   'sendInvoice',
 
