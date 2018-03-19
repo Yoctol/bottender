@@ -34,6 +34,20 @@ const createMockTelegramClient = () => ({
   sendGame: jest.fn(),
   setGameScore: jest.fn(),
   getGameHighScores: jest.fn(),
+  kickChatMember: jest.fn(),
+  unbanChatMember: jest.fn(),
+  restrictChatMember: jest.fn(),
+  promoteChatMember: jest.fn(),
+  exportChatInviteLink: jest.fn(),
+  setChatPhoto: jest.fn(),
+  deleteChatPhoto: jest.fn(),
+  setChatTitle: jest.fn(),
+  setChatDescription: jest.fn(),
+  setChatStickerSet: jest.fn(),
+  deleteChatStickerSet: jest.fn(),
+  pinChatMessage: jest.fn(),
+  unpinChatMessage: jest.fn(),
+  leaveChat: jest.fn(),
   answerShippingQuery: jest.fn(),
   answerPreCheckoutQuery: jest.fn(),
   answerInlineQuery: jest.fn(),
@@ -490,6 +504,289 @@ describe('#getGameHighScores', () => {
     const { context } = setup();
 
     await context.getGameHighScores();
+
+    expect(context.isHandled).toBe(true);
+  });
+});
+
+describe('#kickChatMember', () => {
+  it('should to call client.kickChatMember', async () => {
+    const { context, client } = setup();
+
+    await context.kickChatMember(313534466, {
+      until_date: 1502855973,
+    });
+
+    expect(client.kickChatMember).toBeCalledWith(427770117, 313534466, {
+      until_date: 1502855973,
+    });
+  });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    await context.kickChatMember(313534466);
+
+    expect(context.isHandled).toBe(true);
+  });
+});
+
+describe('#unbanChatMember', () => {
+  it('should to call client.unbanChatMember', async () => {
+    const { context, client } = setup();
+
+    await context.unbanChatMember(313534466);
+
+    expect(client.unbanChatMember).toBeCalledWith(427770117, 313534466);
+  });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    await context.unbanChatMember(313534466);
+
+    expect(context.isHandled).toBe(true);
+  });
+});
+
+describe('#restrictChatMember', () => {
+  it('should to call client.restrictChatMember', async () => {
+    const { context, client } = setup();
+
+    await context.restrictChatMember(313534466, {
+      can_send_messages: true,
+      can_add_web_page_previews: true,
+    });
+
+    expect(client.restrictChatMember).toBeCalledWith(427770117, 313534466, {
+      can_send_messages: true,
+      can_add_web_page_previews: true,
+    });
+  });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    await context.restrictChatMember(313534466);
+
+    expect(context.isHandled).toBe(true);
+  });
+});
+
+describe('#promoteChatMember', () => {
+  it('should to call client.promoteChatMember', async () => {
+    const { context, client } = setup();
+
+    await context.promoteChatMember(313534466, {
+      can_change_info: true,
+      can_invite_users: true,
+      can_delete_messages: true,
+    });
+
+    expect(client.promoteChatMember).toBeCalledWith(427770117, 313534466, {
+      can_change_info: true,
+      can_invite_users: true,
+      can_delete_messages: true,
+    });
+  });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    await context.promoteChatMember(313534466);
+
+    expect(context.isHandled).toBe(true);
+  });
+});
+
+describe('#exportChatInviteLink', () => {
+  it('should to call client.exportChatInviteLink', async () => {
+    const { context, client } = setup();
+
+    await context.exportChatInviteLink();
+
+    expect(client.exportChatInviteLink).toBeCalledWith(427770117);
+  });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    await context.exportChatInviteLink();
+
+    expect(context.isHandled).toBe(true);
+  });
+});
+
+describe('#setChatPhoto', () => {
+  it('should to call client.setChatPhoto', async () => {
+    const { context, client } = setup();
+
+    await context.setChatPhoto('https://example.com/image.png');
+
+    expect(client.setChatPhoto).toBeCalledWith(
+      427770117,
+      'https://example.com/image.png'
+    );
+  });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    await context.setChatPhoto('https://example.com/image.png');
+
+    expect(context.isHandled).toBe(true);
+  });
+});
+
+describe('#deleteChatPhoto', () => {
+  it('should to call client.deleteChatPhoto', async () => {
+    const { context, client } = setup();
+
+    await context.deleteChatPhoto();
+
+    expect(client.deleteChatPhoto).toBeCalledWith(427770117);
+  });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    await context.deleteChatPhoto();
+
+    expect(context.isHandled).toBe(true);
+  });
+});
+
+describe('#setChatTitle', () => {
+  it('should to call client.setChatTitle', async () => {
+    const { context, client } = setup();
+
+    await context.setChatTitle('New Title');
+
+    expect(client.setChatTitle).toBeCalledWith(427770117, 'New Title');
+  });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    await context.setChatTitle('New Title');
+
+    expect(context.isHandled).toBe(true);
+  });
+});
+
+describe('#setChatDescription', () => {
+  it('should to call client.setChatDescription', async () => {
+    const { context, client } = setup();
+
+    await context.setChatDescription('New Description');
+
+    expect(client.setChatDescription).toBeCalledWith(
+      427770117,
+      'New Description'
+    );
+  });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    await context.setChatDescription('New Description');
+
+    expect(context.isHandled).toBe(true);
+  });
+});
+
+describe('#setChatStickerSet', () => {
+  it('should to call client.setChatStickerSet', async () => {
+    const { context, client } = setup();
+
+    await context.setChatStickerSet('Sticker Set Name');
+
+    expect(client.setChatStickerSet).toBeCalledWith(
+      427770117,
+      'Sticker Set Name'
+    );
+  });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    await context.setChatStickerSet('Sticker Set Name');
+
+    expect(context.isHandled).toBe(true);
+  });
+});
+
+describe('#deleteChatStickerSet', () => {
+  it('should to call client.deleteChatStickerSet', async () => {
+    const { context, client } = setup();
+
+    await context.deleteChatStickerSet();
+
+    expect(client.deleteChatStickerSet).toBeCalledWith(427770117);
+  });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    await context.deleteChatStickerSet();
+
+    expect(context.isHandled).toBe(true);
+  });
+});
+
+describe('#pinChatMessage', () => {
+  it('should to call client.pinChatMessage', async () => {
+    const { context, client } = setup();
+
+    await context.pinChatMessage(1, {
+      disable_notification: true,
+    });
+
+    expect(client.pinChatMessage).toBeCalledWith(427770117, 1, {
+      disable_notification: true,
+    });
+  });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    await context.pinChatMessage(1);
+
+    expect(context.isHandled).toBe(true);
+  });
+});
+
+describe('#unpinChatMessage', () => {
+  it('should to call client.unpinChatMessage', async () => {
+    const { context, client } = setup();
+
+    await context.unpinChatMessage();
+
+    expect(client.unpinChatMessage).toBeCalledWith(427770117);
+  });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    await context.unpinChatMessage();
+
+    expect(context.isHandled).toBe(true);
+  });
+});
+
+describe('#leaveChat', () => {
+  it('should to call client.leaveChat', async () => {
+    const { context, client } = setup();
+
+    await context.leaveChat();
+
+    expect(client.leaveChat).toBeCalledWith(427770117);
+  });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    await context.leaveChat();
 
     expect(context.isHandled).toBe(true);
   });
