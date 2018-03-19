@@ -34,6 +34,8 @@ const createMockTelegramClient = () => ({
   sendGame: jest.fn(),
   setGameScore: jest.fn(),
   getGameHighScores: jest.fn(),
+  answerShippingQuery: jest.fn(),
+  answerPreCheckoutQuery: jest.fn(),
   answerInlineQuery: jest.fn(),
 });
 
@@ -493,6 +495,116 @@ describe('#getGameHighScores', () => {
   });
 });
 
+describe('#answerShippingQuery', () => {
+  const shippingQuery = {
+    update_id: 141921690,
+    shipping_query: {
+      id: '123',
+      from: {
+        id: 427770117,
+        first_name: 'user_first',
+        last_name: 'user_last',
+        language_code: 'en',
+      },
+      invoice_payload: 'bot payload',
+      shipping_address: {
+        country_code: 'US',
+        state: 'New York',
+        city: 'New York',
+        street_line1: 'xx',
+        street_line2: 'xx',
+        post_code: '10001',
+      },
+    },
+  };
+
+  it('should to call client.answerShippingQuery', async () => {
+    const { context, client } = setup({ rawEvent: shippingQuery });
+
+    const response = {
+      ok: true,
+      result: true,
+    };
+
+    client.answerShippingQuery.mockReturnValue(Promise.resolve(response));
+
+    const result = await context.answerShippingQuery(true);
+
+    expect(client.answerShippingQuery).toBeCalledWith('123', true, undefined);
+    expect(result).toEqual(response);
+  });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup({ rawEvent: shippingQuery });
+
+    await context.answerShippingQuery(true);
+
+    expect(context.isHandled).toBe(true);
+  });
+
+  it('should not call answerShippingQuery method if event type is not ShippingQuery', async () => {
+    const { context, client } = setup();
+
+    await context.answerShippingQuery(true);
+
+    expect(client.answerShippingQuery).not.toBeCalled();
+  });
+});
+
+describe('#answerPreCheckoutQuery', () => {
+  const preCheckoutQuery = {
+    update_id: 141921690,
+    pre_checkout_query: {
+      id: '123',
+      from: {
+        id: 427770117,
+        first_name: 'user_first',
+        last_name: 'user_last',
+        language_code: 'en',
+      },
+      currency: 'USD',
+      total_amount: 145,
+      invoice_payload: 'bot payload',
+    },
+  };
+
+  it('should to call client.answerPreCheckoutQuery', async () => {
+    const { context, client } = setup({ rawEvent: preCheckoutQuery });
+
+    const response = {
+      ok: true,
+      result: true,
+    };
+
+    client.answerPreCheckoutQuery.mockReturnValue(Promise.resolve(response));
+
+    const result = await context.answerPreCheckoutQuery(true);
+
+    expect(client.answerPreCheckoutQuery).toBeCalledWith(
+      '123',
+      true,
+      undefined
+    );
+    expect(result).toEqual(response);
+  });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup({ rawEvent: preCheckoutQuery });
+
+    await context.answerPreCheckoutQuery(true);
+
+    expect(context.isHandled).toBe(true);
+  });
+
+  it('should not call answerPreCheckoutQuery method if event type is not PreCheckoutQuery', async () => {
+    const { context, client } = setup();
+
+    await context.answerPreCheckoutQuery(true);
+
+    expect(client.answerPreCheckoutQuery).not.toBeCalled();
+  });
+});
+
 describe('#answerInlineQuery', () => {
   const inlineQuery = {
     update_id: 141921700,
@@ -509,6 +621,7 @@ describe('#answerInlineQuery', () => {
       offset: '',
     },
   };
+
   it('should to call client.answerInlineQuery', async () => {
     const { context, client } = setup({ rawEvent: inlineQuery });
 
