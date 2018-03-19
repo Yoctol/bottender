@@ -203,7 +203,7 @@ class LineContext extends Context implements PlatformContext {
    * This feature is only available for LINE@ Approved accounts or official accounts.
    *
    */
-  async getAllMemberIds(): Promise<?Object> {
+  async getAllMemberIds(): Promise<?Array<string>> {
     if (!this._session) {
       warning(
         false,
