@@ -148,6 +148,82 @@ class TelegramContext extends Context implements PlatformContext {
 
     return this._client.answerInlineQuery(inlineQueryId, results, options);
   }
+
+  async getUserProfilePhotos(options: ?Object) {
+    if (!this._session) {
+      warning(
+        false,
+        'getUserProfilePhotos: should not be called in context without session'
+      );
+      return null;
+    }
+
+    const { result } = await this._client.getUserProfilePhotos(
+      (this.session: any).user.id,
+      options
+    );
+    return result;
+  }
+
+  async getChat() {
+    if (!this._session) {
+      warning(
+        false,
+        'getChat: should not be called in context without session'
+      );
+      return null;
+    }
+
+    const chatId = this._getChatId();
+
+    const { result } = await this._client.getChat(chatId);
+    return result;
+  }
+
+  async getChatAdministrators() {
+    if (!this._session) {
+      warning(
+        false,
+        'getChatAdministrators: should not be called in context without session'
+      );
+      return null;
+    }
+
+    const chatId = this._getChatId();
+
+    const { result } = await this._client.getChatAdministrators(chatId);
+    return result;
+  }
+
+  async getChatMembersCount() {
+    if (!this._session) {
+      warning(
+        false,
+        'getChatMembersCount: should not be called in context without session'
+      );
+      return null;
+    }
+
+    const chatId = this._getChatId();
+
+    const { result } = await this._client.getChatMembersCount(chatId);
+    return result;
+  }
+
+  async getChatMember(userId: number) {
+    if (!this._session) {
+      warning(
+        false,
+        'getChatMember: should not be called in context without session'
+      );
+      return null;
+    }
+
+    const chatId = this._getChatId();
+
+    const { result } = await this._client.getChatMember(chatId, userId);
+    return result;
+  }
 }
 
 const sendMethods = [

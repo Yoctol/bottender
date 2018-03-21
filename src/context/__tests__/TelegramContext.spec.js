@@ -51,6 +51,11 @@ const createMockTelegramClient = () => ({
   answerShippingQuery: jest.fn(),
   answerPreCheckoutQuery: jest.fn(),
   answerInlineQuery: jest.fn(),
+  getUserProfilePhotos: jest.fn(),
+  getChat: jest.fn(),
+  getChatAdministrators: jest.fn(),
+  getChatMembersCount: jest.fn(),
+  getChatMember: jest.fn(),
 });
 
 const _rawEvent = {
@@ -1021,6 +1026,174 @@ describe('#answerInlineQuery', () => {
     );
 
     expect(client.answerInlineQuery).not.toBeCalled();
+  });
+});
+
+describe('#getUserProfilePhotos', () => {
+  it('should to call client.getUserProfilePhotos', async () => {
+    const { context, client } = setup();
+
+    const profile = {
+      total_count: 3,
+      photos: [
+        [
+          {
+            file_id: 'AgADBAADGTo4Gz8cZAeR-ouu4XBx78EeqRkABHahi76pN-aO0UoDA050',
+            file_size: 14650,
+            width: 160,
+            height: 160,
+          },
+          {
+            file_id: 'AgADBAADGTo4Gz8cZAeR-ouu4XBx78EeqRkABKCfooqTgFUX0EoD5B1C',
+            file_size: 39019,
+            width: 320,
+            height: 320,
+          },
+          {
+            file_id: 'AgADBAADGTo4Gz8cZAeR-ouu4XBx78EeqRkABPL_pC9K3UpI0koD1B1C',
+            file_size: 132470,
+            width: 640,
+            height: 640,
+          },
+        ],
+        [
+          {
+            file_id: 'AgABXQSPEUo4Gz8cZAeR-ouu7XBx93EeqRkABHahi76pN-aO0UoDO203',
+            file_size: 14220,
+            width: 160,
+            height: 160,
+          },
+          {
+            file_id: 'AgADBAADGTo4Gz8cZAeR-ouu4XBx78EeqRkABKCfooqTgFUX0EoDAT90',
+            file_size: 35122,
+            width: 320,
+            height: 320,
+          },
+          {
+            file_id: 'UtAqweADGTo4Gz8cZAeR-ouu4XBx78EeqRkABPL_pM4A1UpI0koD65K2',
+            file_size: 106356,
+            width: 640,
+            height: 640,
+          },
+        ],
+      ],
+    };
+
+    const res = {
+      ok: true,
+      result: profile,
+    };
+
+    client.getUserProfilePhotos.mockReturnValue(Promise.resolve(res));
+
+    const result = await context.getUserProfilePhotos({ limit: 2 });
+
+    expect(client.getUserProfilePhotos).toBeCalledWith(313534466, { limit: 2 });
+    expect(result).toEqual(profile);
+  });
+});
+
+describe('#getChat', () => {
+  it('should to call client.getChat', async () => {
+    const { context, client } = setup();
+
+    const chat = {
+      id: 313534466,
+      first_name: 'first',
+      last_name: 'last',
+      username: 'username',
+      type: 'private',
+    };
+
+    const res = {
+      ok: true,
+      result: chat,
+    };
+
+    client.getChat.mockReturnValue(Promise.resolve(res));
+
+    const result = await context.getChat();
+
+    expect(client.getChat).toBeCalledWith(427770117);
+    expect(result).toEqual(chat);
+  });
+});
+
+describe('#getChatAdministrators', () => {
+  it('should to call client.getChatAdministrators', async () => {
+    const { context, client } = setup();
+
+    const administrators = [
+      {
+        user: {
+          id: 313534466,
+          first_name: 'first',
+          last_name: 'last',
+          username: 'username',
+          languange_code: 'zh-TW',
+        },
+        status: 'creator',
+      },
+    ];
+
+    const res = {
+      ok: true,
+      result: administrators,
+    };
+
+    client.getChatAdministrators.mockReturnValue(Promise.resolve(res));
+
+    const result = await context.getChatAdministrators();
+
+    expect(client.getChatAdministrators).toBeCalledWith(427770117);
+    expect(result).toEqual(administrators);
+  });
+});
+
+describe('#getChatMembersCount', () => {
+  it('should to call client.getChatMembersCount', async () => {
+    const { context, client } = setup();
+
+    const res = {
+      ok: true,
+      result: '6',
+    };
+
+    client.getChatMembersCount.mockReturnValue(Promise.resolve(res));
+
+    const result = await context.getChatMembersCount();
+
+    expect(client.getChatMembersCount).toBeCalledWith(427770117);
+    expect(result).toEqual('6');
+  });
+});
+
+describe('#getChatMember', () => {
+  it('should to call client.getChatMember', async () => {
+    const { context, client } = setup();
+
+    const member = {
+      user: {
+        id: 313534466,
+        first_name: 'first',
+        last_name: 'last',
+        username: 'username',
+        languange_code: 'zh-TW',
+      },
+      status: 'creator',
+    };
+
+    const res = {
+      ok: true,
+      result: member,
+    };
+
+    client.getChatMember.mockReturnValue(Promise.resolve(res));
+
+    const result = await context.getChatMember(313534466);
+
+    expect(client.getChatMember).toBeCalledWith(427770117, 313534466);
+    expect(result).toEqual(member);
   });
 });
 
