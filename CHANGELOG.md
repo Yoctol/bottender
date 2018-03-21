@@ -1,3 +1,104 @@
+# 0.14.29 / 2018-03-21
+
+### telegram
+
+* [new] Add new Get APIs to `TelegramContext`:
+
+- [`context.getUserProfilePhotos`](https://bottender.js.org/docs/APIReference-TelegramContext#code-classlanguage-textgetuserprofilephotosoptionscode---official-docs)
+
+```js
+context.getUserProfilePhotos({ limit: 1 }).then(result => {
+  console.log(result);
+  // {
+  //   total_count: 3,
+  //   photos: [
+  //     [
+  //       {
+  //         file_id: 'AgADBAADGTo4Gz8cZAeR-ouu4XBx78EeqRkABHahi76pN-aO0UoDA050',
+  //         file_size: 14650,
+  //         width: 160,
+  //         height: 160,
+  //       },
+  //       {
+  //         file_id: 'AgADBAADGTo4Gz8cZAeR-ouu4XBx78EeqRkABKCfooqTgFUX0EoD5B1C',
+  //         file_size: 39019,
+  //         width: 320,
+  //         height: 320,
+  //       },
+  //       {
+  //         file_id: 'AgADBAADGTo4Gz8cZAeR-ouu4XBx78EeqRkABPL_pC9K3UpI0koD1B1C',
+  //         file_size: 132470,
+  //         width: 640,
+  //         height: 640,
+  //       },
+  //     ],
+  //   ],
+  // }
+});
+```
+
+* [`context.getChat`](https://bottender.js.org/docs/APIReference-TelegramContext#code-classlanguage-textgetchatcode---official-docs)
+
+```js
+context.getChat().then(result => {
+  console.log(result);
+  // {
+  //   id: 313534466,
+  //   first_name: 'first',
+  //   last_name: 'last',
+  //   username: 'username',
+  //   type: 'private',
+  // }
+});
+```
+
+* [`context.getChatAdministrators`](https://bottender.js.org/docs/APIReference-TelegramContext#code-classlanguage-textgetchatadministratorscode---official-docs)
+
+```js
+context.getChatAdministrators().then(result => {
+  console.log(result);
+  // [
+  //   {
+  //     user: {
+  //       id: 313534466,
+  //       first_name: 'first',
+  //       last_name: 'last',
+  //       username: 'username',
+  //       languange_code: 'zh-TW',
+  //     },
+  //     status: 'creator',
+  //   },
+  // ]
+});
+```
+
+* [`context.getChatMembersCount`](https://bottender.js.org/docs/APIReference-TelegramContext#code-classlanguage-textgetchatmemberscountcode---official-docs)
+
+```js
+context.getChatMembersCount().then(result => {
+  console.log(result);
+  // '6'
+});
+```
+
+* [`context.getChatMember`](https://bottender.js.org/docs/APIReference-TelegramContext#code-classlanguage-textgetchatmemberuseridcode---official-docs)
+
+```js
+context.getChatMember().then(result => {
+  console.log(result);
+  // {
+  //   user: {
+  //     id: 313534466,
+  //     first_name: 'first',
+  //     last_name: 'last',
+  //     username: 'username',
+  //     languange_code: 'zh-TW',
+  //   },
+  //   status: 'creator',
+  // }
+});
+```
+
 # 0.14.28 / 2018-03-20
 
 ### telegram
