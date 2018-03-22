@@ -112,6 +112,26 @@ describe('resolve', () => {
       });
     });
 
+    it('--token should work', async () => {
+      const ctx = {
+        argv: { token: '12345' },
+      };
+
+      await setMessengerProfile(ctx);
+
+      expect(MessengerClient.connect).toBeCalledWith('12345');
+    });
+
+    it('Abbreviational options should work', async () => {
+      const ctx = {
+        argv: { t: '12345' },
+      };
+
+      await setMessengerProfile(ctx);
+
+      expect(MessengerClient.connect).toBeCalledWith('12345');
+    });
+
     it('should set whole profile once', async () => {
       const ctx = {
         argv: {

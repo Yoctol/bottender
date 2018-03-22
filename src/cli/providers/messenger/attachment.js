@@ -20,13 +20,14 @@ const help = () => {
 
     ${chalk.dim('Commands:')}
 
-      upload    Upload all the files in assets folder.
-                Bottender will also create a bottender-lock.json file.
+      upload        Upload all the files in assets folder.
+                    Bottender will also create a bottender-lock.json file.
 
     ${chalk.dim('Options:')}
 
       -f, --force   Upload all assets and regenerate bottender-lock.json.
       -y, --yes     Skip prompt confirmation for uploading assets.
+      -t, --token   Specify Messenger access token.
 
     ${chalk.dim('Examples:')}
 
@@ -82,9 +83,11 @@ const logUploadInfo = uploadInfo => {
 };
 
 export async function uploadAttachment(ctx) {
-  const { f, force: _force, y, yes: _yes } = ctx.argv;
+  const { f, force: _force, y, yes: _yes, t, token: _token } = ctx.argv;
   const force = f || _force;
   const yes = y || _yes;
+
+  let accessToken;
 
   try {
     warn(
@@ -93,11 +96,17 @@ export async function uploadAttachment(ctx) {
       )} is under heavy development. API may change between any versions.`
     );
 
-    const config = getConfig('bottender.config.js', 'messenger');
+    if (t || _token) {
+      accessToken = t || _token;
+    } else {
+      const config = getConfig('bottender.config.js', 'messenger');
 
-    invariant(config.accessToken, 'accessToken is not found in config file');
+      invariant(config.accessToken, 'accessToken is not found in config file');
 
-    const client = MessengerClient.connect(config.accessToken);
+      accessToken = config.accessToken;
+    }
+
+    const client = MessengerClient.connect(accessToken);
 
     const files = await readdir('assets', ['.*']);
 

@@ -8,11 +8,20 @@ import { print, error, bold, warn } from '../../shared/log';
 
 import help from './help';
 
-export async function setWebhook(webhook, ngrokPort = '4040', eventTypes = []) {
+export async function setWebhook(
+  webhook,
+  ngrokPort = '4040',
+  accessToken = undefined,
+  eventTypes = []
+) {
   try {
-    const { accessToken } = getConfig('bottender.config.js', 'viber');
+    if (!accessToken) {
+      const config = getConfig('bottender.config.js', 'viber');
 
-    invariant(accessToken, '`accessToken` is not found in config file');
+      invariant(config.accessToken, 'accessToken is not found in config file');
+
+      accessToken = config.accessToken;
+    }
 
     const client = ViberClient.connect(accessToken);
 
@@ -49,11 +58,21 @@ export async function setWebhook(webhook, ngrokPort = '4040', eventTypes = []) {
   }
 }
 
-export async function deleteWebhook() {
-  try {
-    const { accessToken } = getConfig('bottender.config.js', 'viber');
+export async function deleteWebhook(ctx) {
+  const { t, token: _token } = ctx.argv;
 
-    invariant(accessToken, '`accessToken` is not found in config file');
+  let accessToken;
+
+  try {
+    if (t || _token) {
+      accessToken = t || _token;
+    } else {
+      const config = getConfig('bottender.config.js', 'viber');
+
+      invariant(config.accessToken, 'accessToken is not found in config file');
+
+      accessToken = config.accessToken;
+    }
 
     const client = ViberClient.connect(accessToken);
 
@@ -81,19 +100,20 @@ export default async function main(ctx) {
     case 'set': {
       const webhook = ctx.argv.w;
       const ngrokPort = ctx.argv['ngrok-port'];
+      const accessToken = ctx.argv.t || ctx.argv.token;
 
       if (typeof ctx.argv.e === 'string') {
         const eventTypes = ctx.argv.e.split(',');
-        await setWebhook(webhook, ngrokPort, eventTypes);
+        await setWebhook(webhook, ngrokPort, accessToken, eventTypes);
       } else {
-        await setWebhook(webhook, ngrokPort);
+        await setWebhook(webhook, ngrokPort, accessToken);
       }
 
       break;
     }
     case 'delete':
     case 'del':
-      await deleteWebhook();
+      await deleteWebhook(ctx);
       break;
     default:
       error(`Please specify a valid subcommand: set, delete`);

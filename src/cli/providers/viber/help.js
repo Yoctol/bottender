@@ -17,6 +17,7 @@ const help = () => {
 
       -w                    Webhook callback URL
       -e                    The types of Viber events. Seperate events by comma (e.g. delivered,seen)
+      -t, --token           Specify Viber access token.
       --ngrok-port          Ngrok port(default: 4040)
 
     ${chalk.dim('Examples:')}

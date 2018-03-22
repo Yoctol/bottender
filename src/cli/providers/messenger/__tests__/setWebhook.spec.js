@@ -15,13 +15,16 @@ const getWebhookFromNgrok = require('../../../shared/getWebhookFromNgrok')
 const log = require('../../../shared/log');
 const getConfig = require('../../../shared/getConfig');
 
+const FAKE_TOKEN = '__FAKE_TOKEN__';
 const APP_ID = '__APP_ID__';
 const APP_SECRET = '__APP_SECRET__';
 const VERIFY_TOKEN = '__VERIFY_TOKEN__';
 const WEBHOOK = 'http://example.com/webhook';
+let ACCESS_TOKEN;
 
 const MOCK_FILE_WITH_PLATFORM = {
   messenger: {
+    accessToken: FAKE_TOKEN,
     appId: APP_ID,
     appSecret: APP_SECRET,
     verifyToken: VERIFY_TOKEN,
@@ -66,7 +69,7 @@ describe('resolve', () => {
   it('successfully set webhook and show messages', async () => {
     setup();
 
-    await setWebhook(WEBHOOK, VERIFY_TOKEN);
+    await setWebhook(ACCESS_TOKEN, WEBHOOK, VERIFY_TOKEN);
 
     const logs = log.print.mock.calls.map(call => call[0]);
 
@@ -77,7 +80,7 @@ describe('resolve', () => {
   it('use default fields to setup', async () => {
     const { client } = setup();
 
-    await setWebhook(WEBHOOK, VERIFY_TOKEN);
+    await setWebhook(ACCESS_TOKEN, WEBHOOK, VERIFY_TOKEN);
 
     expect(client.createSubscription).toBeCalledWith({
       app_id: '__APP_ID__',
@@ -99,7 +102,7 @@ describe('resolve', () => {
   it('get ngrok webhook to setup', async () => {
     const { client } = setup();
 
-    await setWebhook(undefined, VERIFY_TOKEN);
+    await setWebhook(ACCESS_TOKEN, undefined, VERIFY_TOKEN);
 
     expect(getWebhookFromNgrok).toBeCalledWith('4040');
     expect(client.createSubscription).toBeCalledWith({
@@ -122,7 +125,17 @@ describe('resolve', () => {
   it('set ngrok webhook port', async () => {
     setup();
 
-    await setWebhook(undefined, VERIFY_TOKEN, '5555');
+    await setWebhook(ACCESS_TOKEN, undefined, VERIFY_TOKEN, '5555');
+
+    expect(getWebhookFromNgrok).toBeCalledWith('5555');
+  });
+
+  it('--token should work', async () => {
+    setup();
+
+    ACCESS_TOKEN = '12345';
+
+    await setWebhook(ACCESS_TOKEN, undefined, VERIFY_TOKEN, '5555');
 
     expect(getWebhookFromNgrok).toBeCalledWith('5555');
   });
@@ -137,7 +150,7 @@ describe('reject', () => {
       verifyToken: '__verifyToken__',
     });
 
-    await setWebhook(WEBHOOK, VERIFY_TOKEN);
+    await setWebhook(ACCESS_TOKEN, WEBHOOK, VERIFY_TOKEN);
 
     expect(log.error).toBeCalled();
     expect(process.exit).toBeCalled();
@@ -151,7 +164,7 @@ describe('reject', () => {
       verifyToken: '__verifyToken__',
     });
 
-    await setWebhook(WEBHOOK, VERIFY_TOKEN);
+    await setWebhook(ACCESS_TOKEN, WEBHOOK, VERIFY_TOKEN);
 
     expect(log.error).toBeCalled();
     expect(process.exit).toBeCalled();
@@ -160,7 +173,7 @@ describe('reject', () => {
   it('reject when messenger return not success', async () => {
     setup({ success: false });
 
-    await setWebhook(WEBHOOK, VERIFY_TOKEN);
+    await setWebhook(ACCESS_TOKEN, WEBHOOK, VERIFY_TOKEN);
 
     expect(log.error).toBeCalled();
     expect(process.exit).toBeCalled();

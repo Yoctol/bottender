@@ -24,11 +24,18 @@ const MOCK_FILE_WITH_PLATFORM = {
 const _exit = process.exit;
 
 const setup = (
-  { webhook = 'http://example.com/webhook' } = {
-    webhook: 'http://example.com/webhook',
+  { webhook = undefined, ngrokPort = undefined, token = undefined } = {
+    webhook: undefined,
+    ngrokPort: undefined,
+    token: undefined,
   }
 ) => ({
-  webhook,
+  argv: {
+    webhook,
+    ngrokPort,
+    token,
+    t: token,
+  },
 });
 
 beforeEach(() => {
@@ -68,16 +75,26 @@ it('be defined', () => {
 
 describe('resolve', () => {
   it('successfully set webhook', async () => {
-    const { webhook } = setup();
+    const ctx = setup({ webhook: 'http://example.com/webhook' });
 
-    await setWebhook(webhook);
+    await setWebhook(ctx);
 
     expect(log.print).toHaveBeenCalledTimes(1);
     expect(log.print.mock.calls[0][0]).toMatch(/Successfully/);
   });
 
+  it('-t --token should work', async () => {
+    const ctx = setup({ token: '12345' });
+
+    await setWebhook(ctx);
+
+    expect(TelegramClient.connect).toBeCalledWith('12345');
+  });
+
   it('get ngrok webhook to setup', async () => {
-    await setWebhook(undefined);
+    const ctx = setup();
+
+    await setWebhook(ctx);
 
     expect(getWebhookFromNgrok).toBeCalledWith('4040');
     expect(log.print).toHaveBeenCalledTimes(1);
@@ -85,33 +102,38 @@ describe('resolve', () => {
   });
 
   it('set ngrok webhook port', async () => {
-    await setWebhook(undefined, '5555');
+    const ctx = setup({ ngrokPort: '5555' });
+    ctx.argv['ngrok-port'] = ctx.argv.ngrokPort;
+
+    await setWebhook(ctx);
 
     expect(getWebhookFromNgrok).toBeCalledWith('5555');
   });
 });
 
 describe('reject', () => {
-  it('reject when `accessToken` not found in config file', async () => {
-    const { webhook } = setup();
+  it('reject when accessToken not found in config file', async () => {
+    const ctx = setup({ webhook: 'http://example.com/webhook' });
+
     getConfig.mockReturnValue({});
-    process.exit = jest.fn();
 
-    await setWebhook(webhook);
+    await setWebhook(ctx);
 
-    expect(log.error).toBeCalledWith(
-      '`accessToken` is not found in config file'
-    );
+    expect(log.error).toBeCalledWith('accessToken is not found in config file');
     expect(process.exit).toBeCalled();
   });
 
-  it('reject when telegram return not success', () => {
-    const { webhook } = setup();
+  it('reject when telegram return not success', async () => {
+    const ctx = setup({ webhook: 'http://example.com/webhook' });
+
     TelegramClient.connect().setWebhook.mockReturnValueOnce(
       Promise.resolve({
         ok: false,
       })
     );
-    expect(setWebhook(webhook).then).toThrow();
+    await setWebhook(ctx);
+
+    expect(log.error).toBeCalledWith('Setting for webhook is failed');
+    expect(process.exit).toBeCalled();
   });
 });

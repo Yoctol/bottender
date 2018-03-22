@@ -9,6 +9,13 @@ const { LineClient } = require('messaging-api-line');
 const { print, error } = require('../../../shared/log');
 const getConfig = require('../../../shared/getConfig');
 
+const setup = (token = undefined) => ({
+  argv: {
+    t: token,
+    token,
+  },
+});
+
 describe('getLineMenu', () => {
   beforeEach(() => {
     LineClient.connect.mockReturnValue({
@@ -49,29 +56,43 @@ describe('getLineMenu', () => {
     expect(getLineMenu).toBeDefined();
   });
 
-  it('should exit when accessToken is not found in config file', async () => {
+  it('-t, --token should work', async () => {
+    const ctx = setup('12345');
+
+    await getLineMenu(ctx);
+
+    expect(LineClient.connect).toBeCalledWith('12345');
+  });
+
+  it('should exit when accessToken is not found in config file and not pass token option', async () => {
+    const ctx = setup();
+
     getConfig.mockReturnValueOnce({
       accessToken: undefined,
     });
 
-    await getLineMenu();
+    await getLineMenu(ctx);
 
     expect(error).toBeCalled();
     expect(process.exit).toBeCalled();
   });
 
   it('should exit when client.getRichMenuList failed', async () => {
+    const ctx = setup();
+
     LineClient.connect().getRichMenuList.mockReturnValueOnce(
       Promise.reject(new Error('getRichMenuList failed'))
     );
 
-    await getLineMenu();
+    await getLineMenu(ctx);
 
     expect(error).toBeCalled();
     expect(process.exit).toBeCalled();
   });
 
   it('should print rich menus', async () => {
+    const ctx = setup();
+
     LineClient.connect().getRichMenuList.mockReturnValueOnce(
       Promise.resolve([
         {
@@ -101,17 +122,19 @@ describe('getLineMenu', () => {
       ])
     );
 
-    await getLineMenu();
+    await getLineMenu(ctx);
 
     expect(print.mock.calls.length).toBe(2);
   });
 
   it('should call error when failed to find rich menu', async () => {
+    const ctx = setup();
+
     LineClient.connect().getRichMenuList.mockReturnValueOnce(
       Promise.resolve(null)
     );
 
-    await getLineMenu();
+    await getLineMenu(ctx);
 
     expect(error.mock.calls.length).toBe(1);
   });

@@ -33,20 +33,49 @@ it('be defined', () => {
 });
 
 describe('resolved', () => {
+  it('--token should work', async () => {
+    const ctx = {
+      argv: { token: '12345' },
+    };
+
+    await getWhitelistedDomains(ctx);
+
+    expect(MessengerClient.connect).toBeCalledWith('12345');
+  });
+
+  it('Abbreviational options should work', async () => {
+    const ctx = {
+      argv: { t: '12345' },
+    };
+
+    await getWhitelistedDomains(ctx);
+
+    expect(MessengerClient.connect).toBeCalledWith('12345');
+    expect(_client.getWhitelistedDomains).toBeCalled();
+  });
+
   it('call getWhitelistedDomains', async () => {
+    const ctx = {
+      argv: {},
+    };
+
     _client.getWhitelistedDomains.mockReturnValue(
       Promise.resolve(['http://www.facebook.com', 'http://www.yoctol.com'])
     );
 
-    await getWhitelistedDomains();
+    await getWhitelistedDomains(ctx);
 
     expect(_client.getWhitelistedDomains).toBeCalled();
   });
 
   it('error when no config setting', async () => {
+    const ctx = {
+      argv: {},
+    };
+
     _client.getWhitelistedDomains.mockReturnValue(Promise.resolve(null));
 
-    await getWhitelistedDomains();
+    await getWhitelistedDomains(ctx);
 
     expect(log.error).toBeCalled();
     expect(_client.getWhitelistedDomains).toBeCalled();
@@ -55,6 +84,9 @@ describe('resolved', () => {
 
 describe('reject', () => {
   it('handle error thrown with only status', async () => {
+    const ctx = {
+      argv: {},
+    };
     const error = {
       response: {
         status: 400,
@@ -64,13 +96,16 @@ describe('reject', () => {
 
     process.exit = jest.fn();
 
-    await getWhitelistedDomains();
+    await getWhitelistedDomains(ctx);
 
     expect(log.error).toBeCalled();
     expect(process.exit).toBeCalled();
   });
 
   it('handle error thrown by messenger', async () => {
+    const ctx = {
+      argv: {},
+    };
     const error = {
       response: {
         status: 400,
@@ -89,7 +124,7 @@ describe('reject', () => {
 
     process.exit = jest.fn();
 
-    await getWhitelistedDomains();
+    await getWhitelistedDomains(ctx);
 
     expect(log.error).toBeCalled();
     expect(log.error.mock.calls[2][0]).not.toMatch(/\[object Object\]/);
@@ -97,6 +132,9 @@ describe('reject', () => {
   });
 
   it('handle error thrown by ourselves', async () => {
+    const ctx = {
+      argv: {},
+    };
     const error = {
       message: 'something wrong happened',
     };
@@ -104,7 +142,7 @@ describe('reject', () => {
 
     process.exit = jest.fn();
 
-    await getWhitelistedDomains();
+    await getWhitelistedDomains(ctx);
 
     expect(log.error).toBeCalled();
     expect(process.exit).toBeCalled();

@@ -66,13 +66,24 @@ describe('uploadAttachment', () => {
       expect(log.print).not.toBeCalledWith('bye');
     });
 
-    it('Abbreviational options should work', async () => {
+    it('--token should work', async () => {
       const ctx = {
-        argv: { f: true, y: true },
+        argv: { force: true, yes: true, token: '12345' },
       };
 
       await uploadAttachment(ctx);
 
+      expect(MessengerClient.connect).toBeCalledWith('12345');
+    });
+
+    it('Abbreviational options should work', async () => {
+      const ctx = {
+        argv: { f: true, y: true, t: '12345' },
+      };
+
+      await uploadAttachment(ctx);
+
+      expect(MessengerClient.connect).toBeCalledWith('12345');
       expect(inquirer.prompt).not.toBeCalled();
       expect(log.print).not.toBeCalledWith('bye');
     });

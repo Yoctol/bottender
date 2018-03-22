@@ -45,8 +45,32 @@ it('be defined', () => {
 });
 
 describe('resolve', () => {
+  it('--token should work', async () => {
+    const ctx = {
+      argv: { token: '12345' },
+    };
+
+    await deleteWebhook(ctx);
+
+    expect(TelegramClient.connect).toBeCalledWith('12345');
+  });
+
+  it('Abbreviational options should work', async () => {
+    const ctx = {
+      argv: { t: '12345' },
+    };
+
+    await deleteWebhook(ctx);
+
+    expect(TelegramClient.connect).toBeCalledWith('12345');
+  });
+
   it('successfully delete webhook', async () => {
-    await deleteWebhook();
+    const ctx = {
+      argv: {},
+    };
+
+    await deleteWebhook(ctx);
 
     expect(log.print).toHaveBeenCalledTimes(1);
     expect(log.print.mock.calls[0][0]).toMatch(/Successfully/);
@@ -54,19 +78,26 @@ describe('resolve', () => {
 });
 
 describe('reject', () => {
-  it('reject when Telegram return not success', async () => {
+  it('reject when Telegram return not success', () => {
+    const ctx = {
+      argv: {},
+    };
+
     TelegramClient.connect().deleteWebhook.mockReturnValueOnce(
       Promise.resolve({
         ok: false,
       })
     );
-    await deleteWebhook();
-    expect(deleteWebhook().then).toThrow();
+
+    expect(deleteWebhook(ctx).then).toThrow();
   });
 
-  it('reject when `accessToken` is not found in config file', async () => {
-    getConfig.mockReturnValueOnce(null);
-    await deleteWebhook();
-    expect(deleteWebhook().then).toThrow();
+  it('reject when accessToken is not found in config file', () => {
+    const ctx = {
+      argv: {},
+    };
+    getConfig.mockReturnValueOnce({});
+
+    expect(deleteWebhook(ctx).then).toThrow();
   });
 });

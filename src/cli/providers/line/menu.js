@@ -32,7 +32,8 @@ export const help = () => {
 
     ${chalk.dim('Options:')}
 
-      --force       With action del, force delete ${bold('ALL')} LINE rich menus
+      -t, --token   Specify LINE access token.
+      -f, --force   With action del, force delete ${bold('ALL')} LINE rich menus
 
     ${chalk.dim('Examples:')}
 
@@ -56,13 +57,23 @@ export function checkLineMenu() {
   }
 }
 
-export async function getLineMenu() {
+export async function getLineMenu(ctx) {
+  const { t, token: _token } = ctx.argv;
+
+  let accessToken;
+
   try {
-    const config = getConfig('bottender.config.js', 'line');
+    if (t || _token) {
+      accessToken = t || _token;
+    } else {
+      const config = getConfig('bottender.config.js', 'line');
 
-    invariant(config.accessToken, 'accessToken is not found in config file.');
+      invariant(config.accessToken, 'accessToken is not found in config file');
 
-    const client = LineClient.connect(config.accessToken);
+      accessToken = config.accessToken;
+    }
+
+    const client = LineClient.connect(accessToken);
 
     const richMenus = await client.getRichMenuList();
 
@@ -87,19 +98,26 @@ export async function getLineMenu() {
   }
 }
 
-export async function setLineMenus() {
-  try {
-    const { accessToken, richMenus: localRichMenus } = getConfig(
-      'bottender.config.js',
-      'line'
-    );
+export async function setLineMenus(ctx) {
+  const { t, token: _token } = ctx.argv;
 
-    invariant(accessToken, 'accessToken is not found in config file.');
+  let accessToken;
+
+  try {
+    const config = getConfig('bottender.config.js', 'line');
+    const { richMenus: localRichMenus } = config;
+
+    if (t || _token) {
+      accessToken = t || _token;
+    } else {
+      invariant(config.accessToken, 'accessToken is not found in config file');
+
+      accessToken = config.accessToken;
+    }
 
     const client = LineClient.connect(accessToken);
 
     const onlineRichMenus = await client.getRichMenuList();
-
     invariant(
       onlineRichMenus,
       `Failed to get ${bold('LINE rich menu')} response.`
@@ -168,13 +186,23 @@ export async function setLineMenus() {
 }
 
 export async function deleteLineMenu(ctx) {
-  const { force } = ctx.argv;
+  const { f, force: _force, t, token: _token } = ctx.argv;
+  const force = f || _force;
+
+  let accessToken;
+
   try {
-    const config = getConfig('bottender.config.js', 'line');
+    if (t || _token) {
+      accessToken = t || _token;
+    } else {
+      const config = getConfig('bottender.config.js', 'line');
 
-    invariant(config.accessToken, 'accessToken is not found in config file.');
+      invariant(config.accessToken, 'accessToken is not found in config file');
 
-    const client = LineClient.connect(config.accessToken);
+      accessToken = config.accessToken;
+    }
+
+    const client = LineClient.connect(accessToken);
 
     const richMenus = await client.getRichMenuList();
 
@@ -238,7 +266,7 @@ export default async function main(ctx) {
       checkLineMenu();
       break;
     case 'get':
-      await getLineMenu();
+      await getLineMenu(ctx);
       break;
     case 'set':
       await setLineMenus(ctx);
