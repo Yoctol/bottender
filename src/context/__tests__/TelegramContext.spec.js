@@ -34,6 +34,13 @@ const createMockTelegramClient = () => ({
   sendGame: jest.fn(),
   setGameScore: jest.fn(),
   getGameHighScores: jest.fn(),
+  editMessageText: jest.fn(),
+  editMessageCaption: jest.fn(),
+  editMessageReplyMarkup: jest.fn(),
+  deleteMessage: jest.fn(),
+  editMessageLiveLocation: jest.fn(),
+  stopMessageLiveLocation: jest.fn(),
+  forwardMessage: jest.fn(),
   kickChatMember: jest.fn(),
   unbanChatMember: jest.fn(),
   restrictChatMember: jest.fn(),
@@ -509,6 +516,193 @@ describe('#getGameHighScores', () => {
     const { context } = setup();
 
     await context.getGameHighScores();
+
+    expect(context.isHandled).toBe(true);
+  });
+});
+
+describe('#editMessageText', () => {
+  it('should to call client.editMessageText', async () => {
+    const { context, client } = setup();
+
+    await context.editMessageText('new text');
+
+    expect(client.editMessageText).toBeCalledWith('new text', {
+      chat_id: 427770117,
+    });
+  });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    await context.editMessageText('new text');
+
+    expect(context.isHandled).toBe(true);
+  });
+});
+
+describe('#editMessageCaption', () => {
+  it('should to call client.editMessageCaption', async () => {
+    const { context, client } = setup();
+
+    await context.editMessageCaption('new caption');
+
+    expect(client.editMessageCaption).toBeCalledWith('new caption', {
+      chat_id: 427770117,
+    });
+  });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    await context.editMessageCaption('new caption');
+
+    expect(context.isHandled).toBe(true);
+  });
+});
+
+describe('#editMessageReplyMarkup', () => {
+  const markup = {
+    keyboard: [[{ text: 'new_button_1' }, { text: 'new_button_2' }]],
+    resize_keyboard: true,
+    one_time_keyboard: true,
+  };
+
+  it('should to call client.editMessageReplyMarkup', async () => {
+    const { context, client } = setup();
+
+    await context.editMessageReplyMarkup(markup);
+
+    expect(client.editMessageReplyMarkup).toBeCalledWith(markup, {
+      chat_id: 427770117,
+    });
+  });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    await context.editMessageReplyMarkup(markup);
+
+    expect(context.isHandled).toBe(true);
+  });
+});
+
+describe('#deleteMessage', () => {
+  it('should to call client.deleteMessage', async () => {
+    const { context, client } = setup();
+
+    await context.deleteMessage('message_id');
+
+    expect(client.deleteMessage).toBeCalledWith(427770117, 'message_id');
+  });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    await context.deleteMessage('message_id');
+
+    expect(context.isHandled).toBe(true);
+  });
+});
+
+describe('#editMessageLiveLocation', () => {
+  const location = {
+    latitude: 30,
+    longitude: 45,
+  };
+
+  it('should to call client.editMessageLiveLocation', async () => {
+    const { context, client } = setup();
+
+    await context.editMessageLiveLocation(location);
+
+    expect(client.editMessageLiveLocation).toBeCalledWith(location, {
+      chat_id: 427770117,
+    });
+  });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    await context.editMessageLiveLocation(location);
+
+    expect(context.isHandled).toBe(true);
+  });
+});
+
+describe('#stopMessageLiveLocation', () => {
+  it('should to call client.stopMessageLiveLocation', async () => {
+    const { context, client } = setup();
+
+    await context.stopMessageLiveLocation();
+
+    expect(client.stopMessageLiveLocation).toBeCalledWith({
+      chat_id: 427770117,
+    });
+  });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    await context.stopMessageLiveLocation();
+
+    expect(context.isHandled).toBe(true);
+  });
+});
+
+describe('#forwardMessageFrom', () => {
+  it('should to call client.forwardMessage', async () => {
+    const { context, client } = setup();
+
+    await context.forwardMessageFrom(313534466, 'message_id', {
+      disable_notification: true,
+    });
+
+    expect(client.forwardMessage).toBeCalledWith(
+      427770117,
+      313534466,
+      'message_id',
+      {
+        disable_notification: true,
+      }
+    );
+  });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    await context.forwardMessageFrom(313534466, 'message_id', {
+      disable_notification: true,
+    });
+
+    expect(context.isHandled).toBe(true);
+  });
+});
+
+describe('#forwardMessageTo', () => {
+  it('should to call client.forwardMessageTo', async () => {
+    const { context, client } = setup();
+
+    await context.forwardMessageTo(413534466, 'message_id', {
+      disable_notification: true,
+    });
+
+    expect(client.forwardMessage).toBeCalledWith(
+      413534466,
+      427770117,
+      'message_id',
+      {
+        disable_notification: true,
+      }
+    );
+  });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    await context.forwardMessageTo(413534466, 'message_id', {
+      disable_notification: true,
+    });
 
     expect(context.isHandled).toBe(true);
   });
