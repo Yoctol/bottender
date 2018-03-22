@@ -224,6 +224,157 @@ class TelegramContext extends Context implements PlatformContext {
     const { result } = await this._client.getChatMember(chatId, userId);
     return result;
   }
+
+  async editMessageText(text: string, options: ?Object) {
+    if (!this._session) {
+      warning(
+        false,
+        'editMessageText: should not be called in context without session'
+      );
+      return;
+    }
+
+    this._isHandled = true;
+
+    const chatId = this._getChatId();
+
+    return this._client.editMessageText(text, { chat_id: chatId, ...options });
+  }
+
+  async editMessageCaption(caption: string, options: ?Object) {
+    if (!this._session) {
+      warning(
+        false,
+        'editMessageCaption: should not be called in context without session'
+      );
+      return;
+    }
+
+    this._isHandled = true;
+
+    const chatId = this._getChatId();
+
+    return this._client.editMessageCaption(caption, {
+      chat_id: chatId,
+      ...options,
+    });
+  }
+
+  async editMessageReplyMarkup(replyMarkup: Object, options: ?Object) {
+    if (!this._session) {
+      warning(
+        false,
+        'editMessageReplyMarkup: should not be called in context without session'
+      );
+      return;
+    }
+
+    this._isHandled = true;
+
+    const chatId = this._getChatId();
+
+    return this._client.editMessageReplyMarkup(replyMarkup, {
+      chat_id: chatId,
+      ...options,
+    });
+  }
+
+  async deleteMessage(messageId: number) {
+    if (!this._session) {
+      warning(
+        false,
+        'deleteMessage: should not be called in context without session'
+      );
+      return;
+    }
+
+    this._isHandled = true;
+
+    const chatId = this._getChatId();
+
+    return this._client.deleteMessage(chatId, messageId);
+  }
+
+  async editMessageLiveLocation(
+    location: { latitude: number, longitude: number },
+    options: ?Object
+  ) {
+    if (!this._session) {
+      warning(
+        false,
+        'editMessageLiveLocation: should not be called in context without session'
+      );
+      return;
+    }
+
+    this._isHandled = true;
+
+    const chatId = this._getChatId();
+
+    return this._client.editMessageLiveLocation(location, {
+      chat_id: chatId,
+      ...options,
+    });
+  }
+
+  async stopMessageLiveLocation(options: ?Object) {
+    if (!this._session) {
+      warning(
+        false,
+        'stopMessageLiveLocation: should not be called in context without session'
+      );
+      return;
+    }
+
+    this._isHandled = true;
+
+    const chatId = this._getChatId();
+
+    return this._client.stopMessageLiveLocation({
+      chat_id: chatId,
+      ...options,
+    });
+  }
+
+  async forwardMessageFrom(
+    fromChatId: string,
+    messageId: number,
+    options: ?Object
+  ) {
+    if (!this._session) {
+      warning(
+        false,
+        'forwardMessageFrom: should not be called in context without session'
+      );
+      return;
+    }
+
+    this._isHandled = true;
+
+    const chatId = this._getChatId();
+
+    return this._client.forwardMessage(chatId, fromChatId, messageId, options);
+  }
+
+  async forwardMessageTo(
+    toChatId: string,
+    messageId: number,
+    options: ?Object
+  ) {
+    if (!this._session) {
+      warning(
+        false,
+        'forwardMessageTo: should not be called in context without session'
+      );
+      return;
+    }
+
+    this._isHandled = true;
+
+    const chatId = this._getChatId();
+
+    return this._client.forwardMessage(toChatId, chatId, messageId, options);
+  }
 }
 
 const sendMethods = [
