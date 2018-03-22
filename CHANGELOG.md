@@ -1,3 +1,20 @@
+# 0.14.30 / 2018-03-22
+
+* [new] Add cli option `-t`, `--token` to overwrite token setting.
+
+### telegram
+
+* [new] Add new Update APIs to `TelegramContext`:
+
+- [`editMessageText(text [, options])`](https://bottender.js.org/docs/APIReference-TelegramContext#code-classlanguage-texteditmessagetexttext--optionscode---official-docs)
+- [`editMessageCaption(caption [, options])`](https://bottender.js.org/docs/APIReference-TelegramContext#code-classlanguage-texteditmessagecaptioncaption--optionscode---official-docs)
+- [`editMessageReplyMarkup(replyMarkup [, options])`](https://bottender.js.org/docs/APIReference-TelegramContext#code-classlanguage-texteditmessagereplymarkupreplymarkup--optionscode---official-docs)
+- [`deleteMessage(messageId)`](https://bottender.js.org/docs/APIReference-TelegramContext#code-classlanguage-textdeletemessagemessageidcode---official-docs)
+- [`editMessageLiveLocation(location [, options])`](https://bottender.js.org/docs/APIReference-TelegramContext#code-classlanguage-texteditmessagelivelocationlocation--optionscode---official-docs)
+- [`stopMessageLiveLocation(options)`](https://bottender.js.org/docs/APIReference-TelegramContext#code-classlanguage-textstopmessagelivelocationoptionscode---official-docs)
+- [`forwardMessageFrom(fromChatId, messageId [, options])`](https://bottender.js.org/docs/APIReference-TelegramContext#code-classlanguage-textforwardmessagefromfromchatid-messageid--optionscode---official-docs)
+- [`forwardMessageTo(toChatId, messageId [, options])`](https://bottender.js.org/docs/APIReference-TelegramContext#code-classlanguage-textforwardmessagetotochatid-messageid--optionscode---official-docs)
+
 # 0.14.29 / 2018-03-21
 
 ### telegram
