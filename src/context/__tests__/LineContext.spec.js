@@ -758,6 +758,18 @@ describe('send APIs', () => {
 
       expect(context.isHandled).toBe(true);
     });
+
+    it('should support sendButtonsTemplate alias', async () => {
+      const { context, client, session } = setup();
+
+      await context.sendButtonsTemplate('this is a button template', template);
+
+      expect(client.pushButtonTemplate).toBeCalledWith(
+        session.user.id,
+        'this is a button template',
+        template
+      );
+    });
   });
 
   describe('#sendConfirmTemplate', () => {

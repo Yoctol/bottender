@@ -268,80 +268,87 @@ class LineContext extends Context implements PlatformContext {
   }
 }
 
-const types = [
-  '',
-  'Text',
-  'Image',
-  'Video',
-  'Audio',
-  'Location',
-  'Sticker',
-  'Imagemap',
-  'ButtonTemplate',
-  'ConfirmTemplate',
-  'CarouselTemplate',
-  'ImageCarouselTemplate',
+const types: Array<{ name: string, aliases?: Array<string> }> = [
+  { name: '' },
+  { name: 'Text' },
+  { name: 'Image' },
+  { name: 'Video' },
+  { name: 'Audio' },
+  { name: 'Location' },
+  { name: 'Sticker' },
+  { name: 'Imagemap' },
+  { name: 'ButtonTemplate', aliases: ['ButtonsTemplate'] },
+  { name: 'ConfirmTemplate' },
+  { name: 'CarouselTemplate' },
+  { name: 'ImageCarouselTemplate' },
 ];
-types.forEach(type => {
-  Object.defineProperty(LineContext.prototype, `reply${type}`, {
-    enumerable: false,
-    configurable: true,
-    writable: true,
-    async value(...args) {
-      invariant(!this._isReplied, 'Can not reply event mulitple times');
 
-      this._isReplied = true;
-      this._isHandled = true;
+types.forEach(({ name, aliases }) => {
+  [name].concat(aliases || []).forEach(type => {
+    Object.defineProperty(LineContext.prototype, `reply${type}`, {
+      enumerable: false,
+      configurable: true,
+      writable: true,
+      async value(...args) {
+        invariant(!this._isReplied, 'Can not reply event mulitple times');
 
-      return this._client[`reply${type}`](this._event.replyToken, ...args);
-    },
-  });
+        this._isReplied = true;
+        this._isHandled = true;
 
-  Object.defineProperty(LineContext.prototype, `push${type}`, {
-    enumerable: false,
-    configurable: true,
-    writable: true,
-    async value(...args) {
-      if (!this._session) {
-        warning(
-          false,
-          `push${type}: should not be called in context without session`
+        return this._client[`reply${name}`](this._event.replyToken, ...args);
+      },
+    });
+
+    Object.defineProperty(LineContext.prototype, `push${type}`, {
+      enumerable: false,
+      configurable: true,
+      writable: true,
+      async value(...args) {
+        if (!this._session) {
+          warning(
+            false,
+            `push${type}: should not be called in context without session`
+          );
+          return;
+        }
+
+        this._isHandled = true;
+        const sessionType = this._session.type;
+        return this._client[`push${name}`](
+          this._session[sessionType].id,
+          ...args
         );
-        return;
-      }
-
-      this._isHandled = true;
-      const sessionType = this._session.type;
-      return this._client[`push${type}`](
-        this._session[sessionType].id,
-        ...args
-      );
-    },
+      },
+    });
   });
 });
 
-types.filter(type => type !== 'Text' && type !== '').forEach(type => {
-  Object.defineProperty(LineContext.prototype, `send${type}`, {
-    enumerable: false,
-    configurable: true,
-    writable: true,
-    async value(...args) {
-      if (!this._session) {
-        warning(
-          false,
-          `send${type}: should not be called in context without session`
-        );
-        return;
-      }
+types
+  .filter(({ name }) => name !== 'Text' && name !== '')
+  .forEach(({ name, aliases }) => {
+    [name].concat(aliases || []).forEach(type => {
+      Object.defineProperty(LineContext.prototype, `send${type}`, {
+        enumerable: false,
+        configurable: true,
+        writable: true,
+        async value(...args) {
+          if (!this._session) {
+            warning(
+              false,
+              `send${type}: should not be called in context without session`
+            );
+            return;
+          }
 
-      this._isHandled = true;
-      const sessionType = this._session.type;
-      return this._client[`push${type}`](
-        this._session[sessionType].id,
-        ...args
-      );
-    },
+          this._isHandled = true;
+          const sessionType = this._session.type;
+          return this._client[`push${name}`](
+            this._session[sessionType].id,
+            ...args
+          );
+        },
+      });
+    });
   });
-});
 
 export default LineContext;
