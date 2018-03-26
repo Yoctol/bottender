@@ -22,17 +22,7 @@ beforeEach(() => {
   getConfig.mockReturnValue(MOCK_FILE_WITH_PLATFORM.telegram);
 
   TelegramClient.connect.mockReturnValue({
-    deleteWebhook: jest.fn(() =>
-      Promise.resolve({
-        ok: true,
-        result: {
-          url: 'https://4a16faff.ngrok.io/',
-          has_custom_certificate: false,
-          pending_update_count: 0,
-          max_connections: 40,
-        },
-      })
-    ),
+    deleteWebhook: jest.fn(() => Promise.resolve(true)),
   });
 });
 

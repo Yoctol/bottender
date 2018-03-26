@@ -25,8 +25,7 @@ export async function getWebhook(ctx) {
     }
 
     const client = TelegramClient.connect(accessToken);
-    const { ok, result } = await client.getWebhookInfo();
-    invariant(ok, 'Getting Telegram webhook is failed');
+    const result = await client.getWebhookInfo();
 
     Object.keys(result).forEach(key => print(`${key}: ${result[key]}`));
   } catch (err) {
@@ -79,8 +78,7 @@ export async function setWebhook(ctx) {
       '`webhook` is required but not found. Use -w <webhook> to setup or make sure you are running ngrok server.'
     );
 
-    const { ok } = await client.setWebhook(webhook);
-    invariant(ok, 'Setting for webhook is failed');
+    await client.setWebhook(webhook);
 
     print('Successfully set Telegram webhook callback URL');
   } catch (err) {
@@ -114,8 +112,7 @@ export async function deleteWebhook(ctx) {
     }
 
     const client = TelegramClient.connect(accessToken);
-    const { ok } = await client.deleteWebhook();
-    invariant(ok, 'Deleting Telegram webhook is failed');
+    await client.deleteWebhook();
 
     print('Successfully delete Telegram webhook');
   } catch (err) {

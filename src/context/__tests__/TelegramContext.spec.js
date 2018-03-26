@@ -489,35 +489,24 @@ describe('#getGameHighScores', () => {
   it('should to call client.getGameHighScores', async () => {
     const { context, client } = setup();
 
-    const response = {
-      ok: true,
-      result: [
-        {
-          position: 1,
-          user: {
-            id: 427770117,
-            is_bot: false,
-            first_name: 'first',
-          },
-          score: 999,
+    const response = [
+      {
+        position: 1,
+        user: {
+          id: 427770117,
+          is_bot: false,
+          first_name: 'first',
         },
-      ],
-    };
+        score: 999,
+      },
+    ];
 
     client.getGameHighScores.mockReturnValue(Promise.resolve(response));
 
     const result = await context.getGameHighScores();
 
-    expect(client.getGameHighScores).toBeCalledWith(427770117);
+    expect(client.getGameHighScores).toBeCalledWith(427770117, undefined);
     expect(result).toEqual(response);
-  });
-
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    await context.getGameHighScores();
-
-    expect(context.isHandled).toBe(true);
   });
 });
 
@@ -1273,12 +1262,7 @@ describe('#getUserProfilePhotos', () => {
       ],
     };
 
-    const res = {
-      ok: true,
-      result: profile,
-    };
-
-    client.getUserProfilePhotos.mockReturnValue(Promise.resolve(res));
+    client.getUserProfilePhotos.mockReturnValue(Promise.resolve(profile));
 
     const result = await context.getUserProfilePhotos({ limit: 2 });
 
@@ -1299,12 +1283,7 @@ describe('#getChat', () => {
       type: 'private',
     };
 
-    const res = {
-      ok: true,
-      result: chat,
-    };
-
-    client.getChat.mockReturnValue(Promise.resolve(res));
+    client.getChat.mockReturnValue(Promise.resolve(chat));
 
     const result = await context.getChat();
 
@@ -1330,12 +1309,9 @@ describe('#getChatAdministrators', () => {
       },
     ];
 
-    const res = {
-      ok: true,
-      result: administrators,
-    };
-
-    client.getChatAdministrators.mockReturnValue(Promise.resolve(res));
+    client.getChatAdministrators.mockReturnValue(
+      Promise.resolve(administrators)
+    );
 
     const result = await context.getChatAdministrators();
 
@@ -1348,12 +1324,7 @@ describe('#getChatMembersCount', () => {
   it('should to call client.getChatMembersCount', async () => {
     const { context, client } = setup();
 
-    const res = {
-      ok: true,
-      result: '6',
-    };
-
-    client.getChatMembersCount.mockReturnValue(Promise.resolve(res));
+    client.getChatMembersCount.mockReturnValue(Promise.resolve('6'));
 
     const result = await context.getChatMembersCount();
 
@@ -1377,12 +1348,7 @@ describe('#getChatMember', () => {
       status: 'creator',
     };
 
-    const res = {
-      ok: true,
-      result: member,
-    };
-
-    client.getChatMember.mockReturnValue(Promise.resolve(res));
+    client.getChatMember.mockReturnValue(Promise.resolve(member));
 
     const result = await context.getChatMember(313534466);
 

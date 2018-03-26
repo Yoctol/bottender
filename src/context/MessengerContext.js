@@ -348,7 +348,6 @@ const sendMethods = [
   ['sendAudio', 3],
   ['sendVideo', 3],
   ['sendFile', 3],
-  ['sendQuickReplies', 4],
   ['sendTemplate', 3],
   ['sendGenericTemplate', 3],
   ['sendButtonTemplate', 4],
