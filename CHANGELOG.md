@@ -1,3 +1,15 @@
+# 0.14.31 / 2018-03-26
+
+### line
+
+* [new] alias LINE ButtonsTemplate to ButtonTemplate to match type name `buttons` #219
+
+Aliases:
+
+* replyButtonsTemplate -> replyButtonTemplate
+* pushButtonsTemplate -> pushButtonTemplate
+* sendButtonsTemplate -> sendButtonTemplate
+
 # 0.14.30 / 2018-03-22
 
 * [new] Add cli option `-t`, `--token` to overwrite token setting.
