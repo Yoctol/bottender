@@ -51,17 +51,7 @@ beforeEach(() => {
   }));
 
   TelegramClient.connect.mockReturnValue({
-    setWebhook: jest.fn(() =>
-      Promise.resolve({
-        ok: true,
-        result: {
-          url: 'https://4a16faff.ngrok.io/',
-          has_custom_certificate: false,
-          pending_update_count: 0,
-          max_connections: 40,
-        },
-      })
-    ),
+    setWebhook: jest.fn(() => Promise.resolve(true)),
   });
 });
 
@@ -126,14 +116,13 @@ describe('reject', () => {
   it('reject when telegram return not success', async () => {
     const ctx = setup({ webhook: 'http://example.com/webhook' });
 
-    TelegramClient.connect().setWebhook.mockReturnValueOnce(
-      Promise.resolve({
-        ok: false,
-      })
-    );
+    TelegramClient.connect().setWebhook.mockImplementation(() => {
+      throw new Error();
+    });
+
     await setWebhook(ctx);
 
-    expect(log.error).toBeCalledWith('Setting for webhook is failed');
+    expect(log.error).toBeCalledWith('Failed to set Telegram webhook');
     expect(process.exit).toBeCalled();
   });
 });

@@ -158,11 +158,10 @@ class TelegramContext extends Context implements PlatformContext {
       return null;
     }
 
-    const { result } = await this._client.getUserProfilePhotos(
+    return this._client.getUserProfilePhotos(
       (this.session: any).user.id,
       options
     );
-    return result;
   }
 
   async getChat() {
@@ -176,8 +175,7 @@ class TelegramContext extends Context implements PlatformContext {
 
     const chatId = this._getChatId();
 
-    const { result } = await this._client.getChat(chatId);
-    return result;
+    return this._client.getChat(chatId);
   }
 
   async getChatAdministrators() {
@@ -191,8 +189,7 @@ class TelegramContext extends Context implements PlatformContext {
 
     const chatId = this._getChatId();
 
-    const { result } = await this._client.getChatAdministrators(chatId);
-    return result;
+    return this._client.getChatAdministrators(chatId);
   }
 
   async getChatMembersCount() {
@@ -206,8 +203,7 @@ class TelegramContext extends Context implements PlatformContext {
 
     const chatId = this._getChatId();
 
-    const { result } = await this._client.getChatMembersCount(chatId);
-    return result;
+    return this._client.getChatMembersCount(chatId);
   }
 
   async getChatMember(userId: number) {
@@ -221,8 +217,21 @@ class TelegramContext extends Context implements PlatformContext {
 
     const chatId = this._getChatId();
 
-    const { result } = await this._client.getChatMember(chatId, userId);
-    return result;
+    return this._client.getChatMember(chatId, userId);
+  }
+
+  async getGameHighScores(options: ?Object) {
+    if (!this._session) {
+      warning(
+        false,
+        'getGameHighScores: should not be called in context without session'
+      );
+      return null;
+    }
+
+    const chatId = this._getChatId();
+
+    return this._client.getGameHighScores(chatId, options);
   }
 
   async editMessageText(text: string, options: ?Object) {
@@ -415,7 +424,6 @@ const sendMethods = [
   // Game API
   'sendGame',
   'setGameScore',
-  'getGameHighScores',
 ];
 
 sendMethods.forEach(method => {

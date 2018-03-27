@@ -39,32 +39,29 @@ describe('#createLongPollingRuntime', () => {
 
     bot.onEvent(handler);
 
-    const getUpdatesPromise = Promise.resolve({
-      ok: true,
-      result: [
-        {
-          update_id: 513400512,
-          message: {
-            message_id: 3,
-            from: {
-              id: 313534466,
-              first_name: 'first',
-              last_name: 'last',
-              username: 'username',
-            },
-            chat: {
-              id: 313534466,
-              first_name: 'first',
-              last_name: 'last',
-              username: 'username',
-              type: 'private',
-            },
-            date: 1499402829,
-            text: 'hi',
+    const getUpdatesPromise = Promise.resolve([
+      {
+        update_id: 513400512,
+        message: {
+          message_id: 3,
+          from: {
+            id: 313534466,
+            first_name: 'first',
+            last_name: 'last',
+            username: 'username',
           },
+          chat: {
+            id: 313534466,
+            first_name: 'first',
+            last_name: 'last',
+            username: 'username',
+            type: 'private',
+          },
+          date: 1499402829,
+          text: 'hi',
         },
-      ],
-    });
+      },
+    ]);
 
     bot.connector.client.getUpdates = jest.fn();
     bot.connector.client.getUpdates
@@ -88,32 +85,29 @@ describe('#createLongPollingRuntime', () => {
 
     bot.onEvent(handler);
 
-    const getUpdatesPromise = Promise.resolve({
-      ok: true,
-      result: [
-        {
-          update_id: 513400512,
-          message: {
-            message_id: 3,
-            from: {
-              id: 313534466,
-              first_name: 'first',
-              last_name: 'last',
-              username: 'username',
-            },
-            chat: {
-              id: 313534466,
-              first_name: 'first',
-              last_name: 'last',
-              username: 'username',
-              type: 'private',
-            },
-            date: 1499402829,
-            text: 'hi',
+    const getUpdatesPromise = Promise.resolve([
+      {
+        update_id: 513400512,
+        message: {
+          message_id: 3,
+          from: {
+            id: 313534466,
+            first_name: 'first',
+            last_name: 'last',
+            username: 'username',
           },
+          chat: {
+            id: 313534466,
+            first_name: 'first',
+            last_name: 'last',
+            username: 'username',
+            type: 'private',
+          },
+          date: 1499402829,
+          text: 'hi',
         },
-      ],
-    });
+      },
+    ]);
 
     bot.connector.client.getUpdates = jest.fn();
     bot.connector.client.getUpdates

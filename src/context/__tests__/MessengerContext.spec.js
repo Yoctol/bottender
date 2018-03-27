@@ -33,7 +33,6 @@ const createMockGraphAPIClient = () => ({
   sendAudio: jest.fn(),
   sendVideo: jest.fn(),
   sendFile: jest.fn(),
-  sendQuickReplies: jest.fn(),
   sendTemplate: jest.fn(),
   sendGenericTemplate: jest.fn(),
   sendButtonTemplate: jest.fn(),
@@ -309,35 +308,6 @@ describe('#sendFile', () => {
     const { context } = setup();
 
     await context.sendFile('xxx.com');
-
-    expect(context.isHandled).toBe(true);
-  });
-});
-
-describe('#sendQuickReplies', () => {
-  it('should call client.sendQuickReplies', async () => {
-    const { context, client, session } = setup();
-
-    const quickReplies = [];
-
-    await context.sendQuickReplies({ text: 'xxx.com' }, quickReplies);
-
-    expect(client.sendQuickReplies).toBeCalledWith(
-      session.user.id,
-      { text: 'xxx.com' },
-      quickReplies,
-      {
-        messaging_type: 'RESPONSE',
-      }
-    );
-  });
-
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    const quickReplies = [];
-
-    await context.sendQuickReplies({ text: 'xxx.com' }, quickReplies);
 
     expect(context.isHandled).toBe(true);
   });
