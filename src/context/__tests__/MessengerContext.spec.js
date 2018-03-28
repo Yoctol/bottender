@@ -2,6 +2,7 @@ jest.mock('delay');
 jest.mock('messaging-api-messenger');
 jest.mock('warning');
 
+let MessengerClient;
 let MessengerContext;
 let MessengerEvent;
 let sleep;
@@ -9,6 +10,7 @@ let warning;
 
 beforeEach(() => {
   /* eslint-disable global-require */
+  MessengerClient = require('messaging-api-messenger').MessengerClient;
   MessengerContext = require('../MessengerContext').default;
   MessengerEvent = require('../MessengerEvent').default;
   sleep = require('delay');
@@ -18,40 +20,6 @@ beforeEach(() => {
 
 afterEach(() => {
   jest.useFakeTimers();
-});
-
-const createMockGraphAPIClient = () => ({
-  getUserProfile: jest.fn(),
-  sendSenderAction: jest.fn(),
-  typingOn: jest.fn(),
-  typingOff: jest.fn(),
-  markSeen: jest.fn(),
-  sendMessage: jest.fn(),
-  sendText: jest.fn(),
-  sendAttachment: jest.fn(),
-  sendImage: jest.fn(),
-  sendAudio: jest.fn(),
-  sendVideo: jest.fn(),
-  sendFile: jest.fn(),
-  sendTemplate: jest.fn(),
-  sendGenericTemplate: jest.fn(),
-  sendButtonTemplate: jest.fn(),
-  sendListTemplate: jest.fn(),
-  sendOpenGraphTemplate: jest.fn(),
-  sendMediaTemplate: jest.fn(),
-  sendReceiptTemplate: jest.fn(),
-  sendAirlineBoardingPassTemplate: jest.fn(),
-  sendAirlineCheckinTemplate: jest.fn(),
-  sendAirlineItineraryTemplate: jest.fn(),
-  sendAirlineFlightUpdateTemplate: jest.fn(),
-  sendTextWithDelay: jest.fn(),
-  passThreadControl: jest.fn(),
-  passThreadControlToPageInbox: jest.fn(),
-  takeThreadControl: jest.fn(),
-  requestThreadControl: jest.fn(),
-  associateLabel: jest.fn(),
-  dissociateLabel: jest.fn(),
-  getAssociatedLabels: jest.fn(),
 });
 
 const rawEvent = {
@@ -77,7 +45,7 @@ const setup = (
     customAccessToken: undefined,
   }
 ) => {
-  const client = createMockGraphAPIClient();
+  const client = MessengerClient.connect();
   const args = {
     client,
     event: new MessengerEvent(rawEvent),

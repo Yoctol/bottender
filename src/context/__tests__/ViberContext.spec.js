@@ -2,6 +2,7 @@ jest.mock('delay');
 jest.mock('messaging-api-viber');
 jest.mock('warning');
 
+let ViberClient;
 let ViberContext;
 let ViberEvent;
 let sleep;
@@ -9,26 +10,12 @@ let warning;
 
 beforeEach(() => {
   /* eslint-disable global-require */
+  ViberClient = require('messaging-api-viber').ViberClient;
   ViberContext = require('../ViberContext').default;
   ViberEvent = require('../ViberEvent').default;
   sleep = require('delay');
   warning = require('warning');
   /* eslint-enable global-require */
-});
-
-const createMockViberClient = () => ({
-  getUserDetails: jest.fn(),
-  sendMessage: jest.fn(),
-  sendText: jest.fn(),
-  sendPicture: jest.fn(),
-  sendVideo: jest.fn(),
-  sendFile: jest.fn(),
-  sendContact: jest.fn(),
-  sendLocation: jest.fn(),
-  sendURL: jest.fn(),
-  sendSticker: jest.fn(),
-  sendCarouselContent: jest.fn(),
-  getOnlineStatus: jest.fn(),
 });
 
 const rawEvent = {
@@ -51,7 +38,7 @@ const rawEvent = {
 };
 
 const setup = ({ session } = { session: { user: { id: 'fakeUserId' } } }) => {
-  const client = createMockViberClient();
+  const client = ViberClient.connect();
   const args = {
     client,
     event: new ViberEvent(rawEvent),
