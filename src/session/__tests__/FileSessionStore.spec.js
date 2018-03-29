@@ -29,7 +29,7 @@ describe('#read', () => {
     const { store, jfs } = setup();
     await store.init();
 
-    jfs.get.mockReturnValue(Promise.resolve({ x: 1 }));
+    jfs.get.mockResolvedValue({ x: 1 });
 
     expect(await store.read('yoctol:1')).toEqual({ x: 1 });
     expect(jfs.get).toBeCalledWith('yoctol:1');
@@ -39,7 +39,7 @@ describe('#read', () => {
     const { store, jfs } = setup();
     await store.init();
 
-    jfs.get.mockReturnValue(Promise.reject(new Error()));
+    jfs.get.mockRejectedValue(new Error());
 
     expect(await store.read('yoctol:1')).toBeNull();
     expect(jfs.get).toBeCalledWith('yoctol:1');
@@ -50,7 +50,7 @@ describe('#read', () => {
     await store.init();
 
     const sess = { lastActivity: subMinutes(Date.now(), expiresIn + 1) };
-    jfs.get.mockReturnValue(Promise.resolve(sess));
+    jfs.get.mockResolvedValue(sess);
 
     expect(await store.read('yoctol:1')).toBeNull();
     expect(jfs.get).toBeCalledWith('yoctol:1');

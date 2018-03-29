@@ -75,8 +75,8 @@ describe('reject', () => {
       argv: {},
     };
 
-    ViberClient.connect().removeWebhook.mockReturnValueOnce(
-      Promise.reject(new Error('removeWebhook failed'))
+    ViberClient.connect().removeWebhook.mockRejectedValueOnce(
+      new Error('removeWebhook failed')
     );
 
     expect(deleteWebhook(ctx).then).toThrow();

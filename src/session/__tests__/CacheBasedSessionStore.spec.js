@@ -31,7 +31,7 @@ describe('#read', () => {
     const { store, cache } = setup();
     await store.init();
 
-    cache.get.mockReturnValue(Promise.resolve({ x: 1 }));
+    cache.get.mockResolvedValue({ x: 1 });
 
     expect(await store.read('yoctol:1')).toEqual({ x: 1 });
     expect(cache.get).toBeCalledWith('yoctol:1');

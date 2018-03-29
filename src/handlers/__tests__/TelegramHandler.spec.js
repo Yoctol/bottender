@@ -89,7 +89,7 @@ describe('#onCallbackQuery', () => {
   it('should accept async predicate', async () => {
     const { builder } = setup();
     const handler = jest.fn();
-    const predicate = jest.fn(() => Promise.resolve(false));
+    const predicate = jest.fn().mockResolvedValue(false);
     const callbackQuery = {
       message: {
         text: 'awesome',
@@ -324,7 +324,7 @@ describe('#onPhoto', () => {
   it('should accept async predicate', async () => {
     const { builder } = setup();
     const handler = jest.fn();
-    const predicate = jest.fn(() => Promise.resolve(false));
+    const predicate = jest.fn().mockResolvedValue(false);
     const photo = [
       {
         file_id: '112',
@@ -428,7 +428,7 @@ describe('#onDocument', () => {
   it('should accept async predicate', async () => {
     const { builder } = setup();
     const handler = jest.fn();
-    const predicate = jest.fn(() => Promise.resolve(false));
+    const predicate = jest.fn().mockResolvedValue(false);
     const document = {
       file_id: '1234',
       file_name: 'file',
@@ -529,7 +529,7 @@ describe('#onAudio', () => {
   it('should accept async predicate', async () => {
     const { builder } = setup();
     const handler = jest.fn();
-    const predicate = jest.fn(() => Promise.resolve(false));
+    const predicate = jest.fn().mockResolvedValue(false);
     const audio = {
       file_id: '321',
       duration: 100,
@@ -651,7 +651,7 @@ describe('#onGame', () => {
   it('should accept async predicate', async () => {
     const { builder } = setup();
     const handler = jest.fn();
-    const predicate = jest.fn(() => Promise.resolve(false));
+    const predicate = jest.fn().mockResolvedValue(false);
     const game = {
       title: 'gammmmmmmme',
       description: 'Description of the game',
@@ -764,7 +764,7 @@ describe('#onSticker', () => {
   it('should accept async predicate', async () => {
     const { builder } = setup();
     const handler = jest.fn();
-    const predicate = jest.fn(() => Promise.resolve(false));
+    const predicate = jest.fn().mockResolvedValue(false);
     const sticker = {
       file_id: '123',
       width: 50,
@@ -869,7 +869,7 @@ describe('#onVideo', () => {
   it('should accept async predicate', async () => {
     const { builder } = setup();
     const handler = jest.fn();
-    const predicate = jest.fn(() => Promise.resolve(false));
+    const predicate = jest.fn().mockResolvedValue(false);
     const video = {
       file_id: '321',
       width: 100,
@@ -971,7 +971,7 @@ describe('#onVoice', () => {
   it('should accept async predicate', async () => {
     const { builder } = setup();
     const handler = jest.fn();
-    const predicate = jest.fn(() => Promise.resolve(false));
+    const predicate = jest.fn().mockResolvedValue(false);
     const voice = {
       file_id: '543',
       duration: 299,
@@ -1073,7 +1073,7 @@ describe('#onVideoNote', () => {
   it('should accept async predicate', async () => {
     const { builder } = setup();
     const handler = jest.fn();
-    const predicate = jest.fn(() => Promise.resolve(false));
+    const predicate = jest.fn().mockResolvedValue(false);
     const videoNote = {
       file_id: '654',
       length: 100,
@@ -1174,7 +1174,7 @@ describe('#onContact', () => {
   it('should accept async predicate', async () => {
     const { builder } = setup();
     const handler = jest.fn();
-    const predicate = jest.fn(() => Promise.resolve(false));
+    const predicate = jest.fn().mockResolvedValue(false);
     const contact = {
       phone_number: '123456789',
       first_name: 'first',
@@ -1275,7 +1275,7 @@ describe('#onLocation', () => {
   it('should accept async predicate', async () => {
     const { builder } = setup();
     const handler = jest.fn();
-    const predicate = jest.fn(() => Promise.resolve(false));
+    const predicate = jest.fn().mockResolvedValue(false);
     const location = {
       longitude: '111.111',
       latitude: '99.99',
@@ -1384,7 +1384,7 @@ describe('#onVenue', () => {
   it('should accept async predicate', async () => {
     const { builder } = setup();
     const handler = jest.fn();
-    const predicate = jest.fn(() => Promise.resolve(false));
+    const predicate = jest.fn().mockResolvedValue(false);
     const venue = {
       location: {
         longitude: '111.111',

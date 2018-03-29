@@ -707,7 +707,7 @@ describe('#getUserProfile', () => {
       gender: 'male',
     };
 
-    client.getUserProfile.mockReturnValue(Promise.resolve(user));
+    client.getUserProfile.mockResolvedValue(user);
 
     const result = await context.getUserProfile();
 
@@ -732,7 +732,7 @@ describe('#getUserProfile', () => {
       gender: 'male',
     };
 
-    client.getUserProfile.mockReturnValue(Promise.resolve(user));
+    client.getUserProfile.mockResolvedValue(user);
 
     const result = await context.getUserProfile();
 

@@ -33,7 +33,7 @@ it('should call verifyMessengerWebhook when GET', async () => {
   const { bot, requestHandler } = setup({ platform: 'messenger' });
   const middleware = jest.fn();
   verifyMessengerWebhook.mockReturnValue(middleware);
-  requestHandler.mockReturnValue(Promise.resolve());
+  requestHandler.mockResolvedValue();
 
   const microRequestHandler = createRequestHandler(bot);
 
@@ -73,7 +73,7 @@ it('should not call verifyMessengerWebhook when GET if platform is not messenger
   const { bot, requestHandler } = setup({ platform: 'line' });
   const middleware = jest.fn();
   verifyMessengerWebhook.mockReturnValue(middleware);
-  requestHandler.mockReturnValue(Promise.resolve());
+  requestHandler.mockResolvedValue();
 
   const microRequestHandler = createRequestHandler(bot);
 
@@ -91,9 +91,9 @@ it('should not call verifyMessengerWebhook when GET if platform is not messenger
 it('should call verifyMessengerSignature if platform is Messenger', async () => {
   const { bot, requestHandler } = setup({ platform: 'messenger' });
   const middleware = jest.fn();
-  middleware.mockReturnValue(Promise.resolve(true));
+  middleware.mockResolvedValue(true);
   verifyMessengerSignature.mockReturnValue(middleware);
-  requestHandler.mockReturnValue(Promise.resolve());
+  requestHandler.mockResolvedValue();
 
   const microRequestHandler = createRequestHandler(bot);
 
@@ -112,9 +112,9 @@ it('should call verifyMessengerSignature if platform is Messenger', async () => 
 it('should not send 200 if verifyMessengerSignature fail if platform is Messenger', async () => {
   const { bot, requestHandler } = setup({ platform: 'messenger' });
   const middleware = jest.fn();
-  middleware.mockReturnValue(Promise.resolve(false));
+  middleware.mockResolvedValue(false);
   verifyMessengerSignature.mockReturnValue(middleware);
-  requestHandler.mockReturnValue(Promise.resolve());
+  requestHandler.mockResolvedValue();
 
   const microRequestHandler = createRequestHandler(bot);
 
@@ -133,9 +133,9 @@ it('should not send 200 if verifyMessengerSignature fail if platform is Messenge
 it('should call verifyLineSignature if platform is Line', async () => {
   const { bot, requestHandler } = setup({ platform: 'line' });
   const middleware = jest.fn();
-  middleware.mockReturnValue(Promise.resolve(true));
+  middleware.mockResolvedValue(true);
   verifyLineSignature.mockReturnValue(middleware);
-  requestHandler.mockReturnValue(Promise.resolve());
+  requestHandler.mockResolvedValue();
 
   const microRequestHandler = createRequestHandler(bot);
 
@@ -154,9 +154,9 @@ it('should call verifyLineSignature if platform is Line', async () => {
 it('should not send 200 if verifyLineSignature fail if platform is Line', async () => {
   const { bot, requestHandler } = setup({ platform: 'line' });
   const middleware = jest.fn();
-  middleware.mockReturnValue(Promise.resolve(false));
+  middleware.mockResolvedValue(false);
   verifyLineSignature.mockReturnValue(middleware);
-  requestHandler.mockReturnValue(Promise.resolve());
+  requestHandler.mockResolvedValue();
 
   const microRequestHandler = createRequestHandler(bot);
 
@@ -175,9 +175,9 @@ it('should not send 200 if verifyLineSignature fail if platform is Line', async 
 it('should call verifySlackSignature if platform is Slack', async () => {
   const { bot, requestHandler } = setup({ platform: 'slack' });
   const middleware = jest.fn();
-  middleware.mockReturnValue(Promise.resolve(true));
+  middleware.mockResolvedValue(true);
   verifySlackSignature.mockReturnValue(middleware);
-  requestHandler.mockReturnValue(Promise.resolve());
+  requestHandler.mockResolvedValue();
   micro.json.mockImplementationOnce(req => req.body);
 
   const microRequestHandler = createRequestHandler(bot);
@@ -198,9 +198,9 @@ it('should call verifySlackSignature if platform is Slack', async () => {
 it('should not send 200 if verifySlackSignature fail and if platform is Slack', async () => {
   const { bot, requestHandler } = setup({ platform: 'slack' });
   const middleware = jest.fn();
-  middleware.mockReturnValue(Promise.resolve(false));
+  middleware.mockResolvedValue(false);
   verifySlackSignature.mockReturnValue(middleware);
-  requestHandler.mockReturnValue(Promise.resolve());
+  requestHandler.mockResolvedValue();
   micro.json.mockImplementationOnce(req => req.body);
 
   const microRequestHandler = createRequestHandler(bot);
@@ -220,7 +220,7 @@ it('should not send 200 if verifySlackSignature fail and if platform is Slack', 
 
 it('should response 200 when no error be thrown in requestHandler', async () => {
   const { bot, requestHandler } = setup({ platform: 'other' });
-  requestHandler.mockReturnValue(Promise.resolve());
+  requestHandler.mockResolvedValue();
 
   const microRequestHandler = createRequestHandler(bot);
 
@@ -238,7 +238,7 @@ it('should response 200 when no error be thrown in requestHandler', async () => 
 
 it('should response 200 if there is response return from requestHandler', async () => {
   const { bot, requestHandler } = setup({ platform: 'other' });
-  requestHandler.mockReturnValue(Promise.resolve({ headers: {} }));
+  requestHandler.mockResolvedValue({ headers: {} });
 
   const microRequestHandler = createRequestHandler(bot);
 
@@ -256,17 +256,15 @@ it('should response 200 if there is response return from requestHandler', async 
 
 it('should overwrite response when provide', async () => {
   const { bot, requestHandler } = setup({ platform: 'other' });
-  requestHandler.mockReturnValue(
-    Promise.resolve({
-      status: 400,
-      headers: {
-        'X-Header': 'x',
-      },
-      body: {
-        name: 'x',
-      },
-    })
-  );
+  requestHandler.mockResolvedValue({
+    status: 400,
+    headers: {
+      'X-Header': 'x',
+    },
+    body: {
+      name: 'x',
+    },
+  });
 
   const microRequestHandler = createRequestHandler(bot);
 

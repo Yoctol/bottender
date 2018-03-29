@@ -24,7 +24,7 @@ const createReqRes = () => [
 
 it('should do nothing when verification pass', async () => {
   const [req, res] = createReqRes();
-  micro.json.mockReturnValueOnce(Promise.resolve({ token: 'mytoken' }));
+  micro.json.mockResolvedValueOnce({ token: 'mytoken' });
   bot.connector.verifySignature.mockReturnValueOnce(true);
 
   await middleware(req, res);

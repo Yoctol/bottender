@@ -59,7 +59,7 @@ describe('resolved', () => {
       argv: {},
     };
 
-    _client.deleteGetStarted.mockReturnValue(Promise.resolve());
+    _client.deleteGetStarted.mockResolvedValue();
 
     await deleteGetStarted(ctx);
 
@@ -77,7 +77,7 @@ describe('reject', () => {
         status: 400,
       },
     };
-    _client.deleteGetStarted.mockReturnValue(Promise.reject(error));
+    _client.deleteGetStarted.mockRejectedValue(error);
 
     process.exit = jest.fn();
 
@@ -105,7 +105,7 @@ describe('reject', () => {
         },
       },
     };
-    _client.deleteGetStarted.mockReturnValue(Promise.reject(error));
+    _client.deleteGetStarted.mockRejectedValue(error);
 
     process.exit = jest.fn();
 
@@ -123,7 +123,7 @@ describe('reject', () => {
     const error = {
       message: 'something wrong happened',
     };
-    _client.deleteGetStarted.mockReturnValue(Promise.reject(error));
+    _client.deleteGetStarted.mockRejectedValue(error);
 
     process.exit = jest.fn();
 

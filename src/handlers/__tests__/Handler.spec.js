@@ -57,7 +57,7 @@ describe('#on', () => {
   it('should not call handler if predicate return Promise.resolve(false)', async () => {
     const { builder } = setup();
     const context = {};
-    const predicate = jest.fn(() => Promise.resolve(false));
+    const predicate = jest.fn().mockResolvedValue(false);
     const handler = jest.fn();
     builder.on(predicate, handler);
     await builder.build()(context);
@@ -91,8 +91,8 @@ describe('#on', () => {
   it('should support async predicate and handler function', async () => {
     const { builder } = setup();
     const context = {};
-    const predicate = jest.fn(() => Promise.resolve(true));
-    const handler = jest.fn(() => Promise.resolve());
+    const predicate = jest.fn().mockResolvedValue(true);
+    const handler = jest.fn().mockResolvedValue();
     builder.on(predicate, handler);
     await builder.build()(context);
     expect(predicate).toBeCalledWith(context);
@@ -102,8 +102,8 @@ describe('#on', () => {
   it('should work with handler instance', async () => {
     const { builder } = setup();
     const context = {};
-    const predicate = jest.fn(() => Promise.resolve(true));
-    const cb = jest.fn(() => Promise.resolve());
+    const predicate = jest.fn().mockResolvedValue(true);
+    const cb = jest.fn().mockResolvedValue();
     const handler = new Handler().on(predicate, cb);
     builder.on(predicate, handler);
     await builder.build()(context);
@@ -134,7 +134,7 @@ describe('#onEvent', () => {
   it('should support async handler', async () => {
     const { builder } = setup();
     const context = {};
-    const handler = jest.fn(() => Promise.resolve());
+    const handler = jest.fn().mockResolvedValue();
     builder.onEvent(handler);
     await builder.build()(context);
     expect(handler).toBeCalledWith(context);
@@ -226,7 +226,7 @@ describe('#onMessage', () => {
 
   it('should accept async predicate', async () => {
     const { builder } = setup();
-    const predicate = jest.fn(() => Promise.resolve(false));
+    const predicate = jest.fn().mockResolvedValue(false);
     const handler = jest.fn();
     const message = {
       id: '325708',

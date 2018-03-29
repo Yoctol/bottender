@@ -77,7 +77,7 @@ describe('#onPostback', () => {
 
   it('should accept async predicate', async () => {
     const { builder } = setup();
-    const predicate = jest.fn(() => Promise.resolve(false));
+    const predicate = jest.fn().mockResolvedValue(false);
     const handler = jest.fn();
     const postback = {
       payload: 'payload',
@@ -373,7 +373,7 @@ describe('#onPayment', () => {
 
   it('should accept async predicate', async () => {
     const { builder } = setup();
-    const predicate = jest.fn(() => Promise.resolve(false));
+    const predicate = jest.fn().mockResolvedValue(false);
     const handler = jest.fn();
     const payment = {};
     const context = {
@@ -445,7 +445,7 @@ describe('#onOptin', () => {
 
   it('should accept async predicate', async () => {
     const { builder } = setup();
-    const predicate = jest.fn(() => Promise.resolve(false));
+    const predicate = jest.fn().mockResolvedValue(false);
     const handler = jest.fn();
     const optin = {};
     const context = {
@@ -517,7 +517,7 @@ describe('#onCheckoutUpdate', () => {
 
   it('should accept async predicate', async () => {
     const { builder } = setup();
-    const predicate = jest.fn(() => Promise.resolve(false));
+    const predicate = jest.fn().mockResolvedValue(false);
     const handler = jest.fn();
     const checkoutUpdate = {};
     const context = {
@@ -589,7 +589,7 @@ describe('#onPreCheckout', () => {
 
   it('should accept async predicate', async () => {
     const { builder } = setup();
-    const predicate = jest.fn(() => Promise.resolve(false));
+    const predicate = jest.fn().mockResolvedValue(false);
     const handler = jest.fn();
     const preCheckout = {};
     const context = {
@@ -688,7 +688,7 @@ describe('#onQuickReply', () => {
 
   it('should accept async predicate', async () => {
     const { builder } = setup();
-    const predicate = jest.fn(() => Promise.resolve(false));
+    const predicate = jest.fn().mockResolvedValue(false);
     const handler = jest.fn();
     const quickReply = {
       payload: 'so quick!',
@@ -787,7 +787,7 @@ describe('#onEcho', () => {
 
   it('should accept async predicate', async () => {
     const { builder } = setup();
-    const predicate = jest.fn(() => Promise.resolve(false));
+    const predicate = jest.fn().mockResolvedValue(false);
     const handler = jest.fn();
     const message = {
       is_echo: true,
@@ -875,7 +875,7 @@ describe('#onRead', () => {
   it('should accept async predicate', async () => {
     const { builder } = setup();
     const handler = jest.fn();
-    const predicate = jest.fn(() => Promise.resolve(false));
+    const predicate = jest.fn().mockResolvedValue(false);
     const read = {
       watermark: 1458668856253,
       seq: 38,
@@ -959,7 +959,7 @@ describe('#onDelivery', () => {
   it('should accept async predicate', async () => {
     const { builder } = setup();
     const handler = jest.fn();
-    const predicate = jest.fn(() => Promise.resolve(false));
+    const predicate = jest.fn().mockResolvedValue(false);
     const delivery = {
       mids: ['mid.1458668856218:ed81099e15d3f4f233'],
       watermark: 1458668856253,
@@ -1065,7 +1065,7 @@ describe('#onLocation', () => {
   it('should accept async predicate', async () => {
     const { builder } = setup();
     const handler = jest.fn();
-    const predicate = jest.fn(() => Promise.resolve(false));
+    const predicate = jest.fn().mockResolvedValue(false);
     const location = {
       coordinates: {
         lat: 0,
@@ -1173,7 +1173,7 @@ describe('#onImage', () => {
   it('should accept async predicate', async () => {
     const { builder } = setup();
     const handler = jest.fn();
-    const predicate = jest.fn(() => Promise.resolve(false));
+    const predicate = jest.fn().mockResolvedValue(false);
     const image = {
       url: 'https://example.com/bot/images/image.jpg',
     };
@@ -1280,7 +1280,7 @@ describe('#onAudio', () => {
   it('should accept async predicate', async () => {
     const { builder } = setup();
     const handler = jest.fn();
-    const predicate = jest.fn(() => Promise.resolve(false));
+    const predicate = jest.fn().mockResolvedValue(false);
     const audio = {
       url: 'https://example.com/bot/audios/audio.mp3',
     };
@@ -1385,7 +1385,7 @@ describe('#onVideo', () => {
   it('should accept async predicate', async () => {
     const { builder } = setup();
     const handler = jest.fn();
-    const predicate = jest.fn(() => Promise.resolve(false));
+    const predicate = jest.fn().mockResolvedValue(false);
     const video = {
       url: 'https://example.com/bot/videos/video.mp4',
     };
@@ -1490,7 +1490,7 @@ describe('#onFile', () => {
   it('should accept async predicate', async () => {
     const { builder } = setup();
     const handler = jest.fn();
-    const predicate = jest.fn(() => Promise.resolve(false));
+    const predicate = jest.fn().mockResolvedValue(false);
     const file = {
       url: 'https://example.com/bot/files/file.doc',
     };
@@ -1591,7 +1591,7 @@ describe('#onFallback', () => {
   it('should accept async predicate', async () => {
     const { builder } = setup();
     const handler = jest.fn();
-    const predicate = jest.fn(() => Promise.resolve(false));
+    const predicate = jest.fn().mockResolvedValue(false);
     const fallback = {
       type: 'fallback',
       payload: null,

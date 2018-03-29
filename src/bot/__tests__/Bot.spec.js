@@ -91,7 +91,7 @@ describe('#createRequestHandler', () => {
 
     connector.getUniqueSessionKey.mockReturnValue('__id__');
     connector.shouldSessionUpdate.mockReturnValue(true);
-    sessionStore.read.mockReturnValue(Promise.resolve(null));
+    sessionStore.read.mockResolvedValue(null);
 
     const handler = () => {};
     bot.onEvent(handler);
@@ -119,7 +119,7 @@ describe('#createRequestHandler', () => {
     const { bot, sessionStore } = setup({ connector });
 
     connector.getUniqueSessionKey.mockReturnValue('__id__');
-    sessionStore.read.mockReturnValue(Promise.resolve(session));
+    sessionStore.read.mockResolvedValue(session);
 
     const handler = jest.fn();
     bot.onEvent(handler);
@@ -163,7 +163,7 @@ describe('#createRequestHandler', () => {
     const { bot, sessionStore } = setup({ connector, sync: true });
 
     connector.getUniqueSessionKey.mockReturnValue('__id__');
-    sessionStore.read.mockReturnValue(Promise.resolve(session));
+    sessionStore.read.mockResolvedValue(session);
 
     const handler = ({ response }) => {
       response.status = 200;
@@ -335,7 +335,7 @@ describe('#createRequestHandler', () => {
     const { bot, sessionStore } = setup({ connector });
 
     connector.getUniqueSessionKey.mockReturnValue('__id__');
-    sessionStore.read.mockReturnValue(Promise.resolve(session));
+    sessionStore.read.mockResolvedValue(session);
 
     const handler = () => {};
     bot.onEvent(handler);

@@ -35,7 +35,7 @@ describe('#onIntent', () => {
         { name: 'intent_3', score: 0.25 },
       ],
     };
-    classifier.predict.mockReturnValue(Promise.resolve(result));
+    classifier.predict.mockResolvedValue(result);
     const handler1 = jest.fn();
     const handler2 = jest.fn();
     builder.onIntent('intent_1', handler1).onIntent('intent_2', handler2);
@@ -61,7 +61,7 @@ describe('#onIntent', () => {
         { name: 'intent_3', score: 0.25 },
       ],
     };
-    classifier.predict.mockReturnValue(Promise.resolve(result));
+    classifier.predict.mockResolvedValue(result);
     const handler2 = jest.fn();
     builder.onIntent('intent_2', handler2);
     const context = {
@@ -99,7 +99,7 @@ describe('#onUnmatched', () => {
         { name: 'intent_4', score: 0.25 },
       ],
     };
-    classifier.predict.mockReturnValue(Promise.resolve(result));
+    classifier.predict.mockResolvedValue(result);
     const handler = jest.fn();
     builder.onUnmatched(handler);
     const context = {
@@ -124,7 +124,7 @@ describe('#onUnmatched', () => {
         { name: 'intent_4', score: 0.25 },
       ],
     };
-    classifier.predict.mockReturnValue(Promise.resolve(result));
+    classifier.predict.mockResolvedValue(result);
     const context = {
       event: {
         isText: true,

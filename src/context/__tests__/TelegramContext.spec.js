@@ -501,7 +501,7 @@ describe('#getGameHighScores', () => {
       },
     ];
 
-    client.getGameHighScores.mockReturnValue(Promise.resolve(response));
+    client.getGameHighScores.mockResolvedValue(response);
 
     const result = await context.getGameHighScores();
 
@@ -1011,7 +1011,7 @@ describe('#answerShippingQuery', () => {
       result: true,
     };
 
-    client.answerShippingQuery.mockReturnValue(Promise.resolve(response));
+    client.answerShippingQuery.mockResolvedValue(response);
 
     const result = await context.answerShippingQuery(true);
 
@@ -1061,7 +1061,7 @@ describe('#answerPreCheckoutQuery', () => {
       result: true,
     };
 
-    client.answerPreCheckoutQuery.mockReturnValue(Promise.resolve(response));
+    client.answerPreCheckoutQuery.mockResolvedValue(response);
 
     const result = await context.answerPreCheckoutQuery(true);
 
@@ -1114,7 +1114,7 @@ describe('#answerInlineQuery', () => {
       ok: true,
     };
 
-    client.answerInlineQuery.mockReturnValue(Promise.resolve(response));
+    client.answerInlineQuery.mockResolvedValue(response);
 
     const result = await context.answerInlineQuery(
       [
@@ -1262,7 +1262,7 @@ describe('#getUserProfilePhotos', () => {
       ],
     };
 
-    client.getUserProfilePhotos.mockReturnValue(Promise.resolve(profile));
+    client.getUserProfilePhotos.mockResolvedValue(profile);
 
     const result = await context.getUserProfilePhotos({ limit: 2 });
 
@@ -1283,7 +1283,7 @@ describe('#getChat', () => {
       type: 'private',
     };
 
-    client.getChat.mockReturnValue(Promise.resolve(chat));
+    client.getChat.mockResolvedValue(chat);
 
     const result = await context.getChat();
 
@@ -1309,9 +1309,7 @@ describe('#getChatAdministrators', () => {
       },
     ];
 
-    client.getChatAdministrators.mockReturnValue(
-      Promise.resolve(administrators)
-    );
+    client.getChatAdministrators.mockResolvedValue(administrators);
 
     const result = await context.getChatAdministrators();
 
@@ -1324,7 +1322,7 @@ describe('#getChatMembersCount', () => {
   it('should to call client.getChatMembersCount', async () => {
     const { context, client } = setup();
 
-    client.getChatMembersCount.mockReturnValue(Promise.resolve('6'));
+    client.getChatMembersCount.mockResolvedValue('6');
 
     const result = await context.getChatMembersCount();
 
@@ -1348,7 +1346,7 @@ describe('#getChatMember', () => {
       status: 'creator',
     };
 
-    client.getChatMember.mockReturnValue(Promise.resolve(member));
+    client.getChatMember.mockResolvedValue(member);
 
     const result = await context.getChatMember(313534466);
 

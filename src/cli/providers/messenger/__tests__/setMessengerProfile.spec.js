@@ -473,7 +473,7 @@ describe('reject', () => {
       argv: {},
     };
 
-    _client.setMessengerProfile.mockReturnValue(Promise.reject(error));
+    _client.setMessengerProfile.mockRejectedValue(error);
 
     process.exit = jest.fn();
 
@@ -501,7 +501,7 @@ describe('reject', () => {
     const ctx = {
       argv: {},
     };
-    _client.setMessengerProfile.mockReturnValue(Promise.reject(error));
+    _client.setMessengerProfile.mockRejectedValue(error);
 
     process.exit = jest.fn();
 

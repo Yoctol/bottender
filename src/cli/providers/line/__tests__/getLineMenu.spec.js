@@ -80,8 +80,8 @@ describe('getLineMenu', () => {
   it('should exit when client.getRichMenuList failed', async () => {
     const ctx = setup();
 
-    LineClient.connect().getRichMenuList.mockReturnValueOnce(
-      Promise.reject(new Error('getRichMenuList failed'))
+    LineClient.connect().getRichMenuList.mockRejectedValueOnce(
+      new Error('getRichMenuList failed')
     );
 
     await getLineMenu(ctx);
@@ -93,34 +93,32 @@ describe('getLineMenu', () => {
   it('should print rich menus', async () => {
     const ctx = setup();
 
-    LineClient.connect().getRichMenuList.mockReturnValueOnce(
-      Promise.resolve([
-        {
-          richMenuId: '1234567890',
-          size: {
-            width: 2500,
-            height: 1686,
-          },
-          selected: false,
-          name: 'Nice richmenu',
-          chatBarText: 'Tap here',
-          areas: [
-            {
-              bounds: {
-                x: 0,
-                y: 0,
-                width: 2500,
-                height: 1686,
-              },
-              action: {
-                type: 'postback',
-                data: 'action=buy&itemid=123',
-              },
-            },
-          ],
+    LineClient.connect().getRichMenuList.mockResolvedValueOnce([
+      {
+        richMenuId: '1234567890',
+        size: {
+          width: 2500,
+          height: 1686,
         },
-      ])
-    );
+        selected: false,
+        name: 'Nice richmenu',
+        chatBarText: 'Tap here',
+        areas: [
+          {
+            bounds: {
+              x: 0,
+              y: 0,
+              width: 2500,
+              height: 1686,
+            },
+            action: {
+              type: 'postback',
+              data: 'action=buy&itemid=123',
+            },
+          },
+        ],
+      },
+    ]);
 
     await getLineMenu(ctx);
 
@@ -130,9 +128,7 @@ describe('getLineMenu', () => {
   it('should call error when failed to find rich menu', async () => {
     const ctx = setup();
 
-    LineClient.connect().getRichMenuList.mockReturnValueOnce(
-      Promise.resolve(null)
-    );
+    LineClient.connect().getRichMenuList.mockResolvedValueOnce(null);
 
     await getLineMenu(ctx);
 

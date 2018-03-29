@@ -77,7 +77,7 @@ describe('#onPostback', () => {
 
   it('should accept async predicate', async () => {
     const { builder } = setup();
-    const predicate = jest.fn(() => Promise.resolve(false));
+    const predicate = jest.fn().mockResolvedValue(false);
     const handler = jest.fn();
     const postback = {
       data: 'data',

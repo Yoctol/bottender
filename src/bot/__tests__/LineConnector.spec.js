@@ -219,7 +219,7 @@ describe('#updateSession', () => {
       statusMessage: 'Hello, LINE!',
       _updatedAt: expect.any(String),
     };
-    mockLineAPIClient.getUserProfile.mockReturnValue(Promise.resolve(user));
+    mockLineAPIClient.getUserProfile.mockResolvedValue(user);
 
     const session = {};
 
@@ -306,12 +306,8 @@ describe('#updateSession', () => {
       'Uxxxxxxxxxxxxxx...3',
     ];
 
-    mockLineAPIClient.getGroupMemberProfile.mockReturnValue(
-      Promise.resolve(user)
-    );
-    mockLineAPIClient.getAllGroupMemberIds.mockReturnValue(
-      Promise.resolve(memberIds)
-    );
+    mockLineAPIClient.getGroupMemberProfile.mockResolvedValue(user);
+    mockLineAPIClient.getAllGroupMemberIds.mockResolvedValue(memberIds);
 
     const session = {};
 
@@ -369,9 +365,7 @@ describe('#updateSession', () => {
       'Uxxxxxxxxxxxxxx...3',
     ];
 
-    mockLineAPIClient.getAllGroupMemberIds.mockReturnValue(
-      Promise.resolve(memberIds)
-    );
+    mockLineAPIClient.getAllGroupMemberIds.mockResolvedValue(memberIds);
 
     const session = {};
 
@@ -439,12 +433,8 @@ describe('#updateSession', () => {
       'Uxxxxxxxxxxxxxx...3',
     ];
 
-    mockLineAPIClient.getRoomMemberProfile.mockReturnValue(
-      Promise.resolve(user)
-    );
-    mockLineAPIClient.getAllRoomMemberIds.mockReturnValue(
-      Promise.resolve(memberIds)
-    );
+    mockLineAPIClient.getRoomMemberProfile.mockResolvedValue(user);
+    mockLineAPIClient.getAllRoomMemberIds.mockResolvedValue(memberIds);
 
     const session = {};
 
@@ -502,9 +492,7 @@ describe('#updateSession', () => {
       'Uxxxxxxxxxxxxxx...3',
     ];
 
-    mockLineAPIClient.getAllRoomMemberIds.mockReturnValue(
-      Promise.resolve(memberIds)
-    );
+    mockLineAPIClient.getAllRoomMemberIds.mockResolvedValue(memberIds);
 
     const session = {};
 

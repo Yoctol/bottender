@@ -39,7 +39,7 @@ describe('#createLongPollingRuntime', () => {
 
     bot.onEvent(handler);
 
-    const getUpdatesPromise = Promise.resolve([
+    const getUpdates = [
       {
         update_id: 513400512,
         message: {
@@ -61,11 +61,11 @@ describe('#createLongPollingRuntime', () => {
           text: 'hi',
         },
       },
-    ]);
+    ];
 
     bot.connector.client.getUpdates = jest.fn();
     bot.connector.client.getUpdates
-      .mockReturnValueOnce(getUpdatesPromise)
+      .mockResolvedValueOnce(getUpdates)
       .mockImplementationOnce(() => {
         bot.stop();
         expect(bot.connector.client.getUpdates).toBeCalledWith({});
@@ -85,7 +85,7 @@ describe('#createLongPollingRuntime', () => {
 
     bot.onEvent(handler);
 
-    const getUpdatesPromise = Promise.resolve([
+    const getUpdates = [
       {
         update_id: 513400512,
         message: {
@@ -107,11 +107,11 @@ describe('#createLongPollingRuntime', () => {
           text: 'hi',
         },
       },
-    ]);
+    ];
 
     bot.connector.client.getUpdates = jest.fn();
     bot.connector.client.getUpdates
-      .mockReturnValueOnce(getUpdatesPromise)
+      .mockResolvedValueOnce(getUpdates)
       .mockImplementationOnce(() => {
         bot.stop();
         expect(bot.connector.client.getUpdates).toBeCalledWith({

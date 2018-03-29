@@ -516,7 +516,7 @@ describe('#getUserDetails', () => {
       device_type: 'iPhone9,4',
     };
 
-    client.getUserDetails.mockReturnValue(Promise.resolve(user));
+    client.getUserDetails.mockResolvedValue(user);
 
     const result = await context.getUserDetails();
 
@@ -543,7 +543,7 @@ describe('#getOnlineStatus', () => {
       online_status_message: 'online',
     };
 
-    client.getOnlineStatus.mockReturnValue(Promise.resolve([user]));
+    client.getOnlineStatus.mockResolvedValue([user]);
 
     const result = await context.getOnlineStatus();
 

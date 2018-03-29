@@ -65,20 +65,18 @@ describe('resolved', () => {
       argv: { t: '12345' },
     };
 
-    _client.getPersistentMenu.mockReturnValue(
-      Promise.resolve([
-        {
-          composer_input_disabled: false,
-          call_to_actions: [
-            {
-              type: 'postback',
-              title: 'RESTART',
-              payload: 'RESTART',
-            },
-          ],
-        },
-      ])
-    );
+    _client.getPersistentMenu.mockResolvedValue([
+      {
+        composer_input_disabled: false,
+        call_to_actions: [
+          {
+            type: 'postback',
+            title: 'RESTART',
+            payload: 'RESTART',
+          },
+        ],
+      },
+    ]);
 
     await getPersistentMenu(ctx);
 
@@ -90,7 +88,7 @@ describe('resolved', () => {
       argv: {},
     };
 
-    _client.getPersistentMenu.mockReturnValue(Promise.resolve([]));
+    _client.getPersistentMenu.mockResolvedValue([]);
 
     await getPersistentMenu(ctx);
 
@@ -109,7 +107,7 @@ describe('reject', () => {
         status: 400,
       },
     };
-    _client.getPersistentMenu.mockReturnValue(Promise.reject(error));
+    _client.getPersistentMenu.mockRejectedValue(error);
 
     process.exit = jest.fn();
 
@@ -137,7 +135,7 @@ describe('reject', () => {
         },
       },
     };
-    _client.getPersistentMenu.mockReturnValue(Promise.reject(error));
+    _client.getPersistentMenu.mockRejectedValue(error);
 
     process.exit = jest.fn();
 
@@ -155,7 +153,7 @@ describe('reject', () => {
     const error = {
       message: 'something wrong happened',
     };
-    _client.getPersistentMenu.mockReturnValue(Promise.reject(error));
+    _client.getPersistentMenu.mockRejectedValue(error);
 
     process.exit = jest.fn();
 

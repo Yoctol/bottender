@@ -42,16 +42,14 @@ beforeEach(() => {
   process.exit = jest.fn();
   getConfig.mockReturnValue(MOCK_FILE_WITH_PLATFORM.telegram);
 
-  getWebhookFromNgrok.mockReturnValue(
-    Promise.resolve('https://fakeDomain.ngrok.io')
-  );
+  getWebhookFromNgrok.mockResolvedValue('https://fakeDomain.ngrok.io');
 
   Confirm.mockImplementation(() => ({
-    run: jest.fn(() => Promise.resolve(true)),
+    run: jest.fn().mockResolvedValue(true),
   }));
 
   TelegramClient.connect.mockReturnValue({
-    setWebhook: jest.fn(() => Promise.resolve(true)),
+    setWebhook: jest.fn().mockResolvedValue(true),
   });
 });
 

@@ -58,7 +58,7 @@ describe('#get', () => {
     const store = new RedisCacheStore();
     const redis = store.getRedis();
 
-    redis.get.mockReturnValueOnce(Promise.resolve('{"aaa":456}'));
+    redis.get.mockResolvedValueOnce('{"aaa":456}');
 
     expect(await store.get('123')).toEqual({ aaa: 456 });
     expect(redis.get).toBeCalledWith('123');
@@ -68,7 +68,7 @@ describe('#get', () => {
     const store = new RedisCacheStore();
     const redis = store.getRedis();
 
-    redis.get.mockReturnValueOnce(Promise.resolve(null));
+    redis.get.mockResolvedValueOnce(null);
 
     expect(await store.get('123')).toBeNull();
     expect(redis.get).toBeCalledWith('123');
