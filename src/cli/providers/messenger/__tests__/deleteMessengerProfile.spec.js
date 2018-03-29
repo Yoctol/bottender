@@ -65,7 +65,7 @@ describe('resolved', () => {
       argv: {},
     };
 
-    _client.deleteMessengerProfile.mockReturnValue(Promise.resolve());
+    _client.deleteMessengerProfile.mockResolvedValue();
 
     await deleteMessengerProfile(ctx);
 
@@ -92,7 +92,7 @@ describe('reject', () => {
         status: 400,
       },
     };
-    _client.deleteMessengerProfile.mockReturnValue(Promise.reject(error));
+    _client.deleteMessengerProfile.mockRejectedValue(error);
 
     await deleteMessengerProfile(ctx);
 
@@ -118,7 +118,7 @@ describe('reject', () => {
         },
       },
     };
-    _client.deleteMessengerProfile.mockReturnValue(Promise.reject(error));
+    _client.deleteMessengerProfile.mockRejectedValue(error);
 
     await deleteMessengerProfile(ctx);
 
@@ -134,7 +134,7 @@ describe('reject', () => {
     const error = {
       message: 'something wrong happened',
     };
-    _client.deleteMessengerProfile.mockReturnValue(Promise.reject(error));
+    _client.deleteMessengerProfile.mockRejectedValue(error);
 
     await deleteMessengerProfile(ctx);
 

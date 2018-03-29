@@ -17,7 +17,7 @@ function setup(options = {}) {
   const connection = {
     collection: jest.fn(() => sessions),
   };
-  MongoClient.connect.mockReturnValue(Promise.resolve(connection));
+  MongoClient.connect.mockResolvedValue(connection);
   const store = new MongoSessionStore(
     'mongodb://fakemongourl',
     options,
@@ -57,7 +57,7 @@ describe('#read', () => {
   it('should call findOne with platform and id', async () => {
     const { store, sessions } = setup();
     const sess = { lastActivity: Date.now() };
-    sessions.findOne.mockReturnValue(Promise.resolve(sess));
+    sessions.findOne.mockResolvedValue(sess);
 
     await store.init();
 
@@ -69,7 +69,7 @@ describe('#read', () => {
 
   it('should return null when document not found', async () => {
     const { store, sessions } = setup();
-    sessions.findOne.mockReturnValue(Promise.resolve(null));
+    sessions.findOne.mockResolvedValue(null);
 
     await store.init();
 
@@ -84,7 +84,7 @@ describe('#read', () => {
     const sess = {
       lastActivity: subMinutes(Date.now(), MINUTES_IN_ONE_YEAR + 1),
     };
-    sessions.findOne.mockReturnValue(Promise.resolve(sess));
+    sessions.findOne.mockResolvedValue(sess);
 
     await store.init();
 
@@ -101,7 +101,7 @@ describe('#read', () => {
       lastActivity: subMinutes(Date.now(), MINUTES_IN_ONE_YEAR + 1),
     };
     MongoClient.connect.mockReturnValue(null);
-    sessions.findOne.mockReturnValue(Promise.resolve(sess));
+    sessions.findOne.mockResolvedValue(sess);
 
     await store.init();
     await store.read('messenger:1');
@@ -116,7 +116,7 @@ describe('#write', () => {
   it('should call updateOne with platform, id and session using upsert', async () => {
     const { store, sessions } = setup();
     const sess = {};
-    sessions.updateOne.mockReturnValue(Promise.resolve());
+    sessions.updateOne.mockResolvedValue();
 
     await store.init();
     await store.write('messenger:1', sess);
@@ -135,7 +135,7 @@ describe('#write', () => {
     const { store, sessions } = setup();
     const sess = {};
     MongoClient.connect.mockReturnValue(null);
-    sessions.updateOne.mockReturnValue(Promise.resolve());
+    sessions.updateOne.mockResolvedValue();
 
     await store.init();
     await store.write('messenger:1', sess);
@@ -149,7 +149,7 @@ describe('#write', () => {
 describe('#destroy', () => {
   it('should call remove with platform and id', async () => {
     const { store, sessions } = setup();
-    sessions.remove.mockReturnValue(Promise.resolve());
+    sessions.remove.mockResolvedValue();
 
     await store.init();
     await store.destroy('messenger:1');
@@ -163,7 +163,7 @@ describe('#destroy', () => {
     console.error = jest.fn();
     const { store, sessions } = setup();
     MongoClient.connect.mockReturnValue(null);
-    sessions.remove.mockReturnValue(Promise.resolve());
+    sessions.remove.mockResolvedValue();
 
     await store.init();
     await store.destroy('messenger:1');
@@ -177,7 +177,7 @@ describe('#destroy', () => {
 describe('collection name', () => {
   it('should use sessions as default collection name', async () => {
     const { store, sessions, connection } = setup();
-    sessions.findOne.mockReturnValue(Promise.resolve(null));
+    sessions.findOne.mockResolvedValue(null);
 
     await store.init();
     await store.read('messenger:1');
@@ -189,7 +189,7 @@ describe('collection name', () => {
     const { store, sessions, connection } = setup({
       collectionName: 'my.sessions',
     });
-    sessions.findOne.mockReturnValue(Promise.resolve(null));
+    sessions.findOne.mockResolvedValue(null);
 
     await store.init();
     await store.read('messenger:1');

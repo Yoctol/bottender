@@ -65,7 +65,7 @@ it('should not handle token verification if platform is not messenger', async ()
 
 it('should handle bot request', async () => {
   const { bot, requestHandler } = setup({ platform: 'other' });
-  requestHandler.mockReturnValue(Promise.resolve());
+  requestHandler.mockResolvedValue();
   const verifyToken = '1qaz2wsx';
   const server = createServer(bot, { verifyToken });
   const { status } = await request(server)
@@ -77,7 +77,7 @@ it('should handle bot request', async () => {
 
 it('should handle x-www-form-urlencoded request', async () => {
   const { bot, requestHandler } = setup({ platform: 'other' });
-  requestHandler.mockReturnValue(Promise.resolve());
+  requestHandler.mockResolvedValue();
   const verifyToken = '1qaz2wsx';
   const server = createServer(bot, { verifyToken });
   const { status } = await request(server)
@@ -91,7 +91,7 @@ it('should handle x-www-form-urlencoded request', async () => {
 
 it('should run connectNgrok when server listen and ngrok option is provided', async () => {
   const { bot, requestHandler } = setup({ platform: 'other' });
-  requestHandler.mockReturnValue(Promise.resolve());
+  requestHandler.mockResolvedValue();
   const verifyToken = '1qaz2wsx';
   const server = createServer(bot, { verifyToken, ngrok: true });
   server.listen();

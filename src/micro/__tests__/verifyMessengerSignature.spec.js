@@ -26,7 +26,7 @@ const createReqRes = () => [
 
 it('should do nothing when verification pass', async () => {
   const [req, res] = createReqRes();
-  micro.text.mockReturnValueOnce(Promise.resolve('raw body from messenger'));
+  micro.text.mockResolvedValueOnce('raw body from messenger');
   bot.connector.verifySignature.mockReturnValueOnce(true);
 
   await middleware(req, res);

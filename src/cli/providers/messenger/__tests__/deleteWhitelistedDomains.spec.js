@@ -59,7 +59,7 @@ describe('resolved', () => {
       argv: {},
     };
 
-    _client.deleteWhitelistedDomains.mockReturnValue(Promise.resolve());
+    _client.deleteWhitelistedDomains.mockResolvedValue();
 
     await deleteWhitelistedDomains(ctx);
 
@@ -77,7 +77,7 @@ describe('reject', () => {
         status: 400,
       },
     };
-    _client.deleteWhitelistedDomains.mockReturnValue(Promise.reject(error));
+    _client.deleteWhitelistedDomains.mockRejectedValue(error);
     process.exit = jest.fn();
 
     await deleteWhitelistedDomains(ctx);
@@ -104,7 +104,7 @@ describe('reject', () => {
         },
       },
     };
-    _client.deleteWhitelistedDomains.mockReturnValue(Promise.reject(error));
+    _client.deleteWhitelistedDomains.mockRejectedValue(error);
     process.exit = jest.fn();
 
     await deleteWhitelistedDomains(ctx);
@@ -121,7 +121,7 @@ describe('reject', () => {
     const error = {
       message: 'something wrong happened',
     };
-    _client.deleteWhitelistedDomains.mockReturnValue(Promise.reject(error));
+    _client.deleteWhitelistedDomains.mockRejectedValue(error);
     process.exit = jest.fn();
 
     await deleteWhitelistedDomains(ctx);

@@ -138,16 +138,10 @@ describe('#updateSession', () => {
     const members = [user];
     const session = {};
 
-    mockSlackOAuthClient.getUserInfo.mockReturnValue(Promise.resolve(user));
-    mockSlackOAuthClient.getConversationInfo.mockReturnValue(
-      Promise.resolve(channel)
-    );
-    mockSlackOAuthClient.getAllConversationMembers.mockReturnValue(
-      Promise.resolve(members)
-    );
-    mockSlackOAuthClient.getAllUserList.mockReturnValue(
-      Promise.resolve(members)
-    );
+    mockSlackOAuthClient.getUserInfo.mockResolvedValue(user);
+    mockSlackOAuthClient.getConversationInfo.mockResolvedValue(channel);
+    mockSlackOAuthClient.getAllConversationMembers.mockResolvedValue(members);
+    mockSlackOAuthClient.getAllUserList.mockResolvedValue(members);
 
     await connector.updateSession(session, request.body);
 
@@ -229,16 +223,10 @@ describe('#updateSession', () => {
     const members = [user];
     const session = {};
 
-    mockSlackOAuthClient.getUserInfo.mockReturnValue(Promise.resolve(user));
-    mockSlackOAuthClient.getConversationInfo.mockReturnValue(
-      Promise.resolve(channel)
-    );
-    mockSlackOAuthClient.getAllConversationMembers.mockReturnValue(
-      Promise.resolve(members)
-    );
-    mockSlackOAuthClient.getAllUserList.mockReturnValue(
-      Promise.resolve(members)
-    );
+    mockSlackOAuthClient.getUserInfo.mockResolvedValue(user);
+    mockSlackOAuthClient.getConversationInfo.mockResolvedValue(channel);
+    mockSlackOAuthClient.getAllConversationMembers.mockResolvedValue(members);
+    mockSlackOAuthClient.getAllUserList.mockResolvedValue(members);
 
     await connector.updateSession(session, interactiveMessageRequest.body);
 

@@ -59,9 +59,10 @@ describe('resolved', () => {
       argv: {},
     };
 
-    _client.getWhitelistedDomains.mockReturnValue(
-      Promise.resolve(['http://www.facebook.com', 'http://www.yoctol.com'])
-    );
+    _client.getWhitelistedDomains.mockResolvedValue([
+      'http://www.facebook.com',
+      'http://www.yoctol.com',
+    ]);
 
     await getWhitelistedDomains(ctx);
 
@@ -73,7 +74,7 @@ describe('resolved', () => {
       argv: {},
     };
 
-    _client.getWhitelistedDomains.mockReturnValue(Promise.resolve(null));
+    _client.getWhitelistedDomains.mockResolvedValue(null);
 
     await getWhitelistedDomains(ctx);
 
@@ -92,7 +93,7 @@ describe('reject', () => {
         status: 400,
       },
     };
-    _client.getWhitelistedDomains.mockReturnValue(Promise.reject(error));
+    _client.getWhitelistedDomains.mockRejectedValue(error);
 
     process.exit = jest.fn();
 
@@ -120,7 +121,7 @@ describe('reject', () => {
         },
       },
     };
-    _client.getWhitelistedDomains.mockReturnValue(Promise.reject(error));
+    _client.getWhitelistedDomains.mockRejectedValue(error);
 
     process.exit = jest.fn();
 
@@ -138,7 +139,7 @@ describe('reject', () => {
     const error = {
       message: 'something wrong happened',
     };
-    _client.getWhitelistedDomains.mockReturnValue(Promise.reject(error));
+    _client.getWhitelistedDomains.mockRejectedValue(error);
 
     process.exit = jest.fn();
 

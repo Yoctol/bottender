@@ -59,11 +59,9 @@ describe('resolved', () => {
       argv: {},
     };
 
-    _client.getGetStarted.mockReturnValue(
-      Promise.resolve({
-        payload: 'get started yo!',
-      })
-    );
+    _client.getGetStarted.mockResolvedValue({
+      payload: 'get started yo!',
+    });
 
     await getGetStarted(ctx);
 
@@ -75,7 +73,7 @@ describe('resolved', () => {
       argv: {},
     };
 
-    _client.getGetStarted.mockReturnValue(Promise.resolve(null));
+    _client.getGetStarted.mockResolvedValue(null);
 
     await getGetStarted(ctx);
 
@@ -94,7 +92,7 @@ describe('reject', () => {
         status: 400,
       },
     };
-    _client.getGetStarted.mockReturnValue(Promise.reject(error));
+    _client.getGetStarted.mockRejectedValueOnce(error);
 
     process.exit = jest.fn();
 
@@ -122,7 +120,7 @@ describe('reject', () => {
         },
       },
     };
-    _client.getGetStarted.mockReturnValue(Promise.reject(error));
+    _client.getGetStarted.mockRejectedValue(error);
 
     process.exit = jest.fn();
 
@@ -140,7 +138,7 @@ describe('reject', () => {
     const error = {
       message: 'something wrong happened',
     };
-    _client.getGetStarted.mockReturnValue(Promise.reject(error));
+    _client.getGetStarted.mockRejectedValue(error);
 
     process.exit = jest.fn();
 

@@ -13,7 +13,7 @@ function setup() {
 
 it('should response 200 when no error be thrown', async () => {
   const { bot, requestHandler } = setup();
-  requestHandler.mockReturnValue(Promise.resolve());
+  requestHandler.mockResolvedValue();
 
   const middleware = createMiddleware(bot);
 
@@ -31,7 +31,7 @@ it('should response 200 when no error be thrown', async () => {
 
 it('should response 200 if there is response return from requestHandler', async () => {
   const { bot, requestHandler } = setup();
-  requestHandler.mockReturnValue(Promise.resolve({ headers: {} }));
+  requestHandler.mockResolvedValue({ headers: {} });
 
   const middleware = createMiddleware(bot);
 
@@ -49,17 +49,15 @@ it('should response 200 if there is response return from requestHandler', async 
 
 it('should overwrite response when provide', async () => {
   const { bot, requestHandler } = setup();
-  requestHandler.mockReturnValue(
-    Promise.resolve({
-      status: 400,
-      headers: {
-        'X-Header': 'x',
-      },
-      body: {
-        name: 'x',
-      },
-    })
-  );
+  requestHandler.mockResolvedValue({
+    status: 400,
+    headers: {
+      'X-Header': 'x',
+    },
+    body: {
+      name: 'x',
+    },
+  });
 
   const middleware = createMiddleware(bot);
 
@@ -77,7 +75,7 @@ it('should overwrite response when provide', async () => {
 
 it('should throw when no body exists', async () => {
   const { bot, requestHandler } = setup();
-  requestHandler.mockReturnValue(Promise.resolve());
+  requestHandler.mockResolvedValue();
 
   const middleware = createMiddleware(bot);
 

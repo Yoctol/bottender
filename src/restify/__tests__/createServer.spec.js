@@ -82,7 +82,7 @@ it('should handle Messenger signature verification if platform is messenger', as
 
 it('should handle bot request', async () => {
   const { bot, requestHandler } = setup({ platform: 'other' });
-  requestHandler.mockReturnValue(Promise.resolve());
+  requestHandler.mockResolvedValue();
   const verifyToken = '1qaz2wsx';
   const server = createServer(bot, { verifyToken });
   const { status } = await request(server)
@@ -94,7 +94,7 @@ it('should handle bot request', async () => {
 
 it('should run connectNgrok when server listen and ngrok option is provided', async () => {
   const { bot, requestHandler } = setup({ platform: 'other' });
-  requestHandler.mockReturnValue(Promise.resolve());
+  requestHandler.mockResolvedValue();
   const verifyToken = '1qaz2wsx';
   const server = createServer(bot, { verifyToken, ngrok: true });
   server.listen();
@@ -104,7 +104,7 @@ it('should run connectNgrok when server listen and ngrok option is provided', as
 
 it('should work with additional webhook middleware', async () => {
   const { bot, requestHandler } = setup({ platform: 'other' });
-  requestHandler.mockReturnValue(Promise.resolve());
+  requestHandler.mockResolvedValue();
   const mockFn = jest.fn();
   const webhookMiddleware = (req, res, next) => {
     mockFn();

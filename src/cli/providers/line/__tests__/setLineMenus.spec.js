@@ -20,8 +20,8 @@ describe('setLineMenus', () => {
   beforeEach(() => {
     LineClient.connect.mockReturnValue({
       getRichMenuList: jest.fn(),
-      deleteRichMenu: jest.fn().mockReturnValue(Promise.resolve(true)),
-      createRichMenu: jest.fn().mockReturnValue(Promise.resolve(true)),
+      deleteRichMenu: jest.fn().mockResolvedValue(true),
+      createRichMenu: jest.fn().mockResolvedValue(true),
     });
     process.exit = jest.fn();
     getConfig.mockReturnValue({
@@ -82,8 +82,8 @@ describe('setLineMenus', () => {
   it('should exit when client.getRichMenuList failed', async () => {
     const ctx = setup();
 
-    LineClient.connect().getRichMenuList.mockReturnValueOnce(
-      Promise.reject(new Error('getRichMenuList failed'))
+    LineClient.connect().getRichMenuList.mockRejectedValueOnce(
+      new Error('getRichMenuList failed')
     );
 
     await setLineMenus(ctx);
@@ -95,9 +95,7 @@ describe('setLineMenus', () => {
   it('should exit when failed to find rich menu', async () => {
     const ctx = setup();
 
-    LineClient.connect().getRichMenuList.mockReturnValueOnce(
-      Promise.resolve(null)
-    );
+    LineClient.connect().getRichMenuList.mockResolvedValueOnce(null);
 
     await setLineMenus(ctx);
 
@@ -108,34 +106,32 @@ describe('setLineMenus', () => {
   it('should not call deleteRichMenu when online rich menus and local rich menus are same', async () => {
     const ctx = setup();
 
-    LineClient.connect().getRichMenuList.mockReturnValueOnce(
-      Promise.resolve([
-        {
-          richMenuId: '1234567890',
-          size: {
-            width: 2500,
-            height: 1686,
-          },
-          selected: false,
-          name: 'Nice richmenu',
-          chatBarText: 'Tap here',
-          areas: [
-            {
-              bounds: {
-                x: 0,
-                y: 0,
-                width: 2500,
-                height: 1686,
-              },
-              action: {
-                type: 'postback',
-                data: 'action=buy&itemid=123',
-              },
-            },
-          ],
+    LineClient.connect().getRichMenuList.mockResolvedValueOnce([
+      {
+        richMenuId: '1234567890',
+        size: {
+          width: 2500,
+          height: 1686,
         },
-      ])
-    );
+        selected: false,
+        name: 'Nice richmenu',
+        chatBarText: 'Tap here',
+        areas: [
+          {
+            bounds: {
+              x: 0,
+              y: 0,
+              width: 2500,
+              height: 1686,
+            },
+            action: {
+              type: 'postback',
+              data: 'action=buy&itemid=123',
+            },
+          },
+        ],
+      },
+    ]);
 
     await setLineMenus(ctx);
 
@@ -148,58 +144,56 @@ describe('setLineMenus', () => {
   it('should delete one online rich menus if it has one shouldDeleteRichMenus', async () => {
     const ctx = setup();
 
-    LineClient.connect().getRichMenuList.mockReturnValueOnce(
-      Promise.resolve([
-        {
-          richMenuId: '1234567890',
-          size: {
-            width: 2500,
-            height: 1686,
-          },
-          selected: false,
-          name: 'Nice richmenu',
-          chatBarText: 'Tap here',
-          areas: [
-            {
-              bounds: {
-                x: 0,
-                y: 0,
-                width: 2500,
-                height: 1686,
-              },
-              action: {
-                type: 'postback',
-                data: 'action=buy&itemid=123',
-              },
-            },
-          ],
+    LineClient.connect().getRichMenuList.mockResolvedValueOnce([
+      {
+        richMenuId: '1234567890',
+        size: {
+          width: 2500,
+          height: 1686,
         },
-        {
-          richMenuId: '0987654321',
-          size: {
-            width: 2500,
-            height: 1686,
-          },
-          selected: false,
-          name: 'Great richmenu',
-          chatBarText: 'Click me please',
-          areas: [
-            {
-              bounds: {
-                x: 0,
-                y: 0,
-                width: 2500,
-                height: 1686,
-              },
-              action: {
-                type: 'postback',
-                data: 'action=sell&itemid=321',
-              },
+        selected: false,
+        name: 'Nice richmenu',
+        chatBarText: 'Tap here',
+        areas: [
+          {
+            bounds: {
+              x: 0,
+              y: 0,
+              width: 2500,
+              height: 1686,
             },
-          ],
+            action: {
+              type: 'postback',
+              data: 'action=buy&itemid=123',
+            },
+          },
+        ],
+      },
+      {
+        richMenuId: '0987654321',
+        size: {
+          width: 2500,
+          height: 1686,
         },
-      ])
-    );
+        selected: false,
+        name: 'Great richmenu',
+        chatBarText: 'Click me please',
+        areas: [
+          {
+            bounds: {
+              x: 0,
+              y: 0,
+              width: 2500,
+              height: 1686,
+            },
+            action: {
+              type: 'postback',
+              data: 'action=sell&itemid=321',
+            },
+          },
+        ],
+      },
+    ]);
 
     await setLineMenus(ctx);
 
@@ -211,58 +205,56 @@ describe('setLineMenus', () => {
   it('should delete two online rich menus and add one local rich menu if it has two shouldDeleteRichMenus and one shouldAddRichMenus', async () => {
     const ctx = setup();
 
-    LineClient.connect().getRichMenuList.mockReturnValueOnce(
-      Promise.resolve([
-        {
-          richMenuId: '1234567890',
-          size: {
-            width: 2500,
-            height: 1686,
-          },
-          selected: false,
-          name: 'Nice richmenu',
-          chatBarText: 'Tap here !!!!!!!!!!!!!!!!',
-          areas: [
-            {
-              bounds: {
-                x: 0,
-                y: 0,
-                width: 2500,
-                height: 1686,
-              },
-              action: {
-                type: 'postback',
-                data: 'action=buy&itemid=123',
-              },
-            },
-          ],
+    LineClient.connect().getRichMenuList.mockResolvedValueOnce([
+      {
+        richMenuId: '1234567890',
+        size: {
+          width: 2500,
+          height: 1686,
         },
-        {
-          richMenuId: '0987654321',
-          size: {
-            width: 2500,
-            height: 1686,
-          },
-          selected: false,
-          name: 'Great richmenu',
-          chatBarText: 'Click me please',
-          areas: [
-            {
-              bounds: {
-                x: 0,
-                y: 0,
-                width: 2500,
-                height: 1686,
-              },
-              action: {
-                type: 'postback',
-                data: 'action=sell&itemid=321',
-              },
+        selected: false,
+        name: 'Nice richmenu',
+        chatBarText: 'Tap here !!!!!!!!!!!!!!!!',
+        areas: [
+          {
+            bounds: {
+              x: 0,
+              y: 0,
+              width: 2500,
+              height: 1686,
             },
-          ],
+            action: {
+              type: 'postback',
+              data: 'action=buy&itemid=123',
+            },
+          },
+        ],
+      },
+      {
+        richMenuId: '0987654321',
+        size: {
+          width: 2500,
+          height: 1686,
         },
-      ])
-    );
+        selected: false,
+        name: 'Great richmenu',
+        chatBarText: 'Click me please',
+        areas: [
+          {
+            bounds: {
+              x: 0,
+              y: 0,
+              width: 2500,
+              height: 1686,
+            },
+            action: {
+              type: 'postback',
+              data: 'action=sell&itemid=321',
+            },
+          },
+        ],
+      },
+    ]);
 
     await setLineMenus(ctx);
 

@@ -42,14 +42,12 @@ describe('init', () => {
   });
 
   it('should do all good', async () => {
-    inquirer.prompt.mockReturnValueOnce(
-      Promise.resolve({
-        name: 'newbot',
-        platform: 'telegram',
-        session: 'mongo',
-        server: 'micro',
-      })
-    );
+    inquirer.prompt.mockResolvedValueOnce({
+      name: 'newbot',
+      platform: 'telegram',
+      session: 'mongo',
+      server: 'micro',
+    });
     const botConfig = {
       telegram: {
         accessToken: '__PUT_YOUR_ACCESS_TOKEN_HERE__',
@@ -83,14 +81,12 @@ describe('init', () => {
   });
 
   it('should not create bottender.config.js if select console as platform', async () => {
-    inquirer.prompt.mockReturnValueOnce(
-      Promise.resolve({
-        name: 'newbot',
-        platform: 'console',
-        session: 'memory',
-        server: undefined,
-      })
-    );
+    inquirer.prompt.mockResolvedValueOnce({
+      name: 'newbot',
+      platform: 'console',
+      session: 'memory',
+      server: undefined,
+    });
     const botConfig = {};
     const root = path.resolve('newbot');
 
@@ -110,7 +106,7 @@ describe('init', () => {
     err.response = {
       status: 'error status',
     };
-    inquirer.prompt.mockReturnValueOnce(Promise.reject(err));
+    inquirer.prompt.mockRejectedValueOnce(err);
 
     await init();
 
@@ -120,7 +116,7 @@ describe('init', () => {
 
   it('should catch error when inquirer.prompt reject with message', async () => {
     const err = new Error('error message');
-    inquirer.prompt.mockReturnValueOnce(Promise.reject(err));
+    inquirer.prompt.mockRejectedValueOnce(err);
 
     await init();
 
@@ -129,11 +125,9 @@ describe('init', () => {
   });
 
   it('should call error if name is empty string', async () => {
-    inquirer.prompt.mockReturnValueOnce(
-      Promise.resolve({
-        name: '',
-      })
-    );
+    inquirer.prompt.mockResolvedValueOnce({
+      name: '',
+    });
 
     await init();
 
@@ -142,11 +136,9 @@ describe('init', () => {
   });
 
   it('should call error if name is undefined', async () => {
-    inquirer.prompt.mockReturnValueOnce(
-      Promise.resolve({
-        name: undefined,
-      })
-    );
+    inquirer.prompt.mockResolvedValueOnce({
+      name: undefined,
+    });
 
     await init();
 
@@ -156,11 +148,9 @@ describe('init', () => {
 
   describe('createBot', () => {
     it('should exit if name is not valid for validate-npm-package-name', async () => {
-      inquirer.prompt.mockReturnValueOnce(
-        Promise.resolve({
-          name: '..qq',
-        })
-      );
+      inquirer.prompt.mockResolvedValueOnce({
+        name: '..qq',
+      });
 
       await init();
 
@@ -173,11 +163,9 @@ describe('init', () => {
     it('should exit if it has conflicts', async () => {
       fs.readdirSync().filter.mockReturnValueOnce(['conflictFile']);
 
-      inquirer.prompt.mockReturnValueOnce(
-        Promise.resolve({
-          name: 'newbot',
-        })
-      );
+      inquirer.prompt.mockResolvedValueOnce({
+        name: 'newbot',
+      });
 
       await init();
 
@@ -195,11 +183,9 @@ describe('init', () => {
       });
       fs.readdirSync.mockReturnValueOnce([]);
       fs.readdirSync.mockReturnValueOnce(['package.json']);
-      inquirer.prompt.mockReturnValueOnce(
-        Promise.resolve({
-          name: 'newbot',
-        })
-      );
+      inquirer.prompt.mockResolvedValueOnce({
+        name: 'newbot',
+      });
       await init();
 
       expect(error.mock.calls).toContainEqual([
@@ -221,11 +207,9 @@ describe('init', () => {
       fs.readdirSync.mockReturnValueOnce([]);
       fs.readdirSync.mockReturnValueOnce(['package.json']);
       fs.readdirSync.mockReturnValueOnce(['index.js']);
-      inquirer.prompt.mockReturnValueOnce(
-        Promise.resolve({
-          name: 'newbot',
-        })
-      );
+      inquirer.prompt.mockResolvedValueOnce({
+        name: 'newbot',
+      });
 
       await init();
 
@@ -237,14 +221,12 @@ describe('init', () => {
     });
 
     it('should call spawn with yarn if useYarn is true', async () => {
-      inquirer.prompt.mockReturnValueOnce(
-        Promise.resolve({
-          name: 'newbot',
-          platform: 'line',
-          session: 'file',
-          server: 'koa',
-        })
-      );
+      inquirer.prompt.mockResolvedValueOnce({
+        name: 'newbot',
+        platform: 'line',
+        session: 'file',
+        server: 'koa',
+      });
 
       await init();
 
@@ -261,14 +243,12 @@ describe('init', () => {
       execSync.mockImplementation(() => {
         throw new Error('Error!');
       });
-      inquirer.prompt.mockReturnValueOnce(
-        Promise.resolve({
-          name: 'newbot',
-          platform: 'messenger',
-          session: 'redis',
-          server: 'express',
-        })
-      );
+      inquirer.prompt.mockResolvedValueOnce({
+        name: 'newbot',
+        platform: 'messenger',
+        session: 'redis',
+        server: 'express',
+      });
 
       await init();
 

@@ -42,12 +42,10 @@ beforeEach(() => {
   process.exit = jest.fn();
   getConfig.mockReturnValue(MOCK_FILE_WITH_PLATFORM.viber);
 
-  getWebhookFromNgrok.mockReturnValue(
-    Promise.resolve('https://fakeDomain.ngrok.io')
-  );
+  getWebhookFromNgrok.mockResolvedValue('https://fakeDomain.ngrok.io');
 
   Confirm.mockImplementation(() => ({
-    run: jest.fn(() => Promise.resolve(true)),
+    run: jest.fn().mockResolvedValue(true),
   }));
 
   ViberClient.connect.mockReturnValue({
@@ -131,8 +129,8 @@ describe('reject', () => {
 
   it('reject when viber return not success', () => {
     const { webhook } = setup();
-    ViberClient.connect().setWebhook.mockReturnValueOnce(
-      Promise.reject(new Error('setWebhook failed'))
+    ViberClient.connect().setWebhook.mockRejectedValueOnce(
+      new Error('setWebhook failed')
     );
 
     expect(setWebhook(webhook).then).toThrow();

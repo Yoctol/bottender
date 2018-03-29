@@ -59,7 +59,7 @@ describe('resolved', () => {
       argv: {},
     };
 
-    _client.deleteGreeting.mockReturnValue(Promise.resolve());
+    _client.deleteGreeting.mockResolvedValue();
 
     await deleteGreeting(ctx);
 
@@ -77,7 +77,7 @@ describe('reject', () => {
         status: 400,
       },
     };
-    _client.deleteGreeting.mockReturnValue(Promise.reject(error));
+    _client.deleteGreeting.mockRejectedValue(error);
 
     process.exit = jest.fn();
 
@@ -105,7 +105,7 @@ describe('reject', () => {
         },
       },
     };
-    _client.deleteGreeting.mockReturnValue(Promise.reject(error));
+    _client.deleteGreeting.mockRejectedValue(error);
 
     process.exit = jest.fn();
 
@@ -123,7 +123,7 @@ describe('reject', () => {
     const error = {
       message: 'something wrong happened',
     };
-    _client.deleteGreeting.mockReturnValue(Promise.reject(error));
+    _client.deleteGreeting.mockRejectedValue(error);
 
     process.exit = jest.fn();
 

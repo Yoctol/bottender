@@ -32,9 +32,7 @@ const MOCK_FILE_WITH_PLATFORM = {
 };
 
 function setup({ success = true } = {}) {
-  getWebhookFromNgrok.mockReturnValue(
-    Promise.resolve('https://fakeDomain.ngrok.io')
-  );
+  getWebhookFromNgrok.mockResolvedValue('https://fakeDomain.ngrok.io');
 
   getConfig.mockReturnValue(MOCK_FILE_WITH_PLATFORM.messenger);
 
@@ -42,12 +40,12 @@ function setup({ success = true } = {}) {
     createSubscription: jest.fn(),
   };
 
-  client.createSubscription.mockReturnValue(Promise.resolve({ success }));
+  client.createSubscription.mockResolvedValue({ success });
 
   MessengerClient.connect = jest.fn(() => client);
 
   Confirm.mockImplementation(() => ({
-    run: jest.fn(() => Promise.resolve(true)),
+    run: jest.fn().mockResolvedValue(true),
   }));
 
   log.print = jest.fn();

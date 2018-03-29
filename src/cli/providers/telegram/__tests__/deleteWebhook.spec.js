@@ -22,7 +22,7 @@ beforeEach(() => {
   getConfig.mockReturnValue(MOCK_FILE_WITH_PLATFORM.telegram);
 
   TelegramClient.connect.mockReturnValue({
-    deleteWebhook: jest.fn(() => Promise.resolve(true)),
+    deleteWebhook: jest.fn().mockResolvedValue(true),
   });
 });
 
@@ -73,11 +73,9 @@ describe('reject', () => {
       argv: {},
     };
 
-    TelegramClient.connect().deleteWebhook.mockReturnValueOnce(
-      Promise.resolve({
-        ok: false,
-      })
-    );
+    TelegramClient.connect().deleteWebhook.mockResolvedValueOnce({
+      ok: false,
+    });
 
     expect(deleteWebhook(ctx).then).toThrow();
   });

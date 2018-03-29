@@ -10,20 +10,18 @@ it('be defined', () => {
 
 it('call axios.create and return correct url', async () => {
   axios.create.mockReturnValue({
-    get: jest.fn(() =>
-      Promise.resolve({
-        data: {
-          tunnels: [
-            {
-              public_url: 'http://fakeDomain_1.ngrok.io',
-            },
-            {
-              public_url: 'https://fakeDomain_2.ngrok.io',
-            },
-          ],
-        },
-      })
-    ),
+    get: jest.fn().mockResolvedValue({
+      data: {
+        tunnels: [
+          {
+            public_url: 'http://fakeDomain_1.ngrok.io',
+          },
+          {
+            public_url: 'https://fakeDomain_2.ngrok.io',
+          },
+        ],
+      },
+    }),
   });
 
   const webhook = await getWebhookFromNgrok('5555');

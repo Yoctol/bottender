@@ -273,7 +273,7 @@ describe('#updateSession', () => {
       timezone: 8,
       gender: 'male',
     };
-    mockGraphAPIClient.getUserProfile.mockReturnValue(Promise.resolve(user));
+    mockGraphAPIClient.getUserProfile.mockResolvedValue(user);
 
     const session = {};
     await connector.updateSession(session, request.body);
@@ -301,7 +301,7 @@ describe('#updateSession', () => {
       timezone: 8,
       gender: 'male',
     };
-    mockGraphAPIClient.getUserProfile.mockReturnValue(Promise.resolve(user));
+    mockGraphAPIClient.getUserProfile.mockResolvedValue(user);
 
     const session = {
       user: {
@@ -333,7 +333,7 @@ describe('#updateSession', () => {
       timezone: 8,
       gender: 'male',
     };
-    mockGraphAPIClient.getUserProfile.mockReturnValue(Promise.resolve(user));
+    mockGraphAPIClient.getUserProfile.mockResolvedValue(user);
 
     const session = {
       user: {
@@ -365,7 +365,7 @@ describe('#updateSession', () => {
       timezone: 8,
       gender: 'male',
     };
-    mockGraphAPIClient.getUserProfile.mockReturnValue(Promise.resolve(user));
+    mockGraphAPIClient.getUserProfile.mockResolvedValue(user);
 
     const session = {
       user: {
@@ -390,7 +390,7 @@ describe('#updateSession', () => {
     const { connector, mockGraphAPIClient } = setup();
     const error = new Error('fail');
 
-    mockGraphAPIClient.getUserProfile.mockReturnValue(Promise.reject(error));
+    mockGraphAPIClient.getUserProfile.mockRejectedValue(error);
 
     const session = {};
     await connector.updateSession(session, request.body);
@@ -491,7 +491,7 @@ describe('#createContext', () => {
   });
 
   it('should create MessengerContext and has customAccessToken', async () => {
-    const mapPageToAccessToken = jest.fn(() => Promise.resolve('anyToken'));
+    const mapPageToAccessToken = jest.fn().mockResolvedValue('anyToken');
     const { connector } = setup({ mapPageToAccessToken });
     const event = {
       rawEvent: {
@@ -512,7 +512,7 @@ describe('#createContext', () => {
   });
 
   it('should call warning if it could not find pageId', async () => {
-    const mapPageToAccessToken = jest.fn(() => Promise.resolve('anyToken'));
+    const mapPageToAccessToken = jest.fn().mockResolvedValue('anyToken');
     const { connector } = setup({ mapPageToAccessToken });
     const event = {
       rawEvent: {},

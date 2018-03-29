@@ -1151,11 +1151,9 @@ describe('ruchmenu APIs', () => {
     it('should call client.getLinkedRichMenu', async () => {
       const { context, client, session } = setup();
 
-      client.getLinkedRichMenu.mockReturnValue(
-        Promise.resolve({
-          richMenuId: 'richMenuId',
-        })
-      );
+      client.getLinkedRichMenu.mockResolvedValue({
+        richMenuId: 'richMenuId',
+      });
 
       const result = await context.getLinkedRichMenu();
 

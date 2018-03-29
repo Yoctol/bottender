@@ -34,19 +34,15 @@ describe('uploadAttachment', () => {
     };
     MessengerClient.connect = jest.fn(() => _client);
     getConfig.mockReturnValue(MOCK_FILE_WITH_PLATFORM.messenger);
-    readdir.mockReturnValue(
-      Promise.resolve([
-        {
-          name: 'The X-Files',
-        },
-      ])
-    );
+    readdir.mockResolvedValue([
+      {
+        name: 'The X-Files',
+      },
+    ]);
     inquirer.prompt = jest.fn();
-    inquirer.prompt.mockReturnValue(
-      Promise.resolve({
-        confirm: true,
-      })
-    );
+    inquirer.prompt.mockResolvedValue({
+      confirm: true,
+    });
     process.exit = jest.fn();
   });
 
@@ -115,11 +111,9 @@ describe('uploadAttachment', () => {
           force: true,
         },
       };
-      inquirer.prompt.mockReturnValueOnce(
-        Promise.resolve({
-          confirm: false,
-        })
-      );
+      inquirer.prompt.mockResolvedValue({
+        confirm: false,
+      });
 
       await uploadAttachment(ctx);
 

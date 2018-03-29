@@ -59,7 +59,7 @@ describe('resolved', () => {
       argv: {},
     };
 
-    _client.getMessengerProfile.mockReturnValue(Promise.resolve({}));
+    _client.getMessengerProfile.mockResolvedValue({});
 
     await getMessengerProfile(ctx);
 
@@ -80,7 +80,7 @@ describe('resolved', () => {
       argv: {},
     };
 
-    _client.getMessengerProfile.mockReturnValue(Promise.resolve(null));
+    _client.getMessengerProfile.mockResolvedValue(null);
 
     await getMessengerProfile(ctx);
 
@@ -99,7 +99,7 @@ describe('reject', () => {
         status: 400,
       },
     };
-    _client.getMessengerProfile.mockReturnValue(Promise.reject(error));
+    _client.getMessengerProfile.mockRejectedValue(error);
 
     process.exit = jest.fn();
 
@@ -127,7 +127,7 @@ describe('reject', () => {
         },
       },
     };
-    _client.getMessengerProfile.mockReturnValue(Promise.reject(error));
+    _client.getMessengerProfile.mockRejectedValue(error);
 
     process.exit = jest.fn();
 
@@ -145,7 +145,7 @@ describe('reject', () => {
     const error = {
       message: 'something wrong happened',
     };
-    _client.getMessengerProfile.mockReturnValue(Promise.reject(error));
+    _client.getMessengerProfile.mockRejectedValue(error);
 
     process.exit = jest.fn();
 
