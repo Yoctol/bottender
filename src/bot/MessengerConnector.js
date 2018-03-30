@@ -3,6 +3,7 @@
 import crypto from 'crypto';
 
 import { MessengerClient } from 'messaging-api-messenger';
+import { MessengerBatchQueue } from 'messenger-batch';
 import warning from 'warning';
 import isAfter from 'date-fns/is_after';
 import isValid from 'date-fns/is_valid';
@@ -79,6 +80,7 @@ type ConstructorOptions = {|
   client?: MessengerClient,
   mapPageToAccessToken?: (pageId: string) => Promise<string>,
   verifyToken?: ?string,
+  batchConfig?: ?Object,
 |};
 
 export default class MessengerConnector
@@ -87,6 +89,8 @@ export default class MessengerConnector
   _appSecret: string;
   _mapPageToAccessToken: ?(pageId: string) => ?Promise<string>;
   _verifyToken: ?string;
+  _batchConfig: ?Object;
+  _batchQueue: ?Object;
 
   constructor({
     accessToken,
@@ -94,11 +98,21 @@ export default class MessengerConnector
     client,
     mapPageToAccessToken,
     verifyToken,
+    batchConfig,
   }: ConstructorOptions) {
     this._client = client || MessengerClient.connect(accessToken || '');
     this._appSecret = appSecret || '';
     this._mapPageToAccessToken = mapPageToAccessToken;
     this._verifyToken = verifyToken;
+
+    this._batchConfig = batchConfig || null;
+    if (this._batchConfig) {
+      this._batchQueue = new MessengerBatchQueue(
+        this._client,
+        this._batchConfig
+      );
+    }
+
     if (!this._appSecret) {
       warning(
         false,
@@ -287,6 +301,7 @@ export default class MessengerConnector
       session,
       initialState,
       customAccessToken,
+      batchQueue: this._batchQueue,
     });
   }
 

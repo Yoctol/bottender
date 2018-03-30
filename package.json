@@ -74,6 +74,7 @@
     "messaging-api-slack": "^0.7.0-beta.2",
     "messaging-api-telegram": "^0.7.0-beta.2",
     "messaging-api-viber": "^0.7.0-beta.2",
+    "messenger-batch": "^0.2.1",
     "micro": "^9.1.4",
     "minimist": "^1.2.0",
     "mongodb": "^2.2.33",

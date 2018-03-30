@@ -4710,6 +4710,10 @@ messaging-api-viber@^0.7.0-beta.2:
     axios "^0.17.0"
     axios-error "^0.7.0-beta.2"
 
+messenger-batch@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/messenger-batch/-/messenger-batch-0.2.1.tgz#f8c2bbc05c208002cd6a4f077d34dd3460d683e9"
+
 methods@^1.0.1, methods@^1.1.1, methods@~1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/methods/-/methods-1.1.2.tgz#5529a4d67654134edcc5266656835b0f851afcee"

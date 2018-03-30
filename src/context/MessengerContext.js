@@ -2,7 +2,7 @@
 
 import sleep from 'delay';
 import warning from 'warning';
-import { MessengerClient } from 'messaging-api-messenger';
+import { MessengerClient, MessengerBatch } from 'messaging-api-messenger';
 
 import type { Session } from '../session/Session';
 
@@ -16,6 +16,7 @@ type Options = {|
   session: ?Session,
   initialState: ?Object,
   customAccessToken: ?string,
+  batchQueue: ?Object,
 |};
 
 class MessengerContext extends Context implements PlatformContext {
@@ -23,6 +24,7 @@ class MessengerContext extends Context implements PlatformContext {
   _event: MessengerEvent;
   _session: ?Session;
   _customAccessToken: ?string;
+  _batchQueue: ?Object;
 
   constructor({
     client,
@@ -30,9 +32,11 @@ class MessengerContext extends Context implements PlatformContext {
     session,
     initialState,
     customAccessToken,
+    batchQueue,
   }: Options) {
     super({ client, event, session, initialState });
     this._customAccessToken = customAccessToken;
+    this._batchQueue = batchQueue;
   }
 
   /**
@@ -76,11 +80,20 @@ class MessengerContext extends Context implements PlatformContext {
 
     const messageType = options && options.tag ? 'MESSAGE_TAG' : 'RESPONSE';
 
-    return this._client.sendText(this._session.user.id, text, {
-      messaging_type: messageType,
-      ...options,
-      access_token: this._customAccessToken,
-    });
+    const args = [
+      this._session.user.id,
+      text,
+      {
+        messaging_type: messageType,
+        ...options,
+        access_token: this._customAccessToken,
+      },
+    ];
+
+    if (this._batchQueue) {
+      return this._batchQueue.push(MessengerBatch.createText(...args));
+    }
+    return this._client.sendText(...args);
   }
 
   /**
@@ -341,28 +354,28 @@ class MessengerContext extends Context implements PlatformContext {
 }
 
 const sendMethods = [
-  // method name, arguments length
-  ['sendMessage', 3],
-  ['sendAttachment', 3],
-  ['sendImage', 3],
-  ['sendAudio', 3],
-  ['sendVideo', 3],
-  ['sendFile', 3],
-  ['sendTemplate', 3],
-  ['sendGenericTemplate', 3],
-  ['sendButtonTemplate', 4],
-  ['sendListTemplate', 4],
-  ['sendOpenGraphTemplate', 3],
-  ['sendMediaTemplate', 3],
-  ['sendReceiptTemplate', 3],
-  ['sendAirlineBoardingPassTemplate', 3],
-  ['sendAirlineCheckinTemplate', 3],
-  ['sendAirlineItineraryTemplate', 3],
-  ['sendAirlineFlightUpdateTemplate', 3],
+  // type name, arguments length
+  ['Message', 3],
+  ['Attachment', 3],
+  ['Image', 3],
+  ['Audio', 3],
+  ['Video', 3],
+  ['File', 3],
+  ['Template', 3],
+  ['GenericTemplate', 3],
+  ['ButtonTemplate', 4],
+  ['ListTemplate', 4],
+  ['OpenGraphTemplate', 3],
+  ['MediaTemplate', 3],
+  ['ReceiptTemplate', 3],
+  ['AirlineBoardingPassTemplate', 3],
+  ['AirlineCheckinTemplate', 3],
+  ['AirlineItineraryTemplate', 3],
+  ['AirlineFlightUpdateTemplate', 3],
 ];
 
-sendMethods.forEach(([method, len]) => {
-  Object.defineProperty(MessengerContext.prototype, `${method}`, {
+sendMethods.forEach(([type, len]) => {
+  Object.defineProperty(MessengerContext.prototype, `send${type}`, {
     enumerable: false,
     configurable: true,
     writable: true,
@@ -370,7 +383,7 @@ sendMethods.forEach(([method, len]) => {
       if (!this._session) {
         warning(
           false,
-          `${method}: should not be called in context without session`
+          `send${type}: should not be called in context without session`
         );
         return;
       }
@@ -386,7 +399,12 @@ sendMethods.forEach(([method, len]) => {
         access_token: this._customAccessToken,
       };
 
-      return this._client[method](this._session.user.id, ...args);
+      if (this._batchQueue) {
+        return this._batchQueue.push(
+          MessengerBatch[`create${type}`](this._session.user.id, ...args)
+        );
+      }
+      return this._client[`send${type}`](this._session.user.id, ...args);
     },
   });
 });
