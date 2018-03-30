@@ -2,6 +2,7 @@ jest.mock('delay');
 jest.mock('messaging-api-telegram');
 jest.mock('warning');
 
+let TelegramClient;
 let TelegramContext;
 let TelegramEvent;
 let sleep;
@@ -9,60 +10,12 @@ let warning;
 
 beforeEach(() => {
   /* eslint-disable global-require */
+  TelegramClient = require('messaging-api-telegram').TelegramClient;
   TelegramContext = require('../TelegramContext').default;
   TelegramEvent = require('../TelegramEvent').default;
   sleep = require('delay');
   warning = require('warning');
   /* eslint-enable global-require */
-});
-
-const createMockTelegramClient = () => ({
-  sendMessage: jest.fn(),
-  sendPhoto: jest.fn(),
-  sendAudio: jest.fn(),
-  sendDocument: jest.fn(),
-  sendSticker: jest.fn(),
-  sendVideo: jest.fn(),
-  sendVoice: jest.fn(),
-  sendVideoNote: jest.fn(),
-  sendMediaGroup: jest.fn(),
-  sendLocation: jest.fn(),
-  sendVenue: jest.fn(),
-  sendContact: jest.fn(),
-  sendChatAction: jest.fn(),
-  sendInvoice: jest.fn(),
-  sendGame: jest.fn(),
-  setGameScore: jest.fn(),
-  getGameHighScores: jest.fn(),
-  editMessageText: jest.fn(),
-  editMessageCaption: jest.fn(),
-  editMessageReplyMarkup: jest.fn(),
-  deleteMessage: jest.fn(),
-  editMessageLiveLocation: jest.fn(),
-  stopMessageLiveLocation: jest.fn(),
-  forwardMessage: jest.fn(),
-  kickChatMember: jest.fn(),
-  unbanChatMember: jest.fn(),
-  restrictChatMember: jest.fn(),
-  promoteChatMember: jest.fn(),
-  exportChatInviteLink: jest.fn(),
-  setChatPhoto: jest.fn(),
-  deleteChatPhoto: jest.fn(),
-  setChatTitle: jest.fn(),
-  setChatDescription: jest.fn(),
-  setChatStickerSet: jest.fn(),
-  deleteChatStickerSet: jest.fn(),
-  pinChatMessage: jest.fn(),
-  unpinChatMessage: jest.fn(),
-  leaveChat: jest.fn(),
-  answerShippingQuery: jest.fn(),
-  answerPreCheckoutQuery: jest.fn(),
-  answerInlineQuery: jest.fn(),
-  getUserProfilePhotos: jest.fn(),
-  getChat: jest.fn(),
-  getChatAdministrators: jest.fn(),
-  getChatMembersCount: jest.fn(),
-  getChatMember: jest.fn(),
 });
 
 const _rawEvent = {
@@ -90,7 +43,7 @@ const setup = ({
   session = { user: { id: 313534466 } },
   rawEvent = _rawEvent,
 } = {}) => {
-  const client = createMockTelegramClient();
+  const client = TelegramClient.connect();
   const args = {
     client,
     event: new TelegramEvent(rawEvent),

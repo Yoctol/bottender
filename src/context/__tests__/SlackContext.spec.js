@@ -2,6 +2,7 @@ jest.mock('delay');
 jest.mock('messaging-api-slack');
 jest.mock('warning');
 
+let SlackClient;
 let SlackContext;
 let SlackEvent;
 let sleep;
@@ -9,6 +10,7 @@ let warning;
 
 beforeEach(() => {
   /* eslint-disable global-require */
+  SlackClient = require('messaging-api-slack').SlackOAuthClient;
   SlackContext = require('../SlackContext').default;
   SlackEvent = require('../SlackEvent').default;
   sleep = require('delay');
@@ -36,11 +38,6 @@ const threadRawEvent = {
   thread_ts: '1515479974.000115',
 };
 
-const createMockSlackClient = () => ({
-  postMessage: jest.fn(),
-  postEphemeral: jest.fn(),
-});
-
 const userSession = {
   user: {
     id: 'fakeUserId',
@@ -52,7 +49,7 @@ const userSession = {
 const setup = ({ session: _session, rawEvent: _rawEvent } = {}) => {
   const session = _session === undefined ? userSession : _session;
   const rawEvent = _rawEvent === undefined ? messageRawEvent : _rawEvent;
-  const client = createMockSlackClient();
+  const client = SlackClient.connect();
   const args = {
     client,
     event: new SlackEvent(rawEvent),

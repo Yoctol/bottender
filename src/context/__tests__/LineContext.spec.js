@@ -2,6 +2,7 @@ jest.mock('delay');
 jest.mock('messaging-api-line');
 jest.mock('warning');
 
+let LineClient;
 let LineContext;
 let LineEvent;
 let sleep;
@@ -9,6 +10,7 @@ let warning;
 
 beforeEach(() => {
   /* eslint-disable global-require */
+  LineClient = require('messaging-api-line').LineClient;
   LineContext = require('../LineContext').default;
   LineEvent = require('../LineEvent').default;
   sleep = require('delay');
@@ -59,33 +61,7 @@ const groupSession = {
 };
 
 const setup = ({ session } = { session: userSession }) => {
-  const client = {
-    reply: jest.fn(),
-    replyText: jest.fn(),
-    push: jest.fn(),
-    pushText: jest.fn(),
-    pushImage: jest.fn(),
-    pushAudio: jest.fn(),
-    pushVideo: jest.fn(),
-    pushLocation: jest.fn(),
-    pushSticker: jest.fn(),
-    pushButtonTemplate: jest.fn(),
-    pushConfirmTemplate: jest.fn(),
-    pushImagemap: jest.fn(),
-    pushCarouselTemplate: jest.fn(),
-    getUserProfile: jest.fn(),
-    getGroupMemberProfile: jest.fn(),
-    getRoomMemberProfile: jest.fn(),
-    getGroupMemberIds: jest.fn(),
-    getAllGroupMemberIds: jest.fn(),
-    getRoomMemberIds: jest.fn(),
-    getAllRoomMemberIds: jest.fn(),
-    getLinkedRichMenu: jest.fn(),
-    linkRichMenu: jest.fn(),
-    unlinkRichMenu: jest.fn(),
-    leaveGroup: jest.fn(),
-    leaveRoom: jest.fn(),
-  };
+  const client = LineClient.connect();
   const context = new LineContext({
     client,
     event: new LineEvent(rawEvent),

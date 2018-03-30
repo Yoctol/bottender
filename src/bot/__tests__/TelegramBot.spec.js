@@ -1,6 +1,16 @@
 import TelegramBot from '../TelegramBot';
 import TelegramConnector from '../TelegramConnector';
 
+jest.mock('messaging-api-telegram', () => {
+  const createMockInstance = require('jest-create-mock-instance').default;
+  const { TelegramClient } = require.requireActual('messaging-api-telegram');
+  return {
+    TelegramClient: {
+      connect: () => createMockInstance(TelegramClient),
+    },
+  };
+});
+
 const _consoleError = console.error;
 
 beforeEach(() => {
@@ -63,7 +73,6 @@ describe('#createLongPollingRuntime', () => {
       },
     ];
 
-    bot.connector.client.getUpdates = jest.fn();
     bot.connector.client.getUpdates
       .mockResolvedValueOnce(getUpdates)
       .mockImplementationOnce(() => {
@@ -109,7 +118,6 @@ describe('#createLongPollingRuntime', () => {
       },
     ];
 
-    bot.connector.client.getUpdates = jest.fn();
     bot.connector.client.getUpdates
       .mockResolvedValueOnce(getUpdates)
       .mockImplementationOnce(() => {
