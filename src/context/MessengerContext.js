@@ -91,7 +91,7 @@ class MessengerContext extends Context implements PlatformContext {
     ];
 
     if (this._batchQueue) {
-      return this._batchQueue.push(MessengerBatch.createText(...args));
+      return this._batchQueue.push(MessengerBatch.sendText(...args));
     }
     return this._client.sendText(...args);
   }
@@ -355,27 +355,27 @@ class MessengerContext extends Context implements PlatformContext {
 
 const sendMethods = [
   // type name, arguments length
-  ['Message', 3],
-  ['Attachment', 3],
-  ['Image', 3],
-  ['Audio', 3],
-  ['Video', 3],
-  ['File', 3],
-  ['Template', 3],
-  ['GenericTemplate', 3],
-  ['ButtonTemplate', 4],
-  ['ListTemplate', 4],
-  ['OpenGraphTemplate', 3],
-  ['MediaTemplate', 3],
-  ['ReceiptTemplate', 3],
-  ['AirlineBoardingPassTemplate', 3],
-  ['AirlineCheckinTemplate', 3],
-  ['AirlineItineraryTemplate', 3],
-  ['AirlineFlightUpdateTemplate', 3],
+  ['sendMessage', 3],
+  ['sendAttachment', 3],
+  ['sendImage', 3],
+  ['sendAudio', 3],
+  ['sendVideo', 3],
+  ['sendFile', 3],
+  ['sendTemplate', 3],
+  ['sendGenericTemplate', 3],
+  ['sendButtonTemplate', 4],
+  ['sendListTemplate', 4],
+  ['sendOpenGraphTemplate', 3],
+  ['sendMediaTemplate', 3],
+  ['sendReceiptTemplate', 3],
+  ['sendAirlineBoardingPassTemplate', 3],
+  ['sendAirlineCheckinTemplate', 3],
+  ['sendAirlineItineraryTemplate', 3],
+  ['sendAirlineFlightUpdateTemplate', 3],
 ];
 
-sendMethods.forEach(([type, len]) => {
-  Object.defineProperty(MessengerContext.prototype, `send${type}`, {
+sendMethods.forEach(([method, len]) => {
+  Object.defineProperty(MessengerContext.prototype, method, {
     enumerable: false,
     configurable: true,
     writable: true,
@@ -383,7 +383,7 @@ sendMethods.forEach(([type, len]) => {
       if (!this._session) {
         warning(
           false,
-          `send${type}: should not be called in context without session`
+          `${method}: should not be called in context without session`
         );
         return;
       }
@@ -401,10 +401,10 @@ sendMethods.forEach(([type, len]) => {
 
       if (this._batchQueue) {
         return this._batchQueue.push(
-          MessengerBatch[`create${type}`](this._session.user.id, ...args)
+          MessengerBatch[method](this._session.user.id, ...args)
         );
       }
-      return this._client[`send${type}`](this._session.user.id, ...args);
+      return this._client[method](this._session.user.id, ...args);
     },
   });
 });
