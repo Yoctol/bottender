@@ -2,7 +2,7 @@
 
 import sleep from 'delay';
 import warning from 'warning';
-import { MessengerClient } from 'messaging-api-messenger';
+import { MessengerClient, MessengerBatch } from 'messaging-api-messenger';
 
 import type { Session } from '../session/Session';
 
@@ -16,6 +16,7 @@ type Options = {|
   session: ?Session,
   initialState: ?Object,
   customAccessToken: ?string,
+  batchQueue: ?Object,
 |};
 
 class MessengerContext extends Context implements PlatformContext {
@@ -23,6 +24,7 @@ class MessengerContext extends Context implements PlatformContext {
   _event: MessengerEvent;
   _session: ?Session;
   _customAccessToken: ?string;
+  _batchQueue: ?Object;
 
   constructor({
     client,
@@ -30,9 +32,11 @@ class MessengerContext extends Context implements PlatformContext {
     session,
     initialState,
     customAccessToken,
+    batchQueue,
   }: Options) {
     super({ client, event, session, initialState });
     this._customAccessToken = customAccessToken;
+    this._batchQueue = batchQueue;
   }
 
   /**
@@ -76,11 +80,20 @@ class MessengerContext extends Context implements PlatformContext {
 
     const messageType = options && options.tag ? 'MESSAGE_TAG' : 'RESPONSE';
 
-    return this._client.sendText(this._session.user.id, text, {
-      messaging_type: messageType,
-      ...options,
-      access_token: this._customAccessToken,
-    });
+    const args = [
+      this._session.user.id,
+      text,
+      {
+        messaging_type: messageType,
+        ...options,
+        access_token: this._customAccessToken,
+      },
+    ];
+
+    if (this._batchQueue) {
+      return this._batchQueue.push(MessengerBatch.sendText(...args));
+    }
+    return this._client.sendText(...args);
   }
 
   /**
@@ -341,7 +354,7 @@ class MessengerContext extends Context implements PlatformContext {
 }
 
 const sendMethods = [
-  // method name, arguments length
+  // type name, arguments length
   ['sendMessage', 3],
   ['sendAttachment', 3],
   ['sendImage', 3],
@@ -362,7 +375,7 @@ const sendMethods = [
 ];
 
 sendMethods.forEach(([method, len]) => {
-  Object.defineProperty(MessengerContext.prototype, `${method}`, {
+  Object.defineProperty(MessengerContext.prototype, method, {
     enumerable: false,
     configurable: true,
     writable: true,
@@ -386,6 +399,11 @@ sendMethods.forEach(([method, len]) => {
         access_token: this._customAccessToken,
       };
 
+      if (this._batchQueue) {
+        return this._batchQueue.push(
+          MessengerBatch[method](this._session.user.id, ...args)
+        );
+      }
       return this._client[method](this._session.user.id, ...args);
     },
   });
