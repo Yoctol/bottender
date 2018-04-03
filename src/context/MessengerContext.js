@@ -51,6 +51,13 @@ class MessengerContext extends Context implements PlatformContext {
     return this._customAccessToken || this._client.accessToken;
   }
 
+  _callClientMethod(method: string, args: Array<any>) {
+    if (this._batchQueue) {
+      return this._batchQueue.push(MessengerBatch[method](...args));
+    }
+    return this._client[method](...args);
+  }
+
   /**
    * Delay and show indicators for milliseconds.
    *
@@ -90,10 +97,7 @@ class MessengerContext extends Context implements PlatformContext {
       },
     ];
 
-    if (this._batchQueue) {
-      return this._batchQueue.push(MessengerBatch.sendText(...args));
-    }
-    return this._client.sendText(...args);
+    return this._callClientMethod('sendText', args);
   }
 
   /**
@@ -114,9 +118,14 @@ class MessengerContext extends Context implements PlatformContext {
       return null;
     }
 
-    return this._client.getUserProfile(this._session.user.id, {
-      access_token: this._customAccessToken,
-    });
+    const args = [
+      this._session.user.id,
+      {
+        access_token: this._customAccessToken,
+      },
+    ];
+
+    return this._callClientMethod('getUserProfile', args);
   }
 
   /**
@@ -139,9 +148,15 @@ class MessengerContext extends Context implements PlatformContext {
 
     this._isHandled = true;
 
-    return this._client.sendSenderAction(this._session.user.id, action, {
-      access_token: this._customAccessToken,
-    });
+    const args = [
+      this._session.user.id,
+      action,
+      {
+        access_token: this._customAccessToken,
+      },
+    ];
+
+    return this._callClientMethod('sendSenderAction', args);
   }
 
   /**
@@ -158,9 +173,14 @@ class MessengerContext extends Context implements PlatformContext {
 
     this._isHandled = true;
 
-    return this._client.typingOn(this._session.user.id, {
-      access_token: this._customAccessToken,
-    });
+    const args = [
+      this._session.user.id,
+      {
+        access_token: this._customAccessToken,
+      },
+    ];
+
+    return this._callClientMethod('typingOn', args);
   }
 
   /**
@@ -177,9 +197,14 @@ class MessengerContext extends Context implements PlatformContext {
 
     this._isHandled = true;
 
-    return this._client.typingOff(this._session.user.id, {
-      access_token: this._customAccessToken,
-    });
+    const args = [
+      this._session.user.id,
+      {
+        access_token: this._customAccessToken,
+      },
+    ];
+
+    return this._callClientMethod('typingOff', args);
   }
 
   /**
@@ -196,9 +221,14 @@ class MessengerContext extends Context implements PlatformContext {
 
     this._isHandled = true;
 
-    return this._client.markSeen(this._session.user.id, {
-      access_token: this._customAccessToken,
-    });
+    const args = [
+      this._session.user.id,
+      {
+        access_token: this._customAccessToken,
+      },
+    ];
+
+    return this._callClientMethod('markSeen', args);
   }
 
   /**
@@ -224,14 +254,16 @@ class MessengerContext extends Context implements PlatformContext {
 
     this._isHandled = true;
 
-    return this._client.passThreadControl(
+    const args = [
       this._session.user.id,
       targetAppId,
       metadata,
       {
         access_token: this._customAccessToken,
-      }
-    );
+      },
+    ];
+
+    return this._callClientMethod('passThreadControl', args);
   }
 
   /**
@@ -248,13 +280,15 @@ class MessengerContext extends Context implements PlatformContext {
 
     this._isHandled = true;
 
-    return this._client.passThreadControlToPageInbox(
+    const args = [
       this._session.user.id,
       metadata,
       {
         access_token: this._customAccessToken,
-      }
-    );
+      },
+    ];
+
+    return this._callClientMethod('passThreadControlToPageInbox', args);
   }
 
   /**
@@ -271,9 +305,15 @@ class MessengerContext extends Context implements PlatformContext {
 
     this._isHandled = true;
 
-    return this._client.takeThreadControl(this._session.user.id, metadata, {
-      access_token: this._customAccessToken,
-    });
+    const args = [
+      this._session.user.id,
+      metadata,
+      {
+        access_token: this._customAccessToken,
+      },
+    ];
+
+    return this._callClientMethod('takeThreadControl', args);
   }
 
   /**
@@ -290,9 +330,15 @@ class MessengerContext extends Context implements PlatformContext {
 
     this._isHandled = true;
 
-    return this._client.requestThreadControl(this._session.user.id, metadata, {
-      access_token: this._customAccessToken,
-    });
+    const args = [
+      this._session.user.id,
+      metadata,
+      {
+        access_token: this._customAccessToken,
+      },
+    ];
+
+    return this._callClientMethod('requestThreadControl', args);
   }
 
   /**
@@ -313,9 +359,15 @@ class MessengerContext extends Context implements PlatformContext {
       return;
     }
 
-    return this._client.associateLabel(this._session.user.id, labelId, {
-      access_token: this._customAccessToken,
-    });
+    const args = [
+      this._session.user.id,
+      labelId,
+      {
+        access_token: this._customAccessToken,
+      },
+    ];
+
+    return this._callClientMethod('associateLabel', args);
   }
 
   /**
@@ -330,9 +382,15 @@ class MessengerContext extends Context implements PlatformContext {
       return;
     }
 
-    return this._client.dissociateLabel(this._session.user.id, labelId, {
-      access_token: this._customAccessToken,
-    });
+    const args = [
+      this._session.user.id,
+      labelId,
+      {
+        access_token: this._customAccessToken,
+      },
+    ];
+
+    return this._callClientMethod('dissociateLabel', args);
   }
 
   /**
@@ -347,9 +405,14 @@ class MessengerContext extends Context implements PlatformContext {
       return;
     }
 
-    return this._client.getAssociatedLabels(this._session.user.id, {
-      access_token: this._customAccessToken,
-    });
+    const args = [
+      this._session.user.id,
+      {
+        access_token: this._customAccessToken,
+      },
+    ];
+
+    return this._callClientMethod('getAssociatedLabels', args);
   }
 }
 
@@ -399,12 +462,7 @@ sendMethods.forEach(([method, len]) => {
         access_token: this._customAccessToken,
       };
 
-      if (this._batchQueue) {
-        return this._batchQueue.push(
-          MessengerBatch[method](this._session.user.id, ...args)
-        );
-      }
-      return this._client[method](this._session.user.id, ...args);
+      return this._callClientMethod(method, [this._session.user.id, ...args]);
     },
   });
 });

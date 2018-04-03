@@ -651,9 +651,9 @@ aws4@^1.2.1, aws4@^1.6.0:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/aws4/-/aws4-1.6.0.tgz#83ef5ca860b2b32e4a0deedee8c771b9db57471e"
 
-axios-error@^0.7.0-beta.3:
-  version "0.7.0-beta.3"
-  resolved "https://registry.yarnpkg.com/axios-error/-/axios-error-0.7.0-beta.3.tgz#1444b76e7eece71ca247b2f04338af19aa892695"
+axios-error@^0.7.0-beta.4:
+  version "0.7.0-beta.4"
+  resolved "https://registry.yarnpkg.com/axios-error/-/axios-error-0.7.0-beta.4.tgz#89c085851451fc28d37090f552467e039c0e73c7"
 
 axios-mock-adapter@^1.14.0:
   version "1.14.1"
@@ -4669,46 +4669,46 @@ merge@^1.1.3:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/merge/-/merge-1.2.0.tgz#7531e39d4949c281a66b8c5a6e0265e8b05894da"
 
-messaging-api-line@^0.7.0-beta.3:
-  version "0.7.0-beta.3"
-  resolved "https://registry.yarnpkg.com/messaging-api-line/-/messaging-api-line-0.7.0-beta.3.tgz#bc19b8b49f265549860559faaa58cc7f0af5e5fe"
+messaging-api-line@^0.7.0-beta.4:
+  version "0.7.0-beta.4"
+  resolved "https://registry.yarnpkg.com/messaging-api-line/-/messaging-api-line-0.7.0-beta.4.tgz#8906a11044e4612f1bf0501f83b9c4727b415d51"
   dependencies:
     axios "^0.17.0"
-    axios-error "^0.7.0-beta.3"
+    axios-error "^0.7.0-beta.4"
     image-type "^3.0.0"
 
-messaging-api-messenger@^0.7.0-beta.3:
-  version "0.7.0-beta.3"
-  resolved "https://registry.yarnpkg.com/messaging-api-messenger/-/messaging-api-messenger-0.7.0-beta.3.tgz#0d102daf027a29340134328c373ab3bfb4a27272"
+messaging-api-messenger@^0.7.0-beta.4:
+  version "0.7.0-beta.4"
+  resolved "https://registry.yarnpkg.com/messaging-api-messenger/-/messaging-api-messenger-0.7.0-beta.4.tgz#c2db33fdde17b3a5727b8752658630d70b1e7dd3"
   dependencies:
     axios "^0.17.0"
-    axios-error "^0.7.0-beta.3"
+    axios-error "^0.7.0-beta.4"
     form-data "^2.3.1"
     invariant "^2.2.2"
     is-plain-object "^2.0.4"
     lodash.omit "^4.5.0"
     warning "^3.0.0"
 
-messaging-api-slack@^0.7.0-beta.3:
-  version "0.7.0-beta.3"
-  resolved "https://registry.yarnpkg.com/messaging-api-slack/-/messaging-api-slack-0.7.0-beta.3.tgz#04a5166ea80ad83ff36c1aba7cdcce081acc4463"
+messaging-api-slack@^0.7.0-beta.4:
+  version "0.7.0-beta.4"
+  resolved "https://registry.yarnpkg.com/messaging-api-slack/-/messaging-api-slack-0.7.0-beta.4.tgz#95f0bed5df9e824bc7de2d278e3b20eae891eb10"
   dependencies:
     axios "^0.17.0"
-    axios-error "^0.7.0-beta.3"
+    axios-error "^0.7.0-beta.4"
 
-messaging-api-telegram@^0.7.0-beta.3:
-  version "0.7.0-beta.3"
-  resolved "https://registry.yarnpkg.com/messaging-api-telegram/-/messaging-api-telegram-0.7.0-beta.3.tgz#b9ba081e20153e2d6bec1de18a6f055697fd3e40"
+messaging-api-telegram@^0.7.0-beta.4:
+  version "0.7.0-beta.4"
+  resolved "https://registry.yarnpkg.com/messaging-api-telegram/-/messaging-api-telegram-0.7.0-beta.4.tgz#045cb8665482569315669da1ac6f7ea9714b261c"
   dependencies:
     axios "^0.17.0"
-    axios-error "^0.7.0-beta.3"
+    axios-error "^0.7.0-beta.4"
 
-messaging-api-viber@^0.7.0-beta.3:
-  version "0.7.0-beta.3"
-  resolved "https://registry.yarnpkg.com/messaging-api-viber/-/messaging-api-viber-0.7.0-beta.3.tgz#9ef142175bc87f8fa885644e844ba266ed7ea802"
+messaging-api-viber@^0.7.0-beta.4:
+  version "0.7.0-beta.4"
+  resolved "https://registry.yarnpkg.com/messaging-api-viber/-/messaging-api-viber-0.7.0-beta.4.tgz#b1041bca392ad98702fd822c3dcb1b80977b8b63"
   dependencies:
     axios "^0.17.0"
-    axios-error "^0.7.0-beta.3"
+    axios-error "^0.7.0-beta.4"
 
 messenger-batch@^0.2.1:
   version "0.2.1"
