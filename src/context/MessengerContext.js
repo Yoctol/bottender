@@ -434,6 +434,9 @@ const sendMethods = [
   ['sendAirlineBoardingPassTemplate', 3],
   ['sendAirlineCheckinTemplate', 3],
   ['sendAirlineItineraryTemplate', 3],
+  ['sendAirlineUpdateTemplate', 3],
+
+  // deprecated
   ['sendAirlineFlightUpdateTemplate', 3],
 ];
 
