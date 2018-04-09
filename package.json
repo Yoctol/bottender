@@ -24,7 +24,7 @@
     "utils.js"
   ],
   "scripts": {
-    "build": "npm run clean && babel src -d lib --ignore __tests__ --copy-files",
+    "build": "npm run clean && cross-env NODE_ENV=production babel src -d lib --ignore __tests__ --copy-files",
     "check": "flow check",
     "clean": "rimraf lib",
     "precommit": "lint-staged",
@@ -99,10 +99,12 @@
     "axios-mock-adapter": "^1.14.0",
     "babel-cli": "^6.26.0",
     "babel-eslint": "^8.2.1",
+    "babel-plugin-lodash": "^3.3.2",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-flow": "^6.23.0",
+    "cross-env": "^5.1.4",
     "eslint": "^4.19.0",
     "eslint-config-prettier": "^2.9.0",
     "eslint-config-yoctol-base": "^0.15.1",
