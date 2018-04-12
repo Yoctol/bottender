@@ -8,6 +8,18 @@ describe('#get', () => {
     expect(await store.get('x')).toBe('abc');
   });
 
+  it('should get different object when get multiple times', async () => {
+    const store = new MemoryCacheStore(5);
+
+    await store.put('x', { a: 1 }, 5);
+
+    const result1 = await store.get('x');
+    const result2 = await store.get('x');
+
+    expect(result1).not.toBe(result2);
+    expect(result1).toEqual(result2);
+  });
+
   it('should get null when value does not exist', async () => {
     const store = new MemoryCacheStore(5);
 
