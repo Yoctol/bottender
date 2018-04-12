@@ -1,5 +1,6 @@
 import { json, send } from 'micro';
 import parseUrlencoded from 'urlencoded-body-parser';
+import shortid from 'shortid';
 
 import verifyLineSignature from './verifyLineSignature';
 import verifyMessengerSignature from './verifyMessengerSignature';
@@ -12,7 +13,10 @@ function createRequestHandler(bot, config = {}) {
   const requestHandler = bot.createRequestHandler();
   return async (req, res) => {
     if (req.method === 'GET' && bot.connector.platform === 'messenger') {
-      verifyMessengerWebhook({ verifyToken: config.verifyToken })(req, res);
+      verifyMessengerWebhook({
+        verifyToken:
+          config.verifyToken || bot.connector.verifyToken || shortid.generate(),
+      })(req, res);
     } else if (req.method === 'POST') {
       let body;
       if (req.headers['content-type'] === 'application/x-www-form-urlencoded') {

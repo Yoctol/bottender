@@ -7,12 +7,13 @@ import createServer from '../createServer';
 jest.mock('urlencoded-body-parser');
 jest.mock('../../connectNgrok');
 
-function setup({ platform }) {
+function setup({ platform, verifyToken }) {
   const requestHandler = jest.fn();
   const bot = {
     createRequestHandler: () => requestHandler,
     connector: {
       platform,
+      verifyToken,
     },
   };
   return {
@@ -36,6 +37,22 @@ it('should handle token verification', async () => {
   const { bot } = setup({ platform: 'messenger' });
   const verifyToken = '1qaz2wsx';
   const server = createServer(bot, { verifyToken });
+  const { status, text } = await request(server)
+    .get('/')
+    .query({
+      'hub.mode': 'subscribe',
+      'hub.verify_token': verifyToken,
+      'hub.challenge': 'chatbot is awesome',
+    });
+
+  expect(status).toBe(200);
+  expect(text).toBe('chatbot is awesome');
+});
+
+it('should handle token verification if verify token is passed in bot ', async () => {
+  const verifyToken = '1qaz2wsx';
+  const { bot } = setup({ platform: 'messenger', verifyToken });
+  const server = createServer(bot);
   const { status, text } = await request(server)
     .get('/')
     .query({
