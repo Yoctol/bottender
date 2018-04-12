@@ -13,7 +13,12 @@ export default class MemoryCacheStore implements CacheStore {
   }
 
   async get(key: string): Promise<mixed> {
-    const value = await this._lru.get(key);
+    const _value = this._lru.get(key);
+
+    // cloneDeep: To make sure read as different object to prevent
+    // reading same key multiple times, causing freezed by other events.
+    const value = typeof _value === 'object' ? cloneDeep(_value) : _value;
+
     return value || null;
   }
 
