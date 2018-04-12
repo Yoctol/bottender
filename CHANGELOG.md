@@ -1,3 +1,7 @@
+# 0.14.32 / 2018-04-12
+
+* [fix] MemoryCacheStore: make sure read as different object to prevent reading same key multiple times, causing freezed by other events.
+
 # 0.14.31 / 2018-03-26
 
 ### line
