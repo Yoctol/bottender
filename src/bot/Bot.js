@@ -97,6 +97,7 @@ export default class Bot {
         throw new Error('Bot.createRequestHandler: Missing argument.');
       }
 
+      debug('bottender: incoming request body');
       debug(JSON.stringify(body, null, 2));
 
       if (!this._initialized) {
@@ -116,6 +117,9 @@ export default class Bot {
         // $FlowFixMe
         session = await this._sessions.read(sessionId);
         session = session || Object.create(null);
+
+        debug(`bottender: read session ${sessionId}`);
+        debug(JSON.stringify(session, null, 2));
 
         Object.defineProperty(session, 'id', {
           configurable: false,
@@ -178,6 +182,9 @@ export default class Bot {
               context.isSessionWritten = true;
             });
 
+            debug(`bottender: write session ${sessionId}`);
+            debug(JSON.stringify(session, null, 2));
+
             await this._sessions.write(sessionId, session);
           }
         } catch (err) {
@@ -195,6 +202,9 @@ export default class Bot {
             contexts.forEach(context => {
               context.isSessionWritten = true;
             });
+
+            debug(`bottender: write session ${sessionId}`);
+            debug(JSON.stringify(session, null, 2));
 
             return this._sessions.write(sessionId, session);
           }
