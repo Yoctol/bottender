@@ -1,3 +1,8 @@
+# 0.14.33 / 2018-04-13
+
+* [new] add more debug logs (#239)
+* [fix] Fixes webhook verification with Micro when verifyToken is set in bot (#236)
+
 # 0.14.32 / 2018-04-12
 
 * [fix] MemoryCacheStore: make sure read as different object to prevent reading same key multiple times, causing freezed by other events.
