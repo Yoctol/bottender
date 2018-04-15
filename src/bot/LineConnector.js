@@ -18,15 +18,23 @@ type ConstructorOptions = {|
   accessToken?: string,
   channelSecret?: string,
   client?: LineClient,
+  shouldBatch: ?boolean,
 |};
 
 export default class LineConnector implements Connector<LineRequestBody> {
   _client: LineClient;
   _channelSecret: string;
+  _shouldBatch: ?boolean;
 
-  constructor({ accessToken, channelSecret, client }: ConstructorOptions) {
+  constructor({
+    accessToken,
+    channelSecret,
+    client,
+    shouldBatch,
+  }: ConstructorOptions) {
     this._client = client || LineClient.connect(accessToken);
     this._channelSecret = channelSecret || '';
+    this._shouldBatch = shouldBatch || false;
   }
 
   _isWebhookVerifyEvent(event: LineRawEvent): boolean {
@@ -214,6 +222,7 @@ export default class LineConnector implements Connector<LineRequestBody> {
       event,
       session,
       initialState,
+      shouldBatch: this._shouldBatch,
     });
   }
 

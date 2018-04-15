@@ -11,13 +11,19 @@ export default class LineBot extends Bot {
     channelSecret,
     sessionStore,
     sync,
+    shouldBatch,
   }: {
     accessToken: string,
     channelSecret: string,
     sessionStore: SessionStore,
     sync?: boolean,
+    shouldBatch: ?boolean,
   }) {
-    const connector = new LineConnector({ accessToken, channelSecret });
+    const connector = new LineConnector({
+      accessToken,
+      channelSecret,
+      shouldBatch,
+    });
     super({ connector, sessionStore, sync });
   }
 }
