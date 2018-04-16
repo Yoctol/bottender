@@ -2,6 +2,7 @@ jest.mock('delay');
 jest.mock('messaging-api-line');
 jest.mock('warning');
 
+let Line;
 let LineClient;
 let LineContext;
 let LineEvent;
@@ -10,6 +11,7 @@ let warning;
 
 beforeEach(() => {
   /* eslint-disable global-require */
+  Line = require('messaging-api-line').Line;
   LineClient = require('messaging-api-line').LineClient;
   LineContext = require('../LineContext').default;
   LineEvent = require('../LineEvent').default;
@@ -60,12 +62,13 @@ const groupSession = {
   },
 };
 
-const setup = ({ session } = { session: userSession }) => {
+const setup = ({ session = userSession, shouldBatch = false } = {}) => {
   const client = LineClient.connect();
   const context = new LineContext({
     client,
     event: new LineEvent(rawEvent),
     session,
+    shouldBatch,
   });
   return {
     context,
@@ -940,11 +943,13 @@ describe('profile APIs', () => {
 
     it('not get profile without user in session', async () => {
       const { context, client } = setup({
-        type: 'room',
-        room: {
-          id: 'fakeRoomId',
+        session: {
+          type: 'room',
+          room: {
+            id: 'fakeRoomId',
+          },
+          user: null,
         },
-        user: null,
       });
 
       await context.getUserProfile();
@@ -1198,5 +1203,202 @@ describe('#typing', () => {
     await context.typing(10);
 
     expect(sleep).toBeCalled();
+  });
+});
+
+describe('batch', () => {
+  it('should not batch when shouldBatch: false', async () => {
+    const { client, context } = setup({ shouldBatch: false });
+
+    await context.replyText('1');
+    await context.pushText('2');
+    await context.pushText('3');
+
+    await context.handlerDidEnd();
+
+    expect(client.reply).not.toBeCalled();
+    expect(client.push).not.toBeCalled();
+  });
+
+  it('should batch reply', async () => {
+    const { client, context } = setup({ shouldBatch: true });
+
+    await context.replyText('1');
+    await context.replyText('2');
+    await context.replyText('3');
+
+    await context.handlerDidEnd();
+
+    expect(client.reply).toBeCalledWith(rawEvent.replyToken, [
+      {
+        type: 'text',
+        text: '1',
+      },
+      {
+        type: 'text',
+        text: '2',
+      },
+      {
+        type: 'text',
+        text: '3',
+      },
+    ]);
+  });
+
+  it('should work with context.reply', async () => {
+    const { client, context } = setup({ shouldBatch: true });
+
+    await context.replyText('1');
+    await context.reply([Line.createText('2'), Line.createText('3')]);
+
+    await context.handlerDidEnd();
+
+    expect(client.reply).toBeCalledWith(rawEvent.replyToken, [
+      {
+        type: 'text',
+        text: '1',
+      },
+      {
+        type: 'text',
+        text: '2',
+      },
+      {
+        type: 'text',
+        text: '3',
+      },
+    ]);
+  });
+
+  it('should warning when reply over 5 messages', async () => {
+    const { client, context } = setup({ shouldBatch: true });
+
+    await context.replyText('1');
+    await context.replyText('2');
+    await context.replyText('3');
+    await context.replyText('4');
+    await context.replyText('5');
+
+    await context.replyText('6');
+
+    await context.handlerDidEnd();
+
+    expect(client.reply).toHaveBeenCalledTimes(1);
+    expect(client.reply).toBeCalledWith(rawEvent.replyToken, [
+      {
+        type: 'text',
+        text: '1',
+      },
+      {
+        type: 'text',
+        text: '2',
+      },
+      {
+        type: 'text',
+        text: '3',
+      },
+      {
+        type: 'text',
+        text: '4',
+      },
+      {
+        type: 'text',
+        text: '5',
+      },
+    ]);
+    expect(warning).toBeCalledWith(false, expect.any(String));
+  });
+
+  it('should batch push', async () => {
+    const { client, context, session } = setup({ shouldBatch: true });
+
+    await context.pushText('1');
+    await context.pushText('2');
+    await context.pushText('3');
+
+    await context.handlerDidEnd();
+
+    expect(client.push).toBeCalledWith(session.user.id, [
+      {
+        type: 'text',
+        text: '1',
+      },
+      {
+        type: 'text',
+        text: '2',
+      },
+      {
+        type: 'text',
+        text: '3',
+      },
+    ]);
+  });
+
+  it('should work with context.push', async () => {
+    const { client, context, session } = setup({ shouldBatch: true });
+
+    await context.pushText('1');
+    await context.push([Line.createText('2'), Line.createText('3')]);
+
+    await context.handlerDidEnd();
+
+    expect(client.push).toBeCalledWith(session.user.id, [
+      {
+        type: 'text',
+        text: '1',
+      },
+      {
+        type: 'text',
+        text: '2',
+      },
+      {
+        type: 'text',
+        text: '3',
+      },
+    ]);
+  });
+
+  it('should have more requests when push over 5 messages', async () => {
+    const { client, context, session } = setup({ shouldBatch: true });
+
+    await context.pushText('1');
+    await context.pushText('2');
+    await context.pushText('3');
+    await context.pushText('4');
+    await context.pushText('5');
+
+    await context.pushText('6');
+
+    await context.handlerDidEnd();
+
+    expect(client.push).toHaveBeenCalledTimes(2);
+    expect(client.push).toBeCalledWith(session.user.id, [
+      {
+        type: 'text',
+        text: '1',
+      },
+      {
+        type: 'text',
+        text: '2',
+      },
+      {
+        type: 'text',
+        text: '3',
+      },
+      {
+        type: 'text',
+        text: '4',
+      },
+      {
+        type: 'text',
+        text: '5',
+      },
+    ]);
+    expect(client.push).toBeCalledWith(session.user.id, [
+      {
+        type: 'text',
+        text: '6',
+      },
+    ]);
+    expect(warning).not.toBeCalled();
   });
 });

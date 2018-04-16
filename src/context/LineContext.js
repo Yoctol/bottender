@@ -3,7 +3,8 @@
 import sleep from 'delay';
 import warning from 'warning';
 import invariant from 'invariant';
-import { LineClient } from 'messaging-api-line';
+import { Line, LineClient } from 'messaging-api-line';
+import chunk from 'lodash/chunk';
 
 import type { Session } from '../session/Session';
 
@@ -16,6 +17,7 @@ type Options = {|
   event: LineEvent,
   session: ?Session,
   initialState: ?Object,
+  shouldBatch: ?boolean,
 |};
 
 class LineContext extends Context implements PlatformContext {
@@ -25,8 +27,14 @@ class LineContext extends Context implements PlatformContext {
 
   _isReplied: boolean = false;
 
-  constructor({ client, event, session, initialState }: Options) {
+  _shouldBatch: boolean;
+  _replyMessages = [];
+  _pushMessages = [];
+
+  constructor({ client, event, session, initialState, shouldBatch }: Options) {
     super({ client, event, session, initialState });
+
+    this._shouldBatch = shouldBatch || false;
   }
 
   /**
@@ -43,6 +51,42 @@ class LineContext extends Context implements PlatformContext {
    */
   get isReplied(): boolean {
     return this._isReplied;
+  }
+
+  /**
+   * Context Lifecycle Hook
+   */
+  async handlerDidEnd() {
+    if (this._shouldBatch) {
+      if (this._replyMessages.length > 0) {
+        const messageChunks = chunk(this._replyMessages, 5);
+        warning(
+          messageChunks.length === 1,
+          'one replyToken can only be used to reply 5 messages'
+        );
+        await this._client.reply(this._event.replyToken, messageChunks[0]);
+      }
+
+      if (this._pushMessages.length > 0) {
+        if (this._session) {
+          const sessionTypeId = this._session[this._session.type].id;
+
+          const messageChunks = chunk(this._pushMessages, 5);
+
+          for (let i = 0; i < messageChunks.length; i++) {
+            const messages = messageChunks[i];
+
+            // eslint-disable-next-line no-await-in-loop
+            await this._client.push(sessionTypeId, messages);
+          }
+        } else {
+          warning(
+            false,
+            'push: should not be called in context without session'
+          );
+        }
+      }
+    }
   }
 
   /**
@@ -292,8 +336,18 @@ types.forEach(({ name, aliases }) => {
       async value(...args) {
         invariant(!this._isReplied, 'Can not reply event mulitple times');
 
-        this._isReplied = true;
         this._isHandled = true;
+
+        if (this._shouldBatch) {
+          if (name === '') {
+            this._replyMessages.push(...args[0]);
+          } else {
+            this._replyMessages.push(Line[`create${name}`](...args));
+          }
+          return;
+        }
+
+        this._isReplied = true;
 
         return this._client[`reply${name}`](this._event.replyToken, ...args);
       },
@@ -313,6 +367,16 @@ types.forEach(({ name, aliases }) => {
         }
 
         this._isHandled = true;
+
+        if (this._shouldBatch) {
+          if (name === '') {
+            this._pushMessages.push(...args[0]);
+          } else {
+            this._pushMessages.push(Line[`create${name}`](...args));
+          }
+          return;
+        }
+
         const sessionType = this._session.type;
         return this._client[`push${name}`](
           this._session[sessionType].id,
@@ -341,6 +405,12 @@ types
           }
 
           this._isHandled = true;
+
+          if (this._shouldBatch) {
+            this._pushMessages.push(Line[`create${name}`](...args));
+            return;
+          }
+
           const sessionType = this._session.type;
           return this._client[`push${name}`](
             this._session[sessionType].id,

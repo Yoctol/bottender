@@ -169,7 +169,15 @@ export default class Bot {
       }
       const handler: FunctionalHandler = this._handler;
       const promises = Promise.all(
-        contexts.map(context => Promise.resolve().then(() => handler(context)))
+        contexts.map(context =>
+          Promise.resolve()
+            .then(() => handler(context))
+            .then(() => {
+              if (context.handlerDidEnd) {
+                return context.handlerDidEnd();
+              }
+            })
+        )
       );
 
       if (this._sync) {
