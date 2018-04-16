@@ -204,6 +204,20 @@ const beacon = {
   },
 };
 
+const accountLink = {
+  type: 'accountLink',
+  replyToken: 'b60d432864f44d079f6d8efe86cf404b',
+  source: {
+    userId: 'U206d25c2ea6bd87c17655609a1c37cb8',
+    type: 'user',
+  },
+  timestamp: 1513669370317,
+  link: {
+    result: 'ok',
+    nonce: 'xxxxxxxxxxxxxxx',
+  },
+};
+
 const noSourceMessage = {};
 
 it('#rawEvent', () => {
@@ -650,5 +664,30 @@ it('#beacon', () => {
   expect(new LineEvent(beacon).beacon).toEqual({
     hwid: 'd41d8cd98f',
     type: 'enter',
+  });
+});
+
+it('#isAccountLink', () => {
+  expect(new LineEvent(textMessage).isAccountLink).toEqual(false);
+  expect(new LineEvent(follow).isAccountLink).toEqual(false);
+  expect(new LineEvent(unfollow).isAccountLink).toEqual(false);
+  expect(new LineEvent(join).isAccountLink).toEqual(false);
+  expect(new LineEvent(leave).isAccountLink).toEqual(false);
+  expect(new LineEvent(postback).isAccountLink).toEqual(false);
+  expect(new LineEvent(beacon).isAccountLink).toEqual(false);
+  expect(new LineEvent(accountLink).isAccountLink).toEqual(true);
+});
+
+it('#accountLink', () => {
+  expect(new LineEvent(textMessage).accountLink).toEqual(null);
+  expect(new LineEvent(follow).accountLink).toEqual(null);
+  expect(new LineEvent(unfollow).accountLink).toEqual(null);
+  expect(new LineEvent(join).accountLink).toEqual(null);
+  expect(new LineEvent(leave).accountLink).toEqual(null);
+  expect(new LineEvent(postback).accountLink).toEqual(null);
+  expect(new LineEvent(beacon).accountLink).toEqual(null);
+  expect(new LineEvent(accountLink).accountLink).toEqual({
+    result: 'ok',
+    nonce: 'xxxxxxxxxxxxxxx',
   });
 });

@@ -11,7 +11,8 @@ type EventType =
   | 'unfollow'
   | 'join'
   | 'leave'
-  | 'beacon';
+  | 'beacon'
+  | 'accountLink';
 
 type UserSource = {
   type: 'user',
@@ -53,8 +54,13 @@ type Beacon = {|
   type: string,
 |};
 
+type AccountLink = {|
+  result: 'ok' | 'false',
+  nonce: string,
+|};
+
 export type LineRawEvent = {
-  // only message, follow, join, postback, beacon events have replyToken
+  // only message, follow, join, postback, beacon, accountLink events have replyToken
   replyToken?: ReplyToken,
   type: EventType,
   timestamp: number,
@@ -62,6 +68,7 @@ export type LineRawEvent = {
   message?: Message,
   postback?: Postback,
   beacon?: Beacon,
+  link?: AccountLink,
 };
 
 export default class LineEvent implements Event {
@@ -387,5 +394,21 @@ export default class LineEvent implements Event {
    */
   get beacon(): ?Beacon {
     return this._rawEvent.beacon || null;
+  }
+
+  /**
+   * Determine if the event is an accountLink event.
+   *
+   */
+  get isAccountLink(): boolean {
+    return this._rawEvent.type === 'accountLink';
+  }
+
+  /**
+   * The link object from LINE raw event.
+   *
+   */
+  get accountLink(): ?AccountLink {
+    return this._rawEvent.link || null;
   }
 }
