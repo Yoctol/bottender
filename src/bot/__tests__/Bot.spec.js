@@ -482,3 +482,36 @@ describe('#setInitialState', () => {
     );
   });
 });
+
+describe('context lifecycle', () => {
+  it('should call context.handlerDidEnd when it exists', async () => {
+    const event = {};
+    const handlerDidEnd = jest.fn();
+    const connector = {
+      platform: 'any',
+      getUniqueSessionKey: jest.fn(),
+      shouldSessionUpdate: jest.fn(),
+      updateSession: jest.fn(),
+      mapRequestToEvents: jest.fn(() => [event]),
+      createContext: jest.fn(() => ({
+        event,
+        session: undefined,
+        handlerDidEnd,
+      })),
+      handlerDidEnd: jest.fn(),
+    };
+
+    const { bot } = setup({ connector });
+
+    connector.getUniqueSessionKey.mockReturnValue('__id__');
+
+    bot.onEvent(() => {});
+
+    const requestHandler = bot.createRequestHandler();
+
+    const body = {};
+    await requestHandler(body);
+
+    expect(handlerDidEnd).toBeCalled();
+  });
+});

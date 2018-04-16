@@ -336,13 +336,18 @@ types.forEach(({ name, aliases }) => {
       async value(...args) {
         invariant(!this._isReplied, 'Can not reply event mulitple times');
 
-        this._isReplied = true;
         this._isHandled = true;
 
         if (this._shouldBatch) {
-          this._replyMessages.push(Line[`create${name}`](...args));
+          if (name === '') {
+            this._replyMessages.push(...args[0]);
+          } else {
+            this._replyMessages.push(Line[`create${name}`](...args));
+          }
           return;
         }
+
+        this._isReplied = true;
 
         return this._client[`reply${name}`](this._event.replyToken, ...args);
       },
@@ -364,7 +369,11 @@ types.forEach(({ name, aliases }) => {
         this._isHandled = true;
 
         if (this._shouldBatch) {
-          this._pushMessages.push(Line[`create${name}`](...args));
+          if (name === '') {
+            this._pushMessages.push(...args[0]);
+          } else {
+            this._pushMessages.push(Line[`create${name}`](...args));
+          }
           return;
         }
 
