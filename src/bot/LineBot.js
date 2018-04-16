@@ -12,17 +12,20 @@ export default class LineBot extends Bot {
     sessionStore,
     sync,
     shouldBatch,
+    aliasSendToReply,
   }: {
     accessToken: string,
     channelSecret: string,
     sessionStore: SessionStore,
     sync?: boolean,
     shouldBatch: ?boolean,
+    aliasSendToReply: ?boolean,
   }) {
     const connector = new LineConnector({
       accessToken,
       channelSecret,
       shouldBatch,
+      aliasSendToReply,
     });
     super({ connector, sessionStore, sync });
   }
