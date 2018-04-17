@@ -317,6 +317,20 @@ class LineContext extends Context implements PlatformContext {
       'unlinkRichMenu: should not be called in context without session user'
     );
   }
+
+  /**
+   * Issues a link token used for the account link feature with current user.
+   *
+   */
+  async issueLinkToken(): Promise<any> {
+    if (this._session && this._session.user) {
+      return this._client.issueLinkToken(this._session.user.id);
+    }
+    warning(
+      false,
+      'issueLinkToken: should not be called in context without session user'
+    );
+  }
 }
 
 const types: Array<{ name: string, aliases?: Array<string> }> = [

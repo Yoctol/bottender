@@ -1184,6 +1184,33 @@ describe('ruchmenu APIs', () => {
   });
 });
 
+describe('account link APIs', () => {
+  describe('#issueLinkToken', () => {
+    it('should call client.issueLinkToken', async () => {
+      const { context, client, session } = setup();
+      client.issueLinkToken.mockResolvedValue({
+        token: 'xxxxx',
+      });
+
+      const result = await context.issueLinkToken();
+
+      expect(client.issueLinkToken).toBeCalledWith(session.user.id);
+      expect(result).toEqual({
+        token: 'xxxxx',
+      });
+      expect(warning).not.toBeCalled();
+    });
+
+    it('should warn without user', async () => {
+      const { context } = setup({ session: {} });
+
+      await context.issueLinkToken();
+
+      expect(warning).toBeCalled();
+    });
+  });
+});
+
 describe('#typing', () => {
   it('avoid delay 0', async () => {
     const { context } = setup();
