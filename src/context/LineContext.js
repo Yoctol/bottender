@@ -18,7 +18,7 @@ type Options = {|
   session: ?Session,
   initialState: ?Object,
   shouldBatch: ?boolean,
-  aliasSendToReply: ?boolean,
+  sendMethod: ?string,
 |};
 
 class LineContext extends Context implements PlatformContext {
@@ -32,7 +32,7 @@ class LineContext extends Context implements PlatformContext {
   _replyMessages = [];
   _pushMessages = [];
 
-  _aliasSendToReply: boolean;
+  _sendMethod: string;
 
   constructor({
     client,
@@ -40,12 +40,12 @@ class LineContext extends Context implements PlatformContext {
     session,
     initialState,
     shouldBatch,
-    aliasSendToReply,
+    sendMethod,
   }: Options) {
     super({ client, event, session, initialState });
 
     this._shouldBatch = shouldBatch || false;
-    this._aliasSendToReply = aliasSendToReply || false;
+    this._sendMethod = sendMethod || 'push';
   }
 
   /**
@@ -115,7 +115,7 @@ class LineContext extends Context implements PlatformContext {
    *
    */
   async sendText(text: string): Promise<any> {
-    if (this._aliasSendToReply) {
+    if (this._sendMethod === 'reply') {
       // $FlowExpectedError: dynamically defined below
       return this.replyText(text);
     }
@@ -403,9 +403,7 @@ types
         configurable: true,
         writable: true,
         async value(...args) {
-          const method = this._aliasSendToReply ? 'reply' : 'push';
-
-          return this[`${method}${type}`](...args);
+          return this[`${this._sendMethod}${type}`](...args);
         },
       });
     });

@@ -65,7 +65,7 @@ const groupSession = {
 const setup = ({
   session = userSession,
   shouldBatch = false,
-  aliasSendToReply = false,
+  sendMethod,
 } = {}) => {
   const client = LineClient.connect();
   const context = new LineContext({
@@ -73,7 +73,7 @@ const setup = ({
     event: new LineEvent(rawEvent),
     session,
     shouldBatch,
-    aliasSendToReply,
+    sendMethod,
   });
   return {
     context,
@@ -1399,8 +1399,8 @@ describe('batch', () => {
   });
 });
 
-describe('aliasSendToReply', () => {
-  it('should alias send to push as default', async () => {
+describe('sendMethod', () => {
+  it('should use push in send as default', async () => {
     const { context, client, session } = setup();
 
     await context.sendText('hello');
@@ -1409,9 +1409,9 @@ describe('aliasSendToReply', () => {
     expect(client.replyText).not.toBeCalled();
   });
 
-  it('should alias send to reply when aliasSendToReply: true', async () => {
+  it('should use reply in send when sendMethod: reply', async () => {
     const { context, client } = setup({
-      aliasSendToReply: true,
+      sendMethod: 'reply',
     });
 
     await context.sendText('hello');

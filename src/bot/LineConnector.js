@@ -3,6 +3,7 @@
 import crypto from 'crypto';
 
 import { LineClient } from 'messaging-api-line';
+import warning from 'warning';
 
 import LineContext from '../context/LineContext';
 import LineEvent, { type LineRawEvent } from '../context/LineEvent';
@@ -19,26 +20,30 @@ type ConstructorOptions = {|
   channelSecret?: string,
   client?: LineClient,
   shouldBatch: ?boolean,
-  aliasSendToReply: ?boolean,
+  sendMethod: ?string,
 |};
 
 export default class LineConnector implements Connector<LineRequestBody> {
   _client: LineClient;
   _channelSecret: string;
   _shouldBatch: ?boolean;
-  _aliasSendToReply: ?boolean;
+  _sendMethod: ?string;
 
   constructor({
     accessToken,
     channelSecret,
     client,
     shouldBatch,
-    aliasSendToReply,
+    sendMethod,
   }: ConstructorOptions) {
     this._client = client || LineClient.connect(accessToken);
     this._channelSecret = channelSecret || '';
     this._shouldBatch = shouldBatch || false;
-    this._aliasSendToReply = aliasSendToReply || false;
+    warning(
+      !sendMethod || sendMethod === 'reply' || sendMethod === 'push',
+      'sendMethod should be one of `reply` or `push`'
+    );
+    this._sendMethod = sendMethod || 'push';
   }
 
   _isWebhookVerifyEvent(event: LineRawEvent): boolean {
@@ -227,7 +232,7 @@ export default class LineConnector implements Connector<LineRequestBody> {
       session,
       initialState,
       shouldBatch: this._shouldBatch,
-      aliasSendToReply: this._aliasSendToReply,
+      sendMethod: this._sendMethod,
     });
   }
 
