@@ -1,10 +1,12 @@
 import { LineClient } from 'messaging-api-line';
+import warning from 'warning';
 
 import LineConnector from '../LineConnector';
 import LineEvent from '../../context/LineEvent';
 import LineContext from '../../context/LineContext';
 
 jest.mock('messaging-api-line');
+jest.mock('warning');
 
 const ACCESS_TOKEN = 'FAKE_TOKEN';
 const CHANNEL_SECRET = 'FAKE_SECRET';
@@ -79,7 +81,7 @@ const webhookVerifyRequest = {
   },
 };
 
-function setup() {
+function setup({ sendMethod } = {}) {
   const mockLineAPIClient = {
     getUserProfile: jest.fn(),
     isValidSignature: jest.fn(),
@@ -95,6 +97,7 @@ function setup() {
     connector: new LineConnector({
       accessToken: ACCESS_TOKEN,
       channelSecret: CHANNEL_SECRET,
+      sendMethod,
     }),
   };
 }
@@ -616,4 +619,10 @@ describe('#verifySignature', () => {
 
     expect(result).toBe(true);
   });
+});
+
+it('should warning if sendMethod is not one of `reply`, `push`', () => {
+  setup({ sendMethod: 'xxx' });
+
+  expect(warning).toBeCalledWith(false, expect.any(String));
 });

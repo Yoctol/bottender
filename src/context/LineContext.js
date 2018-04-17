@@ -18,6 +18,7 @@ type Options = {|
   session: ?Session,
   initialState: ?Object,
   shouldBatch: ?boolean,
+  sendMethod: ?string,
 |};
 
 class LineContext extends Context implements PlatformContext {
@@ -31,10 +32,20 @@ class LineContext extends Context implements PlatformContext {
   _replyMessages = [];
   _pushMessages = [];
 
-  constructor({ client, event, session, initialState, shouldBatch }: Options) {
+  _sendMethod: string;
+
+  constructor({
+    client,
+    event,
+    session,
+    initialState,
+    shouldBatch,
+    sendMethod,
+  }: Options) {
     super({ client, event, session, initialState });
 
     this._shouldBatch = shouldBatch || false;
+    this._sendMethod = sendMethod || 'push';
   }
 
   /**
@@ -104,17 +115,13 @@ class LineContext extends Context implements PlatformContext {
    *
    */
   async sendText(text: string): Promise<any> {
-    if (!this._session) {
-      warning(
-        false,
-        'sendText: should not be called in context without session'
-      );
-      return;
+    if (this._sendMethod === 'reply') {
+      // $FlowExpectedError: dynamically defined below
+      return this.replyText(text);
     }
 
-    this._isHandled = true;
-    const { type } = this._session;
-    return this._client.pushText(this._session[type].id, text);
+    // $FlowExpectedError: dynamically defined below
+    return this.pushText(text);
   }
 
   /**
@@ -396,26 +403,7 @@ types
         configurable: true,
         writable: true,
         async value(...args) {
-          if (!this._session) {
-            warning(
-              false,
-              `send${type}: should not be called in context without session`
-            );
-            return;
-          }
-
-          this._isHandled = true;
-
-          if (this._shouldBatch) {
-            this._pushMessages.push(Line[`create${name}`](...args));
-            return;
-          }
-
-          const sessionType = this._session.type;
-          return this._client[`push${name}`](
-            this._session[sessionType].id,
-            ...args
-          );
+          return this[`${this._sendMethod}${type}`](...args);
         },
       });
     });

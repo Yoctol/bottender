@@ -62,13 +62,18 @@ const groupSession = {
   },
 };
 
-const setup = ({ session = userSession, shouldBatch = false } = {}) => {
+const setup = ({
+  session = userSession,
+  shouldBatch = false,
+  sendMethod,
+} = {}) => {
   const client = LineClient.connect();
   const context = new LineContext({
     client,
     event: new LineEvent(rawEvent),
     session,
     shouldBatch,
+    sendMethod,
   });
   return {
     context,
@@ -192,15 +197,6 @@ describe('#reply', () => {
     await context.replyText('hello');
 
     expect(context.isHandled).toBe(true);
-  });
-
-  it('should call warning and not to send if dont have session', async () => {
-    const { context, client } = setup({ session: false });
-
-    await context.sendText('xxx.com');
-
-    expect(warning).toBeCalled();
-    expect(client.pushText).not.toBeCalled();
   });
 });
 
@@ -1400,5 +1396,27 @@ describe('batch', () => {
       },
     ]);
     expect(warning).not.toBeCalled();
+  });
+});
+
+describe('sendMethod', () => {
+  it('should use push in send as default', async () => {
+    const { context, client, session } = setup();
+
+    await context.sendText('hello');
+
+    expect(client.pushText).toBeCalledWith(session.user.id, 'hello');
+    expect(client.replyText).not.toBeCalled();
+  });
+
+  it('should use reply in send when sendMethod: reply', async () => {
+    const { context, client } = setup({
+      sendMethod: 'reply',
+    });
+
+    await context.sendText('hello');
+
+    expect(client.replyText).toBeCalledWith(rawEvent.replyToken, 'hello');
+    expect(client.pushText).not.toBeCalled();
   });
 });
