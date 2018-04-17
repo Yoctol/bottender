@@ -116,9 +116,11 @@ class LineContext extends Context implements PlatformContext {
    */
   async sendText(text: string): Promise<any> {
     if (this._aliasSendToReply) {
+      // $FlowExpectedError: dynamically defined below
       return this.replyText(text);
     }
 
+    // $FlowExpectedError: dynamically defined below
     return this.pushText(text);
   }
 
