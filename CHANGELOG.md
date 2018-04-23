@@ -1,3 +1,7 @@
+# 0.14.34 / 2018-04-23
+
+* [fix] Upgrade @slack/client version to fix pjson issue (#247)
+
 # 0.14.33 / 2018-04-13
 
 * [new] add more debug logs (#239)
