@@ -45,6 +45,10 @@ describe('core', () => {
     expect(core.ClassifierHandler).toBeDefined();
   });
 
+  it('export contexts', () => {
+    expect(core.Context).toBeDefined();
+  });
+
   it('export extensions', () => {
     expect(core.withTyping).toBeDefined();
   });

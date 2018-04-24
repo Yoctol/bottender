@@ -53,6 +53,7 @@ export { default as ClassifierHandler } from './handlers/ClassifierHandler';
 export { default as withTyping } from './plugins/withTyping';
 
 /* Context */
+export { default as Context } from './context/Context';
 export { default as ConsoleContext } from './context/ConsoleContext';
 export { default as MessengerContext } from './context/MessengerContext';
 export { default as LineContext } from './context/LineContext';
