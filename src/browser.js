@@ -26,5 +26,8 @@ export { default as MemorySessionStore } from './session/MemorySessionStore';
 /* HandlerBuilder */
 export { default as ClassifierHandler } from './handlers/ClassifierHandler';
 
+/* Context */
+export { default as Context } from './context/Context';
+
 /* Plugins */
 export { default as withTyping } from './plugins/withTyping';
