@@ -105,6 +105,13 @@ describe('method missing', () => {
 
     expect(context.isHandled).toBe(true);
   });
+
+  it('should not proxy blacklisted methods', async () => {
+    const { context } = setup({ fallbackMethods: true });
+
+    expect(context.handlerDidEnd).toBeUndefined();
+    expect(context.then).toBeUndefined();
+  });
 });
 
 describe('#typing', () => {

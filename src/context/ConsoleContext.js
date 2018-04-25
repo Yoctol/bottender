@@ -16,6 +16,11 @@ type Options = {|
   fallbackMethods: boolean,
 |};
 
+const methodBlackList = [
+  'then', // promise
+  'handlerDidEnd', // context lifecycle
+];
+
 export default class ConsoleContext extends Context implements PlatformContext {
   _client: ConsoleClient;
   _event: ConsoleEvent;
@@ -36,8 +41,8 @@ export default class ConsoleContext extends Context implements PlatformContext {
           if (target[key]) {
             return target[key];
           }
-          // should return undefined when check if it is a promise
-          if (key === 'then') return;
+
+          if (methodBlackList.some(method => method === key)) return;
           return async (...args) => {
             await target._methodMissing(key, args);
           };
