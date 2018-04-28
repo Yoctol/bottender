@@ -96,9 +96,9 @@
   version "0.7.0"
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-0.7.0.tgz#9a06f4f137ee84d7df0460c1fdb1135ffa6c50fd"
 
-"@slack/client@^4.1.0":
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/@slack/client/-/client-4.1.0.tgz#c55c89c259cc5bb5b8ee6b6edba9a574a94809dd"
+"@slack/client@^4.2.0":
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/@slack/client/-/client-4.2.0.tgz#c4ca4e1dd2a6b2f03e384514a715214480039258"
   dependencies:
     "@types/delay" "^2.0.1"
     "@types/form-data" "^2.2.1"
@@ -683,9 +683,9 @@ aws4@^1.2.1, aws4@^1.6.0:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/aws4/-/aws4-1.6.0.tgz#83ef5ca860b2b32e4a0deedee8c771b9db57471e"
 
-axios-error@^0.7.0-rc.3:
-  version "0.7.0-rc.3"
-  resolved "https://registry.yarnpkg.com/axios-error/-/axios-error-0.7.0-rc.3.tgz#94a05c3f668de091a63b16746e131e632280dd23"
+axios-error@^0.7.0:
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/axios-error/-/axios-error-0.7.0.tgz#0d433ceaaaa4fcbdf8a7208f828bd79781f2a3ea"
 
 axios-mock-adapter@^1.15.0:
   version "1.15.0"
@@ -3925,9 +3925,9 @@ jest-jasmine2@^22.4.3:
     jest-util "^22.4.3"
     source-map-support "^0.5.0"
 
-jest-junit@^3.6.0:
-  version "3.6.0"
-  resolved "https://registry.yarnpkg.com/jest-junit/-/jest-junit-3.6.0.tgz#f4c4358e5286364a4324dc14abddd526aadfbd38"
+jest-junit@^3.7.0:
+  version "3.7.0"
+  resolved "https://registry.yarnpkg.com/jest-junit/-/jest-junit-3.7.0.tgz#34abaed677439eb96557815d18b5ba01364fd897"
   dependencies:
     mkdirp "^0.5.1"
     strip-ansi "^4.0.0"
@@ -4345,9 +4345,9 @@ koa-router@^7.4.0:
     path-to-regexp "^1.1.1"
     urijs "^1.19.0"
 
-koa@^2.5.0:
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/koa/-/koa-2.5.0.tgz#b0fbe1e195e43b27588a04fd0be0ddaeca2c154c"
+koa@^2.5.1:
+  version "2.5.1"
+  resolved "https://registry.yarnpkg.com/koa/-/koa-2.5.1.tgz#79f8b95f8d72d04fe9a58a8da5ebd6d341103f9c"
   dependencies:
     accepts "^1.2.2"
     content-disposition "~0.5.0"
@@ -4415,9 +4415,9 @@ levn@^0.3.0, levn@~0.3.0:
     prelude-ls "~1.1.2"
     type-check "~0.3.2"
 
-lint-staged@^7.0.4:
-  version "7.0.4"
-  resolved "https://registry.yarnpkg.com/lint-staged/-/lint-staged-7.0.4.tgz#1aa7f27427e4c4c85d4d6524ac98aac10cbaf1b8"
+lint-staged@^7.0.5:
+  version "7.0.5"
+  resolved "https://registry.yarnpkg.com/lint-staged/-/lint-staged-7.0.5.tgz#1ed04c4bb2013579a3d4df4dfe0f2ea1cd988fad"
   dependencies:
     app-root-path "^2.0.1"
     chalk "^2.3.1"
@@ -4437,7 +4437,7 @@ lint-staged@^7.0.4:
     p-map "^1.1.1"
     path-is-inside "^1.0.2"
     pify "^3.0.0"
-    please-upgrade-node "^3.0.1"
+    please-upgrade-node "^3.0.2"
     staged-git-files "1.1.1"
     string-argv "^0.0.2"
     stringify-object "^3.2.2"
@@ -4604,6 +4604,10 @@ lodash@^4.13.1, lodash@^4.14.0, lodash@^4.15.0, lodash@^4.17.4, lodash@^4.17.5, 
   version "4.17.5"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.5.tgz#99a92d65c0272debe8c96b6057bc8fbfa3bed511"
 
+lodash@^4.17.10:
+  version "4.17.10"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.10.tgz#1b7793cf7259ea38fb3661d4d38b3260af8ae4e7"
+
 log-ok@^0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/log-ok/-/log-ok-0.1.1.tgz#bea3dd36acd0b8a7240d78736b5b97c65444a334"
@@ -4724,50 +4728,50 @@ merge@^1.1.3:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/merge/-/merge-1.2.0.tgz#7531e39d4949c281a66b8c5a6e0265e8b05894da"
 
-messaging-api-line@^0.7.0-rc.3:
-  version "0.7.0-rc.3"
-  resolved "https://registry.yarnpkg.com/messaging-api-line/-/messaging-api-line-0.7.0-rc.3.tgz#b7dc270990a57e2099e805d5ab46f6be4b979f39"
+messaging-api-line@^0.7.0:
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/messaging-api-line/-/messaging-api-line-0.7.0.tgz#d6d2bfb3a095114f568655f1e35c450463bcd155"
   dependencies:
     axios "^0.17.0"
-    axios-error "^0.7.0-rc.3"
+    axios-error "^0.7.0"
     image-type "^3.0.0"
 
-messaging-api-messenger@^0.7.0-rc.3:
-  version "0.7.0-rc.3"
-  resolved "https://registry.yarnpkg.com/messaging-api-messenger/-/messaging-api-messenger-0.7.0-rc.3.tgz#df6739083b9ed16df1eec7f9b136caf13f443bca"
+messaging-api-messenger@^0.7.0:
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/messaging-api-messenger/-/messaging-api-messenger-0.7.0.tgz#82951e1011652b2b714676f7c8f20a525413a12d"
   dependencies:
     axios "^0.17.0"
-    axios-error "^0.7.0-rc.3"
+    axios-error "^0.7.0"
     form-data "^2.3.1"
     invariant "^2.2.2"
     is-plain-object "^2.0.4"
     lodash.omit "^4.5.0"
     warning "^3.0.0"
 
-messaging-api-slack@^0.7.0-rc.3:
-  version "0.7.0-rc.3"
-  resolved "https://registry.yarnpkg.com/messaging-api-slack/-/messaging-api-slack-0.7.0-rc.3.tgz#05411528d926c420a97172b115c399130e370a6f"
+messaging-api-slack@^0.7.0:
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/messaging-api-slack/-/messaging-api-slack-0.7.0.tgz#b80541ef629793afe7bbd19914dda9d321e7fd50"
   dependencies:
     axios "^0.17.0"
-    axios-error "^0.7.0-rc.3"
+    axios-error "^0.7.0"
 
-messaging-api-telegram@^0.7.0-rc.3:
-  version "0.7.0-rc.3"
-  resolved "https://registry.yarnpkg.com/messaging-api-telegram/-/messaging-api-telegram-0.7.0-rc.3.tgz#7067655df368a359bccbd65bf4b159d22138d9ca"
+messaging-api-telegram@^0.7.0:
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/messaging-api-telegram/-/messaging-api-telegram-0.7.0.tgz#7e648afac597a0b0ef75ad047af80e0727e3d90d"
   dependencies:
     axios "^0.17.0"
-    axios-error "^0.7.0-rc.3"
+    axios-error "^0.7.0"
 
-messaging-api-viber@^0.7.0-rc.3:
-  version "0.7.0-rc.3"
-  resolved "https://registry.yarnpkg.com/messaging-api-viber/-/messaging-api-viber-0.7.0-rc.3.tgz#86d4a8d213dad94050dcce2d124071ec03da7ac0"
+messaging-api-viber@^0.7.0:
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/messaging-api-viber/-/messaging-api-viber-0.7.0.tgz#256ff05cdd5a7d1c0b365ea3ec5cb4b752557495"
   dependencies:
     axios "^0.17.0"
-    axios-error "^0.7.0-rc.3"
+    axios-error "^0.7.0"
 
-messenger-batch@^0.2.1:
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/messenger-batch/-/messenger-batch-0.2.1.tgz#f8c2bbc05c208002cd6a4f077d34dd3460d683e9"
+messenger-batch@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/messenger-batch/-/messenger-batch-0.3.0.tgz#90071757c34ea93a76b331d207ef79ed0c2cf42f"
 
 methods@^1.0.1, methods@^1.1.1, methods@~1.1.2:
   version "1.1.2"
@@ -5468,9 +5472,11 @@ pkg-dir@^2.0.0:
   dependencies:
     find-up "^2.1.0"
 
-please-upgrade-node@^3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/please-upgrade-node/-/please-upgrade-node-3.0.1.tgz#0a681f2c18915e5433a5ca2cd94e0b8206a782db"
+please-upgrade-node@^3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/please-upgrade-node/-/please-upgrade-node-3.0.2.tgz#7b9eaeca35aa4a43d6ebdfd10616c042f9a83acc"
+  dependencies:
+    semver-compare "^1.0.0"
 
 pluralize@^7.0.0:
   version "7.0.0"
@@ -6194,6 +6200,10 @@ sax@^1.2.4:
 select-hose@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/select-hose/-/select-hose-2.0.0.tgz#625d8658f865af43ec962bfc376a37359a4994ca"
+
+semver-compare@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/semver-compare/-/semver-compare-1.0.0.tgz#0dee216a1c941ab37e9efb1788f6afc5ff5537fc"
 
 semver-diff@^2.0.0:
   version "2.1.0"
