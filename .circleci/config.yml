@@ -7,22 +7,22 @@ references:
       - image: node:8
     environment:
       TZ: "/usr/share/zoneinfo/Asia/Taipei"
-  docker_default: &docker_9
+  docker_default: &docker_10
     working_directory: /tmp/app
     docker:
-      - image: node:9
+      - image: node:10
     environment:
       TZ: "/usr/share/zoneinfo/Asia/Taipei"
 
 jobs:
-  build-node-9:
-    <<: *docker_9
+  build-node-10:
+    <<: *docker_10
     steps:
       - checkout
       - restore_cache:
           keys:
-            - node-9-cache-{{checksum "yarn.lock"}}
-            - node-9-cache
+            - node-10-cache-{{checksum "yarn.lock"}}
+            - node-10-cache
       - run:
           name: install dependencies
           command: |
@@ -32,7 +32,7 @@ jobs:
           name: build
           command: npm run build
       - save_cache:
-          key: node-9-cache-{{checksum "yarn.lock"}}
+          key: node-10-cache-{{checksum "yarn.lock"}}
           paths:
             - .yarn-cache
             - ./node_modules
@@ -41,8 +41,8 @@ jobs:
           paths:
             - node_modules
             - lib
-  test-node-9:
-    <<: *docker_9
+  test-node-10:
+    <<: *docker_10
     steps:
       - checkout
       - attach_workspace:
@@ -120,12 +120,12 @@ jobs:
 
 workflows:
   version: 2
-  test-on-node-8-and-9:
+  test-on-node-8-and-10:
     jobs:
-      - build-node-9
-      - test-node-9:
+      - build-node-10
+      - test-node-10:
           requires:
-            - build-node-9
+            - build-node-10
       - build-node-8
       - lint-node-8:
           requires:
