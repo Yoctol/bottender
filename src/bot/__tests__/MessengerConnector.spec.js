@@ -420,6 +420,7 @@ describe('#mapRequestToEvents', () => {
 
     expect(events).toHaveLength(1);
     expect(events[0]).toBeInstanceOf(MessengerEvent);
+    expect(events[0].pageId).toBe('1895382890692545');
   });
 
   it('should work with batch entry', () => {
@@ -428,7 +429,10 @@ describe('#mapRequestToEvents', () => {
 
     expect(events).toHaveLength(2);
     expect(events[0]).toBeInstanceOf(MessengerEvent);
+    expect(events[0].pageId).toBe('1895382890692545');
+
     expect(events[1]).toBeInstanceOf(MessengerEvent);
+    expect(events[1].pageId).toBe('1895382890692545');
   });
 
   it('should map request to standby MessengerEvents', () => {
@@ -438,6 +442,16 @@ describe('#mapRequestToEvents', () => {
     expect(events).toHaveLength(1);
     expect(events[0]).toBeInstanceOf(MessengerEvent);
     expect(events[0].isStandby).toBe(true);
+    expect(events[0].pageId).toBe('<PAGE_ID>');
+  });
+
+  it('should map request to echo MessengerEvents', () => {
+    const { connector } = setup();
+    const events = connector.mapRequestToEvents(echoRequest.body);
+
+    expect(events).toHaveLength(1);
+    expect(events[0]).toBeInstanceOf(MessengerEvent);
+    expect(events[0].pageId).toBe('1134713619900975');
   });
 
   it('should be filtered if body is not messaging or standby', () => {

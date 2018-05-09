@@ -171,11 +171,13 @@ export type MessengerRawEvent = {
 
 type MessengerEventOptions = {
   isStandby?: boolean,
+  pageId?: ?string,
 };
 
 export default class MessengerEvent implements Event {
   _rawEvent: MessengerRawEvent;
   _isStandby: boolean;
+  _pageId: ?string;
 
   constructor(
     rawEvent: MessengerRawEvent,
@@ -183,6 +185,7 @@ export default class MessengerEvent implements Event {
   ) {
     this._rawEvent = rawEvent;
     this._isStandby = options.isStandby || false;
+    this._pageId = options.pageId;
   }
 
   /**
@@ -712,5 +715,13 @@ export default class MessengerEvent implements Event {
       return null;
     }
     return this.referral && this.referral.ref;
+  }
+
+  /**
+   * The pageId of the Page where this Messenger event is happening on.
+   *
+   */
+  get pageId(): ?string {
+    return this._pageId || null;
   }
 }
