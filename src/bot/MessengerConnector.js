@@ -151,6 +151,14 @@ export default class MessengerConnector
     return [((body: any): MessengerRawEvent)];
   }
 
+  _getPageIdFromRawEvent(rawEvent: MessengerRawEvent): ?string {
+    if (rawEvent.message && rawEvent.message.is_echo && rawEvent.sender) {
+      return rawEvent.sender.id;
+    } else if (rawEvent.recipient) {
+      return rawEvent.recipient.id;
+    }
+  }
+
   _isStandby(body: MessengerRequestBody): boolean {
     if (!body.entry) return false;
     const entry = ((body: any): EntryRequestBody).entry[0];
@@ -212,13 +220,7 @@ export default class MessengerConnector
 
         const rawEvent = this._getRawEventsFromRequest(body)[0];
 
-        let pageId;
-
-        if (rawEvent.message && rawEvent.message.is_echo && rawEvent.sender) {
-          pageId = rawEvent.sender.id;
-        } else if (rawEvent.recipient) {
-          pageId = rawEvent.recipient.id;
-        }
+        const pageId = this._getPageIdFromRawEvent(rawEvent);
 
         if (!pageId) {
           warning(false, 'Could not find pageId from request body.');
@@ -265,7 +267,14 @@ export default class MessengerConnector
   mapRequestToEvents(body: MessengerRequestBody): Array<MessengerEvent> {
     const rawEvents = this._getRawEventsFromRequest(body);
     const isStandby = this._isStandby(body);
-    return rawEvents.map(event => new MessengerEvent(event, { isStandby }));
+
+    return rawEvents.map(
+      rawEvent =>
+        new MessengerEvent(rawEvent, {
+          isStandby,
+          pageId: this._getPageIdFromRawEvent(rawEvent),
+        })
+    );
   }
 
   async createContext({

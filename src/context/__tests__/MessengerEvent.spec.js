@@ -517,6 +517,8 @@ const customerChatPluginReferral = {
   },
 };
 
+const pageId = '137542570280111';
+
 it('#rawEvent', () => {
   expect(new MessengerEvent(textMessage).rawEvent).toEqual(textMessage);
   expect(new MessengerEvent(imageMessage).rawEvent).toEqual(imageMessage);
@@ -1188,4 +1190,23 @@ it('#ref', () => {
   expect(new MessengerEvent(customerChatPluginReferral).ref).toEqual('bbbb');
   expect(new MessengerEvent(postback).ref).toEqual(null);
   expect(new MessengerEvent(textMessage).ref).toEqual(null);
+});
+
+it('#pageId', () => {
+  expect(new MessengerEvent(linkReferral, { pageId }).pageId).toEqual(
+    '137542570280111'
+  );
+  expect(new MessengerEvent(postbackReferral, { pageId }).pageId).toEqual(
+    '137542570280111'
+  );
+  expect(
+    new MessengerEvent(customerChatPluginReferral, { pageId }).pageId
+  ).toEqual('137542570280111');
+  expect(new MessengerEvent(postback, { pageId }).pageId).toEqual(
+    '137542570280111'
+  );
+  expect(new MessengerEvent(textMessage, { pageId }).pageId).toEqual(
+    '137542570280111'
+  );
+  expect(new MessengerEvent(textMessage).pageId).toEqual(null);
 });
