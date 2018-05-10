@@ -19,14 +19,14 @@ const server = createServer(bot, { verifyToken: config.verifyToken });
 // https://developers.facebook.com/docs/messenger-platform/webview/extensions#webview_on_web
 // To support Messenger Extensions SDK on desktop Messenger client, server must return X-Frame-Options header.
 const ALLOWED_BY = new Set([
-  'https://www.messenger.com/',
-  'https://www.facebook.com/',
+  'https://www.messenger.com',
+  'https://www.facebook.com',
 ]);
 
 // Serve Chat Extensions webview
 server.get('/index.html', (req, res) => {
   // https://github.com/helmetjs/frameguard#allowing-from-multiple-origins
-  const domain = String(req.query.domain);
+  const domain = String(req.query.fb_iframe_origin);
   if (ALLOWED_BY.has(domain)) {
     res.setHeader('X-Frame-Options', `ALLOW-FROM ${domain}`);
   }
