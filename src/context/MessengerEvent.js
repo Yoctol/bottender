@@ -77,6 +77,15 @@ export type Postback = {
   referral?: Referral,
 };
 
+export type GamePlay = {
+  game_id: string,
+  player_id: string,
+  context_type: 'SOLO' | 'THREAD' | 'GROUP',
+  context_id: string,
+  score: number,
+  payload: string,
+};
+
 export type Optin = {
   ref: string,
 };
@@ -157,6 +166,7 @@ export type MessengerRawEvent = {
   read?: Read,
   delivery?: Delivery,
   postback?: Postback,
+  game_play?: GamePlay,
   optin?: Optin,
   payment?: Payment,
   checkout_update?: CheckoutUpdate,
@@ -424,6 +434,40 @@ export default class MessengerEvent implements Event {
    */
   get postback(): ?Postback {
     return this._rawEvent.postback || null;
+  }
+
+  /**
+   * Determine if the event is a game_play event.
+   *
+   */
+  get isGamePlay(): boolean {
+    return (
+      !!this._rawEvent.game_play && typeof this._rawEvent.game_play === 'object'
+    );
+  }
+
+  /**
+   * The game_play object from Messenger raw event.
+   *
+   */
+  get gamePlay(): ?GamePlay {
+    if (!this.isGamePlay) {
+      return null;
+    }
+
+    const rawGamePlay = (this._rawEvent: any).game_play;
+
+    let payload;
+    try {
+      payload = JSON.parse(rawGamePlay.payload);
+    } catch (e) {
+      payload = rawGamePlay.payload;
+    }
+
+    return {
+      ...rawGamePlay,
+      payload,
+    };
   }
 
   /**

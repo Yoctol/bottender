@@ -298,6 +298,42 @@ const postback = {
   },
 };
 
+const gamePlay = {
+  sender: {
+    id: 'USER_ID',
+  },
+  recipient: {
+    id: 'PAGE_ID',
+  },
+  timestamp: 1469111400000,
+  game_play: {
+    game_id: 'GAME_ID',
+    player_id: 'PLAYER_ID',
+    context_type: 'SOLO',
+    context_id: 'CONTEXT_ID',
+    score: 99,
+    payload: '{"SOME_KEY":"SOME_VALUE"}',
+  },
+};
+
+const gamePlayWithNonValidPayload = {
+  sender: {
+    id: 'USER_ID',
+  },
+  recipient: {
+    id: 'PAGE_ID',
+  },
+  timestamp: 1469111400000,
+  game_play: {
+    game_id: 'GAME_ID',
+    player_id: 'PLAYER_ID',
+    context_type: 'SOLO',
+    context_id: 'CONTEXT_ID',
+    score: 99,
+    payload: 'SOME_STRING',
+  },
+};
+
 const optin = {
   sender: {
     id: 'USER_ID',
@@ -908,6 +944,46 @@ it('#postback', () => {
     'DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_RED'
   );
   expect(new MessengerEvent(textMessage).payload).toEqual(null);
+});
+
+it('#isGamePlay', () => {
+  expect(new MessengerEvent(textMessage).isGamePlay).toEqual(false);
+  expect(new MessengerEvent(imageMessage).isGamePlay).toEqual(false);
+  expect(new MessengerEvent(likeStickerMessage).isGamePlay).toEqual(false);
+  expect(new MessengerEvent(echoMessage).isGamePlay).toEqual(false);
+  expect(new MessengerEvent(quickReplyMessage).isGamePlay).toEqual(false);
+  expect(new MessengerEvent(postback).isGamePlay).toEqual(false);
+  expect(new MessengerEvent(gamePlay).isGamePlay).toEqual(true);
+  expect(new MessengerEvent(gamePlayWithNonValidPayload).isGamePlay).toEqual(
+    true
+  );
+});
+
+it('#gamePlay', () => {
+  expect(new MessengerEvent(textMessage).gamePlay).toEqual(null);
+  expect(new MessengerEvent(imageMessage).gamePlay).toEqual(null);
+  expect(new MessengerEvent(likeStickerMessage).gamePlay).toEqual(null);
+  expect(new MessengerEvent(echoMessage).gamePlay).toEqual(null);
+  expect(new MessengerEvent(quickReplyMessage).gamePlay).toEqual(null);
+  expect(new MessengerEvent(postback).gamePlay).toEqual(null);
+  expect(new MessengerEvent(gamePlay).gamePlay).toEqual({
+    game_id: 'GAME_ID',
+    player_id: 'PLAYER_ID',
+    context_type: 'SOLO',
+    context_id: 'CONTEXT_ID',
+    score: 99,
+    payload: {
+      SOME_KEY: 'SOME_VALUE',
+    },
+  });
+  expect(new MessengerEvent(gamePlayWithNonValidPayload).gamePlay).toEqual({
+    game_id: 'GAME_ID',
+    player_id: 'PLAYER_ID',
+    context_type: 'SOLO',
+    context_id: 'CONTEXT_ID',
+    score: 99,
+    payload: 'SOME_STRING',
+  });
 });
 
 it('#isOptin', () => {
