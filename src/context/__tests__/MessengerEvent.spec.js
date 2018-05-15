@@ -555,6 +555,20 @@ const customerChatPluginReferral = {
 
 const pageId = '137542570280111';
 
+const brandedCamera = {
+  sender: {
+    id: '1476077422222289',
+  },
+  recipient: {
+    id: '707356222221168',
+  },
+  timestamp: 1469111400000,
+  branded_camera: {
+    content_ids: ['<CAMERA-EFFECT-ID>', '<CAMERA-EFFECT-ID>'],
+    event: 'dismiss',
+  },
+};
+
 it('#rawEvent', () => {
   expect(new MessengerEvent(textMessage).rawEvent).toEqual(textMessage);
   expect(new MessengerEvent(imageMessage).rawEvent).toEqual(imageMessage);
@@ -1285,4 +1299,25 @@ it('#pageId', () => {
     '137542570280111'
   );
   expect(new MessengerEvent(textMessage).pageId).toEqual(null);
+});
+
+it('#isBrandedCamera', () => {
+  expect(new MessengerEvent(textMessage).isBrandedCamera).toEqual(false);
+  expect(new MessengerEvent(postback).isBrandedCamera).toEqual(false);
+  expect(
+    new MessengerEvent(customerChatPluginReferral).isBrandedCamera
+  ).toEqual(false);
+  expect(new MessengerEvent(brandedCamera).isBrandedCamera).toEqual(true);
+});
+
+it('#brandedCamera', () => {
+  expect(new MessengerEvent(textMessage).brandedCamera).toEqual(null);
+  expect(new MessengerEvent(postback).brandedCamera).toEqual(null);
+  expect(new MessengerEvent(customerChatPluginReferral).brandedCamera).toEqual(
+    null
+  );
+  expect(new MessengerEvent(brandedCamera).brandedCamera).toEqual({
+    content_ids: ['<CAMERA-EFFECT-ID>', '<CAMERA-EFFECT-ID>'],
+    event: 'dismiss',
+  });
 });
