@@ -140,7 +140,7 @@ export type PolicyEnforcement = {
 };
 
 export type AppRoles = {
-  [key: string]: Array<String>,
+  [key: string]: Array<string>,
 };
 
 export type PassThreadControl = {
@@ -156,6 +156,11 @@ export type TakeThreadControl = {
 export type RequestThreadControl = {
   requested_owner_app_id: string,
   metadata: string,
+};
+
+export type BrandedCamera = {
+  content_ids: Array<string>,
+  event: string,
 };
 
 export type MessengerRawEvent = {
@@ -177,6 +182,7 @@ export type MessengerRawEvent = {
   take_thread_control?: TakeThreadControl,
   request_thread_control?: RequestThreadControl,
   referral?: Referral,
+  branded_camera?: BrandedCamera,
 };
 
 type MessengerEventOptions = {
@@ -767,5 +773,27 @@ export default class MessengerEvent implements Event {
    */
   get pageId(): ?string {
     return this._pageId || null;
+  }
+
+  /**
+   * Determine if the event is a branded_camera event.
+   *
+   */
+  get isBrandedCamera(): boolean {
+    return (
+      !!this._rawEvent.branded_camera &&
+      typeof this._rawEvent.branded_camera === 'object'
+    );
+  }
+
+  /**
+   * The branded_camera object from Messenger event.
+   *
+   */
+  get brandedCamera(): ?BrandedCamera {
+    if (!this.isBrandedCamera) {
+      return null;
+    }
+    return this._rawEvent.branded_camera;
   }
 }
