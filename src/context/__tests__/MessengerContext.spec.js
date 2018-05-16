@@ -1017,6 +1017,23 @@ describe('#takeThreadControl', () => {
     );
   });
 
+  it('should use custom access token', async () => {
+    const { context, client, session } = setup({
+      session: userSession,
+      customAccessToken: 'anyToken',
+    });
+
+    await context.takeThreadControl('metadata');
+
+    expect(client.takeThreadControl).toBeCalledWith(
+      session.user.id,
+      'metadata',
+      {
+        access_token: 'anyToken',
+      }
+    );
+  });
+
   it('should call warning if dont have session', async () => {
     const { context, client } = setup({ session: false });
 
@@ -1042,6 +1059,23 @@ describe('#requestThreadControl', () => {
     );
   });
 
+  it('should use custom access token', async () => {
+    const { context, client, session } = setup({
+      session: userSession,
+      customAccessToken: 'anyToken',
+    });
+
+    await context.requestThreadControl('metadata');
+
+    expect(client.requestThreadControl).toBeCalledWith(
+      session.user.id,
+      'metadata',
+      {
+        access_token: 'anyToken',
+      }
+    );
+  });
+
   it('should call warning if dont have session', async () => {
     const { context, client } = setup({ session: false });
 
@@ -1049,6 +1083,40 @@ describe('#requestThreadControl', () => {
 
     expect(warning).toBeCalled();
     expect(client.requestThreadControl).not.toBeCalled();
+  });
+});
+
+describe('#getThreadOwner', () => {
+  it('should call to get thread owner', async () => {
+    const { context, client, session } = setup();
+
+    await context.getThreadOwner();
+
+    expect(client.getThreadOwner).toBeCalledWith(session.user.id, {
+      access_token: undefined,
+    });
+  });
+
+  it('should use custom access token', async () => {
+    const { context, client, session } = setup({
+      session: userSession,
+      customAccessToken: 'anyToken',
+    });
+
+    await context.getThreadOwner();
+
+    expect(client.getThreadOwner).toBeCalledWith(session.user.id, {
+      access_token: 'anyToken',
+    });
+  });
+
+  it('should call warning if dont have session', async () => {
+    const { context, client } = setup({ session: false });
+
+    await context.getThreadOwner();
+
+    expect(warning).toBeCalled();
+    expect(client.getThreadOwner).not.toBeCalled();
   });
 });
 

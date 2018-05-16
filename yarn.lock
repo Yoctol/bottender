@@ -4736,9 +4736,9 @@ messaging-api-line@^0.7.0:
     axios-error "^0.7.0"
     image-type "^3.0.0"
 
-messaging-api-messenger@^0.7.0:
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/messaging-api-messenger/-/messaging-api-messenger-0.7.0.tgz#82951e1011652b2b714676f7c8f20a525413a12d"
+messaging-api-messenger@^0.7.1:
+  version "0.7.1"
+  resolved "https://registry.yarnpkg.com/messaging-api-messenger/-/messaging-api-messenger-0.7.1.tgz#fec04ec20e02d0d7dc7363ffb43e6e74a1475e6a"
   dependencies:
     axios "^0.17.0"
     axios-error "^0.7.0"
