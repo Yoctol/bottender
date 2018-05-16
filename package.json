@@ -70,7 +70,7 @@
     "lodash": "^4.17.10",
     "lru-cache": "^4.1.2",
     "messaging-api-line": "^0.7.0",
-    "messaging-api-messenger": "^0.7.0",
+    "messaging-api-messenger": "^0.7.1",
     "messaging-api-slack": "^0.7.0",
     "messaging-api-telegram": "^0.7.0",
     "messaging-api-viber": "^0.7.0",
