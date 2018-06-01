@@ -701,6 +701,19 @@ export default class MessengerEvent implements Event {
   }
 
   /**
+   * Determine if the event is a request thread control event sent by facebook integrated inbox (appId is 263902037430900).
+   *
+   */
+  get isRequestThreadControlFromInbox(): boolean {
+    return (
+      !!this._rawEvent.request_thread_control &&
+      typeof this._rawEvent.request_thread_control === 'object' &&
+      this._rawEvent.request_thread_control.requested_owner_app_id ===
+        263902037430900
+    );
+  }
+
+  /**
    * The take thread control object from Messenger raw event.
    *
    */
