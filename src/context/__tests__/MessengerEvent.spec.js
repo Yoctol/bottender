@@ -486,7 +486,21 @@ const requestThreadControl = {
   },
   timestamp: 1458692752478,
   request_thread_control: {
-    requested_owner_app_id: '123456789',
+    requested_owner_app_id: 123456789,
+    metadata: 'additional content that the caller wants to set',
+  },
+};
+
+const requestThreadControlFromInbox = {
+  sender: {
+    id: '404217156637689',
+  },
+  recipient: {
+    id: '1423587017700273',
+  },
+  timestamp: 1458692752478,
+  request_thread_control: {
+    requested_owner_app_id: 263902037430900,
     metadata: 'additional content that the caller wants to set',
   },
 };
@@ -1218,13 +1232,29 @@ it('#isRequestThreadControl', () => {
   ).toEqual(true);
 });
 
+it('#isRequestThreadControlFromInbox', () => {
+  expect(
+    new MessengerEvent(textMessage).isRequestThreadControlFromInbox
+  ).toEqual(false);
+  expect(new MessengerEvent(postback).isRequestThreadControlFromInbox).toEqual(
+    false
+  );
+  expect(
+    new MessengerEvent(requestThreadControlFromInbox).isRequestThreadControl
+  ).toEqual(true);
+  expect(
+    new MessengerEvent(requestThreadControlFromInbox)
+      .isRequestThreadControlFromInbox
+  ).toEqual(true);
+});
+
 it('#requestThreadControl', () => {
   expect(new MessengerEvent(textMessage).requestThreadControl).toEqual(null);
   expect(new MessengerEvent(postback).requestThreadControl).toEqual(null);
   expect(new MessengerEvent(requestThreadControl).requestThreadControl).toEqual(
     {
       metadata: 'additional content that the caller wants to set',
-      requested_owner_app_id: '123456789',
+      requested_owner_app_id: 123456789,
     }
   );
 });
