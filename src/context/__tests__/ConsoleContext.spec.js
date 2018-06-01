@@ -112,6 +112,12 @@ describe('method missing', () => {
     expect(context.handlerDidEnd).toBeUndefined();
     expect(context.then).toBeUndefined();
   });
+
+  it('should not proxy falsy getters', async () => {
+    const { context } = setup({ fallbackMethods: true });
+
+    expect(context.isSessionWritten).toBe(false);
+  });
 });
 
 describe('#typing', () => {
