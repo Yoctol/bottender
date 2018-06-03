@@ -30,7 +30,10 @@ const bots = {
   viber: new ViberBot(config.viber).onEvent(handler),
 };
 
-registerRoutes(server, bots.messenger, { path: '/messenger' });
+registerRoutes(server, bots.messenger, {
+  path: '/messenger',
+  verifyToken: config.messenger.verifyToken,
+});
 registerRoutes(server, bots.line, { path: '/line' });
 registerRoutes(server, bots.slack, { path: '/slack' });
 registerRoutes(server, bots.telegram, { path: '/telegram' });

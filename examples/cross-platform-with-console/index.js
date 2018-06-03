@@ -36,7 +36,10 @@ if (process.argv[2] === 'console') {
   bots.console.createRuntime();
 }
 
-registerRoutes(server, bots.messenger, { path: '/messenger' });
+registerRoutes(server, bots.messenger, {
+  path: '/messenger',
+  verifyToken: config.messenger.verifyToken,
+});
 registerRoutes(server, bots.line, { path: '/line' });
 registerRoutes(server, bots.slack, { path: '/slack' });
 registerRoutes(server, bots.telegram, { path: '/telegram' });
