@@ -10,6 +10,6 @@
   "scripts": {
     "dev": "nodemon index.js",
     "start": "node index.js",
-    "console": "node index.js console"
+    "console": "USE_CONSOLE=true node index.js"
   }
 }
