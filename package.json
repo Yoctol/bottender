@@ -160,7 +160,9 @@
     ],
     "testPathIgnorePatterns": [
       "/node_modules/",
-      "/examples/"
+      "/examples/",
+      "lib/cli/providers/sh/test.js",
+      "src/cli/providers/sh/test.js"
     ],
     "reporters": [
       "default",
