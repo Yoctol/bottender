@@ -1232,19 +1232,19 @@ it('#isRequestThreadControl', () => {
   ).toEqual(true);
 });
 
-it('#isRequestThreadControlFromInbox', () => {
+it('#isRequestThreadControlFromPageInbox', () => {
   expect(
-    new MessengerEvent(textMessage).isRequestThreadControlFromInbox
+    new MessengerEvent(textMessage).isRequestThreadControlFromPageInbox
   ).toEqual(false);
-  expect(new MessengerEvent(postback).isRequestThreadControlFromInbox).toEqual(
-    false
-  );
+  expect(
+    new MessengerEvent(postback).isRequestThreadControlFromPageInbox
+  ).toEqual(false);
   expect(
     new MessengerEvent(requestThreadControlFromInbox).isRequestThreadControl
   ).toEqual(true);
   expect(
     new MessengerEvent(requestThreadControlFromInbox)
-      .isRequestThreadControlFromInbox
+      .isRequestThreadControlFromPageInbox
   ).toEqual(true);
 });
 
