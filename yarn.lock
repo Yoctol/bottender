@@ -534,6 +534,12 @@ app-root-path@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/app-root-path/-/app-root-path-2.0.1.tgz#cd62dcf8e4fd5a417efc664d2e5b10653c651b46"
 
+append-query@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/append-query/-/append-query-2.0.1.tgz#d996a5954c3746b00ced7b36fa1ee2f023642025"
+  dependencies:
+    extend "^1.3.0"
+
 append-transform@^0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/append-transform/-/append-transform-0.4.0.tgz#d76ebf8ca94d276e247a36bad44a4b74ab611991"
@@ -2545,6 +2551,10 @@ extend-shallow@^3.0.0, extend-shallow@^3.0.2:
   dependencies:
     assign-symbols "^1.0.0"
     is-extendable "^1.0.1"
+
+extend@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/extend/-/extend-1.3.0.tgz#d1516fb0ff5624d2ebf9123ea1dac5a1994004f8"
 
 extend@^3.0.0, extend@~3.0.0, extend@~3.0.1:
   version "3.0.1"
@@ -4728,18 +4738,19 @@ merge@^1.1.3:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/merge/-/merge-1.2.0.tgz#7531e39d4949c281a66b8c5a6e0265e8b05894da"
 
-messaging-api-line@^0.7.0:
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/messaging-api-line/-/messaging-api-line-0.7.0.tgz#d6d2bfb3a095114f568655f1e35c450463bcd155"
+messaging-api-line@^0.7.2:
+  version "0.7.2"
+  resolved "https://registry.yarnpkg.com/messaging-api-line/-/messaging-api-line-0.7.2.tgz#afa9838b57f96934bda9104c081762094142083b"
   dependencies:
     axios "^0.17.0"
     axios-error "^0.7.0"
     image-type "^3.0.0"
 
-messaging-api-messenger@^0.7.1:
-  version "0.7.1"
-  resolved "https://registry.yarnpkg.com/messaging-api-messenger/-/messaging-api-messenger-0.7.1.tgz#fec04ec20e02d0d7dc7363ffb43e6e74a1475e6a"
+messaging-api-messenger@^0.7.2:
+  version "0.7.2"
+  resolved "https://registry.yarnpkg.com/messaging-api-messenger/-/messaging-api-messenger-0.7.2.tgz#a52693a7a43a94a740f1d95b9d104a56d7beca23"
   dependencies:
+    append-query "^2.0.1"
     axios "^0.17.0"
     axios-error "^0.7.0"
     form-data "^2.3.1"
@@ -4748,23 +4759,23 @@ messaging-api-messenger@^0.7.1:
     lodash.omit "^4.5.0"
     warning "^3.0.0"
 
-messaging-api-slack@^0.7.0:
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/messaging-api-slack/-/messaging-api-slack-0.7.0.tgz#b80541ef629793afe7bbd19914dda9d321e7fd50"
+messaging-api-slack@^0.7.2:
+  version "0.7.2"
+  resolved "https://registry.yarnpkg.com/messaging-api-slack/-/messaging-api-slack-0.7.2.tgz#bede32f954e332e7474d5508828fcd4b851b8b35"
   dependencies:
     axios "^0.17.0"
     axios-error "^0.7.0"
 
-messaging-api-telegram@^0.7.0:
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/messaging-api-telegram/-/messaging-api-telegram-0.7.0.tgz#7e648afac597a0b0ef75ad047af80e0727e3d90d"
+messaging-api-telegram@^0.7.2:
+  version "0.7.2"
+  resolved "https://registry.yarnpkg.com/messaging-api-telegram/-/messaging-api-telegram-0.7.2.tgz#dba75bb824938fe1a266029b282161bf0734eb6d"
   dependencies:
     axios "^0.17.0"
     axios-error "^0.7.0"
 
-messaging-api-viber@^0.7.0:
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/messaging-api-viber/-/messaging-api-viber-0.7.0.tgz#256ff05cdd5a7d1c0b365ea3ec5cb4b752557495"
+messaging-api-viber@^0.7.2:
+  version "0.7.2"
+  resolved "https://registry.yarnpkg.com/messaging-api-viber/-/messaging-api-viber-0.7.2.tgz#38556ea800039756daad63ffff77a693d41e1ed7"
   dependencies:
     axios "^0.17.0"
     axios-error "^0.7.0"

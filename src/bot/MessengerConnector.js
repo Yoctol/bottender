@@ -100,8 +100,15 @@ export default class MessengerConnector
     verifyToken,
     batchConfig,
   }: ConstructorOptions) {
-    this._client = client || MessengerClient.connect(accessToken || '');
+    this._client =
+      client ||
+      MessengerClient.connect({
+        accessToken: accessToken || '',
+        appSecret,
+      });
+
     this._appSecret = appSecret || '';
+
     this._mapPageToAccessToken = mapPageToAccessToken;
     this._verifyToken = verifyToken;
 
