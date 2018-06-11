@@ -38,11 +38,11 @@ export default class ConsoleContext extends Context implements PlatformContext {
       // $FlowExpectedError
       return new Proxy(this, {
         get(target, key) {
-          if (target[key] !== undefined) {
+          if (typeof target[key] !== 'undefined') {
             return target[key];
           }
 
-          if (methodBlackList.some(method => method === key)) return;
+          if (methodBlackList.includes(key)) return;
           return async (...args) => {
             await target._methodMissing(key, args);
           };
