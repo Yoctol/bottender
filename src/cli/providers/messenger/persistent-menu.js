@@ -1,5 +1,5 @@
 /* eslint-disable consistent-return */
-import Table from 'cli-table2';
+import Table from 'cli-table3';
 import invariant from 'invariant';
 import { MessengerClient } from 'messaging-api-messenger';
 import chalk from 'chalk';

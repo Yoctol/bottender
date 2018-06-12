@@ -45,7 +45,7 @@
     "camel-case": "^3.0.0",
     "chalk": "~2.3.2",
     "child_process": "^1.0.2",
-    "cli-table2": "^0.2.0",
+    "cli-table3": "^0.5.0",
     "cross-spawn": "^6.0.5",
     "date-fns": "^1.29.0",
     "debug": "^3.1.0",
