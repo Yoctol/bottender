@@ -1,3 +1,5 @@
+import isEmpty from 'lodash/isEmpty';
+
 function createMiddleware(bot) {
   const requestHandler = bot.createRequestHandler();
 
@@ -5,7 +7,7 @@ function createMiddleware(bot) {
     fn(req, res).catch(err => next(err));
 
   return wrapper(async (req, res) => {
-    if (!req.query && !req.body) {
+    if (isEmpty(req.query) && !req.body) {
       throw new Error(
         'createMiddleware(): Missing body parser. Use `body-parser` or other similar package before this middleware.'
       );
