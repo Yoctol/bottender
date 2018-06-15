@@ -3,6 +3,7 @@ function createMiddleware(bot) {
 
   const wrapper = fn => (req, res, next) =>
     fn(req, res).catch(err => next(err));
+
   return wrapper(async (req, res) => {
     if (!req.query && !req.body) {
       throw new Error(
