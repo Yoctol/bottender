@@ -126,5 +126,5 @@ it('should throw when no body exists', async () => {
   }
 
   expect(error).toBeDefined();
-  expect(error.message).toMatch(/Missing body parser/);
+  expect(error.message).toMatch(/Missing query and body/);
 });

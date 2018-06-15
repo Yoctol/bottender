@@ -9,7 +9,7 @@ function createMiddleware(bot) {
   return wrapper(async (req, res) => {
     if (isEmpty(req.query) && !req.body) {
       throw new Error(
-        'createMiddleware(): Missing body parser. Use `body-parser` or other similar package before this middleware.'
+        'createMiddleware(): Missing query and body, you may need a body parser. Use `body-parser` or other similar package before this middleware.'
       );
     }
     const response = await requestHandler({

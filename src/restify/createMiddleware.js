@@ -5,7 +5,7 @@ function createMiddleware(bot) {
   return async (req, res, next) => {
     if (isEmpty(req.query) && !req.body) {
       throw new Error(
-        'createMiddleware(): Missing body parser. Use `restify.plugins.bodyParser()` before this middleware.'
+        'createMiddleware(): Missing query and body, you may need a body parser. Use `restify.plugins.bodyParser()` before this middleware.'
       );
     }
 

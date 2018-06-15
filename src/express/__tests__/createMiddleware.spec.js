@@ -137,7 +137,7 @@ it('should throw when no body exists', async () => {
   const error = next.mock.calls[0][0];
 
   expect(error).toBeDefined();
-  expect(error.message).toMatch(/Missing body parser/);
+  expect(error.message).toMatch(/Missing query and body/);
 });
 
 it('should catch error when requestHandler error', async () => {

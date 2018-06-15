@@ -5,7 +5,7 @@ function createMiddleware(bot) {
   return async ({ request, response }) => {
     if (isEmpty(request.query) && !request.body) {
       throw new Error(
-        'createMiddleware(): Missing body parser. Use `koa-bodyparser` or other similar package before this middleware.'
+        'createMiddleware(): Missing query and body, you may need a body parser. Use `koa-bodyparser` or other similar package before this middleware.'
       );
     }
 
