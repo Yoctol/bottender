@@ -25,6 +25,40 @@ it('should response 200 when no error be thrown', async () => {
   expect(response.status).toBe(200);
 });
 
+it('should merge query and body then pass into requestHandler', async () => {
+  const { bot, requestHandler } = setup();
+  requestHandler.mockResolvedValue();
+
+  const middleware = createMiddleware(bot);
+
+  const request = {
+    query: { a: '1' },
+    body: { b: 2 },
+  };
+  const response = {};
+
+  await middleware({ request, response });
+
+  expect(requestHandler).toBeCalledWith({ a: '1', b: 2 });
+});
+
+it('should overwrite query value if this key exists in body', async () => {
+  const { bot, requestHandler } = setup();
+  requestHandler.mockResolvedValue();
+
+  const middleware = createMiddleware(bot);
+
+  const request = {
+    query: { a: '1' },
+    body: { a: 2 },
+  };
+  const response = {};
+
+  await middleware({ request, response });
+
+  expect(requestHandler).toBeCalledWith({ a: 2 });
+});
+
 it('should response 200 if there is response return from requestHandler', async () => {
   const { bot, requestHandler } = setup();
   requestHandler.mockResolvedValue({});
@@ -92,5 +126,5 @@ it('should throw when no body exists', async () => {
   }
 
   expect(error).toBeDefined();
-  expect(error.message).toMatch(/Missing body parser/);
+  expect(error.message).toMatch(/Missing query and body/);
 });

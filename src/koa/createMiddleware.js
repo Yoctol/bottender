@@ -1,13 +1,18 @@
+import isEmpty from 'lodash/isEmpty';
+
 function createMiddleware(bot) {
   const requestHandler = bot.createRequestHandler();
   return async ({ request, response }) => {
-    if (!request.body) {
+    if (isEmpty(request.query) && !request.body) {
       throw new Error(
-        'createMiddleware(): Missing body parser. Use `koa-bodyparser` or other similar package before this middleware.'
+        'createMiddleware(): Missing query and body, you may need a body parser. Use `koa-bodyparser` or other similar package before this middleware.'
       );
     }
 
-    const res = await requestHandler(request.body);
+    const res = await requestHandler({
+      ...request.query,
+      ...request.body,
+    });
     if (res) {
       response.set(res.headers || {});
       response.status = res.status || 200;
