@@ -100,20 +100,15 @@ export default class ViberConnector implements Connector<ViberRequestBody> {
     return [new ViberEvent(rawEvent)];
   }
 
-  createContext({
-    event,
-    session,
-    initialState,
-  }: {
+  createContext(params: {
     event: ViberEvent,
     session: ?Session,
-    initialState: Object,
+    initialState: ?Object,
+    requestContext: ?Object,
   }): ViberContext {
     return new ViberContext({
+      ...params,
       client: this._client,
-      event,
-      session,
-      initialState,
     });
   }
 

@@ -15,6 +15,7 @@ type Options = {|
   event: ViberEvent,
   session: ?Session,
   initialState: ?Object,
+  requestContext: ?Object,
 |};
 
 class ViberContext extends Context implements PlatformContext {
@@ -22,8 +23,14 @@ class ViberContext extends Context implements PlatformContext {
   _event: ViberEvent;
   _session: ?Session;
 
-  constructor({ client, event, session, initialState }: Options) {
-    super({ client, event, session, initialState });
+  constructor({
+    client,
+    event,
+    session,
+    initialState,
+    requestContext,
+  }: Options) {
+    super({ client, event, session, initialState, requestContext });
   }
 
   /**

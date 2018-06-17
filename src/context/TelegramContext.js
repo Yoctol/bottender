@@ -15,6 +15,7 @@ type Options = {|
   event: TelegramEvent,
   session: ?Session,
   initialState: ?Object,
+  requestContext: ?Object,
 |};
 
 class TelegramContext extends Context implements PlatformContext {
@@ -22,8 +23,14 @@ class TelegramContext extends Context implements PlatformContext {
   _event: TelegramEvent;
   _session: ?Session;
 
-  constructor({ client, event, session, initialState }: Options) {
-    super({ client, event, session, initialState });
+  constructor({
+    client,
+    event,
+    session,
+    initialState,
+    requestContext,
+  }: Options) {
+    super({ client, event, session, initialState, requestContext });
   }
 
   /**

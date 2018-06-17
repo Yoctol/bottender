@@ -251,7 +251,7 @@ it('should merge query and body then pass into requestHandler', async () => {
 
   await microRequestHandler(req, res);
 
-  expect(requestHandler).toBeCalledWith({ a: '1', b: 2 });
+  expect(requestHandler).toBeCalledWith({ a: '1', b: 2 }, { req, res });
 });
 
 it('should overwrite query value if this key exists in body', async () => {
@@ -269,7 +269,7 @@ it('should overwrite query value if this key exists in body', async () => {
 
   await microRequestHandler(req, res);
 
-  expect(requestHandler).toBeCalledWith({ a: 2 });
+  expect(requestHandler).toBeCalledWith({ a: 2 }, { req, res });
 });
 
 it('should response 200 if there is response return from requestHandler', async () => {

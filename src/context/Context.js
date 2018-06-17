@@ -11,6 +11,7 @@ type Options = {|
   event: any,
   session: ?any,
   initialState: ?Object,
+  requestContext: ?Object,
 |};
 
 type Response = {
@@ -27,14 +28,22 @@ export default class Context {
   _event: Object;
   _session: ?Object;
   _initialState: ?Object;
+  _requestContext: ?Object;
 
   response: Response;
 
-  constructor({ client, event, session, initialState }: Options) {
+  constructor({
+    client,
+    event,
+    session,
+    initialState,
+    requestContext,
+  }: Options) {
     this._client = client;
     this._event = event;
     this._session = session;
     this._initialState = initialState || {};
+    this._requestContext = requestContext;
 
     debug('bottender: context created with rawEvent');
     debug(JSON.stringify(this._event.rawEvent, null, 2));
@@ -65,6 +74,14 @@ export default class Context {
    */
   get event(): Object {
     return this._event;
+  }
+
+  /**
+   * The context of request.
+   *
+   */
+  get requestContext(): ?Object {
+    return this._requestContext;
   }
 
   /**

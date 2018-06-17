@@ -17,6 +17,7 @@ type Options = {|
   event: LineEvent,
   session: ?Session,
   initialState: ?Object,
+  requestContext: ?Object,
   shouldBatch: ?boolean,
   sendMethod: ?string,
 |};
@@ -39,10 +40,11 @@ class LineContext extends Context implements PlatformContext {
     event,
     session,
     initialState,
+    requestContext,
     shouldBatch,
     sendMethod,
   }: Options) {
-    super({ client, event, session, initialState });
+    super({ client, event, session, initialState, requestContext });
 
     this._shouldBatch = shouldBatch || false;
     this._sendMethod = sendMethod || 'push';

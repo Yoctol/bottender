@@ -12,10 +12,16 @@ function createMiddleware(bot) {
         'createMiddleware(): Missing query and body, you may need a body parser. Use `body-parser` or other similar package before this middleware.'
       );
     }
-    const response = await requestHandler({
-      ...req.query,
-      ...req.body,
-    });
+    const response = await requestHandler(
+      {
+        ...req.query,
+        ...req.body,
+      },
+      {
+        req,
+        res,
+      }
+    );
     if (response) {
       res.set(response.headers || {});
       res.status(response.status || 200);

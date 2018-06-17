@@ -217,20 +217,15 @@ export default class LineConnector implements Connector<LineRequestBody> {
       .map(e => new LineEvent(e));
   }
 
-  createContext({
-    event,
-    session,
-    initialState,
-  }: {
+  createContext(params: {
     event: LineEvent,
     session: ?Session,
-    initialState: Object,
+    initialState: ?Object,
+    requestContext: ?Object,
   }): LineContext {
     return new LineContext({
+      ...params,
       client: this._client,
-      event,
-      session,
-      initialState,
       shouldBatch: this._shouldBatch,
       sendMethod: this._sendMethod,
     });

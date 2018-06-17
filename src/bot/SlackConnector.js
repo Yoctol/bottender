@@ -206,20 +206,15 @@ export default class SlackConnector implements Connector<SlackRequestBody> {
     return [new SlackEvent(rawEvent)];
   }
 
-  createContext({
-    event,
-    session,
-    initialState,
-  }: {
+  createContext(params: {
     event: SlackEvent,
     session: ?Session,
-    initialState: Object,
+    initialState: ?Object,
+    requestContext: ?Object,
   }): SlackContext {
     return new SlackContext({
+      ...params,
       client: this._client,
-      event,
-      session,
-      initialState,
     });
   }
 
