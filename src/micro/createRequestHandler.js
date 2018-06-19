@@ -1,3 +1,5 @@
+import url from 'url';
+
 import { json, send } from 'micro';
 import parseUrlencoded from 'urlencoded-body-parser';
 import shortid from 'shortid';
@@ -52,7 +54,12 @@ function createRequestHandler(bot, config = {}) {
             return;
           }
         }
-        const response = await requestHandler(body);
+        const { query } = url.parse(req.url, true);
+
+        const response = await requestHandler({
+          ...query,
+          ...body,
+        });
         if (response) {
           Object.keys(response.headers).forEach(key => {
             res.setHeader(key, response.headers[key]);

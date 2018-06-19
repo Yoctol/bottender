@@ -197,6 +197,18 @@ afterEach(() => {
   console.error = _consoleError;
 });
 
+it('should use accessToken and appSecret (for appsecret_proof) to create default client', () => {
+  setup({
+    accessToken: ACCESS_TOKEN,
+    appSecret: APP_SECRET,
+  });
+
+  expect(MessengerClient.connect).toBeCalledWith({
+    accessToken: ACCESS_TOKEN,
+    appSecret: APP_SECRET,
+  });
+});
+
 describe('#platform', () => {
   it('should be messenger', () => {
     const { connector } = setup();
