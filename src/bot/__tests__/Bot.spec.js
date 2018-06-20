@@ -441,7 +441,7 @@ describe('#setInitialState', () => {
     expect(bot.setInitialState({})).toBe(bot);
   });
 
-  it('initialState should be pass to createContext', async () => {
+  it('initialState should be passed to createContext', async () => {
     const event = {};
     const connector = {
       platform: 'any',
@@ -478,6 +478,38 @@ describe('#setInitialState', () => {
             x: 2,
           },
         },
+      })
+    );
+  });
+});
+
+describe('request context', () => {
+  it('requestContext should be passed to createContext', async () => {
+    const event = {};
+    const connector = {
+      platform: 'any',
+      getUniqueSessionKey: jest.fn(),
+      shouldSessionUpdate: jest.fn(),
+      updateSession: jest.fn(),
+      mapRequestToEvents: jest.fn(() => [event]),
+      createContext: jest.fn(() => ({ event, session: undefined })),
+    };
+
+    const { bot } = setup({ connector });
+
+    connector.getUniqueSessionKey.mockReturnValue('__id__');
+
+    bot.onEvent(() => {});
+
+    const requestHandler = bot.createRequestHandler();
+
+    const body = {};
+    const requestContext = { req: {}, res: {} };
+    await requestHandler(body, requestContext);
+
+    expect(connector.createContext).toBeCalledWith(
+      expect.objectContaining({
+        requestContext,
       })
     );
   });
