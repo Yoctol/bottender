@@ -664,6 +664,171 @@ describe('send APIs', () => {
     });
   });
 
+  describe('#sendFlex', () => {
+    const contents = {
+      type: 'bubble',
+      header: {
+        type: 'box',
+        layout: 'vertical',
+        contents: [
+          {
+            type: 'text',
+            text: 'Header text',
+          },
+        ],
+      },
+      hero: {
+        type: 'image',
+        url: 'https://example.com/flex/images/image.jpg',
+      },
+      body: {
+        type: 'box',
+        layout: 'vertical',
+        contents: [
+          {
+            type: 'text',
+            text: 'Body text',
+          },
+        ],
+      },
+      footer: {
+        type: 'box',
+        layout: 'vertical',
+        contents: [
+          {
+            type: 'text',
+            text: 'Footer text',
+          },
+        ],
+      },
+      styles: {
+        comment: 'See the example of a bubble style object',
+      },
+    };
+
+    it('should call client.pushFlex', async () => {
+      const { context, client, session } = setup();
+
+      await context.sendFlex('this is a flex', contents);
+
+      expect(client.pushFlex).toBeCalledWith(
+        session.user.id,
+        'this is a flex',
+        contents
+      );
+    });
+
+    it('should work with room session', async () => {
+      const { context, client, session } = setup({
+        session: roomSession,
+      });
+
+      await context.sendFlex('this is a flex', contents);
+
+      expect(client.pushFlex).toBeCalledWith(
+        session.room.id,
+        'this is a flex',
+        contents
+      );
+    });
+
+    it('should work with group session', async () => {
+      const { context, client, session } = setup({
+        session: groupSession,
+      });
+
+      await context.sendFlex('this is a flex', contents);
+
+      expect(client.pushFlex).toBeCalledWith(
+        session.group.id,
+        'this is a flex',
+        contents
+      );
+    });
+
+    it('should mark context as handled', async () => {
+      const { context } = setup();
+
+      await context.sendFlex('this is a flex', contents);
+
+      expect(context.isHandled).toBe(true);
+    });
+  });
+
+  describe('#sendTemplate', () => {
+    const template = {
+      type: 'buttons',
+      thumbnailImageUrl: 'https://example.com/bot/images/image.jpg',
+      title: 'Menu',
+      text: 'Please select',
+      actions: [
+        {
+          type: 'postback',
+          label: 'Buy',
+          data: 'action=buy&itemid=123',
+        },
+        {
+          type: 'postback',
+          label: 'Add to cart',
+          data: 'action=add&itemid=123',
+        },
+        {
+          type: 'uri',
+          label: 'View detail',
+          uri: 'http://example.com/page/123',
+        },
+      ],
+    };
+
+    it('should call client.pushTemplate', async () => {
+      const { context, client, session } = setup();
+
+      await context.sendTemplate('this is a template', template);
+
+      expect(client.pushTemplate).toBeCalledWith(
+        session.user.id,
+        'this is a template',
+        template
+      );
+    });
+
+    it('should work with room session', async () => {
+      const { context, client, session } = setup({
+        session: roomSession,
+      });
+
+      await context.sendTemplate('this is a template', template);
+
+      expect(client.pushTemplate).toBeCalledWith(
+        session.room.id,
+        'this is a template',
+        template
+      );
+    });
+
+    it('should work with group session', async () => {
+      const { context, client, session } = setup({
+        session: groupSession,
+      });
+
+      await context.sendTemplate('this is a template', template);
+
+      expect(client.pushTemplate).toBeCalledWith(
+        session.group.id,
+        'this is a template',
+        template
+      );
+    });
+
+    it('should mark context as handled', async () => {
+      const { context } = setup();
+
+      await context.sendTemplate('this is a template', template);
+
+      expect(context.isHandled).toBe(true);
+    });
+  });
+
   describe('#sendButtonTemplate', () => {
     const template = {
       thumbnailImageUrl: 'https://example.com/bot/images/image.jpg',
