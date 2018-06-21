@@ -344,6 +344,8 @@ const types: Array<{ name: string, aliases?: Array<string> }> = [
   { name: 'Location' },
   { name: 'Sticker' },
   { name: 'Imagemap' },
+  { name: 'Flex' },
+  { name: 'Template' },
   { name: 'ButtonTemplate', aliases: ['ButtonsTemplate'] },
   { name: 'ConfirmTemplate' },
   { name: 'CarouselTemplate' },
