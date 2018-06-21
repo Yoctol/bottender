@@ -40,7 +40,11 @@ export default class ConsoleContext extends Context implements PlatformContext {
       // $FlowExpectedError
       return new Proxy(this, {
         get(target, key) {
+          // https://github.com/facebook/flow/issues/6181
+          // https://github.com/facebook/flow/issues/6321
+          // $FlowFixMe: Cannot get `target[key]` because an indexer property is missing in `ConsoleContext` [1].
           if (typeof target[key] !== 'undefined') {
+            // $FlowFixMe: Cannot get `target[key]` because an indexer property is missing in `ConsoleContext` [1].
             return target[key];
           }
 

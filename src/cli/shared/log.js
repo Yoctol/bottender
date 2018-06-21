@@ -8,6 +8,9 @@ export function log(
   color: string = 'blue',
   icon: string = 'pointer'
 ): void {
+  // https://github.com/facebook/flow/issues/6181
+  // https://github.com/facebook/flow/issues/6321
+  // $FlowFixMe: An indexer property is missing in `Chalk` [1].
   console.log(`${chalk[color](figures[icon])} ${msg}`);
 }
 
