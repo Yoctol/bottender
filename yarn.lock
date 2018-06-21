@@ -38,6 +38,13 @@
   dependencies:
     "@babel/types" "7.0.0-beta.44"
 
+"@babel/helper-module-imports@^7.0.0-beta.49":
+  version "7.0.0-beta.51"
+  resolved "https://registry.yarnpkg.com/@babel/helper-module-imports/-/helper-module-imports-7.0.0-beta.51.tgz#ce00428045fbb7d5ebc0ea7bf835789f15366ab2"
+  dependencies:
+    "@babel/types" "7.0.0-beta.51"
+    lodash "^4.17.5"
+
 "@babel/helper-split-export-declaration@7.0.0-beta.44":
   version "7.0.0-beta.44"
   resolved "https://registry.yarnpkg.com/@babel/helper-split-export-declaration/-/helper-split-export-declaration-7.0.0-beta.44.tgz#c0b351735e0fbcb3822c8ad8db4e583b05ebd9dc"
@@ -92,6 +99,14 @@
     lodash "^4.2.0"
     to-fast-properties "^2.0.0"
 
+"@babel/types@7.0.0-beta.51", "@babel/types@^7.0.0-beta.49":
+  version "7.0.0-beta.51"
+  resolved "https://registry.yarnpkg.com/@babel/types/-/types-7.0.0-beta.51.tgz#d802b7b543b5836c778aa691797abf00f3d97ea9"
+  dependencies:
+    esutils "^2.0.2"
+    lodash "^4.17.5"
+    to-fast-properties "^2.0.0"
+
 "@samverschueren/stream-to-observable@^0.3.0":
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/@samverschueren/stream-to-observable/-/stream-to-observable-0.3.0.tgz#ecdf48d532c58ea477acfcab80348424f8d0662f"
@@ -102,9 +117,9 @@
   version "0.7.0"
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-0.7.0.tgz#9a06f4f137ee84d7df0460c1fdb1135ffa6c50fd"
 
-"@slack/client@^4.2.2":
-  version "4.2.2"
-  resolved "https://registry.yarnpkg.com/@slack/client/-/client-4.2.2.tgz#f997f39780bbff9c2128816e8377230a5f6bd0d5"
+"@slack/client@^4.3.1":
+  version "4.3.1"
+  resolved "https://registry.yarnpkg.com/@slack/client/-/client-4.3.1.tgz#5caa1eaf753e4fcd23d8c04bcdc215336867a233"
   dependencies:
     "@types/delay" "^2.0.1"
     "@types/form-data" "^2.2.1"
@@ -117,7 +132,7 @@
     "@types/p-retry" "^1.0.1"
     "@types/retry" "^0.10.2"
     "@types/url-join" "^0.8.2"
-    "@types/ws" "^4.0.1"
+    "@types/ws" "^5.1.1"
     delay "^2.0.0"
     eventemitter3 "^3.0.0"
     finity "^0.5.4"
@@ -133,7 +148,7 @@
     p-retry "^1.0.0"
     retry "^0.10.1"
     url-join "^4.0.0"
-    ws "^4.1.0"
+    ws "^5.2.0"
 
 "@types/delay@^2.0.1":
   version "2.0.1"
@@ -199,9 +214,9 @@
   version "0.8.2"
   resolved "https://registry.yarnpkg.com/@types/url-join/-/url-join-0.8.2.tgz#1181ecbe1d97b7034e0ea1e35e62e86cc26b422d"
 
-"@types/ws@^4.0.1":
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/@types/ws/-/ws-4.0.1.tgz#3309d4d02a1ea9cf617d638b9239a2e1e28ef21e"
+"@types/ws@^5.1.1":
+  version "5.1.2"
+  resolved "https://registry.yarnpkg.com/@types/ws/-/ws-5.1.2.tgz#f02d3b1cd46db7686734f3ce83bdf46c49decd64"
   dependencies:
     "@types/events" "*"
     "@types/node" "*"
@@ -854,13 +869,6 @@ babel-helper-hoist-variables@^6.24.1:
     babel-runtime "^6.22.0"
     babel-types "^6.24.1"
 
-babel-helper-module-imports@^7.0.0-beta.3:
-  version "7.0.0-beta.3"
-  resolved "https://registry.yarnpkg.com/babel-helper-module-imports/-/babel-helper-module-imports-7.0.0-beta.3.tgz#e15764e3af9c8e11810c09f78f498a2bdc71585a"
-  dependencies:
-    babel-types "7.0.0-beta.3"
-    lodash "^4.2.0"
-
 babel-helper-optimise-call-expression@^6.24.1:
   version "6.24.1"
   resolved "https://registry.yarnpkg.com/babel-helper-optimise-call-expression/-/babel-helper-optimise-call-expression-6.24.1.tgz#f7a13427ba9f73f8f4fa993c54a97882d1244257"
@@ -936,14 +944,14 @@ babel-plugin-jest-hoist@^23.0.1:
   version "23.0.1"
   resolved "https://registry.yarnpkg.com/babel-plugin-jest-hoist/-/babel-plugin-jest-hoist-23.0.1.tgz#eaa11c964563aea9c21becef2bdf7853f7f3c148"
 
-babel-plugin-lodash@^3.3.2:
-  version "3.3.2"
-  resolved "https://registry.yarnpkg.com/babel-plugin-lodash/-/babel-plugin-lodash-3.3.2.tgz#da3a5b49ba27447f54463f6c4fa81396ccdd463f"
+babel-plugin-lodash@^3.3.4:
+  version "3.3.4"
+  resolved "https://registry.yarnpkg.com/babel-plugin-lodash/-/babel-plugin-lodash-3.3.4.tgz#4f6844358a1340baed182adbeffa8df9967bc196"
   dependencies:
-    babel-helper-module-imports "^7.0.0-beta.3"
-    babel-types "^6.26.0"
+    "@babel/helper-module-imports" "^7.0.0-beta.49"
+    "@babel/types" "^7.0.0-beta.49"
     glob "^7.1.1"
-    lodash "^4.17.4"
+    lodash "^4.17.10"
     require-package-name "^2.0.1"
 
 babel-plugin-syntax-async-functions@^6.8.0:
@@ -1288,14 +1296,6 @@ babel-traverse@^6.18.0, babel-traverse@^6.24.1, babel-traverse@^6.26.0:
     globals "^9.18.0"
     invariant "^2.2.2"
     lodash "^4.17.4"
-
-babel-types@7.0.0-beta.3:
-  version "7.0.0-beta.3"
-  resolved "https://registry.yarnpkg.com/babel-types/-/babel-types-7.0.0-beta.3.tgz#cd927ca70e0ae8ab05f4aab83778cfb3e6eb20b4"
-  dependencies:
-    esutils "^2.0.2"
-    lodash "^4.2.0"
-    to-fast-properties "^2.0.0"
 
 babel-types@^6.18.0, babel-types@^6.19.0, babel-types@^6.24.1, babel-types@^6.26.0:
   version "6.26.0"
@@ -1921,11 +1921,11 @@ create-error-class@^3.0.0:
   dependencies:
     capture-stack-trace "^1.0.0"
 
-cross-env@^5.1.6:
-  version "5.1.6"
-  resolved "https://registry.yarnpkg.com/cross-env/-/cross-env-5.1.6.tgz#0dc05caf945b24e4b9e3b12871fe0e858d08b38d"
+cross-env@^5.2.0:
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/cross-env/-/cross-env-5.2.0.tgz#6ecd4c015d5773e614039ee529076669b9d126f2"
   dependencies:
-    cross-spawn "^5.1.0"
+    cross-spawn "^6.0.5"
     is-windows "^1.0.0"
 
 cross-spawn@^5.0.1, cross-spawn@^5.1.0:
@@ -2313,9 +2313,9 @@ eslint-module-utils@^2.2.0:
     debug "^2.6.8"
     pkg-dir "^1.0.0"
 
-eslint-plugin-flowtype@^2.49.0:
-  version "2.49.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-flowtype/-/eslint-plugin-flowtype-2.49.0.tgz#eee3d3c1b1bcff3c508947d5a4cebed215c43f53"
+eslint-plugin-flowtype@^2.49.3:
+  version "2.49.3"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-flowtype/-/eslint-plugin-flowtype-2.49.3.tgz#ccca6ee5ba2027eb3ed36bc2ec8c9a842feee841"
   dependencies:
     lodash "^4.17.10"
 
@@ -2742,9 +2742,9 @@ flexbuffer@0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/flexbuffer/-/flexbuffer-0.0.6.tgz#039fdf23f8823e440c38f3277e6fef1174215b30"
 
-flow-bin@^0.73.0:
-  version "0.73.0"
-  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.73.0.tgz#da1b90a02b0ef9c439f068c2fc14968db83be425"
+flow-bin@^0.74.0:
+  version "0.74.0"
+  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.74.0.tgz#8017bb00efb37cbe8d81fbb7f464038bde06adc9"
 
 follow-redirects@^1.2.5, follow-redirects@^1.3.0:
   version "1.4.1"
@@ -3917,9 +3917,9 @@ jest-jasmine2@^23.1.0:
     jest-util "^23.1.0"
     pretty-format "^23.0.1"
 
-jest-junit@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/jest-junit/-/jest-junit-5.0.0.tgz#30ed3317c325165c2458ed2649f09d6e214ffab8"
+jest-junit@^5.1.0:
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/jest-junit/-/jest-junit-5.1.0.tgz#e8e497d810a829bf02783125aab74b5df6caa8fe"
   dependencies:
     jest-validate "^23.0.1"
     mkdirp "^0.5.1"
@@ -4359,9 +4359,9 @@ levn@^0.3.0, levn@~0.3.0:
     prelude-ls "~1.1.2"
     type-check "~0.3.2"
 
-lint-staged@^7.1.3:
-  version "7.1.3"
-  resolved "https://registry.yarnpkg.com/lint-staged/-/lint-staged-7.1.3.tgz#0eb77b42131653808e02bc0eba66ad8ff8a8ca1f"
+lint-staged@^7.2.0:
+  version "7.2.0"
+  resolved "https://registry.yarnpkg.com/lint-staged/-/lint-staged-7.2.0.tgz#bdf4bb7f2f37fe689acfaec9999db288a5b26888"
   dependencies:
     app-root-path "^2.0.1"
     chalk "^2.3.1"
@@ -4668,17 +4668,17 @@ merge@^1.1.3:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/merge/-/merge-1.2.0.tgz#7531e39d4949c281a66b8c5a6e0265e8b05894da"
 
-messaging-api-line@^0.7.2:
-  version "0.7.2"
-  resolved "https://registry.yarnpkg.com/messaging-api-line/-/messaging-api-line-0.7.2.tgz#afa9838b57f96934bda9104c081762094142083b"
+messaging-api-line@^0.7.3:
+  version "0.7.3"
+  resolved "https://registry.yarnpkg.com/messaging-api-line/-/messaging-api-line-0.7.3.tgz#e4f16cf154bb3a1b0c197779fbeeb21724f32e50"
   dependencies:
     axios "^0.17.0"
     axios-error "^0.7.0"
     image-type "^3.0.0"
 
-messaging-api-messenger@^0.7.2:
-  version "0.7.2"
-  resolved "https://registry.yarnpkg.com/messaging-api-messenger/-/messaging-api-messenger-0.7.2.tgz#a52693a7a43a94a740f1d95b9d104a56d7beca23"
+messaging-api-messenger@^0.7.3:
+  version "0.7.3"
+  resolved "https://registry.yarnpkg.com/messaging-api-messenger/-/messaging-api-messenger-0.7.3.tgz#cbad0dcf17f6b7b39f562884a0a82b691d37ef3f"
   dependencies:
     append-query "^2.0.1"
     axios "^0.17.0"
@@ -4696,16 +4696,16 @@ messaging-api-slack@^0.7.2:
     axios "^0.17.0"
     axios-error "^0.7.0"
 
-messaging-api-telegram@^0.7.2:
-  version "0.7.2"
-  resolved "https://registry.yarnpkg.com/messaging-api-telegram/-/messaging-api-telegram-0.7.2.tgz#dba75bb824938fe1a266029b282161bf0734eb6d"
+messaging-api-telegram@^0.7.3:
+  version "0.7.3"
+  resolved "https://registry.yarnpkg.com/messaging-api-telegram/-/messaging-api-telegram-0.7.3.tgz#8c6712537daf4b12412beab67a38d9ea76ffacec"
   dependencies:
     axios "^0.17.0"
     axios-error "^0.7.0"
 
-messaging-api-viber@^0.7.2:
-  version "0.7.2"
-  resolved "https://registry.yarnpkg.com/messaging-api-viber/-/messaging-api-viber-0.7.2.tgz#38556ea800039756daad63ffff77a693d41e1ed7"
+messaging-api-viber@^0.7.3:
+  version "0.7.3"
+  resolved "https://registry.yarnpkg.com/messaging-api-viber/-/messaging-api-viber-0.7.3.tgz#38ab05b7fb702a4f058384760c54699a4df6eb09"
   dependencies:
     axios "^0.17.0"
     axios-error "^0.7.0"
@@ -5467,9 +5467,9 @@ prettier@^1.10.2:
   version "1.11.0"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.11.0.tgz#c024f70cab158c993f50fc0c25ffe738cb8b0f85"
 
-prettier@^1.12.1:
-  version "1.12.1"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.12.1.tgz#c1ad20e803e7749faf905a409d2367e06bbe7325"
+prettier@^1.13.5:
+  version "1.13.5"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.13.5.tgz#7ae2076998c8edce79d63834e9b7b09fead6bfd0"
 
 pretty-format@^23.0.1:
   version "23.0.1"
@@ -7140,12 +7140,18 @@ write@^0.2.1:
   dependencies:
     mkdirp "^0.5.1"
 
-ws@^4.0.0, ws@^4.1.0:
+ws@^4.0.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/ws/-/ws-4.1.0.tgz#a979b5d7d4da68bf54efe0408967c324869a7289"
   dependencies:
     async-limiter "~1.0.0"
     safe-buffer "~5.1.0"
+
+ws@^5.2.0:
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/ws/-/ws-5.2.0.tgz#9fd95e3ac7c76f6ae8bcc868a0e3f11f1290c33e"
+  dependencies:
+    async-limiter "~1.0.0"
 
 xdg-basedir@^3.0.0:
   version "3.0.0"
