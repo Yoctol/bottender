@@ -1,4 +1,6 @@
 /* @flow */
+import warning from 'warning';
+
 import type { SessionStore } from '../session/SessionStore';
 
 import Bot from './Bot';
@@ -9,6 +11,10 @@ export default class TestBot extends Bot {
     sessionStore,
     fallbackMethods,
   }: { sessionStore: SessionStore, fallbackMethods?: boolean } = {}) {
+    warning(
+      false,
+      '`TestBot` is under heavy development. API may change between any versions.'
+    );
     const connector = new TestConnector({ fallbackMethods });
     super({ connector, sessionStore, sync: true });
   }
