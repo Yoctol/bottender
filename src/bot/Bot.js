@@ -21,7 +21,10 @@ function createMemorySessionStore(): SessionStore {
   return new CacheBasedSessionStore(cache, MINUTES_IN_ONE_YEAR);
 }
 
-type RequestHandler = (body: Object) => void | Promise<void>;
+type RequestHandler = (
+  body: Object,
+  requestContext?: ?Object
+) => void | Promise<void>;
 
 export default class Bot {
   _sessions: SessionStore;
@@ -92,7 +95,7 @@ export default class Bot {
       );
     }
 
-    return async body => {
+    return async (body: Object, requestContext?: ?Object) => {
       if (!body) {
         throw new Error('Bot.createRequestHandler: Missing argument.');
       }
@@ -149,6 +152,7 @@ export default class Bot {
             event,
             session: ((session: any): Session),
             initialState: this._initialState,
+            requestContext,
           }),
         {
           concurrency: 5,

@@ -56,10 +56,16 @@ function createRequestHandler(bot, config = {}) {
         }
         const { query } = url.parse(req.url, true);
 
-        const response = await requestHandler({
-          ...query,
-          ...body,
-        });
+        const response = await requestHandler(
+          {
+            ...query,
+            ...body,
+          },
+          {
+            req,
+            res,
+          }
+        );
         if (response) {
           Object.keys(response.headers).forEach(key => {
             res.setHeader(key, response.headers[key]);

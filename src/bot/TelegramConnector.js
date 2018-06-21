@@ -147,20 +147,15 @@ export default class TelegramConnector
     return [new TelegramEvent(rawEvent)];
   }
 
-  createContext({
-    event,
-    session,
-    initialState,
-  }: {
+  createContext(params: {
     event: TelegramEvent,
     session: ?Session,
-    initialState: Object,
+    initialState: ?Object,
+    requestContext: ?Object,
   }): TelegramContext {
     return new TelegramContext({
+      ...params,
       client: this._client,
-      event,
-      session,
-      initialState,
     });
   }
 }

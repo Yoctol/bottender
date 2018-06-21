@@ -13,6 +13,7 @@ type Options = {|
   event: ConsoleEvent,
   session: ?Session,
   initialState: ?Object,
+  requestContext: ?Object,
   fallbackMethods: boolean,
 |};
 
@@ -31,9 +32,10 @@ export default class ConsoleContext extends Context implements PlatformContext {
     event,
     session,
     initialState,
+    requestContext,
     fallbackMethods,
   }: Options) {
-    super({ client, event, session, initialState });
+    super({ client, event, session, initialState, requestContext });
     if (fallbackMethods) {
       // $FlowExpectedError
       return new Proxy(this, {

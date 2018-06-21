@@ -15,12 +15,14 @@ function setup({
   event = {},
   session = {},
   initialState = {},
+  requestContext,
 } = {}) {
   const context = new Context({
     client,
     event,
     session,
     initialState,
+    requestContext,
   });
   return {
     context,
@@ -154,6 +156,24 @@ describe('state', () => {
 
       context.resetState();
       expect(warning.mock.calls[1][0]).toBe(false);
+    });
+  });
+});
+
+describe('request context', () => {
+  describe('#requestContext', () => {
+    it('should be empty when no requestContext provided', () => {
+      const { context } = setup({ requestContext: undefined });
+
+      expect(context.requestContext).toBeUndefined();
+    });
+
+    it('should support get requestContext', () => {
+      const requestContext = { req: {}, res: {} };
+
+      const { context } = setup({ requestContext });
+
+      expect(context.requestContext).toBe(requestContext);
     });
   });
 });

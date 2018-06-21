@@ -64,6 +64,7 @@ const groupSession = {
 
 const setup = ({
   session = userSession,
+  requestContext,
   shouldBatch = false,
   sendMethod,
 } = {}) => {
@@ -72,6 +73,7 @@ const setup = ({
     client,
     event: new LineEvent(rawEvent),
     session,
+    requestContext,
     shouldBatch,
     sendMethod,
   });

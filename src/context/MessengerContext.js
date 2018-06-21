@@ -15,6 +15,7 @@ type Options = {|
   event: MessengerEvent,
   session: ?Session,
   initialState: ?Object,
+  requestContext: ?Object,
   customAccessToken: ?string,
   batchQueue: ?Object,
 |};
@@ -31,10 +32,11 @@ class MessengerContext extends Context implements PlatformContext {
     event,
     session,
     initialState,
+    requestContext,
     customAccessToken,
     batchQueue,
   }: Options) {
-    super({ client, event, session, initialState });
+    super({ client, event, session, initialState, requestContext });
     this._customAccessToken = customAccessToken;
     this._batchQueue = batchQueue;
   }

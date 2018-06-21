@@ -284,18 +284,15 @@ export default class MessengerConnector
     );
   }
 
-  async createContext({
-    event,
-    session,
-    initialState,
-  }: {
+  async createContext(params: {
     event: MessengerEvent,
     session: ?Session,
-    initialState: Object,
+    initialState: ?Object,
+    requestContext: ?Object,
   }): Promise<MessengerContext> {
     let customAccessToken;
     if (this._mapPageToAccessToken) {
-      const { rawEvent } = event;
+      const { rawEvent } = params.event;
 
       let pageId = null;
 
@@ -312,10 +309,8 @@ export default class MessengerConnector
       }
     }
     return new MessengerContext({
+      ...params,
       client: this._client,
-      event,
-      session,
-      initialState,
       customAccessToken,
       batchQueue: this._batchQueue,
     });

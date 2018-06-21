@@ -36,10 +36,11 @@ it('should merge query and body then pass into requestHandler', async () => {
     body: { b: 2 },
   };
   const response = {};
+  const ctx = { request, response };
 
-  await middleware({ request, response });
+  await middleware(ctx);
 
-  expect(requestHandler).toBeCalledWith({ a: '1', b: 2 });
+  expect(requestHandler).toBeCalledWith({ a: '1', b: 2 }, ctx);
 });
 
 it('should overwrite query value if this key exists in body', async () => {
@@ -53,10 +54,11 @@ it('should overwrite query value if this key exists in body', async () => {
     body: { a: 2 },
   };
   const response = {};
+  const ctx = { request, response };
 
-  await middleware({ request, response });
+  await middleware(ctx);
 
-  expect(requestHandler).toBeCalledWith({ a: 2 });
+  expect(requestHandler).toBeCalledWith({ a: 2 }, ctx);
 });
 
 it('should response 200 if there is response return from requestHandler', async () => {

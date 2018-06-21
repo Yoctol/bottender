@@ -9,10 +9,16 @@ function createMiddleware(bot) {
       );
     }
 
-    const response = await requestHandler({
-      ...req.query,
-      ...req.body,
-    });
+    const response = await requestHandler(
+      {
+        ...req.query,
+        ...req.body,
+      },
+      {
+        req,
+        res,
+      }
+    );
     if (response) {
       res.send(response.status || 200, response.body || '', response.headers);
     } else {
