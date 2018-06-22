@@ -5,6 +5,7 @@ import * as utils from './utils';
 /* Bot */
 export { default as Bot } from './bot/Bot';
 export { default as ConsoleBot } from './bot/ConsoleBot';
+export { default as TestBot } from './bot/TestBot';
 export { default as MessengerBot } from './bot/MessengerBot';
 export { default as LineBot } from './bot/LineBot';
 export { default as SlackBot } from './bot/SlackBot';
@@ -14,6 +15,7 @@ export { default as ViberBot } from './bot/ViberBot';
 /* Connector */
 export { default as Connector } from './bot/Connector';
 export { default as ConsoleConnector } from './bot/ConsoleConnector';
+export { default as TestConnector } from './bot/TestConnector';
 export { default as MessengerConnector } from './bot/MessengerConnector';
 export { default as LineConnector } from './bot/LineConnector';
 export { default as SlackConnector } from './bot/SlackConnector';
@@ -55,6 +57,7 @@ export { default as withTyping } from './plugins/withTyping';
 /* Context */
 export { default as Context } from './context/Context';
 export { default as ConsoleContext } from './context/ConsoleContext';
+export { default as TestContext } from './context/TestContext';
 export { default as MessengerContext } from './context/MessengerContext';
 export { default as LineContext } from './context/LineContext';
 export { default as SlackContext } from './context/SlackContext';
@@ -63,6 +66,7 @@ export { default as ViberContext } from './context/ViberContext';
 
 /* Event */
 export { default as ConsoleEvent } from './context/ConsoleEvent';
+export { default as TestEvent } from './context/TestEvent';
 export { default as MessengerEvent } from './context/MessengerEvent';
 export { default as LineEvent } from './context/LineEvent';
 export { default as SlackEvent } from './context/SlackEvent';

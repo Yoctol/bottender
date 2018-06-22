@@ -3,10 +3,12 @@ import * as core from '../browser';
 describe('browser', () => {
   it('export bots', () => {
     expect(core.Bot).toBeDefined();
+    expect(core.TestBot).toBeDefined();
   });
 
   it('export connectors', () => {
     expect(core.Connector).toBeDefined();
+    expect(core.TestConnector).toBeDefined();
   });
 
   it('export cache implements', () => {
@@ -26,6 +28,7 @@ describe('browser', () => {
 
   it('export contexts', () => {
     expect(core.Context).toBeDefined();
+    expect(core.TestContext).toBeDefined();
   });
 
   it('export extensions', () => {
