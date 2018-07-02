@@ -1,10 +1,10 @@
 /* @flow */
 
-import _debug from 'debug';
+import debug from 'debug';
 import warning from 'warning';
 import cloneDeep from 'lodash/cloneDeep';
 
-const debug = _debug('bottender/context/Context');
+const debugContext = debug('bottender:context');
 
 type Options = {|
   client: any,
@@ -45,8 +45,8 @@ export default class Context {
     this._initialState = initialState || {};
     this._requestContext = requestContext;
 
-    debug('bottender: context created with rawEvent');
-    debug(JSON.stringify(this._event.rawEvent, null, 2));
+    debugContext('Context created with rawEvent:');
+    debugContext(JSON.stringify(this._event.rawEvent, null, 2));
 
     if (this._session && !this._session._state) {
       const sess = this._session;
