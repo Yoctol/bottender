@@ -1,6 +1,6 @@
 /* @flow */
 
-import _debug from 'debug';
+import debug from 'debug';
 import invariant from 'invariant';
 import pMap from 'p-map';
 
@@ -12,7 +12,9 @@ import type { FunctionalHandler, Builder } from '../handlers/Handler';
 
 import type { Connector } from './Connector';
 
-const debug = _debug('bottender/bot/Bot');
+const debugRequest = debug('bottender:request');
+const debugSessionRead = debug('bottender:session:read');
+const debugSessionWrite = debug('bottender:session:write');
 
 const MINUTES_IN_ONE_YEAR = 365 * 24 * 60;
 
@@ -100,8 +102,8 @@ export default class Bot {
         throw new Error('Bot.createRequestHandler: Missing argument.');
       }
 
-      debug('bottender: incoming request body');
-      debug(JSON.stringify(body, null, 2));
+      debugRequest('Incoming request body:');
+      debugRequest(JSON.stringify(body, null, 2));
 
       if (!this._initialized) {
         await this._sessions.init();
@@ -121,8 +123,8 @@ export default class Bot {
         session = await this._sessions.read(sessionId);
         session = session || Object.create(null);
 
-        debug(`bottender: read session ${sessionId}`);
-        debug(JSON.stringify(session, null, 2));
+        debugSessionRead(`Read session: ${sessionId}`);
+        debugSessionRead(JSON.stringify(session, null, 2));
 
         Object.defineProperty(session, 'id', {
           configurable: false,
@@ -194,8 +196,8 @@ export default class Bot {
               context.isSessionWritten = true;
             });
 
-            debug(`bottender: write session ${sessionId}`);
-            debug(JSON.stringify(session, null, 2));
+            debugSessionWrite(`Write session: ${sessionId}`);
+            debugSessionWrite(JSON.stringify(session, null, 2));
 
             await this._sessions.write(sessionId, session);
           }
@@ -215,8 +217,8 @@ export default class Bot {
               context.isSessionWritten = true;
             });
 
-            debug(`bottender: write session ${sessionId}`);
-            debug(JSON.stringify(session, null, 2));
+            debugSessionWrite(`Write session: ${sessionId}`);
+            debugSessionWrite(JSON.stringify(session, null, 2));
 
             return this._sessions.write(sessionId, session);
           }
