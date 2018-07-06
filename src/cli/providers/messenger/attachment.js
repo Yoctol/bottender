@@ -110,6 +110,8 @@ export async function uploadAttachment(ctx) {
 
     const files = await readdir('assets', ['.*']);
 
+    invariant(files.length > 0, 'No files found in `assets` folder.');
+
     files.forEach(print);
 
     let confirm = true;
