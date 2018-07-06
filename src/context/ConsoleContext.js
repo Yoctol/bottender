@@ -24,7 +24,9 @@ const methodBlackList = [
 
 export default class ConsoleContext extends Context implements PlatformContext {
   _client: ConsoleClient;
+
   _event: ConsoleEvent;
+
   _session: ?Session;
 
   constructor({

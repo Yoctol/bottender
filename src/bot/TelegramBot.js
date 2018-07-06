@@ -14,6 +14,7 @@ type PollingOptions = {
 
 export default class TelegramBot extends Bot {
   _offset: ?number;
+
   _shouldGetUpdates: boolean = false;
 
   constructor({

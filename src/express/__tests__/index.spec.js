@@ -1,4 +1,4 @@
-import * as express from '../';
+import * as express from '..';
 
 describe('express', () => {
   it('export public apis', () => {

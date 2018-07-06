@@ -192,7 +192,9 @@ type MessengerEventOptions = {
 
 export default class MessengerEvent implements Event {
   _rawEvent: MessengerRawEvent;
+
   _isStandby: boolean;
+
   _pageId: ?string;
 
   constructor(
@@ -600,7 +602,8 @@ export default class MessengerEvent implements Event {
   get payload(): ?string {
     if (!!this.postback && this.isPayload) {
       return this.postback.payload;
-    } else if (!!this.quickReply && this.isPayload) {
+    }
+    if (!!this.quickReply && this.isPayload) {
       return this.quickReply.payload;
     }
     return null;

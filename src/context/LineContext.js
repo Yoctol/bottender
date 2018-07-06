@@ -24,13 +24,17 @@ type Options = {|
 
 class LineContext extends Context implements PlatformContext {
   _client: LineClient;
+
   _event: LineEvent;
+
   _session: ?Session;
 
   _isReplied: boolean = false;
 
   _shouldBatch: boolean;
+
   _replyMessages = [];
+
   _pushMessages = [];
 
   _sendMethod: string;

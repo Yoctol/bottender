@@ -22,12 +22,17 @@ type Response = {
 
 export default class Context {
   _isHandled = false;
+
   _isSessionWritten = false;
 
   _client: Object;
+
   _event: Object;
+
   _session: ?Object;
+
   _initialState: ?Object;
+
   _requestContext: ?Object;
 
   response: Response;
@@ -99,6 +104,7 @@ export default class Context {
   get isSessionWritten(): boolean {
     return this._isSessionWritten;
   }
+
   set isSessionWritten(bool: boolean): void {
     this._isSessionWritten = bool;
   }

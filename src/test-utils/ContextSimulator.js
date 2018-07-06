@@ -6,6 +6,7 @@ declare var jest: any;
 
 class ContextSimulator {
   _platform: string;
+
   _initialState: Object;
 
   _mockFn: Function;

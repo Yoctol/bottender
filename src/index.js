@@ -13,7 +13,6 @@ export { default as TelegramBot } from './bot/TelegramBot';
 export { default as ViberBot } from './bot/ViberBot';
 
 /* Connector */
-export { default as Connector } from './bot/Connector';
 export { default as ConsoleConnector } from './bot/ConsoleConnector';
 export { default as TestConnector } from './bot/TestConnector';
 export { default as MessengerConnector } from './bot/MessengerConnector';

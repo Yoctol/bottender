@@ -20,7 +20,9 @@ type Options = {|
 
 export default class SlackContext extends Context implements PlatformContext {
   _client: SlackOAuthClient;
+
   _event: SlackEvent;
+
   _session: ?Session;
 
   constructor({

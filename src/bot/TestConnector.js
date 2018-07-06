@@ -37,6 +37,7 @@ const testClient = {
 
 export default class TestConnector implements Connector<TestRequestBody> {
   _client: TestClient;
+
   _fallbackMethods: boolean;
 
   constructor({ client, fallbackMethods }: ConstructorOptions = {}) {

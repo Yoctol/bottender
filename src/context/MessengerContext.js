@@ -22,9 +22,13 @@ type Options = {|
 
 class MessengerContext extends Context implements PlatformContext {
   _client: MessengerClient;
+
   _event: MessengerEvent;
+
   _session: ?Session;
+
   _customAccessToken: ?string;
+
   _batchQueue: ?Object;
 
   constructor({

@@ -42,7 +42,8 @@ type PredicateHandler = {
 export function matchPattern(pattern: Pattern, text: string): boolean {
   if (typeof pattern === 'string') {
     return pattern === text;
-  } else if (pattern instanceof RegExp) {
+  }
+  if (pattern instanceof RegExp) {
     return pattern.test(text);
   }
   return false;
@@ -50,7 +51,9 @@ export function matchPattern(pattern: Pattern, text: string): boolean {
 
 export default class Handler {
   _handlers: Array<PredicateHandler> = [];
+
   _errorHandler: ?FunctionalHandler = null;
+
   _unhandledHandler: ?FunctionalHandler = null;
 
   on(predicate: ContextPredicate, handler: FunctionalHandler | Builder) {

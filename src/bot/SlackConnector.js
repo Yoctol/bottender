@@ -42,6 +42,7 @@ type ConstructorOptions = {|
 
 export default class SlackConnector implements Connector<SlackRequestBody> {
   _client: SlackOAuthClient;
+
   _verificationToken: string;
 
   constructor({ accessToken, client, verificationToken }: ConstructorOptions) {
@@ -59,7 +60,8 @@ export default class SlackConnector implements Connector<SlackRequestBody> {
   _getRawEventFromRequest(body: SlackRequestBody): SlackRawEvent {
     if (body.event) {
       return (((body: any): EventsAPIBody).event: Message);
-    } else if (body.payload && typeof body.payload === 'string') {
+    }
+    if (body.payload && typeof body.payload === 'string') {
       return (JSON.parse(body.payload): InteractiveMessageEvent);
     }
     // for RTM WebSocket messages
