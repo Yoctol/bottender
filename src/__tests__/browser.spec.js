@@ -7,7 +7,6 @@ describe('browser', () => {
   });
 
   it('export connectors', () => {
-    expect(core.Connector).toBeDefined();
     expect(core.TestConnector).toBeDefined();
   });
 

@@ -8,14 +8,6 @@ import type { Session } from '../session/Session';
 
 import type { Connector } from './Connector';
 
-export type TelegramUser = {
-  id: number,
-  first_name: string,
-  last_name?: string,
-  username?: string,
-  language_code?: string,
-};
-
 export type TelegramRequestBody = TelegramRawEvent;
 
 type ConstructorOptions = {|

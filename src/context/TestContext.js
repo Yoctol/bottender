@@ -1,10 +1,10 @@
 /* @flow */
 import sleep from 'delay';
 
-import type { TestClient } from '../bot/TestConnector';
 import type { Session } from '../session/Session';
 
 import Context from './Context';
+import type { TestClient } from './TestClient';
 import TestEvent from './TestEvent';
 import type { PlatformContext } from './PlatformContext';
 

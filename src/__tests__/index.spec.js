@@ -13,7 +13,6 @@ describe('core', () => {
   });
 
   it('export connectors', () => {
-    expect(core.Connector).toBeDefined();
     expect(core.ConsoleConnector).toBeDefined();
     expect(core.TestConnector).toBeDefined();
     expect(core.MessengerConnector).toBeDefined();

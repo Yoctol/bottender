@@ -5,7 +5,6 @@ export { default as Bot } from './bot/Bot';
 export { default as TestBot } from './bot/TestBot';
 
 /* Connector */
-export { default as Connector } from './bot/Connector';
 export { default as TestConnector } from './bot/TestConnector';
 
 /* HandlerBuilder */

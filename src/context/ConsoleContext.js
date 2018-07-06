@@ -1,10 +1,10 @@
 /* @flow */
 import sleep from 'delay';
 
-import type { ConsoleClient } from '../bot/ConsoleConnector';
 import type { Session } from '../session/Session';
 
 import Context from './Context';
+import type { ConsoleClient } from './ConsoleClient';
 import ConsoleEvent from './ConsoleEvent';
 import type { PlatformContext } from './PlatformContext';
 
