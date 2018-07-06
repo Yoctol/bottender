@@ -23,11 +23,11 @@ type Options = {|
 |};
 
 class LineContext extends Context implements PlatformContext {
-  _client: LineClient;
+  _client: LineClient = this._client;
 
-  _event: LineEvent;
+  _event: LineEvent = this._event;
 
-  _session: ?Session;
+  _session: ?Session = this._session;
 
   _isReplied: boolean = false;
 

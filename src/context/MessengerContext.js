@@ -21,11 +21,11 @@ type Options = {|
 |};
 
 class MessengerContext extends Context implements PlatformContext {
-  _client: MessengerClient;
+  _client: MessengerClient = this._client;
 
-  _event: MessengerEvent;
+  _event: MessengerEvent = this._event;
 
-  _session: ?Session;
+  _session: ?Session = this._session;
 
   _customAccessToken: ?string;
 

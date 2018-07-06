@@ -23,11 +23,11 @@ const methodBlackList = [
 ];
 
 export default class TestContext extends Context implements PlatformContext {
-  _client: TestClient;
+  _client: TestClient = this._client;
 
-  _event: TestEvent;
+  _event: TestEvent = this._event;
 
-  _session: ?Session;
+  _session: ?Session = this._session;
 
   constructor({
     client,
