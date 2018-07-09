@@ -87,6 +87,16 @@ describe('#sendText', () => {
 
     expect(context.isHandled).toBe(true);
   });
+
+  it('should support fallbackMethods with other args', async () => {
+    const { context, client } = setup({ fallbackMethods: true });
+
+    await context.sendText('hello', { other: 1 });
+
+    expect(client.sendText).toBeCalledWith(
+      `hello\nwith other args:\n${JSON.stringify([{ other: 1 }], null, 2)}`
+    );
+  });
 });
 
 describe('method missing', () => {
@@ -95,7 +105,13 @@ describe('method missing', () => {
 
     await context.sendABC('hello', { json: true });
 
-    expect(client.sendText).toBeCalledWith('sendABC: ["hello",{"json":true}]');
+    expect(client.sendText).toBeCalledWith(
+      `sendABC with args:\n${JSON.stringify(
+        ['hello', { json: true }],
+        null,
+        2
+      )}`
+    );
   });
 
   it('should mark context as handled', async () => {

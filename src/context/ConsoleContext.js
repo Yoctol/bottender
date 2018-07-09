@@ -27,6 +27,8 @@ export default class ConsoleContext extends Context implements PlatformContext {
   _event: ConsoleEvent;
   _session: ?Session;
 
+  _fallbackMethods: boolean = false;
+
   constructor({
     client,
     event,
@@ -36,6 +38,7 @@ export default class ConsoleContext extends Context implements PlatformContext {
     fallbackMethods,
   }: Options) {
     super({ client, event, session, initialState, requestContext });
+    this._fallbackMethods = fallbackMethods;
     if (fallbackMethods) {
       // $FlowExpectedError
       return new Proxy(this, {
@@ -79,13 +82,21 @@ export default class ConsoleContext extends Context implements PlatformContext {
    * Send text to the owner of then session.
    *
    */
-  async sendText(text: string): Promise<void> {
+  async sendText(text: string, ...args: Array<any>): Promise<void> {
     this._isHandled = true;
-    this._client.sendText(text);
+    if (args && this._fallbackMethods) {
+      this._client.sendText(
+        `${text}\nwith other args:\n${JSON.stringify(args, null, 2)}`
+      );
+    } else {
+      this._client.sendText(text);
+    }
   }
 
   async _methodMissing(method: string, args: Array<any>): Promise<void> {
     this._isHandled = true;
-    this._client.sendText(`${method}: ${JSON.stringify(args)}`);
+    this._client.sendText(
+      `${method} with args:\n${JSON.stringify(args, null, 2)}`
+    );
   }
 }
