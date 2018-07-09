@@ -1,10 +1,10 @@
 /* @flow */
 import sleep from 'delay';
 
-import type { TestClient } from '../bot/TestConnector';
 import type { Session } from '../session/Session';
 
 import Context from './Context';
+import type { TestClient } from './TestClient';
 import TestEvent from './TestEvent';
 import type { PlatformContext } from './PlatformContext';
 
@@ -23,9 +23,11 @@ const methodBlackList = [
 ];
 
 export default class TestContext extends Context implements PlatformContext {
-  _client: TestClient;
-  _event: TestEvent;
-  _session: ?Session;
+  _client: TestClient = this._client;
+
+  _event: TestEvent = this._event;
+
+  _session: ?Session = this._session;
 
   constructor({
     client,

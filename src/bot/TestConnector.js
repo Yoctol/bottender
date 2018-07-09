@@ -1,21 +1,13 @@
 /* @flow */
 
 import TestContext from '../context/TestContext';
+import type { TestClient } from '../context/TestClient';
 import TestEvent, { type TestRawEvent } from '../context/TestEvent';
 import type { Session } from '../session/Session';
 
 import type { Connector } from './Connector';
 
 type TestRequestBody = TestRawEvent;
-
-export type TestClient = {
-  calls: Array<{
-    name: string,
-    args: Array<any>,
-  }>,
-  callMethod(name: string, args: Array<any>): void,
-  mockReset(): void,
-};
 
 type ConstructorOptions = {|
   client?: TestClient,
@@ -37,6 +29,7 @@ const testClient = {
 
 export default class TestConnector implements Connector<TestRequestBody> {
   _client: TestClient;
+
   _fallbackMethods: boolean;
 
   constructor({ client, fallbackMethods }: ConstructorOptions = {}) {

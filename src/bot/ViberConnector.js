@@ -19,6 +19,7 @@ type ConstructorOptions = {|
 
 export default class ViberConnector implements Connector<ViberRequestBody> {
   _accessToken: ?string;
+
   _client: ViberClient;
 
   constructor({ accessToken, client }: ConstructorOptions) {

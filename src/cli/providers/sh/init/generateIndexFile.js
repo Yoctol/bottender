@@ -48,7 +48,8 @@ const newBotLines = (bot, platform, sessionStore) => {
 const runBotLines = (platform, server) => {
   if (platform === 'console') {
     return 'bot.createRuntime();';
-  } else if (server === 'micro') {
+  }
+  if (server === 'micro') {
     return 'module.exports = createRequestHandler(bot);';
   }
   return `const server = createServer(bot);

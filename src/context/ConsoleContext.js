@@ -1,12 +1,12 @@
 /* @flow */
 import sleep from 'delay';
 
-import type { ConsoleClient } from '../bot/ConsoleConnector';
-import type { Session } from '../session/Session';
+import { type Session } from '../session/Session';
 
 import Context from './Context';
+import { type ConsoleClient } from './ConsoleClient';
 import ConsoleEvent from './ConsoleEvent';
-import type { PlatformContext } from './PlatformContext';
+import { type PlatformContext } from './PlatformContext';
 
 type Options = {|
   client: ConsoleClient,
@@ -23,9 +23,11 @@ const methodBlackList = [
 ];
 
 export default class ConsoleContext extends Context implements PlatformContext {
-  _client: ConsoleClient;
-  _event: ConsoleEvent;
-  _session: ?Session;
+  _client: ConsoleClient = this._client;
+
+  _event: ConsoleEvent = this._event;
+
+  _session: ?Session = this._session;
 
   _fallbackMethods: boolean = false;
 

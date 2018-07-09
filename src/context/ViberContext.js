@@ -19,9 +19,11 @@ type Options = {|
 |};
 
 class ViberContext extends Context implements PlatformContext {
-  _client: ViberClient;
-  _event: ViberEvent;
-  _session: ?Session;
+  _client: ViberClient = this._client;
+
+  _event: ViberEvent = this._event;
+
+  _session: ?Session = this.session;
 
   constructor({
     client,

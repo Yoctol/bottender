@@ -86,10 +86,15 @@ type ConstructorOptions = {|
 export default class MessengerConnector
   implements Connector<MessengerRequestBody> {
   _client: MessengerClient;
+
   _appSecret: string;
+
   _mapPageToAccessToken: ?(pageId: string) => ?Promise<string>;
+
   _verifyToken: ?string;
+
   _batchConfig: ?Object;
+
   _batchQueue: ?Object;
 
   constructor({
@@ -161,7 +166,8 @@ export default class MessengerConnector
   _getPageIdFromRawEvent(rawEvent: MessengerRawEvent): ?string {
     if (rawEvent.message && rawEvent.message.is_echo && rawEvent.sender) {
       return rawEvent.sender.id;
-    } else if (rawEvent.recipient) {
+    }
+    if (rawEvent.recipient) {
       return rawEvent.recipient.id;
     }
   }

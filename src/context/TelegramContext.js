@@ -19,9 +19,11 @@ type Options = {|
 |};
 
 class TelegramContext extends Context implements PlatformContext {
-  _client: TelegramClient;
-  _event: TelegramEvent;
-  _session: ?Session;
+  _client: TelegramClient = this._client;
+
+  _event: TelegramEvent = this._event;
+
+  _session: ?Session = this._session;
 
   constructor({
     client,

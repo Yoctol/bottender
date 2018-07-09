@@ -1,6 +1,6 @@
 import { IncomingMessage } from 'http';
 
-import * as restify from '../';
+import * as restify from '..';
 
 describe('restify', () => {
   afterEach(() => {

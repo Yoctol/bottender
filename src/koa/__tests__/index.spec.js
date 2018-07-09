@@ -1,4 +1,4 @@
-import * as koa from '../';
+import * as koa from '..';
 
 describe('koa', () => {
   it('export public apis', () => {

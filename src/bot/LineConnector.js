@@ -25,8 +25,11 @@ type ConstructorOptions = {|
 
 export default class LineConnector implements Connector<LineRequestBody> {
   _client: LineClient;
+
   _channelSecret: string;
+
   _shouldBatch: ?boolean;
+
   _sendMethod: ?string;
 
   constructor({
@@ -72,9 +75,11 @@ export default class LineConnector implements Connector<LineRequestBody> {
     const { source } = body.events[0];
     if (source.type === 'user') {
       return source.userId;
-    } else if (source.type === 'group') {
+    }
+    if (source.type === 'group') {
       return source.groupId;
-    } else if (source.type === 'room') {
+    }
+    if (source.type === 'room') {
       return source.roomId;
     }
     throw new TypeError(

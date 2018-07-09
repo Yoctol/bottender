@@ -1,4 +1,4 @@
-import * as micro from '../';
+import * as micro from '..';
 
 describe('micro', () => {
   it('export public apis', () => {

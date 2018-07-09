@@ -1,4 +1,4 @@
-import * as utils from '../';
+import * as utils from '..';
 
 describe('micro', () => {
   it('export public apis', () => {
