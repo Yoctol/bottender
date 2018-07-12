@@ -77,9 +77,9 @@ const logUploadInfo = uploadInfo => {
       uploadInfo.unchanged.length <= 1 ? 'file' : 'files'
     }.`
   );
-  for (let i = 0; i < uploadInfo.error.length; i += 1) {
-    error(`Failed file: ${uploadInfo.error[i]}`);
-  }
+  uploadInfo.error.forEach(errorFilename => {
+    error(`Failed file: ${errorFilename}`);
+  });
 };
 
 export async function uploadAttachment(ctx) {
@@ -194,7 +194,8 @@ export async function uploadAttachment(ctx) {
           print(`Successfully uploaded: ${name}`);
           uploadInfo.success.push(name);
         } catch (e) {
-          error(e);
+          error(`Error when uploading file: ${name}`);
+          error(`  ${e}`);
           uploadInfo.error.push(name);
         }
       } else {
