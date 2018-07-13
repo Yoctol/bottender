@@ -89,6 +89,14 @@ class MessengerContext extends Context implements PlatformContext {
       return;
     }
 
+    if (this._event.isEcho || this._event.isDelivery || this._event.isRead) {
+      warning(
+        false,
+        'sendText: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+      );
+      return;
+    }
+
     this._isHandled = true;
 
     const messageType = options && options.tag ? 'MESSAGE_TAG' : 'RESPONSE';
@@ -428,7 +436,7 @@ class MessengerContext extends Context implements PlatformContext {
     if (!this._session) {
       warning(
         false,
-        'dissociateLabel: should not be called in context without session'
+        'getAssociatedLabels: should not be called in context without session'
       );
       return;
     }
@@ -482,6 +490,13 @@ sendMethods.forEach(([method, len]) => {
         return;
       }
 
+      if (this._event.isEcho || this._event.isDelivery || this._event.isRead) {
+        warning(
+          false,
+          `${method}: calling Send APIs in \`message_reads\`(event.isRead), \`message_deliveries\`(event.isDelivery) or \`message_echoes\`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.`
+        );
+        return;
+      }
       this._isHandled = true;
 
       const options = args[len - 2];

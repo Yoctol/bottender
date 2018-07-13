@@ -240,7 +240,7 @@ const quickReplyMessage = {
   },
 };
 
-const delivery = {
+export const delivery = {
   sender: {
     id: '404217156637689',
   },
@@ -254,7 +254,7 @@ const delivery = {
   },
 };
 
-const read = {
+export const read = {
   sender: {
     id: '404217156637689',
   },
@@ -268,7 +268,7 @@ const read = {
   },
 };
 
-const echoMessage = {
+export const echoMessage = {
   sender: {
     id: '404217156637689',
   },

@@ -1,3 +1,5 @@
+import { delivery, read, echoMessage as echo } from './MessengerEvent.spec';
+
 jest.mock('delay');
 jest.mock('messaging-api-messenger');
 jest.mock('warning');
@@ -22,7 +24,7 @@ afterEach(() => {
   jest.useFakeTimers();
 });
 
-const rawEvent = {
+const _rawEvent = {
   sender: { id: '1423587017700273' },
   recipient: { id: '404217156637689' },
   timestamp: 1491796363181,
@@ -40,9 +42,10 @@ const userSession = {
 };
 
 const setup = (
-  { session, customAccessToken } = {
+  { session = userSession, customAccessToken, rawEvent = _rawEvent } = {
     session: userSession,
     customAccessToken: undefined,
+    _rawEvent,
   }
 ) => {
   const client = MessengerClient.connect();
@@ -150,7 +153,46 @@ describe('#sendText', () => {
 
     await context.sendText();
 
-    expect(warning).toBeCalled();
+    expect(warning).toBeCalledWith(
+      false,
+      'sendText: should not be called in context without session'
+    );
+    expect(client.sendText).not.toBeCalled();
+  });
+
+  it('should call warning and not to send if created with read event', async () => {
+    const { context, client } = setup({ rawEvent: read });
+
+    await context.sendText('xxx.com');
+
+    expect(warning).toBeCalledWith(
+      false,
+      'sendText: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+    );
+    expect(client.sendText).not.toBeCalled();
+  });
+
+  it('should call warning and not to send if created with delivery event', async () => {
+    const { context, client } = setup({ rawEvent: delivery });
+
+    await context.sendText('xxx.com');
+
+    expect(warning).toBeCalledWith(
+      false,
+      'sendText: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+    );
+    expect(client.sendText).not.toBeCalled();
+  });
+
+  it('should call warning and not to send if created with echo event', async () => {
+    const { context, client } = setup({ rawEvent: echo });
+
+    await context.sendText('xxx.com');
+
+    expect(warning).toBeCalledWith(
+      false,
+      'sendText: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+    );
     expect(client.sendText).not.toBeCalled();
   });
 });
@@ -190,6 +232,74 @@ describe('#sendAttachment', () => {
 
     expect(context.isHandled).toBe(true);
   });
+
+  it('should call warning and not to send if dont have session', async () => {
+    const { context, client } = setup({ session: false });
+
+    await context.sendAttachment({
+      type: 'image',
+      payload: {
+        url: 'https://example.com/pic.png',
+      },
+    });
+
+    expect(warning).toBeCalledWith(
+      false,
+      'sendAttachment: should not be called in context without session'
+    );
+    expect(client.sendAttachment).not.toBeCalled();
+  });
+
+  it('should call warning and not to send if created with read event', async () => {
+    const { context, client } = setup({ rawEvent: read });
+
+    await context.sendAttachment({
+      type: 'image',
+      payload: {
+        url: 'https://example.com/pic.png',
+      },
+    });
+
+    expect(warning).toBeCalledWith(
+      false,
+      'sendAttachment: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+    );
+    expect(client.sendAttachment).not.toBeCalled();
+  });
+
+  it('should call warning and not to send if created with delivery event', async () => {
+    const { context, client } = setup({ rawEvent: delivery });
+
+    await context.sendAttachment({
+      type: 'image',
+      payload: {
+        url: 'https://example.com/pic.png',
+      },
+    });
+
+    expect(warning).toBeCalledWith(
+      false,
+      'sendAttachment: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+    );
+    expect(client.sendAttachment).not.toBeCalled();
+  });
+
+  it('should call warning and not to send if created with echo event', async () => {
+    const { context, client } = setup({ rawEvent: echo });
+
+    await context.sendAttachment({
+      type: 'image',
+      payload: {
+        url: 'https://example.com/pic.png',
+      },
+    });
+
+    expect(warning).toBeCalledWith(
+      false,
+      'sendAttachment: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+    );
+    expect(client.sendAttachment).not.toBeCalled();
+  });
 });
 
 describe('#sendImage', () => {
@@ -216,7 +326,46 @@ describe('#sendImage', () => {
 
     await context.sendImage('xxx.com');
 
-    expect(warning).toBeCalled();
+    expect(warning).toBeCalledWith(
+      false,
+      'sendImage: should not be called in context without session'
+    );
+    expect(client.sendImage).not.toBeCalled();
+  });
+
+  it('should call warning and not to send if created with read event', async () => {
+    const { context, client } = setup({ rawEvent: read });
+
+    await context.sendImage('xxx.com');
+
+    expect(warning).toBeCalledWith(
+      false,
+      'sendImage: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+    );
+    expect(client.sendImage).not.toBeCalled();
+  });
+
+  it('should call warning and not to send if created with delivery event', async () => {
+    const { context, client } = setup({ rawEvent: delivery });
+
+    await context.sendImage('xxx.com');
+
+    expect(warning).toBeCalledWith(
+      false,
+      'sendImage: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+    );
+    expect(client.sendImage).not.toBeCalled();
+  });
+
+  it('should call warning and not to send if created with echo event', async () => {
+    const { context, client } = setup({ rawEvent: echo });
+
+    await context.sendImage('xxx.com');
+
+    expect(warning).toBeCalledWith(
+      false,
+      'sendImage: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+    );
     expect(client.sendImage).not.toBeCalled();
   });
 });
@@ -239,6 +388,54 @@ describe('#sendAudio', () => {
 
     expect(context.isHandled).toBe(true);
   });
+
+  it('should call warning and not to send if dont have session', async () => {
+    const { context, client } = setup({ session: false });
+
+    await context.sendAudio('xxx.com');
+
+    expect(warning).toBeCalledWith(
+      false,
+      'sendAudio: should not be called in context without session'
+    );
+    expect(client.sendImage).not.toBeCalled();
+  });
+
+  it('should call warning and not to send if created with read event', async () => {
+    const { context, client } = setup({ rawEvent: read });
+
+    await context.sendAudio('xxx.com');
+
+    expect(warning).toBeCalledWith(
+      false,
+      'sendAudio: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+    );
+    expect(client.sendImage).not.toBeCalled();
+  });
+
+  it('should call warning and not to send if created with delivery event', async () => {
+    const { context, client } = setup({ rawEvent: delivery });
+
+    await context.sendAudio('xxx.com');
+
+    expect(warning).toBeCalledWith(
+      false,
+      'sendAudio: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+    );
+    expect(client.sendImage).not.toBeCalled();
+  });
+
+  it('should call warning and not to send if created with echo event', async () => {
+    const { context, client } = setup({ rawEvent: echo });
+
+    await context.sendAudio('xxx.com');
+
+    expect(warning).toBeCalledWith(
+      false,
+      'sendAudio: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+    );
+    expect(client.sendImage).not.toBeCalled();
+  });
 });
 
 describe('#sendVideo', () => {
@@ -259,6 +456,54 @@ describe('#sendVideo', () => {
 
     expect(context.isHandled).toBe(true);
   });
+
+  it('should call warning and not to send if dont have session', async () => {
+    const { context, client } = setup({ session: false });
+
+    await context.sendVideo('xxx.com');
+
+    expect(warning).toBeCalledWith(
+      false,
+      'sendVideo: should not be called in context without session'
+    );
+    expect(client.sendVideo).not.toBeCalled();
+  });
+
+  it('should call warning and not to send if created with read event', async () => {
+    const { context, client } = setup({ rawEvent: read });
+
+    await context.sendVideo('xxx.com');
+
+    expect(warning).toBeCalledWith(
+      false,
+      'sendVideo: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+    );
+    expect(client.sendVideo).not.toBeCalled();
+  });
+
+  it('should call warning and not to send if created with delivery event', async () => {
+    const { context, client } = setup({ rawEvent: delivery });
+
+    await context.sendVideo('xxx.com');
+
+    expect(warning).toBeCalledWith(
+      false,
+      'sendVideo: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+    );
+    expect(client.sendVideo).not.toBeCalled();
+  });
+
+  it('should call warning and not to send if created with echo event', async () => {
+    const { context, client } = setup({ rawEvent: echo });
+
+    await context.sendVideo('xxx.com');
+
+    expect(warning).toBeCalledWith(
+      false,
+      'sendVideo: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+    );
+    expect(client.sendVideo).not.toBeCalled();
+  });
 });
 
 describe('#sendFile', () => {
@@ -278,6 +523,54 @@ describe('#sendFile', () => {
     await context.sendFile('xxx.com');
 
     expect(context.isHandled).toBe(true);
+  });
+
+  it('should call warning and not to send if dont have session', async () => {
+    const { context, client } = setup({ session: false });
+
+    await context.sendFile('xxx.com');
+
+    expect(warning).toBeCalledWith(
+      false,
+      'sendFile: should not be called in context without session'
+    );
+    expect(client.sendFile).not.toBeCalled();
+  });
+
+  it('should call warning and not to send if created with read event', async () => {
+    const { context, client } = setup({ rawEvent: read });
+
+    await context.sendFile('xxx.com');
+
+    expect(warning).toBeCalledWith(
+      false,
+      'sendFile: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+    );
+    expect(client.sendFile).not.toBeCalled();
+  });
+
+  it('should call warning and not to send if created with delivery event', async () => {
+    const { context, client } = setup({ rawEvent: delivery });
+
+    await context.sendFile('xxx.com');
+
+    expect(warning).toBeCalledWith(
+      false,
+      'sendFile: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+    );
+    expect(client.sendFile).not.toBeCalled();
+  });
+
+  it('should call warning and not to send if created with echo event', async () => {
+    const { context, client } = setup({ rawEvent: echo });
+
+    await context.sendFile('xxx.com');
+
+    expect(warning).toBeCalledWith(
+      false,
+      'sendFile: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+    );
+    expect(client.sendFile).not.toBeCalled();
   });
 });
 
@@ -379,6 +672,66 @@ describe('#sendGenericTemplate', () => {
 
     expect(context.isHandled).toBe(true);
   });
+
+  it('should call warning and not to send if dont have session', async () => {
+    const { context, client } = setup({ session: false });
+
+    const elements = {};
+    const ratio = '';
+
+    await context.sendGenericTemplate(elements, { image_aspect_ratio: ratio });
+
+    expect(warning).toBeCalledWith(
+      false,
+      'sendGenericTemplate: should not be called in context without session'
+    );
+    expect(client.sendGenericTemplate).not.toBeCalled();
+  });
+
+  it('should call warning and not to send if created with read event', async () => {
+    const { context, client } = setup({ rawEvent: read });
+
+    const elements = {};
+    const ratio = '';
+
+    await context.sendGenericTemplate(elements, { image_aspect_ratio: ratio });
+
+    expect(warning).toBeCalledWith(
+      false,
+      'sendGenericTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+    );
+    expect(client.sendGenericTemplate).not.toBeCalled();
+  });
+
+  it('should call warning and not to send if created with delivery event', async () => {
+    const { context, client } = setup({ rawEvent: delivery });
+
+    const elements = {};
+    const ratio = '';
+
+    await context.sendGenericTemplate(elements, { image_aspect_ratio: ratio });
+
+    expect(warning).toBeCalledWith(
+      false,
+      'sendGenericTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+    );
+    expect(client.sendGenericTemplate).not.toBeCalled();
+  });
+
+  it('should call warning and not to send if created with echo event', async () => {
+    const { context, client } = setup({ rawEvent: echo });
+
+    const elements = {};
+    const ratio = '';
+
+    await context.sendGenericTemplate(elements, { image_aspect_ratio: ratio });
+
+    expect(warning).toBeCalledWith(
+      false,
+      'sendGenericTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+    );
+    expect(client.sendGenericTemplate).not.toBeCalled();
+  });
 });
 
 describe('#sendButtonTemplate', () => {
@@ -407,6 +760,62 @@ describe('#sendButtonTemplate', () => {
     await context.sendButtonTemplate('yayaya', buttons);
 
     expect(context.isHandled).toBe(true);
+  });
+
+  it('should call warning and not to send if dont have session', async () => {
+    const { context, client } = setup({ session: false });
+
+    const buttons = [];
+
+    await context.sendButtonTemplate('yayaya', buttons);
+
+    expect(warning).toBeCalledWith(
+      false,
+      'sendButtonTemplate: should not be called in context without session'
+    );
+    expect(client.sendButtonTemplate).not.toBeCalled();
+  });
+
+  it('should call warning and not to send if created with read event', async () => {
+    const { context, client } = setup({ rawEvent: read });
+
+    const buttons = [];
+
+    await context.sendButtonTemplate('yayaya', buttons);
+
+    expect(warning).toBeCalledWith(
+      false,
+      'sendButtonTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+    );
+    expect(client.sendButtonTemplate).not.toBeCalled();
+  });
+
+  it('should call warning and not to send if created with delivery event', async () => {
+    const { context, client } = setup({ rawEvent: delivery });
+
+    const buttons = [];
+
+    await context.sendButtonTemplate('yayaya', buttons);
+
+    expect(warning).toBeCalledWith(
+      false,
+      'sendButtonTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+    );
+    expect(client.sendButtonTemplate).not.toBeCalled();
+  });
+
+  it('should call warning and not to send if created with echo event', async () => {
+    const { context, client } = setup({ rawEvent: echo });
+
+    const buttons = [];
+
+    await context.sendButtonTemplate('yayaya', buttons);
+
+    expect(warning).toBeCalledWith(
+      false,
+      'sendButtonTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+    );
+    expect(client.sendButtonTemplate).not.toBeCalled();
   });
 });
 
@@ -441,6 +850,66 @@ describe('#sendListTemplate', () => {
     await context.sendListTemplate(elements, buttons, 'large');
 
     expect(context.isHandled).toBe(true);
+  });
+
+  it('should call warning and not to send if dont have session', async () => {
+    const { context, client } = setup({ session: false });
+
+    const elements = [];
+    const buttons = [];
+
+    await context.sendListTemplate(elements, buttons, 'large');
+
+    expect(warning).toBeCalledWith(
+      false,
+      'sendListTemplate: should not be called in context without session'
+    );
+    expect(client.sendListTemplate).not.toBeCalled();
+  });
+
+  it('should call warning and not to send if created with read event', async () => {
+    const { context, client } = setup({ rawEvent: read });
+
+    const elements = [];
+    const buttons = [];
+
+    await context.sendListTemplate(elements, buttons, 'large');
+
+    expect(warning).toBeCalledWith(
+      false,
+      'sendListTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+    );
+    expect(client.sendListTemplate).not.toBeCalled();
+  });
+
+  it('should call warning and not to send if created with delivery event', async () => {
+    const { context, client } = setup({ rawEvent: delivery });
+
+    const elements = [];
+    const buttons = [];
+
+    await context.sendListTemplate(elements, buttons, 'large');
+
+    expect(warning).toBeCalledWith(
+      false,
+      'sendListTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+    );
+    expect(client.sendListTemplate).not.toBeCalled();
+  });
+
+  it('should call warning and not to send if created with echo event', async () => {
+    const { context, client } = setup({ rawEvent: echo });
+
+    const elements = [];
+    const buttons = [];
+
+    await context.sendListTemplate(elements, buttons, 'large');
+
+    expect(warning).toBeCalledWith(
+      false,
+      'sendListTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+    );
+    expect(client.sendListTemplate).not.toBeCalled();
   });
 });
 
@@ -482,6 +951,72 @@ describe('#sendOpenGraphTemplate', () => {
       }
     );
   });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    const elements = [];
+
+    await context.sendOpenGraphTemplate(elements);
+
+    expect(context.isHandled).toBe(true);
+  });
+
+  it('should call warning and not to send if dont have session', async () => {
+    const { context, client } = setup({ session: false });
+
+    const elements = [];
+
+    await context.sendOpenGraphTemplate(elements);
+
+    expect(warning).toBeCalledWith(
+      false,
+      'sendOpenGraphTemplate: should not be called in context without session'
+    );
+    expect(client.sendOpenGraphTemplate).not.toBeCalled();
+  });
+
+  it('should call warning and not to send if created with read event', async () => {
+    const { context, client } = setup({ rawEvent: read });
+
+    const elements = [];
+
+    await context.sendOpenGraphTemplate(elements);
+
+    expect(warning).toBeCalledWith(
+      false,
+      'sendOpenGraphTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+    );
+    expect(client.sendOpenGraphTemplate).not.toBeCalled();
+  });
+
+  it('should call warning and not to send if created with delivery event', async () => {
+    const { context, client } = setup({ rawEvent: delivery });
+
+    const elements = [];
+
+    await context.sendOpenGraphTemplate(elements);
+
+    expect(warning).toBeCalledWith(
+      false,
+      'sendOpenGraphTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+    );
+    expect(client.sendOpenGraphTemplate).not.toBeCalled();
+  });
+
+  it('should call warning and not to send if created with echo event', async () => {
+    const { context, client } = setup({ rawEvent: echo });
+
+    const elements = [];
+
+    await context.sendOpenGraphTemplate(elements);
+
+    expect(warning).toBeCalledWith(
+      false,
+      'sendOpenGraphTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+    );
+    expect(client.sendOpenGraphTemplate).not.toBeCalled();
+  });
 });
 
 describe('#sendMediaTemplate', () => {
@@ -520,6 +1055,72 @@ describe('#sendMediaTemplate', () => {
       }
     );
   });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    const elements = [];
+
+    await context.sendMediaTemplate(elements);
+
+    expect(context.isHandled).toBe(true);
+  });
+
+  it('should call warning and not to send if dont have session', async () => {
+    const { context, client } = setup({ session: false });
+
+    const elements = [];
+
+    await context.sendMediaTemplate(elements);
+
+    expect(warning).toBeCalledWith(
+      false,
+      'sendMediaTemplate: should not be called in context without session'
+    );
+    expect(client.sendMediaTemplate).not.toBeCalled();
+  });
+
+  it('should call warning and not to send if created with read event', async () => {
+    const { context, client } = setup({ rawEvent: read });
+
+    const elements = [];
+
+    await context.sendMediaTemplate(elements);
+
+    expect(warning).toBeCalledWith(
+      false,
+      'sendMediaTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+    );
+    expect(client.sendMediaTemplate).not.toBeCalled();
+  });
+
+  it('should call warning and not to send if created with delivery event', async () => {
+    const { context, client } = setup({ rawEvent: delivery });
+
+    const elements = [];
+
+    await context.sendMediaTemplate(elements);
+
+    expect(warning).toBeCalledWith(
+      false,
+      'sendMediaTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+    );
+    expect(client.sendMediaTemplate).not.toBeCalled();
+  });
+
+  it('should call warning and not to send if created with echo event', async () => {
+    const { context, client } = setup({ rawEvent: echo });
+
+    const elements = [];
+
+    await context.sendMediaTemplate(elements);
+
+    expect(warning).toBeCalledWith(
+      false,
+      'sendMediaTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+    );
+    expect(client.sendMediaTemplate).not.toBeCalled();
+  });
 });
 
 describe('#sendReceiptTemplate', () => {
@@ -547,6 +1148,62 @@ describe('#sendReceiptTemplate', () => {
     await context.sendReceiptTemplate(receipt);
 
     expect(context.isHandled).toBe(true);
+  });
+
+  it('should call warning and not to send if dont have session', async () => {
+    const { context, client } = setup({ session: false });
+
+    const receipt = {};
+
+    await context.sendReceiptTemplate(receipt);
+
+    expect(warning).toBeCalledWith(
+      false,
+      'sendReceiptTemplate: should not be called in context without session'
+    );
+    expect(client.sendReceiptTemplate).not.toBeCalled();
+  });
+
+  it('should call warning and not to send if created with read event', async () => {
+    const { context, client } = setup({ rawEvent: read });
+
+    const receipt = {};
+
+    await context.sendReceiptTemplate(receipt);
+
+    expect(warning).toBeCalledWith(
+      false,
+      'sendReceiptTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+    );
+    expect(client.sendReceiptTemplate).not.toBeCalled();
+  });
+
+  it('should call warning and not to send if created with delivery event', async () => {
+    const { context, client } = setup({ rawEvent: delivery });
+
+    const receipt = {};
+
+    await context.sendReceiptTemplate(receipt);
+
+    expect(warning).toBeCalledWith(
+      false,
+      'sendReceiptTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+    );
+    expect(client.sendReceiptTemplate).not.toBeCalled();
+  });
+
+  it('should call warning and not to send if created with echo event', async () => {
+    const { context, client } = setup({ rawEvent: echo });
+
+    const receipt = {};
+
+    await context.sendReceiptTemplate(receipt);
+
+    expect(warning).toBeCalledWith(
+      false,
+      'sendReceiptTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+    );
+    expect(client.sendReceiptTemplate).not.toBeCalled();
   });
 });
 
@@ -576,6 +1233,62 @@ describe('#sendAirlineBoardingPassTemplate', () => {
 
     expect(context.isHandled).toBe(true);
   });
+
+  it('should call warning and not to send if dont have session', async () => {
+    const { context, client } = setup({ session: false });
+
+    const boardingPass = {};
+
+    await context.sendAirlineBoardingPassTemplate(boardingPass);
+
+    expect(warning).toBeCalledWith(
+      false,
+      'sendAirlineBoardingPassTemplate: should not be called in context without session'
+    );
+    expect(client.sendAirlineBoardingPassTemplate).not.toBeCalled();
+  });
+
+  it('should call warning and not to send if created with read event', async () => {
+    const { context, client } = setup({ rawEvent: read });
+
+    const boardingPass = {};
+
+    await context.sendAirlineBoardingPassTemplate(boardingPass);
+
+    expect(warning).toBeCalledWith(
+      false,
+      'sendAirlineBoardingPassTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+    );
+    expect(client.sendAirlineBoardingPassTemplate).not.toBeCalled();
+  });
+
+  it('should call warning and not to send if created with delivery event', async () => {
+    const { context, client } = setup({ rawEvent: delivery });
+
+    const boardingPass = {};
+
+    await context.sendAirlineBoardingPassTemplate(boardingPass);
+
+    expect(warning).toBeCalledWith(
+      false,
+      'sendAirlineBoardingPassTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+    );
+    expect(client.sendAirlineBoardingPassTemplate).not.toBeCalled();
+  });
+
+  it('should call warning and not to send if created with echo event', async () => {
+    const { context, client } = setup({ rawEvent: echo });
+
+    const boardingPass = {};
+
+    await context.sendAirlineBoardingPassTemplate(boardingPass);
+
+    expect(warning).toBeCalledWith(
+      false,
+      'sendAirlineBoardingPassTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+    );
+    expect(client.sendAirlineBoardingPassTemplate).not.toBeCalled();
+  });
 });
 
 describe('#sendAirlineCheckinTemplate', () => {
@@ -603,6 +1316,62 @@ describe('#sendAirlineCheckinTemplate', () => {
     await context.sendAirlineCheckinTemplate(checkin);
 
     expect(context.isHandled).toBe(true);
+  });
+
+  it('should call warning and not to send if dont have session', async () => {
+    const { context, client } = setup({ session: false });
+
+    const checkin = {};
+
+    await context.sendAirlineCheckinTemplate(checkin);
+
+    expect(warning).toBeCalledWith(
+      false,
+      'sendAirlineCheckinTemplate: should not be called in context without session'
+    );
+    expect(client.sendAirlineCheckinTemplate).not.toBeCalled();
+  });
+
+  it('should call warning and not to send if created with read event', async () => {
+    const { context, client } = setup({ rawEvent: read });
+
+    const checkin = {};
+
+    await context.sendAirlineCheckinTemplate(checkin);
+
+    expect(warning).toBeCalledWith(
+      false,
+      'sendAirlineCheckinTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+    );
+    expect(client.sendAirlineCheckinTemplate).not.toBeCalled();
+  });
+
+  it('should call warning and not to send if created with delivery event', async () => {
+    const { context, client } = setup({ rawEvent: delivery });
+
+    const checkin = {};
+
+    await context.sendAirlineCheckinTemplate(checkin);
+
+    expect(warning).toBeCalledWith(
+      false,
+      'sendAirlineCheckinTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+    );
+    expect(client.sendAirlineCheckinTemplate).not.toBeCalled();
+  });
+
+  it('should call warning and not to send if created with echo event', async () => {
+    const { context, client } = setup({ rawEvent: echo });
+
+    const checkin = {};
+
+    await context.sendAirlineCheckinTemplate(checkin);
+
+    expect(warning).toBeCalledWith(
+      false,
+      'sendAirlineCheckinTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+    );
+    expect(client.sendAirlineCheckinTemplate).not.toBeCalled();
   });
 });
 
@@ -632,6 +1401,62 @@ describe('#sendAirlineItineraryTemplate', () => {
 
     expect(context.isHandled).toBe(true);
   });
+
+  it('should call warning and not to send if dont have session', async () => {
+    const { context, client } = setup({ session: false });
+
+    const itinerary = {};
+
+    await context.sendAirlineItineraryTemplate(itinerary);
+
+    expect(warning).toBeCalledWith(
+      false,
+      'sendAirlineItineraryTemplate: should not be called in context without session'
+    );
+    expect(client.sendAirlineItineraryTemplate).not.toBeCalled();
+  });
+
+  it('should call warning and not to send if created with read event', async () => {
+    const { context, client } = setup({ rawEvent: read });
+
+    const itinerary = {};
+
+    await context.sendAirlineItineraryTemplate(itinerary);
+
+    expect(warning).toBeCalledWith(
+      false,
+      'sendAirlineItineraryTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+    );
+    expect(client.sendAirlineItineraryTemplate).not.toBeCalled();
+  });
+
+  it('should call warning and not to send if created with delivery event', async () => {
+    const { context, client } = setup({ rawEvent: delivery });
+
+    const itinerary = {};
+
+    await context.sendAirlineItineraryTemplate(itinerary);
+
+    expect(warning).toBeCalledWith(
+      false,
+      'sendAirlineItineraryTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+    );
+    expect(client.sendAirlineItineraryTemplate).not.toBeCalled();
+  });
+
+  it('should call warning and not to send if created with echo event', async () => {
+    const { context, client } = setup({ rawEvent: echo });
+
+    const itinerary = {};
+
+    await context.sendAirlineItineraryTemplate(itinerary);
+
+    expect(warning).toBeCalledWith(
+      false,
+      'sendAirlineItineraryTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+    );
+    expect(client.sendAirlineItineraryTemplate).not.toBeCalled();
+  });
 });
 
 describe('#sendAirlineFlightUpdateTemplate', () => {
@@ -659,6 +1484,62 @@ describe('#sendAirlineFlightUpdateTemplate', () => {
     await context.sendAirlineFlightUpdateTemplate(flightUpdate);
 
     expect(context.isHandled).toBe(true);
+  });
+
+  it('should call warning and not to send if dont have session', async () => {
+    const { context, client } = setup({ session: false });
+
+    const flightUpdate = {};
+
+    await context.sendAirlineFlightUpdateTemplate(flightUpdate);
+
+    expect(warning).toBeCalledWith(
+      false,
+      'sendAirlineFlightUpdateTemplate: should not be called in context without session'
+    );
+    expect(client.sendImage).not.toBeCalled();
+  });
+
+  it('should call warning and not to send if created with read event', async () => {
+    const { context, client } = setup({ rawEvent: read });
+
+    const flightUpdate = {};
+
+    await context.sendAirlineFlightUpdateTemplate(flightUpdate);
+
+    expect(warning).toBeCalledWith(
+      false,
+      'sendAirlineFlightUpdateTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+    );
+    expect(client.sendImage).not.toBeCalled();
+  });
+
+  it('should call warning and not to send if created with delivery event', async () => {
+    const { context, client } = setup({ rawEvent: delivery });
+
+    const flightUpdate = {};
+
+    await context.sendAirlineFlightUpdateTemplate(flightUpdate);
+
+    expect(warning).toBeCalledWith(
+      false,
+      'sendAirlineFlightUpdateTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+    );
+    expect(client.sendImage).not.toBeCalled();
+  });
+
+  it('should call warning and not to send if created with echo event', async () => {
+    const { context, client } = setup({ rawEvent: echo });
+
+    const flightUpdate = {};
+
+    await context.sendAirlineFlightUpdateTemplate(flightUpdate);
+
+    expect(warning).toBeCalledWith(
+      false,
+      'sendAirlineFlightUpdateTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+    );
+    expect(client.sendImage).not.toBeCalled();
   });
 });
 
@@ -715,7 +1596,10 @@ describe('#getUserProfile', () => {
 
     await context.getUserProfile();
 
-    expect(warning).toBeCalled();
+    expect(warning).toBeCalledWith(
+      false,
+      'getUserProfile: should not be called in context without session'
+    );
     expect(client.getUserProfile).not.toBeCalled();
   });
 });
@@ -765,7 +1649,10 @@ describe('#sendSenderAction', () => {
 
     await context.sendSenderAction('typing_on');
 
-    expect(warning).toBeCalled();
+    expect(warning).toBeCalledWith(
+      false,
+      'sendSenderAction: should not be called in context without session'
+    );
     expect(client.sendSenderAction).not.toBeCalled();
   });
 });
@@ -807,7 +1694,10 @@ describe('#typingOn', () => {
 
     await context.typingOn();
 
-    expect(warning).toBeCalled();
+    expect(warning).toBeCalledWith(
+      false,
+      'typingOn: should not be called in context without session'
+    );
     expect(client.typingOn).not.toBeCalled();
   });
 });
@@ -849,7 +1739,10 @@ describe('#typingOff', () => {
 
     await context.typingOff();
 
-    expect(warning).toBeCalled();
+    expect(warning).toBeCalledWith(
+      false,
+      'typingOff: should not be called in context without session'
+    );
     expect(client.typingOff).not.toBeCalled();
   });
 });
@@ -891,7 +1784,10 @@ describe('#markSeen', () => {
 
     await context.markSeen();
 
-    expect(warning).toBeCalled();
+    expect(warning).toBeCalledWith(
+      false,
+      'markSeen: should not be called in context without session'
+    );
     expect(client.markSeen).not.toBeCalled();
   });
 });
@@ -955,7 +1851,10 @@ describe('#passThreadControl', () => {
 
     await context.passThreadControl(263902037430900);
 
-    expect(warning).toBeCalled();
+    expect(warning).toBeCalledWith(
+      false,
+      'passThreadControl: should not be called in context without session'
+    );
     expect(client.passThreadControl).not.toBeCalled();
   });
 });
@@ -997,7 +1896,10 @@ describe('#passThreadControlToPageInbox', () => {
 
     await context.passThreadControlToPageInbox();
 
-    expect(warning).toBeCalled();
+    expect(warning).toBeCalledWith(
+      false,
+      'passThreadControlToPageInbox: should not be called in context without session'
+    );
     expect(client.passThreadControlToPageInbox).not.toBeCalled();
   });
 });
@@ -1039,7 +1941,10 @@ describe('#takeThreadControl', () => {
 
     await context.takeThreadControl();
 
-    expect(warning).toBeCalled();
+    expect(warning).toBeCalledWith(
+      false,
+      'takeThreadControl: should not be called in context without session'
+    );
     expect(client.takeThreadControl).not.toBeCalled();
   });
 });
@@ -1081,7 +1986,10 @@ describe('#requestThreadControl', () => {
 
     await context.requestThreadControl();
 
-    expect(warning).toBeCalled();
+    expect(warning).toBeCalledWith(
+      false,
+      'requestThreadControl: should not be called in context without session'
+    );
     expect(client.requestThreadControl).not.toBeCalled();
   });
 });
@@ -1115,7 +2023,10 @@ describe('#getThreadOwner', () => {
 
     await context.getThreadOwner();
 
-    expect(warning).toBeCalled();
+    expect(warning).toBeCalledWith(
+      false,
+      'getThreadOwner: should not be called in context without session'
+    );
     expect(client.getThreadOwner).not.toBeCalled();
   });
 });
@@ -1153,7 +2064,10 @@ describe('#associateLabel', () => {
 
     await context.associateLabel(1712444532121303);
 
-    expect(warning).toBeCalled();
+    expect(warning).toBeCalledWith(
+      false,
+      'associateLabel: should not be called in context without session'
+    );
     expect(client.associateLabel).not.toBeCalled();
   });
 });
@@ -1191,7 +2105,10 @@ describe('#dissociateLabel', () => {
 
     await context.dissociateLabel(1712444532121303);
 
-    expect(warning).toBeCalled();
+    expect(warning).toBeCalledWith(
+      false,
+      'dissociateLabel: should not be called in context without session'
+    );
     expect(client.dissociateLabel).not.toBeCalled();
   });
 });
@@ -1267,7 +2184,10 @@ describe('#getAssociatedLabels', () => {
 
     await context.getAssociatedLabels();
 
-    expect(warning).toBeCalled();
+    expect(warning).toBeCalledWith(
+      false,
+      'getAssociatedLabels: should not be called in context without session'
+    );
     expect(client.getAssociatedLabels).not.toBeCalled();
   });
 });
