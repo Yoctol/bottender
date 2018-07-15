@@ -92,7 +92,7 @@ class MessengerContext extends Context implements PlatformContext {
     if (this._event.isEcho || this._event.isDelivery || this._event.isRead) {
       warning(
         false,
-        'sendText: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+        'sendText: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
       );
       return;
     }
@@ -493,7 +493,7 @@ sendMethods.forEach(([method, len]) => {
       if (this._event.isEcho || this._event.isDelivery || this._event.isRead) {
         warning(
           false,
-          `${method}: calling Send APIs in \`message_reads\`(event.isRead), \`message_deliveries\`(event.isDelivery) or \`message_echoes\`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.`
+          `${method}: calling Send APIs in \`message_reads\`(event.isRead), \`message_deliveries\`(event.isDelivery) or \`message_echoes\`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.`
         );
         return;
       }
