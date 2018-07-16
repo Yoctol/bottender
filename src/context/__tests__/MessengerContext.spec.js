@@ -167,7 +167,7 @@ describe('#sendText', () => {
 
     expect(warning).toBeCalledWith(
       false,
-      'sendText: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+      'sendText: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
     );
     expect(client.sendText).not.toBeCalled();
   });
@@ -179,7 +179,7 @@ describe('#sendText', () => {
 
     expect(warning).toBeCalledWith(
       false,
-      'sendText: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+      'sendText: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
     );
     expect(client.sendText).not.toBeCalled();
   });
@@ -191,7 +191,7 @@ describe('#sendText', () => {
 
     expect(warning).toBeCalledWith(
       false,
-      'sendText: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+      'sendText: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
     );
     expect(client.sendText).not.toBeCalled();
   });
@@ -262,7 +262,7 @@ describe('#sendAttachment', () => {
 
     expect(warning).toBeCalledWith(
       false,
-      'sendAttachment: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+      'sendAttachment: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
     );
     expect(client.sendAttachment).not.toBeCalled();
   });
@@ -279,7 +279,7 @@ describe('#sendAttachment', () => {
 
     expect(warning).toBeCalledWith(
       false,
-      'sendAttachment: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+      'sendAttachment: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
     );
     expect(client.sendAttachment).not.toBeCalled();
   });
@@ -296,7 +296,7 @@ describe('#sendAttachment', () => {
 
     expect(warning).toBeCalledWith(
       false,
-      'sendAttachment: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+      'sendAttachment: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
     );
     expect(client.sendAttachment).not.toBeCalled();
   });
@@ -340,7 +340,7 @@ describe('#sendImage', () => {
 
     expect(warning).toBeCalledWith(
       false,
-      'sendImage: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+      'sendImage: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
     );
     expect(client.sendImage).not.toBeCalled();
   });
@@ -352,7 +352,7 @@ describe('#sendImage', () => {
 
     expect(warning).toBeCalledWith(
       false,
-      'sendImage: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+      'sendImage: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
     );
     expect(client.sendImage).not.toBeCalled();
   });
@@ -364,7 +364,7 @@ describe('#sendImage', () => {
 
     expect(warning).toBeCalledWith(
       false,
-      'sendImage: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+      'sendImage: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
     );
     expect(client.sendImage).not.toBeCalled();
   });
@@ -408,7 +408,7 @@ describe('#sendAudio', () => {
 
     expect(warning).toBeCalledWith(
       false,
-      'sendAudio: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+      'sendAudio: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
     );
     expect(client.sendImage).not.toBeCalled();
   });
@@ -420,7 +420,7 @@ describe('#sendAudio', () => {
 
     expect(warning).toBeCalledWith(
       false,
-      'sendAudio: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+      'sendAudio: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
     );
     expect(client.sendImage).not.toBeCalled();
   });
@@ -432,7 +432,7 @@ describe('#sendAudio', () => {
 
     expect(warning).toBeCalledWith(
       false,
-      'sendAudio: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+      'sendAudio: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
     );
     expect(client.sendImage).not.toBeCalled();
   });
@@ -476,7 +476,7 @@ describe('#sendVideo', () => {
 
     expect(warning).toBeCalledWith(
       false,
-      'sendVideo: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+      'sendVideo: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
     );
     expect(client.sendVideo).not.toBeCalled();
   });
@@ -488,7 +488,7 @@ describe('#sendVideo', () => {
 
     expect(warning).toBeCalledWith(
       false,
-      'sendVideo: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+      'sendVideo: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
     );
     expect(client.sendVideo).not.toBeCalled();
   });
@@ -500,7 +500,7 @@ describe('#sendVideo', () => {
 
     expect(warning).toBeCalledWith(
       false,
-      'sendVideo: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+      'sendVideo: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
     );
     expect(client.sendVideo).not.toBeCalled();
   });
@@ -544,7 +544,7 @@ describe('#sendFile', () => {
 
     expect(warning).toBeCalledWith(
       false,
-      'sendFile: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+      'sendFile: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
     );
     expect(client.sendFile).not.toBeCalled();
   });
@@ -556,7 +556,7 @@ describe('#sendFile', () => {
 
     expect(warning).toBeCalledWith(
       false,
-      'sendFile: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+      'sendFile: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
     );
     expect(client.sendFile).not.toBeCalled();
   });
@@ -568,7 +568,7 @@ describe('#sendFile', () => {
 
     expect(warning).toBeCalledWith(
       false,
-      'sendFile: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+      'sendFile: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
     );
     expect(client.sendFile).not.toBeCalled();
   });
@@ -698,7 +698,7 @@ describe('#sendGenericTemplate', () => {
 
     expect(warning).toBeCalledWith(
       false,
-      'sendGenericTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+      'sendGenericTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
     );
     expect(client.sendGenericTemplate).not.toBeCalled();
   });
@@ -713,7 +713,7 @@ describe('#sendGenericTemplate', () => {
 
     expect(warning).toBeCalledWith(
       false,
-      'sendGenericTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+      'sendGenericTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
     );
     expect(client.sendGenericTemplate).not.toBeCalled();
   });
@@ -728,7 +728,7 @@ describe('#sendGenericTemplate', () => {
 
     expect(warning).toBeCalledWith(
       false,
-      'sendGenericTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+      'sendGenericTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
     );
     expect(client.sendGenericTemplate).not.toBeCalled();
   });
@@ -785,7 +785,7 @@ describe('#sendButtonTemplate', () => {
 
     expect(warning).toBeCalledWith(
       false,
-      'sendButtonTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+      'sendButtonTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
     );
     expect(client.sendButtonTemplate).not.toBeCalled();
   });
@@ -799,7 +799,7 @@ describe('#sendButtonTemplate', () => {
 
     expect(warning).toBeCalledWith(
       false,
-      'sendButtonTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+      'sendButtonTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
     );
     expect(client.sendButtonTemplate).not.toBeCalled();
   });
@@ -813,7 +813,7 @@ describe('#sendButtonTemplate', () => {
 
     expect(warning).toBeCalledWith(
       false,
-      'sendButtonTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+      'sendButtonTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
     );
     expect(client.sendButtonTemplate).not.toBeCalled();
   });
@@ -877,7 +877,7 @@ describe('#sendListTemplate', () => {
 
     expect(warning).toBeCalledWith(
       false,
-      'sendListTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+      'sendListTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
     );
     expect(client.sendListTemplate).not.toBeCalled();
   });
@@ -892,7 +892,7 @@ describe('#sendListTemplate', () => {
 
     expect(warning).toBeCalledWith(
       false,
-      'sendListTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+      'sendListTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
     );
     expect(client.sendListTemplate).not.toBeCalled();
   });
@@ -907,7 +907,7 @@ describe('#sendListTemplate', () => {
 
     expect(warning).toBeCalledWith(
       false,
-      'sendListTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+      'sendListTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
     );
     expect(client.sendListTemplate).not.toBeCalled();
   });
@@ -985,7 +985,7 @@ describe('#sendOpenGraphTemplate', () => {
 
     expect(warning).toBeCalledWith(
       false,
-      'sendOpenGraphTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+      'sendOpenGraphTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
     );
     expect(client.sendOpenGraphTemplate).not.toBeCalled();
   });
@@ -999,7 +999,7 @@ describe('#sendOpenGraphTemplate', () => {
 
     expect(warning).toBeCalledWith(
       false,
-      'sendOpenGraphTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+      'sendOpenGraphTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
     );
     expect(client.sendOpenGraphTemplate).not.toBeCalled();
   });
@@ -1013,7 +1013,7 @@ describe('#sendOpenGraphTemplate', () => {
 
     expect(warning).toBeCalledWith(
       false,
-      'sendOpenGraphTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+      'sendOpenGraphTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
     );
     expect(client.sendOpenGraphTemplate).not.toBeCalled();
   });
@@ -1089,7 +1089,7 @@ describe('#sendMediaTemplate', () => {
 
     expect(warning).toBeCalledWith(
       false,
-      'sendMediaTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+      'sendMediaTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
     );
     expect(client.sendMediaTemplate).not.toBeCalled();
   });
@@ -1103,7 +1103,7 @@ describe('#sendMediaTemplate', () => {
 
     expect(warning).toBeCalledWith(
       false,
-      'sendMediaTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+      'sendMediaTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
     );
     expect(client.sendMediaTemplate).not.toBeCalled();
   });
@@ -1117,7 +1117,7 @@ describe('#sendMediaTemplate', () => {
 
     expect(warning).toBeCalledWith(
       false,
-      'sendMediaTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+      'sendMediaTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
     );
     expect(client.sendMediaTemplate).not.toBeCalled();
   });
@@ -1173,7 +1173,7 @@ describe('#sendReceiptTemplate', () => {
 
     expect(warning).toBeCalledWith(
       false,
-      'sendReceiptTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+      'sendReceiptTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
     );
     expect(client.sendReceiptTemplate).not.toBeCalled();
   });
@@ -1187,7 +1187,7 @@ describe('#sendReceiptTemplate', () => {
 
     expect(warning).toBeCalledWith(
       false,
-      'sendReceiptTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+      'sendReceiptTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
     );
     expect(client.sendReceiptTemplate).not.toBeCalled();
   });
@@ -1201,7 +1201,7 @@ describe('#sendReceiptTemplate', () => {
 
     expect(warning).toBeCalledWith(
       false,
-      'sendReceiptTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+      'sendReceiptTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
     );
     expect(client.sendReceiptTemplate).not.toBeCalled();
   });
@@ -1257,7 +1257,7 @@ describe('#sendAirlineBoardingPassTemplate', () => {
 
     expect(warning).toBeCalledWith(
       false,
-      'sendAirlineBoardingPassTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+      'sendAirlineBoardingPassTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
     );
     expect(client.sendAirlineBoardingPassTemplate).not.toBeCalled();
   });
@@ -1271,7 +1271,7 @@ describe('#sendAirlineBoardingPassTemplate', () => {
 
     expect(warning).toBeCalledWith(
       false,
-      'sendAirlineBoardingPassTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+      'sendAirlineBoardingPassTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
     );
     expect(client.sendAirlineBoardingPassTemplate).not.toBeCalled();
   });
@@ -1285,7 +1285,7 @@ describe('#sendAirlineBoardingPassTemplate', () => {
 
     expect(warning).toBeCalledWith(
       false,
-      'sendAirlineBoardingPassTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+      'sendAirlineBoardingPassTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
     );
     expect(client.sendAirlineBoardingPassTemplate).not.toBeCalled();
   });
@@ -1341,7 +1341,7 @@ describe('#sendAirlineCheckinTemplate', () => {
 
     expect(warning).toBeCalledWith(
       false,
-      'sendAirlineCheckinTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+      'sendAirlineCheckinTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
     );
     expect(client.sendAirlineCheckinTemplate).not.toBeCalled();
   });
@@ -1355,7 +1355,7 @@ describe('#sendAirlineCheckinTemplate', () => {
 
     expect(warning).toBeCalledWith(
       false,
-      'sendAirlineCheckinTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+      'sendAirlineCheckinTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
     );
     expect(client.sendAirlineCheckinTemplate).not.toBeCalled();
   });
@@ -1369,7 +1369,7 @@ describe('#sendAirlineCheckinTemplate', () => {
 
     expect(warning).toBeCalledWith(
       false,
-      'sendAirlineCheckinTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+      'sendAirlineCheckinTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
     );
     expect(client.sendAirlineCheckinTemplate).not.toBeCalled();
   });
@@ -1425,7 +1425,7 @@ describe('#sendAirlineItineraryTemplate', () => {
 
     expect(warning).toBeCalledWith(
       false,
-      'sendAirlineItineraryTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+      'sendAirlineItineraryTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
     );
     expect(client.sendAirlineItineraryTemplate).not.toBeCalled();
   });
@@ -1439,7 +1439,7 @@ describe('#sendAirlineItineraryTemplate', () => {
 
     expect(warning).toBeCalledWith(
       false,
-      'sendAirlineItineraryTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+      'sendAirlineItineraryTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
     );
     expect(client.sendAirlineItineraryTemplate).not.toBeCalled();
   });
@@ -1453,7 +1453,7 @@ describe('#sendAirlineItineraryTemplate', () => {
 
     expect(warning).toBeCalledWith(
       false,
-      'sendAirlineItineraryTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+      'sendAirlineItineraryTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
     );
     expect(client.sendAirlineItineraryTemplate).not.toBeCalled();
   });
@@ -1509,7 +1509,7 @@ describe('#sendAirlineFlightUpdateTemplate', () => {
 
     expect(warning).toBeCalledWith(
       false,
-      'sendAirlineFlightUpdateTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+      'sendAirlineFlightUpdateTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
     );
     expect(client.sendImage).not.toBeCalled();
   });
@@ -1523,7 +1523,7 @@ describe('#sendAirlineFlightUpdateTemplate', () => {
 
     expect(warning).toBeCalledWith(
       false,
-      'sendAirlineFlightUpdateTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+      'sendAirlineFlightUpdateTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
     );
     expect(client.sendImage).not.toBeCalled();
   });
@@ -1537,7 +1537,7 @@ describe('#sendAirlineFlightUpdateTemplate', () => {
 
     expect(warning).toBeCalledWith(
       false,
-      'sendAirlineFlightUpdateTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subsctiption of those events or handle them without Send APIs.'
+      'sendAirlineFlightUpdateTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
     );
     expect(client.sendImage).not.toBeCalled();
   });
