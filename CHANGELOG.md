@@ -1,43 +1,264 @@
+# 0.15.0 / 2018-07-18
+
+`v0.15` is the second major version after we open sourced Bottender. In this version, we introduce a lot of helpful, community requested features based on [Messaging APIs v0.7](https://github.com/Yoctol/messaging-apis/releases/tag/v0.7.0).
+
+- [new] add `context.requestContext`:
+
+Express, Micro, Restify:
+
+```js
+context.requestContext; // { req, res }
+```
+
+Koa:
+
+```js
+context.requestContext; // ctx in koa
+```
+
+- [new] add more debug logs and key change (#239, #295), so you can run bots with following `DEBUG` env:
+
+```sh
+DEBUG=bottender:*
+DEBUG=bottender:request
+DEBUG=bottender:session:read
+DEBUG=bottender:session:write
+```
+
+- [new] skip and show warning when calling send API in Messenger echo delivery read event (#306)
+- [fix] deepClone when read from `MemoryCacheStore` (#235)
+- [deps] Upgrade to Babel 7
+
+### messenger
+
+- [breaking] remove deprecated `MessengerContext` method - `sendQuickReplies`
+- [new] support Messenger platform v2.4.
+- [new] enable verifying graph API calls with `appsecret_proof` by default.
+- [new] `context.getThreadOwner`
+
+```js
+const threadOwner = await context.getThreadOwner();
+// {
+//   app_id: '12345678910'
+// }
+```
+
+- [new] add `pageId`, `gamePlay`, `brandedCamera`, `isRequestThreadControlFromPageInbox` getters to `MessengerEvent`
+
+```js
+context.event.pageId; // "<PAGE_ID>"
+
+context.event.isRequestThreadControlFromPageInbox; // true
+
+context.event.isGamePlay; //
+context.event.gamePlay; //
+
+context.event.isBrandedCamera; //
+context.event.brandedCamera; //
+```
+
+- [new] implement Batch Mode to send multiple requests in one batch (up to 50 messages):
+
+```js
+const { isError613 } = require('messenger-batch');
+
+new MessengerBot({
+  // ...
+  batchConfig: {
+    delay: 1000,
+    shouldRetry: isError613, // (#613) Calls to this api have exceeded the rate limit.
+    retryTimes: 2,
+  },
+});
+```
+
+It will enable [message batching](https://github.com/Yoctol/messaging-apis/tree/master/packages/messaging-api-messenger#message-batching) functionality via [messaging-api-messenger](https://github.com/Yoctol/messaging-apis/tree/master/packages/messaging-api-messenger) under the hood.
+
+- [deprecated] `sendAirlineFlightUpdateTemplate` has been renamed to `sendAirlineUpdateTemplate`.
+
+### line
+
+- [new] support LINE Flex Message with `replyFlex`, `pushFlex`, `sendFlex`:
+
+```js
+context.sendFlex('this is a flex', {
+  type: 'bubble',
+  header: {
+    type: 'box',
+    layout: 'vertical',
+    contents: [
+      {
+        type: 'text',
+        text: 'Header text',
+      },
+    ],
+  },
+  hero: {
+    type: 'image',
+    url: 'https://example.com/flex/images/image.jpg',
+  },
+  body: {
+    type: 'box',
+    layout: 'vertical',
+    contents: [
+      {
+        type: 'text',
+        text: 'Body text',
+      },
+    ],
+  },
+  footer: {
+    type: 'box',
+    layout: 'vertical',
+    contents: [
+      {
+        type: 'text',
+        text: 'Footer text',
+      },
+    ],
+  },
+  styles: {
+    comment: 'See the example of a bubble style object',
+  },
+});
+```
+
+- [new] add `issueLinkToken` to `LineContext` (#245):
+
+```js
+const result = await context.issueLinkToken();
+// {
+//   linkToken: 'NMZTNuVrPTqlr2IF8Bnymkb7rXfYv5EY',
+// }
+```
+
+- [new] add LINE `linkAccount` events support (#243):
+
+```js
+context.event.isAccountLink; // true
+context.event.linkAccount;
+// {
+//   result: 'ok',
+//   nonce: 'xxxxxxxxxxxxxxx',
+// }
+```
+
+- [new] add `shouldBatch` option:
+
+```js
+new LineBot({
+  // ...
+  shouldBatch: true, // Default: false
+});
+```
+
+When batching is enabled,
+
+```js
+context.replyText('Hi');
+context.replyText('Hi');
+context.replyText('Hi');
+context.replyText('Hi');
+context.replyText('Hi');
+```
+
+Those 5 messages will be sent in one API call, just like the below one.
+
+```js
+const { Line } = require('messaging-api-line');
+
+context.reply([
+  Line.createText('Hi'),
+  Line.createText('Hi'),
+  Line.createText('Hi'),
+  Line.createText('Hi'),
+  Line.createText('Hi'),
+]);
+```
+
+- [new] add `sendMethod` option:
+
+```js
+new LineBot({
+  // ...
+  sendMethod: 'reply', // Default: 'push'
+});
+```
+
+### telegram
+
+- [breaking] Now context methods throw error when `ok` is `false` in Telegram:
+
+```js
+{
+  ok: false,
+  result: { /* ... */ }
+}
+```
+
+### custom connector
+
+- [new] pass merged query and body to handler:
+
+```js
+{
+  ...query,
+  ...body,
+}
+```
+
+It's useful in custom connectors.
+
+- [new] export Context from entry (#250)
+
+```js
+const { Context } = require('bottender');
+
+class MyContext extends Context {
+  //...
+}
+```
+
 # 0.14.32 / 2018-04-12
 
-* [fix] MemoryCacheStore: make sure read as different object to prevent reading same key multiple times, causing freezed by other events.
+- [fix] MemoryCacheStore: make sure read as different object to prevent reading same key multiple times, causing freezed by other events.
 
 # 0.14.31 / 2018-03-26
 
 ### line
 
-* [new] alias LINE ButtonsTemplate to ButtonTemplate to match type name `buttons` #219
+- [new] alias LINE ButtonsTemplate to ButtonTemplate to match type name `buttons` #219
 
 Aliases:
 
-* replyButtonsTemplate -> replyButtonTemplate
-* pushButtonsTemplate -> pushButtonTemplate
-* sendButtonsTemplate -> sendButtonTemplate
+- replyButtonsTemplate -> replyButtonTemplate
+- pushButtonsTemplate -> pushButtonTemplate
+- sendButtonsTemplate -> sendButtonTemplate
 
 # 0.14.30 / 2018-03-22
 
-* [new] Add cli option `-t`, `--token` to overwrite token setting.
+- [new] Add cli option `-t`, `--token` to overwrite token setting.
 
 ### telegram
 
-* [new] Add new Update APIs to `TelegramContext`:
+- [new] Add new Update APIs to `TelegramContext`:
 
-- [`editMessageText(text [, options])`](https://bottender.js.org/docs/APIReference-TelegramContext#code-classlanguage-texteditmessagetexttext--optionscode---official-docs)
-- [`editMessageCaption(caption [, options])`](https://bottender.js.org/docs/APIReference-TelegramContext#code-classlanguage-texteditmessagecaptioncaption--optionscode---official-docs)
-- [`editMessageReplyMarkup(replyMarkup [, options])`](https://bottender.js.org/docs/APIReference-TelegramContext#code-classlanguage-texteditmessagereplymarkupreplymarkup--optionscode---official-docs)
-- [`deleteMessage(messageId)`](https://bottender.js.org/docs/APIReference-TelegramContext#code-classlanguage-textdeletemessagemessageidcode---official-docs)
-- [`editMessageLiveLocation(location [, options])`](https://bottender.js.org/docs/APIReference-TelegramContext#code-classlanguage-texteditmessagelivelocationlocation--optionscode---official-docs)
-- [`stopMessageLiveLocation(options)`](https://bottender.js.org/docs/APIReference-TelegramContext#code-classlanguage-textstopmessagelivelocationoptionscode---official-docs)
-- [`forwardMessageFrom(fromChatId, messageId [, options])`](https://bottender.js.org/docs/APIReference-TelegramContext#code-classlanguage-textforwardmessagefromfromchatid-messageid--optionscode---official-docs)
-- [`forwardMessageTo(toChatId, messageId [, options])`](https://bottender.js.org/docs/APIReference-TelegramContext#code-classlanguage-textforwardmessagetotochatid-messageid--optionscode---official-docs)
+* [`editMessageText(text [, options])`](https://bottender.js.org/docs/APIReference-TelegramContext#code-classlanguage-texteditmessagetexttext--optionscode---official-docs)
+* [`editMessageCaption(caption [, options])`](https://bottender.js.org/docs/APIReference-TelegramContext#code-classlanguage-texteditmessagecaptioncaption--optionscode---official-docs)
+* [`editMessageReplyMarkup(replyMarkup [, options])`](https://bottender.js.org/docs/APIReference-TelegramContext#code-classlanguage-texteditmessagereplymarkupreplymarkup--optionscode---official-docs)
+* [`deleteMessage(messageId)`](https://bottender.js.org/docs/APIReference-TelegramContext#code-classlanguage-textdeletemessagemessageidcode---official-docs)
+* [`editMessageLiveLocation(location [, options])`](https://bottender.js.org/docs/APIReference-TelegramContext#code-classlanguage-texteditmessagelivelocationlocation--optionscode---official-docs)
+* [`stopMessageLiveLocation(options)`](https://bottender.js.org/docs/APIReference-TelegramContext#code-classlanguage-textstopmessagelivelocationoptionscode---official-docs)
+* [`forwardMessageFrom(fromChatId, messageId [, options])`](https://bottender.js.org/docs/APIReference-TelegramContext#code-classlanguage-textforwardmessagefromfromchatid-messageid--optionscode---official-docs)
+* [`forwardMessageTo(toChatId, messageId [, options])`](https://bottender.js.org/docs/APIReference-TelegramContext#code-classlanguage-textforwardmessagetotochatid-messageid--optionscode---official-docs)
 
 # 0.14.29 / 2018-03-21
 
 ### telegram
 
-* [new] Add new Get APIs to `TelegramContext`:
+- [new] Add new Get APIs to `TelegramContext`:
 
-- [`context.getUserProfilePhotos`](https://bottender.js.org/docs/APIReference-TelegramContext#code-classlanguage-textgetuserprofilephotosoptionscode---official-docs)
+* [`context.getUserProfilePhotos`](https://bottender.js.org/docs/APIReference-TelegramContext#code-classlanguage-textgetuserprofilephotosoptionscode---official-docs)
 
 ```js
 context.getUserProfilePhotos({ limit: 1 }).then(result => {
@@ -70,7 +291,7 @@ context.getUserProfilePhotos({ limit: 1 }).then(result => {
 });
 ```
 
-* [`context.getChat`](https://bottender.js.org/docs/APIReference-TelegramContext#code-classlanguage-textgetchatcode---official-docs)
+- [`context.getChat`](https://bottender.js.org/docs/APIReference-TelegramContext#code-classlanguage-textgetchatcode---official-docs)
 
 ```js
 context.getChat().then(result => {
@@ -85,7 +306,7 @@ context.getChat().then(result => {
 });
 ```
 
-* [`context.getChatAdministrators`](https://bottender.js.org/docs/APIReference-TelegramContext#code-classlanguage-textgetchatadministratorscode---official-docs)
+- [`context.getChatAdministrators`](https://bottender.js.org/docs/APIReference-TelegramContext#code-classlanguage-textgetchatadministratorscode---official-docs)
 
 ```js
 context.getChatAdministrators().then(result => {
@@ -105,7 +326,7 @@ context.getChatAdministrators().then(result => {
 });
 ```
 
-* [`context.getChatMembersCount`](https://bottender.js.org/docs/APIReference-TelegramContext#code-classlanguage-textgetchatmemberscountcode---official-docs)
+- [`context.getChatMembersCount`](https://bottender.js.org/docs/APIReference-TelegramContext#code-classlanguage-textgetchatmemberscountcode---official-docs)
 
 ```js
 context.getChatMembersCount().then(result => {
@@ -114,7 +335,7 @@ context.getChatMembersCount().then(result => {
 });
 ```
 
-* [`context.getChatMember`](https://bottender.js.org/docs/APIReference-TelegramContext#code-classlanguage-textgetchatmemberuseridcode---official-docs)
+- [`context.getChatMember`](https://bottender.js.org/docs/APIReference-TelegramContext#code-classlanguage-textgetchatmemberuseridcode---official-docs)
 
 ```js
 context.getChatMember().then(result => {
@@ -136,35 +357,35 @@ context.getChatMember().then(result => {
 
 ### telegram
 
-* [new] Add new Group APIs to `TelegramContext`:
+- [new] Add new Group APIs to `TelegramContext`:
 
-- [`context.kickChatMember`](https://bottender.js.org/docs/APIReference-TelegramContext#kickchatmemberuserid--options---official-docs)
-- [`context.unbanChatMember`](https://bottender.js.org/docs/APIReference-TelegramContext#unbanchatmemberuserid---official-docs)
-- [`context.restrictChatMember`](https://bottender.js.org/docs/APIReference-TelegramContext#restrictchatmemberuserid--options---official-docs)
-- [`context.promoteChatMember`](https://bottender.js.org/docs/APIReference-TelegramContext#promotechatmemberuserid--options---official-docs)
-- [`context.exportChatInviteLink`](https://bottender.js.org/docs/APIReference-TelegramContext#exportchatinvitelink---official-docs)
-- [`context.setChatPhoto`](https://bottender.js.org/docs/APIReference-TelegramContext#setchatphotophoto---official-docs)
-- [`context.deleteChatPhoto`](https://bottender.js.org/docs/APIReference-TelegramContext#deletechatphoto---official-docs)
-- [`context.setChatTitle`](https://bottender.js.org/docs/APIReference-TelegramContext#setchattitletitle---official-docs)
-- [`context.setChatDescription`](https://bottender.js.org/docs/APIReference-TelegramContext#setchatdescriptiondescription---official-docs)
-- [`context.setChatStickerSet`](https://bottender.js.org/docs/APIReference-TelegramContext#setchatstickersetstickersetname---official-docs)
-- [`context.deleteChatStickerSet`](https://bottender.js.org/docs/APIReference-TelegramContext#deletechatstickersetchatid---official-docs)
-- [`context.pinChatMessage`](https://bottender.js.org/docs/APIReference-TelegramContext#pinchatmessagemessageid--options---official-docs)
-- [`context.unpinChatMessage`](https://bottender.js.org/docs/APIReference-TelegramContext#unpinchatmessage---official-docs)
-- [`context.leaveChat`](https://bottender.js.org/docs/APIReference-TelegramContext#leavechat---official-docs)
+* [`context.kickChatMember`](https://bottender.js.org/docs/APIReference-TelegramContext#kickchatmemberuserid--options---official-docs)
+* [`context.unbanChatMember`](https://bottender.js.org/docs/APIReference-TelegramContext#unbanchatmemberuserid---official-docs)
+* [`context.restrictChatMember`](https://bottender.js.org/docs/APIReference-TelegramContext#restrictchatmemberuserid--options---official-docs)
+* [`context.promoteChatMember`](https://bottender.js.org/docs/APIReference-TelegramContext#promotechatmemberuserid--options---official-docs)
+* [`context.exportChatInviteLink`](https://bottender.js.org/docs/APIReference-TelegramContext#exportchatinvitelink---official-docs)
+* [`context.setChatPhoto`](https://bottender.js.org/docs/APIReference-TelegramContext#setchatphotophoto---official-docs)
+* [`context.deleteChatPhoto`](https://bottender.js.org/docs/APIReference-TelegramContext#deletechatphoto---official-docs)
+* [`context.setChatTitle`](https://bottender.js.org/docs/APIReference-TelegramContext#setchattitletitle---official-docs)
+* [`context.setChatDescription`](https://bottender.js.org/docs/APIReference-TelegramContext#setchatdescriptiondescription---official-docs)
+* [`context.setChatStickerSet`](https://bottender.js.org/docs/APIReference-TelegramContext#setchatstickersetstickersetname---official-docs)
+* [`context.deleteChatStickerSet`](https://bottender.js.org/docs/APIReference-TelegramContext#deletechatstickersetchatid---official-docs)
+* [`context.pinChatMessage`](https://bottender.js.org/docs/APIReference-TelegramContext#pinchatmessagemessageid--options---official-docs)
+* [`context.unpinChatMessage`](https://bottender.js.org/docs/APIReference-TelegramContext#unpinchatmessage---official-docs)
+* [`context.leaveChat`](https://bottender.js.org/docs/APIReference-TelegramContext#leavechat---official-docs)
 
-* [new] Add new Payment APIs to `TelegramContext`:
+- [new] Add new Payment APIs to `TelegramContext`:
 
-- [`context.answerShippingQuery`](https://bottender.js.org/docs/APIReference-TelegramContext#answershippingqueryok--options---official-docs)
-- [`context.answerPreCheckoutQuery`](https://bottender.js.org/docs/APIReference-TelegramContext#answerprecheckoutqueryok--options---official-docs)
+* [`context.answerShippingQuery`](https://bottender.js.org/docs/APIReference-TelegramContext#answershippingqueryok--options---official-docs)
+* [`context.answerPreCheckoutQuery`](https://bottender.js.org/docs/APIReference-TelegramContext#answerprecheckoutqueryok--options---official-docs)
 
 # 0.14.27 / 2018-03-19
 
 ### line
 
-* [new] Add new `LineContext` methods:
+- [new] Add new `LineContext` methods:
 
-- [`context.getUserProfile`](https://bottender.js.org/docs/APIReference-LineContext#getuserprofile):
+* [`context.getUserProfile`](https://bottender.js.org/docs/APIReference-LineContext#getuserprofile):
 
 ```js
 context.getUserProfile().then(profile => {
@@ -178,7 +399,7 @@ context.getUserProfile().then(profile => {
 });
 ```
 
-* [`context.getMemberProfile`](https://bottender.js.org/docs/APIReference-LineContext#getmemberprofileuserid):
+- [`context.getMemberProfile`](https://bottender.js.org/docs/APIReference-LineContext#getmemberprofileuserid):
 
 ```js
 context.getMemberProfile(USER_ID).then(member => {
@@ -191,7 +412,7 @@ context.getMemberProfile(USER_ID).then(member => {
 });
 ```
 
-* [`context.getMemberIds`](https://bottender.js.org/docs/APIReference-LineContext#getmemberidsstart):
+- [`context.getMemberIds`](https://bottender.js.org/docs/APIReference-LineContext#getmemberidsstart):
 
 ```js
 context.getMemberIds(CURSOR).then(res => {
@@ -207,7 +428,7 @@ context.getMemberIds(CURSOR).then(res => {
 });
 ```
 
-* [`context.getAllMemberIds`](https://bottender.js.org/docs/APIReference-LineContext#getallmemberids):
+- [`context.getAllMemberIds`](https://bottender.js.org/docs/APIReference-LineContext#getallmemberids):
 
 ```js
 context.getAllMemberIds().then(ids => {
@@ -227,7 +448,7 @@ context.getAllMemberIds().then(ids => {
 
 ### messenger
 
-* [new] Implement `context.getUserProfile`:
+- [new] Implement `context.getUserProfile`:
 
 ```js
 const user = await context.getUserProfile();
@@ -241,7 +462,7 @@ const user = await context.getUserProfile();
 // };
 ```
 
-* [new] Implement `context.sendSenderAction`:
+- [new] Implement `context.sendSenderAction`:
 
 ```js
 context.sendSenderAction('typing_on');
@@ -249,11 +470,11 @@ context.sendSenderAction('typing_on');
 context.typingOn();
 ```
 
-* [fix] Fix metadata argument in handover methods (#208)
+- [fix] Fix metadata argument in handover methods (#208)
 
 ### viber
 
-* [new] Implement `context.getUserDetails`:
+- [new] Implement `context.getUserDetails`:
 
 ```js
 const user = await context.getUserDetails();
@@ -272,7 +493,7 @@ const user = await context.getUserDetails();
 // };
 ```
 
-* [new] Implement `context.getOnlineStatus`:
+- [new] Implement `context.getOnlineStatus`:
 
 ```js
 const status = await context.getOnlineStatus();
@@ -287,15 +508,15 @@ const status = await context.getOnlineStatus();
 
 ### console
 
-* [new] Support using `/exit` to exit
+- [new] Support using `/exit` to exit
 
 ### messenger
 
-* [new] Support passing `verifyToken` to `MessengerBot` or `MessengerConnector` (#204)
+- [new] Support passing `verifyToken` to `MessengerBot` or `MessengerConnector` (#204)
 
 Support both:
 
-* pass verifyToken in server config
+- pass verifyToken in server config
 
 ```js
 const bot = new MessengerBot({
@@ -306,7 +527,7 @@ const bot = new MessengerBot({
 const server = createServer(bot, { verifyToken: config.verifyToken });
 ```
 
-* pass verifyToken in bot config
+- pass verifyToken in bot config
 
 ```js
 const bot = new MessengerBot({
@@ -320,19 +541,19 @@ const server = createServer(bot);
 
 ### line
 
-* [fix] Fix LINE join, leave events which do not have userId will fail get profile (#206)
+- [fix] Fix LINE join, leave events which do not have userId will fail get profile (#206)
 
 # 0.14.24 / 2018-03-11
 
-* [fix] Upgrade `@slack/client` deps to fix security vulnerability
+- [fix] Upgrade `@slack/client` deps to fix security vulnerability
 
 # 0.14.23 / 2018-02-27
 
-* [fix] fix context simulator initialState (#198)
+- [fix] fix context simulator initialState (#198)
 
 ### messenger
 
-* [new] Support request thread control:
+- [new] Support request thread control:
 
 ```js
 context.requestThreadControl();
@@ -346,15 +567,15 @@ context.event.requestThreadControl;
 */
 ```
 
-* [fix] fix error on verifying facebook signature.
+- [fix] fix error on verifying facebook signature.
 
 # 0.14.22 / 2018-02-12
 
-* [deps] bump messaging-apis to v0.6.13
+- [deps] bump messaging-apis to v0.6.13
 
 ### console
 
-* [new] Support trigger payload in `ConsoleBot`
+- [new] Support trigger payload in `ConsoleBot`
 
 ```
 You > /payload PAYLOAD
@@ -374,7 +595,7 @@ context.event.payload; // PAYLOAD
 
 # 0.14.21 / 2018-02-05
 
-* [new] Support all of methods on `ConsoleContext` with `fallbackMethods: true` [#184](https://github.com/Yoctol/bottender/pull/184), for example:
+- [new] Support all of methods on `ConsoleContext` with `fallbackMethods: true` [#184](https://github.com/Yoctol/bottender/pull/184), for example:
 
 ```js
 const bot = new ConsoleBot({ fallbackMethods: true });
@@ -405,16 +626,16 @@ Bot > sendImage: ["https://example.com/vr.jpg"]
 Bot > sendButtonTemplate: ["What do you want to do next?",[{"type":"web_url","url":"https://petersapparel.parseapp.com","title":"Show Website"},{"type":"postback","title":"Start Chatting","payload":"USER_DEFINED_PAYLOAD"}]]
 ```
 
-* [fix] Catch write session error in async mode [#185](https://github.com/Yoctol/bottender/pull/185)
-* [improve] Show warning when calling `setState` or `resetState` after session have been written [#186](https://github.com/Yoctol/bottender/pull/186)
+- [fix] Catch write session error in async mode [#185](https://github.com/Yoctol/bottender/pull/185)
+- [improve] Show warning when calling `setState` or `resetState` after session have been written [#186](https://github.com/Yoctol/bottender/pull/186)
 
 # 0.14.20 / 2018-01-30
 
-* [fix] Use sync mode in `ConsoleBot` to fix some format issue.
+- [fix] Use sync mode in `ConsoleBot` to fix some format issue.
 
 # 0.14.19 / 2018-01-25
 
-* [new] Support `--ngrok-port` when setting webhook [#171](https://github.com/Yoctol/bottender/pull/171). For example:
+- [new] Support `--ngrok-port` when setting webhook [#171](https://github.com/Yoctol/bottender/pull/171). For example:
 
 ```
 bottender messenger webhook set --ngrok-port 1234
@@ -422,19 +643,19 @@ bottender telegram webhook set --ngrok-port 1234
 bottender viber webhook set --ngrok-port 1234
 ```
 
-* [deps] Update part of dependencies.
+- [deps] Update part of dependencies.
 
 ### viber
 
-* [new] Implement signature verify for viber
+- [new] Implement signature verify for viber
 
 # 0.14.18 / 2018-01-18
 
-* [fix] Prevent applying any mutations to `initialState` [#164](https://github.com/Yoctol/bottender/pull/164)
+- [fix] Prevent applying any mutations to `initialState` [#164](https://github.com/Yoctol/bottender/pull/164)
 
 ### telegram
 
-* [new] Added `context.answerInlineQuery` for Telegram [#165](https://github.com/Yoctol/bottender/pull/165):
+- [new] Added `context.answerInlineQuery` for Telegram [#165](https://github.com/Yoctol/bottender/pull/165):
 
 ```js
 context.answerInlineQuery(
@@ -460,11 +681,11 @@ context.answerInlineQuery(
 
 # 0.14.17 / 2018-01-17
 
-* [changed] Improve config schema validation.
+- [changed] Improve config schema validation.
 
 ### slack
 
-* [experimental] add Slack RTM API support:
+- [experimental] add Slack RTM API support:
 
 ```js
 const { SlackBot } = require('bottender');
@@ -482,29 +703,29 @@ bot.createRtmRuntime();
 
 ### telegram
 
-* [new] Handle all of telegram event types includes:
-  * `message`
-  * `edited_message`
-  * `channel_post`
-  * `edited_channel_post`
-  * `inline_query`
-  * `chosen_inline_result`
-  * `callback_query`
-  * `shipping_query`
-  * `pre_checkout_query`
-* [new] Support group chat events.
+- [new] Handle all of telegram event types includes:
+  - `message`
+  - `edited_message`
+  - `channel_post`
+  - `edited_channel_post`
+  - `inline_query`
+  - `chosen_inline_result`
+  - `callback_query`
+  - `shipping_query`
+  - `pre_checkout_query`
+- [new] Support group chat events.
 
 # 0.14.16 / 2018-01-16
 
 ### messenger
 
-* [new] Better handle Messenger getUserProfile failure [#155](https://github.com/Yoctol/bottender/pull/155)
+- [new] Better handle Messenger getUserProfile failure [#155](https://github.com/Yoctol/bottender/pull/155)
 
 If `getUserProfile` throw error, `session.user` will fallback to have only `id` and `_updatedAt` keys.
 
 ### telegram
 
-* [new] Added more event parser and getter to telegram event [#150](https://github.com/Yoctol/bottender/pull/150)
+- [new] Added more event parser and getter to telegram event [#150](https://github.com/Yoctol/bottender/pull/150)
 
 ```
 event.isEditedMessage
@@ -527,36 +748,36 @@ event.preCheckoutQuery
 
 ### slack
 
-* [new] Add `context.postEphemeral`:
+- [new] Add `context.postEphemeral`:
 
 ```js
 context.postEphemeral({ text: 'hello' });
 ```
 
-* [fix] Reply to thread instead of channel when receiving events in thread [#145](https://github.com/Yoctol/bottender/pull/145)
+- [fix] Reply to thread instead of channel when receiving events in thread [#145](https://github.com/Yoctol/bottender/pull/145)
 
 ### telegram
 
-* [fix] Use `message.chat.id` to reply [#148](https://github.com/Yoctol/bottender/pull/148)
+- [fix] Use `message.chat.id` to reply [#148](https://github.com/Yoctol/bottender/pull/148)
 
 # 0.14.14 / 2018-01-08
 
-* [fix] Improve error handling in express middleware [#142](https://github.com/Yoctol/bottender/pull/142)
+- [fix] Improve error handling in express middleware [#142](https://github.com/Yoctol/bottender/pull/142)
 
 # 0.14.13 / 2018-01-03
 
 ### messenger
 
-* [new] Add optional `--yes` for Messenger force upload attachment [#127](https://github.com/Yoctol/bottender/pull/127)
-* [new] Initial State in test-utils [#126](https://github.com/Yoctol/bottender/pull/126)
-* [fix] Improve context simulator and add some tests [#131](https://github.com/Yoctol/bottender/pull/131)
-* [fix] Support Messenger webhook test requests [#139](https://github.com/Yoctol/bottender/pull/139)
+- [new] Add optional `--yes` for Messenger force upload attachment [#127](https://github.com/Yoctol/bottender/pull/127)
+- [new] Initial State in test-utils [#126](https://github.com/Yoctol/bottender/pull/126)
+- [fix] Improve context simulator and add some tests [#131](https://github.com/Yoctol/bottender/pull/131)
+- [fix] Support Messenger webhook test requests [#139](https://github.com/Yoctol/bottender/pull/139)
 
 # 0.14.12 / 2017-12-25
 
 ### telegram
 
-* [new] Support running Telegram bots with long polling [#117](https://github.com/Yoctol/bottender/pull/117)
+- [new] Support running Telegram bots with long polling [#117](https://github.com/Yoctol/bottender/pull/117)
 
 ```js
 const { TelegramBot } = require('bottender');
@@ -578,25 +799,25 @@ bot.createLongPollingRuntime({
 
 See more details in [examples/telegram-long-polling](https://github.com/Yoctol/bottender/tree/master/examples/telegram-long-polling)
 
-* [fix] Result destructing bugs in Telegram webhook commands
+- [fix] Result destructing bugs in Telegram webhook commands
 
 # 0.14.11 / 2017-12-20
 
-* [fix] ContextSimulator: sendState to setState [#108](https://github.com/Yoctol/bottender/pull/108)
-* [deprecated] `sendXXXWithDelay` is deprecated. Use `sendXXX` with `options.delay` instead.
+- [fix] ContextSimulator: sendState to setState [#108](https://github.com/Yoctol/bottender/pull/108)
+- [deprecated] `sendXXXWithDelay` is deprecated. Use `sendXXX` with `options.delay` instead.
 
 ### messenger
 
-* [fix] update messaging-api-messenger to fix empty array quick_replies bug
+- [fix] update messaging-api-messenger to fix empty array quick_replies bug
 
 ### line
 
-* [new] Add LINE `context.leave()` function for group and room [#107](https://github.com/Yoctol/bottender/pull/107)
+- [new] Add LINE `context.leave()` function for group and room [#107](https://github.com/Yoctol/bottender/pull/107)
 
 ### telegram
 
-* [fix] Fix `context.sendVideoNote` using `messaging-api-telegram` v0.6.5
-* [new] Add context.methods:
+- [fix] Fix `context.sendVideoNote` using `messaging-api-telegram` v0.6.5
+- [new] Add context.methods:
 
 sendMediaGroup:
 
@@ -678,26 +899,26 @@ server.listen(5000, () => {
 
 See [viber-hello-world](https://github.com/Yoctol/bottender/tree/master/examples/viber-hello-world) for more details.
 
-* [new] Add `update-notifier` in CLI [#99](https://github.com/Yoctol/bottender/pull/99)
-* [deps] Update messaging API clients to `v0.6.x`.
+- [new] Add `update-notifier` in CLI [#99](https://github.com/Yoctol/bottender/pull/99)
+- [deps] Update messaging API clients to `v0.6.x`.
 
 ### messenger
 
-* [fix] Fix domain whitelisting usage
-* [fix] Check messenger menu item length [#71](https://github.com/Yoctol/bottender/pull/71)
+- [fix] Fix domain whitelisting usage
+- [fix] Check messenger menu item length [#71](https://github.com/Yoctol/bottender/pull/71)
 
 ### line
 
-* [fix] Handle LINE webhook verify request in LineConnector [#100](https://github.com/Yoctol/bottender/pull/100)
+- [fix] Handle LINE webhook verify request in LineConnector [#100](https://github.com/Yoctol/bottender/pull/100)
 
 ### slack
 
-* [new] Add Slack signature validation [#94](https://github.com/Yoctol/bottender/pull/94)
-* [improve] Let slack connector handle promises parallelly [#105](https://github.com/Yoctol/bottender/pull/105)
+- [new] Add Slack signature validation [#94](https://github.com/Yoctol/bottender/pull/94)
+- [improve] Let slack connector handle promises parallelly [#105](https://github.com/Yoctol/bottender/pull/105)
 
 # 0.14.9 / 2017-12-06
 
-* [new] Add referral getters for `MessengerEvent`:
+- [new] Add referral getters for `MessengerEvent`:
 
 ```js
 event.isReferral; // true or false
@@ -705,30 +926,30 @@ event.referral; // { source: 'SHORTLINK', type: 'OPEN_THREAD', ref: 'my_ref' }
 event.ref; // 'my_ref'
 ```
 
-* [fix] `bottender init` bug introduced by [#81](https://github.com/Yoctol/bottender/pull/81). Issue: [#86](https://github.com/Yoctol/bottender/issues/86)
+- [fix] `bottender init` bug introduced by [#81](https://github.com/Yoctol/bottender/pull/81). Issue: [#86](https://github.com/Yoctol/bottender/issues/86)
 
 # 0.14.8 / 2017-12-05
 
-* [new] Create `README.md` and `.gitignore` when `bottender init`
-* [deps] Update messaging-apis to `v0.5.16`
+- [new] Create `README.md` and `.gitignore` when `bottender init`
+- [deps] Update messaging-apis to `v0.5.16`
 
 ### messenger
 
-* [new] Add `event.isFromCustomerChatPlugin` getter
-* [new] Implement CLI attachment force upload [#70](https://github.com/Yoctol/bottender/pull/70)
-* [fix] Fix CLI profile bug
-* [fix] Add huge like sticker support to isLikeSticker [#67](https://github.com/Yoctol/bottender/pull/67)
-* [fix] Use timingSafeEqual to validate signature [#79](https://github.com/Yoctol/bottender/pull/79)
+- [new] Add `event.isFromCustomerChatPlugin` getter
+- [new] Implement CLI attachment force upload [#70](https://github.com/Yoctol/bottender/pull/70)
+- [fix] Fix CLI profile bug
+- [fix] Add huge like sticker support to isLikeSticker [#67](https://github.com/Yoctol/bottender/pull/67)
+- [fix] Use timingSafeEqual to validate signature [#79](https://github.com/Yoctol/bottender/pull/79)
 
 ### line
 
-* [fix] Use timingSafeEqual to validate signature [#79](https://github.com/Yoctol/bottender/pull/79)
+- [fix] Use timingSafeEqual to validate signature [#79](https://github.com/Yoctol/bottender/pull/79)
 
 # 0.14.7 / 2017-11-30
 
 ### messenger
 
-* [new] Add `mapPageToAccessToken` to support multiple pages (Experimental) [#47](https://github.com/Yoctol/bottender/pull/47)
+- [new] Add `mapPageToAccessToken` to support multiple pages (Experimental) [#47](https://github.com/Yoctol/bottender/pull/47)
 
 ```js
 new MessengerBot({
@@ -741,8 +962,8 @@ new MessengerBot({
 
 ### line
 
-* [new] Export `context.reply` and `context.push` methods. [#52](https://github.com/Yoctol/bottender/pull/52)
-* [new] New CLI commands to sync LINE rich menus: [#50](https://github.com/Yoctol/bottender/pull/50)
+- [new] Export `context.reply` and `context.push` methods. [#52](https://github.com/Yoctol/bottender/pull/52)
+- [new] New CLI commands to sync LINE rich menus: [#50](https://github.com/Yoctol/bottender/pull/50)
 
 ```sh
 $ bottender line menu get
@@ -752,7 +973,7 @@ $ bottender line menu delete
 
 ### slack
 
-* [new] Add support to interactive messages, and you can get action from it: [#41](https://github.com/Yoctol/bottender/pull/41)
+- [new] Add support to interactive messages, and you can get action from it: [#41](https://github.com/Yoctol/bottender/pull/41)
 
 ```js
 if (context.event.isInteractiveMessage) {
@@ -764,7 +985,7 @@ if (context.event.isInteractiveMessage) {
 
 ### messenger
 
-* [new] A new command to upload your messenger attachments from `/assets` directory (in beta):
+- [new] A new command to upload your messenger attachments from `/assets` directory (in beta):
 
 ```sh
 $ bottender messenger attachment upload
@@ -778,24 +999,24 @@ const { getAttachment } = require('bottender/utils');
 console.log(getAttachment('mypic.jpg').id); // '1591074914293017'
 ```
 
-* [new] Add `--force` option to `bottender messenger profile set` (delete all and set all)
-* [fix] Fix file export for `test-utils.js` [#44](https://github.com/Yoctol/bottender/pull/44)
-* [fix] Refined affected methods in `withTyping` [#35](https://github.com/Yoctol/bottender/pull/35)
+- [new] Add `--force` option to `bottender messenger profile set` (delete all and set all)
+- [fix] Fix file export for `test-utils.js` [#44](https://github.com/Yoctol/bottender/pull/44)
+- [fix] Refined affected methods in `withTyping` [#35](https://github.com/Yoctol/bottender/pull/35)
 
 ### slack
 
-* [fix] Stop passing `as_user: true` [#33](https://github.com/Yoctol/bottender/pull/33)
+- [fix] Stop passing `as_user: true` [#33](https://github.com/Yoctol/bottender/pull/33)
 
 # 0.14.5 / 2017-11-21
 
 ### messenger
 
-* [new] Add `--skip-validate` cli option to skip `Joi` schema validation [#31](https://github.com/Yoctol/bottender/pull/31)
-* [fix] Allow unknown keys in config and fix schema rules [#29](https://github.com/Yoctol/bottender/pull/29)
+- [new] Add `--skip-validate` cli option to skip `Joi` schema validation [#31](https://github.com/Yoctol/bottender/pull/31)
+- [fix] Allow unknown keys in config and fix schema rules [#29](https://github.com/Yoctol/bottender/pull/29)
 
 ### slack
 
-* [new] Add options for `postMessage` [#25](https://github.com/Yoctol/bottender/pull/25)
+- [new] Add options for `postMessage` [#25](https://github.com/Yoctol/bottender/pull/25)
 
 You can use it to send additional attachments, like below:
 
@@ -815,38 +1036,38 @@ See [official docs](https://api.slack.com/methods/chat.postMessage) for more ava
 
 ### line
 
-* [new] Implement richmenu api methods on context [#23](https://github.com/Yoctol/bottender/pull/23)
+- [new] Implement richmenu api methods on context [#23](https://github.com/Yoctol/bottender/pull/23)
 
-  * `context.getLinkedRichMenu()`
-  * `context.linkRichMenu(richMenuId)`
-  * `context.unlinkRichMenu()`
+  - `context.getLinkedRichMenu()`
+  - `context.linkRichMenu(richMenuId)`
+  - `context.unlinkRichMenu()`
 
 # 0.14.3 / 2017-11-14
 
 ### messenger
 
-* [new] Add new send methods [#19](https://github.com/Yoctol/bottender/pull/19)
-  * `context.sendMessage`
-  * `context.sendTemplate`
-  * `context.sendOpenGraphTemplate`
-  * `context.sendMediaTemplate`
-* [new] Implement label api methods for targeting broadcast messages [#18](https://github.com/Yoctol/bottender/pull/18)
-  * `context.associateLabel(labelId)`
-  * `context.dissociateLabel(labelId)`
-  * `context.getAssociatedLabels()`
-* [new] Implement thread control methods [#15](https://github.com/Yoctol/bottender/pull/15)
-  * `context.passThreadControl(targetAppId, metadata)`
-  * `context.passThreadControlToPageInbox`
-  * `context.takeThreadControl`
-* [new] Send `messaging_type` as `RESPONSE` when reply anything in the context. [#12](https://github.com/Yoctol/bottender/pull/12)
-* [deps] Upgrade [Messaging APIs](https://github.com/Yoctol/messaging-apis) clients to latest.
+- [new] Add new send methods [#19](https://github.com/Yoctol/bottender/pull/19)
+  - `context.sendMessage`
+  - `context.sendTemplate`
+  - `context.sendOpenGraphTemplate`
+  - `context.sendMediaTemplate`
+- [new] Implement label api methods for targeting broadcast messages [#18](https://github.com/Yoctol/bottender/pull/18)
+  - `context.associateLabel(labelId)`
+  - `context.dissociateLabel(labelId)`
+  - `context.getAssociatedLabels()`
+- [new] Implement thread control methods [#15](https://github.com/Yoctol/bottender/pull/15)
+  - `context.passThreadControl(targetAppId, metadata)`
+  - `context.passThreadControlToPageInbox`
+  - `context.takeThreadControl`
+- [new] Send `messaging_type` as `RESPONSE` when reply anything in the context. [#12](https://github.com/Yoctol/bottender/pull/12)
+- [deps] Upgrade [Messaging APIs](https://github.com/Yoctol/messaging-apis) clients to latest.
 
 # 0.14.2 / 2017-11-07
 
 ### slack
 
-* [fix] Slack `url_verification` fails with restify [#4](https://github.com/Yoctol/bottender/issues/4)
-* [fix] Send direct messages on Slack [#8](https://github.com/Yoctol/bottender/issues/8)
+- [fix] Slack `url_verification` fails with restify [#4](https://github.com/Yoctol/bottender/issues/4)
+- [fix] Send direct messages on Slack [#8](https://github.com/Yoctol/bottender/issues/8)
 
 # 0.14.0 / 2017-11-02
 
