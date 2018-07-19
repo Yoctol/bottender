@@ -310,7 +310,7 @@ const init = async () => {
       print('For example:');
       print("  ? What's your project name? my-bot");
       print('');
-      print("Run 'tce --help' to see all options.");
+      print("Run 'bottender --help' to see all options.");
       return process.exit(1);
     }
 
