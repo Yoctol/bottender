@@ -3,7 +3,7 @@
 import LRU from 'lru-cache';
 import cloneDeep from 'lodash/cloneDeep';
 
-import type { CacheStore } from './CacheStore';
+import { type CacheStore } from './CacheStore';
 
 export default class MemoryCacheStore implements CacheStore {
   _lru: LRU;

@@ -6,11 +6,11 @@ import invariant from 'invariant';
 import { Line, LineClient } from 'messaging-api-line';
 import chunk from 'lodash/chunk';
 
-import type { Session } from '../session/Session';
+import { type Session } from '../session/Session';
 
 import Context from './Context';
 import LineEvent from './LineEvent';
-import type { PlatformContext } from './PlatformContext';
+import { type PlatformContext } from './PlatformContext';
 
 type Options = {|
   client: LineClient,

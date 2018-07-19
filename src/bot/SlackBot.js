@@ -1,7 +1,7 @@
 /* @flow */
 import { RTMClient } from '@slack/client';
 
-import type { SessionStore } from '../session/SessionStore';
+import { type SessionStore } from '../session/SessionStore';
 
 import Bot from './Bot';
 import SlackConnector from './SlackConnector';

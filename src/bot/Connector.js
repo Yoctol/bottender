@@ -1,6 +1,6 @@
 /* @flow */
 
-import type { Session } from '../session/Session';
+import { type Session } from '../session/Session';
 
 export interface Connector<B> {
   +platform: string;

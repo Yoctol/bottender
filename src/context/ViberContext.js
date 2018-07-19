@@ -4,11 +4,11 @@ import sleep from 'delay';
 import warning from 'warning';
 import { ViberClient } from 'messaging-api-viber';
 
-import type { Session } from '../session/Session';
+import { type Session } from '../session/Session';
 
 import Context from './Context';
 import ViberEvent from './ViberEvent';
-import type { PlatformContext } from './PlatformContext';
+import { type PlatformContext } from './PlatformContext';
 
 type Options = {|
   client: ViberClient,

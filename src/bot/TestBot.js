@@ -1,7 +1,7 @@
 /* @flow */
 import warning from 'warning';
 
-import type { SessionStore } from '../session/SessionStore';
+import { type SessionStore } from '../session/SessionStore';
 
 import Bot from './Bot';
 import TestConnector from './TestConnector';

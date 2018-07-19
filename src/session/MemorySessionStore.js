@@ -3,7 +3,7 @@
 import MemoryCacheStore from '../cache/MemoryCacheStore';
 
 import CacheBasedSessionStore from './CacheBasedSessionStore';
-import type { SessionStore } from './SessionStore';
+import { type SessionStore } from './SessionStore';
 
 const MINUTES_IN_ONE_YEAR = 365 * 24 * 60;
 

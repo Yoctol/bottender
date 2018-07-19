@@ -4,9 +4,9 @@ import { TelegramClient } from 'messaging-api-telegram';
 
 import TelegramContext from '../context/TelegramContext';
 import TelegramEvent, { type TelegramRawEvent } from '../context/TelegramEvent';
-import type { Session } from '../session/Session';
+import { type Session } from '../session/Session';
 
-import type { Connector } from './Connector';
+import { type Connector } from './Connector';
 
 export type TelegramRequestBody = TelegramRawEvent;
 

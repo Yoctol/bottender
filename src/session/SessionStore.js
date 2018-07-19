@@ -1,6 +1,6 @@
 /* @flow */
 
-import type { Session } from './Session';
+import { type Session } from './Session';
 
 export interface SessionStore {
   init(): Promise<SessionStore>;

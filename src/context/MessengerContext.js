@@ -4,11 +4,11 @@ import sleep from 'delay';
 import warning from 'warning';
 import { MessengerClient, MessengerBatch } from 'messaging-api-messenger';
 
-import type { Session } from '../session/Session';
+import { type Session } from '../session/Session';
 
 import Context from './Context';
 import MessengerEvent from './MessengerEvent';
-import type { PlatformContext } from './PlatformContext';
+import { type PlatformContext } from './PlatformContext';
 
 type Options = {|
   client: MessengerClient,
