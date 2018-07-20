@@ -97,6 +97,17 @@ describe('#sendText', () => {
       `hello\nwith other args:\n${JSON.stringify([{ other: 1 }], null, 2)}`
     );
   });
+
+  it('should not print empty array other args', async () => {
+    const { context, client } = setup({ fallbackMethods: true });
+
+    await context.sendText('hello');
+
+    expect(client.sendText).not.toBeCalledWith(
+      `hello\nwith other args:\n${JSON.stringify([], null, 2)}`
+    );
+    expect(client.sendText).toBeCalledWith('hello');
+  });
 });
 
 describe('method missing', () => {

@@ -86,7 +86,7 @@ export default class ConsoleContext extends Context implements PlatformContext {
    */
   async sendText(text: string, ...args: Array<any>): Promise<void> {
     this._isHandled = true;
-    if (args && this._fallbackMethods) {
+    if (args.length > 0 && this._fallbackMethods) {
       this._client.sendText(
         `${text}\nwith other args:\n${JSON.stringify(args, null, 2)}`
       );
