@@ -1,3 +1,8 @@
+# 0.15.1 / 2018-07-20
+
+- [fix] fix cli hint (#311) 
+- [fix] not print empty array other args in ConsoleBot fallbackMethods (#314)
+
 # 0.15.0 / 2018-07-18
 
 `v0.15` is the second major version after we open sourced Bottender. In this version, we introduce a lot of helpful, community requested features based on [Messaging APIs v0.7](https://github.com/Yoctol/messaging-apis/releases/tag/v0.7.0).
