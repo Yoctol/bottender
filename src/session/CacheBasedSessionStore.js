@@ -1,9 +1,9 @@
 /* @flow */
 
-import type { CacheStore } from '../cache/CacheStore';
+import { type CacheStore } from '../cache/CacheStore';
 
-import type { Session } from './Session';
-import type { SessionStore } from './SessionStore';
+import { type Session } from './Session';
+import { type SessionStore } from './SessionStore';
 
 const MINUTES_IN_ONE_YEAR = 365 * 24 * 60;
 

@@ -20,9 +20,9 @@ import MessengerEvent, {
   type PassThreadControl,
   type TakeThreadControl,
 } from '../context/MessengerEvent';
-import type { Session } from '../session/Session';
+import { type Session } from '../session/Session';
 
-import type { Connector } from './Connector';
+import { type Connector } from './Connector';
 
 type Entry = {
   ['messaging' | 'standby' | 'changes']: Array<{

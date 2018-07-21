@@ -6,11 +6,11 @@ import pMap from 'p-map';
 
 import MemoryCacheStore from '../cache/MemoryCacheStore';
 import CacheBasedSessionStore from '../session/CacheBasedSessionStore';
-import type { Session } from '../session/Session';
-import type { SessionStore } from '../session/SessionStore';
-import type { FunctionalHandler, Builder } from '../handlers/Handler';
+import { type Session } from '../session/Session';
+import { type SessionStore } from '../session/SessionStore';
+import { type FunctionalHandler, type Builder } from '../handlers/Handler';
 
-import type { Connector } from './Connector';
+import { type Connector } from './Connector';
 
 const debugRequest = debug('bottender:request');
 const debugSessionRead = debug('bottender:session:read');

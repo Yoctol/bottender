@@ -1,6 +1,6 @@
 import compose from 'koa-compose';
 
-import type { Builder } from './Handler';
+import { type Builder } from './Handler';
 
 type Middleware = (context?: any, next?: Middleware) => {};
 

@@ -4,8 +4,8 @@ import { MongoClient } from 'mongodb';
 import isBefore from 'date-fns/is_before';
 import subMinutes from 'date-fns/sub_minutes';
 
-import type { Session } from './Session';
-import type { SessionStore } from './SessionStore';
+import { type Session } from './Session';
+import { type SessionStore } from './SessionStore';
 
 type MongoCollection = {
   findOne: (filter: Object) => Promise<{}>,

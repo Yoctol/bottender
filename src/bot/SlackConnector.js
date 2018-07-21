@@ -12,9 +12,9 @@ import SlackEvent, {
   type Message,
   type InteractiveMessageEvent,
 } from '../context/SlackEvent';
-import type { Session } from '../session/Session';
+import { type Session } from '../session/Session';
 
-import type { Connector } from './Connector';
+import { type Connector } from './Connector';
 
 // FIXME
 export type SlackUser = {

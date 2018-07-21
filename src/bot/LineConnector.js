@@ -7,9 +7,9 @@ import warning from 'warning';
 
 import LineContext from '../context/LineContext';
 import LineEvent, { type LineRawEvent } from '../context/LineEvent';
-import type { Session } from '../session/Session';
+import { type Session } from '../session/Session';
 
-import type { Connector } from './Connector';
+import { type Connector } from './Connector';
 
 type LineRequestBody = {
   events: Array<LineRawEvent>,

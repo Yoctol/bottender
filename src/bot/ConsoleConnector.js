@@ -3,9 +3,9 @@
 import ConsoleContext from '../context/ConsoleContext';
 import { type ConsoleClient } from '../context/ConsoleClient';
 import ConsoleEvent, { type ConsoleRawEvent } from '../context/ConsoleEvent';
-import type { Session } from '../session/Session';
+import { type Session } from '../session/Session';
 
-import type { Connector } from './Connector';
+import { type Connector } from './Connector';
 
 type ConsoleRequestBody = ConsoleRawEvent;
 

@@ -1,6 +1,6 @@
 /* @flow */
 
-import type { Event } from './Event';
+import { type Event } from './Event';
 
 type TelegramUser = {
   id: number,

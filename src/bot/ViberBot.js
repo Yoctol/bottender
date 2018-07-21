@@ -1,6 +1,6 @@
 /* @flow */
 
-import type { SessionStore } from '../session/SessionStore';
+import { type SessionStore } from '../session/SessionStore';
 
 import Bot from './Bot';
 import ViberConnector from './ViberConnector';

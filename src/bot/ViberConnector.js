@@ -6,9 +6,9 @@ import { addedDiff } from 'deep-object-diff';
 
 import ViberContext from '../context/ViberContext';
 import ViberEvent, { type ViberRawEvent } from '../context/ViberEvent';
-import type { Session } from '../session/Session';
+import { type Session } from '../session/Session';
 
-import type { Connector } from './Connector';
+import { type Connector } from './Connector';
 
 export type ViberRequestBody = ViberRawEvent;
 

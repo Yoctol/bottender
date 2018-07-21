@@ -4,11 +4,11 @@ import sleep from 'delay';
 import warning from 'warning';
 import { TelegramClient } from 'messaging-api-telegram';
 
-import type { Session } from '../session/Session';
+import { type Session } from '../session/Session';
 
 import Context from './Context';
 import TelegramEvent from './TelegramEvent';
-import type { PlatformContext } from './PlatformContext';
+import { type PlatformContext } from './PlatformContext';
 
 type Options = {|
   client: TelegramClient,

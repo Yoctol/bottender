@@ -1,11 +1,11 @@
 /* @flow */
 
 import TestContext from '../context/TestContext';
-import type { TestClient } from '../context/TestClient';
+import { type TestClient } from '../context/TestClient';
 import TestEvent, { type TestRawEvent } from '../context/TestEvent';
-import type { Session } from '../session/Session';
+import { type Session } from '../session/Session';
 
-import type { Connector } from './Connector';
+import { type Connector } from './Connector';
 
 type TestRequestBody = TestRawEvent;
 

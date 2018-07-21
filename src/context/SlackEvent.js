@@ -2,7 +2,7 @@
 
 import pascalCase from 'pascal-case';
 
-import type { Event } from './Event';
+import { type Event } from './Event';
 
 export type EventAPITypes =
   | 'message'

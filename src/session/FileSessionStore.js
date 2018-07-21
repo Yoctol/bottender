@@ -5,8 +5,8 @@ import thenify from 'thenify';
 import isBefore from 'date-fns/is_before';
 import subMinutes from 'date-fns/sub_minutes';
 
-import type { Session } from './Session';
-import type { SessionStore } from './SessionStore';
+import { type Session } from './Session';
+import { type SessionStore } from './SessionStore';
 
 const MINUTES_IN_ONE_YEAR = 365 * 24 * 60;
 
