@@ -37,7 +37,7 @@ Or install it locally to use it programmatically:
 npm install bottender
 ```
 
-Installation may fail on Windows during compilation of the native dependencies with `node-gyp`. Installing [`windows-build-tools`](https://github.com/felixrieseberg/windows-build-tools#readme) or check [`node-gyp` documentation](https://github.com/nodejs/node-gyp#on-windows) may help.
+Installation may fail on Windows during compilation of the native dependencies with `node-gyp`. To solve this problem, you can install [`windows-build-tools`](https://github.com/felixrieseberg/windows-build-tools#readme) or check [`node-gyp` documentation](https://github.com/nodejs/node-gyp#on-windows).
 
 ## Documentation
 
