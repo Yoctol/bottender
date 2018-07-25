@@ -27,7 +27,7 @@ jobs:
           name: install dependencies
           command: |
             yarn config set cache-folder .yarn-cache
-            yarn
+            yarn --frozen-lockfile
       - run:
           name: build
           command: npm run build
@@ -67,7 +67,7 @@ jobs:
           name: install dependencies
           command: |
             yarn config set cache-folder .yarn-cache
-            yarn
+            yarn --frozen-lockfile
             yarn add codecov
       - run:
           name: build
