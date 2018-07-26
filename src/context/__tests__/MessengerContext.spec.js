@@ -20,6 +20,8 @@ afterEach(() => {
   jest.useFakeTimers();
 });
 
+const APP_ID = '1234567890';
+
 const _rawEvent = {
   sender: { id: '1423587017700273' },
   recipient: { id: '404217156637689' },
@@ -46,6 +48,7 @@ const setup = (
 ) => {
   const client = MessengerClient.connect();
   const args = {
+    appId: APP_ID,
     client,
     event: new MessengerEvent(rawEvent),
     session,
@@ -361,6 +364,24 @@ describe('#getThreadOwner', () => {
       'getThreadOwner: should not be called in context without session'
     );
     expect(client.getThreadOwner).not.toBeCalled();
+  });
+});
+
+describe('#isThreadOwner', () => {
+  it('should return true when bot is not the thread owner', async () => {
+    const { context, client } = setup();
+
+    client.getThreadOwner.mockResolvedValue({ app_id: APP_ID });
+
+    expect(await context.isThreadOwner()).toBe(true);
+  });
+
+  it('should return false when bot is not the thread owner', async () => {
+    const { context, client } = setup();
+
+    client.getThreadOwner.mockResolvedValue({ app_id: '54367890123' });
+
+    expect(await context.isThreadOwner()).toBe(false);
   });
 });
 

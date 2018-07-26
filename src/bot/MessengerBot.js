@@ -8,6 +8,7 @@ import MessengerConnector from './MessengerConnector';
 export default class MessengerBot extends Bot {
   constructor({
     accessToken,
+    appId,
     appSecret,
     sessionStore,
     sync,
@@ -16,6 +17,7 @@ export default class MessengerBot extends Bot {
     batchConfig,
   }: {
     accessToken: string,
+    appId?: string,
     appSecret: string,
     sessionStore: SessionStore,
     sync?: boolean,
@@ -25,6 +27,7 @@ export default class MessengerBot extends Bot {
   }) {
     const connector = new MessengerConnector({
       accessToken,
+      appId,
       appSecret,
       mapPageToAccessToken,
       verifyToken,

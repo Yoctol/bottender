@@ -2,6 +2,7 @@
 
 import sleep from 'delay';
 import warning from 'warning';
+import invariant from 'invariant';
 import { MessengerClient, MessengerBatch } from 'messaging-api-messenger';
 
 import { type Session } from '../session/Session';
@@ -11,6 +12,7 @@ import MessengerEvent from './MessengerEvent';
 import { type PlatformContext } from './PlatformContext';
 
 type Options = {|
+  appId: ?string,
   client: MessengerClient,
   event: MessengerEvent,
   session: ?Session,
@@ -21,6 +23,8 @@ type Options = {|
 |};
 
 class MessengerContext extends Context implements PlatformContext {
+  _appId: ?string;
+
   _client: MessengerClient = this._client;
 
   _event: MessengerEvent = this._event;
@@ -32,6 +36,7 @@ class MessengerContext extends Context implements PlatformContext {
   _batchQueue: ?Object;
 
   constructor({
+    appId,
     client,
     event,
     session,
@@ -43,6 +48,7 @@ class MessengerContext extends Context implements PlatformContext {
     super({ client, event, session, initialState, requestContext });
     this._customAccessToken = customAccessToken;
     this._batchQueue = batchQueue;
+    this._appId = appId;
   }
 
   /**
@@ -375,6 +381,17 @@ class MessengerContext extends Context implements PlatformContext {
     ];
 
     return this._callClientMethod('getThreadOwner', args);
+  }
+
+  async isThreadOwner(): Promise<boolean> {
+    invariant(
+      this._appId,
+      'isThreadOwner: must provide appId to use this feature'
+    );
+    const { app_id: appId } = await this.getThreadOwner();
+
+    // $FlowIssue - do not support assert: https://github.com/facebook/flow/issues/34
+    return `${appId}` === `${this._appId}`;
   }
 
   /**

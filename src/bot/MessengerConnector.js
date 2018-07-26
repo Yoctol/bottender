@@ -76,6 +76,7 @@ type MessengerRequestBody =
 
 type ConstructorOptions = {|
   accessToken?: string,
+  appId?: string,
   appSecret?: string,
   client?: MessengerClient,
   mapPageToAccessToken?: (pageId: string) => Promise<string>,
@@ -86,6 +87,8 @@ type ConstructorOptions = {|
 export default class MessengerConnector
   implements Connector<MessengerRequestBody> {
   _client: MessengerClient;
+
+  _appId: string;
 
   _appSecret: string;
 
@@ -99,6 +102,7 @@ export default class MessengerConnector
 
   constructor({
     accessToken,
+    appId,
     appSecret,
     client,
     mapPageToAccessToken,
@@ -112,6 +116,7 @@ export default class MessengerConnector
         appSecret,
       });
 
+    this._appId = appId || '';
     this._appSecret = appSecret || '';
 
     this._mapPageToAccessToken = mapPageToAccessToken;
@@ -319,6 +324,7 @@ export default class MessengerConnector
       client: this._client,
       customAccessToken,
       batchQueue: this._batchQueue,
+      appId: this._appId,
     });
   }
 
