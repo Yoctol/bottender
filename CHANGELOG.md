@@ -1,6 +1,16 @@
+# 0.15.2 / 2018-08-16
+
+### messenger
+
+- [new] Add `context.isThreadOwner()`:
+
+```js
+await context.isThreadOwner(); // true | false
+```
+
 # 0.15.1 / 2018-07-20
 
-- [fix] fix cli hint (#311) 
+- [fix] fix cli hint (#311)
 - [fix] not print empty array other args in ConsoleBot fallbackMethods (#314)
 
 # 0.15.0 / 2018-07-18
