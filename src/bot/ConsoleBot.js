@@ -10,8 +10,13 @@ export default class ConsoleBot extends Bot {
   constructor({
     sessionStore,
     fallbackMethods,
-  }: { sessionStore: SessionStore, fallbackMethods?: boolean } = {}) {
-    const connector = new ConsoleConnector({ fallbackMethods });
+    mockPlatform,
+  }: {
+    sessionStore: SessionStore,
+    fallbackMethods?: boolean,
+    mockPlatform?: string,
+  } = {}) {
+    const connector = new ConsoleConnector({ fallbackMethods, mockPlatform });
     super({ connector, sessionStore, sync: true });
   }
 
