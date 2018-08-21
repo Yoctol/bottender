@@ -67,6 +67,9 @@ export default class ConsoleContext extends Context implements PlatformContext {
    *
    */
   get platform(): string {
+    if (this._session && this._session.platform) {
+      return this._session.platform;
+    }
     return 'console';
   }
 
