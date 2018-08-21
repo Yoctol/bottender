@@ -1,3 +1,21 @@
+# 0.15.3 / 2018-08-21
+
+### console
+
+- [new] Add `mockPlatform` option:
+
+```js
+const bot = new ConsoleBot({
+  fallbackMethods: true,
+  mockPlatform: 'messenger',
+});
+
+bot.connector.platform; // 'messenger'
+bot.onEvent(context => {
+  context.platform; // 'messenger'
+});
+```
+
 # 0.15.2 / 2018-08-16
 
 ### messenger
