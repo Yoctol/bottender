@@ -8,16 +8,23 @@ const request = {
   },
 };
 
-function setup() {
+function setup(option) {
   return {
-    connector: new ConsoleConnector(),
+    connector: new ConsoleConnector(option),
   };
 }
 
 describe('#platform', () => {
-  it('should be console', () => {
+  it('should be console, when no extra option set', () => {
     const { connector } = setup();
     expect(connector.platform).toBe('console');
+  });
+
+  it('should be overide by mockPlatform setting', () => {
+    const { connector } = setup({
+      mockPlatform: 'messenger',
+    });
+    expect(connector.platform).toBe('messenger');
   });
 });
 

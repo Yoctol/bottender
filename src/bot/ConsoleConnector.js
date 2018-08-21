@@ -12,6 +12,7 @@ type ConsoleRequestBody = ConsoleRawEvent;
 type ConstructorOptions = {|
   client?: ConsoleClient,
   fallbackMethods?: boolean,
+  mockPlatform?: string,
 |};
 
 export default class ConsoleConnector implements Connector<ConsoleRequestBody> {
@@ -19,17 +20,24 @@ export default class ConsoleConnector implements Connector<ConsoleRequestBody> {
 
   _fallbackMethods: boolean;
 
-  constructor({ client, fallbackMethods }: ConstructorOptions = {}) {
+  _platform: string;
+
+  constructor({
+    client,
+    fallbackMethods,
+    mockPlatform,
+  }: ConstructorOptions = {}) {
     this._client = client || {
       sendText: text => {
         process.stdout.write(`Bot > ${text}\n`);
       },
     };
     this._fallbackMethods = fallbackMethods || false;
+    this._platform = mockPlatform || 'console';
   }
 
   get platform(): string {
-    return 'console';
+    return this._platform;
   }
 
   get client(): ConsoleClient {
