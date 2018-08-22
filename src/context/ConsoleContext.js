@@ -15,6 +15,7 @@ type Options = {|
   initialState: ?Object,
   requestContext: ?Object,
   fallbackMethods: boolean,
+  mockPlatform: string,
 |};
 
 const methodBlackList = [
@@ -31,6 +32,8 @@ export default class ConsoleContext extends Context implements PlatformContext {
 
   _fallbackMethods: boolean = false;
 
+  _mockPlatform: string = 'console';
+
   constructor({
     client,
     event,
@@ -38,8 +41,10 @@ export default class ConsoleContext extends Context implements PlatformContext {
     initialState,
     requestContext,
     fallbackMethods,
+    mockPlatform,
   }: Options) {
     super({ client, event, session, initialState, requestContext });
+    this._mockPlatform = mockPlatform;
     this._fallbackMethods = fallbackMethods;
     if (fallbackMethods) {
       // $FlowExpectedError
@@ -67,7 +72,7 @@ export default class ConsoleContext extends Context implements PlatformContext {
    *
    */
   get platform(): string {
-    return 'console';
+    return this._mockPlatform || 'console';
   }
 
   /**

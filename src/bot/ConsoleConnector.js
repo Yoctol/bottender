@@ -80,6 +80,7 @@ export default class ConsoleConnector implements Connector<ConsoleRequestBody> {
       ...params,
       client: this._client,
       fallbackMethods: this._fallbackMethods,
+      mockPlatform: this._platform,
     });
   }
 }
