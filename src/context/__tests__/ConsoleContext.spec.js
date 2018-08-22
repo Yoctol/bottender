@@ -29,7 +29,9 @@ const userSession = {
   },
 };
 
-const setup = ({ session, fallbackMethods } = { session: userSession }) => {
+const setup = (
+  { session, fallbackMethods, mockPlatform } = { session: userSession }
+) => {
   const client = {
     sendText: jest.fn(),
   };
@@ -38,6 +40,7 @@ const setup = ({ session, fallbackMethods } = { session: userSession }) => {
     event: new ConsoleEvent(rawEvent),
     session,
     fallbackMethods: fallbackMethods || false,
+    mockPlatform,
   });
   return {
     client,
@@ -51,9 +54,14 @@ it('be defined', () => {
   expect(context).toBeDefined();
 });
 
-it('#platform to be `console`', () => {
+it('#platform to be `console` by default', () => {
   const { context } = setup();
   expect(context.platform).toBe('console');
+});
+
+it('#platform to be `console` by mockPlatform', () => {
+  const { context } = setup({ mockPlatform: 'messenger' });
+  expect(context.platform).toBe('messenger');
 });
 
 it('get #session works', () => {
