@@ -1,3 +1,27 @@
+# 0.15.4 / 2018-08-22
+
+- [new] add debugger for sync response
+
+```sh
+DEBUG=bottender:response
+```
+
+print:
+
+```sh
+bottender:response Outgoing response:
+bottender:response {
+bottender:response   body: {
+bottender:response   }
+bottender:response }
+```
+
+Useful when debugging synchronized connectors.
+
+### console
+
+- [fix] makes `context.platform` consistent with `context.session.platform`
+
 # 0.15.3 / 2018-08-21
 
 ### console
