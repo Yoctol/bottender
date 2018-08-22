@@ -13,6 +13,7 @@ import { type FunctionalHandler, type Builder } from '../handlers/Handler';
 import { type Connector } from './Connector';
 
 const debugRequest = debug('bottender:request');
+const debugResponse = debug('bottender:response');
 const debugSessionRead = debug('bottender:session:read');
 const debugSessionWrite = debug('bottender:session:write');
 
@@ -205,8 +206,13 @@ export default class Bot {
           console.error(err);
         }
 
-        // TODO: Any chances to merge multiple response from context?
-        return contexts[0].response;
+        // TODO: Any chances to merge multiple responses from context?
+        const response = contexts[0].response;
+        if (response && typeof response === 'object') {
+          debugResponse('Outgoing response:');
+          debugResponse(JSON.stringify(response, null, 2));
+        }
+        return response;
       }
       promises
         .then(() => {
