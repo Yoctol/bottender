@@ -61,9 +61,11 @@ export default class SlackConnector implements Connector<SlackRequestBody> {
     if (body.event) {
       return (((body: any): EventsAPIBody).event: Message);
     }
+
     if (body.payload && typeof body.payload === 'string') {
       return (JSON.parse(body.payload): InteractiveMessageEvent);
     }
+
     // for RTM WebSocket messages
     return ((body: any): Message);
   }
@@ -85,10 +87,30 @@ export default class SlackConnector implements Connector<SlackRequestBody> {
   }
 
   getUniqueSessionKey(body: SlackRequestBody): string {
-    const rawEvent = this._getRawEventFromRequest(body);
+    // FIXME: define types for every slack events
+    const rawEvent = (this._getRawEventFromRequest(body): any);
 
-    if (rawEvent.type === 'interactive_message') {
+    // For interactive_message format
+    if (
+      rawEvent.channel &&
+      typeof rawEvent.channel === 'object' &&
+      rawEvent.channel.id
+    ) {
       return rawEvent.channel.id;
+    }
+
+    // For pin_added format
+    if (rawEvent.channel_id) {
+      return rawEvent.channel_id;
+    }
+
+    // For reaction_added format
+    if (
+      rawEvent.item &&
+      typeof rawEvent.item === 'object' &&
+      typeof rawEvent.item.channel === 'string'
+    ) {
+      return rawEvent.item.channel;
     }
 
     return ((rawEvent: any): Message).channel;
