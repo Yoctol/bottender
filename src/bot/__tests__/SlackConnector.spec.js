@@ -51,6 +51,49 @@ const botRequest = {
   },
 };
 
+const ReactionAddedRequest = {
+  body: {
+    token: 'xxxxxxxxxxxxxxxxxxxxxxxxxxx',
+    team_id: 'T02R00000',
+    api_app_id: 'A6A00000',
+    event: {
+      type: 'reaction_added',
+      user: 'U024BE7LH',
+      reaction: 'thumbsup',
+      item_user: 'U0G9QF9C6',
+      item: {
+        type: 'message',
+        channel: 'C0G9QF9GZ',
+        ts: '1360782400.498405',
+      },
+      event_ts: '1360782804.083113',
+    },
+    type: 'event_callback',
+    authed_users: ['U6AK00000'],
+    event_id: 'Ev6BEYTAK0',
+    event_time: 1500435914,
+  },
+};
+
+const PinAddedRequest = {
+  body: {
+    token: 'xxxxxxxxxxxxxxxxxxxxxxxxxxx',
+    team_id: 'T02R00000',
+    api_app_id: 'A6A00000',
+    event: {
+      type: 'pin_added',
+      user: 'U024BE7LH',
+      channel_id: 'C02ELGNBH',
+      item: {},
+      event_ts: '1360782804.083113',
+    },
+    type: 'event_callback',
+    authed_users: ['U6AK00000'],
+    event_id: 'Ev6BEYTAK0',
+    event_time: 1500435914,
+  },
+};
+
 const interactiveMessageRequest = {
   body: {
     payload:
@@ -122,6 +165,18 @@ describe('#getUniqueSessionKey', () => {
     const { connector } = setup();
     const channelId = connector.getUniqueSessionKey(RtmMessage);
     expect(channelId).toBe('G7W5WAAAA');
+  });
+
+  it('extract correct channel id from reaction_added event', () => {
+    const { connector } = setup();
+    const channelId = connector.getUniqueSessionKey(ReactionAddedRequest.body);
+    expect(channelId).toBe('C0G9QF9GZ');
+  });
+
+  it('extract correct channel id from pin_added event', () => {
+    const { connector } = setup();
+    const channelId = connector.getUniqueSessionKey(PinAddedRequest.body);
+    expect(channelId).toBe('C02ELGNBH');
   });
 });
 
