@@ -1,0 +1,23 @@
+{
+  "name": "with-rxjs",
+  "version": "1.0.0",
+  "description": "Writing a simple bot without imperative conditional statements using Rx.js",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "bottender": "latest",
+    "rx-handler": "^1.0.1",
+    "rxjs": "^6.2.2"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  },
+  "keywords": [
+    "reactive programming"
+  ],
+  "author": "xxhomey19 <xxhomey19@gmail.com>",
+  "license": "MIT"
+}
