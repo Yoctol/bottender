@@ -1,3 +1,9 @@
+# 0.15.5 / 2018-08-27
+
+### slack
+
+- [fix] get correct channel id from more slack event format
+
 # 0.15.4 / 2018-08-22
 
 - [new] add debugger for sync response
