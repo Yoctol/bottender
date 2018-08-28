@@ -51,7 +51,8 @@ type Postback = {|
 
 type Beacon = {|
   hwid: string,
-  type: string,
+  type: 'enter' | 'leave' | 'banner',
+  dm?: string,
 |};
 
 type AccountLink = {|
