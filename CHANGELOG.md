@@ -1,3 +1,41 @@
+# 0.15.6 / 2018-08-28
+
+### line
+
+- [new] make sure all of methods support quick reply (#331):
+
+```js
+context.sendText('hahaha', {
+  quickReply: {
+    items: [
+      {
+        type: 'action',
+        action: {
+          type: 'cameraRoll',
+          label: 'Send photo',
+        },
+      },
+      {
+        type: 'action',
+        action: {
+          type: 'camera',
+          label: 'Open camera',
+        },
+      },
+    ],
+  },
+});
+```
+
+### telegram
+
+- [new] add `isReplyToMessage`, `replyToMessage` (#330):
+
+```js
+event.isReplyToMessage;
+event.replyToMessage;
+```
+
 # 0.15.5 / 2018-08-27
 
 ### slack
