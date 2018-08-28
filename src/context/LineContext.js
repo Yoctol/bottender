@@ -120,14 +120,14 @@ class LineContext extends Context implements PlatformContext {
    * Send text to the owner of the session.
    *
    */
-  async sendText(text: string): Promise<any> {
+  async sendText(text: string, ...args: Array<any>): Promise<any> {
     if (this._sendMethod === 'reply') {
       // $FlowExpectedError: dynamically defined below
-      return this.replyText(text);
+      return this.replyText(text, ...args);
     }
 
     // $FlowExpectedError: dynamically defined below
-    return this.pushText(text);
+    return this.pushText(text, ...args);
   }
 
   /**
