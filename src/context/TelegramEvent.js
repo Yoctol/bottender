@@ -96,6 +96,7 @@ type Message = {
     offset: number,
     length: number,
   }>,
+  reply_to_message?: Message,
   photo?: Photo,
   game?: Game,
   audio?: Audio,
@@ -225,6 +226,31 @@ export default class TelegramEvent implements Event {
   get text(): ?string {
     if (this.isText) {
       return (this.message: any).text;
+    }
+    return null;
+  }
+
+  /**
+   * Determine if the event which include reply to message.
+   *
+   */
+  get isReplyToMessage(): boolean {
+    if (!this.isMessage) return false;
+
+    const message: Message = (this.message: any);
+
+    return (
+      !!message.reply_to_message && typeof message.reply_to_message === 'object'
+    );
+  }
+
+  /**
+   * The Message object from Telegram raw event which includes reply_to_message.
+   *
+   */
+  get replyToMessage(): ?Message {
+    if (this.isReplyToMessage) {
+      return (this.message: any).reply_to_message;
     }
     return null;
   }
