@@ -1,10 +1,10 @@
-import { ViberClient } from 'messaging-api-viber';
-import invariant from 'invariant';
 import Confirm from 'prompt-confirm';
+import invariant from 'invariant';
+import { ViberClient } from 'messaging-api-viber';
 
-import getWebhookFromNgrok from '../../shared/getWebhookFromNgrok';
 import getConfig from '../../shared/getConfig';
-import { print, error, bold, warn } from '../../shared/log';
+import getWebhookFromNgrok from '../../shared/getWebhookFromNgrok';
+import { bold, error, print, warn } from '../../shared/log';
 
 import help from './help';
 

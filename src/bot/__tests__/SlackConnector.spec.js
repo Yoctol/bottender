@@ -1,9 +1,9 @@
-import { SlackOAuthClient } from 'messaging-api-slack';
 import warning from 'warning';
+import { SlackOAuthClient } from 'messaging-api-slack';
 
 import SlackConnector from '../SlackConnector';
-import SlackEvent from '../../context/SlackEvent';
 import SlackContext from '../../context/SlackContext';
+import SlackEvent from '../../context/SlackEvent';
 
 jest.mock('messaging-api-slack');
 jest.mock('warning');

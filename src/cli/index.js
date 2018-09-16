@@ -1,6 +1,6 @@
-import minimist from 'minimist';
 import camelCase from 'camel-case';
 import get from 'lodash/get';
+import minimist from 'minimist';
 import updateNotifier from 'update-notifier';
 
 import pkg from '../../package.json';

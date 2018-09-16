@@ -1,5 +1,5 @@
-import middleware from '../middleware';
 import Handler from '../Handler';
+import middleware from '../middleware';
 
 it('should let middleware to be called', () => {
   const m1 = jest.fn();

@@ -1,5 +1,5 @@
-import RedisSessionStore from '../RedisSessionStore';
 import CacheBasedSessionStore from '../CacheBasedSessionStore';
+import RedisSessionStore from '../RedisSessionStore';
 
 it('should be instanceof CacheBasedSessionStore', () => {
   expect(new RedisSessionStore(6379)).toBeInstanceOf(CacheBasedSessionStore);

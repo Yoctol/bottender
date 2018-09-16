@@ -1,5 +1,5 @@
-import MemorySessionStore from '../MemorySessionStore';
 import CacheBasedSessionStore from '../CacheBasedSessionStore';
+import MemorySessionStore from '../MemorySessionStore';
 
 it('should be instanceof CacheBasedSessionStore', () => {
   expect(new MemorySessionStore()).toBeInstanceOf(CacheBasedSessionStore);

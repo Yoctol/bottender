@@ -1,9 +1,9 @@
 import path from 'path';
 
-import invariant from 'invariant';
+import Joi from 'joi';
 import get from 'lodash/get';
 import importFresh from 'import-fresh';
-import Joi from 'joi';
+import invariant from 'invariant';
 import minimist from 'minimist';
 
 import schema from './schema';

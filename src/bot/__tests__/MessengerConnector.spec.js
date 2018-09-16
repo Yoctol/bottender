@@ -1,9 +1,9 @@
-import { MessengerClient } from 'messaging-api-messenger';
 import warning from 'warning';
+import { MessengerClient } from 'messaging-api-messenger';
 
 import MessengerConnector from '../MessengerConnector';
-import MessengerEvent from '../../context/MessengerEvent';
 import MessengerContext from '../../context/MessengerContext';
+import MessengerEvent from '../../context/MessengerEvent';
 
 jest.mock('messaging-api-messenger');
 jest.mock('warning');

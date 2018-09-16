@@ -2,10 +2,10 @@
 import warning from 'warning';
 
 import Handler, {
-  type Predicate,
+  type Builder,
   type FunctionalHandler,
   type Pattern,
-  type Builder,
+  type Predicate,
   matchPattern,
 } from './Handler';
 

@@ -3,9 +3,9 @@ import sleep from 'delay';
 
 import { type Session } from '../session/Session';
 
+import ConsoleEvent from './ConsoleEvent';
 import Context from './Context';
 import { type ConsoleClient } from './ConsoleClient';
-import ConsoleEvent from './ConsoleEvent';
 import { type PlatformContext } from './PlatformContext';
 
 type Options = {|

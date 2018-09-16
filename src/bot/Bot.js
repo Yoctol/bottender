@@ -4,11 +4,11 @@ import debug from 'debug';
 import invariant from 'invariant';
 import pMap from 'p-map';
 
-import MemoryCacheStore from '../cache/MemoryCacheStore';
 import CacheBasedSessionStore from '../session/CacheBasedSessionStore';
+import MemoryCacheStore from '../cache/MemoryCacheStore';
+import { type Builder, type FunctionalHandler } from '../handlers/Handler';
 import { type Session } from '../session/Session';
 import { type SessionStore } from '../session/SessionStore';
-import { type FunctionalHandler, type Builder } from '../handlers/Handler';
 
 import { type Connector } from './Connector';
 

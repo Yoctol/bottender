@@ -1,6 +1,6 @@
 import TestConnector from '../TestConnector';
-import TestEvent from '../../context/TestEvent';
 import TestContext from '../../context/TestContext';
+import TestEvent from '../../context/TestEvent';
 
 const request = {
   message: {

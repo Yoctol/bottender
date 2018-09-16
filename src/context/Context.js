@@ -1,8 +1,8 @@
 /* @flow */
 
+import cloneDeep from 'lodash/cloneDeep';
 import debug from 'debug';
 import warning from 'warning';
-import cloneDeep from 'lodash/cloneDeep';
 
 const debugContext = debug('bottender:context');
 

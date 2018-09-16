@@ -1,4 +1,4 @@
-import { delivery, read, echoMessage as echo } from './MessengerEvent.spec';
+import { delivery, echoMessage as echo, read } from './MessengerEvent.spec';
 
 jest.mock('delay');
 jest.mock('messaging-api-messenger');

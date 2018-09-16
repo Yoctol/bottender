@@ -1,8 +1,8 @@
 import path from 'path';
 
-import pkgDir from 'pkg-dir';
-import jsonfile from 'jsonfile';
 import get from 'lodash/get';
+import jsonfile from 'jsonfile';
+import pkgDir from 'pkg-dir';
 
 const getAttachment = filename => {
   const rootPath = pkgDir.sync();

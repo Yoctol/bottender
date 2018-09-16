@@ -1,8 +1,8 @@
 /* @flow */
 
-import { MongoClient } from 'mongodb';
 import isBefore from 'date-fns/is_before';
 import subMinutes from 'date-fns/sub_minutes';
+import { MongoClient } from 'mongodb';
 
 import { type Session } from './Session';
 import { type SessionStore } from './SessionStore';

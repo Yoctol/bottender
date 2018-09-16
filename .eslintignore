@@ -1,1 +1,4 @@
 node_modules
+lib
+!.eslintrc.js
+!.babelrc.js

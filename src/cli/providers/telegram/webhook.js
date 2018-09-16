@@ -1,10 +1,10 @@
-import { TelegramClient } from 'messaging-api-telegram';
-import invariant from 'invariant';
 import Confirm from 'prompt-confirm';
+import invariant from 'invariant';
+import { TelegramClient } from 'messaging-api-telegram';
 
-import getWebhookFromNgrok from '../../shared/getWebhookFromNgrok';
 import getConfig from '../../shared/getConfig';
-import { print, error, bold, warn } from '../../shared/log';
+import getWebhookFromNgrok from '../../shared/getWebhookFromNgrok';
+import { bold, error, print, warn } from '../../shared/log';
 
 import help from './help';
 

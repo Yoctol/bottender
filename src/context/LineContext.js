@@ -1,10 +1,10 @@
 /* @flow */
 
+import chunk from 'lodash/chunk';
+import invariant from 'invariant';
 import sleep from 'delay';
 import warning from 'warning';
-import invariant from 'invariant';
 import { Line, LineClient } from 'messaging-api-line';
-import chunk from 'lodash/chunk';
 
 import { type Session } from '../session/Session';
 

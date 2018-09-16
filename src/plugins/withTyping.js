@@ -1,6 +1,6 @@
+import omit from 'lodash/omit';
 import sleep from 'delay';
 import warning from 'warning';
-import omit from 'lodash/omit';
 
 const methodMap = {
   // method name, arguments length (includes options)

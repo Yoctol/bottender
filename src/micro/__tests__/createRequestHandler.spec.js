@@ -1,11 +1,11 @@
 import micro from 'micro';
 
 import createRequestHandler from '../createRequestHandler';
-import verifyMessengerWebhook from '../verifyMessengerWebhook';
-import verifySlackWebhook from '../verifySlackWebhook';
 import verifyLineSignature from '../verifyLineSignature';
 import verifyMessengerSignature from '../verifyMessengerSignature';
+import verifyMessengerWebhook from '../verifyMessengerWebhook';
 import verifySlackSignature from '../verifySlackSignature';
+import verifySlackWebhook from '../verifySlackWebhook';
 
 jest.mock('micro');
 jest.mock('../verifyMessengerWebhook');

@@ -1,18 +1,18 @@
 import fs from 'fs';
 import path from 'path';
 
-import invariant from 'invariant';
-import { MessengerClient } from 'messaging-api-messenger';
-import readdir from 'recursive-readdir';
-import fileType from 'file-type';
-import readChunk from 'read-chunk';
-import inquirer from 'inquirer';
-import jsonfile from 'jsonfile';
-import hasha from 'hasha';
 import chalk from 'chalk';
+import fileType from 'file-type';
+import hasha from 'hasha';
+import inquirer from 'inquirer';
+import invariant from 'invariant';
+import jsonfile from 'jsonfile';
+import readChunk from 'read-chunk';
+import readdir from 'recursive-readdir';
+import { MessengerClient } from 'messaging-api-messenger';
 
 import getConfig from '../../shared/getConfig';
-import { error, warn, print, bold, log } from '../../shared/log';
+import { bold, error, log, print, warn } from '../../shared/log';
 
 const help = () => {
   console.log(`

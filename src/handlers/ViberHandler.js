@@ -2,9 +2,9 @@
 import warning from 'warning';
 
 import Handler, {
-  type Predicate,
-  type FunctionalHandler,
   type Builder,
+  type FunctionalHandler,
+  type Predicate,
 } from './Handler';
 
 export default class ViberHandler extends Handler {

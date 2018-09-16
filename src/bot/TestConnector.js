@@ -1,9 +1,9 @@
 /* @flow */
 
 import TestContext from '../context/TestContext';
-import { type TestClient } from '../context/TestClient';
 import TestEvent, { type TestRawEvent } from '../context/TestEvent';
 import { type Session } from '../session/Session';
+import { type TestClient } from '../context/TestClient';
 
 import { type Connector } from './Connector';
 
