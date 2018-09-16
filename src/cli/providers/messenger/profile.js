@@ -1,12 +1,12 @@
 /* eslint-disable consistent-return */
-import { MessengerClient } from 'messaging-api-messenger';
-import invariant from 'invariant';
-import { diff, addedDiff, deletedDiff, updatedDiff } from 'deep-object-diff';
 import chalk from 'chalk';
-import { pick, omit } from 'lodash';
+import invariant from 'invariant';
+import { MessengerClient } from 'messaging-api-messenger';
+import { addedDiff, deletedDiff, diff, updatedDiff } from 'deep-object-diff';
+import { omit, pick } from 'lodash';
 
 import getConfig from '../../shared/getConfig';
-import { print, error, bold, log } from '../../shared/log';
+import { bold, error, log, print } from '../../shared/log';
 
 const FIELDS = [
   'account_linking_url',

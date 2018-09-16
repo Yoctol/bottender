@@ -1,16 +1,16 @@
 /* @flow */
 import crypto from 'crypto';
 
-import { SlackOAuthClient } from 'messaging-api-slack';
-import warning from 'warning';
 import pProps from 'p-props';
+import warning from 'warning';
+import { SlackOAuthClient } from 'messaging-api-slack';
 
 import SlackContext from '../context/SlackContext';
 import SlackEvent, {
   type EventAPITypes,
-  type SlackRawEvent,
-  type Message,
   type InteractiveMessageEvent,
+  type Message,
+  type SlackRawEvent,
 } from '../context/SlackEvent';
 import { type Session } from '../session/Session';
 

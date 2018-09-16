@@ -1,8 +1,8 @@
 import { TelegramClient } from 'messaging-api-telegram';
 
 import TelegramConnector from '../TelegramConnector';
-import TelegramEvent from '../../context/TelegramEvent';
 import TelegramContext from '../../context/TelegramContext';
+import TelegramEvent from '../../context/TelegramEvent';
 
 jest.mock('messaging-api-telegram');
 

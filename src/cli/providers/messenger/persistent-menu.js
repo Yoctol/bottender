@@ -1,11 +1,11 @@
 /* eslint-disable consistent-return */
 import Table from 'cli-table3';
+import chalk from 'chalk';
 import invariant from 'invariant';
 import { MessengerClient } from 'messaging-api-messenger';
-import chalk from 'chalk';
 
 import getConfig from '../../shared/getConfig';
-import { print, error, bold } from '../../shared/log';
+import { bold, error, print } from '../../shared/log';
 
 const help = () => {
   console.log(`

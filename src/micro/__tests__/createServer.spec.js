@@ -1,5 +1,5 @@
-import request from 'supertest';
 import parseUrlencoded from 'urlencoded-body-parser';
+import request from 'supertest';
 
 import connectNgrok from '../../connectNgrok';
 import createServer from '../createServer';

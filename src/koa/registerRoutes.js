@@ -5,10 +5,10 @@ import connectNgrok from '../connectNgrok';
 
 import createMiddleware from './createMiddleware';
 import verifyLineSignature from './verifyLineSignature';
-import verifyMessengerWebhook from './verifyMessengerWebhook';
 import verifyMessengerSignature from './verifyMessengerSignature';
-import verifySlackWebhook from './verifySlackWebhook';
+import verifyMessengerWebhook from './verifyMessengerWebhook';
 import verifySlackSignature from './verifySlackSignature';
+import verifySlackWebhook from './verifySlackWebhook';
 import verifyViberSignature from './verifyViberSignature';
 
 function registerRoutes(server, bot, config = {}) {

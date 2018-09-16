@@ -1,14 +1,14 @@
 import Joi from 'joi';
 import cloneDeep from 'lodash/cloneDeep';
 
-import schema from '../schema';
 import config from '../__fixtures__/config';
-import nestedConfig from '../__fixtures__/nestedConfig';
 import deepNestedConfig from '../__fixtures__/deepNestedConfig';
+import nestedConfig from '../__fixtures__/nestedConfig';
+import schema from '../schema';
+import tooManyLineRichMenusConfig from '../__fixtures__/tooManyLineRichMenusConfig';
 import tooManyMessengerFirstLayer from '../__fixtures__/tooManyMessengerFirstLayer';
 import tooManyMessengerSecondLayer from '../__fixtures__/tooManyMessengerSecondLayer';
 import tooManyMessengerThirdLayer from '../__fixtures__/tooManyMessengerThirdLayer';
-import tooManyLineRichMenusConfig from '../__fixtures__/tooManyLineRichMenusConfig';
 
 describe('general', () => {
   it('should valid', () => {

@@ -2,8 +2,8 @@
 
 import crypto from 'crypto';
 
-import { LineClient } from 'messaging-api-line';
 import warning from 'warning';
+import { LineClient } from 'messaging-api-line';
 
 import LineContext from '../context/LineContext';
 import LineEvent, { type LineRawEvent } from '../context/LineEvent';

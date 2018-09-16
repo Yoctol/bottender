@@ -1,9 +1,9 @@
 /* @flow */
 
 import JFSStore from 'jfs';
-import thenify from 'thenify';
 import isBefore from 'date-fns/is_before';
 import subMinutes from 'date-fns/sub_minutes';
+import thenify from 'thenify';
 
 import { type Session } from './Session';
 import { type SessionStore } from './SessionStore';

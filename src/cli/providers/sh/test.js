@@ -3,8 +3,8 @@ import path from 'path';
 import fs from 'fs-extra';
 
 import TestBot from '../../../bot/TestBot';
-import { print, error } from '../../shared/log';
 import loadModule from '../../shared/loadModule';
+import { error, print } from '../../shared/log';
 
 const test = async ({ argv }) => {
   const inputFile = argv._[1];

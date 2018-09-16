@@ -2,6 +2,7 @@
 .*/node-uuid/lib/sha1-browser.js
 .*/config-chain/test/broken.json
 .*/npm/test/fixtures/config/package.json
+.*/prettier-package-json/tests/__fixtures__/invalid.json
 
 [libs]
 

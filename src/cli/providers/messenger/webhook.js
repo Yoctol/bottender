@@ -1,11 +1,11 @@
-import { MessengerClient } from 'messaging-api-messenger';
-import invariant from 'invariant';
 import Confirm from 'prompt-confirm';
 import chalk from 'chalk';
+import invariant from 'invariant';
+import { MessengerClient } from 'messaging-api-messenger';
 
-import getWebhookFromNgrok from '../../shared/getWebhookFromNgrok';
 import getConfig from '../../shared/getConfig';
-import { print, error, bold, warn } from '../../shared/log';
+import getWebhookFromNgrok from '../../shared/getWebhookFromNgrok';
+import { bold, error, print, warn } from '../../shared/log';
 
 const help = () => {
   console.log(`

@@ -1,8 +1,8 @@
 import url from 'url';
 
-import { json, send } from 'micro';
 import parseUrlencoded from 'urlencoded-body-parser';
 import shortid from 'shortid';
+import { json, send } from 'micro';
 
 import verifyLineSignature from './verifyLineSignature';
 import verifyMessengerSignature from './verifyMessengerSignature';

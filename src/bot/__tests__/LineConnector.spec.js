@@ -1,9 +1,9 @@
-import { LineClient } from 'messaging-api-line';
 import warning from 'warning';
+import { LineClient } from 'messaging-api-line';
 
 import LineConnector from '../LineConnector';
-import LineEvent from '../../context/LineEvent';
 import LineContext from '../../context/LineContext';
+import LineEvent from '../../context/LineEvent';
 
 jest.mock('messaging-api-line');
 jest.mock('warning');

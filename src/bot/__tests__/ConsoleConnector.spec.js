@@ -1,6 +1,6 @@
 import ConsoleConnector from '../ConsoleConnector';
-import ConsoleEvent from '../../context/ConsoleEvent';
 import ConsoleContext from '../../context/ConsoleContext';
+import ConsoleEvent from '../../context/ConsoleEvent';
 
 const request = {
   message: {

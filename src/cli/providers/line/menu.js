@@ -1,13 +1,13 @@
 /* eslint-disable consistent-return */
-import { LineClient } from 'messaging-api-line';
-import { differenceWith, isEqual, omit, findIndex } from 'lodash';
+import chalk from 'chalk';
 import inquirer from 'inquirer';
 import invariant from 'invariant';
 import pMap from 'p-map';
-import chalk from 'chalk';
+import { LineClient } from 'messaging-api-line';
+import { differenceWith, findIndex, isEqual, omit } from 'lodash';
 
 import getConfig from '../../shared/getConfig';
-import { print, error, bold, log } from '../../shared/log';
+import { bold, error, log, print } from '../../shared/log';
 
 const generateDeleteQuestions = richMenus => [
   {

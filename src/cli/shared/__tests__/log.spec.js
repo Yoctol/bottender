@@ -2,7 +2,7 @@
 import chalk from 'chalk';
 import figures from 'figures';
 
-import { log, print, warn, error, bold } from '../log';
+import { bold, error, log, print, warn } from '../log';
 
 const _log = console.log;
 

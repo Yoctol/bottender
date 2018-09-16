@@ -2,8 +2,8 @@ import path from 'path';
 
 import fs from 'fs-extra';
 
-import testCommand from '../test';
 import loadModule from '../../../shared/loadModule';
+import testCommand from '../test';
 
 jest.mock('path');
 jest.mock('fs-extra');

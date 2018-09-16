@@ -1,9 +1,9 @@
 /* @flow */
 
+import invariant from 'invariant';
 import sleep from 'delay';
 import warning from 'warning';
-import invariant from 'invariant';
-import { MessengerClient, MessengerBatch } from 'messaging-api-messenger';
+import { MessengerBatch, MessengerClient } from 'messaging-api-messenger';
 
 import { type Session } from '../session/Session';
 

@@ -1,4 +1,4 @@
-import { text, send } from 'micro';
+import { send, text } from 'micro';
 
 const verifyLineSignature = bot => async (req, res) => {
   const rawBody = await text(req);

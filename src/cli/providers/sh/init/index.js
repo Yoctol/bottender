@@ -1,13 +1,13 @@
 import path from 'path';
 import { execSync } from 'child_process';
 
-import inquirer from 'inquirer';
-import validateProjectName from 'validate-npm-package-name';
 import fs from 'fs-extra';
+import inquirer from 'inquirer';
 import spawn from 'cross-spawn';
 import stringifyObject from 'stringify-object';
+import validateProjectName from 'validate-npm-package-name';
 
-import { print, error, bold } from '../../../shared/log';
+import { bold, error, print } from '../../../shared/log';
 
 import generateIndexFile from './generateIndexFile';
 

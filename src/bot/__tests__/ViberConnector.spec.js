@@ -1,8 +1,8 @@
 import { ViberClient } from 'messaging-api-viber';
 
 import ViberConnector from '../ViberConnector';
-import ViberEvent from '../../context/ViberEvent';
 import ViberContext from '../../context/ViberContext';
+import ViberEvent from '../../context/ViberEvent';
 
 jest.mock('messaging-api-viber');
 
