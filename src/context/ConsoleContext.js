@@ -19,6 +19,7 @@ type Options = {|
 |};
 
 const methodBlackList = [
+  'inspect', // console
   'then', // promise
   'handlerDidEnd', // context lifecycle
 ];
@@ -59,6 +60,9 @@ export default class ConsoleContext extends Context implements PlatformContext {
           }
 
           if (methodBlackList.includes(key)) return;
+          // $FlowIssue: Support `typeof x === "symbol"` - https://github.com/facebook/flow/issues/1015
+          if (typeof key === 'symbol') return; // any symbol should not be method missing
+
           return async (...args) => {
             await target._methodMissing(key, args);
           };

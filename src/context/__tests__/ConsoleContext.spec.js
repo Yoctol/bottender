@@ -1,3 +1,5 @@
+import util from 'util';
+
 jest.mock('delay');
 
 let ConsoleContext;
@@ -146,6 +148,13 @@ describe('method missing', () => {
 
     expect(context.handlerDidEnd).toBeUndefined();
     expect(context.then).toBeUndefined();
+    expect(context.inspect).toBeUndefined();
+  });
+
+  it('should not proxy symbol', async () => {
+    const { context } = setup({ fallbackMethods: true });
+
+    expect(context[util.inspect.custom]).toBeUndefined();
   });
 
   it('should not proxy falsy getters', async () => {
