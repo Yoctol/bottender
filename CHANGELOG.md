@@ -1,3 +1,14 @@
+# 0.15.7 / 2018-09-19
+
+- [new] upgrade `messaging-apis`, so now we can use `DEBUG` env variable to enable request debugger:
+
+```
+DEBUG=messaging-api*
+```
+
+- [fix] fix `ConsoleBot` recognize symbol as `_methodMissing` (#333)
+- [deps] upgrade dependencies
+
 # 0.15.6 / 2018-08-28
 
 ### line
