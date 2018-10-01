@@ -27,6 +27,10 @@ export default class CacheBasedSessionStore implements SessionStore {
     return (this._cache.get(key): any);
   }
 
+  async all(): Promise<Array<Session>> {
+    return (this._cache.all(): any);
+  }
+
   async write(key: string, sess: Session): Promise<void> {
     this._cache.put(key, sess, this._expiresIn);
   }

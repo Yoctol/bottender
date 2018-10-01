@@ -34,6 +34,19 @@ export default class RedisCacheStore implements CacheStore {
     return this._unserialize(val);
   }
 
+  async all(): Promise<Array<mixed>> {
+    let [cursor, keys] = await this._redis.scan('0');
+
+    while (cursor !== '0') {
+      /* eslint-disable no-await-in-loop */
+      const [nextCursor, newkeys] = await this._redis.scan(cursor);
+      cursor = nextCursor;
+      keys = keys.concat(newkeys);
+    }
+
+    return this._redis.mget(keys);
+  }
+
   async put(key: string, value: mixed, minutes: number): Promise<void> {
     await this._redis.setex(
       `${this._prefix}${key}`,

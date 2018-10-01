@@ -112,6 +112,21 @@ describe('#read', () => {
   });
 });
 
+describe('#all', () => {
+  it('should return all values in mongo session', async () => {
+    const { store, sessions } = setup();
+    const sess = [
+      { id: 1, lastActivity: Date.now() },
+      { id: 2, lastActivity: Date.now() },
+    ];
+    sessions.find = jest.fn(() => ({ toArray: () => sess }));
+
+    await store.init();
+
+    expect(await store.all()).toBe(sess);
+  });
+});
+
 describe('#write', () => {
   it('should call updateOne with platform, id and session using upsert', async () => {
     const { store, sessions } = setup();

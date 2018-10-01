@@ -39,6 +39,10 @@ export default class FileSessionStore implements SessionStore {
     return session;
   }
 
+  all(): Promise<Array<Session>> {
+    return this._jfs.all();
+  }
+
   async write(key: string, sess: Session): Promise<void> {
     sess.lastActivity = Date.now();
 
