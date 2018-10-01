@@ -22,6 +22,10 @@ export default class MemoryCacheStore implements CacheStore {
     return value || null;
   }
 
+  async all(): Promise<Array<mixed>> {
+    return this._lru.values();
+  }
+
   async put(key: string, value: mixed, minutes: number): Promise<void> {
     // cloneDeep: To make sure save as writable object
     const val = value && typeof value === 'object' ? cloneDeep(value) : value;

@@ -8,6 +8,7 @@ function setup() {
   const store = new FileSessionStore('.session', expiresIn);
   const jfs = store.getJFS();
   jfs.get = jest.fn();
+  jfs.all = jest.fn();
   jfs.save = jest.fn();
   jfs.delete = jest.fn();
   return {
@@ -54,6 +55,28 @@ describe('#read', () => {
 
     expect(await store.read('yoctol:1')).toBeNull();
     expect(jfs.get).toBeCalledWith('yoctol:1');
+  });
+});
+
+describe('#all', () => {
+  it('should return all values in jfs', async () => {
+    const { store, jfs } = setup();
+    await store.init();
+
+    jfs.all.mockResolvedValue([{ id: 1 }, { id: 2 }]);
+
+    expect(await store.all()).toEqual([{ id: 1 }, { id: 2 }]);
+    expect(jfs.all).toBeCalled();
+  });
+
+  it('should return empty array when there is no item in sessions or all of them are expired', async () => {
+    const { store, jfs } = setup();
+    await store.init();
+
+    jfs.all.mockResolvedValue([]);
+
+    expect(await store.all()).toEqual([]);
+    expect(jfs.all).toBeCalled();
   });
 });
 
