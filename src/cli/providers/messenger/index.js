@@ -6,6 +6,7 @@ export default {
     'get-started',
     'greeting',
     'persistent-menu',
+    'persona',
     'profile',
     'webhook',
     'whitelisted-domains',
@@ -21,6 +22,9 @@ export default {
   },
   get persistentMenu() {
     return require('./persistent-menu').default;
+  },
+  get persona() {
+    return require('./persona').default;
   },
   get profile() {
     return require('./profile').default;
