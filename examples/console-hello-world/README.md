@@ -13,13 +13,13 @@ npm run dev
 
 ## Idea of this example
 
-This example is a simple bot running on your terminal.\
+This example is a simple bot running on your terminal.
 It shows how to build a most basic console bot.
 
 ## Related examples
 
-* [messenger-hello-world](../messenger-hello-world)
-* [line-hello-world](../line-hello-world)
-* [slack-hello-world](../slack-hello-world)
-* [telegram-hello-world](../telegram-hello-world)
-* [viber-hello-world](../viber-hello-world)
+- [messenger-hello-world](../messenger-hello-world)
+- [line-hello-world](../line-hello-world)
+- [slack-hello-world](../slack-hello-world)
+- [telegram-hello-world](../telegram-hello-world)
+- [viber-hello-world](../viber-hello-world)
