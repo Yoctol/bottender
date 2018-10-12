@@ -1,4 +1,5 @@
 /* eslint-disable consistent-return */
+import Table from 'cli-table3';
 import chalk from 'chalk';
 import invariant from 'invariant';
 import { MessengerClient } from 'messaging-api-messenger';
@@ -46,7 +47,6 @@ const help = () => {
 
 export async function createPersona(ctx) {
   const { t, token: _token, name: personaName, url: personaUrl } = ctx.argv;
-  const config = getConfig('bottender.config.js', 'messenger');
 
   invariant(personaName, 'name is not specified!!');
   invariant(personaUrl, 'profile picture url is not specified!!');
@@ -57,6 +57,8 @@ export async function createPersona(ctx) {
     if (t || _token) {
       accessToken = t || _token;
     } else {
+      const config = getConfig('bottender.config.js', 'messenger');
+
       invariant(config.accessToken, 'accessToken is not found in config file');
 
       accessToken = config.accessToken;
@@ -86,11 +88,61 @@ export async function createPersona(ctx) {
   }
 }
 
+export async function listPersona(ctx) {
+  const { t, token: _token } = ctx.argv;
+
+  let accessToken;
+
+  try {
+    if (t || _token) {
+      accessToken = t || _token;
+    } else {
+      const config = getConfig('bottender.config.js', 'messenger');
+
+      invariant(config.accessToken, 'accessToken is not found in config file');
+
+      accessToken = config.accessToken;
+    }
+
+    const client = MessengerClient.connect(accessToken);
+
+    const personas = await client.getAllPersonas();
+
+    if (personas.length !== 0) {
+      print('Personas');
+      const table = new Table({
+        head: ['id', 'name', 'image url'],
+        colWidths: [30, 30, 30],
+      });
+      personas.forEach(item => {
+        table.push([item.id, item.name, item.profile_picture_url]);
+      });
+      console.log(table.toString()); // eslint-disable-line no-console
+    } else {
+      print('No personas are found.');
+    }
+  } catch (err) {
+    error(`Failed to create ${bold('persona')}`);
+    if (err.response) {
+      error(`status: ${bold(err.response.status)}`);
+      if (err.response.data) {
+        error(`data: ${bold(JSON.stringify(err.response.data, null, 2))}`);
+      }
+    } else {
+      error(err.message);
+    }
+    return process.exit(1);
+  }
+}
+
 export default async function main(ctx) {
   const subcommand = ctx.argv._[2];
   switch (subcommand) {
     case 'create':
       await createPersona(ctx);
+      break;
+    case 'list':
+      await listPersona(ctx);
       break;
     default:
       error(`Please specify a valid subcommand: set`);
