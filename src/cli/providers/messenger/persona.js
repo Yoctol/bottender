@@ -2,7 +2,6 @@
 import chalk from 'chalk';
 import invariant from 'invariant';
 import { MessengerClient } from 'messaging-api-messenger';
-import { diff } from 'deep-object-diff';
 
 import getConfig from '../../shared/getConfig';
 import { bold, error, print } from '../../shared/log';
@@ -14,38 +13,43 @@ const help = () => {
   ${chalk.dim('Commands:')}
 
     list              List all personas.
-    create            Create new personas.
+    create            Create a new persona with name and profile picture url.
     get               Get persona by persona ID.
     del, delete       Delete persona by persona ID.
 
   ${chalk.dim('Options:')}
 
     -t, --token       Specify Messenger access token.
+    --name            Specify persona's name when create
+    --url             Specify persona's profile image url when create
+    --id              Specify persona's ID to get or delete
 
   ${chalk.dim('Examples:')}
 
-  ${chalk.dim('-')} Create new persona from bottender.config
+  ${chalk.dim('-')} Create a new persona
 
-    ${chalk.cyan('$ bottender messenger persona create')}
+    ${chalk.cyan(
+      '$ bottender messenger persona create --name <PERSONA_NAME> --url <PROFILE_PIC_URL>'
+    )}
 
   ${chalk.dim('-')} Get persona by ID
 
-    ${chalk.cyan('$ bottender messenger persona get <PERSONA_ID>')}
+    ${chalk.cyan('$ bottender messenger persona get --id <PERSONA_ID>')}
 
   ${chalk.dim('-')} Delete persona with specific access token
 
     ${chalk.cyan(
-      '$ bottender messenger persona delete --token __FAKE_TOKEN__ <PERSONA_ID>'
+      '$ bottender messenger persona delete --token __FAKE_TOKEN__ --id <PERSONA_ID>'
     )}
 `);
 };
 
 export async function createPersona(ctx) {
-  const { t, token: _token } = ctx.argv;
+  const { t, token: _token, name: personaName, url: personaUrl } = ctx.argv;
   const config = getConfig('bottender.config.js', 'messenger');
-  const personas = config.personas;
 
-  invariant(personas, '`personas` is not found in config file');
+  invariant(personaName, 'name is not specified!!');
+  invariant(personaUrl, 'profile picture url is not specified!!');
 
   let accessToken;
 
@@ -60,20 +64,12 @@ export async function createPersona(ctx) {
 
     const client = MessengerClient.connect(accessToken);
 
-    const existedPersonas = client.getAllPersonas();
-    const diffResult = diff(existedPersonas, personas);
+    const persona = {
+      name: personaName,
+      profile_picture_url: personaUrl,
+    };
 
-    if (Object.keys(diffResult).length !== 0) {
-      //   const shouldDeleteFields = Object.keys(
-      //     deletedDiff(existedPersonas, personas)
-      //   );
-      //   const shouldCreateFields = [
-      //     ...Object.keys(addedDiff(existedPersonas, personas)),
-      //     ...Object.keys(updatedDiff(existedPersonas, personas)),
-      //   ];
-    }
-
-    const personaID = await client.createPersona(personas);
+    const personaID = await client.createPersona(persona);
 
     print(`Successfully create ${bold('persona')} ${bold(personaID.id)}`);
   } catch (err) {
