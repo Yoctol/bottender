@@ -48,8 +48,8 @@ const help = () => {
 export async function createPersona(ctx) {
   const { t, token: _token, name: personaName, url: personaUrl } = ctx.argv;
 
-  invariant(personaName, 'name is not specified!!');
-  invariant(personaUrl, 'profile picture url is not specified!!');
+  invariant(personaName, 'Name is not specified!!');
+  invariant(personaUrl, 'Profile picture url is not specified!!');
 
   let accessToken;
 
@@ -135,6 +135,90 @@ export async function listPersona(ctx) {
   }
 }
 
+export async function getPersona(ctx) {
+  const { t, token: _token, id: personaId } = ctx.argv;
+
+  invariant(personaId, 'Persona ID is not specified!!');
+
+  let accessToken;
+
+  try {
+    if (t || _token) {
+      accessToken = t || _token;
+    } else {
+      const config = getConfig('bottender.config.js', 'messenger');
+
+      invariant(config.accessToken, 'accessToken is not found in config file');
+
+      accessToken = config.accessToken;
+    }
+
+    const client = MessengerClient.connect(accessToken);
+
+    const persona = await client.getPersona(personaId);
+
+    if (persona !== undefined) {
+      print(`Information of persona ${bold(personaId)}:`);
+      print(`Name: ${bold(persona.name)}`);
+      print(`Profile picture: ${bold(persona.profile_picture_url)}`);
+    } else {
+      print(`Cannot get persona of ID ${bold(personaId)}`);
+    }
+  } catch (err) {
+    error(`Failed to get ${bold('persona')} with id ${bold(personaId)}`);
+    if (err.response) {
+      error(`status: ${bold(err.response.status)}`);
+      if (err.response.data) {
+        error(`data: ${bold(JSON.stringify(err.response.data, null, 2))}`);
+      }
+    } else {
+      error(err.message);
+    }
+    return process.exit(1);
+  }
+}
+
+export async function deletePersona(ctx) {
+  const { t, token: _token, id: personaId } = ctx.argv;
+
+  invariant(personaId, 'Persona ID is not specified!!');
+
+  let accessToken;
+
+  try {
+    if (t || _token) {
+      accessToken = t || _token;
+    } else {
+      const config = getConfig('bottender.config.js', 'messenger');
+
+      invariant(config.accessToken, 'accessToken is not found in config file');
+
+      accessToken = config.accessToken;
+    }
+
+    const client = MessengerClient.connect(accessToken);
+
+    const res = await client.deletePersona(personaId);
+
+    if (res.success === true || res.success === 'true') {
+      print(`Sucessfully delete persona of ID ${bold(personaId)}`);
+    } else {
+      print(`Cannot get persona of ID ${bold(personaId)}`);
+    }
+  } catch (err) {
+    error(`Failed to create ${bold('persona')}`);
+    if (err.response) {
+      error(`status: ${bold(err.response.status)}`);
+      if (err.response.data) {
+        error(`data: ${bold(JSON.stringify(err.response.data, null, 2))}`);
+      }
+    } else {
+      error(err.message);
+    }
+    return process.exit(1);
+  }
+}
+
 export default async function main(ctx) {
   const subcommand = ctx.argv._[2];
   switch (subcommand) {
@@ -143,6 +227,13 @@ export default async function main(ctx) {
       break;
     case 'list':
       await listPersona(ctx);
+      break;
+    case 'get':
+      await getPersona(ctx);
+      break;
+    case 'delete':
+    case 'del':
+      await deletePersona(ctx);
       break;
     default:
       error(`Please specify a valid subcommand: set`);
