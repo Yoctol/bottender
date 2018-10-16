@@ -138,8 +138,6 @@ export async function listPersona(ctx) {
 export async function getPersona(ctx) {
   const { t, token: _token, id: personaId } = ctx.argv;
 
-  invariant(personaId, 'Persona ID is not specified!!');
-
   let accessToken;
 
   try {
@@ -152,6 +150,8 @@ export async function getPersona(ctx) {
 
       accessToken = config.accessToken;
     }
+
+    invariant(personaId, 'Persona ID is not specified!!');
 
     const client = MessengerClient.connect(accessToken);
 

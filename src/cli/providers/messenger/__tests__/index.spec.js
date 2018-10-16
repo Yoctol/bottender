@@ -8,6 +8,7 @@ jest.mock('../profile');
 jest.mock('../webhook');
 jest.mock('../whitelisted-domains');
 jest.mock('../help');
+jest.mock('../persona');
 
 describe('messenger cli', () => {
   it('should exist', () => {
@@ -62,5 +63,10 @@ describe('messenger cli', () => {
   it('should return whitelistedDomains module when gettig domains', () => {
     const whitelistedDomains = require('../whitelisted-domains').default;
     expect(messenger.domains).toEqual(whitelistedDomains);
+  });
+
+  it('should return persona module', () => {
+    const persona = require('../persona').default;
+    expect(messenger.persona).toEqual(persona);
   });
 });
