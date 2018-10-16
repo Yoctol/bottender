@@ -48,9 +48,6 @@ const help = () => {
 export async function createPersona(ctx) {
   const { t, token: _token, name: personaName, url: personaUrl } = ctx.argv;
 
-  invariant(personaName, 'Name is not specified!!');
-  invariant(personaUrl, 'Profile picture url is not specified!!');
-
   let accessToken;
 
   try {
@@ -63,6 +60,9 @@ export async function createPersona(ctx) {
 
       accessToken = config.accessToken;
     }
+
+    invariant(personaName, 'Name is not specified!!');
+    invariant(personaUrl, 'Profile picture url is not specified!!');
 
     const client = MessengerClient.connect(accessToken);
 
