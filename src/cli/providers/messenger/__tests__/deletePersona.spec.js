@@ -1,4 +1,4 @@
-import { getPersona } from '../persona';
+import { deletePersona } from '../persona';
 
 jest.mock('messaging-api-messenger');
 
@@ -20,7 +20,7 @@ let _client;
 
 beforeEach(() => {
   _client = {
-    getPersona: jest.fn(),
+    deletePersona: jest.fn(),
   };
   MessengerClient.connect = jest.fn(() => _client);
   log.error = jest.fn();
@@ -29,7 +29,7 @@ beforeEach(() => {
 });
 
 it('be defined', () => {
-  expect(getPersona).toBeDefined();
+  expect(deletePersona).toBeDefined();
 });
 
 describe('resolved', () => {
@@ -40,7 +40,7 @@ describe('resolved', () => {
 
     process.exit = jest.fn();
 
-    await getPersona(ctx);
+    await deletePersona(ctx);
 
     expect(MessengerClient.connect).toBeCalledWith('12345');
   });
@@ -52,24 +52,24 @@ describe('resolved', () => {
 
     process.exit = jest.fn();
 
-    await getPersona(ctx);
+    await deletePersona(ctx);
 
     expect(MessengerClient.connect).toBeCalledWith('12345');
   });
 
-  it('call getPersona', async () => {
+  it('call deletePersona', async () => {
     const ctx = {
       argv: { t: '12345', id: '54321' },
     };
 
     process.exit = jest.fn();
 
-    _client.getPersona.mockResolvedValue({});
+    _client.deletePersona.mockResolvedValue({});
 
-    await getPersona(ctx);
+    await deletePersona(ctx);
 
     expect(MessengerClient.connect).toBeCalledWith('12345');
-    expect(_client.getPersona).toBeCalledWith('54321');
+    expect(_client.deletePersona).toBeCalledWith('54321');
   });
 
   it('error when no config setting', async () => {
@@ -79,9 +79,9 @@ describe('resolved', () => {
 
     process.exit = jest.fn();
 
-    _client.getPersona.mockResolvedValue(null);
+    _client.deletePersona.mockResolvedValue(null);
 
-    await getPersona(ctx);
+    await deletePersona(ctx);
 
     expect(log.error).toBeCalled();
   });
@@ -93,9 +93,9 @@ describe('resolved', () => {
 
     process.exit = jest.fn();
 
-    _client.getPersona.mockResolvedValue(null);
+    _client.deletePersona.mockResolvedValue(null);
 
-    await getPersona(ctx);
+    await deletePersona(ctx);
 
     expect(log.error).toBeCalled();
   });
@@ -111,11 +111,11 @@ describe('reject', () => {
         status: 400,
       },
     };
-    _client.getPersona.mockRejectedValue(error);
+    _client.deletePersona.mockRejectedValue(error);
 
     process.exit = jest.fn();
 
-    await getPersona(ctx);
+    await deletePersona(ctx);
 
     expect(log.error).toBeCalled();
     expect(process.exit).toBeCalled();
@@ -139,11 +139,11 @@ describe('reject', () => {
         },
       },
     };
-    _client.getPersona.mockRejectedValue(error);
+    _client.deletePersona.mockRejectedValue(error);
 
     process.exit = jest.fn();
 
-    await getPersona(ctx);
+    await deletePersona(ctx);
 
     expect(log.error).toBeCalled();
     expect(log.error.mock.calls[2][0]).not.toMatch(/\[object Object\]/);
@@ -157,11 +157,11 @@ describe('reject', () => {
     const error = {
       message: 'something wrong happened',
     };
-    _client.getPersona.mockRejectedValue(error);
+    _client.deletePersona.mockRejectedValue(error);
 
     process.exit = jest.fn();
 
-    await getPersona(ctx);
+    await deletePersona(ctx);
 
     expect(log.error).toBeCalled();
     expect(process.exit).toBeCalled();
