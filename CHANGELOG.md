@@ -1,3 +1,21 @@
+# 0.15.8 / 2018-10-18
+
+- [new] Add `sessionStore.all()` to fetch all of sessions from the store:
+
+```js
+// for those session stores
+const sessionStore = new MemorySessionStore(500);
+const sessionStore = new MongoSessionStore('mongodb://localhost:27017/');
+const sessionStore = new FileSessionStore();
+const sessionStore = new RedisSessionStore();
+```
+
+```js
+const sessions = await sessionStore.all();
+```
+
+- [deps] update `messaging-apis` (which support messenger persona api)
+
 # 0.15.7 / 2018-09-19
 
 - [new] upgrade `messaging-apis`, so now we can use `DEBUG` env variable to enable request debugger:
