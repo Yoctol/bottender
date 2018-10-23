@@ -22,7 +22,7 @@ const help = () => {
 
     -t, --token       Specify Messenger access token.
     --name            Specify persona's name when create
-    --url             Specify persona's profile image url when create
+    --pic             Specify persona's profile image url when create
     --id              Specify persona's ID to get or delete
 
   ${chalk.dim('Examples:')}
@@ -30,7 +30,7 @@ const help = () => {
   ${chalk.dim('-')} Create a new persona
 
     ${chalk.cyan(
-      '$ bottender messenger persona create --name <PERSONA_NAME> --url <PROFILE_PIC_URL>'
+      '$ bottender messenger persona create --name <PERSONA_NAME> --pic <PROFILE_IMAGE_URL>'
     )}
 
   ${chalk.dim('-')} Get persona by ID
@@ -40,13 +40,13 @@ const help = () => {
   ${chalk.dim('-')} Delete persona with specific access token
 
     ${chalk.cyan(
-      '$ bottender messenger persona delete --token __FAKE_TOKEN__ --id <PERSONA_ID>'
+      '$ bottender messenger persona delete --token <ACCESS_TOKEN> --id <PERSONA_ID>'
     )}
 `);
 };
 
 export async function createPersona(ctx) {
-  const { t, token: _token, name: personaName, url: personaUrl } = ctx.argv;
+  const { t, token: _token, name: personaName, pic: personaUrl } = ctx.argv;
 
   let accessToken;
 
@@ -223,20 +223,16 @@ export default async function main(ctx) {
   const subcommand = ctx.argv._[2];
   switch (subcommand) {
     case 'create':
-      await createPersona(ctx);
-      break;
+      return createPersona(ctx);
     case 'list':
-      await listPersona(ctx);
-      break;
+      return listPersona(ctx);
     case 'get':
-      await getPersona(ctx);
-      break;
+      return getPersona(ctx);
     case 'delete':
     case 'del':
-      await deletePersona(ctx);
-      break;
+      return deletePersona(ctx);
     default:
-      error(`Please specify a valid subcommand: set`);
+      error(`Please specify a valid subcommand: create, list, get, delete`);
       help();
   }
 }
