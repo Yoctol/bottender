@@ -38,7 +38,7 @@ describe('resolved', () => {
       argv: {
         token: '12345',
         name: 'kpman',
-        url: 'https://i.imgur.com/zV6uy4T.jpg',
+        pic: 'https://i.imgur.com/zV6uy4T.jpg',
       },
     };
 
@@ -54,7 +54,7 @@ describe('resolved', () => {
       argv: {
         t: '12345',
         name: 'kpman',
-        url: 'https://i.imgur.com/zV6uy4T.jpg',
+        pic: 'https://i.imgur.com/zV6uy4T.jpg',
       },
     };
 
@@ -70,7 +70,7 @@ describe('resolved', () => {
       argv: {
         t: '12345',
         name: 'kpman',
-        url: 'https://i.imgur.com/zV6uy4T.jpg',
+        pic: 'https://i.imgur.com/zV6uy4T.jpg',
       },
     };
 
@@ -91,7 +91,7 @@ describe('resolved', () => {
     const ctx = {
       argv: {
         name: 'kpman',
-        url: 'https://i.imgur.com/zV6uy4T.jpg',
+        pic: 'https://i.imgur.com/zV6uy4T.jpg',
       },
     };
 
@@ -104,7 +104,7 @@ describe('resolved', () => {
     expect(log.error).toBeCalled();
   });
 
-  it('error when no persona name and url', async () => {
+  it('error when no persona name and pic', async () => {
     const ctx = {
       argv: {},
     };
@@ -124,7 +124,7 @@ describe('reject', () => {
     const ctx = {
       argv: {
         name: 'kpman',
-        url: 'https://i.imgur.com/zV6uy4T.jpg',
+        pic: 'https://i.imgur.com/zV6uy4T.jpg',
       },
     };
     const error = {
@@ -146,7 +146,7 @@ describe('reject', () => {
     const ctx = {
       argv: {
         name: 'kpman',
-        url: 'https://i.imgur.com/zV6uy4T.jpg',
+        pic: 'https://i.imgur.com/zV6uy4T.jpg',
       },
     };
     const error = {
@@ -178,7 +178,7 @@ describe('reject', () => {
     const ctx = {
       argv: {
         name: 'kpman',
-        url: 'https://i.imgur.com/zV6uy4T.jpg',
+        pic: 'https://i.imgur.com/zV6uy4T.jpg',
       },
     };
     const error = {
