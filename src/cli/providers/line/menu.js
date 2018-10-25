@@ -58,13 +58,13 @@ export function checkLineMenu() {
 }
 
 export async function getLineMenu(ctx) {
-  const { t, token: _token } = ctx.argv;
+  const { t, token } = ctx.argv;
 
   let accessToken;
 
   try {
-    if (t || _token) {
-      accessToken = t || _token;
+    if (t || token) {
+      accessToken = t || token;
     } else {
       const config = getConfig('bottender.config.js', 'line');
 
@@ -99,7 +99,7 @@ export async function getLineMenu(ctx) {
 }
 
 export async function setLineMenus(ctx) {
-  const { t, token: _token } = ctx.argv;
+  const { t, token } = ctx.argv;
 
   let accessToken;
 
@@ -107,8 +107,8 @@ export async function setLineMenus(ctx) {
     const config = getConfig('bottender.config.js', 'line');
     const { richMenus: localRichMenus } = config;
 
-    if (t || _token) {
-      accessToken = t || _token;
+    if (t || token) {
+      accessToken = t || token;
     } else {
       invariant(config.accessToken, 'accessToken is not found in config file');
 
@@ -186,14 +186,14 @@ export async function setLineMenus(ctx) {
 }
 
 export async function deleteLineMenu(ctx) {
-  const { f, force: _force, t, token: _token } = ctx.argv;
+  const { f, force: _force, t, token } = ctx.argv;
   const force = f || _force;
 
   let accessToken;
 
   try {
-    if (t || _token) {
-      accessToken = t || _token;
+    if (t || token) {
+      accessToken = t || token;
     } else {
       const config = getConfig('bottender.config.js', 'line');
 

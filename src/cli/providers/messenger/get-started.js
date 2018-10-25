@@ -34,13 +34,13 @@ const help = () => {
 };
 
 export async function getGetStarted(ctx) {
-  const { t, token: _token } = ctx.argv;
+  const { t, token } = ctx.argv;
 
   let accessToken;
 
   try {
-    if (t || _token) {
-      accessToken = t || _token;
+    if (t || token) {
+      accessToken = t || token;
     } else {
       const config = getConfig('bottender.config.js', 'messenger');
 
@@ -73,13 +73,13 @@ export async function getGetStarted(ctx) {
 }
 
 export async function deleteGetStarted(ctx) {
-  const { t, token: _token } = ctx.argv;
+  const { t, token } = ctx.argv;
 
   let accessToken;
 
   try {
-    if (t || _token) {
-      accessToken = t || _token;
+    if (t || token) {
+      accessToken = t || token;
     } else {
       const config = getConfig('bottender.config.js', 'messenger');
 
