@@ -1,3 +1,33 @@
+# 0.15.9 / 2018-10-26
+
+### messenger
+
+- [new] Add CLI commands for Messenger persona API:
+
+List all personas:
+
+```sh
+$ bottender messenger persona list
+```
+
+Create a new persona with name and profile picture url:
+
+```sh
+$ bottender messenger persona create --name <PERSONA_NAME> --pic <PROFILE_IMAGE_URL>
+```
+
+Get persona by persona ID:
+
+```sh
+$ bottender messenger persona get --id <PERSONA_ID>
+```
+
+Delete persona by persona ID:
+
+```sh
+$ bottender messenger persona delete --id <PERSONA_ID>
+```
+
 # 0.15.8 / 2018-10-18
 
 - [new] Add `sessionStore.all()` to fetch all of sessions from the store:
