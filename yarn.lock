@@ -2592,7 +2592,7 @@ eslint-config-airbnb-base@^13.1.0:
     object.assign "^4.1.0"
     object.entries "^1.0.4"
 
-eslint-config-prettier@^3.0.1, eslint-config-prettier@^3.1.0:
+eslint-config-prettier@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-3.1.0.tgz#2c26d2cdcfa3a05f0642cd7e6e4ef3316cdabfa2"
   integrity sha512-QYGfmzuc4q4J6XIhlp8vRKdI/fI0tQfQPy1dME3UOLprE+v4ssH/3W9LM2Q7h5qBcy5m0ehCrBDU2YF8q6OY8w==
@@ -2606,14 +2606,14 @@ eslint-config-react-app@^3.0.4:
   dependencies:
     confusing-browser-globals "^1.0.4"
 
-eslint-config-yoctol-base@^0.17.2:
-  version "0.17.2"
-  resolved "https://registry.yarnpkg.com/eslint-config-yoctol-base/-/eslint-config-yoctol-base-0.17.2.tgz#ff2e192419a0e9932a7ee52bc100b316afb1b157"
-  integrity sha512-GpiPFhiWy3lkNJbzW3VITjg3O+lKgqOtKXWTYv1McurbMetKYfXrjEzyi1pFDrvZxnTsensWwFkQ2i8PJ7/UKg==
+eslint-config-yoctol-base@^0.18.0:
+  version "0.18.0"
+  resolved "https://registry.yarnpkg.com/eslint-config-yoctol-base/-/eslint-config-yoctol-base-0.18.0.tgz#a0eec5c540997168d7a72a68cc34895a2fb9412f"
+  integrity sha512-MRLYX00QnwZV0oioNHPVrn9D5Yfv6SlI/9oRYnnaedDImIJKxV8QK7eiz8kq5YRdWuFN8hgjCGsYGCMRG1SwbQ==
   dependencies:
     eslint-config-airbnb-base "^13.1.0"
-    eslint-config-prettier "^3.0.1"
-    prettier "^1.14.2"
+    eslint-config-prettier "^3.1.0"
+    prettier "^1.14.3"
 
 eslint-import-resolver-node@^0.3.1:
   version "0.3.2"
@@ -2631,10 +2631,10 @@ eslint-module-utils@^2.2.0:
     debug "^2.6.8"
     pkg-dir "^1.0.0"
 
-eslint-plugin-flowtype@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-flowtype/-/eslint-plugin-flowtype-3.0.0.tgz#4b72588d8a5a5c836439752fe52e8e0f4b9954df"
-  integrity sha512-84utjHfQeykSyNuhO885pp18yGKYuK2S03EFbhl/BpXR9jk0TABnDP/KhUAqDjjkB43mxK2WZjJesrhnncvR9Q==
+eslint-plugin-flowtype@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-flowtype/-/eslint-plugin-flowtype-3.1.0.tgz#ad2634c9878fc4425040fab5532e219f8e0edc7e"
+  integrity sha512-Eak8hh1xJToj5Zs9jZkx6SW/0cEDexXvMdsCFQ+JDtNxJFdNLPBRzvCwJMG1uHheholzx62ltjg4a8wubx3vuQ==
   dependencies:
     lodash "^4.17.10"
 
@@ -3144,10 +3144,10 @@ file-entry-cache@^2.0.0:
     flat-cache "^1.2.1"
     object-assign "^4.0.1"
 
-file-type@^10.0.0:
-  version "10.0.0"
-  resolved "https://registry.yarnpkg.com/file-type/-/file-type-10.0.0.tgz#084f32ab827238aa9a1482195ca7448c77a006b3"
-  integrity sha512-lKSLYIUQpx+HkWbnBEbW+GEcK1gYLwvlFp8i91yjzKGZD36tmZJ2Yl0f65umHWN6XlUWu+Jr56a4sYP7M/qmnw==
+file-type@^10.1.0:
+  version "10.1.0"
+  resolved "https://registry.yarnpkg.com/file-type/-/file-type-10.1.0.tgz#f692a28722e1ac8e206e68fcc2fb032a759d16d0"
+  integrity sha512-fkjfXnqBRrdUFTS6opakWyMXb+uzDv8zOCqjSOWPbzMLnYnmnUEv/RNY9igkk4nc8TVL44Xd1OCC2fJXH3eb7Q==
 
 file-type@^4.1.0:
   version "4.4.0"
@@ -3257,10 +3257,10 @@ flexbuffer@0.0.6:
   resolved "https://registry.yarnpkg.com/flexbuffer/-/flexbuffer-0.0.6.tgz#039fdf23f8823e440c38f3277e6fef1174215b30"
   integrity sha1-A5/fI/iCPkQMOPMnfm/vEXQhWzA=
 
-flow-bin@^0.83.0:
-  version "0.83.0"
-  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.83.0.tgz#fd26f5f95758d7701264b3f9a1e1a3d4cbcab1a9"
-  integrity sha512-1K83EL/U9Gh0BaXPKkZe6TRizSmNSKx9Wuws1c8gh7DJEwiburtCxYT+4o7in1+GnNEm3CZWnbnVV8n9HMpiDA==
+flow-bin@^0.84.0:
+  version "0.84.0"
+  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.84.0.tgz#4cb2364c750fb37a7840524fa62456b53f64cdcb"
+  integrity sha512-ocji8eEYp+YfICsm+F6cIHUcD7v5sb0/ADEXm6gyUKdjQzmSckMrPUdZtyfP973t3YGHKliUMxMvIBHyR5LbXQ==
 
 follow-redirects@^1.3.0:
   version "1.5.9"
@@ -4913,10 +4913,10 @@ koa-router@^7.4.0:
     path-to-regexp "^1.1.1"
     urijs "^1.19.0"
 
-koa@^2.5.3:
-  version "2.5.3"
-  resolved "https://registry.yarnpkg.com/koa/-/koa-2.5.3.tgz#0b0c37eee3aac807a0a6ad36bc0b8660f12d83f1"
-  integrity sha512-U6rgy2kwlfO+3P1phAidDrRZpGfwcpHCxl33wFe+fHXalpzEshHGnMaSU7I/ZeDFpGRQkbQOYsXkXfUjn+AtdQ==
+koa@^2.6.1:
+  version "2.6.1"
+  resolved "https://registry.yarnpkg.com/koa/-/koa-2.6.1.tgz#88cabb18cd297e0577a37e40f400c4b6f1699fef"
+  integrity sha512-n9R5Eex4y0drUeqFTeCIeXyz8wjr2AxBo2Cq8LvmiXbJl4yDA5KIrecMPkhnmgACZnPXMRyCLbJoyLmpM9aFAw==
   dependencies:
     accepts "^1.3.5"
     cache-content-type "^1.0.0"
@@ -5264,10 +5264,10 @@ merge@^1.2.0:
   resolved "https://registry.yarnpkg.com/merge/-/merge-1.2.0.tgz#7531e39d4949c281a66b8c5a6e0265e8b05894da"
   integrity sha1-dTHjnUlJwoGma4xabgJl6LBYlNo=
 
-messaging-api-line@^0.7.11:
-  version "0.7.11"
-  resolved "https://registry.yarnpkg.com/messaging-api-line/-/messaging-api-line-0.7.11.tgz#982ea2de98fc776982a320c7a291d80cec226b2c"
-  integrity sha512-knlmC1Vk1qIBV8QACtQJm0ZpkSY2B3TAMbck79TKl4zD6SkH05dYO3ku13i1geEzbNSNkqzjyXDw8jSZVo+ZLA==
+messaging-api-line@^0.7.12:
+  version "0.7.12"
+  resolved "https://registry.yarnpkg.com/messaging-api-line/-/messaging-api-line-0.7.12.tgz#d7f503aba9fc5d71d389a7f5a20af56eeab8c23a"
+  integrity sha512-rQw9t+w/HuyoLE28+7z8leu5ot6wARiB6zttEgIAtF5tAtTp5mgqxiUtdxA3Mn8yRPsfN2bcF4QHCC3EUtTB+Q==
   dependencies:
     axios "^0.18.0"
     axios-error "^0.7.11"
@@ -6238,7 +6238,7 @@ prettier-package-json@^2.0.1:
     sort-object-keys "^1.1.2"
     sort-order "^1.0.1"
 
-prettier@^1.14.2, prettier@^1.14.3:
+prettier@^1.14.3:
   version "1.14.3"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.14.3.tgz#90238dd4c0684b7edce5f83b0fb7328e48bd0895"
   integrity sha512-qZDVnCrnpsRJJq5nSsiHCE3BYMED2OtsI+cmzIzF1QIfqm5ALf8tEJcO27zV1gKNKRPdhjO0dNWnrzssDQ1tFg==
