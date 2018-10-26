@@ -46,13 +46,13 @@ const help = () => {
 };
 
 export async function createPersona(ctx) {
-  const { t, token: _token, name: personaName, pic: personaUrl } = ctx.argv;
+  const { t, token, name: personaName, pic: personaUrl } = ctx.argv;
 
   let accessToken;
 
   try {
-    if (t || _token) {
-      accessToken = t || _token;
+    if (t || token) {
+      accessToken = t || token;
     } else {
       const config = getConfig('bottender.config.js', 'messenger');
 
@@ -89,13 +89,13 @@ export async function createPersona(ctx) {
 }
 
 export async function listPersona(ctx) {
-  const { t, token: _token } = ctx.argv;
+  const { t, token } = ctx.argv;
 
   let accessToken;
 
   try {
-    if (t || _token) {
-      accessToken = t || _token;
+    if (t || token) {
+      accessToken = t || token;
     } else {
       const config = getConfig('bottender.config.js', 'messenger');
 
@@ -136,13 +136,13 @@ export async function listPersona(ctx) {
 }
 
 export async function getPersona(ctx) {
-  const { t, token: _token, id: personaId } = ctx.argv;
+  const { t, token, id: personaId } = ctx.argv;
 
   let accessToken;
 
   try {
-    if (t || _token) {
-      accessToken = t || _token;
+    if (t || token) {
+      accessToken = t || token;
     } else {
       const config = getConfig('bottender.config.js', 'messenger');
 
@@ -179,13 +179,13 @@ export async function getPersona(ctx) {
 }
 
 export async function deletePersona(ctx) {
-  const { t, token: _token, id: personaId } = ctx.argv;
+  const { t, token, id: personaId } = ctx.argv;
 
   let accessToken;
 
   try {
-    if (t || _token) {
-      accessToken = t || _token;
+    if (t || token) {
+      accessToken = t || token;
     } else {
       const config = getConfig('bottender.config.js', 'messenger');
 
