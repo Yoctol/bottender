@@ -186,10 +186,11 @@ export default class MessengerConnector
 
   _profilePicExpired(user: { profile_pic: string }): boolean {
     try {
-      // Facebook CDN returns expiration time in the key `oe` in url params
-      // https://stackoverflow.com/questions/27595679/how-to-efficiently-retrieve-expiration-date-for-facebook-photo-url-and-renew-it/27596727#27596727
-      const oe = user.profile_pic.split('oe=')[1];
-      const timestamp = +`0x${oe}` * 1000;
+      // Facebook CDN returns expiration time in the key `ext` in url params like:
+      // https://platform-lookaside.fbsbx.com/platform/profilepic/?psid=11111111111111&width=1024&ext=1543379908&hash=xxxxxxxxxxxx
+      const ext = new URL(user.profile_pic).searchParams.get('ext');
+
+      const timestamp = +ext * 1000;
       const expireTime = new Date(timestamp);
       return !(isValid(expireTime) && isAfter(expireTime, new Date()));
     } catch (e) {
