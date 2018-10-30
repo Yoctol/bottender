@@ -6,6 +6,7 @@ import { addedDiff, deletedDiff, diff, updatedDiff } from 'deep-object-diff';
 import { omit, pick } from 'lodash';
 
 import getConfig from '../../shared/getConfig';
+import getSubArgs from '../sh/utils/getSubArgs';
 import { bold, error, log, print } from '../../shared/log';
 
 const FIELDS = [
@@ -33,7 +34,7 @@ export const help = () => {
 
     ${chalk.dim('Options:')}
 
-      --force       Force update the messenger profile by config
+      -f, --force   Force update the messenger profile by config
       -t, --token   Specify Messenger access token.
 
     ${chalk.dim('Examples:')}
@@ -245,6 +246,14 @@ export async function deleteMessengerProfile(ctx) {
 
 export default async function main(ctx) {
   const subcommand = ctx.argv._[2];
+
+  ctx.argv = getSubArgs(ctx.argv, {
+    '--token': String,
+    '-t': '--token',
+    '--force': Boolean,
+    '-f': '--force',
+  });
+
   switch (subcommand) {
     case 'check':
       checkMessengerProfile();

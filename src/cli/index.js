@@ -19,21 +19,8 @@ const main = async _argv => {
     {
       '--version': Boolean,
       '-v': '--version',
-      '--token': String,
-      '-t': '--token',
-      '--yes': Boolean,
-      '-y': '--yes',
-      '--force': Boolean,
-      '-f': '--force',
-      '--ngrok-port': Number,
-      '--webhook': String,
-      '-w': '--webhook',
-      '--out-file': String,
-      '-o': '--out-file',
-      '--name': String, // messenger persona
-      '--pic': String, // messenger persona
-      '--id': String, // messenger persona
-      '--skip-validate': String, // getConfig
+      '--help': String,
+      '-h': '--help',
     },
     {
       permissive: true,

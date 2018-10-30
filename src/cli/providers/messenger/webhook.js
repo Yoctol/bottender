@@ -4,6 +4,7 @@ import invariant from 'invariant';
 import { MessengerClient } from 'messaging-api-messenger';
 
 import getConfig from '../../shared/getConfig';
+import getSubArgs from '../sh/utils/getSubArgs';
 import getWebhookFromNgrok from '../../shared/getWebhookFromNgrok';
 import { bold, error, print, warn } from '../../shared/log';
 
@@ -19,8 +20,8 @@ const help = () => {
 
       -w, --webhook         Webhook callback URL
       -v, --verify-token    Verify token
-      --ngrok-port          Ngrok port(default: 4040)
       -t, --token           Specify Messenger access token
+      --ngrok-port          Ngrok port(default: 4040)
 
     ${chalk.dim('Examples:')}
 
@@ -35,7 +36,7 @@ const help = () => {
     ${chalk.dim('-')} Use specific ngrok port and access token
 
       ${chalk.cyan(
-        '$ bottender messenger webhook set --ngrok-port 4041 -token __FAKE_TOKEN__'
+        '$ bottender messenger webhook set --ngrok-port 4041 --token __FAKE_TOKEN__'
       )}
   `);
 };
@@ -139,6 +140,17 @@ export async function setWebhook(
 
 export default async function main(ctx) {
   const subcommand = ctx.argv._[2];
+
+  ctx.argv = getSubArgs(ctx.argv, {
+    '--webhook': String,
+    '-w': '--webhook',
+    '--verify-token': String,
+    '-v': '--verify-token',
+    '--token': String,
+    '-t': '--token',
+    '--ngrok-port': Number,
+  });
+
   switch (subcommand) {
     case 'set': {
       const accessToken = ctx.argv['--token'];
