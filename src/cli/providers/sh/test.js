@@ -6,7 +6,14 @@ import TestBot from '../../../bot/TestBot';
 import loadModule from '../../shared/loadModule';
 import { error, print } from '../../shared/log';
 
-const test = async ({ argv }) => {
+import getSubArgs from './utils/getSubArgs';
+
+const test = async ctx => {
+  const argv = getSubArgs(ctx.argv, {
+    '--out-file': String,
+    '-o': '--out-file',
+  });
+
   const inputFile = argv._[1];
   const outputFile = argv['--out-file'];
 

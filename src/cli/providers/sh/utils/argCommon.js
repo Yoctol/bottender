@@ -3,7 +3,9 @@ const ARG_COMMON = {
   '-h': '--help',
 
   '--version': Boolean,
-  '-t': '--version',
+  '-v': '--version',
+
+  '--skip-validate': Boolean,
 };
 
 export default () => ARG_COMMON;

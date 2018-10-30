@@ -3,6 +3,7 @@ import invariant from 'invariant';
 import { ViberClient } from 'messaging-api-viber';
 
 import getConfig from '../../shared/getConfig';
+import getSubArgs from '../sh/utils/getSubArgs';
 import getWebhookFromNgrok from '../../shared/getWebhookFromNgrok';
 import { bold, error, print, warn } from '../../shared/log';
 
@@ -94,11 +95,19 @@ export async function deleteWebhook(ctx) {
 export default async function main(ctx) {
   const subcommand = ctx.argv._[2];
 
+  ctx.argv = getSubArgs(ctx.argv, {
+    '--webhook': String,
+    '-w': '--webhook',
+    '--token': String,
+    '-t': '--token',
+    '--ngrok-port': String,
+  });
+
   switch (subcommand) {
     case 'set': {
       const webhook = ctx.argv['--webhook'];
-      const ngrokPort = ctx.argv['--ngrok-port'];
       const accessToken = ctx.argv['--token'];
+      const ngrokPort = ctx.argv['--ngrok-port'];
 
       if (typeof ctx.argv.e === 'string') {
         const eventTypes = ctx.argv.e.split(',');

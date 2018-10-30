@@ -5,6 +5,7 @@ import invariant from 'invariant';
 import { MessengerClient } from 'messaging-api-messenger';
 
 import getConfig from '../../shared/getConfig';
+import getSubArgs from '../sh/utils/getSubArgs';
 import { bold, error, print } from '../../shared/log';
 
 const help = () => {
@@ -225,6 +226,15 @@ export async function deletePersona(ctx) {
 
 export default async function main(ctx) {
   const subcommand = ctx.argv._[2];
+
+  ctx.argv = getSubArgs(ctx.argv, {
+    '--token': String,
+    '-t': '--token',
+    '--name': String,
+    '--pic': String,
+    '--id': String,
+  });
+
   switch (subcommand) {
     case 'create':
       return createPersona(ctx);

@@ -7,6 +7,7 @@ import { LineClient } from 'messaging-api-line';
 import { differenceWith, findIndex, isEqual, omit } from 'lodash';
 
 import getConfig from '../../shared/getConfig';
+import getSubArgs from '../sh/utils/getSubArgs';
 import { bold, error, log, print } from '../../shared/log';
 
 const generateDeleteQuestions = richMenus => [
@@ -261,6 +262,14 @@ export async function deleteLineMenu(ctx) {
 
 export default async function main(ctx) {
   const subcommand = ctx.argv._[2];
+
+  ctx.argv = getSubArgs(ctx.argv, {
+    '--token': String,
+    '-t': '--token',
+    '--force': Boolean,
+    '-f': '--force',
+  });
+
   switch (subcommand) {
     case 'check':
       checkLineMenu();

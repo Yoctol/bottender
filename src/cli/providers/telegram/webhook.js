@@ -3,6 +3,7 @@ import invariant from 'invariant';
 import { TelegramClient } from 'messaging-api-telegram';
 
 import getConfig from '../../shared/getConfig';
+import getSubArgs from '../sh/utils/getSubArgs';
 import getWebhookFromNgrok from '../../shared/getWebhookFromNgrok';
 import { bold, error, print, warn } from '../../shared/log';
 
@@ -126,6 +127,11 @@ export async function deleteWebhook(ctx) {
 
 export default async function main(ctx) {
   const subcommand = ctx.argv._[2];
+
+  ctx.argv = getSubArgs(ctx.argv, {
+    '--token': String,
+    '-t': '--token',
+  });
 
   switch (subcommand) {
     case 'get':

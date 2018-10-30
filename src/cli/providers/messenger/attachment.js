@@ -12,6 +12,7 @@ import readdir from 'recursive-readdir';
 import { MessengerClient } from 'messaging-api-messenger';
 
 import getConfig from '../../shared/getConfig';
+import getSubArgs from '../sh/utils/getSubArgs';
 import { bold, error, log, print, warn } from '../../shared/log';
 
 const help = () => {
@@ -212,6 +213,16 @@ export async function uploadAttachment(ctx) {
 
 export default async function main(ctx) {
   const subcommand = ctx.argv._[2];
+
+  ctx.argv = getSubArgs(ctx.argv, {
+    '--force': Boolean,
+    '-f': '--force',
+    '--yes': Boolean,
+    '-y': '--yes',
+    '--token': String,
+    '-t': '--token',
+  });
+
   switch (subcommand) {
     case 'upload':
       await uploadAttachment(ctx);
