@@ -53,7 +53,7 @@ describe('uploadAttachment', () => {
   describe('resolve', () => {
     it('--yes should work', async () => {
       const ctx = {
-        argv: { force: true, yes: true },
+        argv: { '--force': true, '--yes': true },
       };
 
       await uploadAttachment(ctx);
@@ -64,24 +64,12 @@ describe('uploadAttachment', () => {
 
     it('--token should work', async () => {
       const ctx = {
-        argv: { force: true, yes: true, token: '12345' },
+        argv: { '--force': true, '--yes': true, '--token': '12345' },
       };
 
       await uploadAttachment(ctx);
 
       expect(MessengerClient.connect).toBeCalledWith('12345');
-    });
-
-    it('Abbreviational options should work', async () => {
-      const ctx = {
-        argv: { f: true, y: true, t: '12345' },
-      };
-
-      await uploadAttachment(ctx);
-
-      expect(MessengerClient.connect).toBeCalledWith('12345');
-      expect(inquirer.prompt).not.toBeCalled();
-      expect(log.print).not.toBeCalledWith('bye');
     });
   });
 
@@ -108,7 +96,7 @@ describe('uploadAttachment', () => {
     it('exit when user does not confirm force upload', async () => {
       const ctx = {
         argv: {
-          force: true,
+          '--force': true,
         },
       };
       inquirer.prompt.mockResolvedValue({

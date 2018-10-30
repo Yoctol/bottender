@@ -41,28 +41,17 @@ it('be defined', () => {
 describe('resolved', () => {
   it('--token should work', async () => {
     const ctx = {
-      argv: { token: '12345' },
+      argv: { '--token': '12345' },
     };
 
     await getPersistentMenu(ctx);
 
     expect(MessengerClient.connect).toBeCalledWith('12345');
-  });
-
-  it('Abbreviational options should work', async () => {
-    const ctx = {
-      argv: { t: '12345' },
-    };
-
-    await getPersistentMenu(ctx);
-
-    expect(MessengerClient.connect).toBeCalledWith('12345');
-    expect(_client.getPersistentMenu).toBeCalled();
   });
 
   it('call getPersistentMenu', async () => {
     const ctx = {
-      argv: { t: '12345' },
+      argv: { '--token': '12345' },
     };
 
     _client.getPersistentMenu.mockResolvedValue([

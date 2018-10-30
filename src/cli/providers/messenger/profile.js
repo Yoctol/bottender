@@ -69,13 +69,13 @@ export function checkMessengerProfile() {
 }
 
 export async function getMessengerProfile(ctx) {
-  const { t, token: _token } = ctx.argv;
+  const token = ctx.argv['--token'];
 
   let accessToken;
 
   try {
-    if (t || _token) {
-      accessToken = t || _token;
+    if (token) {
+      accessToken = token;
     } else {
       const config = getConfig('bottender.config.js', 'messenger');
 
@@ -110,13 +110,14 @@ export async function getMessengerProfile(ctx) {
 }
 
 export async function setMessengerProfile(ctx) {
-  const { force, t, token: _token } = ctx.argv;
+  const force = ctx.argv['--force'];
+  const token = ctx.argv['--token'];
 
   let accessToken;
 
   try {
-    if (t || _token) {
-      accessToken = t || _token;
+    if (token) {
+      accessToken = token;
     } else {
       const config = getConfig('bottender.config.js', 'messenger');
 
@@ -208,13 +209,13 @@ export async function setMessengerProfile(ctx) {
 }
 
 export async function deleteMessengerProfile(ctx) {
-  const { t, token: _token } = ctx.argv;
+  const token = ctx.argv['--token'];
 
   let accessToken;
 
   try {
-    if (t || _token) {
-      accessToken = t || _token;
+    if (token) {
+      accessToken = token;
     } else {
       const config = getConfig('bottender.config.js', 'messenger');
 

@@ -13,10 +13,8 @@ const getConfig = require('../../../shared/getConfig');
 
 const setup = (force, token = undefined) => ({
   argv: {
-    f: force,
-    force,
-    t: token,
-    token,
+    '--force': force,
+    '--token': token,
   },
 });
 
@@ -61,7 +59,7 @@ describe('deleteLineMenu', () => {
     expect(deleteLineMenu).toBeDefined();
   });
 
-  it('-t, --token should work', async () => {
+  it('--token should work', async () => {
     const ctx = setup(false, '12345');
 
     await deleteLineMenu(ctx);

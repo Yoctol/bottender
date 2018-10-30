@@ -11,8 +11,7 @@ const getConfig = require('../../../shared/getConfig');
 
 const setup = (token = undefined) => ({
   argv: {
-    t: token,
-    token,
+    '--token': token,
   },
 });
 
@@ -58,7 +57,7 @@ describe('setLineMenus', () => {
     expect(setLineMenus).toBeDefined();
   });
 
-  it('-t, --token should work', async () => {
+  it('--token should work', async () => {
     const ctx = setup('12345');
 
     await setLineMenus(ctx);

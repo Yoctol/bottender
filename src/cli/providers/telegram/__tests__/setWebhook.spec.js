@@ -31,10 +31,9 @@ const setup = (
   }
 ) => ({
   argv: {
-    webhook,
-    ngrokPort,
-    token,
-    t: token,
+    '--webhook': webhook,
+    '--ngrok-port': ngrokPort,
+    '--token': token,
   },
 });
 

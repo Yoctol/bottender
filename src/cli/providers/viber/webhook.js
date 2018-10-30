@@ -59,13 +59,11 @@ export async function setWebhook(
 }
 
 export async function deleteWebhook(ctx) {
-  const { t, token: _token } = ctx.argv;
-
   let accessToken;
 
   try {
-    if (t || _token) {
-      accessToken = t || _token;
+    if (ctx.argv['--token']) {
+      accessToken = ctx.argv['--token'];
     } else {
       const config = getConfig('bottender.config.js', 'viber');
 
@@ -98,9 +96,9 @@ export default async function main(ctx) {
 
   switch (subcommand) {
     case 'set': {
-      const webhook = ctx.argv.w;
-      const ngrokPort = ctx.argv['ngrok-port'];
-      const accessToken = ctx.argv.t || ctx.argv.token;
+      const webhook = ctx.argv['--webhook'];
+      const ngrokPort = ctx.argv['--ngrok-port'];
+      const accessToken = ctx.argv['--token'];
 
       if (typeof ctx.argv.e === 'string') {
         const eventTypes = ctx.argv.e.split(',');

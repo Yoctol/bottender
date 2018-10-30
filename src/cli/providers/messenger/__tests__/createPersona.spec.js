@@ -36,25 +36,9 @@ describe('resolved', () => {
   it('--token should work', async () => {
     const ctx = {
       argv: {
-        token: '12345',
-        name: 'kpman',
-        pic: 'https://i.imgur.com/zV6uy4T.jpg',
-      },
-    };
-
-    process.exit = jest.fn();
-
-    await createPersona(ctx);
-
-    expect(MessengerClient.connect).toBeCalledWith('12345');
-  });
-
-  it('Abbreviational options should work', async () => {
-    const ctx = {
-      argv: {
-        t: '12345',
-        name: 'kpman',
-        pic: 'https://i.imgur.com/zV6uy4T.jpg',
+        '--token': '12345',
+        '--name': 'kpman',
+        '--pic': 'https://i.imgur.com/zV6uy4T.jpg',
       },
     };
 
@@ -68,9 +52,9 @@ describe('resolved', () => {
   it('call createPersona', async () => {
     const ctx = {
       argv: {
-        t: '12345',
-        name: 'kpman',
-        pic: 'https://i.imgur.com/zV6uy4T.jpg',
+        '--token': '12345',
+        '--name': 'kpman',
+        '--pic': 'https://i.imgur.com/zV6uy4T.jpg',
       },
     };
 
@@ -90,8 +74,8 @@ describe('resolved', () => {
   it('error when no config setting', async () => {
     const ctx = {
       argv: {
-        name: 'kpman',
-        pic: 'https://i.imgur.com/zV6uy4T.jpg',
+        '--name': 'kpman',
+        '--pic': 'https://i.imgur.com/zV6uy4T.jpg',
       },
     };
 
@@ -123,8 +107,8 @@ describe('reject', () => {
   it('handle error thrown with only status', async () => {
     const ctx = {
       argv: {
-        name: 'kpman',
-        pic: 'https://i.imgur.com/zV6uy4T.jpg',
+        '--name': 'kpman',
+        '--pic': 'https://i.imgur.com/zV6uy4T.jpg',
       },
     };
     const error = {
@@ -145,8 +129,8 @@ describe('reject', () => {
   it('handle error thrown by messenger', async () => {
     const ctx = {
       argv: {
-        name: 'kpman',
-        pic: 'https://i.imgur.com/zV6uy4T.jpg',
+        '--name': 'kpman',
+        '--pic': 'https://i.imgur.com/zV6uy4T.jpg',
       },
     };
     const error = {
@@ -177,8 +161,8 @@ describe('reject', () => {
   it('handle error thrown by ourselves', async () => {
     const ctx = {
       argv: {
-        name: 'kpman',
-        pic: 'https://i.imgur.com/zV6uy4T.jpg',
+        '--name': 'kpman',
+        '--pic': 'https://i.imgur.com/zV6uy4T.jpg',
       },
     };
     const error = {

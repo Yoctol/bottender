@@ -83,9 +83,9 @@ const logUploadInfo = uploadInfo => {
 };
 
 export async function uploadAttachment(ctx) {
-  const { f, force: _force, y, yes: _yes, t, token: _token } = ctx.argv;
-  const force = f || _force;
-  const yes = y || _yes;
+  const token = ctx.argv['--token'];
+  const force = ctx.argv['--force'];
+  const yes = ctx.argv['--yes'];
 
   let accessToken;
 
@@ -96,8 +96,8 @@ export async function uploadAttachment(ctx) {
       )} is under heavy development. API may change between any versions.`
     );
 
-    if (t || _token) {
-      accessToken = t || _token;
+    if (token) {
+      accessToken = token;
     } else {
       const config = getConfig('bottender.config.js', 'messenger');
 

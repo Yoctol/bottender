@@ -35,13 +35,13 @@ const help = () => {
 };
 
 export async function getPersistentMenu(ctx) {
-  const { t, token: _token } = ctx.argv;
+  const token = ctx.argv['--token'];
 
   let accessToken;
 
   try {
-    if (t || _token) {
-      accessToken = t || _token;
+    if (token) {
+      accessToken = token;
     } else {
       const config = getConfig('bottender.config.js', 'messenger');
 
@@ -84,13 +84,13 @@ export async function getPersistentMenu(ctx) {
 }
 
 export async function deletePersistentMenu(ctx) {
-  const { t, token: _token } = ctx.argv;
+  const token = ctx.argv['--token'];
 
   let accessToken;
 
   try {
-    if (t || _token) {
-      accessToken = t || _token;
+    if (token) {
+      accessToken = token;
     } else {
       const config = getConfig('bottender.config.js', 'messenger');
 

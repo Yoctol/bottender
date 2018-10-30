@@ -1,18 +1,25 @@
 import path from 'path';
 
 import Joi from 'joi';
+import arg from 'arg';
 import get from 'lodash/get';
 import importFresh from 'import-fresh';
 import invariant from 'invariant';
-import minimist from 'minimist';
 
 import schema from './schema';
 import { bold } from './log';
 
 const getConfig = (configPath, platform) => {
-  const argv = minimist(process.argv);
+  const argv = arg(
+    {
+      '--skip-validate': Boolean,
+    },
+    { permissive: true }
+  );
+
   const config = importFresh(path.resolve(configPath));
-  if (!argv['skip-validate']) {
+
+  if (!argv['--skip-validate']) {
     const validateResult = Joi.validate(config, schema, { allowUnknown: true });
 
     if (validateResult.error) {
@@ -25,11 +32,14 @@ const getConfig = (configPath, platform) => {
       );
     }
   }
+
   const result = get(config, platform, undefined);
+
   invariant(
     result,
     `Could not find \`${platform}\` key, please check your config file is in the correct format.`
   );
+
   return result;
 };
 

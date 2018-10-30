@@ -1,18 +1,44 @@
 import camelCase from 'camel-case';
 import get from 'lodash/get';
-import minimist from 'minimist';
 import updateNotifier from 'update-notifier';
 
 import pkg from '../../package.json';
 
+import getArgs from './providers/sh/utils/getArgs';
 import providers from './providers';
 import { error } from './shared/log';
 
-const main = async argv => {
+const main = async _argv => {
   let providerName;
   let subcommand;
 
   updateNotifier({ pkg }).notify({ defer: false });
+
+  const argv = getArgs(
+    _argv,
+    {
+      '--version': Boolean,
+      '-v': '--version',
+      '--token': String,
+      '-t': '--token',
+      '--yes': Boolean,
+      '-y': '--yes',
+      '--force': Boolean,
+      '-f': '--force',
+      '--ngrok-port': Number,
+      '--webhook': String,
+      '-w': '--webhook',
+      '--out-file': String,
+      '-o': '--out-file',
+      '--name': String, // messenger persona
+      '--pic': String, // messenger persona
+      '--id': String, // messenger persona
+      '--skip-validate': String, // getConfig
+    },
+    {
+      permissive: true,
+    }
+  );
 
   switch (argv._[0]) {
     case 'messenger':
@@ -27,14 +53,14 @@ const main = async argv => {
       subcommand = argv._[0];
   }
 
-  if (argv.v || argv.version || argv._[0] === 'version') {
+  if (argv['--version'] || argv._[0] === 'version') {
     console.log(pkg.version);
     process.exit(0);
   }
 
   const provider = providers[providerName];
 
-  if (argv.h || argv.help) {
+  if (argv['--help']) {
     provider.help();
     process.exit(0);
   }
@@ -86,4 +112,4 @@ const handleRejection = err => {
 process.on('unhandledRejection', handleRejection);
 process.on('uncaughtException', handleUnexpected);
 
-main(minimist(process.argv.slice(2))).catch(handleUnexpected);
+main(process.argv.slice(2)).catch(handleUnexpected);

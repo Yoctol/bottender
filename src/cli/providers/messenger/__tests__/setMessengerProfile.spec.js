@@ -79,7 +79,7 @@ describe('resolve', () => {
   describe('--force', () => {
     it('will delete all fields and set profile', async () => {
       const ctx = {
-        argv: { force: true },
+        argv: { '--force': true },
       };
       await setMessengerProfile(ctx);
       expect(_client.deleteMessengerProfile).toBeCalledWith([
@@ -114,17 +114,7 @@ describe('resolve', () => {
 
     it('--token should work', async () => {
       const ctx = {
-        argv: { token: '12345' },
-      };
-
-      await setMessengerProfile(ctx);
-
-      expect(MessengerClient.connect).toBeCalledWith('12345');
-    });
-
-    it('Abbreviational options should work', async () => {
-      const ctx = {
-        argv: { t: '12345' },
+        argv: { '--token': '12345' },
       };
 
       await setMessengerProfile(ctx);
@@ -135,7 +125,7 @@ describe('resolve', () => {
     it('should set whole profile once', async () => {
       const ctx = {
         argv: {
-          force: true,
+          '--force': true,
         },
       };
       getConfig.mockReturnValue({
@@ -187,7 +177,7 @@ describe('resolve', () => {
     it('should set whitelisted_domains before other fields', async () => {
       const ctx = {
         argv: {
-          force: true,
+          '--force': true,
         },
       };
       getConfig.mockReturnValue({
