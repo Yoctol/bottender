@@ -91,7 +91,7 @@ it('should write to output file', async () => {
   await testCommand({
     argv: {
       _: ['test', 'input.json'],
-      o: 'output.json',
+      '--out-file': 'output.json',
     },
   });
 

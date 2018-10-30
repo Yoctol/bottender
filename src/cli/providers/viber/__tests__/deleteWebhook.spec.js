@@ -39,17 +39,7 @@ it('be defined', () => {
 describe('resolve', () => {
   it('--token should work', async () => {
     const ctx = {
-      argv: { token: '12345' },
-    };
-
-    await deleteWebhook(ctx);
-
-    expect(ViberClient.connect).toBeCalledWith('12345');
-  });
-
-  it('Abbreviational options should work', async () => {
-    const ctx = {
-      argv: { t: '12345' },
+      argv: { '--token': '12345' },
     };
 
     await deleteWebhook(ctx);

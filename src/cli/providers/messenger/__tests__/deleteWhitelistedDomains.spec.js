@@ -35,23 +35,12 @@ it('be defined', () => {
 describe('resolved', () => {
   it('--token should work', async () => {
     const ctx = {
-      argv: { token: '12345' },
+      argv: { '--token': '12345' },
     };
 
     await deleteWhitelistedDomains(ctx);
 
     expect(MessengerClient.connect).toBeCalledWith('12345');
-  });
-
-  it('Abbreviational options should work', async () => {
-    const ctx = {
-      argv: { t: '12345' },
-    };
-
-    await deleteWhitelistedDomains(ctx);
-
-    expect(MessengerClient.connect).toBeCalledWith('12345');
-    expect(_client.deleteWhitelistedDomains).toBeCalled();
   });
 
   it('call deleteWhitelistedDomains', async () => {

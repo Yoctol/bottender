@@ -8,7 +8,7 @@ import { error, print } from '../../shared/log';
 
 const test = async ({ argv }) => {
   const inputFile = argv._[1];
-  const outputFile = argv['out-file'] || argv.o;
+  const outputFile = argv['--out-file'];
 
   const inputFilePath = path.resolve(inputFile);
 

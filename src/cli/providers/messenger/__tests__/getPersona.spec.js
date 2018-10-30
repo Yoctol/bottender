@@ -35,19 +35,7 @@ it('be defined', () => {
 describe('resolved', () => {
   it('--token should work', async () => {
     const ctx = {
-      argv: { token: '12345', id: '54321' },
-    };
-
-    process.exit = jest.fn();
-
-    await getPersona(ctx);
-
-    expect(MessengerClient.connect).toBeCalledWith('12345');
-  });
-
-  it('Abbreviational options should work', async () => {
-    const ctx = {
-      argv: { t: '12345', id: '54321' },
+      argv: { '--token': '12345', '--id': '54321' },
     };
 
     process.exit = jest.fn();
@@ -59,7 +47,7 @@ describe('resolved', () => {
 
   it('call getPersona', async () => {
     const ctx = {
-      argv: { t: '12345', id: '54321' },
+      argv: { '--token': '12345', '--id': '54321' },
     };
 
     process.exit = jest.fn();
@@ -74,7 +62,7 @@ describe('resolved', () => {
 
   it('error when no config setting', async () => {
     const ctx = {
-      argv: { id: '54321' },
+      argv: { '--id': '54321' },
     };
 
     process.exit = jest.fn();
@@ -104,7 +92,7 @@ describe('resolved', () => {
 describe('reject', () => {
   it('handle error thrown with only status', async () => {
     const ctx = {
-      argv: { id: '54321' },
+      argv: { '--id': '54321' },
     };
     const error = {
       response: {
@@ -123,7 +111,7 @@ describe('reject', () => {
 
   it('handle error thrown by messenger', async () => {
     const ctx = {
-      argv: { id: '54321' },
+      argv: { '--id': '54321' },
     };
     const error = {
       response: {
@@ -152,7 +140,7 @@ describe('reject', () => {
 
   it('handle error thrown by ourselves', async () => {
     const ctx = {
-      argv: { id: '54321' },
+      argv: { '--id': '54321' },
     };
     const error = {
       message: 'something wrong happened',

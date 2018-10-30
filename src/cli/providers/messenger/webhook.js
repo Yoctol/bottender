@@ -17,8 +17,8 @@ const help = () => {
 
     ${chalk.dim('Options:')}
 
-      -w                    Webhook callback URL
-      -v                    Verify token
+      -w, --webhook         Webhook callback URL
+      -v, --verify-token    Verify token
       --ngrok-port          Ngrok port(default: 4040)
       -t, --token           Specify Messenger access token
 
@@ -141,10 +141,10 @@ export default async function main(ctx) {
   const subcommand = ctx.argv._[2];
   switch (subcommand) {
     case 'set': {
-      const accessToken = ctx.argv.t || ctx.argv.token;
-      const webhook = ctx.argv.w;
-      const verifyToken = ctx.argv.v;
-      const ngrokPort = ctx.argv['ngrok-port'];
+      const accessToken = ctx.argv['--token'];
+      const webhook = ctx.argv['--webhook'];
+      const verifyToken = ctx.argv['--verify-token'];
+      const ngrokPort = ctx.argv['--ngrok-port'];
 
       await setWebhook(accessToken, webhook, verifyToken, ngrokPort);
       break;

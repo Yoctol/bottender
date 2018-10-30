@@ -9,13 +9,11 @@ import { bold, error, print, warn } from '../../shared/log';
 import help from './help';
 
 export async function getWebhook(ctx) {
-  const { t, token: _token } = ctx.argv;
-
   let accessToken;
 
   try {
-    if (t || _token) {
-      accessToken = t || _token;
+    if (ctx.argv['--token']) {
+      accessToken = ctx.argv['--token'];
     } else {
       const config = getConfig('bottender.config.js', 'telegram');
 
@@ -43,15 +41,14 @@ export async function getWebhook(ctx) {
 }
 
 export async function setWebhook(ctx) {
-  const { t, token: _token } = ctx.argv;
-  const ngrokPort = ctx.argv['ngrok-port'] || '4040';
+  const ngrokPort = ctx.argv['--ngrok-port'] || '4040';
 
-  let { w: webhook } = ctx.argv;
+  let webhook = ctx.argv['--webhook'];
   let accessToken;
 
   try {
-    if (t || _token) {
-      accessToken = t || _token;
+    if (ctx.argv['--token']) {
+      accessToken = ctx.argv['--token'];
     } else {
       const config = getConfig('bottender.config.js', 'telegram');
 
@@ -96,13 +93,11 @@ export async function setWebhook(ctx) {
 }
 
 export async function deleteWebhook(ctx) {
-  const { t, token: _token } = ctx.argv;
-
   let accessToken;
 
   try {
-    if (t || _token) {
-      accessToken = t || _token;
+    if (ctx.argv['--token']) {
+      accessToken = ctx.argv['--token'];
     } else {
       const config = getConfig('bottender.config.js', 'telegram');
 
