@@ -125,7 +125,7 @@ export async function listPersona(ctx) {
       print('No personas are found.');
     }
   } catch (err) {
-    error(`Failed to create ${bold('persona')}`);
+    error(`Failed to list ${bold('personas')}`);
     if (err.response) {
       error(`status: ${bold(err.response.status)}`);
       if (err.response.data) {
@@ -169,7 +169,7 @@ export async function getPersona(ctx) {
       print(`Cannot get persona of ID ${bold(personaId)}`);
     }
   } catch (err) {
-    error(`Failed to get ${bold('persona')} with id ${bold(personaId)}`);
+    error(`Failed to get ${bold('persona')} of ID ${bold(personaId)}`);
     if (err.response) {
       error(`status: ${bold(err.response.status)}`);
       if (err.response.data) {
@@ -211,7 +211,7 @@ export async function deletePersona(ctx) {
       print(`Cannot get persona of ID ${bold(personaId)}`);
     }
   } catch (err) {
-    error(`Failed to create ${bold('persona')}`);
+    error(`Failed to delete ${bold('persona')} of ID ${bold(personaId)}`);
     if (err.response) {
       error(`status: ${bold(err.response.status)}`);
       if (err.response.data) {
