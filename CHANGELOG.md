@@ -1,3 +1,35 @@
+# 0.15.10 / 2018-11-02
+
+- [new] platform bots: add `origin` option for testing purpose:
+
+```js
+new MessengerBot({
+  // ...
+  origin: 'https://mydummytestserver.com',
+});
+new LineBot({
+  // ...
+  origin: 'https://mydummytestserver.com',
+});
+new SlackBot({
+  // ...
+  origin: 'https://mydummytestserver.com',
+});
+new ViberBot({
+  // ...
+  origin: 'https://mydummytestserver.com',
+});
+new TelegramBot({
+  // ...
+  origin: 'https://mydummytestserver.com',
+});
+```
+
+### messenger
+
+- [fix] update Messenger profile_pic check logic
+- [fix] fix persona cli error messages
+
 # 0.15.9 / 2018-10-26
 
 ### messenger
