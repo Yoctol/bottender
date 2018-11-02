@@ -15,6 +15,7 @@ export type ViberRequestBody = ViberRawEvent;
 type ConstructorOptions = {|
   accessToken?: string,
   client?: ViberClient,
+  origin?: string,
 |};
 
 export default class ViberConnector implements Connector<ViberRequestBody> {
@@ -22,9 +23,14 @@ export default class ViberConnector implements Connector<ViberRequestBody> {
 
   _client: ViberClient;
 
-  constructor({ accessToken, client }: ConstructorOptions) {
+  constructor({ accessToken, client, origin }: ConstructorOptions) {
     this._accessToken = accessToken;
-    this._client = client || ViberClient.connect(accessToken);
+    this._client =
+      client ||
+      ViberClient.connect({
+        accessToken,
+        origin,
+      });
   }
 
   _getRawEventFromRequest(body: ViberRequestBody): ViberRawEvent {

@@ -38,6 +38,7 @@ type ConstructorOptions = {|
   accessToken?: string,
   client?: SlackOAuthClient,
   verificationToken?: string,
+  origin?: string,
 |};
 
 export default class SlackConnector implements Connector<SlackRequestBody> {
@@ -45,8 +46,18 @@ export default class SlackConnector implements Connector<SlackRequestBody> {
 
   _verificationToken: string;
 
-  constructor({ accessToken, client, verificationToken }: ConstructorOptions) {
-    this._client = client || SlackOAuthClient.connect(accessToken);
+  constructor({
+    accessToken,
+    client,
+    verificationToken,
+    origin,
+  }: ConstructorOptions) {
+    this._client =
+      client ||
+      SlackOAuthClient.connect({
+        accessToken,
+        origin,
+      });
     this._verificationToken = verificationToken || '';
 
     if (!this._verificationToken) {

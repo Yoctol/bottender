@@ -13,14 +13,20 @@ export type TelegramRequestBody = TelegramRawEvent;
 type ConstructorOptions = {|
   accessToken?: string,
   client?: TelegramClient,
+  origin?: string,
 |};
 
 export default class TelegramConnector
   implements Connector<TelegramRequestBody> {
   _client: TelegramClient;
 
-  constructor({ accessToken, client }: ConstructorOptions) {
-    this._client = client || TelegramClient.connect(accessToken);
+  constructor({ accessToken, client, origin }: ConstructorOptions) {
+    this._client =
+      client ||
+      TelegramClient.connect({
+        accessToken,
+        origin,
+      });
   }
 
   _getRawEventFromRequest(body: TelegramRequestBody): TelegramRawEvent {
