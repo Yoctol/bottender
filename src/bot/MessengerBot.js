@@ -15,6 +15,7 @@ export default class MessengerBot extends Bot {
     mapPageToAccessToken,
     verifyToken,
     batchConfig,
+    origin,
   }: {
     accessToken: string,
     appId?: string,
@@ -24,6 +25,7 @@ export default class MessengerBot extends Bot {
     mapPageToAccessToken?: (pageId: string) => Promise<string>,
     verifyToken?: string,
     batchConfig?: Object,
+    origin?: string,
   }) {
     const connector = new MessengerConnector({
       accessToken,
@@ -32,6 +34,7 @@ export default class MessengerBot extends Bot {
       mapPageToAccessToken,
       verifyToken,
       batchConfig,
+      origin,
     });
     super({ connector, sessionStore, sync });
   }

@@ -82,6 +82,7 @@ type ConstructorOptions = {|
   mapPageToAccessToken?: (pageId: string) => Promise<string>,
   verifyToken?: ?string,
   batchConfig?: ?Object,
+  origin?: string,
 |};
 
 export default class MessengerConnector
@@ -108,12 +109,14 @@ export default class MessengerConnector
     mapPageToAccessToken,
     verifyToken,
     batchConfig,
+    origin,
   }: ConstructorOptions) {
     this._client =
       client ||
       MessengerClient.connect({
         accessToken: accessToken || '',
         appSecret,
+        origin,
       });
 
     this._appId = appId || '';

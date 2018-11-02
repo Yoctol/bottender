@@ -10,12 +10,14 @@ export default class ViberBot extends Bot {
     accessToken,
     sessionStore,
     sync,
+    origin,
   }: {
     accessToken: string,
     sessionStore: SessionStore,
     sync?: boolean,
+    origin?: string,
   }) {
-    const connector = new ViberConnector({ accessToken });
+    const connector = new ViberConnector({ accessToken, origin });
     super({ connector, sessionStore, sync });
   }
 }

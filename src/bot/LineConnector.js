@@ -21,6 +21,7 @@ type ConstructorOptions = {|
   client?: LineClient,
   shouldBatch: ?boolean,
   sendMethod: ?string,
+  origin?: string,
 |};
 
 export default class LineConnector implements Connector<LineRequestBody> {
@@ -38,8 +39,14 @@ export default class LineConnector implements Connector<LineRequestBody> {
     client,
     shouldBatch,
     sendMethod,
+    origin,
   }: ConstructorOptions) {
-    this._client = client || LineClient.connect(accessToken);
+    this._client =
+      client ||
+      LineClient.connect({
+        accessToken,
+        origin,
+      });
     this._channelSecret = channelSecret || '';
     this._shouldBatch = shouldBatch || false;
     warning(
