@@ -1,3 +1,17 @@
+# 0.15.11 / 2018-11-07
+
+### messenger
+
+- [new] Add `skipAppSecretProof` option to `MessengerBot` and `MessengerConnector`:
+
+```js
+const bot = MessengerBot({
+  accessToken: ACCESS_TOKEN,
+  appSecret: APP_SECRET,
+  skipAppSecretProof: true,
+});
+```
+
 # 0.15.10 / 2018-11-02
 
 - [new] platform bots: add `origin` option for testing purpose:
