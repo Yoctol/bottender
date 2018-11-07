@@ -1,0 +1,14 @@
+{
+  "scripts": {
+    "dev": "nodemon --exec \"node -r dotenv/config\" index.js",
+    "start": "node -r dotenv/config index.js"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  },
+  "dependencies": {
+    "bottender": "latest",
+    "dotenv": "^4.0.0",
+    "messenger-batch": "^0.3.0"
+  }
+}
