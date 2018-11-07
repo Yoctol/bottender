@@ -5,7 +5,7 @@
 - [new] Add `skipAppSecretProof` option to `MessengerBot` and `MessengerConnector`:
 
 ```js
-const bot = MessengerBot({
+const bot = new MessengerBot({
   accessToken: ACCESS_TOKEN,
   appSecret: APP_SECRET,
   skipAppSecretProof: true,
