@@ -19,7 +19,7 @@ const main = async _argv => {
     {
       '--version': Boolean,
       '-v': '--version',
-      '--help': String,
+      '--help': Boolean,
       '-h': '--help',
     },
     {
