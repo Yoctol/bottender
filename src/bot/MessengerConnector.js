@@ -83,6 +83,7 @@ type ConstructorOptions = {|
   verifyToken?: ?string,
   batchConfig?: ?Object,
   origin?: string,
+  skipAppSecretProof?: ?boolean,
 |};
 
 export default class MessengerConnector
@@ -110,6 +111,7 @@ export default class MessengerConnector
     verifyToken,
     batchConfig,
     origin,
+    skipAppSecretProof,
   }: ConstructorOptions) {
     this._client =
       client ||
@@ -117,6 +119,7 @@ export default class MessengerConnector
         accessToken: accessToken || '',
         appSecret,
         origin,
+        skipAppSecretProof,
       });
 
     this._appId = appId || '';

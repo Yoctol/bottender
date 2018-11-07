@@ -16,6 +16,7 @@ export default class MessengerBot extends Bot {
     verifyToken,
     batchConfig,
     origin,
+    skipAppSecretProof,
   }: {
     accessToken: string,
     appId?: string,
@@ -26,6 +27,7 @@ export default class MessengerBot extends Bot {
     verifyToken?: string,
     batchConfig?: Object,
     origin?: string,
+    skipAppSecretProof?: ?boolean,
   }) {
     const connector = new MessengerConnector({
       accessToken,
@@ -35,6 +37,7 @@ export default class MessengerBot extends Bot {
       verifyToken,
       batchConfig,
       origin,
+      skipAppSecretProof,
     });
     super({ connector, sessionStore, sync });
   }
