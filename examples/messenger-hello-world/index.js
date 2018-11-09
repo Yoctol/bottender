@@ -9,7 +9,7 @@ const bot = new MessengerBot({
 });
 
 bot.onEvent(async context => {
-  await context.sendText('Hello World');
+  await context.sendText('hello');
 });
 
 const server = createServer(bot, { verifyToken: config.verifyToken });
