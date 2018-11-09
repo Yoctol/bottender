@@ -17,6 +17,7 @@ export default class MessengerBot extends Bot {
     batchConfig,
     origin,
     skipAppSecretProof,
+    skipProfile,
   }: {
     accessToken: string,
     appId?: string,
@@ -28,6 +29,7 @@ export default class MessengerBot extends Bot {
     batchConfig?: Object,
     origin?: string,
     skipAppSecretProof?: ?boolean,
+    skipProfile?: ?boolean,
   }) {
     const connector = new MessengerConnector({
       accessToken,
@@ -38,6 +40,7 @@ export default class MessengerBot extends Bot {
       batchConfig,
       origin,
       skipAppSecretProof,
+      skipProfile,
     });
     super({ connector, sessionStore, sync });
   }
