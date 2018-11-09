@@ -84,6 +84,7 @@ type ConstructorOptions = {|
   batchConfig?: ?Object,
   origin?: string,
   skipAppSecretProof?: ?boolean,
+  skipProfile?: ?boolean,
 |};
 
 export default class MessengerConnector
@@ -93,6 +94,8 @@ export default class MessengerConnector
   _appId: string;
 
   _appSecret: string;
+
+  _skipProfile: boolean;
 
   _mapPageToAccessToken: ?(pageId: string) => ?Promise<string>;
 
@@ -112,6 +115,7 @@ export default class MessengerConnector
     batchConfig,
     origin,
     skipAppSecretProof,
+    skipProfile,
   }: ConstructorOptions) {
     this._client =
       client ||
@@ -127,6 +131,9 @@ export default class MessengerConnector
 
     this._mapPageToAccessToken = mapPageToAccessToken;
     this._verifyToken = verifyToken;
+
+    // FIXME: maybe set this default value as true
+    this._skipProfile = typeof skipProfile === 'boolean' ? skipProfile : false;
 
     this._batchConfig = batchConfig || null;
     if (this._batchConfig) {
@@ -255,24 +262,31 @@ export default class MessengerConnector
       }
 
       // FIXME: refine user
-      let user = {};
-      try {
-        user = await this._client.getUserProfile(senderId, {
-          access_token: customAccessToken,
-        });
-      } catch (e) {
-        warning(
-          false,
-          'getUserProfile() failed, `session.user` will only have `id`'
-        );
-        console.error(e);
-      }
+      if (this._skipProfile) {
+        session.user = {
+          _updatedAt: new Date().toISOString(),
+          id: senderId,
+        };
+      } else {
+        let user = {};
+        try {
+          user = await this._client.getUserProfile(senderId, {
+            access_token: customAccessToken,
+          });
+        } catch (e) {
+          warning(
+            false,
+            'getUserProfile() failed, `session.user` will only have `id`'
+          );
+          console.error(e);
+        }
 
-      session.user = {
-        _updatedAt: new Date().toISOString(),
-        ...user,
-        id: senderId,
-      };
+        session.user = {
+          _updatedAt: new Date().toISOString(),
+          ...user,
+          id: senderId,
+        };
+      }
     }
 
     // TODO: remove later
