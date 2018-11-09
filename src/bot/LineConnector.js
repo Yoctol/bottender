@@ -22,12 +22,15 @@ type ConstructorOptions = {|
   shouldBatch: ?boolean,
   sendMethod: ?string,
   origin?: string,
+  skipProfile?: ?boolean,
 |};
 
 export default class LineConnector implements Connector<LineRequestBody> {
   _client: LineClient;
 
   _channelSecret: string;
+
+  _skipProfile: boolean;
 
   _shouldBatch: ?boolean;
 
@@ -40,6 +43,7 @@ export default class LineConnector implements Connector<LineRequestBody> {
     shouldBatch,
     sendMethod,
     origin,
+    skipProfile,
   }: ConstructorOptions) {
     this._client =
       client ||
@@ -54,6 +58,9 @@ export default class LineConnector implements Connector<LineRequestBody> {
       'sendMethod should be one of `reply` or `push`'
     );
     this._sendMethod = sendMethod || 'push';
+
+    // FIXME: maybe set this default value as true
+    this._skipProfile = typeof skipProfile === 'boolean' ? skipProfile : false;
   }
 
   _isWebhookVerifyEvent(event: LineRawEvent): boolean {
@@ -111,10 +118,11 @@ export default class LineConnector implements Connector<LineRequestBody> {
         user = {
           id: source.userId,
           _updatedAt: new Date().toISOString(),
-          ...(await this._client.getGroupMemberProfile(
-            source.groupId,
-            source.userId
-          )),
+          ...(this._skipProfile &&
+            (await this._client.getGroupMemberProfile(
+              source.groupId,
+              source.userId
+            ))),
         };
       }
 
@@ -142,10 +150,11 @@ export default class LineConnector implements Connector<LineRequestBody> {
         user = {
           id: source.userId,
           _updatedAt: new Date().toISOString(),
-          ...(await this._client.getRoomMemberProfile(
-            source.roomId,
-            source.userId
-          )),
+          ...(this._skipProfile &&
+            (await this._client.getRoomMemberProfile(
+              source.roomId,
+              source.userId
+            ))),
         };
       }
 
@@ -168,12 +177,29 @@ export default class LineConnector implements Connector<LineRequestBody> {
       };
     } else if (source.type === 'user') {
       if (!session.user) {
-        const user = await this._client.getUserProfile(source.userId);
-        session.user = {
-          id: source.userId,
-          _updatedAt: new Date().toISOString(),
-          ...user,
-        };
+        if (this._skipProfile) {
+          session.user = {
+            id: source.userId,
+            _updatedAt: new Date().toISOString(),
+          };
+        } else {
+          let user = {};
+          try {
+            user = await this._client.getUserProfile(source.userId);
+          } catch (e) {
+            warning(
+              false,
+              'getUserProfile() failed, `session.user` will only have `id`'
+            );
+            console.error(e);
+          }
+
+          session.user = {
+            id: source.userId,
+            _updatedAt: new Date().toISOString(),
+            ...user,
+          };
+        }
       }
     }
 

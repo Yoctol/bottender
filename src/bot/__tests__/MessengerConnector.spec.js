@@ -164,11 +164,18 @@ const webhookTestRequest = {
 };
 
 function setup(
-  { accessToken, appSecret, mapPageToAccessToken, verifyToken } = {
+  {
+    accessToken,
+    appSecret,
+    mapPageToAccessToken,
+    verifyToken,
+    skipProfile,
+  } = {
     accessToken: ACCESS_TOKEN,
     appSecret: APP_SECRET,
     mapPageToAccessToken: jest.fn(),
     verifyToken: undefined,
+    skipProfile: false,
   }
 ) {
   const mockGraphAPIClient = {
@@ -183,6 +190,7 @@ function setup(
       appSecret,
       mapPageToAccessToken,
       verifyToken,
+      skipProfile,
     }),
   };
 }
@@ -422,6 +430,23 @@ describe('#updateSession', () => {
       'getUserProfile() failed, `session.user` will only have `id`'
     );
     expect(console.error).toBeCalledWith(error);
+  });
+
+  it(`update session without gettiing user's profile when skipProfile setted true`, async () => {
+    const { connector, mockGraphAPIClient } = setup({
+      skipProfile: true,
+    });
+
+    const session = {};
+    await connector.updateSession(session, request.body);
+
+    expect(mockGraphAPIClient.getUserProfile).not.toBeCalled();
+    expect(session).toEqual({
+      user: {
+        _updatedAt: expect.any(String),
+        id: '1412611362105802',
+      },
+    });
   });
 });
 

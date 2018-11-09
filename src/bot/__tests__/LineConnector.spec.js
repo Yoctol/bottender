@@ -81,7 +81,7 @@ const webhookVerifyRequest = {
   },
 };
 
-function setup({ sendMethod } = {}) {
+function setup({ sendMethod, skipProfile } = {}) {
   const mockLineAPIClient = {
     getUserProfile: jest.fn(),
     isValidSignature: jest.fn(),
@@ -98,9 +98,20 @@ function setup({ sendMethod } = {}) {
       accessToken: ACCESS_TOKEN,
       channelSecret: CHANNEL_SECRET,
       sendMethod,
+      skipProfile,
     }),
   };
 }
+
+const _consoleError = console.error;
+
+beforeEach(() => {
+  console.error = jest.fn();
+});
+
+afterEach(() => {
+  console.error = _consoleError;
+});
 
 describe('#platform', () => {
   it('should be line', () => {
@@ -264,6 +275,68 @@ describe('#updateSession', () => {
     expect(session).toEqual({
       type: 'user',
       user,
+    });
+    expect(Object.isFrozen(session.user)).toBe(true);
+    expect(Object.getOwnPropertyDescriptor(session, 'user')).toEqual({
+      configurable: false,
+      enumerable: true,
+      writable: false,
+      value: session.user,
+    });
+  });
+
+  it('update session when getUserProfile() failed', async () => {
+    const { connector, mockLineAPIClient } = setup();
+    const error = new Error('fail');
+
+    mockLineAPIClient.getUserProfile.mockRejectedValue(error);
+
+    const session = {};
+
+    await connector.updateSession(session, request.body);
+
+    expect(mockLineAPIClient.getUserProfile).toBeCalledWith(
+      'U206d25c2ea6bd87c17655609a1c37cb8'
+    );
+
+    expect(session).toEqual({
+      type: 'user',
+      user: {
+        _updatedAt: expect.any(String),
+        id: 'U206d25c2ea6bd87c17655609a1c37cb8',
+      },
+    });
+    expect(Object.isFrozen(session.user)).toBe(true);
+    expect(Object.getOwnPropertyDescriptor(session, 'user')).toEqual({
+      configurable: false,
+      enumerable: true,
+      writable: false,
+      value: session.user,
+    });
+    expect(warning).toBeCalledWith(
+      false,
+      'getUserProfile() failed, `session.user` will only have `id`'
+    );
+    expect(console.error).toBeCalledWith(error);
+  });
+
+  it(`update session without gettiing user's profile when skipProfile setted true`, async () => {
+    const { connector, mockLineAPIClient } = setup({
+      skipProfile: true,
+    });
+
+    const session = {};
+
+    await connector.updateSession(session, request.body);
+
+    expect(mockLineAPIClient.getUserProfile).not.toBeCalled();
+
+    expect(session).toEqual({
+      type: 'user',
+      user: {
+        _updatedAt: expect.any(String),
+        id: 'U206d25c2ea6bd87c17655609a1c37cb8',
+      },
     });
     expect(Object.isFrozen(session.user)).toBe(true);
     expect(Object.getOwnPropertyDescriptor(session, 'user')).toEqual({
