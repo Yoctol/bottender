@@ -1,3 +1,17 @@
+# 0.15.12 / 2018-11-09
+
+### messenger
+
+- [new] Add `skipProfile` option to `MessengerBot` and `MessengerConnector` to skip auto updating user profile:
+
+```js
+const bot = new MessengerBot({
+  accessToken: ACCESS_TOKEN,
+  appSecret: APP_SECRET,
+  skipProfile: true,
+});
+```
+
 # 0.15.11 / 2018-11-07
 
 ### messenger
