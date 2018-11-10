@@ -21,6 +21,7 @@ afterEach(() => {
 });
 
 const APP_ID = '1234567890';
+const PERSONA_ID = '987654321';
 
 const _rawEvent = {
   sender: { id: '1423587017700273' },
@@ -543,5 +544,82 @@ describe('#getAssociatedLabels', () => {
       'getAssociatedLabels: should not be called in context without session'
     );
     expect(client.getAssociatedLabels).not.toBeCalled();
+  });
+});
+
+describe('persona', () => {
+  describe('#uesPersona', () => {
+    it('should call API with persona_id', async () => {
+      const { context, client, session } = setup();
+
+      context.usePersona(PERSONA_ID);
+      await context.markSeen();
+      await context.typingOn();
+      await context.typingOff();
+      await context.sendText('hi');
+
+      expect(client.markSeen).toBeCalledWith(
+        session.user.id,
+        expect.objectContaining({
+          persona_id: PERSONA_ID,
+        })
+      );
+      expect(client.typingOn).toBeCalledWith(
+        session.user.id,
+        expect.objectContaining({
+          persona_id: PERSONA_ID,
+        })
+      );
+      expect(client.typingOff).toBeCalledWith(
+        session.user.id,
+        expect.objectContaining({
+          persona_id: PERSONA_ID,
+        })
+      );
+      expect(client.sendText).toBeCalledWith(
+        session.user.id,
+        'hi',
+        expect.objectContaining({
+          persona_id: PERSONA_ID,
+        })
+      );
+    });
+  });
+
+  describe('persona_id', () => {
+    it('should call API with persona_id', async () => {
+      const { context, client, session } = setup();
+
+      await context.markSeen({ persona_id: PERSONA_ID });
+      await context.typingOn({ persona_id: PERSONA_ID });
+      await context.typingOff({ persona_id: PERSONA_ID });
+      await context.sendText('hi', { persona_id: PERSONA_ID });
+
+      expect(client.markSeen).toBeCalledWith(
+        session.user.id,
+        expect.objectContaining({
+          persona_id: PERSONA_ID,
+        })
+      );
+      expect(client.typingOn).toBeCalledWith(
+        session.user.id,
+        expect.objectContaining({
+          persona_id: PERSONA_ID,
+        })
+      );
+      expect(client.typingOff).toBeCalledWith(
+        session.user.id,
+        expect.objectContaining({
+          persona_id: PERSONA_ID,
+        })
+      );
+      expect(client.sendText).toBeCalledWith(
+        session.user.id,
+        'hi',
+        expect.objectContaining({
+          persona_id: PERSONA_ID,
+        })
+      );
+    });
   });
 });
