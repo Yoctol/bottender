@@ -2653,6 +2653,13 @@ eslint-config-prettier@^3.1.0:
   dependencies:
     get-stdin "^6.0.0"
 
+eslint-config-prettier@^3.3.0:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-3.3.0.tgz#41afc8d3b852e757f06274ed6c44ca16f939a57d"
+  integrity sha512-Bc3bh5bAcKNvs3HOpSi6EfGA2IIp7EzWcg2tS4vP7stnXu/J1opihHDM7jI9JCIckyIDTgZLSWn7J3HY0j2JfA==
+  dependencies:
+    get-stdin "^6.0.0"
+
 eslint-config-react-app@^3.0.5:
   version "3.0.5"
   resolved "https://registry.yarnpkg.com/eslint-config-react-app/-/eslint-config-react-app-3.0.5.tgz#d199088ab486d7ccc56d40dedcb1482b01934fb2"
@@ -2830,10 +2837,10 @@ eslint@^4.15.0:
     table "4.0.2"
     text-table "~0.2.0"
 
-eslint@^5.8.0:
-  version "5.8.0"
-  resolved "https://registry.yarnpkg.com/eslint/-/eslint-5.8.0.tgz#91fbf24f6e0471e8fdf681a4d9dd1b2c9f28309b"
-  integrity sha512-Zok6Bru3y2JprqTNm14mgQ15YQu/SMDkWdnmHfFg770DIUlmMFd/gqqzCHekxzjHZJxXv3tmTpH0C1icaYJsRQ==
+eslint@^5.9.0:
+  version "5.9.0"
+  resolved "https://registry.yarnpkg.com/eslint/-/eslint-5.9.0.tgz#b234b6d15ef84b5849c6de2af43195a2d59d408e"
+  integrity sha512-g4KWpPdqN0nth+goDNICNXGfJF7nNnepthp46CAlJoJtC5K/cLu3NgCM3AHu1CkJ5Hzt9V0Y0PBAO6Ay/gGb+w==
   dependencies:
     "@babel/code-frame" "^7.0.0"
     ajv "^6.5.3"
@@ -3324,10 +3331,10 @@ flexbuffer@0.0.6:
   resolved "https://registry.yarnpkg.com/flexbuffer/-/flexbuffer-0.0.6.tgz#039fdf23f8823e440c38f3277e6fef1174215b30"
   integrity sha1-A5/fI/iCPkQMOPMnfm/vEXQhWzA=
 
-flow-bin@^0.85.0:
-  version "0.85.0"
-  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.85.0.tgz#a3ca80748a35a071d5bbb2fcd61d64d977fc53a6"
-  integrity sha512-ougBA2q6Rn9sZrjZQ9r5pTFxCotlGouySpD2yRIuq5AYwwfIT8HHhVMeSwrN5qJayjHINLJyrnsSkkPCZyfMrQ==
+flow-bin@^0.86.0:
+  version "0.86.0"
+  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.86.0.tgz#153a28722b4dc13b7200c74b644dd4d9f4969a11"
+  integrity sha512-ulRvFH3ewGIYwg+qPk/OJXoe3Nhqi0RyR0wqgK0b1NzUDEC6O99zU39MBTickXvlrr6iwRO6Wm4lVGeDmnzbew==
 
 follow-redirects@^1.3.0:
   version "1.5.9"
@@ -3400,6 +3407,15 @@ fs-extra@^7.0.0:
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-7.0.0.tgz#8cc3f47ce07ef7b3593a11b9fb245f7e34c041d6"
   integrity sha512-EglNDLRpmaTWiD/qraZn6HREAEAHJcJOmxNEYwq6xeMKnVMAy3GUcFB+wXt2C6k4CNvB/mP1y/U3dzvKKj5OtQ==
+  dependencies:
+    graceful-fs "^4.1.2"
+    jsonfile "^4.0.0"
+    universalify "^0.1.0"
+
+fs-extra@^7.0.1:
+  version "7.0.1"
+  resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-7.0.1.tgz#4f189c44aa123b895f722804f55ea23eadc348e9"
+  integrity sha512-YJDaCJZEnBmcbw13fvdAM9AwNOJwOzrE4pqMqBq5nFiEqXUqHwlK4B+3pUw6JNvfSPtX05xFHtYy/1ni01eGCw==
   dependencies:
     graceful-fs "^4.1.2"
     jsonfile "^4.0.0"
@@ -5007,10 +5023,10 @@ koa-router@^7.4.0:
     path-to-regexp "^1.1.1"
     urijs "^1.19.0"
 
-koa@^2.6.1:
-  version "2.6.1"
-  resolved "https://registry.yarnpkg.com/koa/-/koa-2.6.1.tgz#88cabb18cd297e0577a37e40f400c4b6f1699fef"
-  integrity sha512-n9R5Eex4y0drUeqFTeCIeXyz8wjr2AxBo2Cq8LvmiXbJl4yDA5KIrecMPkhnmgACZnPXMRyCLbJoyLmpM9aFAw==
+koa@^2.6.2:
+  version "2.6.2"
+  resolved "https://registry.yarnpkg.com/koa/-/koa-2.6.2.tgz#57ba4d049b0a99cae0d594e6144e2931949a7ce1"
+  integrity sha512-KdnBFhTgh9ysMMoYe4J4fLvaKjT7mF3nRYV8MjxLzx6qywFNeptqi4xevyUltg1fZl2CFJ+HeLXuCGx07Yvl/A==
   dependencies:
     accepts "^1.3.5"
     cache-content-type "^1.0.0"
@@ -5368,10 +5384,10 @@ merge@^1.2.0:
   resolved "https://registry.yarnpkg.com/merge/-/merge-1.2.0.tgz#7531e39d4949c281a66b8c5a6e0265e8b05894da"
   integrity sha1-dTHjnUlJwoGma4xabgJl6LBYlNo=
 
-messaging-api-line@^0.7.12:
-  version "0.7.12"
-  resolved "https://registry.yarnpkg.com/messaging-api-line/-/messaging-api-line-0.7.12.tgz#d7f503aba9fc5d71d389a7f5a20af56eeab8c23a"
-  integrity sha512-rQw9t+w/HuyoLE28+7z8leu5ot6wARiB6zttEgIAtF5tAtTp5mgqxiUtdxA3Mn8yRPsfN2bcF4QHCC3EUtTB+Q==
+messaging-api-line@^0.7.15:
+  version "0.7.15"
+  resolved "https://registry.yarnpkg.com/messaging-api-line/-/messaging-api-line-0.7.15.tgz#509e6087dd99beddce7a18d02209da57679459b2"
+  integrity sha512-NJQMO5exyAWUygNakIixRmxYjDFF3WiRC6/UpOIbNCo5dEx1y5nxvdhzRoW+BPKXOlRE7ZETOjSa9veiTbn9rg==
   dependencies:
     axios "^0.18.0"
     axios-error "^0.7.11"
@@ -5381,10 +5397,10 @@ messaging-api-line@^0.7.12:
     lodash.omit "^4.5.0"
     url-join "^4.0.0"
 
-messaging-api-messenger@^0.7.14:
-  version "0.7.14"
-  resolved "https://registry.yarnpkg.com/messaging-api-messenger/-/messaging-api-messenger-0.7.14.tgz#9b0075bed43b20b807c7b3d4856f6a97c13f3a09"
-  integrity sha512-DJsI9s9EWr3PhHTiH8vQKwCc22yvoSnwLu84V7D+dDPcs+ikOVM693nEaxbbqfRI8ng/MXxLc+NPydU0DWP9ug==
+messaging-api-messenger@^0.7.15:
+  version "0.7.15"
+  resolved "https://registry.yarnpkg.com/messaging-api-messenger/-/messaging-api-messenger-0.7.15.tgz#bcc3ac80ffa9cc35c9706aab6a4452ed83c2ffe2"
+  integrity sha512-jVWLzL/3WP5KW9Di8nFkwc1q/TTzvIbh1BMG+Jfjo6kJjt7h5HCiKC+xrz2Y2yUVGVQ5zksIhpQ0f47ohHdn+Q==
   dependencies:
     append-query "^2.0.1"
     axios "^0.18.0"
@@ -6347,10 +6363,10 @@ prettier@^1.14.3:
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.14.3.tgz#90238dd4c0684b7edce5f83b0fb7328e48bd0895"
   integrity sha512-qZDVnCrnpsRJJq5nSsiHCE3BYMED2OtsI+cmzIzF1QIfqm5ALf8tEJcO27zV1gKNKRPdhjO0dNWnrzssDQ1tFg==
 
-prettier@^1.15.1:
-  version "1.15.1"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.15.1.tgz#06c67106afb1b40e74b002353b2079cc7e0e67bf"
-  integrity sha512-4rgV2hyc/5Pk0XHH4VjJWHRgVjgRbpMfLQjREAhHBtyW1UvTFkjJEsueGYNYYZd9mn97K+1qv0EBwm11zoaSgA==
+prettier@^1.15.2:
+  version "1.15.2"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.15.2.tgz#d31abe22afa4351efa14c7f8b94b58bb7452205e"
+  integrity sha512-YgPLFFA0CdKL4Eg2IHtUSjzj/BWgszDHiNQAe0VAIBse34148whfdzLagRL+QiKS+YfK5ftB6X4v/MBw8yCoug==
 
 pretty-format@^23.6.0:
   version "23.6.0"

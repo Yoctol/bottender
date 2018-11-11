@@ -38,9 +38,23 @@ function setup({ success = true } = {}) {
 
   const client = {
     createSubscription: jest.fn(),
+    debugToken: jest.fn(),
+    getPageInfo: jest.fn(),
   };
 
   client.createSubscription.mockResolvedValue({ success });
+  client.debugToken.mockResolvedValue({
+    type: 'PAGE',
+    app_id: '000000000000000',
+    application: 'Social Cafe',
+    expires_at: 1352419328,
+    is_valid: true,
+    issued_at: 1347235328,
+    scopes: ['email', 'user_location'],
+    user_id: 1207059,
+  });
+
+  client.getPageInfo.mockResolvedValue({ id: '123456789', name: 'Page Name' });
 
   MessengerClient.connect = jest.fn(() => client);
 
@@ -81,7 +95,6 @@ describe('resolve', () => {
     await setWebhook(ACCESS_TOKEN, WEBHOOK, VERIFY_TOKEN);
 
     expect(client.createSubscription).toBeCalledWith({
-      app_id: '__APP_ID__',
       access_token: '__APP_ID__|__APP_SECRET__',
       callback_url: 'http://example.com/webhook',
       fields: [
@@ -104,7 +117,6 @@ describe('resolve', () => {
 
     expect(getWebhookFromNgrok).toBeCalledWith('4040');
     expect(client.createSubscription).toBeCalledWith({
-      app_id: '__APP_ID__',
       access_token: '__APP_ID__|__APP_SECRET__',
       callback_url: 'https://fakeDomain.ngrok.io',
       fields: [

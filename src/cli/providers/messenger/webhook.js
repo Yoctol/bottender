@@ -1,4 +1,5 @@
 import Confirm from 'prompt-confirm';
+import Table from 'cli-table3';
 import chalk from 'chalk';
 import invariant from 'invariant';
 import { MessengerClient } from 'messaging-api-messenger';
@@ -55,7 +56,11 @@ export async function setWebhook(
       accessToken = config.accessToken;
     }
 
-    const client = MessengerClient.connect(accessToken);
+    const client = MessengerClient.connect({
+      appId: config.appId,
+      appSecret: config.appSecret,
+      accessToken,
+    });
 
     const defaultFields = [
       'messages',
@@ -103,8 +108,42 @@ export async function setWebhook(
 
     const fields = config.fields || defaultFields;
 
+    const tokenInfo = await client.debugToken();
+
+    invariant(tokenInfo.is_valid, 'Page access token is invalid');
+    invariant(tokenInfo.type === 'PAGE', 'Access token is not a page token');
+
+    const pageInfo = await client.getPageInfo();
+
+    const table = new Table();
+
+    table.push(
+      [chalk.green('Page ID'), pageInfo.id],
+      [chalk.green('Page Name'), pageInfo.name],
+      [chalk.green('App Name'), tokenInfo.application],
+      [
+        chalk.green('Token Expires At'),
+        tokenInfo.expires_at === 0
+          ? 'Never'
+          : new Date(tokenInfo.expires_at * 1000).toString(),
+      ],
+      [chalk.green('Token Scopes'), tokenInfo.scopes.join(',')],
+      [chalk.green('App Fields'), fields.join(',')],
+      [chalk.green('Webhook URL'), webhook]
+    );
+
+    console.log(table.toString());
+
+    const prompt = new Confirm(
+      `Are you sure to create subscription with those settings?`
+    );
+    const result = await prompt.run();
+
+    if (!result) {
+      return;
+    }
+
     const { success } = await client.createSubscription({
-      app_id: config.appId,
       object: 'page',
       callback_url: webhook,
       verify_token: verifyToken,
