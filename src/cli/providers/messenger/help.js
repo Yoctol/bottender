@@ -13,6 +13,7 @@ const help = () => {
       webhook                 <action>    Manage webhook
       domains,
       whitelisted-domains     <action>    Manage whitelisted-domains
+      persona                 <action>    Manage persona
       attachment              <action>    Manage attachment
 
     ${chalk.dim('Actions:')}
