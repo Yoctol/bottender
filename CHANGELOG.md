@@ -1,3 +1,15 @@
+# 0.15.13 / 2018-11-12
+
+### messenger
+
+- [new] Add `context.usePersona`:
+
+```js
+context.usePersona('<PERSONA_ID>');
+await context.sendText('Hello');
+await context.sendText('World');
+```
+
 # 0.15.12 / 2018-11-09
 
 ### messenger
