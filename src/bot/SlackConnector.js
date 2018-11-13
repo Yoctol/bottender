@@ -268,9 +268,6 @@ export default class SlackConnector implements Connector<SlackRequestBody> {
       return false;
     }
 
-    // wait this PR to be merged
-    // https://github.com/facebook/flow/pull/4974
-    // $FlowExpectedError
     return crypto.timingSafeEqual(bufferFromBot, bufferFromBody);
   }
 }

@@ -257,9 +257,6 @@ export default class LineConnector implements Connector<LineRequestBody> {
       return false;
     }
 
-    // wait this PR to be merged
-    // https://github.com/facebook/flow/pull/4974
-    // $FlowExpectedError
     return crypto.timingSafeEqual(bufferFromSignature, hashBufferFromBody);
   }
 }
