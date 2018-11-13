@@ -20,6 +20,7 @@ type ConstructorOptions = {|
   accessToken?: string,
   channelSecret?: string,
   client?: LineClient,
+  mapDestinationToAccessToken?: (destination: string) => Promise<string>,
   shouldBatch: ?boolean,
   sendMethod: ?string,
   origin?: string,
@@ -33,6 +34,8 @@ export default class LineConnector implements Connector<LineRequestBody> {
 
   _skipProfile: boolean;
 
+  _mapDestinationToAccessToken: ?(destination: string) => Promise<string>;
+
   _shouldBatch: ?boolean;
 
   _sendMethod: ?string;
@@ -41,6 +44,7 @@ export default class LineConnector implements Connector<LineRequestBody> {
     accessToken,
     channelSecret,
     client,
+    mapDestinationToAccessToken,
     shouldBatch,
     sendMethod,
     origin,
@@ -53,6 +57,9 @@ export default class LineConnector implements Connector<LineRequestBody> {
         origin,
       });
     this._channelSecret = channelSecret || '';
+
+    this._mapDestinationToAccessToken = mapDestinationToAccessToken;
+
     this._shouldBatch = shouldBatch || false;
     warning(
       !sendMethod || sendMethod === 'reply' || sendMethod === 'push',
@@ -252,15 +259,29 @@ export default class LineConnector implements Connector<LineRequestBody> {
       .map(event => new LineEvent(event, { destination }));
   }
 
-  createContext(params: {
+  async createContext(params: {
     event: LineEvent,
     session: ?Session,
     initialState: ?Object,
     requestContext: ?Object,
-  }): LineContext {
+  }): Promise<LineContext> {
+    let customAccessToken;
+    if (this._mapDestinationToAccessToken) {
+      const { destination } = params.event;
+
+      if (!destination) {
+        warning(false, 'Could not find destination from request body.');
+      } else {
+        customAccessToken = await this._mapDestinationToAccessToken(
+          destination
+        );
+      }
+    }
+
     return new LineContext({
       ...params,
       client: this._client,
+      customAccessToken,
       shouldBatch: this._shouldBatch,
       sendMethod: this._sendMethod,
     });

@@ -508,7 +508,7 @@ const sendMethods = [
   ['sendAirlineFlightUpdateTemplate', 3],
 ];
 
-sendMethods.forEach(([method, len]) => {
+sendMethods.forEach(([method, arity]) => {
   Object.defineProperty(MessengerContext.prototype, method, {
     enumerable: false,
     configurable: true,
@@ -531,10 +531,10 @@ sendMethods.forEach(([method, len]) => {
       }
       this._isHandled = true;
 
-      const options = args[len - 2];
+      const options = args[arity - 2];
       const messageType = options && options.tag ? 'MESSAGE_TAG' : 'RESPONSE';
 
-      args[len - 2] = {
+      args[arity - 2] = {
         messaging_type: messageType,
         access_token: this._customAccessToken,
         persona_id: this._personaId,
