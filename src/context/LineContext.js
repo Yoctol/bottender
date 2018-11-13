@@ -18,6 +18,7 @@ type Options = {|
   session: ?Session,
   initialState: ?Object,
   requestContext: ?Object,
+  customAccessToken: ?string,
   shouldBatch: ?boolean,
   sendMethod: ?string,
 |};
@@ -28,6 +29,8 @@ class LineContext extends Context implements PlatformContext {
   _event: LineEvent = this._event;
 
   _session: ?Session = this._session;
+
+  _customAccessToken: ?string;
 
   _isReplied: boolean = false;
 
@@ -45,11 +48,12 @@ class LineContext extends Context implements PlatformContext {
     session,
     initialState,
     requestContext,
+    customAccessToken,
     shouldBatch,
     sendMethod,
   }: Options) {
     super({ client, event, session, initialState, requestContext });
-
+    this._customAccessToken = customAccessToken;
     this._shouldBatch = shouldBatch || false;
     this._sendMethod = sendMethod || 'push';
   }
@@ -60,6 +64,14 @@ class LineContext extends Context implements PlatformContext {
    */
   get platform(): string {
     return 'line';
+  }
+
+  /**
+   * Get applied access token.
+   *
+   */
+  get accessToken(): ?string {
+    return this._customAccessToken || this._client.accessToken;
   }
 
   /**
@@ -81,7 +93,9 @@ class LineContext extends Context implements PlatformContext {
           messageChunks.length === 1,
           'one replyToken can only be used to reply 5 messages'
         );
-        await this._client.reply(this._event.replyToken, messageChunks[0]);
+        await this._client.reply(this._event.replyToken, messageChunks[0], {
+          accessToken: this._customAccessToken,
+        });
       }
 
       if (this._pushMessages.length > 0) {
@@ -94,7 +108,9 @@ class LineContext extends Context implements PlatformContext {
             const messages = messageChunks[i];
 
             // eslint-disable-next-line no-await-in-loop
-            await this._client.push(sessionTypeId, messages);
+            await this._client.push(sessionTypeId, messages, {
+              accessToken: this._customAccessToken,
+            });
           }
         } else {
           warning(
@@ -120,14 +136,20 @@ class LineContext extends Context implements PlatformContext {
    * Send text to the owner of the session.
    *
    */
-  async sendText(text: string, ...args: Array<any>): Promise<any> {
+  async sendText(text: string, options?: Object): Promise<any> {
     if (this._sendMethod === 'reply') {
       // $FlowExpectedError: dynamically defined below
-      return this.replyText(text, ...args);
+      return this.replyText(text, {
+        accessToken: this._customAccessToken,
+        ...options,
+      });
     }
 
     // $FlowExpectedError: dynamically defined below
-    return this.pushText(text, ...args);
+    return this.pushText(text, {
+      accessToken: this._customAccessToken,
+      ...options,
+    });
   }
 
   /**
@@ -143,10 +165,14 @@ class LineContext extends Context implements PlatformContext {
     switch (this._session.type) {
       case 'room':
         this._isHandled = true;
-        return this._client.leaveRoom(this._session.room.id);
+        return this._client.leaveRoom(this._session.room.id, {
+          accessToken: this._customAccessToken,
+        });
       case 'group':
         this._isHandled = true;
-        return this._client.leaveGroup(this._session.group.id);
+        return this._client.leaveGroup(this._session.group.id, {
+          accessToken: this._customAccessToken,
+        });
       default:
         warning(
           false,
@@ -180,16 +206,24 @@ class LineContext extends Context implements PlatformContext {
       case 'room':
         return this._client.getRoomMemberProfile(
           this._session.room.id,
-          this._session.user.id
+          this._session.user.id,
+          {
+            accessToken: this._customAccessToken,
+          }
         );
       case 'group':
         return this._client.getGroupMemberProfile(
           this._session.group.id,
-          this._session.user.id
+          this._session.user.id,
+          {
+            accessToken: this._customAccessToken,
+          }
         );
       case 'user':
       default:
-        return this._client.getUserProfile(this._session.user.id);
+        return this._client.getUserProfile(this._session.user.id, {
+          accessToken: this._customAccessToken,
+        });
     }
   }
 
@@ -209,11 +243,20 @@ class LineContext extends Context implements PlatformContext {
 
     switch (this._session.type) {
       case 'room':
-        return this._client.getRoomMemberProfile(this._session.room.id, userId);
+        return this._client.getRoomMemberProfile(
+          this._session.room.id,
+          userId,
+          {
+            accessToken: this._customAccessToken,
+          }
+        );
       case 'group':
         return this._client.getGroupMemberProfile(
           this._session.group.id,
-          userId
+          userId,
+          {
+            accessToken: this._customAccessToken,
+          }
         );
       default:
         warning(
@@ -242,9 +285,13 @@ class LineContext extends Context implements PlatformContext {
 
     switch (this._session.type) {
       case 'room':
-        return this._client.getRoomMemberIds(this._session.room.id, start);
+        return this._client.getRoomMemberIds(this._session.room.id, start, {
+          accessToken: this._customAccessToken,
+        });
       case 'group':
-        return this._client.getGroupMemberIds(this._session.group.id, start);
+        return this._client.getGroupMemberIds(this._session.group.id, start, {
+          accessToken: this._customAccessToken,
+        });
       default:
         warning(
           false,
@@ -271,9 +318,13 @@ class LineContext extends Context implements PlatformContext {
 
     switch (this._session.type) {
       case 'room':
-        return this._client.getAllRoomMemberIds(this._session.room.id);
+        return this._client.getAllRoomMemberIds(this._session.room.id, {
+          accessToken: this._customAccessToken,
+        });
       case 'group':
-        return this._client.getAllGroupMemberIds(this._session.group.id);
+        return this._client.getAllGroupMemberIds(this._session.group.id, {
+          accessToken: this._customAccessToken,
+        });
       default:
         warning(
           false,
@@ -288,7 +339,9 @@ class LineContext extends Context implements PlatformContext {
    */
   async getLinkedRichMenu(): Promise<any> {
     if (this._session && this._session.user) {
-      return this._client.getLinkedRichMenu(this._session.user.id);
+      return this._client.getLinkedRichMenu(this._session.user.id, {
+        accessToken: this._customAccessToken,
+      });
     }
     warning(
       false,
@@ -302,7 +355,9 @@ class LineContext extends Context implements PlatformContext {
    */
   async linkRichMenu(richMenuId: string): Promise<any> {
     if (this._session && this._session.user) {
-      return this._client.linkRichMenu(this._session.user.id, richMenuId);
+      return this._client.linkRichMenu(this._session.user.id, richMenuId, {
+        accessToken: this._customAccessToken,
+      });
     }
     warning(
       false,
@@ -316,7 +371,9 @@ class LineContext extends Context implements PlatformContext {
    */
   async unlinkRichMenu(): Promise<any> {
     if (this._session && this._session.user) {
-      return this._client.unlinkRichMenu(this._session.user.id);
+      return this._client.unlinkRichMenu(this._session.user.id, {
+        accessToken: this._customAccessToken,
+      });
     }
     warning(
       false,
@@ -330,7 +387,9 @@ class LineContext extends Context implements PlatformContext {
    */
   async issueLinkToken(): Promise<any> {
     if (this._session && this._session.user) {
-      return this._client.issueLinkToken(this._session.user.id);
+      return this._client.issueLinkToken(this._session.user.id, {
+        accessToken: this._customAccessToken,
+      });
     }
     warning(
       false,
@@ -339,24 +398,24 @@ class LineContext extends Context implements PlatformContext {
   }
 }
 
-const types: Array<{ name: string, aliases?: Array<string> }> = [
-  { name: '' },
-  { name: 'Text' },
-  { name: 'Image' },
-  { name: 'Video' },
-  { name: 'Audio' },
-  { name: 'Location' },
-  { name: 'Sticker' },
-  { name: 'Imagemap' },
-  { name: 'Flex' },
-  { name: 'Template' },
-  { name: 'ButtonTemplate', aliases: ['ButtonsTemplate'] },
-  { name: 'ConfirmTemplate' },
-  { name: 'CarouselTemplate' },
-  { name: 'ImageCarouselTemplate' },
+const types: Array<{ name: string, arity: number, aliases?: Array<string> }> = [
+  { name: '', arity: 3 },
+  { name: 'Text', arity: 3 },
+  { name: 'Image', arity: 3 },
+  { name: 'Video', arity: 3 },
+  { name: 'Audio', arity: 3 },
+  { name: 'Location', arity: 3 },
+  { name: 'Sticker', arity: 3 },
+  { name: 'Imagemap', arity: 4 },
+  { name: 'Flex', arity: 4 },
+  { name: 'Template', arity: 4 },
+  { name: 'ButtonTemplate', aliases: ['ButtonsTemplate'], arity: 4 },
+  { name: 'ConfirmTemplate', arity: 4 },
+  { name: 'CarouselTemplate', arity: 4 },
+  { name: 'ImageCarouselTemplate', arity: 4 },
 ];
 
-types.forEach(({ name, aliases }) => {
+types.forEach(({ name, arity, aliases }) => {
   [name].concat(aliases || []).forEach(type => {
     Object.defineProperty(LineContext.prototype, `reply${type}`, {
       enumerable: false,
@@ -377,6 +436,12 @@ types.forEach(({ name, aliases }) => {
         }
 
         this._isReplied = true;
+
+        const options = args[arity - 2];
+        args[arity - 2] = {
+          accessToken: this._customAccessToken,
+          ...options,
+        };
 
         return this._client[`reply${name}`](this._event.replyToken, ...args);
       },
@@ -405,6 +470,12 @@ types.forEach(({ name, aliases }) => {
           }
           return;
         }
+
+        const options = args[arity - 2];
+        args[arity - 2] = {
+          accessToken: this._customAccessToken,
+          ...options,
+        };
 
         const sessionType = this._session.type;
         return this._client[`push${name}`](

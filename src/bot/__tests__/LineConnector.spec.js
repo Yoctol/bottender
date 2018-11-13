@@ -621,12 +621,12 @@ describe('#mapRequestToEvents', () => {
 });
 
 describe('#createContext', () => {
-  it('should create LineContext', () => {
+  it('should create LineContext', async () => {
     const { connector } = setup();
     const event = {};
     const session = {};
 
-    const context = connector.createContext({
+    const context = await connector.createContext({
       event,
       session,
     });

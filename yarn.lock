@@ -5384,10 +5384,10 @@ merge@^1.2.0:
   resolved "https://registry.yarnpkg.com/merge/-/merge-1.2.0.tgz#7531e39d4949c281a66b8c5a6e0265e8b05894da"
   integrity sha1-dTHjnUlJwoGma4xabgJl6LBYlNo=
 
-messaging-api-line@^0.7.15:
-  version "0.7.15"
-  resolved "https://registry.yarnpkg.com/messaging-api-line/-/messaging-api-line-0.7.15.tgz#509e6087dd99beddce7a18d02209da57679459b2"
-  integrity sha512-NJQMO5exyAWUygNakIixRmxYjDFF3WiRC6/UpOIbNCo5dEx1y5nxvdhzRoW+BPKXOlRE7ZETOjSa9veiTbn9rg==
+messaging-api-line@^0.8.0-alpha.0:
+  version "0.8.0-alpha.0"
+  resolved "https://registry.yarnpkg.com/messaging-api-line/-/messaging-api-line-0.8.0-alpha.0.tgz#6673c7152078eaa19a2c42fe5be6a32b70d031f3"
+  integrity sha512-qoU3LoDccesFo81fMQ2eObhRzrHF7UlEsIH15Axv79EK5O9UnirTtXzN+3pgl5J5hbh4QUbn8LL7MXYqlfY1sw==
   dependencies:
     axios "^0.18.0"
     axios-error "^0.7.11"

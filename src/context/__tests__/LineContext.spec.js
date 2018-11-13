@@ -86,6 +86,7 @@ const setup = ({
   requestContext,
   shouldBatch = false,
   sendMethod,
+  customAccessToken,
 } = {}) => {
   const client = LineClient.connect();
   const context = new LineContext({
@@ -95,6 +96,7 @@ const setup = ({
     requestContext,
     shouldBatch,
     sendMethod,
+    customAccessToken,
   });
   return {
     context,
@@ -150,7 +152,9 @@ describe('#leave', () => {
 
     await context.leave();
 
-    expect(client.leaveGroup).toBeCalledWith('fakeGroupId');
+    expect(client.leaveGroup).toBeCalledWith('fakeGroupId', {
+      accessToken: undefined,
+    });
     expect(context.isHandled).toBe(true);
   });
 
@@ -159,7 +163,9 @@ describe('#leave', () => {
 
     await context.leave();
 
-    expect(client.leaveRoom).toBeCalledWith('fakeRoomId');
+    expect(client.leaveRoom).toBeCalledWith('fakeRoomId', {
+      accessToken: undefined,
+    });
     expect(context.isHandled).toBe(true);
   });
 
@@ -186,12 +192,16 @@ describe('#reply', () => {
       },
     ]);
 
-    expect(client.reply).toBeCalledWith(rawEvent.replyToken, [
-      {
-        type: 'text',
-        text: 'xxx.com',
-      },
-    ]);
+    expect(client.reply).toBeCalledWith(
+      rawEvent.replyToken,
+      [
+        {
+          type: 'text',
+          text: 'xxx.com',
+        },
+      ],
+      { accessToken: undefined }
+    );
   });
 
   it('should work with quickReply', async () => {
@@ -230,7 +240,9 @@ describe('#replyText', () => {
 
     await context.replyText('xxx.com');
 
-    expect(client.replyText).toBeCalledWith(rawEvent.replyToken, 'xxx.com');
+    expect(client.replyText).toBeCalledWith(rawEvent.replyToken, 'xxx.com', {
+      accessToken: undefined,
+    });
   });
 
   it('should work with quickReply', async () => {
@@ -262,6 +274,18 @@ describe('#replyText', () => {
 
     expect(context.isHandled).toBe(true);
   });
+
+  it('should support custom token', async () => {
+    const { context, client } = setup({
+      customAccessToken: 'anyToken',
+    });
+
+    await context.replyText('xxx.com');
+
+    expect(client.replyText).toBeCalledWith(rawEvent.replyToken, 'xxx.com', {
+      accessToken: 'anyToken',
+    });
+  });
 });
 
 describe('#push', () => {
@@ -275,12 +299,16 @@ describe('#push', () => {
       },
     ]);
 
-    expect(client.push).toBeCalledWith(session.user.id, [
-      {
-        type: 'text',
-        text: 'xxx.com',
-      },
-    ]);
+    expect(client.push).toBeCalledWith(
+      session.user.id,
+      [
+        {
+          type: 'text',
+          text: 'xxx.com',
+        },
+      ],
+      { accessToken: undefined }
+    );
   });
 
   it('should work with quickReply', async () => {
@@ -319,7 +347,9 @@ describe('#pushText', () => {
 
     await context.pushText('xxx.com');
 
-    expect(client.pushText).toBeCalledWith(session.user.id, 'xxx.com');
+    expect(client.pushText).toBeCalledWith(session.user.id, 'xxx.com', {
+      accessToken: undefined,
+    });
   });
 
   it('should work with quickReply', async () => {
@@ -341,7 +371,9 @@ describe('#pushText', () => {
 
     await context.pushText('xxx.com');
 
-    expect(client.pushText).toBeCalledWith(session.room.id, 'xxx.com');
+    expect(client.pushText).toBeCalledWith(session.room.id, 'xxx.com', {
+      accessToken: undefined,
+    });
   });
 
   it('should work with group session', async () => {
@@ -351,7 +383,9 @@ describe('#pushText', () => {
 
     await context.pushText('xxx.com');
 
-    expect(client.pushText).toBeCalledWith(session.group.id, 'xxx.com');
+    expect(client.pushText).toBeCalledWith(session.group.id, 'xxx.com', {
+      accessToken: undefined,
+    });
   });
 
   it('should mark context as handled', async () => {
@@ -370,6 +404,18 @@ describe('#pushText', () => {
     expect(warning).toBeCalled();
     expect(client.pushText).not.toBeCalled();
   });
+
+  it('should support custom token', async () => {
+    const { context, client, session } = setup({
+      customAccessToken: 'anyToken',
+    });
+
+    await context.pushText('xxx.com');
+
+    expect(client.pushText).toBeCalledWith(session.user.id, 'xxx.com', {
+      accessToken: 'anyToken',
+    });
+  });
 });
 
 describe('send APIs', () => {
@@ -387,7 +433,9 @@ describe('send APIs', () => {
 
       await context.sendText('xxx.com');
 
-      expect(client.pushText).toBeCalledWith(session.user.id, 'xxx.com');
+      expect(client.pushText).toBeCalledWith(session.user.id, 'xxx.com', {
+        accessToken: undefined,
+      });
     });
 
     it('should work with quickReply', async () => {
@@ -409,7 +457,9 @@ describe('send APIs', () => {
 
       await context.sendText('xxx.com');
 
-      expect(client.pushText).toBeCalledWith(session.room.id, 'xxx.com');
+      expect(client.pushText).toBeCalledWith(session.room.id, 'xxx.com', {
+        accessToken: undefined,
+      });
     });
 
     it('should work with group session', async () => {
@@ -419,7 +469,9 @@ describe('send APIs', () => {
 
       await context.sendText('xxx.com');
 
-      expect(client.pushText).toBeCalledWith(session.group.id, 'xxx.com');
+      expect(client.pushText).toBeCalledWith(session.group.id, 'xxx.com', {
+        accessToken: undefined,
+      });
     });
 
     it('should mark context as handled', async () => {
@@ -435,12 +487,18 @@ describe('send APIs', () => {
     it('should call client.pushImage', async () => {
       const { context, client, session } = setup();
 
-      await context.sendImage('xxx.jpg', 'yyy.jpg');
+      await context.sendImage({
+        originalContentUrl: 'xxx.jpg',
+        previewImageUrl: 'yyy.jpg',
+      });
 
       expect(client.pushImage).toBeCalledWith(
         session.user.id,
-        'xxx.jpg',
-        'yyy.jpg'
+        {
+          originalContentUrl: 'xxx.jpg',
+          previewImageUrl: 'yyy.jpg',
+        },
+        { accessToken: undefined }
       );
     });
 
@@ -474,12 +532,18 @@ describe('send APIs', () => {
         session: roomSession,
       });
 
-      await context.sendImage('xxx.jpg', 'yyy.jpg');
+      await context.sendImage({
+        originalContentUrl: 'xxx.jpg',
+        previewImageUrl: 'yyy.jpg',
+      });
 
       expect(client.pushImage).toBeCalledWith(
         session.room.id,
-        'xxx.jpg',
-        'yyy.jpg'
+        {
+          originalContentUrl: 'xxx.jpg',
+          previewImageUrl: 'yyy.jpg',
+        },
+        { accessToken: undefined }
       );
     });
 
@@ -488,19 +552,28 @@ describe('send APIs', () => {
         session: groupSession,
       });
 
-      await context.sendImage('xxx.jpg', 'yyy.jpg');
+      await context.sendImage({
+        originalContentUrl: 'xxx.jpg',
+        previewImageUrl: 'yyy.jpg',
+      });
 
       expect(client.pushImage).toBeCalledWith(
         session.group.id,
-        'xxx.jpg',
-        'yyy.jpg'
+        {
+          originalContentUrl: 'xxx.jpg',
+          previewImageUrl: 'yyy.jpg',
+        },
+        { accessToken: undefined }
       );
     });
 
     it('should mark context as handled', async () => {
       const { context } = setup();
 
-      await context.sendImage('xxx.jpg', 'yyy.jpg');
+      await context.sendImage({
+        originalContentUrl: 'xxx.jpg',
+        previewImageUrl: 'yyy.jpg',
+      });
 
       expect(context.isHandled).toBe(true);
     });
@@ -508,7 +581,10 @@ describe('send APIs', () => {
     it('should call warning and not to send if dont have session', async () => {
       const { context, client } = setup({ session: false });
 
-      await context.sendImage('xxx.jpg', 'yyy.jpg');
+      await context.sendImage({
+        originalContentUrl: 'xxx.jpg',
+        previewImageUrl: 'yyy.jpg',
+      });
 
       expect(warning).toBeCalled();
       expect(client.pushImage).not.toBeCalled();
@@ -519,12 +595,18 @@ describe('send APIs', () => {
     it('should call client.pushAudio', async () => {
       const { context, client, session } = setup();
 
-      await context.sendAudio('xxx.m4a', 240000);
+      await context.sendAudio({
+        originalContentUrl: 'xxx.m4a',
+        duration: 240000,
+      });
 
       expect(client.pushAudio).toBeCalledWith(
         session.user.id,
-        'xxx.m4a',
-        240000
+        {
+          originalContentUrl: 'xxx.m4a',
+          duration: 240000,
+        },
+        { accessToken: undefined }
       );
     });
 
@@ -558,12 +640,18 @@ describe('send APIs', () => {
         session: roomSession,
       });
 
-      await context.sendAudio('xxx.m4a', 240000);
+      await context.sendAudio({
+        originalContentUrl: 'xxx.m4a',
+        duration: 240000,
+      });
 
       expect(client.pushAudio).toBeCalledWith(
         session.room.id,
-        'xxx.m4a',
-        240000
+        {
+          originalContentUrl: 'xxx.m4a',
+          duration: 240000,
+        },
+        { accessToken: undefined }
       );
     });
 
@@ -572,19 +660,28 @@ describe('send APIs', () => {
         session: groupSession,
       });
 
-      await context.sendAudio('xxx.m4a', 240000);
+      await context.sendAudio({
+        originalContentUrl: 'xxx.m4a',
+        duration: 240000,
+      });
 
       expect(client.pushAudio).toBeCalledWith(
         session.group.id,
-        'xxx.m4a',
-        240000
+        {
+          originalContentUrl: 'xxx.m4a',
+          duration: 240000,
+        },
+        { accessToken: undefined }
       );
     });
 
     it('should mark context as handled', async () => {
       const { context } = setup();
 
-      await context.sendAudio('xxx.m4a', 240000);
+      await context.sendAudio({
+        originalContentUrl: 'xxx.m4a',
+        duration: 240000,
+      });
 
       expect(context.isHandled).toBe(true);
     });
@@ -594,12 +691,18 @@ describe('send APIs', () => {
     it('should call client.pushVideo', async () => {
       const { context, client, session } = setup();
 
-      await context.sendVideo('xxx.mp4', 'yyy.jpg');
+      await context.sendVideo({
+        originalContentUrl: 'xxx.mp4',
+        previewImageUrl: 'yyy.jpg',
+      });
 
       expect(client.pushVideo).toBeCalledWith(
         session.user.id,
-        'xxx.mp4',
-        'yyy.jpg'
+        {
+          originalContentUrl: 'xxx.mp4',
+          previewImageUrl: 'yyy.jpg',
+        },
+        { accessToken: undefined }
       );
     });
 
@@ -633,12 +736,18 @@ describe('send APIs', () => {
         session: roomSession,
       });
 
-      await context.sendVideo('xxx.mp4', 'yyy.jpg');
+      await context.sendVideo({
+        originalContentUrl: 'xxx.mp4',
+        previewImageUrl: 'yyy.jpg',
+      });
 
       expect(client.pushVideo).toBeCalledWith(
         session.room.id,
-        'xxx.mp4',
-        'yyy.jpg'
+        {
+          originalContentUrl: 'xxx.mp4',
+          previewImageUrl: 'yyy.jpg',
+        },
+        { accessToken: undefined }
       );
     });
 
@@ -647,19 +756,28 @@ describe('send APIs', () => {
         session: groupSession,
       });
 
-      await context.sendVideo('xxx.mp4', 'yyy.jpg');
+      await context.sendVideo({
+        originalContentUrl: 'xxx.mp4',
+        previewImageUrl: 'yyy.jpg',
+      });
 
       expect(client.pushVideo).toBeCalledWith(
         session.group.id,
-        'xxx.mp4',
-        'yyy.jpg'
+        {
+          originalContentUrl: 'xxx.mp4',
+          previewImageUrl: 'yyy.jpg',
+        },
+        { accessToken: undefined }
       );
     });
 
     it('should mark context as handled', async () => {
       const { context } = setup();
 
-      await context.sendVideo('xxx.mp4', 'yyy.jpg');
+      await context.sendVideo({
+        originalContentUrl: 'xxx.mp4',
+        previewImageUrl: 'yyy.jpg',
+      });
 
       expect(context.isHandled).toBe(true);
     });
@@ -676,12 +794,16 @@ describe('send APIs', () => {
         longitude: 139.70372892916203,
       });
 
-      expect(client.pushLocation).toBeCalledWith(session.user.id, {
-        title: 'my location',
-        address: '〒150-0002 東京都渋谷区渋谷２丁目２１−１',
-        latitude: 35.65910807942215,
-        longitude: 139.70372892916203,
-      });
+      expect(client.pushLocation).toBeCalledWith(
+        session.user.id,
+        {
+          title: 'my location',
+          address: '〒150-0002 東京都渋谷区渋谷２丁目２１−１',
+          latitude: 35.65910807942215,
+          longitude: 139.70372892916203,
+        },
+        { accessToken: undefined }
+      );
     });
 
     it('should work with quickReply', async () => {
@@ -725,12 +847,16 @@ describe('send APIs', () => {
         longitude: 139.70372892916203,
       });
 
-      expect(client.pushLocation).toBeCalledWith(session.room.id, {
-        title: 'my location',
-        address: '〒150-0002 東京都渋谷区渋谷２丁目２１−１',
-        latitude: 35.65910807942215,
-        longitude: 139.70372892916203,
-      });
+      expect(client.pushLocation).toBeCalledWith(
+        session.room.id,
+        {
+          title: 'my location',
+          address: '〒150-0002 東京都渋谷区渋谷２丁目２１−１',
+          latitude: 35.65910807942215,
+          longitude: 139.70372892916203,
+        },
+        { accessToken: undefined }
+      );
     });
 
     it('should work with group session', async () => {
@@ -745,12 +871,16 @@ describe('send APIs', () => {
         longitude: 139.70372892916203,
       });
 
-      expect(client.pushLocation).toBeCalledWith(session.group.id, {
-        title: 'my location',
-        address: '〒150-0002 東京都渋谷区渋谷２丁目２１−１',
-        latitude: 35.65910807942215,
-        longitude: 139.70372892916203,
-      });
+      expect(client.pushLocation).toBeCalledWith(
+        session.group.id,
+        {
+          title: 'my location',
+          address: '〒150-0002 東京都渋谷区渋谷２丁目２１−１',
+          latitude: 35.65910807942215,
+          longitude: 139.70372892916203,
+        },
+        { accessToken: undefined }
+      );
     });
 
     it('should mark context as handled', async () => {
@@ -771,9 +901,19 @@ describe('send APIs', () => {
     it('should call client.pushSticker', async () => {
       const { context, client, session } = setup();
 
-      await context.sendSticker('1', '1');
+      await context.sendSticker({
+        packageId: '1',
+        stickerId: '1',
+      });
 
-      expect(client.pushSticker).toBeCalledWith(session.user.id, '1', '1');
+      expect(client.pushSticker).toBeCalledWith(
+        session.user.id,
+        {
+          packageId: '1',
+          stickerId: '1',
+        },
+        { accessToken: undefined }
+      );
     });
 
     it('should work with quickReply', async () => {
@@ -806,9 +946,19 @@ describe('send APIs', () => {
         session: roomSession,
       });
 
-      await context.sendSticker('1', '1');
+      await context.sendSticker({
+        packageId: '1',
+        stickerId: '1',
+      });
 
-      expect(client.pushSticker).toBeCalledWith(session.room.id, '1', '1');
+      expect(client.pushSticker).toBeCalledWith(
+        session.room.id,
+        {
+          packageId: '1',
+          stickerId: '1',
+        },
+        { accessToken: undefined }
+      );
     });
 
     it('should work with group session', async () => {
@@ -816,15 +966,28 @@ describe('send APIs', () => {
         session: groupSession,
       });
 
-      await context.sendSticker('1', '1');
+      await context.sendSticker({
+        packageId: '1',
+        stickerId: '1',
+      });
 
-      expect(client.pushSticker).toBeCalledWith(session.group.id, '1', '1');
+      expect(client.pushSticker).toBeCalledWith(
+        session.group.id,
+        {
+          packageId: '1',
+          stickerId: '1',
+        },
+        { accessToken: undefined }
+      );
     });
 
     it('should mark context as handled', async () => {
       const { context } = setup();
 
-      await context.sendSticker('1', '1');
+      await context.sendSticker({
+        packageId: '1',
+        stickerId: '1',
+      });
 
       expect(context.isHandled).toBe(true);
     });
@@ -867,7 +1030,8 @@ describe('send APIs', () => {
       expect(client.pushImagemap).toBeCalledWith(
         session.user.id,
         'this is an imagemap',
-        template
+        template,
+        { accessToken: undefined }
       );
     });
 
@@ -898,7 +1062,8 @@ describe('send APIs', () => {
       expect(client.pushImagemap).toBeCalledWith(
         session.room.id,
         'this is an imagemap',
-        template
+        template,
+        { accessToken: undefined }
       );
     });
 
@@ -912,7 +1077,8 @@ describe('send APIs', () => {
       expect(client.pushImagemap).toBeCalledWith(
         session.group.id,
         'this is an imagemap',
-        template
+        template,
+        { accessToken: undefined }
       );
     });
 
@@ -975,7 +1141,8 @@ describe('send APIs', () => {
       expect(client.pushFlex).toBeCalledWith(
         session.user.id,
         'this is a flex',
-        contents
+        contents,
+        { accessToken: undefined }
       );
     });
 
@@ -1006,7 +1173,8 @@ describe('send APIs', () => {
       expect(client.pushFlex).toBeCalledWith(
         session.room.id,
         'this is a flex',
-        contents
+        contents,
+        { accessToken: undefined }
       );
     });
 
@@ -1020,7 +1188,8 @@ describe('send APIs', () => {
       expect(client.pushFlex).toBeCalledWith(
         session.group.id,
         'this is a flex',
-        contents
+        contents,
+        { accessToken: undefined }
       );
     });
 
@@ -1066,7 +1235,8 @@ describe('send APIs', () => {
       expect(client.pushTemplate).toBeCalledWith(
         session.user.id,
         'this is a template',
-        template
+        template,
+        { accessToken: undefined }
       );
     });
 
@@ -1097,7 +1267,8 @@ describe('send APIs', () => {
       expect(client.pushTemplate).toBeCalledWith(
         session.room.id,
         'this is a template',
-        template
+        template,
+        { accessToken: undefined }
       );
     });
 
@@ -1111,7 +1282,8 @@ describe('send APIs', () => {
       expect(client.pushTemplate).toBeCalledWith(
         session.group.id,
         'this is a template',
-        template
+        template,
+        { accessToken: undefined }
       );
     });
 
@@ -1156,7 +1328,8 @@ describe('send APIs', () => {
       expect(client.pushButtonTemplate).toBeCalledWith(
         session.user.id,
         'this is a button template',
-        template
+        template,
+        { accessToken: undefined }
       );
     });
 
@@ -1187,7 +1360,8 @@ describe('send APIs', () => {
       expect(client.pushButtonTemplate).toBeCalledWith(
         session.room.id,
         'this is a button template',
-        template
+        template,
+        { accessToken: undefined }
       );
     });
 
@@ -1201,7 +1375,8 @@ describe('send APIs', () => {
       expect(client.pushButtonTemplate).toBeCalledWith(
         session.group.id,
         'this is a button template',
-        template
+        template,
+        { accessToken: undefined }
       );
     });
 
@@ -1221,7 +1396,8 @@ describe('send APIs', () => {
       expect(client.pushButtonTemplate).toBeCalledWith(
         session.user.id,
         'this is a button template',
-        template
+        template,
+        { accessToken: undefined }
       );
     });
   });
@@ -1251,7 +1427,8 @@ describe('send APIs', () => {
       expect(client.pushConfirmTemplate).toBeCalledWith(
         session.user.id,
         'this is a confirm template',
-        template
+        template,
+        { accessToken: undefined }
       );
     });
 
@@ -1282,7 +1459,8 @@ describe('send APIs', () => {
       expect(client.pushConfirmTemplate).toBeCalledWith(
         session.room.id,
         'this is a confirm template',
-        template
+        template,
+        { accessToken: undefined }
       );
     });
 
@@ -1296,7 +1474,8 @@ describe('send APIs', () => {
       expect(client.pushConfirmTemplate).toBeCalledWith(
         session.group.id,
         'this is a confirm template',
-        template
+        template,
+        { accessToken: undefined }
       );
     });
 
@@ -1368,7 +1547,8 @@ describe('send APIs', () => {
       expect(client.pushCarouselTemplate).toBeCalledWith(
         session.user.id,
         'this is a carousel template',
-        template
+        template,
+        { accessToken: undefined }
       );
     });
 
@@ -1402,7 +1582,8 @@ describe('send APIs', () => {
       expect(client.pushConfirmTemplate).toBeCalledWith(
         session.room.id,
         'this is a carousel template',
-        template
+        template,
+        { accessToken: undefined }
       );
     });
 
@@ -1419,7 +1600,8 @@ describe('send APIs', () => {
       expect(client.pushConfirmTemplate).toBeCalledWith(
         session.group.id,
         'this is a carousel template',
-        template
+        template,
+        { accessToken: undefined }
       );
     });
 
@@ -1477,7 +1659,8 @@ describe('profile APIs', () => {
 
       expect(client.getGroupMemberProfile).toBeCalledWith(
         'fakeGroupId',
-        'fakeUserId'
+        'fakeUserId',
+        { accessToken: undefined }
       );
     });
 
@@ -1488,7 +1671,8 @@ describe('profile APIs', () => {
 
       expect(client.getRoomMemberProfile).toBeCalledWith(
         'fakeRoomId',
-        'fakeUserId'
+        'fakeUserId',
+        { accessToken: undefined }
       );
     });
 
@@ -1497,7 +1681,9 @@ describe('profile APIs', () => {
 
       await context.getUserProfile();
 
-      expect(client.getUserProfile).toBeCalledWith('fakeUserId');
+      expect(client.getUserProfile).toBeCalledWith('fakeUserId', {
+        accessToken: undefined,
+      });
     });
   });
 
@@ -1520,7 +1706,8 @@ describe('profile APIs', () => {
 
       expect(client.getGroupMemberProfile).toBeCalledWith(
         'fakeGroupId',
-        'anotherUser'
+        'anotherUser',
+        { accessToken: undefined }
       );
     });
 
@@ -1531,7 +1718,8 @@ describe('profile APIs', () => {
 
       expect(client.getRoomMemberProfile).toBeCalledWith(
         'fakeRoomId',
-        'anotherUser'
+        'anotherUser',
+        { accessToken: undefined }
       );
     });
 
@@ -1568,7 +1756,8 @@ describe('member IDs APIs', () => {
 
       expect(client.getGroupMemberIds).toBeCalledWith(
         'fakeGroupId',
-        'startToken'
+        'startToken',
+        { accessToken: undefined }
       );
     });
 
@@ -1579,7 +1768,8 @@ describe('member IDs APIs', () => {
 
       expect(client.getRoomMemberIds).toBeCalledWith(
         'fakeRoomId',
-        'startToken'
+        'startToken',
+        { accessToken: undefined }
       );
     });
 
@@ -1612,7 +1802,9 @@ describe('member IDs APIs', () => {
 
       await context.getAllMemberIds();
 
-      expect(client.getAllGroupMemberIds).toBeCalledWith('fakeGroupId');
+      expect(client.getAllGroupMemberIds).toBeCalledWith('fakeGroupId', {
+        accessToken: undefined,
+      });
     });
 
     it('get memeber ids in room', async () => {
@@ -1620,7 +1812,9 @@ describe('member IDs APIs', () => {
 
       await context.getAllMemberIds();
 
-      expect(client.getAllRoomMemberIds).toBeCalledWith('fakeRoomId');
+      expect(client.getAllRoomMemberIds).toBeCalledWith('fakeRoomId', {
+        accessToken: undefined,
+      });
     });
 
     it('not get user profile in user session', async () => {
@@ -1647,7 +1841,9 @@ describe('ruchmenu APIs', () => {
 
       const result = await context.getLinkedRichMenu();
 
-      expect(client.getLinkedRichMenu).toBeCalledWith(session.user.id);
+      expect(client.getLinkedRichMenu).toBeCalledWith(session.user.id, {
+        accessToken: undefined,
+      });
       expect(result.richMenuId).toEqual('richMenuId');
     });
 
@@ -1666,7 +1862,11 @@ describe('ruchmenu APIs', () => {
 
       await context.linkRichMenu('richMenuId');
 
-      expect(client.linkRichMenu).toBeCalledWith(session.user.id, 'richMenuId');
+      expect(client.linkRichMenu).toBeCalledWith(
+        session.user.id,
+        'richMenuId',
+        { accessToken: undefined }
+      );
     });
 
     it('should warn without user', async () => {
@@ -1684,7 +1884,9 @@ describe('ruchmenu APIs', () => {
 
       await context.unlinkRichMenu();
 
-      expect(client.unlinkRichMenu).toBeCalledWith(session.user.id);
+      expect(client.unlinkRichMenu).toBeCalledWith(session.user.id, {
+        accessToken: undefined,
+      });
     });
 
     it('should warn without user', async () => {
@@ -1707,7 +1909,9 @@ describe('account link APIs', () => {
 
       const result = await context.issueLinkToken();
 
-      expect(client.issueLinkToken).toBeCalledWith(session.user.id);
+      expect(client.issueLinkToken).toBeCalledWith(session.user.id, {
+        accessToken: undefined,
+      });
       expect(result).toEqual({
         token: 'xxxxx',
       });
@@ -1765,20 +1969,24 @@ describe('batch', () => {
 
     await context.handlerDidEnd();
 
-    expect(client.reply).toBeCalledWith(rawEvent.replyToken, [
-      {
-        type: 'text',
-        text: '1',
-      },
-      {
-        type: 'text',
-        text: '2',
-      },
-      {
-        type: 'text',
-        text: '3',
-      },
-    ]);
+    expect(client.reply).toBeCalledWith(
+      rawEvent.replyToken,
+      [
+        {
+          type: 'text',
+          text: '1',
+        },
+        {
+          type: 'text',
+          text: '2',
+        },
+        {
+          type: 'text',
+          text: '3',
+        },
+      ],
+      { accessToken: undefined }
+    );
   });
 
   it('should work with context.reply', async () => {
@@ -1789,20 +1997,24 @@ describe('batch', () => {
 
     await context.handlerDidEnd();
 
-    expect(client.reply).toBeCalledWith(rawEvent.replyToken, [
-      {
-        type: 'text',
-        text: '1',
-      },
-      {
-        type: 'text',
-        text: '2',
-      },
-      {
-        type: 'text',
-        text: '3',
-      },
-    ]);
+    expect(client.reply).toBeCalledWith(
+      rawEvent.replyToken,
+      [
+        {
+          type: 'text',
+          text: '1',
+        },
+        {
+          type: 'text',
+          text: '2',
+        },
+        {
+          type: 'text',
+          text: '3',
+        },
+      ],
+      { accessToken: undefined }
+    );
   });
 
   it('should warning when reply over 5 messages', async () => {
@@ -1819,28 +2031,32 @@ describe('batch', () => {
     await context.handlerDidEnd();
 
     expect(client.reply).toHaveBeenCalledTimes(1);
-    expect(client.reply).toBeCalledWith(rawEvent.replyToken, [
-      {
-        type: 'text',
-        text: '1',
-      },
-      {
-        type: 'text',
-        text: '2',
-      },
-      {
-        type: 'text',
-        text: '3',
-      },
-      {
-        type: 'text',
-        text: '4',
-      },
-      {
-        type: 'text',
-        text: '5',
-      },
-    ]);
+    expect(client.reply).toBeCalledWith(
+      rawEvent.replyToken,
+      [
+        {
+          type: 'text',
+          text: '1',
+        },
+        {
+          type: 'text',
+          text: '2',
+        },
+        {
+          type: 'text',
+          text: '3',
+        },
+        {
+          type: 'text',
+          text: '4',
+        },
+        {
+          type: 'text',
+          text: '5',
+        },
+      ],
+      { accessToken: undefined }
+    );
     expect(warning).toBeCalledWith(false, expect.any(String));
   });
 
@@ -1853,20 +2069,24 @@ describe('batch', () => {
 
     await context.handlerDidEnd();
 
-    expect(client.push).toBeCalledWith(session.user.id, [
-      {
-        type: 'text',
-        text: '1',
-      },
-      {
-        type: 'text',
-        text: '2',
-      },
-      {
-        type: 'text',
-        text: '3',
-      },
-    ]);
+    expect(client.push).toBeCalledWith(
+      session.user.id,
+      [
+        {
+          type: 'text',
+          text: '1',
+        },
+        {
+          type: 'text',
+          text: '2',
+        },
+        {
+          type: 'text',
+          text: '3',
+        },
+      ],
+      { accessToken: undefined }
+    );
   });
 
   it('should work with context.push', async () => {
@@ -1877,20 +2097,24 @@ describe('batch', () => {
 
     await context.handlerDidEnd();
 
-    expect(client.push).toBeCalledWith(session.user.id, [
-      {
-        type: 'text',
-        text: '1',
-      },
-      {
-        type: 'text',
-        text: '2',
-      },
-      {
-        type: 'text',
-        text: '3',
-      },
-    ]);
+    expect(client.push).toBeCalledWith(
+      session.user.id,
+      [
+        {
+          type: 'text',
+          text: '1',
+        },
+        {
+          type: 'text',
+          text: '2',
+        },
+        {
+          type: 'text',
+          text: '3',
+        },
+      ],
+      { accessToken: undefined }
+    );
   });
 
   it('should have more requests when push over 5 messages', async () => {
@@ -1907,34 +2131,42 @@ describe('batch', () => {
     await context.handlerDidEnd();
 
     expect(client.push).toHaveBeenCalledTimes(2);
-    expect(client.push).toBeCalledWith(session.user.id, [
-      {
-        type: 'text',
-        text: '1',
-      },
-      {
-        type: 'text',
-        text: '2',
-      },
-      {
-        type: 'text',
-        text: '3',
-      },
-      {
-        type: 'text',
-        text: '4',
-      },
-      {
-        type: 'text',
-        text: '5',
-      },
-    ]);
-    expect(client.push).toBeCalledWith(session.user.id, [
-      {
-        type: 'text',
-        text: '6',
-      },
-    ]);
+    expect(client.push).toBeCalledWith(
+      session.user.id,
+      [
+        {
+          type: 'text',
+          text: '1',
+        },
+        {
+          type: 'text',
+          text: '2',
+        },
+        {
+          type: 'text',
+          text: '3',
+        },
+        {
+          type: 'text',
+          text: '4',
+        },
+        {
+          type: 'text',
+          text: '5',
+        },
+      ],
+      { accessToken: undefined }
+    );
+    expect(client.push).toBeCalledWith(
+      session.user.id,
+      [
+        {
+          type: 'text',
+          text: '6',
+        },
+      ],
+      { accessToken: undefined }
+    );
     expect(warning).not.toBeCalled();
   });
 });
@@ -1945,7 +2177,9 @@ describe('sendMethod', () => {
 
     await context.sendText('hello');
 
-    expect(client.pushText).toBeCalledWith(session.user.id, 'hello');
+    expect(client.pushText).toBeCalledWith(session.user.id, 'hello', {
+      accessToken: undefined,
+    });
     expect(client.replyText).not.toBeCalled();
   });
 
@@ -1956,7 +2190,9 @@ describe('sendMethod', () => {
 
     await context.sendText('hello');
 
-    expect(client.replyText).toBeCalledWith(rawEvent.replyToken, 'hello');
+    expect(client.replyText).toBeCalledWith(rawEvent.replyToken, 'hello', {
+      accessToken: undefined,
+    });
     expect(client.pushText).not.toBeCalled();
   });
 });
