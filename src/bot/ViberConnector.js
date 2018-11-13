@@ -133,9 +133,6 @@ export default class ViberConnector implements Connector<ViberRequestBody> {
       return false;
     }
 
-    // wait this PR to be merged
-    // https://github.com/facebook/flow/pull/4974
-    // $FlowExpectedError
     return crypto.timingSafeEqual(bufferFromSignature, hashBufferFromBody);
   }
 }
