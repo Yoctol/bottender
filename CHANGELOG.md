@@ -1,6 +1,10 @@
-# 0.15.13 / 2018-11-12
+# 0.15.14 / 2018-11-14
 
 ### messenger
+
+- [new] provide useful information when setting webhook
+
+# 0.15.13 / 2018-11-12
 
 - [new] Add `context.usePersona`:
 
