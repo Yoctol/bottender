@@ -111,7 +111,7 @@ const RtmMessage = {
   team: 'T056KAAAA',
 };
 
-function setup({ verificationToken } = {}) {
+function setup({ verificationToken, skipProfile } = {}) {
   const mockSlackOAuthClient = {
     getUserInfo: jest.fn(),
     getConversationInfo: jest.fn(),
@@ -121,7 +121,11 @@ function setup({ verificationToken } = {}) {
   SlackOAuthClient.connect = jest.fn();
   SlackOAuthClient.connect.mockReturnValue(mockSlackOAuthClient);
   return {
-    connector: new SlackConnector({ accessToken, verificationToken }),
+    connector: new SlackConnector({
+      accessToken,
+      verificationToken,
+      skipProfile,
+    }),
     mockSlackOAuthClient,
   };
 }
@@ -304,6 +308,29 @@ describe('#updateSession', () => {
         ...channel,
       },
       team: { members, _updatedAt: expect.any(String) },
+    });
+  });
+
+  it('update session without calling apis while skipProfile setted true', async () => {
+    const { connector, mockSlackOAuthClient } = setup({ skipProfile: true });
+
+    const session = {};
+
+    await connector.updateSession(session, request.body);
+
+    expect(mockSlackOAuthClient.getUserInfo).not.toBeCalled();
+    expect(mockSlackOAuthClient.getConversationInfo).not.toBeCalled();
+    expect(mockSlackOAuthClient.getAllConversationMembers).not.toBeCalled();
+    expect(mockSlackOAuthClient.getAllUserList).not.toBeCalled();
+    expect(session).toEqual({
+      user: {
+        _updatedAt: expect.any(String),
+        id: 'U13A00000',
+      },
+      channel: {
+        _updatedAt: expect.any(String),
+        id: 'C6A900000',
+      },
     });
   });
 });
