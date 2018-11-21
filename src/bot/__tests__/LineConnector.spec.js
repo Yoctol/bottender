@@ -81,7 +81,7 @@ const webhookVerifyRequest = {
   },
 };
 
-function setup({ sendMethod } = {}) {
+function setup({ sendMethod, skipProfile } = {}) {
   const mockLineAPIClient = {
     getUserProfile: jest.fn(),
     isValidSignature: jest.fn(),
@@ -98,6 +98,7 @@ function setup({ sendMethod } = {}) {
       accessToken: ACCESS_TOKEN,
       channelSecret: CHANNEL_SECRET,
       sendMethod,
+      skipProfile,
     }),
   };
 }
@@ -560,6 +561,30 @@ describe('#updateSession', () => {
       enumerable: true,
       writable: false,
       value: undefined,
+    });
+  });
+
+  it('update userId without calling any api while skipProfile setted true', async () => {
+    const { connector, mockLineAPIClient } = setup({ skipProfile: true });
+    const session = {};
+
+    await connector.updateSession(session, request.body);
+
+    expect(mockLineAPIClient.getUserProfile).not.toBeCalled();
+
+    expect(session).toEqual({
+      type: 'user',
+      user: {
+        id: 'U206d25c2ea6bd87c17655609a1c37cb8',
+        _updatedAt: expect.any(String),
+      },
+    });
+    expect(Object.isFrozen(session.user)).toBe(true);
+    expect(Object.getOwnPropertyDescriptor(session, 'user')).toEqual({
+      configurable: false,
+      enumerable: true,
+      writable: false,
+      value: session.user,
     });
   });
 

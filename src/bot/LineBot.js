@@ -14,6 +14,7 @@ export default class LineBot extends Bot {
     sync,
     shouldBatch,
     sendMethod,
+    skipProfile,
   }: {
     accessToken: string,
     channelSecret: string,
@@ -22,6 +23,7 @@ export default class LineBot extends Bot {
     shouldBatch: ?boolean,
     sendMethod: ?string,
     origin?: string,
+    skipProfile?: ?boolean,
   }) {
     const connector = new LineConnector({
       accessToken,
@@ -29,6 +31,7 @@ export default class LineBot extends Bot {
       shouldBatch,
       sendMethod,
       origin,
+      skipProfile,
     });
     super({ connector, sessionStore, sync });
   }
