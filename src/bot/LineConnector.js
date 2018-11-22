@@ -12,6 +12,7 @@ import { type Session } from '../session/Session';
 import { type Connector } from './Connector';
 
 type LineRequestBody = {
+  destination: string,
   events: Array<LineRawEvent>,
 };
 
@@ -244,9 +245,11 @@ export default class LineConnector implements Connector<LineRequestBody> {
   }
 
   mapRequestToEvents(body: LineRequestBody): Array<LineEvent> {
+    const { destination } = body;
+
     return body.events
-      .filter(e => !this._isWebhookVerifyEvent(e))
-      .map(e => new LineEvent(e));
+      .filter(event => !this._isWebhookVerifyEvent(event))
+      .map(event => new LineEvent(event, { destination }));
   }
 
   createContext(params: {

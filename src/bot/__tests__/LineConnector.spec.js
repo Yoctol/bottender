@@ -13,6 +13,7 @@ const CHANNEL_SECRET = 'FAKE_SECRET';
 
 const request = {
   body: {
+    destination: 'Uea8667adaf43586706170ff25ff47ae6',
     events: [
       {
         replyToken: 'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA',
@@ -607,6 +608,8 @@ describe('#mapRequestToEvents', () => {
     expect(events).toHaveLength(2);
     expect(events[0]).toBeInstanceOf(LineEvent);
     expect(events[1]).toBeInstanceOf(LineEvent);
+    expect(events[0].destination).toBe('Uea8667adaf43586706170ff25ff47ae6');
+    expect(events[1].destination).toBe('Uea8667adaf43586706170ff25ff47ae6');
   });
 
   it('should map webhook verify request to empty array', () => {

@@ -60,6 +60,10 @@ type AccountLink = {|
   nonce: string,
 |};
 
+type LineEventOptions = {
+  destination?: ?string,
+};
+
 export type LineRawEvent = {
   // only message, follow, join, postback, beacon, accountLink events have replyToken
   replyToken?: ReplyToken,
@@ -75,8 +79,11 @@ export type LineRawEvent = {
 export default class LineEvent implements Event {
   _rawEvent: LineRawEvent;
 
-  constructor(rawEvent: LineRawEvent) {
+  _destination: ?string;
+
+  constructor(rawEvent: LineRawEvent, options: LineEventOptions = {}) {
     this._rawEvent = rawEvent;
+    this._destination = options.destination;
   }
 
   /**
@@ -85,6 +92,14 @@ export default class LineEvent implements Event {
    */
   get rawEvent(): LineRawEvent {
     return this._rawEvent;
+  }
+
+  /**
+   * The destination is the id of the bot which this event is sent to.
+   *
+   */
+  get destination(): ?string {
+    return this._destination || null;
   }
 
   /**

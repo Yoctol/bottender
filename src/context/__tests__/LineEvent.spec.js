@@ -220,6 +220,8 @@ const accountLink = {
 
 const noSourceMessage = {};
 
+const destination = 'Uea8667adaf43586706170ff25ff47ae6';
+
 it('#rawEvent', () => {
   expect(new LineEvent(textMessage).rawEvent).toEqual(textMessage);
   expect(new LineEvent(imageMessage).rawEvent).toEqual(imageMessage);
@@ -233,6 +235,46 @@ it('#rawEvent', () => {
   expect(new LineEvent(leave).rawEvent).toEqual(leave);
   expect(new LineEvent(postback).rawEvent).toEqual(postback);
   expect(new LineEvent(beacon).rawEvent).toEqual(beacon);
+});
+
+it('#destination', () => {
+  expect(new LineEvent(textMessage, { destination }).destination).toEqual(
+    'Uea8667adaf43586706170ff25ff47ae6'
+  );
+  expect(new LineEvent(imageMessage, { destination }).destination).toEqual(
+    'Uea8667adaf43586706170ff25ff47ae6'
+  );
+  expect(new LineEvent(videoMessage, { destination }).destination).toEqual(
+    'Uea8667adaf43586706170ff25ff47ae6'
+  );
+  expect(new LineEvent(audioMessage, { destination }).destination).toEqual(
+    'Uea8667adaf43586706170ff25ff47ae6'
+  );
+  expect(new LineEvent(locationMessage, { destination }).destination).toEqual(
+    'Uea8667adaf43586706170ff25ff47ae6'
+  );
+  expect(new LineEvent(stickerMessage, { destination }).destination).toEqual(
+    'Uea8667adaf43586706170ff25ff47ae6'
+  );
+  expect(new LineEvent(follow, { destination }).destination).toEqual(
+    'Uea8667adaf43586706170ff25ff47ae6'
+  );
+  expect(new LineEvent(unfollow, { destination }).destination).toEqual(
+    'Uea8667adaf43586706170ff25ff47ae6'
+  );
+  expect(new LineEvent(join, { destination }).destination).toEqual(
+    'Uea8667adaf43586706170ff25ff47ae6'
+  );
+  expect(new LineEvent(leave, { destination }).destination).toEqual(
+    'Uea8667adaf43586706170ff25ff47ae6'
+  );
+  expect(new LineEvent(postback, { destination }).destination).toEqual(
+    'Uea8667adaf43586706170ff25ff47ae6'
+  );
+  expect(new LineEvent(beacon, { destination }).destination).toEqual(
+    'Uea8667adaf43586706170ff25ff47ae6'
+  );
+  expect(new LineEvent(textMessage).destination).toEqual(null);
 });
 
 it('#replyToken', () => {
