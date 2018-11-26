@@ -39,6 +39,7 @@ type ConstructorOptions = {|
   client?: SlackOAuthClient,
   verificationToken?: string,
   origin?: string,
+  skipProfile?: ?boolean,
 |};
 
 export default class SlackConnector implements Connector<SlackRequestBody> {
@@ -46,11 +47,14 @@ export default class SlackConnector implements Connector<SlackRequestBody> {
 
   _verificationToken: string;
 
+  _skipProfile: boolean;
+
   constructor({
     accessToken,
     client,
     verificationToken,
     origin,
+    skipProfile,
   }: ConstructorOptions) {
     this._client =
       client ||
@@ -59,6 +63,9 @@ export default class SlackConnector implements Connector<SlackRequestBody> {
         origin,
       });
     this._verificationToken = verificationToken || '';
+
+    // FIXME: maybe set this default value as true
+    this._skipProfile = typeof skipProfile === 'boolean' ? skipProfile : false;
 
     if (!this._verificationToken) {
       warning(
@@ -152,6 +159,36 @@ export default class SlackConnector implements Connector<SlackRequestBody> {
     const senderId = userFromBody;
 
     if (!senderId) {
+      return;
+    }
+
+    if (this._skipProfile) {
+      session.user = {
+        id: senderId,
+        _updatedAt: new Date().toISOString(),
+      };
+
+      session.channel = {
+        id: channelId,
+        _updatedAt: new Date().toISOString(),
+      };
+
+      Object.freeze(session.user);
+      Object.defineProperty(session, 'user', {
+        configurable: false,
+        enumerable: true,
+        writable: false,
+        value: session.user,
+      });
+
+      Object.freeze(session.channel);
+      Object.defineProperty(session, 'channel', {
+        configurable: false,
+        enumerable: true,
+        writable: false,
+        value: session.channel,
+      });
+
       return;
     }
 
