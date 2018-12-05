@@ -246,17 +246,20 @@ export default class MessengerConnector
     if (!session.user || this._profilePicExpired(session.user)) {
       const senderId = this.getUniqueSessionKey(body);
 
+      const rawEvent = this._getRawEventsFromRequest(body)[0];
+      const pageId = this._getPageIdFromRawEvent(rawEvent);
       let customAccessToken;
-      if (this._mapPageToAccessToken != null) {
-        const mapPageToAccessToken = this._mapPageToAccessToken;
 
-        const rawEvent = this._getRawEventsFromRequest(body)[0];
+      if (!pageId) {
+        warning(false, 'Could not find pageId from request body.');
+      } else {
+        session.page = {
+          id: pageId,
+          _updatedAt: new Date().toISOString(),
+        };
 
-        const pageId = this._getPageIdFromRawEvent(rawEvent);
-
-        if (!pageId) {
-          warning(false, 'Could not find pageId from request body.');
-        } else {
+        if (this._mapPageToAccessToken != null) {
+          const mapPageToAccessToken = this._mapPageToAccessToken;
           customAccessToken = await mapPageToAccessToken(pageId);
         }
       }
@@ -300,6 +303,14 @@ export default class MessengerConnector
       enumerable: true,
       writable: false,
       value: session.user,
+    });
+
+    Object.freeze(session.page);
+    Object.defineProperty(session, 'page', {
+      configurable: false,
+      enumerable: true,
+      writable: false,
+      value: session.page,
     });
   }
 
