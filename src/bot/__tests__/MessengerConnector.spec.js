@@ -297,6 +297,10 @@ describe('#updateSession', () => {
       { access_token: undefined }
     );
     expect(session).toEqual({
+      page: {
+        _updatedAt: expect.any(String),
+        id: '1895382890692545',
+      },
       user: {
         _updatedAt: expect.any(String),
         ...user,
@@ -329,6 +333,10 @@ describe('#updateSession', () => {
       { access_token: undefined }
     );
     expect(session).toEqual({
+      page: {
+        _updatedAt: expect.any(String),
+        id: '1895382890692545',
+      },
       user: {
         _updatedAt: expect.any(String),
         ...user,
@@ -361,6 +369,10 @@ describe('#updateSession', () => {
       { access_token: undefined }
     );
     expect(session).toEqual({
+      page: {
+        _updatedAt: expect.any(String),
+        id: '1895382890692545',
+      },
       user: {
         _updatedAt: expect.any(String),
         ...user,
@@ -393,6 +405,10 @@ describe('#updateSession', () => {
       { access_token: undefined }
     );
     expect(session).toEqual({
+      page: {
+        _updatedAt: expect.any(String),
+        id: '1895382890692545',
+      },
       user: {
         _updatedAt: expect.any(String),
         ...user,
@@ -414,6 +430,10 @@ describe('#updateSession', () => {
       { access_token: undefined }
     );
     expect(session).toEqual({
+      page: {
+        _updatedAt: expect.any(String),
+        id: '1895382890692545',
+      },
       user: {
         _updatedAt: expect.any(String),
         id: '1412611362105802',
@@ -436,6 +456,10 @@ describe('#updateSession', () => {
 
     expect(mockGraphAPIClient.getUserProfile).not.toBeCalled();
     expect(session).toEqual({
+      page: {
+        _updatedAt: expect.any(String),
+        id: '1895382890692545',
+      },
       user: {
         _updatedAt: expect.any(String),
         id: '1412611362105802',
