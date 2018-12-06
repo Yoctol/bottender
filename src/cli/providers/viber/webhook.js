@@ -100,6 +100,8 @@ export default async function main(ctx) {
     '-w': '--webhook',
     '--token': String,
     '-t': '--token',
+    '--events': String,
+    '-e': '--events',
     '--ngrok-port': String,
   });
 
@@ -108,9 +110,10 @@ export default async function main(ctx) {
       const webhook = ctx.argv['--webhook'];
       const accessToken = ctx.argv['--token'];
       const ngrokPort = ctx.argv['--ngrok-port'];
+      const events = ctx.argv['--events'];
 
-      if (typeof ctx.argv.e === 'string') {
-        const eventTypes = ctx.argv.e.split(',');
+      if (typeof events === 'string') {
+        const eventTypes = events.split(',');
         await setWebhook(webhook, ngrokPort, accessToken, eventTypes);
       } else {
         await setWebhook(webhook, ngrokPort, accessToken);

@@ -16,7 +16,7 @@ const help = () => {
     ${chalk.dim('Options:')}
 
       -w, --webhook         Webhook callback URL
-      -e                    The types of Viber events. Seperate events by comma (e.g. delivered,seen)
+      -e, --events          The types of Viber events. Seperate events by comma (e.g. delivered,seen)
       -t, --token           Specify Viber access token.
       --ngrok-port          Ngrok port(default: 4040)
 

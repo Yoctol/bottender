@@ -131,6 +131,9 @@ export default async function main(ctx) {
   ctx.argv = getSubArgs(ctx.argv, {
     '--token': String,
     '-t': '--token',
+    '--webhook': String,
+    '-w': '--webhook',
+    '--ngrok-port': Number,
   });
 
   switch (subcommand) {
