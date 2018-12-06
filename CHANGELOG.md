@@ -1,3 +1,26 @@
+# 0.15.15 / 2018-12-06
+
+### messenger
+
+- [new] Add `page.id` to Messenger sessions:
+
+```js
+session.page.id;
+```
+
+### line
+
+- [new] Add `skipProfile` to `LinekBot` and `LinekConnector`.
+- [new] Add `destination` to `LineEvent`.
+
+### slack
+
+- [new] Add `skipProfile` to `SlackBot` and `SlackConnector`.
+
+### telegram
+
+- [fix] Add missing cli alias `-w` for `--webhook`.
+
 # 0.15.14 / 2018-11-14
 
 ### messenger
