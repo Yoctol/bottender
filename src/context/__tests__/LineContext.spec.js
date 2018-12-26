@@ -2196,3 +2196,17 @@ describe('sendMethod', () => {
     expect(client.pushText).not.toBeCalled();
   });
 });
+
+describe('#useAccessToken', () => {
+  it('should support inject custom token', async () => {
+    const { context, client } = setup();
+
+    context.useAccessToken('anyToken');
+
+    await context.replyText('xxx.com');
+
+    expect(client.replyText).toBeCalledWith(rawEvent.replyToken, 'xxx.com', {
+      accessToken: 'anyToken',
+    });
+  });
+});

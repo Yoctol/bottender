@@ -72,8 +72,20 @@ class MessengerContext extends Context implements PlatformContext {
     return this._client[method](...args);
   }
 
+  /**
+   * Inject persona for the context.
+   *
+   */
   usePersona(personaId: string) {
     this._personaId = personaId;
+  }
+
+  /**
+   * Inject access token for the context.
+   *
+   */
+  useAccessToken(accessToken: string) {
+    this._customAccessToken = accessToken;
   }
 
   /**
