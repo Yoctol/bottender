@@ -75,6 +75,14 @@ class LineContext extends Context implements PlatformContext {
   }
 
   /**
+   * Inject access token for the context.
+   *
+   */
+  useAccessToken(accessToken: string) {
+    this._customAccessToken = accessToken;
+  }
+
+  /**
    * Determine if the reply token is already used.
    *
    */

@@ -756,3 +756,18 @@ describe('#typing', () => {
     expect(client.typingOff).toBeCalled();
   });
 });
+
+describe('#useAccessToken', () => {
+  it('should support inject custom token', async () => {
+    const { context, client, session } = setup();
+
+    context.useAccessToken('anyToken');
+
+    await context.sendText('xxx.com');
+
+    expect(client.sendText).toBeCalledWith(session.user.id, 'xxx.com', {
+      messaging_type: 'RESPONSE',
+      access_token: 'anyToken',
+    });
+  });
+});
