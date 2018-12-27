@@ -206,11 +206,6 @@ export default class LineConnector implements Connector<LineRequestBody> {
     }
 
     if (session.group) {
-      // TODO: remove later
-      if (!session.group._updatedAt) {
-        session.group._updatedAt = new Date().toISOString();
-      }
-
       Object.freeze(session.group);
     }
     Object.defineProperty(session, 'group', {
@@ -221,11 +216,6 @@ export default class LineConnector implements Connector<LineRequestBody> {
     });
 
     if (session.room) {
-      // TODO: remove later
-      if (!session.room._updatedAt) {
-        session.room._updatedAt = new Date().toISOString();
-      }
-
       Object.freeze(session.room);
     }
     Object.defineProperty(session, 'room', {
@@ -236,11 +226,6 @@ export default class LineConnector implements Connector<LineRequestBody> {
     });
 
     if (session.user) {
-      // TODO: remove later
-      if (!session.user._updatedAt) {
-        session.user._updatedAt = new Date().toISOString();
-      }
-
       Object.freeze(session.user);
     }
     Object.defineProperty(session, 'user', {
