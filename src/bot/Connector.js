@@ -4,7 +4,7 @@ import { type Session } from '../session/Session';
 
 export interface Connector<B> {
   +platform: string;
-  getUniqueSessionKey(body: B): ?string;
+  getUniqueSessionKey(body: B, requestContext?: ?Object): ?string;
   updateSession(session: Session, body: B): Promise<void>;
   mapRequestToEvents(body: B): Array<any>;
   createContext(params: {

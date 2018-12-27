@@ -112,7 +112,10 @@ export default class Bot {
       }
 
       const { platform } = this._connector;
-      const sessionKey = this._connector.getUniqueSessionKey(body);
+      const sessionKey = this._connector.getUniqueSessionKey(
+        body,
+        requestContext
+      );
 
       // Create or retrieve session if possible
       let sessionId;
