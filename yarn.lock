@@ -3043,6 +3043,13 @@ expect@^23.6.0:
     jest-message-util "^23.4.0"
     jest-regex-util "^23.3.0"
 
+express-xml-bodyparser@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/express-xml-bodyparser/-/express-xml-bodyparser-0.3.0.tgz#b1f5a98adf6c6e412c4ccba634234b82945c62be"
+  integrity sha1-sfWpit9sbkEsTMumNCNLgpRcYr4=
+  dependencies:
+    xml2js "^0.4.11"
+
 express@^4.16.4:
   version "4.16.4"
   resolved "https://registry.yarnpkg.com/express/-/express-4.16.4.tgz#fddef61926109e24c515ea97fd2f1bdbf62df12e"
@@ -5446,6 +5453,18 @@ messaging-api-viber@^0.7.11:
     lodash.omit "^4.5.0"
     url-join "^4.0.0"
 
+messaging-api-wechat@^0.7.11:
+  version "0.7.11"
+  resolved "https://registry.yarnpkg.com/messaging-api-wechat/-/messaging-api-wechat-0.7.11.tgz#22145de750ed4e0bb5240fb32709f53182b4886b"
+  integrity sha512-O1eZgbM7fNxLH4pdRFPaqlc8QdmRROIZoh37gNCB+feb3CZ90As6UGTYoqCgHiobtevXnG7wHFJfJV0JPyrWdA==
+  dependencies:
+    axios "^0.18.0"
+    axios-error "^0.7.11"
+    debug "^4.0.1"
+    form-data "^2.3.2"
+    lodash.omit "^4.5.0"
+    url-join "^4.0.0"
+
 messenger-batch@^0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/messenger-batch/-/messenger-batch-0.3.0.tgz#90071757c34ea93a76b331d207ef79ed0c2cf42f"
@@ -7114,7 +7133,7 @@ sane@^2.0.0:
   optionalDependencies:
     fsevents "^1.2.3"
 
-sax@^1.2.4:
+sax@>=0.6.0, sax@^1.2.4:
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/sax/-/sax-1.2.4.tgz#2816234e2378bddc4e5354fab5caa895df7100d9"
   integrity sha512-NqVDv9TpANUjFm0N8uM5GxL36UgKi9/atZw+x7YFnQ8ckwFGKrl4xX4yWtrey3UJm5nP1kUbnYgLopqWNSRhWw==
@@ -8297,10 +8316,23 @@ xml-name-validator@^3.0.0:
   resolved "https://registry.yarnpkg.com/xml-name-validator/-/xml-name-validator-3.0.0.tgz#6ae73e06de4d8c6e47f9fb181f78d648ad457c6a"
   integrity sha512-A5CUptxDsvxKJEU3yO6DuWBSJz/qizqzJKOMIfUJHETbBw/sFaDxgd6fxm1ewUaM0jZ444Fc5vC5ROYurg/4Pw==
 
+xml2js@^0.4.11:
+  version "0.4.19"
+  resolved "https://registry.yarnpkg.com/xml2js/-/xml2js-0.4.19.tgz#686c20f213209e94abf0d1bcf1efaa291c7827a7"
+  integrity sha512-esZnJZJOiJR9wWKMyuvSE1y6Dq5LCuJanqhxslH2bxM6duahNZ+HMpCLhBQGZkbX6xRf8x1Y2eJlgt2q3qo49Q==
+  dependencies:
+    sax ">=0.6.0"
+    xmlbuilder "~9.0.1"
+
 xml@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/xml/-/xml-1.0.1.tgz#78ba72020029c5bc87b8a81a3cfcd74b4a2fc1e5"
   integrity sha1-eLpyAgApxbyHuKgaPPzXS0ovweU=
+
+xmlbuilder@~9.0.1:
+  version "9.0.7"
+  resolved "https://registry.yarnpkg.com/xmlbuilder/-/xmlbuilder-9.0.7.tgz#132ee63d2ec5565c557e20f4c22df9aca686b10d"
+  integrity sha1-Ey7mPS7FVlxVfiD0wi35rKaGsQ0=
 
 y18n@^3.2.1:
   version "3.2.1"

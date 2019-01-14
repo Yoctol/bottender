@@ -22,6 +22,7 @@ function createMiddleware(bot) {
         res,
       }
     );
+    console.log(response);
     if (response) {
       res.set(response.headers || {});
       res.status(response.status || 200);
