@@ -5397,10 +5397,10 @@ messaging-api-line@^0.8.0-alpha.0:
     lodash.omit "^4.5.0"
     url-join "^4.0.0"
 
-messaging-api-messenger@^0.7.15:
-  version "0.7.15"
-  resolved "https://registry.yarnpkg.com/messaging-api-messenger/-/messaging-api-messenger-0.7.15.tgz#bcc3ac80ffa9cc35c9706aab6a4452ed83c2ffe2"
-  integrity sha512-jVWLzL/3WP5KW9Di8nFkwc1q/TTzvIbh1BMG+Jfjo6kJjt7h5HCiKC+xrz2Y2yUVGVQ5zksIhpQ0f47ohHdn+Q==
+messaging-api-messenger@^0.7.16:
+  version "0.7.16"
+  resolved "https://registry.yarnpkg.com/messaging-api-messenger/-/messaging-api-messenger-0.7.16.tgz#b030b71fa84d265ad7662b8d636599a1cd9e2a2a"
+  integrity sha512-5V9phjvDGnBwcgWS09I1T8NEHS4znzpxAoDwjwAd4grlfVpq8m3sse4phT36MRCVorcuW/RxqHkCsFPnM+XK0g==
   dependencies:
     append-query "^2.0.1"
     axios "^0.18.0"

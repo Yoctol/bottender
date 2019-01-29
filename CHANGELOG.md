@@ -1,3 +1,7 @@
+# 0.15.16 / 2019-01-29
+
+- [deps] upgrade messaging-api-messenger to [0.7.16](https://github.com/Yoctol/messaging-apis/releases/tag/v0.7.16)
+
 # 0.15.15 / 2018-12-06
 
 ### messenger
