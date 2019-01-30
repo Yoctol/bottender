@@ -1,6 +1,5 @@
 import omit from 'lodash/omit';
 import sleep from 'delay';
-import warning from 'warning';
 
 const methodMap = {
   // method name, arguments length (includes options)
@@ -120,18 +119,6 @@ export default options => context => {
 
         await sleep(delay);
 
-        return _method.call(context, ...args);
-      };
-
-      context[`${method}WithDelay`] = async function(delay, ...args) {
-        warning(
-          false,
-          `\`${method}WithDelay\` is deprecated. Use ${method} with \`options.delay\` instead`
-        );
-        if (this.typingOn) {
-          await this.typingOn();
-        }
-        await sleep(delay);
         return _method.call(context, ...args);
       };
       /* eslint-enable func-names */

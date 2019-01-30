@@ -43,14 +43,6 @@ it('typing duration can be overwritten', async () => {
   expect(_send).toBeCalledWith('Hello', {});
 });
 
-it('should attch sendTextWithDelay', () => {
-  const { context } = setup();
-
-  withTyping({ delay: 1000 })(context);
-
-  expect(context.sendTextWithDelay).toBeDefined();
-});
-
 describe('platforms', () => {
   it('works with messenger', async () => {
     const context = {
