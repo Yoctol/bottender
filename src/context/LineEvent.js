@@ -12,7 +12,9 @@ type EventType =
   | 'join'
   | 'leave'
   | 'beacon'
-  | 'accountLink';
+  | 'accountLink'
+  | 'memberJoined'
+  | 'memberLeft';
 
 type UserSource = {
   type: 'user',
@@ -60,12 +62,16 @@ type AccountLink = {|
   nonce: string,
 |};
 
+type Members = {
+  members: Array<UserSource>,
+};
+
 type LineEventOptions = {
   destination?: ?string,
 };
 
 export type LineRawEvent = {
-  // only message, follow, join, postback, beacon, accountLink events have replyToken
+  // only message, follow, join, postback, beacon, accountLink, memberJoined events have replyToken
   replyToken?: ReplyToken,
   type: EventType,
   timestamp: number,
@@ -74,6 +80,8 @@ export type LineRawEvent = {
   postback?: Postback,
   beacon?: Beacon,
   link?: AccountLink,
+  joined?: Members,
+  left?: Members,
 };
 
 export default class LineEvent implements Event {
@@ -426,5 +434,37 @@ export default class LineEvent implements Event {
    */
   get accountLink(): ?AccountLink {
     return this._rawEvent.link || null;
+  }
+
+  /**
+   * Determine if the event is an memberJoined event.
+   *
+   */
+  get isMemberJoined(): boolean {
+    return this._rawEvent.type === 'memberJoined';
+  }
+
+  /**
+   * The joined object from LINE raw event.
+   *
+   */
+  get memberJoined(): ?Members {
+    return this._rawEvent.joined || null;
+  }
+
+  /**
+   * Determine if the event is an memberLeft event.
+   *
+   */
+  get isMemberLeft(): boolean {
+    return this._rawEvent.type === 'memberLeft';
+  }
+
+  /**
+   * The left object from LINE raw event.
+   *
+   */
+  get memberLeft(): ?Members {
+    return this._rawEvent.left || null;
   }
 }
