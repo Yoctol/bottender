@@ -14,7 +14,8 @@ type EventType =
   | 'beacon'
   | 'accountLink'
   | 'memberJoined'
-  | 'memberLeft';
+  | 'memberLeft'
+  | 'things';
 
 type UserSource = {
   type: 'user',
@@ -66,6 +67,11 @@ type Members = {
   members: Array<UserSource>,
 };
 
+type Things = {
+  deviceId: string,
+  type: 'link' | 'unlink',
+};
+
 type LineEventOptions = {
   destination?: ?string,
 };
@@ -82,6 +88,7 @@ export type LineRawEvent = {
   link?: AccountLink,
   joined?: Members,
   left?: Members,
+  things?: Things,
 };
 
 export default class LineEvent implements Event {
@@ -466,5 +473,37 @@ export default class LineEvent implements Event {
    */
   get memberLeft(): ?Members {
     return this._rawEvent.left || null;
+  }
+
+  /**
+   * Determine if the event is an deviceLink event.
+   *
+   */
+  get isDeviceLink(): boolean {
+    return (
+      this._rawEvent.type === 'things' &&
+      typeof this._rawEvent.things !== 'undefined' &&
+      this._rawEvent.things.type === 'link'
+    );
+  }
+
+  /**
+   * Determine if the event is an deviceUnlink event.
+   *
+   */
+  get isDeviceUnlink(): boolean {
+    return (
+      this._rawEvent.type === 'things' &&
+      typeof this._rawEvent.things !== 'undefined' &&
+      this._rawEvent.things.type === 'unlink'
+    );
+  }
+
+  /**
+   * The things object from LINE raw event.
+   *
+   */
+  get things(): ?Things {
+    return this._rawEvent.things || null;
   }
 }
