@@ -1,3 +1,16 @@
+# 0.15.17 / 2019-02-01
+
+### line
+
+- [new] add member join/leave event to LineEvent
+
+```js
+event.isMemberJoined;
+event.memberJoined;
+event.isMemberLeft;
+event.memberLeft;
+```
+
 # 0.15.16 / 2019-01-29
 
 - [deps] upgrade messaging-api-messenger to [0.7.16](https://github.com/Yoctol/messaging-apis/releases/tag/v0.7.16)
