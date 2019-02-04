@@ -1,5 +1,6 @@
 import bodyParser from 'body-parser';
 import express from 'express';
+import xmlBodyParser from 'express-xml-bodyparser';
 
 import registerRoutes from './registerRoutes';
 
@@ -14,6 +15,7 @@ function createServer(bot, config = {}) {
       },
     })
   );
+  server.use(xmlBodyParser());
 
   registerRoutes(server, bot, config);
 

@@ -9,6 +9,8 @@ import verifyMessengerWebhook from './verifyMessengerWebhook';
 import verifySlackSignature from './verifySlackSignature';
 import verifySlackWebhook from './verifySlackWebhook';
 import verifyViberSignature from './verifyViberSignature';
+import verifyWechatSignature from './verifyWechatSignature';
+import verifyWechatWebhook from './verifyWechatWebhook';
 
 function registerRoutes(server, bot, config = {}) {
   const path = config.path || '/';
@@ -28,6 +30,11 @@ function registerRoutes(server, bot, config = {}) {
     middleware.unshift(verifyLineSignature(bot));
   } else if (bot.connector.platform === 'viber') {
     middleware.unshift(verifyViberSignature(bot));
+  } else if (bot.connector.platform === 'wechat') {
+    verifyToken =
+      config.verifyToken || bot.connector.verifyToken || shortid.generate();
+    server.get(path, verifyWechatWebhook({ verifyToken }));
+    middleware.unshift(verifyWechatSignature(bot));
   }
 
   server.post(path, ...middleware, createMiddleware(bot));

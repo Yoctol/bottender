@@ -11,6 +11,7 @@ export { default as LineBot } from './bot/LineBot';
 export { default as SlackBot } from './bot/SlackBot';
 export { default as TelegramBot } from './bot/TelegramBot';
 export { default as ViberBot } from './bot/ViberBot';
+export { default as WechatBot } from './bot/WechatBot';
 
 /* Connector */
 export { default as ConsoleConnector } from './bot/ConsoleConnector';
@@ -20,6 +21,7 @@ export { default as LineConnector } from './bot/LineConnector';
 export { default as SlackConnector } from './bot/SlackConnector';
 export { default as TelegramConnector } from './bot/TelegramConnector';
 export { default as ViberConnector } from './bot/ViberConnector';
+export { default as WechatConnector } from './bot/WechatConnector';
 
 /* HandlerBuilder */
 export { default as middleware } from './handlers/middleware';
@@ -62,6 +64,7 @@ export { default as LineContext } from './context/LineContext';
 export { default as SlackContext } from './context/SlackContext';
 export { default as TelegramContext } from './context/TelegramContext';
 export { default as ViberContext } from './context/ViberContext';
+export { default as WechatContext } from './context/WechatContext';
 
 /* Event */
 export { default as ConsoleEvent } from './context/ConsoleEvent';
@@ -71,6 +74,7 @@ export { default as LineEvent } from './context/LineEvent';
 export { default as SlackEvent } from './context/SlackEvent';
 export { default as TelegramEvent } from './context/TelegramEvent';
 export { default as ViberEvent } from './context/ViberEvent';
+export { default as WechatEvent } from './context/WechatEvent';
 
 /* Utils */
 export { utils };
