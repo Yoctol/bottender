@@ -1,4 +1,5 @@
 /* @flow */
+import EventEmitter from 'events';
 
 import TestContext from '../context/TestContext';
 import TestEvent, { type TestRawEvent } from '../context/TestEvent';
@@ -76,6 +77,7 @@ export default class TestConnector implements Connector<TestRequestBody> {
     session: ?Session,
     initialState: ?Object,
     requestContext: ?Object,
+    emitter?: ?EventEmitter,
   }) {
     return new TestContext({
       ...params,

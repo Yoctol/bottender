@@ -1,4 +1,5 @@
 /* @flow */
+import EventEmitter from 'events';
 
 import { TelegramClient } from 'messaging-api-telegram';
 
@@ -158,6 +159,7 @@ export default class TelegramConnector
     session: ?Session,
     initialState: ?Object,
     requestContext: ?Object,
+    emitter?: ?EventEmitter,
   }): TelegramContext {
     return new TelegramContext({
       ...params,

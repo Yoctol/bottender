@@ -1,10 +1,13 @@
 /* @flow */
 
+import EventEmitter from 'events';
+
 import debug from 'debug';
 import invariant from 'invariant';
 import pMap from 'p-map';
 
 import CacheBasedSessionStore from '../session/CacheBasedSessionStore';
+import Context from '../context/Context';
 import MemoryCacheStore from '../cache/MemoryCacheStore';
 import { type Builder, type FunctionalHandler } from '../handlers/Handler';
 import { type Session } from '../session/Session';
@@ -29,6 +32,8 @@ type RequestHandler = (
   requestContext?: ?Object
 ) => void | Promise<void>;
 
+type ErrorHandler = (err: Error, ctx?: Context) => void | Promise<void>;
+
 export default class Bot {
   _sessions: SessionStore;
 
@@ -44,6 +49,8 @@ export default class Bot {
 
   _sync: boolean;
 
+  _emitter: EventEmitter;
+
   constructor({
     connector,
     sessionStore = createMemorySessionStore(),
@@ -58,6 +65,7 @@ export default class Bot {
     this._connector = connector;
     this._handler = null;
     this._sync = sync;
+    this._emitter = new EventEmitter();
   }
 
   get connector(): Connector<any> {
@@ -72,12 +80,21 @@ export default class Bot {
     return this._handler;
   }
 
+  get emitter(): EventEmitter {
+    return this._emitter;
+  }
+
   onEvent(handler: FunctionalHandler | Builder): Bot {
     invariant(
       handler,
       'onEvent: Can not pass `undefined`, `null` or any falsy value as handler'
     );
     this._handler = handler.build ? handler.build() : handler;
+    return this;
+  }
+
+  onError(handler: ErrorHandler): Bot {
+    this._emitter.on('error', handler.build ? handler.build() : handler);
     return this;
   }
 
@@ -96,6 +113,10 @@ export default class Bot {
       throw new Error(
         'Bot: Missing event handler function. You should assign it using onEvent(...)'
       );
+    }
+
+    if (!this._emitter.listenerCount('error')) {
+      this._emitter.on('error', console.error);
     }
 
     return async (body: Object, requestContext?: ?Object) => {
@@ -159,6 +180,7 @@ export default class Bot {
             session: ((session: any): Session),
             initialState: this._initialState,
             requestContext,
+            emitter: this._emitter,
           }),
         {
           concurrency: 5,
@@ -186,6 +208,10 @@ export default class Bot {
               if (context.handlerDidEnd) {
                 return context.handlerDidEnd();
               }
+            })
+            .catch(err => {
+              context.emitError(err);
+              throw err;
             })
         )
       );

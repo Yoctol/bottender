@@ -1,4 +1,5 @@
 /* @flow */
+import EventEmitter from 'events';
 
 import ConsoleContext from '../context/ConsoleContext';
 import ConsoleEvent, { type ConsoleRawEvent } from '../context/ConsoleEvent';
@@ -75,6 +76,7 @@ export default class ConsoleConnector implements Connector<ConsoleRequestBody> {
     session: ?Session,
     initialState: ?Object,
     requestContext: ?Object,
+    emitter?: ?EventEmitter,
   }) {
     return new ConsoleContext({
       ...params,

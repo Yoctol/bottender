@@ -1,4 +1,5 @@
 /* @flow */
+import EventEmitter from 'events';
 
 import chunk from 'lodash/chunk';
 import invariant from 'invariant';
@@ -21,6 +22,7 @@ type Options = {|
   customAccessToken: ?string,
   shouldBatch: ?boolean,
   sendMethod: ?string,
+  emitter: ?EventEmitter,
 |};
 
 class LineContext extends Context implements PlatformContext {
@@ -51,8 +53,9 @@ class LineContext extends Context implements PlatformContext {
     customAccessToken,
     shouldBatch,
     sendMethod,
+    emitter,
   }: Options) {
-    super({ client, event, session, initialState, requestContext });
+    super({ client, event, session, initialState, requestContext, emitter });
     this._customAccessToken = customAccessToken;
     this._shouldBatch = shouldBatch || false;
     this._sendMethod = sendMethod || 'push';

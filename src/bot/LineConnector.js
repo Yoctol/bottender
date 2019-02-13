@@ -1,5 +1,6 @@
 /* @flow */
 
+import EventEmitter from 'events';
 import crypto from 'crypto';
 
 import warning from 'warning';
@@ -249,6 +250,7 @@ export default class LineConnector implements Connector<LineRequestBody> {
     session: ?Session,
     initialState: ?Object,
     requestContext: ?Object,
+    emitter?: ?EventEmitter,
   }): Promise<LineContext> {
     let customAccessToken;
     if (this._mapDestinationToAccessToken) {

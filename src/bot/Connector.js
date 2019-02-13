@@ -1,4 +1,5 @@
 /* @flow */
+import EventEmitter from 'events';
 
 import { type Session } from '../session/Session';
 
@@ -12,5 +13,6 @@ export interface Connector<B> {
     session: ?Session,
     initialState: ?Object,
     requestContext: ?Object,
+    emitter?: ?EventEmitter,
   }): any;
 }

@@ -1,5 +1,6 @@
 /* @flow */
 
+import EventEmitter from 'events';
 import crypto from 'crypto';
 
 import isAfter from 'date-fns/is_after';
@@ -327,6 +328,7 @@ export default class MessengerConnector
     session: ?Session,
     initialState: ?Object,
     requestContext: ?Object,
+    emitter?: ?EventEmitter,
   }): Promise<MessengerContext> {
     let customAccessToken;
     if (this._mapPageToAccessToken) {

@@ -1,4 +1,5 @@
 import Bot from '../Bot';
+import Context from '../../context/Context';
 
 function setup({
   connector = {
@@ -332,7 +333,7 @@ describe('#createRequestHandler', () => {
       createContext: jest.fn(() => ({ event, session })),
     };
 
-    const { bot, sessionStore } = setup({ connector });
+    const { bot, sessionStore } = setup({ connector, sync: true });
 
     connector.getUniqueSessionKey.mockReturnValue('__id__');
     sessionStore.read.mockResolvedValue(session);
@@ -343,8 +344,6 @@ describe('#createRequestHandler', () => {
     const requestHandler = bot.createRequestHandler();
 
     await requestHandler({});
-    await Promise.resolve();
-    await Promise.resolve();
 
     expect(sessionStore.write).toBeCalledWith('any:__id__', {
       id: 'any:__id__',
@@ -421,6 +420,102 @@ describe('#onEvent', () => {
     const { bot } = setup({ connector });
 
     expect(bot.onEvent(() => {})).toBe(bot);
+  });
+});
+
+describe('#onError', () => {
+  it('should catch thrown handler error', async () => {
+    const event = {};
+    const connector = {
+      platform: 'any',
+      getUniqueSessionKey: jest.fn(),
+      shouldSessionUpdate: jest.fn(),
+      updateSession: jest.fn(),
+      mapRequestToEvents: jest.fn(() => [event]),
+      createContext: ({ emitter }) =>
+        new Context({ event, session: undefined, emitter }),
+    };
+
+    const { bot } = setup({ connector });
+
+    let receivedError;
+    let receivedContext;
+
+    const promise = new Promise(resolve => {
+      bot
+        .onEvent(() => {
+          throw new Error('boom');
+        })
+        .onError((err, context) => {
+          receivedError = err;
+          receivedContext = context;
+          resolve();
+        });
+    });
+
+    const requestHandler = bot.createRequestHandler();
+
+    await requestHandler({});
+
+    await promise;
+
+    expect(receivedError).toBeInstanceOf(Error);
+    expect(receivedContext).toBeInstanceOf(Context);
+  });
+
+  it('should receive emitted error and context', async () => {
+    const event = {};
+    const connector = {
+      platform: 'any',
+      getUniqueSessionKey: jest.fn(),
+      shouldSessionUpdate: jest.fn(),
+      updateSession: jest.fn(),
+      mapRequestToEvents: jest.fn(() => [event]),
+      createContext: ({ emitter }) =>
+        new Context({ event, session: undefined, emitter }),
+    };
+
+    const { bot } = setup({ connector });
+
+    let receivedError;
+    let receivedContext;
+
+    const promise = new Promise(resolve => {
+      bot
+        .onEvent(context => {
+          context.emitError(new Error('boom'));
+        })
+        .onError((err, context) => {
+          receivedError = err;
+          receivedContext = context;
+          resolve();
+        });
+    });
+
+    const requestHandler = bot.createRequestHandler();
+
+    await requestHandler({});
+
+    await promise;
+
+    expect(receivedError).toBeInstanceOf(Error);
+    expect(receivedContext).toBeInstanceOf(Context);
+  });
+
+  it('should return this', () => {
+    const event = {};
+    const connector = {
+      platform: 'any',
+      getUniqueSessionKey: jest.fn(),
+      shouldSessionUpdate: jest.fn(),
+      updateSession: jest.fn(),
+      mapRequestToEvents: jest.fn(() => [event]),
+      createContext: jest.fn(() => ({ event, session: undefined })),
+    };
+
+    const { bot } = setup({ connector });
+
+    expect(bot.onError(() => {})).toBe(bot);
   });
 });
 

@@ -1,4 +1,5 @@
 /* @flow */
+import EventEmitter from 'events';
 
 import sleep from 'delay';
 import warning from 'warning';
@@ -16,6 +17,7 @@ type Options = {|
   session: ?Session,
   initialState: ?Object,
   requestContext: ?Object,
+  emitter: ?EventEmitter,
 |};
 
 class TelegramContext extends Context implements PlatformContext {
@@ -31,8 +33,9 @@ class TelegramContext extends Context implements PlatformContext {
     session,
     initialState,
     requestContext,
+    emitter,
   }: Options) {
-    super({ client, event, session, initialState, requestContext });
+    super({ client, event, session, initialState, requestContext, emitter });
   }
 
   /**

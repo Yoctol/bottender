@@ -1,4 +1,5 @@
 /* @flow */
+import EventEmitter from 'events';
 
 import cloneDeep from 'lodash/cloneDeep';
 import debug from 'debug';
@@ -12,6 +13,7 @@ type Options = {|
   session: ?any,
   initialState: ?Object,
   requestContext: ?Object,
+  emitter?: ?EventEmitter,
 |};
 
 type Response = {
@@ -35,6 +37,8 @@ export default class Context {
 
   _requestContext: ?Object;
 
+  _emitter: ?EventEmitter;
+
   response: Response;
 
   constructor({
@@ -43,12 +47,14 @@ export default class Context {
     session,
     initialState,
     requestContext,
+    emitter,
   }: Options) {
     this._client = client;
     this._event = event;
     this._session = session;
     this._initialState = initialState || {};
     this._requestContext = requestContext;
+    this._emitter = emitter;
 
     debugContext('Context created with rawEvent:');
     debugContext(JSON.stringify(this._event.rawEvent, null, 2));
@@ -166,6 +172,12 @@ export default class Context {
         false,
         'resetState: should not be called in context without session'
       );
+    }
+  }
+
+  emitError(err: Error): void {
+    if (this._emitter) {
+      this._emitter.emit('error', err, this);
     }
   }
 }

@@ -1,4 +1,6 @@
 /* @flow */
+import EventEmitter from 'events';
+
 import sleep from 'delay';
 
 import { type Session } from '../session/Session';
@@ -16,6 +18,7 @@ type Options = {|
   requestContext: ?Object,
   fallbackMethods: boolean,
   mockPlatform: string,
+  emitter: ?EventEmitter,
 |};
 
 const methodBlackList = [
@@ -43,8 +46,9 @@ export default class ConsoleContext extends Context implements PlatformContext {
     requestContext,
     fallbackMethods,
     mockPlatform,
+    emitter,
   }: Options) {
-    super({ client, event, session, initialState, requestContext });
+    super({ client, event, session, initialState, requestContext, emitter });
     this._mockPlatform = mockPlatform;
     this._fallbackMethods = fallbackMethods;
     if (fallbackMethods) {
