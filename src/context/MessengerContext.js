@@ -1,4 +1,5 @@
 /* @flow */
+import EventEmitter from 'events';
 
 import invariant from 'invariant';
 import sleep from 'delay';
@@ -20,6 +21,7 @@ type Options = {|
   requestContext: ?Object,
   customAccessToken: ?string,
   batchQueue: ?Object,
+  emitter: ?EventEmitter,
 |};
 
 class MessengerContext extends Context implements PlatformContext {
@@ -46,8 +48,9 @@ class MessengerContext extends Context implements PlatformContext {
     requestContext,
     customAccessToken,
     batchQueue,
+    emitter,
   }: Options) {
-    super({ client, event, session, initialState, requestContext });
+    super({ client, event, session, initialState, requestContext, emitter });
     this._customAccessToken = customAccessToken;
     this._batchQueue = batchQueue;
     this._appId = appId;

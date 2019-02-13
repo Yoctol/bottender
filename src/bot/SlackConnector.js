@@ -1,4 +1,5 @@
 /* @flow */
+import EventEmitter from 'events';
 import crypto from 'crypto';
 
 import pProps from 'p-props';
@@ -283,6 +284,7 @@ export default class SlackConnector implements Connector<SlackRequestBody> {
     session: ?Session,
     initialState: ?Object,
     requestContext: ?Object,
+    emitter?: ?EventEmitter,
   }): SlackContext {
     return new SlackContext({
       ...params,

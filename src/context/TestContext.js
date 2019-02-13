@@ -1,4 +1,6 @@
 /* @flow */
+import EventEmitter from 'events';
+
 import sleep from 'delay';
 
 import { type Session } from '../session/Session';
@@ -15,6 +17,7 @@ type Options = {|
   initialState: ?Object,
   requestContext: ?Object,
   fallbackMethods: boolean,
+  emitter: ?EventEmitter,
 |};
 
 const methodBlackList = [
@@ -36,8 +39,9 @@ export default class TestContext extends Context implements PlatformContext {
     initialState,
     requestContext,
     fallbackMethods,
+    emitter,
   }: Options) {
-    super({ client, event, session, initialState, requestContext });
+    super({ client, event, session, initialState, requestContext, emitter });
     if (fallbackMethods) {
       // $FlowExpectedError
       return new Proxy(this, {

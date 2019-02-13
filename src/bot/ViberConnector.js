@@ -1,4 +1,5 @@
 /* @flow */
+import EventEmitter from 'events';
 import crypto from 'crypto';
 
 import { ViberClient } from 'messaging-api-viber';
@@ -112,6 +113,7 @@ export default class ViberConnector implements Connector<ViberRequestBody> {
     session: ?Session,
     initialState: ?Object,
     requestContext: ?Object,
+    emitter?: ?EventEmitter,
   }): ViberContext {
     return new ViberContext({
       ...params,
