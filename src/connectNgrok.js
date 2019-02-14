@@ -15,10 +15,7 @@ const connectNgrok = (port, ngrokHandler) => {
   );
 
   if (typeof port === 'number') {
-    return ngrok.connect(
-      port,
-      ngrokHandler
-    );
+    return ngrok.connect(port, ngrokHandler);
   }
   return ngrok.connect(ngrokHandler);
 };
