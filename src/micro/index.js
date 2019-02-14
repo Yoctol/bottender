@@ -3,6 +3,7 @@
 export { default as createServer } from './createServer';
 export { default as createRequestHandler } from './createRequestHandler';
 export { default as verifyLineSignature } from './verifyLineSignature';
+export { default as verifyLineWebhook } from './verifyLineWebhook';
 export {
   default as verifyMessengerSignature,
 } from './verifyMessengerSignature';

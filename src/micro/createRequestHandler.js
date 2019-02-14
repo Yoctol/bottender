@@ -5,6 +5,7 @@ import shortid from 'shortid';
 import { json, send } from 'micro';
 
 import verifyLineSignature from './verifyLineSignature';
+import verifyLineWebhook from './verifyLineWebhook';
 import verifyMessengerSignature from './verifyMessengerSignature';
 import verifyMessengerWebhook from './verifyMessengerWebhook';
 import verifySlackSignature from './verifySlackSignature';
@@ -39,8 +40,10 @@ function createRequestHandler(bot, config = {}) {
             return;
           }
         } else if (bot.connector.platform === 'line') {
-          const valid = await verifyLineSignature(bot)(req, res);
-          if (!valid) {
+          if (!(await verifyLineSignature(bot)(req, res))) {
+            return;
+          }
+          if (await verifyLineWebhook(bot)(req, res)) {
             return;
           }
         } else if (bot.connector.platform === 'slack') {

@@ -6,6 +6,7 @@ describe('express', () => {
     expect(express.createMiddleware).toBeDefined();
     expect(express.registerRoutes).toBeDefined();
     expect(express.verifyLineSignature).toBeDefined();
+    expect(express.verifyLineWebhook).toBeDefined();
     expect(express.verifyMessengerSignature).toBeDefined();
     expect(express.verifyMessengerWebhook).toBeDefined();
     expect(express.verifySlackSignature).toBeDefined();
