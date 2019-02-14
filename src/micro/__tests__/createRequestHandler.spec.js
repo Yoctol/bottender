@@ -21,6 +21,7 @@ function setup({ platform }) {
     connector: {
       platform,
       verifySignature: jest.fn(),
+      isWebhookVerifyRequest: jest.fn(),
     },
   };
   const res = {

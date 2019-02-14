@@ -6,6 +6,7 @@ describe('koa', () => {
     expect(koa.createMiddleware).toBeDefined();
     expect(koa.registerRoutes).toBeDefined();
     expect(koa.verifyLineSignature).toBeDefined();
+    expect(koa.verifyLineWebhook).toBeDefined();
     expect(koa.verifyMessengerSignature).toBeDefined();
     expect(koa.verifyMessengerWebhook).toBeDefined();
     expect(koa.verifySlackSignature).toBeDefined();

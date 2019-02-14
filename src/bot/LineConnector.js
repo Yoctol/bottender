@@ -79,8 +79,13 @@ export default class LineConnector implements Connector<LineRequestBody> {
     );
   }
 
-  _isWebhookVerifyRequest(body: LineRequestBody): boolean {
-    return body.events.every(this._isWebhookVerifyEvent);
+  isWebhookVerifyRequest(body: LineRequestBody): boolean {
+    return (
+      body &&
+      Array.isArray(body.events) &&
+      body.events.length > 0 &&
+      body.events.every(this._isWebhookVerifyEvent)
+    );
   }
 
   get platform(): string {
@@ -92,9 +97,6 @@ export default class LineConnector implements Connector<LineRequestBody> {
   }
 
   getUniqueSessionKey(body: LineRequestBody): string {
-    if (this._isWebhookVerifyRequest(body)) {
-      return '';
-    }
     const { source } = body.events[0];
     if (source.type === 'user') {
       return source.userId;
@@ -111,9 +113,6 @@ export default class LineConnector implements Connector<LineRequestBody> {
   }
 
   async updateSession(session: Session, body: LineRequestBody): Promise<void> {
-    if (this._isWebhookVerifyRequest(body)) {
-      return;
-    }
     const { source } = body.events[0];
 
     if (!session.type) {

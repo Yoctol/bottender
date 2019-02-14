@@ -177,12 +177,6 @@ describe('#getUniqueSessionKey', () => {
     expect(senderId).toBe('U206d25c2ea6bd87c17655609a1c37cb8');
   });
 
-  it('extract empty string from webhook verify request', () => {
-    const { connector } = setup();
-    const senderId = connector.getUniqueSessionKey(webhookVerifyRequest.body);
-    expect(senderId).toBe('');
-  });
-
   it('should throw error if source.type is not user, group or room', () => {
     const { connector } = setup();
     let error;
@@ -588,16 +582,6 @@ describe('#updateSession', () => {
       value: session.user,
     });
   });
-
-  it('do nothing with webhook verify request', async () => {
-    const { connector } = setup();
-
-    const session = {};
-
-    await connector.updateSession(session, webhookVerifyRequest.body);
-
-    expect(session).toEqual({});
-  });
 });
 
 describe('#mapRequestToEvents', () => {
@@ -610,13 +594,6 @@ describe('#mapRequestToEvents', () => {
     expect(events[1]).toBeInstanceOf(LineEvent);
     expect(events[0].destination).toBe('Uea8667adaf43586706170ff25ff47ae6');
     expect(events[1].destination).toBe('Uea8667adaf43586706170ff25ff47ae6');
-  });
-
-  it('should map webhook verify request to empty array', () => {
-    const { connector } = setup();
-    const events = connector.mapRequestToEvents(webhookVerifyRequest.body);
-
-    expect(events).toEqual([]);
   });
 });
 
@@ -653,4 +630,17 @@ it('should warning if sendMethod is not one of `reply`, `push`', () => {
   setup({ sendMethod: 'xxx' });
 
   expect(warning).toBeCalledWith(false, expect.any(String));
+});
+
+describe('#isWebhookVerifyRequest', () => {
+  it('check if request is for webhook verification', async () => {
+    const { connector } = setup();
+
+    await connector.isWebhookVerifyRequest(webhookVerifyRequest.body);
+
+    expect(connector.isWebhookVerifyRequest(webhookVerifyRequest.body)).toEqual(
+      true
+    );
+    expect(connector.isWebhookVerifyRequest({ events: [] })).toEqual(false);
+  });
 });
