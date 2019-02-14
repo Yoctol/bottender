@@ -21,7 +21,6 @@ const MOCK_FILE_WITH_PLATFORM = {
   },
   line: {},
 };
-const _exit = process.exit;
 
 const setup = (
   { webhook = undefined, ngrokPort = undefined, token = undefined } = {
@@ -50,10 +49,6 @@ beforeEach(() => {
   TelegramClient.connect.mockReturnValue({
     setWebhook: jest.fn().mockResolvedValue(true),
   });
-});
-
-afterEach(() => {
-  process.exit = _exit;
 });
 
 it('be defined', () => {

@@ -189,14 +189,8 @@ function setup(
   };
 }
 
-const _consoleError = console.error;
-
 beforeEach(() => {
   console.error = jest.fn();
-});
-
-afterEach(() => {
-  console.error = _consoleError;
 });
 
 it('should use accessToken and appSecret (for appsecret_proof) to create default client', () => {

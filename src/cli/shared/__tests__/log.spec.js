@@ -4,14 +4,9 @@ import figures from 'figures';
 
 import { bold, error, log, print, warn } from '../log';
 
-const _log = console.log;
-
 describe('console', () => {
   beforeEach(() => {
     console.log = jest.fn();
-  });
-  afterEach(() => {
-    console.log = _log;
   });
 
   it('log', () => {

@@ -1,14 +1,8 @@
 import MessengerBot from '../MessengerBot';
 import MessengerConnector from '../MessengerConnector';
 
-const _consoleError = console.error;
-
 beforeEach(() => {
   console.error = jest.fn();
-});
-
-afterEach(() => {
-  console.error = _consoleError;
 });
 
 it('should construct bot with MessengerConnector', () => {

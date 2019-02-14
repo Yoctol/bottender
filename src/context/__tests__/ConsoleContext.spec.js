@@ -14,10 +14,6 @@ beforeEach(() => {
   /* eslint-enable global-require */
 });
 
-afterEach(() => {
-  jest.useFakeTimers();
-});
-
 const rawEvent = {
   message: {
     text: 'Hello, world',

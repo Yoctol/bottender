@@ -29,14 +29,8 @@ function setup({
   };
 }
 
-const _consoleError = console.error;
-
 beforeEach(() => {
   console.error = jest.fn();
-});
-
-afterEach(() => {
-  console.error = _consoleError;
 });
 
 describe('#connector', () => {

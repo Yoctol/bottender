@@ -11,14 +11,8 @@ jest.mock('messaging-api-telegram', () => {
   };
 });
 
-const _consoleError = console.error;
-
 beforeEach(() => {
   console.error = jest.fn();
-});
-
-afterEach(() => {
-  console.error = _consoleError;
 });
 
 it('should construct bot with TelegramConnector', () => {
