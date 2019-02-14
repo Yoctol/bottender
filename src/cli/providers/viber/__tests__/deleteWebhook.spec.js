@@ -9,7 +9,6 @@ const { ViberClient } = require('messaging-api-viber');
 const log = require('../../../shared/log');
 const getConfig = require('../../../shared/getConfig');
 
-const _exit = process.exit;
 const MOCK_FILE_WITH_PLATFORM = {
   viber: {
     accessToken: '__accessToken__',
@@ -26,10 +25,6 @@ beforeEach(() => {
       status_message: 'ok',
     })),
   });
-});
-
-afterEach(() => {
-  process.exit = _exit;
 });
 
 it('be defined', () => {

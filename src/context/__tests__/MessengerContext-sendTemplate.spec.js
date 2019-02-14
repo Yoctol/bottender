@@ -18,10 +18,6 @@ beforeEach(() => {
   /* eslint-enable global-require */
 });
 
-afterEach(() => {
-  jest.useFakeTimers();
-});
-
 const _rawEvent = {
   sender: { id: '1423587017700273' },
   recipient: { id: '404217156637689' },

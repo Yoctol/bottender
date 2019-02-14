@@ -22,15 +22,9 @@ function setup({ platform, verifyToken }) {
   };
 }
 
-const _consoleLog = console.log;
-
 beforeEach(() => {
   console.log = jest.fn();
   connectNgrok.mockImplementation((arg, fn) => fn('error', 'localhost:1234'));
-});
-
-afterEach(() => {
-  console.log = _consoleLog;
 });
 
 it('should handle token verification', async () => {

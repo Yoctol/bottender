@@ -20,7 +20,6 @@ const MOCK_FILE_WITH_PLATFORM = {
     accessToken: '__accessToken__',
   },
 };
-const _exit = process.exit;
 
 const setup = (
   {
@@ -62,10 +61,6 @@ beforeEach(() => {
       ],
     })),
   });
-});
-
-afterEach(() => {
-  process.exit = _exit;
 });
 
 it('be defined', () => {

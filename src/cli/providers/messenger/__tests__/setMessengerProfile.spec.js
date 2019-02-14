@@ -36,7 +36,6 @@ const MOCK_FILE_WITH_PLATFORM = {
 };
 
 let _client;
-const _exit = process.exit;
 
 beforeEach(() => {
   process.NODE_ENV = 'test';
@@ -65,10 +64,6 @@ beforeEach(() => {
   ]);
   MessengerClient.connect = jest.fn(() => _client);
   getConfig.mockReturnValue(MOCK_FILE_WITH_PLATFORM.messenger);
-});
-
-afterEach(() => {
-  process.exit = _exit;
 });
 
 it('be defined', () => {

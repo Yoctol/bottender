@@ -41,14 +41,8 @@ describe('#client', () => {
   });
 
   describe('#sendText', () => {
-    let _write;
     beforeEach(() => {
-      _write = process.stdout.write;
       process.stdout.write = jest.fn();
-    });
-
-    afterEach(() => {
-      process.stdout.write = _write;
     });
 
     it('should call stdout', () => {

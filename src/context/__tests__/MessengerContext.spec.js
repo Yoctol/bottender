@@ -16,10 +16,6 @@ beforeEach(() => {
   /* eslint-enable global-require */
 });
 
-afterEach(() => {
-  jest.useFakeTimers();
-});
-
 const APP_ID = '1234567890';
 const PERSONA_ID = '987654321';
 

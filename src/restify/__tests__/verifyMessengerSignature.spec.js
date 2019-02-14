@@ -21,14 +21,8 @@ const createReqRes = () => [
   },
 ];
 
-const _consoleError = console.error;
-
 beforeEach(() => {
   console.error = jest.fn();
-});
-
-afterEach(() => {
-  console.error = _consoleError;
 });
 
 it('should call next when verification pass', () => {

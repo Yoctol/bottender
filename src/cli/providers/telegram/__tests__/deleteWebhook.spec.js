@@ -9,7 +9,6 @@ const { TelegramClient } = require('messaging-api-telegram');
 const log = require('../../../shared/log');
 const getConfig = require('../../../shared/getConfig');
 
-const _exit = process.exit;
 const MOCK_FILE_WITH_PLATFORM = {
   telegram: {
     accessToken: '__accessToken__',
@@ -24,10 +23,6 @@ beforeEach(() => {
   TelegramClient.connect.mockReturnValue({
     deleteWebhook: jest.fn().mockResolvedValue(true),
   });
-});
-
-afterEach(() => {
-  process.exit = _exit;
 });
 
 it('be defined', () => {
