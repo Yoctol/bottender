@@ -499,7 +499,7 @@ types.forEach(({ name, arity, aliases }) => {
 });
 
 types
-  .filter(({ name }) => name !== 'Text' && name !== '')
+  .filter(({ name }) => name !== 'Text')
   .forEach(({ name, aliases }) => {
     [name].concat(aliases || []).forEach(type => {
       Object.defineProperty(LineContext.prototype, `send${type}`, {
