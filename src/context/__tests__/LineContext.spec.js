@@ -420,10 +420,58 @@ describe('#pushText', () => {
 
 describe('send APIs', () => {
   describe('#send', () => {
-    it('is not defined', () => {
+    it('should call client.push', async () => {
+      const { context, client, session } = setup();
+
+      await context.send([Line.createText('2'), Line.createText('3')]);
+
+      expect(client.push).toBeCalledWith(
+        session.user.id,
+        [Line.createText('2'), Line.createText('3')],
+        {
+          accessToken: undefined,
+        }
+      );
+    });
+
+    it('should work with room session', async () => {
+      const { context, client, session } = setup({
+        session: roomSession,
+      });
+
+      await context.send([Line.createText('2'), Line.createText('3')]);
+
+      expect(client.push).toBeCalledWith(
+        session.room.id,
+        [Line.createText('2'), Line.createText('3')],
+        {
+          accessToken: undefined,
+        }
+      );
+    });
+
+    it('should work with group session', async () => {
+      const { context, client, session } = setup({
+        session: groupSession,
+      });
+
+      await context.send([Line.createText('2'), Line.createText('3')]);
+
+      expect(client.push).toBeCalledWith(
+        session.group.id,
+        [Line.createText('2'), Line.createText('3')],
+        {
+          accessToken: undefined,
+        }
+      );
+    });
+
+    it('should mark context as handled', async () => {
       const { context } = setup();
 
-      expect(context.send).not.toBeDefined();
+      await context.send([Line.createText('2'), Line.createText('3')]);
+
+      expect(context.isHandled).toBe(true);
     });
   });
 
