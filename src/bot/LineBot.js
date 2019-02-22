@@ -16,6 +16,7 @@ export default class LineBot extends Bot {
     shouldBatch,
     sendMethod,
     skipProfile,
+    onWebhookVerify,
   }: {
     accessToken: string,
     channelSecret: string,
@@ -26,6 +27,7 @@ export default class LineBot extends Bot {
     sendMethod: ?string,
     origin?: string,
     skipProfile?: ?boolean,
+    onWebhookVerify?: ?(httpContext: Object) => void,
   }) {
     const connector = new LineConnector({
       accessToken,
@@ -35,6 +37,7 @@ export default class LineBot extends Bot {
       sendMethod,
       origin,
       skipProfile,
+      onWebhookVerify,
     });
     super({ connector, sessionStore, sync });
   }

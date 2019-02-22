@@ -26,6 +26,7 @@ type ConstructorOptions = {|
   sendMethod: ?string,
   origin?: string,
   skipProfile?: ?boolean,
+  onWebhookVerify?: ?(httpContext: Object) => void,
 |};
 
 export default class LineConnector implements Connector<LineRequestBody> {
@@ -41,6 +42,8 @@ export default class LineConnector implements Connector<LineRequestBody> {
 
   _sendMethod: ?string;
 
+  _onWebhookVerify: ?(httpContext: Object) => void;
+
   constructor({
     accessToken,
     channelSecret,
@@ -50,6 +53,7 @@ export default class LineConnector implements Connector<LineRequestBody> {
     sendMethod,
     origin,
     skipProfile,
+    onWebhookVerify,
   }: ConstructorOptions) {
     this._client =
       client ||
@@ -70,6 +74,12 @@ export default class LineConnector implements Connector<LineRequestBody> {
 
     // FIXME: maybe set this default value as true
     this._skipProfile = typeof skipProfile === 'boolean' ? skipProfile : false;
+
+    this._onWebhookVerify = onWebhookVerify;
+  }
+
+  get onWebhookVerify() {
+    return this._onWebhookVerify;
   }
 
   _isWebhookVerifyEvent(event: LineRawEvent): boolean {

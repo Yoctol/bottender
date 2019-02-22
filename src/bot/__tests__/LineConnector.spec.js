@@ -82,7 +82,7 @@ const webhookVerifyRequest = {
   },
 };
 
-function setup({ sendMethod, skipProfile } = {}) {
+function setup({ sendMethod, skipProfile, onWebhookVerify } = {}) {
   const mockLineAPIClient = {
     getUserProfile: jest.fn(),
     isValidSignature: jest.fn(),
@@ -100,6 +100,7 @@ function setup({ sendMethod, skipProfile } = {}) {
       channelSecret: CHANNEL_SECRET,
       sendMethod,
       skipProfile,
+      onWebhookVerify,
     }),
   };
 }
@@ -121,6 +122,19 @@ describe('#client', () => {
     const client = {};
     const connector = new LineConnector({ client });
     expect(connector.client).toBe(client);
+  });
+});
+
+describe('#onWebhookVerify', () => {
+  it('should be function', () => {
+    const onWebhookVerify = () => {};
+    const { connector } = setup({ onWebhookVerify });
+    expect(connector.onWebhookVerify).toBe(onWebhookVerify);
+  });
+
+  it('should be undefined when not config', () => {
+    const { connector } = setup();
+    expect(connector.onWebhookVerify).toBeUndefined();
   });
 });
 

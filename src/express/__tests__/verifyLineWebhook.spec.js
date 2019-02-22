@@ -76,6 +76,17 @@ it('should correctly response 200 when is webhook verify request', () => {
   expect(next).not.toBeCalled();
 });
 
+it('should call onWebhookVerify when is webhook verify request', () => {
+  const { bot, middleware, req, res, next } = setup();
+
+  bot.connector.onWebhookVerify = jest.fn();
+  bot.connector.isWebhookVerifyRequest.mockReturnValueOnce(true);
+
+  middleware(req, res, next);
+
+  expect(bot.connector.onWebhookVerify).toBeCalledWith({ req, res });
+});
+
 it('should call next when is not webhook verify request', () => {
   const { bot, middleware, req, res, next } = setup();
 
