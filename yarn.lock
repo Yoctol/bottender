@@ -5175,10 +5175,10 @@ merge@^1.2.0:
   resolved "https://registry.yarnpkg.com/merge/-/merge-1.2.0.tgz#7531e39d4949c281a66b8c5a6e0265e8b05894da"
   integrity sha1-dTHjnUlJwoGma4xabgJl6LBYlNo=
 
-messaging-api-line@^0.8.0-alpha.4:
-  version "0.8.0-alpha.4"
-  resolved "https://registry.yarnpkg.com/messaging-api-line/-/messaging-api-line-0.8.0-alpha.4.tgz#9c2c1c2554eb7d2e97cb123014d11ce4ec84c9d4"
-  integrity sha512-BKAnZ+AAe8ggNpjgaWso8Dy2tI4+HXfYm14g9fwIDBrLAQUmlwrGuJf/D8F/e0UPtwl/ATBBXp/bh2dZMHd+mw==
+messaging-api-line@^0.8.0-alpha.5:
+  version "0.8.0-alpha.5"
+  resolved "https://registry.yarnpkg.com/messaging-api-line/-/messaging-api-line-0.8.0-alpha.5.tgz#cb52e97b427d37e58a21172a66701e8146f2b00e"
+  integrity sha512-fHX+5uCHzG7ujFGsz9QIs4gALu6tkYRAbUoYJh4V6ploa/Y2Hj1lh8z1g/rmhwy0TNoYyMn9BwaU00NTH95tuA==
   dependencies:
     axios "^0.18.0"
     axios-error "^0.7.11"
@@ -5188,10 +5188,10 @@ messaging-api-line@^0.8.0-alpha.4:
     lodash.omit "^4.5.0"
     url-join "^4.0.0"
 
-messaging-api-messenger@^0.8.0-alpha.4:
-  version "0.8.0-alpha.4"
-  resolved "https://registry.yarnpkg.com/messaging-api-messenger/-/messaging-api-messenger-0.8.0-alpha.4.tgz#2cb82722e5793c74fb0e786881c3a49cfe7ffb4d"
-  integrity sha512-eC2ZESkFq9uZ7Q8gGYPl9DphSyZtmsCvcvmt5v8gpv12by/aS2ritXw+boyKM48xppbTzbaaTYFgg28PehRDjQ==
+messaging-api-messenger@^0.8.0-alpha.5:
+  version "0.8.0-alpha.5"
+  resolved "https://registry.yarnpkg.com/messaging-api-messenger/-/messaging-api-messenger-0.8.0-alpha.5.tgz#ee16f23c959e764824d3af3df93a11c8c5132e78"
+  integrity sha512-pZVl+VX9pkvilwsRhmH/Xn4tjABioFEViauir7aXa0DkeVWRqQn8B7004Ub1WrhvmIpzHhpmcayI5WRU98MbJw==
   dependencies:
     append-query "^2.0.1"
     axios "^0.18.0"
@@ -5215,10 +5215,10 @@ messaging-api-slack@^0.7.11:
     lodash.omit "^4.5.0"
     url-join "^4.0.0"
 
-messaging-api-telegram@^0.8.0-alpha.4:
-  version "0.8.0-alpha.4"
-  resolved "https://registry.yarnpkg.com/messaging-api-telegram/-/messaging-api-telegram-0.8.0-alpha.4.tgz#4b0dd90417f64d1f8c25c4cb3b9190cbb228f93b"
-  integrity sha512-Qn+QoSUmdKODFdlHGcx8RezNcW1JAfJovQNJvHdrbnTZjE7AANAwks5YezhT2S1wJ0HoXugmGhh0UV/SZyrnPw==
+messaging-api-telegram@^0.8.0-alpha.5:
+  version "0.8.0-alpha.5"
+  resolved "https://registry.yarnpkg.com/messaging-api-telegram/-/messaging-api-telegram-0.8.0-alpha.5.tgz#6d735f93612081a958a1890b7013ea63764d152e"
+  integrity sha512-MzTbLlmeze+aCYsqy+In3feh76xdPcq2XqpUYlPZMdQIMkhuR5XkpwXB0JgIvxKJoZKHdKxqoN7N2eYziJsPPQ==
   dependencies:
     axios "^0.18.0"
     axios-error "^0.7.11"
