@@ -6,7 +6,7 @@
 [![coverage](https://codecov.io/gh/Yoctol/bottender/branch/master/graph/badge.svg)](https://codecov.io/gh/Yoctol/bottender)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/Yoctol/bottender#contributing)
-[![join chat](https://img.shields.io/badge/discord-join%20chat-green.svg)](https://discord.gg/unmFzmR)
+[![join chat](https://img.shields.io/badge/discord-join%20chat-green.svg)](https://discord.gg/apNsWBz)
 ![](https://user-images.githubusercontent.com/662387/38478130-5ceff16c-3be9-11e8-9b2b-d9fc2e0925c0.png)
 
 * **Flexible** - Declare handlers as any JavaScript function.
