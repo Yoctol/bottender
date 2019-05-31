@@ -194,7 +194,7 @@ describe('#onPayload', () => {
     expect(handler).not.toBeCalled();
   });
 
-  describe('should support regex', async () => {
+  describe('should support regex', () => {
     it('when received postback', async () => {
       const { builder } = setup();
       const handler = jest.fn();
@@ -249,7 +249,7 @@ describe('#onPayload', () => {
     });
   });
 
-  describe('should support function predicate', async () => {
+  describe('should support function predicate', () => {
     it('when received postback', async () => {
       const { builder } = setup();
       const handler = jest.fn();
