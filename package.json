@@ -41,7 +41,7 @@
   "dependencies": {
     "@slack/client": "^4.10.0",
     "arg": "^4.1.0",
-    "axios": "^0.18.0",
+    "axios": "^0.19.0",
     "body-parser": "^1.18.3",
     "camel-case": "^3.0.0",
     "chalk": "~2.4.2",
