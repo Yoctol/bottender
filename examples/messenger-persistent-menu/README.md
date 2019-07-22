@@ -1,4 +1,4 @@
-# Messenger deep nested menu
+# Messenger persistent menu
 
 ## Install and Run
 
