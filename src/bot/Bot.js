@@ -108,6 +108,13 @@ export default class Bot {
     return this;
   }
 
+  async initSessionStore() {
+    if (!this._initialized) {
+      await this._sessions.init();
+      this._initialized = true;
+    }
+  }
+
   createRequestHandler(): RequestHandler {
     if (this._handler == null) {
       throw new Error(
@@ -127,10 +134,7 @@ export default class Bot {
       debugRequest('Incoming request body:');
       debugRequest(JSON.stringify(body, null, 2));
 
-      if (!this._initialized) {
-        await this._sessions.init();
-        this._initialized = true;
-      }
+      await this.initSessionStore();
 
       const { platform } = this._connector;
       const sessionKey = this._connector.getUniqueSessionKey(
