@@ -79,6 +79,44 @@ describe('createRuntime', () => {
     expect(process.exit).toBeCalled();
   });
 
+  it('should print session when entering /session', async () => {
+    const bot = new ConsoleBot();
+    const handler = jest.fn();
+
+    bot.onEvent(handler);
+
+    readline.createInterface.mockReturnValue({
+      once: once((string, fn) => fn('/session')),
+      close: jest.fn(),
+    });
+
+    bot.createRuntime();
+
+    await new Promise(process.nextTick);
+
+    expect(process.stdout.write).toBeCalledWith('Bot > {}\n');
+    expect(process.stdout.write).toBeCalledWith('You > ');
+  });
+
+  it('should print state when entering /state', async () => {
+    const bot = new ConsoleBot();
+    const handler = jest.fn();
+
+    bot.onEvent(handler);
+
+    readline.createInterface.mockReturnValue({
+      once: once((string, fn) => fn('/state')),
+      close: jest.fn(),
+    });
+
+    bot.createRuntime();
+
+    await new Promise(process.nextTick);
+
+    expect(process.stdout.write).toBeCalledWith('Bot > {}\n');
+    expect(process.stdout.write).toBeCalledWith('You > ');
+  });
+
   it('should call handler with text event when receive random text', async () => {
     const bot = new ConsoleBot();
 
