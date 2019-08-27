@@ -20,7 +20,7 @@ export default class ViberHandler extends Handler {
     } else {
       const [predicate, handler]: [
         Predicate,
-        FunctionalHandler | Builder,
+        FunctionalHandler | Builder
       ] = (args: any);
 
       warning(
@@ -51,7 +51,7 @@ export default class ViberHandler extends Handler {
     } else {
       const [predicate, handler]: [
         Predicate,
-        FunctionalHandler | Builder,
+        FunctionalHandler | Builder
       ] = (args: any);
 
       warning(
@@ -82,7 +82,7 @@ export default class ViberHandler extends Handler {
     } else {
       const [predicate, handler]: [
         Predicate,
-        FunctionalHandler | Builder,
+        FunctionalHandler | Builder
       ] = (args: any);
 
       warning(
@@ -113,7 +113,7 @@ export default class ViberHandler extends Handler {
     } else {
       const [predicate, handler]: [
         Predicate,
-        FunctionalHandler | Builder,
+        FunctionalHandler | Builder
       ] = (args: any);
 
       warning(
@@ -144,7 +144,7 @@ export default class ViberHandler extends Handler {
     } else {
       const [predicate, handler]: [
         Predicate,
-        FunctionalHandler | Builder,
+        FunctionalHandler | Builder
       ] = (args: any);
 
       warning(
@@ -174,7 +174,7 @@ export default class ViberHandler extends Handler {
     } else {
       const [predicate, handler]: [
         Predicate,
-        FunctionalHandler | Builder,
+        FunctionalHandler | Builder
       ] = (args: any);
 
       warning(

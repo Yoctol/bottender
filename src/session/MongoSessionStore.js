@@ -1,6 +1,6 @@
 /* @flow */
-import isBefore from 'date-fns/is_before';
-import subMinutes from 'date-fns/sub_minutes';
+import isBefore from 'date-fns/isBefore';
+import subMinutes from 'date-fns/subMinutes';
 import { MongoClient } from 'mongodb';
 
 import { type Session } from './Session';
@@ -44,7 +44,7 @@ export default class MongoSessionStore implements SessionStore {
   }
 
   async init(): Promise<MongoSessionStore> {
-    this._connection = await MongoClient.connect(this._url);
+    this._connection = (await MongoClient.connect(this._url)).db();
     // $FlowFixMe
     return this;
   }
@@ -59,8 +59,8 @@ export default class MongoSessionStore implements SessionStore {
       }
 
       return session;
-    } catch (e) {
-      console.error(e);
+    } catch (err) {
+      console.error(err);
       return null;
     }
   }
@@ -78,8 +78,8 @@ export default class MongoSessionStore implements SessionStore {
       await this._sessions.updateOne(filter, sess, {
         upsert: true,
       });
-    } catch (e) {
-      console.error(e);
+    } catch (err) {
+      console.error(err);
     }
   }
 
@@ -87,8 +87,8 @@ export default class MongoSessionStore implements SessionStore {
     const filter = { id: key };
     try {
       await this._sessions.remove(filter);
-    } catch (e) {
-      console.error(e);
+    } catch (err) {
+      console.error(err);
     }
   }
 

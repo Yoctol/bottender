@@ -942,15 +942,15 @@ describe('#sendAirlineItineraryTemplate', () => {
   });
 });
 
-describe('#sendAirlineFlightUpdateTemplate', () => {
-  it('should call client.sendAirlineFlightUpdateTemplate', async () => {
+describe('#sendAirlineUpdateTemplate', () => {
+  it('should call client.sendAirlineUpdateTemplate', async () => {
     const { context, client, session } = setup();
 
     const flightUpdate = {};
 
-    await context.sendAirlineFlightUpdateTemplate(flightUpdate);
+    await context.sendAirlineUpdateTemplate(flightUpdate);
 
-    expect(client.sendAirlineFlightUpdateTemplate).toBeCalledWith(
+    expect(client.sendAirlineUpdateTemplate).toBeCalledWith(
       session.user.id,
       flightUpdate,
       {
@@ -964,7 +964,7 @@ describe('#sendAirlineFlightUpdateTemplate', () => {
 
     const flightUpdate = {};
 
-    await context.sendAirlineFlightUpdateTemplate(flightUpdate);
+    await context.sendAirlineUpdateTemplate(flightUpdate);
 
     expect(context.isHandled).toBe(true);
   });
@@ -974,11 +974,11 @@ describe('#sendAirlineFlightUpdateTemplate', () => {
 
     const flightUpdate = {};
 
-    await context.sendAirlineFlightUpdateTemplate(flightUpdate);
+    await context.sendAirlineUpdateTemplate(flightUpdate);
 
     expect(warning).toBeCalledWith(
       false,
-      'sendAirlineFlightUpdateTemplate: should not be called in context without session'
+      'sendAirlineUpdateTemplate: should not be called in context without session'
     );
     expect(client.sendImage).not.toBeCalled();
   });
@@ -988,11 +988,11 @@ describe('#sendAirlineFlightUpdateTemplate', () => {
 
     const flightUpdate = {};
 
-    await context.sendAirlineFlightUpdateTemplate(flightUpdate);
+    await context.sendAirlineUpdateTemplate(flightUpdate);
 
     expect(warning).toBeCalledWith(
       false,
-      'sendAirlineFlightUpdateTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
+      'sendAirlineUpdateTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
     );
     expect(client.sendImage).not.toBeCalled();
   });
@@ -1002,11 +1002,11 @@ describe('#sendAirlineFlightUpdateTemplate', () => {
 
     const flightUpdate = {};
 
-    await context.sendAirlineFlightUpdateTemplate(flightUpdate);
+    await context.sendAirlineUpdateTemplate(flightUpdate);
 
     expect(warning).toBeCalledWith(
       false,
-      'sendAirlineFlightUpdateTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
+      'sendAirlineUpdateTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
     );
     expect(client.sendImage).not.toBeCalled();
   });
@@ -1016,11 +1016,11 @@ describe('#sendAirlineFlightUpdateTemplate', () => {
 
     const flightUpdate = {};
 
-    await context.sendAirlineFlightUpdateTemplate(flightUpdate);
+    await context.sendAirlineUpdateTemplate(flightUpdate);
 
     expect(warning).toBeCalledWith(
       false,
-      'sendAirlineFlightUpdateTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
+      'sendAirlineUpdateTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
     );
     expect(client.sendImage).not.toBeCalled();
   });

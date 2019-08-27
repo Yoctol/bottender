@@ -1,4 +1,4 @@
-import subMinutes from 'date-fns/sub_minutes';
+import subMinutes from 'date-fns/subMinutes';
 
 import MongoSessionStore from '../MongoSessionStore';
 
@@ -17,7 +17,10 @@ function setup(options = {}) {
   const connection = {
     collection: jest.fn(() => sessions),
   };
-  MongoClient.connect.mockResolvedValue(connection);
+  const client = {
+    db: jest.fn(() => connection),
+  };
+  MongoClient.connect.mockResolvedValue(client);
   const store = new MongoSessionStore(
     'mongodb://fakemongourl',
     options,
@@ -94,16 +97,14 @@ describe('#read', () => {
     });
   });
 
-  it('should log Error when MongoClient.connect is null', async () => {
+  it('should log Error when call read before init', async () => {
     console.error = jest.fn();
     const { store, sessions } = setup();
     const sess = {
       lastActivity: subMinutes(Date.now(), MINUTES_IN_ONE_YEAR + 1),
     };
-    MongoClient.connect.mockReturnValue(null);
     sessions.findOne.mockResolvedValue(sess);
 
-    await store.init();
     await store.read('messenger:1');
 
     expect(console.error).toBeCalledWith(
@@ -145,14 +146,12 @@ describe('#write', () => {
     );
   });
 
-  it('should log Error when MongoClient.connect is null', async () => {
+  it('should log Error when call write before init', async () => {
     console.error = jest.fn();
     const { store, sessions } = setup();
     const sess = {};
-    MongoClient.connect.mockReturnValue(null);
     sessions.updateOne.mockResolvedValue();
 
-    await store.init();
     await store.write('messenger:1', sess);
 
     expect(console.error).toBeCalledWith(
@@ -174,13 +173,11 @@ describe('#destroy', () => {
     });
   });
 
-  it('should log Error when MongoClient.connect is null', async () => {
+  it('should log Error when call destroy before init', async () => {
     console.error = jest.fn();
     const { store, sessions } = setup();
-    MongoClient.connect.mockReturnValue(null);
     sessions.remove.mockResolvedValue();
 
-    await store.init();
     await store.destroy('messenger:1');
 
     expect(console.error).toBeCalledWith(

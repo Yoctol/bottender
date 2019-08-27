@@ -3,8 +3,8 @@
 import EventEmitter from 'events';
 import crypto from 'crypto';
 
-import isAfter from 'date-fns/is_after';
-import isValid from 'date-fns/is_valid';
+import isAfter from 'date-fns/isAfter';
+import isValid from 'date-fns/isValid';
 import warning from 'warning';
 import { MessengerBatchQueue } from 'messenger-batch';
 import { MessengerClient } from 'messaging-api-messenger';

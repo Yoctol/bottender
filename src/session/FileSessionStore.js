@@ -1,8 +1,8 @@
 /* @flow */
 
 import JFSStore from 'jfs';
-import isBefore from 'date-fns/is_before';
-import subMinutes from 'date-fns/sub_minutes';
+import isBefore from 'date-fns/isBefore';
+import subMinutes from 'date-fns/subMinutes';
 import thenify from 'thenify';
 
 import { type Session } from './Session';

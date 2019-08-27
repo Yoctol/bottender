@@ -1,9 +1,9 @@
-import { RTMClient } from '@slack/client';
+import { RTMClient } from '@slack/rtm-api';
 
 import SlackBot from '../SlackBot';
 import SlackConnector from '../SlackConnector';
 
-jest.mock('@slack/client');
+jest.mock('@slack/rtm-api');
 
 beforeEach(() => {
   console.error = jest.fn();

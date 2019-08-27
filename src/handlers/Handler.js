@@ -81,7 +81,7 @@ export default class Handler {
     } else {
       const [predicate, handler]: [
         Predicate,
-        FunctionalHandler | Builder,
+        FunctionalHandler | Builder
       ] = (args: any);
 
       warning(
@@ -113,7 +113,7 @@ export default class Handler {
       // eslint-disable-next-line prefer-const
       let [pattern, handler]: [
         Pattern,
-        FunctionalHandler | Builder,
+        FunctionalHandler | Builder
       ] = (args: any);
 
       if (handler.build) {

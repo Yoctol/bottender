@@ -1,4 +1,4 @@
-import Joi from 'joi';
+import Joi from '@hapi/joi';
 import cloneDeep from 'lodash/cloneDeep';
 
 import config from '../__fixtures__/config';
