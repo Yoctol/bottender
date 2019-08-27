@@ -154,14 +154,10 @@ export async function setWebhook(
 
     print('Successfully set Messenger webhook callback URL');
     print(
-      `Check callback URL on: https://developers.facebook.com/apps/${
-        config.appId
-      }/webhooks/`
+      `Check callback URL on: https://developers.facebook.com/apps/${config.appId}/webhooks/`
     );
     print(
-      `Check selected events on: https://developers.facebook.com/apps/${
-        config.appId
-      }/messenger/`
+      `Check selected events on: https://developers.facebook.com/apps/${config.appId}/messenger/`
     );
   } catch (err) {
     error('Failed to set Messenger webhook');

@@ -1,6 +1,6 @@
 import path from 'path';
 
-import Joi from 'joi';
+import Joi from '@hapi/joi';
 import arg from 'arg';
 import get from 'lodash/get';
 import importFresh from 'import-fresh';

@@ -50,7 +50,7 @@ export const help = () => {
 };
 
 export const trimDomain = profile => {
-  const clone = Object.assign({}, profile);
+  const clone = { ...profile };
   if (clone.whitelisted_domains) {
     clone.whitelisted_domains = clone.whitelisted_domains.map(domain =>
       domain.replace(/\/$/, '')

@@ -1,4 +1,4 @@
-import Joi from 'joi';
+import Joi from '@hapi/joi';
 
 const subMenuItemSchema = Joi.object().keys({
   type: Joi.string(),

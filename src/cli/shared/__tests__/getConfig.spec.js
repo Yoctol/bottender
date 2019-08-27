@@ -86,7 +86,7 @@ let Joi;
 
 beforeEach(() => {
   importFresh = require('import-fresh'); // eslint-disable-line global-require
-  Joi = require('joi'); // eslint-disable-line global-require
+  Joi = require('@hapi/joi'); // eslint-disable-line global-require
   getConfig = require('../getConfig'); // eslint-disable-line global-require
 });
 

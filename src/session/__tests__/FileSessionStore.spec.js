@@ -1,4 +1,4 @@
-import subMinutes from 'date-fns/sub_minutes';
+import subMinutes from 'date-fns/subMinutes';
 
 import FileSessionStore from '../FileSessionStore';
 
