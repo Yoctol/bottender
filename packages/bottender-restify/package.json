@@ -1,0 +1,22 @@
+{
+  "name": "@bottender/restify",
+  "license": "MIT",
+  "homepage": "https://bottender.js.org/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Yoctol/bottender.git"
+  },
+  "version": "1.0.0-alpha.0",
+  "main": "lib/index.js",
+  "files": [
+    "lib"
+  ],
+  "dependencies": {
+    "lodash": "^4.17.15",
+    "restify": "^8.4.0",
+    "shortid": "^2.2.14"
+  },
+  "devDependencies": {
+    "supertest": "^4.0.2"
+  }
+}
