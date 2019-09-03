@@ -9,5 +9,8 @@
         "__tests__/**"
       ]
     }
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
