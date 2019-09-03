@@ -289,4 +289,57 @@ export default class LineConnector implements Connector<LineRequestBody> {
 
     return crypto.timingSafeEqual(bufferFromSignature, hashBufferFromBody);
   }
+
+  preprocess({
+    method,
+    headers,
+    rawBody,
+    body,
+  }: {
+    method: string,
+    headers: Object,
+    query: Object,
+    rawBody: string,
+    body: Object,
+  }) {
+    if (method.toLowerCase() !== 'post') {
+      return {
+        shouldNext: true,
+      };
+    }
+
+    if (!this.verifySignature(rawBody, headers['x-line-signature'])) {
+      const error = {
+        message: 'LINE Signature Validation Failed!',
+        request: {
+          rawBody,
+          headers: {
+            'x-line-signature': headers['x-line-signature'],
+          },
+        },
+      };
+
+      return {
+        shouldNext: false,
+        response: {
+          status: 400,
+          body: { error },
+        },
+      };
+    }
+
+    if (this.isWebhookVerifyRequest(body)) {
+      return {
+        shouldNext: false,
+        response: {
+          status: 200,
+          body: 'OK',
+        },
+      };
+    }
+
+    return {
+      shouldNext: true,
+    };
+  }
 }

@@ -49,4 +49,8 @@ describe('core', () => {
   it('export extensions', () => {
     expect(core.withTyping).toBeDefined();
   });
+
+  it('export createServer', () => {
+    expect(core.createServer).toBeDefined();
+  });
 });

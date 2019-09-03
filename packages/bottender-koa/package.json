@@ -15,8 +15,7 @@
     "koa": "^2.8.1",
     "koa-bodyparser": "^4.2.1",
     "koa-router": "^7.4.0",
-    "lodash": "^4.17.15",
-    "shortid": "^2.2.14"
+    "lodash": "^4.17.15"
   },
   "devDependencies": {
     "supertest": "^4.0.2"

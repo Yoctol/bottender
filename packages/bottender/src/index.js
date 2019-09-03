@@ -1,6 +1,6 @@
-/* @flow */
-
 import * as utils from './utils';
+
+export { createServer } from '@bottender/express';
 
 /* Bot */
 export { default as Bot } from './bot/Bot';

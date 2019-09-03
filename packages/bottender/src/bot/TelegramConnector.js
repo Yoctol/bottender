@@ -166,4 +166,10 @@ export default class TelegramConnector
       client: this._client,
     });
   }
+
+  preprocess() {
+    return {
+      shouldNext: true,
+    };
+  }
 }

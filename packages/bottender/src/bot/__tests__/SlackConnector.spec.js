@@ -1,4 +1,3 @@
-import warning from 'warning';
 import { SlackOAuthClient } from 'messaging-api-slack';
 
 import SlackConnector from '../SlackConnector';
@@ -111,7 +110,10 @@ const RtmMessage = {
   team: 'T056KAAAA',
 };
 
-function setup({ verificationToken, skipProfile } = {}) {
+function setup({
+  verificationToken = 'xxxxxxxxxxxxxxxxxxxxxxxxxxx',
+  skipProfile,
+} = {}) {
   const mockSlackOAuthClient = {
     getUserInfo: jest.fn(),
     getConversationInfo: jest.fn(),
@@ -362,23 +364,78 @@ describe('#createContext', () => {
 });
 
 describe('#verifySignature', () => {
-  it('should return true and show warning if verification token not set', () => {
-    const { connector } = setup();
-
-    const result = connector.verifySignature('signature');
-
-    expect(result).toBe(true);
-    expect(warning).toBeCalledWith(
-      false,
-      '`verificationToken` is not set. Will bypass Slack event verification.\nPass in `verificationToken` to perform Slack event verification.'
-    );
-  });
-
   it('should return true if signature is equal to verification token', () => {
     const { connector } = setup({ verificationToken: 'mytoken' });
 
     const result = connector.verifySignature('mytoken');
 
     expect(result).toBe(true);
+  });
+});
+
+describe('#preprocess', () => {
+  it('should return shouldNext: true if request method is get', () => {
+    const { connector } = setup();
+
+    expect(
+      connector.preprocess({
+        method: 'get',
+        headers: {},
+        query: {},
+        rawBody: '',
+        body: {},
+      })
+    ).toEqual({
+      shouldNext: true,
+    });
+  });
+
+  it('should return shouldNext: true if signature match', () => {
+    const { connector } = setup();
+
+    expect(
+      connector.preprocess({
+        method: 'post',
+        headers: {},
+        query: {},
+        rawBody: '{"token":"xxxxxxxxxxxxxxxxxxxxxxxxxxx"}',
+        body: {
+          token: 'xxxxxxxxxxxxxxxxxxxxxxxxxxx',
+        },
+      })
+    ).toEqual({
+      shouldNext: true,
+    });
+  });
+
+  it('should return shouldNext: false and error if signature does not match', () => {
+    const { connector } = setup();
+
+    expect(
+      connector.preprocess({
+        method: 'post',
+        headers: {},
+        query: {},
+        rawBody: '{"token":"yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy"}',
+        body: {
+          token: 'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy',
+        },
+      })
+    ).toEqual({
+      shouldNext: false,
+      response: {
+        status: 400,
+        body: {
+          error: {
+            message: 'Slack Verification Token Validation Failed!',
+            request: {
+              body: {
+                token: 'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy',
+              },
+            },
+          },
+        },
+      },
+    });
   });
 });

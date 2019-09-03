@@ -5,6 +5,7 @@ import crypto from 'crypto';
 
 import isAfter from 'date-fns/isAfter';
 import isValid from 'date-fns/isValid';
+import shortid from 'shortid';
 import warning from 'warning';
 import { MessengerBatchQueue } from 'messenger-batch';
 import { MessengerClient } from 'messaging-api-messenger';
@@ -131,7 +132,7 @@ export default class MessengerConnector
     this._appSecret = appSecret || '';
 
     this._mapPageToAccessToken = mapPageToAccessToken;
-    this._verifyToken = verifyToken;
+    this._verifyToken = verifyToken || shortid.generate();
 
     // FIXME: maybe set this default value as true
     this._skipProfile = typeof skipProfile === 'boolean' ? skipProfile : false;
@@ -359,11 +360,6 @@ export default class MessengerConnector
 
   // https://developers.facebook.com/docs/messenger-platform/webhook#security
   verifySignature(rawBody: string, signature: string): boolean {
-    if (!this._appSecret) {
-      // TODO: deprecate this bypassing
-      return true;
-    }
-
     if (typeof signature !== 'string') return false;
 
     const sha1 = signature.split('sha1=')[1];
@@ -384,5 +380,71 @@ export default class MessengerConnector
     }
 
     return crypto.timingSafeEqual(bufferFromSignature, hashBufferFromBody);
+  }
+
+  preprocess({
+    method,
+    headers,
+    query,
+    rawBody,
+  }: {
+    method: string,
+    headers: Object,
+    query: Object,
+    rawBody: string,
+    body: Object,
+  }) {
+    if (method.toLowerCase() === 'get') {
+      if (
+        query['hub.mode'] === 'subscribe' &&
+        query['hub.verify_token'] === this.verifyToken
+      ) {
+        return {
+          shouldNext: false,
+          response: {
+            status: 200,
+            body: query['hub.challenge'],
+          },
+        };
+      }
+
+      return {
+        shouldNext: false,
+        response: {
+          status: 403,
+          body: 'Forbidden',
+        },
+      };
+    }
+
+    if (method.toLowerCase() !== 'post') {
+      return {
+        shouldNext: true,
+      };
+    }
+
+    if (this.verifySignature(rawBody, headers['x-hub-signature'])) {
+      return {
+        shouldNext: true,
+      };
+    }
+
+    const error = {
+      message: 'Messenger Signature Validation Failed!',
+      request: {
+        rawBody,
+        headers: {
+          'x-hub-signature': headers['x-hub-signature'],
+        },
+      },
+    };
+
+    return {
+      shouldNext: false,
+      response: {
+        status: 400,
+        body: { error },
+      },
+    };
   }
 }
