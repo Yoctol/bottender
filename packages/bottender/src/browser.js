@@ -1,5 +1,3 @@
-/* @flow */
-
 /* Bot */
 export { default as Bot } from './bot/Bot';
 export { default as TestBot } from './bot/TestBot';

@@ -137,4 +137,43 @@ export default class ViberConnector implements Connector<ViberRequestBody> {
 
     return crypto.timingSafeEqual(bufferFromSignature, hashBufferFromBody);
   }
+
+  preprocess({
+    method,
+    headers,
+    rawBody,
+  }: {
+    method: string,
+    headers: Object,
+    query: Object,
+    rawBody: string,
+    body: Object,
+  }) {
+    if (
+      method.toLowerCase() !== 'post' ||
+      this.verifySignature(rawBody, headers['x-viber-content-signature'])
+    ) {
+      return {
+        shouldNext: true,
+      };
+    }
+
+    const error = {
+      message: 'Viber Signature Validation Failed!',
+      request: {
+        rawBody,
+        headers: {
+          'x-viber-content-signature': headers['x-viber-content-signature'],
+        },
+      },
+    };
+
+    return {
+      shouldNext: false,
+      response: {
+        status: 400,
+        body: { error },
+      },
+    };
+  }
 }

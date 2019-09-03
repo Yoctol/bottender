@@ -13,8 +13,7 @@
   ],
   "dependencies": {
     "lodash": "^4.17.15",
-    "restify": "^8.4.0",
-    "shortid": "^2.2.14"
+    "restify": "^8.4.0"
   },
   "devDependencies": {
     "supertest": "^4.0.2"

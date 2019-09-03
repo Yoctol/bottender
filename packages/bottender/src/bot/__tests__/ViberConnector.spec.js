@@ -386,3 +386,76 @@ describe('#verifySignature', () => {
     expect(result).toBe(true);
   });
 });
+
+describe('#preprocess', () => {
+  it('should return shouldNext: true if request method is get', () => {
+    const { connector } = setup();
+
+    expect(
+      connector.preprocess({
+        method: 'get',
+        headers: {
+          'x-viber-content-signature': 'abc',
+        },
+        query: {},
+        rawBody: '',
+        body: {},
+      })
+    ).toEqual({
+      shouldNext: true,
+    });
+  });
+
+  it('should return shouldNext: true if signature match', () => {
+    const { connector } = setup();
+
+    expect(
+      connector.preprocess({
+        method: 'post',
+        headers: {
+          'x-viber-content-signature':
+            'e8b50346f80483e1a6050475af997f4e245a62879cb39732e6daf0f42ed1290c',
+        },
+        query: {},
+        rawBody: '{}',
+        body: {},
+      })
+    ).toEqual({
+      shouldNext: true,
+    });
+  });
+
+  it('should return shouldNext: false and error if signature does not match', () => {
+    const { connector } = setup();
+
+    expect(
+      connector.preprocess({
+        method: 'post',
+        headers: {
+          'x-viber-content-signature':
+            '250a5136d2f241195d4cb981a7293958434ec3ba9e50ed20788e9b030a1dd878',
+        },
+        query: {},
+        rawBody: '{}',
+        body: {},
+      })
+    ).toEqual({
+      shouldNext: false,
+      response: {
+        status: 400,
+        body: {
+          error: {
+            message: 'Viber Signature Validation Failed!',
+            request: {
+              headers: {
+                'x-viber-content-signature':
+                  '250a5136d2f241195d4cb981a7293958434ec3ba9e50ed20788e9b030a1dd878',
+              },
+              rawBody: '{}',
+            },
+          },
+        },
+      },
+    });
+  });
+});

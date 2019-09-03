@@ -5,13 +5,15 @@ import createServer from '../createServer';
 
 jest.mock('urlencoded-body-parser');
 
-function setup({ platform, verifyToken }) {
+function setup({ platform }) {
   const requestHandler = jest.fn();
   const bot = {
     createRequestHandler: () => requestHandler,
     connector: {
       platform,
-      verifyToken,
+      verifyToken: '1qaz2wsx',
+      verifySignature: jest.fn(),
+      preprocess: jest.fn(),
     },
   };
   return {
@@ -20,35 +22,22 @@ function setup({ platform, verifyToken }) {
   };
 }
 
-beforeEach(() => {
-  console.log = jest.fn();
-});
-
-it('should handle token verification', async () => {
+it('should respond accordingly if shouldNext = false', async () => {
   const { bot } = setup({ platform: 'messenger' });
-  const verifyToken = '1qaz2wsx';
-  const server = createServer(bot, { verifyToken });
-  const { status, text } = await request(server)
-    .get('/')
-    .query({
-      'hub.mode': 'subscribe',
-      'hub.verify_token': verifyToken,
-      'hub.challenge': 'chatbot is awesome',
-    });
+  bot.connector.preprocess.mockReturnValue({
+    shouldNext: false,
+    response: {
+      status: 200,
+      body: 'chatbot is awesome',
+    },
+  });
 
-  expect(status).toBe(200);
-  expect(text).toBe('chatbot is awesome');
-});
-
-it('should handle token verification if verify token is passed in bot ', async () => {
-  const verifyToken = '1qaz2wsx';
-  const { bot } = setup({ platform: 'messenger', verifyToken });
   const server = createServer(bot);
   const { status, text } = await request(server)
     .get('/')
     .query({
       'hub.mode': 'subscribe',
-      'hub.verify_token': verifyToken,
+      'hub.verify_token': bot.connector.verifyToken,
       'hub.challenge': 'chatbot is awesome',
     });
 
@@ -56,26 +45,14 @@ it('should handle token verification if verify token is passed in bot ', async (
   expect(text).toBe('chatbot is awesome');
 });
 
-it('should not handle token verification if platform is not messenger', async () => {
-  const { bot } = setup({ platform: 'line' });
-  const verifyToken = '1qaz2wsx';
-  const server = createServer(bot, { verifyToken });
-  const { status } = await request(server)
-    .get('/')
-    .query({
-      'hub.mode': 'subscribe',
-      'hub.verify_token': verifyToken,
-      'hub.challenge': 'chatbot is awesome',
-    });
-
-  expect(status).toBe(405);
-});
-
-it('should handle bot request', async () => {
-  const { bot, requestHandler } = setup({ platform: 'other' });
+it('should handle bot request if shouldNext = true', async () => {
+  const { bot, requestHandler } = setup({ platform: 'messenger' });
+  bot.connector.preprocess.mockReturnValue({
+    shouldNext: true,
+  });
   requestHandler.mockResolvedValue();
-  const verifyToken = '1qaz2wsx';
-  const server = createServer(bot, { verifyToken });
+
+  const server = createServer(bot);
   const { status } = await request(server)
     .post('/')
     .send({});
@@ -84,10 +61,13 @@ it('should handle bot request', async () => {
 });
 
 it('should handle x-www-form-urlencoded request', async () => {
-  const { bot, requestHandler } = setup({ platform: 'other' });
+  const { bot, requestHandler } = setup({ platform: 'messenger' });
+  bot.connector.preprocess.mockReturnValue({
+    shouldNext: true,
+  });
   requestHandler.mockResolvedValue();
-  const verifyToken = '1qaz2wsx';
-  const server = createServer(bot, { verifyToken });
+
+  const server = createServer(bot);
   const { status } = await request(server)
     .post('/')
     .set('content-type', 'application/x-www-form-urlencoded')

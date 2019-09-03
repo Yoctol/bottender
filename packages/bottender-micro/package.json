@@ -13,7 +13,6 @@
   ],
   "dependencies": {
     "micro": "^9.3.4",
-    "shortid": "^2.2.14",
     "urlencoded-body-parser": "^3.0.0"
   },
   "devDependencies": {

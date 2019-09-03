@@ -293,11 +293,6 @@ export default class SlackConnector implements Connector<SlackRequestBody> {
   }
 
   verifySignature(tokenFromBody: string): boolean {
-    if (!this._verificationToken) {
-      // TODO: deprecate this bypassing
-      return true;
-    }
-
     const bufferFromBot = Buffer.from(this._verificationToken);
     const bufferFromBody = Buffer.from(tokenFromBody);
 
@@ -308,5 +303,53 @@ export default class SlackConnector implements Connector<SlackRequestBody> {
     }
 
     return crypto.timingSafeEqual(bufferFromBot, bufferFromBody);
+  }
+
+  preprocess({
+    method,
+    body,
+  }: {
+    method: string,
+    headers: Object,
+    query: Object,
+    rawBody: string,
+    body: Object,
+  }) {
+    if (method.toLowerCase() !== 'post') {
+      return {
+        shouldNext: true,
+      };
+    }
+
+    if (!this.verifySignature(body.token)) {
+      const error = {
+        message: 'Slack Verification Token Validation Failed!',
+        request: {
+          body,
+        },
+      };
+
+      return {
+        shouldNext: false,
+        response: {
+          status: 400,
+          body: { error },
+        },
+      };
+    }
+
+    if (body.type === 'url_verification') {
+      return {
+        shouldNext: false,
+        response: {
+          status: 200,
+          body: body.challenge,
+        },
+      };
+    }
+
+    return {
+      shouldNext: true,
+    };
   }
 }

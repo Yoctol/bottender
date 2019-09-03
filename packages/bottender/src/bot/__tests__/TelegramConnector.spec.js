@@ -692,3 +692,21 @@ describe('#createContext', () => {
     expect(context).toBeInstanceOf(TelegramContext);
   });
 });
+
+describe('#preprocess', () => {
+  it('should always return shouldNext: true', () => {
+    const { connector } = setup();
+
+    expect(
+      connector.preprocess({
+        method: 'post',
+        headers: {},
+        query: {},
+        rawBody: '{}',
+        body: {},
+      })
+    ).toEqual({
+      shouldNext: true,
+    });
+  });
+});

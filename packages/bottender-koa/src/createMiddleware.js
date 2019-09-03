@@ -2,6 +2,7 @@ import isEmpty from 'lodash/isEmpty';
 
 function createMiddleware(bot) {
   const requestHandler = bot.createRequestHandler();
+
   return async ctx => {
     const { request, response } = ctx;
     if (isEmpty(request.query) && !request.body) {

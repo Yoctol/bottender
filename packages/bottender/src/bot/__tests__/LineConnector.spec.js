@@ -644,3 +644,102 @@ describe('#isWebhookVerifyRequest', () => {
     expect(connector.isWebhookVerifyRequest({ events: [] })).toEqual(false);
   });
 });
+
+describe('#preprocess', () => {
+  it('should return shouldNext: true if request method is get', () => {
+    const { connector } = setup();
+
+    expect(
+      connector.preprocess({
+        method: 'get',
+        headers: {
+          'x-line-signature': 'abc',
+        },
+        query: {},
+        rawBody: '',
+        body: {},
+      })
+    ).toEqual({
+      shouldNext: true,
+    });
+  });
+
+  it('should return shouldNext: true if signature match', () => {
+    const { connector } = setup();
+
+    expect(
+      connector.preprocess({
+        method: 'post',
+        headers: {
+          'x-line-signature': 'RI34eF3TZ0LkP6PK2d4uyozrY5HnnHQuM+UsZjfzLaw=',
+        },
+        query: {},
+        rawBody: '{}',
+        body: {},
+      })
+    ).toEqual({
+      shouldNext: true,
+    });
+  });
+
+  it('should return shouldNext: false and 200 OK if is webhook verify request', () => {
+    const { connector } = setup();
+
+    expect(
+      connector.preprocess({
+        method: 'post',
+        headers: {
+          'x-line-signature': '8nCfywRHp6BCJRiIALL7L3s/qaUK4TDDQ1h52j4hVLk=',
+        },
+        query: {},
+        rawBody:
+          '{"events":[{"replyToken":"00000000000000000000000000000000"},{"replyToken":"ffffffffffffffffffffffffffffffff"}]}',
+        body: {
+          events: [
+            { replyToken: '00000000000000000000000000000000' },
+            { replyToken: 'ffffffffffffffffffffffffffffffff' },
+          ],
+        },
+      })
+    ).toEqual({
+      shouldNext: false,
+      response: {
+        status: 200,
+        body: 'OK',
+      },
+    });
+  });
+
+  it('should return shouldNext: false and error if signature does not match', () => {
+    const { connector } = setup();
+
+    expect(
+      connector.preprocess({
+        method: 'post',
+        headers: {
+          'x-line-signature': 'XtFE4w+/e5cw8ys6BSALGj3ZCYgRtBdCBxyEfrkgLPc=',
+        },
+        query: {},
+        rawBody: '{}',
+        body: {},
+      })
+    ).toEqual({
+      shouldNext: false,
+      response: {
+        status: 400,
+        body: {
+          error: {
+            message: 'LINE Signature Validation Failed!',
+            request: {
+              headers: {
+                'x-line-signature':
+                  'XtFE4w+/e5cw8ys6BSALGj3ZCYgRtBdCBxyEfrkgLPc=',
+              },
+              rawBody: '{}',
+            },
+          },
+        },
+      },
+    });
+  });
+});

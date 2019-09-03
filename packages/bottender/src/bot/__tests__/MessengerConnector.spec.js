@@ -168,7 +168,7 @@ function setup(
     accessToken: ACCESS_TOKEN,
     appSecret: APP_SECRET,
     mapPageToAccessToken: jest.fn(),
-    verifyToken: undefined,
+    verifyToken: '1qaz2wsx',
     skipProfile: false,
   }
 ) {
@@ -213,11 +213,6 @@ describe('#platform', () => {
 });
 
 describe('#verifyToken', () => {
-  it('should be undefined when not be provided', () => {
-    const { connector } = setup();
-    expect(connector.verifyToken).toBe(undefined);
-  });
-
   it('should equal when be provided', () => {
     const { connector } = setup({ verifyToken: '1234' });
     expect(connector.verifyToken).toBe('1234');
@@ -595,22 +590,7 @@ describe('#createContext', () => {
 });
 
 describe('#verifySignature', () => {
-  it('should return true and show warning if app secret not set', () => {
-    const { connector } = setup({
-      accessToken: ACCESS_TOKEN,
-      appSecret: undefined,
-    });
-
-    const result = connector.verifySignature('rawBody', 'signature');
-
-    expect(result).toBe(true);
-    expect(warning).toBeCalledWith(
-      false,
-      '`appSecret` is not set. Will bypass Messenger signature validation.\nPass in `appSecret` to perform Messenger signature validation.'
-    );
-  });
-
-  it('should return true if signature is equal app sercret after crypto', () => {
+  it('should return true if signature is equal app secret after crypto', () => {
     const { connector } = setup();
 
     const result = connector.verifySignature(
@@ -635,5 +615,106 @@ describe('#verifySignature', () => {
     const result = connector.verifySignature('rawBody', 'sha256!!!');
 
     expect(result).toBe(false);
+  });
+});
+
+describe('#preprocess', () => {
+  it('should return correct challenge if request method is get and verify_token match', () => {
+    const { connector } = setup();
+
+    expect(
+      connector.preprocess({
+        method: 'get',
+        headers: {},
+        query: {
+          'hub.mode': 'subscribe',
+          'hub.verify_token': '1qaz2wsx',
+          'hub.challenge': 'abc',
+        },
+        rawBody: '',
+        body: {},
+      })
+    ).toEqual({
+      shouldNext: false,
+      response: {
+        status: 200,
+        body: 'abc',
+      },
+    });
+  });
+
+  it('should return 403 Forbidden if request method is get and verify_token does not match', () => {
+    const { connector } = setup();
+
+    expect(
+      connector.preprocess({
+        method: 'get',
+        headers: {},
+        query: {
+          'hub.mode': 'subscribe',
+          'hub.verify_token': '3edc4rfv',
+          'hub.challenge': 'abc',
+        },
+        rawBody: '',
+        body: {},
+      })
+    ).toEqual({
+      shouldNext: false,
+      response: {
+        status: 403,
+        body: 'Forbidden',
+      },
+    });
+  });
+
+  it('should return shouldNext: true if signature match', () => {
+    const { connector } = setup();
+
+    expect(
+      connector.preprocess({
+        method: 'post',
+        headers: {
+          'x-hub-signature': 'sha1=1c99183cb7c44ea27fb834746086b65b89800db8',
+        },
+        query: {},
+        rawBody: '{}',
+        body: {},
+      })
+    ).toEqual({
+      shouldNext: true,
+    });
+  });
+
+  it('should return shouldNext: false and error if signature does not match', () => {
+    const { connector } = setup();
+
+    expect(
+      connector.preprocess({
+        method: 'post',
+        headers: {
+          'x-hub-signature': 'sha1=0d814d436b45c33ef664a317ff4b8dc2d3d8fe2a',
+        },
+        query: {},
+        rawBody: '{}',
+        body: {},
+      })
+    ).toEqual({
+      shouldNext: false,
+      response: {
+        status: 400,
+        body: {
+          error: {
+            message: 'Messenger Signature Validation Failed!',
+            request: {
+              headers: {
+                'x-hub-signature':
+                  'sha1=0d814d436b45c33ef664a317ff4b8dc2d3d8fe2a',
+              },
+              rawBody: '{}',
+            },
+          },
+        },
+      },
+    });
   });
 });
