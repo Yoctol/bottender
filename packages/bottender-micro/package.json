@@ -1,0 +1,22 @@
+{
+  "name": "@bottender/micro",
+  "license": "MIT",
+  "homepage": "https://bottender.js.org/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Yoctol/bottender.git"
+  },
+  "version": "1.0.0-alpha.0",
+  "main": "lib/index.js",
+  "files": [
+    "lib"
+  ],
+  "dependencies": {
+    "micro": "^9.3.4",
+    "shortid": "^2.2.14",
+    "urlencoded-body-parser": "^3.0.0"
+  },
+  "devDependencies": {
+    "supertest": "^4.0.2"
+  }
+}

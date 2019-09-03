@@ -40,7 +40,7 @@ jobs:
           root: .
           paths:
             - node_modules
-            - lib
+            - packages/*/lib
   test-node-10:
     <<: *docker_10
     steps:
@@ -68,7 +68,7 @@ jobs:
           command: |
             yarn config set cache-folder .yarn-cache
             yarn --frozen-lockfile
-            yarn add codecov
+            yarn add -W codecov
       - run:
           name: build
           command: npm run build
@@ -81,7 +81,7 @@ jobs:
           root: .
           paths:
             - node_modules
-            - lib
+            - packages/*/lib
   lint-node-8:
     <<: *docker_8
     steps:

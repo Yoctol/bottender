@@ -1,5 +1,6 @@
 {
-  "name": "bottender",
+  "private": true,
+  "name": "@bottender/workspace",
   "description": "Make Bots Your Way, Fast and Flexible",
   "license": "MIT",
   "homepage": "https://bottender.js.org/",
@@ -7,27 +8,14 @@
     "type": "git",
     "url": "https://github.com/Yoctol/bottender.git"
   },
-  "version": "0.16.0-rc.1",
-  "main": "lib/index.js",
-  "browser": "lib/browser.js",
-  "bin": {
-    "bottender": "bin/cli.js",
-    "btd": "bin/cli.js"
-  },
-  "files": [
-    "bin",
-    "express.js",
-    "koa.js",
-    "lib",
-    "micro.js",
-    "restify.js",
-    "test-utils.js",
-    "utils.js"
+  "workspaces": [
+    "packages/*"
   ],
   "scripts": {
-    "build": "npm run clean && cross-env NODE_ENV=production babel src -d lib --copy-files",
+    "bootstrap": "lerna bootstrap",
+    "build": "node ./scripts/build.js",
     "check": "flow check",
-    "clean": "rimraf lib",
+    "clean": "rimraf ./packages/*/lib",
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
     "lint:staged": "lint-staged",
@@ -38,64 +26,6 @@
     "testonly:watch": "jest --watch",
     "preversion": "npm test"
   },
-  "dependencies": {
-    "@hapi/joi": "^15.1.1",
-    "@slack/rtm-api": "^5.0.2",
-    "arg": "^4.1.1",
-    "axios": "^0.19.0",
-    "body-parser": "^1.19.0",
-    "camel-case": "^3.0.0",
-    "chalk": "~2.4.2",
-    "child_process": "^1.0.2",
-    "cli-table3": "^0.5.1",
-    "cross-spawn": "^6.0.5",
-    "date-fns": "^2.0.1",
-    "debug": "^4.1.1",
-    "deep-object-diff": "^1.1.0",
-    "delay": "^4.3.0",
-    "express": "^4.17.1",
-    "figures": "^3.0.0",
-    "file-type": "^12.2.0",
-    "fs-extra": "^8.1.0",
-    "hasha": "^5.0.0",
-    "import-fresh": "^3.1.0",
-    "inquirer": "^7.0.0",
-    "invariant": "^2.2.4",
-    "ioredis": "^4.14.0",
-    "jfs": "^0.3.0",
-    "jsonfile": "^5.0.0",
-    "koa": "^2.8.1",
-    "koa-bodyparser": "^4.2.1",
-    "koa-compose": "^4.1.0",
-    "koa-router": "^7.4.0",
-    "lodash": "^4.17.15",
-    "lru-cache": "^5.1.1",
-    "messaging-api-line": "^0.8.1",
-    "messaging-api-messenger": "^0.8.1",
-    "messaging-api-slack": "^0.8.1",
-    "messaging-api-telegram": "^0.8.1",
-    "messaging-api-viber": "^0.8.1",
-    "messenger-batch": "^0.3.0",
-    "micro": "^9.3.4",
-    "minimist": "^1.2.0",
-    "mongodb": "^3.3.1",
-    "p-map": "^3.0.0",
-    "p-props": "^3.0.1",
-    "pascal-case": "^2.0.1",
-    "pkg-dir": "^4.2.0",
-    "prompt-confirm": "^2.0.4",
-    "read-chunk": "^3.2.0",
-    "readline": "^1.3.0",
-    "recursive-readdir": "^2.2.2",
-    "restify": "^8.4.0",
-    "shortid": "^2.2.14",
-    "stringify-object": "^3.3.0",
-    "thenify": "^3.3.0",
-    "update-notifier": "^3.0.1",
-    "urlencoded-body-parser": "^3.0.0",
-    "validate-npm-package-name": "^3.0.0",
-    "warning": "^4.0.3"
-  },
   "devDependencies": {
     "@babel/cli": "^7.5.5",
     "@babel/core": "^7.5.5",
@@ -103,11 +33,11 @@
     "@babel/plugin-proposal-object-rest-spread": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
     "@babel/preset-flow": "^7.0.0",
-    "axios-mock-adapter": "^1.17.0",
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "^10.0.3",
     "babel-jest": "^24.9.0",
     "babel-plugin-lodash": "^3.3.4",
+    "chalk": "^2.4.2",
     "cross-env": "^5.2.0",
     "eslint": "^6.2.2",
     "eslint-config-prettier": "^6.1.0",
@@ -121,31 +51,20 @@
     "eslint-plugin-react-hooks": "^2.0.1",
     "eslint-plugin-sort-imports-es6-autofix": "^0.4.0",
     "flow-bin": "^0.94.0",
+    "glob": "^7.1.4",
     "husky": "^3.0.4",
     "jest": "^24.9.0",
     "jest-create-mock-instance": "^1.1.0",
     "jest-junit": "^8.0.0",
     "lint-staged": "^9.2.5",
-    "ngrok": "^3.2.5",
-    "once": "^1.4.0",
+    "micromatch": "^4.0.2",
+    "mkdirp": "^0.5.1",
     "prettier": "^1.18.2",
     "prettier-package-json": "^2.1.0",
-    "rimraf": "^3.0.0",
-    "supertest": "^4.0.2"
+    "rimraf": "^3.0.0"
   },
-  "keywords": [
-    "bot",
-    "chatbot",
-    "framework",
-    "line",
-    "messaging",
-    "messenger",
-    "slack",
-    "telegram",
-    "viber"
-  ],
   "engines": {
-    "node": ">=7.6"
+    "node": ">=8"
   },
   "husky": {
     "hooks": {
@@ -154,7 +73,7 @@
   },
   "jest": {
     "collectCoverageFrom": [
-      "src/**/*.js"
+      "packages/*/src/**/*.js"
     ],
     "coveragePathIgnorePatterns": [
       "/node_modules/",
