@@ -1,5 +1,3 @@
-import path from 'path';
-
 import ngrok from 'ngrok';
 import nodemon from 'nodemon';
 
@@ -17,7 +15,7 @@ const dev = async ctx => {
     '-p': '--port',
   });
 
-  const isConsole = argv['--console'];
+  const isConsole = argv['--console'] || false;
   const port = argv['--port'] || 5000;
 
   const config = getBottenderConfig();
@@ -25,10 +23,9 @@ const dev = async ctx => {
   const { channels = {} } = config;
 
   // watch
-  nodemon({
-    script: path.resolve(`${__dirname}/start.js`),
-    ext: 'js json',
-  })
+  nodemon(
+    `--exec "bottender start ${isConsole ? '--console' : ''} --port ${port}"`
+  )
     // TODO: improve messages
     .on('start', () => {
       console.log('App has started');
