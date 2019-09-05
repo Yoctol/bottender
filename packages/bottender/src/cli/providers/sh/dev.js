@@ -1,3 +1,5 @@
+import path from 'path';
+
 import ngrok from 'ngrok';
 import nodemon from 'nodemon';
 
@@ -24,9 +26,10 @@ const dev = async ctx => {
 
   // watch
   nodemon({
-    script: 'node ./start.js',
+    script: path.resolve(`${__dirname}/start.js`),
     ext: 'js json',
   })
+    // TODO: improve messages
     .on('start', () => {
       console.log('App has started');
     })
@@ -42,7 +45,7 @@ const dev = async ctx => {
     const url = await ngrok.connect(port);
 
     Object.entries(channels)
-      .filter(([, { enabled }]) => enabled)
+      .filter(([, { enabled }]) => enabled !== false)
       .forEach(([channel, { path: webhookPath }]) => {
         const routePath = webhookPath || `/webhooks/${channel}`;
 
