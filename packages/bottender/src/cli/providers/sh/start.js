@@ -29,7 +29,7 @@ const start = async ctx => {
     '-p': '--port',
   });
 
-  const isConsole = argv['--console'];
+  const isConsole = argv['--console'] || false;
   const port = argv['--port'] || 5000;
 
   const config = getBottenderConfig();
@@ -87,7 +87,7 @@ const start = async ctx => {
   } else {
     let server;
     Object.entries(channels)
-      .filter(([, { enabled }]) => enabled)
+      .filter(([, { enabled }]) => enabled !== false)
       .map(([channel, { enabled, path: webhookPath, ...channelConfig }]) => {
         const ChannelBot = BOT_MAP[channel];
         const channelBot = new ChannelBot(channelConfig);
