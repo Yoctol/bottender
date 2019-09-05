@@ -57,7 +57,10 @@ const start = async ctx => {
       SessionStore = require('../../../session/MemorySessionStore').default;
   }
 
-  const sessionStore = new SessionStore(session[sessionDriver] || {});
+  const sessionStore = new SessionStore(
+    session[sessionDriver] || {},
+    session.expiresIn
+  );
 
   function initializeBot(bot) {
     if (initialState) {
@@ -90,7 +93,10 @@ const start = async ctx => {
       .filter(([, { enabled }]) => enabled !== false)
       .map(([channel, { enabled, path: webhookPath, ...channelConfig }]) => {
         const ChannelBot = BOT_MAP[channel];
-        const channelBot = new ChannelBot(channelConfig);
+        const channelBot = new ChannelBot({
+          ...channelConfig,
+          sessionStore,
+        });
 
         initializeBot(channelBot);
 
