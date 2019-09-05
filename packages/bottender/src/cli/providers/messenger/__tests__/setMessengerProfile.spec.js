@@ -9,28 +9,30 @@ jest.mock('../../../shared/getConfig');
 const { MessengerClient } = require('messaging-api-messenger');
 
 const log = require('../../../shared/log');
-const getConfig = require('../../../shared/getConfig');
+const getConfig = require('../../../shared/getConfig').default;
 
 const MOCK_FILE_WITH_PLATFORM = {
-  messenger: {
-    accessToken: '__FAKE_TOKEN__',
-    profile: {
-      get_started: {
-        payload: '<GET_STARTED_PAYLOAD>',
-      },
-      persistent_menu: [
-        {
-          locale: 'default',
-          composer_input_disabled: false,
-          call_to_actions: [
-            {
-              type: 'web_url',
-              title: 'Powered by Example',
-              url: 'https://www.example.com/',
-            },
-          ],
+  channels: {
+    messenger: {
+      accessToken: '__FAKE_TOKEN__',
+      profile: {
+        get_started: {
+          payload: '<GET_STARTED_PAYLOAD>',
         },
-      ],
+        persistent_menu: [
+          {
+            locale: 'default',
+            composer_input_disabled: false,
+            call_to_actions: [
+              {
+                type: 'web_url',
+                title: 'Powered by Example',
+                url: 'https://www.example.com/',
+              },
+            ],
+          },
+        ],
+      },
     },
   },
 };
@@ -63,7 +65,7 @@ beforeEach(() => {
     },
   ]);
   MessengerClient.connect = jest.fn(() => _client);
-  getConfig.mockReturnValue(MOCK_FILE_WITH_PLATFORM.messenger);
+  getConfig.mockReturnValue(MOCK_FILE_WITH_PLATFORM.channels.messenger);
 });
 
 it('be defined', () => {

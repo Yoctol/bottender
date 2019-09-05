@@ -7,7 +7,7 @@ jest.mock('../../../shared/getConfig');
 const { LineClient } = require('messaging-api-line');
 
 const { print, error } = require('../../../shared/log');
-const getConfig = require('../../../shared/getConfig');
+const getConfig = require('../../../shared/getConfig').default;
 
 const setup = (token = undefined) => ({
   argv: {

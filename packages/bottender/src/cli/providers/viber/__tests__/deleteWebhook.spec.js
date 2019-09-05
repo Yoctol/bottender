@@ -7,17 +7,19 @@ jest.mock('../../../shared/getConfig');
 const { ViberClient } = require('messaging-api-viber');
 
 const log = require('../../../shared/log');
-const getConfig = require('../../../shared/getConfig');
+const getConfig = require('../../../shared/getConfig').default;
 
 const MOCK_FILE_WITH_PLATFORM = {
-  viber: {
-    accessToken: '__accessToken__',
+  channels: {
+    viber: {
+      accessToken: '__accessToken__',
+    },
   },
 };
 
 beforeEach(() => {
   process.exit = jest.fn();
-  getConfig.mockReturnValue(MOCK_FILE_WITH_PLATFORM.viber);
+  getConfig.mockReturnValue(MOCK_FILE_WITH_PLATFORM.channels.viber);
 
   ViberClient.connect.mockReturnValue({
     removeWebhook: jest.fn(() => ({

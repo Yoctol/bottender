@@ -16,7 +16,7 @@ export async function getWebhook(ctx) {
     if (ctx.argv['--token']) {
       accessToken = ctx.argv['--token'];
     } else {
-      const config = getConfig('bottender.config.js', 'telegram');
+      const config = getConfig('telegram');
 
       invariant(config.accessToken, 'accessToken is not found in config file');
 
@@ -51,7 +51,7 @@ export async function setWebhook(ctx) {
     if (ctx.argv['--token']) {
       accessToken = ctx.argv['--token'];
     } else {
-      const config = getConfig('bottender.config.js', 'telegram');
+      const config = getConfig('telegram');
 
       invariant(config.accessToken, 'accessToken is not found in config file');
 
@@ -100,7 +100,7 @@ export async function deleteWebhook(ctx) {
     if (ctx.argv['--token']) {
       accessToken = ctx.argv['--token'];
     } else {
-      const config = getConfig('bottender.config.js', 'telegram');
+      const config = getConfig('telegram');
 
       invariant(config.accessToken, 'accessToken is not found in config file');
 

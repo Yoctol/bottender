@@ -50,7 +50,7 @@ export const help = () => {
 
 export function checkLineMenu() {
   try {
-    getConfig('bottender.config.js', 'line');
+    getConfig('line');
     print('LINE rich menu check done.');
   } catch (e) {
     error(e.message);
@@ -67,7 +67,7 @@ export async function getLineMenu(ctx) {
     if (token) {
       accessToken = token;
     } else {
-      const config = getConfig('bottender.config.js', 'line');
+      const config = getConfig('line');
 
       invariant(config.accessToken, 'accessToken is not found in config file');
 
@@ -105,7 +105,7 @@ export async function setLineMenus(ctx) {
   let accessToken;
 
   try {
-    const config = getConfig('bottender.config.js', 'line');
+    const config = getConfig('line');
     const { richMenus: localRichMenus } = config;
 
     if (token) {
@@ -196,7 +196,7 @@ export async function deleteLineMenu(ctx) {
     if (token) {
       accessToken = token;
     } else {
-      const config = getConfig('bottender.config.js', 'line');
+      const config = getConfig('line');
 
       invariant(config.accessToken, 'accessToken is not found in config file');
 

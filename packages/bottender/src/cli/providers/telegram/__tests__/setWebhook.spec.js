@@ -13,13 +13,15 @@ const { TelegramClient } = require('messaging-api-telegram');
 const getWebhookFromNgrok = require('../../../shared/getWebhookFromNgrok')
   .default;
 const log = require('../../../shared/log');
-const getConfig = require('../../../shared/getConfig');
+const getConfig = require('../../../shared/getConfig').default;
 
 const MOCK_FILE_WITH_PLATFORM = {
-  telegram: {
-    accessToken: '__accessToken__',
+  channels: {
+    telegram: {
+      accessToken: '__accessToken__',
+    },
+    line: {},
   },
-  line: {},
 };
 
 const setup = (
@@ -38,7 +40,7 @@ const setup = (
 
 beforeEach(() => {
   process.exit = jest.fn();
-  getConfig.mockReturnValue(MOCK_FILE_WITH_PLATFORM.telegram);
+  getConfig.mockReturnValue(MOCK_FILE_WITH_PLATFORM.channels.telegram);
 
   getWebhookFromNgrok.mockResolvedValue('https://fakeDomain.ngrok.io');
 

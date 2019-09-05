@@ -57,7 +57,7 @@ export async function createPersona(ctx) {
     if (token) {
       accessToken = token;
     } else {
-      const config = getConfig('bottender.config.js', 'messenger');
+      const config = getConfig('messenger');
 
       invariant(config.accessToken, 'accessToken is not found in config file');
 
@@ -100,7 +100,7 @@ export async function listPersona(ctx) {
     if (token) {
       accessToken = token;
     } else {
-      const config = getConfig('bottender.config.js', 'messenger');
+      const config = getConfig('messenger');
 
       invariant(config.accessToken, 'accessToken is not found in config file');
 
@@ -148,7 +148,7 @@ export async function getPersona(ctx) {
     if (token) {
       accessToken = token;
     } else {
-      const config = getConfig('bottender.config.js', 'messenger');
+      const config = getConfig('messenger');
 
       invariant(config.accessToken, 'accessToken is not found in config file');
 
@@ -192,7 +192,7 @@ export async function deletePersona(ctx) {
     if (token) {
       accessToken = token;
     } else {
-      const config = getConfig('bottender.config.js', 'messenger');
+      const config = getConfig('messenger');
 
       invariant(config.accessToken, 'accessToken is not found in config file');
 

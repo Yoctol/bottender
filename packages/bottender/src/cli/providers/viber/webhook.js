@@ -17,7 +17,7 @@ export async function setWebhook(
 ) {
   try {
     if (!accessToken) {
-      const config = getConfig('bottender.config.js', 'viber');
+      const config = getConfig('viber');
 
       invariant(config.accessToken, 'accessToken is not found in config file');
 
@@ -66,7 +66,7 @@ export async function deleteWebhook(ctx) {
     if (ctx.argv['--token']) {
       accessToken = ctx.argv['--token'];
     } else {
-      const config = getConfig('bottender.config.js', 'viber');
+      const config = getConfig('viber');
 
       invariant(config.accessToken, 'accessToken is not found in config file');
 

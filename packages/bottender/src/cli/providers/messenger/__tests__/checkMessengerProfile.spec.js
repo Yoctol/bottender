@@ -4,11 +4,13 @@ jest.mock('../../../shared/log');
 jest.mock('../../../shared/getConfig');
 
 const log = require('../../../shared/log');
-const getConfig = require('../../../shared/getConfig');
+const getConfig = require('../../../shared/getConfig').default;
 
 const MOCK_FILE_WITH_PLATFORM = {
-  messenger: {
-    accessToken: '__FAKE_TOKEN__',
+  channels: {
+    messenger: {
+      accessToken: '__FAKE_TOKEN__',
+    },
   },
 };
 
@@ -23,7 +25,7 @@ it('be defined', () => {
 
 describe('resolved', () => {
   it('call getConfig', async () => {
-    getConfig.mockReturnValue(MOCK_FILE_WITH_PLATFORM.messenger);
+    getConfig.mockReturnValue(MOCK_FILE_WITH_PLATFORM.channels.messenger);
 
     checkMessengerProfile();
 

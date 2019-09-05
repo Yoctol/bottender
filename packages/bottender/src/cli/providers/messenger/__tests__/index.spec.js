@@ -1,6 +1,5 @@
 import messenger from '..';
 
-jest.mock('../attachment');
 jest.mock('../get-started');
 jest.mock('../greeting');
 jest.mock('../persistent-menu');
@@ -13,11 +12,6 @@ jest.mock('../persona');
 describe('messenger cli', () => {
   it('should exist', () => {
     expect(messenger).toBeDefined();
-  });
-
-  it('should return attachment module', () => {
-    const attachment = require('../attachment').default;
-    expect(messenger.attachment).toEqual(attachment);
   });
 
   it('should return getStarted module', () => {

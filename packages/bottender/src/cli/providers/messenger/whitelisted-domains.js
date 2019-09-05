@@ -43,7 +43,7 @@ export async function getWhitelistedDomains(ctx) {
     if (token) {
       accessToken = token;
     } else {
-      const config = getConfig('bottender.config.js', 'messenger');
+      const config = getConfig('messenger');
 
       invariant(config.accessToken, 'accessToken is not found in config file');
 
@@ -83,7 +83,7 @@ export async function deleteWhitelistedDomains(ctx) {
     if (token) {
       accessToken = token;
     } else {
-      const config = getConfig('bottender.config.js', 'messenger');
+      const config = getConfig('messenger');
 
       invariant(config.accessToken, 'accessToken is not found in config file');
 
