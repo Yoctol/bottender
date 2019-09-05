@@ -9,7 +9,7 @@ const { LineClient } = require('messaging-api-line');
 const inquirer = require('inquirer');
 
 const { print, error } = require('../../../shared/log');
-const getConfig = require('../../../shared/getConfig');
+const getConfig = require('../../../shared/getConfig').default;
 
 const setup = (force, token = undefined) => ({
   argv: {

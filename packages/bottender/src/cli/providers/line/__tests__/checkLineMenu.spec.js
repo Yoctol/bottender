@@ -4,39 +4,41 @@ jest.mock('../../../shared/log');
 jest.mock('../../../shared/getConfig');
 
 const log = require('../../../shared/log');
-const getConfig = require('../../../shared/getConfig');
+const getConfig = require('../../../shared/getConfig').default;
 
 const MOCK_FILE_WITH_PLATFORM = {
-  messenger: {
-    accessToken: '__FAKE_TOKEN__',
-  },
-  line: {
-    accessToken: '__FAKE_TOKEN__',
-    richMenus: [
-      {
-        size: {
-          width: 2500,
-          height: 1686,
-        },
-        selected: false,
-        name: 'Nice richmenu',
-        chatBarText: 'Tap here',
-        areas: [
-          {
-            bounds: {
-              x: 0,
-              y: 0,
-              width: 2500,
-              height: 1686,
-            },
-            action: {
-              type: 'postback',
-              data: 'action=buy&itemid=123',
-            },
+  channels: {
+    messenger: {
+      accessToken: '__FAKE_TOKEN__',
+    },
+    line: {
+      accessToken: '__FAKE_TOKEN__',
+      richMenus: [
+        {
+          size: {
+            width: 2500,
+            height: 1686,
           },
-        ],
-      },
-    ],
+          selected: false,
+          name: 'Nice richmenu',
+          chatBarText: 'Tap here',
+          areas: [
+            {
+              bounds: {
+                x: 0,
+                y: 0,
+                width: 2500,
+                height: 1686,
+              },
+              action: {
+                type: 'postback',
+                data: 'action=buy&itemid=123',
+              },
+            },
+          ],
+        },
+      ],
+    },
   },
 };
 
@@ -51,7 +53,7 @@ it('be defined', () => {
 
 describe('resolved', () => {
   it('call getConfig', async () => {
-    getConfig.mockReturnValue(MOCK_FILE_WITH_PLATFORM.line);
+    getConfig.mockReturnValue(MOCK_FILE_WITH_PLATFORM.channels.line);
 
     checkLineMenu();
 

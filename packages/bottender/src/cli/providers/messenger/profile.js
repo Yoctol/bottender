@@ -61,7 +61,7 @@ export const trimDomain = profile => {
 
 export function checkMessengerProfile() {
   try {
-    getConfig('bottender.config.js', 'messenger');
+    getConfig('messenger');
     print('Messenger profile check done.');
   } catch (e) {
     error(e.message);
@@ -78,7 +78,7 @@ export async function getMessengerProfile(ctx) {
     if (token) {
       accessToken = token;
     } else {
-      const config = getConfig('bottender.config.js', 'messenger');
+      const config = getConfig('messenger');
 
       invariant(config.accessToken, 'accessToken is not found in config file');
 
@@ -120,14 +120,14 @@ export async function setMessengerProfile(ctx) {
     if (token) {
       accessToken = token;
     } else {
-      const config = getConfig('bottender.config.js', 'messenger');
+      const config = getConfig('messenger');
 
       invariant(config.accessToken, 'accessToken is not found in config file');
 
       accessToken = config.accessToken;
     }
 
-    const { profile: _profile } = getConfig('bottender.config.js', 'messenger');
+    const { profile: _profile } = getConfig('messenger');
 
     const client = MessengerClient.connect(accessToken);
 
@@ -218,7 +218,7 @@ export async function deleteMessengerProfile(ctx) {
     if (token) {
       accessToken = token;
     } else {
-      const config = getConfig('bottender.config.js', 'messenger');
+      const config = getConfig('messenger');
 
       invariant(config.accessToken, 'accessToken is not found in config file');
 

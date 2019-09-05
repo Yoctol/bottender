@@ -49,7 +49,7 @@ export async function setWebhook(
   ngrokPort = '4040'
 ) {
   try {
-    const config = getConfig('bottender.config.js', 'messenger');
+    const config = getConfig('messenger');
 
     if (accessToken === undefined) {
       invariant(config.accessToken, 'accessToken is not found in config file');

@@ -13,7 +13,7 @@ const { MessengerClient } = require('messaging-api-messenger');
 const getWebhookFromNgrok = require('../../../shared/getWebhookFromNgrok')
   .default;
 const log = require('../../../shared/log');
-const getConfig = require('../../../shared/getConfig');
+const getConfig = require('../../../shared/getConfig').default;
 
 const FAKE_TOKEN = '__FAKE_TOKEN__';
 const APP_ID = '__APP_ID__';
@@ -23,18 +23,20 @@ const WEBHOOK = 'http://example.com/webhook';
 let ACCESS_TOKEN;
 
 const MOCK_FILE_WITH_PLATFORM = {
-  messenger: {
-    accessToken: FAKE_TOKEN,
-    appId: APP_ID,
-    appSecret: APP_SECRET,
-    verifyToken: VERIFY_TOKEN,
+  channels: {
+    messenger: {
+      accessToken: FAKE_TOKEN,
+      appId: APP_ID,
+      appSecret: APP_SECRET,
+      verifyToken: VERIFY_TOKEN,
+    },
   },
 };
 
 function setup({ success = true } = {}) {
   getWebhookFromNgrok.mockResolvedValue('https://fakeDomain.ngrok.io');
 
-  getConfig.mockReturnValue(MOCK_FILE_WITH_PLATFORM.messenger);
+  getConfig.mockReturnValue(MOCK_FILE_WITH_PLATFORM.channels.messenger);
 
   const client = {
     createSubscription: jest.fn(),

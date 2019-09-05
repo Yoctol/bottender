@@ -7,18 +7,20 @@ jest.mock('../../../shared/getConfig');
 const { TelegramClient } = require('messaging-api-telegram');
 
 const log = require('../../../shared/log');
-const getConfig = require('../../../shared/getConfig');
+const getConfig = require('../../../shared/getConfig').default;
 
 const MOCK_FILE_WITH_PLATFORM = {
-  telegram: {
-    accessToken: '__accessToken__',
+  channels: {
+    telegram: {
+      accessToken: '__accessToken__',
+    },
+    line: {},
   },
-  line: {},
 };
 
 beforeEach(() => {
   process.exit = jest.fn();
-  getConfig.mockReturnValue(MOCK_FILE_WITH_PLATFORM.telegram);
+  getConfig.mockReturnValue(MOCK_FILE_WITH_PLATFORM.channels.telegram);
 
   TelegramClient.connect.mockReturnValue({
     deleteWebhook: jest.fn().mockResolvedValue(true),

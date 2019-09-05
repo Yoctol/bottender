@@ -1,15 +1,13 @@
-import path from 'path';
-
 import Joi from '@hapi/joi';
 import arg from 'arg';
 import get from 'lodash/get';
-import importFresh from 'import-fresh';
 import invariant from 'invariant';
 
+import getBottenderConfig from './getBottenderConfig';
 import schema from './schema';
 import { bold } from './log';
 
-const getConfig = (configPath, platform) => {
+const getConfig = platform => {
   const argv = arg(
     {
       '--skip-validate': Boolean,
@@ -17,7 +15,7 @@ const getConfig = (configPath, platform) => {
     { permissive: true }
   );
 
-  const config = importFresh(path.resolve(configPath));
+  const config = getBottenderConfig();
 
   if (!argv['--skip-validate']) {
     const validateResult = Joi.validate(config, schema, { allowUnknown: true });
@@ -33,7 +31,7 @@ const getConfig = (configPath, platform) => {
     }
   }
 
-  const result = get(config, platform, undefined);
+  const result = get(config, `channels.${platform}`, undefined);
 
   invariant(
     result,
@@ -43,4 +41,4 @@ const getConfig = (configPath, platform) => {
   return result;
 };
 
-module.exports = getConfig;
+export default getConfig;
