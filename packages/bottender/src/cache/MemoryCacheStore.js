@@ -8,7 +8,7 @@ import { type CacheStore } from './CacheStore';
 export default class MemoryCacheStore implements CacheStore {
   _lru: LRU;
 
-  constructor(max: number) {
+  constructor(max: ?number) {
     this._lru = new LRU({ max });
   }
 

@@ -17,6 +17,13 @@ function setup() {
   };
 }
 
+it('should be instanceof CacheBasedSessionStore', () => {
+  expect(new FileSessionStore('.session')).toBeInstanceOf(FileSessionStore);
+  expect(new FileSessionStore({ dirname: '.session' })).toBeInstanceOf(
+    FileSessionStore
+  );
+});
+
 describe('#init', () => {
   it('should return initialize store instance', async () => {
     const { store } = setup();
