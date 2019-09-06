@@ -10,18 +10,38 @@ import { type SessionStore } from './SessionStore';
 
 const MINUTES_IN_ONE_YEAR = 365 * 24 * 60;
 
+type FileOption =
+  | string
+  | {
+      dirname?: ?string,
+    };
+
+function getDirname(arg: FileOption): ?string {
+  if (typeof arg === 'string') {
+    return arg;
+  }
+
+  if (arg && typeof arg === 'object') {
+    return arg.dirname;
+  }
+}
+
 export default class FileSessionStore implements SessionStore {
   _jfs: JFSStore;
 
   // The number of minutes to store the data in the session.
   _expiresIn: number;
 
-  constructor(dirname: string, expiresIn: number) {
+  constructor(arg: FileOption, expiresIn: number) {
     this._expiresIn = expiresIn || MINUTES_IN_ONE_YEAR;
-    const jfs = new JFSStore(dirname || '.sessions');
+
+    const dirname = getDirname(arg) || '.sessions';
+
+    const jfs = new JFSStore(dirname);
     jfs.get = thenify(jfs.get);
     jfs.save = thenify(jfs.save);
     jfs.delete = thenify(jfs.delete);
+
     this._jfs = jfs;
   }
 
