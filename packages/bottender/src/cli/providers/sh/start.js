@@ -34,7 +34,7 @@ const start = async ctx => {
 
   const config = getBottenderConfig();
 
-  const { initialState, plugins = [], session, channels = {} } = config;
+  const { initialState, plugins = [], session = {}, channels = {} } = config;
 
   // TODO: refine handler entry
   // eslint-disable-next-line import/no-dynamic-require
@@ -57,10 +57,9 @@ const start = async ctx => {
       SessionStore = require('../../../session/MemorySessionStore').default;
   }
 
-  const sessionStore = new SessionStore(
-    session[sessionDriver] || {},
-    session.expiresIn
-  );
+  const sessionDriverConfig = (session.stores || {})[sessionDriver] || {};
+
+  const sessionStore = new SessionStore(sessionDriverConfig, session.expiresIn);
 
   function initializeBot(bot) {
     if (initialState) {
