@@ -13,7 +13,7 @@ type MemoryOption =
       maxSize?: ?number,
     };
 
-function getＭaxSize(arg: MemoryOption): ?number {
+function getMaxSize(arg: MemoryOption): ?number {
   if (typeof arg === 'number') {
     return arg;
   }
@@ -26,7 +26,7 @@ function getＭaxSize(arg: MemoryOption): ?number {
 export default class MemorySessionStore extends CacheBasedSessionStore
   implements SessionStore {
   constructor(arg: MemoryOption, expiresIn: number) {
-    const maxSize = getＭaxSize(arg);
+    const maxSize = getMaxSize(arg);
 
     const cache = new MemoryCacheStore(maxSize);
 
