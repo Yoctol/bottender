@@ -619,10 +619,9 @@ describe('context lifecycle', () => {
         session: undefined,
         handlerDidEnd,
       })),
-      handlerDidEnd: jest.fn(),
     };
 
-    const { bot } = setup({ connector });
+    const { bot } = setup({ connector, sync: true });
 
     connector.getUniqueSessionKey.mockReturnValue('__id__');
 

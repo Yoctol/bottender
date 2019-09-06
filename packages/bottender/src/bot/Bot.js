@@ -27,12 +27,28 @@ const debugRequest = debug('bottender:request');
 const debugResponse = debug('bottender:response');
 const debugSessionRead = debug('bottender:session:read');
 const debugSessionWrite = debug('bottender:session:write');
+const debugDialog = debug('bottender:dialog');
 
 const MINUTES_IN_ONE_YEAR = 365 * 24 * 60;
 
 function createMemorySessionStore(): SessionStore {
   const cache = new MemoryCacheStore(500);
   return new CacheBasedSessionStore(cache, MINUTES_IN_ONE_YEAR);
+}
+
+function run(fn: FunctionalHandler): FunctionalHandler {
+  return async function Run(context) {
+    let nextDialog = fn;
+
+    do {
+      // TODO: improve this debug helper
+      debugDialog(`Current Dialog: ${nextDialog.name || 'Anonymous'}`);
+      // eslint-disable-next-line no-await-in-loop
+      nextDialog = await nextDialog(context);
+    } while (typeof nextDialog === 'function');
+
+    return nextDialog;
+  };
 }
 
 type RequestHandler = (
@@ -215,7 +231,7 @@ export default class Bot {
       const promises = Promise.all(
         contexts.map(context =>
           Promise.resolve()
-            .then(() => handler(context))
+            .then(() => run(handler)(context))
             .then(() => {
               if (context.handlerDidEnd) {
                 return context.handlerDidEnd();
