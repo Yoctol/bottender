@@ -34,7 +34,6 @@ const server = createServer(bot, {
 ## Related examples
 
 * [analytics-dashbot](../analytics-dashbot)
-* [analytics-botimize](../analytics-botimize)
 * [analytics-botanalytics](../analytics-botanalytics)
 * [server-express](../server-express)
 * [messenger-hello-world](../messenger-hello-world)
