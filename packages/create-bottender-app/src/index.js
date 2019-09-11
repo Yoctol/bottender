@@ -7,9 +7,8 @@ import spawn from 'cross-spawn';
 import stringifyObject from 'stringify-object';
 import validateProjectName from 'validate-npm-package-name';
 
-import { bold, error, print } from '../../../shared/log';
-
 import generateIndexFile from './generateIndexFile';
+import { bold, error, print } from './shared/log';
 
 const questions = [
   {
