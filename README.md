@@ -9,15 +9,15 @@
 [![join chat](https://img.shields.io/badge/discord-join%20chat-green.svg)](https://discord.gg/apNsWBz)
 ![](https://user-images.githubusercontent.com/662387/38478130-5ceff16c-3be9-11e8-9b2b-d9fc2e0925c0.png)
 
-* **Flexible** - Declare handlers as any JavaScript function.
+- **Flexible** - Declare handlers as any JavaScript function.
 
-* **Modern** - Source written with ES6/ES7 syntax and great async await
+- **Modern** - Source written with ES6/ES7 syntax and great async await
   supports.
 
-* **Modular** - Use session stores, server framework adapters and platform
+- **Modular** - Use session stores, server framework adapters and platform
   connectors with same interface.
 
-* **Learn Once, Write Anywhere** - Handle multiple platforms with consistent
+- **Learn Once, Write Anywhere** - Handle multiple platforms with consistent
   development experience.
 
 Bottender is built on top of
@@ -43,19 +43,19 @@ Installation may fail on Windows during compilation of the native dependencies w
 
 You can find the Bottender documentation on the website.
 
-* [Getting Started](https://bottender.js.org/docs/GettingStarted)
-* [Platforms](https://bottender.js.org/docs/Platforms-Messenger)
-  * [Console](https://bottender.js.org/docs/Platforms-Console)
-  * [Messenger](https://bottender.js.org/docs/Platforms-Messenger)
-  * [LINE](https://bottender.js.org/docs/Platforms-LINE)
-  * [Slack](https://bottender.js.org/docs/Platforms-Slack)
-  * [Telegram](https://bottender.js.org/docs/Platforms-Telegram)
-  * [Viber](https://bottender.js.org/docs/Platforms-Viber)
-* [Guides](https://bottender.js.org/docs/Guides-Commands)
-  * [CLI commands](https://bottender.js.org/docs/Guides-Commands)
-  * [Server](https://bottender.js.org/docs/Guides-Server)
-  * [Session](https://bottender.js.org/docs/Guides-Session)
-* [API Reference](https://bottender.js.org/docs/APIReference-Context)
+- [Getting Started](https://bottender.js.org/docs/GettingStarted)
+- [Platforms](https://bottender.js.org/docs/Platforms-Messenger)
+  - [Console](https://bottender.js.org/docs/Platforms-Console)
+  - [Messenger](https://bottender.js.org/docs/Platforms-Messenger)
+  - [LINE](https://bottender.js.org/docs/Platforms-LINE)
+  - [Slack](https://bottender.js.org/docs/Platforms-Slack)
+  - [Telegram](https://bottender.js.org/docs/Platforms-Telegram)
+  - [Viber](https://bottender.js.org/docs/Platforms-Viber)
+- [Guides](https://bottender.js.org/docs/Guides-Commands)
+  - [CLI commands](https://bottender.js.org/docs/Guides-Commands)
+  - [Server](https://bottender.js.org/docs/Guides-Server)
+  - [Session](https://bottender.js.org/docs/Guides-Session)
+- [API Reference](https://bottender.js.org/docs/APIReference-Context)
 
 ## Community
 
@@ -70,12 +70,12 @@ We have a bunch of examples in the
 Here is the first one to get you started:
 
 ```js
-const { ConsoleBot } = require('bottender');
+const { ConsoleBot } = require("bottender");
 
 const bot = new ConsoleBot();
 
 bot.onEvent(async context => {
-  await context.sendText('Hello World');
+  await context.sendText("Hello World");
 });
 
 bot.createRuntime();
@@ -90,40 +90,40 @@ method, we call it handler. You can put your bot logic in there.
 
 ### Messenger
 
-* Messenger Profile Sync
-* Attachment Upload
-* Handover Protocol
-* Targeting Broadcast Messages
-* Built-in NLP
-* Multiple Pages
+- Messenger Profile Sync
+- Attachment Upload
+- Handover Protocol
+- Targeting Broadcast Messages
+- Built-in NLP
+- Multiple Pages
 
 ### LINE
 
-* Reply, Push, Multicast
-* Imagemap
-* Rich Menu
-* Room, Group Chat
-* Beacon
+- Reply, Push, Multicast
+- Imagemap
+- Rich Menu
+- Room, Group Chat
+- Beacon
 
 ### Slack
 
-* Channel Chat
-* Interactive Message
+- Channel Chat
+- Interactive Message
 
 ### Telegram
 
-* Webhook, Long Polling
-* Update, Delete Messages
-* Keyboard
-* Group Chat
-* Inline Query
-* Message Live Location
-* Payment
+- Webhook, Long Polling
+- Update, Delete Messages
+- Keyboard
+- Group Chat
+- Inline Query
+- Message Live Location
+- Payment
 
 ### Viber
 
-* Subscribed, Unsubscribed Event
-* Delivered, Seen Event
+- Subscribed, Unsubscribed Event
+- Delivered, Seen Event
 
 ## Ecosystem
 

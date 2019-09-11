@@ -21,5 +21,5 @@ running this bot.
 
 ## Related examples
 
-* [messenger-hello-world](../messenger-hello-world)
-* [with-config-env](../with-config-env)
+- [messenger-hello-world](../messenger-hello-world)
+- [with-config-env](../with-config-env)

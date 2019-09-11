@@ -20,4 +20,4 @@ this example, make sure you have got `appId` and `appKey` from
 
 ## Related examples
 
-* [console-hello-world](../console-hello-world)
+- [console-hello-world](../console-hello-world)

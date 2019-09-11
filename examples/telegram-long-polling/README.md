@@ -32,4 +32,4 @@ For more information, check our [Telegram guides](https://bottender.js.org/docs/
 
 ## Related examples
 
-* [telegram-hello-world](../telegram-hello-world)
+- [telegram-hello-world](../telegram-hello-world)

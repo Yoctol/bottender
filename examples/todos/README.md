@@ -23,7 +23,7 @@ state must be an **`Object`**.
 
 ```js
 bot.setInitialState({
-  todos: [],
+  todos: []
 });
 ```
 
@@ -36,7 +36,7 @@ to store your todo in session. This shows how to add a todo.
 ```js
 const newTodos = context.event.text;
 context.setState({
-  todos: [...context.state.todos, newTodos],
+  todos: [...context.state.todos, newTodos]
 });
 await context.sendText(`Todo: ${newTodos} added!`);
 ```
@@ -47,9 +47,9 @@ to you.
 
 ```js
 if (context.state.todos.length > 0) {
-  await context.sendText(context.state.todos.join('\n'));
+  await context.sendText(context.state.todos.join("\n"));
 } else {
-  await context.sendText('No todos!');
+  await context.sendText("No todos!");
 }
 ```
 
@@ -58,7 +58,7 @@ Finally, enter **/clear**, the bot will clear all todos by calling
 
 ```js
 context.resetState();
-await context.sendText('Successfully clear all todos!');
+await context.sendText("Successfully clear all todos!");
 ```
 
 For more information about Bottender, please visit our
@@ -66,5 +66,5 @@ For more information about Bottender, please visit our
 
 ## Related examples
 
-* [with-state](../with-state)
-* [console-hello-world](../console-hello-world)
+- [with-state](../with-state)
+- [console-hello-world](../console-hello-world)

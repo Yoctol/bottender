@@ -51,8 +51,8 @@ This example shows how to use CLI tool which support messenger attachments uploa
 
 ## Related examples
 
-* [with-config](../with-config)
-* [console-hello-world](../console-hello-world)
-* [line-hello-world](../line-hello-world)
-* [slack-hello-world](../slack-hello-world)
-* [telegram-hello-world](../telegram-hello-world)
+- [with-config](../with-config)
+- [console-hello-world](../console-hello-world)
+- [line-hello-world](../line-hello-world)
+- [slack-hello-world](../slack-hello-world)
+- [telegram-hello-world](../telegram-hello-world)

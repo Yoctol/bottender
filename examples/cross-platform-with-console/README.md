@@ -55,9 +55,9 @@ different bots, instead of developing one handler for each platform.
 
 ## Related examples
 
-* [console-hello-world](../console-hello-world)
-* [messenger-hello-world](../messenger-hello-world)
-* [line-hello-world](../line-hello-world)
-* [slack-hello-world](../slack-hello-world)
-* [telegram-hello-world](../telegram-hello-world)
-* [viber-hello-world](../viber-hello-world)
+- [console-hello-world](../console-hello-world)
+- [messenger-hello-world](../messenger-hello-world)
+- [line-hello-world](../line-hello-world)
+- [slack-hello-world](../slack-hello-world)
+- [telegram-hello-world](../telegram-hello-world)
+- [viber-hello-world](../viber-hello-world)

@@ -19,7 +19,7 @@ users. For more information, check our
 
 ## Related examples
 
-* [session-memory](../session-memory)
-* [session-file](../session-file)
-* [session-mongo](../session-mongo)
-* [session-redis](../session-redis)
+- [session-memory](../session-memory)
+- [session-file](../session-file)
+- [session-mongo](../session-mongo)
+- [session-redis](../session-redis)

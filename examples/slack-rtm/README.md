@@ -32,6 +32,5 @@ For more information, check our [Slack guides](https://bottender.js.org/docs/Pla
 
 ## Related examples
 
-* [slack-builder](../slack-builder)
-* [slack-hello-world](../slack-hello-world)
-
+- [slack-builder](../slack-builder)
+- [slack-hello-world](../slack-hello-world)

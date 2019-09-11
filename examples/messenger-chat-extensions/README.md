@@ -54,6 +54,6 @@ For more information, check [Official Docs](https://developers.facebook.com/docs
 
 ## Related examples
 
-* [with-nextjs-webviews](../with-nextjs-webviews)
-* [with-config](../with-config)
-* [with-config-env](../with-config-env)
+- [with-nextjs-webviews](../with-nextjs-webviews)
+- [with-config](../with-config)
+- [with-config-env](../with-config-env)

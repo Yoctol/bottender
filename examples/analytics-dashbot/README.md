@@ -22,17 +22,17 @@ will be better to check [server-express example](../server-express) first.
 
 ```js
 const server = createServer(bot, {
-  verifyToken: '__FILL_YOUR_VERIFY_TOKEN_HERE__',
+  verifyToken: "__FILL_YOUR_VERIFY_TOKEN_HERE__",
   webhookMiddleware: dashbotMiddleware(bot, {
-    apiKey: '__FILL_YOUR_DASHBOT_KEY_HERE__',
-    platform: 'facebook',
-  }),
+    apiKey: "__FILL_YOUR_DASHBOT_KEY_HERE__",
+    platform: "facebook"
+  })
 });
 ```
 
 ## Related examples
 
-* [analytics-chatbase](../analytics-chatbase)
-* [analytics-botanalytics](../analytics-botanalytics)
-* [server-express](../server-express)
-* [messenger-hello-world](../messenger-hello-world)
+- [analytics-chatbase](../analytics-chatbase)
+- [analytics-botanalytics](../analytics-botanalytics)
+- [server-express](../server-express)
+- [messenger-hello-world](../messenger-hello-world)

@@ -46,5 +46,5 @@ For more information, check our [Messenger guides](https://bottender.js.org/docs
 
 ## Related examples
 
-* [messenger-batch](../messenger-batch)
-* [messenger-multi-pages](../messenger-multi-pages)
+- [messenger-batch](../messenger-batch)
+- [messenger-multi-pages](../messenger-multi-pages)
