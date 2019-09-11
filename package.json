@@ -13,11 +13,12 @@
   ],
   "scripts": {
     "bootstrap": "lerna bootstrap",
-    "build": "node ./scripts/build.js",
-    "check": "flow check",
-    "clean": "rimraf ./packages/*/lib",
-    "lint": "eslint .",
-    "lint:fix": "npm run lint -- --fix",
+    "clean": "git clean -dfqX -- ./node_modules **/{dist,node_modules}/ ./packages/*/tsconfig*tsbuildinfo",
+    "compile": "tsc --build tsconfig.build.json",
+    "compile:clean": "tsc --build tsconfig.build.json --clean",
+    "lint": "eslint packages examples --ext=js,ts",
+    "lint:fix": "yarn run lint:fix:md && yarn run lint --fix",
+    "lint:fix:md": "prettier --write **/*.md",
     "lint:staged": "lint-staged",
     "publish": "yarn run clean && yarn run build && lerna publish",
     "prepublishOnly": "npm run build",
@@ -28,30 +29,20 @@
     "preversion": "npm test"
   },
   "devDependencies": {
-    "@babel/cli": "^7.5.5",
-    "@babel/core": "^7.5.5",
-    "@babel/plugin-proposal-class-properties": "^7.5.5",
-    "@babel/plugin-proposal-object-rest-spread": "^7.5.5",
-    "@babel/preset-env": "^7.5.5",
-    "@babel/preset-flow": "^7.0.0",
-    "babel-core": "7.0.0-bridge.0",
-    "babel-eslint": "^10.0.3",
-    "babel-jest": "^24.9.0",
-    "babel-plugin-lodash": "^3.3.4",
+    "@typescript-eslint/eslint-plugin": "^2.2.0",
+    "@typescript-eslint/parser": "^2.2.0",
     "chalk": "^2.4.2",
     "cross-env": "^5.2.1",
     "eslint": "^6.3.0",
     "eslint-config-prettier": "^6.2.0",
     "eslint-config-react-app": "^5.0.1",
     "eslint-config-yoctol-base": "^0.21.2",
-    "eslint-plugin-flowtype": "^4.3.0",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-prettier": "^3.1.0",
     "eslint-plugin-react": "^7.14.3",
     "eslint-plugin-react-hooks": "^2.0.1",
     "eslint-plugin-sort-imports-es6-autofix": "^0.5.0",
-    "flow-bin": "^0.94.0",
     "glob": "^7.1.4",
     "husky": "^3.0.5",
     "jest": "^24.9.0",
@@ -63,7 +54,9 @@
     "mkdirp": "^0.5.1",
     "prettier": "^1.18.2",
     "prettier-package-json": "^2.1.0",
-    "rimraf": "^3.0.0"
+    "rimraf": "^3.0.0",
+    "ts-jest": "^24.0.2",
+    "typescript": "^3.6.3"
   },
   "engines": {
     "node": ">=8"
@@ -72,52 +65,5 @@
     "hooks": {
       "pre-commit": "lint-staged"
     }
-  },
-  "jest": {
-    "collectCoverageFrom": [
-      "packages/*/src/**/*.js"
-    ],
-    "coveragePathIgnorePatterns": [
-      "/node_modules/",
-      "/__tests__/"
-    ],
-    "coverageThreshold": {
-      "global": {
-        "branches": 80,
-        "functions": 80,
-        "lines": 80,
-        "statements": 80
-      }
-    },
-    "setupFiles": [
-      "./test/setupJest.js"
-    ],
-    "testPathIgnorePatterns": [
-      "/node_modules/",
-      "/examples/",
-      "/lib/",
-      "src/cli/providers/sh/test.js"
-    ],
-    "reporters": [
-      "default",
-      "jest-junit"
-    ],
-    "transformIgnorePatterns": [
-      "/node_modules/"
-    ],
-    "testEnvironment": "node",
-    "timers": "fake",
-    "resetModules": true,
-    "resetMocks": true
-  },
-  "lint-staged": {
-    "*.js": [
-      "eslint --fix",
-      "git add"
-    ],
-    "package.json": [
-      "prettier-package-json --write",
-      "git add"
-    ]
   }
 }

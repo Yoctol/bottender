@@ -30,7 +30,7 @@ jobs:
             yarn --frozen-lockfile
       - run:
           name: build
-          command: npm run build
+          command: npm run compile
       - save_cache:
           key: node-10-cache-{{checksum "yarn.lock"}}
           paths:
@@ -41,6 +41,15 @@ jobs:
           paths:
             - node_modules
             - packages/*/lib
+  lint-node-10:
+    <<: *docker_10
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run:
+          name: run lint
+          command: npm run lint
   test-node-10:
     <<: *docker_10
     steps:
@@ -71,7 +80,7 @@ jobs:
             yarn add -W codecov
       - run:
           name: build
-          command: npm run build
+          command: npm run compile
       - save_cache:
           key: node-8-cache-{{checksum "yarn.lock"}}
           paths:
@@ -91,18 +100,6 @@ jobs:
       - run:
           name: run lint
           command: npm run lint
-  type-check-node-8:
-    <<: *docker_8
-    steps:
-      - checkout
-      - attach_workspace:
-          at: .
-      - run:
-          name: install dependencies of flow
-          command: apt update; apt install libelf1;
-      - run:
-          name: run check
-          command: npm run check
   test-node-8:
     <<: *docker_8
     steps:
@@ -128,9 +125,6 @@ workflows:
             - build-node-10
       - build-node-8
       - lint-node-8:
-          requires:
-            - build-node-8
-      - type-check-node-8:
           requires:
             - build-node-8
       - test-node-8:

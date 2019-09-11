@@ -8,18 +8,19 @@
     "url": "https://github.com/Yoctol/bottender.git"
   },
   "version": "1.0.0-alpha.6",
-  "main": "lib/index.js",
-  "browser": "lib/browser.js",
+  "main": "dist/index.js",
+  "browser": "dist/browser.js",
   "bin": {
     "bottender": "bin/cli.js",
     "btd": "bin/cli.js"
   },
   "files": [
     "bin",
-    "lib",
+    "dist",
     "test-utils.js",
     "utils.js"
   ],
+  "types": "dist/index.d.ts",
   "dependencies": {
     "@bottender/express": "^1.0.0-alpha.2",
     "@hapi/joi": "^15.1.1",
