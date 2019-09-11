@@ -1,12 +1,12 @@
 import Redis from 'ioredis';
 import isNumber from 'lodash/isNumber';
 
-import { CacheStore } from './CacheStore';
+import CacheStore, { CacheValue } from './CacheStore';
 
 export default class RedisCacheStore implements CacheStore {
   _redis: Redis;
 
-  _prefix: string = '';
+  _prefix = '';
 
   /*
     Support all of args supported by `ioredis`:
@@ -28,12 +28,12 @@ export default class RedisCacheStore implements CacheStore {
     this._redis = new Redis(...args);
   }
 
-  async get(key: string): Promise<mixed> {
+  async get(key: string): Promise<CacheValue | null> {
     const val = await this._redis.get(`${this._prefix}${key}`);
     return this._unserialize(val);
   }
 
-  async all(): Promise<Array<mixed>> {
+  async all(): Promise<CacheValue[]> {
     let [cursor, keys] = await this._redis.scan('0');
 
     while (cursor !== '0') {
@@ -46,7 +46,7 @@ export default class RedisCacheStore implements CacheStore {
     return this._redis.mget(keys);
   }
 
-  async put(key: string, value: mixed, minutes: number): Promise<void> {
+  async put(key: string, value: CacheValue, minutes: number): Promise<void> {
     await this._redis.setex(
       `${this._prefix}${key}`,
       minutes * 60,
@@ -74,11 +74,11 @@ export default class RedisCacheStore implements CacheStore {
     this._prefix = prefix ? `${prefix}:` : '';
   }
 
-  _serialize(value: mixed) {
+  _serialize(value: CacheValue): number | string {
     return isNumber(value) ? value : JSON.stringify(value);
   }
 
-  _unserialize(value: mixed) {
-    return isNumber(value) ? value : JSON.parse((value: any));
+  _unserialize(value: number | string): CacheValue {
+    return isNumber(value) ? value : JSON.parse(value);
   }
 }
