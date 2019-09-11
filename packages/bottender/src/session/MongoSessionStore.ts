@@ -1,25 +1,9 @@
-
 import isBefore from 'date-fns/isBefore';
 import subMinutes from 'date-fns/subMinutes';
-import { MongoClient } from 'mongodb';
+import { MongoClient, Db, Collection } from 'mongodb';
 
-import { Session } from './Session';
-import { SessionStore } from './SessionStore';
-
-type Cursor = {
-  toArray: () => Promise<Array<any>>,
-};
-
-type MongoCollection = {
-  find: () => Cursor,
-  findOne: (filter: Object) => Promise<{}>,
-  updateOne: (filter: Object, data: Object, options: Object) => Promise<void>,
-  remove: (filter: Object) => Promise<void>,
-};
-
-type MongoConnection = {
-  collection: (name: string) => MongoCollection,
-};
+import Session from './Session';
+import SessionStore from './SessionStore';
 
 const MINUTES_IN_ONE_YEAR = 365 * 24 * 60;
 
@@ -31,7 +15,7 @@ export default class MongoSessionStore implements SessionStore {
   // The number of minutes to store the data in the session.
   _expiresIn: number;
 
-  _connection: ?MongoConnection;
+  _connection?: Db;
 
   constructor(
     url: string,
@@ -45,7 +29,7 @@ export default class MongoSessionStore implements SessionStore {
 
   async init(): Promise<MongoSessionStore> {
     this._connection = (await MongoClient.connect(this._url)).db();
-    // $FlowFixMe
+
     return this;
   }
 
@@ -99,7 +83,7 @@ export default class MongoSessionStore implements SessionStore {
     );
   }
 
-  get _sessions(): MongoCollection {
+  get _sessions(): Collection<any> {
     if (this._connection == null) {
       throw new Error(
         'MongoSessionStore: must call `init` before any operation.'

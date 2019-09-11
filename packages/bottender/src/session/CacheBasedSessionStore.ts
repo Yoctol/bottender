@@ -1,7 +1,7 @@
-import { CacheStore } from '../cache/CacheStore';
+import CacheStore from '../cache/CacheStore';
 
-import { Session } from './Session';
-import { SessionStore } from './SessionStore';
+import Session from './Session';
+import SessionStore from './SessionStore';
 
 const MINUTES_IN_ONE_YEAR = 365 * 24 * 60;
 
@@ -17,23 +17,22 @@ export default class CacheBasedSessionStore implements SessionStore {
   }
 
   async init(): Promise<CacheBasedSessionStore> {
-    // $FlowFixMe
     return this;
   }
 
-  async read(key: string): Promise<Session> {
-    return (this._cache.get(key): any);
+  async read(key: string): Promise<Session | null> {
+    return this._cache.get(key) as Promise<Session | null>;
   }
 
-  async all(): Promise<Array<Session>> {
-    return (this._cache.all(): any);
+  async all(): Promise<Session[]> {
+    return this._cache.all() as Promise<Session[]>;
   }
 
   async write(key: string, sess: Session): Promise<void> {
-    this._cache.put(key, sess, this._expiresIn);
+    return this._cache.put(key, sess, this._expiresIn);
   }
 
   async destroy(key: string): Promise<void> {
-    this._cache.forget(key);
+    return this._cache.forget(key);
   }
 }

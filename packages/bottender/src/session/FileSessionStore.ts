@@ -1,22 +1,19 @@
-
-
-import JFSStore from 'jfs';
+import JFSStore, { Instance } from 'jfs';
 import isBefore from 'date-fns/isBefore';
 import subMinutes from 'date-fns/subMinutes';
-import thenify from 'thenify';
 
-import { Session } from './Session';
-import { SessionStore } from './SessionStore';
+import Session from './Session';
+import SessionStore from './SessionStore';
 
 const MINUTES_IN_ONE_YEAR = 365 * 24 * 60;
 
 type FileOption =
   | string
   | {
-      dirname?: ?string,
+      dirname?: string;
     };
 
-function getDirname(arg: FileOption): ?string {
+function getDirname(arg: FileOption): string | undefined {
   if (typeof arg === 'string') {
     return arg;
   }
@@ -27,7 +24,7 @@ function getDirname(arg: FileOption): ?string {
 }
 
 export default class FileSessionStore implements SessionStore {
-  _jfs: JFSStore;
+  _jfs: Instance<Record<string, any>>;
 
   // The number of minutes to store the data in the session.
   _expiresIn: number;
@@ -38,9 +35,6 @@ export default class FileSessionStore implements SessionStore {
     const dirname = getDirname(arg) || '.sessions';
 
     const jfs = new JFSStore(dirname);
-    jfs.get = thenify(jfs.get);
-    jfs.save = thenify(jfs.save);
-    jfs.delete = thenify(jfs.delete);
 
     this._jfs = jfs;
   }
@@ -50,7 +44,15 @@ export default class FileSessionStore implements SessionStore {
   }
 
   async read(key: string): Promise<Session | null> {
-    const session = await this._jfs.get(key).catch(() => null);
+    const session: Session | null = await new Promise((resolve, reject) => {
+      this._jfs.get(key, (err, obj) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(obj);
+        }
+      });
+    });
 
     if (session && this._expired(session)) {
       return null;
@@ -59,21 +61,45 @@ export default class FileSessionStore implements SessionStore {
     return session;
   }
 
-  all(): Promise<Array<Session>> {
-    return this._jfs.all();
+  all(): Promise<Session[]> {
+    return new Promise((resolve, reject) => {
+      this._jfs.all((err, objs) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(objs as Session[]);
+        }
+      });
+    });
   }
 
   async write(key: string, sess: Session): Promise<void> {
     sess.lastActivity = Date.now();
 
-    await this._jfs.save(key, sess);
+    await new Promise((resolve, reject) => {
+      this._jfs.save(key, sess, err => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve();
+        }
+      });
+    });
   }
 
   async destroy(key: string): Promise<void> {
-    return this._jfs.delete(key);
+    return new Promise((resolve, reject) => {
+      this._jfs.delete(key, err => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve();
+        }
+      });
+    });
   }
 
-  getJFS(): JFSStore {
+  getJFS(): Instance<Record<string, any>> {
     return this._jfs;
   }
 

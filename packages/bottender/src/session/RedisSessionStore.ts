@@ -1,9 +1,7 @@
-
-
 import RedisCacheStore from '../cache/RedisCacheStore';
 
 import CacheBasedSessionStore from './CacheBasedSessionStore';
-import { SessionStore } from './SessionStore';
+import SessionStore from './SessionStore';
 
 const MINUTES_IN_ONE_YEAR = 365 * 24 * 60;
 
@@ -11,11 +9,11 @@ type RedisOption =
   | number
   | string
   | {
-      port?: number,
-      host?: string,
-      family?: number,
-      password?: string,
-      db?: number,
+      port?: number;
+      host?: string;
+      family?: number;
+      password?: string;
+      db?: number;
     };
 
 export default class RedisSessionStore extends CacheBasedSessionStore

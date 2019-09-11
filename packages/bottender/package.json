@@ -67,7 +67,6 @@
     "recursive-readdir": "^2.2.2",
     "shortid": "^2.2.15",
     "stringify-object": "^3.3.0",
-    "thenify": "^3.3.0",
     "update-notifier": "^3.0.1",
     "validate-npm-package-name": "^3.0.0",
     "warning": "^4.0.3"

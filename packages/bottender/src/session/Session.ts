@@ -1,5 +1,3 @@
+type Session = Record<string, any>;
 
-
-export type Session = {
-  [key: string]: any,
-};
+export default Session;
