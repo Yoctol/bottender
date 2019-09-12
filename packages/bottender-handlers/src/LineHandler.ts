@@ -14,15 +14,14 @@ export default class LineHandler extends Handler {
       | [Predicate, FunctionalHandler | Builder]
       | [FunctionalHandler | Builder]
   ) {
-    // FIXME: Can't refine tuple union - https://github.com/facebook/flow/issues/2389
     if (args.length < 2) {
-      const [handler]: [FunctionalHandler | Builder] = (args as any);
+      const [handler] = args as [FunctionalHandler | Builder];
       this.on(context => context.event.isPostback, handler);
     } else {
-      const [predicate, handler]: [
+      const [predicate, handler] = args as [
         Predicate,
         FunctionalHandler | Builder
-      ] = (args as any);
+      ];
 
       warning(
         typeof predicate === 'function',
@@ -45,19 +44,15 @@ export default class LineHandler extends Handler {
       | [Pattern, FunctionalHandler | Builder]
       | [FunctionalHandler | Builder]
   ) {
-    // FIXME: Can't refine tuple union - https://github.com/facebook/flow/issues/2389
     if (args.length < 2) {
-      const [handler]: [FunctionalHandler | Builder] = (args as any);
+      const [handler] = args as [FunctionalHandler | Builder];
 
       this.on(context => context.event.isPayload, handler);
     } else {
       // eslint-disable-next-line prefer-const
-      let [pattern, handler]: [
-        Pattern,
-        FunctionalHandler | Builder
-      ] = (args as any);
+      let [pattern, handler] = args as [Pattern, FunctionalHandler | Builder];
 
-      if (handler.build) {
+      if ('build' in handler) {
         handler = handler.build();
       }
 
@@ -78,16 +73,16 @@ export default class LineHandler extends Handler {
         );
       } else {
         if (pattern instanceof RegExp) {
+          const patternRegExp: RegExp = pattern;
+
           const _handler = handler;
           handler = context => {
-            // $FlowFixMe
-            const match = pattern.exec(context.event.payload);
+            const match = patternRegExp.exec(context.event.payload);
 
             if (!match) return _handler(context);
 
             // reset index so we start at the beginning of the regex each time
-            // $FlowFixMe
-            pattern.lastIndex = 0;
+            patternRegExp.lastIndex = 0;
 
             return _handler(context, match);
           };
@@ -111,15 +106,14 @@ export default class LineHandler extends Handler {
       | [Predicate, FunctionalHandler | Builder]
       | [FunctionalHandler | Builder]
   ) {
-    // FIXME: Can't refine tuple union - https://github.com/facebook/flow/issues/2389
     if (args.length < 2) {
-      const [handler]: [FunctionalHandler | Builder] = (args as any);
+      const [handler] = args as [FunctionalHandler | Builder];
       this.on(context => context.event.isFollow, handler);
     } else {
-      const [predicate, handler]: [
+      const [predicate, handler] = args as [
         Predicate,
         FunctionalHandler | Builder
-      ] = (args as any);
+      ];
 
       warning(
         typeof predicate === 'function',
@@ -141,15 +135,14 @@ export default class LineHandler extends Handler {
       | [Predicate, FunctionalHandler | Builder]
       | [FunctionalHandler | Builder]
   ) {
-    // FIXME: Can't refine tuple union - https://github.com/facebook/flow/issues/2389
     if (args.length < 2) {
-      const [handler]: [FunctionalHandler | Builder] = (args as any);
+      const [handler] = args as [FunctionalHandler | Builder];
       this.on(context => context.event.isUnfollow, handler);
     } else {
-      const [predicate, handler]: [
+      const [predicate, handler] = args as [
         Predicate,
         FunctionalHandler | Builder
-      ] = (args as any);
+      ];
 
       warning(
         typeof predicate === 'function',
@@ -173,15 +166,14 @@ export default class LineHandler extends Handler {
       | [Predicate, FunctionalHandler | Builder]
       | [FunctionalHandler | Builder]
   ) {
-    // FIXME: Can't refine tuple union - https://github.com/facebook/flow/issues/2389
     if (args.length < 2) {
-      const [handler]: [FunctionalHandler | Builder] = (args as any);
+      const [handler] = args as [FunctionalHandler | Builder];
       this.on(context => context.event.isJoin, handler);
     } else {
-      const [predicate, handler]: [
+      const [predicate, handler] = args as [
         Predicate,
         FunctionalHandler | Builder
-      ] = (args as any);
+      ];
 
       warning(
         typeof predicate === 'function',
@@ -204,15 +196,14 @@ export default class LineHandler extends Handler {
       | [Predicate, FunctionalHandler | Builder]
       | [FunctionalHandler | Builder]
   ) {
-    // FIXME: Can't refine tuple union - https://github.com/facebook/flow/issues/2389
     if (args.length < 2) {
-      const [handler]: [FunctionalHandler | Builder] = (args as any);
+      const [handler] = args as [FunctionalHandler | Builder];
       this.on(context => context.event.isLeave, handler);
     } else {
-      const [predicate, handler]: [
+      const [predicate, handler] = args as [
         Predicate,
         FunctionalHandler | Builder
-      ] = (args as any);
+      ];
 
       warning(
         typeof predicate === 'function',
@@ -234,15 +225,14 @@ export default class LineHandler extends Handler {
       | [Predicate, FunctionalHandler | Builder]
       | [FunctionalHandler | Builder]
   ) {
-    // FIXME: Can't refine tuple union - https://github.com/facebook/flow/issues/2389
     if (args.length < 2) {
-      const [handler]: [FunctionalHandler | Builder] = (args as any);
+      const [handler] = args as [FunctionalHandler | Builder];
       this.on(context => context.event.isBeacon, handler);
     } else {
-      const [predicate, handler]: [
+      const [predicate, handler] = args as [
         Predicate,
         FunctionalHandler | Builder
-      ] = (args as any);
+      ];
 
       warning(
         typeof predicate === 'function',
