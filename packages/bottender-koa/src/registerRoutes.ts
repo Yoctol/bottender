@@ -32,6 +32,7 @@ function registerRoutes(server: Koa, bot: Bot, config: RouteConfig = {}) {
         ctx.response.body = response.body;
       }
     }
+    return;
   });
 
   router.post(path, createMiddleware(bot));
