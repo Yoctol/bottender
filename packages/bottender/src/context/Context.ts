@@ -6,14 +6,14 @@ import warning from 'warning';
 
 const debugContext = debug('bottender:context');
 
-type Options = {|
+type Options = {
   client: any,
   event: any,
   session: ?any,
   initialState: ?Object,
   requestContext: ?Object,
   emitter?: ?EventEmitter,
-|};
+};
 
 type Response = {
   status: number,

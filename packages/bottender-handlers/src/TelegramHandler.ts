@@ -16,13 +16,13 @@ export default class TelegramHandler extends Handler {
   ) {
     // FIXME: Can't refine tuple union - https://github.com/facebook/flow/issues/2389
     if (args.length < 2) {
-      const [handler]: [FunctionalHandler | Builder] = (args: any);
+      const [handler]: [FunctionalHandler | Builder] = (args as any);
       this.on(context => context.event.isCallbackQuery, handler);
     } else {
       const [predicate, handler]: [
         Predicate,
         FunctionalHandler | Builder
-      ] = (args: any);
+      ] = (args as any);
 
       warning(
         typeof predicate === 'function',
@@ -47,7 +47,7 @@ export default class TelegramHandler extends Handler {
   ) {
     // FIXME: Can't refine tuple union - https://github.com/facebook/flow/issues/2389
     if (args.length < 2) {
-      const [handler]: [FunctionalHandler | Builder] = (args: any);
+      const [handler]: [FunctionalHandler | Builder] = (args as any);
 
       this.on(context => context.event.isPayload, handler);
     } else {
@@ -55,7 +55,7 @@ export default class TelegramHandler extends Handler {
       let [pattern, handler]: [
         Pattern,
         FunctionalHandler | Builder
-      ] = (args: any);
+      ] = (args as any);
 
       if (handler.build) {
         handler = handler.build();
@@ -111,13 +111,13 @@ export default class TelegramHandler extends Handler {
   ) {
     // FIXME: Can't refine tuple union - https://github.com/facebook/flow/issues/2389
     if (args.length < 2) {
-      const [handler]: [FunctionalHandler | Builder] = (args: any);
+      const [handler]: [FunctionalHandler | Builder] = (args as any);
       this.on(context => context.event.isPhoto, handler);
     } else {
       const [predicate, handler]: [
         Predicate,
         FunctionalHandler | Builder
-      ] = (args: any);
+      ] = (args as any);
 
       warning(
         typeof predicate === 'function',
@@ -141,13 +141,13 @@ export default class TelegramHandler extends Handler {
   ) {
     // FIXME: Can't refine tuple union - https://github.com/facebook/flow/issues/2389
     if (args.length < 2) {
-      const [handler]: [FunctionalHandler | Builder] = (args: any);
+      const [handler]: [FunctionalHandler | Builder] = (args as any);
       this.on(context => context.event.isDocument, handler);
     } else {
       const [predicate, handler]: [
         Predicate,
         FunctionalHandler | Builder
-      ] = (args: any);
+      ] = (args as any);
 
       warning(
         typeof predicate === 'function',
@@ -172,13 +172,13 @@ export default class TelegramHandler extends Handler {
   ) {
     // FIXME: Can't refine tuple union - https://github.com/facebook/flow/issues/2389
     if (args.length < 2) {
-      const [handler]: [FunctionalHandler | Builder] = (args: any);
+      const [handler]: [FunctionalHandler | Builder] = (args as any);
       this.on(context => context.event.isAudio, handler);
     } else {
       const [predicate, handler]: [
         Predicate,
         FunctionalHandler | Builder
-      ] = (args: any);
+      ] = (args as any);
 
       warning(
         typeof predicate === 'function',
@@ -202,13 +202,13 @@ export default class TelegramHandler extends Handler {
   ) {
     // FIXME: Can't refine tuple union - https://github.com/facebook/flow/issues/2389
     if (args.length < 2) {
-      const [handler]: [FunctionalHandler | Builder] = (args: any);
+      const [handler]: [FunctionalHandler | Builder] = (args as any);
       this.on(context => context.event.isGame, handler);
     } else {
       const [predicate, handler]: [
         Predicate,
         FunctionalHandler | Builder
-      ] = (args: any);
+      ] = (args as any);
 
       warning(
         typeof predicate === 'function',
@@ -232,13 +232,13 @@ export default class TelegramHandler extends Handler {
   ) {
     // FIXME: Can't refine tuple union - https://github.com/facebook/flow/issues/2389
     if (args.length < 2) {
-      const [handler]: [FunctionalHandler | Builder] = (args: any);
+      const [handler]: [FunctionalHandler | Builder] = (args as any);
       this.on(context => context.event.isSticker, handler);
     } else {
       const [predicate, handler]: [
         Predicate,
         FunctionalHandler | Builder
-      ] = (args: any);
+      ] = (args as any);
 
       warning(
         typeof predicate === 'function',
@@ -262,13 +262,13 @@ export default class TelegramHandler extends Handler {
   ) {
     // FIXME: Can't refine tuple union - https://github.com/facebook/flow/issues/2389
     if (args.length < 2) {
-      const [handler]: [FunctionalHandler | Builder] = (args: any);
+      const [handler]: [FunctionalHandler | Builder] = (args as any);
       this.on(context => context.event.isVideo, handler);
     } else {
       const [predicate, handler]: [
         Predicate,
         FunctionalHandler | Builder
-      ] = (args: any);
+      ] = (args as any);
 
       warning(
         typeof predicate === 'function',
@@ -292,13 +292,13 @@ export default class TelegramHandler extends Handler {
   ) {
     // FIXME: Can't refine tuple union - https://github.com/facebook/flow/issues/2389
     if (args.length < 2) {
-      const [handler]: [FunctionalHandler | Builder] = (args: any);
+      const [handler]: [FunctionalHandler | Builder] = (args as any);
       this.on(context => context.event.isVoice, handler);
     } else {
       const [predicate, handler]: [
         Predicate,
         FunctionalHandler | Builder
-      ] = (args: any);
+      ] = (args as any);
 
       warning(
         typeof predicate === 'function',
@@ -322,13 +322,13 @@ export default class TelegramHandler extends Handler {
   ) {
     // FIXME: Can't refine tuple union - https://github.com/facebook/flow/issues/2389
     if (args.length < 2) {
-      const [handler]: [FunctionalHandler | Builder] = (args: any);
+      const [handler]: [FunctionalHandler | Builder] = (args as any);
       this.on(context => context.event.isVideoNote, handler);
     } else {
       const [predicate, handler]: [
         Predicate,
         FunctionalHandler | Builder
-      ] = (args: any);
+      ] = (args as any);
 
       warning(
         typeof predicate === 'function',
@@ -353,13 +353,13 @@ export default class TelegramHandler extends Handler {
   ) {
     // FIXME: Can't refine tuple union - https://github.com/facebook/flow/issues/2389
     if (args.length < 2) {
-      const [handler]: [FunctionalHandler | Builder] = (args: any);
+      const [handler]: [FunctionalHandler | Builder] = (args as any);
       this.on(context => context.event.isContact, handler);
     } else {
       const [predicate, handler]: [
         Predicate,
         FunctionalHandler | Builder
-      ] = (args: any);
+      ] = (args as any);
 
       warning(
         typeof predicate === 'function',
@@ -383,13 +383,13 @@ export default class TelegramHandler extends Handler {
   ) {
     // FIXME: Can't refine tuple union - https://github.com/facebook/flow/issues/2389
     if (args.length < 2) {
-      const [handler]: [FunctionalHandler | Builder] = (args: any);
+      const [handler]: [FunctionalHandler | Builder] = (args as any);
       this.on(context => context.event.isLocation, handler);
     } else {
       const [predicate, handler]: [
         Predicate,
         FunctionalHandler | Builder
-      ] = (args: any);
+      ] = (args as any);
 
       warning(
         typeof predicate === 'function',
@@ -414,13 +414,13 @@ export default class TelegramHandler extends Handler {
   ) {
     // FIXME: Can't refine tuple union - https://github.com/facebook/flow/issues/2389
     if (args.length < 2) {
-      const [handler]: [FunctionalHandler | Builder] = (args: any);
+      const [handler]: [FunctionalHandler | Builder] = (args as any);
       this.on(context => context.event.isVenue, handler);
     } else {
       const [predicate, handler]: [
         Predicate,
         FunctionalHandler | Builder
-      ] = (args: any);
+      ] = (args as any);
 
       warning(
         typeof predicate === 'function',

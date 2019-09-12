@@ -10,14 +10,14 @@ import Context from './Context';
 import ViberEvent from './ViberEvent';
 import { PlatformContext } from './PlatformContext';
 
-type Options = {|
+type Options = {
   client: ViberClient,
   event: ViberEvent,
   session: ?Session,
   initialState: ?Object,
   requestContext: ?Object,
   emitter: ?EventEmitter,
-|};
+};
 
 class ViberContext extends Context implements PlatformContext {
   _client: ViberClient = this._client;

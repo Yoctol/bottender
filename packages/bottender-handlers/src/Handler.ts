@@ -74,13 +74,13 @@ export default class Handler {
   ) {
     // FIXME: Can't refine tuple union - https://github.com/facebook/flow/issues/2389
     if (args.length < 2) {
-      const [handler]: [FunctionalHandler | Builder] = (args: any);
+      const [handler]: [FunctionalHandler | Builder] = (args as any);
       this.on(context => context.event.isMessage, handler);
     } else {
       const [predicate, handler]: [
         Predicate,
         FunctionalHandler | Builder
-      ] = (args: any);
+      ] = (args as any);
 
       warning(
         typeof predicate === 'function',
@@ -104,7 +104,7 @@ export default class Handler {
   ) {
     // FIXME: Can't refine tuple union - https://github.com/facebook/flow/issues/2389
     if (args.length < 2) {
-      const [handler]: [FunctionalHandler | Builder] = (args: any);
+      const [handler]: [FunctionalHandler | Builder] = (args as any);
 
       this.on(context => context.event.isText, handler);
     } else {
@@ -112,7 +112,7 @@ export default class Handler {
       let [pattern, handler]: [
         Pattern,
         FunctionalHandler | Builder
-      ] = (args: any);
+      ] = (args as any);
 
       if (handler.build) {
         handler = handler.build();

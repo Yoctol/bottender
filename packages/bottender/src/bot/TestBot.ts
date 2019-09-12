@@ -9,7 +9,7 @@ export default class TestBot extends Bot {
   constructor({
     sessionStore,
     fallbackMethods,
-  }: { sessionStore: SessionStore, fallbackMethods?: boolean } = {}) {
+  }: { sessionStore: SessionStore; fallbackMethods?: boolean } = {}) {
     warning(
       false,
       '`TestBot` is under heavy development. API may change between any versions.'
@@ -19,7 +19,7 @@ export default class TestBot extends Bot {
   }
 
   async runTests(tests: Array<string>) {
-    const client = ((this.connector: any): TestConnector).client;
+    const client = ((this.connector as any) as TestConnector).client;
     const requestHandler = this.createRequestHandler();
 
     const rawEvents = tests.map(t => this._createRawEventFromTest(t));

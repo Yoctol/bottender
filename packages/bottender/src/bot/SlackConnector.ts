@@ -34,13 +34,13 @@ type EventsAPIBody = {
 
 export type SlackRequestBody = EventsAPIBody | { payload: string };
 
-type ConstructorOptions = {|
+type ConstructorOptions = {
   accessToken?: string,
   client?: SlackOAuthClient,
   verificationToken?: string,
   origin?: string,
   skipProfile?: ?boolean,
-|};
+};
 
 export default class SlackConnector implements Connector<SlackRequestBody> {
   _client: SlackOAuthClient;
@@ -77,7 +77,7 @@ export default class SlackConnector implements Connector<SlackRequestBody> {
 
   _getRawEventFromRequest(body: SlackRequestBody): SlackRawEvent {
     if (body.event) {
-      return (((body: any): EventsAPIBody).event: Message);
+      return (((body as any) as EventsAPIBody).event: Message);
     }
 
     if (body.payload && typeof body.payload === 'string') {
@@ -85,7 +85,7 @@ export default class SlackConnector implements Connector<SlackRequestBody> {
     }
 
     // for RTM WebSocket messages
-    return ((body: any): Message);
+    return ((body as any) as Message);
   }
 
   _isBotEventRequest(body: SlackRequestBody): boolean {
@@ -106,7 +106,7 @@ export default class SlackConnector implements Connector<SlackRequestBody> {
 
   getUniqueSessionKey(body: SlackRequestBody): string {
     // FIXME: define types for every slack events
-    const rawEvent = (this._getRawEventFromRequest(body): any);
+    const rawEvent = (this._getRawEventFromRequest(body) as any);
 
     // For interactive_message format
     if (
@@ -131,7 +131,7 @@ export default class SlackConnector implements Connector<SlackRequestBody> {
       return rawEvent.item.channel;
     }
 
-    return ((rawEvent: any): Message).channel;
+    return (rawEvent as Message).channel;
   }
 
   async updateSession(session: Session, body: SlackRequestBody): Promise<void> {
@@ -144,7 +144,7 @@ export default class SlackConnector implements Connector<SlackRequestBody> {
     if (rawEvent.type === 'interactive_message') {
       userFromBody = rawEvent.user.id;
     } else {
-      userFromBody = ((rawEvent: any): Message).user;
+      userFromBody = (rawEvent as Message).user;
     }
 
     if (

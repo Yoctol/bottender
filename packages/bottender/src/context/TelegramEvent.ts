@@ -53,10 +53,10 @@ type Contact = {
   first_name: string,
 };
 
-type Location = {|
+type Location = {
   longitude: number,
   latitude: number,
-|};
+};
 
 type Venue = {
   location: Location,
@@ -214,7 +214,7 @@ export default class TelegramEvent implements Event {
    *
    */
   get isText(): boolean {
-    return this.isMessage && typeof (this.message: any).text === 'string';
+    return this.isMessage && typeof (this.message as any).text === 'string';
   }
 
   /**
@@ -223,7 +223,7 @@ export default class TelegramEvent implements Event {
    */
   get text(): ?string {
     if (this.isText) {
-      return (this.message: any).text;
+      return (this.message as any).text;
     }
     return null;
   }
@@ -235,7 +235,7 @@ export default class TelegramEvent implements Event {
   get isReplyToMessage(): boolean {
     if (!this.isMessage) return false;
 
-    const message: Message = (this.message: any);
+    const message: Message = (this.message as any);
 
     return (
       !!message.reply_to_message && typeof message.reply_to_message === 'object'
@@ -248,7 +248,7 @@ export default class TelegramEvent implements Event {
    */
   get replyToMessage(): ?Message {
     if (this.isReplyToMessage) {
-      return (this.message: any).reply_to_message;
+      return (this.message as any).reply_to_message;
     }
     return null;
   }
@@ -260,7 +260,7 @@ export default class TelegramEvent implements Event {
   get isAudio(): boolean {
     if (!this.isMessage) return false;
 
-    const message: Message = (this.message: any);
+    const message: Message = (this.message as any);
 
     return !!message.audio && typeof message.audio === 'object';
   }
@@ -271,7 +271,7 @@ export default class TelegramEvent implements Event {
    */
   get audio(): ?Audio {
     if (this.isAudio) {
-      return (this.message: any).audio;
+      return (this.message as any).audio;
     }
     return null;
   }
@@ -283,7 +283,7 @@ export default class TelegramEvent implements Event {
   get isDocument(): boolean {
     if (!this.isMessage) return false;
 
-    const message: Message = (this.message: any);
+    const message: Message = (this.message as any);
 
     return !!message.document && typeof message.document === 'object';
   }
@@ -294,7 +294,7 @@ export default class TelegramEvent implements Event {
    */
   get document(): ?Document {
     if (this.isDocument) {
-      return (this.message: any).document;
+      return (this.message as any).document;
     }
     return null;
   }
@@ -306,7 +306,7 @@ export default class TelegramEvent implements Event {
   get isGame(): boolean {
     if (!this.isMessage) return false;
 
-    const message: Message = (this.message: any);
+    const message: Message = (this.message as any);
 
     return !!message.game && typeof message.game === 'object';
   }
@@ -317,7 +317,7 @@ export default class TelegramEvent implements Event {
    */
   get game(): ?Game {
     if (this.isGame) {
-      return (this.message: any).game;
+      return (this.message as any).game;
     }
     return null;
   }
@@ -329,7 +329,7 @@ export default class TelegramEvent implements Event {
   get isPhoto(): boolean {
     if (!this.isMessage) return false;
 
-    const message: Message = (this.message: any);
+    const message: Message = (this.message as any);
 
     return !!message.photo && message.photo.length > 0;
   }
@@ -340,7 +340,7 @@ export default class TelegramEvent implements Event {
    */
   get photo(): ?Photo {
     if (this.isPhoto) {
-      return (this.message: any).photo;
+      return (this.message as any).photo;
     }
     return null;
   }
@@ -352,7 +352,7 @@ export default class TelegramEvent implements Event {
   get isSticker(): boolean {
     if (!this.isMessage) return false;
 
-    const message: Message = (this.message: any);
+    const message: Message = (this.message as any);
 
     return !!message.sticker && typeof message.sticker === 'object';
   }
@@ -363,7 +363,7 @@ export default class TelegramEvent implements Event {
    */
   get sticker(): ?Sticker {
     if (this.isSticker) {
-      return (this.message: any).sticker;
+      return (this.message as any).sticker;
     }
     return null;
   }
@@ -375,7 +375,7 @@ export default class TelegramEvent implements Event {
   get isVideo(): boolean {
     if (!this.isMessage) return false;
 
-    const message: Message = (this.message: any);
+    const message: Message = (this.message as any);
     return !!message.video && typeof message.video === 'object';
   }
 
@@ -385,7 +385,7 @@ export default class TelegramEvent implements Event {
    */
   get video(): ?Video {
     if (this.isVideo) {
-      return (this.message: any).video;
+      return (this.message as any).video;
     }
     return null;
   }
@@ -397,7 +397,7 @@ export default class TelegramEvent implements Event {
   get isVoice(): boolean {
     if (!this.isMessage) return false;
 
-    const message: Message = (this.message: any);
+    const message: Message = (this.message as any);
 
     return !!message.voice && typeof message.voice === 'object';
   }
@@ -408,7 +408,7 @@ export default class TelegramEvent implements Event {
    */
   get voice(): ?Voice {
     if (this.isVoice) {
-      return (this.message: any).voice;
+      return (this.message as any).voice;
     }
     return null;
   }
@@ -420,7 +420,7 @@ export default class TelegramEvent implements Event {
   get isVideoNote(): boolean {
     if (!this.isMessage) return false;
 
-    const message: Message = (this.message: any);
+    const message: Message = (this.message as any);
 
     return !!message.video_note && typeof message.video_note === 'object';
   }
@@ -431,7 +431,7 @@ export default class TelegramEvent implements Event {
    */
   get videoNote(): ?VideoNote {
     if (this.isVideoNote) {
-      return (this.message: any).video_note;
+      return (this.message as any).video_note;
     }
     return null;
   }
@@ -443,7 +443,7 @@ export default class TelegramEvent implements Event {
   get isContact(): boolean {
     if (!this.isMessage) return false;
 
-    const message: Message = (this.message: any);
+    const message: Message = (this.message as any);
 
     return !!message.contact && typeof message.contact === 'object';
   }
@@ -454,7 +454,7 @@ export default class TelegramEvent implements Event {
    */
   get contact(): ?Contact {
     if (this.isContact) {
-      return (this.message: any).contact;
+      return (this.message as any).contact;
     }
     return null;
   }
@@ -466,7 +466,7 @@ export default class TelegramEvent implements Event {
   get isLocation(): boolean {
     if (!this.isMessage) return false;
 
-    const message: Message = (this.message: any);
+    const message: Message = (this.message as any);
 
     return !!message.location && typeof message.location === 'object';
   }
@@ -477,7 +477,7 @@ export default class TelegramEvent implements Event {
    */
   get location(): ?Location {
     if (this.isLocation) {
-      return (this.message: any).location;
+      return (this.message as any).location;
     }
     return null;
   }
@@ -489,7 +489,7 @@ export default class TelegramEvent implements Event {
   get isVenue(): boolean {
     if (!this.isMessage) return false;
 
-    const message: Message = (this.message: any);
+    const message: Message = (this.message as any);
 
     return !!message.venue && typeof message.venue === 'object';
   }
@@ -500,7 +500,7 @@ export default class TelegramEvent implements Event {
    */
   get venue(): ?Venue {
     if (this.isVenue) {
-      return (this.message: any).venue;
+      return (this.message as any).venue;
     }
     return null;
   }
@@ -619,7 +619,7 @@ export default class TelegramEvent implements Event {
    */
   get payload(): ?string {
     if (this.isPayload) {
-      return (this.callbackQuery: any).data;
+      return (this.callbackQuery as any).data;
     }
     return null;
   }

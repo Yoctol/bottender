@@ -15,7 +15,7 @@ type LineRequestBody = {
   events: Array<LineRawEvent>,
 };
 
-type ConstructorOptions = {|
+type ConstructorOptions = {
   accessToken?: string,
   channelSecret?: string,
   client?: LineClient,
@@ -24,7 +24,7 @@ type ConstructorOptions = {|
   sendMethod: ?string,
   origin?: string,
   skipProfile?: ?boolean,
-|};
+};
 
 export default class LineConnector implements Connector<LineRequestBody> {
   _client: LineClient;

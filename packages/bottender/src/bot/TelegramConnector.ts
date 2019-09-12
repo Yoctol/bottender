@@ -10,11 +10,11 @@ import { Connector } from './Connector';
 
 export type TelegramRequestBody = TelegramRawEvent;
 
-type ConstructorOptions = {|
+type ConstructorOptions = {
   accessToken?: string,
   client?: TelegramClient,
   origin?: string,
-|};
+};
 
 export default class TelegramConnector
   implements Connector<TelegramRequestBody> {

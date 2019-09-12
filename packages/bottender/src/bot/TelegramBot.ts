@@ -49,7 +49,7 @@ export default class TelegramBot extends Bot {
               offset: this._offset,
             }
           : options;
-        const updates = await (this.connector: any).client.getUpdates(params);
+        const updates = await (this.connector as any).client.getUpdates(params);
 
         if (updates.length > 0) {
           for (let i = 0; i < updates.length; i++) {

@@ -14,13 +14,13 @@ export default class ViberHandler extends Handler {
   ) {
     // FIXME: Can't refine tuple union - https://github.com/facebook/flow/issues/2389
     if (args.length < 2) {
-      const [handler]: [FunctionalHandler | Builder] = (args: any);
+      const [handler]: [FunctionalHandler | Builder] = (args as any);
       this.on(context => context.event.isSubscribed, handler);
     } else {
       const [predicate, handler]: [
         Predicate,
         FunctionalHandler | Builder
-      ] = (args: any);
+      ] = (args as any);
 
       warning(
         typeof predicate === 'function',
@@ -45,13 +45,13 @@ export default class ViberHandler extends Handler {
   ) {
     // FIXME: Can't refine tuple union - https://github.com/facebook/flow/issues/2389
     if (args.length < 2) {
-      const [handler]: [FunctionalHandler | Builder] = (args: any);
+      const [handler]: [FunctionalHandler | Builder] = (args as any);
       this.on(context => context.event.isUnsubscribed, handler);
     } else {
       const [predicate, handler]: [
         Predicate,
         FunctionalHandler | Builder
-      ] = (args: any);
+      ] = (args as any);
 
       warning(
         typeof predicate === 'function',
@@ -76,13 +76,13 @@ export default class ViberHandler extends Handler {
   ) {
     // FIXME: Can't refine tuple union - https://github.com/facebook/flow/issues/2389
     if (args.length < 2) {
-      const [handler]: [FunctionalHandler | Builder] = (args: any);
+      const [handler]: [FunctionalHandler | Builder] = (args as any);
       this.on(context => context.event.isConversationStarted, handler);
     } else {
       const [predicate, handler]: [
         Predicate,
         FunctionalHandler | Builder
-      ] = (args: any);
+      ] = (args as any);
 
       warning(
         typeof predicate === 'function',
@@ -107,13 +107,13 @@ export default class ViberHandler extends Handler {
   ) {
     // FIXME: Can't refine tuple union - https://github.com/facebook/flow/issues/2389
     if (args.length < 2) {
-      const [handler]: [FunctionalHandler | Builder] = (args: any);
+      const [handler]: [FunctionalHandler | Builder] = (args as any);
       this.on(context => context.event.isDelivered, handler);
     } else {
       const [predicate, handler]: [
         Predicate,
         FunctionalHandler | Builder
-      ] = (args: any);
+      ] = (args as any);
 
       warning(
         typeof predicate === 'function',
@@ -138,13 +138,13 @@ export default class ViberHandler extends Handler {
   ) {
     // FIXME: Can't refine tuple union - https://github.com/facebook/flow/issues/2389
     if (args.length < 2) {
-      const [handler]: [FunctionalHandler | Builder] = (args: any);
+      const [handler]: [FunctionalHandler | Builder] = (args as any);
       this.on(context => context.event.isSeen, handler);
     } else {
       const [predicate, handler]: [
         Predicate,
         FunctionalHandler | Builder
-      ] = (args: any);
+      ] = (args as any);
 
       warning(
         typeof predicate === 'function',
@@ -168,13 +168,13 @@ export default class ViberHandler extends Handler {
   ) {
     // FIXME: Can't refine tuple union - https://github.com/facebook/flow/issues/2389
     if (args.length < 2) {
-      const [handler]: [FunctionalHandler | Builder] = (args: any);
+      const [handler]: [FunctionalHandler | Builder] = (args as any);
       this.on(context => context.event.isFailed, handler);
     } else {
       const [predicate, handler]: [
         Predicate,
         FunctionalHandler | Builder
-      ] = (args: any);
+      ] = (args as any);
 
       warning(
         typeof predicate === 'function',

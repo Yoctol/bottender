@@ -9,10 +9,10 @@ import { Connector } from './Connector';
 
 type TestRequestBody = TestRawEvent;
 
-type ConstructorOptions = {|
+type ConstructorOptions = {
   client?: TestClient,
   fallbackMethods?: boolean,
-|};
+};
 
 const testClient = {
   calls: [],

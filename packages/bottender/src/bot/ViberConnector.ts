@@ -12,11 +12,11 @@ import { Connector } from './Connector';
 
 export type ViberRequestBody = ViberRawEvent;
 
-type ConstructorOptions = {|
+type ConstructorOptions = {
   accessToken?: string,
   client?: ViberClient,
   origin?: string,
-|};
+};
 
 export default class ViberConnector implements Connector<ViberRequestBody> {
   _accessToken: ?string;

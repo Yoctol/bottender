@@ -10,14 +10,14 @@ import Context from './Context';
 import TelegramEvent from './TelegramEvent';
 import { PlatformContext } from './PlatformContext';
 
-type Options = {|
+type Options = {
   client: TelegramClient,
   event: TelegramEvent,
   session: ?Session,
   initialState: ?Object,
   requestContext: ?Object,
   emitter: ?EventEmitter,
-|};
+};
 
 class TelegramContext extends Context implements PlatformContext {
   _client: TelegramClient = this._client;

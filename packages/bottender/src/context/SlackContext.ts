@@ -10,14 +10,14 @@ import Context from './Context';
 import SlackEvent from './SlackEvent';
 import { PlatformContext } from './PlatformContext';
 
-type Options = {|
+type Options = {
   client: SlackOAuthClient,
   event: SlackEvent,
   session: ?Session,
   initialState: ?Object,
   requestContext: ?Object,
   emitter: ?EventEmitter,
-|};
+};
 
 export default class SlackContext extends Context implements PlatformContext {
   _client: SlackOAuthClient = this._client;

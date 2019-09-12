@@ -74,7 +74,7 @@ type MessengerRequestBody =
   | PassThreadControlRequestBody
   | TakeThreadControlRequestBody;
 
-type ConstructorOptions = {|
+type ConstructorOptions = {
   accessToken?: string,
   appId?: string,
   appSecret?: string,
@@ -85,7 +85,7 @@ type ConstructorOptions = {|
   origin?: string,
   skipAppSecretProof?: ?boolean,
   skipProfile?: ?boolean,
-|};
+};
 
 export default class MessengerConnector
   implements Connector<MessengerRequestBody> {
@@ -155,21 +155,21 @@ export default class MessengerConnector
     body: MessengerRequestBody
   ): Array<MessengerRawEvent> {
     if (body.entry) {
-      const { entry } = ((body: any): EntryRequestBody);
+      const { entry } = ((body as any) as EntryRequestBody);
 
       return entry
         .map(ent => {
           if (ent.messaging) {
-            return ((ent.messaging[0]: any): MessengerRawEvent);
+            return ((ent.messaging[0] as any) as MessengerRawEvent);
           }
 
           if (ent.standby) {
-            return ((ent.standby[0]: any): MessengerRawEvent);
+            return ((ent.standby[0] as any) as MessengerRawEvent);
           }
 
           // for Webhook Test button request and other page events
           if (ent.changes) {
-            return ((ent.changes[0]: any): MessengerRawEvent);
+            return ((ent.changes[0] as any) as MessengerRawEvent);
           }
 
           // $FlowExpectedError
@@ -178,7 +178,7 @@ export default class MessengerConnector
         .filter(event => event != null);
     }
 
-    return [((body: any): MessengerRawEvent)];
+    return [((body as any) as MessengerRawEvent)];
   }
 
   _getPageIdFromRawEvent(rawEvent: MessengerRawEvent): ?string {
@@ -192,7 +192,7 @@ export default class MessengerConnector
 
   _isStandby(body: MessengerRequestBody): boolean {
     if (!body.entry) return false;
-    const entry = ((body: any): EntryRequestBody).entry[0];
+    const entry = ((body as any) as EntryRequestBody).entry[0];
 
     return !!entry.standby;
   }

@@ -9,7 +9,7 @@ import Context from './Context';
 import { ConsoleClient } from './ConsoleClient';
 import { PlatformContext } from './PlatformContext';
 
-type Options = {|
+type Options = {
   client: ConsoleClient,
   event: ConsoleEvent,
   session: ?Session,
@@ -18,7 +18,7 @@ type Options = {|
   fallbackMethods: boolean,
   mockPlatform: string,
   emitter: ?EventEmitter,
-|};
+};
 
 const methodBlackList = [
   'inspect', // console

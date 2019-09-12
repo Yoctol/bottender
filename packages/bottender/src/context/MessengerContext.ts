@@ -11,7 +11,7 @@ import Context from './Context';
 import MessengerEvent from './MessengerEvent';
 import { PlatformContext } from './PlatformContext';
 
-type Options = {|
+type Options = {
   appId: ?string,
   client: MessengerClient,
   event: MessengerEvent,
@@ -21,7 +21,7 @@ type Options = {|
   customAccessToken: ?string,
   batchQueue: ?Object,
   emitter: ?EventEmitter,
-|};
+};
 
 class MessengerContext extends Context implements PlatformContext {
   _appId: ?string;

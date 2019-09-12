@@ -12,7 +12,7 @@ import Context from './Context';
 import LineEvent from './LineEvent';
 import { PlatformContext } from './PlatformContext';
 
-type Options = {|
+type Options = {
   client: LineClient,
   event: LineEvent,
   session: ?Session,
@@ -22,7 +22,7 @@ type Options = {|
   shouldBatch: ?boolean,
   sendMethod: ?string,
   emitter: ?EventEmitter,
-|};
+};
 
 class LineContext extends Context implements PlatformContext {
   _client: LineClient = this._client;

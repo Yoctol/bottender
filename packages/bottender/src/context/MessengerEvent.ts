@@ -12,16 +12,16 @@ type QuickReply = {
   payload: string,
 };
 
-type MediaAttachmentPayload = {|
+type MediaAttachmentPayload = {
   url: string,
-|};
+};
 
-type LocationAttachmentPayload = {|
+type LocationAttachmentPayload = {
   coordinates: {
     lat: number,
     long: number,
   },
-|};
+};
 
 type AttachmentPayload = MediaAttachmentPayload | LocationAttachmentPayload;
 
@@ -39,9 +39,9 @@ type MediaAttachment = {
 
 type Attachment = MediaAttachment | FallbackAttachment;
 
-type Tag = {|
+type Tag = {
   source: string,
-|};
+};
 
 export type Message = {
   is_echo?: boolean,
@@ -235,7 +235,7 @@ export default class MessengerEvent implements Event {
    *
    */
   get isText(): boolean {
-    return this.isMessage && typeof (this.message: any).text === 'string';
+    return this.isMessage && typeof (this.message as any).text === 'string';
   }
 
   /**
@@ -244,7 +244,7 @@ export default class MessengerEvent implements Event {
    */
   get text(): ?string {
     if (this.isText) {
-      return (this.message: any).text;
+      return (this.message as any).text;
     }
     return null;
   }
@@ -256,8 +256,8 @@ export default class MessengerEvent implements Event {
   get hasAttachment(): boolean {
     return (
       this.isMessage &&
-      !!(this.message: any).attachments &&
-      (this.message: any).attachments.length > 0
+      !!(this.message as any).attachments &&
+      (this.message as any).attachments.length > 0
     );
   }
 
@@ -274,7 +274,7 @@ export default class MessengerEvent implements Event {
    *
    */
   get isImage(): boolean {
-    return this.hasAttachment && (this.attachments: any)[0].type === 'image';
+    return this.hasAttachment && (this.attachments as any)[0].type === 'image';
   }
 
   /**
@@ -282,7 +282,7 @@ export default class MessengerEvent implements Event {
    *
    */
   get image(): ?MediaAttachmentPayload {
-    return this.isImage ? (this.attachments: any)[0].payload : null;
+    return this.isImage ? (this.attachments as any)[0].payload : null;
   }
 
   /**
@@ -290,7 +290,7 @@ export default class MessengerEvent implements Event {
    *
    */
   get isAudio(): boolean {
-    return this.hasAttachment && (this.attachments: any)[0].type === 'audio';
+    return this.hasAttachment && (this.attachments as any)[0].type === 'audio';
   }
 
   /**
@@ -298,7 +298,7 @@ export default class MessengerEvent implements Event {
    *
    */
   get audio(): ?MediaAttachmentPayload {
-    return this.isAudio ? (this.attachments: any)[0].payload : null;
+    return this.isAudio ? (this.attachments as any)[0].payload : null;
   }
 
   /**
@@ -306,7 +306,7 @@ export default class MessengerEvent implements Event {
    *
    */
   get isVideo(): boolean {
-    return this.hasAttachment && (this.attachments: any)[0].type === 'video';
+    return this.hasAttachment && (this.attachments as any)[0].type === 'video';
   }
 
   /**
@@ -314,7 +314,7 @@ export default class MessengerEvent implements Event {
    *
    */
   get video(): ?MediaAttachmentPayload {
-    return this.isVideo ? (this.attachments: any)[0].payload : null;
+    return this.isVideo ? (this.attachments as any)[0].payload : null;
   }
 
   /**
@@ -322,7 +322,7 @@ export default class MessengerEvent implements Event {
    *
    */
   get isLocation(): boolean {
-    return this.hasAttachment && (this.attachments: any)[0].type === 'location';
+    return this.hasAttachment && (this.attachments as any)[0].type === 'location';
   }
 
   /**
@@ -330,7 +330,7 @@ export default class MessengerEvent implements Event {
    *
    */
   get location(): ?LocationAttachmentPayload {
-    return this.isLocation ? (this.attachments: any)[0].payload : null;
+    return this.isLocation ? (this.attachments as any)[0].payload : null;
   }
 
   /**
@@ -338,7 +338,7 @@ export default class MessengerEvent implements Event {
    *
    */
   get isFile(): boolean {
-    return this.hasAttachment && (this.attachments: any)[0].type === 'file';
+    return this.hasAttachment && (this.attachments as any)[0].type === 'file';
   }
 
   /**
@@ -346,7 +346,7 @@ export default class MessengerEvent implements Event {
    *
    */
   get file(): ?MediaAttachmentPayload {
-    return this.isFile ? (this.attachments: any)[0].payload : null;
+    return this.isFile ? (this.attachments as any)[0].payload : null;
   }
 
   /**
@@ -354,7 +354,7 @@ export default class MessengerEvent implements Event {
    *
    */
   get isFallback(): boolean {
-    return this.hasAttachment && (this.attachments: any)[0].type === 'fallback';
+    return this.hasAttachment && (this.attachments as any)[0].type === 'fallback';
   }
 
   /**
@@ -362,7 +362,7 @@ export default class MessengerEvent implements Event {
    *
    */
   get fallback(): ?FallbackAttachment {
-    return this.isFallback ? (this.attachments: any)[0] : null;
+    return this.isFallback ? (this.attachments as any)[0] : null;
   }
 
   /**
@@ -370,7 +370,7 @@ export default class MessengerEvent implements Event {
    *
    */
   get isSticker(): boolean {
-    return this.isMessage && typeof (this.message: any).sticker_id === 'number';
+    return this.isMessage && typeof (this.message as any).sticker_id === 'number';
   }
 
   /**
@@ -378,7 +378,7 @@ export default class MessengerEvent implements Event {
    *
    */
   get sticker(): ?string {
-    return this.isSticker ? (this.message: any).sticker_id : null;
+    return this.isSticker ? (this.message as any).sticker_id : null;
   }
 
   /**
@@ -390,9 +390,9 @@ export default class MessengerEvent implements Event {
   get isLikeSticker(): boolean {
     return (
       this.isSticker &&
-      ((this.message: any).sticker_id === 369239263222822 ||
-        (this.message: any).sticker_id === 369239343222814 ||
-        (this.message: any).sticker_id === 369239383222810)
+      ((this.message as any).sticker_id === 369239263222822 ||
+        (this.message as any).sticker_id === 369239343222814 ||
+        (this.message as any).sticker_id === 369239383222810)
     );
   }
 
@@ -403,8 +403,8 @@ export default class MessengerEvent implements Event {
   get isQuickReply(): boolean {
     return (
       this.isMessage &&
-      !!(this.message: any).quick_reply &&
-      typeof (this.message: any).quick_reply === 'object'
+      !!(this.message as any).quick_reply &&
+      typeof (this.message as any).quick_reply === 'object'
     );
   }
 
@@ -421,7 +421,7 @@ export default class MessengerEvent implements Event {
    *
    */
   get isEcho(): boolean {
-    return this.isMessage && !!(this.message: any).is_echo;
+    return this.isMessage && !!(this.message as any).is_echo;
   }
 
   /**
@@ -461,7 +461,7 @@ export default class MessengerEvent implements Event {
       return null;
     }
 
-    const rawGamePlay = (this._rawEvent: any).game_play;
+    const rawGamePlay = (this._rawEvent as any).game_play;
 
     let payload;
     try {
@@ -729,9 +729,9 @@ export default class MessengerEvent implements Event {
   get isFromCustomerChatPlugin(): boolean {
     const isMessageFromCustomerChatPlugin = !!(
       this.isMessage &&
-      !!(this.message: any).tags &&
-      (this.message: any).tags.length !== 0 &&
-      (this.message: any).tags.some(
+      !!(this.message as any).tags &&
+      (this.message as any).tags.length !== 0 &&
+      (this.message as any).tags.some(
         tag => tag.source === 'customer_chat_plugin'
       )
     );

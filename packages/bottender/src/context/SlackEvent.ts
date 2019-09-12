@@ -175,7 +175,7 @@ export default class SlackEvent implements Event {
   get message(): ?Message {
     if (!this.isMessage) return;
 
-    const message = ((this._rawEvent: any): Message);
+    const message = ((this._rawEvent as any) as Message);
 
     return message;
   }
@@ -194,7 +194,7 @@ export default class SlackEvent implements Event {
    */
   get text(): ?string {
     if (this.isText) {
-      return ((this.message: any): Message).text;
+      return ((this.message as any) as Message).text;
     }
     return null;
   }
@@ -213,7 +213,7 @@ export default class SlackEvent implements Event {
    */
   get callbackId(): ?string {
     if (this.isInteractiveMessage) {
-      return ((this._rawEvent: any): InteractiveMessageEvent).callback_id;
+      return ((this._rawEvent as any) as InteractiveMessageEvent).callback_id;
     }
     return null;
   }
@@ -224,7 +224,7 @@ export default class SlackEvent implements Event {
    */
   get action(): ?{} {
     if (this.isInteractiveMessage) {
-      return ((this._rawEvent: any): InteractiveMessageEvent).actions[0];
+      return ((this._rawEvent as any) as InteractiveMessageEvent).actions[0];
     }
     return null;
   }

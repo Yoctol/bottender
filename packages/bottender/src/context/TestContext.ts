@@ -9,7 +9,7 @@ import TestEvent from './TestEvent';
 import { PlatformContext } from './PlatformContext';
 import { TestClient } from './TestClient';
 
-type Options = {|
+type Options = {
   client: TestClient,
   event: TestEvent,
   session: ?Session,
@@ -17,7 +17,7 @@ type Options = {|
   requestContext: ?Object,
   fallbackMethods: boolean,
   emitter: ?EventEmitter,
-|};
+};
 
 const methodBlackList = [
   'then', // promise

@@ -57,7 +57,7 @@ export default class TestEvent implements Event {
    */
   get text(): ?string {
     if (this.isText) {
-      return ((this.message: any): Message).text;
+      return ((this.message as any) as Message).text;
     }
     return null;
   }

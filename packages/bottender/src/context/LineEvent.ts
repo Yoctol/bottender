@@ -41,25 +41,25 @@ type Message = {
 };
 
 type PostbackParams =
-  | {| date: string |}
-  | {| time: string |}
-  | {| datetime: string |};
+  | { date: string }
+  | { time: string }
+  | { datetime: string };
 
-type Postback = {|
+type Postback = {
   data: string,
   params?: PostbackParams,
-|};
+};
 
-type Beacon = {|
+type Beacon = {
   hwid: string,
   type: 'enter' | 'leave' | 'banner',
   dm?: string,
-|};
+};
 
-type AccountLink = {|
+type AccountLink = {
   result: 'ok' | 'false',
   nonce: string,
-|};
+};
 
 type Members = {
   members: Array<UserSource>,
@@ -152,7 +152,7 @@ export default class LineEvent implements Event {
    *
    */
   get isText(): boolean {
-    return this.isMessage && (this.message: any).type === 'text';
+    return this.isMessage && (this.message as any).type === 'text';
   }
 
   /**
@@ -161,7 +161,7 @@ export default class LineEvent implements Event {
    */
   get text(): ?string {
     if (this.isText) {
-      return (this.message: any).text;
+      return (this.message as any).text;
     }
     return null;
   }
@@ -171,7 +171,7 @@ export default class LineEvent implements Event {
    *
    */
   get isImage(): boolean {
-    return this.isMessage && (this.message: any).type === 'image';
+    return this.isMessage && (this.message as any).type === 'image';
   }
 
   /**
@@ -190,7 +190,7 @@ export default class LineEvent implements Event {
    *
    */
   get isVideo(): boolean {
-    return this.isMessage && (this.message: any).type === 'video';
+    return this.isMessage && (this.message as any).type === 'video';
   }
 
   /**
@@ -209,7 +209,7 @@ export default class LineEvent implements Event {
    *
    */
   get isAudio(): boolean {
-    return this.isMessage && (this.message: any).type === 'audio';
+    return this.isMessage && (this.message as any).type === 'audio';
   }
 
   /**
@@ -228,7 +228,7 @@ export default class LineEvent implements Event {
    *
    */
   get isLocation(): boolean {
-    return this.isMessage && (this.message: any).type === 'location';
+    return this.isMessage && (this.message as any).type === 'location';
   }
 
   /**
@@ -247,7 +247,7 @@ export default class LineEvent implements Event {
    *
    */
   get isSticker(): boolean {
-    return this.isMessage && (this.message: any).type === 'sticker';
+    return this.isMessage && (this.message as any).type === 'sticker';
   }
 
   /**
@@ -367,7 +367,7 @@ export default class LineEvent implements Event {
    */
   get payload(): ?string {
     if (this.isPayload) {
-      return (this.postback: any).data;
+      return (this.postback as any).data;
     }
     return null;
   }
