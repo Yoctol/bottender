@@ -7,18 +7,18 @@ import warning from 'warning';
 const debugContext = debug('bottender:context');
 
 type Options = {
-  client: any,
-  event: any,
-  session: ?any,
-  initialState: ?Object,
-  requestContext: ?Object,
-  emitter?: ?EventEmitter,
+  client: any;
+  event: any;
+  session: any;
+  initialState: Record<string, any> | null;
+  requestContext: Record<string, any> | null;
+  emitter: EventEmitter | null;
 };
 
 type Response = {
-  status: number,
-  headers: { [key: string]: string },
-  body: any,
+  status: number;
+  headers: Record<string, string>;
+  body: any;
 };
 
 export default class Context {
@@ -26,17 +26,17 @@ export default class Context {
 
   _isSessionWritten = false;
 
-  _client: Object;
+  _client: any;
 
-  _event: Object;
+  _event: any;
 
-  _session: ?Object;
+  _session: Record<string, any> | null;
 
-  _initialState: ?Object;
+  _initialState: Record<string, any> | null;
 
-  _requestContext: ?Object;
+  _requestContext: Record<string, any> | null;
 
-  _emitter: ?EventEmitter;
+  _emitter: EventEmitter | null;
 
   response: Response;
 
@@ -74,7 +74,7 @@ export default class Context {
    * The client instance.
    *
    */
-  get client(): Object {
+  get client(): Record<string, any> {
     return this._client;
   }
 
@@ -82,7 +82,7 @@ export default class Context {
    * The event instance.
    *
    */
-  get event(): Object {
+  get event(): Record<string, any> {
     return this._event;
   }
 
@@ -90,7 +90,7 @@ export default class Context {
    * The context of request.
    *
    */
-  get requestContext(): ?Object {
+  get requestContext(): Record<string, any> | null {
     return this._requestContext;
   }
 
@@ -98,7 +98,7 @@ export default class Context {
    * The session state of the context.
    *
    */
-  get session(): ?Object {
+  get session(): Record<string, any> | null {
     return this._session;
   }
 
@@ -110,7 +110,7 @@ export default class Context {
     return this._isSessionWritten;
   }
 
-  set isSessionWritten(bool: boolean): void {
+  set isSessionWritten(bool: boolean) {
     this._isSessionWritten = bool;
   }
 
@@ -118,7 +118,7 @@ export default class Context {
    * The state in the conversation context.
    *
    */
-  get state(): Object {
+  get state(): Record<string, any> {
     if (this._session) {
       return this._session._state;
     }
@@ -133,7 +133,7 @@ export default class Context {
    * Shallow merge changes to the state.
    *
    */
-  setState(state: Object): void {
+  setState(state: Record<string, any>): void {
     if (this._session) {
       const sess = this._session;
 
