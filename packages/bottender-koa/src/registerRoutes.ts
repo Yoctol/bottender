@@ -9,7 +9,7 @@ function registerRoutes(server: Koa, bot: Bot, config: RouteConfig = {}) {
 
   const router = new Router();
 
-  server.use((ctx, next) => {
+  server.use((ctx: Koa.Context, next: () => Promise<void>) => {
     const { request } = ctx;
     if (request.path !== path) {
       return next();
