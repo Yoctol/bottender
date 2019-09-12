@@ -8,5 +8,4 @@ it('export handler builders', () => {
   expect(handlers.SlackHandler).toBeDefined();
   expect(handlers.TelegramHandler).toBeDefined();
   expect(handlers.ViberHandler).toBeDefined();
-  expect(handlers.ClassifierHandler).toBeDefined();
 });
