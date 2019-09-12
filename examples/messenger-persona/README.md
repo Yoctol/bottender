@@ -46,15 +46,15 @@ This example is a simple bot running on [Messenger](https://www.messenger.com/) 
 To set persona for the whole context, use `context.usePersona`:
 
 ```js
-context.usePersona("<PERSONA_ID>");
-await context.sendText("hi");
+context.usePersona('<PERSONA_ID>');
+await context.sendText('hi');
 ```
 
 Or you can specify different persona for each actions:
 
 ```js
-await context.sendText("hi", { persona_id: "<PERSONA_ID_1>" });
-await context.sendText("hi", { persona_id: "<PERSONA_ID_2>" });
+await context.sendText('hi', { persona_id: '<PERSONA_ID_1>' });
+await context.sendText('hi', { persona_id: '<PERSONA_ID_2>' });
 ```
 
 For more information, check our [Messenger guides](https://bottender.js.org/docs/Platforms-Messenger).

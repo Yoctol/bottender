@@ -70,12 +70,12 @@ We have a bunch of examples in the
 Here is the first one to get you started:
 
 ```js
-const { ConsoleBot } = require("bottender");
+const { ConsoleBot } = require('bottender');
 
 const bot = new ConsoleBot();
 
 bot.onEvent(async context => {
-  await context.sendText("Hello World");
+  await context.sendText('Hello World');
 });
 
 bot.createRuntime();

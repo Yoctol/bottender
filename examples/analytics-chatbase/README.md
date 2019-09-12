@@ -23,11 +23,11 @@ it will be better to check [server-express example](../server-express) first.
 
 ```js
 const server = createServer(bot, {
-  verifyToken: "__FILL_YOUR_VERIFY_TOKEN_HERE__",
+  verifyToken: '__FILL_YOUR_VERIFY_TOKEN_HERE__',
   webhookMiddleware: chatbaseMiddleware(bot, {
-    apiKey: "__FILL_YOUR_CHATBASE_KEY_HERE__",
-    platform: "Facebook"
-  })
+    apiKey: '__FILL_YOUR_CHATBASE_KEY_HERE__',
+    platform: 'Facebook',
+  }),
 });
 ```
 

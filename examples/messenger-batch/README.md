@@ -42,7 +42,7 @@ If you want to expose the server on your local development machine and get a sec
 This example is a bot which sents multiple requsets (up to 50) in batches using `batchConfig`:
 
 ```js
-const { isError613 } = require("messenger-batch");
+const { isError613 } = require('messenger-batch');
 
 new MessengerBot({
   accessToken: config.accessToken,
@@ -50,8 +50,8 @@ new MessengerBot({
   batchConfig: {
     delay: 1000,
     shouldRetry: isError613, // (#613) Calls to this api have exceeded the rate limit.
-    retryTimes: 2
-  }
+    retryTimes: 2,
+  },
 });
 ```
 

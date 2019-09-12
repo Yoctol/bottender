@@ -49,9 +49,9 @@ session.page.id;
 - [new] Add `context.usePersona`:
 
 ```js
-context.usePersona("<PERSONA_ID>");
-await context.sendText("Hello");
-await context.sendText("World");
+context.usePersona('<PERSONA_ID>');
+await context.sendText('Hello');
+await context.sendText('World');
 ```
 
 # 0.15.12 / 2018-11-09
@@ -64,7 +64,7 @@ await context.sendText("World");
 const bot = new MessengerBot({
   accessToken: ACCESS_TOKEN,
   appSecret: APP_SECRET,
-  skipProfile: true
+  skipProfile: true,
 });
 ```
 
@@ -78,7 +78,7 @@ const bot = new MessengerBot({
 const bot = new MessengerBot({
   accessToken: ACCESS_TOKEN,
   appSecret: APP_SECRET,
-  skipAppSecretProof: true
+  skipAppSecretProof: true,
 });
 ```
 
@@ -89,23 +89,23 @@ const bot = new MessengerBot({
 ```js
 new MessengerBot({
   // ...
-  origin: "https://mydummytestserver.com"
+  origin: 'https://mydummytestserver.com',
 });
 new LineBot({
   // ...
-  origin: "https://mydummytestserver.com"
+  origin: 'https://mydummytestserver.com',
 });
 new SlackBot({
   // ...
-  origin: "https://mydummytestserver.com"
+  origin: 'https://mydummytestserver.com',
 });
 new ViberBot({
   // ...
-  origin: "https://mydummytestserver.com"
+  origin: 'https://mydummytestserver.com',
 });
 new TelegramBot({
   // ...
-  origin: "https://mydummytestserver.com"
+  origin: 'https://mydummytestserver.com',
 });
 ```
 
@@ -151,7 +151,7 @@ $ bottender messenger persona delete --id <PERSONA_ID>
 ```js
 // for those session stores
 const sessionStore = new MemorySessionStore(500);
-const sessionStore = new MongoSessionStore("mongodb://localhost:27017/");
+const sessionStore = new MongoSessionStore('mongodb://localhost:27017/');
 const sessionStore = new FileSessionStore();
 const sessionStore = new RedisSessionStore();
 ```
@@ -180,25 +180,25 @@ DEBUG=messaging-api*
 - [new] make sure all of methods support quick reply (#331):
 
 ```js
-context.sendText("hahaha", {
+context.sendText('hahaha', {
   quickReply: {
     items: [
       {
-        type: "action",
+        type: 'action',
         action: {
-          type: "cameraRoll",
-          label: "Send photo"
-        }
+          type: 'cameraRoll',
+          label: 'Send photo',
+        },
       },
       {
-        type: "action",
+        type: 'action',
         action: {
-          type: "camera",
-          label: "Open camera"
-        }
-      }
-    ]
-  }
+          type: 'camera',
+          label: 'Open camera',
+        },
+      },
+    ],
+  },
 });
 ```
 
@@ -250,7 +250,7 @@ Useful when debugging synchronized connectors.
 ```js
 const bot = new ConsoleBot({
   fallbackMethods: true,
-  mockPlatform: "messenger"
+  mockPlatform: 'messenger',
 });
 
 bot.connector.platform; // 'messenger'
@@ -336,15 +336,15 @@ context.event.brandedCamera; //
 - [new] implement Batch Mode to send multiple requests in one batch (up to 50 messages):
 
 ```js
-const { isError613 } = require("messenger-batch");
+const { isError613 } = require('messenger-batch');
 
 new MessengerBot({
   // ...
   batchConfig: {
     delay: 1000,
     shouldRetry: isError613, // (#613) Calls to this api have exceeded the rate limit.
-    retryTimes: 2
-  }
+    retryTimes: 2,
+  },
 });
 ```
 
@@ -357,45 +357,45 @@ It will enable [message batching](https://github.com/Yoctol/messaging-apis/tree/
 - [new] support LINE Flex Message with `replyFlex`, `pushFlex`, `sendFlex`:
 
 ```js
-context.sendFlex("this is a flex", {
-  type: "bubble",
+context.sendFlex('this is a flex', {
+  type: 'bubble',
   header: {
-    type: "box",
-    layout: "vertical",
+    type: 'box',
+    layout: 'vertical',
     contents: [
       {
-        type: "text",
-        text: "Header text"
-      }
-    ]
+        type: 'text',
+        text: 'Header text',
+      },
+    ],
   },
   hero: {
-    type: "image",
-    url: "https://example.com/flex/images/image.jpg"
+    type: 'image',
+    url: 'https://example.com/flex/images/image.jpg',
   },
   body: {
-    type: "box",
-    layout: "vertical",
+    type: 'box',
+    layout: 'vertical',
     contents: [
       {
-        type: "text",
-        text: "Body text"
-      }
-    ]
+        type: 'text',
+        text: 'Body text',
+      },
+    ],
   },
   footer: {
-    type: "box",
-    layout: "vertical",
+    type: 'box',
+    layout: 'vertical',
     contents: [
       {
-        type: "text",
-        text: "Footer text"
-      }
-    ]
+        type: 'text',
+        text: 'Footer text',
+      },
+    ],
   },
   styles: {
-    comment: "See the example of a bubble style object"
-  }
+    comment: 'See the example of a bubble style object',
+  },
 });
 ```
 
@@ -424,31 +424,31 @@ context.event.linkAccount;
 ```js
 new LineBot({
   // ...
-  shouldBatch: true // Default: false
+  shouldBatch: true, // Default: false
 });
 ```
 
 When batching is enabled,
 
 ```js
-context.replyText("Hi");
-context.replyText("Hi");
-context.replyText("Hi");
-context.replyText("Hi");
-context.replyText("Hi");
+context.replyText('Hi');
+context.replyText('Hi');
+context.replyText('Hi');
+context.replyText('Hi');
+context.replyText('Hi');
 ```
 
 Those 5 messages will be sent in one API call, just like the below one.
 
 ```js
-const { Line } = require("messaging-api-line");
+const { Line } = require('messaging-api-line');
 
 context.reply([
-  Line.createText("Hi"),
-  Line.createText("Hi"),
-  Line.createText("Hi"),
-  Line.createText("Hi"),
-  Line.createText("Hi")
+  Line.createText('Hi'),
+  Line.createText('Hi'),
+  Line.createText('Hi'),
+  Line.createText('Hi'),
+  Line.createText('Hi'),
 ]);
 ```
 
@@ -457,7 +457,7 @@ context.reply([
 ```js
 new LineBot({
   // ...
-  sendMethod: "reply" // Default: 'push'
+  sendMethod: 'reply', // Default: 'push'
 });
 ```
 
@@ -488,7 +488,7 @@ It's useful in custom connectors.
 - [new] export Context from entry (#250)
 
 ```js
-const { Context } = require("bottender");
+const { Context } = require('bottender');
 
 class MyContext extends Context {
   //...
@@ -741,7 +741,7 @@ const user = await context.getUserProfile();
 - [new] Implement `context.sendSenderAction`:
 
 ```js
-context.sendSenderAction("typing_on");
+context.sendSenderAction('typing_on');
 // same as
 context.typingOn();
 ```
@@ -797,7 +797,7 @@ Support both:
 ```js
 const bot = new MessengerBot({
   accessToken: config.accessToken,
-  appSecret: config.appSecret
+  appSecret: config.appSecret,
 });
 
 const server = createServer(bot, { verifyToken: config.verifyToken });
@@ -809,7 +809,7 @@ const server = createServer(bot, { verifyToken: config.verifyToken });
 const bot = new MessengerBot({
   accessToken: config.accessToken,
   appSecret: config.appSecret,
-  verifyToken: config.verifyToken
+  verifyToken: config.verifyToken,
 });
 
 const server = createServer(bot);
@@ -877,19 +877,19 @@ context.event.payload; // PAYLOAD
 const bot = new ConsoleBot({ fallbackMethods: true });
 
 bot.onEvent(async context => {
-  await context.sendText("Hello World");
-  await context.sendImage("https://example.com/vr.jpg");
-  await context.sendButtonTemplate("What do you want to do next?", [
+  await context.sendText('Hello World');
+  await context.sendImage('https://example.com/vr.jpg');
+  await context.sendButtonTemplate('What do you want to do next?', [
     {
-      type: "web_url",
-      url: "https://petersapparel.parseapp.com",
-      title: "Show Website"
+      type: 'web_url',
+      url: 'https://petersapparel.parseapp.com',
+      title: 'Show Website',
     },
     {
-      type: "postback",
-      title: "Start Chatting",
-      payload: "USER_DEFINED_PAYLOAD"
-    }
+      type: 'postback',
+      title: 'Start Chatting',
+      payload: 'USER_DEFINED_PAYLOAD',
+    },
   ]);
 });
 ```
@@ -937,20 +937,20 @@ bottender viber webhook set --ngrok-port 1234
 context.answerInlineQuery(
   [
     {
-      type: "photo",
-      id: "UNIQUE_ID",
-      photo_file_id: "FILE_ID",
-      title: "PHOTO_TITLE"
+      type: 'photo',
+      id: 'UNIQUE_ID',
+      photo_file_id: 'FILE_ID',
+      title: 'PHOTO_TITLE',
     },
     {
-      type: "audio",
-      id: "UNIQUE_ID",
-      audio_file_id: "FILE_ID",
-      caption: "AUDIO_TITLE"
-    }
+      type: 'audio',
+      id: 'UNIQUE_ID',
+      audio_file_id: 'FILE_ID',
+      caption: 'AUDIO_TITLE',
+    },
   ],
   {
-    cache_time: 1000
+    cache_time: 1000,
   }
 );
 ```
@@ -964,14 +964,14 @@ context.answerInlineQuery(
 - [experimental] add Slack RTM API support:
 
 ```js
-const { SlackBot } = require("bottender");
+const { SlackBot } = require('bottender');
 
 const bot = new SlackBot({
-  accessToken: "__FILL_YOUR_TOKEN_HERE__"
+  accessToken: '__FILL_YOUR_TOKEN_HERE__',
 });
 
 bot.onEvent(async context => {
-  await context.sendText("Hello World");
+  await context.sendText('Hello World');
 });
 
 bot.createRtmRuntime();
@@ -1027,7 +1027,7 @@ event.preCheckoutQuery
 - [new] Add `context.postEphemeral`:
 
 ```js
-context.postEphemeral({ text: "hello" });
+context.postEphemeral({ text: 'hello' });
 ```
 
 - [fix] Reply to thread instead of channel when receiving events in thread [#145](https://github.com/Yoctol/bottender/pull/145)
@@ -1056,20 +1056,20 @@ context.postEphemeral({ text: "hello" });
 - [new] Support running Telegram bots with long polling [#117](https://github.com/Yoctol/bottender/pull/117)
 
 ```js
-const { TelegramBot } = require("bottender");
+const { TelegramBot } = require('bottender');
 
 const bot = new TelegramBot({
-  accessToken: "__FILL_YOUR_TOKEN_HERE__"
+  accessToken: '__FILL_YOUR_TOKEN_HERE__',
 });
 
 bot.onEvent(async context => {
-  await context.sendText("Hello World");
+  await context.sendText('Hello World');
 });
 
 bot.createLongPollingRuntime({
   limit: 100,
   timeout: 60,
-  allowed_updates: ["message", "callback_query"]
+  allowed_updates: ['message', 'callback_query'],
 });
 ```
 
@@ -1099,7 +1099,7 @@ sendMediaGroup:
 
 ```js
 context.sendMediaGroup([
-  { type: "photo", media: "BQADBAADApYAAgcZZAfj2-xeidueWwI" }
+  { type: 'photo', media: 'BQADBAADApYAAgcZZAfj2-xeidueWwI' },
 ]);
 ```
 
@@ -1107,20 +1107,23 @@ Payment API:
 
 ```js
 context.sendInvoice({
-  title: "product name",
-  description: "product description",
-  payload: "bot-defined invoice payload",
-  provider_token: "PROVIDER_TOKEN",
-  start_parameter: "pay",
-  currency: "USD",
-  prices: [{ label: "product", amount: 11000 }, { label: "tax", amount: 11000 }]
+  title: 'product name',
+  description: 'product description',
+  payload: 'bot-defined invoice payload',
+  provider_token: 'PROVIDER_TOKEN',
+  start_parameter: 'pay',
+  currency: 'USD',
+  prices: [
+    { label: 'product', amount: 11000 },
+    { label: 'tax', amount: 11000 },
+  ],
 });
 ```
 
 Game API:
 
 ```js
-context.sendGame("Mario Bros.");
+context.sendGame('Mario Bros.');
 context.setGameScore(999);
 context.getGameHighScores().then(result => {
   console.log(result);
@@ -1150,23 +1153,23 @@ Introducing Viber Support to Bottender!
 ![](https://user-images.githubusercontent.com/3382565/31753411-0be75dfc-b456-11e7-9eea-b976d21fcc53.png)
 
 ```js
-const { ViberBot } = require("bottender");
-const { createServer } = require("bottender/express");
+const { ViberBot } = require('bottender');
+const { createServer } = require('bottender/express');
 
 const bot = new ViberBot({
-  accessToken: "__FILL_YOUR_TOKEN_HERE__"
+  accessToken: '__FILL_YOUR_TOKEN_HERE__',
 });
 
 bot.onEvent(async context => {
   if (context.event.isMessage) {
-    await context.sendText("Hello World");
+    await context.sendText('Hello World');
   }
 });
 
 const server = createServer(bot);
 
 server.listen(5000, () => {
-  console.log("server is running on 5000 port...");
+  console.log('server is running on 5000 port...');
 });
 ```
 
@@ -1226,8 +1229,8 @@ event.ref; // 'my_ref'
 
 ```js
 new MessengerBot({
-  appSecret: "__FILL_YOUR_SECRET_HERE__",
-  mapPageToAccessToken: pageId => accessToken
+  appSecret: '__FILL_YOUR_SECRET_HERE__',
+  mapPageToAccessToken: pageId => accessToken,
 });
 ```
 
@@ -1267,9 +1270,9 @@ $ bottender messenger attachment upload
 Then, you can import them with `getAttachment` util function:
 
 ```js
-const { getAttachment } = require("bottender/utils");
+const { getAttachment } = require('bottender/utils');
 
-console.log(getAttachment("mypic.jpg").id); // '1591074914293017'
+console.log(getAttachment('mypic.jpg').id); // '1591074914293017'
 ```
 
 - [new] Add `--force` option to `bottender messenger profile set` (delete all and set all)
@@ -1294,12 +1297,12 @@ console.log(getAttachment("mypic.jpg").id); // '1591074914293017'
 You can use it to send additional attachments, like below:
 
 ```js
-context.postMessage("I am a test message", {
+context.postMessage('I am a test message', {
   attachments: [
     {
-      text: "And here's an attachment!"
-    }
-  ]
+      text: "And here's an attachment!",
+    },
+  ],
 });
 ```
 
