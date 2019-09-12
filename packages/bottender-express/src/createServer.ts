@@ -2,14 +2,15 @@ import bodyParser from 'body-parser';
 import express from 'express';
 
 import registerRoutes from './registerRoutes';
+import { Bot, RouteConfig } from './types';
 
-function createServer(bot, config = {}) {
+function createServer(bot: Bot, config: RouteConfig = {}) {
   const server = express();
 
   server.use(bodyParser.urlencoded({ extended: false }));
   server.use(
     bodyParser.json({
-      verify: (req, res, buf) => {
+      verify: (req: express.Request & { rawBody?: string }, _, buf) => {
         req.rawBody = buf.toString();
       },
     })

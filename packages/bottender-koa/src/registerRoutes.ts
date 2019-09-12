@@ -1,8 +1,10 @@
+import Koa from 'koa';
 import Router from 'koa-router';
 
 import createMiddleware from './createMiddleware';
+import { Bot, RouteConfig } from './types';
 
-function registerRoutes(server, bot, config = {}) {
+function registerRoutes(server: Koa, bot: Bot, config: RouteConfig = {}) {
   const path = config.path || '/';
 
   const router = new Router();

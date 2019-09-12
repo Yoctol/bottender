@@ -1,8 +1,9 @@
 import restify from 'restify';
 
 import registerRoutes from './registerRoutes';
+import { Bot, RouteConfig } from './types';
 
-function createServer(bot, config = {}) {
+function createServer(bot: Bot, config: RouteConfig = {}) {
   const server = restify.createServer();
 
   server.use(restify.plugins.queryParser());

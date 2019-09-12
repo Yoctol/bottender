@@ -1,20 +1,24 @@
 import url from 'url';
+import { IncomingMessage, ServerResponse } from 'http';
 
 import parseUrlencoded from 'urlencoded-body-parser';
 import { json, send, text } from 'micro';
 
-function createRequestHandler(bot, config = {}) {
+import { Bot, RouteConfig } from './types';
+
+function createRequestHandler(bot: Bot, config: RouteConfig = {}) {
   const path = config.path || '/';
 
   const requestHandler = bot.createRequestHandler();
-  return async (req, res) => {
-    const requestPath = req.url.split('?')[0];
+  return async (req: IncomingMessage, res: ServerResponse) => {
+    const reqUrl = req.url || '';
+    const requestPath = reqUrl.split('?')[0];
 
     if (requestPath !== path) {
       send(res, 404);
     }
 
-    const { query } = url.parse(req.url, true);
+    const { query } = url.parse(reqUrl, true);
     const [rawBody, body] = await Promise.all(
       req.method === 'POST'
         ? [

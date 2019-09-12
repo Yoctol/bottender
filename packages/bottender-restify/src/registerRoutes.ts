@@ -1,9 +1,15 @@
-import createMiddleware from './createMiddleware';
+import { Request, Server } from 'restify';
 
-function registerRoutes(server, bot, config = {}) {
+import createMiddleware from './createMiddleware';
+import { Bot, RouteConfig } from './types';
+
+function registerRoutes(server: Server, bot: Bot, config: RouteConfig = {}) {
   const path = config.path || '/';
 
   server.pre((req, res, next) => {
+    // rawBody is available on req: https://github.com/restify/plugins/issues/6
+    const { rawBody } = req as Request & { rawBody: string };
+
     if (req.path() !== path) {
       next();
       return;
@@ -13,7 +19,7 @@ function registerRoutes(server, bot, config = {}) {
       method: req.method,
       headers: req.headers,
       query: req.query,
-      rawBody: req.rawBody,
+      rawBody,
       body: req.body,
     });
 

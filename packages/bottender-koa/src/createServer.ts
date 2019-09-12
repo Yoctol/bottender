@@ -2,8 +2,9 @@ import Koa from 'koa';
 import bodyParser from 'koa-bodyparser';
 
 import registerRoutes from './registerRoutes';
+import { Bot, RouteConfig } from './types';
 
-function createServer(bot, config = {}) {
+function createServer(bot: Bot, config: RouteConfig = {}) {
   const server = new Koa();
 
   server.use(bodyParser());

@@ -1,12 +1,20 @@
+import express from 'express';
 import isEmpty from 'lodash/isEmpty';
 
-function createMiddleware(bot) {
+import { Bot } from './types';
+
+function createMiddleware(bot: Bot) {
   const requestHandler = bot.createRequestHandler();
 
-  const wrapper = fn => (req, res, next) =>
-    fn(req, res).catch(err => next(err));
+  const wrapper = (
+    fn: (req: express.Request, res: express.Response) => Promise<void>
+  ) => (
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) => fn(req, res).catch((err: Error) => next(err));
 
-  return wrapper(async (req, res) => {
+  return wrapper(async (req: express.Request, res: express.Response) => {
     if (isEmpty(req.query) && !req.body) {
       throw new Error(
         'createMiddleware(): Missing query and body, you may need a body parser. Use `body-parser` or other similar package before this middleware.'

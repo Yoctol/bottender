@@ -1,9 +1,12 @@
+import Koa from 'koa';
 import isEmpty from 'lodash/isEmpty';
 
-function createMiddleware(bot) {
+import { Bot } from './types';
+
+function createMiddleware(bot: Bot) {
   const requestHandler = bot.createRequestHandler();
 
-  return async ctx => {
+  return async (ctx: Koa.Context) => {
     const { request, response } = ctx;
     if (isEmpty(request.query) && !request.body) {
       throw new Error(
