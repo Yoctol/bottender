@@ -7,8 +7,8 @@ import pMap from 'p-map';
 import CacheBasedSessionStore from '../session/CacheBasedSessionStore';
 import Context from '../context/Context';
 import MemoryCacheStore from '../cache/MemoryCacheStore';
-import { Session } from '../session/Session';
-import { SessionStore } from '../session/SessionStore';
+import Session from '../session/Session';
+import SessionStore from '../session/SessionStore';
 
 import { Connector } from './Connector';
 
@@ -18,7 +18,7 @@ type FunctionalHandler = (
 ) => void | Promise<void>;
 
 type Builder = {
-  build: () => FunctionalHandler,
+  build: () => FunctionalHandler;
 };
 
 const debugRequest = debug('bottender:request');
@@ -35,8 +35,8 @@ function createMemorySessionStore(): SessionStore {
 }
 
 function run(fn: FunctionalHandler): FunctionalHandler {
-  return async function Run(context) {
-    let nextDialog = fn;
+  return async function Run(context): Promise<void> {
+    let nextDialog: FunctionalHandler | void = fn;
 
     do {
       // TODO: improve this debug helper
@@ -49,25 +49,25 @@ function run(fn: FunctionalHandler): FunctionalHandler {
   };
 }
 
-type RequestHandler = (
-  body: Object,
-  requestContext?: ?Object
+type RequestHandler<B> = (
+  body: B,
+  requestContext?: Record<string, any> | null
 ) => void | Promise<void>;
 
 type ErrorHandler = (err: Error, ctx?: Context) => void | Promise<void>;
 
-export default class Bot {
+export default class Bot<B, C> {
   _sessions: SessionStore;
 
   _initialized: boolean;
 
-  _connector: Connector<any>;
+  _connector: Connector<B, C>;
 
-  _handler: ?FunctionalHandler;
+  _handler: FunctionalHandler | null;
 
-  _initialState: Object = {};
+  _initialState: Record<string, any> = {};
 
-  _plugins: Array<Function> = [];
+  _plugins: Function[] = [];
 
   _sync: boolean;
 
@@ -77,11 +77,11 @@ export default class Bot {
     connector,
     sessionStore = createMemorySessionStore(),
     sync = false,
-  }: {|
-    connector: Connector<any>,
-    sessionStore: SessionStore,
-    sync?: boolean,
-  |}) {
+  }: {
+    connector: Connector<B, C>;
+    sessionStore?: SessionStore;
+    sync?: boolean;
+  }) {
     this._sessions = sessionStore;
     this._initialized = false;
     this._connector = connector;
@@ -90,7 +90,7 @@ export default class Bot {
     this._emitter = new EventEmitter();
   }
 
-  get connector(): Connector<any> {
+  get connector(): Connector<B, C> {
     return this._connector;
   }
 
@@ -98,7 +98,7 @@ export default class Bot {
     return this._sessions;
   }
 
-  get handler(): ?FunctionalHandler {
+  get handler(): FunctionalHandler | null {
     return this._handler;
   }
 
@@ -106,38 +106,39 @@ export default class Bot {
     return this._emitter;
   }
 
-  onEvent(handler: FunctionalHandler | Builder): Bot {
+  onEvent(handler: FunctionalHandler | Builder): Bot<B, C> {
     invariant(
       handler,
       'onEvent: Can not pass `undefined`, `null` or any falsy value as handler'
     );
-    this._handler = handler.build ? handler.build() : handler;
+    this._handler = 'build' in handler ? handler.build() : handler;
     return this;
   }
 
-  onError(handler: ErrorHandler): Bot {
-    this._emitter.on('error', handler.build ? handler.build() : handler);
+  onError(handler: ErrorHandler): Bot<B, C> {
+    // FIXME: [type]
+    this._emitter.on('error', 'build' in handler ? handler.build() : handler);
     return this;
   }
 
-  setInitialState(initialState: Object): Bot {
+  setInitialState(initialState: Record<string, any>): Bot<B, C> {
     this._initialState = initialState;
     return this;
   }
 
-  use(fn: Function): Bot {
+  use(fn: Function): Bot<B, C> {
     this._plugins.push(fn);
     return this;
   }
 
-  async initSessionStore() {
+  async initSessionStore(): Promise<void> {
     if (!this._initialized) {
       await this._sessions.init();
       this._initialized = true;
     }
   }
 
-  createRequestHandler(): RequestHandler {
+  createRequestHandler(): RequestHandler<B> {
     if (this._handler == null) {
       throw new Error(
         'Bot: Missing event handler function. You should assign it using onEvent(...)'
@@ -148,7 +149,7 @@ export default class Bot {
       this._emitter.on('error', console.error);
     }
 
-    return async (body: Object, requestContext?: ?Object) => {
+    return async (body: B, requestContext?: Record<string, any> | null) => {
       if (!body) {
         throw new Error('Bot.createRequestHandler: Missing argument.');
       }
@@ -165,14 +166,14 @@ export default class Bot {
       );
 
       // Create or retrieve session if possible
-      let sessionId;
-      let session: Session;
+      let sessionId: string | undefined;
+      let session: Session | undefined;
       if (sessionKey) {
         sessionId = `${platform}:${sessionKey}`;
 
-        // $FlowFixMe
-        session = await this._sessions.read(sessionId);
-        session = session || Object.create(null);
+        session =
+          (await this._sessions.read(sessionId)) ||
+          (Object.create(null) as Session);
 
         debugSessionRead(`Read session: ${sessionId}`);
         debugSessionRead(JSON.stringify(session, null, 2));
@@ -203,7 +204,7 @@ export default class Bot {
         event =>
           this._connector.createContext({
             event,
-            session: ((session: any): Session),
+            session,
             initialState: this._initialState,
             requestContext,
             emitter: this._emitter,
@@ -246,7 +247,6 @@ export default class Bot {
         try {
           await promises;
           if (sessionId && session) {
-            // $FlowFixMe: suppressing this error until we can refactor
             session.lastActivity = Date.now();
             contexts.forEach(context => {
               context.isSessionWritten = true;

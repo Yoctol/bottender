@@ -2,20 +2,21 @@ import EventEmitter from 'events';
 
 import ConsoleContext from '../context/ConsoleContext';
 import ConsoleEvent, { ConsoleRawEvent } from '../context/ConsoleEvent';
+import Session from '../session/Session';
 import { ConsoleClient } from '../context/ConsoleClient';
-import { Session } from '../session/Session';
 
 import { Connector } from './Connector';
 
 type ConsoleRequestBody = ConsoleRawEvent;
 
-type ConstructorOptions = {|
-  client?: ConsoleClient,
-  fallbackMethods?: boolean,
-  mockPlatform?: string,
-|};
+type ConstructorOptions = {
+  client?: ConsoleClient;
+  fallbackMethods?: boolean;
+  mockPlatform?: string;
+};
 
-export default class ConsoleConnector implements Connector<ConsoleRequestBody> {
+export default class ConsoleConnector
+  implements Connector<ConsoleRequestBody, ConsoleClient> {
   _client: ConsoleClient;
 
   _fallbackMethods: boolean;
@@ -28,7 +29,7 @@ export default class ConsoleConnector implements Connector<ConsoleRequestBody> {
     mockPlatform,
   }: ConstructorOptions = {}) {
     this._client = client || {
-      sendText: text => {
+      sendText: (text): void => {
         process.stdout.write(`Bot > ${text}\n`);
       },
     };
@@ -66,17 +67,17 @@ export default class ConsoleConnector implements Connector<ConsoleRequestBody> {
     });
   }
 
-  mapRequestToEvents(body: ConsoleRequestBody): Array<ConsoleEvent> {
+  mapRequestToEvents(body: ConsoleRequestBody): ConsoleEvent[] {
     return [new ConsoleEvent(body)];
   }
 
   createContext(params: {
-    event: ConsoleEvent,
-    session: ?Session,
-    initialState: ?Object,
-    requestContext: ?Object,
-    emitter?: ?EventEmitter,
-  }) {
+    event: ConsoleEvent;
+    session: Session | null;
+    initialState: Record<string, any> | null;
+    requestContext: Record<string, any> | null;
+    emitter?: EventEmitter | null;
+  }): ConsoleContext {
     return new ConsoleContext({
       ...params,
       client: this._client,

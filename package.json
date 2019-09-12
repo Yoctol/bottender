@@ -29,6 +29,8 @@
     "preversion": "npm test"
   },
   "devDependencies": {
+    "@types/debug": "^4.1.5",
+    "@types/invariant": "^2.2.30",
     "@types/jfs": "^0.2.3",
     "@types/lodash": "^4.14.138",
     "@types/mongodb": "^3.3.1",

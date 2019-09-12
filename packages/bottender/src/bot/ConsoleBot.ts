@@ -1,46 +1,51 @@
 import readline from 'readline';
 
-import { SessionStore } from '../session/SessionStore';
+import Session from '../session/Session';
+import SessionStore from '../session/SessionStore';
+import { ConsoleClient } from '../context/ConsoleClient';
+import { ConsoleRawEvent } from '../context/ConsoleEvent';
 
 import Bot from './Bot';
 import ConsoleConnector from './ConsoleConnector';
 
-export default class ConsoleBot extends Bot {
+export default class ConsoleBot extends Bot<ConsoleRawEvent, ConsoleClient> {
   constructor({
     sessionStore,
     fallbackMethods,
     mockPlatform,
   }: {
-    sessionStore: SessionStore,
-    fallbackMethods?: boolean,
-    mockPlatform?: string,
+    sessionStore?: SessionStore;
+    fallbackMethods?: boolean;
+    mockPlatform?: string;
   } = {}) {
     const connector = new ConsoleConnector({ fallbackMethods, mockPlatform });
     super({ connector, sessionStore, sync: true });
   }
 
-  async getSession() {
+  async getSession(): Promise<Session> {
     await this.initSessionStore();
 
     const { platform } = this._connector;
-    const sessionKey = ((this._connector.getUniqueSessionKey(): any): string);
+    // FIXME: [type]
+    const sessionKey = this._connector.getUniqueSessionKey();
 
     // Create or retrieve session if possible
     const sessionId = `${platform}:${sessionKey}`;
     const session =
-      (await this._sessions.read(sessionId)) || Object.create(null);
+      (await this._sessions.read(sessionId)) ||
+      (Object.create(null) as Session);
 
     return session;
   }
 
-  createRuntime() {
+  createRuntime(): void {
     const requestHandler = this.createRequestHandler();
     const rl = readline.createInterface({
       input: process.stdin,
       output: process.stdout,
     });
 
-    const handleLine = async (line: string = '') => {
+    const handleLine = async (line = ''): Promise<void> => {
       const lowerCaseLine = line.toLowerCase();
       if (lowerCaseLine === '/quit' || lowerCaseLine === '/exit') {
         rl.close();
@@ -50,13 +55,11 @@ export default class ConsoleBot extends Bot {
       if (lowerCaseLine === '/session') {
         const session = await this.getSession();
 
-        ((this._connector: any): ConsoleConnector).client.sendText(
-          JSON.stringify(session, null, 2)
-        );
+        this._connector.client.sendText(JSON.stringify(session, null, 2));
       } else if (lowerCaseLine === '/state') {
         const session = await this.getSession();
 
-        ((this._connector: any): ConsoleConnector).client.sendText(
+        this._connector.client.sendText(
           JSON.stringify(session._state || {}, null, 2)
         );
       } else {
