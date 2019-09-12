@@ -1,15 +1,16 @@
 import warning from 'warning';
 
-import { SessionStore } from '../session/SessionStore';
+import SessionStore from '../session/SessionStore';
+import { TestClient } from '../context/TestClient';
 
 import Bot from './Bot';
-import TestConnector from './TestConnector';
+import TestConnector, { TestRequestBody } from './TestConnector';
 
-export default class TestBot extends Bot {
+export default class TestBot extends Bot<TestRequestBody, TestClient> {
   constructor({
     sessionStore,
     fallbackMethods,
-  }: { sessionStore: SessionStore; fallbackMethods?: boolean } = {}) {
+  }: { sessionStore?: SessionStore; fallbackMethods?: boolean } = {}) {
     warning(
       false,
       '`TestBot` is under heavy development. API may change between any versions.'
@@ -18,8 +19,8 @@ export default class TestBot extends Bot {
     super({ connector, sessionStore, sync: true });
   }
 
-  async runTests(tests: Array<string>) {
-    const client = ((this.connector as any) as TestConnector).client;
+  async runTests(tests: string[]) {
+    const { client } = this.connector;
     const requestHandler = this.createRequestHandler();
 
     const rawEvents = tests.map(t => this._createRawEventFromTest(t));

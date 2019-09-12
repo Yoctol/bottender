@@ -5,6 +5,7 @@ import pProps from 'p-props';
 import warning from 'warning';
 import { SlackOAuthClient } from 'messaging-api-slack';
 
+import Session from '../session/Session';
 import SlackContext from '../context/SlackContext';
 import SlackEvent, {
   EventAPITypes,
@@ -12,37 +13,37 @@ import SlackEvent, {
   Message,
   SlackRawEvent,
 } from '../context/SlackEvent';
-import { Session } from '../session/Session';
 
 import { Connector } from './Connector';
 
 // FIXME
 export type SlackUser = {
-  id: string,
+  id: string;
 };
 
 type EventsAPIBody = {
-  token: string,
-  team_id: string,
-  api_app_id: string,
-  type: EventAPITypes,
-  event: Message,
-  authed_users: Array<string>,
-  event_id: string,
-  event_time: number,
+  token: string;
+  team_id: string;
+  api_app_id: string;
+  type: EventAPITypes;
+  event: Message;
+  authed_users: string[];
+  event_id: string;
+  event_time: number;
 };
 
 export type SlackRequestBody = EventsAPIBody | { payload: string };
 
 type ConstructorOptions = {
-  accessToken?: string,
-  client?: SlackOAuthClient,
-  verificationToken?: string,
-  origin?: string,
-  skipProfile?: ?boolean,
+  accessToken?: string;
+  client?: SlackOAuthClient;
+  verificationToken?: string;
+  origin?: string;
+  skipProfile?: boolean | null;
 };
 
-export default class SlackConnector implements Connector<SlackRequestBody> {
+export default class SlackConnector
+  implements Connector<SlackRequestBody, SlackOAuthClient> {
   _client: SlackOAuthClient;
 
   _verificationToken: string;
@@ -81,11 +82,11 @@ export default class SlackConnector implements Connector<SlackRequestBody> {
     }
 
     if (body.payload && typeof body.payload === 'string') {
-      return (JSON.parse(body.payload) as InteractiveMessageEvent);
+      return JSON.parse(body.payload) as InteractiveMessageEvent;
     }
 
     // for RTM WebSocket messages
-    return ((body as any) as Message);
+    return body as Message;
   }
 
   _isBotEventRequest(body: SlackRequestBody): boolean {
@@ -106,7 +107,7 @@ export default class SlackConnector implements Connector<SlackRequestBody> {
 
   getUniqueSessionKey(body: SlackRequestBody): string {
     // FIXME: define types for every slack events
-    const rawEvent = (this._getRawEventFromRequest(body) as any);
+    const rawEvent = this._getRawEventFromRequest(body) as any;
 
     // For interactive_message format
     if (
@@ -192,7 +193,7 @@ export default class SlackConnector implements Connector<SlackRequestBody> {
       return;
     }
 
-    const promises: Object = {
+    const promises: Record<string, any> = {
       sender: this._client.getUserInfo(senderId),
     };
 
@@ -279,11 +280,11 @@ export default class SlackConnector implements Connector<SlackRequestBody> {
   }
 
   createContext(params: {
-    event: SlackEvent,
-    session: ?Session,
-    initialState: ?Object,
-    requestContext: ?Object,
-    emitter?: ?EventEmitter,
+    event: SlackEvent;
+    session: Session | null;
+    initialState: Record<string, any> | null;
+    requestContext: Record<string, any> | null;
+    emitter?: EventEmitter | null;
   }): SlackContext {
     return new SlackContext({
       ...params,
@@ -308,11 +309,11 @@ export default class SlackConnector implements Connector<SlackRequestBody> {
     method,
     body,
   }: {
-    method: string,
-    headers: Object,
-    query: Object,
-    rawBody: string,
-    body: Object,
+    method: string;
+    headers: Record<string, any>;
+    query: Record<string, any>;
+    rawBody: string;
+    body: Record<string, any>;
   }) {
     if (method.toLowerCase() !== 'post') {
       return {

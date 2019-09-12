@@ -4,22 +4,23 @@ import crypto from 'crypto';
 import { ViberClient } from 'messaging-api-viber';
 import { addedDiff } from 'deep-object-diff';
 
+import Session from '../session/Session';
 import ViberContext from '../context/ViberContext';
 import ViberEvent, { ViberRawEvent } from '../context/ViberEvent';
-import { Session } from '../session/Session';
 
 import { Connector } from './Connector';
 
 export type ViberRequestBody = ViberRawEvent;
 
 type ConstructorOptions = {
-  accessToken?: string,
-  client?: ViberClient,
-  origin?: string,
+  accessToken?: string;
+  client?: ViberClient;
+  origin?: string;
 };
 
-export default class ViberConnector implements Connector<ViberRequestBody> {
-  _accessToken: ?string;
+export default class ViberConnector
+  implements Connector<ViberRequestBody, ViberClient> {
+  _accessToken: string | null;
 
   _client: ViberClient;
 
@@ -108,11 +109,11 @@ export default class ViberConnector implements Connector<ViberRequestBody> {
   }
 
   createContext(params: {
-    event: ViberEvent,
-    session: ?Session,
-    initialState: ?Object,
-    requestContext: ?Object,
-    emitter?: ?EventEmitter,
+    event: ViberEvent;
+    session: Session | null;
+    initialState: Record<string, any> | null;
+    requestContext: Record<string, any> | null;
+    emitter?: EventEmitter | null;
   }): ViberContext {
     return new ViberContext({
       ...params,
@@ -142,11 +143,11 @@ export default class ViberConnector implements Connector<ViberRequestBody> {
     headers,
     rawBody,
   }: {
-    method: string,
-    headers: Object,
-    query: Object,
-    rawBody: string,
-    body: Object,
+    method: string;
+    headers: Record<string, any>;
+    query: Record<string, any>;
+    rawBody: string;
+    body: Record<string, any>;
   }) {
     if (
       method.toLowerCase() !== 'post' ||

@@ -1,19 +1,24 @@
-import { SessionStore } from '../session/SessionStore';
+import { TelegramClient } from 'messaging-api-telegram';
+
+import SessionStore from '../session/SessionStore';
 
 import Bot from './Bot';
-import TelegramConnector from './TelegramConnector';
+import TelegramConnector, { TelegramRequestBody } from './TelegramConnector';
 
 type PollingOptions = {
-  offset?: number,
-  limit?: number,
-  timeout?: number,
-  allowed_updates?: Array<string>,
+  offset?: number;
+  limit?: number;
+  timeout?: number;
+  allowed_updates?: Array<string>;
 };
 
-export default class TelegramBot extends Bot {
-  _offset: ?number;
+export default class TelegramBot extends Bot<
+  TelegramRequestBody,
+  TelegramClient
+> {
+  _offset: number | null;
 
-  _shouldGetUpdates: boolean = false;
+  _shouldGetUpdates: boolean;
 
   constructor({
     accessToken,
@@ -21,20 +26,23 @@ export default class TelegramBot extends Bot {
     sync,
     origin,
   }: {
-    accessToken: string,
-    sessionStore: SessionStore,
-    sync?: boolean,
-    origin?: string,
+    accessToken: string;
+    sessionStore: SessionStore;
+    sync?: boolean;
+    origin?: string;
   }) {
     const connector = new TelegramConnector({ accessToken, origin });
     super({ connector, sessionStore, sync });
+
+    this._offset = null;
+    this._shouldGetUpdates = false;
   }
 
-  get offset(): ?number {
+  get offset(): number | null {
     return this._offset;
   }
 
-  async createLongPollingRuntime(options: PollingOptions = {}) {
+  async createLongPollingRuntime(options: PollingOptions = {}): Promise<void> {
     this._shouldGetUpdates = true;
     this._offset = options.offset;
 

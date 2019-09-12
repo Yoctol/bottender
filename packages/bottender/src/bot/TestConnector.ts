@@ -1,20 +1,20 @@
 import EventEmitter from 'events';
 
+import Session from '../session/Session';
 import TestContext from '../context/TestContext';
 import TestEvent, { TestRawEvent } from '../context/TestEvent';
-import { Session } from '../session/Session';
 import { TestClient } from '../context/TestClient';
 
 import { Connector } from './Connector';
 
-type TestRequestBody = TestRawEvent;
+export type TestRequestBody = TestRawEvent;
 
 type ConstructorOptions = {
-  client?: TestClient,
-  fallbackMethods?: boolean,
+  client?: TestClient;
+  fallbackMethods?: boolean;
 };
 
-const testClient = {
+export const testClient: TestClient = {
   calls: [],
   callMethod(name, args) {
     this.calls.push({
@@ -27,7 +27,8 @@ const testClient = {
   },
 };
 
-export default class TestConnector implements Connector<TestRequestBody> {
+export default class TestConnector
+  implements Connector<TestRequestBody, TestClient> {
   _client: TestClient;
 
   _fallbackMethods: boolean;
@@ -72,12 +73,12 @@ export default class TestConnector implements Connector<TestRequestBody> {
   }
 
   createContext(params: {
-    event: TestEvent,
-    session: ?Session,
-    initialState: ?Object,
-    requestContext: ?Object,
-    emitter?: ?EventEmitter,
-  }) {
+    event: TestEvent;
+    session: Session | null;
+    initialState: Record<string, any> | null;
+    requestContext: Record<string, any> | null;
+    emitter?: EventEmitter | null;
+  }): TestContext {
     return new TestContext({
       ...params,
       client: this._client,

@@ -1,8 +1,8 @@
 export type TestClient = {
   calls: Array<{
-    name: string,
-    args: Array<any>,
-  }>,
-  callMethod(name: string, args: Array<any>): void,
-  mockReset(): void,
+    name: string;
+    args: any[];
+  }>;
+  callMethod(name: string, args: any[]): void;
+  mockReset(): void;
 };

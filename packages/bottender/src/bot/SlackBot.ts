@@ -1,11 +1,12 @@
 import { RTMClient } from '@slack/rtm-api';
+import { SlackOAuthClient } from 'messaging-api-slack';
 
-import { SessionStore } from '../session/SessionStore';
+import SessionStore from '../session/SessionStore';
 
 import Bot from './Bot';
-import SlackConnector from './SlackConnector';
+import SlackConnector, { SlackRequestBody } from './SlackConnector';
 
-export default class SlackBot extends Bot {
+export default class SlackBot extends Bot<SlackRequestBody, SlackOAuthClient> {
   _accessToken: string;
 
   constructor({
@@ -16,12 +17,12 @@ export default class SlackBot extends Bot {
     origin,
     skipProfile,
   }: {
-    accessToken: string,
-    sessionStore: SessionStore,
-    sync?: boolean,
-    verificationToken?: string,
-    origin?: string,
-    skipProfile?: ?boolean,
+    accessToken: string;
+    sessionStore: SessionStore;
+    sync?: boolean;
+    verificationToken?: string;
+    origin?: string;
+    skipProfile?: boolean | null;
   }) {
     const connector = new SlackConnector({
       accessToken,
@@ -33,7 +34,7 @@ export default class SlackBot extends Bot {
     this._accessToken = accessToken;
   }
 
-  createRtmRuntime() {
+  createRtmRuntime(): void {
     const rtm = new RTMClient(this._accessToken);
     const handler = this.createRequestHandler();
 

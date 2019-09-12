@@ -6,38 +6,41 @@ import { LineClient } from 'messaging-api-line';
 
 import LineContext from '../context/LineContext';
 import LineEvent, { LineRawEvent } from '../context/LineEvent';
-import { Session } from '../session/Session';
+import Session from '../session/Session';
 
 import { Connector } from './Connector';
 
-type LineRequestBody = {
-  destination: string,
-  events: Array<LineRawEvent>,
+export type LineRequestBody = {
+  destination: string;
+  events: Array<LineRawEvent>;
 };
 
 type ConstructorOptions = {
-  accessToken?: string,
-  channelSecret?: string,
-  client?: LineClient,
-  mapDestinationToAccessToken?: (destination: string) => Promise<string>,
-  shouldBatch: ?boolean,
-  sendMethod: ?string,
-  origin?: string,
-  skipProfile?: ?boolean,
+  accessToken?: string;
+  channelSecret?: string;
+  client?: LineClient;
+  mapDestinationToAccessToken?: (destination: string) => Promise<string>;
+  shouldBatch: boolean | null;
+  sendMethod: string | null;
+  origin?: string;
+  skipProfile?: boolean | null;
 };
 
-export default class LineConnector implements Connector<LineRequestBody> {
+export default class LineConnector
+  implements Connector<LineRequestBody, LineClient> {
   _client: LineClient;
 
   _channelSecret: string;
 
   _skipProfile: boolean;
 
-  _mapDestinationToAccessToken: ?(destination: string) => Promise<string>;
+  _mapDestinationToAccessToken:
+    | ((destination: string) => Promise<string>)
+    | null;
 
-  _shouldBatch: ?boolean;
+  _shouldBatch: boolean | null;
 
-  _sendMethod: ?string;
+  _sendMethod: string | null;
 
   constructor({
     accessToken,
@@ -138,7 +141,7 @@ export default class LineConnector implements Connector<LineRequestBody> {
 
       session.user = user;
 
-      let memberIds = [];
+      let memberIds: string[] = [];
 
       try {
         memberIds = await this._client.getAllGroupMemberIds(source.groupId);
@@ -174,7 +177,7 @@ export default class LineConnector implements Connector<LineRequestBody> {
 
       session.user = user;
 
-      let memberIds = [];
+      let memberIds: string[] = [];
 
       try {
         memberIds = await this._client.getAllRoomMemberIds(source.roomId);
@@ -243,11 +246,11 @@ export default class LineConnector implements Connector<LineRequestBody> {
   }
 
   async createContext(params: {
-    event: LineEvent,
-    session: ?Session,
-    initialState: ?Object,
-    requestContext: ?Object,
-    emitter?: ?EventEmitter,
+    event: LineEvent;
+    session: Session | null;
+    initialState: Record<string, any> | null;
+    requestContext: Record<string, any> | null;
+    emitter?: EventEmitter | null;
   }): Promise<LineContext> {
     let customAccessToken;
     if (this._mapDestinationToAccessToken) {
@@ -294,11 +297,11 @@ export default class LineConnector implements Connector<LineRequestBody> {
     rawBody,
     body,
   }: {
-    method: string,
-    headers: Object,
-    query: Object,
-    rawBody: string,
-    body: Object,
+    method: string;
+    headers: Record<string, any>;
+    query: Record<string, any>;
+    rawBody: string;
+    body: Record<string, any>;
   }) {
     if (method.toLowerCase() !== 'post') {
       return {
