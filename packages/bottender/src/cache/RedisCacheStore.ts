@@ -24,7 +24,7 @@ export default class RedisCacheStore implements CacheStore {
     // Connect to 127.0.0.1:6380, db 4, using password "authpassword"
     - new Redis('redis://:authpassword@127.0.0.1:6380/4')
   */
-  constructor(...args as any) {
+  constructor(...args: any) {
     this._redis = new Redis(...args);
   }
 

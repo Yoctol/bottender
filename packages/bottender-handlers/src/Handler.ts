@@ -11,7 +11,7 @@ export type Context = {
     [key: string]: any,
   },
   sendText: (text: string) => void,
-  +isHandled: boolean,
+  isHandled: boolean,
 };
 
 type ContextPredicate = (context: Context) => boolean | Promise<boolean>;

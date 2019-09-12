@@ -77,34 +77,34 @@ class TelegramContext extends Context implements PlatformContext {
 
   _getChatId() {
     if (this._event.isMessage) {
-      return (this._event.message: any).chat.id;
+      return (this._event.message as any).chat.id;
     }
     if (this._event.isEditedMessage) {
-      return (this._event.editedMessage: any).chat.id;
+      return (this._event.editedMessage as any).chat.id;
     }
     if (this._event.isChannelPost) {
-      return (this._event.channelPost: any).chat.id;
+      return (this._event.channelPost as any).chat.id;
     }
     if (this._event.isEditedChannelPost) {
-      return (this._event.editedChannelPost: any).chat.id;
+      return (this._event.editedChannelPost as any).chat.id;
     }
     if (this._event.isInlineQuery) {
-      return (this._event.inlineQuery: any).from.id;
+      return (this._event.inlineQuery as any).from.id;
     }
     if (this._event.isChosenInlineResult) {
-      return (this._event.chosenInlineResult: any).from.id;
+      return (this._event.chosenInlineResult as any).from.id;
     }
     if (
       this._event.isCallbackQuery &&
-      (this._event.callbackQuery: any).message
+      (this._event.callbackQuery as any).message
     ) {
-      return (this._event.callbackQuery: any).message.chat.id;
+      return (this._event.callbackQuery as any).message.chat.id;
     }
     if (this._event.isShippingQuery) {
-      return (this._event.shippingQuery: any).from.id;
+      return (this._event.shippingQuery as any).from.id;
     }
     if (this._event.isPreCheckoutQuery) {
-      return (this._event.preCheckoutQuery: any).from.id;
+      return (this._event.preCheckoutQuery as any).from.id;
     }
     if (this._session) {
       return this._session.user.id;
@@ -123,7 +123,7 @@ class TelegramContext extends Context implements PlatformContext {
 
     this._isHandled = true;
 
-    const shippingQueryId = (this._event.shippingQuery: any).id;
+    const shippingQueryId = (this._event.shippingQuery as any).id;
 
     return this._client.answerShippingQuery(shippingQueryId, ok, options);
   }
@@ -139,7 +139,7 @@ class TelegramContext extends Context implements PlatformContext {
 
     this._isHandled = true;
 
-    const preCheckoutQueryId = (this._event.preCheckoutQuery: any).id;
+    const preCheckoutQueryId = (this._event.preCheckoutQuery as any).id;
 
     return this._client.answerPreCheckoutQuery(preCheckoutQueryId, ok, options);
   }
@@ -155,7 +155,7 @@ class TelegramContext extends Context implements PlatformContext {
 
     this._isHandled = true;
 
-    const inlineQueryId = (this._event.inlineQuery: any).id;
+    const inlineQueryId = (this._event.inlineQuery as any).id;
 
     return this._client.answerInlineQuery(inlineQueryId, results, options);
   }
@@ -170,7 +170,7 @@ class TelegramContext extends Context implements PlatformContext {
     }
 
     return this._client.getUserProfilePhotos(
-      (this.session: any).user.id,
+      (this.session as any).user.id,
       options
     );
   }

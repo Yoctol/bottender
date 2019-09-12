@@ -77,11 +77,11 @@ export default class SlackConnector implements Connector<SlackRequestBody> {
 
   _getRawEventFromRequest(body: SlackRequestBody): SlackRawEvent {
     if (body.event) {
-      return (((body as any) as EventsAPIBody).event: Message);
+      return (body as EventsAPIBody).event as Message;
     }
 
     if (body.payload && typeof body.payload === 'string') {
-      return (JSON.parse(body.payload): InteractiveMessageEvent);
+      return (JSON.parse(body.payload) as InteractiveMessageEvent);
     }
 
     // for RTM WebSocket messages

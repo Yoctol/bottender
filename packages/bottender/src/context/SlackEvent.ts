@@ -1,4 +1,4 @@
-se from 'pascal-case';
+import pascalCase from 'pascal-case';
 
 import { Event } from './Event';
 
