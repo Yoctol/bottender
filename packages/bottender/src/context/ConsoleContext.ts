@@ -2,7 +2,7 @@ import EventEmitter from 'events';
 
 import sleep from 'delay';
 
-import { Session } from '../session/Session';
+import Session from '../session/Session';
 
 import ConsoleEvent from './ConsoleEvent';
 import Context from './Context';
@@ -10,14 +10,14 @@ import { ConsoleClient } from './ConsoleClient';
 import { PlatformContext } from './PlatformContext';
 
 type Options = {
-  client: ConsoleClient,
-  event: ConsoleEvent,
-  session: ?Session,
-  initialState: ?Object,
-  requestContext: ?Object,
-  fallbackMethods: boolean,
-  mockPlatform: string,
-  emitter: ?EventEmitter,
+  client: ConsoleClient;
+  event: ConsoleEvent;
+  session: Session | null;
+  initialState: Record<string, any> | null;
+  requestContext: Record<string, any> | null;
+  fallbackMethods: boolean;
+  mockPlatform: string;
+  emitter: EventEmitter | null;
 };
 
 const methodBlackList = [
@@ -31,11 +31,11 @@ export default class ConsoleContext extends Context implements PlatformContext {
 
   _event: ConsoleEvent = this._event;
 
-  _session: ?Session = this._session;
+  _session: Session = this._session;
 
-  _fallbackMethods: boolean = false;
+  _fallbackMethods = false;
 
-  _mockPlatform: string = 'console';
+  _mockPlatform = 'console';
 
   constructor({
     client,
@@ -51,22 +51,19 @@ export default class ConsoleContext extends Context implements PlatformContext {
     this._mockPlatform = mockPlatform;
     this._fallbackMethods = fallbackMethods;
     if (fallbackMethods) {
-      // $FlowExpectedError
       return new Proxy(this, {
-        get(target, key) {
-          // https://github.com/facebook/flow/issues/6181
-          // https://github.com/facebook/flow/issues/6321
-          // $FlowFixMe: Cannot get `target[key]` because an indexer property is missing in `ConsoleContext` [1].
-          if (typeof target[key] !== 'undefined') {
-            // $FlowFixMe: Cannot get `target[key]` because an indexer property is missing in `ConsoleContext` [1].
-            return target[key];
+        get(target, key): ((args: any) => Promise<void>) | undefined {
+          if (typeof key !== 'string') {
+            return;
+          }
+
+          if (key in target) {
+            return (target as any)[key];
           }
 
           if (methodBlackList.includes(key)) return;
-          // $FlowIssue: Support `typeof x === "symbol"` - https://github.com/facebook/flow/issues/1015
-          if (typeof key === 'symbol') return; // any symbol should not be method missing
 
-          return async (...args) => {
+          return async (...args): Promise<void> => {
             await target._methodMissing(key, args);
           };
         },
@@ -96,7 +93,7 @@ export default class ConsoleContext extends Context implements PlatformContext {
    * Send text to the owner of then session.
    *
    */
-  async sendText(text: string, ...args: Array<any>): Promise<void> {
+  async sendText(text: string, ...args: any[]): Promise<void> {
     this._isHandled = true;
     if (args.length > 0 && this._fallbackMethods) {
       this._client.sendText(
@@ -107,7 +104,7 @@ export default class ConsoleContext extends Context implements PlatformContext {
     }
   }
 
-  async _methodMissing(method: string, args: Array<any>): Promise<void> {
+  async _methodMissing(method: string, args: any[]): Promise<void> {
     this._isHandled = true;
     this._client.sendText(
       `${method} with args:\n${JSON.stringify(args, null, 2)}`

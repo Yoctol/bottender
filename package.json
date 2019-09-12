@@ -34,6 +34,7 @@
     "@types/jfs": "^0.2.3",
     "@types/lodash": "^4.14.138",
     "@types/mongodb": "^3.3.1",
+    "@types/warning": "^3.0.0",
     "@typescript-eslint/eslint-plugin": "^2.2.0",
     "@typescript-eslint/parser": "^2.2.0",
     "chalk": "^2.4.2",

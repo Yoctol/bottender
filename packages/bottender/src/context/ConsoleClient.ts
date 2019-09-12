@@ -1,3 +1,3 @@
 export type ConsoleClient = {
-  sendText(text: string): void,
+  sendText(text: string): void;
 };

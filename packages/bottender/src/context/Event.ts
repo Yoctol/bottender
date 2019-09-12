@@ -1,6 +1,6 @@
 export interface Event {
-  +rawEvent: ?{};
-  +isMessage: boolean;
-  +isText: boolean;
-  +message: ?{};
+  rawEvent: Record<string, any> | null;
+  isMessage: boolean;
+  isText: boolean;
+  message: Record<string, any> | null;
 }
