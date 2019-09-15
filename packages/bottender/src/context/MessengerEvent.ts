@@ -186,7 +186,7 @@ type MessengerEventOptions = {
   pageId?: string | null,
 };
 
-export default class MessengerEvent implements Event {
+export default class MessengerEvent implements Event<MessengerRawEvent> {
   _rawEvent: MessengerRawEvent;
 
   _isStandby: boolean;

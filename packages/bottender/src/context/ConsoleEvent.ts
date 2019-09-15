@@ -4,12 +4,17 @@ type Message = {
   text: string;
 };
 
-export type ConsoleRawEvent = {
-  message?: Message;
-  payload?: string;
+type MessageEvent = {
+  message: Message;
 };
 
-export default class ConsoleEvent implements Event {
+type PayloadEvent = {
+  payload: string;
+};
+
+export type ConsoleRawEvent = MessageEvent | PayloadEvent;
+
+export default class ConsoleEvent implements Event<ConsoleRawEvent> {
   _rawEvent: ConsoleRawEvent;
 
   constructor(rawEvent: ConsoleRawEvent) {
@@ -29,7 +34,7 @@ export default class ConsoleEvent implements Event {
    *
    */
   get isMessage(): boolean {
-    return !!this._rawEvent.message;
+    return 'message' in this._rawEvent;
   }
 
   /**
@@ -37,7 +42,7 @@ export default class ConsoleEvent implements Event {
    *
    */
   get message(): Message | null {
-    return this._rawEvent.message || null;
+    return this.isMessage ? this._rawEvent.message : null;
   }
 
   /**

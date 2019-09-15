@@ -1,8 +1,4 @@
-import { ViberClient } from 'messaging-api-viber';
-
 import SessionStore from '../session/SessionStore';
-
-import Bot from './Bot';
 import ViberConnector, { ViberRequestBody } from './ViberConnector';
 
 export default class ViberBot extends Bot<ViberRequestBody, ViberClient> {

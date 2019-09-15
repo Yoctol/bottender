@@ -1,13 +1,15 @@
+import Koa from 'koa';
 import Router from 'koa-router';
 
 import createMiddleware from './createMiddleware';
+import { Bot, RouteConfig } from './types';
 
-function registerRoutes(server, bot, config = {}) {
+function registerRoutes(server: Koa, bot: Bot, config: RouteConfig = {}) {
   const path = config.path || '/';
 
   const router = new Router();
 
-  server.use((ctx, next) => {
+  server.use((ctx: Koa.Context, next: () => Promise<void>) => {
     const { request } = ctx;
     if (request.path !== path) {
       return next();
@@ -30,6 +32,7 @@ function registerRoutes(server, bot, config = {}) {
         ctx.response.body = response.body;
       }
     }
+    return;
   });
 
   router.post(path, createMiddleware(bot));

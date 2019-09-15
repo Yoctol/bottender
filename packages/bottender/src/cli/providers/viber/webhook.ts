@@ -1,30 +1,32 @@
 import Confirm from 'prompt-confirm';
 import invariant from 'invariant';
-import { ViberClient } from 'messaging-api-viber';
+import { ViberClient, ViberSender } from 'messaging-api-viber';
 
 import getConfig from '../../shared/getConfig';
 import getSubArgs from '../sh/utils/getSubArgs';
 import getWebhookFromNgrok from '../../shared/getWebhookFromNgrok';
 import { bold, error, print, warn } from '../../shared/log';
+import { CliContext } from '../../';
 
 import help from './help';
 
+type ViberConfig = {
+  accessToken: string;
+  sender: ViberSender;
+  events: string;
+};
+
 export async function setWebhook(
-  webhook,
-  ngrokPort = '4040',
-  accessToken = undefined,
-  eventTypes = []
+  webhook: string,
+  ngrokPort: string = '4040',
+  eventTypes: string[] = []
 ) {
   try {
-    if (!accessToken) {
-      const config = getConfig('viber');
+    const config: ViberConfig = getConfig('viber');
 
-      invariant(config.accessToken, 'accessToken is not found in config file');
+    invariant(config.accessToken, 'accessToken is not found in config file');
 
-      accessToken = config.accessToken;
-    }
-
-    const client = ViberClient.connect(accessToken);
+    const client = ViberClient.connect(config.accessToken, config.sender);
 
     if (!webhook) {
       warn('We can not find the webhook callback url you provided.');
@@ -45,6 +47,7 @@ export async function setWebhook(
     await client.setWebhook(webhook, eventTypes);
 
     print('Successfully set Viber webhook callback URL');
+    return;
   } catch (err) {
     error('Failed to set Viber webhook');
     if (err.response) {
@@ -59,25 +62,18 @@ export async function setWebhook(
   }
 }
 
-export async function deleteWebhook(ctx) {
-  let accessToken;
-
+export async function deleteWebhook(_: CliContext) {
   try {
-    if (ctx.argv['--token']) {
-      accessToken = ctx.argv['--token'];
-    } else {
-      const config = getConfig('viber');
+    const config: ViberConfig = getConfig('viber');
 
-      invariant(config.accessToken, 'accessToken is not found in config file');
+    invariant(config.accessToken, 'accessToken is not found in config file');
 
-      accessToken = config.accessToken;
-    }
-
-    const client = ViberClient.connect(accessToken);
+    const client = ViberClient.connect(config.accessToken, config.sender);
 
     await client.removeWebhook();
 
     print('Successfully delete Viber webhook');
+    return;
   } catch (err) {
     error('Failed to delete Viber webhook');
     if (err.response) {
@@ -92,14 +88,12 @@ export async function deleteWebhook(ctx) {
   }
 }
 
-export default async function main(ctx) {
+export default async function main(ctx: CliContext) {
   const subcommand = ctx.argv._[2];
 
   ctx.argv = getSubArgs(ctx.argv, {
     '--webhook': String,
     '-w': '--webhook',
-    '--token': String,
-    '-t': '--token',
     '--events': String,
     '-e': '--events',
     '--ngrok-port': String,
@@ -108,15 +102,14 @@ export default async function main(ctx) {
   switch (subcommand) {
     case 'set': {
       const webhook = ctx.argv['--webhook'];
-      const accessToken = ctx.argv['--token'];
       const ngrokPort = ctx.argv['--ngrok-port'];
       const events = ctx.argv['--events'];
 
       if (typeof events === 'string') {
         const eventTypes = events.split(',');
-        await setWebhook(webhook, ngrokPort, accessToken, eventTypes);
+        await setWebhook(webhook, ngrokPort, eventTypes);
       } else {
-        await setWebhook(webhook, ngrokPort, accessToken);
+        await setWebhook(webhook, ngrokPort);
       }
 
       break;

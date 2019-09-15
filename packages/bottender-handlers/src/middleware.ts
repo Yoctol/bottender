@@ -5,6 +5,6 @@ import { Builder } from './Handler';
 type Middleware = (context?: any, next?: Middleware) => {};
 
 const middleware = (m: Array<Middleware | Builder>) =>
-  compose(m.map(item => (item.build ? item.build() : item)));
+  compose(m.map(item => ('build' in item ? item.build() : item)));
 
 export default middleware;

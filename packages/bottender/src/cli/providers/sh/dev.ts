@@ -2,10 +2,11 @@ import ngrok from 'ngrok';
 import nodemon from 'nodemon';
 
 import getBottenderConfig from '../../shared/getBottenderConfig';
+import { CliContext } from '../..';
 
 import getSubArgs from './utils/getSubArgs';
 
-const dev = async ctx => {
+const dev = async (ctx: CliContext) => {
   const argv = getSubArgs(ctx.argv, {
     '--console': Boolean,
     '--port': Number,

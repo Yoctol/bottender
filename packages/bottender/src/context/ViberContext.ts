@@ -4,19 +4,19 @@ import sleep from 'delay';
 import warning from 'warning';
 import { ViberClient } from 'messaging-api-viber';
 
-import { Session } from '../session/Session';
+import Session from '../session/Session';
 
 import Context from './Context';
 import ViberEvent from './ViberEvent';
 import { PlatformContext } from './PlatformContext';
 
 type Options = {
-  client: ViberClient,
-  event: ViberEvent,
-  session: ?Session,
-  initialState: ?Object,
-  requestContext: ?Object,
-  emitter: ?EventEmitter,
+  client: ViberClient;
+  event: ViberEvent;
+  session?: Session;
+  initialState?: Record<string, any>;
+  requestContext?: Record<string, any>;
+  emitter?: EventEmitter;
 };
 
 class ViberContext extends Context implements PlatformContext {
@@ -24,18 +24,7 @@ class ViberContext extends Context implements PlatformContext {
 
   _event: ViberEvent = this._event;
 
-  _session: ?Session = this.session;
-
-  constructor({
-    client,
-    event,
-    session,
-    initialState,
-    requestContext,
-    emitter,
-  }: Options) {
-    super({ client, event, session, initialState, requestContext, emitter });
-  }
+  _session: Session | null = this.session;
 
   /**
    * The name of the platform.
@@ -77,7 +66,7 @@ class ViberContext extends Context implements PlatformContext {
    * Get user details from the owner of the session.
    *
    */
-  async getUserDetails(): Promise<?Object> {
+  async getUserDetails(): Promise<Object | null> {
     if (!this._session) {
       warning(
         false,
@@ -93,7 +82,7 @@ class ViberContext extends Context implements PlatformContext {
    * Get user online status from the owner of the session.
    *
    */
-  async getOnlineStatus(): Promise<?Object> {
+  async getOnlineStatus(): Promise<Object | null> {
     if (!this._session) {
       warning(
         false,

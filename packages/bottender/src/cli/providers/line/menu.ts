@@ -9,6 +9,7 @@ import { differenceWith, findIndex, isEqual, omit } from 'lodash';
 import getConfig from '../../shared/getConfig';
 import getSubArgs from '../sh/utils/getSubArgs';
 import { bold, error, log, print } from '../../shared/log';
+import { CliContext } from '../..';
 
 const generateDeleteQuestions = richMenus => [
   {
@@ -52,13 +53,14 @@ export function checkLineMenu() {
   try {
     getConfig('line');
     print('LINE rich menu check done.');
+    return;
   } catch (e) {
     error(e.message);
     return process.exit(1);
   }
 }
 
-export async function getLineMenu(ctx) {
+export async function getLineMenu(ctx: CliContext) {
   const token = ctx.argv['--token'];
 
   let accessToken;
@@ -85,6 +87,7 @@ export async function getLineMenu(ctx) {
     } else {
       error(`Failed to find ${bold('LINE rich menu')}.`);
     }
+    return;
   } catch (err) {
     error(`Failed to get ${bold('LINE rich menu')}.`);
     if (err.response) {
@@ -99,7 +102,7 @@ export async function getLineMenu(ctx) {
   }
 }
 
-export async function setLineMenus(ctx) {
+export async function setLineMenus(ctx: CliContext) {
   const token = ctx.argv['--token'];
 
   let accessToken;
@@ -172,6 +175,7 @@ export async function setLineMenus(ctx) {
         'bottender line menu get'
       )} to see the full rich menu.`
     );
+    return;
   } catch (err) {
     error(`Failed to set ${bold('LINE rich menu')}.`);
     if (err.response) {
@@ -186,7 +190,7 @@ export async function setLineMenus(ctx) {
   }
 }
 
-export async function deleteLineMenu(ctx) {
+export async function deleteLineMenu(ctx: CliContext) {
   const token = ctx.argv['--token'];
   const force = ctx.argv['--force'];
 
@@ -246,6 +250,7 @@ export async function deleteLineMenu(ctx) {
         )} in existing LINE rich menu.`
       );
     }
+    return;
   } catch (err) {
     error(`Failed to delete ${bold('LINE rich menu')}.`);
     if (err.response) {
@@ -260,7 +265,7 @@ export async function deleteLineMenu(ctx) {
   }
 }
 
-export default async function main(ctx) {
+export default async function main(ctx: CliContext) {
   const subcommand = ctx.argv._[2];
 
   ctx.argv = getSubArgs(ctx.argv, {

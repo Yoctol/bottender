@@ -6,6 +6,7 @@ import { MessengerClient } from 'messaging-api-messenger';
 import getConfig from '../../shared/getConfig';
 import getSubArgs from '../sh/utils/getSubArgs';
 import { bold, error, print } from '../../shared/log';
+import { CliContext } from '../..';
 
 const help = () => {
   console.log(`
@@ -34,7 +35,7 @@ const help = () => {
   `);
 };
 
-export async function getGetStarted(ctx) {
+export async function getGetStarted(ctx: CliContext) {
   const token = ctx.argv['--token'];
 
   let accessToken;
@@ -59,6 +60,7 @@ export async function getGetStarted(ctx) {
     } else {
       error(`Failed to find ${bold('get_started')} setting`);
     }
+    return;
   } catch (err) {
     error(`Failed to get ${bold('get_started')} setting`);
     if (err.response) {
@@ -73,7 +75,7 @@ export async function getGetStarted(ctx) {
   }
 }
 
-export async function deleteGetStarted(ctx) {
+export async function deleteGetStarted(ctx: CliContext) {
   const token = ctx.argv['--token'];
 
   let accessToken;
@@ -94,6 +96,7 @@ export async function deleteGetStarted(ctx) {
     await client.deleteGetStarted();
 
     print(`Successfully delete ${bold('get_started')} setting`);
+    return;
   } catch (err) {
     error(`Failed to delete ${bold('get_started')} setting`);
     if (err.response) {
@@ -108,7 +111,7 @@ export async function deleteGetStarted(ctx) {
   }
 }
 
-export default async function main(ctx) {
+export default async function main(ctx: CliContext) {
   const subcommand = ctx.argv._[2];
 
   ctx.argv = getSubArgs(ctx.argv, {

@@ -389,8 +389,8 @@ export default class MessengerConnector
     rawBody,
   }: {
     method: string,
-    headers: Object,
-    query: Object,
+    headers: Record<string, any>,
+    query: Record<string, any>,
     rawBody: string,
     body: Object,
   }) {

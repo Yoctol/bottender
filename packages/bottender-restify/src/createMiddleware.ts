@@ -1,8 +1,11 @@
 import isEmpty from 'lodash/isEmpty';
+import { Next, Request, Response } from 'restify';
 
-function createMiddleware(bot) {
+import { Bot } from './types';
+
+function createMiddleware(bot: Bot) {
   const requestHandler = bot.createRequestHandler();
-  return async (req, res, next) => {
+  return async (req: Request, res: Response, next: Next): Promise<void> => {
     if (isEmpty(req.query) && !req.body) {
       throw new Error(
         'createMiddleware(): Missing query and body, you may need a body parser. Use `restify.plugins.bodyParser()` before this middleware.'

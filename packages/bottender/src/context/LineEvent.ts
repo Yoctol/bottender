@@ -1,43 +1,151 @@
 import { Event } from './Event';
 
-type ReplyToken = string;
-
-type EventType =
-  | 'message'
-  | 'postback'
-  | 'follow'
-  | 'unfollow'
-  | 'join'
-  | 'leave'
-  | 'beacon'
-  | 'accountLink'
-  | 'memberJoined'
-  | 'memberLeft'
-  | 'things';
-
 type UserSource = {
-  type: 'user',
-  userId: string,
+  type: 'user';
+  userId: string;
 };
 
 type GroupSource = {
-  type: 'group',
-  userId?: string,
-  groupId: string,
+  type: 'group';
+  groupId: string;
+  userId?: string;
 };
 
 type RoomSource = {
-  type: 'room',
-  userId?: string,
-  roomId: string,
+  type: 'room';
+  roomId: string;
+  userId?: string;
 };
 
 type Source = UserSource | GroupSource | RoomSource;
 
-type Message = {
-  id: string,
-  type: string,
-  text?: string,
+type TextMessage = {
+  id: string;
+  type: 'text';
+  text: string;
+};
+
+type ContentProviderLine = {
+  type: 'line';
+};
+
+type ContentProviderExternal = {
+  type: 'external';
+  originalContentUrl: string;
+  previewImageUrl?: string;
+};
+
+type ImageMessage = {
+  id: string;
+  type: 'image';
+  contentProvider: ContentProviderLine | ContentProviderExternal;
+};
+
+type VideoMessage = {
+  id: string;
+  type: 'video';
+  duration: number;
+  contentProvider: ContentProviderLine | ContentProviderExternal;
+};
+
+type AudioMessage = {
+  id: string;
+  type: 'audio';
+  duration: number;
+  contentProvider: ContentProviderLine | ContentProviderExternal;
+};
+
+type FileMessage = {
+  id: string;
+  type: 'file';
+  fileName: string;
+  fileSize: number;
+};
+
+type LocationMessage = {
+  id: string;
+  type: 'location';
+  title: string;
+  address: string;
+  latitude: number;
+  longitude: number;
+};
+
+type StickerMessage = {
+  id: string;
+  type: 'sticker';
+  packageId: string;
+  stickerId: string;
+};
+
+type Message =
+  | TextMessage
+  | ImageMessage
+  | VideoMessage
+  | AudioMessage
+  | FileMessage
+  | LocationMessage
+  | StickerMessage;
+
+type MessageEvent = {
+  replyToken: string;
+  type: 'message';
+  timestamp: number;
+  source: Source;
+  message: Message;
+};
+
+type FollowEvent = {
+  replyToken: string;
+  type: 'follow';
+  timestamp: number;
+  source: Source;
+};
+
+type UnfollowEvent = {
+  type: 'unfollow';
+  timestamp: number;
+  source: Source;
+};
+
+type JoinEvent = {
+  replyToken: string;
+  type: 'join';
+  timestamp: number;
+  source: GroupSource | RoomSource;
+};
+
+type LeaveEvent = {
+  type: 'leave';
+  timestamp: number;
+  source: GroupSource | RoomSource;
+};
+
+type MemberJoinedEvent = {
+  replyToken: string;
+  type: 'memberJoined';
+  timestamp: number;
+  source: GroupSource | RoomSource;
+  joined: {
+    members: UserSource[];
+  };
+};
+
+type MemberLeftEvent = {
+  type: 'memberLeft';
+  timestamp: number;
+  source: GroupSource | RoomSource;
+  left: {
+    members: UserSource[];
+  };
+};
+
+type PostbackEvent = {
+  replyToken: string;
+  type: 'postback';
+  timestamp: number;
+  source: Source;
+  postback: Postback;
 };
 
 type PostbackParams =
@@ -46,53 +154,72 @@ type PostbackParams =
   | { datetime: string };
 
 type Postback = {
-  data: string,
-  params?: PostbackParams,
+  data: string;
+  params?: PostbackParams;
+};
+
+type BeaconEvent = {
+  replyToken: string;
+  type: 'beacon';
+  timestamp: number;
+  source: Source;
+  beacon: Beacon;
 };
 
 type Beacon = {
-  hwid: string,
-  type: 'enter' | 'leave' | 'banner',
-  dm?: string,
+  hwid: string;
+  type: 'enter' | 'banner';
+  dm?: string;
+};
+
+type AccountLinkEvent = {
+  replyToken: string;
+  type: 'accountLink';
+  timestamp: number;
+  source: Source;
+  link: AccountLink;
 };
 
 type AccountLink = {
-  result: 'ok' | 'false',
-  nonce: string,
+  result: 'ok' | 'failed';
+  nonce: string;
 };
 
-type Members = {
-  members: Array<UserSource>,
+type ThingsEvent = {
+  replyToken: string;
+  type: 'things';
+  timestamp: number;
+  source: Source;
+  things: Things;
 };
 
 type Things = {
-  deviceId: string,
-  type: 'link' | 'unlink',
+  deviceId: string;
+  type: 'link' | 'unlink' | 'scenarioResult';
+  result?: any;
 };
 
 type LineEventOptions = {
-  destination?: ?string,
+  destination?: string;
 };
 
-export type LineRawEvent = {
-  // only message, follow, join, postback, beacon, accountLink, memberJoined events have replyToken
-  replyToken?: ReplyToken,
-  type: EventType,
-  timestamp: number,
-  source: Source,
-  message?: Message,
-  postback?: Postback,
-  beacon?: Beacon,
-  link?: AccountLink,
-  joined?: Members,
-  left?: Members,
-  things?: Things,
-};
+export type LineRawEvent =
+  | MessageEvent
+  | FollowEvent
+  | UnfollowEvent
+  | JoinEvent
+  | LeaveEvent
+  | MemberJoinedEvent
+  | MemberLeftEvent
+  | PostbackEvent
+  | BeaconEvent
+  | AccountLinkEvent
+  | ThingsEvent;
 
-export default class LineEvent implements Event {
+export default class LineEvent implements Event<LineRawEvent> {
   _rawEvent: LineRawEvent;
 
-  _destination: ?string;
+  _destination: string | undefined;
 
   constructor(rawEvent: LineRawEvent, options: LineEventOptions = {}) {
     this._rawEvent = rawEvent;
@@ -111,7 +238,7 @@ export default class LineEvent implements Event {
    * The destination is the id of the bot which this event is sent to.
    *
    */
-  get destination(): ?string {
+  get destination(): string | null {
     return this._destination || null;
   }
 
@@ -119,15 +246,15 @@ export default class LineEvent implements Event {
    * The reply token from LINE raw event. Only present on message, follow, join, postback, beacon events.
    *
    */
-  get replyToken(): ?ReplyToken {
-    return this._rawEvent.replyToken || null;
+  get replyToken(): string | null {
+    return 'replyToken' in this._rawEvent ? this._rawEvent.replyToken : null;
   }
 
   /**
    * The source object from LINE raw event.
    *
    */
-  get source(): ?Source {
+  get source(): Source {
     return this._rawEvent.source || null;
   }
 
@@ -143,8 +270,8 @@ export default class LineEvent implements Event {
    * The message object from LINE raw event.
    *
    */
-  get message(): ?Message {
-    return this._rawEvent.message || null;
+  get message(): Message | null {
+    return (this._rawEvent as MessageEvent).message || null;
   }
 
   /**
@@ -152,16 +279,16 @@ export default class LineEvent implements Event {
    *
    */
   get isText(): boolean {
-    return this.isMessage && (this.message as any).type === 'text';
+    return this.isMessage && (this.message as Message).type === 'text';
   }
 
   /**
    * The text string from LINE raw event.
    *
    */
-  get text(): ?string {
+  get text(): string | null {
     if (this.isText) {
-      return (this.message as any).text;
+      return (this.message as TextMessage).text;
     }
     return null;
   }
@@ -171,14 +298,14 @@ export default class LineEvent implements Event {
    *
    */
   get isImage(): boolean {
-    return this.isMessage && (this.message as any).type === 'image';
+    return this.isMessage && (this.message as Message).type === 'image';
   }
 
   /**
    * The image object from LINE raw event.
    *
    */
-  get image(): ?Message {
+  get image(): Message | null {
     if (this.isImage) {
       return this.message;
     }
@@ -190,14 +317,14 @@ export default class LineEvent implements Event {
    *
    */
   get isVideo(): boolean {
-    return this.isMessage && (this.message as any).type === 'video';
+    return this.isMessage && (this.message as Message).type === 'video';
   }
 
   /**
    * The video object from LINE raw event.
    *
    */
-  get video(): ?Message {
+  get video(): Message | null {
     if (this.isVideo) {
       return this.message;
     }
@@ -209,14 +336,14 @@ export default class LineEvent implements Event {
    *
    */
   get isAudio(): boolean {
-    return this.isMessage && (this.message as any).type === 'audio';
+    return this.isMessage && (this.message as Message).type === 'audio';
   }
 
   /**
    * The audio object from LINE raw event.
    *
    */
-  get audio(): ?Message {
+  get audio(): Message | null {
     if (this.isAudio) {
       return this.message;
     }
@@ -228,14 +355,14 @@ export default class LineEvent implements Event {
    *
    */
   get isLocation(): boolean {
-    return this.isMessage && (this.message as any).type === 'location';
+    return this.isMessage && (this.message as Message).type === 'location';
   }
 
   /**
    * The location object from LINE raw event.
    *
    */
-  get location(): ?Message {
+  get location(): Message | null {
     if (this.isLocation) {
       return this.message;
     }
@@ -247,14 +374,14 @@ export default class LineEvent implements Event {
    *
    */
   get isSticker(): boolean {
-    return this.isMessage && (this.message as any).type === 'sticker';
+    return this.isMessage && (this.message as Message).type === 'sticker';
   }
 
   /**
    * The sticker object from LINE raw event.
    *
    */
-  get sticker(): ?Message {
+  get sticker(): Message | null {
     if (this.isSticker) {
       return this.message;
     }
@@ -273,7 +400,7 @@ export default class LineEvent implements Event {
    * The source object from LINE raw event.
    *
    */
-  get follow(): ?Source {
+  get follow(): Source | null {
     if (this.isFollow) {
       return this.source;
     }
@@ -292,7 +419,7 @@ export default class LineEvent implements Event {
    * The source object from LINE raw event.
    *
    */
-  get unfollow(): ?Source {
+  get unfollow(): Source | null {
     if (this.isUnfollow) {
       return this.source;
     }
@@ -311,7 +438,7 @@ export default class LineEvent implements Event {
    * The source object from LINE raw event.
    *
    */
-  get join(): ?Source {
+  get join(): Source | null {
     if (this.isJoin) {
       return this.source;
     }
@@ -330,7 +457,7 @@ export default class LineEvent implements Event {
    * The source object from LINE raw event.
    *
    */
-  get leave(): ?Source {
+  get leave(): Source | null {
     if (this.isLeave) {
       return this.source;
     }
@@ -349,8 +476,8 @@ export default class LineEvent implements Event {
    * The postback object from LINE raw event.
    *
    */
-  get postback(): ?Postback {
-    return this._rawEvent.postback || null;
+  get postback(): Postback | null {
+    return (this._rawEvent as PostbackEvent).postback || null;
   }
 
   /**
@@ -365,9 +492,9 @@ export default class LineEvent implements Event {
    * The payload string from LINE raw event.
    *
    */
-  get payload(): ?string {
+  get payload(): string | null {
     if (this.isPayload) {
-      return (this.postback as any).data;
+      return (this.postback as Postback).data;
     }
     return null;
   }
@@ -376,7 +503,7 @@ export default class LineEvent implements Event {
    * The date string from LINE postback event.
    *
    */
-  get date(): ?string {
+  get date(): string | null {
     if (this.postback && this.postback.params && this.postback.params.date) {
       return this.postback.params.date;
     }
@@ -387,7 +514,7 @@ export default class LineEvent implements Event {
    * The time string from LINE postback event.
    *
    */
-  get time(): ?string {
+  get time(): string | null {
     if (this.postback && this.postback.params && this.postback.params.time) {
       return this.postback.params.time;
     }
@@ -398,7 +525,7 @@ export default class LineEvent implements Event {
    * The datetime string from LINE postback event.
    *
    */
-  get datetime(): ?string {
+  get datetime(): string | null {
     if (
       this.postback &&
       this.postback.params &&
@@ -421,8 +548,8 @@ export default class LineEvent implements Event {
    * The beacon object from LINE raw event.
    *
    */
-  get beacon(): ?Beacon {
-    return this._rawEvent.beacon || null;
+  get beacon(): Beacon | null {
+    return (this._rawEvent as BeaconEvent).beacon || null;
   }
 
   /**
@@ -437,8 +564,8 @@ export default class LineEvent implements Event {
    * The link object from LINE raw event.
    *
    */
-  get accountLink(): ?AccountLink {
-    return this._rawEvent.link || null;
+  get accountLink(): AccountLink | null {
+    return (this._rawEvent as AccountLinkEvent).link || null;
   }
 
   /**
@@ -453,8 +580,10 @@ export default class LineEvent implements Event {
    * The joined object from LINE raw event.
    *
    */
-  get memberJoined(): ?Members {
-    return this._rawEvent.joined || null;
+  get memberJoined(): {
+    members: UserSource[];
+  } | null {
+    return (this._rawEvent as MemberJoinedEvent).joined || null;
   }
 
   /**
@@ -469,8 +598,10 @@ export default class LineEvent implements Event {
    * The left object from LINE raw event.
    *
    */
-  get memberLeft(): ?Members {
-    return this._rawEvent.left || null;
+  get memberLeft(): {
+    members: UserSource[];
+  } | null {
+    return (this._rawEvent as MemberLeftEvent).left || null;
   }
 
   /**
@@ -501,7 +632,7 @@ export default class LineEvent implements Event {
    * The things object from LINE raw event.
    *
    */
-  get things(): ?Things {
-    return this._rawEvent.things || null;
+  get things(): Things | null {
+    return (this._rawEvent as ThingsEvent).things || null;
   }
 }

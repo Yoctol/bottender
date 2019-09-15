@@ -8,14 +8,21 @@ import getArgs from './providers/sh/utils/getArgs';
 import providers from './providers';
 import { error } from './shared/log';
 
-const main = async _argv => {
-  let providerName;
-  let subcommand;
+type Provider = 'messenger' | 'telegram' | 'line' | 'viber' | 'sh';
+
+export type CliContext = {
+  config: null; // FIXME
+  argv: Record<string, any>;
+};
+
+const main = async (argvFrom2: string[]) => {
+  let providerName: Provider;
+  let subcommand: string;
 
   updateNotifier({ pkg }).notify({ defer: false });
 
   const argv = getArgs(
-    _argv,
+    argvFrom2,
     {
       '--version': Boolean,
       '-v': '--version',
@@ -32,7 +39,7 @@ const main = async _argv => {
     case 'telegram':
     case 'line':
     case 'viber':
-      providerName = argv._[0];
+      providerName = argv._[0] as Provider;
       subcommand = argv._[1];
       break;
     default:
@@ -53,7 +60,7 @@ const main = async _argv => {
   }
 
   // the context object to supply to the providers or the commands
-  const ctx = {
+  const ctx: CliContext = {
     config: null, // FIXME
     argv,
   };
@@ -76,7 +83,7 @@ const main = async _argv => {
   }
 };
 
-const handleUnexpected = err => {
+const handleUnexpected = (err: Error) => {
   console.error(
     error(`An unexpected error occurred!\n  ${err.stack} ${err.stack}`)
   );

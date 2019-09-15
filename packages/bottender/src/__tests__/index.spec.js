@@ -4,7 +4,6 @@ describe('core', () => {
   it('export bots', () => {
     expect(core.Bot).toBeDefined();
     expect(core.ConsoleBot).toBeDefined();
-    expect(core.TestBot).toBeDefined();
     expect(core.MessengerBot).toBeDefined();
     expect(core.LineBot).toBeDefined();
     expect(core.SlackBot).toBeDefined();
@@ -14,7 +13,6 @@ describe('core', () => {
 
   it('export connectors', () => {
     expect(core.ConsoleConnector).toBeDefined();
-    expect(core.TestConnector).toBeDefined();
     expect(core.MessengerConnector).toBeDefined();
     expect(core.LineConnector).toBeDefined();
     expect(core.SlackConnector).toBeDefined();
@@ -38,7 +36,6 @@ describe('core', () => {
   it('export contexts', () => {
     expect(core.Context).toBeDefined();
     expect(core.ConsoleContext).toBeDefined();
-    expect(core.TestContext).toBeDefined();
     expect(core.MessengerContext).toBeDefined();
     expect(core.LineContext).toBeDefined();
     expect(core.SlackContext).toBeDefined();

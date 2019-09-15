@@ -22,8 +22,8 @@ export default class LineBot extends Bot<LineRequestBody, LineClient> {
     sessionStore: SessionStore;
     sync?: boolean;
     mapDestinationToAccessToken?: (destination: string) => Promise<string>;
-    shouldBatch: boolean | null;
-    sendMethod: string | null;
+    shouldBatch?: boolean | null;
+    sendMethod?: string | null;
     origin?: string;
     skipProfile?: boolean | null;
   }) {

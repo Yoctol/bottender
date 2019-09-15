@@ -2,16 +2,16 @@ import warning from 'warning';
 
 export type Context = {
   event: {
-    isMessage: boolean,
-    isText: boolean,
+    isMessage: boolean;
+    isText: boolean;
     message: {
-      text: string,
-      [key: string]: any,
-    },
-    [key: string]: any,
-  },
-  sendText: (text: string) => void,
-  isHandled: boolean,
+      text: string;
+      [key: string]: any;
+    };
+    [key: string]: any;
+  };
+  sendText: (text: string) => void;
+  isHandled: boolean;
 };
 
 type ContextPredicate = (context: Context) => boolean | Promise<boolean>;
@@ -27,14 +27,14 @@ export type FunctionalHandler = (
 ) => void | Promise<void>;
 
 export type Builder = {
-  build: () => FunctionalHandler,
+  build: () => FunctionalHandler;
 };
 
 export type Pattern = string | RegExp | Predicate;
 
 type PredicateHandler = {
-  predicate: ContextPredicate,
-  handler: FunctionalHandler,
+  predicate: ContextPredicate;
+  handler: FunctionalHandler;
 };
 
 export function matchPattern(pattern: Pattern, text: string): boolean {
@@ -48,16 +48,16 @@ export function matchPattern(pattern: Pattern, text: string): boolean {
 }
 
 export default class Handler {
-  _handlers: Array<PredicateHandler> = [];
+  _handlers: PredicateHandler[] = [];
 
-  _errorHandler: ?FunctionalHandler = null;
+  _errorHandler: FunctionalHandler | null = null;
 
-  _unhandledHandler: ?FunctionalHandler = null;
+  _unhandledHandler: FunctionalHandler | null = null;
 
   on(predicate: ContextPredicate, handler: FunctionalHandler | Builder) {
     this._handlers.push({
       predicate,
-      handler: handler.build ? handler.build() : handler,
+      handler: 'build' in handler ? handler.build() : handler,
     });
     return this;
   }
@@ -72,15 +72,14 @@ export default class Handler {
       | [Predicate, FunctionalHandler | Builder]
       | [FunctionalHandler | Builder]
   ) {
-    // FIXME: Can't refine tuple union - https://github.com/facebook/flow/issues/2389
     if (args.length < 2) {
-      const [handler]: [FunctionalHandler | Builder] = (args as any);
+      const [handler] = args as [FunctionalHandler | Builder];
       this.on(context => context.event.isMessage, handler);
     } else {
-      const [predicate, handler]: [
+      const [predicate, handler] = args as [
         Predicate,
         FunctionalHandler | Builder
-      ] = (args as any);
+      ];
 
       warning(
         typeof predicate === 'function',
@@ -102,19 +101,15 @@ export default class Handler {
       | [Pattern, FunctionalHandler | Builder]
       | [FunctionalHandler | Builder]
   ) {
-    // FIXME: Can't refine tuple union - https://github.com/facebook/flow/issues/2389
     if (args.length < 2) {
-      const [handler]: [FunctionalHandler | Builder] = (args as any);
+      const [handler] = args as [FunctionalHandler | Builder];
 
       this.on(context => context.event.isText, handler);
     } else {
       // eslint-disable-next-line prefer-const
-      let [pattern, handler]: [
-        Pattern,
-        FunctionalHandler | Builder
-      ] = (args as any);
+      let [pattern, handler] = args as [Pattern, FunctionalHandler | Builder];
 
-      if (handler.build) {
+      if ('build' in handler) {
         handler = handler.build();
       }
 
@@ -134,16 +129,16 @@ export default class Handler {
         );
       } else {
         if (pattern instanceof RegExp) {
+          const patternRegExp: RegExp = pattern;
+
           const _handler = handler;
           handler = context => {
-            // $FlowFixMe
-            const match = pattern.exec(context.event.text);
+            const match = patternRegExp.exec(context.event.text);
 
             if (!match) return _handler(context);
 
             // reset index so we start at the beginning of the regex each time
-            // $FlowFixMe
-            pattern.lastIndex = 0;
+            patternRegExp.lastIndex = 0;
 
             return _handler(context, match);
           };
@@ -161,12 +156,12 @@ export default class Handler {
   }
 
   onUnhandled(handler: FunctionalHandler | Builder) {
-    this._unhandledHandler = handler.build ? handler.build() : handler;
+    this._unhandledHandler = 'build' in handler ? handler.build() : handler;
     return this;
   }
 
   onError(handler: FunctionalHandler | Builder) {
-    this._errorHandler = handler.build ? handler.build() : handler;
+    this._errorHandler = 'build' in handler ? handler.build() : handler;
     return this;
   }
 

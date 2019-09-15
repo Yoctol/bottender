@@ -1,10 +1,6 @@
 import warning from 'warning';
 
-import Handler, {
-  Builder,
-  FunctionalHandler,
-  Predicate,
-} from './Handler';
+import Handler, { Builder, FunctionalHandler, Predicate } from './Handler';
 
 export default class ViberHandler extends Handler {
   onSubscribed(
@@ -12,15 +8,14 @@ export default class ViberHandler extends Handler {
       | [Predicate, FunctionalHandler | Builder]
       | [FunctionalHandler | Builder]
   ) {
-    // FIXME: Can't refine tuple union - https://github.com/facebook/flow/issues/2389
     if (args.length < 2) {
-      const [handler]: [FunctionalHandler | Builder] = (args as any);
+      const [handler] = args as [FunctionalHandler | Builder];
       this.on(context => context.event.isSubscribed, handler);
     } else {
-      const [predicate, handler]: [
+      const [predicate, handler] = args as [
         Predicate,
         FunctionalHandler | Builder
-      ] = (args as any);
+      ];
 
       warning(
         typeof predicate === 'function',
@@ -43,15 +38,14 @@ export default class ViberHandler extends Handler {
       | [Predicate, FunctionalHandler | Builder]
       | [FunctionalHandler | Builder]
   ) {
-    // FIXME: Can't refine tuple union - https://github.com/facebook/flow/issues/2389
     if (args.length < 2) {
-      const [handler]: [FunctionalHandler | Builder] = (args as any);
+      const [handler] = args as [FunctionalHandler | Builder];
       this.on(context => context.event.isUnsubscribed, handler);
     } else {
-      const [predicate, handler]: [
+      const [predicate, handler] = args as [
         Predicate,
         FunctionalHandler | Builder
-      ] = (args as any);
+      ];
 
       warning(
         typeof predicate === 'function',
@@ -74,15 +68,14 @@ export default class ViberHandler extends Handler {
       | [Predicate, FunctionalHandler | Builder]
       | [FunctionalHandler | Builder]
   ) {
-    // FIXME: Can't refine tuple union - https://github.com/facebook/flow/issues/2389
     if (args.length < 2) {
-      const [handler]: [FunctionalHandler | Builder] = (args as any);
+      const [handler] = args as [FunctionalHandler | Builder];
       this.on(context => context.event.isConversationStarted, handler);
     } else {
-      const [predicate, handler]: [
+      const [predicate, handler] = args as [
         Predicate,
         FunctionalHandler | Builder
-      ] = (args as any);
+      ];
 
       warning(
         typeof predicate === 'function',
@@ -105,15 +98,14 @@ export default class ViberHandler extends Handler {
       | [Predicate, FunctionalHandler | Builder]
       | [FunctionalHandler | Builder]
   ) {
-    // FIXME: Can't refine tuple union - https://github.com/facebook/flow/issues/2389
     if (args.length < 2) {
-      const [handler]: [FunctionalHandler | Builder] = (args as any);
+      const [handler] = args as [FunctionalHandler | Builder];
       this.on(context => context.event.isDelivered, handler);
     } else {
-      const [predicate, handler]: [
+      const [predicate, handler] = args as [
         Predicate,
         FunctionalHandler | Builder
-      ] = (args as any);
+      ];
 
       warning(
         typeof predicate === 'function',
@@ -136,15 +128,14 @@ export default class ViberHandler extends Handler {
       | [Predicate, FunctionalHandler | Builder]
       | [FunctionalHandler | Builder]
   ) {
-    // FIXME: Can't refine tuple union - https://github.com/facebook/flow/issues/2389
     if (args.length < 2) {
-      const [handler]: [FunctionalHandler | Builder] = (args as any);
+      const [handler] = args as [FunctionalHandler | Builder];
       this.on(context => context.event.isSeen, handler);
     } else {
-      const [predicate, handler]: [
+      const [predicate, handler] = args as [
         Predicate,
         FunctionalHandler | Builder
-      ] = (args as any);
+      ];
 
       warning(
         typeof predicate === 'function',
@@ -166,15 +157,14 @@ export default class ViberHandler extends Handler {
       | [Predicate, FunctionalHandler | Builder]
       | [FunctionalHandler | Builder]
   ) {
-    // FIXME: Can't refine tuple union - https://github.com/facebook/flow/issues/2389
     if (args.length < 2) {
-      const [handler]: [FunctionalHandler | Builder] = (args as any);
+      const [handler] = args as [FunctionalHandler | Builder];
       this.on(context => context.event.isFailed, handler);
     } else {
-      const [predicate, handler]: [
+      const [predicate, handler] = args as [
         Predicate,
         FunctionalHandler | Builder
-      ] = (args as any);
+      ];
 
       warning(
         typeof predicate === 'function',

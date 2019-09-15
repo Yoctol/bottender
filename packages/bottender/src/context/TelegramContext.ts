@@ -4,19 +4,19 @@ import sleep from 'delay';
 import warning from 'warning';
 import { TelegramClient } from 'messaging-api-telegram';
 
-import { Session } from '../session/Session';
+import Session from '../session/Session';
 
 import Context from './Context';
 import TelegramEvent from './TelegramEvent';
 import { PlatformContext } from './PlatformContext';
 
 type Options = {
-  client: TelegramClient,
-  event: TelegramEvent,
-  session: ?Session,
-  initialState: ?Object,
-  requestContext: ?Object,
-  emitter: ?EventEmitter,
+  client: TelegramClient;
+  event: TelegramEvent;
+  session?: Session;
+  initialState?: Object;
+  requestContext?: Object;
+  emitter?: EventEmitter;
 };
 
 class TelegramContext extends Context implements PlatformContext {
@@ -24,7 +24,7 @@ class TelegramContext extends Context implements PlatformContext {
 
   _event: TelegramEvent = this._event;
 
-  _session: ?Session = this._session;
+  _session: Session | null = this._session;
 
   constructor({
     client,
@@ -160,7 +160,7 @@ class TelegramContext extends Context implements PlatformContext {
     return this._client.answerInlineQuery(inlineQueryId, results, options);
   }
 
-  async getUserProfilePhotos(options: ?Object) {
+  async getUserProfilePhotos(options?: Object) {
     if (!this._session) {
       warning(
         false,
@@ -231,7 +231,7 @@ class TelegramContext extends Context implements PlatformContext {
     return this._client.getChatMember(chatId, userId);
   }
 
-  async getGameHighScores(options: ?Object) {
+  async getGameHighScores(options?: Object) {
     if (!this._session) {
       warning(
         false,
@@ -245,7 +245,7 @@ class TelegramContext extends Context implements PlatformContext {
     return this._client.getGameHighScores(chatId, options);
   }
 
-  async editMessageText(text: string, options: ?Object) {
+  async editMessageText(text: string, options?: Object) {
     if (!this._session) {
       warning(
         false,
@@ -261,7 +261,7 @@ class TelegramContext extends Context implements PlatformContext {
     return this._client.editMessageText(text, { chat_id: chatId, ...options });
   }
 
-  async editMessageCaption(caption: string, options: ?Object) {
+  async editMessageCaption(caption: string, options?: Object) {
     if (!this._session) {
       warning(
         false,
@@ -280,7 +280,7 @@ class TelegramContext extends Context implements PlatformContext {
     });
   }
 
-  async editMessageReplyMarkup(replyMarkup: Object, options: ?Object) {
+  async editMessageReplyMarkup(replyMarkup: Object, options?: Object) {
     if (!this._session) {
       warning(
         false,
@@ -316,8 +316,8 @@ class TelegramContext extends Context implements PlatformContext {
   }
 
   async editMessageLiveLocation(
-    location: { latitude: number, longitude: number },
-    options: ?Object
+    location: { latitude: number; longitude: number },
+    options?: Object
   ) {
     if (!this._session) {
       warning(
@@ -337,7 +337,7 @@ class TelegramContext extends Context implements PlatformContext {
     });
   }
 
-  async stopMessageLiveLocation(options: ?Object) {
+  async stopMessageLiveLocation(options?: Object) {
     if (!this._session) {
       warning(
         false,
@@ -359,7 +359,7 @@ class TelegramContext extends Context implements PlatformContext {
   async forwardMessageFrom(
     fromChatId: string,
     messageId: number,
-    options: ?Object
+    options?: Object
   ) {
     if (!this._session) {
       warning(
@@ -379,7 +379,7 @@ class TelegramContext extends Context implements PlatformContext {
   async forwardMessageTo(
     toChatId: string,
     messageId: number,
-    options: ?Object
+    options?: Object
   ) {
     if (!this._session) {
       warning(

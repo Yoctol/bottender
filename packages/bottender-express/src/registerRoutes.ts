@@ -1,9 +1,17 @@
-import createMiddleware from './createMiddleware';
+import express from 'express';
 
-function registerRoutes(server, bot, config = {}) {
+import createMiddleware from './createMiddleware';
+import { Bot, RouteConfig } from './types';
+
+function registerRoutes(
+  server: express.Application,
+  bot: Bot,
+  config: RouteConfig = {}
+) {
   const path = config.path || '/';
 
   server.use((req, res, next) => {
+    const { rawBody } = req as express.Request & { rawBody: string };
     if (req.path !== path) {
       next();
       return;
@@ -13,7 +21,7 @@ function registerRoutes(server, bot, config = {}) {
       method: req.method,
       headers: req.headers,
       query: req.query,
-      rawBody: req.rawBody,
+      rawBody,
       body: req.body,
     });
 

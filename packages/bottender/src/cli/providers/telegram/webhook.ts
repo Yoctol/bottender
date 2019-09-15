@@ -6,10 +6,11 @@ import getConfig from '../../shared/getConfig';
 import getSubArgs from '../sh/utils/getSubArgs';
 import getWebhookFromNgrok from '../../shared/getWebhookFromNgrok';
 import { bold, error, print, warn } from '../../shared/log';
+import { CliContext } from '../../';
 
 import help from './help';
 
-export async function getWebhook(ctx) {
+export async function getWebhook(ctx: CliContext) {
   let accessToken;
 
   try {
@@ -27,6 +28,7 @@ export async function getWebhook(ctx) {
     const result = await client.getWebhookInfo();
 
     Object.keys(result).forEach(key => print(`${key}: ${result[key]}`));
+    return;
   } catch (err) {
     error('Failed to get Telegram webhook');
     if (err.response) {
@@ -41,7 +43,7 @@ export async function getWebhook(ctx) {
   }
 }
 
-export async function setWebhook(ctx) {
+export async function setWebhook(ctx: CliContext) {
   const ngrokPort = ctx.argv['--ngrok-port'] || '4040';
 
   let webhook = ctx.argv['--webhook'];
@@ -79,6 +81,7 @@ export async function setWebhook(ctx) {
     await client.setWebhook(webhook);
 
     print('Successfully set Telegram webhook callback URL');
+    return;
   } catch (err) {
     error('Failed to set Telegram webhook');
     if (err.response) {
@@ -93,7 +96,7 @@ export async function setWebhook(ctx) {
   }
 }
 
-export async function deleteWebhook(ctx) {
+export async function deleteWebhook(ctx: CliContext) {
   let accessToken;
 
   try {
@@ -111,6 +114,7 @@ export async function deleteWebhook(ctx) {
     await client.deleteWebhook();
 
     print('Successfully delete Telegram webhook');
+    return;
   } catch (err) {
     error('Failed to delete Telegram webhook');
     if (err.response) {
@@ -125,7 +129,7 @@ export async function deleteWebhook(ctx) {
   }
 }
 
-export default async function main(ctx) {
+export default async function main(ctx: CliContext) {
   const subcommand = ctx.argv._[2];
 
   ctx.argv = getSubArgs(ctx.argv, {

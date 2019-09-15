@@ -1,6 +1,6 @@
 import path from 'path';
 
-export default function loadModule(modulePath) {
+export default function loadModule(modulePath: string) {
   let mod;
   try {
     mod = require(path.resolve(modulePath)); // eslint-disable-line import/no-dynamic-require

@@ -7,7 +7,7 @@ import getBottenderConfig from './getBottenderConfig';
 import schema from './schema';
 import { bold } from './log';
 
-const getConfig = platform => {
+const getConfig = (platform: string) => {
   const argv = arg(
     {
       '--skip-validate': Boolean,

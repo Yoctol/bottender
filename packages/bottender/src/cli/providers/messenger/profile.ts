@@ -8,6 +8,7 @@ import { omit, pick } from 'lodash';
 import getConfig from '../../shared/getConfig';
 import getSubArgs from '../sh/utils/getSubArgs';
 import { bold, error, log, print } from '../../shared/log';
+import { CliContext } from '../..';
 
 const FIELDS = [
   'account_linking_url',
@@ -52,8 +53,8 @@ export const help = () => {
 export const trimDomain = profile => {
   const clone = { ...profile };
   if (clone.whitelisted_domains) {
-    clone.whitelisted_domains = clone.whitelisted_domains.map(domain =>
-      domain.replace(/\/$/, '')
+    clone.whitelisted_domains = clone.whitelisted_domains.map(
+      (domain: string) => domain.replace(/\/$/, '')
     );
   }
   return clone;
@@ -63,13 +64,14 @@ export function checkMessengerProfile() {
   try {
     getConfig('messenger');
     print('Messenger profile check done.');
+    return;
   } catch (e) {
     error(e.message);
     return process.exit(1);
   }
 }
 
-export async function getMessengerProfile(ctx) {
+export async function getMessengerProfile(ctx: CliContext) {
   const token = ctx.argv['--token'];
 
   let accessToken;
@@ -96,6 +98,7 @@ export async function getMessengerProfile(ctx) {
     } else {
       error(`Failed to find ${bold('messenger_profile')} setting`);
     }
+    return;
   } catch (err) {
     error(`Failed to get ${bold('messenger_profile')} settings`);
     if (err.response) {
@@ -110,7 +113,7 @@ export async function getMessengerProfile(ctx) {
   }
 }
 
-export async function setMessengerProfile(ctx) {
+export async function setMessengerProfile(ctx: CliContext) {
   const force = ctx.argv['--force'];
   const token = ctx.argv['--token'];
 
@@ -195,6 +198,7 @@ export async function setMessengerProfile(ctx) {
         'bottender messenger profile get'
       )} to see the full profile setting.`
     );
+    return;
   } catch (err) {
     error(`Failed to set ${bold('messenger_profile')} settings`);
     if (err.response) {
@@ -209,7 +213,7 @@ export async function setMessengerProfile(ctx) {
   }
 }
 
-export async function deleteMessengerProfile(ctx) {
+export async function deleteMessengerProfile(ctx: CliContext) {
   const token = ctx.argv['--token'];
 
   let accessToken;
@@ -230,6 +234,7 @@ export async function deleteMessengerProfile(ctx) {
     await client.deleteMessengerProfile(FIELDS);
 
     print(`Successfully delete ${bold('messenger_profile')} settings`);
+    return;
   } catch (err) {
     error(`Failed to delete ${bold('messenger_profile')} settings`);
     if (err.response) {
@@ -244,7 +249,7 @@ export async function deleteMessengerProfile(ctx) {
   }
 }
 
-export default async function main(ctx) {
+export default async function main(ctx: CliContext) {
   const subcommand = ctx.argv._[2];
 
   ctx.argv = getSubArgs(ctx.argv, {

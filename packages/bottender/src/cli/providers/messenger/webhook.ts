@@ -8,6 +8,7 @@ import getConfig from '../../shared/getConfig';
 import getSubArgs from '../sh/utils/getSubArgs';
 import getWebhookFromNgrok from '../../shared/getWebhookFromNgrok';
 import { bold, error, print, warn } from '../../shared/log';
+import { CliContext } from '../..';
 
 const help = () => {
   console.log(`
@@ -43,9 +44,9 @@ const help = () => {
 };
 
 export async function setWebhook(
-  accessToken,
-  webhook,
-  verifyToken,
+  accessToken: string,
+  webhook: string,
+  verifyToken: string,
   ngrokPort = '4040'
 ) {
   try {
@@ -159,6 +160,7 @@ export async function setWebhook(
     print(
       `Check selected events on: https://developers.facebook.com/apps/${config.appId}/messenger/`
     );
+    return;
   } catch (err) {
     error('Failed to set Messenger webhook');
     if (err.response) {
@@ -173,7 +175,7 @@ export async function setWebhook(
   }
 }
 
-export default async function main(ctx) {
+export default async function main(ctx: CliContext) {
   const subcommand = ctx.argv._[2];
 
   ctx.argv = getSubArgs(ctx.argv, {

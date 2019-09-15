@@ -1,7 +1,7 @@
 import axios from 'axios';
 import get from 'lodash/get';
 
-export default async function getWebhookFromNgrok(ngrokPort) {
+export default async function getWebhookFromNgrok(ngrokPort: string) {
   const ngrokAxios = axios.create({
     baseURL: `http://localhost:${ngrokPort}`,
   });

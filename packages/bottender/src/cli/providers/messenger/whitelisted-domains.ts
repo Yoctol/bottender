@@ -6,6 +6,7 @@ import { MessengerClient } from 'messaging-api-messenger';
 import getConfig from '../../shared/getConfig';
 import getSubArgs from '../sh/utils/getSubArgs';
 import { bold, error, print } from '../../shared/log';
+import { CliContext } from '../..';
 
 const help = () => {
   console.log(`
@@ -34,7 +35,7 @@ const help = () => {
   `);
 };
 
-export async function getWhitelistedDomains(ctx) {
+export async function getWhitelistedDomains(ctx: CliContext) {
   const token = ctx.argv['--token'];
 
   let accessToken;
@@ -60,6 +61,7 @@ export async function getWhitelistedDomains(ctx) {
     } else {
       error(`Failed to find ${bold('whitelisted-domains')} setting`);
     }
+    return;
   } catch (err) {
     error(`Failed to get ${bold('whitelisted-domains')} setting`);
     if (err.response) {
@@ -74,7 +76,7 @@ export async function getWhitelistedDomains(ctx) {
   }
 }
 
-export async function deleteWhitelistedDomains(ctx) {
+export async function deleteWhitelistedDomains(ctx: CliContext) {
   const token = ctx.argv['--token'];
 
   let accessToken;
@@ -95,6 +97,7 @@ export async function deleteWhitelistedDomains(ctx) {
     await client.deleteWhitelistedDomains();
 
     print(`Successfully delete ${bold('whitelisted-domains')} setting`);
+    return;
   } catch (err) {
     error(`Failed to delete ${bold('whitelisted-domains')} setting`);
     if (err.response) {
@@ -109,7 +112,7 @@ export async function deleteWhitelistedDomains(ctx) {
   }
 }
 
-export default async function main(ctx) {
+export default async function main(ctx: CliContext) {
   const subcommand = ctx.argv._[2];
 
   ctx.argv = getSubArgs(ctx.argv, {
