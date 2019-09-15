@@ -1,6 +1,6 @@
-export interface Event {
-  rawEvent: Record<string, any> | null;
+export interface Event<T> {
+  rawEvent: T;
   isMessage: boolean;
   isText: boolean;
-  message: Record<string, any> | null;
+  message?: Record<string, any>;
 }

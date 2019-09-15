@@ -185,10 +185,10 @@ export type MessengerRawEvent = {
 
 type MessengerEventOptions = {
   isStandby?: boolean,
-  pageId?: ?string,
+  pageId?: string,
 };
 
-export default class MessengerEvent implements Event {
+export default class MessengerEvent implements Event<MessengerRawEvent> {
   _rawEvent: MessengerRawEvent;
 
   _isStandby: boolean;

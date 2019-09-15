@@ -6,7 +6,7 @@ import { LineClient } from 'messaging-api-line';
 
 import LineContext from '../context/LineContext';
 import LineEvent, { LineRawEvent } from '../context/LineEvent';
-import { Session } from '../session/Session';
+import Session from '../session/Session';
 
 import { Connector } from './Connector';
 
@@ -20,10 +20,10 @@ type ConstructorOptions = {
   channelSecret?: string,
   client?: LineClient,
   mapDestinationToAccessToken?: (destination: string) => Promise<string>,
-  shouldBatch: ?boolean,
-  sendMethod: ?string,
+  shouldBatch?: boolean,
+  sendMethod?: string,
   origin?: string,
-  skipProfile?: ?boolean,
+  skipProfile?: boolean,
 };
 
 export default class LineConnector implements Connector<LineRequestBody> {
@@ -244,10 +244,10 @@ export default class LineConnector implements Connector<LineRequestBody> {
 
   async createContext(params: {
     event: LineEvent,
-    session: ?Session,
-    initialState: ?Object,
-    requestContext: ?Object,
-    emitter?: ?EventEmitter,
+    session?: Session,
+    initialState?: Object,
+    requestContext?: Object,
+    emitter?: EventEmitter,
   }): Promise<LineContext> {
     let customAccessToken;
     if (this._mapDestinationToAccessToken) {

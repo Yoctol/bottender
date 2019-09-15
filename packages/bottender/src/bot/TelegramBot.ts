@@ -1,4 +1,4 @@
-import { SessionStore } from '../session/SessionStore';
+import SessionStore from '../session/SessionStore';
 
 import Bot from './Bot';
 import TelegramConnector from './TelegramConnector';

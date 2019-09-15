@@ -1,6 +1,7 @@
 import path from 'path';
 
 import { createServer, registerRoutes } from '@bottender/express';
+import express from 'express';
 
 import LineBot from '../../../bot/LineBot';
 import MessengerBot from '../../../bot/MessengerBot';
@@ -8,6 +9,7 @@ import SlackBot from '../../../bot/SlackBot';
 import TelegramBot from '../../../bot/TelegramBot';
 import ViberBot from '../../../bot/ViberBot';
 import getBottenderConfig from '../../shared/getBottenderConfig';
+import { CliContext } from '../..';
 
 import getSubArgs from './utils/getSubArgs';
 
@@ -19,7 +21,7 @@ const BOT_MAP = {
   viber: ViberBot,
 };
 
-const start = async ctx => {
+const start = async (ctx: CliContext) => {
   const argv = getSubArgs(ctx.argv, {
     '--console': Boolean,
     '--port': Number,
@@ -87,7 +89,7 @@ const start = async ctx => {
 
     bot.createRuntime();
   } else {
-    let server;
+    let server: express.Application;
     Object.entries(channels)
       .filter(([, { enabled }]) => enabled !== false)
       .map(([channel, { enabled, path: webhookPath, ...channelConfig }]) => {

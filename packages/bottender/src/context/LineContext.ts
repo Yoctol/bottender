@@ -6,7 +6,7 @@ import sleep from 'delay';
 import warning from 'warning';
 import { Line, LineClient } from 'messaging-api-line';
 
-import { Session } from '../session/Session';
+import Session from '../session/Session';
 
 import Context from './Context';
 import LineEvent from './LineEvent';
@@ -15,13 +15,13 @@ import { PlatformContext } from './PlatformContext';
 type Options = {
   client: LineClient,
   event: LineEvent,
-  session: ?Session,
-  initialState: ?Object,
-  requestContext: ?Object,
-  customAccessToken: ?string,
-  shouldBatch: ?boolean,
-  sendMethod: ?string,
-  emitter: ?EventEmitter,
+  session?: Session,
+  initialState?: Object,
+  requestContext?: Object,
+  customAccessToken?: string,
+  shouldBatch?: boolean,
+  sendMethod?: string,
+  emitter?: EventEmitter,
 };
 
 class LineContext extends Context implements PlatformContext {

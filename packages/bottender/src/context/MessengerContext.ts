@@ -5,22 +5,22 @@ import sleep from 'delay';
 import warning from 'warning';
 import { MessengerBatch, MessengerClient } from 'messaging-api-messenger';
 
-import { Session } from '../session/Session';
+import Session from '../session/Session';
 
 import Context from './Context';
 import MessengerEvent from './MessengerEvent';
 import { PlatformContext } from './PlatformContext';
 
 type Options = {
-  appId: ?string,
+  appId?: string,
   client: MessengerClient,
   event: MessengerEvent,
-  session: ?Session,
-  initialState: ?Object,
-  requestContext: ?Object,
-  customAccessToken: ?string,
-  batchQueue: ?Object,
-  emitter: ?EventEmitter,
+  session?: Session,
+  initialState?: Object,
+  requestContext?: Object,
+  customAccessToken?: string,
+  batchQueue?: Object,
+  emitter?: EventEmitter,
 };
 
 class MessengerContext extends Context implements PlatformContext {

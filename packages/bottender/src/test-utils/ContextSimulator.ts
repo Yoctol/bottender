@@ -120,6 +120,7 @@ class ContextSimulator {
       },
       initialState: this._initialState,
       requestContext: {},
+      emitter: null,
     });
 
     context.platform = 'other';

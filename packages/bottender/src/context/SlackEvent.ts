@@ -97,7 +97,7 @@ export type InteractiveMessageEvent = {
 
 export type SlackRawEvent = Message | InteractiveMessageEvent;
 
-export default class SlackEvent implements Event {
+export default class SlackEvent implements Event<SlackRawEvent> {
   _rawEvent: SlackRawEvent;
 
   constructor(rawEvent: SlackRawEvent) {

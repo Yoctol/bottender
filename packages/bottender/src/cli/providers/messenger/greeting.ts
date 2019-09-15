@@ -6,6 +6,7 @@ import { MessengerClient } from 'messaging-api-messenger';
 import getConfig from '../../shared/getConfig';
 import getSubArgs from '../sh/utils/getSubArgs';
 import { bold, error, print } from '../../shared/log';
+import { CliContext } from '../..';
 
 const help = () => {
   console.log(`
@@ -34,7 +35,7 @@ const help = () => {
   `);
 };
 
-export async function getGreeting(ctx) {
+export async function getGreeting(ctx: CliContext) {
   const token = ctx.argv['--token'];
 
   let accessToken;
@@ -73,7 +74,7 @@ export async function getGreeting(ctx) {
   }
 }
 
-export async function deleteGreeting(ctx) {
+export async function deleteGreeting(ctx: CliContext) {
   const token = ctx.argv['--token'];
 
   let accessToken;
@@ -108,7 +109,7 @@ export async function deleteGreeting(ctx) {
   }
 }
 
-export default async function main(ctx) {
+export default async function main(ctx: CliContext) {
   const subcommand = ctx.argv._[2];
 
   ctx.argv = getSubArgs(ctx.argv, {

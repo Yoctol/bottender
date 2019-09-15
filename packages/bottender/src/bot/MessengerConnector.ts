@@ -20,7 +20,7 @@ import MessengerEvent, {
   Sender,
   TakeThreadControl,
 } from '../context/MessengerEvent';
-import { Session } from '../session/Session';
+import Session from '../session/Session';
 
 import { Connector } from './Connector';
 
@@ -80,11 +80,11 @@ type ConstructorOptions = {
   appSecret?: string,
   client?: MessengerClient,
   mapPageToAccessToken?: (pageId: string) => Promise<string>,
-  verifyToken?: ?string,
-  batchConfig?: ?Object,
+  verifyToken?: string,
+  batchConfig?: Object,
   origin?: string,
-  skipAppSecretProof?: ?boolean,
-  skipProfile?: ?boolean,
+  skipAppSecretProof?: boolean,
+  skipProfile?: boolean,
 };
 
 export default class MessengerConnector

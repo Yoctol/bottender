@@ -6,14 +6,15 @@ import getConfig from '../../shared/getConfig';
 import getSubArgs from '../sh/utils/getSubArgs';
 import getWebhookFromNgrok from '../../shared/getWebhookFromNgrok';
 import { bold, error, print, warn } from '../../shared/log';
+import { CliContext } from '../../';
 
 import help from './help';
 
 export async function setWebhook(
-  webhook,
-  ngrokPort = '4040',
-  accessToken = undefined,
-  eventTypes = []
+  webhook: string,
+  ngrokPort: string = '4040',
+  accessToken: string | undefined = undefined,
+  eventTypes: string[] = []
 ) {
   try {
     if (!accessToken) {
@@ -45,6 +46,7 @@ export async function setWebhook(
     await client.setWebhook(webhook, eventTypes);
 
     print('Successfully set Viber webhook callback URL');
+    return;
   } catch (err) {
     error('Failed to set Viber webhook');
     if (err.response) {
@@ -59,7 +61,7 @@ export async function setWebhook(
   }
 }
 
-export async function deleteWebhook(ctx) {
+export async function deleteWebhook(ctx: CliContext) {
   let accessToken;
 
   try {
@@ -78,6 +80,7 @@ export async function deleteWebhook(ctx) {
     await client.removeWebhook();
 
     print('Successfully delete Viber webhook');
+    return;
   } catch (err) {
     error('Failed to delete Viber webhook');
     if (err.response) {
@@ -92,7 +95,7 @@ export async function deleteWebhook(ctx) {
   }
 }
 
-export default async function main(ctx) {
+export default async function main(ctx: CliContext) {
   const subcommand = ctx.argv._[2];
 
   ctx.argv = getSubArgs(ctx.argv, {

@@ -4,19 +4,19 @@ import sleep from 'delay';
 import warning from 'warning';
 import { ViberClient } from 'messaging-api-viber';
 
-import { Session } from '../session/Session';
+import Session from '../session/Session';
 
 import Context from './Context';
 import ViberEvent from './ViberEvent';
 import { PlatformContext } from './PlatformContext';
 
 type Options = {
-  client: ViberClient,
-  event: ViberEvent,
-  session: ?Session,
-  initialState: ?Object,
-  requestContext: ?Object,
-  emitter: ?EventEmitter,
+  client: ViberClient;
+  event: ViberEvent;
+  session?: Session;
+  initialState?: Record<string, any>;
+  requestContext?: Record<string, any>;
+  emitter?: EventEmitter;
 };
 
 class ViberContext extends Context implements PlatformContext {

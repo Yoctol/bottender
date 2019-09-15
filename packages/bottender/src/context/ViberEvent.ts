@@ -1,58 +1,58 @@
 import { Event } from './Event';
 
 type ViberUser = {
-  id: string,
-  name: string,
-  avatar: string,
-  country: string,
-  language: string,
-  api_version: number,
+  id: string;
+  name: string;
+  avatar: string;
+  country: string;
+  language: string;
+  api_version: number;
 };
 
 type SubscribedEvent = {
-  event: 'subscribed',
-  timestamp: number,
-  user: ViberUser,
-  message_token: number,
+  event: 'subscribed';
+  timestamp: number;
+  user: ViberUser;
+  message_token: number;
 };
 
 type UnsubscribedEvent = {
-  event: 'unsubscribed',
-  timestamp: number,
-  user_id: string,
-  message_token: number,
+  event: 'unsubscribed';
+  timestamp: number;
+  user_id: string;
+  message_token: number;
 };
 
 type ConversationStartedEvent = {
-  event: 'conversation_started',
-  timestamp: number,
-  message_token: number,
-  type: 'open',
-  context: string,
-  user: ViberUser,
-  subscribed: false,
+  event: 'conversation_started';
+  timestamp: number;
+  message_token: number;
+  type: 'open';
+  context: string;
+  user: ViberUser;
+  subscribed: false;
 };
 
 type DeliveredEvent = {
-  event: 'delivered',
-  timestamp: number,
-  message_token: number,
-  user_id: string,
+  event: 'delivered';
+  timestamp: number;
+  message_token: number;
+  user_id: string;
 };
 
 type SeenEvent = {
-  event: 'seen',
-  timestamp: number,
-  message_token: number,
-  user_id: string,
+  event: 'seen';
+  timestamp: number;
+  message_token: number;
+  user_id: string;
 };
 
 type FailedEvent = {
-  event: 'failed',
-  timestamp: number,
-  message_token: number,
-  user_id: string,
-  desc: string,
+  event: 'failed';
+  timestamp: number;
+  message_token: number;
+  user_id: string;
+  desc: string;
 };
 
 type ViberMessage = {
@@ -64,30 +64,30 @@ type ViberMessage = {
     | 'sticker'
     | 'contact'
     | 'url'
-    | 'location',
-  text?: string,
-  media?: string,
+    | 'location';
+  text?: string;
+  media?: string;
   location?: {
-    lat: string,
-    lot: string,
-  },
+    lat: string;
+    lot: string;
+  };
   contact?: {
-    name: string,
-    phone_number: string,
-  },
-  tracking_data?: string,
-  file_name?: string,
-  file_size?: number,
-  duration?: number,
-  sticker_id?: number,
+    name: string;
+    phone_number: string;
+  };
+  tracking_data?: string;
+  file_name?: string;
+  file_size?: number;
+  duration?: number;
+  sticker_id?: number;
 };
 
 type MessageEvent = {
-  event: 'message',
-  timestamp: number,
-  message_token: number,
-  sender: ViberUser,
-  message: ViberMessage,
+  event: 'message';
+  timestamp: number;
+  message_token: number;
+  sender: ViberUser;
+  message: ViberMessage;
 };
 
 export type ViberRawEvent =
@@ -99,7 +99,7 @@ export type ViberRawEvent =
   | FailedEvent
   | MessageEvent;
 
-export default class ViberEvent implements Event {
+export default class ViberEvent implements Event<ViberRawEvent> {
   _rawEvent: ViberRawEvent;
 
   constructor(rawEvent: ViberRawEvent) {
@@ -126,9 +126,9 @@ export default class ViberEvent implements Event {
    * The message object from Viber raw event.
    *
    */
-  get message(): ?ViberMessage {
+  get message(): ViberMessage | null {
     if (this.isMessage) {
-      return ((this._rawEvent as any) as MessageEvent).message;
+      return (this._rawEvent as MessageEvent).message;
     }
     return null;
   }
@@ -138,18 +138,16 @@ export default class ViberEvent implements Event {
    *
    */
   get isText(): boolean {
-    return (
-      this.isMessage && ((this.message as any) as ViberMessage).type === 'text'
-    );
+    return this.isMessage && (this.message as ViberMessage).type === 'text';
   }
 
   /**
    * The text string from Viber raw event.
    *
    */
-  get text(): ?string {
+  get text(): string | null {
     if (this.isMessage) {
-      return ((this.message as any) as ViberMessage).text || null;
+      return (this.message as ViberMessage).text || null;
     }
     return null;
   }
@@ -159,18 +157,16 @@ export default class ViberEvent implements Event {
    *
    */
   get isPicture(): boolean {
-    return (
-      this.isMessage && ((this.message as any) as ViberMessage).type === 'picture'
-    );
+    return this.isMessage && (this.message as ViberMessage).type === 'picture';
   }
 
   /**
    * The picture URL from Viber raw event.
    *
    */
-  get picture(): ?string {
+  get picture(): string | null {
     if (this.isPicture) {
-      return ((this.message as any) as ViberMessage).media;
+      return (this.message as ViberMessage).media || null;
     }
     return null;
   }
@@ -180,18 +176,16 @@ export default class ViberEvent implements Event {
    *
    */
   get isVideo(): boolean {
-    return (
-      this.isMessage && ((this.message as any) as ViberMessage).type === 'video'
-    );
+    return this.isMessage && (this.message as ViberMessage).type === 'video';
   }
 
   /**
    * The video URL from Viber raw event.
    *
    */
-  get video(): ?string {
+  get video(): string | null {
     if (this.isVideo) {
-      return ((this.message as any) as ViberMessage).media;
+      return (this.message as ViberMessage).media | null;
     }
     return null;
   }
@@ -210,9 +204,9 @@ export default class ViberEvent implements Event {
    * The file URL from Viber raw event.
    *
    */
-  get file(): ?string {
+  get file(): string | null {
     if (this.isFile) {
-      return ((this.message as any) as ViberMessage).media;
+      return (this.message as ViberMessage).media || null;
     }
     return null;
   }
@@ -222,18 +216,16 @@ export default class ViberEvent implements Event {
    *
    */
   get isSticker(): boolean {
-    return (
-      this.isMessage && ((this.message as any) as ViberMessage).type === 'sticker'
-    );
+    return this.isMessage && (this.message as ViberMessage).type === 'sticker';
   }
 
   /**
    * The sticker id from Viber raw event.
    *
    */
-  get sticker(): ?number {
+  get sticker(): number | null {
     if (this.isSticker) {
-      return ((this.message as any) as ViberMessage).sticker_id;
+      return (this.message as ViberMessage).sticker_id || null;
     }
     return null;
   }
@@ -243,18 +235,16 @@ export default class ViberEvent implements Event {
    *
    */
   get isContact(): boolean {
-    return (
-      this.isMessage && ((this.message as any) as ViberMessage).type === 'contact'
-    );
+    return this.isMessage && (this.message as ViberMessage).type === 'contact';
   }
 
   /**
    * The contact object from Viber raw event.
    *
    */
-  get contact(): ?Object {
+  get contact(): Object | null {
     if (this.isContact) {
-      return ((this.message as any) as ViberMessage).contact;
+      return (this.message as ViberMessage).contact || null;
     }
     return null;
   }
@@ -264,16 +254,16 @@ export default class ViberEvent implements Event {
    *
    */
   get isURL(): boolean {
-    return this.isMessage && ((this.message as any) as ViberMessage).type === 'url';
+    return this.isMessage && (this.message as ViberMessage).type === 'url';
   }
 
   /**
    * The URL from Viber raw event.
    *
    */
-  get url(): ?string {
+  get url(): string | null {
     if (this.isURL) {
-      return ((this.message as any) as ViberMessage).media;
+      return (this.message as ViberMessage).media || null;
     }
     return null;
   }
@@ -283,18 +273,16 @@ export default class ViberEvent implements Event {
    *
    */
   get isLocation(): boolean {
-    return (
-      this.isMessage && ((this.message as any) as ViberMessage).type === 'location'
-    );
+    return this.isMessage && (this.message as ViberMessage).type === 'location';
   }
 
   /**
    * The location object from Viber raw event.
    *
    */
-  get location(): ?Object {
+  get location(): Object | null {
     if (this.isLocation) {
-      return ((this.message as any) as ViberMessage).location;
+      return (this.message as ViberMessage).location;
     }
     return null;
   }
@@ -311,9 +299,9 @@ export default class ViberEvent implements Event {
    * The subscribed payload from Viber raw event.
    *
    */
-  get subscribed(): ?SubscribedEvent {
+  get subscribed(): SubscribedEvent | null {
     if (this.isSubscribed) {
-      return (this._rawEvent as any);
+      return this._rawEvent as any;
     }
     return null;
   }
@@ -330,9 +318,9 @@ export default class ViberEvent implements Event {
    * The unsubscribed payload from Viber raw event.
    *
    */
-  get unsubscribed(): ?UnsubscribedEvent {
+  get unsubscribed(): UnsubscribedEvent | null {
     if (this.isUnsubscribed) {
-      return (this._rawEvent as any);
+      return this._rawEvent as any;
     }
     return null;
   }
@@ -349,9 +337,9 @@ export default class ViberEvent implements Event {
    * The conversation started payload from Viber raw event.
    *
    */
-  get conversationStarted(): ?ConversationStartedEvent {
+  get conversationStarted(): ConversationStartedEvent | null {
     if (this.isConversationStarted) {
-      return (this._rawEvent as any);
+      return this._rawEvent as any;
     }
     return null;
   }
@@ -368,9 +356,9 @@ export default class ViberEvent implements Event {
    * The delivered payload from Viber raw event.
    *
    */
-  get delivered(): ?DeliveredEvent {
+  get delivered(): DeliveredEvent | null {
     if (this.isDelivered) {
-      return (this._rawEvent as any);
+      return this._rawEvent as any;
     }
     return null;
   }
@@ -387,9 +375,9 @@ export default class ViberEvent implements Event {
    * The seen payload from Viber raw event.
    *
    */
-  get seen(): ?SeenEvent {
+  get seen(): SeenEvent | null {
     if (this.isSeen) {
-      return (this._rawEvent as any);
+      return this._rawEvent as any;
     }
     return null;
   }
@@ -406,9 +394,9 @@ export default class ViberEvent implements Event {
    * The failed payload from Viber raw event.
    *
    */
-  get failed(): ?FailedEvent {
+  get failed(): FailedEvent | null {
     if (this.isFailed) {
-      return (this._rawEvent as any);
+      return this._rawEvent as any;
     }
     return null;
   }

@@ -1,6 +1,6 @@
 import { RTMClient } from '@slack/rtm-api';
 
-import { SessionStore } from '../session/SessionStore';
+import SessionStore from '../session/SessionStore';
 
 import Bot from './Bot';
 import SlackConnector from './SlackConnector';
@@ -16,12 +16,12 @@ export default class SlackBot extends Bot {
     origin,
     skipProfile,
   }: {
-    accessToken: string,
-    sessionStore: SessionStore,
-    sync?: boolean,
-    verificationToken?: string,
-    origin?: string,
-    skipProfile?: ?boolean,
+    accessToken: string;
+    sessionStore: SessionStore;
+    sync?: boolean;
+    verificationToken?: string;
+    origin?: string;
+    skipProfile?: boolean;
   }) {
     const connector = new SlackConnector({
       accessToken,

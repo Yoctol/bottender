@@ -6,7 +6,7 @@ import { addedDiff } from 'deep-object-diff';
 
 import ViberContext from '../context/ViberContext';
 import ViberEvent, { ViberRawEvent } from '../context/ViberEvent';
-import { Session } from '../session/Session';
+import Session from '../session/Session';
 
 import { Connector } from './Connector';
 
@@ -109,10 +109,10 @@ export default class ViberConnector implements Connector<ViberRequestBody> {
 
   createContext(params: {
     event: ViberEvent,
-    session: ?Session,
-    initialState: ?Object,
-    requestContext: ?Object,
-    emitter?: ?EventEmitter,
+    session?: Session,
+    initialState?: Object,
+    requestContext?: Object,
+    emitter?: EventEmitter,
   }): ViberContext {
     return new ViberContext({
       ...params,

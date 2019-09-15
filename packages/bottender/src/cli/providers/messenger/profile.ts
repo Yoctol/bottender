@@ -8,6 +8,7 @@ import { omit, pick } from 'lodash';
 import getConfig from '../../shared/getConfig';
 import getSubArgs from '../sh/utils/getSubArgs';
 import { bold, error, log, print } from '../../shared/log';
+import { CliContext } from '../..';
 
 const FIELDS = [
   'account_linking_url',
@@ -69,7 +70,7 @@ export function checkMessengerProfile() {
   }
 }
 
-export async function getMessengerProfile(ctx) {
+export async function getMessengerProfile(ctx: CliContext) {
   const token = ctx.argv['--token'];
 
   let accessToken;
@@ -110,7 +111,7 @@ export async function getMessengerProfile(ctx) {
   }
 }
 
-export async function setMessengerProfile(ctx) {
+export async function setMessengerProfile(ctx: CliContext) {
   const force = ctx.argv['--force'];
   const token = ctx.argv['--token'];
 
@@ -209,7 +210,7 @@ export async function setMessengerProfile(ctx) {
   }
 }
 
-export async function deleteMessengerProfile(ctx) {
+export async function deleteMessengerProfile(ctx: CliContext) {
   const token = ctx.argv['--token'];
 
   let accessToken;
@@ -244,7 +245,7 @@ export async function deleteMessengerProfile(ctx) {
   }
 }
 
-export default async function main(ctx) {
+export default async function main(ctx: CliContext) {
   const subcommand = ctx.argv._[2];
 
   ctx.argv = getSubArgs(ctx.argv, {
