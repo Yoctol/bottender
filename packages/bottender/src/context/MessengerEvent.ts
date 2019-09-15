@@ -137,9 +137,7 @@ export type PolicyEnforcement = {
   reason: string,
 };
 
-export type AppRoles = {
-  [key: string]: Array<string>,
-};
+export type AppRoles = Record<string, string[]>;
 
 export type PassThreadControl = {
   new_owner_app_id: string,
@@ -185,7 +183,7 @@ export type MessengerRawEvent = {
 
 type MessengerEventOptions = {
   isStandby?: boolean,
-  pageId?: string,
+  pageId?: string | null,
 };
 
 export default class MessengerEvent implements Event<MessengerRawEvent> {
@@ -193,7 +191,7 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
 
   _isStandby: boolean;
 
-  _pageId: ?string;
+  _pageId: string | null;
 
   constructor(
     rawEvent: MessengerRawEvent,
@@ -242,7 +240,7 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    * The text string from Messenger raw event.
    *
    */
-  get text(): ?string {
+  get text(): string | null {
     if (this.isText) {
       return (this.message as any).text;
     }
@@ -377,7 +375,7 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    * The sticker_id from Messenger raw event.
    *
    */
-  get sticker(): ?string {
+  get sticker(): string | null {
     return this.isSticker ? (this.message as any).sticker_id : null;
   }
 
@@ -597,7 +595,7 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    * The payload received from postback or quick reply.
    *
    */
-  get payload(): ?string {
+  get payload(): string | null {
     if (!!this.postback && this.isPayload) {
       return this.postback.payload;
     }
@@ -774,7 +772,7 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    * The ref string from Messenger event.
    *
    */
-  get ref(): ?string {
+  get ref(): string | null {
     if (!this.isReferral) {
       return null;
     }
@@ -785,7 +783,7 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    * The pageId of the Page where this Messenger event is happening on.
    *
    */
-  get pageId(): ?string {
+  get pageId(): string | null {
     return this._pageId || null;
   }
 

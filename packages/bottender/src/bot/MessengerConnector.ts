@@ -25,7 +25,7 @@ import Session from '../session/Session';
 import { Connector } from './Connector';
 
 type Entry = {
-  ['messaging' | 'standby' | 'changes']: Array<{
+  [key in 'messaging' | 'standby' | 'changes']: {
     sender: Sender,
     recipient: Recipient,
     timestamp: number,
@@ -33,12 +33,12 @@ type Entry = {
     message?: Message,
     field?: String,
     value?: Object,
-  }>,
+  }[],
 };
 
 type EntryRequestBody = {
   type: string,
-  entry: Array<Entry>,
+  entry: Entry[],
 };
 
 type PolicyEnforcementRequestBody = {
@@ -67,7 +67,7 @@ type TakeThreadControlRequestBody = {
   take_thread_control: TakeThreadControl,
 };
 
-type MessengerRequestBody =
+export type MessengerRequestBody =
   | EntryRequestBody
   | PolicyEnforcementRequestBody
   | AppRolesRequestBody
@@ -80,15 +80,15 @@ type ConstructorOptions = {
   appSecret?: string,
   client?: MessengerClient,
   mapPageToAccessToken?: (pageId: string) => Promise<string>,
-  verifyToken?: string,
-  batchConfig?: Object,
+  verifyToken?: string | null,
+  batchConfig?: Object | null,
   origin?: string,
-  skipAppSecretProof?: boolean,
-  skipProfile?: boolean,
+  skipAppSecretProof?: boolean | null,
+  skipProfile?: boolean | null,
 };
 
 export default class MessengerConnector
-  implements Connector<MessengerRequestBody> {
+  implements Connector<MessengerRequestBody, MessengerClient> {
   _client: MessengerClient;
 
   _appId: string;
@@ -97,13 +97,13 @@ export default class MessengerConnector
 
   _skipProfile: boolean;
 
-  _mapPageToAccessToken: ?(pageId: string) => ?Promise<string>;
+  _mapPageToAccessToken: ((pageId: string) => Promise<string>) | null = null;
 
-  _verifyToken: ?string;
+  _verifyToken: string | null = null;
 
-  _batchConfig: ?Object;
+  _batchConfig: Object | null = null;
 
-  _batchQueue: ?Object;
+  _batchQueue: Object | null = null;
 
   constructor({
     accessToken,
@@ -153,23 +153,23 @@ export default class MessengerConnector
 
   _getRawEventsFromRequest(
     body: MessengerRequestBody
-  ): Array<MessengerRawEvent> {
+  ): MessengerRawEvent[] {
     if (body.entry) {
-      const { entry } = ((body as any) as EntryRequestBody);
+      const { entry } = body as EntryRequestBody;
 
       return entry
         .map(ent => {
           if (ent.messaging) {
-            return ((ent.messaging[0] as any) as MessengerRawEvent);
+            return (ent.messaging[0] as MessengerRawEvent);
           }
 
           if (ent.standby) {
-            return ((ent.standby[0] as any) as MessengerRawEvent);
+            return (ent.standby[0] as MessengerRawEvent);
           }
 
           // for Webhook Test button request and other page events
           if (ent.changes) {
-            return ((ent.changes[0] as any) as MessengerRawEvent);
+            return (ent.changes[0] as MessengerRawEvent);
           }
 
           // $FlowExpectedError
@@ -178,21 +178,23 @@ export default class MessengerConnector
         .filter(event => event != null);
     }
 
-    return [((body as any) as MessengerRawEvent)];
+    return [(body as MessengerRawEvent)];
   }
 
-  _getPageIdFromRawEvent(rawEvent: MessengerRawEvent): ?string {
+  _getPageIdFromRawEvent(rawEvent: MessengerRawEvent): string | null {
     if (rawEvent.message && rawEvent.message.is_echo && rawEvent.sender) {
       return rawEvent.sender.id;
     }
     if (rawEvent.recipient) {
       return rawEvent.recipient.id;
     }
+
+    return null;
   }
 
   _isStandby(body: MessengerRequestBody): boolean {
     if (!body.entry) return false;
-    const entry = ((body as any) as EntryRequestBody).entry[0];
+    const entry = (body as EntryRequestBody).entry[0];
 
     return !!entry.standby;
   }

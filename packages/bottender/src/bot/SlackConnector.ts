@@ -5,6 +5,7 @@ import pProps from 'p-props';
 import warning from 'warning';
 import { SlackOAuthClient } from 'messaging-api-slack';
 
+import Session from '../session/Session';
 import SlackContext from '../context/SlackContext';
 import SlackEvent, {
   EventAPITypes,
@@ -12,7 +13,6 @@ import SlackEvent, {
   Message,
   SlackRawEvent,
 } from '../context/SlackEvent';
-import Session from '../session/Session';
 
 import { Connector } from './Connector';
 
@@ -27,7 +27,7 @@ type EventsAPIBody = {
   api_app_id: string;
   type: EventAPITypes;
   event: Message;
-  authed_users: Array<string>;
+  authed_users: string[];
   event_id: string;
   event_time: number;
 };
@@ -39,10 +39,11 @@ type ConstructorOptions = {
   client?: SlackOAuthClient;
   verificationToken?: string;
   origin?: string;
-  skipProfile?: boolean;
+  skipProfile?: boolean | null;
 };
 
-export default class SlackConnector implements Connector<SlackRequestBody> {
+export default class SlackConnector
+  implements Connector<SlackRequestBody, SlackOAuthClient> {
   _client: SlackOAuthClient;
 
   _verificationToken: string;
@@ -85,7 +86,7 @@ export default class SlackConnector implements Connector<SlackRequestBody> {
     }
 
     // for RTM WebSocket messages
-    return (body as any) as Message;
+    return body as Message;
   }
 
   _isBotEventRequest(body: SlackRequestBody): boolean {
@@ -192,7 +193,7 @@ export default class SlackConnector implements Connector<SlackRequestBody> {
       return;
     }
 
-    const promises: Object = {
+    const promises: Record<string, any> = {
       sender: this._client.getUserInfo(senderId),
     };
 
@@ -280,10 +281,10 @@ export default class SlackConnector implements Connector<SlackRequestBody> {
 
   createContext(params: {
     event: SlackEvent;
-    session?: Session;
-    initialState?: Object;
-    requestContext?: Object;
-    emitter?: EventEmitter;
+    session: Session | null;
+    initialState: Record<string, any> | null;
+    requestContext: Record<string, any> | null;
+    emitter?: EventEmitter | null;
   }): SlackContext {
     return new SlackContext({
       ...params,
@@ -312,7 +313,7 @@ export default class SlackConnector implements Connector<SlackRequestBody> {
     headers: Record<string, any>;
     query: Record<string, any>;
     rawBody: string;
-    body: Object;
+    body: Record<string, any>;
   }) {
     if (method.toLowerCase() !== 'post') {
       return {

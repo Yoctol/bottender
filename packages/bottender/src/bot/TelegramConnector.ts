@@ -2,9 +2,9 @@ import EventEmitter from 'events';
 
 import { TelegramClient } from 'messaging-api-telegram';
 
+import Session from '../session/Session';
 import TelegramContext from '../context/TelegramContext';
 import TelegramEvent, { TelegramRawEvent } from '../context/TelegramEvent';
-import Session from '../session/Session';
 
 import { Connector } from './Connector';
 
@@ -17,7 +17,7 @@ type ConstructorOptions = {
 };
 
 export default class TelegramConnector
-  implements Connector<TelegramRequestBody> {
+  implements Connector<TelegramRequestBody, TelegramClient> {
   _client: TelegramClient;
 
   constructor({ accessToken, client, origin }: ConstructorOptions) {
@@ -155,10 +155,10 @@ export default class TelegramConnector
 
   createContext(params: {
     event: TelegramEvent;
-    session?: Session;
-    initialState?: Object;
-    requestContext?: Object;
-    emitter?: EventEmitter;
+    session: Session | null;
+    initialState: Record<string, any> | null;
+    requestContext: Record<string, any> | null;
+    emitter?: EventEmitter | null;
   }): TelegramContext {
     return new TelegramContext({
       ...params,
@@ -166,7 +166,9 @@ export default class TelegramConnector
     });
   }
 
-  preprocess() {
+  preprocess(): {
+    shouldNext: true;
+  } {
     return {
       shouldNext: true,
     };

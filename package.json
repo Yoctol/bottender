@@ -44,6 +44,7 @@
     "@types/micro": "^7.3.3",
     "@types/mongodb": "^3.3.1",
     "@types/restify": "^8.4.0",
+    "@types/shortid": "^0.0.29",
     "@types/update-notifier": "^2.5.0",
     "@types/warning": "^3.0.0",
     "@typescript-eslint/eslint-plugin": "^2.2.0",
