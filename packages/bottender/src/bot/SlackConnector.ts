@@ -282,8 +282,8 @@ export default class SlackConnector
   createContext(params: {
     event: SlackEvent;
     session: Session | null;
-    initialState: Record<string, any> | null;
-    requestContext: Record<string, any> | null;
+    initialState?: Record<string, any> | null;
+    requestContext?: Record<string, any> | null;
     emitter?: EventEmitter | null;
   }): SlackContext {
     return new SlackContext({

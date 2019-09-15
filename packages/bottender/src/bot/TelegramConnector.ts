@@ -156,8 +156,8 @@ export default class TelegramConnector
   createContext(params: {
     event: TelegramEvent;
     session: Session | null;
-    initialState: Record<string, any> | null;
-    requestContext: Record<string, any> | null;
+    initialState?: Record<string, any> | null;
+    requestContext?: Record<string, any> | null;
     emitter?: EventEmitter | null;
   }): TelegramContext {
     return new TelegramContext({

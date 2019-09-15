@@ -33,7 +33,7 @@ type Entry = {
     message?: Message,
     field?: String,
     value?: Object,
-  }[],
+  }[];
 };
 
 type EntryRequestBody = {
@@ -326,10 +326,10 @@ export default class MessengerConnector
 
   async createContext(params: {
     event: MessengerEvent,
-    session: ?Session,
-    initialState: ?Object,
-    requestContext: ?Object,
-    emitter?: ?EventEmitter,
+    session?: Session,
+    initialState?: Object,
+    requestContext?: Object,
+    emitter?: EventEmitter,
   }): Promise<MessengerContext> {
     let customAccessToken;
     if (this._mapPageToAccessToken) {

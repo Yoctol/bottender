@@ -1,3 +1,7 @@
+import { ViberClient } from 'messaging-api-viber';
+
+import Bot from './Bot';
+
 import SessionStore from '../session/SessionStore';
 import ViberConnector, { ViberRequestBody } from './ViberConnector';
 

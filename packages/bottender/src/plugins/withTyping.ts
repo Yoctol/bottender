@@ -1,6 +1,8 @@
 import omit from 'lodash/omit';
 import sleep from 'delay';
 
+import Context from '../context/Context';
+
 const methodMap = {
   // method name, arguments length (includes options)
   messenger: [
@@ -90,7 +92,11 @@ const methodMap = {
   ],
 };
 
-export default options => context => {
+type Options = {
+  delay: number;
+};
+
+export default (options: Options) => (context: Context) => {
   const methods = methodMap[context.platform];
   if (!methods) return;
 
@@ -99,7 +105,7 @@ export default options => context => {
     if (context[method]) {
       const _method = context[method];
       /* eslint-disable func-names */
-      context[method] = async function(...args) {
+      context[method] = async function(...args: any[]) {
         const methodOptions = args[len - 1];
 
         const delay =

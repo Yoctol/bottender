@@ -13,8 +13,8 @@ type Options = {
   client: ConsoleClient;
   event: ConsoleEvent;
   session: Session | null;
-  initialState: Record<string, any> | null;
-  requestContext: Record<string, any> | null;
+  initialState?: Record<string, any> | null;
+  requestContext?: Record<string, any> | null;
   fallbackMethods: boolean;
   mockPlatform: string;
   emitter: EventEmitter | null;

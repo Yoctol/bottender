@@ -10,8 +10,8 @@ type Options = {
   client: any;
   event: any;
   session: any;
-  initialState: Record<string, any> | null;
-  requestContext: Record<string, any> | null;
+  initialState?: Record<string, any> | null;
+  requestContext?: Record<string, any> | null;
   emitter: EventEmitter | null;
 };
 
@@ -32,9 +32,9 @@ export default class Context {
 
   _session: Record<string, any> | null;
 
-  _initialState: Record<string, any> | null;
+  _initialState?: Record<string, any> | null;
 
-  _requestContext: Record<string, any> | null;
+  _requestContext?: Record<string, any> | null;
 
   _emitter: EventEmitter | null;
 

@@ -111,8 +111,8 @@ export default class ViberConnector
   createContext(params: {
     event: ViberEvent;
     session: Session | null;
-    initialState: Record<string, any> | null;
-    requestContext: Record<string, any> | null;
+    initialState?: Record<string, any> | null;
+    requestContext?: Record<string, any> | null;
     emitter?: EventEmitter | null;
   }): ViberContext {
     return new ViberContext({

@@ -74,8 +74,8 @@ export default class ConsoleConnector
   createContext(params: {
     event: ConsoleEvent;
     session: Session | null;
-    initialState: Record<string, any> | null;
-    requestContext: Record<string, any> | null;
+    initialState?: Record<string, any> | null;
+    requestContext?: Record<string, any> | null;
     emitter?: EventEmitter | null;
   }): ConsoleContext {
     return new ConsoleContext({

@@ -340,6 +340,7 @@ class LineContext extends Context implements PlatformContext {
           false,
           'getAllMemberIds: should not be called in context which is not room or group session'
         );
+        return null;
     }
   }
 

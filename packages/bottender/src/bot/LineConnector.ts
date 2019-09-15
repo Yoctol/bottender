@@ -248,8 +248,8 @@ export default class LineConnector
   async createContext(params: {
     event: LineEvent;
     session: Session | null;
-    initialState: Record<string, any> | null;
-    requestContext: Record<string, any> | null;
+    initialState?: Record<string, any> | null;
+    requestContext?: Record<string, any> | null;
     emitter?: EventEmitter | null;
   }): Promise<LineContext> {
     let customAccessToken;

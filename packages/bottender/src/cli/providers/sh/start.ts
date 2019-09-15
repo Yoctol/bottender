@@ -90,6 +90,7 @@ const start = async (ctx: CliContext) => {
     bot.createRuntime();
   } else {
     let server: express.Application;
+
     Object.entries(channels)
       .filter(([, { enabled }]) => enabled !== false)
       .map(([channel, { enabled, path: webhookPath, ...channelConfig }]) => {
@@ -108,13 +109,17 @@ const start = async (ctx: CliContext) => {
         if (server) {
           registerRoutes(server, bot, { path: routePath });
         } else {
-          server = createServer(bot, { path: routePath });
+          server = createServer(bot, {
+            path: routePath,
+          });
         }
       });
 
-    server.listen(port, () => {
-      console.log(`server is running on ${port} port...`);
-    });
+    if (server) {
+      server.listen(port, () => {
+        console.log(`server is running on ${port} port...`);
+      });
+    }
   }
 };
 
