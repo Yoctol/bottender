@@ -29,9 +29,9 @@ class LineContext extends Context implements PlatformContext {
 
   _event: LineEvent = this._event;
 
-  _session: ?Session = this._session;
+  _session: Session | null = this._session;
 
-  _customAccessToken: ?string;
+  _customAccessToken: string | null;
 
   _isReplied: boolean = false;
 
@@ -195,7 +195,7 @@ class LineContext extends Context implements PlatformContext {
    * Gets profile information of current user.
    *
    */
-  async getUserProfile(): Promise<?Object> {
+  async getUserProfile(): Promise<Object | null> {
     if (!this._session) {
       warning(
         false,
@@ -242,7 +242,7 @@ class LineContext extends Context implements PlatformContext {
    * This includes the user IDs of users who has not added the bot as a friend or has blocked the bot.
    *
    */
-  async getMemberProfile(userId: string): Promise<?Object> {
+  async getMemberProfile(userId: string): Promise<Object | null> {
     if (!this._session) {
       warning(
         false,
@@ -284,7 +284,7 @@ class LineContext extends Context implements PlatformContext {
    * This feature is only available for LINE@ Approved accounts or official accounts.
    *
    */
-  async getMemberIds(start: string): Promise<?Object> {
+  async getMemberIds(start: string): Promise<Object | null> {
     if (!this._session) {
       warning(
         false,
@@ -317,13 +317,13 @@ class LineContext extends Context implements PlatformContext {
    * This feature is only available for LINE@ Approved accounts or official accounts.
    *
    */
-  async getAllMemberIds(): Promise<?Array<string>> {
+  async getAllMemberIds(): Promise<string[] | null> {
     if (!this._session) {
       warning(
         false,
         'getAllMemberIds: should not be called in context without session'
       );
-      return;
+      return null;
     }
 
     switch (this._session.type) {

@@ -24,19 +24,19 @@ type Options = {
 };
 
 class MessengerContext extends Context implements PlatformContext {
-  _appId: ?string;
+  _appId: string | null;
 
   _client: MessengerClient = this._client;
 
   _event: MessengerEvent = this._event;
 
-  _session: ?Session = this._session;
+  _session: Session | null = this._session;
 
-  _customAccessToken: ?string;
+  _customAccessToken: string | null;
 
-  _personaId: ?string;
+  _personaId: string | null;
 
-  _batchQueue: ?Object;
+  _batchQueue: Object | null;
 
   constructor({
     appId,
@@ -150,7 +150,7 @@ class MessengerContext extends Context implements PlatformContext {
   /**
    * https://github.com/Yoctol/messaging-apis/tree/master/packages/messaging-api-messenger#typingonuserid
    */
-  async getUserProfile(): Promise<?Object> {
+  async getUserProfile(): Promise<Object | null> {
     if (!this._session) {
       warning(
         false,

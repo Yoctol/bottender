@@ -24,7 +24,7 @@ export default class SlackContext extends Context implements PlatformContext {
 
   _event: SlackEvent = this._event;
 
-  _session: ?Session = this._session;
+  _session: Session | null = this._session;
 
   constructor({
     client,

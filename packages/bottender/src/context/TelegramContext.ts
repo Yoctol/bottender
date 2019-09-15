@@ -11,12 +11,12 @@ import TelegramEvent from './TelegramEvent';
 import { PlatformContext } from './PlatformContext';
 
 type Options = {
-  client: TelegramClient,
-  event: TelegramEvent,
-  session?: Session,
-  initialState?: Object,
-  requestContext?: Object,
-  emitter?: EventEmitter,
+  client: TelegramClient;
+  event: TelegramEvent;
+  session?: Session;
+  initialState?: Object;
+  requestContext?: Object;
+  emitter?: EventEmitter;
 };
 
 class TelegramContext extends Context implements PlatformContext {
@@ -24,7 +24,7 @@ class TelegramContext extends Context implements PlatformContext {
 
   _event: TelegramEvent = this._event;
 
-  _session: ?Session = this._session;
+  _session: Session | null = this._session;
 
   constructor({
     client,
@@ -316,7 +316,7 @@ class TelegramContext extends Context implements PlatformContext {
   }
 
   async editMessageLiveLocation(
-    location: { latitude: number, longitude: number },
+    location: { latitude: number; longitude: number },
     options?: Object
   ) {
     if (!this._session) {
