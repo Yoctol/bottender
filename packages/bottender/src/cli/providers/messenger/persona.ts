@@ -78,6 +78,7 @@ export async function createPersona(ctx: CliContext) {
     const personaID = await client.createPersona(persona);
 
     print(`Successfully create ${bold('persona')} ${bold(personaID.id)}`);
+    return;
   } catch (err) {
     error(`Failed to create ${bold('persona')}`);
     if (err.response) {
@@ -125,6 +126,7 @@ export async function listPersona(ctx: CliContext) {
     } else {
       print('No personas are found.');
     }
+    return;
   } catch (err) {
     error(`Failed to list ${bold('personas')}`);
     if (err.response) {
@@ -169,6 +171,7 @@ export async function getPersona(ctx: CliContext) {
     } else {
       print(`Cannot get persona of ID ${bold(personaId)}`);
     }
+    return;
   } catch (err) {
     error(`Failed to get ${bold('persona')} of ID ${bold(personaId)}`);
     if (err.response) {
@@ -211,6 +214,7 @@ export async function deletePersona(ctx: CliContext) {
     } else {
       print(`Cannot get persona of ID ${bold(personaId)}`);
     }
+    return;
   } catch (err) {
     error(`Failed to delete ${bold('persona')} of ID ${bold(personaId)}`);
     if (err.response) {
@@ -249,5 +253,6 @@ export default async function main(ctx: CliContext) {
     default:
       error(`Please specify a valid subcommand: create, list, get, delete`);
       help();
+      return;
   }
 }

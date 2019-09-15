@@ -185,7 +185,7 @@ export default class ViberEvent implements Event<ViberRawEvent> {
    */
   get video(): string | null {
     if (this.isVideo) {
-      return (this.message as ViberMessage).media | null;
+      return (this.message as ViberMessage).media || null;
     }
     return null;
   }
@@ -282,7 +282,7 @@ export default class ViberEvent implements Event<ViberRawEvent> {
    */
   get location(): Object | null {
     if (this.isLocation) {
-      return (this.message as ViberMessage).location;
+      return (this.message as ViberMessage).location || null;
     }
     return null;
   }

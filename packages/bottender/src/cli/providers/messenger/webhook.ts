@@ -160,6 +160,7 @@ export async function setWebhook(
     print(
       `Check selected events on: https://developers.facebook.com/apps/${config.appId}/messenger/`
     );
+    return;
   } catch (err) {
     error('Failed to set Messenger webhook');
     if (err.response) {

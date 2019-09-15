@@ -61,6 +61,7 @@ export async function getWhitelistedDomains(ctx: CliContext) {
     } else {
       error(`Failed to find ${bold('whitelisted-domains')} setting`);
     }
+    return;
   } catch (err) {
     error(`Failed to get ${bold('whitelisted-domains')} setting`);
     if (err.response) {
@@ -96,6 +97,7 @@ export async function deleteWhitelistedDomains(ctx: CliContext) {
     await client.deleteWhitelistedDomains();
 
     print(`Successfully delete ${bold('whitelisted-domains')} setting`);
+    return;
   } catch (err) {
     error(`Failed to delete ${bold('whitelisted-domains')} setting`);
     if (err.response) {

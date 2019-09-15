@@ -1,6 +1,6 @@
 import Confirm from 'prompt-confirm';
 import invariant from 'invariant';
-import { ViberClient } from 'messaging-api-viber';
+import { ViberClient, ViberSender } from 'messaging-api-viber';
 
 import getConfig from '../../shared/getConfig';
 import getSubArgs from '../sh/utils/getSubArgs';
@@ -10,22 +10,23 @@ import { CliContext } from '../../';
 
 import help from './help';
 
+type ViberConfig = {
+  accessToken: string;
+  sender: ViberSender;
+  events: string;
+};
+
 export async function setWebhook(
   webhook: string,
   ngrokPort: string = '4040',
-  accessToken: string | undefined = undefined,
   eventTypes: string[] = []
 ) {
   try {
-    if (!accessToken) {
-      const config = getConfig('viber');
+    const config: ViberConfig = getConfig('viber');
 
-      invariant(config.accessToken, 'accessToken is not found in config file');
+    invariant(config.accessToken, 'accessToken is not found in config file');
 
-      accessToken = config.accessToken;
-    }
-
-    const client = ViberClient.connect(accessToken);
+    const client = ViberClient.connect(config.accessToken, config.sender);
 
     if (!webhook) {
       warn('We can not find the webhook callback url you provided.');
@@ -61,21 +62,13 @@ export async function setWebhook(
   }
 }
 
-export async function deleteWebhook(ctx: CliContext) {
-  let accessToken;
-
+export async function deleteWebhook(_: CliContext) {
   try {
-    if (ctx.argv['--token']) {
-      accessToken = ctx.argv['--token'];
-    } else {
-      const config = getConfig('viber');
+    const config: ViberConfig = getConfig('viber');
 
-      invariant(config.accessToken, 'accessToken is not found in config file');
+    invariant(config.accessToken, 'accessToken is not found in config file');
 
-      accessToken = config.accessToken;
-    }
-
-    const client = ViberClient.connect(accessToken);
+    const client = ViberClient.connect(config.accessToken, config.sender);
 
     await client.removeWebhook();
 
@@ -101,8 +94,6 @@ export default async function main(ctx: CliContext) {
   ctx.argv = getSubArgs(ctx.argv, {
     '--webhook': String,
     '-w': '--webhook',
-    '--token': String,
-    '-t': '--token',
     '--events': String,
     '-e': '--events',
     '--ngrok-port': String,
@@ -111,15 +102,14 @@ export default async function main(ctx: CliContext) {
   switch (subcommand) {
     case 'set': {
       const webhook = ctx.argv['--webhook'];
-      const accessToken = ctx.argv['--token'];
       const ngrokPort = ctx.argv['--ngrok-port'];
       const events = ctx.argv['--events'];
 
       if (typeof events === 'string') {
         const eventTypes = events.split(',');
-        await setWebhook(webhook, ngrokPort, accessToken, eventTypes);
+        await setWebhook(webhook, ngrokPort, eventTypes);
       } else {
-        await setWebhook(webhook, ngrokPort, accessToken);
+        await setWebhook(webhook, ngrokPort);
       }
 
       break;

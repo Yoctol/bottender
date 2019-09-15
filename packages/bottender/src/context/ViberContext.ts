@@ -24,18 +24,7 @@ class ViberContext extends Context implements PlatformContext {
 
   _event: ViberEvent = this._event;
 
-  _session: ?Session = this.session;
-
-  constructor({
-    client,
-    event,
-    session,
-    initialState,
-    requestContext,
-    emitter,
-  }: Options) {
-    super({ client, event, session, initialState, requestContext, emitter });
-  }
+  _session: Session | null = this.session;
 
   /**
    * The name of the platform.
@@ -77,7 +66,7 @@ class ViberContext extends Context implements PlatformContext {
    * Get user details from the owner of the session.
    *
    */
-  async getUserDetails(): Promise<?Object> {
+  async getUserDetails(): Promise<Object | null> {
     if (!this._session) {
       warning(
         false,
@@ -93,7 +82,7 @@ class ViberContext extends Context implements PlatformContext {
    * Get user online status from the owner of the session.
    *
    */
-  async getOnlineStatus(): Promise<?Object> {
+  async getOnlineStatus(): Promise<Object | null> {
     if (!this._session) {
       warning(
         false,

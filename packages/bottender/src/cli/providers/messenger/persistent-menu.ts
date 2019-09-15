@@ -71,6 +71,7 @@ export async function getPersistentMenu(ctx: CliContext) {
     } else {
       error(`Failed to find ${bold('persistent_menu')} setting`);
     }
+    return;
   } catch (err) {
     error(`Faile to get ${bold('persistent_menu')} setting`);
     if (err.response) {
@@ -106,6 +107,7 @@ export async function deletePersistentMenu(ctx: CliContext) {
     await client.deletePersistentMenu();
 
     print(`Successfully delete ${bold('persistent_menu')} setting`);
+    return;
   } catch (err) {
     error(`Failed to delete ${bold('persistent_menu')} setting`);
     if (err.response) {

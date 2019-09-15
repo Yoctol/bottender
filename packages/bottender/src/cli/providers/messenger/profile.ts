@@ -53,8 +53,8 @@ export const help = () => {
 export const trimDomain = profile => {
   const clone = { ...profile };
   if (clone.whitelisted_domains) {
-    clone.whitelisted_domains = clone.whitelisted_domains.map(domain =>
-      domain.replace(/\/$/, '')
+    clone.whitelisted_domains = clone.whitelisted_domains.map(
+      (domain: string) => domain.replace(/\/$/, '')
     );
   }
   return clone;
@@ -64,6 +64,7 @@ export function checkMessengerProfile() {
   try {
     getConfig('messenger');
     print('Messenger profile check done.');
+    return;
   } catch (e) {
     error(e.message);
     return process.exit(1);
@@ -97,6 +98,7 @@ export async function getMessengerProfile(ctx: CliContext) {
     } else {
       error(`Failed to find ${bold('messenger_profile')} setting`);
     }
+    return;
   } catch (err) {
     error(`Failed to get ${bold('messenger_profile')} settings`);
     if (err.response) {
@@ -196,6 +198,7 @@ export async function setMessengerProfile(ctx: CliContext) {
         'bottender messenger profile get'
       )} to see the full profile setting.`
     );
+    return;
   } catch (err) {
     error(`Failed to set ${bold('messenger_profile')} settings`);
     if (err.response) {
@@ -231,6 +234,7 @@ export async function deleteMessengerProfile(ctx: CliContext) {
     await client.deleteMessengerProfile(FIELDS);
 
     print(`Successfully delete ${bold('messenger_profile')} settings`);
+    return;
   } catch (err) {
     error(`Failed to delete ${bold('messenger_profile')} settings`);
     if (err.response) {

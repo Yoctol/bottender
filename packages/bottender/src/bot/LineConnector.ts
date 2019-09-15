@@ -295,8 +295,8 @@ export default class LineConnector implements Connector<LineRequestBody> {
     body,
   }: {
     method: string,
-    headers: Object,
-    query: Object,
+    headers: Record<string, any>,
+    query: Record<string, any>,
     rawBody: string,
     body: Object,
   }) {

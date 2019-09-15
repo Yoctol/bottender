@@ -58,41 +58,41 @@ export type EventAPITypes =
   | 'user_change';
 
 export type Message = {
-  type: EventAPITypes,
-  subtype?: string,
-  channel: string,
-  user: string,
-  text: string,
-  ts: string,
-  thread_ts?: string,
-  bot_id?: string,
+  type: EventAPITypes;
+  subtype?: string;
+  channel: string;
+  user: string;
+  text: string;
+  ts: string;
+  thread_ts?: string;
+  bot_id?: string;
 };
 
 export type InteractiveMessageEvent = {
-  type: 'interactive_message',
-  actions: Array<{}>,
-  callback_id: string,
+  type: 'interactive_message';
+  actions: Array<{}>;
+  callback_id: string;
   team: {
-    id: string,
-    domain: string,
-  },
+    id: string;
+    domain: string;
+  };
   channel: {
-    id: string,
-    name: string,
-  },
+    id: string;
+    name: string;
+  };
   user: {
-    id: string,
-    name: string,
-  },
-  action_ts: string,
-  message_ts: string,
-  attachment_id: string,
-  token: string,
-  original_message: Message,
-  response_url: string,
-  trigger_id: string,
-  thread_ts?: string,
-  bot_id?: string,
+    id: string;
+    name: string;
+  };
+  action_ts: string;
+  message_ts: string;
+  attachment_id: string;
+  token: string;
+  original_message: Message;
+  response_url: string;
+  trigger_id: string;
+  thread_ts?: string;
+  bot_id?: string;
 };
 
 export type SlackRawEvent = Message | InteractiveMessageEvent;
@@ -172,10 +172,10 @@ export default class SlackEvent implements Event<SlackRawEvent> {
    * The message object from Slack raw event.
    *
    */
-  get message(): ?Message {
-    if (!this.isMessage) return;
+  get message(): Message | null {
+    if (!this.isMessage) return null;
 
-    const message = ((this._rawEvent as any) as Message);
+    const message = this._rawEvent as Message;
 
     return message;
   }
@@ -192,7 +192,7 @@ export default class SlackEvent implements Event<SlackRawEvent> {
    * The text string from Slack raw event.
    *
    */
-  get text(): ?string {
+  get text(): string | null {
     if (this.isText) {
       return ((this.message as any) as Message).text;
     }
@@ -211,9 +211,9 @@ export default class SlackEvent implements Event<SlackRawEvent> {
    * The callback_id from Slack interactive message.
    *
    */
-  get callbackId(): ?string {
+  get callbackId(): string | null {
     if (this.isInteractiveMessage) {
-      return ((this._rawEvent as any) as InteractiveMessageEvent).callback_id;
+      return (this._rawEvent as InteractiveMessageEvent).callback_id;
     }
     return null;
   }
@@ -222,9 +222,9 @@ export default class SlackEvent implements Event<SlackRawEvent> {
    * The action from Slack interactive message.
    *
    */
-  get action(): ?{} {
+  get action(): {} | null {
     if (this.isInteractiveMessage) {
-      return ((this._rawEvent as any) as InteractiveMessageEvent).actions[0];
+      return (this._rawEvent as InteractiveMessageEvent).actions[0];
     }
     return null;
   }

@@ -60,6 +60,7 @@ export async function getGetStarted(ctx: CliContext) {
     } else {
       error(`Failed to find ${bold('get_started')} setting`);
     }
+    return;
   } catch (err) {
     error(`Failed to get ${bold('get_started')} setting`);
     if (err.response) {
@@ -95,6 +96,7 @@ export async function deleteGetStarted(ctx: CliContext) {
     await client.deleteGetStarted();
 
     print(`Successfully delete ${bold('get_started')} setting`);
+    return;
   } catch (err) {
     error(`Failed to delete ${bold('get_started')} setting`);
     if (err.response) {

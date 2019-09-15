@@ -53,6 +53,7 @@ export function checkLineMenu() {
   try {
     getConfig('line');
     print('LINE rich menu check done.');
+    return;
   } catch (e) {
     error(e.message);
     return process.exit(1);
@@ -86,6 +87,7 @@ export async function getLineMenu(ctx: CliContext) {
     } else {
       error(`Failed to find ${bold('LINE rich menu')}.`);
     }
+    return;
   } catch (err) {
     error(`Failed to get ${bold('LINE rich menu')}.`);
     if (err.response) {
@@ -173,6 +175,7 @@ export async function setLineMenus(ctx: CliContext) {
         'bottender line menu get'
       )} to see the full rich menu.`
     );
+    return;
   } catch (err) {
     error(`Failed to set ${bold('LINE rich menu')}.`);
     if (err.response) {
@@ -247,6 +250,7 @@ export async function deleteLineMenu(ctx: CliContext) {
         )} in existing LINE rich menu.`
       );
     }
+    return;
   } catch (err) {
     error(`Failed to delete ${bold('LINE rich menu')}.`);
     if (err.response) {

@@ -60,6 +60,7 @@ export async function getGreeting(ctx: CliContext) {
     } else {
       error(`Failed to find ${bold('greeting')} setting`);
     }
+    return;
   } catch (err) {
     error(`Failed to get ${bold('greeting')} setting`);
     if (err.response) {
@@ -95,6 +96,7 @@ export async function deleteGreeting(ctx: CliContext) {
     await client.deleteGreeting();
 
     print(`Successfully delete ${bold('greeting')} setting`);
+    return;
   } catch (err) {
     error(`Failed to delete ${bold('greeting')} setting`);
     if (err.response) {

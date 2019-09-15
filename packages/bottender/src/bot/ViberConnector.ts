@@ -143,8 +143,8 @@ export default class ViberConnector implements Connector<ViberRequestBody> {
     rawBody,
   }: {
     method: string,
-    headers: Object,
-    query: Object,
+    headers: Record<string, any>,
+    query: Record<string, any>,
     rawBody: string,
     body: Object,
   }) {
