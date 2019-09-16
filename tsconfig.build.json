@@ -11,5 +11,6 @@
     { "path": "./packages/bottender-koa" },
     { "path": "./packages/bottender-micro" },
     { "path": "./packages/bottender-restify" },
+    { "path": "./packages/create-bottender-app" }
   ]
 }
