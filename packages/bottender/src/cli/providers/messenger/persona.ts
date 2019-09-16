@@ -22,7 +22,6 @@ const help = () => {
 
   ${chalk.dim('Options:')}
 
-    -t, --token       Specify Messenger access token.
     --name            Specify persona's name when create
     --pic             Specify persona's profile image url when create
     --id              Specify persona's ID to get or delete
@@ -41,29 +40,20 @@ const help = () => {
 
   ${chalk.dim('-')} Delete persona with specific access token
 
-    ${chalk.cyan(
-      '$ bottender messenger persona delete --token <ACCESS_TOKEN> --id <PERSONA_ID>'
-    )}
+    ${chalk.cyan('$ bottender messenger persona delete --id <PERSONA_ID>')}
 `);
 };
 
 export async function createPersona(ctx: CliContext) {
-  const token = ctx.argv['--token'];
   const personaName = ctx.argv['--name'];
   const personaUrl = ctx.argv['--pic'];
 
-  let accessToken;
-
   try {
-    if (token) {
-      accessToken = token;
-    } else {
-      const config = getConfig('messenger');
+    const config = getConfig('messenger');
 
-      invariant(config.accessToken, 'accessToken is not found in config file');
+    invariant(config.accessToken, 'accessToken is not found in config file');
 
-      accessToken = config.accessToken;
-    }
+    const accessToken = config.accessToken;
 
     invariant(personaName, 'Name is not specified!!');
     invariant(personaUrl, 'Profile picture url is not specified!!');
@@ -94,20 +84,12 @@ export async function createPersona(ctx: CliContext) {
 }
 
 export async function listPersona(ctx: CliContext) {
-  const token = ctx.argv['--token'];
-
-  let accessToken;
-
   try {
-    if (token) {
-      accessToken = token;
-    } else {
-      const config = getConfig('messenger');
+    const config = getConfig('messenger');
 
-      invariant(config.accessToken, 'accessToken is not found in config file');
+    invariant(config.accessToken, 'accessToken is not found in config file');
 
-      accessToken = config.accessToken;
-    }
+    const accessToken = config.accessToken;
 
     const client = MessengerClient.connect(accessToken);
 
@@ -142,21 +124,14 @@ export async function listPersona(ctx: CliContext) {
 }
 
 export async function getPersona(ctx: CliContext) {
-  const token = ctx.argv['--token'];
   const personaId = ctx.argv['--id'];
 
-  let accessToken;
-
   try {
-    if (token) {
-      accessToken = token;
-    } else {
-      const config = getConfig('messenger');
+    const config = getConfig('messenger');
 
-      invariant(config.accessToken, 'accessToken is not found in config file');
+    invariant(config.accessToken, 'accessToken is not found in config file');
 
-      accessToken = config.accessToken;
-    }
+    const accessToken = config.accessToken;
 
     invariant(personaId, 'Persona ID is not specified!!');
 
@@ -187,21 +162,14 @@ export async function getPersona(ctx: CliContext) {
 }
 
 export async function deletePersona(ctx: CliContext) {
-  const token = ctx.argv['--token'];
   const personaId = ctx.argv['--id'];
 
-  let accessToken;
-
   try {
-    if (token) {
-      accessToken = token;
-    } else {
-      const config = getConfig('messenger');
+    const config = getConfig('messenger');
 
-      invariant(config.accessToken, 'accessToken is not found in config file');
+    invariant(config.accessToken, 'accessToken is not found in config file');
 
-      accessToken = config.accessToken;
-    }
+    const accessToken = config.accessToken;
 
     invariant(personaId, 'Persona ID is not specified!!');
 
@@ -233,8 +201,6 @@ export default async function main(ctx: CliContext) {
   const subcommand = ctx.argv._[2];
 
   ctx.argv = getSubArgs(ctx.argv, {
-    '--token': String,
-    '-t': '--token',
     '--name': String,
     '--pic': String,
     '--id': String,

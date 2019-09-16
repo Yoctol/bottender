@@ -3,12 +3,14 @@ import path from 'path';
 import { createServer, registerRoutes } from '@bottender/express';
 import express from 'express';
 
+import Bot from '../../../bot/Bot';
 import LineBot from '../../../bot/LineBot';
 import MessengerBot from '../../../bot/MessengerBot';
 import SlackBot from '../../../bot/SlackBot';
 import TelegramBot from '../../../bot/TelegramBot';
 import ViberBot from '../../../bot/ViberBot';
 import getBottenderConfig from '../../shared/getBottenderConfig';
+import { Plugin } from '../../../plugins';
 import { CliContext } from '../..';
 
 import getSubArgs from './utils/getSubArgs';
@@ -63,13 +65,13 @@ const start = async (ctx: CliContext) => {
 
   const sessionStore = new SessionStore(sessionDriverConfig, session.expiresIn);
 
-  function initializeBot(bot) {
+  function initializeBot(bot: Bot<any, any>) {
     if (initialState) {
       bot.setInitialState(initialState);
     }
 
     if (plugins) {
-      plugins.forEach(plugin => {
+      plugins.forEach((plugin: Plugin) => {
         bot.use(plugin);
       });
     }

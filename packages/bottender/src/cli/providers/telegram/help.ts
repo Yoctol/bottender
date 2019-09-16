@@ -17,7 +17,6 @@ const help = () => {
     ${chalk.dim('Options:')}
 
       -w, --webhook         Webhook callback URL
-      -t, --token           Specify Telegram access token.
       --ngrok-port          Ngrok port(default: 4040)
 
     ${chalk.dim('Examples:')}

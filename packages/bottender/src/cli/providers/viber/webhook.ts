@@ -1,6 +1,6 @@
 import Confirm from 'prompt-confirm';
 import invariant from 'invariant';
-import { ViberClient, ViberSender } from 'messaging-api-viber';
+import { ViberClient, ViberSender, ViberEventType } from 'messaging-api-viber';
 
 import getConfig from '../../shared/getConfig';
 import getSubArgs from '../sh/utils/getSubArgs';
@@ -13,14 +13,10 @@ import help from './help';
 type ViberConfig = {
   accessToken: string;
   sender: ViberSender;
-  events: string;
+  eventTypes: ViberEventType[];
 };
 
-export async function setWebhook(
-  webhook: string,
-  ngrokPort: string = '4040',
-  eventTypes: string[] = []
-) {
+export async function setWebhook(webhook: string, ngrokPort: string = '4040') {
   try {
     const config: ViberConfig = getConfig('viber');
 
@@ -44,7 +40,7 @@ export async function setWebhook(
       '`webhook` is required but not found. Use -w <webhook> to setup or make sure you are running ngrok server.'
     );
 
-    await client.setWebhook(webhook, eventTypes);
+    await client.setWebhook(webhook, config.eventTypes);
 
     print('Successfully set Viber webhook callback URL');
     return;
@@ -91,26 +87,18 @@ export async function deleteWebhook(_: CliContext) {
 export default async function main(ctx: CliContext) {
   const subcommand = ctx.argv._[2];
 
-  ctx.argv = getSubArgs(ctx.argv, {
-    '--webhook': String,
-    '-w': '--webhook',
-    '--events': String,
-    '-e': '--events',
-    '--ngrok-port': String,
-  });
-
   switch (subcommand) {
     case 'set': {
+      ctx.argv = getSubArgs(ctx.argv, {
+        '--webhook': String,
+        '-w': '--webhook',
+        '--ngrok-port': String,
+      });
+
       const webhook = ctx.argv['--webhook'];
       const ngrokPort = ctx.argv['--ngrok-port'];
-      const events = ctx.argv['--events'];
 
-      if (typeof events === 'string') {
-        const eventTypes = events.split(',');
-        await setWebhook(webhook, ngrokPort, eventTypes);
-      } else {
-        await setWebhook(webhook, ngrokPort);
-      }
+      await setWebhook(webhook, ngrokPort);
 
       break;
     }

@@ -1,6 +1,12 @@
+import { Spec, Result, Options } from 'arg';
+
 import getArgs from './getArgs';
 
-const getSubArgs = (argv, argsOptions, argOptions = { permissive: true }) => {
+const getSubArgs = (
+  argv: Result<any>,
+  argsOptions: Spec,
+  argOptions: Options = { permissive: true }
+) => {
   const { _, ...rest } = argv;
 
   return {

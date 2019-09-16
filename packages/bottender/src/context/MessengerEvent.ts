@@ -263,7 +263,7 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    * The attachments array from Messenger raw event.
    *
    */
-  get attachments(): ?Array<Attachment> {
+  get attachments(): Attachment[] | null {
     return this.message ? this.message.attachments : null;
   }
 
@@ -279,7 +279,7 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    * The image attachment from Messenger raw event.
    *
    */
-  get image(): ?MediaAttachmentPayload {
+  get image(): MediaAttachmentPayload | null {
     return this.isImage ? (this.attachments as any)[0].payload : null;
   }
 
@@ -295,7 +295,7 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    * The audio attachment from Messenger raw event.
    *
    */
-  get audio(): ?MediaAttachmentPayload {
+  get audio(): MediaAttachmentPayload | null {
     return this.isAudio ? (this.attachments as any)[0].payload : null;
   }
 
@@ -311,7 +311,7 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    * The video attachment from Messenger raw event.
    *
    */
-  get video(): ?MediaAttachmentPayload {
+  get video(): MediaAttachmentPayload | null {
     return this.isVideo ? (this.attachments as any)[0].payload : null;
   }
 
@@ -327,7 +327,7 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    * The location attachment from Messenger raw event.
    *
    */
-  get location(): ?LocationAttachmentPayload {
+  get location(): LocationAttachmentPayload | null {
     return this.isLocation ? (this.attachments as any)[0].payload : null;
   }
 
@@ -343,7 +343,7 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    * The file attachment from Messenger raw event.
    *
    */
-  get file(): ?MediaAttachmentPayload {
+  get file(): MediaAttachmentPayload | null {
     return this.isFile ? (this.attachments as any)[0].payload : null;
   }
 
@@ -359,7 +359,7 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    * The fallback attachment from Messenger raw event.
    *
    */
-  get fallback(): ?FallbackAttachment {
+  get fallback(): FallbackAttachment | null {
     return this.isFallback ? (this.attachments as any)[0] : null;
   }
 
@@ -410,7 +410,7 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    * The quick reply object from Messenger raw event.
    *
    */
-  get quickReply(): ?QuickReply {
+  get quickReply(): QuickReply | null {
     return this.message ? this.message.quick_reply : null;
   }
 
@@ -436,7 +436,7 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    * The postback object from Messenger raw event.
    *
    */
-  get postback(): ?Postback {
+  get postback(): Postback | null {
     return this._rawEvent.postback || null;
   }
 
@@ -454,7 +454,7 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    * The game_play object from Messenger raw event.
    *
    */
-  get gamePlay(): ?GamePlay {
+  get gamePlay(): GamePlay | null {
     if (!this.isGamePlay) {
       return null;
     }
@@ -486,7 +486,7 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    * The optin object from Messenger raw event.
    *
    */
-  get optin(): ?Optin {
+  get optin(): Optin | null {
     return this._rawEvent.optin || null;
   }
 
@@ -504,7 +504,7 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    * The payment object from Messenger raw event.
    *
    */
-  get payment(): ?Payment {
+  get payment(): Payment | null {
     return this._rawEvent.payment || null;
   }
 
@@ -523,7 +523,7 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    * The checkout_update object from Messenger raw event.
    *
    */
-  get checkoutUpdate(): ?CheckoutUpdate {
+  get checkoutUpdate(): CheckoutUpdate | null {
     return this._rawEvent.checkout_update || null;
   }
 
@@ -542,7 +542,7 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    * The pre_checkout object from Messenger raw event.
    *
    */
-  get preCheckout(): ?PreCheckout {
+  get preCheckout(): PreCheckout | null {
     return this._rawEvent.pre_checkout || null;
   }
 
@@ -558,7 +558,7 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    * The read object from Messenger raw event.
    *
    */
-  get read(): ?Read {
+  get read(): Read | null {
     return this.isRead ? this._rawEvent.read : null;
   }
 
@@ -576,7 +576,7 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    * The delivery object from Messenger raw event.
    *
    */
-  get delivery(): ?Delivery {
+  get delivery(): Delivery | null {
     return this.isDelivery ? this._rawEvent.delivery : null;
   }
 
@@ -620,7 +620,7 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    * The policy enforcement object from Messenger raw event.
    *
    */
-  get policyEnforcement(): ?PolicyEnforcement {
+  get policyEnforcement(): PolicyEnforcement | null {
     return this._rawEvent['policy-enforcement'] || null;
   }
 
@@ -638,7 +638,7 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    * The app roles object from Messenger raw event.
    *
    */
-  get appRoles(): ?AppRoles {
+  get appRoles(): AppRoles | null {
     return this._rawEvent.app_roles || null;
   }
 
@@ -665,7 +665,7 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    * The pass thread control object from Messenger raw event.
    *
    */
-  get passThreadControl(): ?PassThreadControl {
+  get passThreadControl(): PassThreadControl | null {
     return this._rawEvent.pass_thread_control || null;
   }
 
@@ -684,7 +684,7 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    * The take thread control object from Messenger raw event.
    *
    */
-  get takeThreadControl(): ?TakeThreadControl {
+  get takeThreadControl(): TakeThreadControl | null {
     return this._rawEvent.take_thread_control || null;
   }
 
@@ -716,7 +716,7 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    * The take thread control object from Messenger raw event.
    *
    */
-  get requestThreadControl(): ?RequestThreadControl {
+  get requestThreadControl(): RequestThreadControl | null {
     return this._rawEvent.request_thread_control || null;
   }
 
@@ -758,7 +758,7 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    * The referral object from Messenger event.
    *
    */
-  get referral(): ?Referral {
+  get referral(): Referral | null {
     if (!this.isReferral) {
       return null;
     }
@@ -802,7 +802,7 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    * The branded_camera object from Messenger event.
    *
    */
-  get brandedCamera(): ?BrandedCamera {
+  get brandedCamera(): BrandedCamera | null {
     if (!this.isBrandedCamera) {
       return null;
     }

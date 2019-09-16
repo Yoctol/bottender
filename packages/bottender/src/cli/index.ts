@@ -1,6 +1,7 @@
 import camelCase from 'camel-case';
 import get from 'lodash/get';
 import updateNotifier from 'update-notifier';
+import { Result } from 'arg';
 
 import pkg from '../../package.json';
 
@@ -12,7 +13,13 @@ type Provider = 'messenger' | 'telegram' | 'line' | 'viber' | 'sh';
 
 export type CliContext = {
   config: null; // FIXME
-  argv: Record<string, any>;
+  argv: Result<{
+    '--help': BooleanConstructor;
+    '-h': string;
+    '--version': BooleanConstructor;
+    '-v': string;
+    '--skip-validate': BooleanConstructor;
+  }>;
 };
 
 const main = async (argvFrom2: string[]) => {
@@ -83,19 +90,19 @@ const main = async (argvFrom2: string[]) => {
   }
 };
 
-const handleUnexpected = (err: Error) => {
+const handleUnexpected = (err: Error): void => {
   console.error(
     error(`An unexpected error occurred!\n  ${err.stack} ${err.stack}`)
   );
   process.exit(1);
 };
 
-const handleRejection = err => {
-  if (err) {
-    if (err instanceof Error) {
-      handleUnexpected(err);
+const handleRejection = (reason: Error | any): void => {
+  if (reason) {
+    if (reason instanceof Error) {
+      handleUnexpected(reason);
     } else {
-      console.error(error(`An unexpected rejection occurred\n  ${err}`));
+      console.error(error(`An unexpected rejection occurred\n  ${reason}`));
     }
   } else {
     console.error(error('An unexpected empty rejection occurred'));

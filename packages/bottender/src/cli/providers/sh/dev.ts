@@ -6,6 +6,36 @@ import { CliContext } from '../..';
 
 import getSubArgs from './utils/getSubArgs';
 
+type BottenderConfig = {
+  channels: {
+    messenger?: {
+      enabled?: boolean;
+      path?: string;
+      [key: string]: any;
+    };
+    line?: {
+      enabled?: boolean;
+      path?: string;
+      [key: string]: any;
+    };
+    slack?: {
+      enabled?: boolean;
+      path?: string;
+      [key: string]: any;
+    };
+    telegram?: {
+      enabled?: boolean;
+      path?: string;
+      [key: string]: any;
+    };
+    viber?: {
+      enabled?: boolean;
+      path?: string;
+      [key: string]: any;
+    };
+  };
+};
+
 const dev = async (ctx: CliContext) => {
   const argv = getSubArgs(ctx.argv, {
     '--console': Boolean,
@@ -19,7 +49,7 @@ const dev = async (ctx: CliContext) => {
   const isConsole = argv['--console'] || false;
   const port = argv['--port'] || 5000;
 
-  const config = getBottenderConfig();
+  const config: BottenderConfig = getBottenderConfig();
 
   const { channels = {} } = config;
 
@@ -35,7 +65,7 @@ const dev = async (ctx: CliContext) => {
       console.log('App has quit');
       process.exit();
     })
-    .on('restart', files => {
+    .on('restart', (files: string[]) => {
       console.log('App restarted due to: ', files);
     });
 

@@ -34,7 +34,6 @@ export const help = () => {
 
     ${chalk.dim('Options:')}
 
-      -t, --token   Specify LINE access token.
       -f, --force   With action del, force delete ${bold('ALL')} LINE rich menus
 
     ${chalk.dim('Examples:')}
@@ -60,21 +59,13 @@ export function checkLineMenu() {
   }
 }
 
-export async function getLineMenu(ctx: CliContext) {
-  const token = ctx.argv['--token'];
-
-  let accessToken;
-
+export async function getLineMenu(_: CliContext) {
   try {
-    if (token) {
-      accessToken = token;
-    } else {
-      const config = getConfig('line');
+    const config = getConfig('line');
 
-      invariant(config.accessToken, 'accessToken is not found in config file');
+    invariant(config.accessToken, 'accessToken is not found in config file');
 
-      accessToken = config.accessToken;
-    }
+    const accessToken = config.accessToken;
 
     const client = LineClient.connect(accessToken);
 
@@ -102,22 +93,14 @@ export async function getLineMenu(ctx: CliContext) {
   }
 }
 
-export async function setLineMenus(ctx: CliContext) {
-  const token = ctx.argv['--token'];
-
-  let accessToken;
-
+export async function setLineMenus(_: CliContext) {
   try {
     const config = getConfig('line');
     const { richMenus: localRichMenus } = config;
 
-    if (token) {
-      accessToken = token;
-    } else {
-      invariant(config.accessToken, 'accessToken is not found in config file');
+    invariant(config.accessToken, 'accessToken is not found in config file');
 
-      accessToken = config.accessToken;
-    }
+    const accessToken = config.accessToken;
 
     const client = LineClient.connect(accessToken);
 
@@ -191,21 +174,14 @@ export async function setLineMenus(ctx: CliContext) {
 }
 
 export async function deleteLineMenu(ctx: CliContext) {
-  const token = ctx.argv['--token'];
   const force = ctx.argv['--force'];
 
-  let accessToken;
-
   try {
-    if (token) {
-      accessToken = token;
-    } else {
-      const config = getConfig('line');
+    const config = getConfig('line');
 
-      invariant(config.accessToken, 'accessToken is not found in config file');
+    invariant(config.accessToken, 'accessToken is not found in config file');
 
-      accessToken = config.accessToken;
-    }
+    const accessToken = config.accessToken;
 
     const client = LineClient.connect(accessToken);
 
@@ -269,8 +245,6 @@ export default async function main(ctx: CliContext) {
   const subcommand = ctx.argv._[2];
 
   ctx.argv = getSubArgs(ctx.argv, {
-    '--token': String,
-    '-t': '--token',
     '--force': Boolean,
     '-f': '--force',
   });

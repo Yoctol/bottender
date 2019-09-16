@@ -1,8 +1,8 @@
-import arg from 'arg';
+import arg, { Spec, Options } from 'arg';
 
 import getCommonArgs from './argCommon';
 
-const getArgs = (argv, argsOptions, argOptions) =>
+const getArgs = (argv: string[], argsOptions: Spec, argOptions: Options) =>
   arg(
     {
       ...getCommonArgs(),

@@ -24,7 +24,7 @@
     "types": ["node"],
     "baseUrl": ".",
     "paths": {
-      "*" : ["types/*"]
+      "*": ["types/*"]
     }
   }
 }

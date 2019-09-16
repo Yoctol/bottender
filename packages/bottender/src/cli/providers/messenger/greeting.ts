@@ -17,10 +17,6 @@ const help = () => {
       get               Get greeting setting.
       del, delete       Delete greeting setting.
 
-    ${chalk.dim('Options:')}
-
-      -t, --token       Specify Messenger access token.
-
     ${chalk.dim('Examples:')}
 
     ${chalk.dim('-')} Get greeting setting
@@ -29,27 +25,17 @@ const help = () => {
 
     ${chalk.dim('-')} Delete greeting setting with specific access token
 
-      ${chalk.cyan(
-        '$ bottender messenger greeting delete --token __FAKE_TOKEN__'
-      )}
+      ${chalk.cyan('$ bottender messenger greeting delete')}
   `);
 };
 
-export async function getGreeting(ctx: CliContext) {
-  const token = ctx.argv['--token'];
-
-  let accessToken;
-
+export async function getGreeting(_: CliContext) {
   try {
-    if (token) {
-      accessToken = token;
-    } else {
-      const config = getConfig('messenger');
+    const config = getConfig('messenger');
 
-      invariant(config.accessToken, 'accessToken is not found in config file');
+    invariant(config.accessToken, 'accessToken is not found in config file');
 
-      accessToken = config.accessToken;
-    }
+    const accessToken = config.accessToken;
 
     const client = MessengerClient.connect(accessToken);
 
@@ -75,21 +61,13 @@ export async function getGreeting(ctx: CliContext) {
   }
 }
 
-export async function deleteGreeting(ctx: CliContext) {
-  const token = ctx.argv['--token'];
-
-  let accessToken;
-
+export async function deleteGreeting(_: CliContext) {
   try {
-    if (token) {
-      accessToken = token;
-    } else {
-      const config = getConfig('messenger');
+    const config = getConfig('messenger');
 
-      invariant(config.accessToken, 'accessToken is not found in config file');
+    invariant(config.accessToken, 'accessToken is not found in config file');
 
-      accessToken = config.accessToken;
-    }
+    const accessToken = config.accessToken;
 
     const client = MessengerClient.connect(accessToken);
 
@@ -113,11 +91,6 @@ export async function deleteGreeting(ctx: CliContext) {
 
 export default async function main(ctx: CliContext) {
   const subcommand = ctx.argv._[2];
-
-  ctx.argv = getSubArgs(ctx.argv, {
-    '--token': String,
-    '-t': '--token',
-  });
 
   switch (subcommand) {
     case 'get':

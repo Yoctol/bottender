@@ -12,7 +12,7 @@ type Options = {
   session: any;
   initialState?: Record<string, any> | null;
   requestContext?: Record<string, any> | null;
-  emitter: EventEmitter | null;
+  emitter?: EventEmitter | null;
 };
 
 type Response = {

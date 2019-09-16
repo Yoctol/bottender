@@ -1,5 +1,3 @@
-import EventEmitter from 'events';
-
 import sleep from 'delay';
 import warning from 'warning';
 import { TelegramClient } from 'messaging-api-telegram';
@@ -10,32 +8,12 @@ import Context from './Context';
 import TelegramEvent from './TelegramEvent';
 import { PlatformContext } from './PlatformContext';
 
-type Options = {
-  client: TelegramClient;
-  event: TelegramEvent;
-  session?: Session;
-  initialState?: Object;
-  requestContext?: Object;
-  emitter?: EventEmitter;
-};
-
 class TelegramContext extends Context implements PlatformContext {
   _client: TelegramClient = this._client;
 
   _event: TelegramEvent = this._event;
 
   _session: Session | null = this._session;
-
-  constructor({
-    client,
-    event,
-    session,
-    initialState,
-    requestContext,
-    emitter,
-  }: Options) {
-    super({ client, event, session, initialState, requestContext, emitter });
-  }
 
   /**
    * The name of the platform.

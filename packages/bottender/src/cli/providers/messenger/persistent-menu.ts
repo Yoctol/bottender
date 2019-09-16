@@ -5,7 +5,6 @@ import invariant from 'invariant';
 import { MessengerClient } from 'messaging-api-messenger';
 
 import getConfig from '../../shared/getConfig';
-import getSubArgs from '../sh/utils/getSubArgs';
 import { bold, error, print } from '../../shared/log';
 import { CliContext } from '../..';
 
@@ -18,10 +17,6 @@ const help = () => {
       get               Get persistent-menu setting.
       del, delete       Delete persistent-menu setting.
 
-    ${chalk.dim('Options:')}
-
-      -t, --token       Specify Messenger access token.
-
     ${chalk.dim('Examples:')}
 
     ${chalk.dim('-')} Get persistent-menu setting
@@ -30,27 +25,17 @@ const help = () => {
 
     ${chalk.dim('-')} Delete persistent-menu setting with specific access token
 
-      ${chalk.cyan(
-        '$ bottender messenger persistent-menu delete --token __FAKE_TOKEN__'
-      )}
+      ${chalk.cyan('$ bottender messenger persistent-menu delete')}
   `);
 };
 
-export async function getPersistentMenu(ctx: CliContext) {
-  const token = ctx.argv['--token'];
-
-  let accessToken;
-
+export async function getPersistentMenu(_: CliContext) {
   try {
-    if (token) {
-      accessToken = token;
-    } else {
-      const config = getConfig('messenger');
+    const config = getConfig('messenger');
 
-      invariant(config.accessToken, 'accessToken is not found in config file');
+    invariant(config.accessToken, 'accessToken is not found in config file');
 
-      accessToken = config.accessToken;
-    }
+    const accessToken = config.accessToken;
 
     const client = MessengerClient.connect(accessToken);
 
@@ -86,21 +71,13 @@ export async function getPersistentMenu(ctx: CliContext) {
   }
 }
 
-export async function deletePersistentMenu(ctx: CliContext) {
-  const token = ctx.argv['--token'];
-
-  let accessToken;
-
+export async function deletePersistentMenu(_: CliContext) {
   try {
-    if (token) {
-      accessToken = token;
-    } else {
-      const config = getConfig('messenger');
+    const config = getConfig('messenger');
 
-      invariant(config.accessToken, 'accessToken is not found in config file');
+    invariant(config.accessToken, 'accessToken is not found in config file');
 
-      accessToken = config.accessToken;
-    }
+    const accessToken = config.accessToken;
 
     const client = MessengerClient.connect(accessToken);
 
@@ -124,11 +101,6 @@ export async function deletePersistentMenu(ctx: CliContext) {
 
 export default async function main(ctx: CliContext) {
   const subcommand = ctx.argv._[2];
-
-  ctx.argv = getSubArgs(ctx.argv, {
-    '--token': String,
-    '-t': '--token',
-  });
 
   switch (subcommand) {
     case 'get':

@@ -13,15 +13,15 @@ import LineEvent from './LineEvent';
 import { PlatformContext } from './PlatformContext';
 
 type Options = {
-  client: LineClient,
-  event: LineEvent,
-  session?: Session,
-  initialState?: Object,
-  requestContext?: Object,
-  customAccessToken?: string,
-  shouldBatch?: boolean,
-  sendMethod?: string,
-  emitter?: EventEmitter,
+  client: LineClient;
+  event: LineEvent;
+  session?: Session;
+  initialState?: Object;
+  requestContext?: Object;
+  customAccessToken?: string;
+  shouldBatch?: boolean;
+  sendMethod?: string;
+  emitter?: EventEmitter;
 };
 
 class LineContext extends Context implements PlatformContext {
@@ -72,7 +72,7 @@ class LineContext extends Context implements PlatformContext {
    * Get applied access token.
    *
    */
-  get accessToken(): ?string {
+  get accessToken(): string {
     return this._customAccessToken || this._client.accessToken;
   }
 
@@ -148,14 +148,12 @@ class LineContext extends Context implements PlatformContext {
    */
   async sendText(text: string, options?: Object): Promise<any> {
     if (this._sendMethod === 'reply') {
-      // $FlowExpectedError: dynamically defined below
       return this.replyText(text, {
         accessToken: this._customAccessToken,
         ...options,
       });
     }
 
-    // $FlowExpectedError: dynamically defined below
     return this.pushText(text, {
       accessToken: this._customAccessToken,
       ...options,
@@ -409,7 +407,7 @@ class LineContext extends Context implements PlatformContext {
   }
 }
 
-const types: Array<{ name: string, arity: number, aliases?: Array<string> }> = [
+const types: Array<{ name: string; arity: number; aliases?: Array<string> }> = [
   { name: '', arity: 3 },
   { name: 'Text', arity: 3 },
   { name: 'Image', arity: 3 },
@@ -433,7 +431,7 @@ types.forEach(({ name, arity, aliases }) => {
       configurable: true,
       writable: true,
       async value(...args) {
-        invariant(!this._isReplied, 'Can not reply event mulitple times');
+        invariant(!this._isReplied, 'Can not reply event multiple times');
 
         this._isHandled = true;
 

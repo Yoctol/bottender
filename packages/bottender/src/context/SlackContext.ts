@@ -1,5 +1,3 @@
-import EventEmitter from 'events';
-
 import sleep from 'delay';
 import warning from 'warning';
 import { SlackOAuthClient } from 'messaging-api-slack';
@@ -10,32 +8,12 @@ import Context from './Context';
 import SlackEvent from './SlackEvent';
 import { PlatformContext } from './PlatformContext';
 
-type Options = {
-  client: SlackOAuthClient,
-  event: SlackEvent,
-  session?: Session,
-  initialState?: Object,
-  requestContext?: Object,
-  emitter?: EventEmitter,
-};
-
 export default class SlackContext extends Context implements PlatformContext {
   _client: SlackOAuthClient = this._client;
 
   _event: SlackEvent = this._event;
 
   _session: Session | null = this._session;
-
-  constructor({
-    client,
-    event,
-    session,
-    initialState,
-    requestContext,
-    emitter,
-  }: Options) {
-    super({ client, event, session, initialState, requestContext, emitter });
-  }
 
   /**
    * The name of the platform.
@@ -61,7 +39,7 @@ export default class SlackContext extends Context implements PlatformContext {
    * https://api.slack.com/methods/chat.postMessage
    */
   postMessage(
-    message: { text?: string, attachments?: [] | string } | string,
+    message: { text?: string; attachments?: [] | string } | string,
     options?: {}
   ): Promise<any> {
     const channelId = this._getChannelIdFromSession();
@@ -88,8 +66,8 @@ export default class SlackContext extends Context implements PlatformContext {
    * https://api.slack.com/methods/chat.postMessage
    */
   postEphemeral(
-    message: { text?: string, attachments?: [] | string } | string,
-    options?: {} = {}
+    message: { text?: string; attachments?: [] | string } | string,
+    options: {} = {}
   ): Promise<any> {
     const channelId = this._getChannelIdFromSession();
 
@@ -105,7 +83,6 @@ export default class SlackContext extends Context implements PlatformContext {
 
     return this._client.postEphemeral(
       channelId,
-      // $FlowFixMe
       this._session.user.id,
       message,
       options
@@ -121,7 +98,7 @@ export default class SlackContext extends Context implements PlatformContext {
   }
 
   // FIXME: this is to fix type checking
-  _getChannelIdFromSession(): ?string {
+  _getChannelIdFromSession(): string | null {
     if (!this._session) return null;
     if (
       typeof this._session.channel === 'object' &&

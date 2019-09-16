@@ -10,19 +10,13 @@ import { CliContext } from '../../';
 
 import help from './help';
 
-export async function getWebhook(ctx: CliContext) {
-  let accessToken;
-
+export async function getWebhook(_: CliContext) {
   try {
-    if (ctx.argv['--token']) {
-      accessToken = ctx.argv['--token'];
-    } else {
-      const config = getConfig('telegram');
+    const config = getConfig('telegram');
 
-      invariant(config.accessToken, 'accessToken is not found in config file');
+    invariant(config.accessToken, 'accessToken is not found in config file');
 
-      accessToken = config.accessToken;
-    }
+    const accessToken = config.accessToken;
 
     const client = TelegramClient.connect(accessToken);
     const result = await client.getWebhookInfo();
@@ -47,18 +41,13 @@ export async function setWebhook(ctx: CliContext) {
   const ngrokPort = ctx.argv['--ngrok-port'] || '4040';
 
   let webhook = ctx.argv['--webhook'];
-  let accessToken;
 
   try {
-    if (ctx.argv['--token']) {
-      accessToken = ctx.argv['--token'];
-    } else {
-      const config = getConfig('telegram');
+    const config = getConfig('telegram');
 
-      invariant(config.accessToken, 'accessToken is not found in config file');
+    invariant(config.accessToken, 'accessToken is not found in config file');
 
-      accessToken = config.accessToken;
-    }
+    const accessToken = config.accessToken;
 
     const client = TelegramClient.connect(accessToken);
 
@@ -96,21 +85,16 @@ export async function setWebhook(ctx: CliContext) {
   }
 }
 
-export async function deleteWebhook(ctx: CliContext) {
-  let accessToken;
-
+export async function deleteWebhook(_: CliContext) {
   try {
-    if (ctx.argv['--token']) {
-      accessToken = ctx.argv['--token'];
-    } else {
-      const config = getConfig('telegram');
+    const config = getConfig('telegram');
 
-      invariant(config.accessToken, 'accessToken is not found in config file');
+    invariant(config.accessToken, 'accessToken is not found in config file');
 
-      accessToken = config.accessToken;
-    }
+    const accessToken = config.accessToken;
 
     const client = TelegramClient.connect(accessToken);
+
     await client.deleteWebhook();
 
     print('Successfully delete Telegram webhook');
@@ -133,8 +117,6 @@ export default async function main(ctx: CliContext) {
   const subcommand = ctx.argv._[2];
 
   ctx.argv = getSubArgs(ctx.argv, {
-    '--token': String,
-    '-t': '--token',
     '--webhook': String,
     '-w': '--webhook',
     '--ngrok-port': Number,

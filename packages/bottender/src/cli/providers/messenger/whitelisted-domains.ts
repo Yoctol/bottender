@@ -4,7 +4,6 @@ import invariant from 'invariant';
 import { MessengerClient } from 'messaging-api-messenger';
 
 import getConfig from '../../shared/getConfig';
-import getSubArgs from '../sh/utils/getSubArgs';
 import { bold, error, print } from '../../shared/log';
 import { CliContext } from '../..';
 
@@ -17,10 +16,6 @@ const help = () => {
       get               Get whitelisted-domains setting.
       del, delete       Delete whitelisted-domains setting.
 
-    ${chalk.dim('Options:')}
-
-      -t, --token       Specify Messenger access token.
-
     ${chalk.dim('Examples:')}
 
     ${chalk.dim('-')} Get whitelisted-domains setting
@@ -29,27 +24,17 @@ const help = () => {
 
     ${chalk.dim('-')} Delete persistent-menu setting with specific access token
 
-      ${chalk.cyan(
-        '$ bottender messenger persistent-menu delete --token __FAKE_TOKEN__'
-      )}
+      ${chalk.cyan('$ bottender messenger persistent-menu delete')}
   `);
 };
 
-export async function getWhitelistedDomains(ctx: CliContext) {
-  const token = ctx.argv['--token'];
-
-  let accessToken;
-
+export async function getWhitelistedDomains(_: CliContext) {
   try {
-    if (token) {
-      accessToken = token;
-    } else {
-      const config = getConfig('messenger');
+    const config = getConfig('messenger');
 
-      invariant(config.accessToken, 'accessToken is not found in config file');
+    invariant(config.accessToken, 'accessToken is not found in config file');
 
-      accessToken = config.accessToken;
-    }
+    const accessToken = config.accessToken;
 
     const client = MessengerClient.connect(accessToken);
 
@@ -76,21 +61,13 @@ export async function getWhitelistedDomains(ctx: CliContext) {
   }
 }
 
-export async function deleteWhitelistedDomains(ctx: CliContext) {
-  const token = ctx.argv['--token'];
-
-  let accessToken;
-
+export async function deleteWhitelistedDomains(_: CliContext) {
   try {
-    if (token) {
-      accessToken = token;
-    } else {
-      const config = getConfig('messenger');
+    const config = getConfig('messenger');
 
-      invariant(config.accessToken, 'accessToken is not found in config file');
+    invariant(config.accessToken, 'accessToken is not found in config file');
 
-      accessToken = config.accessToken;
-    }
+    const accessToken = config.accessToken;
 
     const client = MessengerClient.connect(accessToken);
 
@@ -114,11 +91,6 @@ export async function deleteWhitelistedDomains(ctx: CliContext) {
 
 export default async function main(ctx: CliContext) {
   const subcommand = ctx.argv._[2];
-
-  ctx.argv = getSubArgs(ctx.argv, {
-    '--token': String,
-    '-t': '--token',
-  });
 
   switch (subcommand) {
     case 'get':

@@ -1,7 +1,7 @@
 /* eslint-disable consistent-return */
 import chalk from 'chalk';
 import invariant from 'invariant';
-import { MessengerClient } from 'messaging-api-messenger';
+import { MessengerClient, MessengerProfile } from 'messaging-api-messenger';
 import { addedDiff, deletedDiff, diff, updatedDiff } from 'deep-object-diff';
 import { omit, pick } from 'lodash';
 
@@ -36,7 +36,6 @@ export const help = () => {
     ${chalk.dim('Options:')}
 
       -f, --force   Force update the messenger profile by config
-      -t, --token   Specify Messenger access token.
 
     ${chalk.dim('Examples:')}
 
@@ -50,13 +49,15 @@ export const help = () => {
   `);
 };
 
-export const trimDomain = profile => {
+export const trimDomain = (profile: MessengerProfile): MessengerProfile => {
   const clone = { ...profile };
+
   if (clone.whitelisted_domains) {
     clone.whitelisted_domains = clone.whitelisted_domains.map(
       (domain: string) => domain.replace(/\/$/, '')
     );
   }
+
   return clone;
 };
 
@@ -71,21 +72,13 @@ export function checkMessengerProfile() {
   }
 }
 
-export async function getMessengerProfile(ctx: CliContext) {
-  const token = ctx.argv['--token'];
-
-  let accessToken;
-
+export async function getMessengerProfile(_: CliContext) {
   try {
-    if (token) {
-      accessToken = token;
-    } else {
-      const config = getConfig('messenger');
+    const config = getConfig('messenger');
 
-      invariant(config.accessToken, 'accessToken is not found in config file');
+    invariant(config.accessToken, 'accessToken is not found in config file');
 
-      accessToken = config.accessToken;
-    }
+    const accessToken = config.accessToken;
 
     const client = MessengerClient.connect(accessToken);
 
@@ -115,20 +108,13 @@ export async function getMessengerProfile(ctx: CliContext) {
 
 export async function setMessengerProfile(ctx: CliContext) {
   const force = ctx.argv['--force'];
-  const token = ctx.argv['--token'];
-
-  let accessToken;
 
   try {
-    if (token) {
-      accessToken = token;
-    } else {
-      const config = getConfig('messenger');
+    const config = getConfig('messenger');
 
-      invariant(config.accessToken, 'accessToken is not found in config file');
+    invariant(config.accessToken, 'accessToken is not found in config file');
 
-      accessToken = config.accessToken;
-    }
+    const accessToken = config.accessToken;
 
     const { profile: _profile } = getConfig('messenger');
 
@@ -213,21 +199,13 @@ export async function setMessengerProfile(ctx: CliContext) {
   }
 }
 
-export async function deleteMessengerProfile(ctx: CliContext) {
-  const token = ctx.argv['--token'];
-
-  let accessToken;
-
+export async function deleteMessengerProfile(_: CliContext) {
   try {
-    if (token) {
-      accessToken = token;
-    } else {
-      const config = getConfig('messenger');
+    const config = getConfig('messenger');
 
-      invariant(config.accessToken, 'accessToken is not found in config file');
+    invariant(config.accessToken, 'accessToken is not found in config file');
 
-      accessToken = config.accessToken;
-    }
+    const accessToken = config.accessToken;
 
     const client = MessengerClient.connect(accessToken);
 
@@ -253,8 +231,6 @@ export default async function main(ctx: CliContext) {
   const subcommand = ctx.argv._[2];
 
   ctx.argv = getSubArgs(ctx.argv, {
-    '--token': String,
-    '-t': '--token',
     '--force': Boolean,
     '-f': '--force',
   });
