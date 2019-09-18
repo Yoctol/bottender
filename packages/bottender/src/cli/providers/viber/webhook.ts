@@ -16,7 +16,16 @@ type ViberConfig = {
   eventTypes: ViberEventType[];
 };
 
-export async function setWebhook(webhook: string, ngrokPort: string = '4040') {
+export async function setWebhook(ctx: CliContext) {
+  const argv = getSubArgs(ctx.argv, {
+    '--webhook': String,
+    '-w': '--webhook',
+    '--ngrok-port': String,
+  });
+
+  let webhook = argv['--webhook'];
+  const ngrokPort = argv['--ngrok-port'] || '4040';
+
   try {
     const config: ViberConfig = getConfig('viber');
 
@@ -89,17 +98,7 @@ export default async function main(ctx: CliContext) {
 
   switch (subcommand) {
     case 'set': {
-      ctx.argv = getSubArgs(ctx.argv, {
-        '--webhook': String,
-        '-w': '--webhook',
-        '--ngrok-port': String,
-      });
-
-      const webhook = ctx.argv['--webhook'];
-      const ngrokPort = ctx.argv['--ngrok-port'];
-
-      await setWebhook(webhook, ngrokPort);
-
+      await setWebhook(ctx);
       break;
     }
     case 'delete':

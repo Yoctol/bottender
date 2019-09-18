@@ -4,7 +4,6 @@ import invariant from 'invariant';
 import { MessengerClient } from 'messaging-api-messenger';
 
 import getConfig from '../../shared/getConfig';
-import getSubArgs from '../sh/utils/getSubArgs';
 import { bold, error, print } from '../../shared/log';
 import { CliContext } from '../..';
 

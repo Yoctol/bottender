@@ -174,7 +174,12 @@ export async function setLineMenus(_: CliContext) {
 }
 
 export async function deleteLineMenu(ctx: CliContext) {
-  const force = ctx.argv['--force'];
+  const argv = getSubArgs(ctx.argv, {
+    '--force': Boolean,
+    '-f': '--force',
+  });
+
+  const force = argv['--force'];
 
   try {
     const config = getConfig('line');
@@ -243,11 +248,6 @@ export async function deleteLineMenu(ctx: CliContext) {
 
 export default async function main(ctx: CliContext) {
   const subcommand = ctx.argv._[2];
-
-  ctx.argv = getSubArgs(ctx.argv, {
-    '--force': Boolean,
-    '-f': '--force',
-  });
 
   switch (subcommand) {
     case 'check':

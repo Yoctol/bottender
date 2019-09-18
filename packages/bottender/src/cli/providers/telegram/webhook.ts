@@ -38,9 +38,14 @@ export async function getWebhook(_: CliContext) {
 }
 
 export async function setWebhook(ctx: CliContext) {
-  const ngrokPort = ctx.argv['--ngrok-port'] || '4040';
+  const argv = getSubArgs(ctx.argv, {
+    '--webhook': String,
+    '-w': '--webhook',
+    '--ngrok-port': String,
+  });
 
-  let webhook = ctx.argv['--webhook'];
+  const ngrokPort = argv['--ngrok-port'] || '4040';
+  let webhook = argv['--webhook'];
 
   try {
     const config = getConfig('telegram');
@@ -115,12 +120,6 @@ export async function deleteWebhook(_: CliContext) {
 
 export default async function main(ctx: CliContext) {
   const subcommand = ctx.argv._[2];
-
-  ctx.argv = getSubArgs(ctx.argv, {
-    '--webhook': String,
-    '-w': '--webhook',
-    '--ngrok-port': Number,
-  });
 
   switch (subcommand) {
     case 'get':

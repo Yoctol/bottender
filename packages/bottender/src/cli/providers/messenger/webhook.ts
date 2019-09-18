@@ -40,11 +40,19 @@ const help = () => {
   `);
 };
 
-export async function setWebhook(
-  webhook: string,
-  verifyToken: string,
-  ngrokPort = '4040'
-) {
+export async function setWebhook(ctx: CliContext) {
+  const argv = getSubArgs(ctx.argv, {
+    '--webhook': String,
+    '-w': '--webhook',
+    '--verify-token': String,
+    '-v': '--verify-token',
+    '--ngrok-port': String,
+  });
+
+  let webhook = argv['--webhook'];
+  let verifyToken = argv['--verify-token'];
+  const ngrokPort = argv['--ngrok-port'] || '4040';
+
   try {
     const config = getConfig('messenger');
 
@@ -172,21 +180,9 @@ export async function setWebhook(
 export default async function main(ctx: CliContext) {
   const subcommand = ctx.argv._[2];
 
-  ctx.argv = getSubArgs(ctx.argv, {
-    '--webhook': String,
-    '-w': '--webhook',
-    '--verify-token': String,
-    '-v': '--verify-token',
-    '--ngrok-port': Number,
-  });
-
   switch (subcommand) {
     case 'set': {
-      const webhook = ctx.argv['--webhook'];
-      const verifyToken = ctx.argv['--verify-token'];
-      const ngrokPort = ctx.argv['--ngrok-port'];
-
-      await setWebhook(webhook, verifyToken, ngrokPort);
+      await setWebhook(ctx);
       break;
     }
     case 'help':

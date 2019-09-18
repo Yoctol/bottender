@@ -45,8 +45,13 @@ const help = () => {
 };
 
 export async function createPersona(ctx: CliContext) {
-  const personaName = ctx.argv['--name'];
-  const personaUrl = ctx.argv['--pic'];
+  const argv = getSubArgs(ctx.argv, {
+    '--name': String,
+    '--pic': String,
+  });
+
+  const personaName = argv['--name'];
+  const personaUrl = argv['--pic'];
 
   try {
     const config = getConfig('messenger');
@@ -83,7 +88,7 @@ export async function createPersona(ctx: CliContext) {
   }
 }
 
-export async function listPersona(ctx: CliContext) {
+export async function listPersona(_: CliContext) {
   try {
     const config = getConfig('messenger');
 
@@ -124,7 +129,11 @@ export async function listPersona(ctx: CliContext) {
 }
 
 export async function getPersona(ctx: CliContext) {
-  const personaId = ctx.argv['--id'];
+  const argv = getSubArgs(ctx.argv, {
+    '--id': String,
+  });
+
+  const personaId = argv['--id'];
 
   try {
     const config = getConfig('messenger');
@@ -162,7 +171,11 @@ export async function getPersona(ctx: CliContext) {
 }
 
 export async function deletePersona(ctx: CliContext) {
-  const personaId = ctx.argv['--id'];
+  const argv = getSubArgs(ctx.argv, {
+    '--id': String,
+  });
+
+  const personaId = argv['--id'];
 
   try {
     const config = getConfig('messenger');
@@ -199,12 +212,6 @@ export async function deletePersona(ctx: CliContext) {
 
 export default async function main(ctx: CliContext) {
   const subcommand = ctx.argv._[2];
-
-  ctx.argv = getSubArgs(ctx.argv, {
-    '--name': String,
-    '--pic': String,
-    '--id': String,
-  });
 
   switch (subcommand) {
     case 'create':
