@@ -1,5 +1,5 @@
 #!/usr/bin/env node
 
-const init = require('../lib').default;
+const init = require('../dist').default;
 
 init();
