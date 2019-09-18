@@ -8,8 +8,8 @@ import { differenceWith, findIndex, isEqual, omit } from 'lodash';
 
 import getConfig from '../../shared/getConfig';
 import getSubArgs from '../sh/utils/getSubArgs';
-import { bold, error, log, print } from '../../shared/log';
 import { CliContext } from '../..';
+import { bold, error, log, print } from '../../shared/log';
 
 const generateDeleteQuestions = richMenus => [
   {
@@ -246,7 +246,7 @@ export async function deleteLineMenu(ctx: CliContext) {
   }
 }
 
-export default async function main(ctx: CliContext) {
+export default async function main(ctx: CliContext): Promise<void> {
   const subcommand = ctx.argv._[2];
 
   switch (subcommand) {

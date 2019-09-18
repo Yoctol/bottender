@@ -1,7 +1,7 @@
 import path from 'path';
 
-import { createServer, registerRoutes } from '@bottender/express';
 import express from 'express';
+import { createServer, registerRoutes } from '@bottender/express';
 
 import Bot from '../../../bot/Bot';
 import LineBot from '../../../bot/LineBot';
@@ -10,8 +10,9 @@ import SlackBot from '../../../bot/SlackBot';
 import TelegramBot from '../../../bot/TelegramBot';
 import ViberBot from '../../../bot/ViberBot';
 import getBottenderConfig from '../../shared/getBottenderConfig';
-import { Plugin } from '../../../plugins';
 import { CliContext } from '../..';
+import { Platform } from '../../shared/types';
+import { Plugin } from '../../../plugins';
 
 import getSubArgs from './utils/getSubArgs';
 
@@ -23,7 +24,7 @@ const BOT_MAP = {
   viber: ViberBot,
 };
 
-const start = async (ctx: CliContext) => {
+const start = async (ctx: CliContext): Promise<void> => {
   const argv = getSubArgs(ctx.argv, {
     '--console': Boolean,
     '--port': Number,
@@ -38,14 +39,14 @@ const start = async (ctx: CliContext) => {
 
   const config = getBottenderConfig();
 
-  const { initialState, plugins = [], session = {}, channels = {} } = config;
+  const { initialState, plugins, session, channels } = config;
 
   // TODO: refine handler entry
-  // eslint-disable-next-line import/no-dynamic-require
+  // eslint-disable-next-line import/no-dynamic-require, @typescript-eslint/no-var-requires
   const handler = require(path.resolve('index.js'));
 
   // session
-  const sessionDriver = session.driver || 'memory';
+  const sessionDriver = (session && session.driver) || 'memory';
   let SessionStore;
   switch (sessionDriver) {
     case 'file':
@@ -61,11 +62,15 @@ const start = async (ctx: CliContext) => {
       SessionStore = require('../../../session/MemorySessionStore').default;
   }
 
-  const sessionDriverConfig = (session.stores || {})[sessionDriver] || {};
+  const sessionDriverConfig =
+    ((session && session.stores) || {})[sessionDriver] || {};
 
-  const sessionStore = new SessionStore(sessionDriverConfig, session.expiresIn);
+  const sessionStore = new SessionStore(
+    sessionDriverConfig,
+    session && session.expiresIn
+  );
 
-  function initializeBot(bot: Bot<any, any>) {
+  function initializeBot(bot: Bot<any, any>): void {
     if (initialState) {
       bot.setInitialState(initialState);
     }
@@ -93,10 +98,10 @@ const start = async (ctx: CliContext) => {
   } else {
     let server: express.Application;
 
-    Object.entries(channels)
-      .filter(([, { enabled }]) => enabled !== false)
-      .map(([channel, { enabled, path: webhookPath, ...channelConfig }]) => {
-        const ChannelBot = BOT_MAP[channel];
+    Object.entries(channels || {})
+      .filter(([, { enabled }]) => enabled)
+      .map(([channel, { path: webhookPath, ...channelConfig }]) => {
+        const ChannelBot = BOT_MAP[channel as Platform];
         const channelBot = new ChannelBot({
           ...channelConfig,
           sessionStore,

@@ -6,37 +6,7 @@ import { CliContext } from '../..';
 
 import getSubArgs from './utils/getSubArgs';
 
-type BottenderConfig = {
-  channels: {
-    messenger?: {
-      enabled?: boolean;
-      path?: string;
-      [key: string]: any;
-    };
-    line?: {
-      enabled?: boolean;
-      path?: string;
-      [key: string]: any;
-    };
-    slack?: {
-      enabled?: boolean;
-      path?: string;
-      [key: string]: any;
-    };
-    telegram?: {
-      enabled?: boolean;
-      path?: string;
-      [key: string]: any;
-    };
-    viber?: {
-      enabled?: boolean;
-      path?: string;
-      [key: string]: any;
-    };
-  };
-};
-
-const dev = async (ctx: CliContext) => {
+const dev = async (ctx: CliContext): Promise<void> => {
   const argv = getSubArgs(ctx.argv, {
     '--console': Boolean,
     '--port': Number,
@@ -49,9 +19,9 @@ const dev = async (ctx: CliContext) => {
   const isConsole = argv['--console'] || false;
   const port = argv['--port'] || 5000;
 
-  const config: BottenderConfig = getBottenderConfig();
+  const config = getBottenderConfig();
 
-  const { channels = {} } = config;
+  const { channels } = config;
 
   // watch
   nodemon(
@@ -72,8 +42,8 @@ const dev = async (ctx: CliContext) => {
   if (!isConsole) {
     const url = await ngrok.connect(port);
 
-    Object.entries(channels)
-      .filter(([, { enabled }]) => enabled !== false)
+    Object.entries(channels || {})
+      .filter(([, { enabled }]) => enabled)
       .forEach(([channel, { path: webhookPath }]) => {
         const routePath = webhookPath || `/webhooks/${channel}`;
 

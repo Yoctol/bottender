@@ -5,12 +5,12 @@ import { TelegramClient } from 'messaging-api-telegram';
 import getConfig from '../../shared/getConfig';
 import getSubArgs from '../sh/utils/getSubArgs';
 import getWebhookFromNgrok from '../../shared/getWebhookFromNgrok';
+import { CliContext } from '../..';
 import { bold, error, print, warn } from '../../shared/log';
-import { CliContext } from '../../';
 
 import help from './help';
 
-export async function getWebhook(_: CliContext) {
+export async function getWebhook(_: CliContext): Promise<void> {
   try {
     const config = getConfig('telegram');
 
@@ -37,7 +37,7 @@ export async function getWebhook(_: CliContext) {
   }
 }
 
-export async function setWebhook(ctx: CliContext) {
+export async function setWebhook(ctx: CliContext): Promise<void> {
   const argv = getSubArgs(ctx.argv, {
     '--webhook': String,
     '-w': '--webhook',
@@ -72,7 +72,7 @@ export async function setWebhook(ctx: CliContext) {
       '`webhook` is required but not found. Use -w <webhook> to setup or make sure you are running ngrok server.'
     );
 
-    await client.setWebhook(webhook);
+    await client.setWebhook(webhook as string);
 
     print('Successfully set Telegram webhook callback URL');
     return;
@@ -90,7 +90,7 @@ export async function setWebhook(ctx: CliContext) {
   }
 }
 
-export async function deleteWebhook(_: CliContext) {
+export async function deleteWebhook(_: CliContext): Promise<void> {
   try {
     const config = getConfig('telegram');
 
@@ -118,7 +118,7 @@ export async function deleteWebhook(_: CliContext) {
   }
 }
 
-export default async function main(ctx: CliContext) {
+export default async function main(ctx: CliContext): Promise<void> {
   const subcommand = ctx.argv._[2];
 
   switch (subcommand) {

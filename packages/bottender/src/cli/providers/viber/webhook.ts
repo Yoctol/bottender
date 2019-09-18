@@ -1,12 +1,12 @@
 import Confirm from 'prompt-confirm';
 import invariant from 'invariant';
-import { ViberClient, ViberSender, ViberEventType } from 'messaging-api-viber';
+import { ViberClient, ViberEventType, ViberSender } from 'messaging-api-viber';
 
 import getConfig from '../../shared/getConfig';
 import getSubArgs from '../sh/utils/getSubArgs';
 import getWebhookFromNgrok from '../../shared/getWebhookFromNgrok';
+import { CliContext } from '../..';
 import { bold, error, print, warn } from '../../shared/log';
-import { CliContext } from '../../';
 
 import help from './help';
 
@@ -16,7 +16,7 @@ type ViberConfig = {
   eventTypes: ViberEventType[];
 };
 
-export async function setWebhook(ctx: CliContext) {
+export async function setWebhook(ctx: CliContext): Promise<void> {
   const argv = getSubArgs(ctx.argv, {
     '--webhook': String,
     '-w': '--webhook',
@@ -49,7 +49,7 @@ export async function setWebhook(ctx: CliContext) {
       '`webhook` is required but not found. Use -w <webhook> to setup or make sure you are running ngrok server.'
     );
 
-    await client.setWebhook(webhook, config.eventTypes);
+    await client.setWebhook(webhook as string, config.eventTypes);
 
     print('Successfully set Viber webhook callback URL');
     return;
@@ -67,7 +67,7 @@ export async function setWebhook(ctx: CliContext) {
   }
 }
 
-export async function deleteWebhook(_: CliContext) {
+export async function deleteWebhook(_: CliContext): Promise<void> {
   try {
     const config: ViberConfig = getConfig('viber');
 
@@ -93,7 +93,7 @@ export async function deleteWebhook(_: CliContext) {
   }
 }
 
-export default async function main(ctx: CliContext) {
+export default async function main(ctx: CliContext): Promise<void> {
   const subcommand = ctx.argv._[2];
 
   switch (subcommand) {
