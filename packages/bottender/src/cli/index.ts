@@ -1,13 +1,18 @@
+import path from 'path';
+
 import camelCase from 'camel-case';
+import fs from 'fs-extra';
 import get from 'lodash/get';
 import updateNotifier from 'update-notifier';
 import { Result } from 'arg';
 
-import pkg from '../../package.json';
-
 import getArgs from './providers/sh/utils/getArgs';
 import providers from './providers';
 import { error } from './shared/log';
+
+const pkg = JSON.parse(
+  fs.readFileSync(path.resolve(__dirname, '../../package.json'), 'utf8')
+);
 
 type Provider = 'messenger' | 'telegram' | 'line' | 'viber' | 'sh';
 

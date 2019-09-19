@@ -5,10 +5,10 @@ import invariant from 'invariant';
 import { MessengerClient } from 'messaging-api-messenger';
 
 import getConfig from '../../shared/getConfig';
-import { bold, error, print } from '../../shared/log';
 import { CliContext } from '../..';
+import { bold, error, print } from '../../shared/log';
 
-const help = () => {
+const help = (): void => {
   console.log(`
     bottender messenger persistent-menu <command> [option]
 
@@ -29,7 +29,7 @@ const help = () => {
   `);
 };
 
-export async function getPersistentMenu(_: CliContext) {
+export async function getPersistentMenu(_: CliContext): Promise<void> {
   try {
     const config = getConfig('messenger');
 
@@ -71,7 +71,7 @@ export async function getPersistentMenu(_: CliContext) {
   }
 }
 
-export async function deletePersistentMenu(_: CliContext) {
+export async function deletePersistentMenu(_: CliContext): Promise<void> {
   try {
     const config = getConfig('messenger');
 
@@ -99,7 +99,7 @@ export async function deletePersistentMenu(_: CliContext) {
   }
 }
 
-export default async function main(ctx: CliContext) {
+export default async function main(ctx: CliContext): Promise<void> {
   const subcommand = ctx.argv._[2];
 
   switch (subcommand) {

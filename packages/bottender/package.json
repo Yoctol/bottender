@@ -34,6 +34,7 @@
     "debug": "^4.1.1",
     "deep-object-diff": "^1.1.0",
     "delay": "^4.3.0",
+    "express": "^4.17.1",
     "figures": "^3.0.0",
     "file-type": "^12.3.0",
     "fs-extra": "^8.1.0",

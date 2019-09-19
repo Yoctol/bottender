@@ -4,10 +4,10 @@ import invariant from 'invariant';
 import { MessengerClient } from 'messaging-api-messenger';
 
 import getConfig from '../../shared/getConfig';
-import { bold, error, print } from '../../shared/log';
 import { CliContext } from '../..';
+import { bold, error, print } from '../../shared/log';
 
-const help = () => {
+const help = (): void => {
   console.log(`
     bottender messenger get-started <command> [option]
 
@@ -28,7 +28,7 @@ const help = () => {
   `);
 };
 
-export async function getGetStarted(_: CliContext) {
+export async function getGetStarted(_: CliContext): Promise<void> {
   try {
     const config = getConfig('messenger');
 
@@ -60,7 +60,7 @@ export async function getGetStarted(_: CliContext) {
   }
 }
 
-export async function deleteGetStarted(_: CliContext) {
+export async function deleteGetStarted(_: CliContext): Promise<void> {
   try {
     const config = getConfig('messenger');
 
@@ -88,7 +88,7 @@ export async function deleteGetStarted(_: CliContext) {
   }
 }
 
-export default async function main(ctx: CliContext) {
+export default async function main(ctx: CliContext): Promise<void> {
   const subcommand = ctx.argv._[2];
 
   switch (subcommand) {

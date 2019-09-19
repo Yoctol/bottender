@@ -7,8 +7,8 @@ import { omit, pick } from 'lodash';
 
 import getConfig from '../../shared/getConfig';
 import getSubArgs from '../sh/utils/getSubArgs';
-import { bold, error, log, print } from '../../shared/log';
 import { CliContext } from '../..';
+import { bold, error, log, print } from '../../shared/log';
 
 const FIELDS = [
   'account_linking_url',
@@ -21,7 +21,7 @@ const FIELDS = [
   'home_url',
 ];
 
-export const help = () => {
+export const help = (): void => {
   console.log(`
     bottender messenger profile <action> [option]
 
@@ -61,7 +61,7 @@ export const trimDomain = (profile: MessengerProfile): MessengerProfile => {
   return clone;
 };
 
-export function checkMessengerProfile() {
+export function checkMessengerProfile(): void {
   try {
     getConfig('messenger');
     print('Messenger profile check done.');
@@ -72,7 +72,7 @@ export function checkMessengerProfile() {
   }
 }
 
-export async function getMessengerProfile(_: CliContext) {
+export async function getMessengerProfile(_: CliContext): Promise<void> {
   try {
     const config = getConfig('messenger');
 
@@ -106,7 +106,7 @@ export async function getMessengerProfile(_: CliContext) {
   }
 }
 
-export async function setMessengerProfile(ctx: CliContext) {
+export async function setMessengerProfile(ctx: CliContext): Promise<void> {
   const argv = getSubArgs(ctx.argv, {
     '--force': Boolean,
     '-f': '--force',
@@ -204,7 +204,7 @@ export async function setMessengerProfile(ctx: CliContext) {
   }
 }
 
-export async function deleteMessengerProfile(_: CliContext) {
+export async function deleteMessengerProfile(_: CliContext): Promise<void> {
   try {
     const config = getConfig('messenger');
 
@@ -232,7 +232,7 @@ export async function deleteMessengerProfile(_: CliContext) {
   }
 }
 
-export default async function main(ctx: CliContext) {
+export default async function main(ctx: CliContext): Promise<void> {
   const subcommand = ctx.argv._[2];
 
   switch (subcommand) {

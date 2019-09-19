@@ -7,10 +7,10 @@ import { MessengerClient } from 'messaging-api-messenger';
 import getConfig from '../../shared/getConfig';
 import getSubArgs from '../sh/utils/getSubArgs';
 import getWebhookFromNgrok from '../../shared/getWebhookFromNgrok';
-import { bold, error, print, warn } from '../../shared/log';
 import { CliContext } from '../..';
+import { bold, error, print, warn } from '../../shared/log';
 
-const help = () => {
+const help = (): void => {
   console.log(`
     bottender messenger webhook <command> [option]
 
@@ -40,7 +40,7 @@ const help = () => {
   `);
 };
 
-export async function setWebhook(ctx: CliContext) {
+export async function setWebhook(ctx: CliContext): Promise<void> {
   const argv = getSubArgs(ctx.argv, {
     '--webhook': String,
     '-w': '--webhook',
@@ -148,8 +148,8 @@ export async function setWebhook(ctx: CliContext) {
 
     const { success } = await client.createSubscription({
       object: 'page',
-      callback_url: webhook,
-      verify_token: verifyToken,
+      callback_url: webhook as string,
+      verify_token: verifyToken as string,
       fields,
       access_token: `${config.appId}|${config.appSecret}`,
     });
@@ -177,7 +177,7 @@ export async function setWebhook(ctx: CliContext) {
   }
 }
 
-export default async function main(ctx: CliContext) {
+export default async function main(ctx: CliContext): Promise<void> {
   const subcommand = ctx.argv._[2];
 
   switch (subcommand) {

@@ -1,6 +1,6 @@
 import chalk from 'chalk';
 
-const help = () => {
+const help = (): void => {
   console.log(`
     bottender messenger <command> <action>
 

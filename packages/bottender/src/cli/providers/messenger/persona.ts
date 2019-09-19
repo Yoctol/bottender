@@ -6,8 +6,8 @@ import { MessengerClient } from 'messaging-api-messenger';
 
 import getConfig from '../../shared/getConfig';
 import getSubArgs from '../sh/utils/getSubArgs';
-import { bold, error, print } from '../../shared/log';
 import { CliContext } from '../..';
+import { bold, error, print } from '../../shared/log';
 
 const help = () => {
   console.log(`
@@ -44,7 +44,7 @@ const help = () => {
 `);
 };
 
-export async function createPersona(ctx: CliContext) {
+export async function createPersona(ctx: CliContext): Promise<void> {
   const argv = getSubArgs(ctx.argv, {
     '--name': String,
     '--pic': String,
@@ -66,8 +66,8 @@ export async function createPersona(ctx: CliContext) {
     const client = MessengerClient.connect(accessToken);
 
     const persona = {
-      name: personaName,
-      profile_picture_url: personaUrl,
+      name: personaName as string,
+      profile_picture_url: personaUrl as string,
     };
 
     const personaID = await client.createPersona(persona);
@@ -128,7 +128,7 @@ export async function listPersona(_: CliContext) {
   }
 }
 
-export async function getPersona(ctx: CliContext) {
+export async function getPersona(ctx: CliContext): Promise<void> {
   const argv = getSubArgs(ctx.argv, {
     '--id': String,
   });
@@ -146,18 +146,20 @@ export async function getPersona(ctx: CliContext) {
 
     const client = MessengerClient.connect(accessToken);
 
-    const persona = await client.getPersona(personaId);
+    const persona = await client.getPersona(personaId as string);
 
     if (persona !== undefined) {
-      print(`Information of persona ${bold(personaId)}:`);
+      print(`Information of persona ${bold(personaId as string)}:`);
       print(`Name: ${bold(persona.name)}`);
       print(`Profile picture: ${bold(persona.profile_picture_url)}`);
     } else {
-      print(`Cannot get persona of ID ${bold(personaId)}`);
+      print(`Cannot get persona of ID ${bold(personaId as string)}`);
     }
     return;
   } catch (err) {
-    error(`Failed to get ${bold('persona')} of ID ${bold(personaId)}`);
+    error(
+      `Failed to get ${bold('persona')} of ID ${bold(personaId as string)}`
+    );
     if (err.response) {
       error(`status: ${bold(err.response.status)}`);
       if (err.response.data) {
@@ -170,7 +172,7 @@ export async function getPersona(ctx: CliContext) {
   }
 }
 
-export async function deletePersona(ctx: CliContext) {
+export async function deletePersona(ctx: CliContext): Promise<void> {
   const argv = getSubArgs(ctx.argv, {
     '--id': String,
   });
@@ -188,16 +190,18 @@ export async function deletePersona(ctx: CliContext) {
 
     const client = MessengerClient.connect(accessToken);
 
-    const res = await client.deletePersona(personaId);
+    const res = await client.deletePersona(personaId as string);
 
     if (res.success === true || res.success === 'true') {
-      print(`Sucessfully delete persona of ID ${bold(personaId)}`);
+      print(`Sucessfully delete persona of ID ${bold(personaId as string)}`);
     } else {
-      print(`Cannot get persona of ID ${bold(personaId)}`);
+      print(`Cannot get persona of ID ${bold(personaId as string)}`);
     }
     return;
   } catch (err) {
-    error(`Failed to delete ${bold('persona')} of ID ${bold(personaId)}`);
+    error(
+      `Failed to delete ${bold('persona')} of ID ${bold(personaId as string)}`
+    );
     if (err.response) {
       error(`status: ${bold(err.response.status)}`);
       if (err.response.data) {
@@ -226,6 +230,5 @@ export default async function main(ctx: CliContext) {
     default:
       error(`Please specify a valid subcommand: create, list, get, delete`);
       help();
-      return;
   }
 }
