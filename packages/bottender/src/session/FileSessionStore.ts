@@ -13,7 +13,7 @@ type FileOption =
       dirname?: string;
     };
 
-function getDirname(arg: FileOption): string | undefined {
+function getDirname(arg: FileOption): string | void {
   if (typeof arg === 'string') {
     return arg;
   }

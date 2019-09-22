@@ -1,9 +1,5 @@
 /* Bot */
 export { default as Bot } from './bot/Bot';
-export { default as TestBot } from './bot/TestBot';
-
-/* Connector */
-export { default as TestConnector } from './bot/TestConnector';
 
 /* Cache */
 export { default as MemoryCacheStore } from './cache/MemoryCacheStore';
@@ -20,7 +16,6 @@ export { default as MemorySessionStore } from './session/MemorySessionStore';
 
 /* Context */
 export { default as Context } from './context/Context';
-export { default as TestContext } from './context/TestContext';
 
 /* Plugins */
 export { default as withTyping } from './plugins/withTyping';
