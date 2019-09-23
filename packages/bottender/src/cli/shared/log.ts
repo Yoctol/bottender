@@ -2,12 +2,8 @@
 import chalk from 'chalk';
 import figures from 'figures';
 
-export function log(
-  msg: string,
-  color: string = 'blue',
-  icon: string = 'pointer'
-): void {
-  console.log(`${chalk[color](figures[icon])} ${msg}`);
+export function log(msg: string, color = 'blue', icon = 'pointer'): void {
+  console.log(`${(chalk as any)[color]((figures as any)[icon])} ${msg}`);
 }
 
 export function print(msg: string): void {

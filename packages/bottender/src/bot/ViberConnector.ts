@@ -1,7 +1,7 @@
 import EventEmitter from 'events';
 import crypto from 'crypto';
 
-import { ViberClient } from 'messaging-api-viber';
+import { ViberClient, ViberSender } from 'messaging-api-viber';
 import { addedDiff } from 'deep-object-diff';
 
 import Session from '../session/Session';
@@ -12,26 +12,43 @@ import { Connector } from './Connector';
 
 export type ViberRequestBody = ViberRawEvent;
 
-type ConstructorOptions = {
-  accessToken?: string;
-  client?: ViberClient;
+type ConstructorOptionsWithoutClient = {
+  accessToken: string;
+  sender: ViberSender;
   origin?: string;
 };
 
+type ConstructorOptionsWithClient = {
+  client: ViberClient;
+};
+
+type ConstructorOptions =
+  | ConstructorOptionsWithoutClient
+  | ConstructorOptionsWithClient;
+
 export default class ViberConnector
   implements Connector<ViberRequestBody, ViberClient> {
-  _accessToken: string | null;
+  _accessToken: string;
 
   _client: ViberClient;
 
-  constructor({ accessToken, client, origin }: ConstructorOptions) {
-    this._accessToken = accessToken;
-    this._client =
-      client ||
-      ViberClient.connect({
-        accessToken,
-        origin,
-      });
+  constructor(options: ConstructorOptions) {
+    if ('client' in options) {
+      this._client = options.client;
+    } else {
+      const { accessToken, sender, origin } = options;
+
+      this._client = ViberClient.connect(
+        {
+          accessToken,
+          sender,
+          origin,
+        },
+        sender
+      );
+    }
+
+    this._accessToken = this._client.accessToken;
   }
 
   _getRawEventFromRequest(body: ViberRequestBody): ViberRawEvent {
@@ -86,7 +103,7 @@ export default class ViberConnector
         break;
     }
 
-    if (Object.keys(addedDiff(session.user || {}, user)).length > 0) {
+    if (Object.keys(addedDiff(session.user || {}, user as any)).length > 0) {
       session.user = {
         ...session.user,
         ...user,

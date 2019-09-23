@@ -34,13 +34,23 @@ type EventsAPIBody = {
 
 export type SlackRequestBody = EventsAPIBody | { payload: string };
 
-type ConstructorOptions = {
-  accessToken?: string;
-  client?: SlackOAuthClient;
-  verificationToken?: string;
-  origin?: string;
+type CommonConstructorOptions = {
   skipProfile?: boolean | null;
+  verificationToken?: string;
 };
+
+type ConstructorOptionsWithoutClient = {
+  accessToken: string;
+  origin?: string;
+} & CommonConstructorOptions;
+
+type ConstructorOptionsWithClient = {
+  client: SlackOAuthClient;
+} & CommonConstructorOptions;
+
+type ConstructorOptions =
+  | ConstructorOptionsWithoutClient
+  | ConstructorOptionsWithClient;
 
 export default class SlackConnector
   implements Connector<SlackRequestBody, SlackOAuthClient> {
@@ -50,19 +60,18 @@ export default class SlackConnector
 
   _skipProfile: boolean;
 
-  constructor({
-    accessToken,
-    client,
-    verificationToken,
-    origin,
-    skipProfile,
-  }: ConstructorOptions) {
-    this._client =
-      client ||
-      SlackOAuthClient.connect({
+  constructor(options: ConstructorOptions) {
+    const { verificationToken, skipProfile } = options;
+    if ('client' in options) {
+      this._client = options.client;
+    } else {
+      const { accessToken, origin } = options;
+      this._client = SlackOAuthClient.connect({
         accessToken,
         origin,
       });
+    }
+
     this._verificationToken = verificationToken || '';
 
     // FIXME: maybe set this default value as true
@@ -77,8 +86,8 @@ export default class SlackConnector
   }
 
   _getRawEventFromRequest(body: SlackRequestBody): SlackRawEvent {
-    if (body.event) {
-      return (body as EventsAPIBody).event as Message;
+    if ('event' in body) {
+      return body.event as Message;
     }
 
     if (body.payload && typeof body.payload === 'string') {
@@ -86,14 +95,14 @@ export default class SlackConnector
     }
 
     // for RTM WebSocket messages
-    return body as Message;
+    return (body as any) as Message;
   }
 
   _isBotEventRequest(body: SlackRequestBody): boolean {
     const rawEvent = this._getRawEventFromRequest(body);
     return !!(
       rawEvent.bot_id ||
-      (rawEvent.subtype && rawEvent.subtype === 'bot_message')
+      ('subtype' in rawEvent && rawEvent.subtype === 'bot_message')
     );
   }
 

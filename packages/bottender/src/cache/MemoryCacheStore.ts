@@ -4,7 +4,7 @@ import cloneDeep from 'lodash/cloneDeep';
 import CacheStore, { CacheValue } from './CacheStore';
 
 export default class MemoryCacheStore implements CacheStore {
-  _lru: LRU;
+  _lru: LRU<string, any>;
 
   constructor(max?: number) {
     this._lru = new LRU({ max });

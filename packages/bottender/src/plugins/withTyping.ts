@@ -1,8 +1,6 @@
 import omit from 'lodash/omit';
 import sleep from 'delay';
 
-import Context from '../context/Context';
-
 const methodMap = {
   // method name, arguments length (includes options)
   messenger: [
@@ -96,8 +94,11 @@ type Options = {
   delay: number;
 };
 
-export default (options: Options) => (context: Context) => {
-  const methods = methodMap[context.platform];
+// FIXME: it should be context: Context
+export default (options: Options) => (context: any) => {
+  const methods = methodMap[
+    context.platform as 'messenger' | 'line' | 'slack' | 'telegram' | 'viber'
+  ] as [string, number][];
   if (!methods) return;
 
   for (let i = 0; i < methods.length; i++) {

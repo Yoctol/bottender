@@ -1,8 +1,5 @@
-import { Event } from './Event';
-
 export interface PlatformContext {
-  platform: string;
-  event: Event;
-  session: any;
-  sendText: (text: string) => any;
+  readonly platform: string;
+
+  sendText: (text: string) => Promise<any>;
 }

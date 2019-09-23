@@ -15,13 +15,13 @@ import { PlatformContext } from './PlatformContext';
 type Options = {
   client: LineClient;
   event: LineEvent;
-  session?: Session;
-  initialState?: Object;
-  requestContext?: Object;
+  session?: Session | null;
+  initialState?: Record<string, any> | null;
+  requestContext?: Record<string, any> | null;
   customAccessToken?: string;
   shouldBatch?: boolean;
   sendMethod?: string;
-  emitter?: EventEmitter;
+  emitter?: EventEmitter | null;
 };
 
 class LineContext extends Context implements PlatformContext {
@@ -33,7 +33,7 @@ class LineContext extends Context implements PlatformContext {
 
   _customAccessToken: string | null;
 
-  _isReplied: boolean = false;
+  _isReplied = false;
 
   _shouldBatch: boolean;
 
@@ -55,7 +55,7 @@ class LineContext extends Context implements PlatformContext {
     emitter,
   }: Options) {
     super({ client, event, session, initialState, requestContext, emitter });
-    this._customAccessToken = customAccessToken;
+    this._customAccessToken = customAccessToken || null;
     this._shouldBatch = shouldBatch || false;
     this._sendMethod = sendMethod || 'push';
   }
@@ -103,9 +103,11 @@ class LineContext extends Context implements PlatformContext {
           messageChunks.length === 1,
           'one replyToken can only be used to reply 5 messages'
         );
-        await this._client.reply(this._event.replyToken, messageChunks[0], {
-          accessToken: this._customAccessToken,
-        });
+        if (this._event.replyToken) {
+          await this._client.reply(this._event.replyToken, messageChunks[0], {
+            accessToken: this._customAccessToken,
+          });
+        }
       }
 
       if (this._pushMessages.length > 0) {
@@ -146,15 +148,15 @@ class LineContext extends Context implements PlatformContext {
    * Send text to the owner of the session.
    *
    */
-  async sendText(text: string, options?: Object): Promise<any> {
+  async sendText(text: string, options?: Record<string, any>): Promise<any> {
     if (this._sendMethod === 'reply') {
-      return this.replyText(text, {
+      return (this as any).replyText(text, {
         accessToken: this._customAccessToken,
         ...options,
       });
     }
 
-    return this.pushText(text, {
+    return (this as any).pushText(text, {
       accessToken: this._customAccessToken,
       ...options,
     });
@@ -175,12 +177,12 @@ class LineContext extends Context implements PlatformContext {
         this._isHandled = true;
         return this._client.leaveRoom(this._session.room.id, {
           accessToken: this._customAccessToken,
-        });
+        } as any);
       case 'group':
         this._isHandled = true;
         return this._client.leaveGroup(this._session.group.id, {
           accessToken: this._customAccessToken,
-        });
+        } as any);
       default:
         warning(
           false,
@@ -193,7 +195,7 @@ class LineContext extends Context implements PlatformContext {
    * Gets profile information of current user.
    *
    */
-  async getUserProfile(): Promise<Object | null> {
+  async getUserProfile(): Promise<Record<string, any> | null> {
     if (!this._session) {
       warning(
         false,
@@ -217,7 +219,7 @@ class LineContext extends Context implements PlatformContext {
           this._session.user.id,
           {
             accessToken: this._customAccessToken,
-          }
+          } as any
         );
       case 'group':
         return this._client.getGroupMemberProfile(
@@ -225,13 +227,13 @@ class LineContext extends Context implements PlatformContext {
           this._session.user.id,
           {
             accessToken: this._customAccessToken,
-          }
+          } as any
         );
       case 'user':
       default:
         return this._client.getUserProfile(this._session.user.id, {
           accessToken: this._customAccessToken,
-        });
+        } as any);
     }
   }
 
@@ -240,7 +242,7 @@ class LineContext extends Context implements PlatformContext {
    * This includes the user IDs of users who has not added the bot as a friend or has blocked the bot.
    *
    */
-  async getMemberProfile(userId: string): Promise<Object | null> {
+  async getMemberProfile(userId: string): Promise<Record<string, any> | null> {
     if (!this._session) {
       warning(
         false,
@@ -256,7 +258,7 @@ class LineContext extends Context implements PlatformContext {
           userId,
           {
             accessToken: this._customAccessToken,
-          }
+          } as any
         );
       case 'group':
         return this._client.getGroupMemberProfile(
@@ -264,7 +266,7 @@ class LineContext extends Context implements PlatformContext {
           userId,
           {
             accessToken: this._customAccessToken,
-          }
+          } as any
         );
       default:
         warning(
@@ -282,7 +284,7 @@ class LineContext extends Context implements PlatformContext {
    * This feature is only available for LINE@ Approved accounts or official accounts.
    *
    */
-  async getMemberIds(start: string): Promise<Object | null> {
+  async getMemberIds(start: string): Promise<Record<string, any> | null> {
     if (!this._session) {
       warning(
         false,
@@ -295,11 +297,11 @@ class LineContext extends Context implements PlatformContext {
       case 'room':
         return this._client.getRoomMemberIds(this._session.room.id, start, {
           accessToken: this._customAccessToken,
-        });
+        } as any);
       case 'group':
         return this._client.getGroupMemberIds(this._session.group.id, start, {
           accessToken: this._customAccessToken,
-        });
+        } as any);
       default:
         warning(
           false,
@@ -350,7 +352,7 @@ class LineContext extends Context implements PlatformContext {
     if (this._session && this._session.user) {
       return this._client.getLinkedRichMenu(this._session.user.id, {
         accessToken: this._customAccessToken,
-      });
+      } as any);
     }
     warning(
       false,
@@ -366,7 +368,7 @@ class LineContext extends Context implements PlatformContext {
     if (this._session && this._session.user) {
       return this._client.linkRichMenu(this._session.user.id, richMenuId, {
         accessToken: this._customAccessToken,
-      });
+      } as any);
     }
     warning(
       false,
@@ -382,7 +384,7 @@ class LineContext extends Context implements PlatformContext {
     if (this._session && this._session.user) {
       return this._client.unlinkRichMenu(this._session.user.id, {
         accessToken: this._customAccessToken,
-      });
+      } as any);
     }
     warning(
       false,
@@ -398,7 +400,7 @@ class LineContext extends Context implements PlatformContext {
     if (this._session && this._session.user) {
       return this._client.issueLinkToken(this._session.user.id, {
         accessToken: this._customAccessToken,
-      });
+      } as any);
     }
     warning(
       false,
@@ -430,7 +432,7 @@ types.forEach(({ name, arity, aliases }) => {
       enumerable: false,
       configurable: true,
       writable: true,
-      async value(...args) {
+      async value(...args: any[]) {
         invariant(!this._isReplied, 'Can not reply event multiple times');
 
         this._isHandled = true;
@@ -439,7 +441,7 @@ types.forEach(({ name, arity, aliases }) => {
           if (name === '') {
             this._replyMessages.push(...args[0]);
           } else {
-            this._replyMessages.push(Line[`create${name}`](...args));
+            this._replyMessages.push((Line as any)[`create${name}`](...args));
           }
           return;
         }
@@ -460,7 +462,7 @@ types.forEach(({ name, arity, aliases }) => {
       enumerable: false,
       configurable: true,
       writable: true,
-      async value(...args) {
+      async value(...args: any[]) {
         if (!this._session) {
           warning(
             false,
@@ -475,7 +477,7 @@ types.forEach(({ name, arity, aliases }) => {
           if (name === '') {
             this._pushMessages.push(...args[0]);
           } else {
-            this._pushMessages.push(Line[`create${name}`](...args));
+            this._pushMessages.push((Line as any)[`create${name}`](...args));
           }
           return;
         }
@@ -504,7 +506,7 @@ types
         enumerable: false,
         configurable: true,
         writable: true,
-        async value(...args) {
+        async value(...args: any[]) {
           return this[`${this._sendMethod}${type}`](...args);
         },
       });

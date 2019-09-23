@@ -504,7 +504,11 @@ export default class LineEvent implements Event<LineRawEvent> {
    *
    */
   get date(): string | null {
-    if (this.postback && this.postback.params && this.postback.params.date) {
+    if (
+      this.postback &&
+      this.postback.params &&
+      'date' in this.postback.params
+    ) {
       return this.postback.params.date;
     }
     return null;
@@ -515,7 +519,11 @@ export default class LineEvent implements Event<LineRawEvent> {
    *
    */
   get time(): string | null {
-    if (this.postback && this.postback.params && this.postback.params.time) {
+    if (
+      this.postback &&
+      this.postback.params &&
+      'time' in this.postback.params
+    ) {
       return this.postback.params.time;
     }
     return null;
@@ -529,7 +537,7 @@ export default class LineEvent implements Event<LineRawEvent> {
     if (
       this.postback &&
       this.postback.params &&
-      this.postback.params.datetime
+      'datetime' in this.postback.params
     ) {
       return this.postback.params.datetime;
     }

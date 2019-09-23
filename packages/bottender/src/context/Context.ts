@@ -34,7 +34,7 @@ export default class Context {
 
   _initialState?: Record<string, any> | null;
 
-  _requestContext?: Record<string, any> | null;
+  _requestContext: Record<string, any> | null;
 
   _emitter: EventEmitter | null;
 
@@ -52,8 +52,8 @@ export default class Context {
     this._event = event;
     this._session = session;
     this._initialState = initialState || {};
-    this._requestContext = requestContext;
-    this._emitter = emitter;
+    this._requestContext = requestContext || null;
+    this._emitter = emitter || null;
 
     debugContext('Context created with rawEvent:');
     debugContext(JSON.stringify(this._event.rawEvent, null, 2));

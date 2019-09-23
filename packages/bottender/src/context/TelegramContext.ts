@@ -122,7 +122,7 @@ class TelegramContext extends Context implements PlatformContext {
     return this._client.answerPreCheckoutQuery(preCheckoutQueryId, ok, options);
   }
 
-  async answerInlineQuery(results: Array<Object>, options?: {}) {
+  async answerInlineQuery(results: Array<Record<string, any>>, options?: {}) {
     if (!this._event.isInlineQuery) {
       warning(
         false,
@@ -138,7 +138,7 @@ class TelegramContext extends Context implements PlatformContext {
     return this._client.answerInlineQuery(inlineQueryId, results, options);
   }
 
-  async getUserProfilePhotos(options?: Object) {
+  async getUserProfilePhotos(options?: Record<string, any>) {
     if (!this._session) {
       warning(
         false,
@@ -206,10 +206,10 @@ class TelegramContext extends Context implements PlatformContext {
 
     const chatId = this._getChatId();
 
-    return this._client.getChatMember(chatId, userId);
+    return this._client.getChatMember(chatId, userId as any);
   }
 
-  async getGameHighScores(options?: Object) {
+  async getGameHighScores(options?: Record<string, any>) {
     if (!this._session) {
       warning(
         false,
@@ -223,7 +223,7 @@ class TelegramContext extends Context implements PlatformContext {
     return this._client.getGameHighScores(chatId, options);
   }
 
-  async editMessageText(text: string, options?: Object) {
+  async editMessageText(text: string, options?: Record<string, any>) {
     if (!this._session) {
       warning(
         false,
@@ -239,7 +239,7 @@ class TelegramContext extends Context implements PlatformContext {
     return this._client.editMessageText(text, { chat_id: chatId, ...options });
   }
 
-  async editMessageCaption(caption: string, options?: Object) {
+  async editMessageCaption(caption: string, options?: Record<string, any>) {
     if (!this._session) {
       warning(
         false,
@@ -258,7 +258,10 @@ class TelegramContext extends Context implements PlatformContext {
     });
   }
 
-  async editMessageReplyMarkup(replyMarkup: Object, options?: Object) {
+  async editMessageReplyMarkup(
+    replyMarkup: Record<string, any>,
+    options?: Record<string, any>
+  ) {
     if (!this._session) {
       warning(
         false,
@@ -290,12 +293,12 @@ class TelegramContext extends Context implements PlatformContext {
 
     const chatId = this._getChatId();
 
-    return this._client.deleteMessage(chatId, messageId);
+    return this._client.deleteMessage(chatId, messageId as any);
   }
 
   async editMessageLiveLocation(
     location: { latitude: number; longitude: number },
-    options?: Object
+    options?: Record<string, any>
   ) {
     if (!this._session) {
       warning(
@@ -315,7 +318,7 @@ class TelegramContext extends Context implements PlatformContext {
     });
   }
 
-  async stopMessageLiveLocation(options?: Object) {
+  async stopMessageLiveLocation(options?: Record<string, any>) {
     if (!this._session) {
       warning(
         false,
@@ -337,7 +340,7 @@ class TelegramContext extends Context implements PlatformContext {
   async forwardMessageFrom(
     fromChatId: string,
     messageId: number,
-    options?: Object
+    options?: Record<string, any>
   ) {
     if (!this._session) {
       warning(
@@ -351,13 +354,18 @@ class TelegramContext extends Context implements PlatformContext {
 
     const chatId = this._getChatId();
 
-    return this._client.forwardMessage(chatId, fromChatId, messageId, options);
+    return this._client.forwardMessage(
+      chatId,
+      fromChatId,
+      messageId as any,
+      options
+    );
   }
 
   async forwardMessageTo(
     toChatId: string,
     messageId: number,
-    options?: Object
+    options?: Record<string, any>
   ) {
     if (!this._session) {
       warning(
@@ -371,7 +379,12 @@ class TelegramContext extends Context implements PlatformContext {
 
     const chatId = this._getChatId();
 
-    return this._client.forwardMessage(toChatId, chatId, messageId, options);
+    return this._client.forwardMessage(
+      toChatId,
+      chatId,
+      messageId as any,
+      options
+    );
   }
 }
 
@@ -420,7 +433,7 @@ sendMethods.forEach(method => {
     enumerable: false,
     configurable: true,
     writable: true,
-    async value(...args) {
+    async value(...args: any[]) {
       if (!this._session) {
         warning(
           false,

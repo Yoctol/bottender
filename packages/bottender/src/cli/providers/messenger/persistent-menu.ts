@@ -50,7 +50,7 @@ export async function getPersistentMenu(_: CliContext): Promise<void> {
         colWidths: [30, 30, 30],
       });
       menu.call_to_actions.forEach(item => {
-        table.push([item.type, item.title, item.payload]);
+        table.push([item.type, item.title, item.payload] as any);
       });
       console.log(table.toString()); // eslint-disable-line no-console
     } else {

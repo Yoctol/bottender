@@ -42,7 +42,7 @@ export default class ConsoleEvent implements Event<ConsoleRawEvent> {
    *
    */
   get message(): Message | null {
-    return this.isMessage ? this._rawEvent.message : null;
+    return this.isMessage ? (this._rawEvent as MessageEvent).message : null;
   }
 
   /**
@@ -69,7 +69,7 @@ export default class ConsoleEvent implements Event<ConsoleRawEvent> {
    *
    */
   get isPayload(): boolean {
-    return !!this._rawEvent.payload;
+    return !!(this._rawEvent as any).payload;
   }
 
   /**
@@ -77,6 +77,9 @@ export default class ConsoleEvent implements Event<ConsoleRawEvent> {
    *
    */
   get payload(): string | null {
-    return this._rawEvent.payload || null;
+    if (this.isPayload) {
+      return (this._rawEvent as PayloadEvent).payload;
+    }
+    return null;
   }
 }

@@ -1,3 +1,1 @@
-
-
-export { default as getAttachment } from './getAttachment';
+export default {};

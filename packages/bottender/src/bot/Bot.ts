@@ -115,7 +115,7 @@ export default class Bot<B, C> {
     return this;
   }
 
-  onError(handler: ErrorHandler): Bot<B, C> {
+  onError(handler: ErrorHandler | Builder): Bot<B, C> {
     // FIXME: [type]
     this._emitter.on('error', 'build' in handler ? handler.build() : handler);
     return this;
@@ -270,7 +270,7 @@ export default class Bot<B, C> {
         return response;
       }
       promises
-        .then(() => {
+        .then((): Promise<any> | void => {
           if (sessionId && session) {
             // $FlowFixMe: suppressing this error until we can refactor
             session.lastActivity = Date.now();

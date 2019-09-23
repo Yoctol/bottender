@@ -26,8 +26,7 @@ export default class ConsoleBot extends Bot<ConsoleRawEvent, ConsoleClient> {
     await this.initSessionStore();
 
     const { platform } = this._connector;
-    // FIXME: [type]
-    const sessionKey = this._connector.getUniqueSessionKey();
+    const sessionKey = '1';
 
     // Create or retrieve session if possible
     const sessionId = `${platform}:${sessionKey}`;

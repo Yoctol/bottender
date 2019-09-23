@@ -1,189 +1,189 @@
 import { Event } from './Event';
 
 export type Sender = {
-  id: string,
+  id: string;
 };
 
 export type Recipient = {
-  id: string,
+  id: string;
 };
 
 type QuickReply = {
-  payload: string,
+  payload: string;
 };
 
 type MediaAttachmentPayload = {
-  url: string,
+  url: string;
 };
 
 type LocationAttachmentPayload = {
   coordinates: {
-    lat: number,
-    long: number,
-  },
+    lat: number;
+    long: number;
+  };
 };
 
 type AttachmentPayload = MediaAttachmentPayload | LocationAttachmentPayload;
 
 type FallbackAttachment = {
-  type: 'fallback',
-  payload: null,
-  title: string,
-  URL: string,
+  type: 'fallback';
+  payload: null;
+  title: string;
+  URL: string;
 };
 
 type MediaAttachment = {
-  type: string,
-  payload: AttachmentPayload,
+  type: string;
+  payload: AttachmentPayload;
 };
 
 type Attachment = MediaAttachment | FallbackAttachment;
 
 type Tag = {
-  source: string,
+  source: string;
 };
 
 export type Message = {
-  is_echo?: boolean,
-  text?: string,
-  sticker_id?: number,
-  quick_reply?: QuickReply,
-  attachments?: Array<Attachment>,
-  tags?: Array<Tag>,
+  is_echo?: boolean;
+  text?: string;
+  sticker_id?: number;
+  quick_reply?: QuickReply;
+  attachments?: Array<Attachment>;
+  tags?: Array<Tag>;
 };
 
 export type Delivery = {
-  mids: Array<string>,
-  watermark: number,
-  seq: number,
+  mids: Array<string>;
+  watermark: number;
+  seq: number;
 };
 
 export type Read = {
-  watermark: number,
-  seq: number,
+  watermark: number;
+  seq: number;
 };
 
 export type Referral = {
-  ref: string,
-  source: string,
-  type: string,
-  origin_domain?: string,
+  ref: string;
+  source: string;
+  type: string;
+  origin_domain?: string;
 };
 
 export type Postback = {
-  payload: string,
-  referral?: Referral,
+  payload: string;
+  referral?: Referral;
 };
 
 export type GamePlay = {
-  game_id: string,
-  player_id: string,
-  context_type: 'SOLO' | 'THREAD' | 'GROUP',
-  context_id: string,
-  score: number,
-  payload: string,
+  game_id: string;
+  player_id: string;
+  context_type: 'SOLO' | 'THREAD' | 'GROUP';
+  context_id: string;
+  score: number;
+  payload: string;
 };
 
 export type Optin = {
-  ref: string,
+  ref: string;
 };
 
 export type Payment = {
-  payload: string,
-  requested_user_info: Object,
-  payment_credential: Object,
+  payload: string;
+  requested_user_info: Record<string, any>;
+  payment_credential: Record<string, any>;
   amount: {
-    currency: string,
-    amount: string,
-  },
-  shipping_option_id: string,
+    currency: string;
+    amount: string;
+  };
+  shipping_option_id: string;
 };
 
 export type CheckoutUpdate = {
-  payload: string,
+  payload: string;
   shipping_address: {
-    id: number,
-    street_1: string,
-    street_2: string,
-    city: string,
-    state: string,
-    country: string,
-    postal_code: string,
-  },
+    id: number;
+    street_1: string;
+    street_2: string;
+    city: string;
+    state: string;
+    country: string;
+    postal_code: string;
+  };
 };
 
 export type PreCheckout = {
-  payload: string,
+  payload: string;
   requested_user_info: {
     shipping_address: {
-      name: string,
-      street_1: string,
-      street_2: string,
-      city: string,
-      state: string,
-      country: string,
-      postal_code: string,
-    },
-    contact_name: string,
-  },
+      name: string;
+      street_1: string;
+      street_2: string;
+      city: string;
+      state: string;
+      country: string;
+      postal_code: string;
+    };
+    contact_name: string;
+  };
   amount: {
-    currency: string,
-    amount: string,
-  },
+    currency: string;
+    amount: string;
+  };
 };
 
 export type PolicyEnforcement = {
-  action: string,
-  reason: string,
+  action: string;
+  reason: string;
 };
 
 export type AppRoles = Record<string, string[]>;
 
 export type PassThreadControl = {
-  new_owner_app_id: string,
-  metadata: string,
+  new_owner_app_id: string;
+  metadata: string;
 };
 
 export type TakeThreadControl = {
-  previous_owner_app_id: string,
-  metadata: string,
+  previous_owner_app_id: string;
+  metadata: string;
 };
 
 export type RequestThreadControl = {
-  requested_owner_app_id: string,
-  metadata: string,
+  requested_owner_app_id: number;
+  metadata: string;
 };
 
 export type BrandedCamera = {
-  content_ids: Array<string>,
-  event: string,
+  content_ids: Array<string>;
+  event: string;
 };
 
 export type MessengerRawEvent = {
-  sender?: Sender,
-  recipient?: Recipient,
-  timestamp?: number,
-  message?: Message,
-  read?: Read,
-  delivery?: Delivery,
-  postback?: Postback,
-  game_play?: GamePlay,
-  optin?: Optin,
-  payment?: Payment,
-  checkout_update?: CheckoutUpdate,
-  pre_checkout?: PreCheckout,
-  'policy-enforcement'?: PolicyEnforcement,
-  app_roles?: AppRoles,
-  pass_thread_control?: PassThreadControl,
-  take_thread_control?: TakeThreadControl,
-  request_thread_control?: RequestThreadControl,
-  referral?: Referral,
-  branded_camera?: BrandedCamera,
+  sender?: Sender;
+  recipient?: Recipient;
+  timestamp?: number;
+  message?: Message;
+  read?: Read;
+  delivery?: Delivery;
+  postback?: Postback;
+  game_play?: GamePlay;
+  optin?: Optin;
+  payment?: Payment;
+  checkout_update?: CheckoutUpdate;
+  pre_checkout?: PreCheckout;
+  'policy-enforcement'?: PolicyEnforcement;
+  app_roles?: AppRoles;
+  pass_thread_control?: PassThreadControl;
+  take_thread_control?: TakeThreadControl;
+  request_thread_control?: RequestThreadControl;
+  referral?: Referral;
+  branded_camera?: BrandedCamera;
 };
 
 type MessengerEventOptions = {
-  isStandby?: boolean,
-  pageId?: string | null,
+  isStandby?: boolean;
+  pageId?: string | null;
 };
 
 export default class MessengerEvent implements Event<MessengerRawEvent> {
@@ -199,7 +199,7 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
   ) {
     this._rawEvent = rawEvent;
     this._isStandby = options.isStandby || false;
-    this._pageId = options.pageId;
+    this._pageId = options.pageId || null;
   }
 
   /**
@@ -224,8 +224,8 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    * The message object from Messenger raw event.
    *
    */
-  get message(): ?Message {
-    return this._rawEvent.message;
+  get message(): Message | null {
+    return this._rawEvent.message || null;
   }
 
   /**
@@ -264,7 +264,10 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    *
    */
   get attachments(): Attachment[] | null {
-    return this.message ? this.message.attachments : null;
+    if (this.message && this.message.attachments) {
+      return this.message.attachments;
+    }
+    return null;
   }
 
   /**
@@ -320,7 +323,9 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    *
    */
   get isLocation(): boolean {
-    return this.hasAttachment && (this.attachments as any)[0].type === 'location';
+    return (
+      this.hasAttachment && (this.attachments as any)[0].type === 'location'
+    );
   }
 
   /**
@@ -352,7 +357,9 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    *
    */
   get isFallback(): boolean {
-    return this.hasAttachment && (this.attachments as any)[0].type === 'fallback';
+    return (
+      this.hasAttachment && (this.attachments as any)[0].type === 'fallback'
+    );
   }
 
   /**
@@ -368,7 +375,9 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    *
    */
   get isSticker(): boolean {
-    return this.isMessage && typeof (this.message as any).sticker_id === 'number';
+    return (
+      this.isMessage && typeof (this.message as any).sticker_id === 'number'
+    );
   }
 
   /**
@@ -411,7 +420,10 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    *
    */
   get quickReply(): QuickReply | null {
-    return this.message ? this.message.quick_reply : null;
+    if (this.message && this.message.quick_reply) {
+      return this.message.quick_reply;
+    }
+    return null;
   }
 
   /**
@@ -559,7 +571,7 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    *
    */
   get read(): Read | null {
-    return this.isRead ? this._rawEvent.read : null;
+    return this.isRead ? (this._rawEvent as any).read : null;
   }
 
   /**
@@ -577,7 +589,7 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    *
    */
   get delivery(): Delivery | null {
-    return this.isDelivery ? this._rawEvent.delivery : null;
+    return this.isDelivery ? (this._rawEvent as any).delivery : null;
   }
 
   /**
@@ -730,7 +742,7 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
       !!(this.message as any).tags &&
       (this.message as any).tags.length !== 0 &&
       (this.message as any).tags.some(
-        tag => tag.source === 'customer_chat_plugin'
+        (tag: any) => tag.source === 'customer_chat_plugin'
       )
     );
 
@@ -764,7 +776,8 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
     }
     return (
       this._rawEvent.referral ||
-      (this._rawEvent.postback && this._rawEvent.postback.referral)
+      (this._rawEvent.postback && this._rawEvent.postback.referral) ||
+      null
     );
   }
 
@@ -806,6 +819,6 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
     if (!this.isBrandedCamera) {
       return null;
     }
-    return this._rawEvent.branded_camera;
+    return (this._rawEvent as any).branded_camera;
   }
 }

@@ -83,7 +83,7 @@ export default class SlackContext extends Context implements PlatformContext {
 
     return this._client.postEphemeral(
       channelId,
-      this._session.user.id,
+      (this._session as any).user.id,
       message,
       options
     );

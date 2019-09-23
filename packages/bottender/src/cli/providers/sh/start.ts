@@ -63,7 +63,7 @@ const start = async (ctx: CliContext): Promise<void> => {
   }
 
   const sessionDriverConfig =
-    ((session && session.stores) || {})[sessionDriver] || {};
+    ((session && session.stores) || ({} as any))[sessionDriver] || {};
 
   const sessionStore = new SessionStore(
     sessionDriverConfig,
@@ -96,7 +96,7 @@ const start = async (ctx: CliContext): Promise<void> => {
 
     bot.createRuntime();
   } else {
-    let server: express.Application;
+    let server: express.Application | undefined;
 
     Object.entries(channels || {})
       .filter(([, { enabled }]) => enabled)
@@ -105,7 +105,7 @@ const start = async (ctx: CliContext): Promise<void> => {
         const channelBot = new ChannelBot({
           ...channelConfig,
           sessionStore,
-        });
+        } as any);
 
         initializeBot(channelBot);
 

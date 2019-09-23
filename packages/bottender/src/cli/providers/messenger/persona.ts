@@ -107,7 +107,7 @@ export async function listPersona(_: CliContext) {
         colWidths: [30, 30, 30],
       });
       personas.forEach(item => {
-        table.push([item.id, item.name, item.profile_picture_url]);
+        table.push([item.id, item.name, item.profile_picture_url] as any);
       });
       console.log(table.toString()); // eslint-disable-line no-console
     } else {

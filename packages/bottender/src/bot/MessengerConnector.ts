@@ -1,5 +1,6 @@
 import EventEmitter from 'events';
 import crypto from 'crypto';
+import { URL } from 'url';
 
 import isAfter from 'date-fns/isAfter';
 import isValid from 'date-fns/isValid';
@@ -26,45 +27,45 @@ import { Connector } from './Connector';
 
 type Entry = {
   [key in 'messaging' | 'standby' | 'changes']: {
-    sender: Sender,
-    recipient: Recipient,
-    timestamp: number,
-    postback?: Postback,
-    message?: Message,
-    field?: String,
-    value?: Object,
+    sender: Sender;
+    recipient: Recipient;
+    timestamp: number;
+    postback?: Postback;
+    message?: Message;
+    field?: string;
+    value?: Record<string, any>;
   }[];
 };
 
 type EntryRequestBody = {
-  type: string,
-  entry: Entry[],
+  type: string;
+  entry: Entry[];
 };
 
 type PolicyEnforcementRequestBody = {
-  recipient: Recipient,
-  timestamp: number,
-  'policy-enforcement': PolicyEnforcement,
+  recipient: Recipient;
+  timestamp: number;
+  'policy-enforcement': PolicyEnforcement;
 };
 
 type AppRolesRequestBody = {
-  recipient: Recipient,
-  timestamp: number,
-  app_roles: AppRoles,
+  recipient: Recipient;
+  timestamp: number;
+  app_roles: AppRoles;
 };
 
 type PassThreadControlRequestBody = {
-  sender: Sender,
-  recipient: Recipient,
-  timestamp: number,
-  pass_thread_control: PassThreadControl,
+  sender: Sender;
+  recipient: Recipient;
+  timestamp: number;
+  pass_thread_control: PassThreadControl;
 };
 
 type TakeThreadControlRequestBody = {
-  sender: Sender,
-  recipient: Recipient,
-  timestamp: number,
-  take_thread_control: TakeThreadControl,
+  sender: Sender;
+  recipient: Recipient;
+  timestamp: number;
+  take_thread_control: TakeThreadControl;
 };
 
 export type MessengerRequestBody =
@@ -74,18 +75,28 @@ export type MessengerRequestBody =
   | PassThreadControlRequestBody
   | TakeThreadControlRequestBody;
 
-type ConstructorOptions = {
-  accessToken?: string,
-  appId?: string,
-  appSecret?: string,
-  client?: MessengerClient,
-  mapPageToAccessToken?: (pageId: string) => Promise<string>,
-  verifyToken?: string | null,
-  batchConfig?: Object | null,
-  origin?: string,
-  skipAppSecretProof?: boolean | null,
-  skipProfile?: boolean | null,
+type CommonConstructorOptions = {
+  appId: string;
+  appSecret: string;
+  verifyToken?: string;
+  batchConfig?: Record<string, any>;
+  skipProfile?: boolean;
+  mapPageToAccessToken?: (pageId: string) => Promise<string>;
 };
+
+type ConstructorOptionsWithoutClient = {
+  accessToken?: string;
+  origin?: string;
+  skipAppSecretProof?: boolean;
+} & CommonConstructorOptions;
+
+type ConstructorOptionsWithClient = {
+  client: MessengerClient;
+} & CommonConstructorOptions;
+
+type ConstructorOptions =
+  | ConstructorOptionsWithoutClient
+  | ConstructorOptionsWithClient;
 
 export default class MessengerConnector
   implements Connector<MessengerRequestBody, MessengerClient> {
@@ -101,35 +112,37 @@ export default class MessengerConnector
 
   _verifyToken: string | null = null;
 
-  _batchConfig: Object | null = null;
+  _batchConfig: Record<string, any> | null = null;
 
-  _batchQueue: Object | null = null;
+  _batchQueue: Record<string, any> | null = null;
 
-  constructor({
-    accessToken,
-    appId,
-    appSecret,
-    client,
-    mapPageToAccessToken,
-    verifyToken,
-    batchConfig,
-    origin,
-    skipAppSecretProof,
-    skipProfile,
-  }: ConstructorOptions) {
-    this._client =
-      client ||
-      MessengerClient.connect({
+  constructor(options: ConstructorOptions) {
+    const {
+      appId,
+      appSecret,
+      mapPageToAccessToken,
+      verifyToken,
+      batchConfig,
+
+      skipProfile,
+    } = options;
+
+    if ('client' in options) {
+      this._client = options.client;
+    } else {
+      const { accessToken, origin, skipAppSecretProof } = options;
+      this._client = MessengerClient.connect({
         accessToken: accessToken || '',
         appSecret,
         origin,
         skipAppSecretProof,
       });
+    }
 
-    this._appId = appId || '';
-    this._appSecret = appSecret || '';
+    this._appId = appId;
+    this._appSecret = appSecret;
 
-    this._mapPageToAccessToken = mapPageToAccessToken;
+    this._mapPageToAccessToken = mapPageToAccessToken || null;
     this._verifyToken = verifyToken || shortid.generate();
 
     // FIXME: maybe set this default value as true
@@ -142,43 +155,33 @@ export default class MessengerConnector
         this._batchConfig
       );
     }
-
-    if (!this._appSecret) {
-      warning(
-        false,
-        '`appSecret` is not set. Will bypass Messenger signature validation.\nPass in `appSecret` to perform Messenger signature validation.'
-      );
-    }
   }
 
-  _getRawEventsFromRequest(
-    body: MessengerRequestBody
-  ): MessengerRawEvent[] {
-    if (body.entry) {
+  _getRawEventsFromRequest(body: MessengerRequestBody): MessengerRawEvent[] {
+    if ('entry' in body) {
       const { entry } = body as EntryRequestBody;
 
       return entry
         .map(ent => {
           if (ent.messaging) {
-            return (ent.messaging[0] as MessengerRawEvent);
+            return ent.messaging[0] as MessengerRawEvent;
           }
 
           if (ent.standby) {
-            return (ent.standby[0] as MessengerRawEvent);
+            return ent.standby[0] as MessengerRawEvent;
           }
 
           // for Webhook Test button request and other page events
           if (ent.changes) {
-            return (ent.changes[0] as MessengerRawEvent);
+            return ent.changes[0] as MessengerRawEvent;
           }
 
-          // $FlowExpectedError
           return null;
         })
-        .filter(event => event != null);
+        .filter(event => event != null) as MessengerRawEvent[];
     }
 
-    return [(body as MessengerRawEvent)];
+    return [body as MessengerRawEvent];
   }
 
   _getPageIdFromRawEvent(rawEvent: MessengerRawEvent): string | null {
@@ -193,7 +196,7 @@ export default class MessengerConnector
   }
 
   _isStandby(body: MessengerRequestBody): boolean {
-    if (!body.entry) return false;
+    if (!('entry' in body)) return false;
     const entry = (body as EntryRequestBody).entry[0];
 
     return !!entry.standby;
@@ -204,6 +207,8 @@ export default class MessengerConnector
       // Facebook CDN returns expiration time in the key `ext` in url params like:
       // https://platform-lookaside.fbsbx.com/platform/profilepic/?psid=11111111111111&width=1024&ext=1543379908&hash=xxxxxxxxxxxx
       const ext = new URL(user.profile_pic).searchParams.get('ext');
+
+      if (!ext) return true;
 
       const timestamp = +ext * 1000;
       const expireTime = new Date(timestamp);
@@ -221,11 +226,11 @@ export default class MessengerConnector
     return this._client;
   }
 
-  get verifyToken(): ?string {
+  get verifyToken(): string | null {
     return this._verifyToken;
   }
 
-  getUniqueSessionKey(body: MessengerRequestBody): ?string {
+  getUniqueSessionKey(body: MessengerRequestBody): string | null {
     const rawEvent = this._getRawEventsFromRequest(body)[0];
     if (
       rawEvent &&
@@ -275,7 +280,7 @@ export default class MessengerConnector
       } else {
         let user = {};
         try {
-          user = await this._client.getUserProfile(senderId, {
+          user = await this._client.getUserProfile(senderId as any, {
             access_token: customAccessToken,
           });
         } catch (e) {
@@ -325,11 +330,11 @@ export default class MessengerConnector
   }
 
   async createContext(params: {
-    event: MessengerEvent,
-    session?: Session,
-    initialState?: Object,
-    requestContext?: Object,
-    emitter?: EventEmitter,
+    event: MessengerEvent;
+    session?: Session;
+    initialState?: Record<string, any>;
+    requestContext?: Record<string, any>;
+    emitter?: EventEmitter;
   }): Promise<MessengerContext> {
     let customAccessToken;
     if (this._mapPageToAccessToken) {
@@ -388,11 +393,11 @@ export default class MessengerConnector
     query,
     rawBody,
   }: {
-    method: string,
-    headers: Record<string, any>,
-    query: Record<string, any>,
-    rawBody: string,
-    body: Object,
+    method: string;
+    headers: Record<string, any>;
+    query: Record<string, any>;
+    rawBody: string;
+    body: Record<string, any>;
   }) {
     if (method.toLowerCase() === 'get') {
       if (

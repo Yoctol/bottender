@@ -44,7 +44,7 @@ export default class TelegramBot extends Bot<
 
   async createLongPollingRuntime(options: PollingOptions = {}): Promise<void> {
     this._shouldGetUpdates = true;
-    this._offset = options.offset;
+    this._offset = options.offset || null;
 
     const handler = this.createRequestHandler();
 
@@ -65,7 +65,7 @@ export default class TelegramBot extends Bot<
           }
 
           const highestUpdateId = Math.max(
-            ...updates.map(update => update.update_id)
+            ...updates.map((update: any) => update.update_id)
           );
 
           this._offset = highestUpdateId + 1;

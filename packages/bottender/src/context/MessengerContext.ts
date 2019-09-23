@@ -12,15 +12,15 @@ import MessengerEvent from './MessengerEvent';
 import { PlatformContext } from './PlatformContext';
 
 type Options = {
-  appId?: string,
-  client: MessengerClient,
-  event: MessengerEvent,
-  session?: Session,
-  initialState?: Object,
-  requestContext?: Object,
-  customAccessToken?: string,
-  batchQueue?: Object,
-  emitter?: EventEmitter,
+  appId?: string;
+  client: MessengerClient;
+  event: MessengerEvent;
+  session?: Session;
+  initialState?: Record<string, any>;
+  requestContext?: Record<string, any>;
+  customAccessToken?: string;
+  batchQueue?: Record<string, any> | null;
+  emitter?: EventEmitter;
 };
 
 class MessengerContext extends Context implements PlatformContext {
@@ -34,9 +34,9 @@ class MessengerContext extends Context implements PlatformContext {
 
   _customAccessToken: string | null;
 
-  _personaId: string | null;
+  _personaId: string | null = null;
 
-  _batchQueue: Object | null;
+  _batchQueue: Record<string, any> | null;
 
   constructor({
     appId,
@@ -50,9 +50,9 @@ class MessengerContext extends Context implements PlatformContext {
     emitter,
   }: Options) {
     super({ client, event, session, initialState, requestContext, emitter });
-    this._customAccessToken = customAccessToken;
-    this._batchQueue = batchQueue;
-    this._appId = appId;
+    this._customAccessToken = customAccessToken || null;
+    this._batchQueue = batchQueue || null;
+    this._appId = appId || null;
   }
 
   /**
@@ -63,15 +63,17 @@ class MessengerContext extends Context implements PlatformContext {
     return 'messenger';
   }
 
-  get accessToken(): ?string {
+  get accessToken(): string | null {
     return this._customAccessToken || this._client.accessToken;
   }
 
-  _callClientMethod(method: string, args: Array<any>) {
+  _callClientMethod(method: string, args: any[]) {
     if (this._batchQueue) {
-      return this._batchQueue.push(MessengerBatch[method](...args));
+      return (this._batchQueue as any).push(
+        (MessengerBatch as any)[method](...args)
+      );
     }
-    return this._client[method](...args);
+    return (this._client as any)[method](...args);
   }
 
   /**
@@ -106,7 +108,7 @@ class MessengerContext extends Context implements PlatformContext {
    * Send text to the owner of then session.
    *
    */
-  async sendText(text: string, options?: Object): Promise<any> {
+  async sendText(text: string, options?: Record<string, any>): Promise<any> {
     if (!this._session) {
       warning(
         false,
@@ -125,7 +127,8 @@ class MessengerContext extends Context implements PlatformContext {
 
     this._isHandled = true;
 
-    const messageType = options && options.tag ? 'MESSAGE_TAG' : 'RESPONSE';
+    const messageType =
+      options && 'tag' in options ? 'MESSAGE_TAG' : 'RESPONSE';
 
     const args = [
       this._session.user.id,
@@ -150,7 +153,7 @@ class MessengerContext extends Context implements PlatformContext {
   /**
    * https://github.com/Yoctol/messaging-apis/tree/master/packages/messaging-api-messenger#typingonuserid
    */
-  async getUserProfile(): Promise<Object | null> {
+  async getUserProfile(): Promise<Record<string, any> | null> {
     if (!this._session) {
       warning(
         false,
@@ -178,7 +181,10 @@ class MessengerContext extends Context implements PlatformContext {
   /**
    * https://github.com/Yoctol/messaging-apis/tree/master/packages/messaging-api-messenger#sendsenderactionuserid-action
    */
-  async sendSenderAction(action: string, options?: Object): Promise<any> {
+  async sendSenderAction(
+    action: string,
+    options?: Record<string, any>
+  ): Promise<any> {
     if (!this._session) {
       warning(
         false,
@@ -205,7 +211,7 @@ class MessengerContext extends Context implements PlatformContext {
   /**
    * https://github.com/Yoctol/messaging-apis/tree/master/packages/messaging-api-messenger#typingonuserid
    */
-  async typingOn(options?: Object): Promise<any> {
+  async typingOn(options?: Record<string, any>): Promise<any> {
     if (!this._session) {
       warning(
         false,
@@ -231,7 +237,7 @@ class MessengerContext extends Context implements PlatformContext {
   /**
    * https://github.com/Yoctol/messaging-apis/tree/master/packages/messaging-api-messenger#typingoffuserid
    */
-  async typingOff(options?: Object): Promise<any> {
+  async typingOff(options?: Record<string, any>): Promise<any> {
     if (!this._session) {
       warning(
         false,
@@ -257,7 +263,7 @@ class MessengerContext extends Context implements PlatformContext {
   /**
    * https://github.com/Yoctol/messaging-apis/tree/master/packages/messaging-api-messenger#markseenuserid
    */
-  async markSeen(options?: Object): Promise<any> {
+  async markSeen(options?: Record<string, any>): Promise<any> {
     if (!this._session) {
       warning(
         false,
@@ -498,7 +504,7 @@ class MessengerContext extends Context implements PlatformContext {
   }
 }
 
-const sendMethods = [
+const sendMethods: [string, number][] = [
   // type name, arguments length
   ['sendMessage', 3],
   ['sendAttachment', 3],
@@ -527,7 +533,7 @@ sendMethods.forEach(([method, arity]) => {
     enumerable: false,
     configurable: true,
     writable: true,
-    async value(...args) {
+    async value(...args: any[]) {
       if (!this._session) {
         warning(
           false,

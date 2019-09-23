@@ -30,7 +30,10 @@ export default class RedisCacheStore implements CacheStore {
 
   async get(key: string): Promise<CacheValue | null> {
     const val = await this._redis.get(`${this._prefix}${key}`);
-    return this._unserialize(val);
+    if (val) {
+      return this._unserialize(val);
+    }
+    return null;
   }
 
   async all(): Promise<CacheValue[]> {

@@ -121,18 +121,18 @@ export async function setWebhook(ctx: CliContext): Promise<void> {
     const table = new Table();
 
     table.push(
-      [chalk.green('Page ID'), pageInfo.id],
-      [chalk.green('Page Name'), pageInfo.name],
-      [chalk.green('App Name'), tokenInfo.application],
+      [chalk.green('Page ID'), pageInfo.id] as any,
+      [chalk.green('Page Name'), pageInfo.name] as any,
+      [chalk.green('App Name'), tokenInfo.application] as any,
       [
         chalk.green('Token Expires At'),
         tokenInfo.expires_at === 0
           ? 'Never'
           : new Date(tokenInfo.expires_at * 1000).toString(),
-      ],
-      [chalk.green('Token Scopes'), tokenInfo.scopes.join(',')],
-      [chalk.green('App Fields'), fields.join(',')],
-      [chalk.green('Webhook URL'), webhook]
+      ] as any,
+      [chalk.green('Token Scopes'), tokenInfo.scopes.join(',')] as any,
+      [chalk.green('App Fields'), fields.join(',')] as any,
+      [chalk.green('Webhook URL'), webhook] as any
     );
 
     console.log(table.toString());

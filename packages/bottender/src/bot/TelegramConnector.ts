@@ -10,23 +10,34 @@ import { Connector } from './Connector';
 
 export type TelegramRequestBody = TelegramRawEvent;
 
-type ConstructorOptions = {
-  accessToken?: string;
-  client?: TelegramClient;
+type ConstructorOptionsWithoutClient = {
+  accessToken: string;
   origin?: string;
 };
+
+type ConstructorOptionsWithClient = {
+  client: TelegramClient;
+};
+
+type ConstructorOptions =
+  | ConstructorOptionsWithoutClient
+  | ConstructorOptionsWithClient;
 
 export default class TelegramConnector
   implements Connector<TelegramRequestBody, TelegramClient> {
   _client: TelegramClient;
 
-  constructor({ accessToken, client, origin }: ConstructorOptions) {
-    this._client =
-      client ||
-      TelegramClient.connect({
+  constructor(options: ConstructorOptions) {
+    if ('client' in options) {
+      this._client = options.client;
+    } else {
+      const { accessToken, origin } = options;
+
+      this._client = TelegramClient.connect({
         accessToken,
         origin,
       });
+    }
   }
 
   _getRawEventFromRequest(body: TelegramRequestBody): TelegramRawEvent {

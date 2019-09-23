@@ -85,7 +85,7 @@ type Message = {
     id: number;
     first_name: string;
     last_name: string;
-    type: 'private';
+    type: 'private' | 'group';
   };
   date: number;
   text: string;

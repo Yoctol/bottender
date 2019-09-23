@@ -15,16 +15,26 @@ export type LineRequestBody = {
   events: Array<LineRawEvent>;
 };
 
-type ConstructorOptions = {
-  accessToken?: string;
-  channelSecret?: string;
-  client?: LineClient;
+type CommonConstructorOptions = {
   mapDestinationToAccessToken?: (destination: string) => Promise<string>;
-  shouldBatch: boolean | null;
-  sendMethod: string | null;
-  origin?: string;
-  skipProfile?: boolean | null;
+  shouldBatch?: boolean;
+  sendMethod?: string;
+  skipProfile?: boolean;
 };
+
+type ConstructorOptionsWithoutClient = {
+  accessToken: string;
+  channelSecret: string;
+  origin?: string;
+} & CommonConstructorOptions;
+
+type ConstructorOptionsWithClient = {
+  client: LineClient;
+} & CommonConstructorOptions;
+
+type ConstructorOptions =
+  | ConstructorOptionsWithoutClient
+  | ConstructorOptionsWithClient;
 
 export default class LineConnector
   implements Connector<LineRequestBody, LineClient> {
@@ -38,29 +48,34 @@ export default class LineConnector
     | ((destination: string) => Promise<string>)
     | null;
 
-  _shouldBatch: boolean | null;
+  _shouldBatch: boolean;
 
-  _sendMethod: string | null;
+  _sendMethod: string;
 
-  constructor({
-    accessToken,
-    channelSecret,
-    client,
-    mapDestinationToAccessToken,
-    shouldBatch,
-    sendMethod,
-    origin,
-    skipProfile,
-  }: ConstructorOptions) {
-    this._client =
-      client ||
-      LineClient.connect({
+  constructor(options: ConstructorOptions) {
+    const {
+      mapDestinationToAccessToken,
+      shouldBatch,
+      sendMethod,
+      skipProfile,
+    } = options;
+    if ('client' in options) {
+      this._client = options.client;
+
+      this._channelSecret = '';
+    } else {
+      const { accessToken, channelSecret, origin } = options;
+
+      this._client = LineClient.connect({
         accessToken,
+        channelSecret,
         origin,
       });
-    this._channelSecret = channelSecret || '';
 
-    this._mapDestinationToAccessToken = mapDestinationToAccessToken;
+      this._channelSecret = channelSecret;
+    }
+
+    this._mapDestinationToAccessToken = mapDestinationToAccessToken || null;
 
     this._shouldBatch = shouldBatch || false;
     warning(
@@ -75,8 +90,8 @@ export default class LineConnector
 
   _isWebhookVerifyEvent(event: LineRawEvent): boolean {
     return (
-      event.replyToken === '00000000000000000000000000000000' ||
-      event.replyToken === 'ffffffffffffffffffffffffffffffff'
+      (event as any).replyToken === '00000000000000000000000000000000' ||
+      (event as any).replyToken === 'ffffffffffffffffffffffffffffffff'
     );
   }
 
@@ -247,7 +262,7 @@ export default class LineConnector
 
   async createContext(params: {
     event: LineEvent;
-    session: Session | null;
+    session?: Session | null;
     initialState?: Record<string, any> | null;
     requestContext?: Record<string, any> | null;
     emitter?: EventEmitter | null;
@@ -329,7 +344,7 @@ export default class LineConnector
       };
     }
 
-    if (this.isWebhookVerifyRequest(body)) {
+    if (this.isWebhookVerifyRequest(body as any)) {
       return {
         shouldNext: false,
         response: {

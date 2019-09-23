@@ -21,7 +21,7 @@ export async function getWebhook(_: CliContext): Promise<void> {
     const client = TelegramClient.connect(accessToken);
     const result = await client.getWebhookInfo();
 
-    Object.keys(result).forEach(key => print(`${key}: ${result[key]}`));
+    Object.entries(result).forEach(([key, value]) => print(`${key}: ${value}`));
     return;
   } catch (err) {
     error('Failed to get Telegram webhook');

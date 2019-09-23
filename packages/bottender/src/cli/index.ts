@@ -80,7 +80,7 @@ const main = async (argvFrom2: string[]) => {
   try {
     const method = get(provider, camelCase(subcommand));
     if (method) {
-      await provider[camelCase(subcommand)](ctx);
+      await (provider as any)[camelCase(subcommand)](ctx);
     } else {
       const subcommands = Array.from(provider.subcommands).join(', ');
       error(`Please specify a valid subcommand: ${subcommands}`);
