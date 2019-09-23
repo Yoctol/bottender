@@ -3823,6 +3823,15 @@ eslint-config-airbnb-base@^14.0.0:
     object.assign "^4.1.0"
     object.entries "^1.1.0"
 
+eslint-config-airbnb@^18.0.1:
+  version "18.0.1"
+  resolved "https://registry.yarnpkg.com/eslint-config-airbnb/-/eslint-config-airbnb-18.0.1.tgz#a3a74cc29b46413b6096965025381df8fb908559"
+  integrity sha512-hLb/ccvW4grVhvd6CT83bECacc+s4Z3/AEyWQdIT2KeTsG9dR7nx1gs7Iw4tDmGKozCNHFn4yZmRm3Tgy+XxyQ==
+  dependencies:
+    eslint-config-airbnb-base "^14.0.0"
+    object.assign "^4.1.0"
+    object.entries "^1.1.0"
+
 eslint-config-prettier@^6.1.0:
   version "6.1.0"
   resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-6.1.0.tgz#e6f678ba367fbd1273998d5510f76f004e9dce7b"
@@ -3844,7 +3853,7 @@ eslint-config-react-app@^5.0.1:
   dependencies:
     confusing-browser-globals "^1.0.8"
 
-eslint-config-yoctol-base@^0.21.2:
+eslint-config-yoctol-base@^0.21.1, eslint-config-yoctol-base@^0.21.2:
   version "0.21.2"
   resolved "https://registry.yarnpkg.com/eslint-config-yoctol-base/-/eslint-config-yoctol-base-0.21.2.tgz#903eaed671a11a2f7f7d6a2eda68a7353f745a87"
   integrity sha512-ubJksSr8Zeu4H6Ikr9SpWHbFfufT4yr2kIRTWGeukzci0sD8FCfmNVQ5QTsCDpmFQTAw+vES7ayjyEgBJhdEZQ==
@@ -3852,6 +3861,14 @@ eslint-config-yoctol-base@^0.21.2:
     eslint-config-airbnb-base "^14.0.0"
     eslint-config-prettier "^6.1.0"
     prettier "^1.18.2"
+
+eslint-config-yoctol@^0.23.3:
+  version "0.23.3"
+  resolved "https://registry.yarnpkg.com/eslint-config-yoctol/-/eslint-config-yoctol-0.23.3.tgz#066070395cad14920e957c37c8b236798ad1aeaf"
+  integrity sha512-nL7hsLEF4uKQKNF4czPUjq3j+xf4XvKleMl8Hpwbzx4ZzF66rzTaGIhEdZwc7O/X2Q3BXUp+DBtaS/Gqf3Z4qA==
+  dependencies:
+    eslint-config-airbnb "^18.0.1"
+    eslint-config-yoctol-base "^0.21.1"
 
 eslint-import-resolver-node@^0.3.2:
   version "0.3.2"

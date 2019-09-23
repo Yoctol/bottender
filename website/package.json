@@ -1,0 +1,13 @@
+{
+  "scripts": {
+    "build": "docusaurus-build",
+    "publish-gh-pages": "docusaurus-publish",
+    "rename-version": "docusaurus-rename-version",
+    "start": "docusaurus-start",
+    "version": "docusaurus-version",
+    "write-translations": "docusaurus-write-translations"
+  },
+  "devDependencies": {
+    "docusaurus": "^1.13.0"
+  }
+}
