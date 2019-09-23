@@ -1,3 +1,6 @@
+import { MessengerClient } from 'messaging-api-messenger';
+
+import { log } from '../../../shared/log';
 import { setMessengerProfile } from '../profile';
 
 jest.mock('messaging-api-messenger');
@@ -6,9 +9,6 @@ jest.mock('warning');
 jest.mock('../../../shared/log');
 jest.mock('../../../shared/getConfig');
 
-const { MessengerClient } = require('messaging-api-messenger');
-
-const log = require('../../../shared/log');
 const getConfig = require('../../../shared/getConfig').default;
 
 const MOCK_FILE_WITH_PLATFORM = {

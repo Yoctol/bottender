@@ -22,6 +22,7 @@
     "lint:staged": "lint-staged",
     "publish": "yarn run clean && yarn run build && lerna publish",
     "prepublishOnly": "npm run build",
+    "postinstall": "npm run compile",
     "test": "npm run lint && npm run check && npm run testonly",
     "testonly": "jest --detectOpenHandles --forceExit",
     "testonly:cov": "jest --coverage --runInBand --detectOpenHandles --forceExit",

@@ -20,6 +20,7 @@ function getMaxSize(arg: MemoryOption): number | undefined {
     return arg.maxSize;
   }
 
+  // eslint-disable-next-line no-useless-return
   return;
 }
 

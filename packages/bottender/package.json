@@ -22,7 +22,7 @@
   ],
   "types": "dist/index.d.ts",
   "dependencies": {
-    "@bottender/express": "^1.0.0-alpha.2",
+    "@bottender/express": "file:../bottender-express",
     "@hapi/joi": "^15.1.1",
     "@slack/rtm-api": "^5.0.2",
     "arg": "^4.1.1",

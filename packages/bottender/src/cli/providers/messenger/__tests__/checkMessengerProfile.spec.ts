@@ -1,9 +1,9 @@
 import { checkMessengerProfile } from '../profile';
+import { log } from '../../../shared/log';
 
 jest.mock('../../../shared/log');
 jest.mock('../../../shared/getConfig');
 
-const log = require('../../../shared/log');
 const getConfig = require('../../../shared/getConfig').default;
 
 const MOCK_FILE_WITH_PLATFORM = {

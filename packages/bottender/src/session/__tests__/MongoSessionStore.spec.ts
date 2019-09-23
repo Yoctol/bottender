@@ -1,10 +1,9 @@
 import subMinutes from 'date-fns/subMinutes';
+import { MongoClient } from 'mongodb';
 
 import MongoSessionStore from '../MongoSessionStore';
 
 jest.mock('mongodb');
-
-const { MongoClient } = require('mongodb');
 
 const MINUTES_IN_ONE_YEAR = 365 * 24 * 60;
 

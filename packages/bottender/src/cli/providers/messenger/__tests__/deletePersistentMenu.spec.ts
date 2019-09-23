@@ -1,13 +1,13 @@
+import { MessengerClient } from 'messaging-api-messenger';
+
 import { deletePersistentMenu } from '../persistent-menu';
+import { log } from '../../../shared/log';
 
 jest.mock('messaging-api-messenger');
 
 jest.mock('../../../shared/log');
 jest.mock('../../../shared/getConfig');
 
-const { MessengerClient } = require('messaging-api-messenger');
-
-const log = require('../../../shared/log');
 const getConfig = require('../../../shared/getConfig').default;
 
 const MOCK_FILE_WITH_PLATFORM = {

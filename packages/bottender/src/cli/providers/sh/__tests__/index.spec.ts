@@ -2,7 +2,8 @@ import sh from '..';
 
 jest.mock('../init');
 jest.mock('../help');
-jest.mock('../test');
+jest.mock('../start');
+jest.mock('../dev');
 
 describe('sh cli', () => {
   it('should exist', () => {
@@ -19,8 +20,13 @@ describe('sh cli', () => {
     expect(sh.help).toEqual(help);
   });
 
-  it('should return test module', () => {
-    const test = require('../test').default;
-    expect(sh.test).toEqual(test);
+  it('should return start module', () => {
+    const start = require('../start').default;
+    expect(sh.start).toEqual(start);
+  });
+
+  it('should return dev module', () => {
+    const dev = require('../dev').default;
+    expect(sh.dev).toEqual(dev);
   });
 });

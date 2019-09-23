@@ -1,12 +1,12 @@
+import { TelegramClient } from 'messaging-api-telegram';
+
 import { deleteWebhook } from '../webhook';
+import { log } from '../../../shared/log';
 
 jest.mock('messaging-api-telegram');
 jest.mock('../../../shared/log');
 jest.mock('../../../shared/getConfig');
 
-const { TelegramClient } = require('messaging-api-telegram');
-
-const log = require('../../../shared/log');
 const getConfig = require('../../../shared/getConfig').default;
 
 const MOCK_FILE_WITH_PLATFORM = {

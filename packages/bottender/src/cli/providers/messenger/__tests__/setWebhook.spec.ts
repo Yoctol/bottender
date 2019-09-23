@@ -1,3 +1,7 @@
+import Confirm from 'prompt-confirm';
+import { MessengerClient } from 'messaging-api-messenger';
+
+import { log } from '../../../shared/log';
 import { setWebhook } from '../webhook';
 
 jest.mock('messaging-api-messenger');
@@ -7,12 +11,8 @@ jest.mock('../../../shared/getWebhookFromNgrok');
 jest.mock('../../../shared/log');
 jest.mock('../../../shared/getConfig');
 
-const Confirm = require('prompt-confirm');
-const { MessengerClient } = require('messaging-api-messenger');
-
 const getWebhookFromNgrok = require('../../../shared/getWebhookFromNgrok')
   .default;
-const log = require('../../../shared/log');
 const getConfig = require('../../../shared/getConfig').default;
 
 const FAKE_TOKEN = '__FAKE_TOKEN__';

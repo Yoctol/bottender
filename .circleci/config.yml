@@ -40,7 +40,7 @@ jobs:
           root: .
           paths:
             - node_modules
-            - packages/*/lib
+            - packages/*/dist
   lint-node-10:
     <<: *docker_10
     steps:
@@ -90,7 +90,7 @@ jobs:
           root: .
           paths:
             - node_modules
-            - packages/*/lib
+            - packages/*/dist
   lint-node-8:
     <<: *docker_8
     steps:

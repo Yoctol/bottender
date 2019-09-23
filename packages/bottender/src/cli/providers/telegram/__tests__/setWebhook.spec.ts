@@ -1,3 +1,7 @@
+import Confirm from 'prompt-confirm';
+import { TelegramClient } from 'messaging-api-telegram';
+
+import { log } from '../../../shared/log';
 import { setWebhook } from '../webhook';
 
 jest.mock('messaging-api-telegram');
@@ -7,12 +11,8 @@ jest.mock('../../../shared/getWebhookFromNgrok');
 jest.mock('../../../shared/log');
 jest.mock('../../../shared/getConfig');
 
-const Confirm = require('prompt-confirm');
-const { TelegramClient } = require('messaging-api-telegram');
-
 const getWebhookFromNgrok = require('../../../shared/getWebhookFromNgrok')
   .default;
-const log = require('../../../shared/log');
 const getConfig = require('../../../shared/getConfig').default;
 
 const MOCK_FILE_WITH_PLATFORM = {
