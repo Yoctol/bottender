@@ -1,3 +1,7 @@
+import Confirm from 'prompt-confirm';
+import { ViberClient } from 'messaging-api-viber';
+
+import { log } from '../../../shared/log';
 import { setWebhook } from '../webhook';
 
 jest.mock('messaging-api-viber');
@@ -7,12 +11,8 @@ jest.mock('../../../shared/getWebhookFromNgrok');
 jest.mock('../../../shared/log');
 jest.mock('../../../shared/getConfig');
 
-const Confirm = require('prompt-confirm');
-const { ViberClient } = require('messaging-api-viber');
-
 const getWebhookFromNgrok = require('../../../shared/getWebhookFromNgrok')
   .default;
-const log = require('../../../shared/log');
 const getConfig = require('../../../shared/getConfig').default;
 
 const MOCK_FILE_WITH_PLATFORM = {

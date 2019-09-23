@@ -18,6 +18,7 @@ module.exports = {
     'consistent-return': 'off',
     'global-require': 'off',
     'no-param-reassign': 'off',
+    'no-undef': 'off',
     'prefer-destructuring': 'off',
     'prettier/prettier': [
       'error',
