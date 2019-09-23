@@ -1,4 +1,4 @@
-import { Spec, Result, Options } from 'arg';
+import { Options, Result, Spec } from 'arg';
 
 import getArgs from './getArgs';
 

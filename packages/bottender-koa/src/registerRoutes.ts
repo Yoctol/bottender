@@ -9,7 +9,9 @@ function registerRoutes(server: Koa, bot: Bot, config: RouteConfig = {}) {
 
   const router = new Router();
 
-  server.use((ctx: Koa.Context, next: () => Promise<void>) => {
+  server.use((ctx: Koa.Context, next: () => Promise<void>): Promise<
+    any
+  > | void => {
     const { request } = ctx;
     if (request.path !== path) {
       return next();
@@ -32,7 +34,6 @@ function registerRoutes(server: Koa, bot: Bot, config: RouteConfig = {}) {
         ctx.response.body = response.body;
       }
     }
-    return;
   });
 
   router.post(path, createMiddleware(bot));

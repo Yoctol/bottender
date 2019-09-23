@@ -2,12 +2,12 @@ import sleep from 'delay';
 import warning from 'warning';
 import {
   ViberClient,
-  ViberPicture,
-  ViberVideo,
-  ViberFile,
   ViberContact,
+  ViberFile,
   ViberLocation,
+  ViberPicture,
   ViberRichMedia,
+  ViberVideo,
 } from 'messaging-api-viber';
 
 import Session from '../session/Session';

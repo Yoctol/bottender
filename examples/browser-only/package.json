@@ -1,7 +1,11 @@
 {
+  "private": true,
   "name": "browser-only",
   "version": "0.1.0",
-  "private": true,
+  "scripts": {
+    "build": "react-scripts build",
+    "start": "react-scripts start"
+  },
   "dependencies": {
     "@chentsulin/react-botui": "^0.1.2",
     "bottender": "latest",
@@ -9,13 +13,6 @@
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "react-scripts": "2.0.4"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
   },
   "browserslist": [
     ">0.2%",

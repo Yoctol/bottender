@@ -242,7 +242,7 @@ export default class ViberEvent implements Event<ViberRawEvent> {
    * The contact object from Viber raw event.
    *
    */
-  get contact(): Object | null {
+  get contact(): Record<string, any> | null {
     if (this.isContact) {
       return (this.message as ViberMessage).contact || null;
     }
@@ -280,7 +280,7 @@ export default class ViberEvent implements Event<ViberRawEvent> {
    * The location object from Viber raw event.
    *
    */
-  get location(): Object | null {
+  get location(): Record<string, any> | null {
     if (this.isLocation) {
       return (this.message as ViberMessage).location || null;
     }

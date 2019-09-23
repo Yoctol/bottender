@@ -1,11 +1,11 @@
 import Context from '../context/Context';
 
-declare var jest: any;
+declare let jest: any;
 
 class ContextSimulator {
   _platform: string;
 
-  _initialState: Object;
+  _initialState: Record<string, any>;
 
   _mockFn: Function;
 
@@ -14,9 +14,9 @@ class ContextSimulator {
     initialState,
     mockFn,
   }: {
-    platform: string,
-    initialState?: Object,
-    mockFn?: Function,
+    platform: string;
+    initialState?: Record<string, any>;
+    mockFn?: Function;
   }) {
     this._platform = platform;
     this._initialState = initialState || {};
@@ -109,7 +109,13 @@ class ContextSimulator {
     }
   }
 
-  createContext({ event, state }: { event: Object, state?: Object }): Object {
+  createContext({
+    event,
+    state,
+  }: {
+    event: Record<string, any>;
+    state?: Record<string, any>;
+  }): Record<string, any> {
     const context: any = new Context({
       client: this.createClient(),
       event: this.createEvent(event),
@@ -232,7 +238,7 @@ class ContextSimulator {
     return context;
   }
 
-  createEvent(properties: Object = {}): Object {
+  createEvent(properties: Record<string, any> = {}): Record<string, any> {
     switch (this._platform) {
       case 'messenger':
         return {
@@ -434,7 +440,7 @@ class ContextSimulator {
     }
   }
 
-  createTextContext(text: string, options?: Object) {
+  createTextContext(text: string, options?: Record<string, any>) {
     return this.createContext({
       event: {
         isMessage: true,

@@ -1,7 +1,7 @@
 import Session from './Session';
 
 type SessionStore = {
-  init(): Promise<SessionStore>;
+  init(): Promise<ThisType<SessionStore>>;
 
   read(key: string): Promise<Session | null>;
 

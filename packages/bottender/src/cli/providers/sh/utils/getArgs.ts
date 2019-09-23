@@ -1,4 +1,4 @@
-import arg, { Spec, Options } from 'arg';
+import arg, { Options, Spec } from 'arg';
 
 import getCommonArgs from './argCommon';
 

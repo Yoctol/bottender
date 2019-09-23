@@ -1,6 +1,6 @@
 import isBefore from 'date-fns/isBefore';
 import subMinutes from 'date-fns/subMinutes';
-import { MongoClient, Db, Collection } from 'mongodb';
+import { Collection, Db, MongoClient } from 'mongodb';
 
 import Session from './Session';
 import SessionStore from './SessionStore';

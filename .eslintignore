@@ -2,3 +2,4 @@ node_modules
 dist
 !.eslintrc.js
 !.babelrc.js
+examples/browser-only
