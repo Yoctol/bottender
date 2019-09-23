@@ -1,13 +1,12 @@
 import { TelegramClient } from 'messaging-api-telegram';
 
+import getConfig from '../../../shared/getConfig';
 import { getWebhook } from '../webhook';
-import { log } from '../../../shared/log';
+import * as log from '../../../shared/log';
 
 jest.mock('messaging-api-telegram');
 jest.mock('../../../shared/log');
 jest.mock('../../../shared/getConfig');
-
-const getConfig = require('../../../shared/getConfig').default;
 
 const MOCK_FILE_WITH_PLATFORM = {
   channels: {
@@ -37,16 +36,6 @@ it('be defined', () => {
 });
 
 describe('resolve', () => {
-  it('--token should work', async () => {
-    const ctx = {
-      argv: { '--token': '12345' },
-    };
-
-    await getWebhook(ctx);
-
-    expect(TelegramClient.connect).toBeCalledWith('12345');
-  });
-
   it('successfully get webhook', async () => {
     const ctx = {
       argv: {},

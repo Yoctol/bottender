@@ -1,15 +1,14 @@
 import { MessengerClient } from 'messaging-api-messenger';
 
-import { log } from '../../../shared/log';
+import getConfig from '../../../shared/getConfig';
 import { setMessengerProfile } from '../profile';
+import * as log from '../../../shared/log';
 
 jest.mock('messaging-api-messenger');
 jest.mock('warning');
 
 jest.mock('../../../shared/log');
 jest.mock('../../../shared/getConfig');
-
-const getConfig = require('../../../shared/getConfig').default;
 
 const MOCK_FILE_WITH_PLATFORM = {
   channels: {
@@ -107,16 +106,6 @@ describe('resolve', () => {
           },
         ],
       });
-    });
-
-    it('--token should work', async () => {
-      const ctx = {
-        argv: { '--token': '12345' },
-      };
-
-      await setMessengerProfile(ctx);
-
-      expect(MessengerClient.connect).toBeCalledWith('12345');
     });
 
     it('should set whole profile once', async () => {

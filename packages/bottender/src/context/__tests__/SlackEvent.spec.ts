@@ -759,8 +759,8 @@ it('#message', () => {
     type: 'message',
     user: 'U2147483697',
   });
-  expect(new SlackEvent({ type: 'notMessage' }).message).toEqual(undefined);
-  expect(new SlackEvent(interactiveMessageEvent).message).toEqual(undefined);
+  expect(new SlackEvent({ type: 'notMessage' }).message).toBeNull();
+  expect(new SlackEvent(interactiveMessageEvent).message).toBeNull();
 });
 
 it('#isChannelsMessage', () => {

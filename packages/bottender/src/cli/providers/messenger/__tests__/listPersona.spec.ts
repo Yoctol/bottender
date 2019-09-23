@@ -1,14 +1,13 @@
 import { MessengerClient } from 'messaging-api-messenger';
 
+import getConfig from '../../../shared/getConfig';
 import { listPersona } from '../persona';
-import { log } from '../../../shared/log';
+import * as log from '../../../shared/log';
 
 jest.mock('messaging-api-messenger');
 
 jest.mock('../../../shared/log');
 jest.mock('../../../shared/getConfig');
-
-const getConfig = require('../../../shared/getConfig').default;
 
 const MOCK_FILE_WITH_PLATFORM = {
   channels: {
@@ -36,21 +35,9 @@ it('be defined', () => {
 });
 
 describe('resolved', () => {
-  it('--token should work', async () => {
-    const ctx = {
-      argv: { '--token': '12345' },
-    };
-
-    process.exit = jest.fn();
-
-    await listPersona(ctx);
-
-    expect(MessengerClient.connect).toBeCalledWith('12345');
-  });
-
   it('call listPersona', async () => {
     const ctx = {
-      argv: { '--token': '12345' },
+      argv: {},
     };
 
     process.exit = jest.fn();
@@ -59,7 +46,7 @@ describe('resolved', () => {
 
     await listPersona(ctx);
 
-    expect(MessengerClient.connect).toBeCalledWith('12345');
+    expect(MessengerClient.connect).toBeCalledWith('__FAKE_TOKEN__');
     expect(_client.getAllPersonas).toBeCalled();
   });
 

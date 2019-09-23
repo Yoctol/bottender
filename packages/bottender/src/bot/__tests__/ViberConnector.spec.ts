@@ -4,7 +4,7 @@ import ViberConnector from '../ViberConnector';
 import ViberContext from '../../context/ViberContext';
 import ViberEvent from '../../context/ViberEvent';
 
-jest.mock('messaging-api-viber');
+jest.unmock('messaging-api-viber');
 
 const ACCESS_TOKEN = 'ACCESS_TOKEN';
 
@@ -102,12 +102,19 @@ const messageRequest = {
 };
 
 function setup() {
-  const mockViberClient = {};
+  const mockViberClient = new ViberClient({
+    accessToken: ACCESS_TOKEN,
+    sender: { name: 'sender' },
+  });
   ViberClient.connect = jest.fn();
   ViberClient.connect.mockReturnValue(mockViberClient);
+
   return {
     mockViberClient,
-    connector: new ViberConnector({ accessToken: ACCESS_TOKEN }),
+    connector: new ViberConnector({
+      accessToken: ACCESS_TOKEN,
+      sender: { name: 'sender' },
+    }),
   };
 }
 
@@ -375,7 +382,7 @@ describe('#createContext', () => {
 });
 
 describe('#verifySignature', () => {
-  it('should return true if signature is equal app sercret after crypto', () => {
+  it('should return true if signature is equal app secret after crypto', () => {
     const { connector } = setup();
 
     const result = connector.verifySignature(

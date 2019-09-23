@@ -1,14 +1,13 @@
 import { MessengerClient } from 'messaging-api-messenger';
 
+import getConfig from '../../../shared/getConfig';
 import { deletePersona } from '../persona';
-import { log } from '../../../shared/log';
+import * as log from '../../../shared/log';
 
 jest.mock('messaging-api-messenger');
 
 jest.mock('../../../shared/log');
 jest.mock('../../../shared/getConfig');
-
-const getConfig = require('../../../shared/getConfig').default;
 
 const MOCK_FILE_WITH_PLATFORM = {
   channels: {
@@ -35,21 +34,9 @@ it('be defined', () => {
 });
 
 describe('resolved', () => {
-  it('--token should work', async () => {
-    const ctx = {
-      argv: { '--token': '12345', '--id': '54321' },
-    };
-
-    process.exit = jest.fn();
-
-    await deletePersona(ctx);
-
-    expect(MessengerClient.connect).toBeCalledWith('12345');
-  });
-
   it('call deletePersona', async () => {
     const ctx = {
-      argv: { '--token': '12345', '--id': '54321' },
+      argv: { '--id': '54321' },
     };
 
     process.exit = jest.fn();
@@ -58,7 +45,7 @@ describe('resolved', () => {
 
     await deletePersona(ctx);
 
-    expect(MessengerClient.connect).toBeCalledWith('12345');
+    expect(MessengerClient.connect).toBeCalledWith('__FAKE_TOKEN__');
     expect(_client.deletePersona).toBeCalledWith('54321');
   });
 

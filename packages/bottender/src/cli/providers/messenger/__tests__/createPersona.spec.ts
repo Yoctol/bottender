@@ -1,14 +1,13 @@
 import { MessengerClient } from 'messaging-api-messenger';
 
+import getConfig from '../../../shared/getConfig';
 import { createPersona } from '../persona';
-import { log } from '../../../shared/log';
+import * as log from '../../../shared/log';
 
 jest.mock('messaging-api-messenger');
 
 jest.mock('../../../shared/log');
 jest.mock('../../../shared/getConfig');
-
-const getConfig = require('../../../shared/getConfig').default;
 
 const MOCK_FILE_WITH_PLATFORM = {
   channels: {
@@ -35,26 +34,9 @@ it('be defined', () => {
 });
 
 describe('resolved', () => {
-  it('--token should work', async () => {
-    const ctx = {
-      argv: {
-        '--token': '12345',
-        '--name': 'kpman',
-        '--pic': 'https://i.imgur.com/zV6uy4T.jpg',
-      },
-    };
-
-    process.exit = jest.fn();
-
-    await createPersona(ctx);
-
-    expect(MessengerClient.connect).toBeCalledWith('12345');
-  });
-
   it('call createPersona', async () => {
     const ctx = {
       argv: {
-        '--token': '12345',
         '--name': 'kpman',
         '--pic': 'https://i.imgur.com/zV6uy4T.jpg',
       },
@@ -66,7 +48,7 @@ describe('resolved', () => {
 
     await createPersona(ctx);
 
-    expect(MessengerClient.connect).toBeCalledWith('12345');
+    expect(MessengerClient.connect).toBeCalledWith('__FAKE_TOKEN__');
     expect(_client.createPersona).toBeCalledWith({
       name: 'kpman',
       profile_picture_url: 'https://i.imgur.com/zV6uy4T.jpg',

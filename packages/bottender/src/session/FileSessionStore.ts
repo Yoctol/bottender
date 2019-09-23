@@ -29,7 +29,7 @@ export default class FileSessionStore implements SessionStore {
   // The number of minutes to store the data in the session.
   _expiresIn: number;
 
-  constructor(arg: FileOption, expiresIn: number) {
+  constructor(arg: FileOption, expiresIn?: number) {
     this._expiresIn = expiresIn || MINUTES_IN_ONE_YEAR;
 
     const dirname = getDirname(arg) || '.sessions';
@@ -44,21 +44,25 @@ export default class FileSessionStore implements SessionStore {
   }
 
   async read(key: string): Promise<Session | null> {
-    const session: Session | null = await new Promise((resolve, reject) => {
-      this._jfs.get(key, (err, obj) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(obj);
-        }
+    try {
+      const session: Session | null = await new Promise((resolve, reject) => {
+        this._jfs.get(key, (err, obj) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(obj);
+          }
+        });
       });
-    });
 
-    if (session && this._expired(session)) {
+      if (session && this._expired(session)) {
+        return null;
+      }
+
+      return session;
+    } catch (err) {
       return null;
     }
-
-    return session;
   }
 
   all(): Promise<Session[]> {

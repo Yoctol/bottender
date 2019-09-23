@@ -10,7 +10,6 @@ it('should parse args as expect', () => {
   const ctx = {
     argv: {
       _: args,
-      '--token': '__FAKE_TOKEN__',
     },
   };
 
@@ -20,7 +19,6 @@ it('should parse args as expect', () => {
 
   expect(result).toEqual({
     _: ['messenger', 'profile', 'set'],
-    '--token': '__FAKE_TOKEN__',
     '--force': true,
   });
 });
@@ -37,7 +35,6 @@ it('should parse args as expect', () => {
   const ctx = {
     argv: {
       _: args,
-      '--token': '__FAKE_TOKEN__',
     },
   };
 
@@ -47,7 +44,6 @@ it('should parse args as expect', () => {
 
   expect(result).toEqual({
     _: ['messenger', 'persona', 'delete'],
-    '--token': '__FAKE_TOKEN__',
     '--id': '__FAKE_PERSONA_ID__',
   });
 });
@@ -58,7 +54,6 @@ it('should handle args abbreviation', () => {
   const ctx = {
     argv: {
       _: args,
-      '--token': '__FAKE_TOKEN__',
     },
   };
 
@@ -69,7 +64,6 @@ it('should handle args abbreviation', () => {
 
   expect(result).toEqual({
     _: ['messenger', 'persona', 'delete', 'other-args'],
-    '--token': '__FAKE_TOKEN__',
     '--force': true,
   });
 });

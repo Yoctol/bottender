@@ -1,10 +1,9 @@
+import getConfig from '../../../shared/getConfig';
 import { checkMessengerProfile } from '../profile';
-import { log } from '../../../shared/log';
+import * as log from '../../../shared/log';
 
 jest.mock('../../../shared/log');
 jest.mock('../../../shared/getConfig');
-
-const getConfig = require('../../../shared/getConfig').default;
 
 const MOCK_FILE_WITH_PLATFORM = {
   channels: {

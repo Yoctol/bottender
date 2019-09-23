@@ -66,8 +66,8 @@ export function checkMessengerProfile(): void {
     getConfig('messenger');
     print('Messenger profile check done.');
     return;
-  } catch (e) {
-    error(e.message);
+  } catch (err) {
+    error(err.message);
     return process.exit(1);
   }
 }

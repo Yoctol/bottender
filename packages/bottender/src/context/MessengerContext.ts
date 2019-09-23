@@ -135,8 +135,10 @@ class MessengerContext extends Context implements PlatformContext {
       text,
       {
         messaging_type: messageType,
-        access_token: this._customAccessToken,
-        persona_id: this._personaId,
+        ...(this._customAccessToken
+          ? { access_token: this._customAccessToken }
+          : undefined),
+        ...(this._personaId ? { persona_id: this._personaId } : undefined),
         ...options,
       },
     ];
@@ -165,7 +167,9 @@ class MessengerContext extends Context implements PlatformContext {
     const args = [
       this._session.user.id,
       {
-        access_token: this._customAccessToken,
+        ...(this._customAccessToken
+          ? { access_token: this._customAccessToken }
+          : undefined),
       },
     ];
 
@@ -199,8 +203,10 @@ class MessengerContext extends Context implements PlatformContext {
       this._session.user.id,
       action,
       {
-        access_token: this._customAccessToken,
-        persona_id: this._personaId,
+        ...(this._customAccessToken
+          ? { access_token: this._customAccessToken }
+          : undefined),
+        ...(this._personaId ? { persona_id: this._personaId } : undefined),
         ...options,
       },
     ];
@@ -225,8 +231,10 @@ class MessengerContext extends Context implements PlatformContext {
     const args = [
       this._session.user.id,
       {
-        access_token: this._customAccessToken,
-        persona_id: this._personaId,
+        ...(this._customAccessToken
+          ? { access_token: this._customAccessToken }
+          : undefined),
+        ...(this._personaId ? { persona_id: this._personaId } : undefined),
         ...options,
       },
     ];
@@ -251,8 +259,10 @@ class MessengerContext extends Context implements PlatformContext {
     const args = [
       this._session.user.id,
       {
-        access_token: this._customAccessToken,
-        persona_id: this._personaId,
+        ...(this._customAccessToken
+          ? { access_token: this._customAccessToken }
+          : undefined),
+        ...(this._personaId ? { persona_id: this._personaId } : undefined),
         ...options,
       },
     ];
@@ -277,8 +287,10 @@ class MessengerContext extends Context implements PlatformContext {
     const args = [
       this._session.user.id,
       {
-        access_token: this._customAccessToken,
-        persona_id: this._personaId,
+        ...(this._customAccessToken
+          ? { access_token: this._customAccessToken }
+          : undefined),
+        ...(this._personaId ? { persona_id: this._personaId } : undefined),
         ...options,
       },
     ];
@@ -314,7 +326,9 @@ class MessengerContext extends Context implements PlatformContext {
       targetAppId,
       metadata,
       {
-        access_token: this._customAccessToken,
+        ...(this._customAccessToken
+          ? { access_token: this._customAccessToken }
+          : undefined),
       },
     ];
 
@@ -339,7 +353,9 @@ class MessengerContext extends Context implements PlatformContext {
       this._session.user.id,
       metadata,
       {
-        access_token: this._customAccessToken,
+        ...(this._customAccessToken
+          ? { access_token: this._customAccessToken }
+          : undefined),
       },
     ];
 
@@ -364,7 +380,9 @@ class MessengerContext extends Context implements PlatformContext {
       this._session.user.id,
       metadata,
       {
-        access_token: this._customAccessToken,
+        ...(this._customAccessToken
+          ? { access_token: this._customAccessToken }
+          : undefined),
       },
     ];
 
@@ -389,7 +407,9 @@ class MessengerContext extends Context implements PlatformContext {
       this._session.user.id,
       metadata,
       {
-        access_token: this._customAccessToken,
+        ...(this._customAccessToken
+          ? { access_token: this._customAccessToken }
+          : undefined),
       },
     ];
 
@@ -411,7 +431,9 @@ class MessengerContext extends Context implements PlatformContext {
     const args = [
       this._session.user.id,
       {
-        access_token: this._customAccessToken,
+        ...(this._customAccessToken
+          ? { access_token: this._customAccessToken }
+          : undefined),
       },
     ];
 
@@ -451,7 +473,9 @@ class MessengerContext extends Context implements PlatformContext {
       this._session.user.id,
       labelId,
       {
-        access_token: this._customAccessToken,
+        ...(this._customAccessToken
+          ? { access_token: this._customAccessToken }
+          : undefined),
       },
     ];
 
@@ -474,7 +498,9 @@ class MessengerContext extends Context implements PlatformContext {
       this._session.user.id,
       labelId,
       {
-        access_token: this._customAccessToken,
+        ...(this._customAccessToken
+          ? { access_token: this._customAccessToken }
+          : undefined),
       },
     ];
 
@@ -496,7 +522,9 @@ class MessengerContext extends Context implements PlatformContext {
     const args = [
       this._session.user.id,
       {
-        access_token: this._customAccessToken,
+        ...(this._customAccessToken
+          ? { access_token: this._customAccessToken }
+          : undefined),
       },
     ];
 
@@ -556,8 +584,10 @@ sendMethods.forEach(([method, arity]) => {
 
       args[arity - 2] = {
         messaging_type: messageType,
-        access_token: this._customAccessToken,
-        persona_id: this._personaId,
+        ...(this._customAccessToken
+          ? { access_token: this._customAccessToken }
+          : undefined),
+        ...(this._personaId ? { persona_id: this._personaId } : undefined),
         ...options,
       };
 

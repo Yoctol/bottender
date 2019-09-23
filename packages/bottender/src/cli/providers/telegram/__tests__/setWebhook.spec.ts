@@ -1,8 +1,10 @@
 import Confirm from 'prompt-confirm';
 import { TelegramClient } from 'messaging-api-telegram';
 
-import { log } from '../../../shared/log';
+import getConfig from '../../../shared/getConfig';
+import getWebhookFromNgrok from '../../../shared/getWebhookFromNgrok';
 import { setWebhook } from '../webhook';
+import * as log from '../../../shared/log';
 
 jest.mock('messaging-api-telegram');
 jest.mock('prompt-confirm');
@@ -10,10 +12,6 @@ jest.mock('prompt-confirm');
 jest.mock('../../../shared/getWebhookFromNgrok');
 jest.mock('../../../shared/log');
 jest.mock('../../../shared/getConfig');
-
-const getWebhookFromNgrok = require('../../../shared/getWebhookFromNgrok')
-  .default;
-const getConfig = require('../../../shared/getConfig').default;
 
 const MOCK_FILE_WITH_PLATFORM = {
   channels: {
@@ -34,7 +32,6 @@ const setup = (
   argv: {
     '--webhook': webhook,
     '--ngrok-port': ngrokPort,
-    '--token': token,
   },
 });
 
@@ -65,14 +62,6 @@ describe('resolve', () => {
 
     expect(log.print).toHaveBeenCalledTimes(1);
     expect(log.print.mock.calls[0][0]).toMatch(/Successfully/);
-  });
-
-  it('-t --token should work', async () => {
-    const ctx = setup({ token: '12345' });
-
-    await setWebhook(ctx);
-
-    expect(TelegramClient.connect).toBeCalledWith('12345');
   });
 
   it('get ngrok webhook to setup', async () => {

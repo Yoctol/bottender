@@ -1,8 +1,10 @@
 import Confirm from 'prompt-confirm';
 import { MessengerClient } from 'messaging-api-messenger';
 
-import { log } from '../../../shared/log';
+import getConfig from '../../../shared/getConfig';
+import getWebhookFromNgrok from '../../../shared/getWebhookFromNgrok';
 import { setWebhook } from '../webhook';
+import * as log from '../../../shared/log';
 
 jest.mock('messaging-api-messenger');
 jest.mock('prompt-confirm');
@@ -11,32 +13,26 @@ jest.mock('../../../shared/getWebhookFromNgrok');
 jest.mock('../../../shared/log');
 jest.mock('../../../shared/getConfig');
 
-const getWebhookFromNgrok = require('../../../shared/getWebhookFromNgrok')
-  .default;
-const getConfig = require('../../../shared/getConfig').default;
-
-const FAKE_TOKEN = '__FAKE_TOKEN__';
+const ACCESS_TOKEN = '__ACCESS_TOKEN__';
 const APP_ID = '__APP_ID__';
 const APP_SECRET = '__APP_SECRET__';
 const VERIFY_TOKEN = '__VERIFY_TOKEN__';
 const WEBHOOK = 'http://example.com/webhook';
-let ACCESS_TOKEN;
 
-const MOCK_FILE_WITH_PLATFORM = {
-  channels: {
-    messenger: {
-      accessToken: FAKE_TOKEN,
+function setup({
+  config,
+  success = true,
+}: { config?: Record<string, any>; success?: boolean } = {}) {
+  getWebhookFromNgrok.mockResolvedValue('https://fakeDomain.ngrok.io');
+
+  getConfig.mockReturnValue(
+    config || {
+      accessToken: ACCESS_TOKEN,
       appId: APP_ID,
       appSecret: APP_SECRET,
       verifyToken: VERIFY_TOKEN,
-    },
-  },
-};
-
-function setup({ success = true } = {}) {
-  getWebhookFromNgrok.mockResolvedValue('https://fakeDomain.ngrok.io');
-
-  getConfig.mockReturnValue(MOCK_FILE_WITH_PLATFORM.channels.messenger);
+    }
+  );
 
   const client = {
     createSubscription: jest.fn(),
@@ -80,21 +76,16 @@ it('be defined', () => {
 });
 
 describe('resolve', () => {
-  it('successfully set webhook and show messages', async () => {
-    setup();
-
-    await setWebhook(ACCESS_TOKEN, WEBHOOK, VERIFY_TOKEN);
-
-    const logs = log.print.mock.calls.map(call => call[0]);
-
-    expect(log.print).toBeCalled();
-    expect(logs.some(text => /Successfully/.test(text))).toBe(true);
-  });
-
-  it('use default fields to setup', async () => {
+  it('successfully set webhook with default fields and show messages', async () => {
     const { client } = setup();
 
-    await setWebhook(ACCESS_TOKEN, WEBHOOK, VERIFY_TOKEN);
+    const ctx = {
+      argv: {
+        _: ['messenger', 'webhook', 'set', `--webhook=${WEBHOOK}`],
+      },
+    };
+
+    await setWebhook(ctx);
 
     expect(client.createSubscription).toBeCalledWith({
       access_token: '__APP_ID__|__APP_SECRET__',
@@ -110,12 +101,20 @@ describe('resolve', () => {
       object: 'page',
       verify_token: '__VERIFY_TOKEN__',
     });
+
+    expect(log.print).toBeCalled();
   });
 
   it('get ngrok webhook to setup', async () => {
     const { client } = setup();
 
-    await setWebhook(ACCESS_TOKEN, undefined, VERIFY_TOKEN);
+    const ctx = {
+      argv: {
+        _: ['messenger', 'webhook', 'set'],
+      },
+    };
+
+    await setWebhook(ctx);
 
     expect(getWebhookFromNgrok).toBeCalledWith('4040');
     expect(client.createSubscription).toBeCalledWith({
@@ -137,17 +136,13 @@ describe('resolve', () => {
   it('set ngrok webhook port', async () => {
     setup();
 
-    await setWebhook(ACCESS_TOKEN, undefined, VERIFY_TOKEN, '5555');
+    const ctx = {
+      argv: {
+        _: ['messenger', 'webhook', 'set', `--ngrok-port=5555`],
+      },
+    };
 
-    expect(getWebhookFromNgrok).toBeCalledWith('5555');
-  });
-
-  it('--token should work', async () => {
-    setup();
-
-    ACCESS_TOKEN = '12345';
-
-    await setWebhook(ACCESS_TOKEN, undefined, VERIFY_TOKEN, '5555');
+    await setWebhook(ctx);
 
     expect(getWebhookFromNgrok).toBeCalledWith('5555');
   });
@@ -155,28 +150,40 @@ describe('resolve', () => {
 
 describe('reject', () => {
   it('reject when `appId` not found in config file', async () => {
-    setup();
-
-    getConfig.mockReturnValue({
-      appSecret: '__APP_SECRET__',
-      verifyToken: '__verifyToken__',
+    setup({
+      config: {
+        appSecret: APP_SECRET,
+        verifyToken: VERIFY_TOKEN,
+      },
     });
 
-    await setWebhook(ACCESS_TOKEN, WEBHOOK, VERIFY_TOKEN);
+    const ctx = {
+      argv: {
+        _: ['messenger', 'webhook', 'set'],
+      },
+    };
+
+    await setWebhook(ctx);
 
     expect(log.error).toBeCalled();
     expect(process.exit).toBeCalled();
   });
 
   it('reject when `appSecret` not found in config file', async () => {
-    setup();
-
-    getConfig.mockReturnValue({
-      appId: '__APP_ID__',
-      verifyToken: '__verifyToken__',
+    setup({
+      config: {
+        appId: APP_ID,
+        verifyToken: VERIFY_TOKEN,
+      },
     });
 
-    await setWebhook(ACCESS_TOKEN, WEBHOOK, VERIFY_TOKEN);
+    const ctx = {
+      argv: {
+        _: ['messenger', 'webhook', 'set'],
+      },
+    };
+
+    await setWebhook(ctx);
 
     expect(log.error).toBeCalled();
     expect(process.exit).toBeCalled();
@@ -185,7 +192,13 @@ describe('reject', () => {
   it('reject when messenger return not success', async () => {
     setup({ success: false });
 
-    await setWebhook(ACCESS_TOKEN, WEBHOOK, VERIFY_TOKEN);
+    const ctx = {
+      argv: {
+        _: ['messenger', 'webhook', 'set'],
+      },
+    };
+
+    await setWebhook(ctx);
 
     expect(log.error).toBeCalled();
     expect(process.exit).toBeCalled();

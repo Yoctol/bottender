@@ -1,8 +1,10 @@
 import Confirm from 'prompt-confirm';
 import { ViberClient } from 'messaging-api-viber';
 
-import { log } from '../../../shared/log';
+import getConfig from '../../../shared/getConfig';
+import getWebhookFromNgrok from '../../../shared/getWebhookFromNgrok';
 import { setWebhook } from '../webhook';
+import * as log from '../../../shared/log';
 
 jest.mock('messaging-api-viber');
 jest.mock('prompt-confirm');
@@ -11,59 +13,54 @@ jest.mock('../../../shared/getWebhookFromNgrok');
 jest.mock('../../../shared/log');
 jest.mock('../../../shared/getConfig');
 
-const getWebhookFromNgrok = require('../../../shared/getWebhookFromNgrok')
-  .default;
-const getConfig = require('../../../shared/getConfig').default;
+const ACCESS_TOKEN = '__ACCESS_TOKEN__';
+const WEBHOOK = 'http://example.com/webhook';
 
-const MOCK_FILE_WITH_PLATFORM = {
-  channels: {
-    viber: {
-      accessToken: '__accessToken__',
-    },
-  },
-};
-
-const setup = (
-  {
-    webhook = 'http://example.com/webhook',
-    eventTypes = [],
-    accessToken = undefined,
-  } = {
-    webhook: 'http://example.com/webhook',
-    eventTypes: [],
-    accessToken: undefined,
-  }
-) => ({
-  webhook,
-  accessToken,
-  eventTypes,
-});
-
-beforeEach(() => {
-  process.exit = jest.fn();
-  getConfig.mockReturnValue(MOCK_FILE_WITH_PLATFORM.channels.viber);
-
+function setup({ config }: { config?: Record<string, any> } = {}) {
   getWebhookFromNgrok.mockResolvedValue('https://fakeDomain.ngrok.io');
+
+  getConfig.mockReturnValue(
+    config || {
+      accessToken: ACCESS_TOKEN,
+      sender: {
+        name: 'sender',
+      },
+    }
+  );
+
+  const client = {
+    setWebhook: jest.fn(),
+  };
+
+  client.setWebhook.mockResolvedValue({
+    status: 0,
+    status_message: 'ok',
+    event_types: [
+      'delivered',
+      'seen',
+      'failed',
+      'subscribed',
+      'unsubscribed',
+      'conversation_started',
+    ],
+  });
+
+  ViberClient.connect.mockReturnValue(client);
 
   Confirm.mockImplementation(() => ({
     run: jest.fn().mockResolvedValue(true),
   }));
 
-  ViberClient.connect.mockReturnValue({
-    setWebhook: jest.fn(() => ({
-      status: 0,
-      status_message: 'ok',
-      event_types: [
-        'delivered',
-        'seen',
-        'failed',
-        'subscribed',
-        'unsubscribed',
-        'conversation_started',
-      ],
-    })),
-  });
-});
+  log.print = jest.fn();
+  log.error = jest.fn();
+  log.bold = jest.fn(s => s);
+
+  process.exit = jest.fn();
+
+  return {
+    client,
+  };
+}
 
 it('be defined', () => {
   expect(setWebhook).toBeDefined();
@@ -71,42 +68,58 @@ it('be defined', () => {
 
 describe('resolve', () => {
   it('successfully set webhook', async () => {
-    const { webhook, accessToken, eventTypes } = setup({
-      eventTypes: ['delivered', 'seen'],
+    const { client } = setup({
+      config: {
+        accessToken: ACCESS_TOKEN,
+        eventTypes: ['delivered', 'seen'],
+      },
     });
 
-    await setWebhook(webhook, undefined, accessToken, eventTypes);
+    const ctx = {
+      argv: {
+        _: ['viber', 'webhook', 'set', `--webhook=${WEBHOOK}`],
+      },
+    };
 
-    expect(ViberClient.connect().setWebhook).toBeCalledWith(
-      webhook,
-      eventTypes
-    );
-    expect(log.print).toHaveBeenCalledTimes(1);
-    expect(log.print.mock.calls[0][0]).toMatch(/Successfully/);
-  });
+    await setWebhook(ctx);
 
-  it('-t --token should work', async () => {
-    const { webhook, accessToken } = setup({ accessToken: '12345' });
+    expect(client.setWebhook).toBeCalledWith('http://example.com/webhook', [
+      'delivered',
+      'seen',
+    ]);
 
-    await setWebhook(webhook, undefined, accessToken);
-
-    expect(ViberClient.connect).toBeCalledWith('12345');
+    expect(log.print).toBeCalled();
   });
 
   it('get ngrok webhook to setup', async () => {
-    await setWebhook(undefined);
+    const { client } = setup();
+
+    const ctx = {
+      argv: {
+        _: ['viber', 'webhook', 'set'],
+      },
+    };
+
+    await setWebhook(ctx);
 
     expect(getWebhookFromNgrok).toBeCalledWith('4040');
-    expect(ViberClient.connect().setWebhook).toBeCalledWith(
+    expect(client.setWebhook).toBeCalledWith(
       'https://fakeDomain.ngrok.io',
-      []
+      undefined
     );
-    expect(log.print).toHaveBeenCalledTimes(1);
-    expect(log.print.mock.calls[0][0]).toMatch(/Successfully/);
+    expect(log.print).toBeCalled();
   });
 
   it('set ngrok webhook port', async () => {
-    await setWebhook(undefined, '5555');
+    setup();
+
+    const ctx = {
+      argv: {
+        _: ['viber', 'webhook', 'set', `--ngrok-port=5555`],
+      },
+    };
+
+    await setWebhook(ctx);
 
     expect(getWebhookFromNgrok).toBeCalledWith('5555');
   });
@@ -114,22 +127,33 @@ describe('resolve', () => {
 
 describe('reject', () => {
   it('reject when accessToken not found in config file', async () => {
-    const { webhook } = setup();
-    getConfig.mockReturnValue({});
-    process.exit = jest.fn();
+    setup({ config: {} });
 
-    await setWebhook(webhook);
+    const ctx = {
+      argv: {
+        _: ['viber', 'webhoook', 'set'],
+      },
+    };
+
+    await setWebhook(ctx);
 
     expect(log.error).toBeCalledWith('accessToken is not found in config file');
     expect(process.exit).toBeCalled();
   });
 
-  it('reject when viber return not success', () => {
-    const { webhook } = setup();
-    ViberClient.connect().setWebhook.mockRejectedValueOnce(
-      new Error('setWebhook failed')
-    );
+  it('reject when viber return not success', async () => {
+    const { client } = setup();
 
-    expect(setWebhook(webhook).then).toThrow();
+    client.setWebhook.mockRejectedValueOnce(new Error('setWebhook failed'));
+
+    const ctx = {
+      argv: {
+        _: ['viber', 'webhoook', 'set'],
+      },
+    };
+
+    await setWebhook(ctx);
+
+    expect(log.error).toBeCalled();
   });
 });

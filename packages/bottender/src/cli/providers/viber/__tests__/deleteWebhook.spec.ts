@@ -1,7 +1,7 @@
 import { ViberClient } from 'messaging-api-viber';
 
 import { deleteWebhook } from '../webhook';
-import { log } from '../../../shared/log';
+import * as log from '../../../shared/log';
 
 jest.mock('messaging-api-viber');
 jest.mock('../../../shared/log');
@@ -34,16 +34,6 @@ it('be defined', () => {
 });
 
 describe('resolve', () => {
-  it('--token should work', async () => {
-    const ctx = {
-      argv: { '--token': '12345' },
-    };
-
-    await deleteWebhook(ctx);
-
-    expect(ViberClient.connect).toBeCalledWith('12345');
-  });
-
   it('successfully delete webhook', async () => {
     const ctx = {
       argv: {},

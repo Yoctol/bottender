@@ -37,20 +37,20 @@ describe('#read', () => {
     const { store, jfs } = setup();
     await store.init();
 
-    jfs.get.mockResolvedValue({ x: 1 });
+    jfs.get.mockImplementation((_, cb) => cb(null, { x: 1 }));
 
     expect(await store.read('yoctol:1')).toEqual({ x: 1 });
-    expect(jfs.get).toBeCalledWith('yoctol:1');
+    expect(jfs.get).toBeCalledWith('yoctol:1', expect.any(Function));
   });
 
   it('should return null when jfs throw error', async () => {
     const { store, jfs } = setup();
     await store.init();
 
-    jfs.get.mockRejectedValue(new Error());
+    jfs.get.mockImplementation((_, cb) => cb(new Error()));
 
     expect(await store.read('yoctol:1')).toBeNull();
-    expect(jfs.get).toBeCalledWith('yoctol:1');
+    expect(jfs.get).toBeCalledWith('yoctol:1', expect.any(Function));
   });
 
   it('should return null when session expires', async () => {
@@ -58,10 +58,10 @@ describe('#read', () => {
     await store.init();
 
     const sess = { lastActivity: subMinutes(Date.now(), expiresIn + 1) };
-    jfs.get.mockResolvedValue(sess);
+    jfs.get.mockImplementation((_, cb) => cb(null, sess));
 
     expect(await store.read('yoctol:1')).toBeNull();
-    expect(jfs.get).toBeCalledWith('yoctol:1');
+    expect(jfs.get).toBeCalledWith('yoctol:1', expect.any(Function));
   });
 });
 
@@ -70,20 +70,20 @@ describe('#all', () => {
     const { store, jfs } = setup();
     await store.init();
 
-    jfs.all.mockResolvedValue([{ id: 1 }, { id: 2 }]);
+    jfs.all.mockImplementation(cb => cb(null, [{ id: 1 }, { id: 2 }]));
 
     expect(await store.all()).toEqual([{ id: 1 }, { id: 2 }]);
-    expect(jfs.all).toBeCalled();
+    expect(jfs.all).toBeCalledWith(expect.any(Function));
   });
 
   it('should return empty array when there is no item in sessions or all of them are expired', async () => {
     const { store, jfs } = setup();
     await store.init();
 
-    jfs.all.mockResolvedValue([]);
+    jfs.all.mockImplementation(cb => cb(null, []));
 
     expect(await store.all()).toEqual([]);
-    expect(jfs.all).toBeCalled();
+    expect(jfs.all).toBeCalledWith(expect.any(Function));
   });
 });
 
@@ -92,11 +92,13 @@ describe('#write', () => {
     const { store, jfs } = setup();
     await store.init();
 
+    jfs.save.mockImplementation((_, __, cb) => cb(null));
+
     const sess = { x: 1 };
 
-    await store.write('yoctol:1', sess, 5);
+    await store.write('yoctol:1', sess);
 
-    expect(jfs.save).toBeCalledWith('yoctol:1', sess);
+    expect(jfs.save).toBeCalledWith('yoctol:1', sess, expect.any(Function));
   });
 });
 
@@ -105,8 +107,10 @@ describe('#destroy', () => {
     const { store, jfs } = setup();
     await store.init();
 
+    jfs.delete.mockImplementation((_, cb) => cb(null));
+
     await store.destroy('yoctol:1');
 
-    expect(jfs.delete).toBeCalledWith('yoctol:1');
+    expect(jfs.delete).toBeCalledWith('yoctol:1', expect.any(Function));
   });
 });

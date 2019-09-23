@@ -52,7 +52,6 @@ export async function setWebhook(ctx: CliContext): Promise<void> {
     await client.setWebhook(webhook as string, config.eventTypes);
 
     print('Successfully set Viber webhook callback URL');
-    return;
   } catch (err) {
     error('Failed to set Viber webhook');
     if (err.response) {

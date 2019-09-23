@@ -118,11 +118,15 @@ describe('#sendPicture', () => {
       thumbnail: 'http://www.images.com/thumb.jpg',
     });
 
-    expect(client.sendPicture).toBeCalledWith(session.user.id, {
-      text: 'Photo description',
-      media: 'http://www.images.com/img.jpg',
-      thumbnail: 'http://www.images.com/thumb.jpg',
-    });
+    expect(client.sendPicture).toBeCalledWith(
+      session.user.id,
+      {
+        text: 'Photo description',
+        media: 'http://www.images.com/img.jpg',
+        thumbnail: 'http://www.images.com/thumb.jpg',
+      },
+      undefined
+    );
   });
 
   it('should mark context as handled', async () => {
@@ -161,12 +165,16 @@ describe('#sendVideo', () => {
       duration: 10,
     });
 
-    expect(client.sendVideo).toBeCalledWith(session.user.id, {
-      media: 'http://www.images.com/video.mp4',
-      size: 10000,
-      thumbnail: 'http://www.images.com/thumb.jpg',
-      duration: 10,
-    });
+    expect(client.sendVideo).toBeCalledWith(
+      session.user.id,
+      {
+        media: 'http://www.images.com/video.mp4',
+        size: 10000,
+        thumbnail: 'http://www.images.com/thumb.jpg',
+        duration: 10,
+      },
+      undefined
+    );
   });
 
   it('should mark context as handled', async () => {
@@ -206,11 +214,15 @@ describe('#sendFile', () => {
       file_name: 'name_of_file.doc',
     });
 
-    expect(client.sendFile).toBeCalledWith(session.user.id, {
-      media: 'http://www.images.com/file.doc',
-      size: 10000,
-      file_name: 'name_of_file.doc',
-    });
+    expect(client.sendFile).toBeCalledWith(
+      session.user.id,
+      {
+        media: 'http://www.images.com/file.doc',
+        size: 10000,
+        file_name: 'name_of_file.doc',
+      },
+      undefined
+    );
   });
 
   it('should mark context as handled', async () => {
@@ -247,10 +259,14 @@ describe('#sendContact', () => {
       phone_number: '+972511123123',
     });
 
-    expect(client.sendContact).toBeCalledWith(session.user.id, {
-      name: 'Itamar',
-      phone_number: '+972511123123',
-    });
+    expect(client.sendContact).toBeCalledWith(
+      session.user.id,
+      {
+        name: 'Itamar',
+        phone_number: '+972511123123',
+      },
+      undefined
+    );
   });
 
   it('should mark context as handled', async () => {
@@ -285,10 +301,14 @@ describe('#sendLocation', () => {
       lon: '-122.3942',
     });
 
-    expect(client.sendLocation).toBeCalledWith(session.user.id, {
-      lat: '37.7898',
-      lon: '-122.3942',
-    });
+    expect(client.sendLocation).toBeCalledWith(
+      session.user.id,
+      {
+        lat: '37.7898',
+        lon: '-122.3942',
+      },
+      undefined
+    );
   });
 
   it('should mark context as handled', async () => {
@@ -322,7 +342,8 @@ describe('#sendURL', () => {
 
     expect(client.sendURL).toBeCalledWith(
       session.user.id,
-      'http://developers.viber.com'
+      'http://developers.viber.com',
+      undefined
     );
   });
 
@@ -349,7 +370,11 @@ describe('#sendSticker', () => {
 
     await context.sendSticker(46105);
 
-    expect(client.sendSticker).toBeCalledWith(session.user.id, 46105);
+    expect(client.sendSticker).toBeCalledWith(
+      session.user.id,
+      46105,
+      undefined
+    );
   });
 
   it('should mark context as handled', async () => {
@@ -464,7 +489,8 @@ describe('#sendCarouselContent', () => {
 
     expect(client.sendCarouselContent).toBeCalledWith(
       session.user.id,
-      richMedia
+      richMedia,
+      undefined
     );
   });
 

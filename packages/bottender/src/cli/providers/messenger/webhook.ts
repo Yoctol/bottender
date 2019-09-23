@@ -30,10 +30,6 @@ const help = (): void => {
 
       ${chalk.cyan('$ bottender messenger webhook set -w http://example.com')}
 
-    ${chalk.dim('-')} Set verify token
-
-      ${chalk.cyan('$ bottender messenger webhook set -v abc123')}
-
     ${chalk.dim('-')} Use specific ngrok port and access token
 
       ${chalk.cyan('$ bottender messenger webhook set --ngrok-port 4041')}
@@ -44,25 +40,22 @@ export async function setWebhook(ctx: CliContext): Promise<void> {
   const argv = getSubArgs(ctx.argv, {
     '--webhook': String,
     '-w': '--webhook',
-    '--verify-token': String,
-    '-v': '--verify-token',
     '--ngrok-port': String,
   });
 
   let webhook = argv['--webhook'];
-  let verifyToken = argv['--verify-token'];
   const ngrokPort = argv['--ngrok-port'] || '4040';
 
   try {
     const config = getConfig('messenger');
 
     invariant(config.accessToken, 'accessToken is not found in config file');
-    const accessToken = config.accessToken;
+    const { accessToken, appId, appSecret } = config;
 
     const client = MessengerClient.connect({
-      appId: config.appId,
-      appSecret: config.appSecret,
       accessToken,
+      appId,
+      appSecret,
     });
 
     const defaultFields = [
@@ -85,7 +78,7 @@ export async function setWebhook(ctx: CliContext): Promise<void> {
       }
     }
 
-    verifyToken = verifyToken || config.verifyToken;
+    const verifyToken = config.verifyToken;
 
     invariant(config.appId, '`appId` is not found in config file');
     invariant(config.appSecret, '`appSecret` is not found in config file');

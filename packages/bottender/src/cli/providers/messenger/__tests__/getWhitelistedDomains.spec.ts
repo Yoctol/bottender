@@ -1,14 +1,13 @@
 import { MessengerClient } from 'messaging-api-messenger';
 
+import getConfig from '../../../shared/getConfig';
 import { getWhitelistedDomains } from '../whitelisted-domains';
-import { log } from '../../../shared/log';
+import * as log from '../../../shared/log';
 
 jest.mock('messaging-api-messenger');
 
 jest.mock('../../../shared/log');
 jest.mock('../../../shared/getConfig');
-
-const getConfig = require('../../../shared/getConfig').default;
 
 const MOCK_FILE_WITH_PLATFORM = {
   channels: {
@@ -35,16 +34,6 @@ it('be defined', () => {
 });
 
 describe('resolved', () => {
-  it('--token should work', async () => {
-    const ctx = {
-      argv: { '--token': '12345' },
-    };
-
-    await getWhitelistedDomains(ctx);
-
-    expect(MessengerClient.connect).toBeCalledWith('12345');
-  });
-
   it('call getWhitelistedDomains', async () => {
     const ctx = {
       argv: {},

@@ -165,7 +165,7 @@ describe('request context', () => {
     it('should be empty when no requestContext provided', () => {
       const { context } = setup({ requestContext: undefined });
 
-      expect(context.requestContext).toBeUndefined();
+      expect(context.requestContext).toBeNull();
     });
 
     it('should support get requestContext', () => {

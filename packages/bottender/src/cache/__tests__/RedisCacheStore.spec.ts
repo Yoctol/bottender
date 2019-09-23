@@ -86,7 +86,7 @@ describe('#all', () => {
     const result = await store.all();
 
     expect(result).toEqual([{ id: 1 }, { id: 2 }]);
-    expect(redis.scan).toBeCalledWith('0');
+    expect(redis.scan).toBeCalledWith(0);
   });
 
   it('should iterate through all the keys in redis', async () => {
@@ -99,8 +99,8 @@ describe('#all', () => {
 
     await store.all();
 
-    expect(redis.scan).toBeCalledWith('0');
-    expect(redis.scan).toBeCalledWith('4');
+    expect(redis.scan).toBeCalledWith(0);
+    expect(redis.scan).toBeCalledWith(4);
   });
 });
 

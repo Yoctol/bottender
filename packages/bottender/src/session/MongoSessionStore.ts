@@ -20,7 +20,7 @@ export default class MongoSessionStore implements SessionStore {
   constructor(
     url: string,
     options: { collectionName?: string } = {},
-    expiresIn: number
+    expiresIn?: number
   ) {
     this._url = url;
     this._collectionName = options.collectionName || 'sessions';

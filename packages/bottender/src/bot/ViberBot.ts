@@ -14,8 +14,8 @@ export default class ViberBot extends Bot<ViberRequestBody, ViberClient> {
     origin,
   }: {
     accessToken: string;
-    sessionStore: SessionStore;
     sender: ViberSender;
+    sessionStore?: SessionStore;
     sync?: boolean;
     origin?: string;
   }) {

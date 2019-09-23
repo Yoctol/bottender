@@ -152,9 +152,7 @@ describe('#leave', () => {
 
     await context.leave();
 
-    expect(client.leaveGroup).toBeCalledWith('fakeGroupId', {
-      accessToken: undefined,
-    });
+    expect(client.leaveGroup).toBeCalledWith('fakeGroupId', {});
     expect(context.isHandled).toBe(true);
   });
 
@@ -163,9 +161,7 @@ describe('#leave', () => {
 
     await context.leave();
 
-    expect(client.leaveRoom).toBeCalledWith('fakeRoomId', {
-      accessToken: undefined,
-    });
+    expect(client.leaveRoom).toBeCalledWith('fakeRoomId', {});
     expect(context.isHandled).toBe(true);
   });
 
@@ -240,9 +236,7 @@ describe('#replyText', () => {
 
     await context.replyText('xxx.com');
 
-    expect(client.replyText).toBeCalledWith(rawEvent.replyToken, 'xxx.com', {
-      accessToken: undefined,
-    });
+    expect(client.replyText).toBeCalledWith(rawEvent.replyToken, 'xxx.com', {});
   });
 
   it('should work with quickReply', async () => {
@@ -257,10 +251,10 @@ describe('#replyText', () => {
     });
   });
 
-  it('should throw when reply mulitple times', async () => {
+  it('should throw when reply multiple times', async () => {
     const { context } = setup();
 
-    const error = new Error('Can not reply event mulitple times');
+    const error = new Error('Can not reply event multiple times');
     error.name = 'Invariant Violation';
 
     await context.replyText('xxx.com');
@@ -347,9 +341,7 @@ describe('#pushText', () => {
 
     await context.pushText('xxx.com');
 
-    expect(client.pushText).toBeCalledWith(session.user.id, 'xxx.com', {
-      accessToken: undefined,
-    });
+    expect(client.pushText).toBeCalledWith(session.user.id, 'xxx.com', {});
   });
 
   it('should work with quickReply', async () => {
@@ -371,9 +363,7 @@ describe('#pushText', () => {
 
     await context.pushText('xxx.com');
 
-    expect(client.pushText).toBeCalledWith(session.room.id, 'xxx.com', {
-      accessToken: undefined,
-    });
+    expect(client.pushText).toBeCalledWith(session.room.id, 'xxx.com', {});
   });
 
   it('should work with group session', async () => {
@@ -383,9 +373,7 @@ describe('#pushText', () => {
 
     await context.pushText('xxx.com');
 
-    expect(client.pushText).toBeCalledWith(session.group.id, 'xxx.com', {
-      accessToken: undefined,
-    });
+    expect(client.pushText).toBeCalledWith(session.group.id, 'xxx.com', {});
   });
 
   it('should mark context as handled', async () => {
@@ -428,9 +416,7 @@ describe('send APIs', () => {
       expect(client.push).toBeCalledWith(
         session.user.id,
         [Line.createText('2'), Line.createText('3')],
-        {
-          accessToken: undefined,
-        }
+        {}
       );
     });
 
@@ -444,9 +430,7 @@ describe('send APIs', () => {
       expect(client.push).toBeCalledWith(
         session.room.id,
         [Line.createText('2'), Line.createText('3')],
-        {
-          accessToken: undefined,
-        }
+        {}
       );
     });
 
@@ -460,9 +444,7 @@ describe('send APIs', () => {
       expect(client.push).toBeCalledWith(
         session.group.id,
         [Line.createText('2'), Line.createText('3')],
-        {
-          accessToken: undefined,
-        }
+        {}
       );
     });
 
@@ -481,9 +463,7 @@ describe('send APIs', () => {
 
       await context.sendText('xxx.com');
 
-      expect(client.pushText).toBeCalledWith(session.user.id, 'xxx.com', {
-        accessToken: undefined,
-      });
+      expect(client.pushText).toBeCalledWith(session.user.id, 'xxx.com', {});
     });
 
     it('should work with quickReply', async () => {
@@ -505,9 +485,7 @@ describe('send APIs', () => {
 
       await context.sendText('xxx.com');
 
-      expect(client.pushText).toBeCalledWith(session.room.id, 'xxx.com', {
-        accessToken: undefined,
-      });
+      expect(client.pushText).toBeCalledWith(session.room.id, 'xxx.com', {});
     });
 
     it('should work with group session', async () => {
@@ -517,9 +495,7 @@ describe('send APIs', () => {
 
       await context.sendText('xxx.com');
 
-      expect(client.pushText).toBeCalledWith(session.group.id, 'xxx.com', {
-        accessToken: undefined,
-      });
+      expect(client.pushText).toBeCalledWith(session.group.id, 'xxx.com', {});
     });
 
     it('should mark context as handled', async () => {
@@ -1729,9 +1705,7 @@ describe('profile APIs', () => {
 
       await context.getUserProfile();
 
-      expect(client.getUserProfile).toBeCalledWith('fakeUserId', {
-        accessToken: undefined,
-      });
+      expect(client.getUserProfile).toBeCalledWith('fakeUserId', {});
     });
   });
 
@@ -1850,9 +1824,7 @@ describe('member IDs APIs', () => {
 
       await context.getAllMemberIds();
 
-      expect(client.getAllGroupMemberIds).toBeCalledWith('fakeGroupId', {
-        accessToken: undefined,
-      });
+      expect(client.getAllGroupMemberIds).toBeCalledWith('fakeGroupId', {});
     });
 
     it('get memeber ids in room', async () => {
@@ -1860,9 +1832,7 @@ describe('member IDs APIs', () => {
 
       await context.getAllMemberIds();
 
-      expect(client.getAllRoomMemberIds).toBeCalledWith('fakeRoomId', {
-        accessToken: undefined,
-      });
+      expect(client.getAllRoomMemberIds).toBeCalledWith('fakeRoomId', {});
     });
 
     it('not get user profile in user session', async () => {
@@ -1889,9 +1859,7 @@ describe('ruchmenu APIs', () => {
 
       const result = await context.getLinkedRichMenu();
 
-      expect(client.getLinkedRichMenu).toBeCalledWith(session.user.id, {
-        accessToken: undefined,
-      });
+      expect(client.getLinkedRichMenu).toBeCalledWith(session.user.id, {});
       expect(result.richMenuId).toEqual('richMenuId');
     });
 
@@ -1932,9 +1900,7 @@ describe('ruchmenu APIs', () => {
 
       await context.unlinkRichMenu();
 
-      expect(client.unlinkRichMenu).toBeCalledWith(session.user.id, {
-        accessToken: undefined,
-      });
+      expect(client.unlinkRichMenu).toBeCalledWith(session.user.id, {});
     });
 
     it('should warn without user', async () => {
@@ -1957,9 +1923,7 @@ describe('account link APIs', () => {
 
       const result = await context.issueLinkToken();
 
-      expect(client.issueLinkToken).toBeCalledWith(session.user.id, {
-        accessToken: undefined,
-      });
+      expect(client.issueLinkToken).toBeCalledWith(session.user.id, {});
       expect(result).toEqual({
         token: 'xxxxx',
       });
@@ -2225,9 +2189,7 @@ describe('sendMethod', () => {
 
     await context.sendText('hello');
 
-    expect(client.pushText).toBeCalledWith(session.user.id, 'hello', {
-      accessToken: undefined,
-    });
+    expect(client.pushText).toBeCalledWith(session.user.id, 'hello', {});
     expect(client.replyText).not.toBeCalled();
   });
 
@@ -2238,9 +2200,7 @@ describe('sendMethod', () => {
 
     await context.sendText('hello');
 
-    expect(client.replyText).toBeCalledWith(rawEvent.replyToken, 'hello', {
-      accessToken: undefined,
-    });
+    expect(client.replyText).toBeCalledWith(rawEvent.replyToken, 'hello', {});
     expect(client.pushText).not.toBeCalled();
   });
 });

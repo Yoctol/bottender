@@ -105,7 +105,9 @@ class LineContext extends Context implements PlatformContext {
         );
         if (this._event.replyToken) {
           await this._client.reply(this._event.replyToken, messageChunks[0], {
-            accessToken: this._customAccessToken,
+            ...(this._customAccessToken
+              ? { accessToken: this._customAccessToken }
+              : undefined),
           });
         }
       }
@@ -121,7 +123,9 @@ class LineContext extends Context implements PlatformContext {
 
             // eslint-disable-next-line no-await-in-loop
             await this._client.push(sessionTypeId, messages, {
-              accessToken: this._customAccessToken,
+              ...(this._customAccessToken
+                ? { accessToken: this._customAccessToken }
+                : undefined),
             });
           }
         } else {
@@ -151,13 +155,17 @@ class LineContext extends Context implements PlatformContext {
   async sendText(text: string, options?: Record<string, any>): Promise<any> {
     if (this._sendMethod === 'reply') {
       return (this as any).replyText(text, {
-        accessToken: this._customAccessToken,
+        ...(this._customAccessToken
+          ? { accessToken: this._customAccessToken }
+          : undefined),
         ...options,
       });
     }
 
     return (this as any).pushText(text, {
-      accessToken: this._customAccessToken,
+      ...(this._customAccessToken
+        ? { accessToken: this._customAccessToken }
+        : undefined),
       ...options,
     });
   }
@@ -176,12 +184,16 @@ class LineContext extends Context implements PlatformContext {
       case 'room':
         this._isHandled = true;
         return this._client.leaveRoom(this._session.room.id, {
-          accessToken: this._customAccessToken,
+          ...(this._customAccessToken
+            ? { accessToken: this._customAccessToken }
+            : undefined),
         } as any);
       case 'group':
         this._isHandled = true;
         return this._client.leaveGroup(this._session.group.id, {
-          accessToken: this._customAccessToken,
+          ...(this._customAccessToken
+            ? { accessToken: this._customAccessToken }
+            : undefined),
         } as any);
       default:
         warning(
@@ -218,7 +230,9 @@ class LineContext extends Context implements PlatformContext {
           this._session.room.id,
           this._session.user.id,
           {
-            accessToken: this._customAccessToken,
+            ...(this._customAccessToken
+              ? { accessToken: this._customAccessToken }
+              : undefined),
           } as any
         );
       case 'group':
@@ -226,13 +240,17 @@ class LineContext extends Context implements PlatformContext {
           this._session.group.id,
           this._session.user.id,
           {
-            accessToken: this._customAccessToken,
+            ...(this._customAccessToken
+              ? { accessToken: this._customAccessToken }
+              : undefined),
           } as any
         );
       case 'user':
       default:
         return this._client.getUserProfile(this._session.user.id, {
-          accessToken: this._customAccessToken,
+          ...(this._customAccessToken
+            ? { accessToken: this._customAccessToken }
+            : undefined),
         } as any);
     }
   }
@@ -257,7 +275,9 @@ class LineContext extends Context implements PlatformContext {
           this._session.room.id,
           userId,
           {
-            accessToken: this._customAccessToken,
+            ...(this._customAccessToken
+              ? { accessToken: this._customAccessToken }
+              : undefined),
           } as any
         );
       case 'group':
@@ -265,7 +285,9 @@ class LineContext extends Context implements PlatformContext {
           this._session.group.id,
           userId,
           {
-            accessToken: this._customAccessToken,
+            ...(this._customAccessToken
+              ? { accessToken: this._customAccessToken }
+              : undefined),
           } as any
         );
       default:
@@ -296,11 +318,15 @@ class LineContext extends Context implements PlatformContext {
     switch (this._session.type) {
       case 'room':
         return this._client.getRoomMemberIds(this._session.room.id, start, {
-          accessToken: this._customAccessToken,
+          ...(this._customAccessToken
+            ? { accessToken: this._customAccessToken }
+            : undefined),
         } as any);
       case 'group':
         return this._client.getGroupMemberIds(this._session.group.id, start, {
-          accessToken: this._customAccessToken,
+          ...(this._customAccessToken
+            ? { accessToken: this._customAccessToken }
+            : undefined),
         } as any);
       default:
         warning(
@@ -329,11 +355,15 @@ class LineContext extends Context implements PlatformContext {
     switch (this._session.type) {
       case 'room':
         return this._client.getAllRoomMemberIds(this._session.room.id, {
-          accessToken: this._customAccessToken,
+          ...(this._customAccessToken
+            ? { accessToken: this._customAccessToken }
+            : undefined),
         });
       case 'group':
         return this._client.getAllGroupMemberIds(this._session.group.id, {
-          accessToken: this._customAccessToken,
+          ...(this._customAccessToken
+            ? { accessToken: this._customAccessToken }
+            : undefined),
         });
       default:
         warning(
@@ -351,7 +381,9 @@ class LineContext extends Context implements PlatformContext {
   async getLinkedRichMenu(): Promise<any> {
     if (this._session && this._session.user) {
       return this._client.getLinkedRichMenu(this._session.user.id, {
-        accessToken: this._customAccessToken,
+        ...(this._customAccessToken
+          ? { accessToken: this._customAccessToken }
+          : undefined),
       } as any);
     }
     warning(
@@ -367,7 +399,9 @@ class LineContext extends Context implements PlatformContext {
   async linkRichMenu(richMenuId: string): Promise<any> {
     if (this._session && this._session.user) {
       return this._client.linkRichMenu(this._session.user.id, richMenuId, {
-        accessToken: this._customAccessToken,
+        ...(this._customAccessToken
+          ? { accessToken: this._customAccessToken }
+          : undefined),
       } as any);
     }
     warning(
@@ -383,7 +417,9 @@ class LineContext extends Context implements PlatformContext {
   async unlinkRichMenu(): Promise<any> {
     if (this._session && this._session.user) {
       return this._client.unlinkRichMenu(this._session.user.id, {
-        accessToken: this._customAccessToken,
+        ...(this._customAccessToken
+          ? { accessToken: this._customAccessToken }
+          : undefined),
       } as any);
     }
     warning(
@@ -399,7 +435,9 @@ class LineContext extends Context implements PlatformContext {
   async issueLinkToken(): Promise<any> {
     if (this._session && this._session.user) {
       return this._client.issueLinkToken(this._session.user.id, {
-        accessToken: this._customAccessToken,
+        ...(this._customAccessToken
+          ? { accessToken: this._customAccessToken }
+          : undefined),
       } as any);
     }
     warning(
@@ -450,7 +488,9 @@ types.forEach(({ name, arity, aliases }) => {
 
         const options = args[arity - 2];
         args[arity - 2] = {
-          accessToken: this._customAccessToken,
+          ...(this._customAccessToken
+            ? { accessToken: this._customAccessToken }
+            : undefined),
           ...options,
         };
 
@@ -484,7 +524,9 @@ types.forEach(({ name, arity, aliases }) => {
 
         const options = args[arity - 2];
         args[arity - 2] = {
-          accessToken: this._customAccessToken,
+          ...(this._customAccessToken
+            ? { accessToken: this._customAccessToken }
+            : undefined),
           ...options,
         };
 
