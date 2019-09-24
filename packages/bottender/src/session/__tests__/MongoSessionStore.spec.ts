@@ -20,9 +20,9 @@ function setup(options = {}) {
     db: jest.fn(() => connection),
   };
   MongoClient.connect.mockResolvedValue(client);
+
   const store = new MongoSessionStore(
-    'mongodb://fakemongourl',
-    options,
+    { url: 'mongodb://fakemongourl', ...options },
     MINUTES_IN_ONE_YEAR
   );
 
@@ -32,6 +32,18 @@ function setup(options = {}) {
     sessions,
   };
 }
+
+it('should be instanceof MongoSessionStore', () => {
+  expect(
+    new MongoSessionStore('mongodb://fakemongourl', MINUTES_IN_ONE_YEAR)
+  ).toBeInstanceOf(MongoSessionStore);
+  expect(
+    new MongoSessionStore(
+      { url: 'mongodb://fakemongourl' },
+      MINUTES_IN_ONE_YEAR
+    )
+  ).toBeInstanceOf(MongoSessionStore);
+});
 
 describe('#init', () => {
   it('should return initialize store instance', async () => {

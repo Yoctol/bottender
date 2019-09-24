@@ -19,7 +19,10 @@ const generateConfig = (
         password: 'auth',
         db: 0,
       },
-      mongo: {},
+      mongo: {
+        url: 'mongodb://localhost:27017',
+        collectionName: 'sessions',
+      },
     },
   },
   initialState: {},

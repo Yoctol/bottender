@@ -18,21 +18,24 @@ export type BottenderConfig = {
   plugins?: any[];
   session?: {
     driver: SessionDriver;
-    expiresIn: number;
+    expiresIn?: number;
     stores: {
       memory: {
-        maxSize: number;
+        maxSize?: number;
       };
       file: {
-        dirname: string;
+        dirname?: string;
       };
       redis: {
-        port: number;
-        host: string;
-        password: string;
+        port?: number;
+        host?: string;
+        password?: string;
         db: number;
       };
-      mongo: {};
+      mongo: {
+        url: string;
+        collectionName?: string;
+      };
     };
   };
   initialState: Record<string, any>;

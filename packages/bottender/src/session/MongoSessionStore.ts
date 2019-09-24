@@ -7,6 +7,13 @@ import SessionStore from './SessionStore';
 
 const MINUTES_IN_ONE_YEAR = 365 * 24 * 60;
 
+type MongoOption =
+  | string
+  | {
+      url: string;
+      collectionName?: string;
+    };
+
 export default class MongoSessionStore implements SessionStore {
   _url: string;
 
@@ -17,13 +24,14 @@ export default class MongoSessionStore implements SessionStore {
 
   _connection?: Db;
 
-  constructor(
-    url: string,
-    options: { collectionName?: string } = {},
-    expiresIn?: number
-  ) {
-    this._url = url;
-    this._collectionName = options.collectionName || 'sessions';
+  constructor(options: MongoOption, expiresIn?: number) {
+    if (typeof options === 'string') {
+      this._url = options;
+      this._collectionName = 'sessions';
+    } else {
+      this._url = options.url;
+      this._collectionName = options.collectionName || 'sessions';
+    }
     this._expiresIn = expiresIn || MINUTES_IN_ONE_YEAR;
   }
 
