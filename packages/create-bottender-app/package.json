@@ -4,13 +4,19 @@
   "bin": {
     "create-bottender-app": "bin/cli.js"
   },
+  "files": [
+    "dist",
+    "template"
+  ],
+  "types": "dist/index.d.ts",
   "dependencies": {
     "chalk": "^2.4.2",
+    "commander": "^3.0.1",
     "cross-spawn": "^7.0.0",
+    "envinfo": "^7.3.1",
     "figures": "^3.0.0",
     "fs-extra": "^8.1.0",
     "inquirer": "^7.0.0",
-    "stringify-object": "^3.3.0",
     "validate-npm-package-name": "^3.0.0"
   }
 }

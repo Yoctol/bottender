@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
-const init = require('../lib').default;
+// eslint-disable-next-line import/no-unresolved
+const init = require('../dist').default;
 
 init();

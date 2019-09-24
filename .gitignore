@@ -1,7 +1,25 @@
-.DS_Store
-node_modules
+# Ignore the compiled output.
+dist/
+
+# TypeScript incremental compilation cache
+*.tsbuildinfo
+
+# Logs
+logs
+*.log
 npm-debug.log*
-yarn-error.log
-coverage
+yarn-debug.log*
+yarn-error.log*
+
+# Coverage (from Jest)
+coverage/
+
+# JUnit Reports (used mainly in CircleCI)
+reports/
 junit.xml
-lib
+
+# Node modules
+node_modules/
+
+# Mac OS
+.DS_Store

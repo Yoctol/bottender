@@ -19,6 +19,6 @@ store sessions in your MongoDB. For more information, check our
 
 ## Related examples
 
-* [session-memory](../session-memory)
-* [session-file](../session-file)
-* [session-redis](../session-redis)
+- [session-memory](../session-memory)
+- [session-file](../session-file)
+- [session-redis](../session-redis)

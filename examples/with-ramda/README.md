@@ -18,4 +18,4 @@ statements using Ramda.js.
 
 ## Related examples
 
-* [console-hello-world](../console-hello-world)
+- [console-hello-world](../console-hello-world)

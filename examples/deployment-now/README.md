@@ -42,4 +42,4 @@ This example is a simple bot show how to deploy with
 
 ## Related examples
 
-* [messenger-hello-world](../messenger-hello-world)
+- [messenger-hello-world](../messenger-hello-world)

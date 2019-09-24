@@ -46,8 +46,8 @@ For more information, check our [Viber guides](https://bottender.js.org/docs/Pla
 
 ## Related examples
 
-* [viber-hello-world](../viber-hello-world)
-* [messenger-builder](../messenger-builder)
-* [line-builder](../line-builder)
-* [slack-builder](../slack-builder)
-* [telegram-builder](../telegram-builder)
+- [viber-hello-world](../viber-hello-world)
+- [messenger-builder](../messenger-builder)
+- [line-builder](../line-builder)
+- [slack-builder](../slack-builder)
+- [telegram-builder](../telegram-builder)

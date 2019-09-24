@@ -1,1 +1,2 @@
-module.exports = require('./lib/test-utils');
+/* eslint-disable import/no-unresolved */
+module.exports = require('./dist/test-utils');

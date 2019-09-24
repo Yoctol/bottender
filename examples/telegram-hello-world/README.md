@@ -44,9 +44,9 @@ For more information, check our [Telegram guides](https://bottender.js.org/docs/
 
 ## Related examples
 
-* [telegram-builder](../telegram-builder)
-* [console-hello-world](../console-hello-world)
-* [messenger-hello-world](../messenger-hello-world)
-* [line-hello-world](../line-hello-world)
-* [slack-hello-world](../slack-hello-world)
-* [viber-hello-world](../viber-hello-world)
+- [telegram-builder](../telegram-builder)
+- [console-hello-world](../console-hello-world)
+- [messenger-hello-world](../messenger-hello-world)
+- [line-hello-world](../line-hello-world)
+- [slack-hello-world](../slack-hello-world)
+- [viber-hello-world](../viber-hello-world)

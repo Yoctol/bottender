@@ -7,10 +7,11 @@
     "url": "https://github.com/Yoctol/bottender.git"
   },
   "version": "1.0.0-alpha.1",
-  "main": "lib/index.js",
+  "main": "dist/index.js",
   "files": [
-    "lib"
+    "dist"
   ],
+  "types": "dist/index.d.ts",
   "dependencies": {
     "koa-compose": "^4.1.0",
     "warning": "^4.0.3"

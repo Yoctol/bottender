@@ -19,6 +19,6 @@ store sessions in your local file. For more information, check our
 
 ## Related examples
 
-* [session-memory](../session-memory)
-* [session-mongo](../session-mongo)
-* [session-redis](../session-redis)
+- [session-memory](../session-memory)
+- [session-mongo](../session-mongo)
+- [session-redis](../session-redis)

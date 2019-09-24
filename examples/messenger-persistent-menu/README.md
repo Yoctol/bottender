@@ -49,5 +49,5 @@ It shows how to extend nested persistent menu to have 3 levels and total 75 call
 
 ## Related examples
 
-* [messenger-hello-world](../messenger-hello-world)
-* [with-config](../with-config)
+- [messenger-hello-world](../messenger-hello-world)
+- [with-config](../with-config)

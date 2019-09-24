@@ -34,8 +34,8 @@ For more information, check our [Slack guides](https://bottender.js.org/docs/Pla
 
 ## Related examples
 
-* [slack-hello-world](../slack-hello-world)
-* [messenger-builder](../messenger-builder)
-* [line-builder](../line-builder)
-* [telegram-builder](../telegram-builder)
-* [viber-builder](../viber-builder)
+- [slack-hello-world](../slack-hello-world)
+- [messenger-builder](../messenger-builder)
+- [line-builder](../line-builder)
+- [telegram-builder](../telegram-builder)
+- [viber-builder](../viber-builder)
