@@ -316,7 +316,7 @@ export default class MessengerConnector
     });
   }
 
-  mapRequestToEvents(body: MessengerRequestBody): Array<MessengerEvent> {
+  mapRequestToEvents(body: MessengerRequestBody): MessengerEvent[] {
     const rawEvents = this._getRawEventsFromRequest(body);
     const isStandby = this._isStandby(body);
 

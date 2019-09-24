@@ -12,7 +12,7 @@ import { Connector } from './Connector';
 
 export type LineRequestBody = {
   destination: string;
-  events: Array<LineRawEvent>;
+  events: LineRawEvent[];
 };
 
 type CommonConstructorOptions = {
@@ -252,7 +252,7 @@ export default class LineConnector
     });
   }
 
-  mapRequestToEvents(body: LineRequestBody): Array<LineEvent> {
+  mapRequestToEvents(body: LineRequestBody): LineEvent[] {
     const { destination } = body;
 
     return body.events

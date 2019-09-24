@@ -8,11 +8,11 @@ type TelegramUser = {
   language_code?: string;
 };
 
-type Photo = Array<{
+type Photo = {
   file_id: string;
   width: number;
   height: number;
-}>;
+}[];
 
 type Audio = {
   file_id: string;
@@ -71,11 +71,11 @@ type File = {
 type Game = {
   title: string;
   description: string;
-  photo: Array<{
+  photo: {
     file_id: string;
     width: number;
     height: number;
-  }>;
+  }[];
 };
 
 type Message = {
@@ -89,11 +89,11 @@ type Message = {
   };
   date: number;
   text: string;
-  entities: Array<{
+  entities: {
     type: 'bot_command';
     offset: number;
     length: number;
-  }>;
+  }[];
   reply_to_message?: Message;
   photo?: Photo;
   game?: Game;

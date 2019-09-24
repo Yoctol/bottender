@@ -278,7 +278,7 @@ export default class SlackConnector
     }
   }
 
-  mapRequestToEvents(body: SlackRequestBody): Array<SlackEvent> {
+  mapRequestToEvents(body: SlackRequestBody): SlackEvent[] {
     const rawEvent = this._getRawEventFromRequest(body);
 
     if (this._isBotEventRequest(body)) {

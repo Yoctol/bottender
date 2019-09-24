@@ -159,7 +159,7 @@ export default class TelegramConnector
     });
   }
 
-  mapRequestToEvents(body: TelegramRequestBody): Array<TelegramEvent> {
+  mapRequestToEvents(body: TelegramRequestBody): TelegramEvent[] {
     const rawEvent = this._getRawEventFromRequest(body);
     return [new TelegramEvent(rawEvent)];
   }

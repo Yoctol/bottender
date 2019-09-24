@@ -10,7 +10,7 @@ export interface Connector<B, C> {
     requestContext?: Record<string, any> | null
   ): string | null;
   updateSession(session: Session, body: B): Promise<void>;
-  mapRequestToEvents(body: B): Array<any>;
+  mapRequestToEvents(body: B): any[];
   createContext(params: {
     event: any;
     session?: Session | null;

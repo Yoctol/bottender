@@ -49,7 +49,7 @@ export default class MongoSessionStore implements SessionStore {
     }
   }
 
-  async all(): Promise<Array<Session>> {
+  async all(): Promise<Session[]> {
     return this._sessions.find().toArray();
   }
 

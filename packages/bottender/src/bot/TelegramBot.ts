@@ -9,7 +9,7 @@ type PollingOptions = {
   offset?: number;
   limit?: number;
   timeout?: number;
-  allowed_updates?: Array<string>;
+  allowed_updates?: string[];
 };
 
 export default class TelegramBot extends Bot<

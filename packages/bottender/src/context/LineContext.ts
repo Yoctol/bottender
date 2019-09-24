@@ -447,7 +447,7 @@ class LineContext extends Context implements PlatformContext {
   }
 }
 
-const types: Array<{ name: string; arity: number; aliases?: Array<string> }> = [
+const types: { name: string; arity: number; aliases?: string[] }[] = [
   { name: '', arity: 3 },
   { name: 'Text', arity: 3 },
   { name: 'Image', arity: 3 },

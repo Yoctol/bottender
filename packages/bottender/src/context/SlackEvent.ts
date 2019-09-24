@@ -70,7 +70,7 @@ export type Message = {
 
 export type InteractiveMessageEvent = {
   type: 'interactive_message';
-  actions: Array<{}>;
+  actions: {}[];
   callback_id: string;
   team: {
     id: string;

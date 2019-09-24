@@ -120,7 +120,7 @@ export default class ViberConnector
     });
   }
 
-  mapRequestToEvents(body: ViberRequestBody): Array<ViberEvent> {
+  mapRequestToEvents(body: ViberRequestBody): ViberEvent[] {
     const rawEvent = this._getRawEventFromRequest(body);
     return [new ViberEvent(rawEvent)];
   }

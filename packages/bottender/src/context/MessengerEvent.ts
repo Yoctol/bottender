@@ -48,12 +48,12 @@ export type Message = {
   text?: string;
   sticker_id?: number;
   quick_reply?: QuickReply;
-  attachments?: Array<Attachment>;
-  tags?: Array<Tag>;
+  attachments?: Attachment[];
+  tags?: Tag[];
 };
 
 export type Delivery = {
-  mids: Array<string>;
+  mids: string[];
   watermark: number;
   seq: number;
 };
@@ -155,7 +155,7 @@ export type RequestThreadControl = {
 };
 
 export type BrandedCamera = {
-  content_ids: Array<string>;
+  content_ids: string[];
   event: string;
 };
 

@@ -122,7 +122,7 @@ class TelegramContext extends Context implements PlatformContext {
     return this._client.answerPreCheckoutQuery(preCheckoutQueryId, ok, options);
   }
 
-  async answerInlineQuery(results: Array<Record<string, any>>, options?: {}) {
+  async answerInlineQuery(results: Record<string, any>[], options?: {}) {
     if (!this._event.isInlineQuery) {
       warning(
         false,
