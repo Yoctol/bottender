@@ -17,7 +17,7 @@ function setup() {
   };
 }
 
-it('should be instanceof CacheBasedSessionStore', () => {
+it('should be instanceof FileSessionStore', () => {
   expect(new FileSessionStore('.session')).toBeInstanceOf(FileSessionStore);
   expect(new FileSessionStore({ dirname: '.session' })).toBeInstanceOf(
     FileSessionStore
