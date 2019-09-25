@@ -44,7 +44,7 @@ export async function setWebhook(ctx: CliContext): Promise<void> {
   });
 
   let webhook = argv['--webhook'];
-  const ngrokPort = argv['--ngrok-port'] || '4040';
+  const ngrokPort = argv['--ngrok-port'];
 
   try {
     const config = getConfig('messenger');
