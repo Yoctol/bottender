@@ -31,7 +31,7 @@ const getConfig = (platform: string) => {
     }
   }
 
-  const result = get(config, `channels.${platform}`, undefined);
+  const result = get(config, `channels.${platform}`);
 
   invariant(
     result,

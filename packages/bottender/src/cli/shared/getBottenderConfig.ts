@@ -2,11 +2,12 @@ import path from 'path';
 
 import { BottenderConfig } from './types';
 
-const getConfig = (): BottenderConfig => {
+/**
+ * By default, it will try to require the module from `<root>/bottender.config.js`.
+ */
+const getBottenderConfig = (): BottenderConfig | never => {
   // eslint-disable-next-line import/no-dynamic-require, @typescript-eslint/no-var-requires
-  const config = require(path.resolve('bottender.config.js'));
-
-  return config;
+  return require(path.resolve('bottender.config.js'));
 };
 
-export default getConfig;
+export default getBottenderConfig;

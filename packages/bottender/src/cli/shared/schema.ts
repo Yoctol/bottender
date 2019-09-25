@@ -1,47 +1,8 @@
 import Joi from '@hapi/joi';
 
-const subMenuItemSchema = Joi.object().keys({
-  type: Joi.string(),
-  title: Joi.string(),
-  url: Joi.string().when('type', {
-    is: 'web_url',
-    then: Joi.string().required(),
-  }),
-  payload: Joi.string().when('type', {
-    is: 'postback',
-    then: Joi.string().required(),
-  }),
-  webview_height_ratio: Joi.string(),
-  messenger_extensions: Joi.boolean(),
-  fallback_url: Joi.string(),
-  webview_share_button: Joi.string(),
+const menuItemSchema = Joi.object().keys({
+  // TODO:
 });
-
-const secondLayerMenuItemSchema = Joi.object()
-  .keys({
-    call_to_actions: Joi.array()
-      .items()
-      .when('type', {
-        is: 'nested',
-        then: Joi.array()
-          .items(subMenuItemSchema)
-          .max(5),
-      }),
-  })
-  .concat(subMenuItemSchema);
-
-const firstLayerMenuItemSchema = Joi.object()
-  .keys({
-    call_to_actions: Joi.array()
-      .items()
-      .when('type', {
-        is: 'nested',
-        then: Joi.array()
-          .items(secondLayerMenuItemSchema)
-          .max(5),
-      }),
-  })
-  .concat(secondLayerMenuItemSchema);
 
 const schema = Joi.object().keys({
   channels: Joi.object().keys({
@@ -61,12 +22,12 @@ const schema = Joi.object().keys({
             locale: Joi.string(),
             composer_input_disabled: Joi.boolean(),
             call_to_actions: Joi.array()
-              .items(firstLayerMenuItemSchema)
+              .items(menuItemSchema)
               .max(3)
               .when('composer_input_disabled', {
                 is: true,
                 then: Joi.array()
-                  .items(firstLayerMenuItemSchema)
+                  .items(menuItemSchema)
                   .max(3)
                   .required(),
               }),
