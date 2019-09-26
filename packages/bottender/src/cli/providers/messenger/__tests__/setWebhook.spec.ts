@@ -13,6 +13,7 @@ jest.mock('../../../shared/getWebhookFromNgrok');
 jest.mock('../../../shared/log');
 jest.mock('../../../shared/getConfig');
 
+const PAGE_ID = '__PAGE_ID__';
 const ACCESS_TOKEN = '__ACCESS_TOKEN__';
 const APP_ID = '__APP_ID__';
 const APP_SECRET = '__APP_SECRET__';
@@ -53,6 +54,11 @@ function setup({
   });
 
   client.getPageInfo.mockResolvedValue({ id: '123456789', name: 'Page Name' });
+  client.axios = {
+    post: jest.fn(),
+  };
+
+  client.axios.post.mockResolvedValue({ data: { success: true } });
 
   MessengerClient.connect = jest.fn(() => client);
 
@@ -108,6 +114,10 @@ describe('resolve', () => {
   it('get ngrok webhook to setup', async () => {
     const { client } = setup();
 
+    client.axios.post = jest
+      .fn()
+      .mockResolvedValue({ data: { success: true } });
+
     const ctx = {
       argv: {
         _: ['messenger', 'webhook', 'set'],
@@ -145,6 +155,50 @@ describe('resolve', () => {
     await setWebhook(ctx);
 
     expect(getWebhookFromNgrok).toBeCalledWith('5555');
+  });
+
+  it('should subscribe app for the page if pageId is provided', async () => {
+    const { client } = setup({
+      config: {
+        pageId: PAGE_ID,
+        accessToken: ACCESS_TOKEN,
+        appId: APP_ID,
+        appSecret: APP_SECRET,
+        verifyToken: VERIFY_TOKEN,
+      },
+    });
+
+    const ctx = {
+      argv: {
+        _: ['messenger', 'webhook', 'set'],
+      },
+    };
+
+    await setWebhook(ctx);
+
+    expect(getWebhookFromNgrok).toBeCalledWith('4040');
+    expect(client.createSubscription).toBeCalledWith({
+      access_token: '__APP_ID__|__APP_SECRET__',
+      callback_url: 'https://fakeDomain.ngrok.io/webhooks/messenger',
+      fields: [
+        'messages',
+        'messaging_postbacks',
+        'messaging_optins',
+        'messaging_referrals',
+        'messaging_handovers',
+        'messaging_policy_enforcement',
+      ],
+      object: 'page',
+      verify_token: '__VERIFY_TOKEN__',
+    });
+
+    expect(client.axios.post).toBeCalledWith(
+      '/__PAGE_ID__/subscribed_apps?access_token=__ACCESS_TOKEN__',
+      {
+        subscribed_fields:
+          'messages,messaging_postbacks,messaging_optins,messaging_referrals,messaging_handovers,messaging_policy_enforcement',
+      }
+    );
   });
 });
 
