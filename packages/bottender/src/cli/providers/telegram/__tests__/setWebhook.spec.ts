@@ -69,7 +69,7 @@ describe('resolve', () => {
 
     await setWebhook(ctx);
 
-    expect(getWebhookFromNgrok).toBeCalledWith(undefined);
+    expect(getWebhookFromNgrok).toBeCalledWith('4040');
     expect(log.print).toHaveBeenCalledTimes(1);
     expect(log.print.mock.calls[0][0]).toMatch(/Successfully/);
   });

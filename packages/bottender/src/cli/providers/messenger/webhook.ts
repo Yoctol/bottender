@@ -21,7 +21,6 @@ const help = (): void => {
     ${chalk.dim('Options:')}
 
       -w, --webhook         Webhook callback URL
-      -v, --verify-token    Verify token
       --ngrok-port          Ngrok port(default: 4040)
 
     ${chalk.dim('Examples:')}
@@ -44,19 +43,45 @@ export async function setWebhook(ctx: CliContext): Promise<void> {
   });
 
   let webhook = argv['--webhook'];
-  const ngrokPort = argv['--ngrok-port'];
+  const ngrokPort = argv['--ngrok-port'] || '4040';
 
   try {
     const config = getConfig('messenger');
 
-    invariant(config.accessToken, 'accessToken is not found in config file');
-    const { accessToken, appId, appSecret } = config;
+    const {
+      accessToken,
+      appId,
+      appSecret,
+      verifyToken,
+      path = '/webhooks/messenger',
+    } = config;
+
+    invariant(accessToken, 'accessToken is not found in config file');
+    invariant(appId, 'appId is not found in config file');
+    invariant(appSecret, 'appSecret is not found in config file');
+    invariant(verifyToken, 'verifyToken is not found in config file');
 
     const client = MessengerClient.connect({
       accessToken,
       appId,
       appSecret,
     });
+
+    if (!webhook) {
+      warn('We can not find the webhook callback url you provided.');
+      const prompt = new Confirm(
+        `Are you using ngrok (get url from ngrok server on http://127.0.0.1:${ngrokPort})?`
+      );
+      const result = await prompt.run();
+      if (result) {
+        webhook = `${await getWebhookFromNgrok(ngrokPort)}${path}`;
+      }
+    }
+
+    invariant(
+      webhook,
+      '`webhook` is required but not found. Use -w <webhook> to setup or make sure you are running ngrok server.'
+    );
 
     const defaultFields = [
       'messages',
@@ -66,30 +91,6 @@ export async function setWebhook(ctx: CliContext): Promise<void> {
       'messaging_handovers',
       'messaging_policy_enforcement',
     ];
-
-    if (!webhook) {
-      warn('We can not find the webhook callback url you provided.');
-      const prompt = new Confirm(
-        `Are you using ngrok (get url from ngrok server on http://127.0.0.1:${ngrokPort})?`
-      );
-      const result = await prompt.run();
-      if (result) {
-        webhook = await getWebhookFromNgrok(ngrokPort);
-      }
-    }
-
-    const verifyToken = config.verifyToken;
-
-    invariant(config.appId, '`appId` is not found in config file');
-    invariant(config.appSecret, '`appSecret` is not found in config file');
-    invariant(
-      verifyToken,
-      '`verifyToken` is required but not found. using -v <verifyToken> to setup or list `verifyToken` key it in config file.'
-    );
-    invariant(
-      webhook,
-      '`webhook` is required but not found. Use -w <webhook> to setup or make sure you are running ngrok server.'
-    );
 
     if (!config.fields) {
       print(
@@ -144,20 +145,21 @@ export async function setWebhook(ctx: CliContext): Promise<void> {
       callback_url: webhook as string,
       verify_token: verifyToken as string,
       fields,
-      access_token: `${config.appId}|${config.appSecret}`,
+      access_token: `${appId}|${appSecret}`,
     });
+
     invariant(success, 'Setting for webhook is failed');
 
     print('Successfully set Messenger webhook callback URL');
     print(
-      `Check callback URL on: https://developers.facebook.com/apps/${config.appId}/webhooks/`
+      `Check callback URL on: https://developers.facebook.com/apps/${appId}/webhooks/`
     );
     print(
-      `Check selected events on: https://developers.facebook.com/apps/${config.appId}/messenger/`
+      `Check selected events on: https://developers.facebook.com/apps/${appId}/messenger/`
     );
-    return;
   } catch (err) {
     error('Failed to set Messenger webhook');
+
     if (err.response) {
       error(`status: ${bold(err.response.status)}`);
       if (err.response.data) {
@@ -166,6 +168,7 @@ export async function setWebhook(ctx: CliContext): Promise<void> {
     } else {
       warn(err.message);
     }
+
     return process.exit(1);
   }
 }
@@ -174,10 +177,12 @@ export default async function main(ctx: CliContext): Promise<void> {
   const subcommand = ctx.argv._[2];
 
   switch (subcommand) {
+    // TODO: implement get
     case 'set': {
       await setWebhook(ctx);
       break;
     }
+    // TODO: implement delete
     case 'help':
       help();
       break;
