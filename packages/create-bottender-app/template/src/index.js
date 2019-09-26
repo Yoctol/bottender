@@ -1,3 +1,3 @@
 module.exports = async function App(context) {
-  await context.send('Welcome to Bottender');
+  await context.sendText('Welcome to Bottender');
 };
