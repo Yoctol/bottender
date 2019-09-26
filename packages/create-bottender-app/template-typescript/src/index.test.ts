@@ -1,4 +1,4 @@
-import { App } from '.';
+import App from '.';
 
 describe('index.js', () => {
   it('should be defined', () => {
