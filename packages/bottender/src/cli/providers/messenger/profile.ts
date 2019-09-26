@@ -78,7 +78,10 @@ export async function getMessengerProfile(_: CliContext): Promise<void> {
 
     const { accessToken } = config;
 
-    invariant(accessToken, 'accessToken is not found in config file');
+    invariant(
+      accessToken,
+      '`accessToken` is not found in the `bottender.config.js` file'
+    );
 
     const client = MessengerClient.connect({
       accessToken,
@@ -122,7 +125,10 @@ export async function setMessengerProfile(ctx: CliContext): Promise<void> {
 
     const { accessToken } = config;
 
-    invariant(accessToken, 'accessToken is not found in config file');
+    invariant(
+      accessToken,
+      '`accessToken` is not found in the `bottender.config.js` file'
+    );
 
     const { profile: _profile } = getConfig('messenger');
 
@@ -216,7 +222,10 @@ export async function deleteMessengerProfile(_: CliContext): Promise<void> {
   try {
     const config = getConfig('messenger');
 
-    invariant(config.accessToken, 'accessToken is not found in config file');
+    invariant(
+      config.accessToken,
+      '`accessToken` is not found in the `bottender.config.js` file'
+    );
 
     const accessToken = config.accessToken;
 

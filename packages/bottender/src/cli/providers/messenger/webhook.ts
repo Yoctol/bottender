@@ -56,10 +56,19 @@ export async function setWebhook(ctx: CliContext): Promise<void> {
       path = '/webhooks/messenger',
     } = config;
 
-    invariant(accessToken, 'accessToken is not found in config file');
-    invariant(appId, 'appId is not found in config file');
-    invariant(appSecret, 'appSecret is not found in config file');
-    invariant(verifyToken, 'verifyToken is not found in config file');
+    invariant(
+      accessToken,
+      '`accessToken` is not found in the `bottender.config.js` file'
+    );
+    invariant(appId, '`appId` is not found in the `bottender.config.js` file');
+    invariant(
+      appSecret,
+      '`appSecret` is not found in the `bottender.config.js` file'
+    );
+    invariant(
+      verifyToken,
+      '`verifyToken` is not found in the `bottender.config.js` file'
+    );
 
     const client = MessengerClient.connect({
       accessToken,
@@ -94,7 +103,7 @@ export async function setWebhook(ctx: CliContext): Promise<void> {
 
     if (!config.fields) {
       print(
-        `\`fields\` is not found in config file, we will use ${bold(
+        `\`fields\` is not found in the \`bottender.config.js\` file, we will use ${bold(
           defaultFields.join(', ')
         )} to setup.`
       );

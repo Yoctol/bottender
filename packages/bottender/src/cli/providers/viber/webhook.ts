@@ -32,8 +32,14 @@ export async function setWebhook(ctx: CliContext): Promise<void> {
 
     const { accessToken, sender, path = '/webhooks/viber' } = config;
 
-    invariant(accessToken, 'accessToken is not found in config file');
-    invariant(sender, 'sender is not found in config file');
+    invariant(
+      accessToken,
+      '`accessToken` is not found in the `bottender.config.js` file'
+    );
+    invariant(
+      sender,
+      '`sender` is not found in the `bottender.config.js` file'
+    );
 
     const client = ViberClient.connect(
       {
@@ -87,8 +93,14 @@ export async function deleteWebhook(_: CliContext): Promise<void> {
 
     const { accessToken, sender } = config;
 
-    invariant(accessToken, 'accessToken is not found in config file');
-    invariant(sender, 'sender is not found in config file');
+    invariant(
+      accessToken,
+      '`accessToken` is not found in the `bottender.config.js` file'
+    );
+    invariant(
+      sender,
+      '`sender` is not found in the `bottender.config.js` file'
+    );
 
     const client = ViberClient.connect(
       {

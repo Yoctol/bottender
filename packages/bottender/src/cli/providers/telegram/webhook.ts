@@ -16,7 +16,10 @@ export async function getWebhook(_: CliContext): Promise<void> {
 
     const { accessToken } = config;
 
-    invariant(accessToken, 'accessToken is not found in config file');
+    invariant(
+      accessToken,
+      '`accessToken` is not found in the `bottender.config.js` file'
+    );
 
     const client = TelegramClient.connect({
       accessToken,
@@ -56,7 +59,10 @@ export async function setWebhook(ctx: CliContext): Promise<void> {
 
     const { accessToken, path = '/webhooks/telegram' } = config;
 
-    invariant(accessToken, 'accessToken is not found in config file');
+    invariant(
+      accessToken,
+      '`accessToken` is not found in the `bottender.config.js` file'
+    );
 
     const client = TelegramClient.connect({
       accessToken,
@@ -103,7 +109,10 @@ export async function deleteWebhook(_: CliContext): Promise<void> {
 
     const { accessToken } = config;
 
-    invariant(accessToken, 'accessToken is not found in config file');
+    invariant(
+      accessToken,
+      '`accessToken` is not found in the `bottender.config.js` file'
+    );
 
     const client = TelegramClient.connect({
       accessToken,

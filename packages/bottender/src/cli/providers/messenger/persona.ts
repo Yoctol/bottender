@@ -58,7 +58,10 @@ export async function createPersona(ctx: CliContext): Promise<void> {
 
     const { accessToken } = config;
 
-    invariant(accessToken, 'accessToken is not found in config file');
+    invariant(
+      accessToken,
+      '`accessToken` is not found in the `bottender.config.js` file'
+    );
 
     invariant(
       personaName,
@@ -103,7 +106,10 @@ export async function listPersona(_: CliContext): Promise<void> {
 
     const { accessToken } = config;
 
-    invariant(accessToken, 'accessToken is not found in config file');
+    invariant(
+      accessToken,
+      '`accessToken` is not found in the `bottender.config.js` file'
+    );
 
     const client = MessengerClient.connect({
       accessToken,
@@ -150,7 +156,10 @@ export async function getPersona(ctx: CliContext): Promise<void> {
 
     const { accessToken } = config;
 
-    invariant(accessToken, 'accessToken is not found in config file');
+    invariant(
+      accessToken,
+      '`accessToken` is not found in the `bottender.config.js` file'
+    );
     invariant(
       personaId,
       '`id` is required but not found. Use --id <id> to specify persona id'
@@ -199,7 +208,10 @@ export async function deletePersona(ctx: CliContext): Promise<void> {
 
     const { accessToken } = config;
 
-    invariant(accessToken, 'accessToken is not found in config file');
+    invariant(
+      accessToken,
+      '`accessToken` is not found in the `bottender.config.js` file'
+    );
     invariant(
       personaId,
       '`id` is required but not found. Use --id <id> to specify persona id'

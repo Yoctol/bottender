@@ -92,7 +92,9 @@ describe('reject', () => {
 
     await setWebhook(ctx);
 
-    expect(log.error).toBeCalledWith('accessToken is not found in config file');
+    expect(log.error).toBeCalledWith(
+      '`accessToken` is not found in the `bottender.config.js` file'
+    );
     expect(process.exit).toBeCalled();
   });
 

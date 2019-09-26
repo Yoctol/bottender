@@ -63,7 +63,7 @@ describe('reject', () => {
     expect(deleteWebhook(ctx).then).toThrow();
   });
 
-  it('reject when `accessToken` is not found in config file', () => {
+  it('reject when `accessToken` is not found in the `bottender.config.js` file', () => {
     setup();
 
     getConfig.mockReturnValueOnce(null);

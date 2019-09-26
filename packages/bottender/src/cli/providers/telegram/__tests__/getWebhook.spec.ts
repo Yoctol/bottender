@@ -59,7 +59,7 @@ describe('reject', () => {
     expect(getWebhook(ctx).then).toThrow();
   });
 
-  it('reject when accessToken is not found in config file', () => {
+  it('reject when `accessToken` is not found in the `bottender.config.js` file', () => {
     const ctx = {
       argv: {},
     };
