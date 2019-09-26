@@ -53,6 +53,7 @@ export async function setWebhook(ctx: CliContext): Promise<void> {
       appId,
       appSecret,
       verifyToken,
+      pageId,
       path = '/webhooks/messenger',
     } = config;
 
@@ -160,6 +161,18 @@ export async function setWebhook(ctx: CliContext): Promise<void> {
     invariant(success, 'Setting for webhook is failed');
 
     print('Successfully set Messenger webhook callback URL');
+
+    if (pageId) {
+      const { data } = await client.axios.post(
+        `/${pageId}/subscribed_apps?access_token=${accessToken}`,
+        {
+          subscribed_fields: fields.join(','),
+        }
+      );
+
+      invariant(data.success, 'Subscribing app for page is failed');
+    }
+
     print(
       `Check callback URL on: https://developers.facebook.com/apps/${appId}/webhooks/`
     );
