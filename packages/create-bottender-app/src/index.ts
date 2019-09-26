@@ -1,6 +1,7 @@
 import path from 'path';
 import { execSync } from 'child_process';
 
+import chalk from 'chalk';
 import commander from 'commander';
 import envinfo from 'envinfo';
 import fs from 'fs-extra';
@@ -29,7 +30,7 @@ let projectName: string;
 const program = new commander.Command(pkg.name)
   .version(pkg.version)
   .arguments('<project-directory>')
-  .usage(`${print('<project-directory>')} [options]`)
+  .usage(`${chalk.green('<project-directory>')} [options]`)
   .action(name => {
     projectName = name;
   })
@@ -40,7 +41,7 @@ const program = new commander.Command(pkg.name)
   .parse(process.argv);
 
 if (program.info) {
-  console.log(bold('\nEnvironment Info:'));
+  print(bold('\nEnvironment Info:'));
   envinfo
     .run(
       {
@@ -55,7 +56,7 @@ if (program.info) {
         showNotFound: true,
       }
     )
-    .then(console.log);
+    .then(print);
 }
 
 const getQuestions = (): Record<string, any>[] => [
@@ -123,15 +124,15 @@ const isSafeToCreateProjectIn = (root: string, name: string): boolean => {
     );
 
   if (conflicts.length > 0) {
-    console.log(
-      `The directory ${print(name)} contains files that could conflict:`
+    error(
+      `The directory ${chalk.green(name)} contains files that could conflict:`
     );
-    console.log();
+    error();
     for (const file of conflicts) {
-      console.log(`  ${file}`);
+      error(`  ${file}`);
     }
-    console.log();
-    console.log(
+    error();
+    error(
       'Either try using a new directory name, or remove the files listed above.'
     );
 
@@ -164,7 +165,7 @@ const checkBotName = (botName: string): void => {
 
   if (!validationResult.validForNewPackages) {
     error(
-      `Could not create a project called ${error(
+      `Could not create a project called ${chalk.green(
         `"${botName}"`
       )} because of npm naming restrictions:`
     );
@@ -319,7 +320,7 @@ const createBot = async (
     return process.exit(1);
   }
 
-  print(`Creating a new Bottender bot at ${print(root)}.`);
+  print(`Creating a new Bottender bot at ${chalk.green(root)}.`);
   print();
 
   const packageJson = {
@@ -360,7 +361,7 @@ const init = async (): Promise<void> => {
       print('For example:');
       print("  ? What's your project name? my-bot");
       print('');
-      print("Run 'bottender --help' to see all options.");
+      print(`Run ${chalk.cyan('bottender --help')} to see all options.`);
       return process.exit(1);
     }
 
@@ -381,7 +382,7 @@ const init = async (): Promise<void> => {
     print('Success!');
     print(`Created ${name} at ${root}`);
     print(
-      `Please make sure you have edited ${bold(
+      `Please make sure you have edited ${chalk.green(
         'bottender.config.js'
       )} before running the bot.`
     );
