@@ -38,8 +38,8 @@ For more information, check our [LINE guides](https://bottender.js.org/docs/Plat
 
 ## Related examples
 
-* [line-builder](../line-builder)
-* [console-hello-world](../console-hello-world)
-* [slack-hello-world](../slack-hello-world)
-* [telegram-hello-world](../telegram-hello-world)
-* [viber-hello-world](../viber-hello-world)
+- [line-builder](../line-builder)
+- [console-hello-world](../console-hello-world)
+- [slack-hello-world](../slack-hello-world)
+- [telegram-hello-world](../telegram-hello-world)
+- [viber-hello-world](../viber-hello-world)

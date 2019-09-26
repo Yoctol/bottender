@@ -1,18 +1,24 @@
 module.exports = {
-  parser: 'babel-eslint',
-  extends: ['yoctol-base', 'prettier'],
+  parser: '@typescript-eslint/parser',
+  extends: [
+    'yoctol-base',
+    'plugin:@typescript-eslint/recommended',
+    'prettier',
+    'prettier/@typescript-eslint',
+  ],
   env: {
     browser: true,
     node: true,
     jest: true,
     jasmine: true,
   },
-  plugins: ['flowtype', 'prettier'],
+  plugins: ['@typescript-eslint'],
   rules: {
     'class-methods-use-this': 'off',
     'consistent-return': 'off',
     'global-require': 'off',
     'no-param-reassign': 'off',
+    'no-undef': 'off',
     'prefer-destructuring': 'off',
     'prettier/prettier': [
       'error',
@@ -21,10 +27,21 @@ module.exports = {
         singleQuote: true,
       },
     ],
+    '@typescript-eslint/camelcase': 'off',
   },
+  overrides: [
+    {
+      files: ['examples/**/*.js'],
+      rules: {
+        '@typescript-eslint/no-var-requires': 'off',
+      },
+    },
+  ],
   settings: {
-    flowtype: {
-      onlyFilesWithFlowAnnotation: true,
+    'import/resolver': {
+      node: {
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],
+      },
     },
   },
   globals: {

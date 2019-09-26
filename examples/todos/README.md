@@ -66,5 +66,5 @@ For more information about Bottender, please visit our
 
 ## Related examples
 
-* [with-state](../with-state)
-* [console-hello-world](../console-hello-world)
+- [with-state](../with-state)
+- [console-hello-world](../console-hello-world)

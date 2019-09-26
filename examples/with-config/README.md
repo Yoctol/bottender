@@ -20,7 +20,7 @@ separately. Therefore, we recommend you putting them all together into
 
 ## Related examples
 
-* [cross-platform](../cross-platform)
-* [server-express](../server-express)
-* [messenger-hello-world](../messenger-hello-world)
-* [messenger-builder](../messenger-builder)
+- [cross-platform](../cross-platform)
+- [server-express](../server-express)
+- [messenger-hello-world](../messenger-hello-world)
+- [messenger-builder](../messenger-builder)

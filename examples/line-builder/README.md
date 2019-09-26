@@ -40,8 +40,8 @@ This example shows how to combine
 
 ## Related examples
 
-* [line-hello-world](../line-hello-world)
-* [messenger-builder](../messenger-builder)
-* [slack-builder](../slack-builder)
-* [telegram-builder](../telegram-builder)
-* [viber-builder](../viber-builder)
+- [line-hello-world](../line-hello-world)
+- [messenger-builder](../messenger-builder)
+- [slack-builder](../slack-builder)
+- [telegram-builder](../telegram-builder)
+- [viber-builder](../viber-builder)

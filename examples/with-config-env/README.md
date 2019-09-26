@@ -20,5 +20,5 @@ You have to put `ACCESS_TOKEN`, `VERIFY_TOKEN`, `APP_SECRET`, and `APP_ID` into 
 
 ## Related examples
 
-* [with-config](../with-config)
-* [with-dotenv](../with-dotenv)
+- [with-config](../with-config)
+- [with-dotenv](../with-dotenv)

@@ -21,5 +21,5 @@ Notice that the unit of optional number of delay seconds is **millisecond**.
 
 ## Related examples
 
-* [server-express](../server-express)
-* [messenger-hello-world](../messenger-hello-world)
+- [server-express](../server-express)
+- [messenger-hello-world](../messenger-hello-world)

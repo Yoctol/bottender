@@ -20,7 +20,7 @@ For more information, check our [Middleware guides](https://bottender.js.org/doc
 
 ## Related examples
 
-* [messenger-builder](../messenger-builder)
-* [line-builder](../line-builder)
-* [slack-builder](../slack-builder)
-* [telegram-builder](../telegram-builder)
+- [messenger-builder](../messenger-builder)
+- [line-builder](../line-builder)
+- [slack-builder](../slack-builder)
+- [telegram-builder](../telegram-builder)

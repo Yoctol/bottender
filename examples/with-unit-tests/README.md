@@ -20,4 +20,4 @@ information.
 
 ## Related examples
 
-* [console-hello-world](../console-hello-world)
+- [console-hello-world](../console-hello-world)

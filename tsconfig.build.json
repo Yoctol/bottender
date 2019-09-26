@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "composite": true
+  },
+  "files": [],
+  "include": [],
+  "references": [
+    { "path": "./packages/bottender" },
+    { "path": "./packages/bottender-express" },
+    { "path": "./packages/bottender-handlers" },
+    { "path": "./packages/bottender-koa" },
+    { "path": "./packages/bottender-micro" },
+    { "path": "./packages/bottender-restify" },
+    { "path": "./packages/create-bottender-app" }
+  ]
+}

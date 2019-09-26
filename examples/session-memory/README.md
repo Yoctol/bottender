@@ -19,6 +19,6 @@ more information, check our
 
 ## Related examples
 
-* [session-file](../session-file)
-* [session-mongo](../session-mongo)
-* [session-redis](../session-redis)
+- [session-file](../session-file)
+- [session-mongo](../session-mongo)
+- [session-redis](../session-redis)

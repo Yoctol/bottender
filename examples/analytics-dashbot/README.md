@@ -32,7 +32,7 @@ const server = createServer(bot, {
 
 ## Related examples
 
-* [analytics-chatbase](../analytics-chatbase)
-* [analytics-botanalytics](../analytics-botanalytics)
-* [server-express](../server-express)
-* [messenger-hello-world](../messenger-hello-world)
+- [analytics-chatbase](../analytics-chatbase)
+- [analytics-botanalytics](../analytics-botanalytics)
+- [server-express](../server-express)
+- [messenger-hello-world](../messenger-hello-world)

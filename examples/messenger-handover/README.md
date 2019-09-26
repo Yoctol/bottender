@@ -44,4 +44,4 @@ For more information, check our [Messenger guides](https://bottender.js.org/docs
 
 ## Related examples
 
-* [messenger-hello-world](../messenger-hello-world)
+- [messenger-hello-world](../messenger-hello-world)

@@ -19,7 +19,7 @@ Check our [server guide](https://bottender.js.org/docs/Guides-Server) for more i
 
 ## Related examples
 
-* [server-koa](../server-koa)
-* [server-micro](../server-micro)
-* [server-restify](../server-restify)
-* [messenger-hello-world](../messenger-hello-world)
+- [server-koa](../server-koa)
+- [server-micro](../server-micro)
+- [server-restify](../server-restify)
+- [messenger-hello-world](../messenger-hello-world)

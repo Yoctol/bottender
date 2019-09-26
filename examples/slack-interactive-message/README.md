@@ -41,5 +41,5 @@ After that, type 'heyo' to the bot and it will respond you with buttons and menu
 
 ## Related examples
 
-* [slack-builder](../slack-builder)
-* [slack-hello-world](../slack-hello-world)
+- [slack-builder](../slack-builder)
+- [slack-hello-world](../slack-hello-world)
