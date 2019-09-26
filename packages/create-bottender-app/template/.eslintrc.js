@@ -1,4 +1,7 @@
 module.exports = {
+  parserOptions: {
+    ecmaVersion: 2017,
+  },
   extends: ['eslint:recommended', 'prettier'],
   env: {
     node: true,
@@ -13,4 +16,12 @@ module.exports = {
     ],
   },
   plugins: ['prettier'],
+  overrides: [
+    {
+      files: ['**/*.test.js'],
+      env: {
+        jest: true,
+      },
+    },
+  ],
 };

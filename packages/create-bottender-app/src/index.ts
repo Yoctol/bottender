@@ -329,6 +329,7 @@ const createBot = async (
     private: true,
     scripts: {
       dev: 'bottender dev',
+      lint: 'eslint .',
       start: 'bottender start',
       test: 'jest',
       ...(useTypescript
@@ -394,6 +395,9 @@ const init = async (): Promise<void> => {
     print('');
     print(`  ${command} dev`);
     print('    Starts the development server.');
+    print('');
+    print(`  ${command} lint`);
+    print('    Checks the code with the linter.');
     print('');
     print('We suggest that you begin by typing:');
     print('');

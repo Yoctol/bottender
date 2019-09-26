@@ -20,4 +20,12 @@ module.exports = {
     ],
   },
   plugins: ['prettier', '@typescript-eslint'],
+  overrides: [
+    {
+      files: ['**/*.test.ts'],
+      env: {
+        jest: true,
+      },
+    },
+  ],
 };
