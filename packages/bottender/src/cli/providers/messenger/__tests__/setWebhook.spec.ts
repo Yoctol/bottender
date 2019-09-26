@@ -116,10 +116,10 @@ describe('resolve', () => {
 
     await setWebhook(ctx);
 
-    expect(getWebhookFromNgrok).toBeCalledWith(undefined);
+    expect(getWebhookFromNgrok).toBeCalledWith('4040');
     expect(client.createSubscription).toBeCalledWith({
       access_token: '__APP_ID__|__APP_SECRET__',
-      callback_url: 'https://fakeDomain.ngrok.io',
+      callback_url: 'https://fakeDomain.ngrok.io/webhooks/messenger',
       fields: [
         'messages',
         'messaging_postbacks',

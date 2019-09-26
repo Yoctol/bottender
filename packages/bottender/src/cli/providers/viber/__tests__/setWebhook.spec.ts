@@ -71,6 +71,9 @@ describe('resolve', () => {
     const { client } = setup({
       config: {
         accessToken: ACCESS_TOKEN,
+        sender: {
+          name: 'sender',
+        },
         eventTypes: ['delivered', 'seen'],
       },
     });
@@ -102,9 +105,9 @@ describe('resolve', () => {
 
     await setWebhook(ctx);
 
-    expect(getWebhookFromNgrok).toBeCalledWith(undefined);
+    expect(getWebhookFromNgrok).toBeCalledWith('4040');
     expect(client.setWebhook).toBeCalledWith(
-      'https://fakeDomain.ngrok.io',
+      'https://fakeDomain.ngrok.io/webhooks/viber',
       undefined
     );
     expect(log.print).toBeCalled();

@@ -14,17 +14,20 @@ export async function getWebhook(_: CliContext): Promise<void> {
   try {
     const config = getConfig('telegram');
 
-    invariant(config.accessToken, 'accessToken is not found in config file');
+    const { accessToken } = config;
 
-    const accessToken = config.accessToken;
+    invariant(accessToken, 'accessToken is not found in config file');
 
-    const client = TelegramClient.connect(accessToken);
+    const client = TelegramClient.connect({
+      accessToken,
+    });
+
     const result = await client.getWebhookInfo();
 
     Object.entries(result).forEach(([key, value]) => print(`${key}: ${value}`));
-    return;
   } catch (err) {
     error('Failed to get Telegram webhook');
+
     if (err.response) {
       error(`status: ${bold(err.response.status)}`);
       if (err.response.data) {
@@ -33,6 +36,7 @@ export async function getWebhook(_: CliContext): Promise<void> {
     } else {
       error(err.message);
     }
+
     return process.exit(1);
   }
 }
@@ -44,17 +48,19 @@ export async function setWebhook(ctx: CliContext): Promise<void> {
     '--ngrok-port': String,
   });
 
-  const ngrokPort = argv['--ngrok-port'];
+  const ngrokPort = argv['--ngrok-port'] || '4040';
   let webhook = argv['--webhook'];
 
   try {
     const config = getConfig('telegram');
 
-    invariant(config.accessToken, 'accessToken is not found in config file');
+    const { accessToken, path = '/webhooks/telegram' } = config;
 
-    const accessToken = config.accessToken;
+    invariant(accessToken, 'accessToken is not found in config file');
 
-    const client = TelegramClient.connect(accessToken);
+    const client = TelegramClient.connect({
+      accessToken,
+    });
 
     if (!webhook) {
       warn('We can not find the webhook callback url you provided.');
@@ -63,7 +69,7 @@ export async function setWebhook(ctx: CliContext): Promise<void> {
       );
       const result = await prompt.run();
       if (result) {
-        webhook = await getWebhookFromNgrok(ngrokPort);
+        webhook = `${await getWebhookFromNgrok(ngrokPort)}${path}`;
       }
     }
 
@@ -75,9 +81,9 @@ export async function setWebhook(ctx: CliContext): Promise<void> {
     await client.setWebhook(webhook as string);
 
     print('Successfully set Telegram webhook callback URL');
-    return;
   } catch (err) {
     error('Failed to set Telegram webhook');
+
     if (err.response) {
       error(`status: ${bold(err.response.status)}`);
       if (err.response.data) {
@@ -86,6 +92,7 @@ export async function setWebhook(ctx: CliContext): Promise<void> {
     } else {
       error(err.message);
     }
+
     return process.exit(1);
   }
 }
@@ -94,18 +101,20 @@ export async function deleteWebhook(_: CliContext): Promise<void> {
   try {
     const config = getConfig('telegram');
 
-    invariant(config.accessToken, 'accessToken is not found in config file');
+    const { accessToken } = config;
 
-    const accessToken = config.accessToken;
+    invariant(accessToken, 'accessToken is not found in config file');
 
-    const client = TelegramClient.connect(accessToken);
+    const client = TelegramClient.connect({
+      accessToken,
+    });
 
     await client.deleteWebhook();
 
     print('Successfully delete Telegram webhook');
-    return;
   } catch (err) {
     error('Failed to delete Telegram webhook');
+
     if (err.response) {
       error(`status: ${bold(err.response.status)}`);
       if (err.response.data) {
@@ -114,6 +123,7 @@ export async function deleteWebhook(_: CliContext): Promise<void> {
     } else {
       error(err.message);
     }
+
     return process.exit(1);
   }
 }
@@ -125,10 +135,9 @@ export default async function main(ctx: CliContext): Promise<void> {
     case 'get':
       await getWebhook(ctx);
       break;
-    case 'set': {
+    case 'set':
       await setWebhook(ctx);
       break;
-    }
     case 'delete':
     case 'del':
       await deleteWebhook(ctx);

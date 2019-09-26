@@ -1,5 +1,6 @@
 import { ViberClient } from 'messaging-api-viber';
 
+import getConfig from '../../../shared/getConfig';
 import { deleteWebhook } from '../webhook';
 import * as log from '../../../shared/log';
 
@@ -7,19 +8,19 @@ jest.mock('messaging-api-viber');
 jest.mock('../../../shared/log');
 jest.mock('../../../shared/getConfig');
 
-const getConfig = require('../../../shared/getConfig').default;
+const ACCESS_TOKEN = '__ACCESS_TOKEN__';
 
-const MOCK_FILE_WITH_PLATFORM = {
-  channels: {
-    viber: {
-      accessToken: '__accessToken__',
-    },
-  },
-};
+function setup({ config }: { config?: Record<string, any> } = {}) {
+  getConfig.mockReturnValue(
+    config || {
+      accessToken: ACCESS_TOKEN,
+      sender: {
+        name: 'sender',
+      },
+    }
+  );
 
-beforeEach(() => {
   process.exit = jest.fn();
-  getConfig.mockReturnValue(MOCK_FILE_WITH_PLATFORM.channels.viber);
 
   ViberClient.connect.mockReturnValue({
     removeWebhook: jest.fn(() => ({
@@ -27,7 +28,7 @@ beforeEach(() => {
       status_message: 'ok',
     })),
   });
-});
+}
 
 it('be defined', () => {
   expect(deleteWebhook).toBeDefined();
@@ -35,19 +36,22 @@ it('be defined', () => {
 
 describe('resolve', () => {
   it('successfully delete webhook', async () => {
+    setup();
+
     const ctx = {
       argv: {},
     };
 
     await deleteWebhook(ctx);
 
-    expect(log.print).toHaveBeenCalledTimes(1);
-    expect(log.print.mock.calls[0][0]).toMatch(/Successfully/);
+    expect(log.print).toBeCalled();
   });
 });
 
 describe('reject', () => {
   it('reject when Viber return not success', () => {
+    setup();
+
     const ctx = {
       argv: {},
     };
@@ -60,11 +64,13 @@ describe('reject', () => {
   });
 
   it('reject when `accessToken` is not found in config file', () => {
+    setup();
+
+    getConfig.mockReturnValueOnce(null);
+
     const ctx = {
       argv: {},
     };
-
-    getConfig.mockReturnValueOnce(null);
 
     expect(deleteWebhook(ctx).then).toThrow();
   });

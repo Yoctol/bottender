@@ -45,7 +45,9 @@ describe('resolved', () => {
 
     await deletePersona(ctx);
 
-    expect(MessengerClient.connect).toBeCalledWith('__FAKE_TOKEN__');
+    expect(MessengerClient.connect).toBeCalledWith({
+      accessToken: '__FAKE_TOKEN__',
+    });
     expect(_client.deletePersona).toBeCalledWith('54321');
   });
 

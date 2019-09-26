@@ -56,14 +56,22 @@ export async function createPersona(ctx: CliContext): Promise<void> {
   try {
     const config = getConfig('messenger');
 
-    invariant(config.accessToken, 'accessToken is not found in config file');
+    const { accessToken } = config;
 
-    const accessToken = config.accessToken;
+    invariant(accessToken, 'accessToken is not found in config file');
 
-    invariant(personaName, 'Name is not specified!!');
-    invariant(personaUrl, 'Profile picture url is not specified!!');
+    invariant(
+      personaName,
+      '`name` is required but not found. Use --name <name> to specify persona name'
+    );
+    invariant(
+      personaUrl,
+      '`pic` is required but not found. Use --pic <url> to specify persona profile picture url'
+    );
 
-    const client = MessengerClient.connect(accessToken);
+    const client = MessengerClient.connect({
+      accessToken,
+    });
 
     const persona = {
       name: personaName as string,
@@ -73,9 +81,9 @@ export async function createPersona(ctx: CliContext): Promise<void> {
     const personaID = await client.createPersona(persona);
 
     print(`Successfully create ${bold('persona')} ${bold(personaID.id)}`);
-    return;
   } catch (err) {
     error(`Failed to create ${bold('persona')}`);
+
     if (err.response) {
       error(`status: ${bold(err.response.status)}`);
       if (err.response.data) {
@@ -84,19 +92,22 @@ export async function createPersona(ctx: CliContext): Promise<void> {
     } else {
       error(err.message);
     }
+
     return process.exit(1);
   }
 }
 
-export async function listPersona(_: CliContext) {
+export async function listPersona(_: CliContext): Promise<void> {
   try {
     const config = getConfig('messenger');
 
-    invariant(config.accessToken, 'accessToken is not found in config file');
+    const { accessToken } = config;
 
-    const accessToken = config.accessToken;
+    invariant(accessToken, 'accessToken is not found in config file');
 
-    const client = MessengerClient.connect(accessToken);
+    const client = MessengerClient.connect({
+      accessToken,
+    });
 
     const personas = await client.getAllPersonas();
 
@@ -113,7 +124,6 @@ export async function listPersona(_: CliContext) {
     } else {
       print('No personas are found.');
     }
-    return;
   } catch (err) {
     error(`Failed to list ${bold('personas')}`);
     if (err.response) {
@@ -138,13 +148,17 @@ export async function getPersona(ctx: CliContext): Promise<void> {
   try {
     const config = getConfig('messenger');
 
-    invariant(config.accessToken, 'accessToken is not found in config file');
+    const { accessToken } = config;
 
-    const accessToken = config.accessToken;
+    invariant(accessToken, 'accessToken is not found in config file');
+    invariant(
+      personaId,
+      '`id` is required but not found. Use --id <id> to specify persona id'
+    );
 
-    invariant(personaId, 'Persona ID is not specified!!');
-
-    const client = MessengerClient.connect(accessToken);
+    const client = MessengerClient.connect({
+      accessToken,
+    });
 
     const persona = await client.getPersona(personaId as string);
 
@@ -155,11 +169,11 @@ export async function getPersona(ctx: CliContext): Promise<void> {
     } else {
       print(`Cannot get persona of ID ${bold(personaId as string)}`);
     }
-    return;
   } catch (err) {
     error(
       `Failed to get ${bold('persona')} of ID ${bold(personaId as string)}`
     );
+
     if (err.response) {
       error(`status: ${bold(err.response.status)}`);
       if (err.response.data) {
@@ -168,6 +182,7 @@ export async function getPersona(ctx: CliContext): Promise<void> {
     } else {
       error(err.message);
     }
+
     return process.exit(1);
   }
 }
@@ -182,13 +197,17 @@ export async function deletePersona(ctx: CliContext): Promise<void> {
   try {
     const config = getConfig('messenger');
 
-    invariant(config.accessToken, 'accessToken is not found in config file');
+    const { accessToken } = config;
 
-    const accessToken = config.accessToken;
+    invariant(accessToken, 'accessToken is not found in config file');
+    invariant(
+      personaId,
+      '`id` is required but not found. Use --id <id> to specify persona id'
+    );
 
-    invariant(personaId, 'Persona ID is not specified!!');
-
-    const client = MessengerClient.connect(accessToken);
+    const client = MessengerClient.connect({
+      accessToken,
+    });
 
     const res = await client.deletePersona(personaId as string);
 
@@ -197,11 +216,11 @@ export async function deletePersona(ctx: CliContext): Promise<void> {
     } else {
       print(`Cannot get persona of ID ${bold(personaId as string)}`);
     }
-    return;
   } catch (err) {
     error(
       `Failed to delete ${bold('persona')} of ID ${bold(personaId as string)}`
     );
+
     if (err.response) {
       error(`status: ${bold(err.response.status)}`);
       if (err.response.data) {
@@ -210,6 +229,7 @@ export async function deletePersona(ctx: CliContext): Promise<void> {
     } else {
       error(err.message);
     }
+
     return process.exit(1);
   }
 }

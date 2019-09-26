@@ -76,11 +76,13 @@ export async function getMessengerProfile(_: CliContext): Promise<void> {
   try {
     const config = getConfig('messenger');
 
-    invariant(config.accessToken, 'accessToken is not found in config file');
+    const { accessToken } = config;
 
-    const accessToken = config.accessToken;
+    invariant(accessToken, 'accessToken is not found in config file');
 
-    const client = MessengerClient.connect(accessToken);
+    const client = MessengerClient.connect({
+      accessToken,
+    });
 
     const profile = await client.getMessengerProfile(FIELDS);
 
@@ -91,9 +93,9 @@ export async function getMessengerProfile(_: CliContext): Promise<void> {
     } else {
       error(`Failed to find ${bold('messenger_profile')} setting`);
     }
-    return;
   } catch (err) {
     error(`Failed to get ${bold('messenger_profile')} settings`);
+
     if (err.response) {
       error(`status: ${bold(err.response.status)}`);
       if (err.response.data) {
@@ -102,6 +104,7 @@ export async function getMessengerProfile(_: CliContext): Promise<void> {
     } else {
       error(err.message);
     }
+
     return process.exit(1);
   }
 }
@@ -117,21 +120,25 @@ export async function setMessengerProfile(ctx: CliContext): Promise<void> {
   try {
     const config = getConfig('messenger');
 
-    invariant(config.accessToken, 'accessToken is not found in config file');
+    const { accessToken } = config;
 
-    const accessToken = config.accessToken;
+    invariant(accessToken, 'accessToken is not found in config file');
 
     const { profile: _profile } = getConfig('messenger');
 
-    const client = MessengerClient.connect(accessToken);
+    const client = MessengerClient.connect({
+      accessToken,
+    });
 
     if (force) {
       await client.deleteMessengerProfile(FIELDS);
+
       print(
         `Successfully delete all ${bold(
           'messenger_profile'
         )} settings due to ${bold('--force')} option`
       );
+
       if (_profile.whitelisted_domains) {
         await client.setMessengerProfile(pick(_profile, 'whitelisted_domains'));
         await client.setMessengerProfile(omit(_profile, 'whitelisted_domains'));
@@ -189,9 +196,9 @@ export async function setMessengerProfile(ctx: CliContext): Promise<void> {
         'bottender messenger profile get'
       )} to see the full profile setting.`
     );
-    return;
   } catch (err) {
     error(`Failed to set ${bold('messenger_profile')} settings`);
+
     if (err.response) {
       error(`status: ${bold(err.response.status)}`);
       if (err.response.data) {
@@ -200,6 +207,7 @@ export async function setMessengerProfile(ctx: CliContext): Promise<void> {
     } else {
       error(err.message);
     }
+
     return process.exit(1);
   }
 }
@@ -212,14 +220,16 @@ export async function deleteMessengerProfile(_: CliContext): Promise<void> {
 
     const accessToken = config.accessToken;
 
-    const client = MessengerClient.connect(accessToken);
+    const client = MessengerClient.connect({
+      accessToken,
+    });
 
     await client.deleteMessengerProfile(FIELDS);
 
     print(`Successfully delete ${bold('messenger_profile')} settings`);
-    return;
   } catch (err) {
     error(`Failed to delete ${bold('messenger_profile')} settings`);
+
     if (err.response) {
       error(`status: ${bold(err.response.status)}`);
       if (err.response.data) {
@@ -228,6 +238,7 @@ export async function deleteMessengerProfile(_: CliContext): Promise<void> {
     } else {
       error(err.message);
     }
+
     return process.exit(1);
   }
 }

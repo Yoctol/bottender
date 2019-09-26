@@ -1,7 +1,20 @@
 import Joi from '@hapi/joi';
 
 const menuItemSchema = Joi.object().keys({
-  // TODO:
+  type: Joi.string(),
+  title: Joi.string(),
+  url: Joi.string().when('type', {
+    is: 'web_url',
+    then: Joi.string().required(),
+  }),
+  payload: Joi.string().when('type', {
+    is: 'postback',
+    then: Joi.string().required(),
+  }),
+  webview_height_ratio: Joi.string(),
+  messenger_extensions: Joi.boolean(),
+  fallback_url: Joi.string(),
+  webview_share_button: Joi.string(),
 });
 
 const schema = Joi.object().keys({
