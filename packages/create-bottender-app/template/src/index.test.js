@@ -1,4 +1,4 @@
-import { App } from '.';
+const App = require('.');
 
 describe('index.js', () => {
   it('should be defined', () => {
