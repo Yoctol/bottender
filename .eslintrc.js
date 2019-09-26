@@ -31,7 +31,10 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['examples/**/*.js'],
+      files: [
+        'examples/**/*.js',
+        'packages/create-bottender-app/template/**/*.js',
+      ],
       rules: {
         '@typescript-eslint/no-var-requires': 'off',
       },
