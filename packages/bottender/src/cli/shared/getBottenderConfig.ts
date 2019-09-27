@@ -1,6 +1,10 @@
 import path from 'path';
 
+import dotenv from 'dotenv';
+
 import { BottenderConfig } from './types';
+
+dotenv.config();
 
 /**
  * By default, it will try to require the module from `<root>/bottender.config.js`.
