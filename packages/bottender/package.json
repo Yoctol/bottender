@@ -56,7 +56,6 @@
     "minimist": "^1.2.0",
     "mongodb": "^3.3.2",
     "ngrok": "^3.2.5",
-    "nodemon": "^1.19.2",
     "p-map": "^3.0.0",
     "p-props": "^3.1.0",
     "pascal-case": "^2.0.1",
@@ -67,7 +66,8 @@
     "recursive-readdir": "^2.2.2",
     "shortid": "^2.2.15",
     "update-notifier": "^3.0.1",
-    "warning": "^4.0.3"
+    "warning": "^4.0.3",
+    "watchpack": "^1.6.0"
   },
   "devDependencies": {
     "jest-create-mock-instance": "^1.1.0",
