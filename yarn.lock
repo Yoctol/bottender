@@ -138,6 +138,13 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
+"@bottender/express@file:packages/bottender-express":
+  version "1.0.0-alpha.7"
+  dependencies:
+    body-parser "^1.19.0"
+    express "^4.17.1"
+    lodash "^4.17.15"
+
 "@cnakazawa/watch@^1.0.3":
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/@cnakazawa/watch/-/watch-1.0.3.tgz#099139eaec7ebf07a27c1786a3ff64f39464d2ef"
@@ -1332,6 +1339,13 @@
   version "4.1.5"
   resolved "https://registry.yarnpkg.com/@types/debug/-/debug-4.1.5.tgz#b14efa8852b7768d898906613c23f688713e02cd"
   integrity sha512-Q1y515GcOdTHgagaVFhHnIFQ38ygs/kmxdNpvpou+raI9UO3YZcHDngBSYKQklcKlvA7iuQlmIKbzvmxcOE9CQ==
+
+"@types/dotenv@^6.1.1":
+  version "6.1.1"
+  resolved "https://registry.yarnpkg.com/@types/dotenv/-/dotenv-6.1.1.tgz#f7ce1cc4fe34f0a4373ba99fefa437b0bec54b46"
+  integrity sha512-ftQl3DtBvqHl9L16tpqqzA4YzCSXZfi7g8cQceTz5rOlYtk/IZbFjAv3mLOQlNIgOaylCQWQoBdDQHPgEBJPHg==
+  dependencies:
+    "@types/node" "*"
 
 "@types/eslint-visitor-keys@^1.0.0":
   version "1.0.0"
@@ -3647,6 +3661,11 @@ dot-prop@^4.1.0, dot-prop@^4.2.0:
   integrity sha512-tUMXrxlExSW6U2EXiiKGSBVdYgtV8qlHL+C10TsW4PURY/ic+eaysnSkwB4kA/mBlCyy/IKDJ+Lc3wbWeaXtuQ==
   dependencies:
     is-obj "^1.0.0"
+
+dotenv@^8.1.0:
+  version "8.1.0"
+  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-8.1.0.tgz#d811e178652bfb8a1e593c6dd704ec7e90d85ea2"
+  integrity sha512-GUE3gqcDCaMltj2++g6bRQ5rBJWtkWTmqmD0fo1RnnMuUqHNCt2oTPeDnS9n6fKYvlhn7AeBkb38lymBtWBQdA==
 
 dtrace-provider@^0.8.1, dtrace-provider@~0.8:
   version "0.8.8"
