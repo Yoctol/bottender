@@ -1,5 +1,7 @@
+import childProcess from 'child_process';
+
+import Watchpack from 'watchpack';
 import ngrok from 'ngrok';
-import nodemon from 'nodemon';
 
 import getBottenderConfig from '../../shared/getBottenderConfig';
 import { CliContext } from '../..';
@@ -23,21 +25,46 @@ const dev = async (ctx: CliContext): Promise<void> => {
 
   const { channels } = config;
 
-  // watch
-  nodemon(
-    `--exec "bottender start ${isConsole ? '--console' : ''} --port ${port}"`
-  )
-    // TODO: improve messages
-    .on('start', () => {
-      console.log('App has started');
-    })
-    .on('quit', () => {
-      console.log('App has quit');
-      process.exit();
-    })
-    .on('restart', (files: string[]) => {
-      console.log('App restarted due to: ', files);
-    });
+  const createProcess = () =>
+    childProcess.spawn(
+      `npx bottender start ${isConsole ? '--console' : ''} --port ${port}`,
+      {
+        stdio: 'inherit',
+      }
+    );
+
+  let cp = createProcess();
+
+  const handleExit = (code: number | null) => {
+    process.exit(code || undefined);
+  };
+
+  cp.on('exit', handleExit);
+
+  const wp = new Watchpack({
+    aggregateTimeout: 1000,
+    poll: true,
+    ignored: ['**/.git', '**/node_modules'],
+  });
+
+  wp.watch([], ['.']);
+
+  wp.on('aggregated', (changes, removals) => {
+    console.log('App restarted due to: ', changes, removals);
+    cp.off('exit', handleExit);
+    cp.kill('SIGTERM');
+
+    cp = createProcess();
+  });
+
+  const useTypeScript = false; // FIXME
+
+  if (useTypeScript) {
+    // watch js and run cp
+    // watch ts and compile to dist
+  } else {
+    // watch all and run cp
+  }
 
   if (!isConsole) {
     const url = await ngrok.connect(port);
