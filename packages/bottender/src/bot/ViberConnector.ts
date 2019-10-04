@@ -1,7 +1,7 @@
 import EventEmitter from 'events';
 import crypto from 'crypto';
 
-import { ViberClient, ViberSender } from 'messaging-api-viber';
+import { ViberClient, ViberTypes } from 'messaging-api-viber';
 import { addedDiff } from 'deep-object-diff';
 
 import Session from '../session/Session';
@@ -14,7 +14,7 @@ export type ViberRequestBody = ViberRawEvent;
 
 type ConstructorOptionsWithoutClient = {
   accessToken: string;
-  sender: ViberSender;
+  sender: ViberTypes.Sender;
   origin?: string;
 };
 

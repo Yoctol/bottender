@@ -1,14 +1,6 @@
 import sleep from 'delay';
 import warning from 'warning';
-import {
-  ViberClient,
-  ViberContact,
-  ViberFile,
-  ViberLocation,
-  ViberPicture,
-  ViberRichMedia,
-  ViberVideo,
-} from 'messaging-api-viber';
+import { ViberClient, ViberTypes } from 'messaging-api-viber';
 
 import Session from '../session/Session';
 
@@ -45,7 +37,10 @@ class ViberContext extends Context implements PlatformContext {
    * Send text to the owner of the session.
    *
    */
-  async sendText(text: string, options?: Record<string, any>): Promise<any> {
+  async sendText(
+    text: string,
+    options?: ViberTypes.MessageOptions
+  ): Promise<any> {
     if (!this._session) {
       warning(
         false,
@@ -63,7 +58,7 @@ class ViberContext extends Context implements PlatformContext {
    * Get user details from the owner of the session.
    *
    */
-  async getUserDetails(): Promise<Record<string, any> | null> {
+  async getUserDetails(): Promise<ViberTypes.UserDetails | null> {
     if (!this._session) {
       warning(
         false,
@@ -79,7 +74,7 @@ class ViberContext extends Context implements PlatformContext {
    * Get user online status from the owner of the session.
    *
    */
-  async getOnlineStatus(): Promise<Record<string, any> | null> {
+  async getOnlineStatus(): Promise<ViberTypes.UserOnlineStatus | null> {
     if (!this._session) {
       warning(
         false,
@@ -92,7 +87,7 @@ class ViberContext extends Context implements PlatformContext {
     return status[0];
   }
 
-  async sendMessage(message: Record<string, any>): Promise<any> {
+  async sendMessage(message: ViberTypes.Message): Promise<any> {
     if (!this._session) {
       warning(
         false,
@@ -107,8 +102,8 @@ class ViberContext extends Context implements PlatformContext {
   }
 
   async sendPicture(
-    picture: ViberPicture,
-    options?: Record<string, any>
+    picture: ViberTypes.Picture,
+    options?: ViberTypes.MessageOptions
   ): Promise<any> {
     if (!this._session) {
       warning(
@@ -124,8 +119,8 @@ class ViberContext extends Context implements PlatformContext {
   }
 
   async sendVideo(
-    video: ViberVideo,
-    options?: Record<string, any>
+    video: ViberTypes.Video,
+    options?: ViberTypes.MessageOptions
   ): Promise<any> {
     if (!this._session) {
       warning(
@@ -140,7 +135,10 @@ class ViberContext extends Context implements PlatformContext {
     return this._client.sendVideo(this._session.user.id, video, options);
   }
 
-  async sendFile(file: ViberFile, options?: Record<string, any>): Promise<any> {
+  async sendFile(
+    file: ViberTypes.File,
+    options?: ViberTypes.MessageOptions
+  ): Promise<any> {
     if (!this._session) {
       warning(
         false,
@@ -155,8 +153,8 @@ class ViberContext extends Context implements PlatformContext {
   }
 
   async sendContact(
-    contact: ViberContact,
-    options?: Record<string, any>
+    contact: ViberTypes.Contact,
+    options?: ViberTypes.MessageOptions
   ): Promise<any> {
     if (!this._session) {
       warning(
@@ -172,8 +170,8 @@ class ViberContext extends Context implements PlatformContext {
   }
 
   async sendLocation(
-    location: ViberLocation,
-    options?: Record<string, any>
+    location: ViberTypes.Location,
+    options?: ViberTypes.MessageOptions
   ): Promise<any> {
     if (!this._session) {
       warning(
@@ -188,7 +186,10 @@ class ViberContext extends Context implements PlatformContext {
     return this._client.sendLocation(this._session.user.id, location, options);
   }
 
-  async sendURL(url: string, options?: Record<string, any>): Promise<any> {
+  async sendURL(
+    url: string,
+    options?: ViberTypes.MessageOptions
+  ): Promise<any> {
     if (!this._session) {
       warning(
         false,
@@ -203,8 +204,8 @@ class ViberContext extends Context implements PlatformContext {
   }
 
   async sendSticker(
-    stickerId: string,
-    options?: Record<string, any>
+    stickerId: number,
+    options?: ViberTypes.MessageOptions
   ): Promise<any> {
     if (!this._session) {
       warning(
@@ -220,8 +221,8 @@ class ViberContext extends Context implements PlatformContext {
   }
 
   async sendCarouselContent(
-    richMedia: ViberRichMedia,
-    options?: Record<string, any>
+    richMedia: ViberTypes.RichMedia,
+    options?: ViberTypes.MessageOptions
   ): Promise<any> {
     if (!this._session) {
       warning(

@@ -1,7 +1,7 @@
 /* eslint-disable consistent-return */
 import chalk from 'chalk';
 import invariant from 'invariant';
-import { MessengerClient, MessengerProfile } from 'messaging-api-messenger';
+import { MessengerClient, MessengerTypes } from 'messaging-api-messenger';
 import { addedDiff, deletedDiff, diff, updatedDiff } from 'deep-object-diff';
 import { omit, pick } from 'lodash';
 
@@ -49,7 +49,9 @@ export const help = (): void => {
   `);
 };
 
-export const trimDomain = (profile: MessengerProfile): MessengerProfile => {
+export const trimDomain = (
+  profile: MessengerTypes.MessengerProfile
+): MessengerTypes.MessengerProfile => {
   const clone = { ...profile };
 
   if (clone.whitelisted_domains) {

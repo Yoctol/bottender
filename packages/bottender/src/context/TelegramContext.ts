@@ -1,6 +1,6 @@
 import sleep from 'delay';
 import warning from 'warning';
-import { TelegramClient } from 'messaging-api-telegram';
+import { TelegramClient, TelegramTypes } from 'messaging-api-telegram';
 
 import Session from '../session/Session';
 
@@ -298,7 +298,9 @@ class TelegramContext extends Context implements PlatformContext {
 
   async editMessageLiveLocation(
     location: { latitude: number; longitude: number },
-    options?: Record<string, any>
+    options: { messageId: number } & {
+      replyMarkup?: TelegramTypes.InlineKeyboardMarkup;
+    }
   ) {
     if (!this._session) {
       warning(
@@ -313,12 +315,16 @@ class TelegramContext extends Context implements PlatformContext {
     const chatId = this._getChatId();
 
     return this._client.editMessageLiveLocation(location, {
-      chat_id: chatId,
+      chatId,
       ...options,
     });
   }
 
-  async stopMessageLiveLocation(options?: Record<string, any>) {
+  async stopMessageLiveLocation(
+    options: { messageId: number } & {
+      replyMarkup?: TelegramTypes.InlineKeyboardMarkup;
+    }
+  ) {
     if (!this._session) {
       warning(
         false,
@@ -332,7 +338,7 @@ class TelegramContext extends Context implements PlatformContext {
     const chatId = this._getChatId();
 
     return this._client.stopMessageLiveLocation({
-      chat_id: chatId,
+      chatId,
       ...options,
     });
   }
@@ -410,7 +416,7 @@ const sendMethods = [
   'restrictChatMember',
   'promoteChatMember',
   'exportChatInviteLink',
-  'setChatPhoto',
+  // TODO: implement setChatPhoto
   'deleteChatPhoto',
   'setChatTitle',
   'setChatDescription',
