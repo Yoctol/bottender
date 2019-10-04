@@ -17,6 +17,7 @@
   "files": [
     "bin",
     "dist",
+    "router.js",
     "test-utils.js",
     "utils.js"
   ],
