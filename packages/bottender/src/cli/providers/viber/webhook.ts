@@ -1,6 +1,6 @@
 import Confirm from 'prompt-confirm';
 import invariant from 'invariant';
-import { ViberClient, ViberEventType, ViberSender } from 'messaging-api-viber';
+import { ViberClient, ViberTypes } from 'messaging-api-viber';
 
 import getConfig from '../../shared/getConfig';
 import getSubArgs from '../sh/utils/getSubArgs';
@@ -12,8 +12,8 @@ import help from './help';
 
 type ViberConfig = {
   accessToken: string;
-  sender: ViberSender;
-  eventTypes: ViberEventType[];
+  sender: ViberTypes.Sender;
+  eventTypes: ViberTypes.EventType[];
   path?: string;
 };
 

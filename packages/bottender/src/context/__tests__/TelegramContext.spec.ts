@@ -559,7 +559,7 @@ describe('#editMessageLiveLocation', () => {
     await context.editMessageLiveLocation(location);
 
     expect(client.editMessageLiveLocation).toBeCalledWith(location, {
-      chat_id: 427770117,
+      chatId: 427770117,
     });
   });
 
@@ -579,7 +579,7 @@ describe('#stopMessageLiveLocation', () => {
     await context.stopMessageLiveLocation();
 
     expect(client.stopMessageLiveLocation).toBeCalledWith({
-      chat_id: 427770117,
+      chatId: 427770117,
     });
   });
 
@@ -753,27 +753,6 @@ describe('#exportChatInviteLink', () => {
     const { context } = setup();
 
     await context.exportChatInviteLink();
-
-    expect(context.isHandled).toBe(true);
-  });
-});
-
-describe('#setChatPhoto', () => {
-  it('should to call client.setChatPhoto', async () => {
-    const { context, client } = setup();
-
-    await context.setChatPhoto('https://example.com/image.png');
-
-    expect(client.setChatPhoto).toBeCalledWith(
-      427770117,
-      'https://example.com/image.png'
-    );
-  });
-
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    await context.setChatPhoto('https://example.com/image.png');
 
     expect(context.isHandled).toBe(true);
   });
