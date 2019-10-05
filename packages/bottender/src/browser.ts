@@ -1,3 +1,5 @@
+export { default as chain } from './chain';
+
 /* Bot */
 export { default as Bot } from './bot/Bot';
 
