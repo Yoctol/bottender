@@ -50,4 +50,8 @@ describe('core', () => {
   it('export createServer', () => {
     expect(core.createServer).toBeDefined();
   });
+
+  it('export chain', () => {
+    expect(core.chain).toBeDefined();
+  });
 });

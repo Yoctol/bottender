@@ -1,4 +1,5 @@
 import Context from '../context/Context';
+import { Action, Props } from '../types';
 
 type MatchPattern = string | Array<string> | RegExp;
 
@@ -6,19 +7,9 @@ type RoutePattern = '*' | RoutePredicate;
 
 type RoutePredicate = (context: Context) => boolean | Promise<boolean>;
 
-type Action = (
-  context: Context,
-  props?: Props
-) => void | Action | Promise<Action>;
-
 type Route = {
   predicate: RoutePredicate;
   action: Action;
-};
-
-type Props = {
-  next?: Action;
-  [key: string]: any;
 };
 
 function router(routes: Route[]) {
