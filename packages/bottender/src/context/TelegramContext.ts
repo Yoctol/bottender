@@ -392,69 +392,476 @@ class TelegramContext extends Context implements PlatformContext {
       options
     );
   }
-}
 
-const sendMethods = [
   // Send API
-  'sendMessage',
-  'sendPhoto',
-  'sendAudio',
-  'sendDocument',
-  'sendSticker',
-  'sendVideo',
-  'sendVoice',
-  'sendVideoNote',
-  'sendMediaGroup',
-  'sendLocation',
-  'sendVenue',
-  'sendContact',
-  'sendChatAction',
+  async sendMessage(...args: any[]) {
+    if (!this._session) {
+      warning(
+        false,
+        'sendMessage: should not be called in context without session'
+      );
+      return;
+    }
+
+    this._isHandled = true;
+
+    const chatId = this._getChatId();
+
+    return this._client.sendMessage(chatId, ...args);
+  }
+
+  async sendPhoto(...args: any[]) {
+    if (!this._session) {
+      warning(
+        false,
+        'sendPhoto: should not be called in context without session'
+      );
+      return;
+    }
+
+    this._isHandled = true;
+
+    const chatId = this._getChatId();
+
+    return this._client.sendPhoto(chatId, ...args);
+  }
+
+  async sendAudio(...args: any[]) {
+    if (!this._session) {
+      warning(
+        false,
+        'sendAudio: should not be called in context without session'
+      );
+      return;
+    }
+
+    this._isHandled = true;
+
+    const chatId = this._getChatId();
+
+    return this._client.sendAudio(chatId, ...args);
+  }
+
+  async sendDocument(...args: any[]) {
+    if (!this._session) {
+      warning(
+        false,
+        'sendDocument: should not be called in context without session'
+      );
+      return;
+    }
+
+    this._isHandled = true;
+
+    const chatId = this._getChatId();
+
+    return this._client.sendDocument(chatId, ...args);
+  }
+
+  async sendSticker(...args: any[]) {
+    if (!this._session) {
+      warning(
+        false,
+        'sendSticker: should not be called in context without session'
+      );
+      return;
+    }
+
+    this._isHandled = true;
+
+    const chatId = this._getChatId();
+
+    return this._client.sendSticker(chatId, ...args);
+  }
+
+  async sendVideo(...args: any[]) {
+    if (!this._session) {
+      warning(
+        false,
+        'sendVideo: should not be called in context without session'
+      );
+      return;
+    }
+
+    this._isHandled = true;
+
+    const chatId = this._getChatId();
+
+    return this._client.sendVideo(chatId, ...args);
+  }
+
+  async sendVoice(...args: any[]) {
+    if (!this._session) {
+      warning(
+        false,
+        'sendVoice: should not be called in context without session'
+      );
+      return;
+    }
+
+    this._isHandled = true;
+
+    const chatId = this._getChatId();
+
+    return this._client.sendVoice(chatId, ...args);
+  }
+
+  async sendVideoNote(...args: any[]) {
+    if (!this._session) {
+      warning(
+        false,
+        'sendVideoNote: should not be called in context without session'
+      );
+      return;
+    }
+
+    this._isHandled = true;
+
+    const chatId = this._getChatId();
+
+    return this._client.sendVideoNote(chatId, ...args);
+  }
+
+  async sendMediaGroup(...args: any[]) {
+    if (!this._session) {
+      warning(
+        false,
+        'sendMediaGroup: should not be called in context without session'
+      );
+      return;
+    }
+
+    this._isHandled = true;
+
+    const chatId = this._getChatId();
+
+    return this._client.sendMediaGroup(chatId, ...args);
+  }
+
+  async sendLocation(...args: any[]) {
+    if (!this._session) {
+      warning(
+        false,
+        'sendLocation: should not be called in context without session'
+      );
+      return;
+    }
+
+    this._isHandled = true;
+
+    const chatId = this._getChatId();
+
+    return this._client.sendLocation(chatId, ...args);
+  }
+
+  async sendVenue(...args: any[]) {
+    if (!this._session) {
+      warning(
+        false,
+        'sendVenue: should not be called in context without session'
+      );
+      return;
+    }
+
+    this._isHandled = true;
+
+    const chatId = this._getChatId();
+
+    return this._client.sendVenue(chatId, ...args);
+  }
+
+  async sendContact(...args: any[]) {
+    if (!this._session) {
+      warning(
+        false,
+        'sendContact: should not be called in context without session'
+      );
+      return;
+    }
+
+    this._isHandled = true;
+
+    const chatId = this._getChatId();
+
+    return this._client.sendContact(chatId, ...args);
+  }
+
+  async sendChatAction(...args: any[]) {
+    if (!this._session) {
+      warning(
+        false,
+        'sendChatAction: should not be called in context without session'
+      );
+      return;
+    }
+
+    this._isHandled = true;
+
+    const chatId = this._getChatId();
+
+    return this._client.sendChatAction(chatId, ...args);
+  }
 
   // Group API
-  'kickChatMember',
-  'unbanChatMember',
-  'restrictChatMember',
-  'promoteChatMember',
-  'exportChatInviteLink',
+  async kickChatMember(...args: any[]) {
+    if (!this._session) {
+      warning(
+        false,
+        'kickChatMember: should not be called in context without session'
+      );
+      return;
+    }
+
+    this._isHandled = true;
+
+    const chatId = this._getChatId();
+
+    return this._client.kickChatMember(chatId, ...args);
+  }
+
+  async unbanChatMember(...args: any[]) {
+    if (!this._session) {
+      warning(
+        false,
+        'unbanChatMember: should not be called in context without session'
+      );
+      return;
+    }
+
+    this._isHandled = true;
+
+    const chatId = this._getChatId();
+
+    return this._client.unbanChatMember(chatId, ...args);
+  }
+
+  async restrictChatMember(...args: any[]) {
+    if (!this._session) {
+      warning(
+        false,
+        'restrictChatMember: should not be called in context without session'
+      );
+      return;
+    }
+
+    this._isHandled = true;
+
+    const chatId = this._getChatId();
+
+    return this._client.restrictChatMember(chatId, ...args);
+  }
+
+  async promoteChatMember(...args: any[]) {
+    if (!this._session) {
+      warning(
+        false,
+        'promoteChatMember: should not be called in context without session'
+      );
+      return;
+    }
+
+    this._isHandled = true;
+
+    const chatId = this._getChatId();
+
+    return this._client.promoteChatMember(chatId, ...args);
+  }
+
+  async exportChatInviteLink(...args: any[]) {
+    if (!this._session) {
+      warning(
+        false,
+        'exportChatInviteLink: should not be called in context without session'
+      );
+      return;
+    }
+
+    this._isHandled = true;
+
+    const chatId = this._getChatId();
+
+    return this._client.exportChatInviteLink(chatId, ...args);
+  }
+
   // TODO: implement setChatPhoto
-  'deleteChatPhoto',
-  'setChatTitle',
-  'setChatDescription',
-  'setChatStickerSet',
-  'deleteChatStickerSet',
-  'pinChatMessage',
-  'unpinChatMessage',
-  'leaveChat',
+
+  async deleteChatPhoto(...args: any[]) {
+    if (!this._session) {
+      warning(
+        false,
+        'deleteChatPhoto: should not be called in context without session'
+      );
+      return;
+    }
+
+    this._isHandled = true;
+
+    const chatId = this._getChatId();
+
+    return this._client.deleteChatPhoto(chatId, ...args);
+  }
+
+  async setChatTitle(...args: any[]) {
+    if (!this._session) {
+      warning(
+        false,
+        'setChatTitle: should not be called in context without session'
+      );
+      return;
+    }
+
+    this._isHandled = true;
+
+    const chatId = this._getChatId();
+
+    return this._client.setChatTitle(chatId, ...args);
+  }
+
+  async setChatDescription(...args: any[]) {
+    if (!this._session) {
+      warning(
+        false,
+        'setChatDescription: should not be called in context without session'
+      );
+      return;
+    }
+
+    this._isHandled = true;
+
+    const chatId = this._getChatId();
+
+    return this._client.setChatDescription(chatId, ...args);
+  }
+
+  async setChatStickerSet(...args: any[]) {
+    if (!this._session) {
+      warning(
+        false,
+        'setChatStickerSet: should not be called in context without session'
+      );
+      return;
+    }
+
+    this._isHandled = true;
+
+    const chatId = this._getChatId();
+
+    return this._client.setChatStickerSet(chatId, ...args);
+  }
+
+  async deleteChatStickerSet(...args: any[]) {
+    if (!this._session) {
+      warning(
+        false,
+        'deleteChatStickerSet: should not be called in context without session'
+      );
+      return;
+    }
+
+    this._isHandled = true;
+
+    const chatId = this._getChatId();
+
+    return this._client.deleteChatStickerSet(chatId, ...args);
+  }
+
+  async pinChatMessage(...args: any[]) {
+    if (!this._session) {
+      warning(
+        false,
+        'pinChatMessage: should not be called in context without session'
+      );
+      return;
+    }
+
+    this._isHandled = true;
+
+    const chatId = this._getChatId();
+
+    return this._client.pinChatMessage(chatId, ...args);
+  }
+
+  async unpinChatMessage(...args: any[]) {
+    if (!this._session) {
+      warning(
+        false,
+        'unpinChatMessage: should not be called in context without session'
+      );
+      return;
+    }
+
+    this._isHandled = true;
+
+    const chatId = this._getChatId();
+
+    return this._client.unpinChatMessage(chatId, ...args);
+  }
+
+  async leaveChat(...args: any[]) {
+    if (!this._session) {
+      warning(
+        false,
+        'leaveChat: should not be called in context without session'
+      );
+      return;
+    }
+
+    this._isHandled = true;
+
+    const chatId = this._getChatId();
+
+    return this._client.leaveChat(chatId, ...args);
+  }
 
   // Payments API
-  'sendInvoice',
+  async sendInvoice(...args: any[]) {
+    if (!this._session) {
+      warning(
+        false,
+        'sendInvoice: should not be called in context without session'
+      );
+      return;
+    }
+
+    this._isHandled = true;
+
+    const chatId = this._getChatId();
+
+    return this._client.sendInvoice(chatId, ...args);
+  }
 
   // Game API
-  'sendGame',
-  'setGameScore',
-];
+  async sendGame(...args: any[]) {
+    if (!this._session) {
+      warning(
+        false,
+        'sendGame: should not be called in context without session'
+      );
+      return;
+    }
 
-sendMethods.forEach(method => {
-  Object.defineProperty(TelegramContext.prototype, `${method}`, {
-    enumerable: false,
-    configurable: true,
-    writable: true,
-    async value(...args: any[]) {
-      if (!this._session) {
-        warning(
-          false,
-          `${method}: should not be called in context without session`
-        );
-        return;
-      }
+    this._isHandled = true;
 
-      this._isHandled = true;
+    const chatId = this._getChatId();
 
-      const chatId = this._getChatId();
+    return this._client.sendGame(chatId, ...args);
+  }
 
-      return this._client[method](chatId, ...args);
-    },
-  });
-});
+  async setGameScore(...args: any[]) {
+    if (!this._session) {
+      warning(
+        false,
+        'setGameScore: should not be called in context without session'
+      );
+      return;
+    }
+
+    this._isHandled = true;
+
+    const chatId = this._getChatId();
+
+    return this._client.setGameScore(chatId, ...args);
+  }
+}
 
 export default TelegramContext;
