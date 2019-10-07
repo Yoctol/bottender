@@ -50,6 +50,14 @@ class TelegramContext extends Context implements PlatformContext {
 
     const chatId = this._getChatId();
 
+    if(chatId === null){
+      warning(
+        false,
+        'sendText: should not be called in context without chatId'
+      );
+      return null;
+    }
+
     return this._client.sendMessage(chatId, text, options);
   }
 
@@ -172,6 +180,14 @@ class TelegramContext extends Context implements PlatformContext {
 
     const chatId = this._getChatId();
 
+    if(chatId === null){
+      warning(
+        false,
+        'getChat: should not be called in context without chatId'
+      );
+      return null;
+    }
+
     return this._client.getChat(chatId);
   }
 
@@ -185,6 +201,14 @@ class TelegramContext extends Context implements PlatformContext {
     }
 
     const chatId = this._getChatId();
+
+    if(chatId === null){
+      warning(
+        false,
+        'getChatAdministrators: should not be called in context without chatId'
+      );
+      return null;
+    }
 
     return this._client.getChatAdministrators(chatId);
   }
@@ -200,6 +224,14 @@ class TelegramContext extends Context implements PlatformContext {
 
     const chatId = this._getChatId();
 
+    if(chatId === null){
+      warning(
+        false,
+        'getChatMembersCount: should not be called in context without chatId'
+      );
+      return null;
+    }
+
     return this._client.getChatMembersCount(chatId);
   }
 
@@ -214,6 +246,14 @@ class TelegramContext extends Context implements PlatformContext {
 
     const chatId = this._getChatId();
 
+    if(chatId === null){
+      warning(
+        false,
+        'getChatMember: should not be called in context without chatId'
+      );
+      return null;
+    }
+
     return this._client.getChatMember(chatId, userId);
   }
 
@@ -227,6 +267,14 @@ class TelegramContext extends Context implements PlatformContext {
     }
 
     const chatId = this._getChatId();
+
+    if(chatId === null){
+      warning(
+        false,
+        'getGameHighScores: should not be called in context without chatId'
+      );
+      return null;
+    }
 
     return this._client.getGameHighScores(chatId, options);
   }
@@ -244,6 +292,14 @@ class TelegramContext extends Context implements PlatformContext {
 
     const chatId = this._getChatId();
 
+    if(chatId === null){
+      warning(
+        false,
+        'editMessageText: should not be called in context without chatId'
+      );
+      return null;
+    }
+
     return this._client.editMessageText(text, { chatId, ...options });
   }
 
@@ -259,6 +315,14 @@ class TelegramContext extends Context implements PlatformContext {
     this._isHandled = true;
 
     const chatId = this._getChatId();
+
+    if(chatId === null){
+      warning(
+        false,
+        'editMessageCaption: should not be called in context without chatId'
+      );
+      return null;
+    }
 
     return this._client.editMessageCaption(caption, {
       chatId,
@@ -282,6 +346,14 @@ class TelegramContext extends Context implements PlatformContext {
 
     const chatId = this._getChatId();
 
+    if(chatId === null){
+      warning(
+        false,
+        'editMessageReplyMarkup: should not be called in context without chatId'
+      );
+      return null;
+    }
+
     return this._client.editMessageReplyMarkup(replyMarkup, {
       chatId,
       ...options,
@@ -300,6 +372,14 @@ class TelegramContext extends Context implements PlatformContext {
     this._isHandled = true;
 
     const chatId = this._getChatId();
+
+    if(chatId === null){
+      warning(
+        false,
+        'deleteMessage: should not be called in context without chatId'
+      );
+      return null;
+    }
 
     return this._client.deleteMessage(chatId, messageId);
   }
@@ -320,6 +400,14 @@ class TelegramContext extends Context implements PlatformContext {
 
     const chatId = this._getChatId();
 
+    if(chatId === null){
+      warning(
+        false,
+        'editMessageLiveLocation: should not be called in context without chatId'
+      );
+      return null;
+    }
+
     return this._client.editMessageLiveLocation(location, {
       chatId,
       ...options,
@@ -338,6 +426,14 @@ class TelegramContext extends Context implements PlatformContext {
     this._isHandled = true;
 
     const chatId = this._getChatId();
+
+    if(chatId === null){
+      warning(
+        false,
+        'stopMessageLiveLocation: should not be called in context without chatId'
+      );
+      return null;
+    }
 
     return this._client.stopMessageLiveLocation({
       chatId,
@@ -361,6 +457,14 @@ class TelegramContext extends Context implements PlatformContext {
     this._isHandled = true;
 
     const chatId = this._getChatId();
+
+    if(chatId === null){
+      warning(
+        false,
+        'forwardMessageFrom: should not be called in context without chatId'
+      );
+      return null;
+    }
 
     return this._client.forwardMessage(
       chatId,
@@ -387,6 +491,14 @@ class TelegramContext extends Context implements PlatformContext {
 
     const chatId = this._getChatId();
 
+    if(chatId === null){
+      warning(
+        false,
+        'forwardMessageTo: should not be called in context without chatId'
+      );
+      return null;
+    }
+
     return this._client.forwardMessage(
       toChatId,
       chatId,
@@ -412,6 +524,14 @@ class TelegramContext extends Context implements PlatformContext {
 
     const chatId = this._getChatId();
 
+    if(chatId === null){
+      warning(
+        false,
+        'sendPhoto: should not be called in context without chatId'
+      );
+      return null;
+    }
+
     return this._client.sendPhoto(chatId, photo, options);
   }
 
@@ -430,6 +550,14 @@ class TelegramContext extends Context implements PlatformContext {
     this._isHandled = true;
 
     const chatId = this._getChatId();
+
+    if(chatId === null){
+      warning(
+        false,
+        'sendAudio: should not be called in context without chatId'
+      );
+      return null;
+    }
 
     return this._client.sendAudio(chatId, audio, options);
   }
@@ -450,6 +578,14 @@ class TelegramContext extends Context implements PlatformContext {
 
     const chatId = this._getChatId();
 
+    if(chatId === null){
+      warning(
+        false,
+        'sendDocument: should not be called in context without chatId'
+      );
+      return null;
+    }
+
     return this._client.sendDocument(chatId, document, options);
   }
 
@@ -468,6 +604,14 @@ class TelegramContext extends Context implements PlatformContext {
     this._isHandled = true;
 
     const chatId = this._getChatId();
+
+    if(chatId === null){
+      warning(
+        false,
+        'sendSticker: should not be called in context without chatId'
+      );
+      return null;
+    }
 
     return this._client.sendSticker(chatId, sticker, options);
   }
@@ -488,6 +632,14 @@ class TelegramContext extends Context implements PlatformContext {
 
     const chatId = this._getChatId();
 
+    if(chatId === null){
+      warning(
+        false,
+        'sendVideo: should not be called in context without chatId'
+      );
+      return null;
+    }
+
     return this._client.sendVideo(chatId, video, options);
   }
 
@@ -506,6 +658,14 @@ class TelegramContext extends Context implements PlatformContext {
     this._isHandled = true;
 
     const chatId = this._getChatId();
+
+    if(chatId === null){
+      warning(
+        false,
+        'sendVoice: should not be called in context without chatId'
+      );
+      return null;
+    }
 
     return this._client.sendVoice(chatId, voice, options);
   }
@@ -526,6 +686,14 @@ class TelegramContext extends Context implements PlatformContext {
 
     const chatId = this._getChatId();
 
+    if(chatId === null){
+      warning(
+        false,
+        'sendVideoNote: should not be called in context without chatId'
+      );
+      return null;
+    }
+
     return this._client.sendVideoNote(chatId, videoNote, options);
   }
 
@@ -545,6 +713,14 @@ class TelegramContext extends Context implements PlatformContext {
 
     const chatId = this._getChatId();
 
+    if(chatId === null){
+      warning(
+        false,
+        'sendMediaGroup: should not be called in context without chatId'
+      );
+      return null;
+    }
+
     return this._client.sendMediaGroup(chatId, media, options);
   }
 
@@ -563,6 +739,14 @@ class TelegramContext extends Context implements PlatformContext {
     this._isHandled = true;
 
     const chatId = this._getChatId();
+
+    if(chatId === null){
+      warning(
+        false,
+        'sendLocation: should not be called in context without chatId'
+      );
+      return null;
+    }
 
     return this._client.sendLocation(chatId, { latitude, longitude }, options);
   }
@@ -594,6 +778,14 @@ class TelegramContext extends Context implements PlatformContext {
 
     const chatId = this._getChatId();
 
+    if(chatId === null){
+      warning(
+        false,
+        'sendVenue: should not be called in context without chatId'
+      );
+      return null;
+    }
+
     return this._client.sendVenue(chatId, {
       latitude,
       longitude,
@@ -618,6 +810,14 @@ class TelegramContext extends Context implements PlatformContext {
 
     const chatId = this._getChatId();
 
+    if(chatId === null){
+      warning(
+        false,
+        'sendContact: should not be called in context without chatId'
+      );
+      return null;
+    }
+
     return this._client.sendContact(chatId, requiredOptions, options);
   }
 
@@ -633,6 +833,14 @@ class TelegramContext extends Context implements PlatformContext {
     this._isHandled = true;
 
     const chatId = this._getChatId();
+
+    if(chatId === null){
+      warning(
+        false,
+        'sendChatAction: should not be called in context without chatId'
+      );
+      return null;
+    }
 
     return this._client.sendChatAction(chatId, action);
   }
@@ -654,6 +862,14 @@ class TelegramContext extends Context implements PlatformContext {
 
     const chatId = this._getChatId();
 
+    if(chatId === null){
+      warning(
+        false,
+        'kickChatMember: should not be called in context without chatId'
+      );
+      return null;
+    }
+
     return this._client.kickChatMember(chatId, userId, options);
   }
 
@@ -669,6 +885,14 @@ class TelegramContext extends Context implements PlatformContext {
     this._isHandled = true;
 
     const chatId = this._getChatId();
+
+    if(chatId === null){
+      warning(
+        false,
+        'unbanChatMember: should not be called in context without chatId'
+      );
+      return null;
+    }
 
     return this._client.unbanChatMember(chatId, userId);
   }
@@ -690,6 +914,14 @@ class TelegramContext extends Context implements PlatformContext {
 
     const chatId = this._getChatId();
 
+    if(chatId === null){
+      warning(
+        false,
+        'restrictChatMember: should not be called in context without chatId'
+      );
+      return null;
+    }
+
     return this._client.restrictChatMember(chatId, userId, permissions, options);
   }
 
@@ -709,6 +941,14 @@ class TelegramContext extends Context implements PlatformContext {
 
     const chatId = this._getChatId();
 
+    if(chatId === null){
+      warning(
+        false,
+        'promoteChatMember: should not be called in context without chatId'
+      );
+      return null;
+    }
+
     return this._client.promoteChatMember(chatId, userId, options);
   }
 
@@ -724,6 +964,14 @@ class TelegramContext extends Context implements PlatformContext {
     this._isHandled = true;
 
     const chatId = this._getChatId();
+
+    if(chatId === null){
+      warning(
+        false,
+        'exportChatInviteLink: should not be called in context without chatId'
+      );
+      return null;
+    }
 
     return this._client.exportChatInviteLink(chatId);
   }
@@ -743,6 +991,14 @@ class TelegramContext extends Context implements PlatformContext {
 
     const chatId = this._getChatId();
 
+    if(chatId === null){
+      warning(
+        false,
+        'deleteChatPhoto: should not be called in context without chatId'
+      );
+      return null;
+    }
+
     return this._client.deleteChatPhoto(chatId);
   }
 
@@ -758,6 +1014,14 @@ class TelegramContext extends Context implements PlatformContext {
     this._isHandled = true;
 
     const chatId = this._getChatId();
+
+    if(chatId === null){
+      warning(
+        false,
+        'setChatTitle: should not be called in context without chatId'
+      );
+      return null;
+    }
 
     return this._client.setChatTitle(chatId, title);
   }
@@ -777,6 +1041,14 @@ class TelegramContext extends Context implements PlatformContext {
 
     const chatId = this._getChatId();
 
+    if(chatId === null){
+      warning(
+        false,
+        'setChatDescription: should not be called in context without chatId'
+      );
+      return null;
+    }
+
     return this._client.setChatDescription(chatId, description);
   }
 
@@ -795,6 +1067,14 @@ class TelegramContext extends Context implements PlatformContext {
 
     const chatId = this._getChatId();
 
+    if(chatId === null){
+      warning(
+        false,
+        'setChatStickerSet: should not be called in context without chatId'
+      );
+      return null;
+    }
+
     return this._client.setChatStickerSet(chatId, stickerSetName);
   }
 
@@ -810,6 +1090,14 @@ class TelegramContext extends Context implements PlatformContext {
     this._isHandled = true;
 
     const chatId = this._getChatId();
+
+    if(chatId === null){
+      warning(
+        false,
+        'deleteChatStickerSet: should not be called in context without chatId'
+      );
+      return null;
+    }
 
     return this._client.deleteChatStickerSet(chatId);
   }
@@ -830,6 +1118,14 @@ class TelegramContext extends Context implements PlatformContext {
 
     const chatId = this._getChatId();
 
+    if(chatId === null){
+      warning(
+        false,
+        'pinChatMessage: should not be called in context without chatId'
+      );
+      return null;
+    }
+
     return this._client.pinChatMessage(chatId, messageId, options);
   }
 
@@ -846,6 +1142,14 @@ class TelegramContext extends Context implements PlatformContext {
 
     const chatId = this._getChatId();
 
+    if(chatId === null){
+      warning(
+        false,
+        'unpinChatMessage: should not be called in context without chatId'
+      );
+      return null;
+    }
+
     return this._client.unpinChatMessage(chatId);
   }
 
@@ -861,6 +1165,14 @@ class TelegramContext extends Context implements PlatformContext {
     this._isHandled = true;
 
     const chatId = this._getChatId();
+
+    if(chatId === null){
+      warning(
+        false,
+        'leaveChat: should not be called in context without chatId'
+      );
+      return null;
+    }
 
     return this._client.leaveChat(chatId);
   }
@@ -882,6 +1194,14 @@ class TelegramContext extends Context implements PlatformContext {
 
     const chatId = this._getChatId();
 
+    if(chatId === null){
+      warning(
+        false,
+        'sendInvoice: should not be called in context without chatId'
+      );
+      return null;
+    }
+
     return this._client.sendInvoice(chatId, product, options);
   }
 
@@ -901,6 +1221,14 @@ class TelegramContext extends Context implements PlatformContext {
     this._isHandled = true;
 
     const chatId = this._getChatId();
+
+    if(chatId === null){
+      warning(
+        false,
+        'sendGame: should not be called in context without chatId'
+      );
+      return null;
+    }
 
     return this._client.sendGame(chatId, gameShortName, options);
   }
