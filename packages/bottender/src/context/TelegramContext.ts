@@ -1153,7 +1153,7 @@ class TelegramContext extends Context implements PlatformContext {
     return this._client.unpinChatMessage(chatId);
   }
 
-  async leaveChat(): Promise<Type.Chat | null> {
+  async leaveChat(): Promise<boolean | null> {
     if (!this._session) {
       warning(
         false,
