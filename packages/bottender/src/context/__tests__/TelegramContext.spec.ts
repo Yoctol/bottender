@@ -86,15 +86,15 @@ describe('#sendText', () => {
   it('should call client.sendMessage', async () => {
     const { context, client } = setup();
 
-    await context.sendText('xxx.com');
+    await context.sendText('hello');
 
-    expect(client.sendMessage).toBeCalledWith(427770117, 'xxx.com', undefined);
+    expect(client.sendMessage).toBeCalledWith(427770117, 'hello', undefined);
   });
 
   it('should mark context as handled', async () => {
     const { context } = setup();
 
-    await context.sendText('xxx.com');
+    await context.sendText('hello');
 
     expect(context._isHandled).toBe(true);
   });
@@ -102,7 +102,7 @@ describe('#sendText', () => {
   it('should call warning and not to send if dont have session', async () => {
     const { context, client } = setup({ session: false });
 
-    await context.sendText('xxx.com');
+    await context.sendText('hello');
 
     expect(warning).toBeCalled();
     expect(client.sendMessage).not.toBeCalled();
@@ -113,15 +113,15 @@ describe('#sendMessage', () => {
   it('should call client.sendMessage', async () => {
     const { context, client } = setup();
 
-    await context.sendMessage('xxx.com');
+    await context.sendMessage('hello');
 
-    expect(client.sendMessage).toBeCalledWith(427770117, 'xxx.com');
+    expect(client.sendMessage).toBeCalledWith(427770117, 'hello');
   });
 
   it('should mark context as handled', async () => {
     const { context } = setup();
 
-    await context.sendMessage('xxx.com');
+    await context.sendMessage('hello');
 
     expect(context.isHandled).toBe(true);
   });
@@ -129,7 +129,7 @@ describe('#sendMessage', () => {
   it('should not call send method if dont have session', async () => {
     const { context, client } = setup({ session: null });
 
-    await context.sendMessage('xxx.com');
+    await context.sendMessage('hello');
 
     expect(client.sendMessage).not.toBeCalled();
   });

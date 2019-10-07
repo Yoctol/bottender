@@ -184,7 +184,7 @@ describe('#reply', () => {
     await context.reply([
       {
         type: 'text',
-        text: 'xxx.com',
+        text: 'hello',
       },
     ]);
 
@@ -193,7 +193,7 @@ describe('#reply', () => {
       [
         {
           type: 'text',
-          text: 'xxx.com',
+          text: 'hello',
         },
       ],
       { accessToken: undefined }
@@ -206,7 +206,7 @@ describe('#reply', () => {
     await context.reply([
       {
         type: 'text',
-        text: 'xxx.com',
+        text: 'hello',
         quickReply,
       },
     ]);
@@ -216,7 +216,7 @@ describe('#reply', () => {
       [
         {
           type: 'text',
-          text: 'xxx.com',
+          text: 'hello',
           quickReply,
         },
       ],
@@ -229,11 +229,11 @@ describe('#replyText', () => {
   it('should call client.replyText', async () => {
     const { context, client } = setup();
 
-    await context.replyText('xxx.com');
+    await context.replyText('hello');
 
     expect(client.reply).toBeCalledWith(
       rawEvent.replyToken,
-      [{ text: 'xxx.com', type: 'text' }],
+      [{ text: 'hello', type: 'text' }],
       {}
     );
   });
@@ -241,7 +241,7 @@ describe('#replyText', () => {
   it('should work with quickReply', async () => {
     const { context, client } = setup();
 
-    await context.replyText('xxx.com', {
+    await context.replyText('hello', {
       quickReply,
     });
 
@@ -250,7 +250,7 @@ describe('#replyText', () => {
       [
         {
           type: 'text',
-          text: 'xxx.com',
+          text: 'hello',
           quickReply,
         },
       ],
@@ -263,11 +263,11 @@ describe('#replyText', () => {
   it('should throw when reply multiple times', async () => {
     const { context } = setup();
 
-    await context.replyText('xxx.com');
+    await context.replyText('hello');
 
     let error;
     try {
-      await context.replyText('xxx.com');
+      await context.replyText('hello');
     } catch (err) {
       error = err;
     }
@@ -289,11 +289,11 @@ describe('#replyText', () => {
       customAccessToken: 'anyToken',
     });
 
-    await context.replyText('xxx.com');
+    await context.replyText('hello');
 
     expect(client.reply).toBeCalledWith(
       rawEvent.replyToken,
-      [{ text: 'xxx.com', type: 'text' }],
+      [{ text: 'hello', type: 'text' }],
       {
         accessToken: 'anyToken',
       }
@@ -308,7 +308,7 @@ describe('#push', () => {
     await context.push([
       {
         type: 'text',
-        text: 'xxx.com',
+        text: 'hello',
       },
     ]);
 
@@ -317,7 +317,7 @@ describe('#push', () => {
       [
         {
           type: 'text',
-          text: 'xxx.com',
+          text: 'hello',
         },
       ],
       { accessToken: undefined }
@@ -330,7 +330,7 @@ describe('#push', () => {
     await context.push([
       {
         type: 'text',
-        text: 'xxx.com',
+        text: 'hello',
         quickReply,
       },
     ]);
@@ -340,7 +340,7 @@ describe('#push', () => {
       [
         {
           type: 'text',
-          text: 'xxx.com',
+          text: 'hello',
           quickReply,
         },
       ],
@@ -353,11 +353,11 @@ describe('#pushText', () => {
   it('should call client.pushText', async () => {
     const { context, client, session } = setup();
 
-    await context.pushText('xxx.com');
+    await context.pushText('hello');
 
     expect(client.push).toBeCalledWith(
       session.user.id,
-      [{ text: 'xxx.com', type: 'text' }],
+      [{ text: 'hello', type: 'text' }],
       {}
     );
   });
@@ -365,7 +365,7 @@ describe('#pushText', () => {
   it('should work with quickReply', async () => {
     const { context, client, session } = setup();
 
-    await context.pushText('xxx.com', {
+    await context.pushText('hello', {
       quickReply,
     });
 
@@ -373,7 +373,7 @@ describe('#pushText', () => {
       session.user.id,
       [
         {
-          text: 'xxx.com',
+          text: 'hello',
           type: 'text',
           quickReply,
         },
@@ -389,11 +389,11 @@ describe('#pushText', () => {
       session: roomSession,
     });
 
-    await context.pushText('xxx.com');
+    await context.pushText('hello');
 
     expect(client.push).toBeCalledWith(
       session.room.id,
-      [{ text: 'xxx.com', type: 'text' }],
+      [{ text: 'hello', type: 'text' }],
       {}
     );
   });
@@ -403,11 +403,11 @@ describe('#pushText', () => {
       session: groupSession,
     });
 
-    await context.pushText('xxx.com');
+    await context.pushText('hello');
 
     expect(client.push).toBeCalledWith(
       session.group.id,
-      [{ text: 'xxx.com', type: 'text' }],
+      [{ text: 'hello', type: 'text' }],
       {}
     );
   });
@@ -415,7 +415,7 @@ describe('#pushText', () => {
   it('should mark context as handled', async () => {
     const { context } = setup();
 
-    await context.pushText('xxx.com');
+    await context.pushText('hello');
 
     expect(context.isHandled).toBe(true);
   });
@@ -423,7 +423,7 @@ describe('#pushText', () => {
   it('should call warning and not to send if dont have session', async () => {
     const { context, client } = setup({ session: false });
 
-    await context.pushText('xxx.com');
+    await context.pushText('hello');
 
     expect(warning).toBeCalled();
     expect(client.push).not.toBeCalled();
@@ -434,11 +434,11 @@ describe('#pushText', () => {
       customAccessToken: 'anyToken',
     });
 
-    await context.pushText('xxx.com');
+    await context.pushText('hello');
 
     expect(client.push).toBeCalledWith(
       session.user.id,
-      [{ text: 'xxx.com', type: 'text' }],
+      [{ text: 'hello', type: 'text' }],
       {
         accessToken: 'anyToken',
       }
@@ -482,14 +482,14 @@ describe('send APIs', () => {
     it('should call client.replyText', async () => {
       const { context, client } = setup();
 
-      await context.sendText('xxx.com');
+      await context.sendText('hello');
 
       expect(client.reply).toBeCalledWith(
         rawEvent.replyToken,
         [
           {
             type: 'text',
-            text: 'xxx.com',
+            text: 'hello',
           },
         ],
         {}
@@ -499,7 +499,7 @@ describe('send APIs', () => {
     it('should work with quickReply', async () => {
       const { context, client } = setup();
 
-      await context.sendText('xxx.com', {
+      await context.sendText('hello', {
         quickReply,
       });
 
@@ -508,7 +508,7 @@ describe('send APIs', () => {
         [
           {
             type: 'text',
-            text: 'xxx.com',
+            text: 'hello',
             quickReply,
           },
         ],
@@ -1878,11 +1878,11 @@ describe('#useAccessToken', () => {
 
     context.useAccessToken('anyToken');
 
-    await context.replyText('xxx.com');
+    await context.replyText('hello');
 
     expect(client.reply).toBeCalledWith(
       rawEvent.replyToken,
-      [{ text: 'xxx.com', type: 'text' }],
+      [{ text: 'hello', type: 'text' }],
       {
         accessToken: 'anyToken',
       }
