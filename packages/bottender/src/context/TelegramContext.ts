@@ -61,7 +61,7 @@ class TelegramContext extends Context implements PlatformContext {
     return this.sendText(text, options);
   }
 
-  _getChatId() {
+  _getChatId(): number | null {
     if (this._event.isMessage) {
       return (this._event.message as any).chat.id;
     }
