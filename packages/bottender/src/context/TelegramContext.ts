@@ -1,6 +1,6 @@
 import sleep from 'delay';
 import warning from 'warning';
-import { TelegramClient, TelegramTypes } from 'messaging-api-telegram';
+import { TelegramClient, TelegramTypes as Type } from 'messaging-api-telegram';
 
 import Session from '../session/Session';
 
@@ -37,13 +37,13 @@ class TelegramContext extends Context implements PlatformContext {
    * Send text to the owner of then session.
    *
    */
-  async sendText(text: string, options?: {}): Promise<any> {
+  async sendText(text: string, options?: Type.SendMessageOption): Promise<Type.Message | null> {
     if (!this._session) {
       warning(
         false,
         'sendText: should not be called in context without session'
       );
-      return;
+      return null;
     }
 
     this._isHandled = true;
@@ -51,6 +51,14 @@ class TelegramContext extends Context implements PlatformContext {
     const chatId = this._getChatId();
 
     return this._client.sendMessage(chatId, text, options);
+  }
+
+  /**
+   * Send text to the owner of then session.
+   *
+   */
+  async sendMessage(text: string, options?: Type.SendMessageOption): Promise<Type.Message | null> {
+    return this.sendText(text, options);
   }
 
   _getChatId() {
@@ -90,13 +98,13 @@ class TelegramContext extends Context implements PlatformContext {
     return null;
   }
 
-  async answerShippingQuery(ok: boolean, options?: {}) {
+  async answerShippingQuery(ok: boolean, options?: Type.AnswerShippingQueryOption): Promise<boolean | null> {
     if (!this._event.isShippingQuery) {
       warning(
         false,
         'answerShippingQuery: should only be called to answer ShippingQuery event'
       );
-      return;
+      return null;
     }
 
     this._isHandled = true;
@@ -106,13 +114,13 @@ class TelegramContext extends Context implements PlatformContext {
     return this._client.answerShippingQuery(shippingQueryId, ok, options);
   }
 
-  async answerPreCheckoutQuery(ok: boolean, options?: {}) {
+  async answerPreCheckoutQuery(ok: boolean, options?: Type.AnswerPreCheckoutQueryOption): Promise<boolean | null> {
     if (!this._event.isPreCheckoutQuery) {
       warning(
         false,
         'answerPreCheckoutQuery: should only be called to answer PreCheckoutQuery event'
       );
-      return;
+      return null;
     }
 
     this._isHandled = true;
@@ -122,13 +130,13 @@ class TelegramContext extends Context implements PlatformContext {
     return this._client.answerPreCheckoutQuery(preCheckoutQueryId, ok, options);
   }
 
-  async answerInlineQuery(results: Record<string, any>[], options?: {}) {
+  async answerInlineQuery(results: Type.InlineQueryResult[], options?: Type.AnswerInlineQueryOption): Promise<boolean | null> {
     if (!this._event.isInlineQuery) {
       warning(
         false,
         'answerInlineQuery: should only be called to answer InlineQuery event'
       );
-      return;
+      return null;
     }
 
     this._isHandled = true;
@@ -138,7 +146,7 @@ class TelegramContext extends Context implements PlatformContext {
     return this._client.answerInlineQuery(inlineQueryId, results, options);
   }
 
-  async getUserProfilePhotos(options?: Record<string, any>) {
+  async getUserProfilePhotos(options?: Type.GetUserProfilePhotosOption): Promise<Type.UserProfilePhotos | null> {
     if (!this._session) {
       warning(
         false,
@@ -153,7 +161,7 @@ class TelegramContext extends Context implements PlatformContext {
     );
   }
 
-  async getChat() {
+  async getChat(): Promise<Type.Chat | null>  {
     if (!this._session) {
       warning(
         false,
@@ -167,7 +175,7 @@ class TelegramContext extends Context implements PlatformContext {
     return this._client.getChat(chatId);
   }
 
-  async getChatAdministrators() {
+  async getChatAdministrators(): Promise<Type.ChatMember[] | null> {
     if (!this._session) {
       warning(
         false,
@@ -181,7 +189,7 @@ class TelegramContext extends Context implements PlatformContext {
     return this._client.getChatAdministrators(chatId);
   }
 
-  async getChatMembersCount() {
+  async getChatMembersCount(): Promise<number | null> {
     if (!this._session) {
       warning(
         false,
@@ -195,7 +203,7 @@ class TelegramContext extends Context implements PlatformContext {
     return this._client.getChatMembersCount(chatId);
   }
 
-  async getChatMember(userId: number) {
+  async getChatMember(userId: number): Promise<Type.ChatMember | null> {
     if (!this._session) {
       warning(
         false,
@@ -206,10 +214,10 @@ class TelegramContext extends Context implements PlatformContext {
 
     const chatId = this._getChatId();
 
-    return this._client.getChatMember(chatId, userId as any);
+    return this._client.getChatMember(chatId, userId);
   }
 
-  async getGameHighScores(options?: Record<string, any>) {
+  async getGameHighScores(options?: Type.GetGameHighScoresOption): Promise<Type.GameHighScore[] | null> {
     if (!this._session) {
       warning(
         false,
@@ -223,29 +231,29 @@ class TelegramContext extends Context implements PlatformContext {
     return this._client.getGameHighScores(chatId, options);
   }
 
-  async editMessageText(text: string, options?: Record<string, any>) {
+  async editMessageText(text: string, options?: Type.EditMessageTextOption): Promise<Type.Message | boolean | null> {
     if (!this._session) {
       warning(
         false,
         'editMessageText: should not be called in context without session'
       );
-      return;
+      return null;
     }
 
     this._isHandled = true;
 
     const chatId = this._getChatId();
 
-    return this._client.editMessageText(text, { chat_id: chatId, ...options });
+    return this._client.editMessageText(text, { chatId, ...options });
   }
 
-  async editMessageCaption(caption: string, options?: Record<string, any>) {
+  async editMessageCaption(caption: string, options?: Type.EditMessageCaptionOption): Promise<Type.Message | boolean | null> {
     if (!this._session) {
       warning(
         false,
         'editMessageCaption: should not be called in context without session'
       );
-      return;
+      return null;
     }
 
     this._isHandled = true;
@@ -253,21 +261,21 @@ class TelegramContext extends Context implements PlatformContext {
     const chatId = this._getChatId();
 
     return this._client.editMessageCaption(caption, {
-      chat_id: chatId,
+      chatId,
       ...options,
     });
   }
 
   async editMessageReplyMarkup(
-    replyMarkup: Record<string, any>,
-    options?: Record<string, any>
-  ) {
+    replyMarkup: Type.InlineKeyboardMarkup,
+    options?: Type.EditMessageReplyMarkupOption
+  ): Promise<Type.Message | boolean | null> {
     if (!this._session) {
       warning(
         false,
         'editMessageReplyMarkup: should not be called in context without session'
       );
-      return;
+      return null;
     }
 
     this._isHandled = true;
@@ -275,39 +283,37 @@ class TelegramContext extends Context implements PlatformContext {
     const chatId = this._getChatId();
 
     return this._client.editMessageReplyMarkup(replyMarkup, {
-      chat_id: chatId,
+      chatId,
       ...options,
     });
   }
 
-  async deleteMessage(messageId: number) {
+  async deleteMessage(messageId: number): Promise<boolean | null> {
     if (!this._session) {
       warning(
         false,
         'deleteMessage: should not be called in context without session'
       );
-      return;
+      return null;
     }
 
     this._isHandled = true;
 
     const chatId = this._getChatId();
 
-    return this._client.deleteMessage(chatId, messageId as any);
+    return this._client.deleteMessage(chatId, messageId);
   }
 
   async editMessageLiveLocation(
     location: { latitude: number; longitude: number },
-    options: { messageId: number } & {
-      replyMarkup?: TelegramTypes.InlineKeyboardMarkup;
-    }
-  ) {
+    options?: Type.EditMessageLiveLocationOption
+  ): Promise<Type.Message | boolean | null> {
     if (!this._session) {
       warning(
         false,
         'editMessageLiveLocation: should not be called in context without session'
       );
-      return;
+      return null;
     }
 
     this._isHandled = true;
@@ -320,17 +326,13 @@ class TelegramContext extends Context implements PlatformContext {
     });
   }
 
-  async stopMessageLiveLocation(
-    options: { messageId: number } & {
-      replyMarkup?: TelegramTypes.InlineKeyboardMarkup;
-    }
-  ) {
+  async stopMessageLiveLocation(options?: Type.StopMessageLiveLocationOption): Promise<Type.Message | boolean | null> {
     if (!this._session) {
       warning(
         false,
         'stopMessageLiveLocation: should not be called in context without session'
       );
-      return;
+      return null;
     }
 
     this._isHandled = true;
@@ -346,14 +348,14 @@ class TelegramContext extends Context implements PlatformContext {
   async forwardMessageFrom(
     fromChatId: string,
     messageId: number,
-    options?: Record<string, any>
-  ) {
+    options?: Type.ForwardMessageOption
+  ): Promise<Type.Message | null> {
     if (!this._session) {
       warning(
         false,
         'forwardMessageFrom: should not be called in context without session'
       );
-      return;
+      return null;
     }
 
     this._isHandled = true;
@@ -363,7 +365,7 @@ class TelegramContext extends Context implements PlatformContext {
     return this._client.forwardMessage(
       chatId,
       fromChatId,
-      messageId as any,
+      messageId,
       options
     );
   }
@@ -371,14 +373,14 @@ class TelegramContext extends Context implements PlatformContext {
   async forwardMessageTo(
     toChatId: string,
     messageId: number,
-    options?: Record<string, any>
-  ) {
+    options?: Type.ForwardMessageOption
+  ): Promise<Type.Message | null> {
     if (!this._session) {
       warning(
         false,
         'forwardMessageTo: should not be called in context without session'
       );
-      return;
+      return null;
     }
 
     this._isHandled = true;
@@ -388,479 +390,537 @@ class TelegramContext extends Context implements PlatformContext {
     return this._client.forwardMessage(
       toChatId,
       chatId,
-      messageId as any,
+      messageId,
       options
     );
   }
 
   // Send API
-  async sendMessage(...args: any[]) {
-    if (!this._session) {
-      warning(
-        false,
-        'sendMessage: should not be called in context without session'
-      );
-      return;
-    }
-
-    this._isHandled = true;
-
-    const chatId = this._getChatId();
-
-    return this._client.sendMessage(chatId, ...args);
-  }
-
-  async sendPhoto(...args: any[]) {
+  async sendPhoto(
+    photo: string,
+    options?: Type.SendPhotoOption
+  ): Promise<Type.Message | null> {
     if (!this._session) {
       warning(
         false,
         'sendPhoto: should not be called in context without session'
       );
-      return;
+      return null;
     }
 
     this._isHandled = true;
 
     const chatId = this._getChatId();
 
-    return this._client.sendPhoto(chatId, ...args);
+    return this._client.sendPhoto(chatId, photo, options);
   }
 
-  async sendAudio(...args: any[]) {
+  async sendAudio(
+    audio: string,
+    options: Type.SendAudioOption = {}
+  ): Promise<Type.Message | null> {
     if (!this._session) {
       warning(
         false,
         'sendAudio: should not be called in context without session'
       );
-      return;
+      return null;
     }
 
     this._isHandled = true;
 
     const chatId = this._getChatId();
 
-    return this._client.sendAudio(chatId, ...args);
+    return this._client.sendAudio(chatId, audio, options);
   }
 
-  async sendDocument(...args: any[]) {
+  async sendDocument(
+    document: string,
+    options?: Type.SendDocumentOption
+  ): Promise<Type.Message | null> {
     if (!this._session) {
       warning(
         false,
         'sendDocument: should not be called in context without session'
       );
-      return;
+      return null;
     }
 
     this._isHandled = true;
 
     const chatId = this._getChatId();
 
-    return this._client.sendDocument(chatId, ...args);
+    return this._client.sendDocument(chatId, document, options);
   }
 
-  async sendSticker(...args: any[]) {
+  async sendSticker(
+    sticker: string,
+    options?: Type.SendStickerOption
+  ): Promise<Type.Message | null> {
     if (!this._session) {
       warning(
         false,
         'sendSticker: should not be called in context without session'
       );
-      return;
+      return null;
     }
 
     this._isHandled = true;
 
     const chatId = this._getChatId();
 
-    return this._client.sendSticker(chatId, ...args);
+    return this._client.sendSticker(chatId, sticker, options);
   }
 
-  async sendVideo(...args: any[]) {
+  async sendVideo(
+    video: string,
+    options: Type.SendVideoOption = {}
+  ): Promise<Type.Message | null> {
     if (!this._session) {
       warning(
         false,
         'sendVideo: should not be called in context without session'
       );
-      return;
+      return null;
     }
 
     this._isHandled = true;
 
     const chatId = this._getChatId();
 
-    return this._client.sendVideo(chatId, ...args);
+    return this._client.sendVideo(chatId, video, options);
   }
 
-  async sendVoice(...args: any[]) {
+  async sendVoice(
+    voice: string,
+    options: Type.SendVoiceOption = {}
+  ): Promise<Type.Message | null> {
     if (!this._session) {
       warning(
         false,
         'sendVoice: should not be called in context without session'
       );
-      return;
+      return null;
     }
 
     this._isHandled = true;
 
     const chatId = this._getChatId();
 
-    return this._client.sendVoice(chatId, ...args);
+    return this._client.sendVoice(chatId, voice, options);
   }
 
-  async sendVideoNote(...args: any[]) {
+  async sendVideoNote(
+    videoNote: string,
+    options: Type.SendVideoNoteOption = {}
+  ): Promise<Type.Message | null> {
     if (!this._session) {
       warning(
         false,
         'sendVideoNote: should not be called in context without session'
       );
-      return;
+      return null;
     }
 
     this._isHandled = true;
 
     const chatId = this._getChatId();
 
-    return this._client.sendVideoNote(chatId, ...args);
+    return this._client.sendVideoNote(chatId, videoNote, options);
   }
 
-  async sendMediaGroup(...args: any[]) {
+  async sendMediaGroup(
+    media: (Type.InputMediaPhoto | Type.InputMediaVideo)[],
+    options?: Type.SendMediaGroupOption
+  ): Promise<Type.Message[] | null> {
     if (!this._session) {
       warning(
         false,
         'sendMediaGroup: should not be called in context without session'
       );
-      return;
+      return null;
     }
 
     this._isHandled = true;
 
     const chatId = this._getChatId();
 
-    return this._client.sendMediaGroup(chatId, ...args);
+    return this._client.sendMediaGroup(chatId, media, options);
   }
 
-  async sendLocation(...args: any[]) {
+  async sendLocation(
+    { latitude, longitude }: { latitude: number; longitude: number },
+    options?: Type.SendLocationOption
+  ): Promise<Type.Message | null> {
     if (!this._session) {
       warning(
         false,
         'sendLocation: should not be called in context without session'
       );
-      return;
+      return null;
     }
 
     this._isHandled = true;
 
     const chatId = this._getChatId();
 
-    return this._client.sendLocation(chatId, ...args);
+    return this._client.sendLocation(chatId, { latitude, longitude }, options);
   }
 
-  async sendVenue(...args: any[]) {
+  async sendVenue(
+    // TODO: replace this parameter with Type.Venue
+    {
+      latitude,
+      longitude,
+      title,
+      address,
+    }: {
+      latitude: number;
+      longitude: number;
+      title: string;
+      address: string;
+    },
+    options?: Type.SendVenueOption
+  ): Promise<Type.Message | null> {
     if (!this._session) {
       warning(
         false,
         'sendVenue: should not be called in context without session'
       );
-      return;
+      return null;
     }
 
     this._isHandled = true;
 
     const chatId = this._getChatId();
 
-    return this._client.sendVenue(chatId, ...args);
+    return this._client.sendVenue(chatId, {
+      latitude,
+      longitude,
+      title,
+      address,
+    }, options);
   }
 
-  async sendContact(...args: any[]) {
+  async sendContact(
+    requiredOptions: Type.SendContactRequiredOption,
+    options?: Type.SendContactOption
+  ): Promise<Type.Message | null> {
     if (!this._session) {
       warning(
         false,
         'sendContact: should not be called in context without session'
       );
-      return;
+      return null;
     }
 
     this._isHandled = true;
 
     const chatId = this._getChatId();
 
-    return this._client.sendContact(chatId, ...args);
+    return this._client.sendContact(chatId, requiredOptions, options);
   }
 
-  async sendChatAction(...args: any[]) {
+  async sendChatAction(action: Type.ChatAction): Promise<boolean | null> {
     if (!this._session) {
       warning(
         false,
         'sendChatAction: should not be called in context without session'
       );
-      return;
+      return null;
     }
 
     this._isHandled = true;
 
     const chatId = this._getChatId();
 
-    return this._client.sendChatAction(chatId, ...args);
+    return this._client.sendChatAction(chatId, action);
   }
 
   // Group API
-  async kickChatMember(...args: any[]) {
+  async kickChatMember(
+    userId: number,
+    options?: Type.KickChatMemberOption
+  ): Promise<boolean | null> {
     if (!this._session) {
       warning(
         false,
         'kickChatMember: should not be called in context without session'
       );
-      return;
+      return null;
     }
 
     this._isHandled = true;
 
     const chatId = this._getChatId();
 
-    return this._client.kickChatMember(chatId, ...args);
+    return this._client.kickChatMember(chatId, userId, options);
   }
 
-  async unbanChatMember(...args: any[]) {
+  async unbanChatMember(userId: number): Promise<boolean | null> {
     if (!this._session) {
       warning(
         false,
         'unbanChatMember: should not be called in context without session'
       );
-      return;
+      return null;
     }
 
     this._isHandled = true;
 
     const chatId = this._getChatId();
 
-    return this._client.unbanChatMember(chatId, ...args);
+    return this._client.unbanChatMember(chatId, userId);
   }
 
-  async restrictChatMember(...args: any[]) {
+  async restrictChatMember(
+    userId: number,
+    permissions: Type.ChatPermissions,
+    options?: Type.RestrictChatMemberOption
+  ): Promise<boolean | null> {
     if (!this._session) {
       warning(
         false,
         'restrictChatMember: should not be called in context without session'
       );
-      return;
+      return null;
     }
 
     this._isHandled = true;
 
     const chatId = this._getChatId();
 
-    return this._client.restrictChatMember(chatId, ...args);
+    return this._client.restrictChatMember(chatId, userId, permissions, options);
   }
 
-  async promoteChatMember(...args: any[]) {
+  async promoteChatMember(
+    userId: number,
+    options?: Type.PromoteChatMemberOption
+  ): Promise<boolean | null> {
     if (!this._session) {
       warning(
         false,
         'promoteChatMember: should not be called in context without session'
       );
-      return;
+      return null;
     }
 
     this._isHandled = true;
 
     const chatId = this._getChatId();
 
-    return this._client.promoteChatMember(chatId, ...args);
+    return this._client.promoteChatMember(chatId, userId, options);
   }
 
-  async exportChatInviteLink(...args: any[]) {
+  async exportChatInviteLink(): Promise<string | null> {
     if (!this._session) {
       warning(
         false,
         'exportChatInviteLink: should not be called in context without session'
       );
-      return;
+      return null;
     }
 
     this._isHandled = true;
 
     const chatId = this._getChatId();
 
-    return this._client.exportChatInviteLink(chatId, ...args);
+    return this._client.exportChatInviteLink(chatId);
   }
 
   // TODO: implement setChatPhoto
 
-  async deleteChatPhoto(...args: any[]) {
+  async deleteChatPhoto(): Promise<boolean | null> {
     if (!this._session) {
       warning(
         false,
         'deleteChatPhoto: should not be called in context without session'
       );
-      return;
+      return null;
     }
 
     this._isHandled = true;
 
     const chatId = this._getChatId();
 
-    return this._client.deleteChatPhoto(chatId, ...args);
+    return this._client.deleteChatPhoto(chatId);
   }
 
-  async setChatTitle(...args: any[]) {
+  async setChatTitle(title: string): Promise<boolean | null> {
     if (!this._session) {
       warning(
         false,
         'setChatTitle: should not be called in context without session'
       );
-      return;
+      return null;
     }
 
     this._isHandled = true;
 
     const chatId = this._getChatId();
 
-    return this._client.setChatTitle(chatId, ...args);
+    return this._client.setChatTitle(chatId, title);
   }
 
-  async setChatDescription(...args: any[]) {
+  async setChatDescription(
+    description: string
+  ): Promise<boolean | null> {
     if (!this._session) {
       warning(
         false,
         'setChatDescription: should not be called in context without session'
       );
-      return;
+      return null;
     }
 
     this._isHandled = true;
 
     const chatId = this._getChatId();
 
-    return this._client.setChatDescription(chatId, ...args);
+    return this._client.setChatDescription(chatId, description);
   }
 
-  async setChatStickerSet(...args: any[]) {
+  async setChatStickerSet(
+    stickerSetName: string
+  ): Promise<boolean | null> {
     if (!this._session) {
       warning(
         false,
         'setChatStickerSet: should not be called in context without session'
       );
-      return;
+      return null;
     }
 
     this._isHandled = true;
 
     const chatId = this._getChatId();
 
-    return this._client.setChatStickerSet(chatId, ...args);
+    return this._client.setChatStickerSet(chatId, stickerSetName);
   }
 
-  async deleteChatStickerSet(...args: any[]) {
+  async deleteChatStickerSet(): Promise<boolean | null> {
     if (!this._session) {
       warning(
         false,
         'deleteChatStickerSet: should not be called in context without session'
       );
-      return;
+      return null;
     }
 
     this._isHandled = true;
 
     const chatId = this._getChatId();
 
-    return this._client.deleteChatStickerSet(chatId, ...args);
+    return this._client.deleteChatStickerSet(chatId);
   }
 
-  async pinChatMessage(...args: any[]) {
+  async pinChatMessage(
+    messageId: number,
+    options?: Type.PinChatMessageOption
+  ): Promise<boolean | null> {
     if (!this._session) {
       warning(
         false,
         'pinChatMessage: should not be called in context without session'
       );
-      return;
+      return null;
     }
 
     this._isHandled = true;
 
     const chatId = this._getChatId();
 
-    return this._client.pinChatMessage(chatId, ...args);
+    return this._client.pinChatMessage(chatId, messageId, options);
   }
 
-  async unpinChatMessage(...args: any[]) {
+  async unpinChatMessage(): Promise<boolean | null> {
     if (!this._session) {
       warning(
         false,
         'unpinChatMessage: should not be called in context without session'
       );
-      return;
+      return null;
     }
 
     this._isHandled = true;
 
     const chatId = this._getChatId();
 
-    return this._client.unpinChatMessage(chatId, ...args);
+    return this._client.unpinChatMessage(chatId);
   }
 
-  async leaveChat(...args: any[]) {
+  async leaveChat(): Promise<Type.Chat | null> {
     if (!this._session) {
       warning(
         false,
         'leaveChat: should not be called in context without session'
       );
-      return;
+      return null;
     }
 
     this._isHandled = true;
 
     const chatId = this._getChatId();
 
-    return this._client.leaveChat(chatId, ...args);
+    return this._client.leaveChat(chatId);
   }
 
   // Payments API
-  async sendInvoice(...args: any[]) {
+  async sendInvoice(
+    product: Type.Product,
+    options?: Type.SendInvoiceOption
+  ): Promise<Type.Message | null> {
     if (!this._session) {
       warning(
         false,
         'sendInvoice: should not be called in context without session'
       );
-      return;
+      return null;
     }
 
     this._isHandled = true;
 
     const chatId = this._getChatId();
 
-    return this._client.sendInvoice(chatId, ...args);
+    return this._client.sendInvoice(chatId, product, options);
   }
 
   // Game API
-  async sendGame(...args: any[]) {
+  async sendGame(
+    gameShortName: string,
+    options?: Type.SendGameOption
+  ): Promise<Type.Message | null> {
     if (!this._session) {
       warning(
         false,
         'sendGame: should not be called in context without session'
       );
-      return;
+      return null;
     }
 
     this._isHandled = true;
 
     const chatId = this._getChatId();
 
-    return this._client.sendGame(chatId, ...args);
+    return this._client.sendGame(chatId, gameShortName, options);
   }
 
-  async setGameScore(...args: any[]) {
+  async setGameScore(
+    userId: number,
+    score: number,
+    options?: Type.SetGameScoreOption
+  ): Promise<Type.Message | boolean | null> {
     if (!this._session) {
       warning(
         false,
         'setGameScore: should not be called in context without session'
       );
-      return;
+      return null;
     }
 
     this._isHandled = true;
 
-    const chatId = this._getChatId();
-
-    return this._client.setGameScore(chatId, ...args);
+    return this._client.setGameScore(userId, score, options);
   }
 }
 
