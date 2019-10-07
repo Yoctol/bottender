@@ -1,0 +1,27 @@
+{
+  "name": "@bottender/compose",
+  "description": "An utility library for Bottender and higher-order actions",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Yoctol/bottender-compose.git"
+  },
+  "version": "1.0.0-alpha.2",
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "delay": "^4.3.0",
+    "invariant": "^2.2.4",
+    "lodash": "^4.17.15",
+    "pascal-case": "^2.0.1",
+    "random-item": "^3.0.0",
+    "warning": "^4.0.3"
+  },
+  "keywords": [
+    "bot",
+    "bottender",
+    "compose"
+  ]
+}

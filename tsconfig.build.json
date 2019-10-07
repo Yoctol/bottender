@@ -6,6 +6,8 @@
   "include": [],
   "references": [
     { "path": "./packages/bottender" },
+    { "path": "./packages/bottender-compose" },
+    { "path": "./packages/bottender-core" },
     { "path": "./packages/bottender-express" },
     { "path": "./packages/bottender-handlers" },
     { "path": "./packages/bottender-koa" },
