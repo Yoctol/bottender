@@ -4,7 +4,7 @@ import chunk from 'lodash/chunk';
 import invariant from 'invariant';
 import sleep from 'delay';
 import warning from 'warning';
-import { Line, LineClient } from 'messaging-api-line';
+import { Line, LineClient, LineTypes } from 'messaging-api-line';
 
 import Session from '../session/Session';
 
@@ -37,9 +37,9 @@ class LineContext extends Context implements PlatformContext {
 
   _shouldBatch: boolean;
 
-  _replyMessages = [];
+  _replyMessages: LineTypes.Message[] = [];
 
-  _pushMessages = [];
+  _pushMessages: LineTypes.Message[] = [];
 
   _sendMethod: string;
 
@@ -57,7 +57,7 @@ class LineContext extends Context implements PlatformContext {
     super({ client, event, session, initialState, requestContext, emitter });
     this._customAccessToken = customAccessToken || null;
     this._shouldBatch = shouldBatch || false;
-    this._sendMethod = sendMethod || 'push';
+    this._sendMethod = sendMethod || 'reply';
   }
 
   /**
@@ -146,28 +146,6 @@ class LineContext extends Context implements PlatformContext {
     if (milliseconds > 0) {
       await sleep(milliseconds);
     }
-  }
-
-  /**
-   * Send text to the owner of the session.
-   *
-   */
-  async sendText(text: string, options?: Record<string, any>): Promise<any> {
-    if (this._sendMethod === 'reply') {
-      return (this as any).replyText(text, {
-        ...(this._customAccessToken
-          ? { accessToken: this._customAccessToken }
-          : undefined),
-        ...options,
-      });
-    }
-
-    return (this as any).pushText(text, {
-      ...(this._customAccessToken
-        ? { accessToken: this._customAccessToken }
-        : undefined),
-      ...options,
-    });
   }
 
   /**
@@ -445,114 +423,486 @@ class LineContext extends Context implements PlatformContext {
       'issueLinkToken: should not be called in context without session user'
     );
   }
+
+  reply(messages: LineTypes.Message[], options: LineTypes.MessageOptions = {}) {
+    invariant(!this._isReplied, 'Can not reply event multiple times');
+
+    this._isHandled = true;
+
+    if (this._shouldBatch) {
+      this._replyMessages.push(...messages);
+
+      return;
+    }
+
+    this._isReplied = true;
+
+    // FIXME: throw or warn for no replyToken
+    return this._client.reply(this._event.replyToken as string, messages, {
+      ...(this._customAccessToken
+        ? { accessToken: this._customAccessToken }
+        : undefined),
+      ...options,
+    });
+  }
+
+  replyText(text: string, options?: LineTypes.MessageOptions) {
+    return this.reply([Line.createText(text, options)], options);
+  }
+
+  replyImage(
+    image: {
+      originalContentUrl: string;
+      previewImageUrl?: string;
+    },
+    options?: LineTypes.MessageOptions
+  ) {
+    return this.reply([Line.createImage(image, options)], options);
+  }
+
+  replyVideo(
+    video: {
+      originalContentUrl: string;
+      previewImageUrl: string;
+    },
+    options?: LineTypes.MessageOptions
+  ) {
+    return this.reply([Line.createVideo(video, options)], options);
+  }
+
+  replyAudio(
+    audio: {
+      originalContentUrl: string;
+      duration: number;
+    },
+    options?: LineTypes.MessageOptions
+  ) {
+    return this.reply([Line.createAudio(audio, options)], options);
+  }
+
+  replyLocation(
+    location: LineTypes.Location,
+    options?: LineTypes.MessageOptions
+  ) {
+    return this.reply([Line.createLocation(location, options)], options);
+  }
+
+  replySticker(
+    sticker: Omit<LineTypes.StickerMessage, 'type'>,
+    options?: LineTypes.MessageOptions
+  ) {
+    return this.reply([Line.createSticker(sticker, options)], options);
+  }
+
+  replyImagemap(
+    altText: string,
+    imagemap: Omit<LineTypes.ImagemapMessage, 'type' | 'altText'>,
+    options?: LineTypes.MessageOptions
+  ) {
+    return this.reply(
+      [Line.createImagemap(altText, imagemap, options)],
+      options
+    );
+  }
+
+  replyFlex(
+    altText: string,
+    flex: LineTypes.FlexContainer,
+    options?: LineTypes.MessageOptions
+  ) {
+    return this.reply([Line.createFlex(altText, flex, options)], options);
+  }
+
+  replyTemplate(
+    altText: string,
+    template: LineTypes.Template,
+    options?: LineTypes.MessageOptions
+  ) {
+    return this.reply(
+      [Line.createTemplate(altText, template, options)],
+      options
+    );
+  }
+
+  replyButtonTemplate(
+    altText: string,
+    buttonTemplate: Omit<LineTypes.ButtonsTemplate, 'type'>,
+    options?: LineTypes.MessageOptions
+  ) {
+    return this.reply(
+      [Line.createButtonTemplate(altText, buttonTemplate, options)],
+      options
+    );
+  }
+
+  replyButtonsTemplate(
+    altText: string,
+    buttonTemplate: Omit<LineTypes.ButtonsTemplate, 'type'>,
+    options?: LineTypes.MessageOptions
+  ) {
+    return this.replyButtonTemplate(altText, buttonTemplate, options);
+  }
+
+  replyConfirmTemplate(
+    altText: string,
+    confirmTemplate: Omit<LineTypes.ConfirmTemplate, 'type'>,
+    options: LineTypes.MessageOptions
+  ) {
+    return this.reply(
+      [Line.createConfirmTemplate(altText, confirmTemplate, options)],
+      options
+    );
+  }
+
+  replyCarouselTemplate(
+    altText: string,
+    columns: LineTypes.ColumnObject[],
+    {
+      imageAspectRatio,
+      imageSize,
+      ...options
+    }: {
+      imageAspectRatio?: 'rectangle' | 'square';
+      imageSize?: 'cover' | 'contain';
+    } & LineTypes.MessageOptions = {}
+  ) {
+    return this.reply(
+      [
+        Line.createCarouselTemplate(altText, columns, {
+          imageAspectRatio,
+          imageSize,
+          ...options,
+        }),
+      ],
+      options
+    );
+  }
+
+  replyImageCarouselTemplate(
+    altText: string,
+    columns: LineTypes.ImageCarouselColumnObject[],
+    options: LineTypes.MessageOptions
+  ) {
+    return this.reply(
+      [Line.createImageCarouselTemplate(altText, columns, options)],
+      options
+    );
+  }
+
+  push(messages: LineTypes.Message[], options: LineTypes.MessageOptions = {}) {
+    if (!this._session) {
+      warning(false, `push: should not be called in context without session`);
+      return;
+    }
+
+    this._isHandled = true;
+
+    if (this._shouldBatch) {
+      this._pushMessages.push(...messages);
+      return;
+    }
+
+    const sessionType = this._session.type;
+    return this._client.push(this._session[sessionType].id, messages, {
+      ...(this._customAccessToken
+        ? { accessToken: this._customAccessToken }
+        : undefined),
+      ...options,
+    });
+  }
+
+  pushText(text: string, options?: LineTypes.MessageOptions) {
+    return this.push([Line.createText(text, options)], options);
+  }
+
+  pushImage(
+    image: {
+      originalContentUrl: string;
+      previewImageUrl?: string;
+    },
+    options?: LineTypes.MessageOptions
+  ) {
+    return this.push([Line.createImage(image, options)], options);
+  }
+
+  pushVideo(
+    video: {
+      originalContentUrl: string;
+      previewImageUrl: string;
+    },
+    options?: LineTypes.MessageOptions
+  ) {
+    return this.push([Line.createVideo(video, options)], options);
+  }
+
+  pushAudio(
+    audio: {
+      originalContentUrl: string;
+      duration: number;
+    },
+    options?: LineTypes.MessageOptions
+  ) {
+    return this.push([Line.createAudio(audio, options)], options);
+  }
+
+  pushLocation(
+    location: LineTypes.Location,
+    options?: LineTypes.MessageOptions
+  ) {
+    return this.push([Line.createLocation(location, options)], options);
+  }
+
+  pushSticker(
+    sticker: Omit<LineTypes.StickerMessage, 'type'>,
+    options?: LineTypes.MessageOptions
+  ) {
+    return this.push([Line.createSticker(sticker, options)], options);
+  }
+
+  pushImagemap(
+    altText: string,
+    imagemap: Omit<LineTypes.ImagemapMessage, 'type' | 'altText'>,
+    options?: LineTypes.MessageOptions
+  ) {
+    return this.push(
+      [Line.createImagemap(altText, imagemap, options)],
+      options
+    );
+  }
+
+  pushFlex(
+    altText: string,
+    flex: LineTypes.FlexContainer,
+    options?: LineTypes.MessageOptions
+  ) {
+    return this.push([Line.createFlex(altText, flex, options)], options);
+  }
+
+  pushTemplate(
+    altText: string,
+    template: LineTypes.Template,
+    options?: LineTypes.MessageOptions
+  ) {
+    return this.push(
+      [Line.createTemplate(altText, template, options)],
+      options
+    );
+  }
+
+  pushButtonTemplate(
+    altText: string,
+    buttonTemplate: Omit<LineTypes.ButtonsTemplate, 'type'>,
+    options?: LineTypes.MessageOptions
+  ) {
+    return this.push(
+      [Line.createButtonTemplate(altText, buttonTemplate, options)],
+      options
+    );
+  }
+
+  pushButtonsTemplate(
+    altText: string,
+    buttonTemplate: Omit<LineTypes.ButtonsTemplate, 'type'>,
+    options?: LineTypes.MessageOptions
+  ) {
+    return this.pushButtonTemplate(altText, buttonTemplate, options);
+  }
+
+  pushConfirmTemplate(
+    altText: string,
+    confirmTemplate: Omit<LineTypes.ConfirmTemplate, 'type'>,
+    options: LineTypes.MessageOptions
+  ) {
+    return this.push(
+      [Line.createConfirmTemplate(altText, confirmTemplate, options)],
+      options
+    );
+  }
+
+  pushCarouselTemplate(
+    altText: string,
+    columns: LineTypes.ColumnObject[],
+    {
+      imageAspectRatio,
+      imageSize,
+      ...options
+    }: {
+      imageAspectRatio?: 'rectangle' | 'square';
+      imageSize?: 'cover' | 'contain';
+    } & LineTypes.MessageOptions = {}
+  ) {
+    return this.push(
+      [
+        Line.createCarouselTemplate(altText, columns, {
+          imageAspectRatio,
+          imageSize,
+          ...options,
+        }),
+      ],
+      options
+    );
+  }
+
+  pushImageCarouselTemplate(
+    altText: string,
+    columns: LineTypes.ImageCarouselColumnObject[],
+    options: LineTypes.MessageOptions
+  ) {
+    return this.push(
+      [Line.createImageCarouselTemplate(altText, columns, options)],
+      options
+    );
+  }
+
+  send(messages: LineTypes.Message[], options: LineTypes.MessageOptions = {}) {
+    if (this._sendMethod === 'push') {
+      return this.push(messages, options);
+    }
+    return this.reply(messages, options);
+  }
+
+  sendText(text: string, options?: LineTypes.MessageOptions) {
+    return this.send([Line.createText(text, options)], options);
+  }
+
+  sendImage(
+    image: {
+      originalContentUrl: string;
+      previewImageUrl?: string;
+    },
+    options?: LineTypes.MessageOptions
+  ) {
+    return this.send([Line.createImage(image, options)], options);
+  }
+
+  sendVideo(
+    video: {
+      originalContentUrl: string;
+      previewImageUrl: string;
+    },
+    options?: LineTypes.MessageOptions
+  ) {
+    return this.send([Line.createVideo(video, options)], options);
+  }
+
+  sendAudio(
+    audio: {
+      originalContentUrl: string;
+      duration: number;
+    },
+    options?: LineTypes.MessageOptions
+  ) {
+    return this.send([Line.createAudio(audio, options)], options);
+  }
+
+  sendLocation(
+    location: LineTypes.Location,
+    options?: LineTypes.MessageOptions
+  ) {
+    return this.send([Line.createLocation(location, options)], options);
+  }
+
+  sendSticker(
+    sticker: Omit<LineTypes.StickerMessage, 'type'>,
+    options?: LineTypes.MessageOptions
+  ) {
+    return this.send([Line.createSticker(sticker, options)], options);
+  }
+
+  sendImagemap(
+    altText: string,
+    imagemap: Omit<LineTypes.ImagemapMessage, 'type' | 'altText'>,
+    options?: LineTypes.MessageOptions
+  ) {
+    return this.send(
+      [Line.createImagemap(altText, imagemap, options)],
+      options
+    );
+  }
+
+  sendFlex(
+    altText: string,
+    flex: LineTypes.FlexContainer,
+    options?: LineTypes.MessageOptions
+  ) {
+    return this.send([Line.createFlex(altText, flex, options)], options);
+  }
+
+  sendTemplate(
+    altText: string,
+    template: LineTypes.Template,
+    options?: LineTypes.MessageOptions
+  ) {
+    return this.send(
+      [Line.createTemplate(altText, template, options)],
+      options
+    );
+  }
+
+  sendButtonTemplate(
+    altText: string,
+    buttonTemplate: Omit<LineTypes.ButtonsTemplate, 'type'>,
+    options?: LineTypes.MessageOptions
+  ) {
+    return this.send(
+      [Line.createButtonTemplate(altText, buttonTemplate, options)],
+      options
+    );
+  }
+
+  sendButtonsTemplate(
+    altText: string,
+    buttonTemplate: Omit<LineTypes.ButtonsTemplate, 'type'>,
+    options?: LineTypes.MessageOptions
+  ) {
+    return this.sendButtonTemplate(altText, buttonTemplate, options);
+  }
+
+  sendConfirmTemplate(
+    altText: string,
+    confirmTemplate: Omit<LineTypes.ConfirmTemplate, 'type'>,
+    options: LineTypes.MessageOptions
+  ) {
+    return this.send(
+      [Line.createConfirmTemplate(altText, confirmTemplate, options)],
+      options
+    );
+  }
+
+  sendCarouselTemplate(
+    altText: string,
+    columns: LineTypes.ColumnObject[],
+    {
+      imageAspectRatio,
+      imageSize,
+      ...options
+    }: {
+      imageAspectRatio?: 'rectangle' | 'square';
+      imageSize?: 'cover' | 'contain';
+    } & LineTypes.MessageOptions = {}
+  ) {
+    return this.send(
+      [
+        Line.createCarouselTemplate(altText, columns, {
+          imageAspectRatio,
+          imageSize,
+          ...options,
+        }),
+      ],
+      options
+    );
+  }
+
+  sendImageCarouselTemplate(
+    altText: string,
+    columns: LineTypes.ImageCarouselColumnObject[],
+    options: LineTypes.MessageOptions
+  ) {
+    return this.send(
+      [Line.createImageCarouselTemplate(altText, columns, options)],
+      options
+    );
+  }
 }
-
-const types: { name: string; arity: number; aliases?: string[] }[] = [
-  { name: '', arity: 3 },
-  { name: 'Text', arity: 3 },
-  { name: 'Image', arity: 3 },
-  { name: 'Video', arity: 3 },
-  { name: 'Audio', arity: 3 },
-  { name: 'Location', arity: 3 },
-  { name: 'Sticker', arity: 3 },
-  { name: 'Imagemap', arity: 4 },
-  { name: 'Flex', arity: 4 },
-  { name: 'Template', arity: 4 },
-  { name: 'ButtonTemplate', aliases: ['ButtonsTemplate'], arity: 4 },
-  { name: 'ConfirmTemplate', arity: 4 },
-  { name: 'CarouselTemplate', arity: 4 },
-  { name: 'ImageCarouselTemplate', arity: 4 },
-];
-
-types.forEach(({ name, arity, aliases }) => {
-  [name].concat(aliases || []).forEach(type => {
-    Object.defineProperty(LineContext.prototype, `reply${type}`, {
-      enumerable: false,
-      configurable: true,
-      writable: true,
-      async value(...args: any[]) {
-        invariant(!this._isReplied, 'Can not reply event multiple times');
-
-        this._isHandled = true;
-
-        if (this._shouldBatch) {
-          if (name === '') {
-            this._replyMessages.push(...args[0]);
-          } else {
-            this._replyMessages.push((Line as any)[`create${name}`](...args));
-          }
-          return;
-        }
-
-        this._isReplied = true;
-
-        const options = args[arity - 2];
-        args[arity - 2] = {
-          ...(this._customAccessToken
-            ? { accessToken: this._customAccessToken }
-            : undefined),
-          ...options,
-        };
-
-        return this._client[`reply${name}`](this._event.replyToken, ...args);
-      },
-    });
-
-    Object.defineProperty(LineContext.prototype, `push${type}`, {
-      enumerable: false,
-      configurable: true,
-      writable: true,
-      async value(...args: any[]) {
-        if (!this._session) {
-          warning(
-            false,
-            `push${type}: should not be called in context without session`
-          );
-          return;
-        }
-
-        this._isHandled = true;
-
-        if (this._shouldBatch) {
-          if (name === '') {
-            this._pushMessages.push(...args[0]);
-          } else {
-            this._pushMessages.push((Line as any)[`create${name}`](...args));
-          }
-          return;
-        }
-
-        const options = args[arity - 2];
-        args[arity - 2] = {
-          ...(this._customAccessToken
-            ? { accessToken: this._customAccessToken }
-            : undefined),
-          ...options,
-        };
-
-        const sessionType = this._session.type;
-        return this._client[`push${name}`](
-          this._session[sessionType].id,
-          ...args
-        );
-      },
-    });
-  });
-});
-
-types
-  .filter(({ name }) => name !== 'Text')
-  .forEach(({ name, aliases }) => {
-    [name].concat(aliases || []).forEach(type => {
-      Object.defineProperty(LineContext.prototype, `send${type}`, {
-        enumerable: false,
-        configurable: true,
-        writable: true,
-        async value(...args: any[]) {
-          return this[`${this._sendMethod}${type}`](...args);
-        },
-      });
-    });
-  });
 
 export default LineContext;
