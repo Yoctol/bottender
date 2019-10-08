@@ -52,7 +52,7 @@
     "messaging-api-line": "^1.0.0-alpha.2",
     "messaging-api-messenger": "^1.0.0-alpha.2",
     "messaging-api-slack": "^1.0.0-alpha.2",
-    "messaging-api-telegram": "^1.0.0-alpha.2",
+    "messaging-api-telegram": "^1.0.0-alpha.3",
     "messaging-api-viber": "^1.0.0-alpha.2",
     "messenger-batch": "^0.3.1",
     "minimist": "^1.2.0",

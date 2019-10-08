@@ -37,7 +37,10 @@ class TelegramContext extends Context implements PlatformContext {
    * Send text to the owner of then session.
    *
    */
-  async sendText(text: string, options?: Type.SendMessageOption): Promise<Type.Message | null> {
+  async sendText(
+    text: string,
+    options?: Type.SendMessageOption
+  ): Promise<Type.Message | null> {
     if (!this._session) {
       warning(
         false,
@@ -50,7 +53,7 @@ class TelegramContext extends Context implements PlatformContext {
 
     const chatId = this._getChatId();
 
-    if(chatId === null){
+    if (chatId === null) {
       warning(
         false,
         'sendText: should not be called in context without chatId'
@@ -65,7 +68,10 @@ class TelegramContext extends Context implements PlatformContext {
    * Send text to the owner of then session.
    *
    */
-  async sendMessage(text: string, options?: Type.SendMessageOption): Promise<Type.Message | null> {
+  async sendMessage(
+    text: string,
+    options?: Type.SendMessageOption
+  ): Promise<Type.Message | null> {
     return this.sendText(text, options);
   }
 
@@ -106,7 +112,10 @@ class TelegramContext extends Context implements PlatformContext {
     return null;
   }
 
-  async answerShippingQuery(ok: boolean, options?: Type.AnswerShippingQueryOption): Promise<boolean | null> {
+  async answerShippingQuery(
+    ok: boolean,
+    options?: Type.AnswerShippingQueryOption
+  ): Promise<boolean | null> {
     if (!this._event.isShippingQuery) {
       warning(
         false,
@@ -122,7 +131,10 @@ class TelegramContext extends Context implements PlatformContext {
     return this._client.answerShippingQuery(shippingQueryId, ok, options);
   }
 
-  async answerPreCheckoutQuery(ok: boolean, options?: Type.AnswerPreCheckoutQueryOption): Promise<boolean | null> {
+  async answerPreCheckoutQuery(
+    ok: boolean,
+    options?: Type.AnswerPreCheckoutQueryOption
+  ): Promise<boolean | null> {
     if (!this._event.isPreCheckoutQuery) {
       warning(
         false,
@@ -138,7 +150,10 @@ class TelegramContext extends Context implements PlatformContext {
     return this._client.answerPreCheckoutQuery(preCheckoutQueryId, ok, options);
   }
 
-  async answerInlineQuery(results: Type.InlineQueryResult[], options?: Type.AnswerInlineQueryOption): Promise<boolean | null> {
+  async answerInlineQuery(
+    results: Type.InlineQueryResult[],
+    options?: Type.AnswerInlineQueryOption
+  ): Promise<boolean | null> {
     if (!this._event.isInlineQuery) {
       warning(
         false,
@@ -154,7 +169,9 @@ class TelegramContext extends Context implements PlatformContext {
     return this._client.answerInlineQuery(inlineQueryId, results, options);
   }
 
-  async getUserProfilePhotos(options?: Type.GetUserProfilePhotosOption): Promise<Type.UserProfilePhotos | null> {
+  async getUserProfilePhotos(
+    options?: Type.GetUserProfilePhotosOption
+  ): Promise<Type.UserProfilePhotos | null> {
     if (!this._session) {
       warning(
         false,
@@ -169,7 +186,7 @@ class TelegramContext extends Context implements PlatformContext {
     );
   }
 
-  async getChat(): Promise<Type.Chat | null>  {
+  async getChat(): Promise<Type.Chat | null> {
     if (!this._session) {
       warning(
         false,
@@ -180,11 +197,8 @@ class TelegramContext extends Context implements PlatformContext {
 
     const chatId = this._getChatId();
 
-    if(chatId === null){
-      warning(
-        false,
-        'getChat: should not be called in context without chatId'
-      );
+    if (chatId === null) {
+      warning(false, 'getChat: should not be called in context without chatId');
       return null;
     }
 
@@ -202,7 +216,7 @@ class TelegramContext extends Context implements PlatformContext {
 
     const chatId = this._getChatId();
 
-    if(chatId === null){
+    if (chatId === null) {
       warning(
         false,
         'getChatAdministrators: should not be called in context without chatId'
@@ -224,7 +238,7 @@ class TelegramContext extends Context implements PlatformContext {
 
     const chatId = this._getChatId();
 
-    if(chatId === null){
+    if (chatId === null) {
       warning(
         false,
         'getChatMembersCount: should not be called in context without chatId'
@@ -246,7 +260,7 @@ class TelegramContext extends Context implements PlatformContext {
 
     const chatId = this._getChatId();
 
-    if(chatId === null){
+    if (chatId === null) {
       warning(
         false,
         'getChatMember: should not be called in context without chatId'
@@ -257,7 +271,9 @@ class TelegramContext extends Context implements PlatformContext {
     return this._client.getChatMember(chatId, userId);
   }
 
-  async getGameHighScores(options?: Type.GetGameHighScoresOption): Promise<Type.GameHighScore[] | null> {
+  async getGameHighScores(
+    options?: Type.GetGameHighScoresOption
+  ): Promise<Type.GameHighScore[] | null> {
     if (!this._session) {
       warning(
         false,
@@ -268,7 +284,7 @@ class TelegramContext extends Context implements PlatformContext {
 
     const chatId = this._getChatId();
 
-    if(chatId === null){
+    if (chatId === null) {
       warning(
         false,
         'getGameHighScores: should not be called in context without chatId'
@@ -279,7 +295,10 @@ class TelegramContext extends Context implements PlatformContext {
     return this._client.getGameHighScores(chatId, options);
   }
 
-  async editMessageText(text: string, options?: Type.EditMessageTextOption): Promise<Type.Message | boolean | null> {
+  async editMessageText(
+    text: string,
+    options?: Type.EditMessageTextOption
+  ): Promise<Type.Message | boolean | null> {
     if (!this._session) {
       warning(
         false,
@@ -292,7 +311,7 @@ class TelegramContext extends Context implements PlatformContext {
 
     const chatId = this._getChatId();
 
-    if(chatId === null){
+    if (chatId === null) {
       warning(
         false,
         'editMessageText: should not be called in context without chatId'
@@ -300,10 +319,19 @@ class TelegramContext extends Context implements PlatformContext {
       return null;
     }
 
-    return this._client.editMessageText(text, { chatId, ...options });
+    const messageId = 1;
+
+    return this._client.editMessageText(text, {
+      chatId,
+      messageId,
+      ...options,
+    });
   }
 
-  async editMessageCaption(caption: string, options?: Type.EditMessageCaptionOption): Promise<Type.Message | boolean | null> {
+  async editMessageCaption(
+    caption: string,
+    options?: Type.EditMessageCaptionOption
+  ): Promise<Type.Message | boolean | null> {
     if (!this._session) {
       warning(
         false,
@@ -316,7 +344,7 @@ class TelegramContext extends Context implements PlatformContext {
 
     const chatId = this._getChatId();
 
-    if(chatId === null){
+    if (chatId === null) {
       warning(
         false,
         'editMessageCaption: should not be called in context without chatId'
@@ -324,8 +352,11 @@ class TelegramContext extends Context implements PlatformContext {
       return null;
     }
 
+    const messageId = 1;
+
     return this._client.editMessageCaption(caption, {
       chatId,
+      messageId,
       ...options,
     });
   }
@@ -346,7 +377,7 @@ class TelegramContext extends Context implements PlatformContext {
 
     const chatId = this._getChatId();
 
-    if(chatId === null){
+    if (chatId === null) {
       warning(
         false,
         'editMessageReplyMarkup: should not be called in context without chatId'
@@ -354,8 +385,11 @@ class TelegramContext extends Context implements PlatformContext {
       return null;
     }
 
+    const messageId = 1;
+
     return this._client.editMessageReplyMarkup(replyMarkup, {
       chatId,
+      messageId,
       ...options,
     });
   }
@@ -373,7 +407,7 @@ class TelegramContext extends Context implements PlatformContext {
 
     const chatId = this._getChatId();
 
-    if(chatId === null){
+    if (chatId === null) {
       warning(
         false,
         'deleteMessage: should not be called in context without chatId'
@@ -385,7 +419,7 @@ class TelegramContext extends Context implements PlatformContext {
   }
 
   async editMessageLiveLocation(
-    location: { latitude: number; longitude: number },
+    location: Type.Location,
     options?: Type.EditMessageLiveLocationOption
   ): Promise<Type.Message | boolean | null> {
     if (!this._session) {
@@ -400,7 +434,7 @@ class TelegramContext extends Context implements PlatformContext {
 
     const chatId = this._getChatId();
 
-    if(chatId === null){
+    if (chatId === null) {
       warning(
         false,
         'editMessageLiveLocation: should not be called in context without chatId'
@@ -408,13 +442,18 @@ class TelegramContext extends Context implements PlatformContext {
       return null;
     }
 
+    const messageId = 1;
+
     return this._client.editMessageLiveLocation(location, {
       chatId,
+      messageId,
       ...options,
     });
   }
 
-  async stopMessageLiveLocation(options?: Type.StopMessageLiveLocationOption): Promise<Type.Message | boolean | null> {
+  async stopMessageLiveLocation(
+    options?: Type.StopMessageLiveLocationOption
+  ): Promise<Type.Message | boolean | null> {
     if (!this._session) {
       warning(
         false,
@@ -427,7 +466,7 @@ class TelegramContext extends Context implements PlatformContext {
 
     const chatId = this._getChatId();
 
-    if(chatId === null){
+    if (chatId === null) {
       warning(
         false,
         'stopMessageLiveLocation: should not be called in context without chatId'
@@ -435,8 +474,11 @@ class TelegramContext extends Context implements PlatformContext {
       return null;
     }
 
+    const messageId = 1;
+
     return this._client.stopMessageLiveLocation({
       chatId,
+      messageId,
       ...options,
     });
   }
@@ -458,7 +500,7 @@ class TelegramContext extends Context implements PlatformContext {
 
     const chatId = this._getChatId();
 
-    if(chatId === null){
+    if (chatId === null) {
       warning(
         false,
         'forwardMessageFrom: should not be called in context without chatId'
@@ -466,12 +508,7 @@ class TelegramContext extends Context implements PlatformContext {
       return null;
     }
 
-    return this._client.forwardMessage(
-      chatId,
-      fromChatId,
-      messageId,
-      options
-    );
+    return this._client.forwardMessage(chatId, fromChatId, messageId, options);
   }
 
   async forwardMessageTo(
@@ -491,7 +528,7 @@ class TelegramContext extends Context implements PlatformContext {
 
     const chatId = this._getChatId();
 
-    if(chatId === null){
+    if (chatId === null) {
       warning(
         false,
         'forwardMessageTo: should not be called in context without chatId'
@@ -499,12 +536,7 @@ class TelegramContext extends Context implements PlatformContext {
       return null;
     }
 
-    return this._client.forwardMessage(
-      toChatId,
-      chatId,
-      messageId,
-      options
-    );
+    return this._client.forwardMessage(toChatId, chatId, messageId, options);
   }
 
   // Send API
@@ -524,7 +556,7 @@ class TelegramContext extends Context implements PlatformContext {
 
     const chatId = this._getChatId();
 
-    if(chatId === null){
+    if (chatId === null) {
       warning(
         false,
         'sendPhoto: should not be called in context without chatId'
@@ -551,7 +583,7 @@ class TelegramContext extends Context implements PlatformContext {
 
     const chatId = this._getChatId();
 
-    if(chatId === null){
+    if (chatId === null) {
       warning(
         false,
         'sendAudio: should not be called in context without chatId'
@@ -578,7 +610,7 @@ class TelegramContext extends Context implements PlatformContext {
 
     const chatId = this._getChatId();
 
-    if(chatId === null){
+    if (chatId === null) {
       warning(
         false,
         'sendDocument: should not be called in context without chatId'
@@ -605,7 +637,7 @@ class TelegramContext extends Context implements PlatformContext {
 
     const chatId = this._getChatId();
 
-    if(chatId === null){
+    if (chatId === null) {
       warning(
         false,
         'sendSticker: should not be called in context without chatId'
@@ -632,7 +664,7 @@ class TelegramContext extends Context implements PlatformContext {
 
     const chatId = this._getChatId();
 
-    if(chatId === null){
+    if (chatId === null) {
       warning(
         false,
         'sendVideo: should not be called in context without chatId'
@@ -659,7 +691,7 @@ class TelegramContext extends Context implements PlatformContext {
 
     const chatId = this._getChatId();
 
-    if(chatId === null){
+    if (chatId === null) {
       warning(
         false,
         'sendVoice: should not be called in context without chatId'
@@ -686,7 +718,7 @@ class TelegramContext extends Context implements PlatformContext {
 
     const chatId = this._getChatId();
 
-    if(chatId === null){
+    if (chatId === null) {
       warning(
         false,
         'sendVideoNote: should not be called in context without chatId'
@@ -713,7 +745,7 @@ class TelegramContext extends Context implements PlatformContext {
 
     const chatId = this._getChatId();
 
-    if(chatId === null){
+    if (chatId === null) {
       warning(
         false,
         'sendMediaGroup: should not be called in context without chatId'
@@ -740,7 +772,7 @@ class TelegramContext extends Context implements PlatformContext {
 
     const chatId = this._getChatId();
 
-    if(chatId === null){
+    if (chatId === null) {
       warning(
         false,
         'sendLocation: should not be called in context without chatId'
@@ -752,18 +784,7 @@ class TelegramContext extends Context implements PlatformContext {
   }
 
   async sendVenue(
-    // TODO: replace this parameter with Type.Venue
-    {
-      latitude,
-      longitude,
-      title,
-      address,
-    }: {
-      latitude: number;
-      longitude: number;
-      title: string;
-      address: string;
-    },
+    venue: Type.Venue,
     options?: Type.SendVenueOption
   ): Promise<Type.Message | null> {
     if (!this._session) {
@@ -778,7 +799,7 @@ class TelegramContext extends Context implements PlatformContext {
 
     const chatId = this._getChatId();
 
-    if(chatId === null){
+    if (chatId === null) {
       warning(
         false,
         'sendVenue: should not be called in context without chatId'
@@ -786,12 +807,7 @@ class TelegramContext extends Context implements PlatformContext {
       return null;
     }
 
-    return this._client.sendVenue(chatId, {
-      latitude,
-      longitude,
-      title,
-      address,
-    }, options);
+    return this._client.sendVenue(chatId, venue, options);
   }
 
   async sendContact(
@@ -810,7 +826,7 @@ class TelegramContext extends Context implements PlatformContext {
 
     const chatId = this._getChatId();
 
-    if(chatId === null){
+    if (chatId === null) {
       warning(
         false,
         'sendContact: should not be called in context without chatId'
@@ -834,7 +850,7 @@ class TelegramContext extends Context implements PlatformContext {
 
     const chatId = this._getChatId();
 
-    if(chatId === null){
+    if (chatId === null) {
       warning(
         false,
         'sendChatAction: should not be called in context without chatId'
@@ -862,7 +878,7 @@ class TelegramContext extends Context implements PlatformContext {
 
     const chatId = this._getChatId();
 
-    if(chatId === null){
+    if (chatId === null) {
       warning(
         false,
         'kickChatMember: should not be called in context without chatId'
@@ -886,7 +902,7 @@ class TelegramContext extends Context implements PlatformContext {
 
     const chatId = this._getChatId();
 
-    if(chatId === null){
+    if (chatId === null) {
       warning(
         false,
         'unbanChatMember: should not be called in context without chatId'
@@ -914,7 +930,7 @@ class TelegramContext extends Context implements PlatformContext {
 
     const chatId = this._getChatId();
 
-    if(chatId === null){
+    if (chatId === null) {
       warning(
         false,
         'restrictChatMember: should not be called in context without chatId'
@@ -922,7 +938,12 @@ class TelegramContext extends Context implements PlatformContext {
       return null;
     }
 
-    return this._client.restrictChatMember(chatId, userId, permissions, options);
+    return this._client.restrictChatMember(
+      chatId,
+      userId,
+      permissions,
+      options
+    );
   }
 
   async promoteChatMember(
@@ -941,7 +962,7 @@ class TelegramContext extends Context implements PlatformContext {
 
     const chatId = this._getChatId();
 
-    if(chatId === null){
+    if (chatId === null) {
       warning(
         false,
         'promoteChatMember: should not be called in context without chatId'
@@ -965,7 +986,7 @@ class TelegramContext extends Context implements PlatformContext {
 
     const chatId = this._getChatId();
 
-    if(chatId === null){
+    if (chatId === null) {
       warning(
         false,
         'exportChatInviteLink: should not be called in context without chatId'
@@ -991,7 +1012,7 @@ class TelegramContext extends Context implements PlatformContext {
 
     const chatId = this._getChatId();
 
-    if(chatId === null){
+    if (chatId === null) {
       warning(
         false,
         'deleteChatPhoto: should not be called in context without chatId'
@@ -1015,7 +1036,7 @@ class TelegramContext extends Context implements PlatformContext {
 
     const chatId = this._getChatId();
 
-    if(chatId === null){
+    if (chatId === null) {
       warning(
         false,
         'setChatTitle: should not be called in context without chatId'
@@ -1026,9 +1047,7 @@ class TelegramContext extends Context implements PlatformContext {
     return this._client.setChatTitle(chatId, title);
   }
 
-  async setChatDescription(
-    description: string
-  ): Promise<boolean | null> {
+  async setChatDescription(description: string): Promise<boolean | null> {
     if (!this._session) {
       warning(
         false,
@@ -1041,7 +1060,7 @@ class TelegramContext extends Context implements PlatformContext {
 
     const chatId = this._getChatId();
 
-    if(chatId === null){
+    if (chatId === null) {
       warning(
         false,
         'setChatDescription: should not be called in context without chatId'
@@ -1052,9 +1071,7 @@ class TelegramContext extends Context implements PlatformContext {
     return this._client.setChatDescription(chatId, description);
   }
 
-  async setChatStickerSet(
-    stickerSetName: string
-  ): Promise<boolean | null> {
+  async setChatStickerSet(stickerSetName: string): Promise<boolean | null> {
     if (!this._session) {
       warning(
         false,
@@ -1067,7 +1084,7 @@ class TelegramContext extends Context implements PlatformContext {
 
     const chatId = this._getChatId();
 
-    if(chatId === null){
+    if (chatId === null) {
       warning(
         false,
         'setChatStickerSet: should not be called in context without chatId'
@@ -1091,7 +1108,7 @@ class TelegramContext extends Context implements PlatformContext {
 
     const chatId = this._getChatId();
 
-    if(chatId === null){
+    if (chatId === null) {
       warning(
         false,
         'deleteChatStickerSet: should not be called in context without chatId'
@@ -1118,7 +1135,7 @@ class TelegramContext extends Context implements PlatformContext {
 
     const chatId = this._getChatId();
 
-    if(chatId === null){
+    if (chatId === null) {
       warning(
         false,
         'pinChatMessage: should not be called in context without chatId'
@@ -1142,7 +1159,7 @@ class TelegramContext extends Context implements PlatformContext {
 
     const chatId = this._getChatId();
 
-    if(chatId === null){
+    if (chatId === null) {
       warning(
         false,
         'unpinChatMessage: should not be called in context without chatId'
@@ -1166,7 +1183,7 @@ class TelegramContext extends Context implements PlatformContext {
 
     const chatId = this._getChatId();
 
-    if(chatId === null){
+    if (chatId === null) {
       warning(
         false,
         'leaveChat: should not be called in context without chatId'
@@ -1194,7 +1211,7 @@ class TelegramContext extends Context implements PlatformContext {
 
     const chatId = this._getChatId();
 
-    if(chatId === null){
+    if (chatId === null) {
       warning(
         false,
         'sendInvoice: should not be called in context without chatId'
@@ -1222,7 +1239,7 @@ class TelegramContext extends Context implements PlatformContext {
 
     const chatId = this._getChatId();
 
-    if(chatId === null){
+    if (chatId === null) {
       warning(
         false,
         'sendGame: should not be called in context without chatId'

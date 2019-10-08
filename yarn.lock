@@ -6981,10 +6981,10 @@ messaging-api-slack@^1.0.0-alpha.2:
     messaging-api-common "^1.0.0-alpha.2"
     url-join "^4.0.1"
 
-messaging-api-telegram@^1.0.0-alpha.2:
-  version "1.0.0-alpha.2"
-  resolved "https://registry.yarnpkg.com/messaging-api-telegram/-/messaging-api-telegram-1.0.0-alpha.2.tgz#cb3787269ba186120d412a53499c70797ce3c34a"
-  integrity sha512-Cp2UnkkJunN50BK9ErhgoUI9MsWLZRGHfHllW6a220OziTwo65mSwwrMi/qmhHbAAVXYiBzFk8KRpXycC0um0w==
+messaging-api-telegram@^1.0.0-alpha.3:
+  version "1.0.0-alpha.3"
+  resolved "https://registry.yarnpkg.com/messaging-api-telegram/-/messaging-api-telegram-1.0.0-alpha.3.tgz#8fe2fc681899d045489483ac54542a631cbf820d"
+  integrity sha512-N0V1xC/dMHuvlXYB0TEOiBgCnYsvVUeZ1Qfw8Hy2T5nTXnKZeTnaz5dJdobOGDeCVgzJIJbeOHm6RgBHXj57og==
   dependencies:
     axios "^0.19.0"
     axios-error "^1.0.0-alpha.2"
