@@ -45,7 +45,7 @@ class HomeSplash extends Component {
             A framework for building <br />
             conversational user interfaces.
           </h2>
-          <a className="primary large" href={docUrl('doc1')}>
+          <a className="primary large" href={docUrl('getting-started')}>
             Get Started
           </a>
         </div>
@@ -151,7 +151,7 @@ class Index extends Component {
               />
               <div className="get-started-content">
                 <h2>Build Your Bot Today!</h2>
-                <a className="primary large" href={docUrl('doc1')}>
+                <a className="primary large" href={docUrl('getting-started')}>
                   Get Started Now
                 </a>
               </div>
