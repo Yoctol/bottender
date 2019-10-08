@@ -296,6 +296,7 @@ class TelegramContext extends Context implements PlatformContext {
   }
 
   async editMessageText(
+    messageId: number,
     text: string,
     options?: Type.EditMessageTextOption
   ): Promise<Type.Message | boolean | null> {
@@ -319,8 +320,6 @@ class TelegramContext extends Context implements PlatformContext {
       return null;
     }
 
-    const messageId = 1;
-
     return this._client.editMessageText(text, {
       chatId,
       messageId,
@@ -329,6 +328,7 @@ class TelegramContext extends Context implements PlatformContext {
   }
 
   async editMessageCaption(
+    messageId: number,
     caption: string,
     options?: Type.EditMessageCaptionOption
   ): Promise<Type.Message | boolean | null> {
@@ -352,8 +352,6 @@ class TelegramContext extends Context implements PlatformContext {
       return null;
     }
 
-    const messageId = 1;
-
     return this._client.editMessageCaption(caption, {
       chatId,
       messageId,
@@ -362,6 +360,7 @@ class TelegramContext extends Context implements PlatformContext {
   }
 
   async editMessageReplyMarkup(
+    messageId: number,
     replyMarkup: Type.InlineKeyboardMarkup,
     options?: Type.EditMessageReplyMarkupOption
   ): Promise<Type.Message | boolean | null> {
@@ -384,8 +383,6 @@ class TelegramContext extends Context implements PlatformContext {
       );
       return null;
     }
-
-    const messageId = 1;
 
     return this._client.editMessageReplyMarkup(replyMarkup, {
       chatId,
@@ -419,6 +416,7 @@ class TelegramContext extends Context implements PlatformContext {
   }
 
   async editMessageLiveLocation(
+    messageId: number,
     location: Type.Location,
     options?: Type.EditMessageLiveLocationOption
   ): Promise<Type.Message | boolean | null> {
@@ -442,8 +440,6 @@ class TelegramContext extends Context implements PlatformContext {
       return null;
     }
 
-    const messageId = 1;
-
     return this._client.editMessageLiveLocation(location, {
       chatId,
       messageId,
@@ -452,6 +448,7 @@ class TelegramContext extends Context implements PlatformContext {
   }
 
   async stopMessageLiveLocation(
+    messageId: number,
     options?: Type.StopMessageLiveLocationOption
   ): Promise<Type.Message | boolean | null> {
     if (!this._session) {
@@ -473,8 +470,6 @@ class TelegramContext extends Context implements PlatformContext {
       );
       return null;
     }
-
-    const messageId = 1;
 
     return this._client.stopMessageLiveLocation({
       chatId,
