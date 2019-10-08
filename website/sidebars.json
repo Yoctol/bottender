@@ -1,10 +1,28 @@
 {
   "docs": {
-    "Docusaurus": ["doc1"],
-    "First Category": ["doc2"],
-    "Second Category": ["doc3"]
+    "Installation": ["getting-started"],
+    "Platforms": ["console", "messenger", "line", "slack", "telegram", "viber"],
+    "Guides": [
+      "commands",
+      "deployment",
+      "error-handling",
+      "intents",
+      "middleware",
+      "server",
+      "session",
+      "state",
+      "testing",
+      "custom-connector",
+      "troubleshooting"
+    ]
   },
-  "docs-other": {
-    "First Category": ["doc4", "doc5"]
+  "api": {
+    "Common": ["api-context", "api-event", "api-handler"],
+    "Console": ["api-consolecontext", "api-consoleevent"],
+    "Messenger": ["api-messengercontext", "api-messengerevent"],
+    "LINE": ["api-linecontext", "api-lineevent"],
+    "Slack": ["api-slackcontext", "api-slackevent"],
+    "Telegram": ["api-telegramcontext", "api-telegramevent"],
+    "Viber": ["api-vibercontext", "api-viberevent"]
   }
 }

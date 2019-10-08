@@ -5,6 +5,51 @@
     "previous": "Previous",
     "tagline": "Make Bots Your Way, Fast and Flexible.",
     "docs": {
+      "api-consolecontext": {
+        "title": "ConsoleContext"
+      },
+      "api-console-event": {
+        "title": "ConsoleEvent"
+      },
+      "api-context": {
+        "title": "Context"
+      },
+      "api-event": {
+        "title": "Event"
+      },
+      "api-handler": {
+        "title": "Handler"
+      },
+      "api-linecontext": {
+        "title": "LineContext"
+      },
+      "api-lineevent": {
+        "title": "LineEvent"
+      },
+      "api-messengercontext": {
+        "title": "MessengerContext"
+      },
+      "api-messengerevent": {
+        "title": "MessengerEvent"
+      },
+      "api-slackcontext": {
+        "title": "SlackContext"
+      },
+      "api-slackevent": {
+        "title": "SlackEvent"
+      },
+      "api-telegramcontext": {
+        "title": "TelegramContext"
+      },
+      "api-telegramevent": {
+        "title": "TelegramEvent"
+      },
+      "api-vibercontext": {
+        "title": "ViberContext"
+      },
+      "api-viberevent": {
+        "title": "ViberEvent"
+      },
       "doc1": {
         "title": "Latin-ish",
         "sidebar_label": "Example Page"
@@ -20,17 +65,79 @@
       },
       "doc5": {
         "title": "Fifth Document"
+      },
+      "getting-started": {
+        "title": "Getting Started"
+      },
+      "commands": {
+        "title": "Commands"
+      },
+      "custome-connector": {
+        "title": "CustomConnector"
+      },
+      "deployment": {
+        "title": "Deployment"
+      },
+      "error-handling": {
+        "title": "Error Handling"
+      },
+      "intents": {
+        "title": "Intents"
+      },
+      "middleware": {
+        "title": "Middleware"
+      },
+      "server": {
+        "title": "HTTP Server"
+      },
+      "session": {
+        "title": "Conversation Session"
+      },
+      "state": {
+        "title": "State"
+      },
+      "testing": {
+        "title": "Testing"
+      },
+      "troubleshooting": {
+        "title": "Troubleshooting"
+      },
+      "console": {
+        "title": "Console"
+      },
+      "line": {
+        "title": "LINE"
+      },
+      "messenger": {
+        "title": "Messenger"
+      },
+      "slack": {
+        "title": "Slack"
+      },
+      "telegram": {
+        "title": "Telegram"
+      },
+      "viber": {
+        "title": "Viber"
       }
     },
     "links": {
       "Docs": "Docs",
+      "API": "API",
       "Blog": "Blog",
       "GitHub": "GitHub"
     },
     "categories": {
-      "Docusaurus": "Docusaurus",
-      "First Category": "First Category",
-      "Second Category": "Second Category"
+      "Installation": "Installation",
+      "Platforms": "Platforms",
+      "Guides": "Guides",
+      "Common": "Common",
+      "Console": "Console",
+      "Messenger": "Messenger",
+      "LINE": "LINE",
+      "Slack": "Slack",
+      "Telegram": "Telegram",
+      "Viber": "Viber"
     }
   },
   "pages-strings": {
