@@ -40,12 +40,13 @@ class HomeSplash extends Component {
     return (
       <SplashContainer>
         <div className="hero-content">
-          <h1>
-            Make Bots Your Way, <br /> Fast and Flexible.
-          </h1>
-          <h2>Make Bots Your Way, Fast and Flexible.</h2>
+          <h1>Bottender</h1>
+          <h2>
+            A framework for building <br />
+            conversational user interfaces.
+          </h2>
           <a className="primary large" href={docUrl('doc1')}>
-            Get Started Now
+            Get Started
           </a>
         </div>
       </SplashContainer>
