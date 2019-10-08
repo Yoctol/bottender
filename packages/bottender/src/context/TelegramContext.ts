@@ -564,7 +564,7 @@ class TelegramContext extends Context implements PlatformContext {
 
   async sendAudio(
     audio: string,
-    options: Type.SendAudioOption = {}
+    options?: Type.SendAudioOption
   ): Promise<Type.Message | null> {
     if (!this._session) {
       warning(
@@ -645,7 +645,7 @@ class TelegramContext extends Context implements PlatformContext {
 
   async sendVideo(
     video: string,
-    options: Type.SendVideoOption = {}
+    options?: Type.SendVideoOption
   ): Promise<Type.Message | null> {
     if (!this._session) {
       warning(
@@ -672,7 +672,7 @@ class TelegramContext extends Context implements PlatformContext {
 
   async sendVoice(
     voice: string,
-    options: Type.SendVoiceOption = {}
+    options?: Type.SendVoiceOption
   ): Promise<Type.Message | null> {
     if (!this._session) {
       warning(
@@ -699,7 +699,7 @@ class TelegramContext extends Context implements PlatformContext {
 
   async sendVideoNote(
     videoNote: string,
-    options: Type.SendVideoNoteOption = {}
+    options?: Type.SendVideoNoteOption
   ): Promise<Type.Message | null> {
     if (!this._session) {
       warning(
