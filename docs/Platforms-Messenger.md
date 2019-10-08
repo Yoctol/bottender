@@ -29,7 +29,7 @@ We will use them to develop our messenger bot later.
 
 ## Build Your First Messenger Bot
 
-The following is a partial sample code, see the full example [here](https://github.com/Yoctol/bottender/tree/master/examples/messenger-hello-world).
+The following is a partial sample code, see the full example [here](https://github.com/Yoctol/bottender/tree/v0.15.x/examples/messenger-hello-world).
 
 ```js
 const { MessengerBot } = require('bottender');
@@ -44,7 +44,7 @@ After you fill the `accessToken` and `appSecret`, run your server and try it out
 
 ### Full Example
 
-Here is the complete example for [messenger-hello-world](https://github.com/Yoctol/bottender/tree/master/examples/messenger-hello-world).
+Here is the complete example for [messenger-hello-world](https://github.com/Yoctol/bottender/tree/v0.15.x/examples/messenger-hello-world).
 
 ```js
 const { MessengerBot } = require('bottender');

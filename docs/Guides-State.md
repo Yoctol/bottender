@@ -51,4 +51,4 @@ bot.onEvent(async context => {
 });
 ```
 
-See more details at the [with-state example](https://github.com/Yoctol/bottender/tree/master/examples/with-state).
+See more details at the [with-state example](https://github.com/Yoctol/bottender/tree/v0.15.x/examples/with-state).

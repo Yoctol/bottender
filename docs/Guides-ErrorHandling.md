@@ -49,4 +49,4 @@ const handler = new MessengerHandler()
 bot.onEvent(handler);
 ```
 
-[Here](https://github.com/Yoctol/bottender/tree/master/examples/messenger-builder) is the full example of Messenger builder.
+[Here](https://github.com/Yoctol/bottender/tree/v0.15.x/examples/messenger-builder) is the full example of Messenger builder.

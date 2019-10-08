@@ -5,7 +5,7 @@ title: Viber
 
 ## Build Your First Viber Bot
 
-After setting up and getting the authorization token, you should fill it in [viber-hello-world](https://github.com/Yoctol/bottender/tree/master/examples/viber-hello-world/index.js). The following is part of sample code.
+After setting up and getting the authorization token, you should fill it in [viber-hello-world](https://github.com/Yoctol/bottender/tree/v0.15.x/examples/viber-hello-world/index.js). The following is part of sample code.
 
 ```js
 const url = '__FILL_URL_HERE__';
@@ -19,7 +19,7 @@ Run your server and talk to the Viber bot. It works!
 
 ### Full Example
 
-Here is the complete example for [viber-hello-world](https://github.com/Yoctol/bottender/tree/master/examples/viber-hello-world/index.js).
+Here is the complete example for [viber-hello-world](https://github.com/Yoctol/bottender/tree/v0.15.x/examples/viber-hello-world/index.js).
 
 ```js
 const { ViberBot } = require('bottender');

@@ -51,4 +51,4 @@ Each event came from bot will be handled by function handler1.
 
 Call `next()` in function handler1 and it will go to function handler2.
 
-more [example](https://github.com/Yoctol/bottender/tree/master/examples/middleware) for middleware.
+more [example](https://github.com/Yoctol/bottender/tree/v0.15.x/examples/middleware) for middleware.

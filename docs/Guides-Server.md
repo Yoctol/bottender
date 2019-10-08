@@ -76,7 +76,7 @@ server.listen(5000, () => {
 });
 ```
 
-The full `Express` server example is [here](https://github.com/Yoctol/bottender/tree/master/examples/server-express).
+The full `Express` server example is [here](https://github.com/Yoctol/bottender/tree/v0.15.x/examples/server-express).
 
 ### Koa
 
@@ -97,7 +97,7 @@ server.listen(5000, () => {
 });
 ```
 
-The full `Koa` server example is [here](https://github.com/Yoctol/bottender/tree/master/examples/server-koa).
+The full `Koa` server example is [here](https://github.com/Yoctol/bottender/tree/v0.15.x/examples/server-koa).
 
 ### Micro
 
@@ -114,7 +114,7 @@ const bot = require('./bot'); // implement your bot logic
 module.exports = createRequestHandler(bot);
 ```
 
-The full `Micro` server example is [here](https://github.com/Yoctol/bottender/tree/master/examples/server-micro).
+The full `Micro` server example is [here](https://github.com/Yoctol/bottender/tree/v0.15.x/examples/server-micro).
 
 ### Restify
 
@@ -133,4 +133,4 @@ server.listen(5000, () => {
 });
 ```
 
-The full `Restify` server example is [here](https://github.com/Yoctol/bottender/tree/master/examples/server-restify).
+The full `Restify` server example is [here](https://github.com/Yoctol/bottender/tree/v0.15.x/examples/server-restify).
