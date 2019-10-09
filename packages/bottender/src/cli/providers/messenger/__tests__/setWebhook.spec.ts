@@ -1,7 +1,7 @@
 import Confirm from 'prompt-confirm';
 import { MessengerClient } from 'messaging-api-messenger';
 
-import getConfig from '../../../shared/getConfig';
+import getChannelConfig from '../../../shared/getChannelConfig';
 import getWebhookFromNgrok from '../../../shared/getWebhookFromNgrok';
 import { setWebhook } from '../webhook';
 import * as log from '../../../shared/log';
@@ -11,7 +11,7 @@ jest.mock('prompt-confirm');
 
 jest.mock('../../../shared/getWebhookFromNgrok');
 jest.mock('../../../shared/log');
-jest.mock('../../../shared/getConfig');
+jest.mock('../../../shared/getChannelConfig');
 
 const PAGE_ID = '__PAGE_ID__';
 const ACCESS_TOKEN = '__ACCESS_TOKEN__';
@@ -26,7 +26,7 @@ function setup({
 }: { config?: Record<string, any>; success?: boolean } = {}) {
   getWebhookFromNgrok.mockResolvedValue('https://fakeDomain.ngrok.io');
 
-  getConfig.mockReturnValue(
+  getChannelConfig.mockReturnValue(
     config || {
       accessToken: ACCESS_TOKEN,
       appId: APP_ID,

@@ -18,10 +18,6 @@ const help = () => {
         init                    Init a bot skeleton
         help                    Show this help
 
-    ${chalk.dim('Configs:')}
-
-        --skip-validate         Skip the config validation
-
     ${chalk.dim('Examples:')}
 
     ${chalk.dim('-')} Init a bot
@@ -36,10 +32,6 @@ const help = () => {
     ${chalk.dim('-')} Manage the Messenger command
 
       ${chalk.cyan('$ bottender messenger webhook set')}
-
-    ${chalk.dim('-')} Skip config validation
-
-      ${chalk.cyan('$ bottender messenger profile set --skip-validate')}
   `);
 };
 

@@ -23,7 +23,6 @@ export type CliContext = {
     '-h': string;
     '--version': BooleanConstructor;
     '-v': string;
-    '--skip-validate': BooleanConstructor;
   }>;
 };
 

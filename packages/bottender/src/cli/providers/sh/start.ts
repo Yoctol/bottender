@@ -10,8 +10,8 @@ import SlackBot from '../../../bot/SlackBot';
 import TelegramBot from '../../../bot/TelegramBot';
 import ViberBot from '../../../bot/ViberBot';
 import getBottenderConfig from '../../shared/getBottenderConfig';
+import { Channel } from '../../shared/types';
 import { CliContext } from '../..';
-import { Platform } from '../../shared/types';
 import { Plugin } from '../../../plugins';
 
 import getSubArgs from './utils/getSubArgs';
@@ -101,7 +101,7 @@ const start = async (ctx: CliContext): Promise<void> => {
     Object.entries(channels || {})
       .filter(([, { enabled }]) => enabled)
       .map(([channel, { path: webhookPath, ...channelConfig }]) => {
-        const ChannelBot = BOT_MAP[channel as Platform];
+        const ChannelBot = BOT_MAP[channel as Channel];
         const channelBot = new ChannelBot({
           ...channelConfig,
           sessionStore,

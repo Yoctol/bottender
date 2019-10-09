@@ -1,17 +1,17 @@
 import { ViberClient } from 'messaging-api-viber';
 
-import getConfig from '../../../shared/getConfig';
+import getChannelConfig from '../../../shared/getChannelConfig';
 import { deleteWebhook } from '../webhook';
 import * as log from '../../../shared/log';
 
 jest.mock('messaging-api-viber');
 jest.mock('../../../shared/log');
-jest.mock('../../../shared/getConfig');
+jest.mock('../../../shared/getChannelConfig');
 
 const ACCESS_TOKEN = '__ACCESS_TOKEN__';
 
 function setup({ config }: { config?: Record<string, any> } = {}) {
-  getConfig.mockReturnValue(
+  getChannelConfig.mockReturnValue(
     config || {
       accessToken: ACCESS_TOKEN,
       sender: {
@@ -66,7 +66,7 @@ describe('reject', () => {
   it('reject when `accessToken` is not found in the `bottender.config.js` file', () => {
     setup();
 
-    getConfig.mockReturnValueOnce(null);
+    getChannelConfig.mockReturnValueOnce(null);
 
     const ctx = {
       argv: {},

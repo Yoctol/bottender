@@ -2,9 +2,10 @@ import Confirm from 'prompt-confirm';
 import invariant from 'invariant';
 import { ViberClient, ViberTypes } from 'messaging-api-viber';
 
-import getConfig from '../../shared/getConfig';
+import getChannelConfig from '../../shared/getChannelConfig';
 import getSubArgs from '../sh/utils/getSubArgs';
 import getWebhookFromNgrok from '../../shared/getWebhookFromNgrok';
+import { Channel } from '../../shared/types';
 import { CliContext } from '../..';
 import { bold, error, print, warn } from '../../shared/log';
 
@@ -28,7 +29,7 @@ export async function setWebhook(ctx: CliContext): Promise<void> {
   const ngrokPort = argv['--ngrok-port'] || '4040';
 
   try {
-    const config: ViberConfig = getConfig('viber');
+    const config: ViberConfig = getChannelConfig(Channel.Viber);
 
     const { accessToken, sender, path = '/webhooks/viber' } = config;
 
@@ -89,7 +90,7 @@ export async function setWebhook(ctx: CliContext): Promise<void> {
 
 export async function deleteWebhook(_: CliContext): Promise<void> {
   try {
-    const config: ViberConfig = getConfig('viber');
+    const config: ViberConfig = getChannelConfig(Channel.Viber);
 
     const { accessToken, sender } = config;
 

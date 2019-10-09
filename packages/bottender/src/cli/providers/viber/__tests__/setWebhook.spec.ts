@@ -1,7 +1,7 @@
 import Confirm from 'prompt-confirm';
 import { ViberClient } from 'messaging-api-viber';
 
-import getConfig from '../../../shared/getConfig';
+import getChannelConfig from '../../../shared/getChannelConfig';
 import getWebhookFromNgrok from '../../../shared/getWebhookFromNgrok';
 import { setWebhook } from '../webhook';
 import * as log from '../../../shared/log';
@@ -11,7 +11,7 @@ jest.mock('prompt-confirm');
 
 jest.mock('../../../shared/getWebhookFromNgrok');
 jest.mock('../../../shared/log');
-jest.mock('../../../shared/getConfig');
+jest.mock('../../../shared/getChannelConfig');
 
 const ACCESS_TOKEN = '__ACCESS_TOKEN__';
 const WEBHOOK = 'http://example.com/webhook';
@@ -19,7 +19,7 @@ const WEBHOOK = 'http://example.com/webhook';
 function setup({ config }: { config?: Record<string, any> } = {}) {
   getWebhookFromNgrok.mockResolvedValue('https://fakeDomain.ngrok.io');
 
-  getConfig.mockReturnValue(
+  getChannelConfig.mockReturnValue(
     config || {
       accessToken: ACCESS_TOKEN,
       sender: {
