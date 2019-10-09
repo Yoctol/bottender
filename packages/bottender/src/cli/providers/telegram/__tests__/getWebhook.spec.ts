@@ -1,12 +1,12 @@
 import { TelegramClient } from 'messaging-api-telegram';
 
-import getConfig from '../../../shared/getConfig';
+import getChannelConfig from '../../../shared/getChannelConfig';
 import { getWebhook } from '../webhook';
 import * as log from '../../../shared/log';
 
 jest.mock('messaging-api-telegram');
 jest.mock('../../../shared/log');
-jest.mock('../../../shared/getConfig');
+jest.mock('../../../shared/getChannelConfig');
 
 const MOCK_FILE_WITH_PLATFORM = {
   channels: {
@@ -19,7 +19,7 @@ const MOCK_FILE_WITH_PLATFORM = {
 
 beforeEach(() => {
   process.exit = jest.fn();
-  getConfig.mockReturnValue(MOCK_FILE_WITH_PLATFORM.channels.telegram);
+  getChannelConfig.mockReturnValue(MOCK_FILE_WITH_PLATFORM.channels.telegram);
 
   TelegramClient.connect.mockReturnValue({
     getWebhookInfo: jest.fn().mockResolvedValue({
@@ -64,7 +64,7 @@ describe('reject', () => {
       argv: {},
     };
 
-    getConfig.mockReturnValueOnce({});
+    getChannelConfig.mockReturnValueOnce({});
 
     expect(getWebhook(ctx).then).toThrow();
   });

@@ -1,7 +1,7 @@
 import Confirm from 'prompt-confirm';
 import { TelegramClient } from 'messaging-api-telegram';
 
-import getConfig from '../../../shared/getConfig';
+import getChannelConfig from '../../../shared/getChannelConfig';
 import getWebhookFromNgrok from '../../../shared/getWebhookFromNgrok';
 import { setWebhook } from '../webhook';
 import * as log from '../../../shared/log';
@@ -11,7 +11,7 @@ jest.mock('prompt-confirm');
 
 jest.mock('../../../shared/getWebhookFromNgrok');
 jest.mock('../../../shared/log');
-jest.mock('../../../shared/getConfig');
+jest.mock('../../../shared/getChannelConfig');
 
 const MOCK_FILE_WITH_PLATFORM = {
   channels: {
@@ -37,7 +37,7 @@ const setup = (
 
 beforeEach(() => {
   process.exit = jest.fn();
-  getConfig.mockReturnValue(MOCK_FILE_WITH_PLATFORM.channels.telegram);
+  getChannelConfig.mockReturnValue(MOCK_FILE_WITH_PLATFORM.channels.telegram);
 
   getWebhookFromNgrok.mockResolvedValue('https://fakeDomain.ngrok.io');
 
@@ -88,7 +88,7 @@ describe('reject', () => {
   it('reject when accessToken not found in config file', async () => {
     const ctx = setup({ webhook: 'http://example.com/webhook' });
 
-    getConfig.mockReturnValue({});
+    getChannelConfig.mockReturnValue({});
 
     await setWebhook(ctx);
 

@@ -1,17 +1,17 @@
 // XXX: Maybe create a bottender-env package for common type & lib
-export enum Platform {
-  messenger = 'messenger',
-  line = 'line',
-  slack = 'slack',
-  telegram = 'telegram',
-  viber = 'viber',
+export enum Channel {
+  Messenger = 'messenger',
+  Line = 'line',
+  Slack = 'slack',
+  Telegram = 'telegram',
+  Viber = 'viber',
 }
 
 export enum SessionDriver {
-  memory = 'memory',
-  file = 'file',
-  redis = 'redis',
-  mongo = 'mongo',
+  Memory = 'memory',
+  File = 'file',
+  Redis = 'redis',
+  Mongo = 'mongo',
 }
 
 export type BottenderConfig = {
@@ -40,7 +40,7 @@ export type BottenderConfig = {
   };
   initialState: Record<string, any>;
   channels?: {
-    [Platform.messenger]: {
+    [Channel.Messenger]: {
       enabled: boolean;
       path: string;
       accessToken: string;
@@ -48,24 +48,24 @@ export type BottenderConfig = {
       appId: string;
       appSecret: string;
     };
-    [Platform.line]: {
+    [Channel.Line]: {
       enabled: boolean;
       path: string;
       accessToken: string;
       channelSecret: string;
     };
-    [Platform.telegram]: {
+    [Channel.Telegram]: {
       enabled: boolean;
       path: string;
       accessToken: string;
     };
-    [Platform.slack]: {
+    [Channel.Slack]: {
       enabled: boolean;
       path: string;
       accessToken: string;
       verificationToken: string;
     };
-    [Platform.viber]: {
+    [Channel.Viber]: {
       enabled: boolean;
       path: string;
       accessToken: string;

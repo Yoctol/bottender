@@ -42,31 +42,6 @@ const setup = () => {
       line: {
         channelSecret: '__PUT_YOUR_CHANNEL_SECRET_HERE__',
         accessToken: '__PUT_YOUR_ACCESS_TOKEN_HERE__',
-        richMenus: [
-          {
-            size: {
-              width: 2500,
-              height: 1686,
-            },
-            selected: false,
-            name: 'Nice richmenu',
-            chatBarText: 'Tap here',
-            areas: [
-              {
-                bounds: {
-                  x: 0,
-                  y: 0,
-                  width: 2500,
-                  height: 1686,
-                },
-                action: {
-                  type: 'postback',
-                  data: 'action=buy&itemid=123',
-                },
-              },
-            ],
-          },
-        ],
       },
       telegram: {
         accessToken: '__PUT_YOUR_ACCESS_TOKEN_HERE__',
@@ -84,16 +59,16 @@ const setup = () => {
 
 let getBottenderConfig;
 let Joi;
-let getConfig;
+let getChannelConfig;
 
 beforeEach(() => {
   getBottenderConfig = require('../getBottenderConfig').default; // eslint-disable-line global-require
   Joi = require('@hapi/joi'); // eslint-disable-line global-require
-  getConfig = require('../getConfig').default; // eslint-disable-line global-require
+  getChannelConfig = require('../getChannelConfig').default; // eslint-disable-line global-require
 });
 
 it('be defined', () => {
-  expect(getConfig).toBeDefined();
+  expect(getChannelConfig).toBeDefined();
 });
 
 it('read the config file with platform key', () => {
@@ -102,7 +77,7 @@ it('read the config file with platform key', () => {
   getBottenderConfig.mockReturnValue(MOCK_FILE_WITH_PLATFORM);
 
   const platform = 'messenger';
-  const config = getConfig(platform);
+  const config = getChannelConfig(platform);
   expect(config).toEqual({
     accessToken: '__PUT_YOUR_ACCESS_TOKEN_HERE__',
     verifyToken: '__PUT_YOUR_VERITY_TOKEN_HERE__',
@@ -149,7 +124,7 @@ describe('Joi validate', () => {
     const platform = 'messenger';
 
     const spy = jest.spyOn(Joi, 'validate');
-    getConfig(platform);
+    getChannelConfig(platform);
 
     expect(spy).toBeCalled();
 
@@ -159,42 +134,18 @@ describe('Joi validate', () => {
 
   it('should throw error if validate failed', () => {
     const { MOCK_FILE_WITH_PLATFORM } = setup();
-    // slack.accessToken should be string type originally
-    MOCK_FILE_WITH_PLATFORM.channels.slack.accessToken = 12345;
+
+    // messenger.accessToken should be string type originally
+    MOCK_FILE_WITH_PLATFORM.channels.messenger.accessToken = 12345;
 
     getBottenderConfig.mockReturnValue(MOCK_FILE_WITH_PLATFORM);
-
-    const platform = 'messenger';
 
     const spy = jest.spyOn(Joi, 'validate');
 
     expect(() => {
-      getConfig(platform);
+      getChannelConfig('messenger');
     }).toThrow();
     expect(spy).toHaveBeenCalled();
-
-    spy.mockReset();
-    spy.mockRestore();
-  });
-
-  it('should pass validate when with `--skip-validate`', () => {
-    const { MOCK_FILE_WITH_PLATFORM } = setup();
-    getBottenderConfig.mockReturnValue(MOCK_FILE_WITH_PLATFORM);
-    process.argv = [
-      'node',
-      'cli/index.js',
-      'messenger',
-      'profile',
-      'set',
-      '--skip-validate',
-    ];
-
-    const platform = 'messenger';
-
-    const spy = jest.spyOn(Joi, 'validate');
-    getConfig(platform);
-
-    expect(spy).not.toBeCalled();
 
     spy.mockReset();
     spy.mockRestore();

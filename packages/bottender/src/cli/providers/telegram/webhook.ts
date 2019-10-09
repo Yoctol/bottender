@@ -2,9 +2,10 @@ import Confirm from 'prompt-confirm';
 import invariant from 'invariant';
 import { TelegramClient } from 'messaging-api-telegram';
 
-import getConfig from '../../shared/getConfig';
+import getChannelConfig from '../../shared/getChannelConfig';
 import getSubArgs from '../sh/utils/getSubArgs';
 import getWebhookFromNgrok from '../../shared/getWebhookFromNgrok';
+import { Channel } from '../../shared/types';
 import { CliContext } from '../..';
 import { bold, error, print, warn } from '../../shared/log';
 
@@ -12,7 +13,7 @@ import help from './help';
 
 export async function getWebhook(_: CliContext): Promise<void> {
   try {
-    const config = getConfig('telegram');
+    const config = getChannelConfig(Channel.Telegram);
 
     const { accessToken } = config;
 
@@ -55,7 +56,7 @@ export async function setWebhook(ctx: CliContext): Promise<void> {
   let webhook = argv['--webhook'];
 
   try {
-    const config = getConfig('telegram');
+    const config = getChannelConfig(Channel.Telegram);
 
     const { accessToken, path = '/webhooks/telegram' } = config;
 
@@ -105,7 +106,7 @@ export async function setWebhook(ctx: CliContext): Promise<void> {
 
 export async function deleteWebhook(_: CliContext): Promise<void> {
   try {
-    const config = getConfig('telegram');
+    const config = getChannelConfig(Channel.Telegram);
 
     const { accessToken } = config;
 
