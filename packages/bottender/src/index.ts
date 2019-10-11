@@ -1,5 +1,3 @@
-import * as utils from './utils';
-
 export { createServer } from '@bottender/express';
 
 export { default as chain } from './chain';
@@ -58,6 +56,3 @@ export { default as LineEvent } from './context/LineEvent';
 export { default as SlackEvent } from './context/SlackEvent';
 export { default as TelegramEvent } from './context/TelegramEvent';
 export { default as ViberEvent } from './context/ViberEvent';
-
-/* Utils */
-export { utils };
