@@ -6,7 +6,8 @@
   },
   "files": [
     "dist",
-    "template"
+    "template",
+    "template-typescript"
   ],
   "types": "dist/index.d.ts",
   "dependencies": {
