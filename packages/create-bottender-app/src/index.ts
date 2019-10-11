@@ -264,6 +264,8 @@ const run = async (
       ),
       root
     );
+
+    fs.copySync(path.join(root, '.env.example'), path.join(root, '.env'));
   } catch (reason) {
     print('');
     print('Aborting installation.');
