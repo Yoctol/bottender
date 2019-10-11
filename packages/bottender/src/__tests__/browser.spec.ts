@@ -25,4 +25,8 @@ describe('browser', () => {
   it('export chain', () => {
     expect(core.chain).toBeDefined();
   });
+
+  it('export withProps', () => {
+    expect(core.withProps).toBeDefined();
+  });
 });
