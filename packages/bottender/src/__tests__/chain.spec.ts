@@ -1,4 +1,6 @@
 import chain from '../chain';
+import withProps from '../withProps';
+import { run } from '../bot/Bot';
 
 function setup() {
   const context = {
@@ -10,7 +12,7 @@ function setup() {
   };
 }
 
-it('should resolve undefined if First action return undefined', async () => {
+it('should not call sendText if First action return undefined', async () => {
   const { context } = setup();
 
   function First(ctx, { next }) {} // eslint-disable-line @typescript-eslint/no-empty-function
@@ -18,13 +20,12 @@ it('should resolve undefined if First action return undefined', async () => {
 
   const Chain = chain([First, Second]);
 
-  const Action = await Chain(context);
-  const ActionReturnedByFirst = await Action(context);
+  await run(Chain)(context);
 
-  expect(ActionReturnedByFirst).toBeUndefined();
+  expect(context.sendText).not.toBeCalled();
 });
 
-it('should resolve SayHi if first action return SayHi', async () => {
+it('should call sendText with hi if first action return SayHi', async () => {
   const { context } = setup();
 
   async function SayHi(ctx) {
@@ -37,13 +38,12 @@ it('should resolve SayHi if first action return SayHi', async () => {
 
   const Chain = chain([First, Second]);
 
-  const Action = await Chain(context);
-  const ActionReturnedByFirst = await Action(context);
+  await run(Chain)(context);
 
-  expect(ActionReturnedByFirst).toEqual(SayHi);
+  expect(context.sendText).toBeCalledWith('hi');
 });
 
-it('should resolve SayHi if second action return SayHi', async () => {
+it('should call sendText with hi if second action return SayHi', async () => {
   const { context } = setup();
 
   async function SayHi(ctx) {
@@ -58,14 +58,12 @@ it('should resolve SayHi if second action return SayHi', async () => {
 
   const Chain = chain([First, Second]);
 
-  const Action = await Chain(context);
-  const ActionReturnedByFirst = await Action(context);
-  const ActionReturnedBySecond = await ActionReturnedByFirst(context);
+  await run(Chain)(context);
 
-  expect(ActionReturnedBySecond).toEqual(SayHi);
+  expect(context.sendText).toBeCalledWith('hi');
 });
 
-it('should resolve SayHi if second action return next', async () => {
+it('should call sendText with hi if second action return next', async () => {
   const { context } = setup();
 
   async function SayHi(ctx) {
@@ -80,9 +78,7 @@ it('should resolve SayHi if second action return next', async () => {
 
   const Chain = chain([First, Second]);
 
-  const Action = await Chain(context, { next: SayHi });
-  const ActionReturnedByFirst = await Action(context);
-  const ActionReturnedBySecond = await ActionReturnedByFirst(context);
+  await run(withProps(Chain, { next: SayHi }))(context);
 
-  expect(ActionReturnedBySecond).toEqual(SayHi);
+  expect(context.sendText).toBeCalledWith('hi');
 });
