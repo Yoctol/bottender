@@ -12,7 +12,7 @@ import ViberBot from '../../../bot/ViberBot';
 import getBottenderConfig from '../../shared/getBottenderConfig';
 import { Channel } from '../../shared/types';
 import { CliContext } from '../..';
-import { Plugin } from '../../../plugins';
+import { Plugin } from '../../../types';
 
 import getSubArgs from './utils/getSubArgs';
 

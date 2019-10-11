@@ -9,16 +9,12 @@ import Context from '../context/Context';
 import MemoryCacheStore from '../cache/MemoryCacheStore';
 import Session from '../session/Session';
 import SessionStore from '../session/SessionStore';
+import { Action, Plugin } from '../types';
 
 import { Connector } from './Connector';
 
-type FunctionalHandler = (
-  context: Context,
-  otherArg?: any
-) => void | Promise<void>;
-
 type Builder = {
-  build: () => FunctionalHandler;
+  build: () => Action;
 };
 
 const debugRequest = debug('bottender:request');
@@ -34,9 +30,9 @@ function createMemorySessionStore(): SessionStore {
   return new CacheBasedSessionStore(cache, MINUTES_IN_ONE_YEAR);
 }
 
-export function run(fn: FunctionalHandler): FunctionalHandler {
-  return async function Run(context): Promise<void> {
-    let nextDialog: FunctionalHandler | void = fn;
+export function run(fn: Action): Action {
+  return async function Run(context: Context): Promise<void> {
+    let nextDialog: Action | void = fn;
 
     do {
       // TODO: improve this debug helper
@@ -54,8 +50,6 @@ type RequestHandler<B> = (
   requestContext?: Record<string, any> | null
 ) => void | Promise<void>;
 
-type ErrorHandler = (err: Error, ctx?: Context) => void | Promise<void>;
-
 export default class Bot<B, C> {
   _sessions: SessionStore;
 
@@ -63,7 +57,7 @@ export default class Bot<B, C> {
 
   _connector: Connector<B, C>;
 
-  _handler: FunctionalHandler | null;
+  _handler: Action | null;
 
   _initialState: Record<string, any> = {};
 
@@ -98,7 +92,7 @@ export default class Bot<B, C> {
     return this._sessions;
   }
 
-  get handler(): FunctionalHandler | null {
+  get handler(): Action | null {
     return this._handler;
   }
 
@@ -106,7 +100,7 @@ export default class Bot<B, C> {
     return this._emitter;
   }
 
-  onEvent(handler: FunctionalHandler | Builder): Bot<B, C> {
+  onEvent(handler: Action | Builder): Bot<B, C> {
     invariant(
       handler,
       'onEvent: Can not pass `undefined`, `null` or any falsy value as handler'
@@ -115,8 +109,11 @@ export default class Bot<B, C> {
     return this;
   }
 
-  onError(handler: ErrorHandler | Builder): Bot<B, C> {
-    // FIXME: [type]
+  onError(handler: Action | Builder): Bot<B, C> {
+    invariant(
+      handler,
+      'onError: Can not pass `undefined`, `null` or any falsy value as error handler'
+    );
     this._emitter.on('error', 'build' in handler ? handler.build() : handler);
     return this;
   }
@@ -126,8 +123,8 @@ export default class Bot<B, C> {
     return this;
   }
 
-  use(fn: Function): Bot<B, C> {
-    this._plugins.push(fn);
+  use(plugin: Plugin): Bot<B, C> {
+    this._plugins.push(plugin);
     return this;
   }
 
@@ -226,7 +223,7 @@ export default class Bot<B, C> {
           'Bot: Missing event handler function. You should assign it using onEvent(...)'
         );
       }
-      const handler: FunctionalHandler = this._handler;
+      const handler: Action = this._handler;
       const promises = Promise.all(
         contexts.map(context =>
           Promise.resolve()
