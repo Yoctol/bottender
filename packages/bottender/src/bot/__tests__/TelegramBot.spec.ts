@@ -72,7 +72,7 @@ describe('#createLongPollingRuntime', () => {
       .mockImplementationOnce(() => {
         bot.stop();
         expect(bot.connector.client.getUpdates).toBeCalledWith({});
-        expect(handler).toBeCalledWith(expect.any(Object));
+        expect(handler).toBeCalledWith(expect.any(Object), {});
         done();
       });
 
@@ -122,7 +122,7 @@ describe('#createLongPollingRuntime', () => {
           allowed_updates: ['message', 'edited_channel_post', 'callback_query'],
           offset: 1,
         });
-        expect(handler).toBeCalledWith(expect.any(Object));
+        expect(handler).toBeCalledWith(expect.any(Object), {});
         done();
       });
 

@@ -3,6 +3,7 @@ import * as utils from './utils';
 export { createServer } from '@bottender/express';
 
 export { default as chain } from './chain';
+export { default as withProps } from './withProps';
 
 /* Bot */
 export { default as Bot } from './bot/Bot';

@@ -124,14 +124,17 @@ describe('#createRequestHandler', () => {
     const body = {};
     await requestHandler(body);
 
-    expect(handler).toBeCalledWith({
-      event: {},
-      session: expect.objectContaining({
-        id: 'any:__id__',
-        platform: 'any',
-        user: {},
-      }),
-    });
+    expect(handler).toBeCalledWith(
+      {
+        event: {},
+        session: expect.objectContaining({
+          id: 'any:__id__',
+          platform: 'any',
+          user: {},
+        }),
+      },
+      {}
+    );
   });
 
   it('should return response in sync mode', async () => {
@@ -241,7 +244,8 @@ describe('#createRequestHandler', () => {
     expect(handler).toBeCalledWith(
       expect.objectContaining({
         session: undefined,
-      })
+      }),
+      {}
     );
   });
 

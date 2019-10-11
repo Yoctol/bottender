@@ -34,7 +34,7 @@ function createMemorySessionStore(): SessionStore {
   return new CacheBasedSessionStore(cache, MINUTES_IN_ONE_YEAR);
 }
 
-function run(fn: FunctionalHandler): FunctionalHandler {
+export function run(fn: FunctionalHandler): FunctionalHandler {
   return async function Run(context): Promise<void> {
     let nextDialog: FunctionalHandler | void = fn;
 
@@ -42,7 +42,7 @@ function run(fn: FunctionalHandler): FunctionalHandler {
       // TODO: improve this debug helper
       debugDialog(`Current Dialog: ${nextDialog.name || 'Anonymous'}`);
       // eslint-disable-next-line no-await-in-loop
-      nextDialog = await nextDialog(context);
+      nextDialog = await nextDialog(context, {});
     } while (typeof nextDialog === 'function');
 
     return nextDialog;
