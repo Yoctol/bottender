@@ -9,7 +9,7 @@ import Context from '../context/Context';
 import MemoryCacheStore from '../cache/MemoryCacheStore';
 import Session from '../session/Session';
 import SessionStore from '../session/SessionStore';
-import { Action, Plugin } from '../types';
+import { Action, Plugin, Props } from '../types';
 
 import { Connector } from './Connector';
 
@@ -30,16 +30,24 @@ function createMemorySessionStore(): SessionStore {
   return new CacheBasedSessionStore(cache, MINUTES_IN_ONE_YEAR);
 }
 
-export function run(fn: Action): Action {
-  return async function Run(context: Context): Promise<void> {
-    let nextDialog: Action | void = fn;
+export function run(action: Action): Action {
+  return async function Run(
+    context: Context,
+    props: Props = {}
+  ): Promise<void> {
+    let nextDialog: Action | void = action;
 
-    do {
+    // TODO: refactor this with withProps or whatever
+    debugDialog(`Current Dialog: ${nextDialog.name || 'Anonymous'}`);
+    // eslint-disable-next-line no-await-in-loop
+    nextDialog = await nextDialog(context, props);
+
+    while (typeof nextDialog === 'function') {
       // TODO: improve this debug helper
       debugDialog(`Current Dialog: ${nextDialog.name || 'Anonymous'}`);
       // eslint-disable-next-line no-await-in-loop
       nextDialog = await nextDialog(context, {});
-    } while (typeof nextDialog === 'function');
+    }
 
     return nextDialog;
   };
@@ -58,6 +66,8 @@ export default class Bot<B, C> {
   _connector: Connector<B, C>;
 
   _handler: Action | null;
+
+  _errorHandler: Action | null;
 
   _initialState: Record<string, any> = {};
 
@@ -80,6 +90,7 @@ export default class Bot<B, C> {
     this._initialized = false;
     this._connector = connector;
     this._handler = null;
+    this._errorHandler = null;
     this._sync = sync;
     this._emitter = new EventEmitter();
   }
@@ -114,7 +125,7 @@ export default class Bot<B, C> {
       handler,
       'onError: Can not pass `undefined`, `null` or any falsy value as error handler'
     );
-    this._emitter.on('error', 'build' in handler ? handler.build() : handler);
+    this._errorHandler = 'build' in handler ? handler.build() : handler;
     return this;
   }
 
@@ -224,6 +235,7 @@ export default class Bot<B, C> {
         );
       }
       const handler: Action = this._handler;
+      const errorHandler: Action | null = this._errorHandler;
       const promises = Promise.all(
         contexts.map(context =>
           Promise.resolve()
@@ -232,6 +244,12 @@ export default class Bot<B, C> {
               if (context.handlerDidEnd) {
                 return context.handlerDidEnd();
               }
+            })
+            .catch(err => {
+              if (errorHandler) {
+                return run(errorHandler)(context, { error: err });
+              }
+              throw err;
             })
             .catch(err => {
               context.emitError(err);
