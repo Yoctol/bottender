@@ -10,9 +10,9 @@ import SlackBot from '../../../bot/SlackBot';
 import TelegramBot from '../../../bot/TelegramBot';
 import ViberBot from '../../../bot/ViberBot';
 import getBottenderConfig from '../../shared/getBottenderConfig';
+import { Action, Plugin } from '../../../types';
 import { Channel } from '../../shared/types';
 import { CliContext } from '../..';
-import { Plugin } from '../../../types';
 
 import getSubArgs from './utils/getSubArgs';
 
@@ -41,10 +41,6 @@ const start = async (ctx: CliContext): Promise<void> => {
 
   const { initialState, plugins, session, channels } = config;
 
-  // TODO: refine handler entry
-  // eslint-disable-next-line import/no-dynamic-require, @typescript-eslint/no-var-requires
-  const handler = require(path.resolve('index.js'));
-
   // session
   const sessionDriver = (session && session.driver) || 'memory';
   let SessionStore;
@@ -70,6 +66,15 @@ const start = async (ctx: CliContext): Promise<void> => {
     session && session.expiresIn
   );
 
+  // TODO: refine handler entry, improve error message and hint
+  // eslint-disable-next-line import/no-dynamic-require, @typescript-eslint/no-var-requires
+  const Entry: Action = require(path.resolve('index.js'));
+  let ErrorEntry: Action;
+  try {
+    // eslint-disable-next-line import/no-dynamic-require
+    ErrorEntry = require(path.resolve('_error.js'));
+  } catch (err) {} // eslint-disable-line no-empty
+
   function initializeBot(bot: Bot<any, any>): void {
     if (initialState) {
       bot.setInitialState(initialState);
@@ -81,7 +86,10 @@ const start = async (ctx: CliContext): Promise<void> => {
       });
     }
 
-    bot.onEvent(handler);
+    bot.onEvent(Entry);
+    if (ErrorEntry) {
+      bot.onError(ErrorEntry);
+    }
   }
 
   if (isConsole) {
