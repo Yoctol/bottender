@@ -7,7 +7,7 @@ import warning from 'warning';
 const debugContext = debug('bottender:context');
 
 type Options = {
-  client: any;
+  client?: any;
   event: any;
   session: any;
   initialState?: Record<string, any> | null;

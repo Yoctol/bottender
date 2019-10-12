@@ -1,19 +1,32 @@
 import Context from '../context/Context';
 import withProps from '../withProps';
+import { PlatformContext } from '../context/PlatformContext';
 import { Props } from '../types';
 import { run } from '../bot/Bot';
 
+class MockContext extends Context implements PlatformContext {
+  get platform() {
+    return 'mock';
+  }
+
+  sendText = jest.fn();
+}
+
 function setup() {
-  const context = {
-    sendText: jest.fn(),
-  };
+  const context = new MockContext({
+    event: {},
+    session: {},
+  });
 
   return {
     context,
   };
 }
 
-async function SendSomeText(context: Context, { text }: Props) {
+async function SendSomeText(
+  context: MockContext,
+  { text }: Props
+): Promise<void> {
   await context.sendText(text);
 }
 

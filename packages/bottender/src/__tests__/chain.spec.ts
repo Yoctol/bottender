@@ -1,11 +1,23 @@
+import Context from '../context/Context';
 import chain from '../chain';
 import withProps from '../withProps';
+import { Action, Props } from '../types';
+import { PlatformContext } from '../context/PlatformContext';
 import { run } from '../bot/Bot';
 
+class MockContext extends Context implements PlatformContext {
+  get platform() {
+    return 'mock';
+  }
+
+  sendText = jest.fn();
+}
+
 function setup() {
-  const context = {
-    sendText: jest.fn(),
-  };
+  const context = new MockContext({
+    event: {},
+    session: {},
+  });
 
   return {
     context,
@@ -15,8 +27,8 @@ function setup() {
 it('should not call sendText if First action return undefined', async () => {
   const { context } = setup();
 
-  function First(ctx, { next }) {} // eslint-disable-line @typescript-eslint/no-empty-function
-  function Second(ctx, { next }) {} // eslint-disable-line @typescript-eslint/no-empty-function
+  function First(): void {} // eslint-disable-line @typescript-eslint/no-empty-function
+  function Second(): void {} // eslint-disable-line @typescript-eslint/no-empty-function
 
   const Chain = chain([First, Second]);
 
@@ -28,13 +40,13 @@ it('should not call sendText if First action return undefined', async () => {
 it('should call sendText with hi if first action return SayHi', async () => {
   const { context } = setup();
 
-  async function SayHi(ctx) {
+  async function SayHi(ctx: MockContext) {
     await ctx.sendText('hi');
   }
-  function First(ctx, { next }) {
+  function First(): Action {
     return SayHi;
   }
-  function Second(ctx, { next }) {} // eslint-disable-line @typescript-eslint/no-empty-function
+  function Second(): void {} // eslint-disable-line @typescript-eslint/no-empty-function
 
   const Chain = chain([First, Second]);
 
@@ -46,13 +58,13 @@ it('should call sendText with hi if first action return SayHi', async () => {
 it('should call sendText with hi if second action return SayHi', async () => {
   const { context } = setup();
 
-  async function SayHi(ctx) {
+  async function SayHi(ctx: MockContext) {
     await ctx.sendText('hi');
   }
-  function First(ctx, { next }) {
+  function First(_: MockContext, { next }: Props): Action {
     return next;
   }
-  function Second(ctx, { next }) {
+  function Second(): Action {
     return SayHi;
   }
 
@@ -66,13 +78,13 @@ it('should call sendText with hi if second action return SayHi', async () => {
 it('should call sendText with hi if second action return next', async () => {
   const { context } = setup();
 
-  async function SayHi(ctx) {
+  async function SayHi(ctx: MockContext) {
     await ctx.sendText('hi');
   }
-  function First(ctx, { next }) {
+  function First(_: MockContext, { next }: Props) {
     return next;
   }
-  function Second(ctx, { next }) {
+  function Second(_: MockContext, { next }: Props) {
     return next;
   }
 
