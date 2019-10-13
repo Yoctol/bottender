@@ -56,3 +56,5 @@ export { default as LineEvent } from './context/LineEvent';
 export { default as SlackEvent } from './context/SlackEvent';
 export { default as TelegramEvent } from './context/TelegramEvent';
 export { default as ViberEvent } from './context/ViberEvent';
+
+export { default as initializeServer } from './initializeServer';

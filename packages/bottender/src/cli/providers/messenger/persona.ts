@@ -4,11 +4,11 @@ import chalk from 'chalk';
 import invariant from 'invariant';
 import { MessengerClient } from 'messaging-api-messenger';
 
-import getChannelConfig from '../../shared/getChannelConfig';
+import getChannelConfig from '../../../shared/getChannelConfig';
 import getSubArgs from '../sh/utils/getSubArgs';
-import { Channel } from '../../shared/types';
+import { Channel } from '../../../types';
 import { CliContext } from '../..';
-import { bold, error, print } from '../../shared/log';
+import { bold, error, print } from '../../../shared/log';
 
 const help = () => {
   console.log(`

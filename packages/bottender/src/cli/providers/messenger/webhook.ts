@@ -4,12 +4,12 @@ import chalk from 'chalk';
 import invariant from 'invariant';
 import { MessengerClient } from 'messaging-api-messenger';
 
-import getChannelConfig from '../../shared/getChannelConfig';
+import getChannelConfig from '../../../shared/getChannelConfig';
 import getSubArgs from '../sh/utils/getSubArgs';
-import getWebhookFromNgrok from '../../shared/getWebhookFromNgrok';
-import { Channel } from '../../shared/types';
+import getWebhookFromNgrok from '../../../shared/getWebhookFromNgrok';
+import { Channel } from '../../../types';
 import { CliContext } from '../..';
-import { bold, error, print, warn } from '../../shared/log';
+import { bold, error, print, warn } from '../../../shared/log';
 
 const help = (): void => {
   console.log(`

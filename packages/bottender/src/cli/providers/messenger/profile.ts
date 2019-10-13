@@ -5,11 +5,11 @@ import { MessengerClient, MessengerTypes } from 'messaging-api-messenger';
 import { addedDiff, deletedDiff, diff, updatedDiff } from 'deep-object-diff';
 import { omit, pick } from 'lodash';
 
-import getChannelConfig from '../../shared/getChannelConfig';
+import getChannelConfig from '../../../shared/getChannelConfig';
 import getSubArgs from '../sh/utils/getSubArgs';
-import { Channel } from '../../shared/types';
+import { Channel } from '../../../types';
 import { CliContext } from '../..';
-import { bold, error, log, print } from '../../shared/log';
+import { bold, error, log, print } from '../../../shared/log';
 
 const FIELDS = [
   'account_linking_url',

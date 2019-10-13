@@ -1,12 +1,12 @@
 import { ViberClient } from 'messaging-api-viber';
 
-import getChannelConfig from '../../../shared/getChannelConfig';
+import getChannelConfig from '../../../../shared/getChannelConfig';
 import { deleteWebhook } from '../webhook';
-import * as log from '../../../shared/log';
+import * as log from '../../../../shared/log';
 
 jest.mock('messaging-api-viber');
-jest.mock('../../../shared/log');
-jest.mock('../../../shared/getChannelConfig');
+jest.mock('../../../../shared/log');
+jest.mock('../../../../shared/getChannelConfig');
 
 const ACCESS_TOKEN = '__ACCESS_TOKEN__';
 

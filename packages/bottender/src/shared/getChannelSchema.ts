@@ -1,6 +1,6 @@
 import Joi, { Schema } from '@hapi/joi';
 
-import { Channel } from './types';
+import { Channel } from '../types';
 
 const menuItemSchema = Joi.object().keys({
   type: Joi.string(),

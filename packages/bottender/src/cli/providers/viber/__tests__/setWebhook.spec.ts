@@ -1,17 +1,17 @@
 import Confirm from 'prompt-confirm';
 import { ViberClient } from 'messaging-api-viber';
 
-import getChannelConfig from '../../../shared/getChannelConfig';
-import getWebhookFromNgrok from '../../../shared/getWebhookFromNgrok';
+import getChannelConfig from '../../../../shared/getChannelConfig';
+import getWebhookFromNgrok from '../../../../shared/getWebhookFromNgrok';
 import { setWebhook } from '../webhook';
-import * as log from '../../../shared/log';
+import * as log from '../../../../shared/log';
 
 jest.mock('messaging-api-viber');
 jest.mock('prompt-confirm');
 
-jest.mock('../../../shared/getWebhookFromNgrok');
-jest.mock('../../../shared/log');
-jest.mock('../../../shared/getChannelConfig');
+jest.mock('../../../../shared/getWebhookFromNgrok');
+jest.mock('../../../../shared/log');
+jest.mock('../../../../shared/getChannelConfig');
 
 const ACCESS_TOKEN = '__ACCESS_TOKEN__';
 const WEBHOOK = 'http://example.com/webhook';

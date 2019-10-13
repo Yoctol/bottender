@@ -1,7 +1,7 @@
 import Joi from '@hapi/joi';
 
 import getChannelSchema from '../getChannelSchema';
-import { Channel } from '../types';
+import { Channel } from '../../types';
 
 describe('messenger', () => {
   const messengerSchema = getChannelSchema(Channel.Messenger);
