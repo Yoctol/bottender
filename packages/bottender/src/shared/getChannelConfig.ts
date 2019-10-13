@@ -2,9 +2,10 @@ import Joi from '@hapi/joi';
 import get from 'lodash/get';
 import invariant from 'invariant';
 
+import { Channel } from '../types';
+
 import getBottenderConfig from './getBottenderConfig';
 import getChannelSchema from './getChannelSchema';
-import { Channel } from './types';
 import { bold } from './log';
 
 const getChannelConfig = (channel: Channel): any | never => {

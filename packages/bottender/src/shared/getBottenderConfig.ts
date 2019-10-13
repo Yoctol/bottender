@@ -2,7 +2,7 @@ import path from 'path';
 
 import dotenv from 'dotenv';
 
-import { BottenderConfig } from './types';
+import { BottenderConfig } from '../types';
 
 dotenv.config();
 

@@ -2,12 +2,12 @@ import Confirm from 'prompt-confirm';
 import invariant from 'invariant';
 import { ViberClient, ViberTypes } from 'messaging-api-viber';
 
-import getChannelConfig from '../../shared/getChannelConfig';
+import getChannelConfig from '../../../shared/getChannelConfig';
 import getSubArgs from '../sh/utils/getSubArgs';
-import getWebhookFromNgrok from '../../shared/getWebhookFromNgrok';
-import { Channel } from '../../shared/types';
+import getWebhookFromNgrok from '../../../shared/getWebhookFromNgrok';
+import { Channel } from '../../../types';
 import { CliContext } from '../..';
-import { bold, error, print, warn } from '../../shared/log';
+import { bold, error, print, warn } from '../../../shared/log';
 
 import help from './help';
 

@@ -1,7 +1,7 @@
 import ngrok from 'ngrok';
 import nodemon from 'nodemon';
 
-import getBottenderConfig from '../../shared/getBottenderConfig';
+import getBottenderConfig from '../../../shared/getBottenderConfig';
 import { CliContext } from '../..';
 
 import getSubArgs from './utils/getSubArgs';

@@ -1,14 +1,14 @@
 import { MessengerClient } from 'messaging-api-messenger';
 
-import getChannelConfig from '../../../shared/getChannelConfig';
+import getChannelConfig from '../../../../shared/getChannelConfig';
 import { setMessengerProfile } from '../profile';
-import * as log from '../../../shared/log';
+import * as log from '../../../../shared/log';
 
 jest.mock('messaging-api-messenger');
 jest.mock('warning');
 
-jest.mock('../../../shared/log');
-jest.mock('../../../shared/getChannelConfig');
+jest.mock('../../../../shared/log');
+jest.mock('../../../../shared/getChannelConfig');
 
 const MOCK_FILE_WITH_PLATFORM = {
   channels: {

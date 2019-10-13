@@ -1,17 +1,17 @@
 import Confirm from 'prompt-confirm';
 import { MessengerClient } from 'messaging-api-messenger';
 
-import getChannelConfig from '../../../shared/getChannelConfig';
-import getWebhookFromNgrok from '../../../shared/getWebhookFromNgrok';
+import getChannelConfig from '../../../../shared/getChannelConfig';
+import getWebhookFromNgrok from '../../../../shared/getWebhookFromNgrok';
 import { setWebhook } from '../webhook';
-import * as log from '../../../shared/log';
+import * as log from '../../../../shared/log';
 
 jest.mock('messaging-api-messenger');
 jest.mock('prompt-confirm');
 
-jest.mock('../../../shared/getWebhookFromNgrok');
-jest.mock('../../../shared/log');
-jest.mock('../../../shared/getChannelConfig');
+jest.mock('../../../../shared/getWebhookFromNgrok');
+jest.mock('../../../../shared/log');
+jest.mock('../../../../shared/getChannelConfig');
 
 const PAGE_ID = '__PAGE_ID__';
 const ACCESS_TOKEN = '__ACCESS_TOKEN__';

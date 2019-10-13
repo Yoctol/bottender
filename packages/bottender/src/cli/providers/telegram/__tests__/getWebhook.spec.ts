@@ -1,12 +1,12 @@
 import { TelegramClient } from 'messaging-api-telegram';
 
-import getChannelConfig from '../../../shared/getChannelConfig';
+import getChannelConfig from '../../../../shared/getChannelConfig';
 import { getWebhook } from '../webhook';
-import * as log from '../../../shared/log';
+import * as log from '../../../../shared/log';
 
 jest.mock('messaging-api-telegram');
-jest.mock('../../../shared/log');
-jest.mock('../../../shared/getChannelConfig');
+jest.mock('../../../../shared/log');
+jest.mock('../../../../shared/getChannelConfig');
 
 const MOCK_FILE_WITH_PLATFORM = {
   channels: {
