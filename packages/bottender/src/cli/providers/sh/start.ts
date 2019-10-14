@@ -14,7 +14,7 @@ const start = async (ctx: CliContext): Promise<void> => {
   });
 
   const isConsole = argv['--console'] || false;
-  const port = argv['--port'] || 5000;
+  const port = argv['--port'] || process.env.PORT || 5000;
 
   const server = initializeServer({ isConsole });
 
