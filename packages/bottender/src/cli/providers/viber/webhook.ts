@@ -14,7 +14,7 @@ import help from './help';
 type ViberConfig = {
   accessToken: string;
   sender: ViberTypes.Sender;
-  eventTypes: ViberTypes.EventType[];
+  Events: ViberTypes.EventType[];
   path?: string;
 };
 
@@ -69,7 +69,7 @@ export async function setWebhook(ctx: CliContext): Promise<void> {
       '`webhook` is required but not found. Use -w <webhook> to setup or make sure you are running ngrok server.'
     );
 
-    await client.setWebhook(webhook as string, config.eventTypes);
+    await client.setWebhook(webhook as string, config.Events);
 
     print('Successfully set Viber webhook callback URL');
   } catch (err) {

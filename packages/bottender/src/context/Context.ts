@@ -4,11 +4,13 @@ import cloneDeep from 'lodash/cloneDeep';
 import debug from 'debug';
 import warning from 'warning';
 
+import { Client, Event } from '../types';
+
 const debugContext = debug('bottender:context');
 
-type Options = {
-  client: any;
-  event: any;
+type Options<C extends Client, E extends Event> = {
+  client: C;
+  event: E;
   session: any;
   initialState?: Record<string, any> | null;
   requestContext?: Record<string, any> | null;
@@ -21,14 +23,14 @@ type Response = {
   body: any;
 };
 
-export default class Context {
+export default class Context<C extends Client, E extends Event> {
   _isHandled = false;
 
   _isSessionWritten = false;
 
-  _client: any;
+  _client: C;
 
-  _event: any;
+  _event: E;
 
   _session: Record<string, any> | null;
 
@@ -47,7 +49,7 @@ export default class Context {
     initialState,
     requestContext,
     emitter,
-  }: Options) {
+  }: Options<C, E>) {
     this._client = client;
     this._event = event;
     this._session = session;

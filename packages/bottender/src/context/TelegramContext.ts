@@ -2,19 +2,12 @@ import sleep from 'delay';
 import warning from 'warning';
 import { TelegramClient, TelegramTypes as Type } from 'messaging-api-telegram';
 
-import Session from '../session/Session';
-
 import Context from './Context';
 import TelegramEvent from './TelegramEvent';
 import { PlatformContext } from './PlatformContext';
 
-class TelegramContext extends Context implements PlatformContext {
-  _client: TelegramClient = this._client;
-
-  _event: TelegramEvent = this._event;
-
-  _session: Session | null = this._session;
-
+class TelegramContext extends Context<TelegramClient, TelegramEvent>
+  implements PlatformContext {
   /**
    * The name of the platform.
    *

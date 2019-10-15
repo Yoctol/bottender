@@ -11,7 +11,7 @@ import SlackBot from './bot/SlackBot';
 import TelegramBot from './bot/TelegramBot';
 import ViberBot from './bot/ViberBot';
 import getBottenderConfig from './shared/getBottenderConfig';
-import { Action, Channel, Plugin } from './types';
+import { Action, BottenderConfig, Channel, Plugin } from './types';
 
 const BOT_MAP = {
   messenger: MessengerBot,
@@ -26,7 +26,7 @@ function initializeServer({
   config,
 }: {
   isConsole?: boolean;
-  config?: Record<string, any>;
+  config?: BottenderConfig;
 } = {}): express.Application | void {
   const bottenderConfig = getBottenderConfig();
 
@@ -53,7 +53,7 @@ function initializeServer({
   }
 
   const sessionDriverConfig =
-    ((session && session.stores) || ({} as any))[sessionDriver] || {};
+    ((session && session.stores) || {})[sessionDriver] || {};
 
   const sessionStore = new SessionStore(
     sessionDriverConfig,
@@ -62,20 +62,20 @@ function initializeServer({
 
   // TODO: refine handler entry, improve error message and hint
   // eslint-disable-next-line import/no-dynamic-require, @typescript-eslint/no-var-requires
-  const Entry: Action = require(path.resolve('index.js'));
-  let ErrorEntry: Action;
+  const Entry: Action<any, any> = require(path.resolve('index.js'));
+  let ErrorEntry: Action<any, any>;
   try {
     // eslint-disable-next-line import/no-dynamic-require
     ErrorEntry = require(path.resolve('_error.js'));
   } catch (err) {} // eslint-disable-line no-empty
 
-  function initializeBot(bot: Bot<any, any>): void {
+  function initializeBot(bot: Bot<any, any, any>): void {
     if (initialState) {
       bot.setInitialState(initialState);
     }
 
     if (plugins) {
-      plugins.forEach((plugin: Plugin) => {
+      plugins.forEach((plugin: Plugin<any, any>) => {
         bot.use(plugin);
       });
     }

@@ -26,13 +26,8 @@ const methodBlackList = [
   'handlerDidEnd', // context lifecycle
 ];
 
-export default class ConsoleContext extends Context implements PlatformContext {
-  _client: ConsoleClient = this._client;
-
-  _event: ConsoleEvent = this._event;
-
-  _session: Session = this._session;
-
+export default class ConsoleContext extends Context<ConsoleClient, ConsoleEvent>
+  implements PlatformContext {
   _fallbackMethods = false;
 
   _mockPlatform = 'console';

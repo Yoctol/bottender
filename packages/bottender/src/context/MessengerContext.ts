@@ -23,14 +23,9 @@ type Options = {
   emitter?: EventEmitter;
 };
 
-class MessengerContext extends Context implements PlatformContext {
+class MessengerContext extends Context<MessengerClient, MessengerEvent>
+  implements PlatformContext {
   _appId: string | null;
-
-  _client: MessengerClient = this._client;
-
-  _event: MessengerEvent = this._event;
-
-  _session: Session | null = this._session;
 
   _customAccessToken: string | null;
 

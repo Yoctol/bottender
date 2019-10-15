@@ -5,7 +5,13 @@ import SessionStore from '../session/SessionStore';
 import Bot from './Bot';
 import LineConnector, { LineRequestBody } from './LineConnector';
 
-export default class LineBot extends Bot<LineRequestBody, LineClient> {
+import { LineEvent } from '..';
+
+export default class LineBot extends Bot<
+  LineRequestBody,
+  LineClient,
+  LineEvent
+> {
   constructor({
     accessToken,
     channelSecret,
