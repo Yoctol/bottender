@@ -42,7 +42,9 @@ async function expectConversation(app, message, expectedReply) {
 
 async function expectPayloadConversation(app, message, expectedReply) {
   const context = payloadContext(message);
+
   await app(context);
+
   if (expectedReply == null) {
     expect(context.sendText).not.toBeCalled();
   } else {
@@ -60,6 +62,7 @@ describe('#router', () => {
     ]);
 
     const app = run(Router);
+
     await expectConversation(app, 'hi', 'hello');
   });
 
@@ -77,7 +80,9 @@ describe('#router', () => {
 
     const app = run(Router);
     const context = textContext('hi');
+
     await app(context, props);
+
     expect(context.sendText).toBeCalledWith('next');
   });
 });
@@ -87,6 +92,7 @@ describe('#route', () => {
     const Router = router([route('*', textAction('hello'))]);
 
     const app = run(Router);
+
     await expectConversation(app, 'hi', 'hello');
     await expectConversation(app, 'yo', 'hello');
   });
@@ -100,6 +106,7 @@ describe('#route', () => {
     ]);
 
     const app = run(Router);
+
     await expectConversation(app, 'hi', 'hello');
     await expectPayloadConversation(app, 'hi', null);
   });
@@ -110,6 +117,7 @@ describe('#text', () => {
     const Router = router([text('hi', textAction('hello'))]);
 
     const app = run(Router);
+
     await expectConversation(app, 'hi', 'hello');
     await expectConversation(app, 'yo', null);
     await expectPayloadConversation(app, 'hi', null);
@@ -119,6 +127,7 @@ describe('#text', () => {
     const Router = router([text(['hi', 'hello'], textAction('hello'))]);
 
     const app = run(Router);
+
     await expectConversation(app, 'hi', 'hello');
     await expectConversation(app, 'hello', 'hello');
     await expectConversation(app, 'yo', null);
@@ -129,6 +138,7 @@ describe('#text', () => {
     const Router = router([text(/(hi|hello)/, textAction('hello'))]);
 
     const app = run(Router);
+
     await expectConversation(app, 'hi', 'hello');
     await expectConversation(app, 'hello', 'hello');
     await expectConversation(app, 'yo', null);
@@ -136,21 +146,36 @@ describe('#text', () => {
   });
 
   it('should work with regexp match', async () => {
-    const action = jest.fn();
+    let receivedContext;
+    let receivedProps;
+    const action = (ctx, props) => {
+      receivedContext = ctx;
+      receivedProps = props;
+    };
     const Router = router([text(/number: (\d+)/, action)]);
 
     const app = run(Router);
     const context = textContext('number: 123');
+
     await app(context);
-    const expectedProps = { match: ['number: 123', '123'], next: undefined };
-    expect(action).toBeCalledWith(context, expectedProps, context, {});
-    // expect(action).toBeCalledWith(1,2,3)
+
+    const match: any = ['number: 123', '123'];
+    match.index = 0;
+    match.input = 'number: 123';
+    match.groups = undefined;
+
+    expect(receivedContext).toEqual(context);
+    expect(receivedProps).toEqual({
+      match,
+      next: undefined,
+    });
   });
 
   it('should work with *', async () => {
     const Router = router([text('*', textAction('hello'))]);
 
     const app = run(Router);
+
     await expectConversation(app, 'hi', 'hello');
     await expectConversation(app, 'hello', 'hello');
     await expectConversation(app, 'yo', 'hello');
@@ -163,6 +188,7 @@ describe('#payload', () => {
     const Router = router([payload('hi', textAction('hello'))]);
 
     const app = run(Router);
+
     await expectPayloadConversation(app, 'hi', 'hello');
     await expectPayloadConversation(app, 'hello', null);
     await expectPayloadConversation(app, 'yo', null);
@@ -173,6 +199,7 @@ describe('#payload', () => {
     const Router = router([payload(['hi', 'hello'], textAction('hello'))]);
 
     const app = run(Router);
+
     await expectPayloadConversation(app, 'hi', 'hello');
     await expectPayloadConversation(app, 'hello', 'hello');
     await expectPayloadConversation(app, 'yo', null);
@@ -183,6 +210,7 @@ describe('#payload', () => {
     const Router = router([payload(/(hi|hello)/, textAction('hello'))]);
 
     const app = run(Router);
+
     await expectPayloadConversation(app, 'hi', 'hello');
     await expectPayloadConversation(app, 'hello', 'hello');
     await expectPayloadConversation(app, 'yo', null);
@@ -193,6 +221,7 @@ describe('#payload', () => {
     const Router = router([payload('*', textAction('hello'))]);
 
     const app = run(Router);
+
     await expectPayloadConversation(app, 'hi', 'hello');
     await expectPayloadConversation(app, 'hello', 'hello');
     await expectPayloadConversation(app, 'yo', 'hello');
