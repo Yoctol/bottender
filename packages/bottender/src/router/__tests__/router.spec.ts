@@ -1,4 +1,3 @@
-import withProps from '../../withProps';
 import { run } from '../../bot/Bot';
 
 import router, { payload, route, text } from '..';
@@ -134,6 +133,18 @@ describe('#text', () => {
     await expectConversation(app, 'hello', 'hello');
     await expectConversation(app, 'yo', null);
     await expectPayloadConversation(app, 'hi', null);
+  });
+
+  it('should work with regexp match', async () => {
+    const action = jest.fn();
+    const Router = router([text(/number: (\d+)/, action)]);
+
+    const app = run(Router);
+    const context = textContext('number: 123');
+    await app(context);
+    const expectedProps = { match: ['number: 123', '123'], next: undefined };
+    expect(action).toBeCalledWith(context, expectedProps, context, {});
+    // expect(action).toBeCalledWith(1,2,3)
   });
 
   it('should work with *', async () => {
