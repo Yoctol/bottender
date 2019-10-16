@@ -73,14 +73,18 @@ export default class Bot<B, C> {
 
   _emitter: EventEmitter;
 
+  _sessionIdSeperator: string;
+
   constructor({
     connector,
     sessionStore = createMemorySessionStore(),
     sync = false,
+    sessionIdSeperator = ':',
   }: {
     connector: Connector<B, C>;
     sessionStore?: SessionStore;
     sync?: boolean;
+    sessionIdSeperator?: string;
   }) {
     this._sessions = sessionStore;
     this._initialized = false;
@@ -88,6 +92,7 @@ export default class Bot<B, C> {
     this._handler = null;
     this._sync = sync;
     this._emitter = new EventEmitter();
+    this._sessionIdSeperator = sessionIdSeperator;
   }
 
   get connector(): Connector<B, C> {
@@ -169,7 +174,7 @@ export default class Bot<B, C> {
       let sessionId: string | undefined;
       let session: Session | undefined;
       if (sessionKey) {
-        sessionId = `${platform}:${sessionKey}`;
+        sessionId = `${platform}${this._sessionIdSeperator}${sessionKey}`;
 
         session =
           (await this._sessions.read(sessionId)) ||

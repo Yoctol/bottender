@@ -16,6 +16,7 @@ export default class SlackBot extends Bot<SlackRequestBody, SlackOAuthClient> {
     verificationToken,
     origin,
     skipProfile,
+    sessionIdSeperator = ':',
   }: {
     accessToken: string;
     sessionStore: SessionStore;
@@ -23,6 +24,7 @@ export default class SlackBot extends Bot<SlackRequestBody, SlackOAuthClient> {
     verificationToken?: string;
     origin?: string;
     skipProfile?: boolean | null;
+    sessionIdSeperator?: string;
   }) {
     const connector = new SlackConnector({
       accessToken,
@@ -30,7 +32,7 @@ export default class SlackBot extends Bot<SlackRequestBody, SlackOAuthClient> {
       origin,
       skipProfile,
     });
-    super({ connector, sessionStore, sync });
+    super({ connector, sessionStore, sync, sessionIdSeperator });
     this._accessToken = accessToken;
   }
 

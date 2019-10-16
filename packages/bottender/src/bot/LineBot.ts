@@ -16,6 +16,7 @@ export default class LineBot extends Bot<LineRequestBody, LineClient> {
     shouldBatch,
     sendMethod,
     skipProfile,
+    sessionIdSeperator = ':',
   }: {
     accessToken: string;
     channelSecret: string;
@@ -26,6 +27,7 @@ export default class LineBot extends Bot<LineRequestBody, LineClient> {
     sendMethod?: string;
     origin?: string;
     skipProfile?: boolean;
+    sessionIdSeperator?: string;
   }) {
     const connector = new LineConnector({
       accessToken,
@@ -36,6 +38,6 @@ export default class LineBot extends Bot<LineRequestBody, LineClient> {
       origin,
       skipProfile,
     });
-    super({ connector, sessionStore, sync });
+    super({ connector, sessionStore, sync, sessionIdSeperator });
   }
 }

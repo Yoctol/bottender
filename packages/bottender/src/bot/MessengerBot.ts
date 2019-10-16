@@ -21,6 +21,7 @@ export default class MessengerBot extends Bot<
     origin,
     skipAppSecretProof,
     skipProfile,
+    sessionIdSeperator = ':',
   }: {
     accessToken: string;
     appId: string;
@@ -33,6 +34,7 @@ export default class MessengerBot extends Bot<
     origin?: string;
     skipAppSecretProof?: boolean;
     skipProfile?: boolean;
+    sessionIdSeperator?: string;
   }) {
     const connector = new MessengerConnector({
       accessToken,
@@ -45,6 +47,6 @@ export default class MessengerBot extends Bot<
       skipAppSecretProof,
       skipProfile,
     });
-    super({ connector, sessionStore, sync });
+    super({ connector, sessionStore, sync, sessionIdSeperator });
   }
 }

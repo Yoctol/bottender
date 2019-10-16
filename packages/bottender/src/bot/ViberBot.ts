@@ -12,14 +12,16 @@ export default class ViberBot extends Bot<ViberRequestBody, ViberClient> {
     sessionStore,
     sync,
     origin,
+    sessionIdSeperator = ':',
   }: {
     accessToken: string;
     sender: ViberSender;
     sessionStore?: SessionStore;
     sync?: boolean;
     origin?: string;
+    sessionIdSeperator?: string;
   }) {
     const connector = new ViberConnector({ accessToken, sender, origin });
-    super({ connector, sessionStore, sync });
+    super({ connector, sessionStore, sync, sessionIdSeperator });
   }
 }

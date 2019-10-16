@@ -13,13 +13,15 @@ export default class ConsoleBot extends Bot<ConsoleRawEvent, ConsoleClient> {
     sessionStore,
     fallbackMethods,
     mockPlatform,
+    sessionIdSeperator = ':',
   }: {
     sessionStore?: SessionStore;
     fallbackMethods?: boolean;
     mockPlatform?: string;
+    sessionIdSeperator?: string;
   } = {}) {
     const connector = new ConsoleConnector({ fallbackMethods, mockPlatform });
-    super({ connector, sessionStore, sync: true });
+    super({ connector, sessionStore, sync: true, sessionIdSeperator });
   }
 
   async getSession(): Promise<Session> {
@@ -29,7 +31,7 @@ export default class ConsoleBot extends Bot<ConsoleRawEvent, ConsoleClient> {
     const sessionKey = '1';
 
     // Create or retrieve session if possible
-    const sessionId = `${platform}:${sessionKey}`;
+    const sessionId = `${platform}${this._sessionIdSeperator}${sessionKey}`;
     const session =
       (await this._sessions.read(sessionId)) ||
       (Object.create(null) as Session);
