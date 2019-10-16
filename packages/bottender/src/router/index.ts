@@ -7,11 +7,7 @@ type RoutePattern = '*' | RoutePredicate;
 
 type RoutePredicate = (
   context: Context
-) =>
-  | boolean
-  | string[]
-  | Record<string, string>
-  | Promise<boolean | string[] | Record<string, string>>;
+) => boolean | Record<string, any> | Promise<boolean | Record<string, any>>;
 
 type Route = {
   predicate: RoutePredicate;
@@ -22,9 +18,9 @@ function router(routes: Route[]) {
   return async function Router(context: Context, { next }: Props = {}) {
     for (const r of routes) {
       // eslint-disable-next-line no-await-in-loop
-      const params = await r.predicate(context);
-      if (params) {
-        return r.action.bind(null, context, { next, params });
+      const match = await r.predicate(context);
+      if (match) {
+        return r.action.bind(null, context, { next, match });
       }
     }
 
@@ -64,17 +60,7 @@ function text(pattern: MatchPattern, action: Action) {
   if (pattern instanceof RegExp) {
     return {
       predicate: (context: Context) => {
-        const result = pattern.exec(context.event.text);
-        // mismatch
-        if (result == null) {
-          return false;
-        }
-        // return named group object
-        if (result.groups) {
-          return result.groups;
-        }
-        // return group
-        return result.slice(1);
+        return pattern.exec(context.event.text);
       },
       action,
     };
