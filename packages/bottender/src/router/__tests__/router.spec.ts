@@ -1,193 +1,230 @@
+import { run } from '../../bot/Bot';
+
 import router, { payload, route, text } from '..';
 
-const contextWithTextHi = {
-  event: {
-    isText: true,
-    isPayload: false,
-    text: 'hi',
-  },
-};
+function textContext(message = '') {
+  return {
+    sendText: jest.fn(),
+    event: {
+      isText: true,
+      isPayload: false,
+      text: message,
+    },
+  };
+}
 
-const contextWithTextHello = {
-  event: {
-    isText: true,
-    isPayload: false,
-    text: 'hello',
-  },
-};
+function payloadContext(message = '') {
+  return {
+    sendText: jest.fn(),
+    event: {
+      isText: false,
+      isPayload: true,
+      payload: message,
+    },
+  };
+}
 
-const contextWithTextHey = {
-  event: {
-    isText: true,
-    isPayload: false,
-    text: 'hey',
-  },
-};
+function textAction(message) {
+  return async function(context) {
+    await context.sendText(message);
+  };
+}
 
-const contextWithPayloadHi = {
-  event: {
-    isText: false,
-    isPayload: true,
-    payload: 'hi',
-  },
-};
+async function expectConversation(app, message, expectedReply) {
+  const context = textContext(message);
+  await app(context);
+  if (expectedReply == null) {
+    expect(context.sendText).not.toBeCalled();
+  } else {
+    expect(context.sendText).toBeCalledWith(expectedReply);
+  }
+}
 
-const contextWithPayloadHello = {
-  event: {
-    isText: false,
-    isPayload: true,
-    payload: 'hello',
-  },
-};
+async function expectPayloadConversation(app, message, expectedReply) {
+  const context = payloadContext(message);
 
-const contextWithPayloadHey = {
-  event: {
-    isText: false,
-    isPayload: true,
-    payload: 'hey',
-  },
-};
+  await app(context);
+
+  if (expectedReply == null) {
+    expect(context.sendText).not.toBeCalled();
+  } else {
+    expect(context.sendText).toBeCalledWith(expectedReply);
+  }
+}
 
 describe('#router', () => {
   it('should work with raw route format', async () => {
-    const Hi = () => {};
-
     const Router = router([
       {
         predicate: () => true,
-        action: Hi,
+        action: textAction('hello'),
       },
     ]);
 
-    expect(await Router(contextWithTextHi as any)).toEqual(Hi);
+    const app = run(Router);
+
+    await expectConversation(app, 'hi', 'hello');
   });
 
   it('should return next if not match any route', async () => {
-    const Hi = () => {};
-    const Next = () => {};
-
     const Router = router([
       {
         predicate: () => false,
-        action: Hi,
+        action: textAction('hello'),
       },
     ]);
 
-    expect(await Router(contextWithTextHi as any, { next: Next })).toEqual(
-      Next
-    );
+    const props = {
+      next: textAction('next'),
+    };
+
+    const app = run(Router);
+    const context = textContext('hi');
+
+    await app(context, props);
+
+    expect(context.sendText).toBeCalledWith('next');
   });
 });
 
 describe('#route', () => {
   it('should work with *', async () => {
-    const Hi = () => {};
+    const Router = router([route('*', textAction('hello'))]);
 
-    const Router = router([route('*', Hi)]);
+    const app = run(Router);
 
-    expect(await Router(contextWithTextHi as any)).toEqual(Hi);
-    expect(await Router(contextWithPayloadHi as any)).toEqual(Hi);
+    await expectConversation(app, 'hi', 'hello');
+    await expectConversation(app, 'yo', 'hello');
   });
 
   it('should work with predicate', async () => {
-    const Hi = () => {};
-
     const Router = router([
       route(
         context => context.event.isText && context.event.text.startsWith('h'),
-        Hi
+        textAction('hello')
       ),
     ]);
 
-    expect(await Router(contextWithTextHi as any)).toEqual(Hi);
-    expect(await Router(contextWithPayloadHi as any)).toBeUndefined();
+    const app = run(Router);
+
+    await expectConversation(app, 'hi', 'hello');
+    await expectPayloadConversation(app, 'hi', null);
   });
 });
 
 describe('#text', () => {
   it('should work with string', async () => {
-    const Hi = () => {};
+    const Router = router([text('hi', textAction('hello'))]);
 
-    const Router = router([text('hi', Hi)]);
+    const app = run(Router);
 
-    expect(await Router(contextWithTextHi as any)).toEqual(Hi);
-
-    expect(await Router(contextWithTextHello as any)).toBeUndefined();
+    await expectConversation(app, 'hi', 'hello');
+    await expectConversation(app, 'yo', null);
+    await expectPayloadConversation(app, 'hi', null);
   });
 
   it('should work with array of string', async () => {
-    const Hi = () => {};
+    const Router = router([text(['hi', 'hello'], textAction('hello'))]);
 
-    const Router = router([text(['hi', 'hello'], Hi)]);
+    const app = run(Router);
 
-    expect(await Router(contextWithTextHi as any)).toEqual(Hi);
-    expect(await Router(contextWithTextHello as any)).toEqual(Hi);
-
-    expect(await Router(contextWithTextHey as any)).toBeUndefined();
+    await expectConversation(app, 'hi', 'hello');
+    await expectConversation(app, 'hello', 'hello');
+    await expectConversation(app, 'yo', null);
+    await expectPayloadConversation(app, 'hi', null);
   });
 
   it('should work with regexp', async () => {
-    const Hi = () => {};
+    const Router = router([text(/(hi|hello)/, textAction('hello'))]);
 
-    const Router = router([text(/(hi|hello)/, Hi)]);
+    const app = run(Router);
 
-    expect(await Router(contextWithTextHi as any)).toEqual(Hi);
-    expect(await Router(contextWithTextHello as any)).toEqual(Hi);
+    await expectConversation(app, 'hi', 'hello');
+    await expectConversation(app, 'hello', 'hello');
+    await expectConversation(app, 'yo', null);
+    await expectPayloadConversation(app, 'hi', null);
+  });
 
-    expect(await Router(contextWithTextHey as any)).toBeUndefined();
+  it('should work with regexp match', async () => {
+    let receivedContext;
+    let receivedProps;
+    const action = (ctx, props) => {
+      receivedContext = ctx;
+      receivedProps = props;
+    };
+    const Router = router([text(/number: (\d+)/, action)]);
+
+    const app = run(Router);
+    const context = textContext('number: 123');
+
+    await app(context);
+
+    const match: any = ['number: 123', '123'];
+    match.index = 0;
+    match.input = 'number: 123';
+    match.groups = undefined;
+
+    expect(receivedContext).toEqual(context);
+    expect(receivedProps).toEqual({
+      match,
+      next: undefined,
+    });
   });
 
   it('should work with *', async () => {
-    const Hi = () => {};
+    const Router = router([text('*', textAction('hello'))]);
 
-    const Router = router([text('*', Hi)]);
+    const app = run(Router);
 
-    expect(await Router(contextWithTextHi as any)).toEqual(Hi);
-    expect(await Router(contextWithTextHello as any)).toEqual(Hi);
-    expect(await Router(contextWithTextHey as any)).toEqual(Hi);
+    await expectConversation(app, 'hi', 'hello');
+    await expectConversation(app, 'hello', 'hello');
+    await expectConversation(app, 'yo', 'hello');
+    await expectPayloadConversation(app, 'hi', null);
   });
 });
 
 describe('#payload', () => {
   it('should work with string', async () => {
-    const Hi = () => {};
+    const Router = router([payload('hi', textAction('hello'))]);
 
-    const Router = router([payload('hi', Hi)]);
+    const app = run(Router);
 
-    expect(await Router(contextWithPayloadHi as any)).toEqual(Hi);
-
-    expect(await Router(contextWithPayloadHello as any)).toBeUndefined();
+    await expectPayloadConversation(app, 'hi', 'hello');
+    await expectPayloadConversation(app, 'hello', null);
+    await expectPayloadConversation(app, 'yo', null);
+    await expectConversation(app, 'hi', null);
   });
 
   it('should work with array of string', async () => {
-    const Hi = () => {};
+    const Router = router([payload(['hi', 'hello'], textAction('hello'))]);
 
-    const Router = router([payload(['hi', 'hello'], Hi)]);
+    const app = run(Router);
 
-    expect(await Router(contextWithPayloadHi as any)).toEqual(Hi);
-    expect(await Router(contextWithPayloadHello as any)).toEqual(Hi);
-
-    expect(await Router(contextWithPayloadHey as any)).toBeUndefined();
+    await expectPayloadConversation(app, 'hi', 'hello');
+    await expectPayloadConversation(app, 'hello', 'hello');
+    await expectPayloadConversation(app, 'yo', null);
+    await expectConversation(app, 'hi', null);
   });
 
   it('should work with regexp', async () => {
-    const Hi = () => {};
+    const Router = router([payload(/(hi|hello)/, textAction('hello'))]);
 
-    const Router = router([payload(/(hi|hello)/, Hi)]);
+    const app = run(Router);
 
-    expect(await Router(contextWithPayloadHi as any)).toEqual(Hi);
-    expect(await Router(contextWithPayloadHello as any)).toEqual(Hi);
-
-    expect(await Router(contextWithPayloadHey as any)).toBeUndefined();
+    await expectPayloadConversation(app, 'hi', 'hello');
+    await expectPayloadConversation(app, 'hello', 'hello');
+    await expectPayloadConversation(app, 'yo', null);
+    await expectConversation(app, 'hi', null);
   });
 
   it('should work with *', async () => {
-    const Hi = () => {};
+    const Router = router([payload('*', textAction('hello'))]);
 
-    const Router = router([payload('*', Hi)]);
+    const app = run(Router);
 
-    expect(await Router(contextWithPayloadHi as any)).toEqual(Hi);
-    expect(await Router(contextWithPayloadHello as any)).toEqual(Hi);
-    expect(await Router(contextWithPayloadHey as any)).toEqual(Hi);
+    await expectPayloadConversation(app, 'hi', 'hello');
+    await expectPayloadConversation(app, 'hello', 'hello');
+    await expectPayloadConversation(app, 'yo', 'hello');
+    await expectConversation(app, 'hi', null);
   });
 });
