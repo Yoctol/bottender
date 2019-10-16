@@ -171,32 +171,6 @@ describe('#text', () => {
     });
   });
 
-  it('should work with regexp named group match', async () => {
-    let receivedContext;
-    let receivedProps;
-    const action = (ctx, props) => {
-      receivedContext = ctx;
-      receivedProps = props;
-    };
-    const Router = router([text(/number: (?<number>\d+)/, action)]);
-
-    const app = run(Router);
-    const context = textContext('number: 123');
-
-    await app(context);
-
-    const match: any = ['number: 123', '123'];
-    match.index = 0;
-    match.input = 'number: 123';
-    match.groups = { number: '123' };
-
-    expect(receivedContext).toEqual(context);
-    expect(receivedProps).toEqual({
-      match,
-      next: undefined,
-    });
-  });
-
   it('should work with *', async () => {
     const Router = router([text('*', textAction('hello'))]);
 
