@@ -1,12 +1,13 @@
 import Context from '../context/Context';
 import { Action, Props } from '../types';
+import { PlatformContext } from '../context/PlatformContext';
 
 type MatchPattern = string | Array<string> | RegExp;
 
 type RoutePattern = '*' | RoutePredicate;
 
 type RoutePredicate = (
-  context: Context
+  context: Context | PlatformContext
 ) => boolean | Record<string, any> | Promise<boolean | Record<string, any>>;
 
 type Route = {
@@ -114,6 +115,44 @@ function payload(pattern: MatchPattern, action: Action) {
   };
 }
 
+function platform(pattern: MatchPattern, action: Action) {
+  if (typeof pattern === 'string') {
+    if (pattern === '*') {
+      return {
+        predicate: () => true,
+        action,
+      };
+    }
+
+    return {
+      predicate: (context: PlatformContext) => context.platform === pattern,
+      action,
+    };
+  }
+
+  if (pattern instanceof RegExp) {
+    return {
+      predicate: (context: PlatformContext) => {
+        return pattern.exec(context.platform);
+      },
+      action,
+    };
+  }
+
+  if (Array.isArray(pattern)) {
+    return {
+      predicate: (context: PlatformContext) =>
+        pattern.includes(context.platform),
+      action,
+    };
+  }
+
+  return {
+    predicate: () => false,
+    action,
+  };
+}
+
 export default router;
 
-export { router, route, text, payload };
+export { router, route, text, payload, platform };

@@ -1,6 +1,6 @@
 import { run } from '../../bot/Bot';
 
-import router, { payload, route, text } from '..';
+import router, { payload, platform, route, text } from '..';
 
 function textContext(message = '') {
   return {
@@ -24,6 +24,13 @@ function payloadContext(message = '') {
   };
 }
 
+function platformContext(name = '') {
+  return {
+    sendText: jest.fn(),
+    platform: name,
+  };
+}
+
 function textAction(message) {
   return async function(context) {
     await context.sendText(message);
@@ -42,6 +49,18 @@ async function expectConversation(app, message, expectedReply) {
 
 async function expectPayloadConversation(app, message, expectedReply) {
   const context = payloadContext(message);
+
+  await app(context);
+
+  if (expectedReply == null) {
+    expect(context.sendText).not.toBeCalled();
+  } else {
+    expect(context.sendText).toBeCalledWith(expectedReply);
+  }
+}
+
+async function expectplatformConversation(app, name, expectedReply) {
+  const context = platformContext(name);
 
   await app(context);
 
@@ -226,5 +245,49 @@ describe('#payload', () => {
     await expectPayloadConversation(app, 'hello', 'hello');
     await expectPayloadConversation(app, 'yo', 'hello');
     await expectConversation(app, 'hi', null);
+  });
+});
+
+describe('#platform', () => {
+  it('should work with string', async () => {
+    const Router = router([platform('line', textAction('hello'))]);
+
+    const app = run(Router);
+
+    await expectplatformConversation(app, 'line', 'hello');
+    await expectplatformConversation(app, 'telegram', null);
+    await expectplatformConversation(app, 'slack', null);
+  });
+
+  it('should work with array of string', async () => {
+    const Router = router([
+      platform(['line', 'telegram'], textAction('hello')),
+    ]);
+
+    const app = run(Router);
+
+    await expectplatformConversation(app, 'line', 'hello');
+    await expectplatformConversation(app, 'telegram', 'hello');
+    await expectplatformConversation(app, 'slack', null);
+  });
+
+  it('should work with regexp', async () => {
+    const Router = router([platform(/(line|telegram)/, textAction('hello'))]);
+
+    const app = run(Router);
+
+    await expectplatformConversation(app, 'line', 'hello');
+    await expectplatformConversation(app, 'telegram', 'hello');
+    await expectplatformConversation(app, 'slack', null);
+  });
+
+  it('should work with *', async () => {
+    const Router = router([platform('*', textAction('hello'))]);
+
+    const app = run(Router);
+
+    await expectplatformConversation(app, 'line', 'hello');
+    await expectplatformConversation(app, 'telegram', 'hello');
+    await expectplatformConversation(app, 'slack', 'hello');
   });
 });
