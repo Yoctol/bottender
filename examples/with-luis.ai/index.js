@@ -1,15 +1,12 @@
 const LUISClient = require('luis-sdk');
-const { ConsoleBot } = require('bottender');
 
 const luis = new LUISClient({
-  appId: process.env.APP_ID,
-  appKey: process.env.APP_KEY,
+  appId: process.env.LUIS_APP_ID,
+  appKey: process.env.LUIS_APP_KEY,
   verbose: true,
 });
 
-const bot = new ConsoleBot();
-
-bot.onEvent(async context => {
+module.exports = async function App(context) {
   if (context.event.isText) {
     try {
       const response = await new Promise((resolve, reject) => {
@@ -27,6 +24,4 @@ bot.onEvent(async context => {
       console.error(err);
     }
   }
-});
-
-bot.createRuntime();
+};

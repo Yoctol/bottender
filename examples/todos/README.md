@@ -8,7 +8,7 @@ Download this example or clone [bottender](https://github.com/Yoctol/bottender).
 curl https://codeload.github.com/Yoctol/bottender/tar.gz/master | tar -xz --strip=2 bottender-master/examples/todos
 cd todos
 npm install
-npm run dev
+npm run dev --console
 ```
 
 ## Idea of this example
@@ -67,4 +67,3 @@ For more information about Bottender, please visit our
 ## Related examples
 
 - [with-state](../with-state)
-- [console-hello-world](../console-hello-world)

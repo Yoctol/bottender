@@ -1,13 +1,10 @@
 {
-  "dependencies": {
-    "luis-sdk": "^1.0.1",
-    "bottender": "latest"
-  },
-  "devDependencies": {
-    "nodemon": "^1.11.0"
-  },
   "scripts": {
-    "dev": "nodemon index.js",
-    "start": "node index.js"
+    "dev": "bottender dev",
+    "start": "bottender start"
+  },
+  "dependencies": {
+    "bottender": "next",
+    "luis-sdk": "^1.0.1"
   }
 }

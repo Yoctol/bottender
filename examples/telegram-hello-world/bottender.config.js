@@ -1,5 +1,9 @@
 module.exports = {
-  telegram: {
-    accessToken: '__FILL_YOUR_TOKEN_HERE__',
+  channels: {
+    telegram: {
+      enabled: true,
+      path: '/webhooks/telegram',
+      accessToken: process.env.TELEGRAM_ACCESS_TOKEN,
+    },
   },
 };

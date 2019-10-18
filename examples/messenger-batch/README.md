@@ -60,3 +60,4 @@ new MessengerBot({
 ## Related examples
 
 - [messenger-hello-world](../messenger-hello-world)
+- [messenger-batch-multi-pages](../messenger-batch-multi-pages)
