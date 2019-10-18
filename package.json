@@ -59,6 +59,7 @@
     "eslint": "^6.5.1",
     "eslint-config-prettier": "^6.3.0",
     "eslint-config-react-app": "^5.0.2",
+    "eslint-config-yoctol": "^0.23.3",
     "eslint-config-yoctol-base": "^0.21.2",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-jsx-a11y": "^6.2.3",

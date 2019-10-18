@@ -1,0 +1,28 @@
+{
+  "docs": {
+    "Installation": ["getting-started"],
+    "Platforms": ["console", "messenger", "line", "slack", "telegram", "viber"],
+    "Guides": [
+      "commands",
+      "deployment",
+      "error-handling",
+      "intents",
+      "middleware",
+      "server",
+      "session",
+      "state",
+      "testing",
+      "custom-connector",
+      "troubleshooting"
+    ]
+  },
+  "api": {
+    "Common": ["api-context", "api-event", "api-handler"],
+    "Console": ["api-consolecontext", "api-consoleevent"],
+    "Messenger": ["api-messengercontext", "api-messengerevent"],
+    "LINE": ["api-linecontext", "api-lineevent"],
+    "Slack": ["api-slackcontext", "api-slackevent"],
+    "Telegram": ["api-telegramcontext", "api-telegramevent"],
+    "Viber": ["api-vibercontext", "api-viberevent"]
+  }
+}
