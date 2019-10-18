@@ -1,14 +1,15 @@
 /* eslint-disable consistent-return */
 import chalk from 'chalk';
 import invariant from 'invariant';
-import { MessengerClient, MessengerProfile } from 'messaging-api-messenger';
+import { MessengerClient, MessengerTypes } from 'messaging-api-messenger';
 import { addedDiff, deletedDiff, diff, updatedDiff } from 'deep-object-diff';
 import { omit, pick } from 'lodash';
 
-import getConfig from '../../shared/getConfig';
+import getChannelConfig from '../../../shared/getChannelConfig';
 import getSubArgs from '../sh/utils/getSubArgs';
+import { Channel } from '../../../types';
 import { CliContext } from '../..';
-import { bold, error, log, print } from '../../shared/log';
+import { bold, error, log, print } from '../../../shared/log';
 
 const FIELDS = [
   'account_linking_url',
@@ -27,7 +28,6 @@ export const help = (): void => {
 
     ${chalk.dim('Actions:')}
 
-      check         Check if messenger profile setting in bottender.config.js valids
       get           Get the messenger profile
       set           Set the messenger profile by diff
       del, delete   Delete all the messenger profile fields
@@ -49,7 +49,9 @@ export const help = (): void => {
   `);
 };
 
-export const trimDomain = (profile: MessengerProfile): MessengerProfile => {
+export const trimDomain = (
+  profile: MessengerTypes.MessengerProfile
+): MessengerTypes.MessengerProfile => {
   const clone = { ...profile };
 
   if (clone.whitelisted_domains) {
@@ -61,20 +63,9 @@ export const trimDomain = (profile: MessengerProfile): MessengerProfile => {
   return clone;
 };
 
-export function checkMessengerProfile(): void {
-  try {
-    getConfig('messenger');
-    print('Messenger profile check done.');
-    return;
-  } catch (err) {
-    error(err.message);
-    return process.exit(1);
-  }
-}
-
 export async function getMessengerProfile(_: CliContext): Promise<void> {
   try {
-    const config = getConfig('messenger');
+    const config = getChannelConfig(Channel.Messenger);
 
     const { accessToken } = config;
 
@@ -121,7 +112,7 @@ export async function setMessengerProfile(ctx: CliContext): Promise<void> {
   const force = argv['--force'];
 
   try {
-    const config = getConfig('messenger');
+    const config = getChannelConfig(Channel.Messenger);
 
     const { accessToken } = config;
 
@@ -130,7 +121,7 @@ export async function setMessengerProfile(ctx: CliContext): Promise<void> {
       '`accessToken` is not found in the `bottender.config.js` file'
     );
 
-    const { profile: _profile } = getConfig('messenger');
+    const { profile: _profile } = getChannelConfig(Channel.Messenger);
 
     const client = MessengerClient.connect({
       accessToken,
@@ -220,7 +211,7 @@ export async function setMessengerProfile(ctx: CliContext): Promise<void> {
 
 export async function deleteMessengerProfile(_: CliContext): Promise<void> {
   try {
-    const config = getConfig('messenger');
+    const config = getChannelConfig(Channel.Messenger);
 
     invariant(
       config.accessToken,
@@ -256,9 +247,6 @@ export default async function main(ctx: CliContext): Promise<void> {
   const subcommand = ctx.argv._[2];
 
   switch (subcommand) {
-    case 'check':
-      checkMessengerProfile();
-      break;
     case 'get':
       await getMessengerProfile(ctx);
       break;
@@ -273,7 +261,7 @@ export default async function main(ctx: CliContext): Promise<void> {
       help();
       break;
     default:
-      error(`Please specify a valid subcommand: check, get, set, delete, help`);
+      error(`Please specify a valid subcommand: get, set, delete, help`);
       help();
   }
 }

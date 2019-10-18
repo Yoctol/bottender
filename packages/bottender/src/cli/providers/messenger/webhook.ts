@@ -4,11 +4,12 @@ import chalk from 'chalk';
 import invariant from 'invariant';
 import { MessengerClient } from 'messaging-api-messenger';
 
-import getConfig from '../../shared/getConfig';
+import getChannelConfig from '../../../shared/getChannelConfig';
 import getSubArgs from '../sh/utils/getSubArgs';
-import getWebhookFromNgrok from '../../shared/getWebhookFromNgrok';
+import getWebhookFromNgrok from '../../../shared/getWebhookFromNgrok';
+import { Channel } from '../../../types';
 import { CliContext } from '../..';
-import { bold, error, print, warn } from '../../shared/log';
+import { bold, error, print, warn } from '../../../shared/log';
 
 const help = (): void => {
   console.log(`
@@ -46,7 +47,7 @@ export async function setWebhook(ctx: CliContext): Promise<void> {
   const ngrokPort = argv['--ngrok-port'] || '4040';
 
   try {
-    const config = getConfig('messenger');
+    const config = getChannelConfig(Channel.Messenger);
 
     const {
       accessToken,

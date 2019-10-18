@@ -1,14 +1,14 @@
 import { MessengerClient } from 'messaging-api-messenger';
 
-import getConfig from '../../../shared/getConfig';
+import getChannelConfig from '../../../../shared/getChannelConfig';
 import { setMessengerProfile } from '../profile';
-import * as log from '../../../shared/log';
+import * as log from '../../../../shared/log';
 
 jest.mock('messaging-api-messenger');
 jest.mock('warning');
 
-jest.mock('../../../shared/log');
-jest.mock('../../../shared/getConfig');
+jest.mock('../../../../shared/log');
+jest.mock('../../../../shared/getChannelConfig');
 
 const MOCK_FILE_WITH_PLATFORM = {
   channels: {
@@ -64,7 +64,7 @@ beforeEach(() => {
     },
   ]);
   MessengerClient.connect = jest.fn(() => _client);
-  getConfig.mockReturnValue(MOCK_FILE_WITH_PLATFORM.channels.messenger);
+  getChannelConfig.mockReturnValue(MOCK_FILE_WITH_PLATFORM.channels.messenger);
 });
 
 it('be defined', () => {
@@ -114,7 +114,7 @@ describe('resolve', () => {
           '--force': true,
         },
       };
-      getConfig.mockReturnValue({
+      getChannelConfig.mockReturnValue({
         accessToken: '__FAKE_TOKEN__',
         profile: {
           get_started: {
@@ -166,7 +166,7 @@ describe('resolve', () => {
           '--force': true,
         },
       };
-      getConfig.mockReturnValue({
+      getChannelConfig.mockReturnValue({
         accessToken: '__FAKE_TOKEN__',
         profile: {
           get_started: {
@@ -294,7 +294,7 @@ describe('resolve', () => {
         ],
       },
     ]);
-    getConfig.mockReturnValue({
+    getChannelConfig.mockReturnValue({
       accessToken: '__FAKE_TOKEN__',
       profile: {
         get_started: {

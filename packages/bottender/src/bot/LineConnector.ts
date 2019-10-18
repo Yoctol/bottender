@@ -77,12 +77,12 @@ export default class LineConnector
 
     this._mapDestinationToAccessToken = mapDestinationToAccessToken || null;
 
-    this._shouldBatch = shouldBatch || false;
+    this._shouldBatch = typeof shouldBatch === 'boolean' ? shouldBatch : true;
     warning(
       !sendMethod || sendMethod === 'reply' || sendMethod === 'push',
       'sendMethod should be one of `reply` or `push`'
     );
-    this._sendMethod = sendMethod || 'push';
+    this._sendMethod = sendMethod || 'reply';
 
     // FIXME: maybe set this default value as true
     this._skipProfile = typeof skipProfile === 'boolean' ? skipProfile : false;

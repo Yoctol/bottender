@@ -9,16 +9,12 @@ import Context from '../context/Context';
 import MemoryCacheStore from '../cache/MemoryCacheStore';
 import Session from '../session/Session';
 import SessionStore from '../session/SessionStore';
+import { Action, Plugin, Props } from '../types';
 
 import { Connector } from './Connector';
 
-type FunctionalHandler = (
-  context: Context,
-  otherArg?: any
-) => void | Promise<void>;
-
 type Builder = {
-  build: () => FunctionalHandler;
+  build: () => Action;
 };
 
 const debugRequest = debug('bottender:request');
@@ -34,16 +30,24 @@ function createMemorySessionStore(): SessionStore {
   return new CacheBasedSessionStore(cache, MINUTES_IN_ONE_YEAR);
 }
 
-function run(fn: FunctionalHandler): FunctionalHandler {
-  return async function Run(context): Promise<void> {
-    let nextDialog: FunctionalHandler | void = fn;
+export function run(action: Action): Action {
+  return async function Run(
+    context: Context,
+    props: Props = {}
+  ): Promise<void> {
+    let nextDialog: Action | void = action;
 
-    do {
+    // TODO: refactor this with withProps or whatever
+    debugDialog(`Current Dialog: ${nextDialog.name || 'Anonymous'}`);
+    // eslint-disable-next-line no-await-in-loop
+    nextDialog = await nextDialog(context, props);
+
+    while (typeof nextDialog === 'function') {
       // TODO: improve this debug helper
       debugDialog(`Current Dialog: ${nextDialog.name || 'Anonymous'}`);
       // eslint-disable-next-line no-await-in-loop
-      nextDialog = await nextDialog(context);
-    } while (typeof nextDialog === 'function');
+      nextDialog = await nextDialog(context, {});
+    }
 
     return nextDialog;
   };
@@ -54,8 +58,6 @@ type RequestHandler<B> = (
   requestContext?: Record<string, any> | null
 ) => void | Promise<void>;
 
-type ErrorHandler = (err: Error, ctx?: Context) => void | Promise<void>;
-
 export default class Bot<B, C> {
   _sessions: SessionStore;
 
@@ -63,7 +65,9 @@ export default class Bot<B, C> {
 
   _connector: Connector<B, C>;
 
-  _handler: FunctionalHandler | null;
+  _handler: Action | null;
+
+  _errorHandler: Action | null;
 
   _initialState: Record<string, any> = {};
 
@@ -86,6 +90,7 @@ export default class Bot<B, C> {
     this._initialized = false;
     this._connector = connector;
     this._handler = null;
+    this._errorHandler = null;
     this._sync = sync;
     this._emitter = new EventEmitter();
   }
@@ -98,7 +103,7 @@ export default class Bot<B, C> {
     return this._sessions;
   }
 
-  get handler(): FunctionalHandler | null {
+  get handler(): Action | null {
     return this._handler;
   }
 
@@ -106,7 +111,7 @@ export default class Bot<B, C> {
     return this._emitter;
   }
 
-  onEvent(handler: FunctionalHandler | Builder): Bot<B, C> {
+  onEvent(handler: Action | Builder): Bot<B, C> {
     invariant(
       handler,
       'onEvent: Can not pass `undefined`, `null` or any falsy value as handler'
@@ -115,9 +120,12 @@ export default class Bot<B, C> {
     return this;
   }
 
-  onError(handler: ErrorHandler | Builder): Bot<B, C> {
-    // FIXME: [type]
-    this._emitter.on('error', 'build' in handler ? handler.build() : handler);
+  onError(handler: Action | Builder): Bot<B, C> {
+    invariant(
+      handler,
+      'onError: Can not pass `undefined`, `null` or any falsy value as error handler'
+    );
+    this._errorHandler = 'build' in handler ? handler.build() : handler;
     return this;
   }
 
@@ -126,8 +134,8 @@ export default class Bot<B, C> {
     return this;
   }
 
-  use(fn: Function): Bot<B, C> {
-    this._plugins.push(fn);
+  use(plugin: Plugin): Bot<B, C> {
+    this._plugins.push(plugin);
     return this;
   }
 
@@ -226,7 +234,8 @@ export default class Bot<B, C> {
           'Bot: Missing event handler function. You should assign it using onEvent(...)'
         );
       }
-      const handler: FunctionalHandler = this._handler;
+      const handler: Action = this._handler;
+      const errorHandler: Action | null = this._errorHandler;
       const promises = Promise.all(
         contexts.map(context =>
           Promise.resolve()
@@ -235,6 +244,12 @@ export default class Bot<B, C> {
               if (context.handlerDidEnd) {
                 return context.handlerDidEnd();
               }
+            })
+            .catch(err => {
+              if (errorHandler) {
+                return run(errorHandler)(context, { error: err });
+              }
+              throw err;
             })
             .catch(err => {
               context.emitError(err);

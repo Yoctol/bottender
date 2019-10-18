@@ -83,9 +83,9 @@ describe('#sendText', () => {
   it('should call client.sendText', async () => {
     const { context, client, session } = setup();
 
-    await context.sendText('xxx.com');
+    await context.sendText('hello');
 
-    expect(client.sendText).toBeCalledWith(session.user.id, 'xxx.com', {
+    expect(client.sendText).toBeCalledWith(session.user.id, 'hello', {
       messaging_type: 'RESPONSE',
     });
   });
@@ -93,9 +93,9 @@ describe('#sendText', () => {
   it('can call with tag', async () => {
     const { context, client, session } = setup();
 
-    await context.sendText('xxx.com', { tag: 'ISSUE_RESOLUTION' });
+    await context.sendText('hello', { tag: 'ISSUE_RESOLUTION' });
 
-    expect(client.sendText).toBeCalledWith(session.user.id, 'xxx.com', {
+    expect(client.sendText).toBeCalledWith(session.user.id, 'hello', {
       messaging_type: 'MESSAGE_TAG',
       tag: 'ISSUE_RESOLUTION',
     });
@@ -104,9 +104,9 @@ describe('#sendText', () => {
   it('can call with custom messaging_type', async () => {
     const { context, client, session } = setup();
 
-    await context.sendText('xxx.com', { messaging_type: 'UPDATE' });
+    await context.sendText('hello', { messaging_type: 'UPDATE' });
 
-    expect(client.sendText).toBeCalledWith(session.user.id, 'xxx.com', {
+    expect(client.sendText).toBeCalledWith(session.user.id, 'hello', {
       messaging_type: 'UPDATE',
     });
   });
@@ -114,7 +114,7 @@ describe('#sendText', () => {
   it('should mark context as handled', async () => {
     const { context } = setup();
 
-    await context.sendText('xxx.com');
+    await context.sendText('hello');
 
     expect(context.isHandled).toBe(true);
   });
@@ -134,7 +134,7 @@ describe('#sendText', () => {
   it('should call warning and not to send if created with read event', async () => {
     const { context, client } = setup({ rawEvent: read });
 
-    await context.sendText('xxx.com');
+    await context.sendText('hello');
 
     expect(warning).toBeCalledWith(
       false,
@@ -146,7 +146,7 @@ describe('#sendText', () => {
   it('should call warning and not to send if created with delivery event', async () => {
     const { context, client } = setup({ rawEvent: delivery });
 
-    await context.sendText('xxx.com');
+    await context.sendText('hello');
 
     expect(warning).toBeCalledWith(
       false,
@@ -158,7 +158,7 @@ describe('#sendText', () => {
   it('should call warning and not to send if created with echo event', async () => {
     const { context, client } = setup({ rawEvent: echo });
 
-    await context.sendText('xxx.com');
+    await context.sendText('hello');
 
     expect(warning).toBeCalledWith(
       false,
@@ -277,9 +277,9 @@ describe('#sendImage', () => {
   it('should call client.sendImage', async () => {
     const { context, client, session } = setup();
 
-    await context.sendImage('xxx.com');
+    await context.sendImage('hello');
 
-    expect(client.sendImage).toBeCalledWith(session.user.id, 'xxx.com', {
+    expect(client.sendImage).toBeCalledWith(session.user.id, 'hello', {
       messaging_type: 'RESPONSE',
     });
   });
@@ -287,7 +287,7 @@ describe('#sendImage', () => {
   it('should mark context as handled', async () => {
     const { context } = setup();
 
-    await context.sendImage('xxx.com');
+    await context.sendImage('hello');
 
     expect(context.isHandled).toBe(true);
   });
@@ -295,7 +295,7 @@ describe('#sendImage', () => {
   it('should call warning and not to send if dont have session', async () => {
     const { context, client } = setup({ session: false });
 
-    await context.sendImage('xxx.com');
+    await context.sendImage('hello');
 
     expect(warning).toBeCalledWith(
       false,
@@ -307,7 +307,7 @@ describe('#sendImage', () => {
   it('should call warning and not to send if created with read event', async () => {
     const { context, client } = setup({ rawEvent: read });
 
-    await context.sendImage('xxx.com');
+    await context.sendImage('hello');
 
     expect(warning).toBeCalledWith(
       false,
@@ -319,7 +319,7 @@ describe('#sendImage', () => {
   it('should call warning and not to send if created with delivery event', async () => {
     const { context, client } = setup({ rawEvent: delivery });
 
-    await context.sendImage('xxx.com');
+    await context.sendImage('hello');
 
     expect(warning).toBeCalledWith(
       false,
@@ -331,7 +331,7 @@ describe('#sendImage', () => {
   it('should call warning and not to send if created with echo event', async () => {
     const { context, client } = setup({ rawEvent: echo });
 
-    await context.sendImage('xxx.com');
+    await context.sendImage('hello');
 
     expect(warning).toBeCalledWith(
       false,
@@ -345,9 +345,9 @@ describe('#sendAudio', () => {
   it('should call client.sendAudio', async () => {
     const { context, client, session } = setup();
 
-    await context.sendAudio('xxx.com');
+    await context.sendAudio('hello');
 
-    expect(client.sendAudio).toBeCalledWith(session.user.id, 'xxx.com', {
+    expect(client.sendAudio).toBeCalledWith(session.user.id, 'hello', {
       messaging_type: 'RESPONSE',
     });
   });
@@ -355,7 +355,7 @@ describe('#sendAudio', () => {
   it('should mark context as handled', async () => {
     const { context } = setup();
 
-    await context.sendAudio('xxx.com');
+    await context.sendAudio('hello');
 
     expect(context.isHandled).toBe(true);
   });
@@ -363,7 +363,7 @@ describe('#sendAudio', () => {
   it('should call warning and not to send if dont have session', async () => {
     const { context, client } = setup({ session: false });
 
-    await context.sendAudio('xxx.com');
+    await context.sendAudio('hello');
 
     expect(warning).toBeCalledWith(
       false,
@@ -375,7 +375,7 @@ describe('#sendAudio', () => {
   it('should call warning and not to send if created with read event', async () => {
     const { context, client } = setup({ rawEvent: read });
 
-    await context.sendAudio('xxx.com');
+    await context.sendAudio('hello');
 
     expect(warning).toBeCalledWith(
       false,
@@ -387,7 +387,7 @@ describe('#sendAudio', () => {
   it('should call warning and not to send if created with delivery event', async () => {
     const { context, client } = setup({ rawEvent: delivery });
 
-    await context.sendAudio('xxx.com');
+    await context.sendAudio('hello');
 
     expect(warning).toBeCalledWith(
       false,
@@ -399,7 +399,7 @@ describe('#sendAudio', () => {
   it('should call warning and not to send if created with echo event', async () => {
     const { context, client } = setup({ rawEvent: echo });
 
-    await context.sendAudio('xxx.com');
+    await context.sendAudio('hello');
 
     expect(warning).toBeCalledWith(
       false,
@@ -413,9 +413,9 @@ describe('#sendVideo', () => {
   it('should call client.sendVideo', async () => {
     const { context, client, session } = setup();
 
-    await context.sendVideo('xxx.com');
+    await context.sendVideo('hello');
 
-    expect(client.sendVideo).toBeCalledWith(session.user.id, 'xxx.com', {
+    expect(client.sendVideo).toBeCalledWith(session.user.id, 'hello', {
       messaging_type: 'RESPONSE',
     });
   });
@@ -423,7 +423,7 @@ describe('#sendVideo', () => {
   it('should mark context as handled', async () => {
     const { context } = setup();
 
-    await context.sendVideo('xxx.com');
+    await context.sendVideo('hello');
 
     expect(context.isHandled).toBe(true);
   });
@@ -431,7 +431,7 @@ describe('#sendVideo', () => {
   it('should call warning and not to send if dont have session', async () => {
     const { context, client } = setup({ session: false });
 
-    await context.sendVideo('xxx.com');
+    await context.sendVideo('hello');
 
     expect(warning).toBeCalledWith(
       false,
@@ -443,7 +443,7 @@ describe('#sendVideo', () => {
   it('should call warning and not to send if created with read event', async () => {
     const { context, client } = setup({ rawEvent: read });
 
-    await context.sendVideo('xxx.com');
+    await context.sendVideo('hello');
 
     expect(warning).toBeCalledWith(
       false,
@@ -455,7 +455,7 @@ describe('#sendVideo', () => {
   it('should call warning and not to send if created with delivery event', async () => {
     const { context, client } = setup({ rawEvent: delivery });
 
-    await context.sendVideo('xxx.com');
+    await context.sendVideo('hello');
 
     expect(warning).toBeCalledWith(
       false,
@@ -467,7 +467,7 @@ describe('#sendVideo', () => {
   it('should call warning and not to send if created with echo event', async () => {
     const { context, client } = setup({ rawEvent: echo });
 
-    await context.sendVideo('xxx.com');
+    await context.sendVideo('hello');
 
     expect(warning).toBeCalledWith(
       false,
@@ -481,9 +481,9 @@ describe('#sendFile', () => {
   it('should call client.sendFile', async () => {
     const { context, client, session } = setup();
 
-    await context.sendFile('xxx.com');
+    await context.sendFile('hello');
 
-    expect(client.sendFile).toBeCalledWith(session.user.id, 'xxx.com', {
+    expect(client.sendFile).toBeCalledWith(session.user.id, 'hello', {
       messaging_type: 'RESPONSE',
     });
   });
@@ -491,7 +491,7 @@ describe('#sendFile', () => {
   it('should mark context as handled', async () => {
     const { context } = setup();
 
-    await context.sendFile('xxx.com');
+    await context.sendFile('hello');
 
     expect(context.isHandled).toBe(true);
   });
@@ -499,7 +499,7 @@ describe('#sendFile', () => {
   it('should call warning and not to send if dont have session', async () => {
     const { context, client } = setup({ session: false });
 
-    await context.sendFile('xxx.com');
+    await context.sendFile('hello');
 
     expect(warning).toBeCalledWith(
       false,
@@ -511,7 +511,7 @@ describe('#sendFile', () => {
   it('should call warning and not to send if created with read event', async () => {
     const { context, client } = setup({ rawEvent: read });
 
-    await context.sendFile('xxx.com');
+    await context.sendFile('hello');
 
     expect(warning).toBeCalledWith(
       false,
@@ -523,7 +523,7 @@ describe('#sendFile', () => {
   it('should call warning and not to send if created with delivery event', async () => {
     const { context, client } = setup({ rawEvent: delivery });
 
-    await context.sendFile('xxx.com');
+    await context.sendFile('hello');
 
     expect(warning).toBeCalledWith(
       false,
@@ -535,7 +535,7 @@ describe('#sendFile', () => {
   it('should call warning and not to send if created with echo event', async () => {
     const { context, client } = setup({ rawEvent: echo });
 
-    await context.sendFile('xxx.com');
+    await context.sendFile('hello');
 
     expect(warning).toBeCalledWith(
       false,
@@ -759,9 +759,9 @@ describe('#useAccessToken', () => {
 
     context.useAccessToken('anyToken');
 
-    await context.sendText('xxx.com');
+    await context.sendText('hello');
 
-    expect(client.sendText).toBeCalledWith(session.user.id, 'xxx.com', {
+    expect(client.sendText).toBeCalledWith(session.user.id, 'hello', {
       messaging_type: 'RESPONSE',
       access_token: 'anyToken',
     });

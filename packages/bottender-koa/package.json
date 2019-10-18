@@ -6,14 +6,14 @@
     "type": "git",
     "url": "https://github.com/Yoctol/bottender.git"
   },
-  "version": "1.0.0-alpha.7",
+  "version": "1.0.0-alpha.12",
   "main": "dist/index.js",
   "files": [
     "dist"
   ],
   "types": "dist/index.d.ts",
   "dependencies": {
-    "koa": "^2.8.1",
+    "koa": "^2.8.2",
     "koa-bodyparser": "^4.2.1",
     "koa-router": "^7.4.0",
     "lodash": "^4.17.15"
