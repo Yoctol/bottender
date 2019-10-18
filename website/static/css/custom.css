@@ -112,12 +112,12 @@ a:focus {
 
 .features .container .wrapper .imageAlignSide p {
   font-family: Roboto;
-  font-size: 20px;
-  line-height: 32px;
+  font-size: 18px;
+  line-height: 1.5;
   max-width: 360px;
   text-align: left;
   margin-bottom: 16px;
-  color: #67758D;
+  color: #050F37;
 }
 
 .features .container .wrapper .blockContent h2 {
@@ -156,14 +156,22 @@ a:focus {
 
 .demo .demo-content {
   display: flex;
+  align-items: center;
   margin-top: 64px;
   width: 100%;
   max-width: 960px;
 }
 
+.demo .demo-content .code-block pre {
+  margin-bottom: 0;
+}
+
 .demo .demo-content .code-block {
   flex: none;
   width: 60%;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px 0 #67758d;
 }
 
 .demo .demo-content .description {
@@ -174,15 +182,15 @@ a:focus {
 .demo .demo-content .description h3 {
   font-family: Montserrat;
   font-weight: bold;
-  font-size: 28px;
+  font-size: 32px;
   letter-spacing: 0.28px;
   color: #050F37;
-  margin-top: 16px;
+  margin-top: 0px;
 }
 
 .demo .demo-content .description p {
   font-family: Roboto;
-  font-size: 20px;
+  font-size: 18px;
   color: #4A4A4A;
 }
 
