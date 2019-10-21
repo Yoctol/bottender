@@ -113,25 +113,21 @@ describe('#router', () => {
       receivedProps = props;
     };
 
-    const Router = router(
-      [
-        {
-          predicate: () => true,
-          action,
-        },
-      ],
-      { a: 1 }
-    );
+    const Router = router([
+      {
+        predicate: () => true,
+        action,
+      },
+    ]);
 
     const app = run(Router);
     const context = textContext('hi');
-    const props = { b: 2 };
+    const props = { a: 1 };
     await app(context, props);
 
     expect(receivedContext).toEqual(context);
     expect(receivedProps).toEqual({
       a: 1,
-      b: 2,
       match: true,
     });
   });

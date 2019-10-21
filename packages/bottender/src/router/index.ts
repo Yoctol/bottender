@@ -15,14 +15,13 @@ type Route = {
   action: Action;
 };
 
-function router(routes: Route[], defaultProps: Props = {}) {
+function router(routes: Route[]) {
   return async function Router(context: Context, props: Props = {}) {
     for (const r of routes) {
       // eslint-disable-next-line no-await-in-loop
       const match = await r.predicate(context);
       if (match) {
         return r.action.bind(null, context, {
-          ...defaultProps,
           ...props,
           match,
         });
