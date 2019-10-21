@@ -104,6 +104,33 @@ describe('#router', () => {
 
     expect(context.sendText).toBeCalledWith('next');
   });
+
+  it('should work with props', async () => {
+    let receivedContext;
+    let receivedProps;
+    const action = (ctx, props) => {
+      receivedContext = ctx;
+      receivedProps = props;
+    };
+
+    const Router = router([
+      {
+        predicate: () => true,
+        action,
+      },
+    ]);
+
+    const app = run(Router);
+    const context = textContext('hi');
+    const props = { a: 1 };
+    await app(context, props);
+
+    expect(receivedContext).toEqual(context);
+    expect(receivedProps).toEqual({
+      a: 1,
+      match: true,
+    });
+  });
 });
 
 describe('#route', () => {
