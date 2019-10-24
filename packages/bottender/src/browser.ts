@@ -1,3 +1,6 @@
+export { default as chain } from './chain';
+export { default as withProps } from './withProps';
+
 /* Bot */
 export { default as Bot } from './bot/Bot';
 

@@ -1,3 +1,3 @@
-export async function App(context: any): Promise<void> {
-  await context.send('Welcome to Bottender');
+export default async function App(context: any): Promise<void> {
+  await context.sendText('Welcome to Bottender');
 }

@@ -6,9 +6,10 @@ import get from 'lodash/get';
 import updateNotifier from 'update-notifier';
 import { Result } from 'arg';
 
+import { error } from '../shared/log';
+
 import getArgs from './providers/sh/utils/getArgs';
 import providers from './providers';
-import { error } from './shared/log';
 
 const pkg = JSON.parse(
   fs.readFileSync(path.resolve(__dirname, '../../package.json'), 'utf8')
@@ -23,7 +24,6 @@ export type CliContext = {
     '-h': string;
     '--version': BooleanConstructor;
     '-v': string;
-    '--skip-validate': BooleanConstructor;
   }>;
 };
 

@@ -1,19 +1,20 @@
 {
   "name": "create-bottender-app",
-  "version": "1.0.0-alpha.1",
+  "version": "1.0.0-alpha.16",
   "bin": {
     "create-bottender-app": "bin/cli.js"
   },
   "files": [
     "dist",
-    "template"
+    "template",
+    "template-typescript"
   ],
   "types": "dist/index.d.ts",
   "dependencies": {
     "chalk": "^2.4.2",
-    "commander": "^3.0.1",
+    "commander": "^3.0.2",
     "cross-spawn": "^7.0.0",
-    "envinfo": "^7.3.1",
+    "envinfo": "^7.4.0",
     "figures": "^3.0.0",
     "fs-extra": "^8.1.0",
     "inquirer": "^7.0.0",

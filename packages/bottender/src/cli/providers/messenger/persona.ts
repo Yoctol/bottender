@@ -4,10 +4,11 @@ import chalk from 'chalk';
 import invariant from 'invariant';
 import { MessengerClient } from 'messaging-api-messenger';
 
-import getConfig from '../../shared/getConfig';
+import getChannelConfig from '../../../shared/getChannelConfig';
 import getSubArgs from '../sh/utils/getSubArgs';
+import { Channel } from '../../../types';
 import { CliContext } from '../..';
-import { bold, error, print } from '../../shared/log';
+import { bold, error, print } from '../../../shared/log';
 
 const help = () => {
   console.log(`
@@ -54,7 +55,7 @@ export async function createPersona(ctx: CliContext): Promise<void> {
   const personaUrl = argv['--pic'];
 
   try {
-    const config = getConfig('messenger');
+    const config = getChannelConfig(Channel.Messenger);
 
     const { accessToken } = config;
 
@@ -102,7 +103,7 @@ export async function createPersona(ctx: CliContext): Promise<void> {
 
 export async function listPersona(_: CliContext): Promise<void> {
   try {
-    const config = getConfig('messenger');
+    const config = getChannelConfig(Channel.Messenger);
 
     const { accessToken } = config;
 
@@ -152,7 +153,7 @@ export async function getPersona(ctx: CliContext): Promise<void> {
   const personaId = argv['--id'];
 
   try {
-    const config = getConfig('messenger');
+    const config = getChannelConfig(Channel.Messenger);
 
     const { accessToken } = config;
 
@@ -204,7 +205,7 @@ export async function deletePersona(ctx: CliContext): Promise<void> {
   const personaId = argv['--id'];
 
   try {
-    const config = getConfig('messenger');
+    const config = getChannelConfig(Channel.Messenger);
 
     const { accessToken } = config;
 

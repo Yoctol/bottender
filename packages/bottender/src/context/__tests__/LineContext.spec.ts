@@ -184,7 +184,7 @@ describe('#reply', () => {
     await context.reply([
       {
         type: 'text',
-        text: 'xxx.com',
+        text: 'hello',
       },
     ]);
 
@@ -193,7 +193,7 @@ describe('#reply', () => {
       [
         {
           type: 'text',
-          text: 'xxx.com',
+          text: 'hello',
         },
       ],
       { accessToken: undefined }
@@ -203,29 +203,24 @@ describe('#reply', () => {
   it('should work with quickReply', async () => {
     const { context, client } = setup();
 
-    await context.reply(
-      [
-        {
-          type: 'text',
-          text: 'xxx.com',
-        },
-      ],
+    await context.reply([
       {
+        type: 'text',
+        text: 'hello',
         quickReply,
-      }
-    );
+      },
+    ]);
 
     expect(client.reply).toBeCalledWith(
       rawEvent.replyToken,
       [
         {
           type: 'text',
-          text: 'xxx.com',
+          text: 'hello',
+          quickReply,
         },
       ],
-      {
-        quickReply,
-      }
+      {}
     );
   });
 });
@@ -234,31 +229,51 @@ describe('#replyText', () => {
   it('should call client.replyText', async () => {
     const { context, client } = setup();
 
-    await context.replyText('xxx.com');
+    await context.replyText('hello');
 
-    expect(client.replyText).toBeCalledWith(rawEvent.replyToken, 'xxx.com', {});
+    expect(client.reply).toBeCalledWith(
+      rawEvent.replyToken,
+      [{ text: 'hello', type: 'text' }],
+      {}
+    );
   });
 
   it('should work with quickReply', async () => {
     const { context, client } = setup();
 
-    await context.replyText('xxx.com', {
+    await context.replyText('hello', {
       quickReply,
     });
 
-    expect(client.replyText).toBeCalledWith(rawEvent.replyToken, 'xxx.com', {
-      quickReply,
-    });
+    expect(client.reply).toBeCalledWith(
+      rawEvent.replyToken,
+      [
+        {
+          type: 'text',
+          text: 'hello',
+          quickReply,
+        },
+      ],
+      {
+        quickReply,
+      }
+    );
   });
 
   it('should throw when reply multiple times', async () => {
     const { context } = setup();
 
-    const error = new Error('Can not reply event multiple times');
-    error.name = 'Invariant Violation';
+    await context.replyText('hello');
 
-    await context.replyText('xxx.com');
-    await expect(context.replyText('xxx.com')).rejects.toEqual(error);
+    let error;
+    try {
+      await context.replyText('hello');
+    } catch (err) {
+      error = err;
+    }
+
+    expect(error).toBeDefined();
+    expect(error.message).toEqual('Can not reply event multiple times');
   });
 
   it('should mark context as handled', async () => {
@@ -274,11 +289,15 @@ describe('#replyText', () => {
       customAccessToken: 'anyToken',
     });
 
-    await context.replyText('xxx.com');
+    await context.replyText('hello');
 
-    expect(client.replyText).toBeCalledWith(rawEvent.replyToken, 'xxx.com', {
-      accessToken: 'anyToken',
-    });
+    expect(client.reply).toBeCalledWith(
+      rawEvent.replyToken,
+      [{ text: 'hello', type: 'text' }],
+      {
+        accessToken: 'anyToken',
+      }
+    );
   });
 });
 
@@ -289,7 +308,7 @@ describe('#push', () => {
     await context.push([
       {
         type: 'text',
-        text: 'xxx.com',
+        text: 'hello',
       },
     ]);
 
@@ -298,7 +317,7 @@ describe('#push', () => {
       [
         {
           type: 'text',
-          text: 'xxx.com',
+          text: 'hello',
         },
       ],
       { accessToken: undefined }
@@ -308,29 +327,24 @@ describe('#push', () => {
   it('should work with quickReply', async () => {
     const { context, client, session } = setup();
 
-    await context.push(
-      [
-        {
-          type: 'text',
-          text: 'xxx.com',
-        },
-      ],
+    await context.push([
       {
+        type: 'text',
+        text: 'hello',
         quickReply,
-      }
-    );
+      },
+    ]);
 
     expect(client.push).toBeCalledWith(
       session.user.id,
       [
         {
           type: 'text',
-          text: 'xxx.com',
+          text: 'hello',
+          quickReply,
         },
       ],
-      {
-        quickReply,
-      }
+      {}
     );
   });
 });
@@ -339,21 +353,35 @@ describe('#pushText', () => {
   it('should call client.pushText', async () => {
     const { context, client, session } = setup();
 
-    await context.pushText('xxx.com');
+    await context.pushText('hello');
 
-    expect(client.pushText).toBeCalledWith(session.user.id, 'xxx.com', {});
+    expect(client.push).toBeCalledWith(
+      session.user.id,
+      [{ text: 'hello', type: 'text' }],
+      {}
+    );
   });
 
   it('should work with quickReply', async () => {
     const { context, client, session } = setup();
 
-    await context.pushText('xxx.com', {
+    await context.pushText('hello', {
       quickReply,
     });
 
-    expect(client.pushText).toBeCalledWith(session.user.id, 'xxx.com', {
-      quickReply,
-    });
+    expect(client.push).toBeCalledWith(
+      session.user.id,
+      [
+        {
+          text: 'hello',
+          type: 'text',
+          quickReply,
+        },
+      ],
+      {
+        quickReply,
+      }
+    );
   });
 
   it('should work with room session', async () => {
@@ -361,9 +389,13 @@ describe('#pushText', () => {
       session: roomSession,
     });
 
-    await context.pushText('xxx.com');
+    await context.pushText('hello');
 
-    expect(client.pushText).toBeCalledWith(session.room.id, 'xxx.com', {});
+    expect(client.push).toBeCalledWith(
+      session.room.id,
+      [{ text: 'hello', type: 'text' }],
+      {}
+    );
   });
 
   it('should work with group session', async () => {
@@ -371,15 +403,19 @@ describe('#pushText', () => {
       session: groupSession,
     });
 
-    await context.pushText('xxx.com');
+    await context.pushText('hello');
 
-    expect(client.pushText).toBeCalledWith(session.group.id, 'xxx.com', {});
+    expect(client.push).toBeCalledWith(
+      session.group.id,
+      [{ text: 'hello', type: 'text' }],
+      {}
+    );
   });
 
   it('should mark context as handled', async () => {
     const { context } = setup();
 
-    await context.pushText('xxx.com');
+    await context.pushText('hello');
 
     expect(context.isHandled).toBe(true);
   });
@@ -387,10 +423,10 @@ describe('#pushText', () => {
   it('should call warning and not to send if dont have session', async () => {
     const { context, client } = setup({ session: false });
 
-    await context.pushText('xxx.com');
+    await context.pushText('hello');
 
     expect(warning).toBeCalled();
-    expect(client.pushText).not.toBeCalled();
+    expect(client.push).not.toBeCalled();
   });
 
   it('should support custom token', async () => {
@@ -398,52 +434,37 @@ describe('#pushText', () => {
       customAccessToken: 'anyToken',
     });
 
-    await context.pushText('xxx.com');
+    await context.pushText('hello');
 
-    expect(client.pushText).toBeCalledWith(session.user.id, 'xxx.com', {
-      accessToken: 'anyToken',
-    });
+    expect(client.push).toBeCalledWith(
+      session.user.id,
+      [{ text: 'hello', type: 'text' }],
+      {
+        accessToken: 'anyToken',
+      }
+    );
   });
 });
 
 describe('send APIs', () => {
   describe('#send', () => {
-    it('should call client.push', async () => {
-      const { context, client, session } = setup();
+    it('should call client.reply', async () => {
+      const { context, client } = setup();
 
       await context.send([Line.createText('2'), Line.createText('3')]);
 
-      expect(client.push).toBeCalledWith(
-        session.user.id,
-        [Line.createText('2'), Line.createText('3')],
-        {}
-      );
-    });
-
-    it('should work with room session', async () => {
-      const { context, client, session } = setup({
-        session: roomSession,
-      });
-
-      await context.send([Line.createText('2'), Line.createText('3')]);
-
-      expect(client.push).toBeCalledWith(
-        session.room.id,
-        [Line.createText('2'), Line.createText('3')],
-        {}
-      );
-    });
-
-    it('should work with group session', async () => {
-      const { context, client, session } = setup({
-        session: groupSession,
-      });
-
-      await context.send([Line.createText('2'), Line.createText('3')]);
-
-      expect(client.push).toBeCalledWith(
-        session.group.id,
-        [Line.createText('2'), Line.createText('3')],
+      expect(client.reply).toBeCalledWith(
+        rawEvent.replyToken,
+        [
+          {
+            type: 'text',
+            text: '2',
+          },
+          {
+            type: 'text',
+            text: '3',
+          },
+        ],
         {}
       );
     });
@@ -458,76 +479,70 @@ describe('send APIs', () => {
   });
 
   describe('#sendText', () => {
-    it('should call client.pushText', async () => {
-      const { context, client, session } = setup();
+    it('should call client.replyText', async () => {
+      const { context, client } = setup();
 
-      await context.sendText('xxx.com');
+      await context.sendText('hello');
 
-      expect(client.pushText).toBeCalledWith(session.user.id, 'xxx.com', {});
+      expect(client.reply).toBeCalledWith(
+        rawEvent.replyToken,
+        [
+          {
+            type: 'text',
+            text: 'hello',
+          },
+        ],
+        {}
+      );
     });
 
     it('should work with quickReply', async () => {
-      const { context, client, session } = setup();
+      const { context, client } = setup();
 
-      await context.sendText('xxx.com', {
+      await context.sendText('hello', {
         quickReply,
       });
 
-      expect(client.pushText).toBeCalledWith(session.user.id, 'xxx.com', {
-        quickReply,
-      });
-    });
-
-    it('should work with room session', async () => {
-      const { context, client, session } = setup({
-        session: roomSession,
-      });
-
-      await context.sendText('xxx.com');
-
-      expect(client.pushText).toBeCalledWith(session.room.id, 'xxx.com', {});
-    });
-
-    it('should work with group session', async () => {
-      const { context, client, session } = setup({
-        session: groupSession,
-      });
-
-      await context.sendText('xxx.com');
-
-      expect(client.pushText).toBeCalledWith(session.group.id, 'xxx.com', {});
-    });
-
-    it('should mark context as handled', async () => {
-      const { context } = setup();
-
-      await context.sendText('xxx.com');
-
-      expect(context.isHandled).toBe(true);
+      expect(client.reply).toBeCalledWith(
+        rawEvent.replyToken,
+        [
+          {
+            type: 'text',
+            text: 'hello',
+            quickReply,
+          },
+        ],
+        {
+          quickReply,
+        }
+      );
     });
   });
 
   describe('#sendImage', () => {
-    it('should call client.pushImage', async () => {
-      const { context, client, session } = setup();
+    it('should call client.replyImage', async () => {
+      const { context, client } = setup();
 
       await context.sendImage({
         originalContentUrl: 'xxx.jpg',
         previewImageUrl: 'yyy.jpg',
       });
 
-      expect(client.pushImage).toBeCalledWith(
-        session.user.id,
-        {
-          originalContentUrl: 'xxx.jpg',
-          previewImageUrl: 'yyy.jpg',
-        },
+      expect(client.reply).toBeCalledWith(
+        rawEvent.replyToken,
+        [
+          {
+            type: 'image',
+            originalContentUrl: 'xxx.jpg',
+            previewImageUrl: 'yyy.jpg',
+          },
+        ],
         { accessToken: undefined }
       );
     });
 
     it('should work with quickReply', async () => {
-      const { context, client, session } = setup();
+      const { context, client } = setup();
 
       await context.sendImage(
         {
@@ -539,103 +554,47 @@ describe('send APIs', () => {
         }
       );
 
-      expect(client.pushImage).toBeCalledWith(
-        session.user.id,
-        {
-          originalContentUrl: 'xxx.jpg',
-          previewImageUrl: 'yyy.jpg',
-        },
+      expect(client.reply).toBeCalledWith(
+        rawEvent.replyToken,
+        [
+          {
+            type: 'image',
+            originalContentUrl: 'xxx.jpg',
+            previewImageUrl: 'yyy.jpg',
+            quickReply,
+          },
+        ],
         {
           quickReply,
         }
       );
     });
-
-    it('should work with room session', async () => {
-      const { context, client, session } = setup({
-        session: roomSession,
-      });
-
-      await context.sendImage({
-        originalContentUrl: 'xxx.jpg',
-        previewImageUrl: 'yyy.jpg',
-      });
-
-      expect(client.pushImage).toBeCalledWith(
-        session.room.id,
-        {
-          originalContentUrl: 'xxx.jpg',
-          previewImageUrl: 'yyy.jpg',
-        },
-        { accessToken: undefined }
-      );
-    });
-
-    it('should work with group session', async () => {
-      const { context, client, session } = setup({
-        session: groupSession,
-      });
-
-      await context.sendImage({
-        originalContentUrl: 'xxx.jpg',
-        previewImageUrl: 'yyy.jpg',
-      });
-
-      expect(client.pushImage).toBeCalledWith(
-        session.group.id,
-        {
-          originalContentUrl: 'xxx.jpg',
-          previewImageUrl: 'yyy.jpg',
-        },
-        { accessToken: undefined }
-      );
-    });
-
-    it('should mark context as handled', async () => {
-      const { context } = setup();
-
-      await context.sendImage({
-        originalContentUrl: 'xxx.jpg',
-        previewImageUrl: 'yyy.jpg',
-      });
-
-      expect(context.isHandled).toBe(true);
-    });
-
-    it('should call warning and not to send if dont have session', async () => {
-      const { context, client } = setup({ session: false });
-
-      await context.sendImage({
-        originalContentUrl: 'xxx.jpg',
-        previewImageUrl: 'yyy.jpg',
-      });
-
-      expect(warning).toBeCalled();
-      expect(client.pushImage).not.toBeCalled();
-    });
   });
 
   describe('#sendAudio', () => {
-    it('should call client.pushAudio', async () => {
-      const { context, client, session } = setup();
+    it('should call client.replyAudio', async () => {
+      const { context, client } = setup();
 
       await context.sendAudio({
         originalContentUrl: 'xxx.m4a',
         duration: 240000,
       });
 
-      expect(client.pushAudio).toBeCalledWith(
-        session.user.id,
-        {
-          originalContentUrl: 'xxx.m4a',
-          duration: 240000,
-        },
+      expect(client.reply).toBeCalledWith(
+        rawEvent.replyToken,
+        [
+          {
+            type: 'audio',
+            originalContentUrl: 'xxx.m4a',
+            duration: 240000,
+          },
+        ],
         { accessToken: undefined }
       );
     });
 
     it('should work with quickReply', async () => {
-      const { context, client, session } = setup();
+      const { context, client } = setup();
 
       await context.sendAudio(
         {
@@ -647,91 +606,47 @@ describe('send APIs', () => {
         }
       );
 
-      expect(client.pushAudio).toBeCalledWith(
-        session.user.id,
-        {
-          originalContentUrl: 'xxx.m4a',
-          duration: 240000,
-        },
+      expect(client.reply).toBeCalledWith(
+        rawEvent.replyToken,
+        [
+          {
+            type: 'audio',
+            originalContentUrl: 'xxx.m4a',
+            duration: 240000,
+            quickReply,
+          },
+        ],
         {
           quickReply,
         }
       );
     });
-
-    it('should work with room session', async () => {
-      const { context, client, session } = setup({
-        session: roomSession,
-      });
-
-      await context.sendAudio({
-        originalContentUrl: 'xxx.m4a',
-        duration: 240000,
-      });
-
-      expect(client.pushAudio).toBeCalledWith(
-        session.room.id,
-        {
-          originalContentUrl: 'xxx.m4a',
-          duration: 240000,
-        },
-        { accessToken: undefined }
-      );
-    });
-
-    it('should work with group session', async () => {
-      const { context, client, session } = setup({
-        session: groupSession,
-      });
-
-      await context.sendAudio({
-        originalContentUrl: 'xxx.m4a',
-        duration: 240000,
-      });
-
-      expect(client.pushAudio).toBeCalledWith(
-        session.group.id,
-        {
-          originalContentUrl: 'xxx.m4a',
-          duration: 240000,
-        },
-        { accessToken: undefined }
-      );
-    });
-
-    it('should mark context as handled', async () => {
-      const { context } = setup();
-
-      await context.sendAudio({
-        originalContentUrl: 'xxx.m4a',
-        duration: 240000,
-      });
-
-      expect(context.isHandled).toBe(true);
-    });
   });
 
   describe('#sendVideo', () => {
-    it('should call client.pushVideo', async () => {
-      const { context, client, session } = setup();
+    it('should call client.replyVideo', async () => {
+      const { context, client } = setup();
 
       await context.sendVideo({
         originalContentUrl: 'xxx.mp4',
         previewImageUrl: 'yyy.jpg',
       });
 
-      expect(client.pushVideo).toBeCalledWith(
-        session.user.id,
-        {
-          originalContentUrl: 'xxx.mp4',
-          previewImageUrl: 'yyy.jpg',
-        },
+      expect(client.reply).toBeCalledWith(
+        rawEvent.replyToken,
+        [
+          {
+            type: 'video',
+            originalContentUrl: 'xxx.mp4',
+            previewImageUrl: 'yyy.jpg',
+          },
+        ],
         { accessToken: undefined }
       );
     });
 
     it('should work with quickReply', async () => {
-      const { context, client, session } = setup();
+      const { context, client } = setup();
 
       await context.sendVideo(
         {
@@ -743,73 +658,26 @@ describe('send APIs', () => {
         }
       );
 
-      expect(client.pushVideo).toBeCalledWith(
-        session.user.id,
-        {
-          originalContentUrl: 'xxx.mp4',
-          previewImageUrl: 'yyy.jpg',
-        },
+      expect(client.reply).toBeCalledWith(
+        rawEvent.replyToken,
+        [
+          {
+            type: 'video',
+            originalContentUrl: 'xxx.mp4',
+            previewImageUrl: 'yyy.jpg',
+            quickReply,
+          },
+        ],
         {
           quickReply,
         }
       );
     });
-
-    it('should work with room session', async () => {
-      const { context, client, session } = setup({
-        session: roomSession,
-      });
-
-      await context.sendVideo({
-        originalContentUrl: 'xxx.mp4',
-        previewImageUrl: 'yyy.jpg',
-      });
-
-      expect(client.pushVideo).toBeCalledWith(
-        session.room.id,
-        {
-          originalContentUrl: 'xxx.mp4',
-          previewImageUrl: 'yyy.jpg',
-        },
-        { accessToken: undefined }
-      );
-    });
-
-    it('should work with group session', async () => {
-      const { context, client, session } = setup({
-        session: groupSession,
-      });
-
-      await context.sendVideo({
-        originalContentUrl: 'xxx.mp4',
-        previewImageUrl: 'yyy.jpg',
-      });
-
-      expect(client.pushVideo).toBeCalledWith(
-        session.group.id,
-        {
-          originalContentUrl: 'xxx.mp4',
-          previewImageUrl: 'yyy.jpg',
-        },
-        { accessToken: undefined }
-      );
-    });
-
-    it('should mark context as handled', async () => {
-      const { context } = setup();
-
-      await context.sendVideo({
-        originalContentUrl: 'xxx.mp4',
-        previewImageUrl: 'yyy.jpg',
-      });
-
-      expect(context.isHandled).toBe(true);
-    });
   });
 
   describe('#sendLocation', () => {
-    it('should call client.pushLocation', async () => {
-      const { context, client, session } = setup();
+    it('should call client.replyLocation', async () => {
+      const { context, client } = setup();
 
       await context.sendLocation({
         title: 'my location',
@@ -818,20 +686,23 @@ describe('send APIs', () => {
         longitude: 139.70372892916203,
       });
 
-      expect(client.pushLocation).toBeCalledWith(
-        session.user.id,
-        {
-          title: 'my location',
-          address: '〒150-0002 東京都渋谷区渋谷２丁目２１−１',
-          latitude: 35.65910807942215,
-          longitude: 139.70372892916203,
-        },
+      expect(client.reply).toBeCalledWith(
+        rawEvent.replyToken,
+        [
+          {
+            type: 'location',
+            title: 'my location',
+            address: '〒150-0002 東京都渋谷区渋谷２丁目２１−１',
+            latitude: 35.65910807942215,
+            longitude: 139.70372892916203,
+          },
+        ],
         { accessToken: undefined }
       );
     });
 
     it('should work with quickReply', async () => {
-      const { context, client, session } = setup();
+      const { context, client } = setup();
 
       await context.sendLocation(
         {
@@ -845,103 +716,49 @@ describe('send APIs', () => {
         }
       );
 
-      expect(client.pushLocation).toBeCalledWith(
-        session.user.id,
-        {
-          title: 'my location',
-          address: '〒150-0002 東京都渋谷区渋谷２丁目２１−１',
-          latitude: 35.65910807942215,
-          longitude: 139.70372892916203,
-        },
+      expect(client.reply).toBeCalledWith(
+        rawEvent.replyToken,
+        [
+          {
+            type: 'location',
+            title: 'my location',
+            address: '〒150-0002 東京都渋谷区渋谷２丁目２１−１',
+            latitude: 35.65910807942215,
+            longitude: 139.70372892916203,
+            quickReply,
+          },
+        ],
         {
           quickReply,
         }
       );
     });
-
-    it('should work with room session', async () => {
-      const { context, client, session } = setup({
-        session: roomSession,
-      });
-
-      await context.sendLocation({
-        title: 'my location',
-        address: '〒150-0002 東京都渋谷区渋谷２丁目２１−１',
-        latitude: 35.65910807942215,
-        longitude: 139.70372892916203,
-      });
-
-      expect(client.pushLocation).toBeCalledWith(
-        session.room.id,
-        {
-          title: 'my location',
-          address: '〒150-0002 東京都渋谷区渋谷２丁目２１−１',
-          latitude: 35.65910807942215,
-          longitude: 139.70372892916203,
-        },
-        { accessToken: undefined }
-      );
-    });
-
-    it('should work with group session', async () => {
-      const { context, client, session } = setup({
-        session: groupSession,
-      });
-
-      await context.sendLocation({
-        title: 'my location',
-        address: '〒150-0002 東京都渋谷区渋谷２丁目２１−１',
-        latitude: 35.65910807942215,
-        longitude: 139.70372892916203,
-      });
-
-      expect(client.pushLocation).toBeCalledWith(
-        session.group.id,
-        {
-          title: 'my location',
-          address: '〒150-0002 東京都渋谷区渋谷２丁目２１−１',
-          latitude: 35.65910807942215,
-          longitude: 139.70372892916203,
-        },
-        { accessToken: undefined }
-      );
-    });
-
-    it('should mark context as handled', async () => {
-      const { context } = setup();
-
-      await context.sendLocation({
-        title: 'my location',
-        address: '〒150-0002 東京都渋谷区渋谷２丁目２１−１',
-        latitude: 35.65910807942215,
-        longitude: 139.70372892916203,
-      });
-
-      expect(context.isHandled).toBe(true);
-    });
   });
 
   describe('#sendSticker', () => {
-    it('should call client.pushSticker', async () => {
-      const { context, client, session } = setup();
+    it('should call client.replySticker', async () => {
+      const { context, client } = setup();
 
       await context.sendSticker({
         packageId: '1',
         stickerId: '1',
       });
 
-      expect(client.pushSticker).toBeCalledWith(
-        session.user.id,
-        {
-          packageId: '1',
-          stickerId: '1',
-        },
+      expect(client.reply).toBeCalledWith(
+        rawEvent.replyToken,
+        [
+          {
+            type: 'sticker',
+            packageId: '1',
+            stickerId: '1',
+          },
+        ],
         { accessToken: undefined }
       );
     });
 
     it('should work with quickReply', async () => {
-      const { context, client, session } = setup();
+      const { context, client } = setup();
 
       await context.sendSticker(
         {
@@ -953,75 +770,30 @@ describe('send APIs', () => {
         }
       );
 
-      expect(client.pushSticker).toBeCalledWith(
-        session.user.id,
-        {
-          packageId: '1',
-          stickerId: '1',
-        },
+      expect(client.reply).toBeCalledWith(
+        rawEvent.replyToken,
+        [
+          {
+            type: 'sticker',
+            packageId: '1',
+            stickerId: '1',
+            quickReply,
+          },
+        ],
         {
           quickReply,
         }
       );
-    });
-
-    it('should work with room session', async () => {
-      const { context, client, session } = setup({
-        session: roomSession,
-      });
-
-      await context.sendSticker({
-        packageId: '1',
-        stickerId: '1',
-      });
-
-      expect(client.pushSticker).toBeCalledWith(
-        session.room.id,
-        {
-          packageId: '1',
-          stickerId: '1',
-        },
-        { accessToken: undefined }
-      );
-    });
-
-    it('should work with group session', async () => {
-      const { context, client, session } = setup({
-        session: groupSession,
-      });
-
-      await context.sendSticker({
-        packageId: '1',
-        stickerId: '1',
-      });
-
-      expect(client.pushSticker).toBeCalledWith(
-        session.group.id,
-        {
-          packageId: '1',
-          stickerId: '1',
-        },
-        { accessToken: undefined }
-      );
-    });
-
-    it('should mark context as handled', async () => {
-      const { context } = setup();
-
-      await context.sendSticker({
-        packageId: '1',
-        stickerId: '1',
-      });
-
-      expect(context.isHandled).toBe(true);
     });
   });
 
   describe('#sendImagemap', () => {
     const template = {
       baseUrl: 'https://example.com/bot/images/rm001',
-      baseHeight: 1040,
-      baseWidth: 1040,
+      baseSize: {
+        height: 1040,
+        width: 1040,
+      },
       actions: [
         {
           type: 'uri',
@@ -1046,72 +818,45 @@ describe('send APIs', () => {
       ],
     };
 
-    it('should call client.pushImagemap', async () => {
-      const { context, client, session } = setup();
+    it('should call client.replyImagemap', async () => {
+      const { context, client } = setup();
 
       await context.sendImagemap('this is an imagemap', template);
 
-      expect(client.pushImagemap).toBeCalledWith(
-        session.user.id,
-        'this is an imagemap',
-        template,
-        { accessToken: undefined }
+      expect(client.reply).toBeCalledWith(
+        rawEvent.replyToken,
+        [
+          {
+            type: 'imagemap',
+            altText: 'this is an imagemap',
+            ...template,
+          },
+        ],
+        {}
       );
     });
 
     it('should work with quickReply', async () => {
-      const { context, client, session } = setup();
+      const { context, client } = setup();
 
       await context.sendImagemap('this is an imagemap', template, {
         quickReply,
       });
 
-      expect(client.pushImagemap).toBeCalledWith(
-        session.user.id,
-        'this is an imagemap',
-        template,
+      expect(client.reply).toBeCalledWith(
+        rawEvent.replyToken,
+        [
+          {
+            type: 'imagemap',
+            altText: 'this is an imagemap',
+            ...template,
+            quickReply,
+          },
+        ],
         {
           quickReply,
         }
       );
-    });
-
-    it('should work with room session', async () => {
-      const { context, client, session } = setup({
-        session: roomSession,
-      });
-
-      await context.sendImagemap('this is an imagemap', template);
-
-      expect(client.pushImagemap).toBeCalledWith(
-        session.room.id,
-        'this is an imagemap',
-        template,
-        { accessToken: undefined }
-      );
-    });
-
-    it('should work with group session', async () => {
-      const { context, client, session } = setup({
-        session: groupSession,
-      });
-
-      await context.sendImagemap('this is an imagemap', template);
-
-      expect(client.pushImagemap).toBeCalledWith(
-        session.group.id,
-        'this is an imagemap',
-        template,
-        { accessToken: undefined }
-      );
-    });
-
-    it('should mark context as handled', async () => {
-      const { context } = setup();
-
-      await context.sendImagemap('this is an imagemap', template);
-
-      expect(context.isHandled).toBe(true);
     });
   });
 
@@ -1157,72 +902,45 @@ describe('send APIs', () => {
       },
     };
 
-    it('should call client.pushFlex', async () => {
-      const { context, client, session } = setup();
+    it('should call client.replyFlex', async () => {
+      const { context, client } = setup();
 
       await context.sendFlex('this is a flex', contents);
 
-      expect(client.pushFlex).toBeCalledWith(
-        session.user.id,
-        'this is a flex',
-        contents,
-        { accessToken: undefined }
+      expect(client.reply).toBeCalledWith(
+        rawEvent.replyToken,
+        [
+          {
+            type: 'flex',
+            altText: 'this is a flex',
+            contents,
+          },
+        ],
+        {}
       );
     });
 
     it('should work with quickReply', async () => {
-      const { context, client, session } = setup();
+      const { context, client } = setup();
 
       await context.sendFlex('this is a flex', contents, {
         quickReply,
       });
 
-      expect(client.pushFlex).toBeCalledWith(
-        session.user.id,
-        'this is a flex',
-        contents,
+      expect(client.reply).toBeCalledWith(
+        rawEvent.replyToken,
+        [
+          {
+            type: 'flex',
+            altText: 'this is a flex',
+            contents,
+            quickReply,
+          },
+        ],
         {
           quickReply,
         }
       );
-    });
-
-    it('should work with room session', async () => {
-      const { context, client, session } = setup({
-        session: roomSession,
-      });
-
-      await context.sendFlex('this is a flex', contents);
-
-      expect(client.pushFlex).toBeCalledWith(
-        session.room.id,
-        'this is a flex',
-        contents,
-        { accessToken: undefined }
-      );
-    });
-
-    it('should work with group session', async () => {
-      const { context, client, session } = setup({
-        session: groupSession,
-      });
-
-      await context.sendFlex('this is a flex', contents);
-
-      expect(client.pushFlex).toBeCalledWith(
-        session.group.id,
-        'this is a flex',
-        contents,
-        { accessToken: undefined }
-      );
-    });
-
-    it('should mark context as handled', async () => {
-      const { context } = setup();
-
-      await context.sendFlex('this is a flex', contents);
-
-      expect(context.isHandled).toBe(true);
     });
   });
 
@@ -1251,72 +969,45 @@ describe('send APIs', () => {
       ],
     };
 
-    it('should call client.pushTemplate', async () => {
-      const { context, client, session } = setup();
+    it('should call client.replyTemplate', async () => {
+      const { context, client } = setup();
 
       await context.sendTemplate('this is a template', template);
 
-      expect(client.pushTemplate).toBeCalledWith(
-        session.user.id,
-        'this is a template',
-        template,
-        { accessToken: undefined }
+      expect(client.reply).toBeCalledWith(
+        rawEvent.replyToken,
+        [
+          {
+            type: 'template',
+            altText: 'this is a template',
+            template,
+          },
+        ],
+        {}
       );
     });
 
     it('should work with quickReply', async () => {
-      const { context, client, session } = setup();
+      const { context, client } = setup();
 
       await context.sendTemplate('this is a template', template, {
         quickReply,
       });
 
-      expect(client.pushTemplate).toBeCalledWith(
-        session.user.id,
-        'this is a template',
-        template,
+      expect(client.reply).toBeCalledWith(
+        rawEvent.replyToken,
+        [
+          {
+            type: 'template',
+            altText: 'this is a template',
+            template,
+            quickReply,
+          },
+        ],
         {
           quickReply,
         }
       );
-    });
-
-    it('should work with room session', async () => {
-      const { context, client, session } = setup({
-        session: roomSession,
-      });
-
-      await context.sendTemplate('this is a template', template);
-
-      expect(client.pushTemplate).toBeCalledWith(
-        session.room.id,
-        'this is a template',
-        template,
-        { accessToken: undefined }
-      );
-    });
-
-    it('should work with group session', async () => {
-      const { context, client, session } = setup({
-        session: groupSession,
-      });
-
-      await context.sendTemplate('this is a template', template);
-
-      expect(client.pushTemplate).toBeCalledWith(
-        session.group.id,
-        'this is a template',
-        template,
-        { accessToken: undefined }
-      );
-    });
-
-    it('should mark context as handled', async () => {
-      const { context } = setup();
-
-      await context.sendTemplate('this is a template', template);
-
-      expect(context.isHandled).toBe(true);
     });
   });
 
@@ -1344,84 +1035,71 @@ describe('send APIs', () => {
       ],
     };
 
-    it('should call client.pushButtonTemplate', async () => {
-      const { context, client, session } = setup();
+    it('should call client.replyButtonTemplate', async () => {
+      const { context, client } = setup();
 
       await context.sendButtonTemplate('this is a button template', template);
 
-      expect(client.pushButtonTemplate).toBeCalledWith(
-        session.user.id,
-        'this is a button template',
-        template,
+      expect(client.reply).toBeCalledWith(
+        rawEvent.replyToken,
+        [
+          {
+            type: 'template',
+            altText: 'this is a button template',
+            template: {
+              type: 'buttons',
+              ...template,
+            },
+          },
+        ],
         { accessToken: undefined }
       );
     });
 
     it('should work with quickReply', async () => {
-      const { context, client, session } = setup();
+      const { context, client } = setup();
 
       await context.sendButtonTemplate('this is a button template', template, {
         quickReply,
       });
 
-      expect(client.pushButtonTemplate).toBeCalledWith(
-        session.user.id,
-        'this is a button template',
-        template,
+      expect(client.reply).toBeCalledWith(
+        rawEvent.replyToken,
+        [
+          {
+            type: 'template',
+            altText: 'this is a button template',
+            template: {
+              type: 'buttons',
+              ...template,
+            },
+            quickReply,
+          },
+        ],
         {
           quickReply,
         }
       );
     });
 
-    it('should work with room session', async () => {
-      const { context, client, session } = setup({
-        session: roomSession,
-      });
-
-      await context.sendButtonTemplate('this is a button template', template);
-
-      expect(client.pushButtonTemplate).toBeCalledWith(
-        session.room.id,
-        'this is a button template',
-        template,
-        { accessToken: undefined }
-      );
-    });
-
-    it('should work with group session', async () => {
-      const { context, client, session } = setup({
-        session: groupSession,
-      });
-
-      await context.sendButtonTemplate('this is a button template', template);
-
-      expect(client.pushButtonTemplate).toBeCalledWith(
-        session.group.id,
-        'this is a button template',
-        template,
-        { accessToken: undefined }
-      );
-    });
-
-    it('should mark context as handled', async () => {
-      const { context } = setup();
-
-      await context.sendButtonTemplate('this is a button template', template);
-
-      expect(context.isHandled).toBe(true);
-    });
-
     it('should support sendButtonsTemplate alias', async () => {
-      const { context, client, session } = setup();
+      const { context, client } = setup();
 
       await context.sendButtonsTemplate('this is a button template', template);
 
-      expect(client.pushButtonTemplate).toBeCalledWith(
-        session.user.id,
-        'this is a button template',
-        template,
-        { accessToken: undefined }
+      expect(client.reply).toBeCalledWith(
+        rawEvent.replyToken,
+        [
+          {
+            type: 'template',
+            altText: 'this is a button template',
+            template: {
+              type: 'buttons',
+              ...template,
+            },
+          },
+        ],
+        {}
       );
     });
   });
@@ -1443,21 +1121,29 @@ describe('send APIs', () => {
       ],
     };
 
-    it('should call client.pushConfirmTemplate', async () => {
-      const { context, client, session } = setup();
+    it('should call client.replyConfirmTemplate', async () => {
+      const { context, client } = setup();
 
       await context.sendConfirmTemplate('this is a confirm template', template);
 
-      expect(client.pushConfirmTemplate).toBeCalledWith(
-        session.user.id,
-        'this is a confirm template',
-        template,
+      expect(client.reply).toBeCalledWith(
+        rawEvent.replyToken,
+        [
+          {
+            type: 'template',
+            altText: 'this is a confirm template',
+            template: {
+              type: 'confirm',
+              ...template,
+            },
+          },
+        ],
         { accessToken: undefined }
       );
     });
 
     it('should work with quickReply', async () => {
-      const { context, client, session } = setup();
+      const { context, client } = setup();
 
       await context.sendConfirmTemplate(
         'this is a confirm template',
@@ -1465,50 +1151,21 @@ describe('send APIs', () => {
         { quickReply }
       );
 
-      expect(client.pushConfirmTemplate).toBeCalledWith(
-        session.user.id,
-        'this is a confirm template',
-        template,
+      expect(client.reply).toBeCalledWith(
+        rawEvent.replyToken,
+        [
+          {
+            type: 'template',
+            altText: 'this is a confirm template',
+            template: {
+              type: 'confirm',
+              ...template,
+            },
+            quickReply,
+          },
+        ],
         { quickReply }
       );
-    });
-
-    it('should work with room session', async () => {
-      const { context, client, session } = setup({
-        session: roomSession,
-      });
-
-      await context.sendConfirmTemplate('this is a confirm template', template);
-
-      expect(client.pushConfirmTemplate).toBeCalledWith(
-        session.room.id,
-        'this is a confirm template',
-        template,
-        { accessToken: undefined }
-      );
-    });
-
-    it('should work with group session', async () => {
-      const { context, client, session } = setup({
-        session: groupSession,
-      });
-
-      await context.sendConfirmTemplate('this is a confirm template', template);
-
-      expect(client.pushConfirmTemplate).toBeCalledWith(
-        session.group.id,
-        'this is a confirm template',
-        template,
-        { accessToken: undefined }
-      );
-    });
-
-    it('should mark context as handled', async () => {
-      const { context } = setup();
-
-      await context.sendConfirmTemplate('this is a confirm template', template);
-
-      expect(context.isHandled).toBe(true);
     });
   });
 
@@ -1560,24 +1217,34 @@ describe('send APIs', () => {
       },
     ];
 
-    it('should call client.pushCarouselTemplate', async () => {
-      const { context, client, session } = setup();
+    it('should call client.replyCarouselTemplate', async () => {
+      const { context, client } = setup();
 
       await context.sendCarouselTemplate(
         'this is a carousel template',
         template
       );
 
-      expect(client.pushCarouselTemplate).toBeCalledWith(
-        session.user.id,
-        'this is a carousel template',
-        template,
+      expect(client.reply).toBeCalledWith(
+        rawEvent.replyToken,
+        [
+          {
+            type: 'template',
+            altText: 'this is a carousel template',
+            template: {
+              type: 'carousel',
+              imageAspectRatio: undefined,
+              imageSize: undefined,
+              columns: template,
+            },
+          },
+        ],
         { accessToken: undefined }
       );
     });
 
     it('should work with quickReply', async () => {
-      const { context, client, session } = setup();
+      const { context, client } = setup();
 
       await context.sendCarouselTemplate(
         'this is a carousel template',
@@ -1585,59 +1252,23 @@ describe('send APIs', () => {
         { quickReply }
       );
 
-      expect(client.pushCarouselTemplate).toBeCalledWith(
-        session.user.id,
-        'this is a carousel template',
-        template,
+      expect(client.reply).toBeCalledWith(
+        rawEvent.replyToken,
+        [
+          {
+            type: 'template',
+            altText: 'this is a carousel template',
+            template: {
+              type: 'carousel',
+              imageAspectRatio: undefined,
+              imageSize: undefined,
+              columns: template,
+            },
+            quickReply,
+          },
+        ],
         { quickReply }
       );
-    });
-
-    it('should work with room session', async () => {
-      const { context, client, session } = setup({
-        session: roomSession,
-      });
-
-      await context.sendConfirmTemplate(
-        'this is a carousel template',
-        template
-      );
-
-      expect(client.pushConfirmTemplate).toBeCalledWith(
-        session.room.id,
-        'this is a carousel template',
-        template,
-        { accessToken: undefined }
-      );
-    });
-
-    it('should work with group session', async () => {
-      const { context, client, session } = setup({
-        session: groupSession,
-      });
-
-      await context.sendConfirmTemplate(
-        'this is a carousel template',
-        template
-      );
-
-      expect(client.pushConfirmTemplate).toBeCalledWith(
-        session.group.id,
-        'this is a carousel template',
-        template,
-        { accessToken: undefined }
-      );
-    });
-
-    it('should mark context as handled', async () => {
-      const { context } = setup();
-
-      await context.sendCarouselTemplate(
-        'this is a carousel template',
-        template
-      );
-
-      expect(context.isHandled).toBe(true);
     });
   });
 });
@@ -1960,7 +1591,7 @@ describe('#typing', () => {
 
 describe('batch', () => {
   it('should not batch when shouldBatch: false', async () => {
-    const { client, context } = setup({ shouldBatch: false });
+    const { client, context, session } = setup({ shouldBatch: false });
 
     await context.replyText('1');
     await context.pushText('2');
@@ -1968,8 +1599,36 @@ describe('batch', () => {
 
     await context.handlerDidEnd();
 
-    expect(client.reply).not.toBeCalled();
-    expect(client.push).not.toBeCalled();
+    expect(client.reply).toBeCalledWith(
+      rawEvent.replyToken,
+      [
+        {
+          type: 'text',
+          text: '1',
+        },
+      ],
+      { accessToken: undefined }
+    );
+    expect(client.push).toBeCalledWith(
+      session.user.id,
+      [
+        {
+          type: 'text',
+          text: '2',
+        },
+      ],
+      { accessToken: undefined }
+    );
+    expect(client.push).toBeCalledWith(
+      session.user.id,
+      [
+        {
+          type: 'text',
+          text: '3',
+        },
+      ],
+      { accessToken: undefined }
+    );
   });
 
   it('should batch reply', async () => {
@@ -2184,24 +1843,32 @@ describe('batch', () => {
 });
 
 describe('sendMethod', () => {
-  it('should use push in send as default', async () => {
-    const { context, client, session } = setup();
+  it('should use reply in send as default', async () => {
+    const { context, client } = setup();
 
     await context.sendText('hello');
 
-    expect(client.pushText).toBeCalledWith(session.user.id, 'hello', {});
-    expect(client.replyText).not.toBeCalled();
+    expect(client.reply).toBeCalledWith(
+      rawEvent.replyToken,
+      [{ text: 'hello', type: 'text' }],
+      {}
+    );
+    expect(client.push).not.toBeCalled();
   });
 
-  it('should use reply in send when sendMethod: reply', async () => {
-    const { context, client } = setup({
-      sendMethod: 'reply',
+  it('should use push in send when sendMethod: push', async () => {
+    const { context, client, session } = setup({
+      sendMethod: 'push',
     });
 
     await context.sendText('hello');
 
-    expect(client.replyText).toBeCalledWith(rawEvent.replyToken, 'hello', {});
-    expect(client.pushText).not.toBeCalled();
+    expect(client.push).toBeCalledWith(
+      session.user.id,
+      [{ text: 'hello', type: 'text' }],
+      {}
+    );
+    expect(client.reply).not.toBeCalled();
   });
 });
 
@@ -2211,10 +1878,14 @@ describe('#useAccessToken', () => {
 
     context.useAccessToken('anyToken');
 
-    await context.replyText('xxx.com');
+    await context.replyText('hello');
 
-    expect(client.replyText).toBeCalledWith(rawEvent.replyToken, 'xxx.com', {
-      accessToken: 'anyToken',
-    });
+    expect(client.reply).toBeCalledWith(
+      rawEvent.replyToken,
+      [{ text: 'hello', type: 'text' }],
+      {
+        accessToken: 'anyToken',
+      }
+    );
   });
 });

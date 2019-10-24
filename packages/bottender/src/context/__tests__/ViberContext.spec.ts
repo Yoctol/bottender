@@ -81,19 +81,15 @@ describe('#sendText', () => {
   it('should call client.sendText', async () => {
     const { context, client, session } = setup();
 
-    await context.sendText('xxx.com');
+    await context.sendText('hello');
 
-    expect(client.sendText).toBeCalledWith(
-      session.user.id,
-      'xxx.com',
-      undefined
-    );
+    expect(client.sendText).toBeCalledWith(session.user.id, 'hello', undefined);
   });
 
   it('should mark context as handled', async () => {
     const { context } = setup();
 
-    await context.sendText('xxx.com');
+    await context.sendText('hello');
 
     expect(context.isHandled).toBe(true);
   });
@@ -101,7 +97,7 @@ describe('#sendText', () => {
   it('should call warning and not to send if dont have session', async () => {
     const { context, client } = setup({ session: false });
 
-    await context.sendText('xxx.com');
+    await context.sendText('hello');
 
     expect(warning).toBeCalled();
     expect(client.sendText).not.toBeCalled();

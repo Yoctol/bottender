@@ -1,4 +1,4 @@
-import { ViberClient, ViberSender } from 'messaging-api-viber';
+import { ViberClient, ViberTypes } from 'messaging-api-viber';
 
 import SessionStore from '../session/SessionStore';
 
@@ -14,7 +14,7 @@ export default class ViberBot extends Bot<ViberRequestBody, ViberClient> {
     origin,
   }: {
     accessToken: string;
-    sender: ViberSender;
+    sender: ViberTypes.Sender;
     sessionStore?: SessionStore;
     sync?: boolean;
     origin?: string;

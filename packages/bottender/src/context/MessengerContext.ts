@@ -551,9 +551,6 @@ const sendMethods: [string, number][] = [
   ['sendAirlineCheckinTemplate', 3],
   ['sendAirlineItineraryTemplate', 3],
   ['sendAirlineUpdateTemplate', 3],
-
-  // deprecated
-  ['sendAirlineFlightUpdateTemplate', 3],
 ];
 
 sendMethods.forEach(([method, arity]) => {

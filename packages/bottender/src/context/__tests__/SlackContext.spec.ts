@@ -92,7 +92,7 @@ describe('#sendText', () => {
   it('should call this.postMessage', async () => {
     const { context } = setup();
 
-    expect(context.sendText('xxx.com')).toEqual(context.postMessage('xxx.com'));
+    expect(context.sendText('hello')).toEqual(context.postMessage('hello'));
   });
 });
 
@@ -100,17 +100,17 @@ describe('#postMessage', () => {
   it('should call client.postMessage', async () => {
     const { context, client } = setup();
 
-    await context.postMessage('xxx.com');
+    await context.postMessage('hello');
 
-    expect(client.postMessage).toBeCalledWith('C6A9RJJ3F', 'xxx.com', {});
+    expect(client.postMessage).toBeCalledWith('C6A9RJJ3F', 'hello', {});
   });
 
   it('should set thread_ts if event is in a thread', async () => {
     const { context, client } = setup({ rawEvent: threadRawEvent });
 
-    await context.postMessage('xxx.com');
+    await context.postMessage('hello');
 
-    expect(client.postMessage).toBeCalledWith('C6A9RJJ3F', 'xxx.com', {
+    expect(client.postMessage).toBeCalledWith('C6A9RJJ3F', 'hello', {
       thread_ts: '1515479974.000115',
     });
   });
@@ -118,9 +118,9 @@ describe('#postMessage', () => {
   it('should support overwrite options', async () => {
     const { context, client } = setup();
 
-    await context.postMessage('xxx.com', { attachments: [], as_user: false });
+    await context.postMessage('hello', { attachments: [], as_user: false });
 
-    expect(client.postMessage).toBeCalledWith('C6A9RJJ3F', 'xxx.com', {
+    expect(client.postMessage).toBeCalledWith('C6A9RJJ3F', 'hello', {
       attachments: [],
       as_user: false,
     });
@@ -129,7 +129,7 @@ describe('#postMessage', () => {
   it('should mark context as handled', async () => {
     const { context } = setup();
 
-    await context.postMessage('xxx.com');
+    await context.postMessage('hello');
 
     expect(context.isHandled).toBe(true);
   });
@@ -137,7 +137,7 @@ describe('#postMessage', () => {
   it('should call warning and not to send if dont have channelId', async () => {
     const { context, client } = setup({ session: false });
 
-    await context.postMessage('xxx.com');
+    await context.postMessage('hello');
 
     expect(warning).toBeCalled();
     expect(client.postMessage).not.toBeCalled();
@@ -147,15 +147,15 @@ describe('#postMessage', () => {
     const id = '123';
     const { context, client } = setup({ session: { channel: { id } } });
 
-    await context.postMessage('xxx.com');
+    await context.postMessage('hello');
 
-    expect(client.postMessage).toBeCalledWith(id, 'xxx.com', {});
+    expect(client.postMessage).toBeCalledWith(id, 'hello', {});
   });
 
   it('should get null channelId and call warning if no session', async () => {
     const { context, client } = setup({ session: false });
 
-    await context.postMessage('xxx.com');
+    await context.postMessage('hello');
 
     expect(warning).toBeCalled();
     expect(client.postMessage).not.toBeCalled();
@@ -164,7 +164,7 @@ describe('#postMessage', () => {
   it('should get null channelId and call warning if session is wrong', async () => {
     const { context, client } = setup({ session: { channel: '123' } });
 
-    await context.postMessage('xxx.com');
+    await context.postMessage('hello');
 
     expect(warning).toBeCalled();
     expect(client.postMessage).not.toBeCalled();
@@ -175,12 +175,12 @@ describe('#postEphemeral', () => {
   it('should call client.postEphemeral', async () => {
     const { context, client } = setup();
 
-    await context.postEphemeral('xxx.com');
+    await context.postEphemeral('hello');
 
     expect(client.postEphemeral).toBeCalledWith(
       'C6A9RJJ3F',
       'fakeUserId',
-      'xxx.com',
+      'hello',
       {}
     );
   });

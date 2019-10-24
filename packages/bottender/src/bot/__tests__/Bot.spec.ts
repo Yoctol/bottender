@@ -116,15 +116,18 @@ describe('#createRequestHandler', () => {
     connector.getUniqueSessionKey.mockReturnValue('__id__');
     sessionStore.read.mockResolvedValue(session);
 
-    const handler = jest.fn();
-    bot.onEvent(handler);
+    let receivedContext;
+    const Action = context => {
+      receivedContext = context;
+    };
+    bot.onEvent(Action);
 
     const requestHandler = bot.createRequestHandler();
 
     const body = {};
     await requestHandler(body);
 
-    expect(handler).toBeCalledWith({
+    expect(receivedContext).toEqual({
       event: {},
       session: expect.objectContaining({
         id: 'any:__id__',
@@ -230,15 +233,18 @@ describe('#createRequestHandler', () => {
 
     connector.getUniqueSessionKey.mockReturnValue(null);
 
-    const handler = jest.fn();
-    bot.onEvent(handler);
+    let receivedContext;
+    const Action = context => {
+      receivedContext = context;
+    };
+    bot.onEvent(Action);
 
     const requestHandler = bot.createRequestHandler();
 
     const body = {};
     await requestHandler(body);
 
-    expect(handler).toBeCalledWith(
+    expect(receivedContext).toEqual(
       expect.objectContaining({
         session: undefined,
       })
@@ -440,47 +446,8 @@ describe('#onError', () => {
         .onEvent(() => {
           throw new Error('boom');
         })
-        .onError((err, context) => {
-          receivedError = err;
-          receivedContext = context;
-          resolve();
-        });
-    });
-
-    const requestHandler = bot.createRequestHandler();
-
-    await requestHandler({});
-
-    await promise;
-
-    expect(receivedError).toBeInstanceOf(Error);
-    expect(receivedContext).toBeInstanceOf(Context);
-  });
-
-  it('should receive emitted error and context', async () => {
-    const event = {};
-    const connector = {
-      platform: 'any',
-      getUniqueSessionKey: jest.fn(),
-      shouldSessionUpdate: jest.fn(),
-      updateSession: jest.fn(),
-      mapRequestToEvents: jest.fn(() => [event]),
-      createContext: ({ emitter }) =>
-        new Context({ event, session: undefined, emitter }),
-    };
-
-    const { bot } = setup({ connector });
-
-    let receivedError;
-    let receivedContext;
-
-    const promise = new Promise(resolve => {
-      bot
-        .onEvent(context => {
-          context.emitError(new Error('boom'));
-        })
-        .onError((err, context) => {
-          receivedError = err;
+        .onError((context, { error }) => {
+          receivedError = error;
           receivedContext = context;
           resolve();
         });

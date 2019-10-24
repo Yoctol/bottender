@@ -1,13 +1,13 @@
 import { MessengerClient } from 'messaging-api-messenger';
 
-import getConfig from '../../../shared/getConfig';
+import getChannelConfig from '../../../../shared/getChannelConfig';
 import { getPersona } from '../persona';
-import * as log from '../../../shared/log';
+import * as log from '../../../../shared/log';
 
 jest.mock('messaging-api-messenger');
 
-jest.mock('../../../shared/log');
-jest.mock('../../../shared/getConfig');
+jest.mock('../../../../shared/log');
+jest.mock('../../../../shared/getChannelConfig');
 
 const MOCK_FILE_WITH_PLATFORM = {
   channels: {
@@ -26,7 +26,7 @@ beforeEach(() => {
   MessengerClient.connect = jest.fn(() => _client);
   log.error = jest.fn();
   log.print = jest.fn();
-  getConfig.mockReturnValue(MOCK_FILE_WITH_PLATFORM.channels.messenger);
+  getChannelConfig.mockReturnValue(MOCK_FILE_WITH_PLATFORM.channels.messenger);
 });
 
 it('be defined', () => {
