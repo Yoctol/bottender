@@ -5,104 +5,26 @@
     "previous": "Previous",
     "tagline": "Make Bots Your Way, Fast and Flexible.",
     "docs": {
-      "api-consolecontext": {
-        "title": "ConsoleContext"
-      },
-      "api-console-event": {
-        "title": "ConsoleEvent"
-      },
-      "api-context": {
-        "title": "Context"
-      },
-      "api-event": {
-        "title": "Event"
-      },
-      "api-handler": {
-        "title": "Handler"
-      },
-      "api-linecontext": {
-        "title": "LineContext"
-      },
-      "api-lineevent": {
-        "title": "LineEvent"
-      },
-      "api-messengercontext": {
-        "title": "MessengerContext"
-      },
-      "api-messengerevent": {
-        "title": "MessengerEvent"
-      },
-      "api-slackcontext": {
-        "title": "SlackContext"
-      },
-      "api-slackevent": {
-        "title": "SlackEvent"
-      },
-      "api-telegramcontext": {
-        "title": "TelegramContext"
-      },
-      "api-telegramevent": {
-        "title": "TelegramEvent"
-      },
-      "api-vibercontext": {
-        "title": "ViberContext"
-      },
-      "api-viberevent": {
-        "title": "ViberEvent"
-      },
       "getting-started": {
         "title": "Getting Started"
       },
-      "commands": {
-        "title": "Commands"
+      "the-basics-actions": {
+        "title": "Resolving Actions"
       },
-      "custome-connector": {
-        "title": "CustomConnector"
+      "the-basics-chain": {
+        "title": "Chain of Responsibility"
       },
-      "deployment": {
-        "title": "Deployment"
+      "the-basics-console-mode": {
+        "title": "Console Mode"
       },
-      "error-handling": {
+      "the-basics-errors": {
         "title": "Error Handling"
       },
-      "intents": {
-        "title": "Intents"
+      "the-basics-routing": {
+        "title": "Routing"
       },
-      "middleware": {
-        "title": "Middleware"
-      },
-      "server": {
-        "title": "HTTP Server"
-      },
-      "session": {
-        "title": "Conversation Session"
-      },
-      "state": {
+      "the-basics-state": {
         "title": "State"
-      },
-      "testing": {
-        "title": "Testing"
-      },
-      "troubleshooting": {
-        "title": "Troubleshooting"
-      },
-      "console": {
-        "title": "Console"
-      },
-      "line": {
-        "title": "LINE"
-      },
-      "messenger": {
-        "title": "Messenger"
-      },
-      "slack": {
-        "title": "Slack"
-      },
-      "telegram": {
-        "title": "Telegram"
-      },
-      "viber": {
-        "title": "Viber"
       },
       "version-0.15.17/version-0.15.17-api-consolecontext": {
         "title": "ConsoleContext"
@@ -206,11 +128,18 @@
     },
     "links": {
       "Docs": "Docs",
-      "API": "API",
       "Blog": "Blog",
       "GitHub": "GitHub"
     },
     "categories": {
+      "Getting Started": "Getting Started",
+      "The Basics": "The Basics",
+      "Guides (Messenger)": "Guides (Messenger)",
+      "Guides (LINE)": "Guides (LINE)",
+      "Guides (Telegram)": "Guides (Telegram)",
+      "Guides (Slack)": "Guides (Slack)",
+      "Guides (Viber)": "Guides (Viber)",
+      "FAQ": "FAQ",
       "Installation": "Installation",
       "Platforms": "Platforms",
       "Guides": "Guides",
