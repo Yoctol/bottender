@@ -19,20 +19,44 @@ npm run dev -- --console
 
 With this option,
 
-## Sending Message or Payload
+<!--Image-->
 
-text message event
+## Sending Text Message and Payload
+
+```
+You >
+```
+
+The most common event types that sent by the end users are text message and payload event.
+
+To send text message event
 
 ```
 MY_TEXT
 ```
 
-`/payload` payload event
+To send payload event, `/payload`
 
 ```
-/payload THIS_IS_MY_COOL_PAYLOAD
+
+/payload THIS_IS_MY_PAYLOAD
+
 ```
 
 ## Receiving Response
 
+```
+
+Bot >
+
+```
+
+// ...
+
 ## Exiting Console Mode
+
+To exit the console mode, you can press `ctrl + c` twice or enter the following command:
+
+```
+/exit
+```

@@ -7,49 +7,33 @@ title: Chain of Responsibility
 
 ```js
 const { chain } = require('bottender');
-```
 
-If we don't return `next` in `First`, it will not execute the `Second`:
-
-```js
-async function SayHi(context) {
-  await context.sendText('hi');
-}
-
-chain([
-  function First(context, { next }) {
-    if (context.event.text === 'hi') {
-      return SayHi;
-    }
-
+function RuleBased(context, { next }) {
+  if (context.event.text === 'hi') {
     // discontinue
-  },
-  function Second(context, { next }) {},
-]);
-```
-
-And if it enters the branch and returns `next`, it will execute the `Second`:
-
-```js
-async function SayHi(context) {
-  await context.sendText('hi');
+    return SayHi;
+  }
+  return next;
 }
 
-chain([
-  function First(context, { next }) {
-    if (context.event.text === 'hi') {
-      return SayHi;
-    }
+function MachineLearningBased(context, { next }) {
+  /* ...skip */
+}
 
-    // continue
-    return next;
-  },
-  function Second(context, { next }) {
-    // ...
-  },
-]);
+function HumanAgent(context, { next }) {
+  /* ...skip */
+}
+
+function App() {
+  return chain([
+    //
+    RuleBased,
+    MachineLearningBased,
+    HumanAgent,
+  ]);
+}
 ```
 
 ## Using with Router
 
-This pattern can be used with the `router` mechanism we provided.
+This pattern can be used with the routing mechanism we provided and mentioned in [previous section](the-basics-routing).

@@ -39,6 +39,8 @@ async function App(context) {
 
 ## Regular Expression Routes
 
+If you are familiar [regular expressions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions), it's a powerful way to extend your matching rule with JavaScript RegExp:
+
 ```js
 async function App(context) {
   return router([
@@ -48,7 +50,36 @@ async function App(context) {
 }
 ```
 
-[RegExp Named capturing groups](https://github.com/tc39/proposal-regexp-named-groups)
+Sometimes you may want to add [named capture groups to your JavaScript RegExps](https://github.com/tc39/proposal-regexp-named-groups):
+
+```js
+async function App(context) {
+  return router([
+    // return Command when receiving /join, /invite, /whatever
+    text(/^\/(?<command>\S+)$/i, Command),
+  ]);
+}
+```
+
+Then, you can access match groups result in your props:
+
+```js
+async function Command(
+  context,
+  {
+    match: {
+      groups: { command },
+    },
+  }
+) {
+  // | input     | command    |
+  // | --------- | ---------- |
+  // | /join     | `join`     |
+  // | /invite   | `invite`   |
+  // | /whatever | `whatever` |
+  await context.sendText(`Executing command: ${command}`);
+}
+```
 
 > Note: `RegExp Named Capturing Groups` is supported from Node 10.
 
@@ -70,6 +101,8 @@ async function App(context) {
 }
 ```
 
+If you want to fallback all events and not only text message events, you can use `route('*', ...)` instead:
+
 ```js
 const { router, route, text } = require('bottender/router');
 
@@ -83,3 +116,6 @@ async function App(context) {
 ```
 
 > Note: The fallback route should always be the last route registered in your router.
+
+<!--## Payload Routes-->
+<!--## Custom Routes-->

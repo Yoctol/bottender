@@ -13,13 +13,13 @@ async function SayHi(context) {
 }
 ```
 
-Actions typically accept `context` as first argument. There are a bunch of stuff in the conversation context, and you can use them to construct your actions. For instance, we can use `context.sendText` to send a text to the user from the bot.
+Actions typically accept `context` as first argument. There are a bunch of stuff in the conversation context, and you can use them to construct your actions. For instance, we may use `context.sendText()` to send a text to the user from the bot.
 
 ## Composing Actions
 
 // ...
 
-For example, we can create an `App` action that says `Hi!` back when it receives `hi` and says sorry for anything else:
+For example, we may create an `App` action that says `Hi!` back when it receives `hi` and says sorry for anything else:
 
 ```js
 async function SayHi(context) {
@@ -38,7 +38,7 @@ async function App(context) {
 }
 ```
 
-> Note: New Bottender apps created by Create Bottender App have a single `App` action as entrypoint in `src/index.js`. However, if you are very familiar with Bottender, you can rename the action or even use different structure instead.
+> Note: New Bottender apps created by Create Bottender App have a single `App` action as entry point in `src/index.js`. However, if you are very familiar with Bottender, you can rename the action or even use different structure instead.
 
 ## Passing Props to Actions
 

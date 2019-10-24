@@ -34,7 +34,7 @@ As you can see, we just got a bot that always replies "Welcome to Bottender" in 
 
 What we did in the previous section is just a "Hello World" example. Let's see how it works and try to make some changes to it.
 
-`src/index.js` is the entrypoint of the app created by Create Bottender App. There are only few lines of code in this file:
+`src/index.js` is the entry point of the app created by Create Bottender App. There are only few lines of code in this file:
 
 ```js
 module.exports = async function App(context) {

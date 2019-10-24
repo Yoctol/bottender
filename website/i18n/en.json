@@ -17,11 +17,17 @@
       "the-basics-console-mode": {
         "title": "Console Mode"
       },
+      "the-basics-context-event": {
+        "title": "Context and Event"
+      },
       "the-basics-errors": {
         "title": "Error Handling"
       },
       "the-basics-routing": {
         "title": "Routing"
+      },
+      "the-basics-session": {
+        "title": "Session Storage"
       },
       "the-basics-state": {
         "title": "State"
