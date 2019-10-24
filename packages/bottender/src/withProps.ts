@@ -1,16 +1,15 @@
-import Context from './context/Context';
+import partial from 'lodash/partial';
+
 import { Action, Props } from './types';
 
 function withProps(action: Action, props: Props): Action {
   // TODO: we may only apply this on dev env
   Object.freeze(props);
 
-  const actionWithProps = (context: Context): Action => {
-    return action.bind(null, context, props);
-  };
+  const actionWithProps = partial(action, partial.placeholder, props);
 
   Object.defineProperty(actionWithProps, 'name', {
-    value: `withProps(${action.name || 'Anonymous'})`,
+    value: action.name || 'Anonymous',
   });
 
   return actionWithProps;
