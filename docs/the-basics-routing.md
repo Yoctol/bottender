@@ -16,7 +16,7 @@ async function SayHello(context) {
   await context.sendText('Hello!');
 }
 
-async function App(context) {
+async function App() {
   return router([
     text('hi', SayHi), // return SayHi when receiving hi text message
     text('hello', SayHello), // return SayHello when receiving hello text message
