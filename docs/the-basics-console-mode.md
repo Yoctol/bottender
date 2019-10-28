@@ -23,32 +23,26 @@ With this option,
 
 ## Sending Text Message and Payload
 
-```
-You >
-```
-
 The most common event types that sent by the end users are text message and payload event.
 
-To send text message event
+To send a text message event, enter your text into the console:
 
 ```
-MY_TEXT
+You > MY_TEXT
 ```
 
-To send payload event, `/payload`
+To send a payload event, enter your payload with `/payload` prefix:
 
 ```
-
-/payload THIS_IS_MY_PAYLOAD
-
+You > /payload MY_PAYLOAD
 ```
 
 ## Receiving Response
 
+Every responses received from Bot are following by `Bot >` prefix, for example:
+
 ```
-
-Bot >
-
+Bot > Hi!
 ```
 
 // ...

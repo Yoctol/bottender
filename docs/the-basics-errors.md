@@ -10,7 +10,7 @@ To customize the error message sending to the user, you may create an `_error.js
 ```js
 // _error.js
 
-module.exports = async function HandleError(context, { error }) {
+module.exports = async function HandleError(context, props) {
   await context.sendText(
     'There are some unexpected errors happened. Please try again later, sorry for the inconvenience.'
   );
@@ -18,9 +18,9 @@ module.exports = async function HandleError(context, { error }) {
     // send your error to the error tracker, for example: Sentry
   }
   if (process.env.NODE_ENV === 'development') {
-    await context.sendText(error.stack);
+    await context.sendText(props.error.stack);
   }
-  console.error(error);
+  console.error(props.error);
 };
 ```
 

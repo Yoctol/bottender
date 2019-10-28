@@ -17,7 +17,7 @@ Actions typically accept `context` as first argument. There are a bunch of stuff
 
 ## Composing Actions
 
-// ...
+Actions can refer to other actions as their return value. This lets us use the same action abstraction for any level of detail.
 
 For example, we may create an `App` action that says `Hi!` back when it receives `hi` and says sorry for anything else:
 

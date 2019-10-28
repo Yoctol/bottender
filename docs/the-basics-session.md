@@ -5,7 +5,9 @@ title: Session Storage
 
 ## Introduction
 
-provided by the channel
+Since HTTP driven applications are stateless, sessions provide a way to store information about the user between conversations. Bottender ships with a variety of session drivers that are accessed through an expressive, unified API. Support for popular drivers such as memory, file, redis, and mongo is included out of the box.
+
+Every connectors define the way to get the session id from the request payload and determine the session is about a user or shared between a group of users.
 
 ## Configuring Session Driver
 

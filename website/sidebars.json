@@ -3,7 +3,6 @@
     "Getting Started": ["getting-started"],
     "The Basics": [
       "the-basics-console-mode",
-      "the-basics-context-event",
       "the-basics-actions",
       "the-basics-routing",
       "the-basics-chain",

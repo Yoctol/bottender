@@ -92,10 +92,16 @@ context.setState({
 
 ## Debug State in Console Mode
 
+In "Console Mode"....TODO
+
 ```
 /state
 ```
 
+```
+Bot > { count: 1 }
+```
+
 ## State Storage
 
-Session ...expired
+The conversation states are stored in the [session storage](the-basics-session). You can specify a explicit session expiration time to reset the state to the initial state after conversation has been inactive for a while, see [this section](the-basics-session#setting-the-session-expiration-time) for more details.
