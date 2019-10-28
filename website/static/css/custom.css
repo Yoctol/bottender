@@ -37,6 +37,17 @@ a:focus {
   padding: 40px 0 0;
 }
 
+.mainContainer article a:not(.anchor):not(.hash-link) {
+  background-color: rgba(187,239,253,0.3);
+  border-bottom: 1px solid rgba(0,0,0,0.2);
+  color: #1a1a1a;
+}
+
+.mainContainer article a:not(.anchor):not(.hash-link):hover {
+  background-color: #bbeffd;
+  border-bottom-color: #1a1a1a;
+}
+
 .homeContainer {
   background-color: #0A1C30;
   height: 750px;
