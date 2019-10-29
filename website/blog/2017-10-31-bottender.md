@@ -9,7 +9,7 @@ authorImageURL: https://avatars1.githubusercontent.com/u/3382565?s=460&v=4
 
 We're very proud to open-source [Bottender](https://github.com/yoctol/bottender), a JavaScript framework for cross-platform bots, built on top of [Messaging-APIs](https://github.com/Yoctol/messaging-apis) and lots of great tools from the JavaScript community!
 
-![bottender logo](../img/blog/2017-10-31/logo-600x600.png)
+![bottender logo](/img/blog/2017-10-31/logo-600x600.png)
 
 To begin with, install `bottender` globally from the npm registry:
 
@@ -25,7 +25,7 @@ bottender init
 
 After answering a few questions, a new bot will be created for you.
 
-![bottender init screenshot](../img/blog/2017-10-31/init-screenshot.png)
+![bottender init screenshot](/img/blog/2017-10-31/init-screenshot.png)
 
 <br />
 
