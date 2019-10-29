@@ -81,8 +81,8 @@ const siteConfig = {
   cleanUrl: true,
 
   // Open Graph and Twitter card images.
-  ogImage: 'img/fb-og.svg',
-  twitterImage: 'img/undraw_tweetstorm.svg',
+  ogImage: 'img/og-image.png',
+  twitterImage: 'img/og-image.png',
 
   disableHeaderTitle: true,
 
