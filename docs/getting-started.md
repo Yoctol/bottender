@@ -17,7 +17,8 @@ npx create-bottender-app my-app
 
 After you go through the interactive creation steps by steps, it will create a directory named `my-app` containing a fresh Bottender installation with all of Bottender's dependencies already installed:
 
-![](https://user-images.githubusercontent.com/3382565/42831197-41b3f436-8a20-11e8-80a9-d2cd4895e0f5.png)
+![](https://user-images.githubusercontent.com/3382565/67745483-5667ef80-fa5f-11e9-8bae-39489b8544e7.png)
+![](https://user-images.githubusercontent.com/3382565/67745485-57008600-fa5f-11e9-8fed-8d97d600a760.png)
 
 The easiest way to test it is running the bot in ["Console Mode"](the-basics-console-mode.md). To do this, pass `--console` option to the command:
 
@@ -26,9 +27,7 @@ cd my-app
 npm run dev -- --console
 ```
 
-<!--TODO:image-->
-
-![](https://user-images.githubusercontent.com/3382565/42831198-41e68f86-8a20-11e8-8b22-3378c37c4ed4.png)
+![](https://user-images.githubusercontent.com/3382565/67745487-57991c80-fa5f-11e9-8eb7-9e4144df9e73.png)
 
 As you can see, we just got a bot that always replies "Welcome to Bottender" in the console.
 
@@ -59,9 +58,7 @@ module.exports = async function App(context) {
 
 And the application will be restarted automatically.
 
-![](https://user-images.githubusercontent.com/3382565/42831200-4215364c-8a20-11e8-9e19-cd0709bc1b13.png)
-
-<!--TODO:image-->
+![](https://user-images.githubusercontent.com/3382565/67745488-57991c80-fa5f-11e9-91d2-659b65df2c58.png)
 
 That's it!
 

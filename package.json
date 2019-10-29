@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "@bottender/workspace",
-  "description": "Make Bots Your Way, Fast and Flexible",
+  "description": "A framework for building conversational user interfaces.",
   "license": "MIT",
   "homepage": "https://bottender.js.org/",
   "repository": {

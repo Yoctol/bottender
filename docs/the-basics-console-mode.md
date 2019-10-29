@@ -17,9 +17,9 @@ npm start -- --console
 npm run dev -- --console
 ```
 
-With this option, the bot will be started and run on the console:
+With this option, the bot will be started and run in the console:
 
-<!--TODO:image-->
+![](https://user-images.githubusercontent.com/3382565/67745487-57991c80-fa5f-11e9-8eb7-9e4144df9e73.png)
 
 ## Sending Text Message and Payload
 

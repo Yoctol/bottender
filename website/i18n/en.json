@@ -3,7 +3,7 @@
   "localized-strings": {
     "next": "Next",
     "previous": "Previous",
-    "tagline": "Make Bots Your Way, Fast and Flexible.",
+    "tagline": "A framework for building conversational user interfaces.",
     "docs": {
       "getting-started": {
         "title": "Getting Started"

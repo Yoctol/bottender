@@ -90,6 +90,6 @@ Or you may put your `DEBUG` environment setting into your `.env` file:
 DEBUG=bottender:dialog
 ```
 
-<!--TODO:image-->
+![](https://user-images.githubusercontent.com/3382565/67746734-0cccd400-fa62-11e9-9318-3517a983eb64.png)
 
-We recommend that you should always name your actions, so it prints meaningful path for you to debug instead of showing `Anonymous` as action name.
+We recommend that you should always name your actions, so it will print meaningful paths for you to debug instead of showing `Anonymous` as action name.
