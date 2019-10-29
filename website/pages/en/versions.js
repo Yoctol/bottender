@@ -112,7 +112,7 @@ function Versions(props) {
             </tbody>
           </table>
           <p>
-            You can find past versions of this project on{' '}
+            You can find past versions of this project on
             <a href={repoUrl}>GitHub</a>.
           </p>
         </div>

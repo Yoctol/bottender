@@ -143,7 +143,7 @@ module.export = function App(context) {
                   help you define your conversations. <br />
                   <br />
                   For most applications, you will begin by defining routes that
-                  you may familiar with when developing a web application.{' '}
+                  you may familiar with when developing a web application.
                   <br />
                   <br />
                   Besides router, you can describe the side effects with
