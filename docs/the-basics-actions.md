@@ -13,13 +13,13 @@ async function SayHi(context) {
 }
 ```
 
-Actions typically accept `context` as first argument. There are a bunch of stuff in the conversation context, and you can use them to construct your actions. For instance, we may use `context.sendText()` to send a text to the user from the bot.
+Actions typically accept `context` as first argument. There are a bunch of stuff in the conversation context, and you can use them to construct your actions. For instance, you may use `context.sendText()` to send a text to the user from the bot.
 
 ## Composing Actions
 
 Actions can refer to other actions as their return value. This lets us use the same action abstraction for any level of detail.
 
-For example, we may create an `App` action that says `Hi!` back when it receives `hi` and says sorry for anything else:
+For example, you may create an `App` action that says `Hi!` back when it receives `hi` and says sorry for anything else:
 
 ```js
 async function SayHi(context) {
@@ -42,7 +42,7 @@ async function App(context) {
 
 ## Passing Props to Actions
 
-Previously, we only saw Bottender actions that accept one argument - `context`:
+Previously, you only saw Bottender actions that accept one argument - `context`:
 
 ```js
 async function SayHi(context) {
@@ -50,7 +50,7 @@ async function SayHi(context) {
 }
 ```
 
-However, we can access the second argument - `props` to define actions with flexibility in mind:
+However, you can access the second argument - `props` to define actions with flexibility in mind:
 
 ```js
 async function SayHi(context, props) {
@@ -58,7 +58,7 @@ async function SayHi(context, props) {
 }
 ```
 
-Instead of returning the action directly without `props`, we can use `withProps` to pass a single object as `props` to the action:
+Instead of returning the action directly without `props`, you can use `withProps` to pass a single object as `props` to the action:
 
 ```js
 const { withProps } = require('bottender');
@@ -72,18 +72,24 @@ Bottender will call the `SayHi` action with `{ name: 'Bob' }` as the `props` and
 
 ## How to Debug
 
-[debug](https://www.npmjs.com/package/debug)
+Bottender use famous [debug](https://www.npmjs.com/package/debug) package internally to collect some helpful information that can be showed up when you provide corresponding `DEBUG` environment variable. To debug your actions, you may run your command with `DEBUG=bottender:dialog`, for example:
 
 ```sh
 DEBUG=bottender:dialog npm start
 ```
 
-<!--TODO:image-->
-
-We recommend that always name your actions, so it will meaningful path to debug instead of Anonymous
-
-> Note: If you are developing your bots on Windows, you can use [cross-env](https://www.npmjs.com/package/cross-env) to assign `DEBUG` environment variable:
+> Note: If you are developing your bots on Windows, you may use [cross-env](https://www.npmjs.com/package/cross-env) to assign `DEBUG` environment variable:
 
 ```sh
 cross-env DEBUG=bottender:dialog npm start
 ```
+
+Or you may put your `DEBUG` environment setting into your `.env` file:
+
+```
+DEBUG=bottender:dialog
+```
+
+<!--TODO:image-->
+
+We recommend that you should always name your actions, so it prints meaningful path for you to debug instead of showing `Anonymous` as action name.

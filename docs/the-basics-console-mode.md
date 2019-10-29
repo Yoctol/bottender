@@ -17,9 +17,9 @@ npm start -- --console
 npm run dev -- --console
 ```
 
-With this option,
+With this option, the bot will be started and run on the console:
 
-<!--Image-->
+<!--TODO:image-->
 
 ## Sending Text Message and Payload
 
@@ -39,13 +39,25 @@ You > /payload MY_PAYLOAD
 
 ## Receiving Response
 
-Every responses received from Bot are following by `Bot >` prefix, for example:
+Every responses you receive from the bot are following by `Bot >` prefix, for example:
 
 ```
 Bot > Hi!
 ```
 
-// ...
+Except text messages, other response types will be displayed as method name and its arguments:
+
+```
+Bot > sendSticker with args:
+[
+  {
+    "packageId": "11537",
+    "stickerId": "52002744"
+  }
+]
+```
+
+It's a helpful trick that let you test your bots just in the console.
 
 ## Exiting Console Mode
 

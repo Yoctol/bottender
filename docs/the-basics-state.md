@@ -92,16 +92,18 @@ context.setState({
 
 ## Debug State in Console Mode
 
-In "Console Mode"....TODO
+In ["Console Mode"](the-basics-console-mode.md), you can leverage the convenient built-in command - `/state` to help you debugging you state transition:
 
 ```
-/state
+You > /state
 ```
 
+This commmand will format the state with `JSON.stringify()` and send the result as a bot message to you:
+
 ```
-Bot > { count: 1 }
+Bot > { "count": 1 }
 ```
 
 ## State Storage
 
-The conversation states are stored in the [session storage](the-basics-session). You can specify a explicit session expiration time to reset the state to the initial state after conversation has been inactive for a while, see [this section](the-basics-session#setting-the-session-expiration-time) for more details.
+The conversation states are stored in the [session storage](the-basics-session.md). You can specify a explicit session expiration time to reset the state to the initial state after conversation has been inactive for a while, see [this section](the-basics-session.md#setting-the-session-expiration-time) for more details.

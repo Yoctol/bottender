@@ -149,13 +149,7 @@
       "Installation": "Installation",
       "Platforms": "Platforms",
       "Guides": "Guides",
-      "Common": "Common",
-      "Console": "Console",
-      "Messenger": "Messenger",
-      "LINE": "LINE",
-      "Slack": "Slack",
-      "Telegram": "Telegram",
-      "Viber": "Viber"
+      "API References": "API References"
     }
   },
   "pages-strings": {

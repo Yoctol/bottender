@@ -81,4 +81,4 @@ module.exports = {
 };
 ```
 
-After setting this, the user will get a new session and [conversation state](the-basics-state) after without any activities in 15 minutes.
+After setting this, the user will get a new session and [conversation state](the-basics-state.md) after without any activities in 15 minutes.

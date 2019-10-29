@@ -26,6 +26,8 @@ cd my-app
 npm run dev -- --console
 ```
 
+<!--TODO:image-->
+
 ![](https://user-images.githubusercontent.com/3382565/42831198-41e68f86-8a20-11e8-8b22-3378c37c4ed4.png)
 
 As you can see, we just got a bot that always replies "Welcome to Bottender" in the console.
@@ -44,7 +46,7 @@ module.exports = async function App(context) {
 
 It's very intuitive that it just sends back "Welcome to Bottender" whenever it is called.
 
-The next step is teaching your bot to send back what it receives, so open the `src/index.js` file on the editor and apply following changes to the code:
+The next step is teaching your bot to send back what it receives, so let's open the `src/index.js` file on the editor and apply following changes to the code:
 
 ```diff
 module.exports = async function App(context) {
@@ -58,6 +60,8 @@ module.exports = async function App(context) {
 And the application will be restarted automatically.
 
 ![](https://user-images.githubusercontent.com/3382565/42831200-4215364c-8a20-11e8-9e19-cd0709bc1b13.png)
+
+<!--TODO:image-->
 
 That's it!
 
