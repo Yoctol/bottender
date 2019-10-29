@@ -79,12 +79,12 @@ const server = createServer(bot, {
 });
 ```
 
-more on [Guides Server](Guides-Server.md#options).
+more on [Guides Server](server#options).
 
 ## Events
 
 Bottender supports several types of events. You are able to access them via `context.event`.
-For more information, check [Event Reference](APIReference-Event.md).
+For more information, check [Event Reference](api-event).
 
 ### Messenger Event Properties
 
@@ -98,7 +98,7 @@ For more information, check [Event Reference](APIReference-Event.md).
 - payload
 - ...
 
-more on [MessengerEvent Reference](APIReference-MessengerEvent.md).
+more on [MessengerEvent Reference](api-messengerevent).
 
 For example:
 
@@ -131,7 +131,7 @@ When using Bottender, we automatically set `messaging_type` to `RESPONSE` when u
 - sendGenericTemplate
 - ...
 
-more on [MessengerContext Reference](APIReference-MessengerContext.md).
+more on [MessengerContext Reference](api-messengercontext).
 
 For example:
 

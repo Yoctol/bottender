@@ -10,7 +10,7 @@
 
 const siteConfig = {
   title: 'Bottender', // Title for your website.
-  tagline: 'Make Bots Your Way, Fast and Flexible.',
+  tagline: 'A framework for building conversational user interfaces.',
   url: 'https://bottender.js.org', // Your website URL
   baseUrl: '/', // Base URL for your project */
   // For github.io type URLs, you would set the url and baseUrl like:
@@ -27,7 +27,7 @@ const siteConfig = {
   // For no header links in the top nav bar -> headerLinks: [],
   headerLinks: [
     { doc: 'getting-started', label: 'Docs' },
-    { doc: 'api-context', label: 'API' },
+    // { doc: 'api-context', label: 'API' },
     { blog: true, label: 'Blog' },
     { href: 'https://github.com/yoctol/bottender', label: 'GitHub' },
   ],

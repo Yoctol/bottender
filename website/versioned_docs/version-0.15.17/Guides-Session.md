@@ -166,4 +166,4 @@ class Store implements SessionStore {
 
 ## Manipulate Session State
 
-See more on [state](Guides-State.md).
+See more on [state](state).

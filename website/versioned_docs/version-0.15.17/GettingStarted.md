@@ -75,4 +75,4 @@ That's it!
 
 ## Next Steps
 
-You just created your first bot with Bottender! To dive deeper into bot development, you may want to determine the intents behind what the user says. For more information on intent understanding, [check out its documentation](Guides-Intents.md).
+You just created your first bot with Bottender! To dive deeper into bot development, you may want to determine the intents behind what the user says. For more information on intent understanding, [check out its documentation](intents).

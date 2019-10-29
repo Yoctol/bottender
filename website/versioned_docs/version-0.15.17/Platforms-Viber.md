@@ -44,7 +44,7 @@ server.listen(5000, () => {
 ## Events
 
 Bottender supplies several types of event. You are able to access them via `context.event`.  
-For more information, check [Event Reference](APIReference-Event.md).
+For more information, check [Event Reference](api-event).
 
 ### Viber-Specific Context Event
 
@@ -66,7 +66,7 @@ For more information, check [Event Reference](APIReference-Event.md).
 - picture
 - ...
 
-more on [ViberEvent Reference](APIReference-ViberEvent.md).
+more on [ViberEvent Reference](api-viberevent).
 
 Example:
 
@@ -99,7 +99,7 @@ After your bot receives the request from Viber, you can use context send APIs to
 - sendSticker
 - sendCarouselContent
 
-more on [ViberContext Reference](APIReference-ViberContext.md).
+more on [ViberContext Reference](api-vibercontext).
 
 Example:
 

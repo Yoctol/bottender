@@ -6,10 +6,10 @@ original_id: intents
 
 ## Events
 
-Every time when there is an incoming request, the [handler](APIReference-Handler.md) will be called and parse out events from the request. Afterwards, the Event instance is attached to [context](APIReference-Context.md) so that you can access it via `context.event`.  
+Every time when there is an incoming request, the [handler](api-handler) will be called and parse out events from the request. Afterwards, the Event instance is attached to [context](api-context) so that you can access it via `context.event`.  
 Bottender help you recognize what kind of messages or payloads are sent from users. In this way, you are able to handle intents more easily.
 
-Check [Event Reference](APIReference-Event.md) to get more information about event.
+Check [Event Reference](api-event) to get more information about event.
 
 ## Pattern Matching
 
