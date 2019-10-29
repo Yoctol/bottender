@@ -60,7 +60,7 @@ server.listen(5000, () => {
 });
 ```
 
-After running up the bot server, you can use [bottender CLI](Guides-Commands.md) command to setup webhook.
+After running up the bot server, you can use [bottender CLI](commands) command to setup webhook.
 
 ```
 $ bottender telegram webhook set -w <YOUR_WEBHOOK_URL>
@@ -69,7 +69,7 @@ $ bottender telegram webhook set -w <YOUR_WEBHOOK_URL>
 ## Events
 
 Bottender supplies several types of event. You are able to access them via `context.event`.  
-For more information, check [Event Reference](APIReference-Event.md).
+For more information, check [Event Reference](api-event).
 
 ### Telegram-Specific Context Event
 
@@ -81,7 +81,7 @@ For more information, check [Event Reference](APIReference-Event.md).
 - callbackQuery
 - ...
 
-more on [TelegramEvent Reference](APIReference-TelegramEvent.md).
+more on [TelegramEvent Reference](api-telegramevent).
 
 Example:
 
@@ -111,7 +111,7 @@ After your bot receives the request from Telegram, you can use context send APIs
 - sendContact
 - ...
 
-more on [TelegramContext Reference](APIReference-TelegramContext.md).
+more on [TelegramContext Reference](api-telegramcontext).
 
 Example:
 

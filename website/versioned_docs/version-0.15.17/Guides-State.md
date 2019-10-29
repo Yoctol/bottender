@@ -4,7 +4,7 @@ title: State
 original_id: state
 ---
 
-A state is an object inside [session](Guides-Session.md). You can manipulate the state by the following APIs.
+A state is an object inside [session](session). You can manipulate the state by the following APIs.
 
 ## Usage
 

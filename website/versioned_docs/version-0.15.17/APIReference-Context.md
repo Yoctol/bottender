@@ -8,14 +8,14 @@ Bottender context encapsulates many helpful methods and exports session, client,
 
 For platform specific methods, please check out following links:
 
-| Platform                                | Doc                                                               |
-| --------------------------------------- | ----------------------------------------------------------------- |
-| Console                                 | [APIReference-ConsoleContext](APIReference-ConsoleContext.md)     |
-| [Messenger](https://www.messenger.com/) | [APIReference-MessengerContext](APIReference-MessengerContext.md) |
-| [LINE](https://line.me/)                | [APIReference-LineContext](APIReference-LineContext.md)           |
-| [Slack](https://slack.com/)             | [APIReference-SlackContext](APIReference-SlackContext.md)         |
-| [Telegram](https://telegram.org/)       | [APIReference-TelegramContext](APIReference-TelegramContext.md)   |
-| [Viber](https://www.viber.com/)         | [APIReference-ViberContext](APIReference-ViberContext.md)         |
+| Platform                                | Doc                                                   |
+| --------------------------------------- | ----------------------------------------------------- |
+| Console                                 | [APIReference-ConsoleContext](api-consolecontext)     |
+| [Messenger](https://www.messenger.com/) | [APIReference-MessengerContext](api-messengercontext) |
+| [LINE](https://line.me/)                | [APIReference-LineContext](api-linecontext)           |
+| [Slack](https://slack.com/)             | [APIReference-SlackContext](api-slackcontext)         |
+| [Telegram](https://telegram.org/)       | [APIReference-TelegramContext](api-telegramcontext)   |
+| [Viber](https://www.viber.com/)         | [APIReference-ViberContext](api-vibercontext)         |
 
 #### `platform`
 

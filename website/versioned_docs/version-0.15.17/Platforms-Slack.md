@@ -40,7 +40,7 @@ Then run your server and try it out by invite the **Bot User** to a channel and 
 
 ## Events
 
-There are many types of events your bot may receive from Slack, but it's up to you whether to subscribe to each of them. In Bottender, you can access them via `context.event`. For more information, check [SlackEvent Reference](APIReference-SlackEvent.md) and [official docs](https://api.slack.com/events).
+There are many types of events your bot may receive from Slack, but it's up to you whether to subscribe to each of them. In Bottender, you can access them via `context.event`. For more information, check [SlackEvent Reference](api-slackevent) and [official docs](https://api.slack.com/events).
 
 For the **message** related events, Bottender supports some helpers:
 
@@ -73,7 +73,7 @@ bot.onEvent(async context => {
 
 ### Message Format
 
-In Bottender, you can use function `context.sendText()` to send messages. You can format messages with [Slack message formatting](https://api.slack.com/docs/message-formatting). For more information, check [SlackContext Reference](APIReference-SlackContext.md) and [official docs](https://api.slack.com/methods/chat.postMessage).
+In Bottender, you can use function `context.sendText()` to send messages. You can format messages with [Slack message formatting](https://api.slack.com/docs/message-formatting). For more information, check [SlackContext Reference](api-slackcontext) and [official docs](https://api.slack.com/methods/chat.postMessage).
 
 ### Channel
 

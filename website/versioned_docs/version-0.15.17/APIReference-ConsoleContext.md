@@ -4,7 +4,7 @@ title: ConsoleContext
 original_id: api-consolecontext
 ---
 
-Extends from [Context](APIReference-Context.md).
+Extends from [Context](api-context).
 
 #### `platform`
 

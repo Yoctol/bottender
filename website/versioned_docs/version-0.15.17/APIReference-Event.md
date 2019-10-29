@@ -20,14 +20,14 @@ bot.onEvent(async context => {
 
 For platform specific events, please check out following links:
 
-| Platform                                | Doc                                                           |
-| --------------------------------------- | ------------------------------------------------------------- |
-| Console                                 | [APIReference-ConsoleEvent](APIReference-ConsoleEvent.md)     |
-| [Messenger](https://www.messenger.com/) | [APIReference-MessengerEvent](APIReference-MessengerEvent.md) |
-| [LINE](https://line.me/)                | [APIReference-LineEvent](APIReference-LineEvent.md)           |
-| [Slack](https://slack.com/)             | [APIReference-SlackEvent](APIReference-SlackEvent.md)         |
-| [Telegram](https://telegram.org/)       | [APIReference-TelegramEvent](APIReference-TelegramEvent.md)   |
-| [Viber](https://www.viber.com/)         | [APIReference-ViberEvent](APIReference-ViberEvent.md)         |
+| Platform                                | Doc                                               |
+| --------------------------------------- | ------------------------------------------------- |
+| Console                                 | [APIReference-ConsoleEvent](api-console-event)    |
+| [Messenger](https://www.messenger.com/) | [APIReference-MessengerEvent](api-messengerevent) |
+| [LINE](https://line.me/)                | [APIReference-LineEvent](api-lineevent)           |
+| [Slack](https://slack.com/)             | [APIReference-SlackEvent](api-slackevent)         |
+| [Telegram](https://telegram.org/)       | [APIReference-TelegramEvent](api-telegramevent)   |
+| [Viber](https://www.viber.com/)         | [APIReference-ViberEvent](api-viberevent)         |
 
 #### `rawEvent`
 
