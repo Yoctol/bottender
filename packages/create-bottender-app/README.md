@@ -2,7 +2,7 @@
 
 Create Bottender apps with predefined configurations.
 
-- [Creating an App]](#creating-an-app) – How to create a new app.
+- [Creating an App](#creating-an-app) – How to create a new app.
 
 Create Bottender App works on macOS, Windows, and Linux.
 If something doesn’t work, please [file an issue](https://github.com/Yoctol/bottender/issues/new).
