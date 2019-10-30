@@ -266,6 +266,8 @@ const run = async (
     );
 
     fs.copySync(path.join(root, '.env.example'), path.join(root, '.env'));
+    fs.copySync(path.join(root, 'gitignore'), path.join(root, '.gitignore'));
+    fs.removeSync(path.join(root, 'gitignore'));
   } catch (reason) {
     print('');
     print('Aborting installation.');
