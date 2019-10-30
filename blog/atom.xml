@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://bottender.js.org/blog</id>
+    <title>Bottender Blog</title>
+    <updated>2018-08-03T06:00:00Z</updated>
+    <generator>Feed for Node.js</generator>
+    <link rel="alternate" href="https://bottender.js.org/blog"/>
+    <subtitle>The best place to stay up-to-date with the latest Bottender news and events.</subtitle>
+    <logo>https://bottender.js.org/img/element_bottender_logo.svg</logo>
+    <rights>Copyright © 2019 Yoctol.AI</rights>
+    <entry>
+        <title type="html"><![CDATA[Bottender 0.15]]></title>
+        <id>https://bottender.js.org/blog/2018/08/03/bottender-0_15.html</id>
+        <link href="https://bottender.js.org/blog/2018/08/03/bottender-0_15.html">
+        </link>
+        <updated>2018-08-03T06:00:00Z</updated>
+        <summary type="html"><![CDATA[<p>After half an year of our open source journey, we are thrilled to finally introduce our latest work - Bottender v0.15. With the release this time, not only did we make tremendous progress from our experiences previously, we also benefited quite a lot by the feedback from the whole community, which we are highly appreciative of. Thanks to your support and feedback for us to get here today.</p>
+<p>You can now install the latest package by simply entering the command to your terminal:</p>
+<pre><code class="hljs css language-sh">$ npm i bottender@latest
+</code></pre>
+<pre><code class="hljs">$ yarn <span class="hljs-keyword">add </span><span class="hljs-keyword">bottender@latest
+</span></code></pre>
+<p>As we cannot stress enough the importance of a smooth process when it comes to developing, we try to avoid any sorts of breaking changes when updating to a new version. With that being said, developers should find it easy when making updates.</p>
+<p>You can find the full change log <a href="https://github.com/Yoctol/bottender/releases/tag/v0.15.0">on GitHub Realease Page</a>.</p>
+]]></summary>
+        <author>
+            <name>C. T. Lin</name>
+            <uri>https://twitter.com/chentsulin</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Bottender]]></title>
+        <id>https://bottender.js.org/blog/2017/10/31/bottender.html</id>
+        <link href="https://bottender.js.org/blog/2017/10/31/bottender.html">
+        </link>
+        <updated>2017-10-31T06:00:00Z</updated>
+        <summary type="html"><![CDATA[<p>We're very proud to open-source <a href="https://github.com/yoctol/bottender">Bottender</a>, a JavaScript framework for cross-platform bots, built on top of <a href="https://github.com/Yoctol/messaging-apis">Messaging-APIs</a> and lots of great tools from the JavaScript community!</p>
+<p><img src="/img/blog/2017-10-31/logo-600x600.png" alt="bottender logo"></p>
+<p>To begin with, install <code>bottender</code> globally from the npm registry:</p>
+<pre><code class="hljs css language-sh">npm install -g bottender
+</code></pre>
+<p>And enter interactive bot creation process with:</p>
+<pre><code class="hljs css language-sh">bottender init
+</code></pre>
+<p>After answering a few questions, a new bot will be created for you.</p>
+<p><img src="/img/blog/2017-10-31/init-screenshot.png" alt="bottender init screenshot"></p>
+<p><br /></p>
+]]></summary>
+        <author>
+            <name>C. T. Lin</name>
+            <uri>https://twitter.com/chentsulin</uri>
+        </author>
+    </entry>
+</feed>
