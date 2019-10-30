@@ -21,9 +21,11 @@ function router(routes: Route[]) {
       // eslint-disable-next-line no-await-in-loop
       const match = await r.predicate(context);
       if (match) {
+        const derivedProps = match && typeof match === 'object' ? match : {};
+
         return r.action.bind(null, context, {
           ...props,
-          match,
+          ...derivedProps,
         });
       }
     }
@@ -64,7 +66,12 @@ function text(pattern: MatchPattern, action: Action) {
   if (pattern instanceof RegExp) {
     return {
       predicate: (context: Context) => {
-        return pattern.exec(context.event.text);
+        const match = pattern.exec(context.event.text);
+        return match
+          ? {
+              match,
+            }
+          : false;
       },
       action,
     };
@@ -100,7 +107,14 @@ function payload(pattern: MatchPattern, action: Action) {
 
   if (pattern instanceof RegExp) {
     return {
-      predicate: (context: Context) => pattern.test(context.event.payload),
+      predicate: (context: Context) => {
+        const match = pattern.exec(context.event.payload);
+        return match
+          ? {
+              match,
+            }
+          : false;
+      },
       action,
     };
   }
