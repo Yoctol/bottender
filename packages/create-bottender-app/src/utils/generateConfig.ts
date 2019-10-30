@@ -11,7 +11,7 @@ const generateConfig = (
         maxSize: 500,
       },
       file: {
-        dirname: '.session',
+        dirname: '.sessions',
       },
       redis: {
         port: 6379,
