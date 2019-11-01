@@ -3,9 +3,9 @@ id: the-basics-chain
 title: Chain of Responsibility
 ---
 
-Another way to organize your actions is using the ["Chain of Responsibility"](https://en.wikipedia.org/wiki/Chain-of-responsibility_pattern) pattern. In this way, you can prioritize your actions explicitly by specifying the order of the actions.
+An advanced way to organize your actions is using the ["Chain of Responsibility"](https://en.wikipedia.org/wiki/Chain-of-responsibility_pattern). This enables you to prioritize your actions explicitly by the order of the actions.
 
-Consider we have an app that has three very different layers: `RuleBased` layer, `MachineLearning` layer and `HumanAgent` layer. It depends, but you may want to put the cheapest layer on the top of the chain:
+Considering a customer service bot app with three very different layers: `RuleBased` layer, `MachineLearning` layer and `HumanAgent` layer, generally speaking, you may want to put the cheapest layer on the top of the chain:
 
 ```js
 const { chain } = require('bottender');
@@ -37,7 +37,7 @@ function App() {
 }
 ```
 
-If it receives `hi` as input in the `RuleBased` layer, it returns `SayHi` and exits this chain. Otherwise, it continues the chain and goes to the `MachineLearningBased` layer.
+If the bot receives `hi` as input in the `RuleBased` layer, it returns `SayHi` and exits this chain. Otherwise, it follows the chain and goes to the `MachineLearningBased` layer.
 
 `chain` accepts an array of actions and returns an action as return value, so it's possible to work with any pattern that compatible with actions.
 
