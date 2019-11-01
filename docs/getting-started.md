@@ -7,20 +7,20 @@ title: Getting Started
 
 Create Bottender App is the best way to start building a new application in Bottender.
 
-It sets up your development environment so that you can use the latest Bottender features, provides a great experience when developing on multiple channels, and optimizes your app for deploying to production. To create a project, run:
+It initializes your development environment for the latest Bottender features, provides a great experience for multiple channels development, and optimizes your app for production deployment. To create a project, run:
 
 ```sh
 npx create-bottender-app my-app
 ```
 
-> Note: `npx` comes with npm 5.2+ and higher, see [introduction blog post for npx command](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b).
+> Note: `npx` comes with npm 5.2+ and higher, see [npx command introduction](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b).
 
-After you go through the interactive creation steps by steps, it will create a directory named `my-app` containing a fresh Bottender installation with all of Bottender's dependencies already installed:
+After your go through the interactive creation, you will see a directory named my-app containing a fresh Bottender project with every Bottender’s dependency installed:
 
 ![](https://user-images.githubusercontent.com/3382565/67745483-5667ef80-fa5f-11e9-8bae-39489b8544e7.png)
 ![](https://user-images.githubusercontent.com/3382565/67745485-57008600-fa5f-11e9-8fed-8d97d600a760.png)
 
-The easiest way to test it is running the bot in ["Console Mode"](the-basics-console-mode.md). To do this, pass `--console` option to the command:
+Running the bot in ["Console Mode"](the-basics-console-mode.md) is the easiest way. To do this, pass `--console` option to the command:
 
 ```sh
 cd my-app
@@ -43,7 +43,7 @@ module.exports = async function App(context) {
 };
 ```
 
-It's very intuitive that it just sends back "Welcome to Bottender" whenever it is called.
+It's very intuitive that it always replies "Welcome to Bottender" whenever it is called.
 
 The next step is teaching your bot to send back what it receives, so let's open the `src/index.js` file on the editor and apply following changes to the code:
 
