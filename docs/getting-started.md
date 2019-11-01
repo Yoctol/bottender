@@ -43,7 +43,7 @@ module.exports = async function App(context) {
 };
 ```
 
-It’s very intuitive that it always replies "Welcome to Bottender" whenever it is called.
+It's very intuitive that it always replies "Welcome to Bottender" whenever it is called.
 
 The next step is teaching your bot to send back what it receives, so let's open the `src/index.js` file on the editor and apply following changes to the code:
 
