@@ -3,9 +3,9 @@ id: the-basics-chain
 title: Chain of Responsibility
 ---
 
-An advanced way to organize your actions is using the ["Chain of Responsibility"](https://en.wikipedia.org/wiki/Chain-of-responsibility_pattern) . This enables you to prioritize your actions explicitly by the order of the actions.
+An advanced way to organize your actions is using the ["Chain of Responsibility"](https://en.wikipedia.org/wiki/Chain-of-responsibility_pattern) .This enables you to prioritize your actions explicitly by the order of the actions.
 
-Considering a customer service bot app with three very different layers: `RuleBased` layer, `MachineLearning` layer and `HumanAgent` layer, generally Speaking, you may want to put the cheapest layer on the top of the chain:
+Considering a customer service bot app with three very different layers: `RuleBased` layer, `MachineLearning` layer and `HumanAgent` layer, generally speaking, you may want to put the cheapest layer on the top of the chain:
 
 ```js
 const { chain } = require('bottender');
