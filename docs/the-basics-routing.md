@@ -42,7 +42,7 @@ async function App(context) {
 
 ## Regular Expression Routes
 
-If you are familiar [regular expressions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions), it's a powerful way to extend your matching rules with JavaScript RegExp:
+If you are familiar with [regular expressions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions), it's a powerful way to extend your matching rules with JavaScript RegExp:
 
 ```js
 async function App(context) {
