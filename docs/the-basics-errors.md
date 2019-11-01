@@ -24,12 +24,12 @@ module.exports = async function HandleError(context, props) {
 };
 ```
 
-According to the code in the above example, it will do following things for you:
+The example code above will do following things for you while an error occurred:
 
 1. Send `There are some unexpected errors happened. Please try again later, sorry for the inconvenience.` text message to the end user.
 2. Log error to the console.
 3. Log error into error tracker.
-4. Send `error.stack` as text message to the user when developing the app.
+4. Send `error.stack` as text message to the user (only in the development)
 
 ## Sending Errors to Sentry
 
