@@ -5,8 +5,7 @@ title: Console Mode
 
 ## Introduction
 
-Console Mode is a powerful feature included with Bottender. It can run your bot
-in the console, which helps you develop and test your bot in a short period of time and iterating quickly. It's the cheapest way to develop your bot.
+Console Mode is a producivity feature shipped with Bottender. It speeds up bot development iteration by running bots in the console. Comparing with testing your bots on existing messaging platform (e.g. Messenger, LINE), it is recommended to build, test, and debug your bot in the console mode.
 
 ## Running in Console Mode
 

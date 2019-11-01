@@ -3,7 +3,8 @@ id: the-basics-routing
 title: Routing
 ---
 
-The most basic Bottender routes accept a text and an action, providing a very simple and expressive method of defining routes:
+Routing is a handy design pattern to help you organize bot actions.  
+The most basic Bottender route is composed by a text and an action, providing a very simple and expressive method of route definition:
 
 ```js
 const { router, text } = require('bottender/router');
@@ -24,9 +25,11 @@ async function App() {
 }
 ```
 
-`router` accepts an array of routes and returns an action as return value, so it's possible to have nested routers or work with any pattern that compatible with actions.
+`router` is consist of an array of routes. It returns the action of the first matched route. It's possible to have nested routers or any pattern that compatible with actions.
 
-It also can take an array of strings as first argument and will be matched when receiving one of them:
+The first argument of route defines the matching rule, which could be an array of strings. The action of the route will be returned when one of the strings is matched:
+
+
 
 ```js
 async function App(context) {
@@ -39,7 +42,7 @@ async function App(context) {
 
 ## Regular Expression Routes
 
-If you are familiar [regular expressions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions), it's a powerful way to extend your matching rule with JavaScript RegExp:
+If you are familiar with [regular expressions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions), it's a powerful way to extend your matching rules with JavaScript RegExp:
 
 ```js
 async function App(context) {
@@ -85,7 +88,7 @@ async function Command(
 
 ## Fallback Routes
 
-Using the `*` as first argument, you may define a route that will be matched when no other route matches the incoming event. Typically, unhandled events can be handled by sending a fallback message or the guide to using the bot.
+By using the `*` as the first argument, you may define a route for unhandled events, which will be triggered whenever no other routes match the incoming event. Meanwhile, reply of unhandled events is a chance to introudce bot features by sending a fallback message or a user's manual.
 
 ```js
 async function Unknown(context) {
@@ -101,7 +104,7 @@ async function App(context) {
 }
 ```
 
-If you want to fallback all events and not only text message events, you can use `route('*', ...)` instead:
+Besides all unhandled text message events, you can fallback all events by `route('*', ...)` instead:
 
 ```js
 const { router, route, text } = require('bottender/router');

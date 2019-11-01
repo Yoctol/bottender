@@ -24,6 +24,9 @@ const siteConfig = {
   // e.g., for the https://JoelMarcey.github.io site, it would be set like...
   //   organizationName: 'JoelMarcey'
 
+  // The CNAME for your website. It will go into a CNAME file when your site is built.
+  cname: 'bottender.js.org',
+
   // For no header links in the top nav bar -> headerLinks: [],
   headerLinks: [
     { doc: 'getting-started', label: 'Docs' },

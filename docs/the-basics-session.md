@@ -5,9 +5,11 @@ title: Session Storage
 
 ## Introduction
 
-Since HTTP driven applications are stateless, sessions provide a way to store information about the user between conversations. Bottender ships with a variety of session drivers that are accessed through an expressive, unified API. Support for popular drivers such as memory, file, redis, and mongo is included out of the box.
+Since HTTP driven applications are stateless, the mission of sessions is to store context of users during conversations. Bottender offers a variety of session drivers right out of the box, e.g. memory, file, redis, and mongo. These drivers could be accessed through an expressive, unified API. 
 
-Every connectors define the way to get the session id from the request payload and determine the session is about a user or shared between a group of users.
+From connectors, the information of session could be accessed, e.g. session id,
+plus, whether the session is between a bot and single user, or between a bot and a group of users. One bot could support multiple messaging platforms at once, and one connector refers to one messaging platform.
+
 
 ## Configuring Session Driver
 
@@ -41,18 +43,18 @@ module.exports = {
 };
 ```
 
-The following four options are valid drivers:
+The four valid drivers are as follows:
 
-- `memory` - sessions are stored in memory with [LRU cache](https://github.com/isaacs/node-lru-cache) and will not be persisted.
-- `file` - sessions are stored in files placed in `.session` directory be default.
+- `memory` - sessions are stored in memory with [LRU cache](https://github.com/isaacs/node-lru-cache) and not persistent.
+- `file` - sessions are stored in files placed in `.session` directory by default.
 - `redis` - sessions are stored in a [redis](https://redis.io/) database.
 - `mongo` - sessions are stored in a [mongo](https://www.mongodb.com/) database.
 
 ## Using Different Session Driver Based on NODE_ENV
 
-You can safely use memory as the session driver when you develop your apps. After you save something into the session store, you can just reset them by restarting the process.
+It is recommended to use memory as the session driver in the development for shorter iteration. By restarting the process, the session store could be reset completely.
 
-To achieve this, you can determine which session driver to use by using env variable:
+You can determine which session driver to use in the development or production by env variable:
 
 ```js
 // bottender.config.js
@@ -67,7 +69,7 @@ module.exports = {
 
 ## Setting the Session Expiration Time
 
-By default, the sessions stored by Bottender never expires. To set a explicit session expiration time, add the `session.expiresIn` setting in your `bottender.config.js` file:
+By default, the sessions stored by Bottender never expire. To set explicit session expiration time, add the `session.expiresIn` setting in your `bottender.config.js` file:
 
 ```js
 // bottender.config.js
@@ -81,4 +83,4 @@ module.exports = {
 };
 ```
 
-After setting this, the user will get a new session and [conversation state](the-basics-state.md) after without any activities in 15 minutes.
+With settings above, the user will get a new session and new [conversation state](the-basics-state.md) after inactive for 15 minutes.
