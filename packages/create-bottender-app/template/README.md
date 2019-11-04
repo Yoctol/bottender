@@ -24,8 +24,8 @@ my-bot/
 ### index.js
 
 All functionalities start from here.\
-Mainly it's a server which listen on port 5000. You are encouraged to add more [event listener](https://bottender.js.org/docs/APIReference-Event)
-and [`Handler`](https://bottender.js.org/docs/APIReference-Handler) to enrich the bot.
+Mainly it's a server which listen on port 5000. You are encouraged to add more [event listener](https://bottender.js.org/docs/APIReference-Event?new)
+and [`Handler`](https://bottender.js.org/docs/APIReference-Handler?new) to enrich the bot.
 
 See more examples, please refer to
 [Bottender examples](https://github.com/Yoctol/bottender/tree/master/examples).

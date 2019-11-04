@@ -41,21 +41,9 @@ Installation may fail on Windows during compilation of the native dependencies w
 
 ## Documentation
 
-You can find the Bottender documentation on the website.
+You can find the Bottender documentation [on the website](https://bottender.js.org?new).
 
-- [Getting Started](https://bottender.js.org/docs/GettingStarted)
-- [Platforms](https://bottender.js.org/docs/Platforms-Messenger)
-  - [Console](https://bottender.js.org/docs/Platforms-Console)
-  - [Messenger](https://bottender.js.org/docs/Platforms-Messenger)
-  - [LINE](https://bottender.js.org/docs/Platforms-LINE)
-  - [Slack](https://bottender.js.org/docs/Platforms-Slack)
-  - [Telegram](https://bottender.js.org/docs/Platforms-Telegram)
-  - [Viber](https://bottender.js.org/docs/Platforms-Viber)
-- [Guides](https://bottender.js.org/docs/Guides-Commands)
-  - [CLI commands](https://bottender.js.org/docs/Guides-Commands)
-  - [Server](https://bottender.js.org/docs/Guides-Server)
-  - [Session](https://bottender.js.org/docs/Guides-Session)
-- [API Reference](https://bottender.js.org/docs/APIReference-Context)
+Check out the [Getting Started](https://bottender.js.org/docs/getting-started?new) page for a quick overview.
 
 ## Community
 
