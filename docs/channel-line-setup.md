@@ -39,7 +39,7 @@ module.exports = {
 };
 ```
 
-The default webhook path is `/webhooks/line`, but you can set your webhook path by `path` field. Furthur information of `webhook`, `accessToken`, and `channelSecret` will be explained in the next section.
+The default webhook path is `/webhooks/line`, but you can set your own webhook path by `path` field. Furthur information of `webhook`, `accessToken`, and `channelSecret` will be explained in the next section.
 
 
 ## Complete LINE Channel Settings
