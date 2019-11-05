@@ -86,6 +86,9 @@ const siteConfig = {
   // No .html extensions for paths.
   cleanUrl: true,
 
+  // URL for editing docs, usage example: editUrl + 'en/doc1.md'.
+  editUrl: 'https://github.com/Yoctol/bottender/edit/develop/docs/',
+
   // Open Graph and Twitter card images.
   ogImage: 'img/og-image.png',
   twitter: true,
