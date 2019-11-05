@@ -6,7 +6,13 @@ import SessionStore from '../session/SessionStore';
 import Bot from './Bot';
 import SlackConnector, { SlackRequestBody } from './SlackConnector';
 
-export default class SlackBot extends Bot<SlackRequestBody, SlackOAuthClient> {
+import { SlackEvent } from '..';
+
+export default class SlackBot extends Bot<
+  SlackRequestBody,
+  SlackOAuthClient,
+  SlackEvent
+> {
   _accessToken: string;
 
   constructor({

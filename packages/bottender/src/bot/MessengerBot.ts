@@ -5,9 +5,12 @@ import SessionStore from '../session/SessionStore';
 import Bot from './Bot';
 import MessengerConnector, { MessengerRequestBody } from './MessengerConnector';
 
+import { MessengerEvent } from '..';
+
 export default class MessengerBot extends Bot<
   MessengerRequestBody,
-  MessengerClient
+  MessengerClient,
+  MessengerEvent
 > {
   constructor({
     accessToken,

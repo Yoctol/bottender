@@ -74,7 +74,7 @@ describe('resolve', () => {
         sender: {
           name: 'sender',
         },
-        eventTypes: ['delivered', 'seen'],
+        Events: ['delivered', 'seen'],
       },
     });
 

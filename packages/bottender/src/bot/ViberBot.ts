@@ -5,7 +5,13 @@ import SessionStore from '../session/SessionStore';
 import Bot from './Bot';
 import ViberConnector, { ViberRequestBody } from './ViberConnector';
 
-export default class ViberBot extends Bot<ViberRequestBody, ViberClient> {
+import { ViberEvent } from '..';
+
+export default class ViberBot extends Bot<
+  ViberRequestBody,
+  ViberClient,
+  ViberEvent
+> {
   constructor({
     accessToken,
     sender,

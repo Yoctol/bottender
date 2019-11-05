@@ -1,14 +1,18 @@
 import readline from 'readline';
 
+import ConsoleEvent, { ConsoleRawEvent } from '../context/ConsoleEvent';
 import Session from '../session/Session';
 import SessionStore from '../session/SessionStore';
 import { ConsoleClient } from '../context/ConsoleClient';
-import { ConsoleRawEvent } from '../context/ConsoleEvent';
 
 import Bot from './Bot';
 import ConsoleConnector from './ConsoleConnector';
 
-export default class ConsoleBot extends Bot<ConsoleRawEvent, ConsoleClient> {
+export default class ConsoleBot extends Bot<
+  ConsoleRawEvent,
+  ConsoleClient,
+  ConsoleEvent
+> {
   constructor({
     sessionStore,
     fallbackMethods,

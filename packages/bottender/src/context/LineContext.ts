@@ -24,13 +24,8 @@ type Options = {
   emitter?: EventEmitter | null;
 };
 
-class LineContext extends Context implements PlatformContext {
-  _client: LineClient = this._client;
-
-  _event: LineEvent = this._event;
-
-  _session: Session | null = this._session;
-
+class LineContext extends Context<LineClient, LineEvent>
+  implements PlatformContext {
   _customAccessToken: string | null;
 
   _isReplied = false;

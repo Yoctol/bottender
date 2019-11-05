@@ -9,12 +9,12 @@ import Context from '../context/Context';
 import MemoryCacheStore from '../cache/MemoryCacheStore';
 import Session from '../session/Session';
 import SessionStore from '../session/SessionStore';
-import { Action, Plugin, Props } from '../types';
+import { Action, Body, Client, Event, Plugin, Props } from '../types';
 
 import { Connector } from './Connector';
 
-type Builder = {
-  build: () => Action;
+type Builder<C extends Client, E extends Event> = {
+  build: () => Action<C, E>;
 };
 
 const debugRequest = debug('bottender:request');
@@ -30,12 +30,14 @@ function createMemorySessionStore(): SessionStore {
   return new CacheBasedSessionStore(cache, MINUTES_IN_ONE_YEAR);
 }
 
-export function run(action: Action): Action {
+export function run<C extends Client, E extends Event>(
+  action: Action<C, E>
+): Action<C, E> {
   return async function Run(
-    context: Context,
-    props: Props = {}
+    context: Context<C, E>,
+    props: Props<C, E> = {}
   ): Promise<void> {
-    let nextDialog: Action | void = action;
+    let nextDialog: Action<C, E> | void = action;
 
     // TODO: refactor this with withProps or whatever
     debugDialog(`Current Dialog: ${nextDialog.name || 'Anonymous'}`);
@@ -58,16 +60,16 @@ type RequestHandler<B> = (
   requestContext?: Record<string, any> | null
 ) => void | Promise<void>;
 
-export default class Bot<B, C> {
+export default class Bot<B extends Body, C extends Client, E extends Event> {
   _sessions: SessionStore;
 
   _initialized: boolean;
 
   _connector: Connector<B, C>;
 
-  _handler: Action | null;
+  _handler: Action<C, E> | null;
 
-  _errorHandler: Action | null;
+  _errorHandler: Action<C, E> | null;
 
   _initialState: Record<string, any> = {};
 
@@ -103,7 +105,7 @@ export default class Bot<B, C> {
     return this._sessions;
   }
 
-  get handler(): Action | null {
+  get handler(): Action<C, E> | null {
     return this._handler;
   }
 
@@ -111,7 +113,7 @@ export default class Bot<B, C> {
     return this._emitter;
   }
 
-  onEvent(handler: Action | Builder): Bot<B, C> {
+  onEvent(handler: Action<C, E> | Builder<C, E>): Bot<B, C, E> {
     invariant(
       handler,
       'onEvent: Can not pass `undefined`, `null` or any falsy value as handler'
@@ -120,7 +122,7 @@ export default class Bot<B, C> {
     return this;
   }
 
-  onError(handler: Action | Builder): Bot<B, C> {
+  onError(handler: Action<C, E> | Builder<C, E>): Bot<B, C, E> {
     invariant(
       handler,
       'onError: Can not pass `undefined`, `null` or any falsy value as error handler'
@@ -129,12 +131,12 @@ export default class Bot<B, C> {
     return this;
   }
 
-  setInitialState(initialState: Record<string, any>): Bot<B, C> {
+  setInitialState(initialState: Record<string, any>): Bot<B, C, E> {
     this._initialState = initialState;
     return this;
   }
 
-  use(plugin: Plugin): Bot<B, C> {
+  use(plugin: Plugin<C, E>): Bot<B, C, E> {
     this._plugins.push(plugin);
     return this;
   }
@@ -157,7 +159,10 @@ export default class Bot<B, C> {
       this._emitter.on('error', console.error);
     }
 
-    return async (body: B, requestContext?: Record<string, any> | null) => {
+    return async (
+      body: B,
+      requestContext?: Record<string, any> | null
+    ): Promise<any> => {
       if (!body) {
         throw new Error('Bot.createRequestHandler: Missing argument.');
       }
@@ -234,8 +239,8 @@ export default class Bot<B, C> {
           'Bot: Missing event handler function. You should assign it using onEvent(...)'
         );
       }
-      const handler: Action = this._handler;
-      const errorHandler: Action | null = this._errorHandler;
+      const handler: Action<C, E> = this._handler;
+      const errorHandler: Action<C, E> | null = this._errorHandler;
       const promises = Promise.all(
         contexts.map(context =>
           Promise.resolve()

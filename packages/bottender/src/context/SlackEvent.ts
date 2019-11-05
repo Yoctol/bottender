@@ -231,7 +231,7 @@ export default class SlackEvent implements Event<SlackRawEvent> {
 }
 
 // https://api.slack.com/events
-const eventTypes = [
+const Events = [
   'app_uninstalled',
   'channel_archive',
   'channel_created',
@@ -286,7 +286,7 @@ const eventTypes = [
   'user_change',
 ];
 
-eventTypes.forEach(event => {
+Events.forEach(event => {
   Object.defineProperty(SlackEvent.prototype, `is${pascalCase(event)}`, {
     enumerable: false,
     configurable: true,

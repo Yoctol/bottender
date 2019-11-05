@@ -1,7 +1,9 @@
 import Context from './context/Context';
-import { Action, Props } from './types';
+import { Action, Client, Event, Props } from './types';
 
-function chain(actions: Action[]) {
+function chain<C extends Client = any, E extends Event = any>(
+  actions: Action<C, E>[]
+) {
   if (!Array.isArray(actions))
     throw new TypeError('Chain stack must be an array!');
   for (const action of actions) {
@@ -9,12 +11,15 @@ function chain(actions: Action[]) {
       throw new TypeError('Chain must be composed of actions!');
   }
 
-  return function Chain(context: Context, props: Props = {}): Action {
+  return function Chain(
+    context: Context<C, E>,
+    props: Props<C, E> = {}
+  ): Action<C, E> {
     // do immutable reverse
     const reversedAction = actions.slice().reverse();
 
     const boundActions = reversedAction.reduce(
-      (acc: Action[], curr: Action) => {
+      (acc: Action<C, E>[], curr: Action<C, E>) => {
         if (acc.length === 0) {
           return [
             curr.bind(null, context, {
