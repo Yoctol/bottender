@@ -3,23 +3,28 @@ id: channel-line-setup
 title: Setup LINE
 ---
 
-## Create a New LINE Bottender App
+## Enable LINE Channel
 
-Create Bottender App is the best way to start building a new application in Bottender.
+### Enable LINE Channel for New Bottender App
 
-To create a project, run:
+`Create Bottender App` is the best way to start a new bot application in Bottender. 
+
+To create a new application, run:
 
 ```sh
 npx create-bottender-app my-app
 ```
 
-Make sure that you checked the `line` option:
+Please make sure the `line` option is enabled:
 
 ![](https://user-images.githubusercontent.com/3382565/67851224-f2b7f200-fb44-11e9-9ccb-afd7eee74b00.png)
 
-## Enabling LINE Channel in Existing Apps
+After finishing `Create Bottender App` process, `bottender.config.js`, a config file, will be generated automatically for furthur LINE channel settings.
 
-First, you need to have a `bottender.config.js` file that sets `channels.line.enabled` as `true`:
+
+### Enable LINE Channel for Existing Apps
+
+Firstly, you need to have a `bottender.config.js` under application root folder, then set `channels.line.enabled` to `true`:
 
 ```js
 module.exports = {
@@ -34,16 +39,37 @@ module.exports = {
 };
 ```
 
-By default, webhook listens on path - `/webhooks/line`, but you can set it to whatever you want using `path` field.
+The default webhook path is `/webhooks/line`, but you can set your webhook path by `path` field. Furthur information of `webhook`, `accessToken`, and `channelSecret` will be explained in the next section.
 
-Then, you need to fill in following fields in `.env` for loading those values correctly into `bottender.config.js`:
+
+## Complete LINE Channel Settings
+
+To make LINE bot work, you have to setup three values:
+- LINE Access Token
+- LINE Channel Secret
+- Webhook
+  
+
+
+### LINE Access Token & Channel Secret
+
+`bottender.config.js` looks up `.env` for LINE access token and LINE channel secrect. Those two values have to be copied from LINE@ account settings and manually pasted to the the following fields in `.env`.
 
 ```
 LINE_ACCESS_TOKEN=
 LINE_CHANNEL_SECRET=
 ```
 
-After that, you can start your server with LINE webhook listening using following commands:
+**Note:** 
+- It is recommended to develop your LINE Bot with your developer LINE@ account, furthur information could be found in LINE's official article, [Getting Started](https://developers.line.biz/en/docs/messaging-api/getting-started/). 
+- Your LINE@ accounts could be accessed from your [provider list](https://developers.line.biz/console/).
+- To get your LINE access token and LINE channel secrect, you may refer to LINE's official article, [Building a Bot](https://developers.line.biz/en/docs/messaging-api/building-bot/).
+
+### Webhook
+After the setting of LINE access token and LINE channel secret, the only setting left is webhook. You have to manually copy your webhook to LINE@ account's setting page, after running your bot locally (and get a public url by [ngrok](https://ngrok.com/)), or running your bot remotely.
+
+you can start your server with LINE webhook listening using following commands:
+
 
 ```
 // in production mode
@@ -53,6 +79,7 @@ npm start
 npm run dev
 ```
 
-## Setting Webhook to LINE
 
-// ...
+**Note:**
+- Furthur instruction of webhook setting, could be referred to LINE's official article, [Building a Bot](https://developers.line.biz/en/docs/messaging-api/building-bot/).
+
