@@ -24,6 +24,9 @@ const siteConfig = {
   // e.g., for the https://JoelMarcey.github.io site, it would be set like...
   //   organizationName: 'JoelMarcey'
 
+  // The default version for the site to be shown.
+  defaultVersionShown: 'next',
+
   // The CNAME for your website. It will go into a CNAME file when your site is built.
   cname: 'bottender.js.org',
 
