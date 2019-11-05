@@ -88,6 +88,8 @@ const siteConfig = {
 
   // Open Graph and Twitter card images.
   ogImage: 'img/og-image.png',
+  twitter: true,
+  twitterUsername: 'bottenderjs',
   twitterImage: 'img/og-image.png',
 
   disableHeaderTitle: true,
