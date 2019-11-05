@@ -78,6 +78,9 @@ const siteConfig = {
     '/js/code-blocks-buttons.js',
   ],
 
+  // Google Analytics tracking ID to track page views.
+  gaTrackingId: 'UA-70309045-11',
+
   // On page navigation for the current documentation page.
   onPageNav: 'separate',
   // No .html extensions for paths.
