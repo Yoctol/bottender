@@ -32,8 +32,6 @@ For more information, check our [Slack guides](https://bottender.js.org/docs/Pla
 
 ## Related examples
 
-- [slack-builder](../slack-builder)
-- [console-hello-world](../console-hello-world)
 - [messenger-hello-world](../messenger-hello-world)
 - [slack-hello-world](../slack-hello-world)
 - [telegram-hello-world](../telegram-hello-world)

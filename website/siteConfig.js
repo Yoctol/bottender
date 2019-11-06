@@ -78,13 +78,21 @@ const siteConfig = {
     '/js/code-blocks-buttons.js',
   ],
 
+  // Google Analytics tracking ID to track page views.
+  gaTrackingId: 'UA-70309045-11',
+
   // On page navigation for the current documentation page.
   onPageNav: 'separate',
   // No .html extensions for paths.
   cleanUrl: true,
 
+  // URL for editing docs, usage example: editUrl + 'en/doc1.md'.
+  editUrl: 'https://github.com/Yoctol/bottender/edit/develop/docs/',
+
   // Open Graph and Twitter card images.
   ogImage: 'img/og-image.png',
+  twitter: true,
+  twitterUsername: 'bottenderjs',
   twitterImage: 'img/og-image.png',
 
   disableHeaderTitle: true,

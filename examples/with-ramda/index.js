@@ -1,4 +1,3 @@
-const { ConsoleBot } = require('bottender');
 const R = require('ramda');
 
 const {
@@ -14,8 +13,6 @@ const {
   join,
   compose,
 } = R;
-
-const bot = new ConsoleBot();
 
 /* Handler processes user input */
 const sayHello = compose(
@@ -56,10 +53,6 @@ const respond = compose(
   path(['event', 'text'])
 );
 
-const sendResponse = () => async context =>
-  when(context.event.isText, await context.sendText(respond(context)));
-
-/* client simply sends context to response builder functions */
-bot.onEvent(sendResponse());
-
-bot.createRuntime();
+module.exports = async function App(context) {
+  return when(context.event.isText, await context.sendText(respond(context)));
+};

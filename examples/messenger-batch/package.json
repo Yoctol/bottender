@@ -1,13 +1,10 @@
 {
-  "dependencies": {
-    "bottender": "latest",
-    "messenger-batch": "^0.3.0"
-  },
-  "devDependencies": {
-    "nodemon": "^1.11.0"
-  },
   "scripts": {
-    "dev": "nodemon index.js",
-    "start": "node index.js"
+    "dev": "bottender dev",
+    "start": "bottender start"
+  },
+  "dependencies": {
+    "bottender": "next",
+    "messenger-batch": "^0.3.1"
   }
 }

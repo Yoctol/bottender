@@ -1,5 +1,12 @@
 module.exports = {
-  viber: {
-    accessToken: '__FILL_YOUR_TOKEN_HERE__',
+  channels: {
+    viber: {
+      enabled: true,
+      path: '/webhooks/viber',
+      accessToken: process.env.VIBER_ACCESS_TOKEN,
+      sender: {
+        name: 'xxxx',
+      },
+    },
   },
 };

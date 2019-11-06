@@ -1,36 +1,27 @@
-const { MessengerBot } = require('bottender');
-const { createServer } = require('bottender/express');
+const { withProps } = require('bottender');
 
-const config = require('./bottender.config').messenger;
+async function NoDatetime(context) {
+  await context.sendText('Not a date or time');
+}
 
-const bot = new MessengerBot({
-  accessToken: config.accessToken,
-  appSecret: config.appSecret,
-});
-
-bot.onEvent(async context => {
-  console.log(context.event.message.nlp.entities);
-  const { datetime } = context.event.message.nlp.entities;
-
-  if (!datetime) {
-    await context.sendText('Not a date or time');
-    return;
-  }
-
-  const dt = datetime[0];
-
-  if (dt.type === 'value') {
+async function ReplyDatetime(context, { datetime }) {
+  if (datetime.type === 'value') {
     await context.sendText(`Did you mean ${dt.value} ? :)`);
-  } else if (dt.type === 'interval') {
-    const { from, to } = dt;
+  } else if (datetime.type === 'interval') {
+    const { from, to } = datetime;
     await context.sendText(
       `Did you mean from ${from.value} to ${to.value} ? :)`
     );
   }
-});
+}
 
-const server = createServer(bot, { verifyToken: config.verifyToken });
+module.exports = async function App(context) {
+  console.log(context.event.message.nlp.entities);
+  const { datetime } = context.event.message.nlp.entities;
 
-server.listen(5000, () => {
-  console.log('server is running on 5000 port...');
-});
+  if (!datetime) {
+    return NoDatetime;
+  }
+
+  return withProps(ReplyDatetime, { datetime: datetime[0] });
+};

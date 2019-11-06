@@ -45,4 +45,3 @@ For more information, check the official docs [Messenger Built-in NLP](https://d
 ## Related examples
 
 - [messenger-hello-world](../messenger-hello-world)
-- [messenger-builder](../messenger-builder)

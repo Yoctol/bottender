@@ -1,12 +1,5 @@
-const { ConsoleBot } = require('bottender');
-
-const bot = new ConsoleBot();
-
-bot.onEvent(async context => {
+module.exports = async function App(context) {
   if (context.event.isText) {
-    const text = context.event.text;
-    await context.sendText(text);
+    await context.sendText(context.event.text);
   }
-});
-
-bot.createRuntime();
+};
