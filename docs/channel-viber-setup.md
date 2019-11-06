@@ -70,7 +70,7 @@ npm start
 npm run dev
 ```
 
-Then, you can finish your Telegram webhook setting with the following command.
+Then, you can finish your Viber webhook setting with the following command.
 
 ```
 npx bottender viber webhook set
