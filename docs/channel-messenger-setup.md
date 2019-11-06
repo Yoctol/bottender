@@ -3,9 +3,10 @@ id: channel-messenger-setup
 title: Setup Messenger
 ---
 
-## Create a New Messenger Bottender App
+## Enable Messenger Channel
+### Create a New Messenger Bottender App
 
-Create Bottender App is the best way to start building a new application in Bottender.
+`Create Bottender App` is the best way to start building a new application in Bottender.
 
 To create a project, run:
 
@@ -17,7 +18,10 @@ Make sure that you checked the `messenger` option:
 
 ![](https://user-images.githubusercontent.com/3382565/67851223-f2b7f200-fb44-11e9-960a-4f58d68ab37d.png)
 
-## Enabling Messenger Channel in Existing Apps
+After finishing `Create Bottender App` process, `bottender.config.js`, a config file, will be generated automatically for furthur channel settings.
+
+
+### Enable Messenger Channel for Existing Apps
 
 First, you need to have a `bottender.config.js` file that sets `channels.messenger.enabled` as `true`:
 
@@ -37,9 +41,22 @@ module.exports = {
 };
 ```
 
-By default, webhook listens on path - `/webhooks/messenger`, but you can set it to whatever you want using `path` field.
+By default, webhook listens on path - `/webhooks/messenger`. You can set your own webhook path in the `path` field.
 
-Then, you need to fill in following fields in `.env` for loading those values correctly into `bottender.config.js`:
+
+## Complete Messenger Channel Settings
+
+To make a Messenger bot work, you have to setup the following values:
+- Messenger Page Id
+- Messenger Access Token
+- Messenger App Id
+- Messenger App Secret
+- Messenger Verify Token
+- Webhook
+
+### Messenger Page Id, Messenger Access Token, Messenger App Id, Messenger App Secret, and Messenger Verify Token
+
+These fields could be found on your Facebook App page, which you can accessed from your [Facebook App Dashboard](https://developers.facebook.com/apps). Then, you need to fill in corresponding fields in `.env` for loading those values correctly into `bottender.config.js`:
 
 ```
 MESSENGER_PAGE_ID=
@@ -49,7 +66,11 @@ MESSENGER_APP_SECRET=
 MESSENGER_VERIFY_TOKEN=
 ```
 
-After that, you can start your server with Messenger webhook listening using following commands:
+**Note:**
+- If you are not familiar with how messenger bots work, you may refer to Facebook's official document, [Setting Up Your Facebook App](https://developers.facebook.com/docs/messenger-platform/getting-started/app-setup/).
+
+### Webhook
+After finishing above settings, you can start your server with Messenger webhook listening using following commands:
 
 ```
 // in production mode
@@ -59,8 +80,12 @@ npm start
 npm run dev
 ```
 
-## Setting Webhook to Messenger
+Then, you can finish your Messenger webhook setting with the following command.
 
 ```
 npx bottender messenger webhook set
 ```
+Now you are ready to interact with your bot on Messenger :)
+
+Note:
+- Before you release your bot to the public, you have to submit your App to Facebook to get relevant permissions, e.g. `pages_message`. See Facebook's official document, [Submitting Your Messenger App](https://developers.facebook.com/docs/messenger-platform/app-review/), for more information.

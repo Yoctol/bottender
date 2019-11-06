@@ -3,9 +3,11 @@ id: channel-viber-setup
 title: Setup Viber
 ---
 
-## Create a New Viber Bottender App
+## Enable Viber Channel
 
-Create Bottender App is the best way to start building a new application in Bottender.
+### Create a New Viber Bottender App
+
+`Create Bottender App` is the best way to start building a new application in Bottender.
 
 To create a project, run:
 
@@ -17,7 +19,10 @@ Make sure that you checked the `viber` option:
 
 ![](https://user-images.githubusercontent.com/3382565/67851228-f3508880-fb44-11e9-90aa-c5bcc2d96aa2.png)
 
-## Enabling Viber Channel in Existing Apps
+After finishing `Create Bottender App` process, `bottender.config.js`, a config file, will be generated automatically for furthur channel settings.
+
+
+### Enable Viber Channel for Existing Apps
 
 First, you need to have a `bottender.config.js` file that sets `channels.viber.enabled` as `true`:
 
@@ -36,15 +41,26 @@ module.exports = {
 };
 ```
 
-By default, webhook listens on path - `/webhooks/viber`, but you can set it to whatever you want using `path` field.
+The default webhook path is `/webhooks/viber`, but you can set your own webhook path in the `path` field. You can find more information about `sender` field on Viber's official document, [General Send Message Parameters](https://developers.viber.com/docs/api/rest-bot-api/#general-send-message-parameters).
 
-Then, you need to fill in following fields in `.env` for loading those values correctly into `bottender.config.js`:
+
+## Complete Viber Channel Settings
+
+To make Viber bots work, you have to setup the following values:
+- Viber Access Token
+- Webhook
+
+### Viber Access Token
+
+`bottender.config.js` looks up `.env` for access token, which could be found in Viber Admin Panel (see Viber's official document, [Authentication Token](https://developers.viber.com/docs/api/rest-bot-api/#authentication-token) for more information). Then, paste your Viber bot token to the follwing field in `.env`.
+
 
 ```
 VIBER_ACCESS_TOKEN=
 ```
 
-After that, you can start your server with Viber webhook listening using following commands:
+### Webhook
+After finshing above settings, you can start your server with Viber webhook listening using following commands:
 
 ```
 // in production mode
@@ -54,8 +70,11 @@ npm start
 npm run dev
 ```
 
-## Setting Webhook to Viber
+Then, you can finish your Telegram webhook setting with the following command.
 
 ```
 npx bottender viber webhook set
 ```
+
+Now you are ready to interact with your bot on Viber :)
+

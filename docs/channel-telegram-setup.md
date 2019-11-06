@@ -7,7 +7,7 @@ title: Setup Telegram
 
 ### Create a New Telegram Bottender App
 
-Create Bottender App is the best way to start building a new application in Bottender.
+`Create Bottender App` is the best way to start building a new application in Bottender.
 
 To create a project, run:
 
@@ -21,9 +21,7 @@ Make sure that the `telegram` option is checked:
 
 After finishing `Create Bottender App` process, `bottender.config.js`, a config file, will be generated automatically for furthur channel settings.
 
-
 ### Enable Telegram Channel for Existing Apps
-
 
 First, you need to have a `bottender.config.js` file which sets `channels.telegram.enabled` as `true`:
 
@@ -39,11 +37,10 @@ module.exports = {
 };
 ```
 
-The default webhook path is `/webhooks/telegram`, but you can set your own webhook path by `path` field. 
+The default webhook path is `/webhooks/telegram`. You can set your own webhook path in the `path` field. 
 
 
 ## Complete Telegram Channel Settings
-
 
 To make Telegram bots work, you have to setup 2 values:
 - Telegram Access Token
@@ -59,7 +56,7 @@ TELEGRAM_ACCESS_TOKEN=
 
 ### Webhook
 
-After finsihing the above settings, you can start your server with Telegram webhook listening using following commands:
+After finishing above settings, you can start your server with Telegram webhook listening using following commands:
 
 ```
 // in production mode
@@ -74,3 +71,5 @@ By the following command, you can finish the Telegram webhook setting.
 ```
 npx bottender telegram webhook set
 ```
+
+Now you are ready to interact with your bot on Telegram :)

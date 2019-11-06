@@ -39,12 +39,12 @@ module.exports = {
 };
 ```
 
-The default webhook path is `/webhooks/line`, but you can set your own webhook path by `path` field. Furthur information of `webhook`, `accessToken`, and `channelSecret` will be explained in the next section.
+The default webhook path is `/webhooks/line`, but you can set your own webhook path in the `path` field. 
 
 
 ## Complete LINE Channel Settings
 
-To make LINE bot work, you have to setup three values:
+To make a LINE bot work, you have to setup three values:
 - LINE Access Token
 - LINE Channel Secret
 - Webhook
@@ -53,7 +53,7 @@ To make LINE bot work, you have to setup three values:
 
 ### LINE Access Token & Channel Secret
 
-`bottender.config.js` looks up `.env` for LINE access token and LINE channel secrect. Those two values have to be copied from LINE@ account settings and manually pasted to the the following fields in `.env`.
+`bottender.config.js` looks up `.env` for LINE access token and LINE channel secrect. Those two values have to be copied from LINE@ account settings and pasted to the the following fields in `.env`.
 
 ```
 LINE_ACCESS_TOKEN=
@@ -66,10 +66,7 @@ LINE_CHANNEL_SECRET=
 - To get your LINE access token and LINE channel secrect, you may refer to LINE's official article, [Building a Bot](https://developers.line.biz/en/docs/messaging-api/building-bot/).
 
 ### Webhook
-After the setting of LINE access token and LINE channel secret, the only setting left is webhook. You have to manually copy your webhook to LINE@ account's setting page, after running your bot locally (and get a public url by [ngrok](https://ngrok.com/)), or running your bot remotely.
-
-you can start your server with LINE webhook listening using following commands:
-
+After finishing above settings, you can start your server with LINE webhook listening using following commands:
 
 ```
 // in production mode
@@ -79,7 +76,9 @@ npm start
 npm run dev
 ```
 
+Then, you have to manually copy your webhook to LINE@ account's setting page. Finally, you are ready to interact with your bot on LINE :)
+
 
 **Note:**
-- Furthur instruction of webhook setting, could be referred to LINE's official article, [Building a Bot](https://developers.line.biz/en/docs/messaging-api/building-bot/).
+- For furthur instruction of webhook setting, please check LINE's official article, [Building a Bot](https://developers.line.biz/en/docs/messaging-api/building-bot/).
 
