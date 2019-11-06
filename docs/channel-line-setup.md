@@ -66,7 +66,7 @@ LINE_CHANNEL_SECRET=
 - To get your LINE access token and LINE channel secrect, you may refer to LINE's official article, [Building a Bot](https://developers.line.biz/en/docs/messaging-api/building-bot/).
 
 ### Webhook
-After finishing above settings, you can start your server with LINE webhook listening using following commands:
+After finishing above settings, you can start your server with LINE webhook event listening using following commands:
 
 ```
 // in production mode
@@ -76,7 +76,7 @@ npm start
 npm run dev
 ```
 
-Then, you have to manually copy your webhook to LINE@ account's setting page. Finally, you are ready to interact with your bot on LINE :)
+Then, you have to manually copy your webhook url to LINE@ account's setting page. Finally, you are ready to interact with your bot on LINE :)
 
 
 **Note:**

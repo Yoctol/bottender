@@ -56,7 +56,7 @@ TELEGRAM_ACCESS_TOKEN=
 
 ### Webhook
 
-After finishing above settings, you can start your server with Telegram webhook listening using following commands:
+After finishing above settings, you can start your server with Telegram webhook event listening using following commands:
 
 ```
 // in production mode

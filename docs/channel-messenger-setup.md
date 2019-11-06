@@ -70,7 +70,7 @@ MESSENGER_VERIFY_TOKEN=
 - If you are not familiar with how messenger bots work, you may refer to Facebook's official document, [Setting Up Your Facebook App](https://developers.facebook.com/docs/messenger-platform/getting-started/app-setup/).
 
 ### Webhook
-After finishing above settings, you can start your server with Messenger webhook listening using following commands:
+After finishing above settings, you can start your server with Messenger webhook event listening using following commands:
 
 ```
 // in production mode

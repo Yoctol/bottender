@@ -66,7 +66,7 @@ SLACK_VERIFICATION_TOKEN=
 
 ### Webhook
 
-After finishing above settings, you can start your server with Slack webhook listening using following commands:
+After finishing above settings, you can start your server with Slack webhook event listening using following commands:
 
 ```
 // in production mode
@@ -76,4 +76,4 @@ npm start
 npm run dev
 ```
 
-Then, you have to copy your Slack webhook to [Slack Developer Console](https://api.slack.com/apps) / [YourApp] / Event Subscriptions, where you can pick which bot events to subscribe.
+Then, you have to copy your Slack webhook url to [Slack Developer Console](https://api.slack.com/apps) / [YourApp] / Event Subscriptions, where you can pick which bot events to subscribe.

@@ -60,7 +60,7 @@ VIBER_ACCESS_TOKEN=
 ```
 
 ### Webhook
-After finshing above settings, you can start your server with Viber webhook listening using following commands:
+After finshing above settings, you can start your server with Viber webhook event listening using following commands:
 
 ```
 // in production mode
