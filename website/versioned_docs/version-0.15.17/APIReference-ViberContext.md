@@ -28,7 +28,7 @@ context.sendMessage({
 });
 ```
 
-> Note: Maximum total JSON size of the request is 30kb.
+> **Note:** Maximum total JSON size of the request is 30kb.
 
 <br />
 

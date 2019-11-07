@@ -13,7 +13,7 @@ It initializes your development environment for the latest Bottender features, p
 npx create-bottender-app my-app
 ```
 
-> Note: `npx` comes with npm 5.2+ and higher, see [npx command introduction](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b).
+> **Note:** `npx` comes with npm 5.2+ and higher, see [npx command introduction](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b).
 
 After your go through the interactive creation, you will see a directory named my-app containing a fresh Bottender project with every Bottender’s dependency installed:
 

@@ -38,7 +38,7 @@ async function App(context) {
 }
 ```
 
-> Note: New Bottender apps created by Create Bottender App have a single `App` action as entry point in `src/index.js`. However, if you are very familiar with Bottender, you can rename the action or even use different structure instead.
+> **Note:** New Bottender apps created by Create Bottender App have a single `App` action as entry point in `src/index.js`. However, if you are very familiar with Bottender, you can rename the action or even use different structure instead.
 
 ## Passing Props to Actions
 
@@ -78,7 +78,7 @@ Bottender use famous [debug](https://www.npmjs.com/package/debug) package intern
 DEBUG=bottender:dialog npm start
 ```
 
-> Note: If you are developing your bots on Windows, you may use [cross-env](https://www.npmjs.com/package/cross-env) to assign `DEBUG` environment variable:
+> **Note:** If you are developing your bots on Windows, you may use [cross-env](https://www.npmjs.com/package/cross-env) to assign `DEBUG` environment variable:
 
 ```sh
 cross-env DEBUG=bottender:dialog npm start

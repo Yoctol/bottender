@@ -5,7 +5,6 @@ title: State
 
 `State` is widely used in flow control of daily mahcines, e.g. traffic light. The change of state is in response to external inputs and/or conditions is satisfied. For example, a green traffic light (a state) changes to yellow traffic light after 60 sec (a satisfied time condition).
 
-
 ## A Counting Bot Example
 
 Considering a couting bot which responds the number of message events it received, for example:
@@ -68,7 +67,7 @@ async function EventCount(context) {
 
 Then it works as expected.
 
-> Note: don't modify state directly using `this.state.stateKey = stateValue;`, it may cause unexpected behavior in the future.
+> **Note:** don't modify state directly using `this.state.stateKey = stateValue;`, it may cause unexpected behavior in the future.
 
 ## State Updates are Merged
 

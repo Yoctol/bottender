@@ -29,8 +29,6 @@ async function App() {
 
 The first argument of route defines the matching rule, which could be an array of strings. The action of the route will be returned when one of the strings is matched:
 
-
-
 ```js
 async function App(context) {
   return router([
@@ -84,7 +82,7 @@ async function Command(
 }
 ```
 
-> Note: `RegExp Named Capturing Groups` is supported from Node 10.
+> **Note:** `RegExp Named Capturing Groups` is supported from Node 10.
 
 ## Fallback Routes
 
@@ -118,7 +116,7 @@ async function App(context) {
 }
 ```
 
-> Note: The fallback route should always be the last route registered in your router.
+> **Note:** The fallback route should always be the last route registered in your router.
 
 <!--## Payload Routes-->
 <!--## Custom Routes-->
