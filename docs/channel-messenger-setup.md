@@ -74,17 +74,17 @@ MESSENGER_VERIFY_TOKEN=
 
 After finishing above settings, you can start your server with Messenger webhook event listening using following commands:
 
-```
-// in production mode
+```sh
+# in production mode
 npm start
 
-// or in development mode
+# or in development mode
 npm run dev
 ```
 
 Then, you can finish your Messenger webhook setting with the following command.
 
-```
+```sh
 npx bottender messenger webhook set
 ```
 

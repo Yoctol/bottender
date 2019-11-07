@@ -67,11 +67,11 @@ LINE_CHANNEL_SECRET=
 
 After finishing above settings, you can start your server with LINE webhook event listening using following commands:
 
-```
-// in production mode
+```sh
+# in production mode
 npm start
 
-// or in development mode
+# or in development mode
 npm run dev
 ```
 

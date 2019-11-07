@@ -37,12 +37,12 @@ module.exports = {
 };
 ```
 
-The default webhook path is `/webhooks/telegram`. You can set your own webhook path in the `path` field. 
-
+The default webhook path is `/webhooks/telegram`. You can set your own webhook path in the `path` field.
 
 ## Complete Telegram Channel Settings
 
 To make Telegram bots work, you have to setup 2 values:
+
 - Telegram Access Token
 - Webhook
 
@@ -58,17 +58,17 @@ TELEGRAM_ACCESS_TOKEN=
 
 After finishing above settings, you can start your server with Telegram webhook event listening using following commands:
 
-```
-// in production mode
+```sh
+# in production mode
 npm start
 
-// or in development mode
+# or in development mode
 npm run dev
 ```
 
 By the following command, you can finish the Telegram webhook setting.
 
-```
+```sh
 npx bottender telegram webhook set
 ```
 
