@@ -1,0 +1,23 @@
+{
+  "private": true,
+  "name": "browser-only",
+  "version": "0.1.0",
+  "scripts": {
+    "build": "react-scripts build",
+    "start": "react-scripts start"
+  },
+  "dependencies": {
+    "@chentsulin/react-botui": "^0.1.2",
+    "bottender": "next",
+    "botui": "^0.3.9",
+    "react": "^16.11.0",
+    "react-dom": "^16.11.0",
+    "react-scripts": "3.2.0"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}
