@@ -5,6 +5,21 @@
     "previous": "Previous",
     "tagline": "A framework for building conversational user interfaces.",
     "docs": {
+      "channel-line-setup": {
+        "title": "Setup LINE"
+      },
+      "channel-messenger-setup": {
+        "title": "Setup Messenger"
+      },
+      "channel-slack-setup": {
+        "title": "Setup Slack"
+      },
+      "channel-telegram-setup": {
+        "title": "Setup Telegram"
+      },
+      "channel-viber-setup": {
+        "title": "Setup Viber"
+      },
       "getting-started": {
         "title": "Getting Started"
       },

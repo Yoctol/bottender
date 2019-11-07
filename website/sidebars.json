@@ -10,11 +10,11 @@
       "the-basics-session",
       "the-basics-errors"
     ],
-    "Guides (Messenger)": [],
-    "Guides (LINE)": [],
-    "Guides (Telegram)": [],
-    "Guides (Slack)": [],
-    "Guides (Viber)": [],
+    "Guides (Messenger)": ["channel-messenger-setup"],
+    "Guides (LINE)": ["channel-line-setup"],
+    "Guides (Telegram)": ["channel-telegram-setup"],
+    "Guides (Slack)": ["channel-slack-setup"],
+    "Guides (Viber)": ["channel-viber-setup"],
     "FAQ": []
   },
   "api": {}
