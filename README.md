@@ -7,34 +7,28 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/Yoctol/bottender#contributing)
 [![join chat](https://img.shields.io/badge/discord-join%20chat-green.svg)](https://discord.gg/apNsWBz)
-![](https://user-images.githubusercontent.com/662387/38478130-5ceff16c-3be9-11e8-9b2b-d9fc2e0925c0.png)
 
-- **Flexible** - Declare handlers as any JavaScript function.
+![](https://user-images.githubusercontent.com/3382565/68366395-3080d000-016e-11ea-8bad-d9c52a215376.png)
 
-- **Modern** - Source written with ES6/ES7 syntax and great async await
-  supports.
+> The readme below is the documentation for the v1 (prerelease) version of Bottender. To view the documentation for the old Bottender version visit https://bottender.js.org/docs/0.15.17/getting-started
 
-- **Modular** - Use session stores, server framework adapters and platform
-  connectors with same interface.
+- **Declarative** - Bottender takes care of the complexity of conversational UIs for you. Design actions for each event and state in your application, and Bottender will run accordingly. his approach makes your code more predictable and easier to debug.
 
-- **Learn Once, Write Anywhere** - Handle multiple platforms with consistent
-  development experience.
+- **Native User Experience** - Bottender lets you create apps on every channel and never compromise on your users’ experience. You can apply progressive enhancement or graceful degradation strategy on your building blocks.
+
+- **Easy Setup** - With Bottender, you only need a few configurations to make your bot work with channels, automatic server listening, webhook setup, signature verification and so much more.
+
+- **Ready for Production** - There are thousands of bots are powered by Bottender. It has been optimized for real world use cases, automatic batching request and dozens of other compelling features.
 
 Bottender is built on top of
 [Messaging APIs](https://github.com/Yoctol/messaging-apis).
 
 ## Installation
 
-You can install Bottender globally to use the cli tools:
+You can create a new Bottender app using the cli tools:
 
 ```sh
-npm install -g bottender
-```
-
-Or install it locally to use it programmatically:
-
-```sh
-npm install bottender
+npx create-bottender-app my-app
 ```
 
 Installation may fail on Windows during compilation of the native dependencies with `node-gyp`. To solve this problem, you can install [`windows-build-tools`](https://github.com/felixrieseberg/windows-build-tools#readme) or check [`node-gyp` documentation](https://github.com/nodejs/node-gyp#on-windows).
@@ -58,21 +52,17 @@ We have a bunch of examples in the
 Here is the first one to get you started:
 
 ```js
-const { ConsoleBot } = require('bottender');
-
-const bot = new ConsoleBot();
-
-bot.onEvent(async context => {
+// index.js
+module.export = async function App(context) {
   await context.sendText('Hello World');
-});
+};
+```
 
-bot.createRuntime();
+```sh
+npx bottender start --console
 ```
 
 This will create and run a bot which always reply "Hello World" in the console.
-
-You'll notice that there is an async function to be passed to the `onEvent`
-method, we call it handler. You can put your bot logic in there.
 
 ## Notable Features
 
