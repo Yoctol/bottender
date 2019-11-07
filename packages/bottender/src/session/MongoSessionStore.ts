@@ -67,9 +67,13 @@ export default class MongoSessionStore implements SessionStore {
     sess.lastActivity = Date.now();
 
     try {
-      await this._sessions.updateOne(filter, sess, {
-        upsert: true,
-      });
+      await this._sessions.updateOne(
+        filter,
+        { $set: sess },
+        {
+          upsert: true,
+        }
+      );
     } catch (err) {
       console.error(err);
     }
