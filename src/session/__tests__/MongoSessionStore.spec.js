@@ -141,7 +141,9 @@ describe('#write', () => {
       {
         id: 'messenger:1',
       },
-      sess,
+      {
+        $set: sess,
+      },
       { upsert: true }
     );
   });
