@@ -10,6 +10,7 @@ When you are building a LINE bot, you should never miss one of the killer featur
 ![](https://user-images.githubusercontent.com/3382565/68373526-1222d080-017e-11ea-9461-8f26fdfdc527.png)
 
 If you are familiar with web programming, you will find similarities between the intentions of Flex Messages and HTML. For example:
+
 - The size of a container is calculated based on its components and layout
 - The hierarchical structure for the display of nested content
   
@@ -20,10 +21,11 @@ Another benefit of Flex Messages is better desktop support, compared with mobile
 In the following sections, we will guide you through Flex Messages examples from simple to complex ones.
 
 ## Flex Message Examples
+
 ### A Hello World Flex Message
 
 
-![](https://user-images.githubusercontent.com/3382565/68382618-0ee41080-018f-11ea-8fb1-82e3dde7521f.png)
+![](https://user-images.githubusercontent.com/3382565/68481176-783c5000-0271-11ea-9ab1-c9869a11f42a.png)
 
 The following is a simple example based on a `bubble` type container with two text components arranged horizontally. 
 
@@ -55,7 +57,7 @@ async function App(context) {
 
 Let's see a much more complicated example. This example offers a better user experience, where information is positioned carefully with proper emphasis. 
 
-![](https://user-images.githubusercontent.com/3382565/68382617-0ee41080-018f-11ea-817c-3a4ace1c24f1.png)
+![](https://user-images.githubusercontent.com/3382565/68481175-783c5000-0271-11ea-8749-5a0b6ebf8d34.png)
 
 ```js
 async function App(context) {
