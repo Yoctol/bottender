@@ -25,11 +25,11 @@ npm run dev
 
 This command will start server for bot developing at `http://localhost:5000`.
 
+If you successfully start the server, you will get a webhook url like `https://xxxxxxxx.ngrok.io/webhooks/line` from command line.
+
 ## Set webhook
 
-To set the webhook, go to [LINE developers console](https://developers.line.me/console/) and edit webhook information for your channel.
-
-If you want to expose the server on your local development machine and get a secure URL, [ngrok](https://ngrok.com/) or [localtunnel](https://localtunnel.github.io/www/) may be good tools for you.
+To set the webhook, go to [LINE developers console](https://developers.line.me/console/) and use the webhook url you get from running `npm run dev` to edit webhook information for your channel.
 
 ## Idea of this example
 
