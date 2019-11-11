@@ -5,11 +5,10 @@ title: Session Storage
 
 ## Introduction
 
-Since HTTP driven applications are stateless, the mission of sessions is to store context of users during conversations. Bottender offers a variety of session drivers right out of the box, e.g. memory, file, redis, and mongo. These drivers could be accessed through an expressive, unified API. 
+Since HTTP driven applications are stateless, the mission of sessions is to store context of users during conversations. Bottender offers a variety of session drivers right out of the box, e.g. memory, file, redis, and mongo. These drivers could be accessed through an expressive, unified API.
 
 From connectors, the information of session could be accessed, e.g. session id,
 plus, whether the session is between a bot and single user, or between a bot and a group of users. One bot could support multiple messaging platforms at once, and one connector refers to one messaging platform.
-
 
 ## Configuring Session Driver
 
