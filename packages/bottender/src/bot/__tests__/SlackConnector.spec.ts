@@ -408,6 +408,25 @@ describe('#preprocess', () => {
     });
   });
 
+  it('should return shouldNext: true if signature match (token is in payload)', () => {
+    const { connector } = setup();
+
+    expect(
+      connector.preprocess({
+        method: 'post',
+        headers: {},
+        query: {},
+        rawBody:
+          '{"payload":"{\\"token\\":\\"xxxxxxxxxxxxxxxxxxxxxxxxxxx\\"}"}',
+        body: {
+          payload: '{"token": "xxxxxxxxxxxxxxxxxxxxxxxxxxx"}',
+        },
+      })
+    ).toEqual({
+      shouldNext: true,
+    });
+  });
+
   it('should return shouldNext: false and error if signature does not match', () => {
     const { connector } = setup();
 
