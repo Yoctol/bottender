@@ -60,7 +60,10 @@ const methodMap = {
     ['pushCarouselTemplate', 3],
     ['pushImageCarouselTemplate', 3],
   ],
-  slack: [['sendText', 2], ['postMessage', 2]],
+  slack: [
+    ['sendText', 2],
+    ['postMessage', 2],
+  ],
   telegram: [
     ['sendText', 2],
     ['sendMessage', 2],

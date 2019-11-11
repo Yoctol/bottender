@@ -111,7 +111,7 @@ describe('#postMessage', () => {
     await context.postMessage('hello');
 
     expect(client.postMessage).toBeCalledWith('C6A9RJJ3F', 'hello', {
-      thread_ts: '1515479974.000115',
+      threadTs: '1515479974.000115',
     });
   });
 
@@ -181,7 +181,7 @@ describe('#postEphemeral', () => {
       'C6A9RJJ3F',
       'fakeUserId',
       'hello',
-      {}
+      undefined
     );
   });
 });

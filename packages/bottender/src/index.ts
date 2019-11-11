@@ -25,9 +25,7 @@ export { default as MemoryCacheStore } from './cache/MemoryCacheStore';
 export { default as RedisCacheStore } from './cache/RedisCacheStore';
 
 /* Session */
-export {
-  default as CacheBasedSessionStore,
-} from './session/CacheBasedSessionStore';
+export { default as CacheBasedSessionStore } from './session/CacheBasedSessionStore';
 export { default as MemorySessionStore } from './session/MemorySessionStore';
 export { default as RedisSessionStore } from './session/RedisSessionStore';
 export { default as FileSessionStore } from './session/FileSessionStore';
