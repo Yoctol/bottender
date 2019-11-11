@@ -330,7 +330,12 @@ export default class SlackConnector
       };
     }
 
-    if (!this.verifySignature(body.token)) {
+    const token =
+      !body.token && body.payload && typeof body.payload === 'string'
+        ? JSON.parse(body.payload).token
+        : body.token;
+
+    if (!this.verifySignature(token)) {
       const error = {
         message: 'Slack Verification Token Validation Failed!',
         request: {
