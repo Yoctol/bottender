@@ -5,6 +5,9 @@
     "previous": "Previous",
     "tagline": "A framework for building conversational user interfaces.",
     "docs": {
+      "channel-line-flex": {
+        "title": "Sending Flex Message"
+      },
       "channel-line-setup": {
         "title": "Setup LINE"
       },
