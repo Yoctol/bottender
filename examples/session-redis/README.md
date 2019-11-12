@@ -11,6 +11,25 @@ npm install
 npm run dev -- --console
 ```
 
+## Redis connection settings
+
+```js
+module.exports = {
+  session: {
+    driver: 'redis', 
+    stores: {
+      redis: {
+        port: 6379, 
+        host: '127.0.0.1',
+        password: 'auth',
+        db: 0,
+      },
+    },
+  },
+};
+```
+
+
 ## Idea of this example
 
 This example shows how to use Session to store some information from users and

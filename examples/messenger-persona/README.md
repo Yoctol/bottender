@@ -27,7 +27,7 @@ This command will start server for bot developing at `http://localhost:5000`.
 
 If you successfully start the server, you will get a webhook url like `https://xxxxxxxx.ngrok.io/webhooks/messenger` from command line.
 
-> Note: You must set `PERSONA_1` and `PERSONA_2` env variables pairs before running this command. You can create them using `bottender messenger persona create`.
+> Note: You must set `PERSONA_1` and `PERSONA_2` env variables pairs before running this command. You can create them using `bottender messenger persona create --name <name> --pic <url>`.
 
 ## Set webhook
 
