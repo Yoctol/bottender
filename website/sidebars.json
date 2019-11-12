@@ -10,7 +10,10 @@
       "the-basics-session",
       "the-basics-errors"
     ],
-    "Guides (Messenger)": ["channel-messenger-setup"],
+    "Guides (Messenger)": [
+      "channel-messenger-setup",
+      "channel-messenger-profile"
+    ],
     "Guides (LINE)": ["channel-line-setup", "channel-line-flex"],
     "Guides (Telegram)": ["channel-telegram-setup"],
     "Guides (Slack)": ["channel-slack-setup"],

@@ -11,6 +11,9 @@
       "channel-line-setup": {
         "title": "Setup LINE"
       },
+      "channel-messenger-profile": {
+        "title": "Messenger Profile"
+      },
       "channel-messenger-setup": {
         "title": "Setup Messenger"
       },
