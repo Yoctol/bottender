@@ -96,7 +96,7 @@ export type BottenderConfig = {
       };
     };
   };
-  initialState: Record<string, any>;
+  initialState?: Record<string, any>;
   channels?: {
     [Channel.Messenger]: {
       enabled: boolean;
