@@ -8,6 +8,7 @@ import { SlackOAuthClient } from 'messaging-api-slack';
 import Session from '../session/Session';
 import SlackContext from '../context/SlackContext';
 import SlackEvent, {
+  BlockActionEvent,
   EventAPITypes,
   InteractiveMessageEvent,
   Message,
@@ -91,7 +92,11 @@ export default class SlackConnector
     }
 
     if (body.payload && typeof body.payload === 'string') {
-      return JSON.parse(body.payload) as InteractiveMessageEvent;
+      const payload = JSON.parse(body.payload);
+      if (payload.type === 'interactive_message') {
+        return payload as InteractiveMessageEvent;
+      }
+      return payload as BlockActionEvent;
     }
 
     // for RTM WebSocket messages
@@ -151,7 +156,10 @@ export default class SlackConnector
 
     const rawEvent = this._getRawEventFromRequest(body);
     let userFromBody;
-    if (rawEvent.type === 'interactive_message') {
+    if (
+      rawEvent.type === 'interactive_message' ||
+      rawEvent.type === 'block_actions'
+    ) {
       userFromBody = rawEvent.user.id;
     } else {
       userFromBody = (rawEvent as Message).user;
