@@ -73,7 +73,7 @@ describe('#sendMessage', () => {
         text: 'Hello!',
       },
       {
-        messaging_type: 'RESPONSE',
+        messagingType: 'RESPONSE',
       }
     );
   });
@@ -86,28 +86,28 @@ describe('#sendText', () => {
     await context.sendText('hello');
 
     expect(client.sendText).toBeCalledWith(session.user.id, 'hello', {
-      messaging_type: 'RESPONSE',
+      messagingType: 'RESPONSE',
     });
   });
 
   it('can call with tag', async () => {
     const { context, client, session } = setup();
 
-    await context.sendText('hello', { tag: 'ISSUE_RESOLUTION' });
+    await context.sendText('hello', { tag: 'CONFIRMED_EVENT_UPDATE' });
 
     expect(client.sendText).toBeCalledWith(session.user.id, 'hello', {
-      messaging_type: 'MESSAGE_TAG',
-      tag: 'ISSUE_RESOLUTION',
+      messagingType: 'MESSAGE_TAG',
+      tag: 'CONFIRMED_EVENT_UPDATE',
     });
   });
 
   it('can call with custom messaging_type', async () => {
     const { context, client, session } = setup();
 
-    await context.sendText('hello', { messaging_type: 'UPDATE' });
+    await context.sendText('hello', { messagingType: 'UPDATE' });
 
     expect(client.sendText).toBeCalledWith(session.user.id, 'hello', {
-      messaging_type: 'UPDATE',
+      messagingType: 'UPDATE',
     });
   });
 
@@ -187,7 +187,7 @@ describe('#sendAttachment', () => {
     });
 
     expect(client.sendAttachment).toBeCalledWith(session.user.id, attachment, {
-      messaging_type: 'RESPONSE',
+      messagingType: 'RESPONSE',
     });
   });
 
@@ -280,7 +280,7 @@ describe('#sendImage', () => {
     await context.sendImage('hello');
 
     expect(client.sendImage).toBeCalledWith(session.user.id, 'hello', {
-      messaging_type: 'RESPONSE',
+      messagingType: 'RESPONSE',
     });
   });
 
@@ -348,7 +348,7 @@ describe('#sendAudio', () => {
     await context.sendAudio('hello');
 
     expect(client.sendAudio).toBeCalledWith(session.user.id, 'hello', {
-      messaging_type: 'RESPONSE',
+      messagingType: 'RESPONSE',
     });
   });
 
@@ -416,7 +416,7 @@ describe('#sendVideo', () => {
     await context.sendVideo('hello');
 
     expect(client.sendVideo).toBeCalledWith(session.user.id, 'hello', {
-      messaging_type: 'RESPONSE',
+      messagingType: 'RESPONSE',
     });
   });
 
@@ -484,7 +484,7 @@ describe('#sendFile', () => {
     await context.sendFile('hello');
 
     expect(client.sendFile).toBeCalledWith(session.user.id, 'hello', {
-      messaging_type: 'RESPONSE',
+      messagingType: 'RESPONSE',
     });
   });
 
@@ -555,7 +555,7 @@ describe('#sendSenderAction', () => {
       session.user.id,
       'typing_on',
       {
-        access_token: undefined,
+        accessYoken: undefined,
       }
     );
   });
@@ -572,7 +572,7 @@ describe('#sendSenderAction', () => {
       session.user.id,
       'typing_on',
       {
-        access_token: 'anyToken',
+        accessToken: 'anyToken',
       }
     );
   });
@@ -605,7 +605,7 @@ describe('#typingOn', () => {
     await context.typingOn();
 
     expect(client.typingOn).toBeCalledWith(session.user.id, {
-      access_token: undefined,
+      accessYoken: undefined,
     });
   });
 
@@ -618,7 +618,7 @@ describe('#typingOn', () => {
     await context.typingOn();
 
     expect(client.typingOn).toBeCalledWith(session.user.id, {
-      access_token: 'anyToken',
+      accessToken: 'anyToken',
     });
   });
 
@@ -650,7 +650,7 @@ describe('#typingOff', () => {
     await context.typingOff();
 
     expect(client.typingOff).toBeCalledWith(session.user.id, {
-      access_token: undefined,
+      accessYoken: undefined,
     });
   });
 
@@ -663,7 +663,7 @@ describe('#typingOff', () => {
     await context.typingOff();
 
     expect(client.typingOff).toBeCalledWith(session.user.id, {
-      access_token: 'anyToken',
+      accessToken: 'anyToken',
     });
   });
 
@@ -695,7 +695,7 @@ describe('#markSeen', () => {
     await context.markSeen();
 
     expect(client.markSeen).toBeCalledWith(session.user.id, {
-      access_token: undefined,
+      accessYoken: undefined,
     });
   });
 
@@ -708,7 +708,7 @@ describe('#markSeen', () => {
     await context.markSeen();
 
     expect(client.markSeen).toBeCalledWith(session.user.id, {
-      access_token: 'anyToken',
+      accessToken: 'anyToken',
     });
   });
 
@@ -762,8 +762,8 @@ describe('#useAccessToken', () => {
     await context.sendText('hello');
 
     expect(client.sendText).toBeCalledWith(session.user.id, 'hello', {
-      messaging_type: 'RESPONSE',
-      access_token: 'anyToken',
+      messagingType: 'RESPONSE',
+      accessToken: 'anyToken',
     });
   });
 });

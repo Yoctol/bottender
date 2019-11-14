@@ -29,14 +29,14 @@ const messengerSchema = Joi.object().keys({
   appSecret: Joi.string(),
   fields: Joi.array().items(Joi.string()),
   profile: Joi.object().keys({
-    get_started: Joi.object().keys({
+    getStarted: Joi.object().keys({
       payload: Joi.string(),
     }),
-    persistent_menu: Joi.array().items(
+    persistentMenu: Joi.array().items(
       Joi.object().keys({
         locale: Joi.string(),
-        composer_input_disabled: Joi.boolean(),
-        call_to_actions: Joi.array()
+        composerInputDisabled: Joi.boolean(),
+        callToActions: Joi.array()
           .items(menuItemSchema)
           .max(3)
           .when('composer_input_disabled', {
@@ -54,7 +54,13 @@ const messengerSchema = Joi.object().keys({
         text: Joi.string(),
       })
     ),
-    whitelisted_domains: Joi.array().items(Joi.string()),
+    iceBreakers: Joi.array().items(
+      Joi.object().keys({
+        question: Joi.string(),
+        payload: Joi.string(),
+      })
+    ),
+    whitelistedDomains: Joi.array().items(Joi.string()),
   }),
 });
 

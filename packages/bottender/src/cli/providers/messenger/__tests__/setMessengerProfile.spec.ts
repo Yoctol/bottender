@@ -15,14 +15,14 @@ const MOCK_FILE_WITH_PLATFORM = {
     messenger: {
       accessToken: '__FAKE_TOKEN__',
       profile: {
-        get_started: {
+        getStarted: {
           payload: '<GET_STARTED_PAYLOAD>',
         },
-        persistent_menu: [
+        persistentMenu: [
           {
             locale: 'default',
-            composer_input_disabled: false,
-            call_to_actions: [
+            composerInputDisabled: false,
+            callToActions: [
               {
                 type: 'web_url',
                 title: 'Powered by Example',
@@ -48,11 +48,11 @@ beforeEach(() => {
   };
   _client.getMessengerProfile.mockReturnValue([
     {
-      persistent_menu: [
+      persistentMenu: [
         {
           locale: 'default',
-          composer_input_disabled: false,
-          call_to_actions: [
+          composerInputDisabled: false,
+          callToActions: [
             {
               type: 'web_url',
               title: 'Powered by Example',
@@ -83,20 +83,21 @@ describe('resolve', () => {
         'persistent_menu',
         'get_started',
         'greeting',
+        'ice_breakers',
         'whitelisted_domains',
         'payment_settings',
         'target_audience',
         'home_url',
       ]);
       expect(_client.setMessengerProfile).toBeCalledWith({
-        get_started: {
+        getStarted: {
           payload: '<GET_STARTED_PAYLOAD>',
         },
-        persistent_menu: [
+        persistentMenu: [
           {
             locale: 'default',
-            composer_input_disabled: false,
-            call_to_actions: [
+            composerInputDisabled: false,
+            callToActions: [
               {
                 type: 'web_url',
                 title: 'Powered by Example',
@@ -117,19 +118,19 @@ describe('resolve', () => {
       getChannelConfig.mockReturnValue({
         accessToken: '__FAKE_TOKEN__',
         profile: {
-          get_started: {
+          getStarted: {
             payload: '<GET_STARTED_PAYLOAD>',
           },
-          persistent_menu: [
+          persistentMenu: [
             {
               locale: 'default',
-              composer_input_disabled: false,
-              call_to_actions: [
+              composerInputDisabled: false,
+              callToActions: [
                 {
                   type: 'web_url',
                   title: 'Open Chat Extensions',
                   url: 'http://example.com/index.html',
-                  messenger_extensions: true,
+                  messengerExtensions: true,
                 },
               ],
             },
@@ -140,19 +141,19 @@ describe('resolve', () => {
       await setMessengerProfile(ctx);
 
       expect(_client.setMessengerProfile).toBeCalledWith({
-        get_started: {
+        getStarted: {
           payload: '<GET_STARTED_PAYLOAD>',
         },
-        persistent_menu: [
+        persistentMenu: [
           {
             locale: 'default',
-            composer_input_disabled: false,
-            call_to_actions: [
+            composerInputDisabled: false,
+            callToActions: [
               {
                 type: 'web_url',
                 title: 'Open Chat Extensions',
                 url: 'http://example.com/index.html',
-                messenger_extensions: true,
+                messengerExtensions: true,
               },
             ],
           },
@@ -169,29 +170,29 @@ describe('resolve', () => {
       getChannelConfig.mockReturnValue({
         accessToken: '__FAKE_TOKEN__',
         profile: {
-          get_started: {
+          getStarted: {
             payload: '<GET_STARTED_PAYLOAD>',
           },
-          persistent_menu: [
+          persistentMenu: [
             {
               locale: 'default',
-              composer_input_disabled: false,
-              call_to_actions: [
+              composerInputDisabled: false,
+              callToActions: [
                 {
                   type: 'web_url',
                   title: 'Open Chat Extensions',
                   url: 'http://example.com/index.html',
-                  messenger_extensions: true,
+                  messengerExtensions: true,
                 },
               ],
             },
           ],
-          whitelisted_domains: ['http://example.com'], // profile has `whitelisted_domains`
-          home_url: {
+          whitelistedDomains: ['http://example.com'], // profile has `whitelisted_domains`
+          homeUrl: {
             url: 'http://example.com/index.html',
-            webview_height_ratio: 'tall',
-            webview_share_button: 'show',
-            in_test: true,
+            webviewHeightRatio: 'tall',
+            webviewShareButton: 'show',
+            inTest: true,
           },
         },
       });
@@ -199,31 +200,31 @@ describe('resolve', () => {
       await setMessengerProfile(ctx);
 
       expect(_client.setMessengerProfile.mock.calls[0][0]).toEqual({
-        whitelisted_domains: ['http://example.com'],
+        whitelistedDomains: ['http://example.com'],
       });
       expect(_client.setMessengerProfile.mock.calls[1][0]).toEqual({
-        get_started: {
+        getStarted: {
           payload: '<GET_STARTED_PAYLOAD>',
         },
-        persistent_menu: [
+        persistentMenu: [
           {
             locale: 'default',
-            composer_input_disabled: false,
-            call_to_actions: [
+            composerInputDisabled: false,
+            callToActions: [
               {
                 type: 'web_url',
                 title: 'Open Chat Extensions',
                 url: 'http://example.com/index.html',
-                messenger_extensions: true,
+                messengerExtensions: true,
               },
             ],
           },
         ],
-        home_url: {
+        homeUrl: {
           url: 'http://example.com/index.html',
-          webview_height_ratio: 'tall',
-          webview_share_button: 'show',
-          in_test: true,
+          webviewHeightRatio: 'tall',
+          webviewShareButton: 'show',
+          inTest: true,
         },
       });
     });
@@ -235,11 +236,11 @@ describe('resolve', () => {
     };
     _client.getMessengerProfile.mockReturnValue([
       {
-        persistent_menu: [
+        persistentMenu: [
           {
             locale: 'default',
-            composer_input_disabled: false,
-            call_to_actions: [
+            composerInputDisabled: false,
+            callToActions: [
               {
                 type: 'web_url',
                 title: 'Powered by Facebook',
@@ -254,14 +255,14 @@ describe('resolve', () => {
     await setMessengerProfile(ctx);
 
     expect(_client.setMessengerProfile).toBeCalledWith({
-      get_started: {
+      getStarted: {
         payload: '<GET_STARTED_PAYLOAD>',
       },
-      persistent_menu: [
+      persistentMenu: [
         {
           locale: 'default',
-          composer_input_disabled: false,
-          call_to_actions: [
+          composerInputDisabled: false,
+          callToActions: [
             {
               type: 'web_url',
               title: 'Powered by Example',
@@ -297,29 +298,29 @@ describe('resolve', () => {
     getChannelConfig.mockReturnValue({
       accessToken: '__FAKE_TOKEN__',
       profile: {
-        get_started: {
+        getStarted: {
           payload: '<GET_STARTED_PAYLOAD>',
         },
-        persistent_menu: [
+        persistentMenu: [
           {
             locale: 'default',
-            composer_input_disabled: false,
-            call_to_actions: [
+            composerInputDisabled: false,
+            callToActions: [
               {
                 type: 'web_url',
                 title: 'Open Chat Extensions',
                 url: 'http://example.com/index.html',
-                messenger_extensions: true,
+                messengerExtensions: true,
               },
             ],
           },
         ],
-        whitelisted_domains: ['http://example.com'],
-        home_url: {
+        whitelistedDomains: ['http://example.com'],
+        homeUrl: {
           url: 'http://example.com/index.html',
-          webview_height_ratio: 'tall',
-          webview_share_button: 'show',
-          in_test: true,
+          webviewHeightRatio: 'tall',
+          webviewShareButton: 'show',
+          inTest: true,
         },
       },
     });
@@ -327,31 +328,31 @@ describe('resolve', () => {
     await setMessengerProfile(ctx);
 
     expect(_client.setMessengerProfile.mock.calls[0][0]).toEqual({
-      whitelisted_domains: ['http://example.com'],
+      whitelistedDomains: ['http://example.com'],
     });
     expect(_client.setMessengerProfile.mock.calls[1][0]).toEqual({
-      get_started: {
+      getStarted: {
         payload: '<GET_STARTED_PAYLOAD>',
       },
-      persistent_menu: [
+      persistentMenu: [
         {
           locale: 'default',
-          composer_input_disabled: false,
-          call_to_actions: [
+          composerInputDisabled: false,
+          callToActions: [
             {
               type: 'web_url',
               title: 'Open Chat Extensions',
               url: 'http://example.com/index.html',
-              messenger_extensions: true,
+              messengerExtensions: true,
             },
           ],
         },
       ],
-      home_url: {
+      homeUrl: {
         url: 'http://example.com/index.html',
-        webview_height_ratio: 'tall',
-        webview_share_button: 'show',
-        in_test: true,
+        webviewHeightRatio: 'tall',
+        webviewShareButton: 'show',
+        inTest: true,
       },
     });
   });
@@ -364,7 +365,7 @@ describe('resolve', () => {
     await setMessengerProfile(ctx);
 
     expect(_client.setMessengerProfile).toBeCalledWith({
-      get_started: {
+      getStarted: {
         payload: '<GET_STARTED_PAYLOAD>',
       },
     });
@@ -373,11 +374,11 @@ describe('resolve', () => {
   it('successfully delete diff fields `whitelisted_domains`', async () => {
     _client.getMessengerProfile.mockReturnValue([
       {
-        persistent_menu: [
+        persistentMenu: [
           {
             locale: 'default',
-            composer_input_disabled: false,
-            call_to_actions: [
+            composerInputDisabled: false,
+            callToActions: [
               {
                 type: 'web_url',
                 title: 'Powered by Example',
@@ -386,7 +387,7 @@ describe('resolve', () => {
             ],
           },
         ],
-        whitelisted_domains: [
+        whitelistedDomains: [
           'https://www.facebook.com/',
           'https://www.google.com/',
         ],
@@ -406,14 +407,14 @@ describe('resolve', () => {
   it('do nothing and log info', async () => {
     _client.getMessengerProfile.mockReturnValue([
       {
-        get_started: {
+        getStarted: {
           payload: '<GET_STARTED_PAYLOAD>',
         },
-        persistent_menu: [
+        persistentMenu: [
           {
             locale: 'default',
-            composer_input_disabled: false,
-            call_to_actions: [
+            composerInputDisabled: false,
+            callToActions: [
               {
                 type: 'web_url',
                 title: 'Powered by Example',
@@ -468,8 +469,8 @@ describe('reject', () => {
             message: '(#100) ...',
             type: 'OAuthException',
             code: 100,
-            error_subcode: 2018145,
-            fbtrace_id: 'HXd3kIOXLsK',
+            errorSubcode: 2018145,
+            fbtraceId: 'HXd3kIOXLsK',
           },
         },
       },

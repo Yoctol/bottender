@@ -34,25 +34,25 @@ describe('messenger', () => {
       appSecret: 'MESSENGER_APP_SECRET',
       verifyToken: 'MESSENGER_VERIFY_TOKEN',
       profile: {
-        get_started: {
+        getStarted: {
           payload: 'GET_STARTED',
         },
-        persistent_menu: [
+        persistentMenu: [
           {
             locale: 'default',
-            composer_input_disabled: true,
-            call_to_actions: [
+            composerInputDisabled: true,
+            callToActions: [
               {
                 type: 'web_url',
                 title: 'Latest News',
                 url: 'http://petershats.parseapp.com/hat-news',
-                webview_height_ratio: 'full',
+                webviewHeightRatio: 'full',
               },
               {
                 type: 'web_url',
                 title: 'Latest News',
                 url: 'http://petershats.parseapp.com/hat-news',
-                webview_height_ratio: 'full',
+                webviewHeightRatio: 'full',
               },
               {
                 title: 'History',
@@ -68,8 +68,8 @@ describe('messenger', () => {
           },
           {
             locale: 'zh_CN',
-            composer_input_disabled: false,
-            call_to_actions: [
+            composerInputDisabled: false,
+            callToActions: [
               {
                 title: 'Pay Bill',
                 type: 'postback',
@@ -84,7 +84,7 @@ describe('messenger', () => {
             text: 'Hello!',
           },
         ],
-        whitelisted_domains: ['http://example.com'],
+        whitelistedDomains: ['http://example.com'],
       },
     };
 
@@ -98,12 +98,12 @@ describe('messenger', () => {
     const errorPath = validateResult.error.details[0].path.join('.');
 
     expect(message).toBe(
-      '"call_to_actions" must contain less than or equal to 3 items'
+      '"callToActions" must contain less than or equal to 3 items'
     );
     expect(type).toBe('array.max');
-    expect(errorPath).toBe('profile.persistent_menu.0.call_to_actions');
+    expect(errorPath).toBe('profile.persistentMenu.0.callToActions');
     expect(validateResult.error.message).toBe(
-      'child "profile" fails because [child "persistent_menu" fails because ["persistent_menu" at position 0 fails because [child "call_to_actions" fails because ["call_to_actions" must contain less than or equal to 3 items]]]]'
+      'child "profile" fails because [child "persistentMenu" fails because ["persistentMenu" at position 0 fails because [child "callToActions" fails because ["callToActions" must contain less than or equal to 3 items]]]]'
     );
   });
 });

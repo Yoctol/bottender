@@ -202,11 +202,11 @@ export default class MessengerConnector
     return !!entry.standby;
   }
 
-  _profilePicExpired(user: { profile_pic: string }): boolean {
+  _profilePicExpired(user: { profilePic: string }): boolean {
     try {
       // Facebook CDN returns expiration time in the key `ext` in url params like:
       // https://platform-lookaside.fbsbx.com/platform/profilepic/?psid=11111111111111&width=1024&ext=1543379908&hash=xxxxxxxxxxxx
-      const ext = new URL(user.profile_pic).searchParams.get('ext');
+      const ext = new URL(user.profilePic).searchParams.get('ext');
 
       if (!ext) return true;
 
@@ -281,14 +281,14 @@ export default class MessengerConnector
         let user = {};
         try {
           user = await this._client.getUserProfile(senderId as any, {
-            access_token: customAccessToken,
+            accessToken: customAccessToken,
           });
-        } catch (e) {
+        } catch (err) {
           warning(
             false,
             'getUserProfile() failed, `session.user` will only have `id`'
           );
-          console.error(e);
+          console.error(err);
         }
 
         session.user = {
