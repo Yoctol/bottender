@@ -12,12 +12,20 @@
     ],
     "Guides (Messenger)": [
       "channel-messenger-setup",
+      "channel-messenger-handling-events",
       "channel-messenger-profile"
     ],
-    "Guides (LINE)": ["channel-line-setup", "channel-line-flex"],
-    "Guides (Telegram)": ["channel-telegram-setup"],
-    "Guides (Slack)": ["channel-slack-setup"],
-    "Guides (Viber)": ["channel-viber-setup"],
+    "Guides (LINE)": [
+      "channel-line-setup", 
+      "channel-line-handling-events",
+      "channel-line-flex"
+    ],
+    "Guides (Telegram)": [
+      "channel-telegram-setup",
+      "channel-telegram-handling-events"
+    ],
+    "Guides (Slack)": ["channel-slack-setup", "channel-slack-handling-events"],
+    "Guides (Viber)": ["channel-viber-setup", "channel-viber-handling-events"],
     "FAQ": []
   },
   "api": {}
