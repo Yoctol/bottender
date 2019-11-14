@@ -5,8 +5,14 @@
     "previous": "Previous",
     "tagline": "A framework for building conversational user interfaces.",
     "docs": {
+      "channel-line-flex": {
+        "title": "Sending Flex Message"
+      },
       "channel-line-setup": {
         "title": "Setup LINE"
+      },
+      "channel-messenger-profile": {
+        "title": "Messenger Profile"
       },
       "channel-messenger-setup": {
         "title": "Setup Messenger"
@@ -145,11 +151,60 @@
       },
       "version-0.15.17/version-0.15.17-viber": {
         "title": "Viber"
+      },
+      "version-1.0.0-beta.1/version-1.0.0-beta.1-channel-line-flex": {
+        "title": "Sending Flex Message"
+      },
+      "version-1.0.0-beta.1/version-1.0.0-beta.1-channel-line-setup": {
+        "title": "Setup LINE"
+      },
+      "version-1.0.0-beta.1/version-1.0.0-beta.1-channel-messenger-profile": {
+        "title": "Messenger Profile"
+      },
+      "version-1.0.0-beta.1/version-1.0.0-beta.1-channel-messenger-setup": {
+        "title": "Setup Messenger"
+      },
+      "version-1.0.0-beta.1/version-1.0.0-beta.1-channel-slack-setup": {
+        "title": "Setup Slack"
+      },
+      "version-1.0.0-beta.1/version-1.0.0-beta.1-channel-telegram-setup": {
+        "title": "Setup Telegram"
+      },
+      "version-1.0.0-beta.1/version-1.0.0-beta.1-channel-viber-setup": {
+        "title": "Setup Viber"
+      },
+      "version-1.0.0-beta.1/version-1.0.0-beta.1-getting-started": {
+        "title": "Getting Started"
+      },
+      "version-1.0.0-beta.1/version-1.0.0-beta.1-the-basics-actions": {
+        "title": "Resolving Actions"
+      },
+      "version-1.0.0-beta.1/version-1.0.0-beta.1-the-basics-chain": {
+        "title": "Chain of Responsibility"
+      },
+      "version-1.0.0-beta.1/version-1.0.0-beta.1-the-basics-console-mode": {
+        "title": "Console Mode"
+      },
+      "version-1.0.0-beta.1/version-1.0.0-beta.1-the-basics-context-event": {
+        "title": "Context and Event"
+      },
+      "version-1.0.0-beta.1/version-1.0.0-beta.1-the-basics-errors": {
+        "title": "Error Handling"
+      },
+      "version-1.0.0-beta.1/version-1.0.0-beta.1-the-basics-routing": {
+        "title": "Routing"
+      },
+      "version-1.0.0-beta.1/version-1.0.0-beta.1-the-basics-session": {
+        "title": "Session Storage"
+      },
+      "version-1.0.0-beta.1/version-1.0.0-beta.1-the-basics-state": {
+        "title": "State"
       }
     },
     "links": {
       "Docs": "Docs",
       "Blog": "Blog",
+      "Examples": "Examples",
       "GitHub": "GitHub"
     },
     "categories": {

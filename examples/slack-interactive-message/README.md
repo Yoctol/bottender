@@ -25,6 +25,12 @@ npm run dev
 
 This command will start server for bot developing at `http://localhost:5000`.
 
+If you successfully start the server, you will get a webhook url like `https://xxxxxxxx.ngrok.io/webhooks/slack` from command line.
+
+## Set webhook
+
+To set the webhook, go to [Slack Developer Console](https://api.slack.com/apps) / [YourApp] / Event Subscriptions, and use the webhook url you get from running `npm run dev` to edit Request URL for your bot.
+
 ## Idea of this example
 
 This example shows how to send [messages with interactive components (button/menu)](https://api.slack.com/interactive-messages) and handle the event triggered by users clicking the button/menu.

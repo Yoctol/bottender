@@ -1,6 +1,6 @@
 import sleep from 'delay';
 import warning from 'warning';
-import { SlackOAuthClient } from 'messaging-api-slack';
+import { SlackOAuthClient, SlackTypes } from 'messaging-api-slack';
 
 import Context from './Context';
 import SlackEvent from './SlackEvent';
@@ -32,7 +32,13 @@ export default class SlackContext extends Context<SlackOAuthClient, SlackEvent>
    * https://api.slack.com/methods/chat.postMessage
    */
   postMessage(
-    message: { text?: string; attachments?: [] | string } | string,
+    message:
+      | {
+          text?: string;
+          attachments?: SlackTypes.Attachment[] | string;
+          blocks?: SlackTypes.Block[] | string;
+        }
+      | string,
     options?: {}
   ): Promise<any> {
     const channelId = this._getChannelIdFromSession();
@@ -48,7 +54,7 @@ export default class SlackContext extends Context<SlackOAuthClient, SlackEvent>
     this._isHandled = true;
 
     return this._client.postMessage(channelId, message, {
-      thread_ts: this._event.rawEvent.thread_ts,
+      threadTs: this._event.rawEvent.thread_ts,
       ...options,
     });
   }
@@ -59,8 +65,14 @@ export default class SlackContext extends Context<SlackOAuthClient, SlackEvent>
    * https://api.slack.com/methods/chat.postMessage
    */
   postEphemeral(
-    message: { text?: string; attachments?: [] | string } | string,
-    options: {} = {}
+    message:
+      | {
+          text?: string;
+          attachments?: SlackTypes.Attachment[] | string;
+          blocks?: SlackTypes.Block[] | string;
+        }
+      | string,
+    options?: {}
   ): Promise<any> {
     const channelId = this._getChannelIdFromSession();
 

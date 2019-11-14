@@ -25,15 +25,15 @@ npm run dev
 
 This command will start server for bot developing at `http://localhost:5000`.
 
+If you successfully start the server, you will get a webhook url like `https://xxxxxxxx.ngrok.io/webhooks/viber` from command line.
+
 ## Set webhook
 
-While the server running, you can run following command with global `bottender` to set up the webhook:
+While the server running, you can run following command with global `bottender` to set up the webhook with the webhook url you get from running `npm run dev`:
 
 ```
 bottender viber webhook set -w <YOUR_WEBHOOK_URL>
 ```
-
-If you want to expose the server on your local development machine and get a secure URL, [ngrok](https://ngrok.com/) or [localtunnel](https://localtunnel.github.io/www/) may be good tools for you.
 
 > Note: You must put `accessToken` into `bottender.config.js` before running this command.
 

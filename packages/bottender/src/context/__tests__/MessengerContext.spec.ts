@@ -102,7 +102,7 @@ describe('#getUserProfile', () => {
     const result = await context.getUserProfile();
 
     expect(client.getUserProfile).toBeCalledWith(session.user.id, {
-      access_token: undefined,
+      accessToken: undefined,
     });
     expect(result).toEqual(user);
   });
@@ -127,7 +127,7 @@ describe('#getUserProfile', () => {
     const result = await context.getUserProfile();
 
     expect(client.getUserProfile).toBeCalledWith(session.user.id, {
-      access_token: 'anyToken',
+      accessToken: 'anyToken',
     });
     expect(result).toEqual(user);
   });
@@ -156,7 +156,7 @@ describe('#passThreadControl', () => {
       263902037430900,
       'metadata',
       {
-        access_token: undefined,
+        accessToken: undefined,
       }
     );
   });
@@ -174,7 +174,7 @@ describe('#passThreadControl', () => {
       263902037430900,
       'metadata',
       {
-        access_token: 'anyToken',
+        accessToken: 'anyToken',
       }
     );
   });
@@ -202,7 +202,7 @@ describe('#passThreadControlToPageInbox', () => {
       session.user.id,
       'metadata',
       {
-        access_token: undefined,
+        accessToken: undefined,
       }
     );
   });
@@ -219,7 +219,7 @@ describe('#passThreadControlToPageInbox', () => {
       session.user.id,
       undefined,
       {
-        access_token: 'anyToken',
+        accessToken: 'anyToken',
       }
     );
   });
@@ -247,7 +247,7 @@ describe('#takeThreadControl', () => {
       session.user.id,
       'metadata',
       {
-        access_token: undefined,
+        accessToken: undefined,
       }
     );
   });
@@ -264,7 +264,7 @@ describe('#takeThreadControl', () => {
       session.user.id,
       'metadata',
       {
-        access_token: 'anyToken',
+        accessToken: 'anyToken',
       }
     );
   });
@@ -292,7 +292,7 @@ describe('#requestThreadControl', () => {
       session.user.id,
       'metadata',
       {
-        access_token: undefined,
+        accessToken: undefined,
       }
     );
   });
@@ -309,7 +309,7 @@ describe('#requestThreadControl', () => {
       session.user.id,
       'metadata',
       {
-        access_token: 'anyToken',
+        accessToken: 'anyToken',
       }
     );
   });
@@ -334,7 +334,7 @@ describe('#getThreadOwner', () => {
     await context.getThreadOwner();
 
     expect(client.getThreadOwner).toBeCalledWith(session.user.id, {
-      access_token: undefined,
+      accessToken: undefined,
     });
   });
 
@@ -347,7 +347,7 @@ describe('#getThreadOwner', () => {
     await context.getThreadOwner();
 
     expect(client.getThreadOwner).toBeCalledWith(session.user.id, {
-      access_token: 'anyToken',
+      accessToken: 'anyToken',
     });
   });
 
@@ -368,7 +368,7 @@ describe('#isThreadOwner', () => {
   it('should return true when bot is not the thread owner', async () => {
     const { context, client } = setup();
 
-    client.getThreadOwner.mockResolvedValue({ app_id: APP_ID });
+    client.getThreadOwner.mockResolvedValue({ appId: APP_ID });
 
     expect(await context.isThreadOwner()).toBe(true);
   });
@@ -376,7 +376,7 @@ describe('#isThreadOwner', () => {
   it('should return false when bot is not the thread owner', async () => {
     const { context, client } = setup();
 
-    client.getThreadOwner.mockResolvedValue({ app_id: '54367890123' });
+    client.getThreadOwner.mockResolvedValue({ appId: '54367890123' });
 
     expect(await context.isThreadOwner()).toBe(false);
   });
@@ -391,7 +391,7 @@ describe('#associateLabel', () => {
     expect(client.associateLabel).toBeCalledWith(
       session.user.id,
       1712444532121303,
-      { access_token: undefined }
+      { accessToken: undefined }
     );
   });
 
@@ -406,7 +406,7 @@ describe('#associateLabel', () => {
     expect(client.associateLabel).toBeCalledWith(
       session.user.id,
       1712444532121303,
-      { access_token: 'anyToken' }
+      { accessToken: 'anyToken' }
     );
   });
 
@@ -432,7 +432,7 @@ describe('#dissociateLabel', () => {
     expect(client.dissociateLabel).toBeCalledWith(
       session.user.id,
       1712444532121303,
-      { access_token: undefined }
+      { accessToken: undefined }
     );
   });
 
@@ -447,7 +447,7 @@ describe('#dissociateLabel', () => {
     expect(client.dissociateLabel).toBeCalledWith(
       session.user.id,
       1712444532121303,
-      { access_token: 'anyToken' }
+      { accessToken: 'anyToken' }
     );
   });
 
@@ -492,7 +492,7 @@ describe('#getAssociatedLabels', () => {
     await context.getAssociatedLabels();
 
     expect(client.getAssociatedLabels).toBeCalledWith(session.user.id, {
-      access_token: undefined,
+      accessToken: undefined,
     });
   });
 
@@ -526,7 +526,7 @@ describe('#getAssociatedLabels', () => {
     await context.getAssociatedLabels();
 
     expect(client.getAssociatedLabels).toBeCalledWith(session.user.id, {
-      access_token: 'anyToken',
+      accessToken: 'anyToken',
     });
   });
 
@@ -545,7 +545,7 @@ describe('#getAssociatedLabels', () => {
 
 describe('persona', () => {
   describe('#uesPersona', () => {
-    it('should call API with persona_id', async () => {
+    it('should call API with personaId', async () => {
       const { context, client, session } = setup();
 
       context.usePersona(PERSONA_ID);
@@ -557,63 +557,63 @@ describe('persona', () => {
       expect(client.markSeen).toBeCalledWith(
         session.user.id,
         expect.objectContaining({
-          persona_id: PERSONA_ID,
+          personaId: PERSONA_ID,
         })
       );
       expect(client.typingOn).toBeCalledWith(
         session.user.id,
         expect.objectContaining({
-          persona_id: PERSONA_ID,
+          personaId: PERSONA_ID,
         })
       );
       expect(client.typingOff).toBeCalledWith(
         session.user.id,
         expect.objectContaining({
-          persona_id: PERSONA_ID,
+          personaId: PERSONA_ID,
         })
       );
       expect(client.sendText).toBeCalledWith(
         session.user.id,
         'hi',
         expect.objectContaining({
-          persona_id: PERSONA_ID,
+          personaId: PERSONA_ID,
         })
       );
     });
   });
 
-  describe('persona_id', () => {
-    it('should call API with persona_id', async () => {
+  describe('personaId', () => {
+    it('should call API with personaId', async () => {
       const { context, client, session } = setup();
 
-      await context.markSeen({ persona_id: PERSONA_ID });
-      await context.typingOn({ persona_id: PERSONA_ID });
-      await context.typingOff({ persona_id: PERSONA_ID });
-      await context.sendText('hi', { persona_id: PERSONA_ID });
+      await context.markSeen({ personaId: PERSONA_ID });
+      await context.typingOn({ personaId: PERSONA_ID });
+      await context.typingOff({ personaId: PERSONA_ID });
+      await context.sendText('hi', { personaId: PERSONA_ID });
 
       expect(client.markSeen).toBeCalledWith(
         session.user.id,
         expect.objectContaining({
-          persona_id: PERSONA_ID,
+          personaId: PERSONA_ID,
         })
       );
       expect(client.typingOn).toBeCalledWith(
         session.user.id,
         expect.objectContaining({
-          persona_id: PERSONA_ID,
+          personaId: PERSONA_ID,
         })
       );
       expect(client.typingOff).toBeCalledWith(
         session.user.id,
         expect.objectContaining({
-          persona_id: PERSONA_ID,
+          personaId: PERSONA_ID,
         })
       );
       expect(client.sendText).toBeCalledWith(
         session.user.id,
         'hi',
         expect.objectContaining({
-          persona_id: PERSONA_ID,
+          personaId: PERSONA_ID,
         })
       );
     });

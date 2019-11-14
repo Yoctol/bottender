@@ -12,9 +12,14 @@
     ],
     "Guides (Messenger)": [
       "channel-messenger-setup",
-      "channel-messenger-handling-events"
+      "channel-messenger-handling-events",
+      "channel-messenger-profile"
     ],
-    "Guides (LINE)": ["channel-line-setup", "channel-line-handling-events"],
+    "Guides (LINE)": [
+      "channel-line-setup", 
+      "channel-line-handling-events",
+      "channel-line-flex"
+    ],
     "Guides (Telegram)": [
       "channel-telegram-setup",
       "channel-telegram-handling-events"

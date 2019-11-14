@@ -8,9 +8,7 @@ export { default as Bot } from './bot/Bot';
 export { default as MemoryCacheStore } from './cache/MemoryCacheStore';
 
 /* Session */
-export {
-  default as CacheBasedSessionStore,
-} from './session/CacheBasedSessionStore';
+export { default as CacheBasedSessionStore } from './session/CacheBasedSessionStore';
 export { default as MemorySessionStore } from './session/MemorySessionStore';
 
 /**
