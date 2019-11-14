@@ -13,10 +13,10 @@ const menuItemSchema = Joi.object().keys({
     is: 'postback',
     then: Joi.string().required(),
   }),
-  webview_height_ratio: Joi.string(),
-  messenger_extensions: Joi.boolean(),
-  fallback_url: Joi.string(),
-  webview_share_button: Joi.string(),
+  webviewHeightRatio: Joi.string(),
+  messengerExtensions: Joi.boolean(),
+  fallbackUrl: Joi.string(),
+  webviewShareButton: Joi.string(),
 });
 
 const messengerSchema = Joi.object().keys({
@@ -39,7 +39,7 @@ const messengerSchema = Joi.object().keys({
         callToActions: Joi.array()
           .items(menuItemSchema)
           .max(3)
-          .when('composer_input_disabled', {
+          .when('composerInputDisabled', {
             is: true,
             then: Joi.array()
               .items(menuItemSchema)
