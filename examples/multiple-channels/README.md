@@ -25,6 +25,8 @@ npm run dev
 
 This command will start server for bot developing at `http://localhost:5000`.
 
+If you successfully start the server, you will get webhook urls correspond to each platform from command line.
+
 ## Set webhook
 
 You must set webhooks correspond to mounted paths properly:
@@ -38,8 +40,6 @@ You must set webhooks correspond to mounted paths properly:
 ```
 
 > Note: See related examples to know how to set webhook on each platform
-
-If you want to expose the server on your local development machine and get a secure URL, [ngrok](https://ngrok.com/) or [localtunnel](https://localtunnel.github.io/www/) may be good tools for you.
 
 ## Idea of this example
 

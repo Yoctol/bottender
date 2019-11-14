@@ -15,16 +15,18 @@ npm run dev --console
 
 Building a todo app is the best way to understand new tools. This example shows
 what a To-Do console bot looks like. We suggest that you read our
-[session guide](https://bottender.js.org/docs/Guides-Session) first. That will
+[session guide](https://bottender.js.org/docs/next/the-basics-session) first. That will
 help you come to a better understanding.
 
-To begin with, the bot sets a initial state like following code. Noticed that
+To begin with, the bot sets a initial state in `bottender.config.js`. Noticed that
 state must be an **`Object`**.
 
 ```js
-bot.setInitialState({
-  todos: [],
-});
+module.exports = {
+  initialState: {
+    todos: [],
+  },
+};
 ```
 
 There are three features in this example: **Add todo**, **list all todos** and
@@ -34,11 +36,13 @@ First of all, just talk anything to the bot, and it will call `context.setState`
 to store your todo in session. This shows how to add a todo.
 
 ```js
-const newTodos = context.event.text;
-context.setState({
-  todos: [...context.state.todos, newTodos],
-});
-await context.sendText(`Todo: ${newTodos} added!`);
+async function AddTodo(context) {
+  const newTodos = context.event.text;
+  context.setState({
+    todos: [...context.state.todos, newTodos],
+  });
+  await context.sendText(`Todo: ${newTodos} added!`);
+}
 ```
 
 To show all todos, enter **/list**, then the bot will check whether
@@ -46,10 +50,12 @@ To show all todos, enter **/list**, then the bot will check whether
 to you.
 
 ```js
-if (context.state.todos.length > 0) {
-  await context.sendText(context.state.todos.join('\n'));
-} else {
-  await context.sendText('No todos!');
+async function ShowTodos(context, { todos }) {
+  if (todos.length > 0) {
+    await context.sendText(todos.join('\n'));
+  } else {
+    return TodoNotFound;
+  }
 }
 ```
 
@@ -57,8 +63,10 @@ Finally, enter **/clear**, the bot will clear all todos by calling
 `context.resetState`. That is a very useful method to reset your state.
 
 ```js
-context.resetState();
-await context.sendText('Successfully clear all todos!');
+async function ClearTodos(context) {
+  context.resetState();
+  await context.sendText('Successfully clear all todos!');
+}
 ```
 
 For more information about Bottender, please visit our
