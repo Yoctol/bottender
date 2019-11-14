@@ -107,10 +107,6 @@ This will create and run a bot which always reply "Hello World" in the console.
 
 - [bottender-compose](https://github.com/Yoctol/bottender-compose) - An utility library for Bottender and higher-order handlers.
 
-## Introduction Video
-
-[![](https://user-images.githubusercontent.com/3382565/33467982-cc8a0e42-d693-11e7-9134-2d42ec135e19.png)](https://www.youtube.com/watch?v=C_OBHmbXCsE)
-
 ## Contributing
 
 Pull Requests and issue reports are welcome. You can follow steps below to
