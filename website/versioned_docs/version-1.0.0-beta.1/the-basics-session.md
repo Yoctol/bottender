@@ -1,5 +1,5 @@
 ---
-id: version-1.0.0-beta.0-the-basics-session
+id: version-1.0.0-beta.1-the-basics-session
 title: Session Storage
 original_id: the-basics-session
 ---

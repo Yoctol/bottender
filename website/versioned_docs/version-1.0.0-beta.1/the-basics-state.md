@@ -1,5 +1,5 @@
 ---
-id: version-1.0.0-beta.0-the-basics-state
+id: version-1.0.0-beta.1-the-basics-state
 title: State
 original_id: the-basics-state
 ---

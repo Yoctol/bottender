@@ -1,5 +1,5 @@
 ---
-id: version-1.0.0-beta.0-channel-slack-setup
+id: version-1.0.0-beta.1-channel-slack-setup
 title: Setup Slack
 original_id: channel-slack-setup
 ---

@@ -1,5 +1,5 @@
 ---
-id: version-1.0.0-beta.0-the-basics-actions
+id: version-1.0.0-beta.1-the-basics-actions
 title: Resolving Actions
 original_id: the-basics-actions
 ---
