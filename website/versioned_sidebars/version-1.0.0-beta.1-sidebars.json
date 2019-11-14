@@ -14,20 +14,25 @@
     ],
     "Guides (Messenger)": [
       "version-1.0.0-beta.1-channel-messenger-setup",
+      "version-1.0.0-beta.1-channel-messenger-handling-events",
       "version-1.0.0-beta.1-channel-messenger-profile"
     ],
     "Guides (LINE)": [
       "version-1.0.0-beta.1-channel-line-setup",
+      "version-1.0.0-beta.1-channel-line-handling-events",
       "version-1.0.0-beta.1-channel-line-flex"
     ],
     "Guides (Telegram)": [
-      "version-1.0.0-beta.1-channel-telegram-setup"
+      "version-1.0.0-beta.1-channel-telegram-setup",
+      "version-1.0.0-beta.1-channel-telegram-handling-events"
     ],
     "Guides (Slack)": [
-      "version-1.0.0-beta.1-channel-slack-setup"
+      "version-1.0.0-beta.1-channel-slack-setup",
+      "version-1.0.0-beta.1-channel-slack-handling-events"
     ],
     "Guides (Viber)": [
-      "version-1.0.0-beta.1-channel-viber-setup"
+      "version-1.0.0-beta.1-channel-viber-setup",
+      "version-1.0.0-beta.1-channel-viber-handling-events"
     ],
     "FAQ": []
   },

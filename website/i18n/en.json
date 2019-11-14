@@ -8,8 +8,14 @@
       "channel-line-flex": {
         "title": "Sending Flex Message"
       },
+      "channel-line-handling-events": {
+        "title": "Handling LINE Events"
+      },
       "channel-line-setup": {
         "title": "Setup LINE"
+      },
+      "channel-messenger-handling-events": {
+        "title": "Handling Messenger Events"
       },
       "channel-messenger-profile": {
         "title": "Messenger Profile"
@@ -17,11 +23,20 @@
       "channel-messenger-setup": {
         "title": "Setup Messenger"
       },
+      "channel-slack-handling-events": {
+        "title": "Handling Slack Events"
+      },
       "channel-slack-setup": {
         "title": "Setup Slack"
       },
+      "channel-telegram-handling-events": {
+        "title": "Handling Telegram Events"
+      },
       "channel-telegram-setup": {
         "title": "Setup Telegram"
+      },
+      "channel-viber-handling-events": {
+        "title": "Handling Viber Events"
       },
       "channel-viber-setup": {
         "title": "Setup Viber"
@@ -155,8 +170,14 @@
       "version-1.0.0-beta.1/version-1.0.0-beta.1-channel-line-flex": {
         "title": "Sending Flex Message"
       },
+      "version-1.0.0-beta.1/version-1.0.0-beta.1-channel-line-handling-events": {
+        "title": "Handling LINE Events"
+      },
       "version-1.0.0-beta.1/version-1.0.0-beta.1-channel-line-setup": {
         "title": "Setup LINE"
+      },
+      "version-1.0.0-beta.1/version-1.0.0-beta.1-channel-messenger-handling-events": {
+        "title": "Handling Messenger Events"
       },
       "version-1.0.0-beta.1/version-1.0.0-beta.1-channel-messenger-profile": {
         "title": "Messenger Profile"
@@ -164,11 +185,20 @@
       "version-1.0.0-beta.1/version-1.0.0-beta.1-channel-messenger-setup": {
         "title": "Setup Messenger"
       },
+      "version-1.0.0-beta.1/version-1.0.0-beta.1-channel-slack-handling-events": {
+        "title": "Handling Slack Events"
+      },
       "version-1.0.0-beta.1/version-1.0.0-beta.1-channel-slack-setup": {
         "title": "Setup Slack"
       },
+      "version-1.0.0-beta.1/version-1.0.0-beta.1-channel-telegram-handling-events": {
+        "title": "Handling Telegram Events"
+      },
       "version-1.0.0-beta.1/version-1.0.0-beta.1-channel-telegram-setup": {
         "title": "Setup Telegram"
+      },
+      "version-1.0.0-beta.1/version-1.0.0-beta.1-channel-viber-handling-events": {
+        "title": "Handling Viber Events"
       },
       "version-1.0.0-beta.1/version-1.0.0-beta.1-channel-viber-setup": {
         "title": "Setup Viber"
