@@ -1,6 +1,7 @@
 /* eslint-disable consistent-return */
 import chalk from 'chalk';
 import invariant from 'invariant';
+import snakecase from 'snake-case';
 import { MessengerClient, MessengerTypes } from 'messaging-api-messenger';
 import { addedDiff, deletedDiff, diff, updatedDiff } from 'deep-object-diff';
 import { omit, pick } from 'lodash';
@@ -16,6 +17,7 @@ const FIELDS = [
   'persistent_menu',
   'get_started',
   'greeting',
+  'ice_breakers',
   'whitelisted_domains',
   'payment_settings',
   'target_audience',
@@ -54,9 +56,9 @@ export const trimDomain = (
 ): MessengerTypes.MessengerProfile => {
   const clone = { ...profile };
 
-  if (clone.whitelisted_domains) {
-    clone.whitelisted_domains = clone.whitelisted_domains.map(
-      (domain: string) => domain.replace(/\/$/, '')
+  if (clone.whitelistedDomains) {
+    clone.whitelistedDomains = clone.whitelistedDomains.map((domain: string) =>
+      domain.replace(/\/$/, '')
     );
   }
 
@@ -136,9 +138,9 @@ export async function setMessengerProfile(ctx: CliContext): Promise<void> {
         )} settings due to ${bold('--force')} option`
       );
 
-      if (_profile.whitelisted_domains) {
-        await client.setMessengerProfile(pick(_profile, 'whitelisted_domains'));
-        await client.setMessengerProfile(omit(_profile, 'whitelisted_domains'));
+      if (_profile.whitelistedDomains) {
+        await client.setMessengerProfile(pick(_profile, 'whitelistedDomains'));
+        await client.setMessengerProfile(omit(_profile, 'whitelistedDomains'));
       } else {
         await client.setMessengerProfile(_profile);
       }
@@ -162,7 +164,9 @@ export async function setMessengerProfile(ctx: CliContext): Promise<void> {
         ];
 
         if (shouldDeleteFields.length > 0) {
-          await client.deleteMessengerProfile(shouldDeleteFields);
+          await client.deleteMessengerProfile(
+            shouldDeleteFields.map(field => snakecase(field))
+          );
           const deleteFileds = shouldDeleteFields.join(', ');
           print(`Successfully delete ${bold(deleteFileds)} settings`);
         }
@@ -170,12 +174,12 @@ export async function setMessengerProfile(ctx: CliContext): Promise<void> {
         if (shouldSetFields.length > 0) {
           const shouldSetProfile = pick(profile, shouldSetFields);
 
-          if (shouldSetFields.includes('whitelisted_domains')) {
+          if (shouldSetFields.includes('whitelistedDomains')) {
             await client.setMessengerProfile(
-              pick(shouldSetProfile, 'whitelisted_domains')
+              pick(shouldSetProfile, 'whitelistedDomains')
             );
             await client.setMessengerProfile(
-              omit(shouldSetProfile, 'whitelisted_domains')
+              omit(shouldSetProfile, 'whitelistedDomains')
             );
           } else {
             await client.setMessengerProfile(shouldSetProfile);

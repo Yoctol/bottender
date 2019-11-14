@@ -53,7 +53,7 @@ describe('resolved', () => {
     });
     expect(_client.createPersona).toBeCalledWith({
       name: 'kpman',
-      profile_picture_url: 'https://i.imgur.com/zV6uy4T.jpg',
+      profilePictureUrl: 'https://i.imgur.com/zV6uy4T.jpg',
     });
   });
 

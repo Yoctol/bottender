@@ -44,13 +44,13 @@ function setup({
   client.createSubscription.mockResolvedValue({ success });
   client.debugToken.mockResolvedValue({
     type: 'PAGE',
-    app_id: '000000000000000',
+    appId: '000000000000000',
     application: 'Social Cafe',
-    expires_at: 1352419328,
-    is_valid: true,
-    issued_at: 1347235328,
+    expiresAt: 1352419328,
+    isValid: true,
+    issuedAt: 1347235328,
     scopes: ['email', 'user_location'],
-    user_id: 1207059,
+    userId: 1207059,
   });
 
   client.getPageInfo.mockResolvedValue({ id: '123456789', name: 'Page Name' });
@@ -94,8 +94,8 @@ describe('resolve', () => {
     await setWebhook(ctx);
 
     expect(client.createSubscription).toBeCalledWith({
-      access_token: '__APP_ID__|__APP_SECRET__',
-      callback_url: 'http://example.com/webhook',
+      accessToken: '__APP_ID__|__APP_SECRET__',
+      callbackUrl: 'http://example.com/webhook',
       fields: [
         'messages',
         'messaging_postbacks',
@@ -105,7 +105,7 @@ describe('resolve', () => {
         'messaging_policy_enforcement',
       ],
       object: 'page',
-      verify_token: '__VERIFY_TOKEN__',
+      verifyToken: '__VERIFY_TOKEN__',
     });
 
     expect(log.print).toBeCalled();
@@ -128,8 +128,8 @@ describe('resolve', () => {
 
     expect(getWebhookFromNgrok).toBeCalledWith('4040');
     expect(client.createSubscription).toBeCalledWith({
-      access_token: '__APP_ID__|__APP_SECRET__',
-      callback_url: 'https://fakeDomain.ngrok.io/webhooks/messenger',
+      accessToken: '__APP_ID__|__APP_SECRET__',
+      callbackUrl: 'https://fakeDomain.ngrok.io/webhooks/messenger',
       fields: [
         'messages',
         'messaging_postbacks',
@@ -139,7 +139,7 @@ describe('resolve', () => {
         'messaging_policy_enforcement',
       ],
       object: 'page',
-      verify_token: '__VERIFY_TOKEN__',
+      verifyToken: '__VERIFY_TOKEN__',
     });
   });
 
@@ -178,8 +178,8 @@ describe('resolve', () => {
 
     expect(getWebhookFromNgrok).toBeCalledWith('4040');
     expect(client.createSubscription).toBeCalledWith({
-      access_token: '__APP_ID__|__APP_SECRET__',
-      callback_url: 'https://fakeDomain.ngrok.io/webhooks/messenger',
+      accessToken: '__APP_ID__|__APP_SECRET__',
+      callbackUrl: 'https://fakeDomain.ngrok.io/webhooks/messenger',
       fields: [
         'messages',
         'messaging_postbacks',
@@ -189,13 +189,13 @@ describe('resolve', () => {
         'messaging_policy_enforcement',
       ],
       object: 'page',
-      verify_token: '__VERIFY_TOKEN__',
+      verifyToken: '__VERIFY_TOKEN__',
     });
 
     expect(client.axios.post).toBeCalledWith(
       '/__PAGE_ID__/subscribed_apps?access_token=__ACCESS_TOKEN__',
       {
-        subscribed_fields:
+        subscribedFields:
           'messages,messaging_postbacks,messaging_optins,messaging_referrals,messaging_handovers,messaging_policy_enforcement',
       }
     );

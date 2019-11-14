@@ -292,7 +292,6 @@ export default class Bot<B extends Body, C extends Client, E extends Event> {
       promises
         .then((): Promise<any> | void => {
           if (sessionId && session) {
-            // $FlowFixMe: suppressing this error until we can refactor
             session.lastActivity = Date.now();
             contexts.forEach(context => {
               context.isSessionWritten = true;

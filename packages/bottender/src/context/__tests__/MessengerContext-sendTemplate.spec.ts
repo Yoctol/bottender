@@ -87,7 +87,7 @@ describe('#sendTemplate', () => {
         ],
       },
       {
-        messaging_type: 'RESPONSE',
+        messagingType: 'RESPONSE',
       }
     );
   });
@@ -100,14 +100,14 @@ describe('#sendGenericTemplate', () => {
     const elements = {};
     const ratio = '';
 
-    await context.sendGenericTemplate(elements, { image_aspect_ratio: ratio });
+    await context.sendGenericTemplate(elements, { imageAspectRatio: ratio });
 
     expect(client.sendGenericTemplate).toBeCalledWith(
       session.user.id,
       elements,
       {
-        image_aspect_ratio: ratio,
-        messaging_type: 'RESPONSE',
+        imageAspectRatio: ratio,
+        messagingType: 'RESPONSE',
       }
     );
   });
@@ -123,7 +123,7 @@ describe('#sendGenericTemplate', () => {
       session.user.id,
       elements,
       {
-        messaging_type: 'MESSAGE_TAG',
+        messagingType: 'MESSAGE_TAG',
         tag: 'ISSUE_RESOLUTION',
       }
     );
@@ -134,13 +134,13 @@ describe('#sendGenericTemplate', () => {
 
     const elements = {};
 
-    await context.sendGenericTemplate(elements, { messaging_type: 'UPDATE' });
+    await context.sendGenericTemplate(elements, { messagingType: 'UPDATE' });
 
     expect(client.sendGenericTemplate).toBeCalledWith(
       session.user.id,
       elements,
       {
-        messaging_type: 'UPDATE',
+        messagingType: 'UPDATE',
       }
     );
   });
@@ -151,7 +151,7 @@ describe('#sendGenericTemplate', () => {
     const elements = {};
     const ratio = '';
 
-    await context.sendGenericTemplate(elements, { image_aspect_ratio: ratio });
+    await context.sendGenericTemplate(elements, { imageAspectRatio: ratio });
 
     expect(context.isHandled).toBe(true);
   });
@@ -162,7 +162,7 @@ describe('#sendGenericTemplate', () => {
     const elements = {};
     const ratio = '';
 
-    await context.sendGenericTemplate(elements, { image_aspect_ratio: ratio });
+    await context.sendGenericTemplate(elements, { imageAspectRatio: ratio });
 
     expect(warning).toBeCalledWith(
       false,
@@ -177,7 +177,7 @@ describe('#sendGenericTemplate', () => {
     const elements = {};
     const ratio = '';
 
-    await context.sendGenericTemplate(elements, { image_aspect_ratio: ratio });
+    await context.sendGenericTemplate(elements, { imageAspectRatio: ratio });
 
     expect(warning).toBeCalledWith(
       false,
@@ -192,7 +192,7 @@ describe('#sendGenericTemplate', () => {
     const elements = {};
     const ratio = '';
 
-    await context.sendGenericTemplate(elements, { image_aspect_ratio: ratio });
+    await context.sendGenericTemplate(elements, { imageAspectRatio: ratio });
 
     expect(warning).toBeCalledWith(
       false,
@@ -207,7 +207,7 @@ describe('#sendGenericTemplate', () => {
     const elements = {};
     const ratio = '';
 
-    await context.sendGenericTemplate(elements, { image_aspect_ratio: ratio });
+    await context.sendGenericTemplate(elements, { imageAspectRatio: ratio });
 
     expect(warning).toBeCalledWith(
       false,
@@ -230,7 +230,7 @@ describe('#sendButtonTemplate', () => {
       'yayaya',
       buttons,
       {
-        messaging_type: 'RESPONSE',
+        messagingType: 'RESPONSE',
       }
     );
   });
@@ -302,206 +302,6 @@ describe('#sendButtonTemplate', () => {
   });
 });
 
-describe('#sendListTemplate', () => {
-  it('should call client.sendListTemplate', async () => {
-    const { context, client, session } = setup();
-
-    const elements = [];
-    const buttons = [];
-
-    await context.sendListTemplate(elements, buttons, {
-      top_element_style: 'large',
-    });
-
-    expect(client.sendListTemplate).toBeCalledWith(
-      session.user.id,
-      elements,
-      buttons,
-      {
-        top_element_style: 'large',
-        messaging_type: 'RESPONSE',
-      }
-    );
-  });
-
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    const elements = [];
-    const buttons = [];
-
-    await context.sendListTemplate(elements, buttons, 'large');
-
-    expect(context.isHandled).toBe(true);
-  });
-
-  it('should call warning and not to send if dont have session', async () => {
-    const { context, client } = setup({ session: false });
-
-    const elements = [];
-    const buttons = [];
-
-    await context.sendListTemplate(elements, buttons, 'large');
-
-    expect(warning).toBeCalledWith(
-      false,
-      'sendListTemplate: should not be called in context without session'
-    );
-    expect(client.sendListTemplate).not.toBeCalled();
-  });
-
-  it('should call warning and not to send if created with read event', async () => {
-    const { context, client } = setup({ rawEvent: read });
-
-    const elements = [];
-    const buttons = [];
-
-    await context.sendListTemplate(elements, buttons, 'large');
-
-    expect(warning).toBeCalledWith(
-      false,
-      'sendListTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
-    );
-    expect(client.sendListTemplate).not.toBeCalled();
-  });
-
-  it('should call warning and not to send if created with delivery event', async () => {
-    const { context, client } = setup({ rawEvent: delivery });
-
-    const elements = [];
-    const buttons = [];
-
-    await context.sendListTemplate(elements, buttons, 'large');
-
-    expect(warning).toBeCalledWith(
-      false,
-      'sendListTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
-    );
-    expect(client.sendListTemplate).not.toBeCalled();
-  });
-
-  it('should call warning and not to send if created with echo event', async () => {
-    const { context, client } = setup({ rawEvent: echo });
-
-    const elements = [];
-    const buttons = [];
-
-    await context.sendListTemplate(elements, buttons, 'large');
-
-    expect(warning).toBeCalledWith(
-      false,
-      'sendListTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
-    );
-    expect(client.sendListTemplate).not.toBeCalled();
-  });
-});
-
-describe('#sendOpenGraphTemplate', () => {
-  it('should call client.sendOpenGraphTemplate', async () => {
-    const { context, client, session } = setup();
-
-    await context.sendOpenGraphTemplate([
-      {
-        media_type: 'image',
-        attachment_id: '1854626884821032',
-        buttons: [
-          {
-            type: 'web_url',
-            url: 'https://en.wikipedia.org/wiki/Rickrolling',
-            title: 'View Website',
-          },
-        ],
-      },
-    ]);
-
-    expect(client.sendOpenGraphTemplate).toBeCalledWith(
-      session.user.id,
-      [
-        {
-          media_type: 'image',
-          attachment_id: '1854626884821032',
-          buttons: [
-            {
-              type: 'web_url',
-              url: 'https://en.wikipedia.org/wiki/Rickrolling',
-              title: 'View Website',
-            },
-          ],
-        },
-      ],
-      {
-        messaging_type: 'RESPONSE',
-      }
-    );
-  });
-
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    const elements = [];
-
-    await context.sendOpenGraphTemplate(elements);
-
-    expect(context.isHandled).toBe(true);
-  });
-
-  it('should call warning and not to send if dont have session', async () => {
-    const { context, client } = setup({ session: false });
-
-    const elements = [];
-
-    await context.sendOpenGraphTemplate(elements);
-
-    expect(warning).toBeCalledWith(
-      false,
-      'sendOpenGraphTemplate: should not be called in context without session'
-    );
-    expect(client.sendOpenGraphTemplate).not.toBeCalled();
-  });
-
-  it('should call warning and not to send if created with read event', async () => {
-    const { context, client } = setup({ rawEvent: read });
-
-    const elements = [];
-
-    await context.sendOpenGraphTemplate(elements);
-
-    expect(warning).toBeCalledWith(
-      false,
-      'sendOpenGraphTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
-    );
-    expect(client.sendOpenGraphTemplate).not.toBeCalled();
-  });
-
-  it('should call warning and not to send if created with delivery event', async () => {
-    const { context, client } = setup({ rawEvent: delivery });
-
-    const elements = [];
-
-    await context.sendOpenGraphTemplate(elements);
-
-    expect(warning).toBeCalledWith(
-      false,
-      'sendOpenGraphTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
-    );
-    expect(client.sendOpenGraphTemplate).not.toBeCalled();
-  });
-
-  it('should call warning and not to send if created with echo event', async () => {
-    const { context, client } = setup({ rawEvent: echo });
-
-    const elements = [];
-
-    await context.sendOpenGraphTemplate(elements);
-
-    expect(warning).toBeCalledWith(
-      false,
-      'sendOpenGraphTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
-    );
-    expect(client.sendOpenGraphTemplate).not.toBeCalled();
-  });
-});
-
 describe('#sendMediaTemplate', () => {
   it('should call client.sendMediaTemplate', async () => {
     const { context, client, session } = setup();
@@ -534,7 +334,7 @@ describe('#sendMediaTemplate', () => {
         },
       ],
       {
-        messaging_type: 'RESPONSE',
+        messagingType: 'RESPONSE',
       }
     );
   });
@@ -618,7 +418,7 @@ describe('#sendReceiptTemplate', () => {
       session.user.id,
       receipt,
       {
-        messaging_type: 'RESPONSE',
+        messagingType: 'RESPONSE',
       }
     );
   });
@@ -702,7 +502,7 @@ describe('#sendAirlineBoardingPassTemplate', () => {
       session.user.id,
       boardingPass,
       {
-        messaging_type: 'RESPONSE',
+        messagingType: 'RESPONSE',
       }
     );
   });
@@ -786,7 +586,7 @@ describe('#sendAirlineCheckinTemplate', () => {
       session.user.id,
       checkin,
       {
-        messaging_type: 'RESPONSE',
+        messagingType: 'RESPONSE',
       }
     );
   });
@@ -870,7 +670,7 @@ describe('#sendAirlineItineraryTemplate', () => {
       session.user.id,
       itinerary,
       {
-        messaging_type: 'RESPONSE',
+        messagingType: 'RESPONSE',
       }
     );
   });
@@ -954,7 +754,7 @@ describe('#sendAirlineUpdateTemplate', () => {
       session.user.id,
       flightUpdate,
       {
-        messaging_type: 'RESPONSE',
+        messagingType: 'RESPONSE',
       }
     );
   });

@@ -283,7 +283,7 @@ describe('#updateSession', () => {
 
     expect(mockGraphAPIClient.getUserProfile).toBeCalledWith(
       '1412611362105802',
-      { access_token: undefined }
+      { accessToken: undefined }
     );
     expect(session).toEqual({
       page: {
@@ -319,7 +319,7 @@ describe('#updateSession', () => {
 
     expect(mockGraphAPIClient.getUserProfile).toBeCalledWith(
       '1412611362105802',
-      { access_token: undefined }
+      { accessToken: undefined }
     );
     expect(session).toEqual({
       page: {
@@ -355,7 +355,7 @@ describe('#updateSession', () => {
 
     expect(mockGraphAPIClient.getUserProfile).toBeCalledWith(
       '1412611362105802',
-      { access_token: undefined }
+      { accessToken: undefined }
     );
     expect(session).toEqual({
       page: {
@@ -391,7 +391,7 @@ describe('#updateSession', () => {
 
     expect(mockGraphAPIClient.getUserProfile).toBeCalledWith(
       '1412611362105802',
-      { access_token: undefined }
+      { accessToken: undefined }
     );
     expect(session).toEqual({
       page: {
@@ -416,7 +416,7 @@ describe('#updateSession', () => {
 
     expect(mockGraphAPIClient.getUserProfile).toBeCalledWith(
       '1412611362105802',
-      { access_token: undefined }
+      { accessToken: undefined }
     );
     expect(session).toEqual({
       page: {

@@ -122,18 +122,18 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent>
 
     this._isHandled = true;
 
-    const messageType =
+    const messagingType =
       options && 'tag' in options ? 'MESSAGE_TAG' : 'RESPONSE';
 
     const args = [
       this._session.user.id,
       text,
       {
-        messaging_type: messageType,
+        messagingType,
         ...(this._customAccessToken
-          ? { access_token: this._customAccessToken }
+          ? { accessToken: this._customAccessToken }
           : undefined),
-        ...(this._personaId ? { persona_id: this._personaId } : undefined),
+        ...(this._personaId ? { personaId: this._personaId } : undefined),
         ...options,
       },
     ];
@@ -163,7 +163,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent>
       this._session.user.id,
       {
         ...(this._customAccessToken
-          ? { access_token: this._customAccessToken }
+          ? { accessToken: this._customAccessToken }
           : undefined),
       },
     ];
@@ -199,9 +199,9 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent>
       action,
       {
         ...(this._customAccessToken
-          ? { access_token: this._customAccessToken }
+          ? { accessToken: this._customAccessToken }
           : undefined),
-        ...(this._personaId ? { persona_id: this._personaId } : undefined),
+        ...(this._personaId ? { personaId: this._personaId } : undefined),
         ...options,
       },
     ];
@@ -227,9 +227,9 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent>
       this._session.user.id,
       {
         ...(this._customAccessToken
-          ? { access_token: this._customAccessToken }
+          ? { accessToken: this._customAccessToken }
           : undefined),
-        ...(this._personaId ? { persona_id: this._personaId } : undefined),
+        ...(this._personaId ? { personaId: this._personaId } : undefined),
         ...options,
       },
     ];
@@ -255,9 +255,9 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent>
       this._session.user.id,
       {
         ...(this._customAccessToken
-          ? { access_token: this._customAccessToken }
+          ? { accessToken: this._customAccessToken }
           : undefined),
-        ...(this._personaId ? { persona_id: this._personaId } : undefined),
+        ...(this._personaId ? { personaId: this._personaId } : undefined),
         ...options,
       },
     ];
@@ -283,9 +283,9 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent>
       this._session.user.id,
       {
         ...(this._customAccessToken
-          ? { access_token: this._customAccessToken }
+          ? { accessToken: this._customAccessToken }
           : undefined),
-        ...(this._personaId ? { persona_id: this._personaId } : undefined),
+        ...(this._personaId ? { personaId: this._personaId } : undefined),
         ...options,
       },
     ];
@@ -322,7 +322,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent>
       metadata,
       {
         ...(this._customAccessToken
-          ? { access_token: this._customAccessToken }
+          ? { accessToken: this._customAccessToken }
           : undefined),
       },
     ];
@@ -349,7 +349,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent>
       metadata,
       {
         ...(this._customAccessToken
-          ? { access_token: this._customAccessToken }
+          ? { accessToken: this._customAccessToken }
           : undefined),
       },
     ];
@@ -376,7 +376,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent>
       metadata,
       {
         ...(this._customAccessToken
-          ? { access_token: this._customAccessToken }
+          ? { accessToken: this._customAccessToken }
           : undefined),
       },
     ];
@@ -403,7 +403,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent>
       metadata,
       {
         ...(this._customAccessToken
-          ? { access_token: this._customAccessToken }
+          ? { accessToken: this._customAccessToken }
           : undefined),
       },
     ];
@@ -427,7 +427,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent>
       this._session.user.id,
       {
         ...(this._customAccessToken
-          ? { access_token: this._customAccessToken }
+          ? { accessToken: this._customAccessToken }
           : undefined),
       },
     ];
@@ -440,9 +440,8 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent>
       this._appId,
       'isThreadOwner: must provide appId to use this feature'
     );
-    const { app_id: appId } = await this.getThreadOwner();
+    const { appId } = await this.getThreadOwner();
 
-    // $FlowIssue - do not support assert: https://github.com/facebook/flow/issues/34
     return `${appId}` === `${this._appId}`;
   }
 
@@ -469,7 +468,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent>
       labelId,
       {
         ...(this._customAccessToken
-          ? { access_token: this._customAccessToken }
+          ? { accessToken: this._customAccessToken }
           : undefined),
       },
     ];
@@ -494,7 +493,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent>
       labelId,
       {
         ...(this._customAccessToken
-          ? { access_token: this._customAccessToken }
+          ? { accessToken: this._customAccessToken }
           : undefined),
       },
     ];
@@ -518,7 +517,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent>
       this._session.user.id,
       {
         ...(this._customAccessToken
-          ? { access_token: this._customAccessToken }
+          ? { accessToken: this._customAccessToken }
           : undefined),
       },
     ];
@@ -538,8 +537,6 @@ const sendMethods: [string, number][] = [
   ['sendTemplate', 3],
   ['sendGenericTemplate', 3],
   ['sendButtonTemplate', 4],
-  ['sendListTemplate', 4],
-  ['sendOpenGraphTemplate', 3],
   ['sendMediaTemplate', 3],
   ['sendReceiptTemplate', 3],
   ['sendAirlineBoardingPassTemplate', 3],
@@ -572,14 +569,14 @@ sendMethods.forEach(([method, arity]) => {
       this._isHandled = true;
 
       const options = args[arity - 2];
-      const messageType = options && options.tag ? 'MESSAGE_TAG' : 'RESPONSE';
+      const messagingType = options && options.tag ? 'MESSAGE_TAG' : 'RESPONSE';
 
       args[arity - 2] = {
-        messaging_type: messageType,
+        messagingType,
         ...(this._customAccessToken
-          ? { access_token: this._customAccessToken }
+          ? { accessToken: this._customAccessToken }
           : undefined),
-        ...(this._personaId ? { persona_id: this._personaId } : undefined),
+        ...(this._personaId ? { personaId: this._personaId } : undefined),
         ...options,
       };
 
