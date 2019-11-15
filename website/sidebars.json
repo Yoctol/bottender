@@ -13,10 +13,11 @@
     "Guides (Messenger)": [
       "channel-messenger-setup",
       "channel-messenger-handling-events",
-      "channel-messenger-profile"
+      "channel-messenger-profile",
+      "channel-messenger-multi-page"
     ],
     "Guides (LINE)": [
-      "channel-line-setup", 
+      "channel-line-setup",
       "channel-line-handling-events",
       "channel-line-flex"
     ],
