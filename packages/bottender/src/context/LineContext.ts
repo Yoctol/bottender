@@ -144,6 +144,28 @@ class LineContext extends Context<LineClient, LineEvent>
   }
 
   /**
+   * Retrieve content for image, video and audio message.
+   *
+   */
+  getMessageContent(): Promise<Buffer> | undefined {
+    if (!(this._event.isImage || this._event.isVideo || this._event.isAudio)) {
+      warning(
+        false,
+        'getMessageContent: should only be called with image, video or audio message'
+      );
+      return;
+    }
+
+    const messageId = (this._event.message as any).id;
+
+    return this._client.getMessageContent(messageId, {
+      ...(this._customAccessToken
+        ? { accessToken: this._customAccessToken }
+        : undefined),
+    });
+  }
+
+  /**
    * Leave room or group depending on type of the session.
    *
    */

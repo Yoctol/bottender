@@ -20,8 +20,10 @@ beforeEach(() => {
   /* eslint-enable global-require */
 });
 
-const rawEvent = {
-  replyToken: 'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA',
+const REPLY_TOKEN = 'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA';
+
+const rawEventText = {
+  replyToken: REPLY_TOKEN,
   type: 'message',
   timestamp: 1462629479859,
   source: {
@@ -87,6 +89,7 @@ const setup = ({
   shouldBatch = false,
   sendMethod,
   customAccessToken,
+  rawEvent = rawEventText,
 } = {}) => {
   const client = LineClient.connect();
   const context = new LineContext({
@@ -133,6 +136,48 @@ it('get #event works', () => {
 it('get #client works', () => {
   const { context, client } = setup();
   expect(context.client).toBe(client);
+});
+
+describe('#getMessageContent', () => {
+  it('should work', async () => {
+    const { context, client } = setup({
+      session: userSession,
+      rawEvent: {
+        replyToken: 'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA',
+        type: 'message',
+        timestamp: 1462629479859,
+        source: {
+          type: 'user',
+          userId: 'U206d25c2ea6bd87c17655609a1c37cb8',
+        },
+        message: {
+          id: '325708',
+          type: 'image',
+          contentProvider: {
+            type: 'line',
+          },
+        },
+      },
+    });
+
+    const buf = Buffer.from('');
+    client.getMessageContent.mockResolvedValue(buf);
+
+    const res = await context.getMessageContent();
+
+    expect(client.getMessageContent).toBeCalledWith('325708', {});
+    expect(res).toEqual(buf);
+  });
+
+  it('should warning when no media included', async () => {
+    const { context, client } = setup({ session: userSession });
+
+    const res = await context.getMessageContent();
+
+    expect(client.getMessageContent).not.toBeCalled();
+    expect(warning).toBeCalled();
+    expect(res).toBeUndefined();
+  });
 });
 
 describe('#leave', () => {
@@ -189,7 +234,7 @@ describe('#reply', () => {
     ]);
 
     expect(client.reply).toBeCalledWith(
-      rawEvent.replyToken,
+      REPLY_TOKEN,
       [
         {
           type: 'text',
@@ -212,7 +257,7 @@ describe('#reply', () => {
     ]);
 
     expect(client.reply).toBeCalledWith(
-      rawEvent.replyToken,
+      REPLY_TOKEN,
       [
         {
           type: 'text',
@@ -232,7 +277,7 @@ describe('#replyText', () => {
     await context.replyText('hello');
 
     expect(client.reply).toBeCalledWith(
-      rawEvent.replyToken,
+      REPLY_TOKEN,
       [{ text: 'hello', type: 'text' }],
       {}
     );
@@ -246,7 +291,7 @@ describe('#replyText', () => {
     });
 
     expect(client.reply).toBeCalledWith(
-      rawEvent.replyToken,
+      REPLY_TOKEN,
       [
         {
           type: 'text',
@@ -292,7 +337,7 @@ describe('#replyText', () => {
     await context.replyText('hello');
 
     expect(client.reply).toBeCalledWith(
-      rawEvent.replyToken,
+      REPLY_TOKEN,
       [{ text: 'hello', type: 'text' }],
       {
         accessToken: 'anyToken',
@@ -454,7 +499,7 @@ describe('send APIs', () => {
       await context.send([Line.createText('2'), Line.createText('3')]);
 
       expect(client.reply).toBeCalledWith(
-        rawEvent.replyToken,
+        REPLY_TOKEN,
         [
           {
             type: 'text',
@@ -485,7 +530,7 @@ describe('send APIs', () => {
       await context.sendText('hello');
 
       expect(client.reply).toBeCalledWith(
-        rawEvent.replyToken,
+        REPLY_TOKEN,
         [
           {
             type: 'text',
@@ -504,7 +549,7 @@ describe('send APIs', () => {
       });
 
       expect(client.reply).toBeCalledWith(
-        rawEvent.replyToken,
+        REPLY_TOKEN,
         [
           {
             type: 'text',
@@ -529,7 +574,7 @@ describe('send APIs', () => {
       });
 
       expect(client.reply).toBeCalledWith(
-        rawEvent.replyToken,
+        REPLY_TOKEN,
         [
           {
             type: 'image',
@@ -555,7 +600,7 @@ describe('send APIs', () => {
       );
 
       expect(client.reply).toBeCalledWith(
-        rawEvent.replyToken,
+        REPLY_TOKEN,
         [
           {
             type: 'image',
@@ -581,7 +626,7 @@ describe('send APIs', () => {
       });
 
       expect(client.reply).toBeCalledWith(
-        rawEvent.replyToken,
+        REPLY_TOKEN,
         [
           {
             type: 'audio',
@@ -607,7 +652,7 @@ describe('send APIs', () => {
       );
 
       expect(client.reply).toBeCalledWith(
-        rawEvent.replyToken,
+        REPLY_TOKEN,
         [
           {
             type: 'audio',
@@ -633,7 +678,7 @@ describe('send APIs', () => {
       });
 
       expect(client.reply).toBeCalledWith(
-        rawEvent.replyToken,
+        REPLY_TOKEN,
         [
           {
             type: 'video',
@@ -659,7 +704,7 @@ describe('send APIs', () => {
       );
 
       expect(client.reply).toBeCalledWith(
-        rawEvent.replyToken,
+        REPLY_TOKEN,
         [
           {
             type: 'video',
@@ -687,7 +732,7 @@ describe('send APIs', () => {
       });
 
       expect(client.reply).toBeCalledWith(
-        rawEvent.replyToken,
+        REPLY_TOKEN,
         [
           {
             type: 'location',
@@ -717,7 +762,7 @@ describe('send APIs', () => {
       );
 
       expect(client.reply).toBeCalledWith(
-        rawEvent.replyToken,
+        REPLY_TOKEN,
         [
           {
             type: 'location',
@@ -745,7 +790,7 @@ describe('send APIs', () => {
       });
 
       expect(client.reply).toBeCalledWith(
-        rawEvent.replyToken,
+        REPLY_TOKEN,
         [
           {
             type: 'sticker',
@@ -771,7 +816,7 @@ describe('send APIs', () => {
       );
 
       expect(client.reply).toBeCalledWith(
-        rawEvent.replyToken,
+        REPLY_TOKEN,
         [
           {
             type: 'sticker',
@@ -824,7 +869,7 @@ describe('send APIs', () => {
       await context.sendImagemap('this is an imagemap', template);
 
       expect(client.reply).toBeCalledWith(
-        rawEvent.replyToken,
+        REPLY_TOKEN,
         [
           {
             type: 'imagemap',
@@ -844,7 +889,7 @@ describe('send APIs', () => {
       });
 
       expect(client.reply).toBeCalledWith(
-        rawEvent.replyToken,
+        REPLY_TOKEN,
         [
           {
             type: 'imagemap',
@@ -908,7 +953,7 @@ describe('send APIs', () => {
       await context.sendFlex('this is a flex', contents);
 
       expect(client.reply).toBeCalledWith(
-        rawEvent.replyToken,
+        REPLY_TOKEN,
         [
           {
             type: 'flex',
@@ -928,7 +973,7 @@ describe('send APIs', () => {
       });
 
       expect(client.reply).toBeCalledWith(
-        rawEvent.replyToken,
+        REPLY_TOKEN,
         [
           {
             type: 'flex',
@@ -975,7 +1020,7 @@ describe('send APIs', () => {
       await context.sendTemplate('this is a template', template);
 
       expect(client.reply).toBeCalledWith(
-        rawEvent.replyToken,
+        REPLY_TOKEN,
         [
           {
             type: 'template',
@@ -995,7 +1040,7 @@ describe('send APIs', () => {
       });
 
       expect(client.reply).toBeCalledWith(
-        rawEvent.replyToken,
+        REPLY_TOKEN,
         [
           {
             type: 'template',
@@ -1041,7 +1086,7 @@ describe('send APIs', () => {
       await context.sendButtonTemplate('this is a button template', template);
 
       expect(client.reply).toBeCalledWith(
-        rawEvent.replyToken,
+        REPLY_TOKEN,
         [
           {
             type: 'template',
@@ -1064,7 +1109,7 @@ describe('send APIs', () => {
       });
 
       expect(client.reply).toBeCalledWith(
-        rawEvent.replyToken,
+        REPLY_TOKEN,
         [
           {
             type: 'template',
@@ -1088,7 +1133,7 @@ describe('send APIs', () => {
       await context.sendButtonsTemplate('this is a button template', template);
 
       expect(client.reply).toBeCalledWith(
-        rawEvent.replyToken,
+        REPLY_TOKEN,
         [
           {
             type: 'template',
@@ -1127,7 +1172,7 @@ describe('send APIs', () => {
       await context.sendConfirmTemplate('this is a confirm template', template);
 
       expect(client.reply).toBeCalledWith(
-        rawEvent.replyToken,
+        REPLY_TOKEN,
         [
           {
             type: 'template',
@@ -1152,7 +1197,7 @@ describe('send APIs', () => {
       );
 
       expect(client.reply).toBeCalledWith(
-        rawEvent.replyToken,
+        REPLY_TOKEN,
         [
           {
             type: 'template',
@@ -1226,7 +1271,7 @@ describe('send APIs', () => {
       );
 
       expect(client.reply).toBeCalledWith(
-        rawEvent.replyToken,
+        REPLY_TOKEN,
         [
           {
             type: 'template',
@@ -1253,7 +1298,7 @@ describe('send APIs', () => {
       );
 
       expect(client.reply).toBeCalledWith(
-        rawEvent.replyToken,
+        REPLY_TOKEN,
         [
           {
             type: 'template',
@@ -1600,7 +1645,7 @@ describe('batch', () => {
     await context.handlerDidEnd();
 
     expect(client.reply).toBeCalledWith(
-      rawEvent.replyToken,
+      REPLY_TOKEN,
       [
         {
           type: 'text',
@@ -1641,7 +1686,7 @@ describe('batch', () => {
     await context.handlerDidEnd();
 
     expect(client.reply).toBeCalledWith(
-      rawEvent.replyToken,
+      REPLY_TOKEN,
       [
         {
           type: 'text',
@@ -1669,7 +1714,7 @@ describe('batch', () => {
     await context.handlerDidEnd();
 
     expect(client.reply).toBeCalledWith(
-      rawEvent.replyToken,
+      REPLY_TOKEN,
       [
         {
           type: 'text',
@@ -1703,7 +1748,7 @@ describe('batch', () => {
 
     expect(client.reply).toHaveBeenCalledTimes(1);
     expect(client.reply).toBeCalledWith(
-      rawEvent.replyToken,
+      REPLY_TOKEN,
       [
         {
           type: 'text',
@@ -1849,7 +1894,7 @@ describe('sendMethod', () => {
     await context.sendText('hello');
 
     expect(client.reply).toBeCalledWith(
-      rawEvent.replyToken,
+      REPLY_TOKEN,
       [{ text: 'hello', type: 'text' }],
       {}
     );
@@ -1881,7 +1926,7 @@ describe('#useAccessToken', () => {
     await context.replyText('hello');
 
     expect(client.reply).toBeCalledWith(
-      rawEvent.replyToken,
+      REPLY_TOKEN,
       [{ text: 'hello', type: 'text' }],
       {
         accessToken: 'anyToken',
