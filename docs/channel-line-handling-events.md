@@ -3,13 +3,12 @@ id: channel-line-handling-events
 title: Handling LINE Events
 ---
 
-
 For a LINE bot, the two most frequent LINE events are `Text Event` and `Payload Event.`
+
 - [`Text Event`](#text-events) is triggered when a user inputs text.
 - [`Payload Event`](#payload-events) can be triggered by postback buttons on template, imagemap, flex messages and rich menus, or quick replies.
 
-Apart from the above events, LINE also supports advanced events for better user experience. For example, [`Follow Event`](#follow--unfollow-events) offers the best timing to say hello to new users. [`Unfollow Event`](#follow--unfollow-events) allows the bot to clean up previous user data. [`Group/Room Related Events`](#grouproom-events) are necessary for bots served in group chats. 
-
+Apart from the above events, LINE also supports advanced events for better user experience. For example, [`Follow Event`](#follow--unfollow-events) offers the best timing to say hello to new users. [`Unfollow Event`](#follow--unfollow-events) allows the bot to clean up previous user data. [`Group/Room Related Events`](#grouproom-events) are necessary for bots served in group chats.
 
 ## Text Events
 
@@ -58,14 +57,14 @@ async function App(context) {
 ## Other Events
 
 ### Follow / Unfollow Events
-`Follow Event` is the best entry point for bot introduction, e.g., the bot user manual and killer features. It is triggered when a user adds your bot as a friend. 
+
+`Follow Event` is the best entry point for bot introduction, e.g., the bot user manual and killer features. It is triggered when a user adds your bot as a friend.
 
 > **Note:**
 >
 > - Alternative entry point of bot introduction is `Rich Menu.` You can set your `Rich Menu` open as default, to help your users understand and access the major features of your bot.
 
 `Unfollow Event` is triggered when a user blocked your bot, which implies that you can't send more messages to your previous user. The only thing you can do is clean up your previous user data, or think about how to improve bot user experience to keep your users engaged.
-
 
 ```js
 async function HandleFollow(context) {
@@ -75,7 +74,6 @@ async function HandleFollow(context) {
   //   userId: 'U206d25c2ea6bd87c17655609a1c37cb8',
   // }
 }
-
 
 async function HandleUnfollow(context) {
   console.log(context.event.unfollow);
@@ -94,7 +92,6 @@ async function App(context) {
   }
 }
 ```
-
 
 ### Group/Room Events
 
