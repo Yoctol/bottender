@@ -54,6 +54,27 @@ async function App(context) {
 }
 ```
 
+## Retrieve Media Content from Message
+
+When you receive image, video or audio message, message content is not included in the request. To get message content, call `context.getMessageContent()`:
+
+```js
+const fileType = require('file-type');
+const fs = require('fs');
+
+async function App(context) {
+  if (context.event.isImage || context.event.isVideo || context.event.isAudio) {
+    const buffer = await context.getMessageContent();
+    const { ext } = fileType(buffer);
+
+    const filename = `my-file.${ext}`;
+
+    // You can do whatever you want, for example, write buffer into file system
+    await fs.promises.writeFile(filename, buffer);
+  }
+}
+```
+
 ## Other Events
 
 ### Follow / Unfollow Events
