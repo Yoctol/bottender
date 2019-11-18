@@ -4,7 +4,7 @@
 
 Download this example or clone [bottender](https://github.com/Yoctol/bottender).
 
-```
+```sh
 curl https://codeload.github.com/Yoctol/bottender/tar.gz/master | tar -xz --strip=2 bottender-master/examples/with-state
 cd with-state
 npm install
@@ -15,7 +15,7 @@ npm run dev --console
 
 This example shows how to use Session State to store some information from
 users. For more information, check our
-[session guide](https://bottender.js.org/docs/Guides-Session).
+[session guide](https://bottender.js.org/docs/the-basics-session).
 
 ## Related examples
 

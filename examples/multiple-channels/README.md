@@ -4,14 +4,14 @@
 
 Download this example or clone [bottender](https://github.com/Yoctol/bottender).
 
-```
+```sh
 curl https://codeload.github.com/Yoctol/bottender/tar.gz/master | tar -xz --strip=2 bottender-master/examples/cross-platform
 cd cross-platform
 ```
 
 Install dependencies:
 
-```
+```sh
 npm install
 ```
 
@@ -19,7 +19,7 @@ You must put all needed information into `bottender.config.js`.
 
 After that, you can run the bot with this npm script:
 
-```
+```sh
 npm run dev
 ```
 
@@ -31,7 +31,7 @@ If you successfully start the server, you will get webhook urls correspond to ea
 
 You must set webhooks correspond to mounted paths properly:
 
-```
+```sh
 <YOUR_BASE_URL>/messenger
 <YOUR_BASE_URL>/line
 <YOUR_BASE_URL>/slack

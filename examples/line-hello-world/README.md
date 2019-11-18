@@ -4,14 +4,14 @@
 
 Download this example or clone [bottender](https://github.com/Yoctol/bottender).
 
-```
+```sh
 curl https://codeload.github.com/Yoctol/bottender/tar.gz/master | tar -xz --strip=2 bottender-master/examples/line-hello-world
 cd line-hello-world
 ```
 
 Install dependencies:
 
-```
+```sh
 npm install
 ```
 
@@ -19,7 +19,7 @@ You must put `accessToken` and `channelSecret` into `index.js`.
 
 After that, you can run the bot with this npm script:
 
-```
+```sh
 npm run dev
 ```
 
@@ -34,7 +34,7 @@ To set the webhook, go to [LINE developers console](https://developers.line.me/c
 ## Idea of this example
 
 This example is a simple bot running on [LINE](https://line.me/).
-For more information, check our [LINE guides](https://bottender.js.org/docs/Platforms-LINE).
+For more information, check our [LINE guides](https://bottender.js.org/docs/channel-line-setup).
 
 ## Related examples
 
