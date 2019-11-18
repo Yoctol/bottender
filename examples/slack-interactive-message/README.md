@@ -4,14 +4,14 @@
 
 Download this example or clone [bottender](https://github.com/Yoctol/bottender).
 
-```
+```sh
 curl https://codeload.github.com/Yoctol/bottender/tar.gz/master | tar -xz --strip=2 bottender-master/examples/slack-interactive-message
 cd slack-interactive-message
 ```
 
 Install dependencies:
 
-```
+```sh
 npm install
 ```
 
@@ -19,7 +19,7 @@ You must put `accessToken` and `verificationToken` into `index.js`.
 
 After that, you can run the bot with this npm script:
 
-```
+```sh
 npm run dev
 ```
 

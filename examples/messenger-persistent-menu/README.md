@@ -4,28 +4,28 @@
 
 Download this example or clone [bottender](https://github.com/Yoctol/bottender).
 
-```
+```sh
 curl https://codeload.github.com/Yoctol/bottender/tar.gz/master | tar -xz --strip=2 bottender-master/examples/messenger-persistent-menu
 cd messenger-persistent-menu
 ```
 
 Install dependencies:
 
-```
+```sh
 npm install
 ```
 
 You must put `accessToken`, `appSecret` and `verifyToken` into `bottender.config.js`.
 
-To set messenger profile, run following command with global `bottender`:
+To set messenger profile, run following command with `bottender`:
 
-```
-bottender messenger profile set
+```sh
+npx bottender messenger profile set
 ```
 
 After that, you can run the bot with this npm script:
 
-```
+```sh
 npm run dev
 ```
 
@@ -37,7 +37,7 @@ If you successfully start the server, you will get a webhook url like `https://x
 
 While the server running, you can run following command with `bottender` to set up the webhook with the webhook url you get from running `npm run dev`:
 
-```
+```sh
 npx bottender messenger webhook set -w <YOUR_WEBHOOK_URL>
 ```
 
