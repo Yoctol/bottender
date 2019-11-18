@@ -34,7 +34,7 @@ To set the webhook, go to [Slack Developer Console](https://api.slack.com/apps) 
 ## Idea of this example
 
 This example is a simple bot running on [Slack](https://slack.com/).
-For more information, check our [Slack guides](https://bottender.js.org/docs/Platforms-Slack).
+For more information, check our [Slack guides](https://bottender.js.org/docs/channel-slack-setup).
 
 ## Related examples
 

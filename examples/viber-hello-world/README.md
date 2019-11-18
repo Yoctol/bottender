@@ -29,10 +29,10 @@ If you successfully start the server, you will get a webhook url like `https://x
 
 ## Set webhook
 
-While the server running, you can run following command with global `bottender` to set up the webhook with the webhook url you get from running `npm run dev`:
+While the server running, you can run following command with `bottender` to set up the webhook with the webhook url you get from running `npm run dev`:
 
 ```
-bottender viber webhook set -w <YOUR_WEBHOOK_URL>
+npx bottender viber webhook set -w <YOUR_WEBHOOK_URL>
 ```
 
 > Note: You must put `accessToken` into `bottender.config.js` before running this command.
@@ -40,7 +40,7 @@ bottender viber webhook set -w <YOUR_WEBHOOK_URL>
 ## Idea of this example
 
 This example is a simple bot running on [Viber](https://www.viber.com/).
-For more information, check our [Viber guides](https://bottender.js.org/docs/Platforms-Viber).
+For more information, check our [Viber guides](https://bottender.js.org/docs/channel-viber-setup).
 
 ## Related examples
 

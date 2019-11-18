@@ -31,10 +31,10 @@ If you successfully start the server, you will get a webhook url like `https://x
 
 ## Set webhook
 
-While the server running, you can run following command with global `bottender` to set up the webhook with the webhook url you get from running `npm run dev`:
+While the server running, you can run following command with `bottender` to set up the webhook with the webhook url you get from running `npm run dev`:
 
 ```
-bottender messenger webhook set -w <YOUR_WEBHOOK_URL>
+npx bottender messenger webhook set -w <YOUR_WEBHOOK_URL>
 ```
 
 > Note: You must put `appId`, `appSecret` and `verifyToken` into `bottender.config.js` before running this command.

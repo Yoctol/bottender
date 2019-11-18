@@ -34,7 +34,7 @@ To set the webhook, go to [LINE developers console](https://developers.line.me/c
 ## Idea of this example
 
 This example is a simple bot running on [LINE](https://line.me/).
-For more information, check our [LINE guides](https://bottender.js.org/docs/Platforms-LINE).
+For more information, check our [LINE guides](https://bottender.js.org/docs/channel-line-setup).
 
 ## Related examples
 

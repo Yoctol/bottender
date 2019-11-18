@@ -35,7 +35,7 @@ To set the webhook, go to [Slack Developer Console](https://api.slack.com/apps) 
 
 This example shows how to send [messages with interactive components (button/menu)](https://api.slack.com/interactive-messages) and handle the event triggered by users clicking the button/menu.
 
-For more information, check our [Slack guides](https://bottender.js.org/docs/Platforms-Slack).
+For more information, check our [Slack guides](https://bottender.js.org/docs/channel-slack-setup).
 
 ## Usage
 
