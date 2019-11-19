@@ -13,7 +13,8 @@
     "Guides (Messenger)": [
       "channel-messenger-setup",
       "channel-messenger-handling-events",
-      "channel-messenger-profile"
+      "channel-messenger-profile",
+      "channel-messenger-persona"
     ],
     "Guides (LINE)": [
       "channel-line-setup", 
