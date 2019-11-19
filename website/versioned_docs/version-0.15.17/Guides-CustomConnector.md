@@ -1,7 +1,7 @@
 ---
-id: version-0.15.17-custome-connector
+id: version-0.15.17-custom-connector
 title: CustomConnector
-original_id: custome-connector
+original_id: custom-connector
 ---
 
 To create a custom connector, you must implement the following classes:
