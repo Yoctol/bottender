@@ -73,7 +73,6 @@ When a `Persona` begins processing a message, you might set the typing indicator
 ```js
 async function App(context) {
   await context.sendSenderAction('typing_on');
-  await context.markSeen({ personaId: '<PERSONA_ID>' });
   await context.typingOn({ personaId: '<PERSONA_ID>' });
   await context.typingOff({ personaId: '<PERSONA_ID>' });
 }
