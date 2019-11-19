@@ -80,6 +80,7 @@ const siteConfig = {
   scripts: [
     'https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js',
     '/js/code-blocks-buttons.js',
+    '/js/sw.js',
   ],
 
   // Google Analytics tracking ID to track page views.
