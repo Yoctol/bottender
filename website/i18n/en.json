@@ -17,6 +17,9 @@
       "channel-messenger-handling-events": {
         "title": "Handling Messenger Events"
       },
+      "channel-messenger-persona": {
+        "title": "Using Persona"
+      },
       "channel-messenger-profile": {
         "title": "Messenger Profile"
       },
