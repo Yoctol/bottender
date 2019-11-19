@@ -4,14 +4,14 @@
 
 Download this example or clone [bottender](https://github.com/Yoctol/bottender).
 
-```
+```sh
 curl https://codeload.github.com/Yoctol/bottender/tar.gz/master | tar -xz --strip=2 bottender-master/examples/telegram-hello-world
 cd telegram-hello-world
 ```
 
 Install dependencies:
 
-```
+```sh
 npm install
 ```
 
@@ -19,28 +19,28 @@ You must put `accessToken` into `bottender.config.js`.
 
 After that, you can run the bot with this npm script:
 
-```
+```sh
 npm run dev
 ```
 
 This command will start server for bot developing at `http://localhost:5000`.
 
+If you successfully start the server, you will get a webhook url like `https://xxxxxxxx.ngrok.io/webhooks/slack` from command line.
+
 ## Set webhook
 
-While the server running, you can run following command with global `bottender` to set up the webhook:
+While the server running, you can run following command with `bottender` to set up the webhook with the webhook url you get from running `npm run dev`:
 
+```sh
+npx bottender telegram webhook set -w <YOUR_WEBHOOK_URL>
 ```
-bottender telegram webhook set -w <YOUR_WEBHOOK_URL>
-```
-
-If you want to expose the server on your local development machine and get a secure URL, [ngrok](https://ngrok.com/) or [localtunnel](https://localtunnel.github.io/www/) may be good tools for you.
 
 > Note: You must put `accessToken` into `bottender.config.js` before running this command.
 
 ## Idea of this example
 
 This example is a simple bot running on [Telegram](https://telegram.org/).
-For more information, check our [Telegram guides](https://bottender.js.org/docs/Platforms-Telegram).
+For more information, check our [Telegram guides](https://bottender.js.org/docs/channel-telegram-setup).
 
 ## Related examples
 

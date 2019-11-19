@@ -32,11 +32,15 @@ const siteConfig = {
     { doc: 'getting-started', label: 'Docs' },
     // { doc: 'api-context', label: 'API' },
     { blog: true, label: 'Blog' },
+    {
+      href: 'https://github.com/Yoctol/bottender/tree/master/examples',
+      label: 'Examples',
+    },
     { href: 'https://github.com/yoctol/bottender', label: 'GitHub' },
   ],
 
   /* path to images for header/footer */
-  headerIcon: 'img/element_bottender_logo.svg',
+  headerIcon: 'img/bottender.svg',
   footerIcon: '',
   favicon: 'img/favicon.ico',
 
@@ -76,6 +80,7 @@ const siteConfig = {
   scripts: [
     'https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js',
     '/js/code-blocks-buttons.js',
+    '/js/sw.js',
   ],
 
   // Google Analytics tracking ID to track page views.
@@ -87,7 +92,7 @@ const siteConfig = {
   cleanUrl: true,
 
   // URL for editing docs, usage example: editUrl + 'en/doc1.md'.
-  editUrl: 'https://github.com/Yoctol/bottender/edit/develop/docs/',
+  editUrl: 'https://github.com/Yoctol/bottender/edit/master/docs/',
 
   // Open Graph and Twitter card images.
   ogImage: 'img/og-image.png',
@@ -95,7 +100,7 @@ const siteConfig = {
   twitterUsername: 'bottenderjs',
   twitterImage: 'img/og-image.png',
 
-  disableHeaderTitle: true,
+  disableHeaderTitle: false,
 
   // For sites with a sizable amount of content, set collapsible to true.
   // Expand/collapse the links and subcategories under categories.

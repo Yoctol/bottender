@@ -4,48 +4,49 @@
 
 Download this example or clone [bottender](https://github.com/Yoctol/bottender).
 
-```
-curl https://codeload.github.com/Yoctol/bottender/tar.gz/master | tar -xz --strip=2 bottender-master/examples/messenger-deep-nested-menu
-cd messenger-deep-nested-menu
+```sh
+curl https://codeload.github.com/Yoctol/bottender/tar.gz/master | tar -xz --strip=2 bottender-master/examples/messenger-persistent-menu
+cd messenger-persistent-menu
 ```
 
 Install dependencies:
 
-```
+```sh
 npm install
 ```
 
 You must put `accessToken`, `appSecret` and `verifyToken` into `bottender.config.js`.
 
-To set messenger profile, run following command with global `bottender`:
+To set messenger profile, run following command with `bottender`:
 
-```
-bottender messenger profile set
+```sh
+npx bottender messenger profile set
 ```
 
 After that, you can run the bot with this npm script:
 
-```
+```sh
 npm run dev
 ```
 
 This command will start server for bot developing at `http://localhost:5000`.
 
+If you successfully start the server, you will get a webhook url like `https://xxxxxxxx.ngrok.io/webhooks/messenger` from command line.
+
 ## Set webhook
 
-While the server running, you can run following command with global `bottender` to set up the webhook:
+While the server running, you can run following command with `bottender` to set up the webhook with the webhook url you get from running `npm run dev`:
 
+```sh
+npx bottender messenger webhook set -w <YOUR_WEBHOOK_URL>
 ```
-bottender messenger webhook set -w <YOUR_WEBHOOK_URL>
-```
-
-If you want to expose the server on your local development machine and get a secure URL, [ngrok](https://ngrok.com/) or [localtunnel](https://localtunnel.github.io/www/) may be good tools for you.
 
 > Note: You must put `appId`, `appSecret` and `verifyToken` into `bottender.config.js` before running this command.
 
 ## Idea of this example
 
-It shows how to extend nested persistent menu to have 3 levels and total 75 call to actions.
+It shows how to set a [persistent menu](https://developers.facebook.com/docs/messenger-platform/reference/messenger-profile-api/persistent-menu/) on [Messenger](https://www.messenger.com/).
+For more information, check our [Messenger guides](https://bottender.js.org/docs/channel-messenger-setup).
 
 ## Related examples
 

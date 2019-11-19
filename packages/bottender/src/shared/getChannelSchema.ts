@@ -13,10 +13,10 @@ const menuItemSchema = Joi.object().keys({
     is: 'postback',
     then: Joi.string().required(),
   }),
-  webview_height_ratio: Joi.string(),
-  messenger_extensions: Joi.boolean(),
-  fallback_url: Joi.string(),
-  webview_share_button: Joi.string(),
+  webviewHeightRatio: Joi.string(),
+  messengerExtensions: Joi.boolean(),
+  fallbackUrl: Joi.string(),
+  webviewShareButton: Joi.string(),
 });
 
 const messengerSchema = Joi.object().keys({
@@ -29,17 +29,17 @@ const messengerSchema = Joi.object().keys({
   appSecret: Joi.string(),
   fields: Joi.array().items(Joi.string()),
   profile: Joi.object().keys({
-    get_started: Joi.object().keys({
+    getStarted: Joi.object().keys({
       payload: Joi.string(),
     }),
-    persistent_menu: Joi.array().items(
+    persistentMenu: Joi.array().items(
       Joi.object().keys({
         locale: Joi.string(),
-        composer_input_disabled: Joi.boolean(),
-        call_to_actions: Joi.array()
+        composerInputDisabled: Joi.boolean(),
+        callToActions: Joi.array()
           .items(menuItemSchema)
           .max(3)
-          .when('composer_input_disabled', {
+          .when('composerInputDisabled', {
             is: true,
             then: Joi.array()
               .items(menuItemSchema)
@@ -54,7 +54,13 @@ const messengerSchema = Joi.object().keys({
         text: Joi.string(),
       })
     ),
-    whitelisted_domains: Joi.array().items(Joi.string()),
+    iceBreakers: Joi.array().items(
+      Joi.object().keys({
+        question: Joi.string(),
+        payload: Joi.string(),
+      })
+    ),
+    whitelistedDomains: Joi.array().items(Joi.string()),
   }),
 });
 

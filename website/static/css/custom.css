@@ -3,7 +3,7 @@
 a.primary {
   display: inline-flex;
   align-items: center;
-  background: linear-gradient(180deg, #0094FF 0%, #006AEE 100%);
+  background: linear-gradient(180deg, #0094ff 0%, #006aee 100%);
   border-radius: 24px;
   font-family: Montserrat;
   font-weight: bold;
@@ -12,7 +12,7 @@ a.primary {
   padding: 0 24px;
   text-align: center;
   letter-spacing: 0.24px;
-  color: #FFFFFF;
+  color: #ffffff;
   border: none;
   cursor: pointer;
 }
@@ -22,11 +22,11 @@ a.primary.large {
 }
 
 a.primary:hover {
-  background: linear-gradient(180deg, #64BEFF 0%, #3290FF 100%);
+  background: linear-gradient(180deg, #64beff 0%, #3290ff 100%);
 }
 
 a.primary:active {
-  background: linear-gradient(180deg, #0086E8 0%, #035BC8 100%);
+  background: linear-gradient(180deg, #0086e8 0%, #035bc8 100%);
 }
 
 a:focus {
@@ -43,8 +43,8 @@ a:focus {
 }
 
 .mainContainer article a:not(.anchor):not(.hash-link) {
-  background-color: rgba(187,239,253,0.3);
-  border-bottom: 1px solid rgba(0,0,0,0.2);
+  background-color: rgba(187, 239, 253, 0.3);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   color: #1a1a1a;
 }
 
@@ -54,7 +54,7 @@ a:focus {
 }
 
 .homeContainer {
-  background-color: #0A1C30;
+  background-color: #0a1c30;
   height: 750px;
   display: flex;
   flex-direction: column;
@@ -63,7 +63,13 @@ a:focus {
 
 .homeContainer .triangle {
   height: 80px;
-  background: linear-gradient(to top right, #fff 0%, #fff 50%, #0A1C30 50%, #0A1C30 100%);
+  background: linear-gradient(
+    to top right,
+    #fff 0%,
+    #fff 50%,
+    #0a1c30 50%,
+    #0a1c30 100%
+  );
 }
 
 .homeSplashFade {
@@ -85,7 +91,7 @@ a:focus {
   font-family: Montserrat;
   font-weight: bold;
   font-size: 48px;
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 .hero-content h2 {
@@ -94,7 +100,7 @@ a:focus {
   margin-top: 8px;
   margin-bottom: 56px;
   font-size: 28px;
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 .features {
@@ -108,7 +114,7 @@ a:focus {
   font-size: 40px;
   letter-spacing: 0.4px;
   text-align: center;
-  color: #050F37;
+  color: #050f37;
 }
 
 .features .container .wrapper {
@@ -125,7 +131,6 @@ a:focus {
   margin-right: 20px;
 }
 
-
 .features .container .wrapper .imageAlignSide p {
   font-family: Roboto;
   font-size: 18px;
@@ -133,7 +138,7 @@ a:focus {
   max-width: 360px;
   text-align: left;
   margin-bottom: 16px;
-  color: #050F37;
+  color: #050f37;
 }
 
 .features .container .wrapper .blockContent h2 {
@@ -144,12 +149,18 @@ a:focus {
   font-family: Montserrat;
   font-weight: bold;
   font-size: 28px;
-  color: #050F37;
+  color: #050f37;
 }
 
 .features + .triangle {
   height: 80px;
-  background: linear-gradient(to bottom left, #fff 0%, #fff 50%, #F2F2F2 50%, #F2F2F2 100%);
+  background: linear-gradient(
+    to bottom left,
+    #fff 0%,
+    #fff 50%,
+    #f2f2f2 50%,
+    #f2f2f2 100%
+  );
 }
 
 .demo {
@@ -158,7 +169,7 @@ a:focus {
   align-items: center;
   width: 100%;
   padding: 40px 16px;
-  background-color: #F2F2F2;
+  background-color: #f2f2f2;
 }
 
 .demo h2 {
@@ -167,7 +178,7 @@ a:focus {
   font-size: 40px;
   letter-spacing: 0.4px;
   text-align: center;
-  color: #050F37;
+  color: #050f37;
 }
 
 .demo .demo-content {
@@ -200,14 +211,14 @@ a:focus {
   font-weight: bold;
   font-size: 32px;
   letter-spacing: 0.28px;
-  color: #050F37;
+  color: #050f37;
   margin-top: 0px;
 }
 
 .demo .demo-content .description p {
   font-family: Roboto;
   font-size: 18px;
-  color: #4A4A4A;
+  color: #4a4a4a;
 }
 
 .get-started {
@@ -215,15 +226,15 @@ a:focus {
   align-items: center;
   justify-content: center;
   padding: 60px 16px 120px;
-  background-color: #F2F2F2;
+  background-color: #f2f2f2;
 }
 
 .get-started-card {
   width: 100%;
   max-width: 1040px;
   height: 300px;
-  background: #FFFFFF;
-  box-shadow: 0px 8px 40px #CBD8E4;
+  background: #ffffff;
+  box-shadow: 0px 8px 40px #cbd8e4;
   border-radius: 16px;
   display: flex;
   padding: 90px 96px;
@@ -240,7 +251,7 @@ a:focus {
   font-weight: bold;
   font-size: 40px;
   letter-spacing: 0.4px;
-  color: #050F37;
+  color: #050f37;
   margin: 0;
   margin-bottom: 24px;
 }
@@ -254,15 +265,15 @@ a:focus {
   transform: rotate(-30deg);
 }
 
-.get-started-card-background .primary-box{
+.get-started-card-background .primary-box {
   height: 60%;
   width: 100%;
-  background-color: #0A1C30;
+  background-color: #0a1c30;
 }
-.get-started-card-background .secondary-box{
+.get-started-card-background .secondary-box {
   height: 60%;
   width: 100%;
-  background-color: #008DFC;
+  background-color: #008dfc;
 }
 
 .mobile {
@@ -270,13 +281,13 @@ a:focus {
 }
 
 .nav-footer {
-  background-color: #0A1C30;
+  background-color: #0a1c30;
 }
 
 .nav-footer .title {
   margin: 0;
   margin-bottom: 16px;
-  color: #50D5FF;
+  color: #50d5ff;
   font-size: 14px;
   font-weight: 500;
   letter-spacing: 0.2px;
@@ -315,6 +326,11 @@ a:focus {
 
 .icons a:active > svg {
   fill: #2db8de;
+}
+
+.post img {
+  margin-top: 40px;
+  margin-bottom: 40px;
 }
 
 @media only screen and (min-device-width: 360px) and (max-device-width: 736px) {

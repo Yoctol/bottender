@@ -24,8 +24,8 @@
     "publish": "lerna publish",
     "prepublishOnly": "yarn clean && yarn && yarn test",
     "test": "yarn compile && yarn lint && yarn testonly",
-    "testonly": "jest --detectOpenHandles --forceExit",
-    "testonly:cov": "jest --coverage --runInBand --detectOpenHandles --forceExit",
+    "testonly": "jest --detectOpenHandles",
+    "testonly:cov": "jest --coverage --runInBand --detectOpenHandles",
     "testonly:watch": "jest --watch"
   },
   "devDependencies": {

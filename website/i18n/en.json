@@ -8,17 +8,35 @@
       "channel-line-flex": {
         "title": "Sending Flex Message"
       },
+      "channel-line-handling-events": {
+        "title": "Handling LINE Events"
+      },
       "channel-line-setup": {
         "title": "Setup LINE"
+      },
+      "channel-messenger-handling-events": {
+        "title": "Handling Messenger Events"
+      },
+      "channel-messenger-profile": {
+        "title": "Messenger Profile"
       },
       "channel-messenger-setup": {
         "title": "Setup Messenger"
       },
+      "channel-slack-handling-events": {
+        "title": "Handling Slack Events"
+      },
       "channel-slack-setup": {
         "title": "Setup Slack"
       },
+      "channel-telegram-handling-events": {
+        "title": "Handling Telegram Events"
+      },
       "channel-telegram-setup": {
         "title": "Setup Telegram"
+      },
+      "channel-viber-handling-events": {
+        "title": "Handling Viber Events"
       },
       "channel-viber-setup": {
         "title": "Setup Viber"
@@ -148,11 +166,75 @@
       },
       "version-0.15.17/version-0.15.17-viber": {
         "title": "Viber"
+      },
+      "version-1.0.0-beta.1/version-1.0.0-beta.1-channel-line-flex": {
+        "title": "Sending Flex Message"
+      },
+      "version-1.0.0-beta.1/version-1.0.0-beta.1-channel-line-handling-events": {
+        "title": "Handling LINE Events"
+      },
+      "version-1.0.0-beta.1/version-1.0.0-beta.1-channel-line-setup": {
+        "title": "Setup LINE"
+      },
+      "version-1.0.0-beta.1/version-1.0.0-beta.1-channel-messenger-handling-events": {
+        "title": "Handling Messenger Events"
+      },
+      "version-1.0.0-beta.1/version-1.0.0-beta.1-channel-messenger-profile": {
+        "title": "Messenger Profile"
+      },
+      "version-1.0.0-beta.1/version-1.0.0-beta.1-channel-messenger-setup": {
+        "title": "Setup Messenger"
+      },
+      "version-1.0.0-beta.1/version-1.0.0-beta.1-channel-slack-handling-events": {
+        "title": "Handling Slack Events"
+      },
+      "version-1.0.0-beta.1/version-1.0.0-beta.1-channel-slack-setup": {
+        "title": "Setup Slack"
+      },
+      "version-1.0.0-beta.1/version-1.0.0-beta.1-channel-telegram-handling-events": {
+        "title": "Handling Telegram Events"
+      },
+      "version-1.0.0-beta.1/version-1.0.0-beta.1-channel-telegram-setup": {
+        "title": "Setup Telegram"
+      },
+      "version-1.0.0-beta.1/version-1.0.0-beta.1-channel-viber-handling-events": {
+        "title": "Handling Viber Events"
+      },
+      "version-1.0.0-beta.1/version-1.0.0-beta.1-channel-viber-setup": {
+        "title": "Setup Viber"
+      },
+      "version-1.0.0-beta.1/version-1.0.0-beta.1-getting-started": {
+        "title": "Getting Started"
+      },
+      "version-1.0.0-beta.1/version-1.0.0-beta.1-the-basics-actions": {
+        "title": "Resolving Actions"
+      },
+      "version-1.0.0-beta.1/version-1.0.0-beta.1-the-basics-chain": {
+        "title": "Chain of Responsibility"
+      },
+      "version-1.0.0-beta.1/version-1.0.0-beta.1-the-basics-console-mode": {
+        "title": "Console Mode"
+      },
+      "version-1.0.0-beta.1/version-1.0.0-beta.1-the-basics-context-event": {
+        "title": "Context and Event"
+      },
+      "version-1.0.0-beta.1/version-1.0.0-beta.1-the-basics-errors": {
+        "title": "Error Handling"
+      },
+      "version-1.0.0-beta.1/version-1.0.0-beta.1-the-basics-routing": {
+        "title": "Routing"
+      },
+      "version-1.0.0-beta.1/version-1.0.0-beta.1-the-basics-session": {
+        "title": "Session Storage"
+      },
+      "version-1.0.0-beta.1/version-1.0.0-beta.1-the-basics-state": {
+        "title": "State"
       }
     },
     "links": {
       "Docs": "Docs",
       "Blog": "Blog",
+      "Examples": "Examples",
       "GitHub": "GitHub"
     },
     "categories": {

@@ -79,7 +79,7 @@ export async function createPersona(ctx: CliContext): Promise<void> {
 
     const persona = {
       name: personaName as string,
-      profile_picture_url: personaUrl as string,
+      profilePictureUrl: personaUrl as string,
     };
 
     const personaID = await client.createPersona(persona);
@@ -125,7 +125,7 @@ export async function listPersona(_: CliContext): Promise<void> {
         colWidths: [30, 30, 30],
       });
       personas.forEach(item => {
-        table.push([item.id, item.name, item.profile_picture_url] as any);
+        table.push([item.id, item.name, item.profilePictureUrl] as any);
       });
       console.log(table.toString()); // eslint-disable-line no-console
     } else {
@@ -175,7 +175,7 @@ export async function getPersona(ctx: CliContext): Promise<void> {
     if (persona !== undefined) {
       print(`Information of persona ${bold(personaId as string)}:`);
       print(`Name: ${bold(persona.name)}`);
-      print(`Profile picture: ${bold(persona.profile_picture_url)}`);
+      print(`Profile picture: ${bold(persona.profilePictureUrl)}`);
     } else {
       print(`Cannot get persona of ID ${bold(personaId as string)}`);
     }

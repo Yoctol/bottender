@@ -7,6 +7,11 @@ import ConsoleConnector from '../ConsoleConnector';
 
 jest.mock('readline');
 
+afterEach(() => {
+  // use fake stdin to avoid unclosed stream
+  Object.defineProperty(process, 'stdin', { value: {} });
+});
+
 it('should construct bot with ConsoleConnector', () => {
   const bot = new ConsoleBot();
   expect(bot).toBeDefined();

@@ -118,7 +118,7 @@ export async function setWebhook(ctx: CliContext): Promise<void> {
 
     const tokenInfo = await client.debugToken();
 
-    invariant(tokenInfo.is_valid, 'Page access token is invalid');
+    invariant(tokenInfo.isValid, 'Page access token is invalid');
     invariant(tokenInfo.type === 'PAGE', 'Access token is not a page token');
 
     const pageInfo = await client.getPageInfo();
@@ -131,9 +131,9 @@ export async function setWebhook(ctx: CliContext): Promise<void> {
       [chalk.green('App Name'), tokenInfo.application] as any,
       [
         chalk.green('Token Expires At'),
-        tokenInfo.expires_at === 0
+        tokenInfo.expiresAt === 0
           ? 'Never'
-          : new Date(tokenInfo.expires_at * 1000).toString(),
+          : new Date(tokenInfo.expiresAt * 1000).toString(),
       ] as any,
       [chalk.green('Token Scopes'), tokenInfo.scopes.join(',')] as any,
       [chalk.green('App Fields'), fields.join(',')] as any,
@@ -153,10 +153,10 @@ export async function setWebhook(ctx: CliContext): Promise<void> {
 
     const { success } = await client.createSubscription({
       object: 'page',
-      callback_url: webhook as string,
-      verify_token: verifyToken as string,
+      callbackUrl: webhook as string,
+      verifyToken: verifyToken as string,
       fields,
-      access_token: `${appId}|${appSecret}`,
+      accessToken: `${appId}|${appSecret}`,
     });
 
     invariant(success, 'Setting for webhook is failed');
@@ -167,7 +167,7 @@ export async function setWebhook(ctx: CliContext): Promise<void> {
       const { data } = await client.axios.post(
         `/${pageId}/subscribed_apps?access_token=${accessToken}`,
         {
-          subscribed_fields: fields.join(','),
+          subscribedFields: fields.join(','),
         }
       );
 

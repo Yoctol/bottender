@@ -9,14 +9,14 @@ const setup = () => {
         appId: '__PUT_YOUR_APP_ID_HERE__',
         appSecret: '__PUT_YOUR_APP_SECRET_HERE__',
         profile: {
-          get_started: {
+          getStarted: {
             payload: 'GET_STARTED',
           },
-          persistent_menu: [
+          persistentMenu: [
             {
               locale: 'default',
-              composer_input_disabled: false,
-              call_to_actions: [
+              composerInputDisabled: false,
+              callToActions: [
                 {
                   type: 'postback',
                   title: '__TITLE_HERE__',
@@ -36,7 +36,7 @@ const setup = () => {
               text: 'Hello!',
             },
           ],
-          whitelisted_domains: ['http://example.com'],
+          whitelistedDomains: ['http://example.com'],
         },
       },
       line: {
@@ -84,14 +84,14 @@ it('read the config file with platform key', () => {
     appId: '__PUT_YOUR_APP_ID_HERE__',
     appSecret: '__PUT_YOUR_APP_SECRET_HERE__',
     profile: {
-      get_started: {
+      getStarted: {
         payload: 'GET_STARTED',
       },
-      persistent_menu: [
+      persistentMenu: [
         {
           locale: 'default',
-          composer_input_disabled: false,
-          call_to_actions: [
+          composerInputDisabled: false,
+          callToActions: [
             {
               type: 'postback',
               title: '__TITLE_HERE__',
@@ -111,7 +111,7 @@ it('read the config file with platform key', () => {
           text: 'Hello!',
         },
       ],
-      whitelisted_domains: ['http://example.com'],
+      whitelistedDomains: ['http://example.com'],
     },
   });
 });
