@@ -40,7 +40,7 @@ const siteConfig = {
   ],
 
   /* path to images for header/footer */
-  headerIcon: 'img/element_bottender_logo.svg',
+  headerIcon: 'img/bottender.svg',
   footerIcon: '',
   favicon: 'img/favicon.ico',
 
@@ -99,7 +99,7 @@ const siteConfig = {
   twitterUsername: 'bottenderjs',
   twitterImage: 'img/og-image.png',
 
-  disableHeaderTitle: true,
+  disableHeaderTitle: false,
 
   // For sites with a sizable amount of content, set collapsible to true.
   // Expand/collapse the links and subcategories under categories.
