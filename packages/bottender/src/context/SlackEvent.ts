@@ -68,8 +68,7 @@ export type Message = {
   bot_id?: string;
 };
 
-export type InteractiveMessageEvent = {
-  type: 'interactive_message';
+export type UIEvent = {
   actions: {}[];
   callback_id: string;
   team: {
@@ -95,7 +94,18 @@ export type InteractiveMessageEvent = {
   bot_id?: string;
 };
 
-export type SlackRawEvent = Message | InteractiveMessageEvent;
+export type InteractiveMessageEvent = UIEvent & {
+  type: 'interactive_message';
+};
+
+export type BlockActionEvent = UIEvent & {
+  type: 'block_actions';
+};
+
+export type SlackRawEvent =
+  | Message
+  | InteractiveMessageEvent
+  | BlockActionEvent;
 
 export default class SlackEvent implements Event<SlackRawEvent> {
   _rawEvent: SlackRawEvent;
@@ -208,11 +218,30 @@ export default class SlackEvent implements Event<SlackRawEvent> {
   }
 
   /**
+   * Determine if the event is a block actions (button/menu) event.
+   *
+   */
+  get isBlockAction(): boolean {
+    return this._rawEvent.type === 'block_actions';
+  }
+
+  /**
+   * Determine if the event is an UI Event (block actions or interactive message)
+   *
+   */
+  get isBlockActionOrInteractiveMessage(): boolean {
+    return (
+      this._rawEvent.type === 'interactive_message' ||
+      this._rawEvent.type === 'block_actions'
+    );
+  }
+
+  /**
    * The callback_id from Slack interactive message.
    *
    */
   get callbackId(): string | null {
-    if (this.isInteractiveMessage) {
+    if (this.isBlockActionOrInteractiveMessage) {
       return (this._rawEvent as InteractiveMessageEvent).callback_id;
     }
     return null;
@@ -223,7 +252,7 @@ export default class SlackEvent implements Event<SlackRawEvent> {
    *
    */
   get action(): {} | null {
-    if (this.isInteractiveMessage) {
+    if (this.isBlockActionOrInteractiveMessage) {
       return (this._rawEvent as InteractiveMessageEvent).actions[0];
     }
     return null;
