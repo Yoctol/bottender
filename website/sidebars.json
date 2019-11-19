@@ -16,9 +16,10 @@
       "channel-messenger-profile"
     ],
     "Guides (LINE)": [
-      "channel-line-setup", 
+      "channel-line-setup",
       "channel-line-handling-events",
-      "channel-line-flex"
+      "channel-line-flex",
+      "channel-line-rich-menu"
     ],
     "Guides (Telegram)": [
       "channel-telegram-setup",
