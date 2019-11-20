@@ -118,11 +118,11 @@ class Index extends Component {
 ~~~javascript
 const { router, text } = require('bottender/router');
 
-function SayHi(context) {
+async function SayHi(context) {
   await context.sendText('Hi!');
 }
 
-function Unknown(context) {
+async function Unknown(context) {
   await context.sendText('Sorry, I don’t know what you say.');
 }
 
