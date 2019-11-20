@@ -19,11 +19,11 @@
 <p>It has been optimized for real world use cases, automatic batching request and dozens of other compelling features.</p>
 </span></div></div></div></div></div></div></div><div class="triangle"></div><div class="demo"><div class="demo-content"><div class="code-block"><div><span><pre><code class="hljs css language-javascript"><span class="hljs-keyword">const</span> { router, text } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'bottender/router'</span>);
 
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">SayHi</span>(<span class="hljs-params">context</span>) </span>{
+<span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">SayHi</span>(<span class="hljs-params">context</span>) </span>{
   <span class="hljs-keyword">await</span> context.sendText(<span class="hljs-string">'Hi!'</span>);
 }
 
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Unknown</span>(<span class="hljs-params">context</span>) </span>{
+<span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Unknown</span>(<span class="hljs-params">context</span>) </span>{
   <span class="hljs-keyword">await</span> context.sendText(<span class="hljs-string">'Sorry, I don’t know what you say.'</span>);
 }
 
