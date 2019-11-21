@@ -36,8 +36,11 @@ it('should merge query and body then pass into requestHandler', async () => {
   const middleware = createMiddleware(bot);
 
   const req = {
+    method: 'post',
+    path: '/',
     query: { a: '1' },
     body: { b: 2 },
+    headers: {},
   };
   const res = {
     send: jest.fn(),
@@ -46,7 +49,15 @@ it('should merge query and body then pass into requestHandler', async () => {
 
   await middleware(req, res, next);
 
-  expect(requestHandler).toBeCalledWith({ a: '1', b: 2 }, { req, res });
+  expect(requestHandler).toBeCalledWith(
+    { a: '1', b: 2 },
+    {
+      method: 'post',
+      path: '/',
+      query: { a: '1' },
+      headers: {},
+    }
+  );
 });
 
 it('should overwrite query value if this key exists in body', async () => {
@@ -56,8 +67,11 @@ it('should overwrite query value if this key exists in body', async () => {
   const middleware = createMiddleware(bot);
 
   const req = {
+    method: 'post',
+    path: '/',
     query: { a: '1' },
     body: { a: 2 },
+    headers: {},
   };
   const res = {
     send: jest.fn(),
@@ -66,7 +80,15 @@ it('should overwrite query value if this key exists in body', async () => {
 
   await middleware(req, res, next);
 
-  expect(requestHandler).toBeCalledWith({ a: 2 }, { req, res });
+  expect(requestHandler).toBeCalledWith(
+    { a: 2 },
+    {
+      method: 'post',
+      path: '/',
+      query: { a: '1' },
+      headers: {},
+    }
+  );
 });
 
 it('should response 200 if there is response return from requestHandler', async () => {

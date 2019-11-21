@@ -5,6 +5,7 @@ import { TelegramClient } from 'messaging-api-telegram';
 import Session from '../session/Session';
 import TelegramContext from '../context/TelegramContext';
 import TelegramEvent, { TelegramRawEvent } from '../context/TelegramEvent';
+import { RequestContext } from '../types';
 
 import { Connector } from './Connector';
 
@@ -168,7 +169,7 @@ export default class TelegramConnector
     event: TelegramEvent;
     session: Session | null;
     initialState?: Record<string, any> | null;
-    requestContext?: Record<string, any> | null;
+    requestContext?: RequestContext;
     emitter?: EventEmitter | null;
   }): TelegramContext {
     return new TelegramContext({

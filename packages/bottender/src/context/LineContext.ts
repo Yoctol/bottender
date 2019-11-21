@@ -7,6 +7,7 @@ import warning from 'warning';
 import { Line, LineClient, LineTypes } from 'messaging-api-line';
 
 import Session from '../session/Session';
+import { RequestContext } from '../types';
 
 import Context from './Context';
 import LineEvent from './LineEvent';
@@ -17,7 +18,7 @@ type Options = {
   event: LineEvent;
   session?: Session | null;
   initialState?: Record<string, any> | null;
-  requestContext?: Record<string, any> | null;
+  requestContext?: RequestContext;
   customAccessToken?: string;
   shouldBatch?: boolean;
   sendMethod?: string;

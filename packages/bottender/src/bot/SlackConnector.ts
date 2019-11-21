@@ -14,6 +14,7 @@ import SlackEvent, {
   Message,
   SlackRawEvent,
 } from '../context/SlackEvent';
+import { RequestContext } from '../types';
 
 import { Connector } from './Connector';
 
@@ -300,7 +301,7 @@ export default class SlackConnector
     event: SlackEvent;
     session: Session | null;
     initialState?: Record<string, any> | null;
-    requestContext?: Record<string, any> | null;
+    requestContext?: RequestContext;
     emitter?: EventEmitter | null;
   }): SlackContext {
     return new SlackContext({

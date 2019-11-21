@@ -51,8 +51,10 @@ function createRequestHandler(bot: Bot, config: RouteConfig = {}) {
         ...body,
       },
       {
-        req,
-        res,
+        method: req.method,
+        path: requestPath,
+        query,
+        headers: req.headers,
       }
     );
     if (handlerResponse) {

@@ -19,7 +19,12 @@ function createMiddleware(bot: Bot) {
         ...request.query,
         ...request.body,
       },
-      ctx
+      {
+        method: request.method,
+        path: request.path,
+        query: request.query,
+        headers: request.headers,
+      }
     );
     if (res) {
       response.set(res.headers || {});

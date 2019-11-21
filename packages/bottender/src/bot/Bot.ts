@@ -9,7 +9,15 @@ import Context from '../context/Context';
 import MemoryCacheStore from '../cache/MemoryCacheStore';
 import Session from '../session/Session';
 import SessionStore from '../session/SessionStore';
-import { Action, Body, Client, Event, Plugin, Props } from '../types';
+import {
+  Action,
+  Body,
+  Client,
+  Event,
+  Plugin,
+  Props,
+  RequestContext,
+} from '../types';
 
 import { Connector } from './Connector';
 
@@ -57,7 +65,7 @@ export function run<C extends Client, E extends Event>(
 
 type RequestHandler<B> = (
   body: B,
-  requestContext?: Record<string, any> | null
+  requestContext?: RequestContext
 ) => void | Promise<void>;
 
 export default class Bot<B extends Body, C extends Client, E extends Event> {
@@ -159,10 +167,7 @@ export default class Bot<B extends Body, C extends Client, E extends Event> {
       this._emitter.on('error', console.error);
     }
 
-    return async (
-      body: B,
-      requestContext?: Record<string, any> | null
-    ): Promise<any> => {
+    return async (body: B, requestContext?: RequestContext): Promise<any> => {
       if (!body) {
         throw new Error('Bot.createRequestHandler: Missing argument.');
       }

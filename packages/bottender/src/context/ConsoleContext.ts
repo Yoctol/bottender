@@ -3,6 +3,7 @@ import EventEmitter from 'events';
 import sleep from 'delay';
 
 import Session from '../session/Session';
+import { RequestContext } from '../types';
 
 import ConsoleEvent from './ConsoleEvent';
 import Context from './Context';
@@ -14,7 +15,7 @@ type Options = {
   event: ConsoleEvent;
   session: Session | null;
   initialState?: Record<string, any> | null;
-  requestContext?: Record<string, any> | null;
+  requestContext?: RequestContext;
   fallbackMethods: boolean;
   mockPlatform: string;
   emitter: EventEmitter | null;
