@@ -22,6 +22,7 @@ import MessengerEvent, {
   TakeThreadControl,
 } from '../context/MessengerEvent';
 import Session from '../session/Session';
+import { RequestContext } from '../types';
 
 import { Connector } from './Connector';
 
@@ -333,7 +334,7 @@ export default class MessengerConnector
     event: MessengerEvent;
     session?: Session;
     initialState?: Record<string, any>;
-    requestContext?: Record<string, any>;
+    requestContext?: RequestContext;
     emitter?: EventEmitter;
   }): Promise<MessengerContext> {
     let customAccessToken;

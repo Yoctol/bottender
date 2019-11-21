@@ -7,6 +7,7 @@ import { LineClient } from 'messaging-api-line';
 import LineContext from '../context/LineContext';
 import LineEvent, { LineRawEvent } from '../context/LineEvent';
 import Session from '../session/Session';
+import { RequestContext } from '../types';
 
 import { Connector } from './Connector';
 
@@ -264,7 +265,7 @@ export default class LineConnector
     event: LineEvent;
     session?: Session | null;
     initialState?: Record<string, any> | null;
-    requestContext?: Record<string, any> | null;
+    requestContext?: RequestContext;
     emitter?: EventEmitter | null;
   }): Promise<LineContext> {
     let customAccessToken;

@@ -125,7 +125,7 @@ class ContextSimulator {
         _state: state || this._initialState,
       },
       initialState: this._initialState,
-      requestContext: {},
+      requestContext: undefined,
       emitter: null,
     });
 

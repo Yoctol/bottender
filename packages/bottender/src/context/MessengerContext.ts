@@ -6,6 +6,7 @@ import warning from 'warning';
 import { MessengerBatch, MessengerClient } from 'messaging-api-messenger';
 
 import Session from '../session/Session';
+import { RequestContext } from '../types';
 
 import Context from './Context';
 import MessengerEvent from './MessengerEvent';
@@ -17,7 +18,7 @@ type Options = {
   event: MessengerEvent;
   session?: Session;
   initialState?: Record<string, any>;
-  requestContext?: Record<string, any>;
+  requestContext?: RequestContext;
   customAccessToken?: string;
   batchQueue?: Record<string, any> | null;
   emitter?: EventEmitter;

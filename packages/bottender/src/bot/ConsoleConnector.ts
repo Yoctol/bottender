@@ -4,6 +4,7 @@ import ConsoleContext from '../context/ConsoleContext';
 import ConsoleEvent, { ConsoleRawEvent } from '../context/ConsoleEvent';
 import Session from '../session/Session';
 import { ConsoleClient } from '../context/ConsoleClient';
+import { RequestContext } from '../types';
 
 import { Connector } from './Connector';
 
@@ -75,7 +76,7 @@ export default class ConsoleConnector
     event: ConsoleEvent;
     session: Session | null;
     initialState?: Record<string, any> | null;
-    requestContext?: Record<string, any> | null;
+    requestContext?: RequestContext;
     emitter: EventEmitter | null;
   }): ConsoleContext {
     return new ConsoleContext({

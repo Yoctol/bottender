@@ -4,7 +4,7 @@ import cloneDeep from 'lodash/cloneDeep';
 import debug from 'debug';
 import warning from 'warning';
 
-import { Client, Event } from '../types';
+import { Client, Event, RequestContext } from '../types';
 
 const debugContext = debug('bottender:context');
 
@@ -13,7 +13,7 @@ type Options<C extends Client, E extends Event> = {
   event: E;
   session: any;
   initialState?: Record<string, any> | null;
-  requestContext?: Record<string, any> | null;
+  requestContext?: RequestContext;
   emitter?: EventEmitter | null;
 };
 
@@ -36,7 +36,7 @@ export default class Context<C extends Client, E extends Event> {
 
   _initialState?: Record<string, any> | null;
 
-  _requestContext: Record<string, any> | null;
+  _requestContext: RequestContext | null;
 
   _emitter: EventEmitter | null;
 

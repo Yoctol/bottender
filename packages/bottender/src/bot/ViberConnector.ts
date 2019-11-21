@@ -7,6 +7,7 @@ import { addedDiff } from 'deep-object-diff';
 import Session from '../session/Session';
 import ViberContext from '../context/ViberContext';
 import ViberEvent, { ViberRawEvent } from '../context/ViberEvent';
+import { RequestContext } from '../types';
 
 import { Connector } from './Connector';
 
@@ -129,7 +130,7 @@ export default class ViberConnector
     event: ViberEvent;
     session: Session | null;
     initialState?: Record<string, any> | null;
-    requestContext?: Record<string, any> | null;
+    requestContext?: RequestContext;
     emitter?: EventEmitter | null;
   }): ViberContext {
     return new ViberContext({

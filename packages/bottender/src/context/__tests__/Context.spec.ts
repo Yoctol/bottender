@@ -169,7 +169,12 @@ describe('request context', () => {
     });
 
     it('should support get requestContext', () => {
-      const requestContext = { req: {}, res: {} };
+      const requestContext = {
+        method: 'post',
+        path: '/',
+        query: {},
+        headers: {},
+      };
 
       const { context } = setup({ requestContext });
 
