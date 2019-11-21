@@ -12,7 +12,7 @@ Apart from the above events, LINE also supports advanced events for better user 
 
 ## Text Events
 
-For a bot, the most common event is `Text Event`. To determine whether the event type is `Text Event`, you may check the boolean value of `context.event.isText`:
+For a bot, the most popular event is `Text Event`. To determine whether the event type is `Text Event`, you may check the boolean value of `context.event.isText`:
 
 ```js
 async function App(context) {
@@ -56,7 +56,8 @@ async function App(context) {
 
 ## Retrieve Media Content from Message
 
-When you receive image, video or audio message, message content is not included in the request. To get message content, call `context.getMessageContent()`:
+When you receive a media message, e.g., image, video, or audio message, the message content is not covered in the request. 
+You can make further responses based on the user's message content, e.g., add a photo frame, convert the audio message into text. You can get message content by `context.getMessageContent()`:
 
 ```js
 const fileType = require('file-type');
