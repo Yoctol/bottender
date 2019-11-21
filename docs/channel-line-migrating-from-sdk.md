@@ -52,6 +52,10 @@ function handleEvent(event) {
 app.listen(3000);
 ```
 
+If you have experienced in bot projects, you can figure out that 80% of the above code is duplicated from project to project. That's why we need an excellent bot framework, i.e., Bottender, to save your development time from redundant works. 
+
+
+
 ### Create a Bot Project by Bottender
 
 
