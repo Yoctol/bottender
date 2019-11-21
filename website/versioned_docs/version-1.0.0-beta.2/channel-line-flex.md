@@ -1,5 +1,5 @@
 ---
-id: version-1.0.0-beta.1-channel-line-flex
+id: version-1.0.0-beta.2-channel-line-flex
 title: Sending Flex Message
 original_id: channel-line-flex
 ---

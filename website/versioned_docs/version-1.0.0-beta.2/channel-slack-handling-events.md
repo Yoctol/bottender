@@ -1,5 +1,5 @@
 ---
-id: version-1.0.0-beta.1-channel-slack-handling-events
+id: version-1.0.0-beta.2-channel-slack-handling-events
 title: Handling Slack Events
 original_id: channel-slack-handling-events
 ---

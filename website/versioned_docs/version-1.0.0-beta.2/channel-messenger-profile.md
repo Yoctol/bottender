@@ -1,5 +1,5 @@
 ---
-id: version-1.0.0-beta.1-channel-messenger-profile
+id: version-1.0.0-beta.2-channel-messenger-profile
 title: Messenger Profile
 original_id: channel-messenger-profile
 ---

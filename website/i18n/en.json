@@ -11,6 +11,9 @@
       "channel-line-handling-events": {
         "title": "Handling LINE Events"
       },
+      "channel-line-migrating-from-sdk": {
+        "title": "Migrating from LINE SDK for nodejs"
+      },
       "channel-line-setup": {
         "title": "Setup LINE"
       },
@@ -170,67 +173,73 @@
       "version-0.15.17/version-0.15.17-viber": {
         "title": "Viber"
       },
-      "version-1.0.0-beta.1/version-1.0.0-beta.1-channel-line-flex": {
+      "version-1.0.0-beta.2/version-1.0.0-beta.2-channel-line-flex": {
         "title": "Sending Flex Message"
       },
-      "version-1.0.0-beta.1/version-1.0.0-beta.1-channel-line-handling-events": {
+      "version-1.0.0-beta.2/version-1.0.0-beta.2-channel-line-handling-events": {
         "title": "Handling LINE Events"
       },
-      "version-1.0.0-beta.1/version-1.0.0-beta.1-channel-line-setup": {
+      "version-1.0.0-beta.2/version-1.0.0-beta.2-channel-line-migrating-from-sdk": {
+        "title": "Migrating from LINE SDK for nodejs"
+      },
+      "version-1.0.0-beta.2/version-1.0.0-beta.2-channel-line-setup": {
         "title": "Setup LINE"
       },
-      "version-1.0.0-beta.1/version-1.0.0-beta.1-channel-messenger-handling-events": {
+      "version-1.0.0-beta.2/version-1.0.0-beta.2-channel-messenger-handling-events": {
         "title": "Handling Messenger Events"
       },
-      "version-1.0.0-beta.1/version-1.0.0-beta.1-channel-messenger-profile": {
+      "version-1.0.0-beta.2/version-1.0.0-beta.2-channel-messenger-persona": {
+        "title": "Using Persona"
+      },
+      "version-1.0.0-beta.2/version-1.0.0-beta.2-channel-messenger-profile": {
         "title": "Messenger Profile"
       },
-      "version-1.0.0-beta.1/version-1.0.0-beta.1-channel-messenger-setup": {
+      "version-1.0.0-beta.2/version-1.0.0-beta.2-channel-messenger-setup": {
         "title": "Setup Messenger"
       },
-      "version-1.0.0-beta.1/version-1.0.0-beta.1-channel-slack-handling-events": {
+      "version-1.0.0-beta.2/version-1.0.0-beta.2-channel-slack-handling-events": {
         "title": "Handling Slack Events"
       },
-      "version-1.0.0-beta.1/version-1.0.0-beta.1-channel-slack-setup": {
+      "version-1.0.0-beta.2/version-1.0.0-beta.2-channel-slack-setup": {
         "title": "Setup Slack"
       },
-      "version-1.0.0-beta.1/version-1.0.0-beta.1-channel-telegram-handling-events": {
+      "version-1.0.0-beta.2/version-1.0.0-beta.2-channel-telegram-handling-events": {
         "title": "Handling Telegram Events"
       },
-      "version-1.0.0-beta.1/version-1.0.0-beta.1-channel-telegram-setup": {
+      "version-1.0.0-beta.2/version-1.0.0-beta.2-channel-telegram-setup": {
         "title": "Setup Telegram"
       },
-      "version-1.0.0-beta.1/version-1.0.0-beta.1-channel-viber-handling-events": {
+      "version-1.0.0-beta.2/version-1.0.0-beta.2-channel-viber-handling-events": {
         "title": "Handling Viber Events"
       },
-      "version-1.0.0-beta.1/version-1.0.0-beta.1-channel-viber-setup": {
+      "version-1.0.0-beta.2/version-1.0.0-beta.2-channel-viber-setup": {
         "title": "Setup Viber"
       },
-      "version-1.0.0-beta.1/version-1.0.0-beta.1-getting-started": {
+      "version-1.0.0-beta.2/version-1.0.0-beta.2-getting-started": {
         "title": "Getting Started"
       },
-      "version-1.0.0-beta.1/version-1.0.0-beta.1-the-basics-actions": {
+      "version-1.0.0-beta.2/version-1.0.0-beta.2-the-basics-actions": {
         "title": "Resolving Actions"
       },
-      "version-1.0.0-beta.1/version-1.0.0-beta.1-the-basics-chain": {
+      "version-1.0.0-beta.2/version-1.0.0-beta.2-the-basics-chain": {
         "title": "Chain of Responsibility"
       },
-      "version-1.0.0-beta.1/version-1.0.0-beta.1-the-basics-console-mode": {
+      "version-1.0.0-beta.2/version-1.0.0-beta.2-the-basics-console-mode": {
         "title": "Console Mode"
       },
-      "version-1.0.0-beta.1/version-1.0.0-beta.1-the-basics-context-event": {
+      "version-1.0.0-beta.2/version-1.0.0-beta.2-the-basics-context-event": {
         "title": "Context and Event"
       },
-      "version-1.0.0-beta.1/version-1.0.0-beta.1-the-basics-errors": {
+      "version-1.0.0-beta.2/version-1.0.0-beta.2-the-basics-errors": {
         "title": "Error Handling"
       },
-      "version-1.0.0-beta.1/version-1.0.0-beta.1-the-basics-routing": {
+      "version-1.0.0-beta.2/version-1.0.0-beta.2-the-basics-routing": {
         "title": "Routing"
       },
-      "version-1.0.0-beta.1/version-1.0.0-beta.1-the-basics-session": {
+      "version-1.0.0-beta.2/version-1.0.0-beta.2-the-basics-session": {
         "title": "Session Storage"
       },
-      "version-1.0.0-beta.1/version-1.0.0-beta.1-the-basics-state": {
+      "version-1.0.0-beta.2/version-1.0.0-beta.2-the-basics-state": {
         "title": "State"
       }
     },

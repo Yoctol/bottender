@@ -1,5 +1,5 @@
 ---
-id: version-1.0.0-beta.1-the-basics-errors
+id: version-1.0.0-beta.2-the-basics-errors
 title: Error Handling
 original_id: the-basics-errors
 ---
