@@ -14,12 +14,23 @@ If you want to have more general intent recognition, you can leverage modern NLU
 
 ## Building with Dialogflow
 
-[Dialogflow](https://dialogflow.com/)
+To build a bot integrated with [Dialogflow](https://dialogflow.com/), you have to setup Dialogflow following the [Official Setup Guide](https://cloud.google.com/dialogflow/docs/quick/setup) and fill the two values: `GOOGLE_APPLICATION_CREDENTIALS` (the file path of the JSON file that contains your service account key) and `GOOGLE_APPLICATION_PROJECT_ID` (the GCP project ID) into the `.env` file.
+
+`.env`
+
+```
+GOOGLE_APPLICATION_CREDENTIALS=
+GOOGLE_APPLICATION_PROJECT_ID=
+```
+
+Next, you can build an agent following the [official document](https://cloud.google.com/dialogflow/docs/quick/build-agent). In this example, we build an agent and create a simple intent with display name `greeting`. You can set your own training phrases on the Dialogflow console for this intent.
+
+After you finish the settings of the agent, you can then call Dialogflow's API to detect the intention of the message the bot receives. We use [Dialogflow Node SDK](https://github.com/googleapis/nodejs-dialogflow) to integrate our bot with Dialogflow.
 
 ```js
 const dialogflow = require('dialogflow');
 
-const PROJECT_ID = 'YOUR-PROJECT_ID';
+const PROJECT_ID = process.env.GOOGLE_APPLICATION_PROJECT_ID;
 
 const sessionClient = new dialogflow.SessionsClient();
 
@@ -35,7 +46,7 @@ module.exports = async function App(context) {
       queryInput: {
         text: {
           text: context.event.text,
-          languageCode: '',
+          languageCode: 'en',
         },
       },
       queryParams: {
@@ -53,7 +64,9 @@ module.exports = async function App(context) {
 };
 ```
 
-https://github.com/Yoctol/bottender/tree/master/examples/with-dialogflow
+You can check out the full example [Here](https://github.com/Yoctol/bottender/tree/master/examples/with-dialogflow).
+
+For more information about how to use Dialogflow with Node.js, you can check [Dialogflow: Node.js Client Document](https://googleapis.dev/nodejs/dialogflow/latest/index.html).
 
 ## Building with QnA Maker
 
