@@ -1,5 +1,5 @@
 ---
-id: version-1.0.0-beta.2-channel-telegram-setup
+id: version-1.0.0-beta-channel-telegram-setup
 title: Setup Telegram
 original_id: channel-telegram-setup
 ---

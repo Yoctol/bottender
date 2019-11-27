@@ -1,5 +1,5 @@
 ---
-id: version-1.0.0-beta.2-channel-line-handling-events
+id: version-1.0.0-beta-channel-line-handling-events
 title: Handling LINE Events
 original_id: channel-line-handling-events
 ---

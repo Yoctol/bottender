@@ -1,5 +1,5 @@
 ---
-id: version-1.0.0-beta.2-channel-telegram-handling-events
+id: version-1.0.0-beta-channel-telegram-handling-events
 title: Handling Telegram Events
 original_id: channel-telegram-handling-events
 ---

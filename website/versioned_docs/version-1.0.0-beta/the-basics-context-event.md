@@ -1,5 +1,5 @@
 ---
-id: version-1.0.0-beta.2-the-basics-context-event
+id: version-1.0.0-beta-the-basics-context-event
 title: Context and Event
 original_id: the-basics-context-event
 ---

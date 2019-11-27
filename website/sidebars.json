@@ -22,11 +22,11 @@
       "channel-line-flex",
       "channel-line-migrating-from-sdk"
     ],
+    "Guides (Slack)": ["channel-slack-setup", "channel-slack-handling-events"],
     "Guides (Telegram)": [
       "channel-telegram-setup",
       "channel-telegram-handling-events"
     ],
-    "Guides (Slack)": ["channel-slack-setup", "channel-slack-handling-events"],
     "Guides (Viber)": ["channel-viber-setup", "channel-viber-handling-events"],
     "FAQ": []
   },

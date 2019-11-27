@@ -1,0 +1,42 @@
+{
+  "version-1.0.0-beta-docs": {
+    "Getting Started": [
+      "version-1.0.0-beta-getting-started"
+    ],
+    "The Basics": [
+      "version-1.0.0-beta-the-basics-console-mode",
+      "version-1.0.0-beta-the-basics-actions",
+      "version-1.0.0-beta-the-basics-routing",
+      "version-1.0.0-beta-the-basics-chain",
+      "version-1.0.0-beta-the-basics-state",
+      "version-1.0.0-beta-the-basics-session",
+      "version-1.0.0-beta-the-basics-errors"
+    ],
+    "Guides (Messenger)": [
+      "version-1.0.0-beta-channel-messenger-setup",
+      "version-1.0.0-beta-channel-messenger-handling-events",
+      "version-1.0.0-beta-channel-messenger-profile",
+      "version-1.0.0-beta-channel-messenger-persona"
+    ],
+    "Guides (LINE)": [
+      "version-1.0.0-beta-channel-line-setup",
+      "version-1.0.0-beta-channel-line-handling-events",
+      "version-1.0.0-beta-channel-line-flex",
+      "version-1.0.0-beta-channel-line-migrating-from-sdk"
+    ],
+    "Guides (Slack)": [
+      "version-1.0.0-beta-channel-slack-setup",
+      "version-1.0.0-beta-channel-slack-handling-events"
+    ],
+    "Guides (Telegram)": [
+      "version-1.0.0-beta-channel-telegram-setup",
+      "version-1.0.0-beta-channel-telegram-handling-events"
+    ],
+    "Guides (Viber)": [
+      "version-1.0.0-beta-channel-viber-setup",
+      "version-1.0.0-beta-channel-viber-handling-events"
+    ],
+    "FAQ": []
+  },
+  "version-1.0.0-beta-api": {}
+}
