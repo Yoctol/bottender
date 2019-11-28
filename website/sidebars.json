@@ -28,7 +28,11 @@
       "channel-telegram-setup",
       "channel-telegram-handling-events"
     ],
-    "Guides (Viber)": ["channel-viber-setup", "channel-viber-handling-events"],
+    "Guides (Viber)": [
+      "channel-viber-setup",
+      "channel-viber-handling-events",
+      "channel-viber-sending-messages"
+    ],
     "FAQ": []
   },
   "api": {}
