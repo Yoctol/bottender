@@ -32,5 +32,13 @@
     "Guides (Viber)": ["channel-viber-setup", "channel-viber-handling-events"],
     "FAQ": []
   },
-  "api": {}
+  "api": {
+    "Core": ["api-context", "api-event"],
+    "Messenger": ["api-messenger-context", "api-messenger-event"],
+    "LINE": ["api-line-context", "api-line-event"],
+    "Slack": ["api-slack-context", "api-slack-event"],
+    "Telegram": ["api-telegram-context", "api-telegram-event"],
+    "Viber": ["api-viber-context", "api-viber-event"],
+    "Console": ["api-console-context", "api-console-event"]
+  }
 }

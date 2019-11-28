@@ -30,7 +30,7 @@ const siteConfig = {
   // For no header links in the top nav bar -> headerLinks: [],
   headerLinks: [
     { doc: 'getting-started', label: 'Docs' },
-    // { doc: 'api-context', label: 'API' },
+    { doc: 'api-context', label: 'API' },
     { blog: true, label: 'Blog' },
     {
       href: 'https://github.com/Yoctol/bottender/tree/master/examples',
