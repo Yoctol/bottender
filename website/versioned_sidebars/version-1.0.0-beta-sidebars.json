@@ -12,6 +12,9 @@
       "version-1.0.0-beta-the-basics-session",
       "version-1.0.0-beta-the-basics-errors"
     ],
+    "Advanced Guides": [
+      "version-1.0.0-beta-advanced-guides-nlu"
+    ],
     "Guides (Messenger)": [
       "version-1.0.0-beta-channel-messenger-setup",
       "version-1.0.0-beta-channel-messenger-handling-events",
