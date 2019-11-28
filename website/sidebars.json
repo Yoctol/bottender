@@ -14,6 +14,7 @@
     "Guides (Messenger)": [
       "channel-messenger-setup",
       "channel-messenger-handling-events",
+      "channel-messenger-sending-messages",
       "channel-messenger-profile",
       "channel-messenger-persona"
     ],
