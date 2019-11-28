@@ -99,7 +99,7 @@ class Index extends Component {
                 },
                 {
                   content:
-                    'There are thousands of bots are powered by Bottender.\n\nIt has been optimized for real world use cases, automatic batching request and dozens of other compelling features.',
+                    'There are thousands of bots powered by Bottender.\n\nIt has been optimized for real world use cases, automatic batching request and dozens of other compelling features.',
                   image: `${baseUrl}img/element_anywhere.svg`,
                   imageAlign: 'left',
                   title: 'Ready for Production',

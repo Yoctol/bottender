@@ -18,7 +18,7 @@
 
 - **Easy Setup** - With Bottender, you only need a few configurations to make your bot work with channels, automatic server listening, webhook setup, signature verification and so much more.
 
-- **Ready for Production** - There are thousands of bots are powered by Bottender. It has been optimized for real world use cases, automatic batching request and dozens of other compelling features.
+- **Ready for Production** - There are thousands of bots powered by Bottender. It has been optimized for real world use cases, automatic batching request and dozens of other compelling features.
 
 Bottender is built on top of
 [Messaging APIs](https://github.com/Yoctol/messaging-apis).
