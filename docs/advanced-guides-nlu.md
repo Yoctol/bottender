@@ -16,9 +16,8 @@ If you want to have more general intent recognition, you can leverage modern NLU
 
 To build a bot integrated with [Dialogflow](https://dialogflow.com/), you have to setup Dialogflow following the [Official Setup Guide](https://cloud.google.com/dialogflow/docs/quick/setup) and fill the two values: `GOOGLE_APPLICATION_CREDENTIALS` (the file path of the JSON file that contains your service account key) and `GOOGLE_APPLICATION_PROJECT_ID` (the GCP project ID) into the `.env` file.
 
-`.env`
-
 ```
+# .env
 GOOGLE_APPLICATION_CREDENTIALS=
 GOOGLE_APPLICATION_PROJECT_ID=
 ```
@@ -74,9 +73,8 @@ To build a bot integrated with [QnA Maker](https://www.qnamaker.ai/), you have t
 
 After you publish your knowledge base, you will get `RESOURCE_NAME`, `KNOWLEDGE_BASE_ID`, and `ENDPOINT_KEY` (See [Here](https://docs.microsoft.com/en-us/azure/cognitive-services/qnamaker/quickstarts/get-answer-from-knowledge-base-using-url-tool?pivots=url-test-tool-postman) for detailed guide). Make sure you copy them into the `.env` file.
 
-`.env`
-
 ```
+# .env
 RESOURCE_NAME=
 KNOWLEDGE_BASE_ID=
 ENDPOINT_KEY=
@@ -117,9 +115,8 @@ You can check out the full example [Here](https://github.com/Yoctol/bottender/tr
 
 To build a bot integrated with [LUIS (Language Understanding Intelligent Service)](https://luis.ai/), you have to create a new app in the LUIS portal following the [Official Setup Guide](https://docs.microsoft.com/en-us/azure/cognitive-services/LUIS/get-started-portal-build-app) and fill the three values: `LUIS_APP_ID`, `LUIS_APP_KEY`, and `LUIS_APP_ENDPOINT` into the `.env` file.
 
-`.env`
-
 ```
+# .env
 LUIS_APP_ID=
 LUIS_APP_KEY=
 LUIS_APP_ENDPOINT=
