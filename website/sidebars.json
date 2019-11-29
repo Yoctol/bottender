@@ -29,7 +29,11 @@
       "channel-line-errors",
       "channel-line-migrating-from-sdk"
     ],
-    "Guides (Slack)": ["channel-slack-setup", "channel-slack-handling-events"],
+    "Guides (Slack)": [
+      "channel-slack-setup",
+      "channel-slack-handling-events",
+      "channel-slack-sending-messages"
+    ],
     "Guides (Telegram)": [
       "channel-telegram-setup",
       "channel-telegram-handling-events"
