@@ -158,14 +158,14 @@ const likeStickerMessage = {
   message: {
     mid: 'mid.$cAAE1UUyiiwthh05ZKlbVgkOobi32',
     seq: 348853,
-    sticker_id: 369239263222822,
+    stickerId: 369239263222822,
     attachments: [
       {
         type: 'image',
         payload: {
           url:
             'https://scontent.xx.fbcdn.net/v/t39.1997-6/851557_369239266556155_759568595_n.png?_nc_ad=z-m&oh=547beb90237e24a9682810a5144c9fba&oe=5988CFDC',
-          sticker_id: 369239263222822,
+          stickerId: 369239263222822,
         },
       },
     ],
@@ -183,14 +183,14 @@ const largeLikeStickerMessage = {
   message: {
     mid: 'mid.$cAAE1UUyiiwthh05ZKlbVgkOobi32',
     seq: 348853,
-    sticker_id: 369239343222814,
+    stickerId: 369239343222814,
     attachments: [
       {
         type: 'image',
         payload: {
           url:
             'https://scontent.xx.fbcdn.net/v/t39.1997-6/p100x100/851587_369239346556147_162929011_n.png?_nc_ad=z-m&oh=2008c832edbd2376b09a1008358b8fd9&oe=598FC1B0',
-          sticker_id: 369239343222814,
+          stickerId: 369239343222814,
         },
       },
     ],
@@ -208,14 +208,14 @@ const hugeLikeStickerMessage = {
   message: {
     mid: 'mid.$cAAE1UUyiiwthh05ZKlbVgkOobi32',
     seq: 348853,
-    sticker_id: 369239383222810,
+    stickerId: 369239383222810,
     attachments: [
       {
         type: 'image',
         payload: {
           url:
             'https://scontent.xx.fbcdn.net/v/t39.1997-6/p100x100/851587_369239346556147_162929011_n.png?_nc_ad=z-m&oh=2008c832edbd2376b09a1008358b8fd9&oe=598FC1B0',
-          sticker_id: 369239383222810,
+          stickerId: 369239383222810,
         },
       },
     ],
@@ -231,7 +231,7 @@ const quickReplyMessage = {
   },
   timestamp: 1491798262319,
   message: {
-    quick_reply: {
+    quickReply: {
       payload: 'DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_RED',
     },
     mid: 'mid.$cAAE1UUyiiwthh2BKL1bVhsBhVxvm',
@@ -277,8 +277,8 @@ export const echoMessage = {
   },
   timestamp: 1491798024994,
   message: {
-    is_echo: true,
-    app_id: 205552219930699,
+    isEcho: true,
+    appId: 205552219930699,
     mid: 'mid.$cAAE1UUyiiwthh1yrIlbVhdisQW8M',
     seq: 348859,
     text: 'Difficult the first time, easy the second.',
@@ -306,13 +306,13 @@ const gamePlay = {
     id: 'PAGE_ID',
   },
   timestamp: 1469111400000,
-  game_play: {
-    game_id: 'GAME_ID',
-    player_id: 'PLAYER_ID',
-    context_type: 'SOLO',
-    context_id: 'CONTEXT_ID',
+  gamePlay: {
+    gameId: 'GAME_ID',
+    playerId: 'PLAYER_ID',
+    contextType: 'SOLO',
+    contextId: 'CONTEXT_ID',
     score: 99,
-    payload: '{"SOME_KEY":"SOME_VALUE"}',
+    payload: '{"some_key":"SOME_VALUE"}',
   },
 };
 
@@ -324,11 +324,11 @@ const gamePlayWithNonValidPayload = {
     id: 'PAGE_ID',
   },
   timestamp: 1469111400000,
-  game_play: {
-    game_id: 'GAME_ID',
-    player_id: 'PLAYER_ID',
-    context_type: 'SOLO',
-    context_id: 'CONTEXT_ID',
+  gamePlay: {
+    gameId: 'GAME_ID',
+    playerId: 'PLAYER_ID',
+    contextType: 'SOLO',
+    contextId: 'CONTEXT_ID',
     score: 99,
     payload: 'SOME_STRING',
   },
@@ -357,22 +357,22 @@ const payment = {
   },
   payment: {
     payload: 'DEVELOPER_DEFINED_PAYLOAD',
-    requested_user_info: {
-      shipping_address: {},
-      contact_name: 'Peter Chang',
-      contact_email: 'peter@anemail.com',
-      contact_phone: '+15105551234',
+    requestedUserInfo: {
+      shippingAddress: {},
+      contactName: 'Peter Chang',
+      contactEmail: 'peter@anemail.com',
+      contactPhone: '+15105551234',
     },
-    payment_credential: {
-      provider_type: 'paypal',
-      charge_id: 'ch_18tmdBEoNIH3FPJHa60ep123',
-      fb_payment_id: '123456789',
+    paymentCredential: {
+      providerType: 'paypal',
+      chargeId: 'ch_18tmdBEoNIH3FPJHa60ep123',
+      fbPaymentId: '123456789',
     },
     amount: {
       currency: 'USD',
       amount: '29.62',
     },
-    shipping_option_id: '123',
+    shippingOptionId: '123',
   },
 };
 
@@ -384,16 +384,16 @@ const checkoutUpdate = {
   sender: {
     id: 'USER_ID',
   },
-  checkout_update: {
+  checkoutUpdate: {
     payload: 'DEVELOPER_DEFINED_PAYLOAD',
-    shipping_address: {
+    shippingAddress: {
       id: 10105655000959552,
       country: 'US',
       city: 'MENLO PARK',
       street1: '1 Hacker Way',
       street2: '',
       state: 'CA',
-      postal_code: '94025',
+      postalCode: '94025',
     },
   },
 };
@@ -406,19 +406,19 @@ const preCheckout = {
   sender: {
     id: 'USER_ID',
   },
-  pre_checkout: {
+  preCheckout: {
     payload: 'xyz',
-    requested_user_info: {
-      shipping_address: {
+    requestedUserInfo: {
+      shippingAddress: {
         name: 'Tao Jiang',
-        street_1: '600 Edgewater Blvd',
-        street_2: '',
+        street1: '600 Edgewater Blvd',
+        street2: '',
         city: 'Foster City',
         state: 'CA',
         country: 'US',
-        postal_code: '94404',
+        postalCode: '94404',
       },
-      contact_name: 'Tao Jiang',
+      contactName: 'Tao Jiang',
     },
     amount: {
       currency: 'USD',
@@ -444,7 +444,7 @@ const appRoles = {
     id: '404217156637689',
   },
   timestamp: 1458692752478,
-  app_roles: {
+  appRoles: {
     '123456789': ['automation'],
   },
 };
@@ -457,8 +457,8 @@ const passThreadControl = {
     id: '1423587017700273',
   },
   timestamp: 1458692752478,
-  pass_thread_control: {
-    new_owner_app_id: '123456789',
+  passThreadControl: {
+    newOwnerAppId: '123456789',
     metadata: 'additional content that the caller wants to set',
   },
 };
@@ -471,8 +471,8 @@ const takeThreadControl = {
     id: '1423587017700273',
   },
   timestamp: 1458692752478,
-  take_thread_control: {
-    previous_owner_app_id: '123456789',
+  takeThreadControl: {
+    previousOwnerAppId: '123456789',
     metadata: 'additional content that the caller wants to set',
   },
 };
@@ -485,8 +485,8 @@ const requestThreadControl = {
     id: '1423587017700273',
   },
   timestamp: 1458692752478,
-  request_thread_control: {
-    requested_owner_app_id: 123456789,
+  requestThreadControl: {
+    requestedOwnerAppId: 123456789,
     metadata: 'additional content that the caller wants to set',
   },
 };
@@ -499,8 +499,8 @@ const requestThreadControlFromInbox = {
     id: '1423587017700273',
   },
   timestamp: 1458692752478,
-  request_thread_control: {
-    requested_owner_app_id: 263902037430900,
+  requestThreadControl: {
+    requestedOwnerAppId: 263902037430900,
     metadata: 'additional content that the caller wants to set',
   },
 };
@@ -563,7 +563,7 @@ const customerChatPluginReferral = {
     ref: 'bbbb',
     source: 'CUSTOMER_CHAT_PLUGIN',
     type: 'OPEN_THREAD',
-    origin_domain: 'https://test.domain.tw/',
+    originDomain: 'https://test.domain.tw/',
   },
 };
 
@@ -577,8 +577,8 @@ const brandedCamera = {
     id: '707356222221168',
   },
   timestamp: 1469111400000,
-  branded_camera: {
-    content_ids: ['<CAMERA-EFFECT-ID>', '<CAMERA-EFFECT-ID>'],
+  brandedCamera: {
+    contentIds: ['<CAMERA-EFFECT-ID>', '<CAMERA-EFFECT-ID>'],
     event: 'dismiss',
   },
 };
@@ -632,14 +632,14 @@ it('#message', () => {
   expect(new MessengerEvent(likeStickerMessage).message).toEqual({
     mid: 'mid.$cAAE1UUyiiwthh05ZKlbVgkOobi32',
     seq: 348853,
-    sticker_id: 369239263222822,
+    stickerId: 369239263222822,
     attachments: [
       {
         type: 'image',
         payload: {
           url:
             'https://scontent.xx.fbcdn.net/v/t39.1997-6/851557_369239266556155_759568595_n.png?_nc_ad=z-m&oh=547beb90237e24a9682810a5144c9fba&oe=5988CFDC',
-          sticker_id: 369239263222822,
+          stickerId: 369239263222822,
         },
       },
     ],
@@ -682,7 +682,7 @@ it('#attachments', () => {
       payload: {
         url:
           'https://scontent.xx.fbcdn.net/v/t39.1997-6/851557_369239266556155_759568595_n.png?_nc_ad=z-m&oh=547beb90237e24a9682810a5144c9fba&oe=5988CFDC',
-        sticker_id: 369239263222822,
+        stickerId: 369239263222822,
       },
     },
   ]);
@@ -712,7 +712,7 @@ it('#image', () => {
       'https://scontent.xx.fbcdn.net/v/t35.0-12/17887258_1429713783754592_1626047672_o.jpg?_nc_ad=z-m&oh=e44af5a4c973541ef56333202f160720&oe=58ECF78B',
   });
   expect(new MessengerEvent(likeStickerMessage).image).toEqual({
-    sticker_id: 369239263222822,
+    stickerId: 369239263222822,
     url:
       'https://scontent.xx.fbcdn.net/v/t39.1997-6/851557_369239266556155_759568595_n.png?_nc_ad=z-m&oh=547beb90237e24a9682810a5144c9fba&oe=5988CFDC',
   });
@@ -995,20 +995,20 @@ it('#gamePlay', () => {
   expect(new MessengerEvent(quickReplyMessage).gamePlay).toEqual(null);
   expect(new MessengerEvent(postback).gamePlay).toEqual(null);
   expect(new MessengerEvent(gamePlay).gamePlay).toEqual({
-    game_id: 'GAME_ID',
-    player_id: 'PLAYER_ID',
-    context_type: 'SOLO',
-    context_id: 'CONTEXT_ID',
+    gameId: 'GAME_ID',
+    playerId: 'PLAYER_ID',
+    contextType: 'SOLO',
+    contextId: 'CONTEXT_ID',
     score: 99,
     payload: {
-      SOME_KEY: 'SOME_VALUE',
+      someKey: 'SOME_VALUE',
     },
   });
   expect(new MessengerEvent(gamePlayWithNonValidPayload).gamePlay).toEqual({
-    game_id: 'GAME_ID',
-    player_id: 'PLAYER_ID',
-    context_type: 'SOLO',
-    context_id: 'CONTEXT_ID',
+    gameId: 'GAME_ID',
+    playerId: 'PLAYER_ID',
+    contextType: 'SOLO',
+    contextId: 'CONTEXT_ID',
     score: 99,
     payload: 'SOME_STRING',
   });
@@ -1050,22 +1050,22 @@ it('#payment', () => {
   expect(new MessengerEvent(textMessage).payment).toEqual(null);
   expect(new MessengerEvent(payment).payment).toEqual({
     payload: 'DEVELOPER_DEFINED_PAYLOAD',
-    requested_user_info: {
-      shipping_address: {},
-      contact_name: 'Peter Chang',
-      contact_email: 'peter@anemail.com',
-      contact_phone: '+15105551234',
+    requestedUserInfo: {
+      shippingAddress: {},
+      contactName: 'Peter Chang',
+      contactEmail: 'peter@anemail.com',
+      contactPhone: '+15105551234',
     },
-    payment_credential: {
-      provider_type: 'paypal',
-      charge_id: 'ch_18tmdBEoNIH3FPJHa60ep123',
-      fb_payment_id: '123456789',
+    paymentCredential: {
+      providerType: 'paypal',
+      chargeId: 'ch_18tmdBEoNIH3FPJHa60ep123',
+      fbPaymentId: '123456789',
     },
     amount: {
       currency: 'USD',
       amount: '29.62',
     },
-    shipping_option_id: '123',
+    shippingOptionId: '123',
   });
 });
 
@@ -1090,14 +1090,14 @@ it('#checkoutUpdate', () => {
   expect(new MessengerEvent(postback).checkoutUpdate).toEqual(null);
   expect(new MessengerEvent(checkoutUpdate).checkoutUpdate).toEqual({
     payload: 'DEVELOPER_DEFINED_PAYLOAD',
-    shipping_address: {
+    shippingAddress: {
       id: 10105655000959552,
       country: 'US',
       city: 'MENLO PARK',
       street1: '1 Hacker Way',
       street2: '',
       state: 'CA',
-      postal_code: '94025',
+      postalCode: '94025',
     },
   });
 });
@@ -1121,17 +1121,17 @@ it('#preCheckout', () => {
   expect(new MessengerEvent(postback).preCheckout).toEqual(null);
   expect(new MessengerEvent(preCheckout).preCheckout).toEqual({
     payload: 'xyz',
-    requested_user_info: {
-      shipping_address: {
+    requestedUserInfo: {
+      shippingAddress: {
         name: 'Tao Jiang',
-        street_1: '600 Edgewater Blvd',
-        street_2: '',
+        street1: '600 Edgewater Blvd',
+        street2: '',
         city: 'Foster City',
         state: 'CA',
         country: 'US',
-        postal_code: '94404',
+        postalCode: '94404',
       },
-      contact_name: 'Tao Jiang',
+      contactName: 'Tao Jiang',
     },
     amount: {
       currency: 'USD',
@@ -1195,7 +1195,7 @@ it('#passThreadControl', () => {
   expect(new MessengerEvent(postback).passThreadControl).toEqual(null);
   expect(new MessengerEvent(passThreadControl).passThreadControl).toEqual({
     metadata: 'additional content that the caller wants to set',
-    new_owner_app_id: '123456789',
+    newOwnerAppId: '123456789',
   });
 });
 
@@ -1212,7 +1212,7 @@ it('#takeThreadControl', () => {
   expect(new MessengerEvent(postback).takeThreadControl).toEqual(null);
   expect(new MessengerEvent(takeThreadControl).takeThreadControl).toEqual({
     metadata: 'additional content that the caller wants to set',
-    previous_owner_app_id: '123456789',
+    previousOwnerAppId: '123456789',
   });
 });
 
@@ -1254,7 +1254,7 @@ it('#requestThreadControl', () => {
   expect(new MessengerEvent(requestThreadControl).requestThreadControl).toEqual(
     {
       metadata: 'additional content that the caller wants to set',
-      requested_owner_app_id: 123456789,
+      requestedOwnerAppId: 123456789,
     }
   );
 });
@@ -1298,7 +1298,7 @@ it('#referral', () => {
     ref: 'bbbb',
     source: 'CUSTOMER_CHAT_PLUGIN',
     type: 'OPEN_THREAD',
-    origin_domain: 'https://test.domain.tw/',
+    originDomain: 'https://test.domain.tw/',
   });
   expect(new MessengerEvent(postback).referral).toEqual(null);
   expect(new MessengerEvent(textMessage).referral).toEqual(null);
@@ -1347,7 +1347,7 @@ it('#brandedCamera', () => {
     null
   );
   expect(new MessengerEvent(brandedCamera).brandedCamera).toEqual({
-    content_ids: ['<CAMERA-EFFECT-ID>', '<CAMERA-EFFECT-ID>'],
+    contentIds: ['<CAMERA-EFFECT-ID>', '<CAMERA-EFFECT-ID>'],
     event: 'dismiss',
   });
 });

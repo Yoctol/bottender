@@ -12,18 +12,18 @@ const messageRequest = {
   body: {
     update_id: 141921689,
     message: {
-      message_id: 666,
+      messageId: 666,
       from: {
         id: 427770117,
-        is_bot: false,
-        first_name: 'user_first',
-        last_name: 'user_last',
-        language_code: 'en',
+        isBot: false,
+        firstName: 'user_first',
+        lastName: 'user_last',
+        languageCode: 'en',
       },
       chat: {
         id: 427770117,
-        first_name: 'first',
-        last_name: 'last',
+        firstName: 'first',
+        lastName: 'last',
         type: 'private',
       },
       date: 1499402829,
@@ -34,21 +34,21 @@ const messageRequest = {
 
 const groupMessageRequest = {
   body: {
-    update_id: 141921689,
+    updateId: 141921689,
     message: {
-      message_id: 238,
+      messageId: 238,
       from: {
         id: 427770117,
-        is_bot: false,
-        first_name: 'user_first',
-        last_name: 'user_last',
-        language_code: 'en',
+        isBot: false,
+        firstName: 'user_first',
+        lastName: 'user_last',
+        languageCode: 'en',
       },
       chat: {
         id: -225456171,
         title: 'Bottender',
         type: 'group',
-        all_members_are_administrators: true,
+        allMembersAreAdministrators: true,
       },
       date: 1515758146,
       text: 'hi',
@@ -58,24 +58,24 @@ const groupMessageRequest = {
 
 const editedMessageRequest = {
   body: {
-    update_id: 141921687,
-    edited_message: {
-      message_id: 229,
+    updateId: 141921687,
+    editedMessage: {
+      messageId: 229,
       from: {
         id: 427770117,
-        is_bot: false,
-        first_name: 'user_first',
-        last_name: 'user_last',
-        language_code: 'en',
+        isBot: false,
+        firstName: 'user_first',
+        lastName: 'user_last',
+        languageCode: 'en',
       },
       chat: {
         id: 427770117,
-        first_name: 'user_first',
-        last_name: 'user_last',
-        language_code: 'en',
+        firstName: 'user_first',
+        lastName: 'user_last',
+        languageCode: 'en',
       },
       date: 1515736358,
-      edit_date: 1515758017,
+      editDate: 1515758017,
       text: 'hiiiii',
     },
   },
@@ -83,24 +83,24 @@ const editedMessageRequest = {
 
 const groupEditedMessageRequest = {
   body: {
-    update_id: 141921688,
-    edited_message: {
-      message_id: 234,
+    updateId: 141921688,
+    editedMessage: {
+      messageId: 234,
       from: {
         id: 427770117,
-        is_bot: false,
-        first_name: 'user_first',
-        last_name: 'user_last',
-        language_code: 'en',
+        isBot: false,
+        firstName: 'user_first',
+        lastName: 'user_last',
+        languageCode: 'en',
       },
       chat: {
         id: -225456171,
         title: 'Bottender',
         type: 'group',
-        all_members_are_administrators: true,
+        allMembersAreAdministrators: true,
       },
       date: 1515736470,
-      edit_date: 1515758048,
+      editDate: 1515758048,
       text: 'hiiiii',
     },
   },
@@ -108,9 +108,9 @@ const groupEditedMessageRequest = {
 
 const channelPostRequest = {
   body: {
-    update_id: 141921710,
-    channel_post: {
-      message_id: 2,
+    updateId: 141921710,
+    channelPost: {
+      messageId: 2,
       chat: {
         id: -1001305240521,
         title: 'channel_12345',
@@ -124,16 +124,16 @@ const channelPostRequest = {
 
 const editedChannelPostRequest = {
   body: {
-    update_id: 141921711,
-    edited_channel_post: {
-      message_id: 2,
+    updateId: 141921711,
+    editedChannelPost: {
+      messageId: 2,
       chat: {
         id: -1001305240521,
         title: 'channel_12345',
         type: 'channel',
       },
       date: 1515760382,
-      edit_date: 1515760478,
+      editDate: 1515760478,
       text: 'post~~~edited',
     },
   },
@@ -141,15 +141,15 @@ const editedChannelPostRequest = {
 
 const inlineQueryRequest = {
   body: {
-    update_id: 141921700,
-    inline_query: {
+    updateId: 141921700,
+    inlineQuery: {
       id: '1837258670654537434',
       from: {
         id: 427770117,
-        is_bot: false,
-        first_name: 'user_first',
-        last_name: 'user_last',
-        language_code: 'en',
+        isBot: false,
+        firstName: 'user_first',
+        lastName: 'user_last',
+        languageCode: 'en',
       },
       query: '123',
       offset: '',
@@ -159,17 +159,17 @@ const inlineQueryRequest = {
 
 const chosenInlineResultRequest = {
   body: {
-    update_id: 141921701,
-    chosen_inline_result: {
-      result_id: '2837258670654537434',
+    updateId: 141921701,
+    chosenInlineResult: {
+      resultId: '2837258670654537434',
       from: {
         id: 427770117,
-        is_bot: false,
-        first_name: 'user_first',
-        last_name: 'user_last',
-        language_code: 'en',
+        isBot: false,
+        firstName: 'user_first',
+        lastName: 'user_last',
+        languageCode: 'en',
       },
-      inline_message_id: '1837258670654537434',
+      inlineMessageId: '1837258670654537434',
       query: '123',
     },
   },
@@ -177,34 +177,34 @@ const chosenInlineResultRequest = {
 
 const callbackQueryRequest = {
   body: {
-    update_id: 141921689,
-    callback_query: {
+    updateId: 141921689,
+    callbackQuery: {
       id: '1068230107531367617',
       from: {
         id: 427770117,
-        is_bot: false,
-        first_name: 'user_first',
-        last_name: 'user_last',
-        language_code: 'en',
+        isBot: false,
+        firstName: 'user_first',
+        lastName: 'user_last',
+        languageCode: 'en',
       },
       message: {
-        message_id: 3300,
+        messageId: 3300,
         from: {
           id: 313534466,
-          is_bot: true,
-          first_name: 'bot_first',
+          isBot: true,
+          firstName: 'bot_first',
           username: 'bot_name',
         },
         chat: {
           id: 427770117,
-          first_name: 'user_first',
-          last_name: 'user_last',
+          firstName: 'user_first',
+          lastName: 'user_last',
           type: 'private',
         },
         date: 1502371827,
         text: 'text',
       },
-      chat_instance: '-1828607021492040088',
+      chatInstance: '-1828607021492040088',
       data: 'data',
     },
   },
@@ -212,34 +212,34 @@ const callbackQueryRequest = {
 
 const groupCallbackQueryRequest = {
   body: {
-    update_id: 141921690,
-    callback_query: {
+    updateId: 141921690,
+    callbackQuery: {
       id: '1837258667245133763',
       from: {
         id: 427770117,
-        is_bot: false,
-        first_name: 'user_first',
-        last_name: 'user_last',
-        language_code: 'en',
+        isBot: false,
+        firstName: 'user_first',
+        lastName: 'user_last',
+        languageCode: 'en',
       },
       message: {
-        message_id: 237,
+        messageId: 237,
         from: {
           id: 313534466,
-          is_bot: true,
-          first_name: 'bot_first',
+          isBot: true,
+          firstName: 'bot_first',
           username: 'bot_name',
         },
         chat: {
           id: -225456171,
           title: 'Bottender',
           type: 'group',
-          all_members_are_administrators: true,
+          allMembersAreAdministrators: true,
         },
         date: 1515736481,
         text: 'Hello World',
       },
-      chat_instance: '-582211693826679000',
+      chatInstance: '-582211693826679000',
       data: '123',
     },
   },
@@ -247,23 +247,23 @@ const groupCallbackQueryRequest = {
 
 const shippingQueryRequest = {
   body: {
-    update_id: 141921690,
-    shipping_query: {
+    updateId: 141921690,
+    shippingQuery: {
       id: '123',
       from: {
         id: 427770117,
-        first_name: 'user_first',
-        last_name: 'user_last',
-        language_code: 'en',
+        firstName: 'user_first',
+        lastName: 'user_last',
+        languageCode: 'en',
       },
-      invoice_payload: 'bot payload',
-      shipping_address: {
-        country_code: 'US',
+      invoicePayload: 'bot payload',
+      shippingAddress: {
+        countryCode: 'US',
         state: 'New York',
         city: 'New York',
-        street_line1: 'xx',
-        street_line2: 'xx',
-        post_code: '10001',
+        streetLine1: 'xx',
+        streetLine2: 'xx',
+        postCode: '10001',
       },
     },
   },
@@ -271,18 +271,18 @@ const shippingQueryRequest = {
 
 const preCheckoutQueryRequest = {
   body: {
-    update_id: 141921690,
-    pre_checkout_query: {
+    updateId: 141921690,
+    preCheckoutQuery: {
       id: '123',
       from: {
         id: 427770117,
-        first_name: 'user_first',
-        last_name: 'user_last',
-        language_code: 'en',
+        firstName: 'user_first',
+        lastName: 'user_last',
+        languageCode: 'en',
       },
       currency: 'USD',
-      total_amount: 145,
-      invoice_payload: 'bot payload',
+      totalAmount: 145,
+      invoicePayload: 'bot payload',
     },
   },
 };
@@ -420,10 +420,10 @@ describe('#updateSession', () => {
       group: undefined,
       user: {
         id: 427770117,
-        is_bot: false,
-        first_name: 'user_first',
-        last_name: 'user_last',
-        language_code: 'en',
+        isBot: false,
+        firstName: 'user_first',
+        lastName: 'user_last',
+        languageCode: 'en',
         _updatedAt: expect.any(String),
       },
     });
@@ -442,15 +442,15 @@ describe('#updateSession', () => {
         id: -225456171,
         title: 'Bottender',
         type: 'group',
-        all_members_are_administrators: true,
+        allMembersAreAdministrators: true,
         _updatedAt: expect.any(String),
       },
       user: {
         id: 427770117,
-        is_bot: false,
-        first_name: 'user_first',
-        last_name: 'user_last',
-        language_code: 'en',
+        isBot: false,
+        firstName: 'user_first',
+        lastName: 'user_last',
+        languageCode: 'en',
         _updatedAt: expect.any(String),
       },
     });
@@ -468,10 +468,10 @@ describe('#updateSession', () => {
       group: undefined,
       user: {
         id: 427770117,
-        is_bot: false,
-        first_name: 'user_first',
-        last_name: 'user_last',
-        language_code: 'en',
+        isBot: false,
+        firstName: 'user_first',
+        lastName: 'user_last',
+        languageCode: 'en',
         _updatedAt: expect.any(String),
       },
     });
@@ -490,15 +490,15 @@ describe('#updateSession', () => {
         id: -225456171,
         title: 'Bottender',
         type: 'group',
-        all_members_are_administrators: true,
+        allMembersAreAdministrators: true,
         _updatedAt: expect.any(String),
       },
       user: {
         id: 427770117,
-        is_bot: false,
-        first_name: 'user_first',
-        last_name: 'user_last',
-        language_code: 'en',
+        isBot: false,
+        firstName: 'user_first',
+        lastName: 'user_last',
+        languageCode: 'en',
         _updatedAt: expect.any(String),
       },
     });
@@ -553,10 +553,10 @@ describe('#updateSession', () => {
       group: undefined,
       user: {
         id: 427770117,
-        is_bot: false,
-        first_name: 'user_first',
-        last_name: 'user_last',
-        language_code: 'en',
+        isBot: false,
+        firstName: 'user_first',
+        lastName: 'user_last',
+        languageCode: 'en',
         _updatedAt: expect.any(String),
       },
     });
@@ -573,10 +573,10 @@ describe('#updateSession', () => {
       group: undefined,
       user: {
         id: 427770117,
-        is_bot: false,
-        first_name: 'user_first',
-        last_name: 'user_last',
-        language_code: 'en',
+        isBot: false,
+        firstName: 'user_first',
+        lastName: 'user_last',
+        languageCode: 'en',
         _updatedAt: expect.any(String),
       },
     });
@@ -593,10 +593,10 @@ describe('#updateSession', () => {
       group: undefined,
       user: {
         id: 427770117,
-        is_bot: false,
-        first_name: 'user_first',
-        last_name: 'user_last',
-        language_code: 'en',
+        isBot: false,
+        firstName: 'user_first',
+        lastName: 'user_last',
+        languageCode: 'en',
         _updatedAt: expect.any(String),
       },
     });
@@ -614,15 +614,15 @@ describe('#updateSession', () => {
         id: -225456171,
         title: 'Bottender',
         type: 'group',
-        all_members_are_administrators: true,
+        allMembersAreAdministrators: true,
         _updatedAt: expect.any(String),
       },
       user: {
         id: 427770117,
-        is_bot: false,
-        first_name: 'user_first',
-        last_name: 'user_last',
-        language_code: 'en',
+        isBot: false,
+        firstName: 'user_first',
+        lastName: 'user_last',
+        languageCode: 'en',
         _updatedAt: expect.any(String),
       },
     });
@@ -639,9 +639,9 @@ describe('#updateSession', () => {
       group: undefined,
       user: {
         id: 427770117,
-        first_name: 'user_first',
-        last_name: 'user_last',
-        language_code: 'en',
+        firstName: 'user_first',
+        lastName: 'user_last',
+        languageCode: 'en',
         _updatedAt: expect.any(String),
       },
     });
@@ -658,9 +658,9 @@ describe('#updateSession', () => {
       group: undefined,
       user: {
         id: 427770117,
-        first_name: 'user_first',
-        last_name: 'user_last',
-        language_code: 'en',
+        firstName: 'user_first',
+        lastName: 'user_last',
+        languageCode: 'en',
         _updatedAt: expect.any(String),
       },
     });

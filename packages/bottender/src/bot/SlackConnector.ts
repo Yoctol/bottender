@@ -25,13 +25,13 @@ export type SlackUser = {
 
 type EventsAPIBody = {
   token: string;
-  team_id: string;
-  api_app_id: string;
+  teamId: string;
+  apiAppId: string;
   type: EventAPITypes;
   event: Message;
-  authed_users: string[];
-  event_id: string;
-  event_time: number;
+  authedUsers: string[];
+  eventId: string;
+  eventTime: number;
 };
 
 export type SlackRequestBody = EventsAPIBody | { payload: string };
@@ -107,7 +107,7 @@ export default class SlackConnector
   _isBotEventRequest(body: SlackRequestBody): boolean {
     const rawEvent = this._getRawEventFromRequest(body);
     return !!(
-      rawEvent.bot_id ||
+      rawEvent.botId ||
       ('subtype' in rawEvent && rawEvent.subtype === 'bot_message')
     );
   }
@@ -134,8 +134,8 @@ export default class SlackConnector
     }
 
     // For pin_added format
-    if (rawEvent.channel_id) {
-      return rawEvent.channel_id;
+    if (rawEvent.channelId) {
+      return rawEvent.channelId;
     }
 
     // For reaction_added format

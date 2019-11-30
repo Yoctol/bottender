@@ -52,21 +52,21 @@ type PolicyEnforcementRequestBody = {
 type AppRolesRequestBody = {
   recipient: Recipient;
   timestamp: number;
-  app_roles: AppRoles;
+  appRoles: AppRoles;
 };
 
 type PassThreadControlRequestBody = {
   sender: Sender;
   recipient: Recipient;
   timestamp: number;
-  pass_thread_control: PassThreadControl;
+  passThreadControl: PassThreadControl;
 };
 
 type TakeThreadControlRequestBody = {
   sender: Sender;
   recipient: Recipient;
   timestamp: number;
-  take_thread_control: TakeThreadControl;
+  takeThreadControl: TakeThreadControl;
 };
 
 export type MessengerRequestBody =
@@ -186,7 +186,7 @@ export default class MessengerConnector
   }
 
   _getPageIdFromRawEvent(rawEvent: MessengerRawEvent): string | null {
-    if (rawEvent.message && rawEvent.message.is_echo && rawEvent.sender) {
+    if (rawEvent.message && rawEvent.message.isEcho && rawEvent.sender) {
       return rawEvent.sender.id;
     }
     if (rawEvent.recipient) {
@@ -236,7 +236,7 @@ export default class MessengerConnector
     if (
       rawEvent &&
       rawEvent.message &&
-      rawEvent.message.is_echo &&
+      rawEvent.message.isEcho &&
       rawEvent.recipient
     ) {
       return rawEvent.recipient.id;
@@ -343,7 +343,7 @@ export default class MessengerConnector
 
       let pageId = null;
 
-      if (rawEvent.message && rawEvent.message.is_echo && rawEvent.sender) {
+      if (rawEvent.message && rawEvent.message.isEcho && rawEvent.sender) {
         pageId = rawEvent.sender.id;
       } else if (rawEvent.recipient) {
         pageId = rawEvent.recipient.id;

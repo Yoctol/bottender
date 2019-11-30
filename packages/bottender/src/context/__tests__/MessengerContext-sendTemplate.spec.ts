@@ -62,7 +62,7 @@ describe('#sendTemplate', () => {
     const { context, client, session } = setup();
 
     await context.sendTemplate({
-      template_type: 'button',
+      templateType: 'button',
       text: 'title',
       buttons: [
         {
@@ -76,7 +76,7 @@ describe('#sendTemplate', () => {
     expect(client.sendTemplate).toBeCalledWith(
       session.user.id,
       {
-        template_type: 'button',
+        templateType: 'button',
         text: 'title',
         buttons: [
           {
@@ -129,7 +129,7 @@ describe('#sendGenericTemplate', () => {
     );
   });
 
-  it('can call with custom messaging_type', async () => {
+  it('can call with custom messagingType', async () => {
     const { context, client, session } = setup();
 
     const elements = {};

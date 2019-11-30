@@ -56,8 +56,8 @@ const echoRequest = {
             },
             timestamp: 1492414608982.0,
             message: {
-              is_echo: true,
-              app_id: 1821152484774199,
+              isEcho: true,
+              appId: 1821152484774199,
               mid: 'mid.$cAARS90328R5hrBz-Vlbete17ftIb',
               seq: 661428,
               text: 'text',
@@ -151,7 +151,7 @@ const webhookTestRequest = {
           {
             field: 'messages',
             value: {
-              page_id: '<PAGE_ID>',
+              pageId: '<PAGE_ID>',
             },
           },
         ],
@@ -269,9 +269,9 @@ describe('#updateSession', () => {
     const { connector, mockGraphAPIClient } = setup();
     const user = {
       id: '1412611362105802',
-      first_name: 'firstName',
-      last_name: 'lastName',
-      profile_pic: 'https://example.com/pic.png',
+      firstName: 'firstName',
+      lastName: 'lastName',
+      profilePic: 'https://example.com/pic.png',
       locale: 'en_US',
       timezone: 8,
       gender: 'male',
@@ -297,13 +297,13 @@ describe('#updateSession', () => {
     });
   });
 
-  it('update session when profile_pic expired', async () => {
+  it('update session when profilePic expired', async () => {
     const { connector, mockGraphAPIClient } = setup();
     const user = {
       id: '1412611362105802',
-      first_name: 'firstName',
-      last_name: 'lastName',
-      profile_pic: 'https://example.com/pic.png',
+      firstName: 'firstName',
+      lastName: 'lastName',
+      profilePic: 'https://example.com/pic.png',
       locale: 'en_US',
       timezone: 8,
       gender: 'male',
@@ -312,7 +312,7 @@ describe('#updateSession', () => {
 
     const session = {
       user: {
-        profile_pic: 'https://example.com/pic.png?oe=386D4380', // expired at 2000-01-01T00:00:00.000Z
+        profilePic: 'https://example.com/pic.png?oe=386D4380', // expired at 2000-01-01T00:00:00.000Z
       },
     };
     await connector.updateSession(session, request.body);
@@ -337,9 +337,9 @@ describe('#updateSession', () => {
     const { connector, mockGraphAPIClient } = setup();
     const user = {
       id: '1412611362105802',
-      first_name: 'firstName',
-      last_name: 'lastName',
-      profile_pic: 'https://example.com/pic.png',
+      firstName: 'firstName',
+      lastName: 'lastName',
+      profilePic: 'https://example.com/pic.png',
       locale: 'en_US',
       timezone: 8,
       gender: 'male',
@@ -348,7 +348,7 @@ describe('#updateSession', () => {
 
     const session = {
       user: {
-        profile_pic: 'https://example.com/pic.png?oe=abc666666666', // wrong timestamp
+        profilePic: 'https://example.com/pic.png?oe=abc666666666', // wrong timestamp
       },
     };
     await connector.updateSession(session, request.body);
@@ -373,9 +373,9 @@ describe('#updateSession', () => {
     const { connector, mockGraphAPIClient } = setup();
     const user = {
       id: '1412611362105802',
-      first_name: 'firstName',
-      last_name: 'lastName',
-      profile_pic: 'https://example.com/pic.png',
+      firstName: 'firstName',
+      lastName: 'lastName',
+      profilePic: 'https://example.com/pic.png',
       locale: 'en_US',
       timezone: 8,
       gender: 'male',
@@ -384,7 +384,7 @@ describe('#updateSession', () => {
 
     const session = {
       user: {
-        profile_pic123: 'https://example.com/pic.png?oe=386D4380', // wrong name
+        profilePic123: 'https://example.com/pic.png?oe=386D4380', // wrong name
       },
     };
     await connector.updateSession(session, request.body);

@@ -24,7 +24,7 @@ const messageRawEvent = {
   text: 'Experience is the best teacher.',
   ts: '1500435914.425136',
   channel: 'C6A9RJJ3F',
-  event_ts: '1500435914.425136',
+  eventTs: '1500435914.425136',
 };
 
 const threadRawEvent = {
@@ -33,9 +33,9 @@ const threadRawEvent = {
   user: 'U056KAAAA',
   text: 'in a thread',
   ts: '1515480368.000083',
-  source_team: 'T056KAAAA',
+  sourceTeam: 'T056KAAAA',
   team: 'T056KAAAA',
-  thread_ts: '1515479974.000115',
+  threadTs: '1515479974.000115',
 };
 
 const userSession = {
@@ -105,7 +105,7 @@ describe('#postMessage', () => {
     expect(client.postMessage).toBeCalledWith('C6A9RJJ3F', 'hello', {});
   });
 
-  it('should set thread_ts if event is in a thread', async () => {
+  it('should set threadTs if event is in a thread', async () => {
     const { context, client } = setup({ rawEvent: threadRawEvent });
 
     await context.postMessage('hello');
@@ -118,11 +118,11 @@ describe('#postMessage', () => {
   it('should support overwrite options', async () => {
     const { context, client } = setup();
 
-    await context.postMessage('hello', { attachments: [], as_user: false });
+    await context.postMessage('hello', { attachments: [], asUser: false });
 
     expect(client.postMessage).toBeCalledWith('C6A9RJJ3F', 'hello', {
       attachments: [],
-      as_user: false,
+      asUser: false,
     });
   });
 

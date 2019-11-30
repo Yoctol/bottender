@@ -29,7 +29,7 @@ const channelHistoryChanged = {
   type: 'channel_history_changed',
   latest: '1358877455.000010',
   ts: '1361482916.000003',
-  event_ts: '1361482916.000004',
+  eventTs: '1361482916.000004',
 };
 
 const channelRename = {
@@ -50,41 +50,41 @@ const channelUnarchive = {
 const dndUpdated = {
   type: 'dnd_updated',
   user: 'U1234',
-  dnd_status: {
-    dnd_enabled: true,
-    next_dnd_start_ts: 1450387800,
-    next_dnd_end_ts: 1450423800,
-    snooze_enabled: true,
-    snooze_endtime: 1450373897,
+  dndStatus: {
+    dndEnabled: true,
+    nextDndStartTs: 1450387800,
+    nextDndEndTs: 1450423800,
+    snoozeEnabled: true,
+    snoozeEndtime: 1450373897,
   },
 };
 
 const dndUpdatedUser = {
   type: 'dnd_updated_user',
   user: 'U1234',
-  dnd_status: {
-    dnd_enabled: true,
-    next_dnd_start_ts: 1450387800,
-    next_dnd_end_ts: 1450423800,
+  dndStatus: {
+    dndEnabled: true,
+    nextDndStartTs: 1450387800,
+    nextDndEndTs: 1450423800,
   },
 };
 
 const emailDomainChanged = {
   type: 'email_domain_changed',
-  email_domain: 'example.com',
-  event_ts: '1360782804.083113',
+  emailDomain: 'example.com',
+  eventTs: '1360782804.083113',
 };
 
 const emojiChanged = {
   type: 'emoji_changed',
   subtype: 'remove',
   names: ['picard_facepalm'],
-  event_ts: '1361482916.000004',
+  eventTs: '1361482916.000004',
 };
 
 const fileChange = {
   type: 'file_change',
-  file_id: 'F2147483862',
+  fileId: 'F2147483862',
   file: {
     id: 'F2147483862',
   },
@@ -93,7 +93,7 @@ const fileChange = {
 const fileCommentAdded = {
   type: 'file_comment_added',
   comment: {},
-  file_id: 'F2147483862',
+  fileId: 'F2147483862',
   file: {
     id: 'F2147483862',
   },
@@ -102,7 +102,7 @@ const fileCommentAdded = {
 const fileCommentDeleted = {
   type: 'file_comment_deleted',
   comment: 'Fc67890',
-  file_id: 'F2147483862',
+  fileId: 'F2147483862',
   file: {
     id: 'F2147483862',
   },
@@ -111,7 +111,7 @@ const fileCommentDeleted = {
 const fileCommentEdited = {
   type: 'file_comment_edited',
   comment: {},
-  file_id: 'F2147483862',
+  fileId: 'F2147483862',
   file: {
     id: 'F2147483862',
   },
@@ -119,7 +119,7 @@ const fileCommentEdited = {
 
 const fileCreated = {
   type: 'file_created',
-  file_id: 'F2147483862',
+  fileId: 'F2147483862',
   file: {
     id: 'F2147483862',
   },
@@ -127,13 +127,13 @@ const fileCreated = {
 
 const fileDeleted = {
   type: 'file_deleted',
-  file_id: 'F2147483862',
-  event_ts: '1361482916.000004',
+  fileId: 'F2147483862',
+  eventTs: '1361482916.000004',
 };
 
 const filePublic = {
   type: 'file_public',
-  file_id: 'F2147483862',
+  fileId: 'F2147483862',
   file: {
     id: 'F2147483862',
   },
@@ -141,7 +141,7 @@ const filePublic = {
 
 const fileShared = {
   type: 'file_shared',
-  file_id: 'F2147483862',
+  fileId: 'F2147483862',
   file: {
     id: 'F2147483862',
   },
@@ -149,7 +149,7 @@ const fileShared = {
 
 const fileUnshared = {
   type: 'file_unshared',
-  file_id: 'F2147483862',
+  fileId: 'F2147483862',
   file: {
     id: 'F2147483862',
   },
@@ -157,12 +157,12 @@ const fileUnshared = {
 
 const gridMigrationFinished = {
   type: 'grid_migration_finished',
-  enterprise_id: 'EXXXXXXXX',
+  enterpriseId: 'EXXXXXXXX',
 };
 
 const gridMigrationStarted = {
   type: 'grid_migration_started',
-  enterprise_id: 'EXXXXXXXX',
+  enterpriseId: 'EXXXXXXXX',
 };
 
 const groupArchive = {
@@ -180,7 +180,7 @@ const groupHistoryChanged = {
   type: 'group_history_changed',
   latest: '1358877455.000010',
   ts: '1361482916.000003',
-  event_ts: '1361482916.000004',
+  eventTs: '1361482916.000004',
 };
 
 const groupOpen = {
@@ -219,7 +219,7 @@ const imHistoryChanged = {
   type: 'im_history_changed',
   latest: '1358877455.000010',
   ts: '1361482916.000003',
-  event_ts: '1361482916.000004',
+  eventTs: '1361482916.000004',
 };
 
 const imOpen = {
@@ -232,7 +232,7 @@ const linkShared = {
   type: 'link_shared',
   channel: 'Cxxxxxx',
   user: 'Uxxxxxxx',
-  message_ts: '123456789.9875',
+  messageTs: '123456789.9875',
   links: [
     {
       domain: 'example.com',
@@ -253,7 +253,7 @@ const memberJoinedChannel = {
   type: 'member_joined_channel',
   user: 'W06GH7XHN',
   channel: 'C0698JE0H',
-  channel_type: 'C',
+  channelType: 'C',
   inviter: 'U123456789',
 };
 
@@ -261,7 +261,7 @@ const memberLeftChannel = {
   type: 'member_left_channel',
   user: 'W06GH7XHN',
   channel: 'C0698JE0H',
-  channel_type: 'C',
+  channelType: 'C',
 };
 
 const message = {
@@ -307,116 +307,116 @@ const mpimMessage = {
 const pinAdded = {
   type: 'pin_added',
   user: 'U024BE7LH',
-  channel_id: 'C02ELGNBH',
+  channelId: 'C02ELGNBH',
   item: {},
-  event_ts: '1360782804.083113',
+  eventTs: '1360782804.083113',
 };
 
 const pinRemoved = {
   type: 'pin_removed',
   user: 'U024BE7LH',
-  channel_id: 'C02ELGNBH',
+  channelId: 'C02ELGNBH',
   item: {},
-  has_pins: false,
-  event_ts: '1360782804.083113',
+  hasPins: false,
+  eventTs: '1360782804.083113',
 };
 
 const reactionAdded = {
   type: 'reaction_added',
   user: 'U024BE7LH',
   reaction: 'thumbsup',
-  item_user: 'U0G9QF9C6',
+  itemUser: 'U0G9QF9C6',
   item: {},
-  event_ts: '1360782804.083113',
+  eventTs: '1360782804.083113',
 };
 
 const reactionRemoved = {
   type: 'reaction_removed',
   user: 'U024BE7LH',
   reaction: 'thumbsup',
-  item_user: 'U0G9QF9C6',
+  itemUser: 'U0G9QF9C6',
   item: {},
-  event_ts: '1360782804.083113',
+  eventTs: '1360782804.083113',
 };
 
 const starAdded = {
   type: 'star_added',
   user: 'U024BE7LH',
   item: {},
-  event_ts: '1360782804.083113',
+  eventTs: '1360782804.083113',
 };
 
 const starRemoved = {
   type: 'star_removed',
   user: 'U024BE7LH',
   item: {},
-  event_ts: '1360782804.083113',
+  eventTs: '1360782804.083113',
 };
 
 const subteamCreated = {
   type: 'subteam_created',
   subteam: {
     id: 'S0615G0KT',
-    team_id: 'T060RNRCH',
-    is_usergroup: true,
+    teamId: 'T060RNRCH',
+    isUsergroup: true,
     name: 'Marketing Team',
     description: 'Marketing gurus, PR experts and product advocates.',
     handle: 'marketing-team',
-    is_external: false,
-    date_create: 1446746793,
-    date_update: 1446746793,
-    date_delete: 0,
-    auto_type: null,
-    created_by: 'U060RNRCZ',
-    updated_by: 'U060RNRCZ',
-    deleted_by: null,
+    isExternal: false,
+    dateCreate: 1446746793,
+    dateUpdate: 1446746793,
+    dateDelete: 0,
+    autoType: null,
+    createdBy: 'U060RNRCZ',
+    updatedBy: 'U060RNRCZ',
+    deletedBy: null,
     prefs: {
       channels: [],
       groups: [],
     },
-    user_count: '0',
+    userCount: '0',
   },
 };
 
 const subteamMembersChanged = {
   type: 'subteam_members_changed',
-  subteam_id: 'S0614TZR7',
-  team_id: 'T060RNRCH',
-  date_previous_update: 1446670362,
-  date_update: 1492906952,
-  added_users: ['U060RNRCZ', 'U060ULRC0', 'U061309JM'],
-  added_users_count: '3',
-  removed_users: ['U06129G2V'],
-  removed_users_count: '1',
+  subteamId: 'S0614TZR7',
+  teamId: 'T060RNRCH',
+  datePrevious_update: 1446670362,
+  dateUpdate: 1492906952,
+  addedUsers: ['U060RNRCZ', 'U060ULRC0', 'U061309JM'],
+  addedUsersCount: '3',
+  removedUsers: ['U06129G2V'],
+  removedUsersCount: '1',
 };
 
 const subteamSelfAdded = {
   type: 'subteam_self_added',
-  subteam_id: 'S0615G0KT',
+  subteamId: 'S0615G0KT',
 };
 
 const subteamSelfRemoved = {
   type: 'subteam_self_removed',
-  subteam_id: 'S0615G0KT',
+  subteamId: 'S0615G0KT',
 };
 
 const subteamUpdated = {
   type: 'subteam_updated',
   subteam: {
     id: 'S0614TZR7',
-    team_id: 'T060RNRCH',
-    is_usergroup: true,
+    teamId: 'T060RNRCH',
+    isUsergroup: true,
     name: 'Team Admins',
     description: 'A group of all Administrators on your team.',
     handle: 'admins',
-    is_external: false,
-    date_create: 1446598059,
-    date_update: 1446670362,
-    date_delete: 0,
-    auto_type: 'admin',
-    created_by: 'USLACKBOT',
-    updated_by: 'U060RNRCZ',
-    deleted_by: null,
+    isExternal: false,
+    dateCreate: 1446598059,
+    dateUpdate: 1446670362,
+    dateDelete: 0,
+    autoType: 'admin',
+    createdBy: 'USLACKBOT',
+    updatedBy: 'U060RNRCZ',
+    deletedBy: null,
     prefs: {
       channels: [],
       groups: [],
@@ -470,7 +470,7 @@ const interactiveMessageEvent = {
       value: 'chess',
     },
   ],
-  callback_id: 'wopr_game',
+  callbackId: 'wopr_game',
   team: {
     id: 'T056K3CM5',
     domain: 'ricebug',
@@ -483,19 +483,19 @@ const interactiveMessageEvent = {
     id: 'U056K3CN1',
     name: 'tw0517tw',
   },
-  action_ts: '1511153911.446899',
-  message_ts: '1511153905.000093',
-  attachment_id: '1',
+  actionTs: '1511153911.446899',
+  messageTs: '1511153905.000093',
+  attachmentId: '1',
   token: 'n8uIomPoBtc7fSnbHbQcmwdy',
-  is_app_unfurl: false,
-  original_message: {
+  isAppUnfurl: false,
+  originalMessage: {
     type: 'message',
     user: 'U7W1PH7MY',
     text: 'Would you like to play a game?',
-    bot_id: 'B7VUVQTK5',
+    botId: 'B7VUVQTK5',
     attachments: [
       {
-        callback_id: 'wopr_game',
+        callbackId: 'wopr_game',
         fallback: 'You are unable to choose a game',
         text: 'Choose a game to play',
         id: 1,
@@ -527,8 +527,8 @@ const interactiveMessageEvent = {
             confirm: {
               text: "Wouldn't you prefer a good game of chess?",
               title: 'Are you sure?',
-              ok_text: 'Yes',
-              dismiss_text: 'No',
+              okText: 'Yes',
+              dismissText: 'No',
             },
           },
         ],
@@ -536,9 +536,9 @@ const interactiveMessageEvent = {
     ],
     ts: '1511153905.000093',
   },
-  response_url:
+  responseUrl:
     'https://hooks.slack.com/actions/T056K3CM5/274366307953/73rSfbP0LcVPWfAYB3GicEdD',
-  trigger_id: '274927463524.5223114719.95a5b9f6d3b30dc7e07dec6bfa4610e5',
+  triggerId: '274927463524.5223114719.95a5b9f6d3b30dc7e07dec6bfa4610e5',
 };
 
 it('#rawEvent', () => {

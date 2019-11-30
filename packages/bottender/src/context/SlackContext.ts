@@ -54,7 +54,7 @@ export default class SlackContext extends Context<SlackOAuthClient, SlackEvent>
     this._isHandled = true;
 
     return this._client.postMessage(channelId, message, {
-      threadTs: this._event.rawEvent.thread_ts,
+      threadTs: this._event.rawEvent.threadTs,
       ...options,
     });
   }

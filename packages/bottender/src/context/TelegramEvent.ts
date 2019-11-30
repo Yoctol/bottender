@@ -2,55 +2,55 @@ import { Event } from './Event';
 
 type TelegramUser = {
   id: number;
-  first_name: string;
-  last_name?: string;
+  firstName: string;
+  lastName?: string;
   username?: string;
-  language_code?: string;
+  languageCode?: string;
 };
 
 type Photo = {
-  file_id: string;
+  fileId: string;
   width: number;
   height: number;
 }[];
 
 type Audio = {
-  file_id: string;
+  fileId: string;
   width: number;
   height: number;
 };
 
 type Document = {
-  file_id: string;
+  fileId: string;
 };
 
 type Sticker = {
-  file_id: string;
+  fileId: string;
   width: number;
   height: number;
 };
 
 type Video = {
-  file_id: string;
+  fileId: string;
   width: number;
   height: number;
   duration: number;
 };
 
 type Voice = {
-  file_id: string;
+  fileId: string;
   duration: number;
 };
 
 type VideoNote = {
-  file_id: string;
+  fileId: string;
   length: number;
   duration: number;
 };
 
 type Contact = {
-  phone_number: string;
-  first_name: string;
+  phoneNumber: string;
+  firstName: string;
 };
 
 type Location = {
@@ -65,26 +65,26 @@ type Venue = {
 };
 
 type File = {
-  file_id: string;
+  fileId: string;
 };
 
 type Game = {
   title: string;
   description: string;
   photo: {
-    file_id: string;
+    fileId: string;
     width: number;
     height: number;
   }[];
 };
 
 type Message = {
-  message_id: number;
+  messageId: number;
   from: TelegramUser;
   chat: {
     id: number;
-    first_name: string;
-    last_name: string;
+    firstName: string;
+    lastName: string;
     type: 'private' | 'group';
   };
   date: number;
@@ -94,7 +94,7 @@ type Message = {
     offset: number;
     length: number;
   }[];
-  reply_to_message?: Message;
+  replyToMessage?: Message;
   photo?: Photo;
   game?: Game;
   audio?: Audio;
@@ -102,7 +102,7 @@ type Message = {
   sticker?: Sticker;
   video?: Video;
   voice?: Voice;
-  video_note?: VideoNote;
+  videoNote?: VideoNote;
   contact?: Contact;
   location?: Location;
   venue?: Venue;
@@ -118,64 +118,64 @@ type InlineQuery = {
 };
 
 type ChosenInlineResult = {
-  result_id: string;
+  resultId: string;
   from: TelegramUser;
   location?: Location;
-  inline_message_id?: string;
+  inlineMessageId?: string;
   query: string;
 };
 
 type CallbackQuery = {
   from: TelegramUser;
   message: Message;
-  chat_instance: string;
+  chatInstance: string;
   data: string;
 };
 
 type ShippingAddress = {
-  country_code: string;
+  countryCode: string;
   state: string;
   city: string;
-  street_line1: string;
-  street_line2: string;
-  post_code: string;
+  streetLine1: string;
+  streetLine2: string;
+  postCode: string;
 };
 
 type ShippingQuery = {
   id: string;
   from: TelegramUser;
-  invoice_payload: string;
-  shipping_address: ShippingAddress;
+  invoicePayload: string;
+  shippingAddress: ShippingAddress;
 };
 
 type OrderInfo = {
   name?: string;
-  phone_number?: string;
+  phoneNumber?: string;
   email?: string;
-  shipping_address?: ShippingAddress;
+  shippingAddress?: ShippingAddress;
 };
 
 type PreCheckoutQuery = {
   id: string;
   from: TelegramUser;
   currency: string;
-  total_amount: number;
-  invoice_payload: string;
-  shipping_option_id?: string;
-  order_info?: OrderInfo;
+  totalAmount: number;
+  invoicePayload: string;
+  shippingOptionId?: string;
+  orderInfo?: OrderInfo;
 };
 
 export type TelegramRawEvent = {
-  update_id: number;
+  updateId: number;
   message?: Message;
-  edited_message?: Message;
-  channel_post?: Message;
-  edited_channel_post?: Message;
-  inline_query?: InlineQuery;
-  chosen_inline_result?: ChosenInlineResult;
-  callback_query?: CallbackQuery;
-  shipping_query?: ShippingQuery;
-  pre_checkout_query?: PreCheckoutQuery;
+  editedMessage?: Message;
+  channelPost?: Message;
+  editedChannelPost?: Message;
+  inlineQuery?: InlineQuery;
+  chosenInlineResult?: ChosenInlineResult;
+  callbackQuery?: CallbackQuery;
+  shippingQuery?: ShippingQuery;
+  preCheckoutQuery?: PreCheckoutQuery;
 };
 
 export default class TelegramEvent implements Event<TelegramRawEvent> {
@@ -238,17 +238,17 @@ export default class TelegramEvent implements Event<TelegramRawEvent> {
     const message: Message = this.message as any;
 
     return (
-      !!message.reply_to_message && typeof message.reply_to_message === 'object'
+      !!message.replyToMessage && typeof message.replyToMessage === 'object'
     );
   }
 
   /**
-   * The Message object from Telegram raw event which includes reply_to_message.
+   * The Message object from Telegram raw event which includes replyToMessage.
    *
    */
   get replyToMessage(): Message | null {
     if (this.isReplyToMessage) {
-      return (this.message as any).reply_to_message;
+      return (this.message as any).replyToMessage;
     }
     return null;
   }
@@ -422,7 +422,7 @@ export default class TelegramEvent implements Event<TelegramRawEvent> {
 
     const message: Message = this.message as any;
 
-    return !!message.video_note && typeof message.video_note === 'object';
+    return !!message.videoNote && typeof message.videoNote === 'object';
   }
 
   /**
@@ -431,7 +431,7 @@ export default class TelegramEvent implements Event<TelegramRawEvent> {
    */
   get videoNote(): VideoNote | null {
     if (this.isVideoNote) {
-      return (this.message as any).video_note;
+      return (this.message as any).videoNote;
     }
     return null;
   }
@@ -518,7 +518,7 @@ export default class TelegramEvent implements Event<TelegramRawEvent> {
    *
    */
   get editedMessage(): Message | null {
-    return this._rawEvent.edited_message || null;
+    return this._rawEvent.editedMessage || null;
   }
 
   /**
@@ -534,7 +534,7 @@ export default class TelegramEvent implements Event<TelegramRawEvent> {
    *
    */
   get channelPost(): Message | null {
-    return this._rawEvent.channel_post || null;
+    return this._rawEvent.channelPost || null;
   }
 
   /**
@@ -552,7 +552,7 @@ export default class TelegramEvent implements Event<TelegramRawEvent> {
    *
    */
   get editedChannelPost(): Message | null {
-    return this._rawEvent.edited_channel_post || null;
+    return this._rawEvent.editedChannelPost || null;
   }
 
   /**
@@ -568,7 +568,7 @@ export default class TelegramEvent implements Event<TelegramRawEvent> {
    *
    */
   get inlineQuery(): InlineQuery | null {
-    return this._rawEvent.inline_query || null;
+    return this._rawEvent.inlineQuery || null;
   }
 
   /**
@@ -586,7 +586,7 @@ export default class TelegramEvent implements Event<TelegramRawEvent> {
    *
    */
   get chosenInlineResult(): ChosenInlineResult | null {
-    return this._rawEvent.chosen_inline_result || null;
+    return this._rawEvent.chosenInlineResult || null;
   }
 
   /**
@@ -602,7 +602,7 @@ export default class TelegramEvent implements Event<TelegramRawEvent> {
    *
    */
   get callbackQuery(): CallbackQuery | null {
-    return this._rawEvent.callback_query || null;
+    return this._rawEvent.callbackQuery || null;
   }
 
   /**
@@ -637,7 +637,7 @@ export default class TelegramEvent implements Event<TelegramRawEvent> {
    *
    */
   get shippingQuery(): ShippingQuery | null {
-    return this._rawEvent.shipping_query || null;
+    return this._rawEvent.shippingQuery || null;
   }
 
   /**
@@ -653,6 +653,6 @@ export default class TelegramEvent implements Event<TelegramRawEvent> {
    *
    */
   get preCheckoutQuery(): PreCheckoutQuery | null {
-    return this._rawEvent.pre_checkout_query || null;
+    return this._rawEvent.preCheckoutQuery || null;
   }
 }

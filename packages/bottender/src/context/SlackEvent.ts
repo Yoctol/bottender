@@ -64,13 +64,13 @@ export type Message = {
   user: string;
   text: string;
   ts: string;
-  thread_ts?: string;
-  bot_id?: string;
+  threadTs?: string;
+  botId?: string;
 };
 
 export type UIEvent = {
   actions: {}[];
-  callback_id: string;
+  callbackId: string;
   team: {
     id: string;
     domain: string;
@@ -83,15 +83,15 @@ export type UIEvent = {
     id: string;
     name: string;
   };
-  action_ts: string;
-  message_ts: string;
-  attachment_id: string;
+  actionTs: string;
+  messageTs: string;
+  attachmentId: string;
   token: string;
-  original_message: Message;
-  response_url: string;
-  trigger_id: string;
-  thread_ts?: string;
-  bot_id?: string;
+  originalMessage: Message;
+  responseUrl: string;
+  triggerId: string;
+  threadTs?: string;
+  botId?: string;
 };
 
 export type InteractiveMessageEvent = UIEvent & {
@@ -242,7 +242,7 @@ export default class SlackEvent implements Event<SlackRawEvent> {
    */
   get callbackId(): string | null {
     if (this.isBlockActionOrInteractiveMessage) {
-      return (this._rawEvent as InteractiveMessageEvent).callback_id;
+      return (this._rawEvent as InteractiveMessageEvent).callbackId;
     }
     return null;
   }

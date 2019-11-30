@@ -20,18 +20,18 @@ beforeEach(() => {
 
 const _rawEvent = {
   message: {
-    message_id: 666,
+    messageId: 666,
     from: {
       id: 313534466,
-      first_name: 'first',
-      last_name: 'last',
+      firstName: 'first',
+      lastName: 'last',
       username: 'username',
-      language_code: 'en',
+      languageCode: 'en',
     },
     chat: {
       id: 427770117,
-      first_name: 'first',
-      last_name: 'last',
+      firstName: 'first',
+      lastName: 'last',
       type: 'private',
     },
     date: 1499402829,
@@ -384,8 +384,8 @@ describe('#sendInvoice', () => {
     title: 'product name',
     description: 'product description',
     payload: 'bot-defined invoice payload',
-    provider_token: 'PROVIDER_TOKEN',
-    start_parameter: 'pay',
+    providerToken: 'PROVIDER_TOKEN',
+    startParameter: 'pay',
     currency: 'USD',
     prices: [
       { label: 'product', amount: 11000 },
@@ -454,8 +454,8 @@ describe('#getGameHighScores', () => {
         position: 1,
         user: {
           id: 427770117,
-          is_bot: false,
-          first_name: 'first',
+          isBot: false,
+          firstName: 'first',
         },
         score: 999,
       },
@@ -515,8 +515,8 @@ describe('#editMessageCaption', () => {
 describe('#editMessageReplyMarkup', () => {
   const markup = {
     keyboard: [[{ text: 'new_button_1' }, { text: 'new_button_2' }]],
-    resize_keyboard: true,
-    one_time_keyboard: true,
+    resizeKeyboard: true,
+    oneTimeKeyboard: true,
   };
 
   it('should to call client.editMessageReplyMarkup', async () => {
@@ -607,16 +607,16 @@ describe('#forwardMessageFrom', () => {
   it('should to call client.forwardMessage', async () => {
     const { context, client } = setup();
 
-    await context.forwardMessageFrom(313534466, 'message_id', {
-      disable_notification: true,
+    await context.forwardMessageFrom(313534466, 'messageId', {
+      disableNotification: true,
     });
 
     expect(client.forwardMessage).toBeCalledWith(
       427770117,
       313534466,
-      'message_id',
+      'messageId',
       {
-        disable_notification: true,
+        disableNotification: true,
       }
     );
   });
@@ -624,8 +624,8 @@ describe('#forwardMessageFrom', () => {
   it('should mark context as handled', async () => {
     const { context } = setup();
 
-    await context.forwardMessageFrom(313534466, 'message_id', {
-      disable_notification: true,
+    await context.forwardMessageFrom(313534466, 'messageId', {
+      disableNotification: true,
     });
 
     expect(context.isHandled).toBe(true);
@@ -636,16 +636,16 @@ describe('#forwardMessageTo', () => {
   it('should to call client.forwardMessageTo', async () => {
     const { context, client } = setup();
 
-    await context.forwardMessageTo(413534466, 'message_id', {
-      disable_notification: true,
+    await context.forwardMessageTo(413534466, 'messageId', {
+      disableNotification: true,
     });
 
     expect(client.forwardMessage).toBeCalledWith(
       413534466,
       427770117,
-      'message_id',
+      'messageId',
       {
-        disable_notification: true,
+        disableNotification: true,
       }
     );
   });
@@ -653,8 +653,8 @@ describe('#forwardMessageTo', () => {
   it('should mark context as handled', async () => {
     const { context } = setup();
 
-    await context.forwardMessageTo(413534466, 'message_id', {
-      disable_notification: true,
+    await context.forwardMessageTo(413534466, 'messageId', {
+      disableNotification: true,
     });
 
     expect(context.isHandled).toBe(true);
@@ -666,11 +666,11 @@ describe('#kickChatMember', () => {
     const { context, client } = setup();
 
     await context.kickChatMember(313534466, {
-      until_date: 1502855973,
+      untilDate: 1502855973,
     });
 
     expect(client.kickChatMember).toBeCalledWith(427770117, 313534466, {
-      until_date: 1502855973,
+      untilDate: 1502855973,
     });
   });
 
@@ -706,16 +706,16 @@ describe('#restrictChatMember', () => {
     const { context, client } = setup();
 
     await context.restrictChatMember(313534466, {
-      can_send_messages: true,
-      can_add_web_page_previews: true,
+      canSendMessages: true,
+      canAddWebPagePreviews: true,
     });
 
     expect(client.restrictChatMember).toBeCalledWith(
       427770117,
       313534466,
       {
-        can_send_messages: true,
-        can_add_web_page_previews: true,
+        canSendMessages: true,
+        canAddWebPagePreviews: true,
       },
       undefined
     );
@@ -735,15 +735,15 @@ describe('#promoteChatMember', () => {
     const { context, client } = setup();
 
     await context.promoteChatMember(313534466, {
-      can_change_info: true,
-      can_invite_users: true,
-      can_delete_messages: true,
+      canChangeInfo: true,
+      canInviteUsers: true,
+      canDeleteMessages: true,
     });
 
     expect(client.promoteChatMember).toBeCalledWith(427770117, 313534466, {
-      can_change_info: true,
-      can_invite_users: true,
-      can_delete_messages: true,
+      canChangeInfo: true,
+      canInviteUsers: true,
+      canDeleteMessages: true,
     });
   });
 
@@ -875,11 +875,11 @@ describe('#pinChatMessage', () => {
     const { context, client } = setup();
 
     await context.pinChatMessage(1, {
-      disable_notification: true,
+      disableNotification: true,
     });
 
     expect(client.pinChatMessage).toBeCalledWith(427770117, 1, {
-      disable_notification: true,
+      disableNotification: true,
     });
   });
 
@@ -930,23 +930,23 @@ describe('#leaveChat', () => {
 
 describe('#answerShippingQuery', () => {
   const shippingQuery = {
-    update_id: 141921690,
-    shipping_query: {
+    updateId: 141921690,
+    shippingQuery: {
       id: '123',
       from: {
         id: 427770117,
-        first_name: 'user_first',
-        last_name: 'user_last',
-        language_code: 'en',
+        firstName: 'user_first',
+        lastName: 'user_last',
+        languageCode: 'en',
       },
-      invoice_payload: 'bot payload',
-      shipping_address: {
-        country_code: 'US',
+      invoicePayload: 'bot payload',
+      shippingAddress: {
+        countryCode: 'US',
         state: 'New York',
         city: 'New York',
-        street_line1: 'xx',
-        street_line2: 'xx',
-        post_code: '10001',
+        streetLine1: 'xx',
+        streetLine2: 'xx',
+        postCode: '10001',
       },
     },
   };
@@ -986,18 +986,18 @@ describe('#answerShippingQuery', () => {
 
 describe('#answerPreCheckoutQuery', () => {
   const preCheckoutQuery = {
-    update_id: 141921690,
-    pre_checkout_query: {
+    updateId: 141921690,
+    preCheckoutQuery: {
       id: '123',
       from: {
         id: 427770117,
-        first_name: 'user_first',
-        last_name: 'user_last',
-        language_code: 'en',
+        firstName: 'user_first',
+        lastName: 'user_last',
+        languageCode: 'en',
       },
       currency: 'USD',
-      total_amount: 145,
-      invoice_payload: 'bot payload',
+      totalAmount: 145,
+      invoicePayload: 'bot payload',
     },
   };
 
@@ -1040,15 +1040,15 @@ describe('#answerPreCheckoutQuery', () => {
 
 describe('#answerInlineQuery', () => {
   const inlineQuery = {
-    update_id: 141921700,
-    inline_query: {
+    updateId: 141921700,
+    inlineQuery: {
       id: '1837258670654537434',
       from: {
         id: 427770117,
-        is_bot: false,
-        first_name: 'user_first',
-        last_name: 'user_last',
-        language_code: 'en',
+        isBot: false,
+        firstName: 'user_first',
+        lastName: 'user_last',
+        languageCode: 'en',
       },
       query: '123',
       offset: '',
@@ -1069,18 +1069,18 @@ describe('#answerInlineQuery', () => {
         {
           type: 'photo',
           id: 'UNIQUE_ID',
-          photo_file_id: 'FILE_ID',
+          photoFileId: 'FILE_ID',
           title: 'PHOTO_TITLE',
         },
         {
           type: 'audio',
           id: 'UNIQUE_ID',
-          audio_file_id: 'FILE_ID',
+          audioFileId: 'FILE_ID',
           caption: 'AUDIO_TITLE',
         },
       ],
       {
-        cache_time: 1000,
+        cacheTime: 1000,
       }
     );
 
@@ -1090,18 +1090,18 @@ describe('#answerInlineQuery', () => {
         {
           type: 'photo',
           id: 'UNIQUE_ID',
-          photo_file_id: 'FILE_ID',
+          photoFileId: 'FILE_ID',
           title: 'PHOTO_TITLE',
         },
         {
           type: 'audio',
           id: 'UNIQUE_ID',
-          audio_file_id: 'FILE_ID',
+          audioFileId: 'FILE_ID',
           caption: 'AUDIO_TITLE',
         },
       ],
       {
-        cache_time: 1000,
+        cacheTime: 1000,
       }
     );
     expect(result).toEqual(response);
@@ -1115,18 +1115,18 @@ describe('#answerInlineQuery', () => {
         {
           type: 'photo',
           id: 'UNIQUE_ID',
-          photo_file_id: 'FILE_ID',
+          photoFileId: 'FILE_ID',
           title: 'PHOTO_TITLE',
         },
         {
           type: 'audio',
           id: 'UNIQUE_ID',
-          audio_file_id: 'FILE_ID',
+          audioFileId: 'FILE_ID',
           caption: 'AUDIO_TITLE',
         },
       ],
       {
-        cache_time: 1000,
+        cacheTime: 1000,
       }
     );
 
@@ -1141,18 +1141,18 @@ describe('#answerInlineQuery', () => {
         {
           type: 'photo',
           id: 'UNIQUE_ID',
-          photo_file_id: 'FILE_ID',
+          photoFileId: 'FILE_ID',
           title: 'PHOTO_TITLE',
         },
         {
           type: 'audio',
           id: 'UNIQUE_ID',
-          audio_file_id: 'FILE_ID',
+          audioFileId: 'FILE_ID',
           caption: 'AUDIO_TITLE',
         },
       ],
       {
-        cache_time: 1000,
+        cacheTime: 1000,
       }
     );
 
@@ -1165,44 +1165,44 @@ describe('#getUserProfilePhotos', () => {
     const { context, client } = setup();
 
     const profile = {
-      total_count: 3,
+      totalCount: 3,
       photos: [
         [
           {
-            file_id: 'AgADBAADGTo4Gz8cZAeR-ouu4XBx78EeqRkABHahi76pN-aO0UoDA050',
-            file_size: 14650,
+            fileId: 'AgADBAADGTo4Gz8cZAeR-ouu4XBx78EeqRkABHahi76pN-aO0UoDA050',
+            fileSize: 14650,
             width: 160,
             height: 160,
           },
           {
-            file_id: 'AgADBAADGTo4Gz8cZAeR-ouu4XBx78EeqRkABKCfooqTgFUX0EoD5B1C',
-            file_size: 39019,
+            fileId: 'AgADBAADGTo4Gz8cZAeR-ouu4XBx78EeqRkABKCfooqTgFUX0EoD5B1C',
+            fileSize: 39019,
             width: 320,
             height: 320,
           },
           {
-            file_id: 'AgADBAADGTo4Gz8cZAeR-ouu4XBx78EeqRkABPL_pC9K3UpI0koD1B1C',
-            file_size: 132470,
+            fileId: 'AgADBAADGTo4Gz8cZAeR-ouu4XBx78EeqRkABPL_pC9K3UpI0koD1B1C',
+            fileSize: 132470,
             width: 640,
             height: 640,
           },
         ],
         [
           {
-            file_id: 'AgABXQSPEUo4Gz8cZAeR-ouu7XBx93EeqRkABHahi76pN-aO0UoDO203',
-            file_size: 14220,
+            fileId: 'AgABXQSPEUo4Gz8cZAeR-ouu7XBx93EeqRkABHahi76pN-aO0UoDO203',
+            fileSize: 14220,
             width: 160,
             height: 160,
           },
           {
-            file_id: 'AgADBAADGTo4Gz8cZAeR-ouu4XBx78EeqRkABKCfooqTgFUX0EoDAT90',
-            file_size: 35122,
+            fileId: 'AgADBAADGTo4Gz8cZAeR-ouu4XBx78EeqRkABKCfooqTgFUX0EoDAT90',
+            fileSize: 35122,
             width: 320,
             height: 320,
           },
           {
-            file_id: 'UtAqweADGTo4Gz8cZAeR-ouu4XBx78EeqRkABPL_pM4A1UpI0koD65K2',
-            file_size: 106356,
+            fileId: 'UtAqweADGTo4Gz8cZAeR-ouu4XBx78EeqRkABPL_pM4A1UpI0koD65K2',
+            fileSize: 106356,
             width: 640,
             height: 640,
           },
@@ -1225,8 +1225,8 @@ describe('#getChat', () => {
 
     const chat = {
       id: 313534466,
-      first_name: 'first',
-      last_name: 'last',
+      firstName: 'first',
+      lastName: 'last',
       username: 'username',
       type: 'private',
     };
@@ -1248,10 +1248,10 @@ describe('#getChatAdministrators', () => {
       {
         user: {
           id: 313534466,
-          first_name: 'first',
-          last_name: 'last',
+          firstName: 'first',
+          lastName: 'last',
           username: 'username',
-          languange_code: 'zh-TW',
+          languangeCode: 'zh-TW',
         },
         status: 'creator',
       },
@@ -1286,10 +1286,10 @@ describe('#getChatMember', () => {
     const member = {
       user: {
         id: 313534466,
-        first_name: 'first',
-        last_name: 'last',
+        firstName: 'first',
+        lastName: 'last',
         username: 'username',
-        languange_code: 'zh-TW',
+        languangeCode: 'zh-TW',
       },
       status: 'creator',
     };
@@ -1325,21 +1325,21 @@ describe('group chat', () => {
   it('should call method with chat id when receiving message', async () => {
     const { context, client } = setup({
       rawEvent: {
-        update_id: 241921684,
+        updateId: 241921684,
         message: {
-          message_id: 334,
+          messageId: 334,
           from: {
             id: 227770118,
-            is_bot: false,
-            first_name: 'Chen-Tsu',
-            last_name: 'Lin',
-            language_code: 'zh-TW',
+            isBot: false,
+            firstName: 'Chen-Tsu',
+            lastName: 'Lin',
+            languageCode: 'zh-TW',
           },
           chat: {
             id: -325456176,
             title: 'Bottender',
             type: 'group',
-            all_members_are_administrators: true,
+            allMembersAreAdministrators: true,
           },
           date: 1415736470,
           text: 'hi',
@@ -1355,34 +1355,34 @@ describe('group chat', () => {
   it('should call method with chat id when receiving callback query', async () => {
     const { context, client } = setup({
       rawEvent: {
-        update_id: 131921685,
-        callback_query: {
+        updateId: 131921685,
+        callbackQuery: {
           id: '1737258669604245426',
           from: {
             id: 327770118,
-            is_bot: false,
-            first_name: 'Chen-Tsu',
-            last_name: 'Lin',
-            language_code: 'zh-TW',
+            isBot: false,
+            firstName: 'Chen-Tsu',
+            lastName: 'Lin',
+            languageCode: 'zh-TW',
           },
           message: {
-            message_id: 235,
+            messageId: 235,
             from: {
               id: 213534466,
-              is_bot: true,
-              first_name: 'already_taken',
+              isBot: true,
+              firstName: 'already_taken',
               username: 'alreadytaken1_bot',
             },
             chat: {
               id: -325456176,
               title: 'Bottender',
               type: 'group',
-              all_members_are_administrators: true,
+              allMembersAreAdministrators: true,
             },
             date: 1415736471,
             text: 'Hello World',
           },
-          chat_instance: '-582211693826679000',
+          chatInstance: '-582211693826679000',
           data: '123',
         },
       },
