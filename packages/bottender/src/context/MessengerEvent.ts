@@ -1,3 +1,5 @@
+import { camelcaseKeysDeep } from 'messaging-api-common';
+
 import { Event } from './Event';
 
 export type Sender = {
@@ -44,10 +46,10 @@ type Tag = {
 };
 
 export type Message = {
-  is_echo?: boolean;
+  isEcho?: boolean;
   text?: string;
-  sticker_id?: number;
-  quick_reply?: QuickReply;
+  stickerId?: number;
+  quickReply?: QuickReply;
   attachments?: Attachment[];
   tags?: Tag[];
 };
@@ -67,7 +69,7 @@ export type Referral = {
   ref: string;
   source: string;
   type: string;
-  origin_domain?: string;
+  originDomain?: string;
 };
 
 export type Postback = {
@@ -76,10 +78,10 @@ export type Postback = {
 };
 
 export type GamePlay = {
-  game_id: string;
-  player_id: string;
-  context_type: 'SOLO' | 'THREAD' | 'GROUP';
-  context_id: string;
+  gameId: string;
+  playerId: string;
+  contextType: 'SOLO' | 'THREAD' | 'GROUP';
+  contextId: string;
   score: number;
   payload: string;
 };
@@ -90,41 +92,41 @@ export type Optin = {
 
 export type Payment = {
   payload: string;
-  requested_user_info: Record<string, any>;
-  payment_credential: Record<string, any>;
+  requestedUserInfo: Record<string, any>;
+  paymentCredential: Record<string, any>;
   amount: {
     currency: string;
     amount: string;
   };
-  shipping_option_id: string;
+  shippingOptionId: string;
 };
 
 export type CheckoutUpdate = {
   payload: string;
-  shipping_address: {
+  shippingAddress: {
     id: number;
-    street_1: string;
-    street_2: string;
+    street1: string;
+    street2: string;
     city: string;
     state: string;
     country: string;
-    postal_code: string;
+    postalCode: string;
   };
 };
 
 export type PreCheckout = {
   payload: string;
-  requested_user_info: {
-    shipping_address: {
+  requestedUserInfo: {
+    shippingAddress: {
       name: string;
-      street_1: string;
-      street_2: string;
+      street1: string;
+      street2: string;
       city: string;
       state: string;
       country: string;
-      postal_code: string;
+      postalCode: string;
     };
-    contact_name: string;
+    contactName: string;
   };
   amount: {
     currency: string;
@@ -140,22 +142,22 @@ export type PolicyEnforcement = {
 export type AppRoles = Record<string, string[]>;
 
 export type PassThreadControl = {
-  new_owner_app_id: string;
+  newOwnerAppId: string;
   metadata: string;
 };
 
 export type TakeThreadControl = {
-  previous_owner_app_id: string;
+  previousOwnerAppId: string;
   metadata: string;
 };
 
 export type RequestThreadControl = {
-  requested_owner_app_id: number;
+  requestedOwnerAppId: number;
   metadata: string;
 };
 
 export type BrandedCamera = {
-  content_ids: string[];
+  contentIds: string[];
   event: string;
 };
 
@@ -167,18 +169,18 @@ export type MessengerRawEvent = {
   read?: Read;
   delivery?: Delivery;
   postback?: Postback;
-  game_play?: GamePlay;
+  gamePlay?: GamePlay;
   optin?: Optin;
   payment?: Payment;
-  checkout_update?: CheckoutUpdate;
-  pre_checkout?: PreCheckout;
+  checkoutUpdate?: CheckoutUpdate;
+  preCheckout?: PreCheckout;
   'policy-enforcement'?: PolicyEnforcement;
-  app_roles?: AppRoles;
-  pass_thread_control?: PassThreadControl;
-  take_thread_control?: TakeThreadControl;
-  request_thread_control?: RequestThreadControl;
+  appRoles?: AppRoles;
+  passThreadControl?: PassThreadControl;
+  takeThreadControl?: TakeThreadControl;
+  requestThreadControl?: RequestThreadControl;
   referral?: Referral;
-  branded_camera?: BrandedCamera;
+  brandedCamera?: BrandedCamera;
 };
 
 type MessengerEventOptions = {
@@ -376,16 +378,16 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    */
   get isSticker(): boolean {
     return (
-      this.isMessage && typeof (this.message as any).sticker_id === 'number'
+      this.isMessage && typeof (this.message as any).stickerId === 'number'
     );
   }
 
   /**
-   * The sticker_id from Messenger raw event.
+   * The stickerId from Messenger raw event.
    *
    */
   get sticker(): string | null {
-    return this.isSticker ? (this.message as any).sticker_id : null;
+    return this.isSticker ? (this.message as any).stickerId : null;
   }
 
   /**
@@ -397,9 +399,9 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
   get isLikeSticker(): boolean {
     return (
       this.isSticker &&
-      ((this.message as any).sticker_id === 369239263222822 ||
-        (this.message as any).sticker_id === 369239343222814 ||
-        (this.message as any).sticker_id === 369239383222810)
+      ((this.message as any).stickerId === 369239263222822 ||
+        (this.message as any).stickerId === 369239343222814 ||
+        (this.message as any).stickerId === 369239383222810)
     );
   }
 
@@ -410,8 +412,8 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
   get isQuickReply(): boolean {
     return (
       this.isMessage &&
-      !!(this.message as any).quick_reply &&
-      typeof (this.message as any).quick_reply === 'object'
+      !!(this.message as any).quickReply &&
+      typeof (this.message as any).quickReply === 'object'
     );
   }
 
@@ -420,8 +422,8 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    *
    */
   get quickReply(): QuickReply | null {
-    if (this.message && this.message.quick_reply) {
-      return this.message.quick_reply;
+    if (this.message && this.message.quickReply) {
+      return this.message.quickReply;
     }
     return null;
   }
@@ -431,7 +433,7 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    *
    */
   get isEcho(): boolean {
-    return this.isMessage && !!(this.message as any).is_echo;
+    return this.isMessage && !!(this.message as any).isEcho;
   }
 
   /**
@@ -458,12 +460,12 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    */
   get isGamePlay(): boolean {
     return (
-      !!this._rawEvent.game_play && typeof this._rawEvent.game_play === 'object'
+      !!this._rawEvent.gamePlay && typeof this._rawEvent.gamePlay === 'object'
     );
   }
 
   /**
-   * The game_play object from Messenger raw event.
+   * The gamePlay object from Messenger raw event.
    *
    */
   get gamePlay(): GamePlay | null {
@@ -471,11 +473,15 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
       return null;
     }
 
-    const rawGamePlay = (this._rawEvent as any).game_play;
+    const rawGamePlay = (this._rawEvent as any).gamePlay;
 
     let payload;
     try {
-      payload = JSON.parse(rawGamePlay.payload);
+      const parsed = JSON.parse(rawGamePlay.payload);
+      payload =
+        parsed && typeof parsed === 'object'
+          ? camelcaseKeysDeep(parsed)
+          : parsed;
     } catch (e) {
       payload = rawGamePlay.payload;
     }
@@ -526,17 +532,17 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    */
   get isCheckoutUpdate(): boolean {
     return (
-      !!this._rawEvent.checkout_update &&
-      typeof this._rawEvent.checkout_update === 'object'
+      !!this._rawEvent.checkoutUpdate &&
+      typeof this._rawEvent.checkoutUpdate === 'object'
     );
   }
 
   /**
-   * The checkout_update object from Messenger raw event.
+   * The checkoutUpdate object from Messenger raw event.
    *
    */
   get checkoutUpdate(): CheckoutUpdate | null {
-    return this._rawEvent.checkout_update || null;
+    return this._rawEvent.checkoutUpdate || null;
   }
 
   /**
@@ -545,17 +551,17 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    */
   get isPreCheckout(): boolean {
     return (
-      !!this._rawEvent.pre_checkout &&
-      typeof this._rawEvent.pre_checkout === 'object'
+      !!this._rawEvent.preCheckout &&
+      typeof this._rawEvent.preCheckout === 'object'
     );
   }
 
   /**
-   * The pre_checkout object from Messenger raw event.
+   * The preCheckout object from Messenger raw event.
    *
    */
   get preCheckout(): PreCheckout | null {
-    return this._rawEvent.pre_checkout || null;
+    return this._rawEvent.preCheckout || null;
   }
 
   /**
@@ -642,7 +648,7 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    */
   get isAppRoles(): boolean {
     return (
-      !!this._rawEvent.app_roles && typeof this._rawEvent.app_roles === 'object'
+      !!this._rawEvent.appRoles && typeof this._rawEvent.appRoles === 'object'
     );
   }
 
@@ -651,7 +657,7 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    *
    */
   get appRoles(): AppRoles | null {
-    return this._rawEvent.app_roles || null;
+    return this._rawEvent.appRoles || null;
   }
 
   /**
@@ -668,8 +674,8 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    */
   get isPassThreadControl(): boolean {
     return (
-      !!this._rawEvent.pass_thread_control &&
-      typeof this._rawEvent.pass_thread_control === 'object'
+      !!this._rawEvent.passThreadControl &&
+      typeof this._rawEvent.passThreadControl === 'object'
     );
   }
 
@@ -678,7 +684,7 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    *
    */
   get passThreadControl(): PassThreadControl | null {
-    return this._rawEvent.pass_thread_control || null;
+    return this._rawEvent.passThreadControl || null;
   }
 
   /**
@@ -687,8 +693,8 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    */
   get isTakeThreadControl(): boolean {
     return (
-      !!this._rawEvent.take_thread_control &&
-      typeof this._rawEvent.take_thread_control === 'object'
+      !!this._rawEvent.takeThreadControl &&
+      typeof this._rawEvent.takeThreadControl === 'object'
     );
   }
 
@@ -697,7 +703,7 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    *
    */
   get takeThreadControl(): TakeThreadControl | null {
-    return this._rawEvent.take_thread_control || null;
+    return this._rawEvent.takeThreadControl || null;
   }
 
   /**
@@ -706,8 +712,8 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    */
   get isRequestThreadControl(): boolean {
     return (
-      !!this._rawEvent.request_thread_control &&
-      typeof this._rawEvent.request_thread_control === 'object'
+      !!this._rawEvent.requestThreadControl &&
+      typeof this._rawEvent.requestThreadControl === 'object'
     );
   }
 
@@ -717,9 +723,9 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    */
   get isRequestThreadControlFromPageInbox(): boolean {
     return (
-      !!this._rawEvent.request_thread_control &&
-      typeof this._rawEvent.request_thread_control === 'object' &&
-      this._rawEvent.request_thread_control.requested_owner_app_id ===
+      !!this._rawEvent.requestThreadControl &&
+      typeof this._rawEvent.requestThreadControl === 'object' &&
+      this._rawEvent.requestThreadControl.requestedOwnerAppId ===
         263902037430900
     );
   }
@@ -729,7 +735,7 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    *
    */
   get requestThreadControl(): RequestThreadControl | null {
-    return this._rawEvent.request_thread_control || null;
+    return this._rawEvent.requestThreadControl || null;
   }
 
   /**
@@ -806,19 +812,19 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    */
   get isBrandedCamera(): boolean {
     return (
-      !!this._rawEvent.branded_camera &&
-      typeof this._rawEvent.branded_camera === 'object'
+      !!this._rawEvent.brandedCamera &&
+      typeof this._rawEvent.brandedCamera === 'object'
     );
   }
 
   /**
-   * The branded_camera object from Messenger event.
+   * The brandedCamera object from Messenger event.
    *
    */
   get brandedCamera(): BrandedCamera | null {
     if (!this.isBrandedCamera) {
       return null;
     }
-    return (this._rawEvent as any).branded_camera;
+    return (this._rawEvent as any).brandedCamera;
   }
 }

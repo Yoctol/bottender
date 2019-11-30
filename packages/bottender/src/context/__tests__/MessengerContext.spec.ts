@@ -89,9 +89,9 @@ describe('#getUserProfile', () => {
     const { context, client, session } = setup();
 
     const user = {
-      first_name: 'Kevin',
-      last_name: 'Durant',
-      profile_pic: 'https://example.com/pic.png',
+      firstName: 'Kevin',
+      lastName: 'Durant',
+      profilePic: 'https://example.com/pic.png',
       locale: 'en_US',
       timezone: 8,
       gender: 'male',
@@ -114,9 +114,9 @@ describe('#getUserProfile', () => {
     });
 
     const user = {
-      first_name: 'Kevin',
-      last_name: 'Durant',
-      profile_pic: 'https://example.com/pic.png',
+      firstName: 'Kevin',
+      lastName: 'Durant',
+      profilePic: 'https://example.com/pic.png',
       locale: 'en_US',
       timezone: 8,
       gender: 'male',

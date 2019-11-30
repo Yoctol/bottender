@@ -3,6 +3,7 @@ import EventEmitter from 'events';
 import debug from 'debug';
 import invariant from 'invariant';
 import pMap from 'p-map';
+import { camelcaseKeysDeep } from 'messaging-api-common';
 
 import CacheBasedSessionStore from '../session/CacheBasedSessionStore';
 import Context from '../context/Context';
@@ -167,15 +168,20 @@ export default class Bot<B extends Body, C extends Client, E extends Event> {
       this._emitter.on('error', console.error);
     }
 
-    return async (body: B, requestContext?: RequestContext): Promise<any> => {
-      if (!body) {
+    return async (
+      inputBody: B,
+      requestContext?: RequestContext
+    ): Promise<any> => {
+      if (!inputBody) {
         throw new Error('Bot.createRequestHandler: Missing argument.');
       }
 
       debugRequest('Incoming request body:');
-      debugRequest(JSON.stringify(body, null, 2));
+      debugRequest(JSON.stringify(inputBody, null, 2));
 
       await this.initSessionStore();
+
+      const body = camelcaseKeysDeep(inputBody) as B;
 
       const { platform } = this._connector;
       const sessionKey = this._connector.getUniqueSessionKey(

@@ -18,9 +18,9 @@ const subscribedRequest = {
       avatar: 'http://avatar.example.com',
       country: 'UK',
       language: 'en',
-      api_version: 1,
+      apiVersion: 1,
     },
-    message_token: 4912661846655238145,
+    messageToken: 4912661846655238145,
   },
 };
 
@@ -28,8 +28,8 @@ const unsubscribedRequest = {
   body: {
     event: 'unsubscribed',
     timestamp: 1457764197627,
-    user_id: '01234567890A=',
-    message_token: 4912661846655238145,
+    userId: '01234567890A=',
+    messageToken: 4912661846655238145,
   },
 };
 
@@ -37,7 +37,7 @@ const conversationStartedRequest = {
   body: {
     event: 'conversation_started',
     timestamp: 1457764197627,
-    message_token: 4912661846655238145,
+    messageToken: 4912661846655238145,
     type: 'open',
     context: 'context information',
     user: {
@@ -46,7 +46,7 @@ const conversationStartedRequest = {
       avatar: 'http://avatar.example.com',
       country: 'UK',
       language: 'en',
-      api_version: 1,
+      apiVersion: 1,
     },
     subscribed: false,
   },
@@ -56,8 +56,8 @@ const deliveredRequest = {
   body: {
     event: 'delivered',
     timestamp: 1457764197627,
-    message_token: 4912661846655238145,
-    user_id: '01234567890A=',
+    messageToken: 4912661846655238145,
+    userId: '01234567890A=',
   },
 };
 
@@ -65,8 +65,8 @@ const seenRequest = {
   body: {
     event: 'seen',
     timestamp: 1457764197627,
-    message_token: 4912661846655238145,
-    user_id: '01234567890A=',
+    messageToken: 4912661846655238145,
+    userId: '01234567890A=',
   },
 };
 
@@ -74,8 +74,8 @@ const failedRequest = {
   body: {
     event: 'failed',
     timestamp: 1457764197627,
-    message_token: 4912661846655238145,
-    user_id: '01234567890A=',
+    messageToken: 4912661846655238145,
+    userId: '01234567890A=',
     desc: 'failure description',
   },
 };
@@ -84,19 +84,19 @@ const messageRequest = {
   body: {
     event: 'message',
     timestamp: 1457764197627,
-    message_token: 4912661846655238145,
+    messageToken: 4912661846655238145,
     sender: {
       id: '01234567890A=',
       name: 'John McClane',
       avatar: 'http://avatar.example.com',
       country: 'UK',
       language: 'en',
-      api_version: 1,
+      apiVersion: 1,
     },
     message: {
       type: 'text',
       text: 'a message to the service',
-      tracking_data: 'tracking data',
+      trackingData: 'tracking data',
     },
   },
 };
@@ -193,7 +193,7 @@ describe('#updateSession', () => {
       avatar: 'http://avatar.example.com',
       country: 'UK',
       language: 'en',
-      api_version: 1,
+      apiVersion: 1,
     };
 
     const session = {};
@@ -234,7 +234,7 @@ describe('#updateSession', () => {
       avatar: 'http://avatar.example.com',
       country: 'UK',
       language: 'en',
-      api_version: 1,
+      apiVersion: 1,
     };
 
     const session = {};
@@ -311,7 +311,7 @@ describe('#updateSession', () => {
       avatar: 'http://avatar.example.com',
       country: 'UK',
       language: 'en',
-      api_version: 1,
+      apiVersion: 1,
     };
 
     const session = {};
@@ -334,7 +334,7 @@ describe('#updateSession', () => {
       avatar: 'http://avatar.example.com',
       country: 'UK',
       language: 'en',
-      api_version: 1,
+      apiVersion: 1,
     };
 
     const session = {

@@ -9,22 +9,22 @@ const subscribed = {
     avatar: 'http://avatar.example.com',
     country: 'UK',
     language: 'en',
-    api_version: 1,
+    apiVersion: 1,
   },
-  message_token: 4912661846655238145,
+  messageToken: 4912661846655238145,
 };
 
 const unsubscribed = {
   event: 'unsubscribed',
   timestamp: 1457764197627,
-  user_id: '01234567890A=',
-  message_token: 4912661846655238145,
+  userId: '01234567890A=',
+  messageToken: 4912661846655238145,
 };
 
 const conversationStarted = {
   event: 'conversation_started',
   timestamp: 1457764197627,
-  message_token: 4912661846655238145,
+  messageToken: 4912661846655238145,
   type: 'open',
   context: 'context information',
   user: {
@@ -33,7 +33,7 @@ const conversationStarted = {
     avatar: 'http://avatar.example.com',
     country: 'UK',
     language: 'en',
-    api_version: 1,
+    apiVersion: 1,
   },
   subscribed: false,
 };
@@ -41,176 +41,176 @@ const conversationStarted = {
 const delivered = {
   event: 'delivered',
   timestamp: 1457764197627,
-  message_token: 4912661846655238145,
-  user_id: '01234567890A=',
+  messageToken: 4912661846655238145,
+  userId: '01234567890A=',
 };
 
 const seen = {
   event: 'seen',
   timestamp: 1457764197627,
-  message_token: 4912661846655238145,
-  user_id: '01234567890A=',
+  messageToken: 4912661846655238145,
+  userId: '01234567890A=',
 };
 
 const failed = {
   event: 'failed',
   timestamp: 1457764197627,
-  message_token: 4912661846655238145,
-  user_id: '01234567890A=',
+  messageToken: 4912661846655238145,
+  userId: '01234567890A=',
   desc: 'failure description',
 };
 
 const textMessage = {
   event: 'message',
   timestamp: 1457764197627,
-  message_token: 4912661846655238145,
+  messageToken: 4912661846655238145,
   sender: {
     id: '01234567890A=',
     name: 'John McClane',
     avatar: 'http://avatar.example.com',
     country: 'UK',
     language: 'en',
-    api_version: 1,
+    apiVersion: 1,
   },
   message: {
     type: 'text',
     text: 'a message to the service',
-    tracking_data: 'tracking data',
+    trackingData: 'tracking data',
   },
 };
 
 const pictureMessage = {
   event: 'message',
   timestamp: 1457764197627,
-  message_token: 4912661846655238145,
+  messageToken: 4912661846655238145,
   sender: {
     id: '01234567890A=',
     name: 'John McClane',
     avatar: 'http://avatar.example.com',
     country: 'UK',
     language: 'en',
-    api_version: 1,
+    apiVersion: 1,
   },
   message: {
     type: 'picture',
     text: 'a message to the service',
     media: 'http://example.com/img.jpg',
-    tracking_data: 'tracking data',
+    trackingData: 'tracking data',
   },
 };
 
 const videoMessage = {
   event: 'message',
   timestamp: 1457764197627,
-  message_token: 4912661846655238145,
+  messageToken: 4912661846655238145,
   sender: {
     id: '01234567890A=',
     name: 'John McClane',
     avatar: 'http://avatar.example.com',
     country: 'UK',
     language: 'en',
-    api_version: 1,
+    apiVersion: 1,
   },
   message: {
     type: 'video',
     media: 'http://example.com/video.mp4',
     duration: 320,
-    tracking_data: 'tracking data',
+    trackingData: 'tracking data',
   },
 };
 
 const fileMessage = {
   event: 'message',
   timestamp: 1457764197627,
-  message_token: 4912661846655238145,
+  messageToken: 4912661846655238145,
   sender: {
     id: '01234567890A=',
     name: 'John McClane',
     avatar: 'http://avatar.example.com',
     country: 'UK',
     language: 'en',
-    api_version: 1,
+    apiVersion: 1,
   },
   message: {
     type: 'file',
     media: 'http://example.com/doc.pdf',
-    file_name: 'doc.pdf',
-    file_size: 3220,
-    tracking_data: 'tracking data',
+    fileName: 'doc.pdf',
+    fileSize: 3220,
+    trackingData: 'tracking data',
   },
 };
 
 const stickerMessage = {
   event: 'message',
   timestamp: 1457764197627,
-  message_token: 4912661846655238145,
+  messageToken: 4912661846655238145,
   sender: {
     id: '01234567890A=',
     name: 'John McClane',
     avatar: 'http://avatar.example.com',
     country: 'UK',
     language: 'en',
-    api_version: 1,
+    apiVersion: 1,
   },
   message: {
     type: 'sticker',
-    sticker_id: 46105,
-    tracking_data: 'tracking data',
+    stickerId: 46105,
+    trackingData: 'tracking data',
   },
 };
 
 const contactMessage = {
   event: 'message',
   timestamp: 1457764197627,
-  message_token: 4912661846655238145,
+  messageToken: 4912661846655238145,
   sender: {
     id: '01234567890A=',
     name: 'John McClane',
     avatar: 'http://avatar.example.com',
     country: 'UK',
     language: 'en',
-    api_version: 1,
+    apiVersion: 1,
   },
   message: {
     type: 'contact',
     contact: {
       name: 'Itamar',
-      phone_number: '+972511123123',
+      phoneNumber: '+972511123123',
     },
-    tracking_data: 'tracking data',
+    trackingData: 'tracking data',
   },
 };
 
 const urlMessage = {
   event: 'message',
   timestamp: 1457764197627,
-  message_token: 4912661846655238145,
+  messageToken: 4912661846655238145,
   sender: {
     id: '01234567890A=',
     name: 'John McClane',
     avatar: 'http://avatar.example.com',
     country: 'UK',
     language: 'en',
-    api_version: 1,
+    apiVersion: 1,
   },
   message: {
     type: 'url',
     media: 'http://example.com',
-    tracking_data: 'tracking data',
+    trackingData: 'tracking data',
   },
 };
 
 const locationMessage = {
   event: 'message',
   timestamp: 1457764197627,
-  message_token: 4912661846655238145,
+  messageToken: 4912661846655238145,
   sender: {
     id: '01234567890A=',
     name: 'John McClane',
     avatar: 'http://avatar.example.com',
     country: 'UK',
     language: 'en',
-    api_version: 1,
+    apiVersion: 1,
   },
   message: {
     type: 'location',
@@ -218,7 +218,7 @@ const locationMessage = {
       lat: 50.76891,
       lon: 6.11499,
     },
-    tracking_data: 'tracking data',
+    trackingData: 'tracking data',
   },
 };
 
@@ -253,44 +253,44 @@ it('#message', () => {
   expect(new ViberEvent(textMessage).message).toEqual({
     type: 'text',
     text: 'a message to the service',
-    tracking_data: 'tracking data',
+    trackingData: 'tracking data',
   });
   expect(new ViberEvent(pictureMessage).message).toEqual({
     type: 'picture',
     text: 'a message to the service',
     media: 'http://example.com/img.jpg',
-    tracking_data: 'tracking data',
+    trackingData: 'tracking data',
   });
   expect(new ViberEvent(videoMessage).message).toEqual({
     type: 'video',
     media: 'http://example.com/video.mp4',
     duration: 320,
-    tracking_data: 'tracking data',
+    trackingData: 'tracking data',
   });
   expect(new ViberEvent(fileMessage).message).toEqual({
     type: 'file',
     media: 'http://example.com/doc.pdf',
-    file_name: 'doc.pdf',
-    file_size: 3220,
-    tracking_data: 'tracking data',
+    fileName: 'doc.pdf',
+    fileSize: 3220,
+    trackingData: 'tracking data',
   });
   expect(new ViberEvent(stickerMessage).message).toEqual({
     type: 'sticker',
-    sticker_id: 46105,
-    tracking_data: 'tracking data',
+    stickerId: 46105,
+    trackingData: 'tracking data',
   });
   expect(new ViberEvent(contactMessage).message).toEqual({
     type: 'contact',
     contact: {
       name: 'Itamar',
-      phone_number: '+972511123123',
+      phoneNumber: '+972511123123',
     },
-    tracking_data: 'tracking data',
+    trackingData: 'tracking data',
   });
   expect(new ViberEvent(urlMessage).message).toEqual({
     type: 'url',
     media: 'http://example.com',
-    tracking_data: 'tracking data',
+    trackingData: 'tracking data',
   });
   expect(new ViberEvent(locationMessage).message).toEqual({
     type: 'location',
@@ -298,7 +298,7 @@ it('#message', () => {
       lat: 50.76891,
       lon: 6.11499,
     },
-    tracking_data: 'tracking data',
+    trackingData: 'tracking data',
   });
 });
 
@@ -511,7 +511,7 @@ it('#contact', () => {
   expect(new ViberEvent(stickerMessage).contact).toEqual(null);
   expect(new ViberEvent(contactMessage).contact).toEqual({
     name: 'Itamar',
-    phone_number: '+972511123123',
+    phoneNumber: '+972511123123',
   });
   expect(new ViberEvent(urlMessage).contact).toEqual(null);
   expect(new ViberEvent(locationMessage).contact).toEqual(null);
@@ -608,9 +608,9 @@ it('#subscribed', () => {
       avatar: 'http://avatar.example.com',
       country: 'UK',
       language: 'en',
-      api_version: 1,
+      apiVersion: 1,
     },
-    message_token: 4912661846655238145,
+    messageToken: 4912661846655238145,
   });
   expect(new ViberEvent(unsubscribed).subscribed).toEqual(null);
   expect(new ViberEvent(conversationStarted).subscribed).toEqual(null);
@@ -635,8 +635,8 @@ it('#unsubscribed', () => {
   expect(new ViberEvent(unsubscribed).unsubscribed).toEqual({
     event: 'unsubscribed',
     timestamp: 1457764197627,
-    user_id: '01234567890A=',
-    message_token: 4912661846655238145,
+    userId: '01234567890A=',
+    messageToken: 4912661846655238145,
   });
   expect(new ViberEvent(conversationStarted).unsubscribed).toEqual(null);
   expect(new ViberEvent(delivered).unsubscribed).toEqual(null);
@@ -663,7 +663,7 @@ it('#conversationStarted', () => {
   expect(new ViberEvent(conversationStarted).conversationStarted).toEqual({
     event: 'conversation_started',
     timestamp: 1457764197627,
-    message_token: 4912661846655238145,
+    messageToken: 4912661846655238145,
     type: 'open',
     context: 'context information',
     user: {
@@ -672,7 +672,7 @@ it('#conversationStarted', () => {
       avatar: 'http://avatar.example.com',
       country: 'UK',
       language: 'en',
-      api_version: 1,
+      apiVersion: 1,
     },
     subscribed: false,
   });
@@ -699,8 +699,8 @@ it('#delivered', () => {
   expect(new ViberEvent(delivered).delivered).toEqual({
     event: 'delivered',
     timestamp: 1457764197627,
-    message_token: 4912661846655238145,
-    user_id: '01234567890A=',
+    messageToken: 4912661846655238145,
+    userId: '01234567890A=',
   });
   expect(new ViberEvent(seen).delivered).toEqual(null);
   expect(new ViberEvent(failed).delivered).toEqual(null);
@@ -725,8 +725,8 @@ it('#seen', () => {
   expect(new ViberEvent(seen).seen).toEqual({
     event: 'seen',
     timestamp: 1457764197627,
-    message_token: 4912661846655238145,
-    user_id: '01234567890A=',
+    messageToken: 4912661846655238145,
+    userId: '01234567890A=',
   });
   expect(new ViberEvent(failed).seen).toEqual(null);
   expect(new ViberEvent(textMessage).seen).toEqual(null);
@@ -751,8 +751,8 @@ it('#failed', () => {
   expect(new ViberEvent(failed).failed).toEqual({
     event: 'failed',
     timestamp: 1457764197627,
-    message_token: 4912661846655238145,
-    user_id: '01234567890A=',
+    messageToken: 4912661846655238145,
+    userId: '01234567890A=',
     desc: 'failure description',
   });
   expect(new ViberEvent(textMessage).failed).toEqual(null);

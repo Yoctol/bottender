@@ -73,7 +73,7 @@ export default class ViberConnector
       case 'delivered':
       case 'seen':
       case 'failed':
-        return body.user_id;
+        return body.userId;
       case 'message':
         return body.sender.id;
       default:
@@ -94,7 +94,7 @@ export default class ViberConnector
       case 'seen':
       case 'failed':
         user = {
-          id: body.user_id,
+          id: body.userId,
         };
         break;
       case 'message':

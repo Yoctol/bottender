@@ -2,18 +2,18 @@ import TelegramEvent from '../TelegramEvent';
 
 const textMessage = {
   message: {
-    message_id: 666,
+    messageId: 666,
     from: {
       id: 427770117,
-      is_bot: false,
-      first_name: 'first',
-      last_name: 'last',
-      language_code: 'en',
+      isBot: false,
+      firstName: 'first',
+      lastName: 'last',
+      languageCode: 'en',
     },
     chat: {
       id: 427770117,
-      first_name: 'first',
-      last_name: 'last',
+      firstName: 'first',
+      lastName: 'last',
       type: 'private',
     },
     date: 1499402829,
@@ -23,23 +23,23 @@ const textMessage = {
 
 const stickerMessage = {
   message: {
-    message_id: 666,
+    messageId: 666,
     from: {
       id: 427770117,
-      is_bot: false,
-      first_name: 'first',
-      last_name: 'last',
-      language_code: 'en',
+      isBot: false,
+      firstName: 'first',
+      lastName: 'last',
+      languageCode: 'en',
     },
     chat: {
       id: 427770117,
-      first_name: 'first',
-      last_name: 'last',
+      firstName: 'first',
+      lastName: 'last',
       type: 'private',
     },
     date: 1499402829,
     sticker: {
-      file_id: '123',
+      fileId: '123',
       width: 50,
       height: 50,
     },
@@ -48,23 +48,23 @@ const stickerMessage = {
 
 const videoMessage = {
   message: {
-    message_id: 666,
+    messageId: 666,
     from: {
       id: 313534466,
-      is_bot: false,
-      first_name: 'first',
-      last_name: 'last',
-      language_code: 'en',
+      isBot: false,
+      firstName: 'first',
+      lastName: 'last',
+      languageCode: 'en',
     },
     chat: {
       id: 427770117,
-      first_name: 'first',
-      last_name: 'last',
+      firstName: 'first',
+      lastName: 'last',
       type: 'private',
     },
     date: 1499402829,
     video: {
-      file_id: '321',
+      fileId: '321',
       width: 100,
       height: 100,
       duration: 199,
@@ -74,23 +74,23 @@ const videoMessage = {
 
 const voiceMessage = {
   message: {
-    message_id: 666,
+    messageId: 666,
     from: {
       id: 427770117,
-      is_bot: false,
-      first_name: 'first',
-      last_name: 'last',
-      language_code: 'en',
+      isBot: false,
+      firstName: 'first',
+      lastName: 'last',
+      languageCode: 'en',
     },
     chat: {
       id: 427770117,
-      first_name: 'first',
-      last_name: 'last',
+      firstName: 'first',
+      lastName: 'last',
       type: 'private',
     },
     date: 1499402829,
     voice: {
-      file_id: '543',
+      fileId: '543',
       duration: 299,
     },
   },
@@ -98,23 +98,23 @@ const voiceMessage = {
 
 const videoNoteMessage = {
   message: {
-    message_id: 666,
+    messageId: 666,
     from: {
       id: 427770117,
-      is_bot: false,
-      first_name: 'first',
-      last_name: 'last',
-      language_code: 'en',
+      isBot: false,
+      firstName: 'first',
+      lastName: 'last',
+      languageCode: 'en',
     },
     chat: {
       id: 427770117,
-      first_name: 'first',
-      last_name: 'last',
+      firstName: 'first',
+      lastName: 'last',
       type: 'private',
     },
     date: 1499402829,
-    video_note: {
-      file_id: '654',
+    videoNote: {
+      fileId: '654',
       length: 100,
       duration: 399,
     },
@@ -123,54 +123,53 @@ const videoNoteMessage = {
 
 const contactMessage = {
   message: {
-    message_id: 666,
+    messageId: 666,
     from: {
       id: 427770117,
-      is_bot: false,
-      first_name: 'first',
-      last_name: 'last',
-      language_code: 'en',
+      isBot: false,
+      firstName: 'first',
+      lastName: 'last',
+      languageCode: 'en',
     },
     chat: {
       id: 427770117,
-      first_name: 'first',
-      last_name: 'last',
+      firstName: 'first',
+      lastName: 'last',
       type: 'private',
     },
     date: 1499402829,
     contact: {
-      phone_number: '123456789',
-      first_name: 'first',
+      phoneNumber: '123456789',
+      firstName: 'first',
     },
   },
 };
 
 const photoMessage = {
   message: {
-    message_id: 666,
+    messageId: 666,
     from: {
       id: 427770117,
-      is_bot: false,
-
-      first_name: 'first',
-      last_name: 'last',
-      language_code: 'en',
+      isBot: false,
+      firstName: 'first',
+      lastName: 'last',
+      languageCode: 'en',
     },
     chat: {
       id: 427770117,
-      first_name: 'first',
-      last_name: 'last',
+      firstName: 'first',
+      lastName: 'last',
       type: 'private',
     },
     date: 1499402829,
     photo: [
       {
-        file_id: '112',
+        fileId: '112',
         width: 100,
         height: 100,
       },
       {
-        file_id: '116',
+        fileId: '116',
         width: 50,
         height: 50,
       },
@@ -180,23 +179,23 @@ const photoMessage = {
 
 const audioMessage = {
   message: {
-    message_id: 666,
+    messageId: 666,
     from: {
       id: 427770117,
-      is_bot: false,
-      first_name: 'first',
-      last_name: 'last',
-      language_code: 'en',
+      isBot: false,
+      firstName: 'first',
+      lastName: 'last',
+      languageCode: 'en',
     },
     chat: {
       id: 427770117,
-      first_name: 'first',
-      last_name: 'last',
+      firstName: 'first',
+      lastName: 'last',
       type: 'private',
     },
     date: 1499402829,
     audio: {
-      file_id: '321',
+      fileId: '321',
       duration: 100,
       title: 'audioooooooo',
     },
@@ -205,18 +204,18 @@ const audioMessage = {
 
 const locationMessage = {
   message: {
-    message_id: 666,
+    messageId: 666,
     from: {
       id: 427770117,
-      is_bot: false,
-      first_name: 'first',
-      last_name: 'last',
-      language_code: 'en',
+      isBot: false,
+      firstName: 'first',
+      lastName: 'last',
+      languageCode: 'en',
     },
     chat: {
       id: 427770117,
-      first_name: 'first',
-      last_name: 'last',
+      firstName: 'first',
+      lastName: 'last',
       type: 'private',
     },
     date: 1499402829,
@@ -229,18 +228,18 @@ const locationMessage = {
 
 const venueMessage = {
   message: {
-    message_id: 666,
+    messageId: 666,
     from: {
       id: 427770117,
-      is_bot: false,
-      first_name: 'first',
-      last_name: 'last',
-      language_code: 'en',
+      isBot: false,
+      firstName: 'first',
+      lastName: 'last',
+      languageCode: 'en',
     },
     chat: {
       id: 427770117,
-      first_name: 'first',
-      last_name: 'last',
+      firstName: 'first',
+      lastName: 'last',
       type: 'private',
     },
     date: 1499402829,
@@ -257,42 +256,42 @@ const venueMessage = {
 
 const documentMessage = {
   message: {
-    message_id: 666,
+    messageId: 666,
     from: {
       id: 427770117,
-      is_bot: false,
-      first_name: 'first',
-      last_name: 'last',
-      language_code: 'en',
+      isBot: false,
+      firstName: 'first',
+      lastName: 'last',
+      languageCode: 'en',
     },
     chat: {
       id: 427770117,
-      first_name: 'first',
-      last_name: 'last',
+      firstName: 'first',
+      lastName: 'last',
       type: 'private',
     },
     date: 1499402829,
     document: {
-      file_id: '234',
-      file_name: 'file',
+      fileId: '234',
+      fileName: 'file',
     },
   },
 };
 
 const gameMessage = {
   message: {
-    message_id: 666,
+    messageId: 666,
     from: {
       id: 427770117,
-      is_bot: false,
-      first_name: 'first',
-      last_name: 'last',
-      language_code: 'en',
+      isBot: false,
+      firstName: 'first',
+      lastName: 'last',
+      languageCode: 'en',
     },
     chat: {
       id: 427770117,
-      first_name: 'first',
-      last_name: 'last',
+      firstName: 'first',
+      lastName: 'last',
       type: 'private',
     },
     date: 1499402829,
@@ -301,12 +300,12 @@ const gameMessage = {
       description: 'Description of the game',
       photo: [
         {
-          file_id: '112',
+          fileId: '112',
           width: 100,
           height: 100,
         },
         {
-          file_id: '116',
+          fileId: '116',
           width: 50,
           height: 50,
         },
@@ -316,21 +315,21 @@ const gameMessage = {
 };
 
 const groupMessage = {
-  update_id: 141921689,
+  updateId: 141921689,
   message: {
-    message_id: 238,
+    messageId: 238,
     from: {
       id: 427770117,
-      is_bot: false,
-      first_name: 'user_first',
-      last_name: 'user_last',
-      language_code: 'en',
+      isBot: false,
+      firstName: 'user_first',
+      lastName: 'user_last',
+      languageCode: 'en',
     },
     chat: {
       id: -225456171,
       title: 'Bottender',
       type: 'group',
-      all_members_are_administrators: true,
+      allMembersAreAdministrators: true,
     },
     date: 1515758146,
     text: 'hi',
@@ -338,55 +337,55 @@ const groupMessage = {
 };
 
 const editedMessage = {
-  update_id: 141921687,
-  edited_message: {
-    message_id: 229,
+  updateId: 141921687,
+  editedMessage: {
+    messageId: 229,
     from: {
       id: 427770117,
-      is_bot: false,
-      first_name: 'user_first',
-      last_name: 'user_last',
-      language_code: 'en',
+      isBot: false,
+      firstName: 'user_first',
+      lastName: 'user_last',
+      languageCode: 'en',
     },
     chat: {
       id: 427770117,
-      first_name: 'user_first',
-      last_name: 'user_last',
-      language_code: 'en',
+      firstName: 'user_first',
+      lastName: 'user_last',
+      languageCode: 'en',
     },
     date: 1515736358,
-    edit_date: 1515758017,
+    editDate: 1515758017,
     text: 'hiiiii',
   },
 };
 
 const groupEditedMessage = {
-  update_id: 141921688,
-  edited_message: {
-    message_id: 234,
+  updateId: 141921688,
+  editedMessage: {
+    messageId: 234,
     from: {
       id: 427770117,
-      is_bot: false,
-      first_name: 'user_first',
-      last_name: 'user_last',
-      language_code: 'en',
+      isBot: false,
+      firstName: 'user_first',
+      lastName: 'user_last',
+      languageCode: 'en',
     },
     chat: {
       id: -225456171,
       title: 'Bottender',
       type: 'group',
-      all_members_are_administrators: true,
+      allMembersAreAdministrators: true,
     },
     date: 1515736470,
-    edit_date: 1515758048,
+    editDate: 1515758048,
     text: 'hiiiii',
   },
 };
 
 const channelPost = {
-  update_id: 141921710,
-  channel_post: {
-    message_id: 2,
+  updateId: 141921710,
+  channelPost: {
+    messageId: 2,
     chat: {
       id: -1001305240521,
       title: 'channel_12345',
@@ -398,30 +397,30 @@ const channelPost = {
 };
 
 const editedChannelPost = {
-  update_id: 141921711,
-  edited_channel_post: {
-    message_id: 2,
+  updateId: 141921711,
+  editedChannelPost: {
+    messageId: 2,
     chat: {
       id: -1001305240521,
       title: 'channel_12345',
       type: 'channel',
     },
     date: 1515760382,
-    edit_date: 1515760478,
+    editDate: 1515760478,
     text: 'post~~~edited',
   },
 };
 
 const inlineQuery = {
-  update_id: 141921700,
-  inline_query: {
+  updateId: 141921700,
+  inlineQuery: {
     id: '1837258670654537434',
     from: {
       id: 427770117,
-      is_bot: false,
-      first_name: 'user_first',
-      last_name: 'user_last',
-      language_code: 'en',
+      isBot: false,
+      firstName: 'user_first',
+      lastName: 'user_last',
+      languageCode: 'en',
     },
     query: '123',
     offset: '',
@@ -429,156 +428,156 @@ const inlineQuery = {
 };
 
 const chosenInlineResult = {
-  update_id: 141921701,
-  chosen_inline_result: {
-    result_id: '2837258670654537434',
+  updateId: 141921701,
+  chosenInlineResult: {
+    resultId: '2837258670654537434',
     from: {
       id: 427770117,
-      is_bot: false,
-      first_name: 'user_first',
-      last_name: 'user_last',
-      language_code: 'en',
+      isBot: false,
+      firstName: 'user_first',
+      lastName: 'user_last',
+      languageCode: 'en',
     },
-    inline_message_id: '1837258670654537434',
+    inlineMessageId: '1837258670654537434',
     query: '123',
   },
 };
 
 const callbackQuery = {
-  update_id: 141921690,
-  callback_query: {
+  updateId: 141921690,
+  callbackQuery: {
     id: '123',
     from: {
       id: 427770117,
-      is_bot: false,
-      first_name: 'user_first',
-      last_name: 'user_last',
-      language_code: 'en',
+      isBot: false,
+      firstName: 'user_first',
+      lastName: 'user_last',
+      languageCode: 'en',
     },
     message: {
-      message_id: 666,
+      messageId: 666,
       from: {
         id: 313534466,
-        is_bot: true,
-        first_name: 'bot_first',
+        isBot: true,
+        firstName: 'bot_first',
         username: 'bot_name',
       },
       chat: {
         id: 427770117,
-        first_name: 'first',
-        last_name: 'last',
+        firstName: 'first',
+        lastName: 'last',
         type: 'private',
       },
       date: 1499402829,
       text: 'text',
     },
-    chat_instance: '-1828607021492040088',
+    chatInstance: '-1828607021492040088',
     data: 'data',
   },
 };
 
 const groupCallbackQuery = {
-  update_id: 141921690,
-  callback_query: {
+  updateId: 141921690,
+  callbackQuery: {
     id: '1837258667245133763',
     from: {
       id: 427770117,
-      is_bot: false,
-      first_name: 'user_first',
-      last_name: 'user_last',
-      language_code: 'en',
+      isBot: false,
+      firstName: 'user_first',
+      lastName: 'user_last',
+      languageCode: 'en',
     },
     message: {
-      message_id: 237,
+      messageId: 237,
       from: {
         id: 313534466,
-        is_bot: true,
-        first_name: 'bot_first',
+        isBot: true,
+        firstName: 'bot_first',
         username: 'bot_name',
       },
       chat: {
         id: -225456171,
         title: 'Bottender',
         type: 'group',
-        all_members_are_administrators: true,
+        allMembersAreAdministrators: true,
       },
       date: 1515736481,
       text: 'Hello World',
     },
-    chat_instance: '-582211693826679000',
+    chatInstance: '-582211693826679000',
     data: '123',
   },
 };
 
 const shippingQuery = {
-  update_id: 141921690,
-  shipping_query: {
+  updateId: 141921690,
+  shippingQuery: {
     id: '123',
     from: {
       id: 427770117,
-      first_name: 'user_first',
-      last_name: 'user_last',
-      language_code: 'en',
+      firstName: 'user_first',
+      lastName: 'user_last',
+      languageCode: 'en',
     },
-    invoice_payload: 'bot payload',
-    shipping_address: {
-      country_code: 'US',
+    invoicePayload: 'bot payload',
+    shippingAddress: {
+      countryCode: 'US',
       state: 'New York',
       city: 'New York',
-      street_line1: 'xx',
-      street_line2: 'xx',
-      post_code: '10001',
+      streetLine1: 'xx',
+      streetLine2: 'xx',
+      postCode: '10001',
     },
   },
 };
 
 const preCheckoutQuery = {
-  update_id: 141921690,
-  pre_checkout_query: {
+  updateId: 141921690,
+  preCheckoutQuery: {
     id: '123',
     from: {
       id: 427770117,
-      first_name: 'user_first',
-      last_name: 'user_last',
-      language_code: 'en',
+      firstName: 'user_first',
+      lastName: 'user_last',
+      languageCode: 'en',
     },
     currency: 'USD',
-    total_amount: 145,
-    invoice_payload: 'bot payload',
+    totalAmount: 145,
+    invoicePayload: 'bot payload',
   },
 };
 
 const replyToTextMessage = {
   message: {
-    message_id: 666,
+    messageId: 666,
     from: {
       id: 427770117,
-      is_bot: false,
-      first_name: 'first',
-      last_name: 'last',
-      language_code: 'en',
+      isBot: false,
+      firstName: 'first',
+      lastName: 'last',
+      languageCode: 'en',
     },
     chat: {
       id: 427770117,
-      first_name: 'first',
-      last_name: 'last',
+      firstName: 'first',
+      lastName: 'last',
       type: 'private',
     },
     date: 1499402829,
     text: 'replyText',
-    reply_to_message: {
-      message_id: 777,
+    replyToMessage: {
+      messageId: 777,
       from: {
         id: 427770117,
-        is_bot: false,
-        first_name: 'first',
-        last_name: 'last',
-        language_code: 'en',
+        isBot: false,
+        firstName: 'first',
+        lastName: 'last',
+        languageCode: 'en',
       },
       chat: {
         id: 427770117,
-        first_name: 'first',
-        last_name: 'last',
+        firstName: 'first',
+        lastName: 'last',
         type: 'private',
       },
       date: 1499402829,
@@ -624,37 +623,37 @@ it('#isMessage', () => {
 
 it('#message', () => {
   expect(new TelegramEvent(textMessage).message).toEqual({
-    message_id: 666,
+    messageId: 666,
     from: {
       id: 427770117,
-      is_bot: false,
-      first_name: 'first',
-      last_name: 'last',
-      language_code: 'en',
+      isBot: false,
+      firstName: 'first',
+      lastName: 'last',
+      languageCode: 'en',
     },
     chat: {
       id: 427770117,
-      first_name: 'first',
-      last_name: 'last',
+      firstName: 'first',
+      lastName: 'last',
       type: 'private',
     },
     date: 1499402829,
     text: 'text',
   });
   expect(new TelegramEvent(groupMessage).message).toEqual({
-    message_id: 238,
+    messageId: 238,
     from: {
       id: 427770117,
-      is_bot: false,
-      first_name: 'user_first',
-      last_name: 'user_last',
-      language_code: 'en',
+      isBot: false,
+      firstName: 'user_first',
+      lastName: 'user_last',
+      languageCode: 'en',
     },
     chat: {
       id: -225456171,
       title: 'Bottender',
       type: 'group',
-      all_members_are_administrators: true,
+      allMembersAreAdministrators: true,
     },
     date: 1515758146,
     text: 'hi',
@@ -668,35 +667,35 @@ it('#message', () => {
   expect(new TelegramEvent(shippingQuery).message).toEqual(null);
   expect(new TelegramEvent(preCheckoutQuery).message).toEqual(null);
   expect(new TelegramEvent(replyToTextMessage).message).toEqual({
-    message_id: 666,
+    messageId: 666,
     from: {
       id: 427770117,
-      is_bot: false,
-      first_name: 'first',
-      last_name: 'last',
-      language_code: 'en',
+      isBot: false,
+      firstName: 'first',
+      lastName: 'last',
+      languageCode: 'en',
     },
     chat: {
       id: 427770117,
-      first_name: 'first',
-      last_name: 'last',
+      firstName: 'first',
+      lastName: 'last',
       type: 'private',
     },
     date: 1499402829,
     text: 'replyText',
-    reply_to_message: {
-      message_id: 777,
+    replyToMessage: {
+      messageId: 777,
       from: {
         id: 427770117,
-        is_bot: false,
-        first_name: 'first',
-        last_name: 'last',
-        language_code: 'en',
+        isBot: false,
+        firstName: 'first',
+        lastName: 'last',
+        languageCode: 'en',
       },
       chat: {
         id: 427770117,
-        first_name: 'first',
-        last_name: 'last',
+        firstName: 'first',
+        lastName: 'last',
         type: 'private',
       },
       date: 1499402829,
@@ -744,18 +743,18 @@ it('#replyToMessage', () => {
   expect(new TelegramEvent(shippingQuery).replyToMessage).toEqual(null);
   expect(new TelegramEvent(preCheckoutQuery).replyToMessage).toEqual(null);
   expect(new TelegramEvent(replyToTextMessage).replyToMessage).toEqual({
-    message_id: 777,
+    messageId: 777,
     from: {
       id: 427770117,
-      is_bot: false,
-      first_name: 'first',
-      last_name: 'last',
-      language_code: 'en',
+      isBot: false,
+      firstName: 'first',
+      lastName: 'last',
+      languageCode: 'en',
     },
     chat: {
       id: 427770117,
-      first_name: 'first',
-      last_name: 'last',
+      firstName: 'first',
+      lastName: 'last',
       type: 'private',
     },
     date: 1499402829,
@@ -774,7 +773,7 @@ it('#audio', () => {
   expect(new TelegramEvent(callbackQuery).audio).toEqual(null);
   expect(new TelegramEvent(textMessage).audio).toEqual(null);
   expect(new TelegramEvent(audioMessage).audio).toEqual({
-    file_id: '321',
+    fileId: '321',
     duration: 100,
     title: 'audioooooooo',
   });
@@ -792,8 +791,8 @@ it('#document', () => {
   expect(new TelegramEvent(callbackQuery).document).toEqual(null);
   expect(new TelegramEvent(textMessage).document).toEqual(null);
   expect(new TelegramEvent(documentMessage).document).toEqual({
-    file_id: '234',
-    file_name: 'file',
+    fileId: '234',
+    fileName: 'file',
   });
   expect(new TelegramEvent(replyToTextMessage).document).toEqual(null);
 });
@@ -813,12 +812,12 @@ it('#game', () => {
     description: 'Description of the game',
     photo: [
       {
-        file_id: '112',
+        fileId: '112',
         width: 100,
         height: 100,
       },
       {
-        file_id: '116',
+        fileId: '116',
         width: 50,
         height: 50,
       },
@@ -839,12 +838,12 @@ it('#photo', () => {
   expect(new TelegramEvent(textMessage).photo).toEqual(null);
   expect(new TelegramEvent(photoMessage).photo).toEqual([
     {
-      file_id: '112',
+      fileId: '112',
       width: 100,
       height: 100,
     },
     {
-      file_id: '116',
+      fileId: '116',
       width: 50,
       height: 50,
     },
@@ -863,7 +862,7 @@ it('#sticker', () => {
   expect(new TelegramEvent(callbackQuery).sticker).toEqual(null);
   expect(new TelegramEvent(textMessage).sticker).toEqual(null);
   expect(new TelegramEvent(stickerMessage).sticker).toEqual({
-    file_id: '123',
+    fileId: '123',
     width: 50,
     height: 50,
   });
@@ -881,7 +880,7 @@ it('#video', () => {
   expect(new TelegramEvent(callbackQuery).video).toEqual(null);
   expect(new TelegramEvent(textMessage).video).toEqual(null);
   expect(new TelegramEvent(videoMessage).video).toEqual({
-    file_id: '321',
+    fileId: '321',
     width: 100,
     height: 100,
     duration: 199,
@@ -900,7 +899,7 @@ it('#voice', () => {
   expect(new TelegramEvent(callbackQuery).voice).toEqual(null);
   expect(new TelegramEvent(textMessage).voice).toEqual(null);
   expect(new TelegramEvent(voiceMessage).voice).toEqual({
-    file_id: '543',
+    fileId: '543',
     duration: 299,
   });
   expect(new TelegramEvent(replyToTextMessage).voice).toEqual(null);
@@ -917,7 +916,7 @@ it('#videoNote', () => {
   expect(new TelegramEvent(callbackQuery).videoNote).toEqual(null);
   expect(new TelegramEvent(textMessage).videoNote).toEqual(null);
   expect(new TelegramEvent(videoNoteMessage).videoNote).toEqual({
-    file_id: '654',
+    fileId: '654',
     length: 100,
     duration: 399,
   });
@@ -935,8 +934,8 @@ it('#contact', () => {
   expect(new TelegramEvent(callbackQuery).contact).toEqual(null);
   expect(new TelegramEvent(textMessage).contact).toEqual(null);
   expect(new TelegramEvent(contactMessage).contact).toEqual({
-    phone_number: '123456789',
-    first_name: 'first',
+    phoneNumber: '123456789',
+    firstName: 'first',
   });
   expect(new TelegramEvent(replyToTextMessage).contact).toEqual(null);
 });
@@ -996,41 +995,41 @@ it('#isEditedMessage', () => {
 it('#editedMessage', () => {
   expect(new TelegramEvent(textMessage).editedMessage).toEqual(null);
   expect(new TelegramEvent(editedMessage).editedMessage).toEqual({
-    message_id: 229,
+    messageId: 229,
     from: {
       id: 427770117,
-      is_bot: false,
-      first_name: 'user_first',
-      last_name: 'user_last',
-      language_code: 'en',
+      isBot: false,
+      firstName: 'user_first',
+      lastName: 'user_last',
+      languageCode: 'en',
     },
     chat: {
       id: 427770117,
-      first_name: 'user_first',
-      last_name: 'user_last',
-      language_code: 'en',
+      firstName: 'user_first',
+      lastName: 'user_last',
+      languageCode: 'en',
     },
     date: 1515736358,
-    edit_date: 1515758017,
+    editDate: 1515758017,
     text: 'hiiiii',
   });
   expect(new TelegramEvent(groupEditedMessage).editedMessage).toEqual({
-    message_id: 234,
+    messageId: 234,
     from: {
       id: 427770117,
-      is_bot: false,
-      first_name: 'user_first',
-      last_name: 'user_last',
-      language_code: 'en',
+      isBot: false,
+      firstName: 'user_first',
+      lastName: 'user_last',
+      languageCode: 'en',
     },
     chat: {
       id: -225456171,
       title: 'Bottender',
       type: 'group',
-      all_members_are_administrators: true,
+      allMembersAreAdministrators: true,
     },
     date: 1515736470,
-    edit_date: 1515758048,
+    editDate: 1515758048,
     text: 'hiiiii',
   });
   expect(new TelegramEvent(channelPost).editedMessage).toEqual(null);
@@ -1060,7 +1059,7 @@ it('#channelPost', () => {
   expect(new TelegramEvent(textMessage).channelPost).toEqual(null);
   expect(new TelegramEvent(editedMessage).channelPost).toEqual(null);
   expect(new TelegramEvent(channelPost).channelPost).toEqual({
-    message_id: 2,
+    messageId: 2,
     chat: {
       id: -1001305240521,
       title: 'channel_12345',
@@ -1104,14 +1103,14 @@ it('#editedChannelPost', () => {
   expect(new TelegramEvent(editedMessage).editedChannelPost).toEqual(null);
   expect(new TelegramEvent(channelPost).editedChannelPost).toEqual(null);
   expect(new TelegramEvent(editedChannelPost).editedChannelPost).toEqual({
-    message_id: 2,
+    messageId: 2,
     chat: {
       id: -1001305240521,
       title: 'channel_12345',
       type: 'channel',
     },
     date: 1515760382,
-    edit_date: 1515760478,
+    editDate: 1515760478,
     text: 'post~~~edited',
   });
   expect(new TelegramEvent(inlineQuery).editedChannelPost).toEqual(null);
@@ -1144,10 +1143,10 @@ it('#inlineQuery', () => {
     id: '1837258670654537434',
     from: {
       id: 427770117,
-      is_bot: false,
-      first_name: 'user_first',
-      last_name: 'user_last',
-      language_code: 'en',
+      isBot: false,
+      firstName: 'user_first',
+      lastName: 'user_last',
+      languageCode: 'en',
     },
     query: '123',
     offset: '',
@@ -1187,15 +1186,15 @@ it('#chosenInlineResult', () => {
   expect(new TelegramEvent(editedChannelPost).chosenInlineResult).toEqual(null);
   expect(new TelegramEvent(inlineQuery).chosenInlineResult).toEqual(null);
   expect(new TelegramEvent(chosenInlineResult).chosenInlineResult).toEqual({
-    result_id: '2837258670654537434',
+    resultId: '2837258670654537434',
     from: {
       id: 427770117,
-      is_bot: false,
-      first_name: 'user_first',
-      last_name: 'user_last',
-      language_code: 'en',
+      isBot: false,
+      firstName: 'user_first',
+      lastName: 'user_last',
+      languageCode: 'en',
     },
-    inline_message_id: '1837258670654537434',
+    inlineMessageId: '1837258670654537434',
     query: '123',
   });
   expect(new TelegramEvent(callbackQuery).chosenInlineResult).toEqual(null);
@@ -1231,58 +1230,58 @@ it('#callbackQuery', () => {
     id: '123',
     from: {
       id: 427770117,
-      is_bot: false,
-      first_name: 'user_first',
-      last_name: 'user_last',
-      language_code: 'en',
+      isBot: false,
+      firstName: 'user_first',
+      lastName: 'user_last',
+      languageCode: 'en',
     },
     message: {
-      message_id: 666,
+      messageId: 666,
       from: {
         id: 313534466,
-        is_bot: true,
-        first_name: 'bot_first',
+        isBot: true,
+        firstName: 'bot_first',
         username: 'bot_name',
       },
       chat: {
         id: 427770117,
-        first_name: 'first',
-        last_name: 'last',
+        firstName: 'first',
+        lastName: 'last',
         type: 'private',
       },
       date: 1499402829,
       text: 'text',
     },
-    chat_instance: '-1828607021492040088',
+    chatInstance: '-1828607021492040088',
     data: 'data',
   });
   expect(new TelegramEvent(groupCallbackQuery).callbackQuery).toEqual({
     id: '1837258667245133763',
     from: {
       id: 427770117,
-      is_bot: false,
-      first_name: 'user_first',
-      last_name: 'user_last',
-      language_code: 'en',
+      isBot: false,
+      firstName: 'user_first',
+      lastName: 'user_last',
+      languageCode: 'en',
     },
     message: {
-      message_id: 237,
+      messageId: 237,
       from: {
         id: 313534466,
-        is_bot: true,
-        first_name: 'bot_first',
+        isBot: true,
+        firstName: 'bot_first',
         username: 'bot_name',
       },
       chat: {
         id: -225456171,
         title: 'Bottender',
         type: 'group',
-        all_members_are_administrators: true,
+        allMembersAreAdministrators: true,
       },
       date: 1515736481,
       text: 'Hello World',
     },
-    chat_instance: '-582211693826679000',
+    chatInstance: '-582211693826679000',
     data: '123',
   });
   expect(new TelegramEvent(shippingQuery).callbackQuery).toEqual(null);

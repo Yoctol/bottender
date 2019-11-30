@@ -6,27 +6,27 @@ type ViberUser = {
   avatar: string;
   country: string;
   language: string;
-  api_version: number;
+  apiVersion: number;
 };
 
 type SubscribedEvent = {
   event: 'subscribed';
   timestamp: number;
   user: ViberUser;
-  message_token: number;
+  messageToken: number;
 };
 
 type UnsubscribedEvent = {
   event: 'unsubscribed';
   timestamp: number;
-  user_id: string;
-  message_token: number;
+  userId: string;
+  messageToken: number;
 };
 
 type ConversationStartedEvent = {
   event: 'conversation_started';
   timestamp: number;
-  message_token: number;
+  messageToken: number;
   type: 'open';
   context: string;
   user: ViberUser;
@@ -36,22 +36,22 @@ type ConversationStartedEvent = {
 type DeliveredEvent = {
   event: 'delivered';
   timestamp: number;
-  message_token: number;
-  user_id: string;
+  messageToken: number;
+  userId: string;
 };
 
 type SeenEvent = {
   event: 'seen';
   timestamp: number;
-  message_token: number;
-  user_id: string;
+  messageToken: number;
+  userId: string;
 };
 
 type FailedEvent = {
   event: 'failed';
   timestamp: number;
-  message_token: number;
-  user_id: string;
+  messageToken: number;
+  userId: string;
   desc: string;
 };
 
@@ -73,19 +73,19 @@ type ViberMessage = {
   };
   contact?: {
     name: string;
-    phone_number: string;
+    phoneNumber: string;
   };
-  tracking_data?: string;
-  file_name?: string;
-  file_size?: number;
+  trackingData?: string;
+  fileName?: string;
+  fileSize?: number;
   duration?: number;
-  sticker_id?: number;
+  stickerId?: number;
 };
 
 type MessageEvent = {
   event: 'message';
   timestamp: number;
-  message_token: number;
+  messageToken: number;
   sender: ViberUser;
   message: ViberMessage;
 };
@@ -225,7 +225,7 @@ export default class ViberEvent implements Event<ViberRawEvent> {
    */
   get sticker(): number | null {
     if (this.isSticker) {
-      return (this.message as ViberMessage).sticker_id || null;
+      return (this.message as ViberMessage).stickerId || null;
     }
     return null;
   }

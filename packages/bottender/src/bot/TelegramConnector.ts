@@ -57,32 +57,32 @@ export default class TelegramConnector
     if (body.message) {
       return `${body.message.chat.id}`;
     }
-    if (body.edited_message) {
-      return `${body.edited_message.chat.id}`;
+    if (body.editedMessage) {
+      return `${body.editedMessage.chat.id}`;
     }
-    if (body.channel_post) {
-      return `${body.channel_post.chat.id}`;
+    if (body.channelPost) {
+      return `${body.channelPost.chat.id}`;
     }
-    if (body.edited_channel_post) {
-      return `${body.edited_channel_post.chat.id}`;
+    if (body.editedChannelPost) {
+      return `${body.editedChannelPost.chat.id}`;
     }
-    if (body.inline_query) {
-      return `${body.inline_query.from.id}`;
+    if (body.inlineQuery) {
+      return `${body.inlineQuery.from.id}`;
     }
-    if (body.chosen_inline_result) {
-      return `${body.chosen_inline_result.from.id}`;
+    if (body.chosenInlineResult) {
+      return `${body.chosenInlineResult.from.id}`;
     }
-    if (body.callback_query) {
-      if (body.callback_query.message) {
-        return `${body.callback_query.message.chat.id}`;
+    if (body.callbackQuery) {
+      if (body.callbackQuery.message) {
+        return `${body.callbackQuery.message.chat.id}`;
       }
-      return `${body.callback_query.from.id}`;
+      return `${body.callbackQuery.from.id}`;
     }
-    if (body.shipping_query) {
-      return `${body.shipping_query.from.id}`;
+    if (body.shippingQuery) {
+      return `${body.shippingQuery.from.id}`;
     }
-    if (body.pre_checkout_query) {
-      return `${body.pre_checkout_query.from.id}`;
+    if (body.preCheckoutQuery) {
+      return `${body.preCheckoutQuery.from.id}`;
     }
     return '';
   }
@@ -91,10 +91,10 @@ export default class TelegramConnector
     session: Session,
     body: TelegramRequestBody
   ): Promise<void> {
-    if (body.channel_post) {
-      session.channel = body.channel_post.chat;
-    } else if (body.edited_channel_post) {
-      session.channel = body.edited_channel_post.chat;
+    if (body.channelPost) {
+      session.channel = body.channelPost.chat;
+    } else if (body.editedChannelPost) {
+      session.channel = body.editedChannelPost.chat;
     }
     if (session.channel) {
       session.channel._updatedAt = new Date().toISOString();
@@ -109,17 +109,14 @@ export default class TelegramConnector
 
     if (body.message && body.message.chat.type === 'group') {
       session.group = body.message.chat;
+    } else if (body.editedMessage && body.editedMessage.chat.type === 'group') {
+      session.group = body.editedMessage.chat;
     } else if (
-      body.edited_message &&
-      body.edited_message.chat.type === 'group'
+      body.callbackQuery &&
+      body.callbackQuery.message &&
+      body.callbackQuery.message.chat.type === 'group'
     ) {
-      session.group = body.edited_message.chat;
-    } else if (
-      body.callback_query &&
-      body.callback_query.message &&
-      body.callback_query.message.chat.type === 'group'
-    ) {
-      session.group = body.callback_query.message.chat;
+      session.group = body.callbackQuery.message.chat;
     }
     if (session.group) {
       session.group._updatedAt = new Date().toISOString();
@@ -134,18 +131,18 @@ export default class TelegramConnector
 
     if (body.message) {
       session.user = body.message.from;
-    } else if (body.edited_message) {
-      session.user = body.edited_message.from;
-    } else if (body.inline_query) {
-      session.user = body.inline_query.from;
-    } else if (body.chosen_inline_result) {
-      session.user = body.chosen_inline_result.from;
-    } else if (body.callback_query) {
-      session.user = body.callback_query.from;
-    } else if (body.shipping_query) {
-      session.user = body.shipping_query.from;
-    } else if (body.pre_checkout_query) {
-      session.user = body.pre_checkout_query.from;
+    } else if (body.editedMessage) {
+      session.user = body.editedMessage.from;
+    } else if (body.inlineQuery) {
+      session.user = body.inlineQuery.from;
+    } else if (body.chosenInlineResult) {
+      session.user = body.chosenInlineResult.from;
+    } else if (body.callbackQuery) {
+      session.user = body.callbackQuery.from;
+    } else if (body.shippingQuery) {
+      session.user = body.shippingQuery.from;
+    } else if (body.preCheckoutQuery) {
+      session.user = body.preCheckoutQuery.from;
     }
 
     if (session.user) {

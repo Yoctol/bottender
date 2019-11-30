@@ -21,19 +21,19 @@ beforeEach(() => {
 const rawEvent = {
   event: 'message',
   timestamp: 1457764197627,
-  message_token: 4912661846655238145,
+  messageToken: 4912661846655238145,
   sender: {
     id: '01234567890A=',
     name: 'John McClane',
     avatar: 'http://avatar.example.com',
     country: 'UK',
     language: 'en',
-    api_version: 1,
+    apiVersion: 1,
   },
   message: {
     type: 'text',
     text: 'a message to the service',
-    tracking_data: 'tracking data',
+    trackingData: 'tracking data',
   },
 };
 
@@ -207,7 +207,7 @@ describe('#sendFile', () => {
     await context.sendFile({
       media: 'http://www.images.com/file.doc',
       size: 10000,
-      file_name: 'name_of_file.doc',
+      fileName: 'name_of_file.doc',
     });
 
     expect(client.sendFile).toBeCalledWith(
@@ -215,7 +215,7 @@ describe('#sendFile', () => {
       {
         media: 'http://www.images.com/file.doc',
         size: 10000,
-        file_name: 'name_of_file.doc',
+        fileName: 'name_of_file.doc',
       },
       undefined
     );
@@ -227,7 +227,7 @@ describe('#sendFile', () => {
     await context.sendFile({
       media: 'http://www.images.com/file.doc',
       size: 10000,
-      file_name: 'name_of_file.doc',
+      fileName: 'name_of_file.doc',
     });
 
     expect(context.isHandled).toBe(true);
@@ -239,7 +239,7 @@ describe('#sendFile', () => {
     await context.sendFile({
       media: 'http://www.images.com/file.doc',
       size: 10000,
-      file_name: 'name_of_file.doc',
+      fileName: 'name_of_file.doc',
     });
 
     expect(client.sendFile).not.toBeCalled();
@@ -252,14 +252,14 @@ describe('#sendContact', () => {
 
     await context.sendContact({
       name: 'Itamar',
-      phone_number: '+972511123123',
+      phoneNumber: '+972511123123',
     });
 
     expect(client.sendContact).toBeCalledWith(
       session.user.id,
       {
         name: 'Itamar',
-        phone_number: '+972511123123',
+        phoneNumber: '+972511123123',
       },
       undefined
     );
@@ -270,7 +270,7 @@ describe('#sendContact', () => {
 
     await context.sendContact({
       name: 'Itamar',
-      phone_number: '+972511123123',
+      phoneNumber: '+972511123123',
     });
 
     expect(context.isHandled).toBe(true);
@@ -281,7 +281,7 @@ describe('#sendContact', () => {
 
     await context.sendContact({
       name: 'Itamar',
-      phone_number: '+972511123123',
+      phoneNumber: '+972511123123',
     });
 
     expect(client.sendContact).not.toBeCalled();
@@ -391,88 +391,88 @@ describe('#sendSticker', () => {
 });
 
 const richMedia = {
-  Type: 'rich_media',
-  ButtonsGroupColumns: 6,
-  ButtonsGroupRows: 7,
-  BgColor: '#FFFFFF',
-  Buttons: [
+  type: 'rich_media',
+  buttonsGroupColumns: 6,
+  buttonsGroupRows: 7,
+  bgColor: '#FFFFFF',
+  buttons: [
     {
-      Columns: 6,
-      Rows: 3,
-      ActionType: 'open-url',
-      ActionBody: 'https://www.google.com',
-      Image: 'http://html-test:8080/myweb/guy/assets/imageRMsmall2.png',
+      columns: 6,
+      rows: 3,
+      actionType: 'open-url',
+      actionBody: 'https://www.google.com',
+      image: 'http://html-test:8080/myweb/guy/assets/imageRMsmall2.png',
     },
     {
-      Columns: 6,
-      Rows: 2,
-      Text:
+      columns: 6,
+      rows: 2,
+      text:
         '<font color=#323232><b>Headphones with Microphone, On-ear Wired earphones</b></font><font color=#777777><br>Sound Intone </font><font color=#6fc133>$17.99</font>',
-      ActionType: 'open-url',
-      ActionBody: 'https://www.google.com',
-      TextSize: 'medium',
-      TextVAlign: 'middle',
-      TextHAlign: 'left',
+      actionType: 'open-url',
+      actionBody: 'https://www.google.com',
+      textSize: 'medium',
+      textVAlign: 'middle',
+      textHAlign: 'left',
     },
     {
-      Columns: 6,
-      Rows: 1,
-      ActionType: 'reply',
-      ActionBody: 'https://www.google.com',
-      Text: '<font color=#ffffff>Buy</font>',
-      TextSize: 'large',
-      TextVAlign: 'middle',
-      TextHAlign: 'middle',
-      Image: 'https://s14.postimg.org/4mmt4rw1t/Button.png',
+      columns: 6,
+      rows: 1,
+      actionType: 'reply',
+      actionBody: 'https://www.google.com',
+      text: '<font color=#ffffff>Buy</font>',
+      textSize: 'large',
+      textVAlign: 'middle',
+      textHAlign: 'middle',
+      image: 'https://s14.postimg.org/4mmt4rw1t/Button.png',
     },
     {
-      Columns: 6,
-      Rows: 1,
-      ActionType: 'reply',
-      ActionBody: 'https://www.google.com',
-      Text: '<font color=#8367db>MORE DETAILS</font>',
-      TextSize: 'small',
-      TextVAlign: 'middle',
-      TextHAlign: 'middle',
+      columns: 6,
+      rows: 1,
+      actionType: 'reply',
+      actionBody: 'https://www.google.com',
+      text: '<font color=#8367db>MORE DETAILS</font>',
+      textSize: 'small',
+      textVAlign: 'middle',
+      textHAlign: 'middle',
     },
     {
-      Columns: 6,
-      Rows: 3,
-      ActionType: 'open-url',
-      ActionBody: 'https://www.google.com',
-      Image: 'https://s16.postimg.org/wi8jx20wl/image_RMsmall2.png',
+      columns: 6,
+      rows: 3,
+      actionType: 'open-url',
+      actionBody: 'https://www.google.com',
+      image: 'https://s16.postimg.org/wi8jx20wl/image_RMsmall2.png',
     },
     {
-      Columns: 6,
-      Rows: 2,
-      Text:
+      columns: 6,
+      rows: 2,
+      text:
         "<font color=#323232><b>Hanes Men's Humor Graphic T-Shirt</b></font><font color=#777777><br>Hanes</font><font color=#6fc133>$10.99</font>",
-      ActionType: 'open-url',
-      ActionBody: 'https://www.google.com',
-      TextSize: 'medium',
-      TextVAlign: 'middle',
-      TextHAlign: 'left',
+      actionType: 'open-url',
+      actionBody: 'https://www.google.com',
+      textSize: 'medium',
+      textVAlign: 'middle',
+      textHAlign: 'left',
     },
     {
-      Columns: 6,
-      Rows: 1,
-      ActionType: 'reply',
-      ActionBody: 'https://www.google.com',
-      Text: '<font color=#ffffff>Buy</font>',
-      TextSize: 'large',
-      TextVAlign: 'middle',
-      TextHAlign: 'middle',
-      Image: 'https://s14.postimg.org/4mmt4rw1t/Button.png',
+      columns: 6,
+      rows: 1,
+      actionType: 'reply',
+      actionBody: 'https://www.google.com',
+      text: '<font color=#ffffff>Buy</font>',
+      textSize: 'large',
+      textVAlign: 'middle',
+      textHAlign: 'middle',
+      image: 'https://s14.postimg.org/4mmt4rw1t/Button.png',
     },
     {
-      Columns: 6,
-      Rows: 1,
-      ActionType: 'reply',
-      ActionBody: 'https://www.google.com',
-      Text: '<font color=#8367db>MORE DETAILS</font>',
-      TextSize: 'small',
-      TextVAlign: 'middle',
-      TextHAlign: 'middle',
+      columns: 6,
+      rows: 1,
+      actionType: 'reply',
+      actionBody: 'https://www.google.com',
+      text: '<font color=#8367db>MORE DETAILS</font>',
+      textSize: 'small',
+      textVAlign: 'middle',
+      textHAlign: 'middle',
     },
   ],
 };
@@ -517,12 +517,12 @@ describe('#getUserDetails', () => {
       avatar: 'http://avatar.example.com',
       country: 'UK',
       language: 'en',
-      primary_device_os: 'android 7.1',
-      api_version: 1,
-      viber_version: '6.5.0',
+      primaryDeviceOs: 'android 7.1',
+      apiVersion: 1,
+      viberVersion: '6.5.0',
       mcc: 1,
       mnc: 1,
-      device_type: 'iPhone9,4',
+      deviceType: 'iPhone9,4',
     };
 
     client.getUserDetails.mockResolvedValue(user);
@@ -548,8 +548,8 @@ describe('#getOnlineStatus', () => {
 
     const user = {
       id: '01234567890=',
-      online_status: 0,
-      online_status_message: 'online',
+      onlineStatus: 0,
+      onlineStatusMessage: 'online',
     };
 
     client.getOnlineStatus.mockResolvedValue([user]);

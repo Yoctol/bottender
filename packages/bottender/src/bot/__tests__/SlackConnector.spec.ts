@@ -12,84 +12,84 @@ const accessToken = 'SLACK_accessTOKEN';
 const request = {
   body: {
     token: 'xxxxxxxxxxxxxxxxxxxxxxxxxxx',
-    team_id: 'T02R00000',
-    api_app_id: 'A6A00000',
+    teamId: 'T02R00000',
+    apiAppId: 'A6A00000',
     event: {
       type: 'message',
       user: 'U13A00000',
       text: 'hello',
       ts: '1500435914.425136',
       channel: 'C6A900000',
-      event_ts: '1500435914.425136',
+      eventTs: '1500435914.425136',
     },
     type: 'event_callback',
-    authed_users: ['U6AK00000'],
-    event_id: 'Ev6BEYTAK0',
-    event_time: 1500435914,
+    authedUsers: ['U6AK00000'],
+    eventId: 'Ev6BEYTAK0',
+    eventTime: 1500435914,
   },
 };
 
 const botRequest = {
   body: {
     token: 'xxxxxxxxxxxxxxxxxxxxxxxxxxx',
-    team_id: 'T02R00000',
-    api_app_id: 'A6A00000',
+    teamId: 'T02R00000',
+    apiAppId: 'A6A00000',
     event: {
       type: 'message',
       user: 'U13A00000',
       text: 'hello',
-      bot_id: 'B6AK00000',
+      botId: 'B6AK00000',
       ts: '1500435914.425136',
       channel: 'C6A900000',
-      event_ts: '1500435914.425136',
+      eventTs: '1500435914.425136',
     },
     type: 'event_callback',
-    authed_users: ['U6AK00000'],
-    event_id: 'Ev6BEYTAK0',
-    event_time: 1500435914,
+    authedUsers: ['U6AK00000'],
+    eventId: 'Ev6BEYTAK0',
+    eventTime: 1500435914,
   },
 };
 
 const ReactionAddedRequest = {
   body: {
     token: 'xxxxxxxxxxxxxxxxxxxxxxxxxxx',
-    team_id: 'T02R00000',
-    api_app_id: 'A6A00000',
+    teamId: 'T02R00000',
+    apiAppId: 'A6A00000',
     event: {
       type: 'reaction_added',
       user: 'U024BE7LH',
       reaction: 'thumbsup',
-      item_user: 'U0G9QF9C6',
+      itemUser: 'U0G9QF9C6',
       item: {
         type: 'message',
         channel: 'C0G9QF9GZ',
         ts: '1360782400.498405',
       },
-      event_ts: '1360782804.083113',
+      eventTs: '1360782804.083113',
     },
     type: 'event_callback',
-    authed_users: ['U6AK00000'],
-    event_id: 'Ev6BEYTAK0',
-    event_time: 1500435914,
+    authedUsers: ['U6AK00000'],
+    eventId: 'Ev6BEYTAK0',
+    eventTime: 1500435914,
   },
 };
 
 const PinAddedRequest = {
   body: {
     token: 'xxxxxxxxxxxxxxxxxxxxxxxxxxx',
-    team_id: 'T02R00000',
-    api_app_id: 'A6A00000',
+    teamId: 'T02R00000',
+    apiAppId: 'A6A00000',
     event: {
       type: 'pin_added',
       user: 'U024BE7LH',
-      channel_id: 'C02ELGNBH',
+      channelId: 'C02ELGNBH',
       item: {},
-      event_ts: '1360782804.083113',
+      eventTs: '1360782804.083113',
     },
     type: 'event_callback',
-    authed_users: ['U6AK00000'],
-    event_id: 'Ev6BEYTAK0',
-    event_time: 1500435914,
+    authedUsers: ['U6AK00000'],
+    eventId: 'Ev6BEYTAK0',
+    eventTime: 1500435914,
   },
 };
 
@@ -106,7 +106,7 @@ const RtmMessage = {
   user: 'U056KAAAA',
   text: 'Awesome!!!',
   ts: '1515405044.000352',
-  source_team: 'T056KAAAA',
+  sourceTeam: 'T056KAAAA',
   team: 'T056KAAAA',
 };
 
