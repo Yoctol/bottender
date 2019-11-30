@@ -5,11 +5,11 @@ import merge from 'lodash/merge';
 import { createServer, registerRoutes } from '@bottender/express';
 
 import Bot from './bot/Bot';
-import LineBot from './bot/LineBot';
-import MessengerBot from './bot/MessengerBot';
-import SlackBot from './bot/SlackBot';
-import TelegramBot from './bot/TelegramBot';
-import ViberBot from './bot/ViberBot';
+import LineBot from './line/LineBot';
+import MessengerBot from './messenger/MessengerBot';
+import SlackBot from './slack/SlackBot';
+import TelegramBot from './telegram/TelegramBot';
+import ViberBot from './viber/ViberBot';
 import getBottenderConfig from './shared/getBottenderConfig';
 import { Action, BottenderConfig, Channel, Plugin } from './types';
 
@@ -87,7 +87,7 @@ function initializeServer({
   }
 
   if (isConsole) {
-    const ConsoleBot = require('./bot/ConsoleBot').default;
+    const ConsoleBot = require('./console/ConsoleBot').default;
 
     const bot = new ConsoleBot({
       fallbackMethods: true,
