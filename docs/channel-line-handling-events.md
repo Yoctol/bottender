@@ -56,7 +56,7 @@ async function App(context) {
 
 ## Retrieve Media Content from Message
 
-When you receive a media message, e.g., image, video, or audio message, the message content is not covered in the request. 
+When you receive a media message, e.g., image, video, or audio message, the message content is not covered in the request.
 You can make further responses based on the user's message content, e.g., add a photo frame, convert the audio message into text. You can get message content by `context.getMessageContent()`:
 
 ```js
