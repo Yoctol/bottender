@@ -1,0 +1,15 @@
+{
+  "scripts": {
+    "dev": "nodemon server.js",
+    "start": "cross-env NODE_ENV=production node server.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "bottender": "next",
+    "cross-env": "^6.0.3",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.1"
+  }
+}

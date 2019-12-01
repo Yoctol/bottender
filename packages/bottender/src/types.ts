@@ -72,30 +72,32 @@ export enum SessionDriver {
   Mongo = 'mongo',
 }
 
-export type BottenderConfig = {
-  plugins?: any[];
-  session?: {
-    driver: SessionDriver;
-    expiresIn?: number;
-    stores: {
-      memory: {
-        maxSize?: number;
-      };
-      file: {
-        dirname?: string;
-      };
-      redis: {
-        port?: number;
-        host?: string;
-        password?: string;
-        db: number;
-      };
-      mongo: {
-        url: string;
-        collectionName?: string;
-      };
+export type SessionConfig = {
+  driver: SessionDriver;
+  expiresIn?: number;
+  stores: {
+    memory?: {
+      maxSize?: number;
+    };
+    file?: {
+      dirname?: string;
+    };
+    redis?: {
+      port?: number;
+      host?: string;
+      password?: string;
+      db: number;
+    };
+    mongo?: {
+      url: string;
+      collectionName?: string;
     };
   };
+};
+
+export type BottenderConfig = {
+  plugins?: any[];
+  session?: SessionConfig;
   initialState?: Record<string, any>;
   channels?: {
     [Channel.Messenger]: {
