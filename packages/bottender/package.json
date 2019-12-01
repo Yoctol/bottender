@@ -27,7 +27,6 @@
     "@slack/rtm-api": "^5.0.3",
     "arg": "^4.1.1",
     "axios": "^0.19.0",
-    "camel-case": "^3.0.0",
     "chalk": "~2.4.2",
     "cli-table3": "^0.5.1",
     "date-fns": "^2.7.0",
