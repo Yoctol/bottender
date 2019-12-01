@@ -1,4 +1,6 @@
-export { createServer } from '@bottender/express';
+import bottender from './bottender';
+
+export { bottender };
 
 /* Core */
 export { default as Bot } from './bot/Bot';
@@ -62,4 +64,5 @@ export { default as ViberEvent } from './viber/ViberEvent';
 /* Plugins */
 export { default as withTyping } from './plugins/withTyping';
 
+export { createServer } from '@bottender/express';
 export { default as initializeServer } from './initializeServer';

@@ -1,4 +1,4 @@
-import * as core from '../index';
+import * as core from '..';
 
 describe('core', () => {
   it('export bots', () => {
