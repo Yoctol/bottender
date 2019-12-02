@@ -1,3 +1,301 @@
+# 1.0.0 / 2019-12-05
+
+- The whole codebase has been fully rewritten with **TypeScript**.
+- The repository becomes a lerna **monorepo**.
+- [new] A brand-new project creator - `create-bottender-app`. You can use following command to create your new bot:
+
+```sh
+npx create-bottender-app my-app
+```
+
+- [new] Implement new runner and `bottender start` cli. It finds `index.js` entry and `bottender.config.js` config file then executes accordingly:
+
+```sh
+bottender start
+```
+
+To enable console mode:
+
+```sh
+bottender start --console
+```
+
+- [new] Add new development mode via `bottender dev` cli:
+
+```sh
+bottender dev
+bottender dev --console
+```
+
+The bot server will be restarted after changing the files.
+
+- [new] Add several recommended ways to organize chatbot dialogs and features:
+
+**Action**:
+
+```js
+async function SayHi(context) {
+  await context.sendText('hi');
+}
+```
+
+**Pass Props to Action**:
+
+```js
+const { withProps } = require('bottender');
+
+async function SayHi(context, { name }) {
+  await context.sendText(`hi! ${name}.`);
+}
+
+async function App() {
+  return withProps(SayHi, { name: 'John' });
+}
+```
+
+**Router**:
+
+```js
+const { router, text } = require('bottender/router');
+
+async function SayHi(context) {
+  await context.sendText('Hi!');
+}
+
+async function SayHello(context) {
+  await context.sendText('Hello!');
+}
+
+async function App() {
+  return router([
+    text('hi', SayHi), // return SayHi when receiving hi text message
+    text('hello', SayHello), // return SayHello when receiving hello text message
+  ]);
+}
+```
+
+**Chain**:
+
+```js
+const { chain } = require('bottender');
+
+function RuleBased(context, props) {
+  if (context.event.text === 'hi') {
+    // discontinue and return SayHi
+    return SayHi;
+  }
+  // continue to next
+  return props.next;
+}
+
+function MachineLearningBased(context, props) {
+  /* ...skip */
+}
+
+function HumanAgent(context, props) {
+  /* ...skip */
+}
+
+function App() {
+  return chain([
+    // will execute in following order
+    RuleBased,
+    MachineLearningBased,
+    HumanAgent,
+  ]);
+}
+```
+
+- [new] Add `_error.js` entry support for error handling:
+
+```js
+// _error.js
+module.exports = async function HandleError(context, props) {
+  await context.sendText(
+    'There are some unexpected errors happened. Please try again later, sorry for the inconvenience.'
+  );
+  console.error(props.error);
+  if (process.env.NODE_ENV === 'production') {
+    // send your error to the error tracker, for example: Sentry
+  }
+  if (process.env.NODE_ENV === 'development') {
+    await context.sendText(props.error.stack);
+  }
+};
+```
+
+- [new] Add better custom server support
+- [breaking] `middleware` and Handlers has been moved to `@bottender/handlers` package. You can install it from registry:
+
+```sh
+npm install @bottender/handlers
+
+// or using yarn:
+yarn add @bottender/handlers
+```
+
+And import them like this:
+
+```js
+const {
+  middleware,
+  Handler,
+  MessengerHandler,
+  LineHandler,
+  SlackHandler,
+  TelegramHandler,
+  ViberHandler,
+} = require('@bottender/handlers');
+```
+
+- [breaking] transform all context method parameters to camelcase:
+
+Messenger -
+
+```js
+context.sendGenericTemplate([
+  {
+    title: "Welcome to Peter's Hats",
+    imageUrl: 'https://petersfancybrownhats.com/company_image.png',
+    subtitle: "We've got the right hat for everyone.",
+    defaultAction: {
+      type: 'web_url',
+      url: 'https://peterssendreceiveapp.ngrok.io/view?item=103',
+      messengerExtensions: true,
+      webviewHeightRatio: 'tall',
+      fallbackUrl: 'https://peterssendreceiveapp.ngrok.io/',
+    },
+    buttons: [
+      {
+        type: 'postback',
+        title: 'Start Chatting',
+        payload: 'DEVELOPER_DEFINED_PAYLOAD',
+      },
+    ],
+  },
+]);
+```
+
+Slack -
+
+```js
+context.scheduleMessage({
+  text: 'Hello world!',
+  postAt: '299876400',
+});
+```
+
+Telegram -
+
+```js
+context.sendMessage('hi', {
+  disableWebPagePreview: true,
+  disableNotification: true,
+});
+```
+
+Viber -
+
+```js
+context.sendFile({
+  media: 'http://www.images.com/file.doc',
+  size: 10000,
+  fileName: 'name_of_file.doc',
+});
+```
+
+- [breaking] transform all event attributes to camelcase:
+
+```js
+context.event.rawEvent; // all keys is camelcase in this object
+```
+
+- [breaking] rename `skipProfile` to `skipLegacyProfile`, and set to true by default
+
+- [breaking] unify requestContext (#541)
+- [deps] update `messaging-apis` to v1
+- [examples] Rewrite all examples for Bottender v1
+- [docs] A brand-new website with new docs - https://bottender.js.org?new
+
+### messenger
+
+- [new] add `pageId` config to automatically add subscribe app in `bottender messenger webhook set`.
+- [removed] `get-started`, `greeting`, `persistent-menu`, `whitelisted-domains` cli subcommands has been removed. Use `profile` instead:
+
+```sh
+bottender messenger profile get
+bottender messenger profile set
+bottender messenger profile delete
+```
+
+- [removed] Remove deprecated `context.sendAirlineFlightUpdateTemplate()`.
+
+### line
+
+- [new] Implement `context.getMessageContent()`. You can use it to get received media content:
+
+```js
+async function App(context) {
+  if (context.event.isImage || context.event.isVideo || context.event.isAudio) {
+    const buffer = await context.getMessageContent();
+  }
+}
+```
+
+- [new] LineBot: Set `sendMethod` to `reply` and `shouldBatch` to `true` by default.
+- [removed] legacy `menu` cli subcommand has been removed.
+
+### slack
+
+- [new] add block kits support:
+
+```js
+context.postMessage({
+  blocks: [
+    {
+      type: 'section',
+      text: {
+        type: 'plain_text',
+        text: 'You updated the modal!',
+      },
+    },
+    {
+      type: 'image',
+      imageUrl: 'https://media.giphy.com/media/SVZGEcYt7brkFUyU90/giphy.gif',
+      altText: 'Yay! The modal was updated',
+    },
+  ],
+});
+```
+
+- [fix] use `token` in payload when received a JSON string payload.
+
+### telegram
+
+- [new] implement `context.sendAnimation()`:
+
+```js
+context.sendAnimation('xxx.mp4');
+```
+
+- [new] implement `context.sendPoll()`
+
+```js
+const options = ['a', 'b'];
+
+context.sendPoll(question, options);
+```
+
+- [breaking] add messageId to args for all function need messageId:
+
+```js
+context.editMessageText('<MESSAGE_ID>', text);
+context.editMessageCaption('<MESSAGE_ID>', caption);
+context.editMessageReplyMarkup('<MESSAGE_ID>', replyMarkup);
+context.editMessageLiveLocation('<MESSAGE_ID>', location);
+context.stopMessageLiveLocation('<MESSAGE_ID>');
+```
+
 # 0.15.17 / 2019-02-01
 
 ### line
