@@ -24,6 +24,7 @@
     "Guides (LINE)": [
       "channel-line-setup",
       "channel-line-handling-events",
+      "channel-line-sending-messages",
       "channel-line-flex",
       "channel-line-rich-menu",
       "channel-line-errors",
