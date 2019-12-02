@@ -6800,10 +6800,10 @@ messaging-api-messenger@^1.0.0-beta.10:
     messaging-api-common "^1.0.0-beta.5"
     warning "^4.0.3"
 
-messaging-api-slack@^1.0.0-beta.5:
-  version "1.0.0-beta.5"
-  resolved "https://registry.yarnpkg.com/messaging-api-slack/-/messaging-api-slack-1.0.0-beta.5.tgz#a2ab613bc2d9a26eaa060e3f01bd07de0c71114c"
-  integrity sha512-7yn9uLobehJfXi8pcEp3M5W+y0XAzH9u23CM+qXG+XeJ9l+pZwqENkFmfJYkQ/1b1LdpLa3YBmHbjpgPN2xLEQ==
+messaging-api-slack@^1.0.0-beta.10:
+  version "1.0.0-beta.10"
+  resolved "https://registry.yarnpkg.com/messaging-api-slack/-/messaging-api-slack-1.0.0-beta.10.tgz#cac527fd46b0e580b0b14edc967b1496a4325b0d"
+  integrity sha512-L9aeVWA0Ajr3xM8vPjbYJ3/kDbH+BVl49k4tFjzZ9laJxupTuKekMWF8Dqmh5MO8/6XAAJa9aZObivUEFuy8iQ==
   dependencies:
     axios "^0.19.0"
     axios-error "^1.0.0-beta.5"

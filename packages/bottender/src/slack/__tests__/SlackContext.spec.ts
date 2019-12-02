@@ -1,5 +1,5 @@
 jest.mock('delay');
-jest.mock('messaging-api-slack');
+// jest.mock('messaging-api-slack');
 jest.mock('warning');
 
 let SlackClient;
@@ -50,6 +50,29 @@ const setup = ({ session: _session, rawEvent: _rawEvent } = {}) => {
   const session = _session === undefined ? userSession : _session;
   const rawEvent = _rawEvent === undefined ? messageRawEvent : _rawEvent;
   const client = SlackClient.connect();
+
+  client.chat = {
+    postMessage: jest.fn(),
+    postEphemeral: jest.fn(),
+    update: jest.fn(),
+    delete: jest.fn(),
+    meMessage: jest.fn(),
+    getPermalink: jest.fn(),
+    scheduleMessage: jest.fn(),
+    deleteScheduledMessage: jest.fn(),
+    unfurl: jest.fn(),
+    scheduledMessages: {
+      list: jest.fn(),
+    },
+  };
+
+  client.views = {
+    open: jest.fn(),
+    publish: jest.fn(),
+    push: jest.fn(),
+    update: jest.fn(),
+  };
+
   const args = {
     client,
     event: new SlackEvent(rawEvent),
@@ -102,7 +125,10 @@ describe('#postMessage', () => {
 
     await context.postMessage('hello');
 
-    expect(client.postMessage).toBeCalledWith('C6A9RJJ3F', 'hello', {});
+    expect(client.chat.postMessage).toBeCalledWith({
+      channel: 'C6A9RJJ3F',
+      text: 'hello',
+    });
   });
 
   it('should set threadTs if event is in a thread', async () => {
@@ -110,7 +136,9 @@ describe('#postMessage', () => {
 
     await context.postMessage('hello');
 
-    expect(client.postMessage).toBeCalledWith('C6A9RJJ3F', 'hello', {
+    expect(client.chat.postMessage).toBeCalledWith({
+      channel: 'C6A9RJJ3F',
+      text: 'hello',
       threadTs: '1515479974.000115',
     });
   });
@@ -118,11 +146,19 @@ describe('#postMessage', () => {
   it('should support overwrite options', async () => {
     const { context, client } = setup();
 
-    await context.postMessage('hello', { attachments: [], asUser: false });
-
-    expect(client.postMessage).toBeCalledWith('C6A9RJJ3F', 'hello', {
-      attachments: [],
+    await context.postMessage({
       asUser: false,
+      attachments: [],
+      channel: 'C6A9RJJ3F',
+      text: 'hello',
+      threadTs: undefined,
+    });
+
+    expect(client.chat.postMessage).toBeCalledWith({
+      asUser: false,
+      attachments: [],
+      channel: 'C6A9RJJ3F',
+      text: 'hello',
     });
   });
 
@@ -140,7 +176,7 @@ describe('#postMessage', () => {
     await context.postMessage('hello');
 
     expect(warning).toBeCalled();
-    expect(client.postMessage).not.toBeCalled();
+    expect(client.chat.postMessage).not.toBeCalled();
   });
 
   it('should get channel id', async () => {
@@ -149,7 +185,10 @@ describe('#postMessage', () => {
 
     await context.postMessage('hello');
 
-    expect(client.postMessage).toBeCalledWith(id, 'hello', {});
+    expect(client.chat.postMessage).toBeCalledWith({
+      channel: '123',
+      text: 'hello',
+    });
   });
 
   it('should get null channelId and call warning if no session', async () => {
@@ -158,7 +197,7 @@ describe('#postMessage', () => {
     await context.postMessage('hello');
 
     expect(warning).toBeCalled();
-    expect(client.postMessage).not.toBeCalled();
+    expect(client.chat.postMessage).not.toBeCalled();
   });
 
   it('should get null channelId and call warning if session is wrong', async () => {
@@ -167,7 +206,97 @@ describe('#postMessage', () => {
     await context.postMessage('hello');
 
     expect(warning).toBeCalled();
-    expect(client.postMessage).not.toBeCalled();
+    expect(client.chat.postMessage).not.toBeCalled();
+  });
+});
+
+describe('#chat.postMessage', () => {
+  it('should call client.postMessage', async () => {
+    const { context, client } = setup();
+
+    await context.chat.postMessage({ text: 'hello' });
+
+    expect(client.chat.postMessage).toBeCalledWith({
+      channel: 'C6A9RJJ3F',
+      text: 'hello',
+    });
+  });
+
+  it('should set threadTs if event is in a thread', async () => {
+    const { context, client } = setup({ rawEvent: threadRawEvent });
+
+    await context.chat.postMessage({ text: 'hello' });
+
+    expect(client.chat.postMessage).toBeCalledWith({
+      channel: 'C6A9RJJ3F',
+      text: 'hello',
+      threadTs: '1515479974.000115',
+    });
+  });
+
+  it('should support overwrite options', async () => {
+    const { context, client } = setup();
+
+    await context.chat.postMessage({
+      asUser: false,
+      attachments: [],
+      channel: 'C6A9RJJ3F',
+      text: 'hello',
+    });
+
+    expect(client.chat.postMessage).toBeCalledWith({
+      asUser: false,
+      attachments: [],
+      channel: 'C6A9RJJ3F',
+      text: 'hello',
+    });
+  });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    await context.chat.postMessage({ text: 'hello' });
+
+    expect(context.isHandled).toBe(true);
+  });
+
+  it('should call warning and not to send if dont have channelId', async () => {
+    const { context, client } = setup({ session: false });
+
+    await context.postMessage({ text: 'hello' });
+
+    expect(warning).toBeCalled();
+    expect(client.chat.postMessage).not.toBeCalled();
+  });
+
+  it('should get channel id', async () => {
+    const id = '123';
+    const { context, client } = setup({ session: { channel: { id } } });
+
+    await context.postMessage({ text: 'hello' });
+
+    expect(client.chat.postMessage).toBeCalledWith({
+      channel: '123',
+      text: 'hello',
+    });
+  });
+
+  it('should get null channelId and call warning if no session', async () => {
+    const { context, client } = setup({ session: false });
+
+    await context.postMessage({ text: 'hello' });
+
+    expect(warning).toBeCalled();
+    expect(client.chat.postMessage).not.toBeCalled();
+  });
+
+  it('should get null channelId and call warning if session is wrong', async () => {
+    const { context, client } = setup({ session: { channel: '123' } });
+
+    await context.postMessage({ text: 'hello' });
+
+    expect(warning).toBeCalled();
+    expect(client.chat.postMessage).not.toBeCalled();
   });
 });
 
@@ -177,14 +306,53 @@ describe('#postEphemeral', () => {
 
     await context.postEphemeral('hello');
 
-    expect(client.postEphemeral).toBeCalledWith(
-      'C6A9RJJ3F',
-      'fakeUserId',
-      'hello',
-      undefined
-    );
+    expect(client.chat.postEphemeral).toBeCalledWith({
+      channel: 'C6A9RJJ3F',
+      text: 'hello',
+      user: 'fakeUserId',
+    });
   });
 });
+
+describe('#chat.postEphemeral', () => {
+  it('should call client.postEphemeral', async () => {
+    const { context, client } = setup();
+
+    await context.chat.postEphemeral({
+      text: 'hello',
+    });
+
+    expect(client.chat.postEphemeral).toBeCalledWith({
+      channel: 'C6A9RJJ3F',
+      text: 'hello',
+      user: 'fakeUserId',
+    });
+  });
+});
+
+describe('#chat.update', () => {});
+
+describe('#chat.delete', () => {});
+
+describe('#chat.meMessage', () => {});
+
+describe('#chat.getPermalink', () => {});
+
+describe('#chat.scheduleMessage', () => {});
+
+describe('#chat.deleteScheduledMessage', () => {});
+
+describe('#chat.unfurl', () => {});
+
+describe('#chat.scheduledMessages', () => {});
+
+describe('#views.open', () => {});
+
+describe('#views.publish', () => {});
+
+describe('#views.push', () => {});
+
+describe('#views.update', () => {});
 
 describe('#typing', () => {
   it('avoid delay 0', async () => {

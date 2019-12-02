@@ -1,14 +1,94 @@
+import EventEmitter from 'events';
+
 import sleep from 'delay';
 import warning from 'warning';
 import { SlackOAuthClient, SlackTypes } from 'messaging-api-slack';
 
 import Context from '../context/Context';
+import Session from '../session/Session';
 import { PlatformContext } from '../context/PlatformContext';
+import { RequestContext } from '../types';
 
 import SlackEvent from './SlackEvent';
 
+type Options = {
+  client: SlackOAuthClient;
+  event: SlackEvent;
+  session: Session | null;
+  initialState?: Record<string, any> | null;
+  requestContext?: RequestContext;
+  emitter?: EventEmitter | null;
+};
+
 export default class SlackContext extends Context<SlackOAuthClient, SlackEvent>
   implements PlatformContext {
+  chat: {
+    postMessage: (
+      options: Omit<SlackTypes.PostMessageOptions, 'channel'>
+    ) => Promise<any>;
+    postEphemeral: (
+      options: Omit<Omit<SlackTypes.PostEphemeralOptions, 'channel'>, 'user'>
+    ) => Promise<any>;
+    update: (options: SlackTypes.UpdateMessageOptions) => Promise<any>;
+    delete: (
+      options: Omit<SlackTypes.DeleteMessageOptions, 'channel'>
+    ) => Promise<any>;
+    meMessage: (
+      options: Omit<SlackTypes.MeMessageOptions, 'channel'>
+    ) => Promise<any>;
+    getPermalink: (
+      options: Omit<SlackTypes.GetPermalinkOptions, 'channel'>
+    ) => Promise<any>;
+    scheduleMessage: (
+      options: Omit<SlackTypes.ScheduleMessageOptions, 'channel'>
+    ) => Promise<any>;
+    deleteScheduledMessage: (
+      options: Omit<SlackTypes.DeleteScheduledMessageOptions, 'channel'>
+    ) => Promise<any>;
+    scheduledMessages: {
+      list: (options: SlackTypes.GetScheduledMessagesOptions) => Promise<any>;
+    };
+  };
+
+  views: {
+    open: (options: SlackTypes.OpenViewOptions) => Promise<any>;
+    publish: (options: SlackTypes.PublishViewOptions) => Promise<any>;
+    push: (options: SlackTypes.PushViewOptions) => Promise<any>;
+    update: (options: SlackTypes.UpdateViewOptions) => Promise<any>;
+  };
+
+  constructor({
+    client,
+    event,
+    session,
+    initialState,
+    requestContext,
+    emitter,
+  }: Options) {
+    super({ client, event, session, initialState, requestContext, emitter });
+
+    this.chat = {
+      postMessage: this._postMessage.bind(this),
+      postEphemeral: this._postEphemeral.bind(this),
+      update: this._updateMessage.bind(this),
+      delete: this._deleteMessage.bind(this),
+      meMessage: this._meMessage.bind(this),
+      getPermalink: this._getPermalink.bind(this),
+      scheduleMessage: this._scheduleMessage.bind(this),
+      deleteScheduledMessage: this._deleteScheduledMessage.bind(this),
+      scheduledMessages: {
+        list: this._getScheduledMessages.bind(this),
+      },
+    };
+
+    this.views = {
+      open: this._openView.bind(this),
+      publish: this._publishView.bind(this),
+      push: this._pushView.bind(this),
+      update: this._updateView.bind(this),
+    };
+  }
+
   /**
    * The name of the platform.
    *
@@ -27,6 +107,28 @@ export default class SlackContext extends Context<SlackOAuthClient, SlackEvent>
     }
   }
 
+  // FIXME: this is to fix type checking
+  _getChannelIdFromSession(callerMethodName = ''): string | null {
+    if (
+      this._session &&
+      typeof this._session.channel === 'object' &&
+      this._session.channel &&
+      this._session.channel.id &&
+      typeof this._session.channel.id === 'string'
+    ) {
+      return this._session.channel.id;
+    }
+
+    if (callerMethodName) {
+      warning(
+        false,
+        `${callerMethodName}: should not be called in context without session`
+      );
+    }
+
+    return null;
+  }
+
   /**
    * Sends a message to the channel of the session.
    *
@@ -37,25 +139,41 @@ export default class SlackContext extends Context<SlackOAuthClient, SlackEvent>
       | {
           text?: string;
           attachments?: SlackTypes.Attachment[] | string;
-          blocks?: SlackTypes.Block[] | string;
+          blocks?: SlackTypes.MessageBlock[] | string;
         }
       | string,
     options?: {}
   ): Promise<any> {
-    const channelId = this._getChannelIdFromSession();
+    warning(
+      false,
+      '`postMessage` is deprecated. Use `chat.postMessage` instead.'
+    );
 
-    if (!channelId) {
-      warning(
-        false,
-        'postMessage: should not be called in context without session'
-      );
+    return this.chat.postMessage({
+      ...(typeof message === 'string' ? { text: message } : message),
+      ...options,
+    });
+  }
+
+  /**
+   * Sends a message to a channel.
+   *
+   * https://api.slack.com/methods/chat.postMessage
+   */
+  _postMessage(
+    options: Omit<SlackTypes.PostMessageOptions, 'channel'>
+  ): Promise<any> {
+    const channel = this._getChannelIdFromSession('chat.postMessage');
+
+    if (!channel) {
       return Promise.resolve();
     }
 
     this._isHandled = true;
 
-    return this._client.postMessage(channelId, message, {
+    return this._client.chat.postMessage({
       threadTs: this._event.rawEvent.threadTs,
+      channel,
       ...options,
     });
   }
@@ -70,50 +188,224 @@ export default class SlackContext extends Context<SlackOAuthClient, SlackEvent>
       | {
           text?: string;
           attachments?: SlackTypes.Attachment[] | string;
-          blocks?: SlackTypes.Block[] | string;
+          blocks?: SlackTypes.MessageBlock[] | string;
         }
       | string,
     options?: {}
   ): Promise<any> {
-    const channelId = this._getChannelIdFromSession();
+    warning(
+      false,
+      '`postEphemeral` is deprecated. Use `chat.postEphemeral` instead.'
+    );
 
-    if (!channelId) {
-      warning(
-        false,
-        'postMessage: should not be called in context without session'
-      );
+    return this.chat.postEphemeral({
+      ...(typeof message === 'string' ? { text: message } : message),
+      ...options,
+    });
+  }
+
+  /**
+   * Sends an ephemeral message to a user in a channel.
+   *
+   * https://api.slack.com/methods/chat.postEphemeral
+   */
+  _postEphemeral(
+    options: Omit<Omit<SlackTypes.PostEphemeralOptions, 'channel'>, 'user'>
+  ): Promise<any> {
+    const channel = this._getChannelIdFromSession('chat.postEphemeral');
+
+    if (!channel) {
       return Promise.resolve();
     }
 
     this._isHandled = true;
 
-    return this._client.postEphemeral(
-      channelId,
-      (this._session as any).user.id,
-      message,
-      options
-    );
+    return this._client.chat.postEphemeral({
+      channel,
+      user: (this._session as any).user.id,
+      ...options,
+    });
   }
 
   /**
    * Send text to the owner of the session.
    *
    */
-  sendText(text: string, options?: {}): Promise<any> {
-    return this.postMessage(text, options);
+  sendText(text: string): Promise<any> {
+    return this._postMessage({ text });
   }
 
-  // FIXME: this is to fix type checking
-  _getChannelIdFromSession(): string | null {
-    if (!this._session) return null;
-    if (
-      typeof this._session.channel === 'object' &&
-      this._session.channel &&
-      this._session.channel.id &&
-      typeof this._session.channel.id === 'string'
-    ) {
-      return this._session.channel.id;
+  /**
+   * Updates a message.
+   *
+   * https://api.slack.com/methods/chat.update
+   */
+  _updateMessage(options: SlackTypes.UpdateMessageOptions): Promise<any> {
+    this._isHandled = true;
+
+    return this._client.chat.update(options);
+  }
+
+  /**
+   * Deletes a message.
+   *
+   * https://api.slack.com/methods/chat.delete
+   */
+  _deleteMessage(
+    options: Omit<SlackTypes.DeleteMessageOptions, 'channel'>
+  ): Promise<any> {
+    const channel = this._getChannelIdFromSession('chat.delete');
+
+    if (!channel) {
+      return Promise.resolve();
     }
-    return null;
+
+    this._isHandled = true;
+
+    return this._client.chat.delete({
+      channel,
+      ...options,
+    });
+  }
+
+  /**
+   * Share a me message into a channel.
+   *
+   * https://api.slack.com/methods/chat.meMessage
+   */
+  _meMessage(
+    options: Omit<SlackTypes.MeMessageOptions, 'channel'>
+  ): Promise<any> {
+    const channel = this._getChannelIdFromSession('chat.meMessage');
+
+    if (!channel) {
+      return Promise.resolve();
+    }
+
+    this._isHandled = true;
+
+    return this._client.chat.meMessage({ channel, ...options });
+  }
+
+  /**
+   * Retrieve a permalink URL for a specific extant message
+   *
+   * https://api.slack.com/methods/chat.getPermalink
+   */
+  _getPermalink(
+    options: Omit<SlackTypes.GetPermalinkOptions, 'channel'>
+  ): Promise<any> {
+    const channel = this._getChannelIdFromSession('chat.getPermalink');
+
+    if (!channel) {
+      return Promise.resolve();
+    }
+
+    this._isHandled = true;
+
+    return this._client.chat.getPermalink({ channel, ...options });
+  }
+
+  /**
+   * Schedules a message to be sent to a channel.
+   *
+   * https://api.slack.com/methods/chat.scheduleMessage
+   */
+  _scheduleMessage(
+    options: Omit<SlackTypes.ScheduleMessageOptions, 'channel'>
+  ): Promise<any> {
+    const channel = this._getChannelIdFromSession('chat.scheduleMessage');
+
+    if (!channel) {
+      return Promise.resolve();
+    }
+
+    this._isHandled = true;
+
+    return this._client.chat.scheduleMessage({
+      channel,
+      ...options,
+    });
+  }
+
+  /**
+   * Deletes a pending scheduled message from the queue.
+   *
+   * https://api.slack.com/methods/chat.deleteScheduledMessage
+   */
+  _deleteScheduledMessage(
+    options: Omit<SlackTypes.DeleteScheduledMessageOptions, 'channel'>
+  ): Promise<any> {
+    const channel = this._getChannelIdFromSession(
+      'chat.deleteScheduledMessage'
+    );
+
+    if (!channel) {
+      return Promise.resolve();
+    }
+
+    this._isHandled = true;
+
+    return this._client.chat.deleteScheduledMessage({
+      channel,
+      ...options,
+    });
+  }
+
+  /**
+   * Returns a list of scheduled messages.
+   *
+   * https://api.slack.com/methods/chat.scheduledMessages.list
+   */
+  _getScheduledMessages(
+    options: SlackTypes.GetScheduledMessagesOptions
+  ): Promise<any> {
+    this._isHandled = true;
+
+    return this._client.chat.scheduledMessages.list(options);
+  }
+
+  /**
+   * Open a view for a user.
+   *
+   * https://api.slack.com/methods/views.open
+   */
+  _openView(options: SlackTypes.OpenViewOptions): Promise<any> {
+    this._isHandled = true;
+
+    return this._client.views.open(options);
+  }
+
+  /**
+   * Publish a static view for a User.
+   *
+   * https://api.slack.com/methods/views.publish
+   */
+  _publishView(options: SlackTypes.PublishViewOptions): Promise<any> {
+    this._isHandled = true;
+
+    return this._client.views.publish(options);
+  }
+
+  /**
+   * Update an existing view.
+   *
+   * https://api.slack.com/methods/views.update
+   */
+  _updateView(options: SlackTypes.UpdateViewOptions): Promise<any> {
+    this._isHandled = true;
+
+    return this._client.views.update(options);
+  }
+
+  /**
+   * Push a view onto the stack of a root view.
+   *
+   * https://api.slack.com/methods/views.push
+   */
+  _pushView(options: SlackTypes.PushViewOptions): Promise<any> {
+    this._isHandled = true;
+
+    return this._client.views.push(options);
   }
 }
