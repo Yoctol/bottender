@@ -1,6 +1,6 @@
 {
   "docs": {
-    "Getting Started": ["getting-started"],
+    "Getting Started": ["getting-started", "migrating-v1"],
     "The Basics": [
       "the-basics-console-mode",
       "the-basics-actions",
