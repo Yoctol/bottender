@@ -20,7 +20,7 @@ type CommonConstructorOptions = {
   mapDestinationToAccessToken?: (destination: string) => Promise<string>;
   shouldBatch?: boolean;
   sendMethod?: string;
-  skipProfile?: boolean;
+  skipLegacyProfile?: boolean;
 };
 
 type ConstructorOptionsWithoutClient = {
@@ -43,7 +43,7 @@ export default class LineConnector
 
   _channelSecret: string;
 
-  _skipProfile: boolean;
+  _skipLegacyProfile: boolean;
 
   _mapDestinationToAccessToken:
     | ((destination: string) => Promise<string>)
@@ -58,7 +58,7 @@ export default class LineConnector
       mapDestinationToAccessToken,
       shouldBatch,
       sendMethod,
-      skipProfile,
+      skipLegacyProfile,
     } = options;
     if ('client' in options) {
       this._client = options.client;
@@ -85,8 +85,8 @@ export default class LineConnector
     );
     this._sendMethod = sendMethod || 'reply';
 
-    // FIXME: maybe set this default value as true
-    this._skipProfile = typeof skipProfile === 'boolean' ? skipProfile : false;
+    this._skipLegacyProfile =
+      typeof skipLegacyProfile === 'boolean' ? skipLegacyProfile : true;
   }
 
   _isWebhookVerifyEvent(event: LineRawEvent): boolean {
@@ -140,7 +140,7 @@ export default class LineConnector
       let user = null;
 
       if (source.userId) {
-        user = this._skipProfile
+        user = this._skipLegacyProfile
           ? {
               id: source.userId,
               _updatedAt: new Date().toISOString(),
@@ -176,7 +176,7 @@ export default class LineConnector
       let user = null;
 
       if (source.userId) {
-        user = this._skipProfile
+        user = this._skipLegacyProfile
           ? {
               id: source.userId,
               _updatedAt: new Date().toISOString(),
@@ -210,7 +210,7 @@ export default class LineConnector
       };
     } else if (source.type === 'user') {
       if (!session.user) {
-        const user = this._skipProfile
+        const user = this._skipLegacyProfile
           ? {}
           : await this._client.getUserProfile(source.userId);
 

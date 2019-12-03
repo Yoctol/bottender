@@ -37,7 +37,7 @@ type EventsAPIBody = {
 export type SlackRequestBody = EventsAPIBody | { payload: string };
 
 type CommonConstructorOptions = {
-  skipProfile?: boolean | null;
+  skipLegacyProfile?: boolean | null;
   verificationToken?: string;
 };
 
@@ -60,10 +60,10 @@ export default class SlackConnector
 
   _verificationToken: string;
 
-  _skipProfile: boolean;
+  _skipLegacyProfile: boolean;
 
   constructor(options: ConstructorOptions) {
-    const { verificationToken, skipProfile } = options;
+    const { verificationToken, skipLegacyProfile } = options;
     if ('client' in options) {
       this._client = options.client;
     } else {
@@ -76,8 +76,8 @@ export default class SlackConnector
 
     this._verificationToken = verificationToken || '';
 
-    // FIXME: maybe set this default value as true
-    this._skipProfile = typeof skipProfile === 'boolean' ? skipProfile : false;
+    this._skipLegacyProfile =
+      typeof skipLegacyProfile === 'boolean' ? skipLegacyProfile : true;
 
     if (!this._verificationToken) {
       warning(
@@ -181,7 +181,7 @@ export default class SlackConnector
       return;
     }
 
-    if (this._skipProfile) {
+    if (this._skipLegacyProfile) {
       session.user = {
         id: senderId,
         _updatedAt: new Date().toISOString(),

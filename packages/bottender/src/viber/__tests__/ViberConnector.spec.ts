@@ -114,6 +114,7 @@ function setup() {
     connector: new ViberConnector({
       accessToken: ACCESS_TOKEN,
       sender: { name: 'sender' },
+      skipLegacyProfile: false,
     }),
   };
 }

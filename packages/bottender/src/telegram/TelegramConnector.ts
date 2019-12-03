@@ -14,10 +14,12 @@ export type TelegramRequestBody = TelegramRawEvent;
 type ConstructorOptionsWithoutClient = {
   accessToken: string;
   origin?: string;
+  skipLegacyProfile?: boolean;
 };
 
 type ConstructorOptionsWithClient = {
   client: TelegramClient;
+  skipLegacyProfile?: boolean;
 };
 
 type ConstructorOptions =
@@ -28,7 +30,10 @@ export default class TelegramConnector
   implements Connector<TelegramRequestBody, TelegramClient> {
   _client: TelegramClient;
 
+  _skipLegacyProfile: boolean;
+
   constructor(options: ConstructorOptions) {
+    const { skipLegacyProfile } = options;
     if ('client' in options) {
       this._client = options.client;
     } else {
@@ -39,6 +44,9 @@ export default class TelegramConnector
         origin,
       });
     }
+
+    this._skipLegacyProfile =
+      typeof skipLegacyProfile === 'boolean' ? skipLegacyProfile : true;
   }
 
   _getRawEventFromRequest(body: TelegramRequestBody): TelegramRawEvent {
@@ -91,12 +99,21 @@ export default class TelegramConnector
     session: Session,
     body: TelegramRequestBody
   ): Promise<void> {
+    let channel;
     if (body.channelPost) {
-      session.channel = body.channelPost.chat;
+      channel = body.channelPost.chat;
     } else if (body.editedChannelPost) {
-      session.channel = body.editedChannelPost.chat;
+      channel = body.editedChannelPost.chat;
     }
-    if (session.channel) {
+
+    if (channel) {
+      if (this._skipLegacyProfile) {
+        session.channel = {
+          id: channel.id,
+        };
+      } else {
+        session.channel = channel;
+      }
       session.channel._updatedAt = new Date().toISOString();
       Object.freeze(session.channel);
     }
@@ -107,18 +124,26 @@ export default class TelegramConnector
       value: session.channel,
     });
 
+    let group;
     if (body.message && body.message.chat.type === 'group') {
-      session.group = body.message.chat;
+      group = body.message.chat;
     } else if (body.editedMessage && body.editedMessage.chat.type === 'group') {
-      session.group = body.editedMessage.chat;
+      group = body.editedMessage.chat;
     } else if (
       body.callbackQuery &&
       body.callbackQuery.message &&
       body.callbackQuery.message.chat.type === 'group'
     ) {
-      session.group = body.callbackQuery.message.chat;
+      group = body.callbackQuery.message.chat;
     }
-    if (session.group) {
+    if (group) {
+      if (this._skipLegacyProfile) {
+        session.group = {
+          id: group.id,
+        };
+      } else {
+        session.group = group;
+      }
       session.group._updatedAt = new Date().toISOString();
       Object.freeze(session.group);
     }
@@ -129,23 +154,31 @@ export default class TelegramConnector
       value: session.group,
     });
 
+    let user;
     if (body.message) {
-      session.user = body.message.from;
+      user = body.message.from;
     } else if (body.editedMessage) {
-      session.user = body.editedMessage.from;
+      user = body.editedMessage.from;
     } else if (body.inlineQuery) {
-      session.user = body.inlineQuery.from;
+      user = body.inlineQuery.from;
     } else if (body.chosenInlineResult) {
-      session.user = body.chosenInlineResult.from;
+      user = body.chosenInlineResult.from;
     } else if (body.callbackQuery) {
-      session.user = body.callbackQuery.from;
+      user = body.callbackQuery.from;
     } else if (body.shippingQuery) {
-      session.user = body.shippingQuery.from;
+      user = body.shippingQuery.from;
     } else if (body.preCheckoutQuery) {
-      session.user = body.preCheckoutQuery.from;
+      user = body.preCheckoutQuery.from;
     }
 
-    if (session.user) {
+    if (user) {
+      if (this._skipLegacyProfile) {
+        session.user = {
+          id: user.id,
+        };
+      } else {
+        session.user = user;
+      }
       session.user._updatedAt = new Date().toISOString();
       Object.freeze(session.user);
     }
