@@ -112,7 +112,7 @@ const RtmMessage = {
 
 function setup({
   verificationToken = 'xxxxxxxxxxxxxxxxxxxxxxxxxxx',
-  skipProfile,
+  skipLegacyProfile,
 } = {}) {
   const mockSlackOAuthClient = {
     getUserInfo: jest.fn(),
@@ -126,7 +126,7 @@ function setup({
     connector: new SlackConnector({
       accessToken,
       verificationToken,
-      skipProfile,
+      skipLegacyProfile,
     }),
     mockSlackOAuthClient,
   };
@@ -188,7 +188,9 @@ describe('#getUniqueSessionKey', () => {
 
 describe('#updateSession', () => {
   it('update session with data needed', async () => {
-    const { connector, mockSlackOAuthClient } = setup();
+    const { connector, mockSlackOAuthClient } = setup({
+      skipLegacyProfile: false,
+    });
 
     const user = {
       id: 'U13A00000',
@@ -229,7 +231,9 @@ describe('#updateSession', () => {
   });
 
   it('not update session if it is bot event request', async () => {
-    const { connector, mockSlackOAuthClient } = setup();
+    const { connector, mockSlackOAuthClient } = setup({
+      skipLegacyProfile: false,
+    });
 
     const session = {};
 
@@ -243,7 +247,9 @@ describe('#updateSession', () => {
   });
 
   it('not update session if no senderId in body', async () => {
-    const { connector, mockSlackOAuthClient } = setup();
+    const { connector, mockSlackOAuthClient } = setup({
+      skipLegacyProfile: false,
+    });
 
     const session = {};
     const body = {
@@ -273,7 +279,9 @@ describe('#updateSession', () => {
   });
 
   it('update session with data needed when receiving interactive message request', async () => {
-    const { connector, mockSlackOAuthClient } = setup();
+    const { connector, mockSlackOAuthClient } = setup({
+      skipLegacyProfile: false,
+    });
 
     const user = {
       id: 'U056K3CN1',
@@ -313,8 +321,8 @@ describe('#updateSession', () => {
     });
   });
 
-  it('update session without calling apis while skipProfile setted true', async () => {
-    const { connector, mockSlackOAuthClient } = setup({ skipProfile: true });
+  it('update session without calling apis while skipLegacyProfile set true', async () => {
+    const { connector, mockSlackOAuthClient } = setup();
 
     const session = {};
 

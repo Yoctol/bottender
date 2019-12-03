@@ -82,7 +82,7 @@ const webhookVerifyRequest = {
   },
 };
 
-function setup({ sendMethod, skipProfile } = {}) {
+function setup({ sendMethod, skipLegacyProfile } = {}) {
   const mockLineAPIClient = {
     getUserProfile: jest.fn(),
     isValidSignature: jest.fn(),
@@ -99,7 +99,7 @@ function setup({ sendMethod, skipProfile } = {}) {
       accessToken: ACCESS_TOKEN,
       channelSecret: CHANNEL_SECRET,
       sendMethod,
-      skipProfile,
+      skipLegacyProfile,
     }),
   };
 }
@@ -209,7 +209,9 @@ describe('#getUniqueSessionKey', () => {
 
 describe('#updateSession', () => {
   it('update session with data needed', async () => {
-    const { connector, mockLineAPIClient } = setup();
+    const { connector, mockLineAPIClient } = setup({
+      skipLegacyProfile: false,
+    });
     const user = {
       id: 'U206d25c2ea6bd87c17655609a1c37cb8',
       displayName: 'LINE taro',
@@ -242,7 +244,9 @@ describe('#updateSession', () => {
   });
 
   it('update session if session.user exists', async () => {
-    const { connector, mockLineAPIClient } = setup();
+    const { connector, mockLineAPIClient } = setup({
+      skipLegacyProfile: false,
+    });
     const user = {
       id: 'U206d25c2ea6bd87c17655609a1c37cb8',
       displayName: 'LINE taro',
@@ -271,7 +275,9 @@ describe('#updateSession', () => {
   });
 
   it('update session with group type message', async () => {
-    const { connector, mockLineAPIClient } = setup();
+    const { connector, mockLineAPIClient } = setup({
+      skipLegacyProfile: false,
+    });
     const body = {
       events: [
         {
@@ -343,7 +349,9 @@ describe('#updateSession', () => {
   });
 
   it('update session with group type event without userId', async () => {
-    const { connector, mockLineAPIClient } = setup();
+    const { connector, mockLineAPIClient } = setup({
+      skipLegacyProfile: false,
+    });
     const body = {
       events: [
         {
@@ -398,7 +406,9 @@ describe('#updateSession', () => {
   });
 
   it('update session with room type message', async () => {
-    const { connector, mockLineAPIClient } = setup();
+    const { connector, mockLineAPIClient } = setup({
+      skipLegacyProfile: false,
+    });
     const body = {
       events: [
         {
@@ -470,7 +480,9 @@ describe('#updateSession', () => {
   });
 
   it('update session with room type event without userId', async () => {
-    const { connector, mockLineAPIClient } = setup();
+    const { connector, mockLineAPIClient } = setup({
+      skipLegacyProfile: false,
+    });
     const body = {
       events: [
         {
@@ -525,7 +537,9 @@ describe('#updateSession', () => {
   });
 
   it('update session with other type message', async () => {
-    const { connector } = setup();
+    const { connector } = setup({
+      skipLegacyProfile: false,
+    });
     const body = {
       events: [
         {
@@ -559,8 +573,8 @@ describe('#updateSession', () => {
     });
   });
 
-  it('update userId without calling any api while skipProfile setted true', async () => {
-    const { connector, mockLineAPIClient } = setup({ skipProfile: true });
+  it('update userId without calling any api while skipLegacyProfile set to true', async () => {
+    const { connector, mockLineAPIClient } = setup();
     const session = {};
 
     await connector.updateSession(session, request.body);

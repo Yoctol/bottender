@@ -163,15 +163,13 @@ const webhookTestRequest = {
   },
 };
 
-function setup(
-  { accessToken, appSecret, mapPageToAccessToken, verifyToken, skipProfile } = {
-    accessToken: ACCESS_TOKEN,
-    appSecret: APP_SECRET,
-    mapPageToAccessToken: jest.fn(),
-    verifyToken: '1qaz2wsx',
-    skipProfile: false,
-  }
-) {
+function setup({
+  accessToken = ACCESS_TOKEN,
+  appSecret = APP_SECRET,
+  mapPageToAccessToken = jest.fn(),
+  verifyToken = '1qaz2wsx',
+  skipLegacyProfile = true,
+} = {}) {
   const mockGraphAPIClient = {
     getUserProfile: jest.fn(),
   };
@@ -184,7 +182,7 @@ function setup(
       appSecret,
       mapPageToAccessToken,
       verifyToken,
-      skipProfile,
+      skipLegacyProfile,
     }),
   };
 }
@@ -266,7 +264,9 @@ describe('#getUniqueSessionKey', () => {
 
 describe('#updateSession', () => {
   it('update session with data needed', async () => {
-    const { connector, mockGraphAPIClient } = setup();
+    const { connector, mockGraphAPIClient } = setup({
+      skipLegacyProfile: false,
+    });
     const user = {
       id: '1412611362105802',
       firstName: 'firstName',
@@ -298,7 +298,9 @@ describe('#updateSession', () => {
   });
 
   it('update session when profilePic expired', async () => {
-    const { connector, mockGraphAPIClient } = setup();
+    const { connector, mockGraphAPIClient } = setup({
+      skipLegacyProfile: false,
+    });
     const user = {
       id: '1412611362105802',
       firstName: 'firstName',
@@ -334,7 +336,9 @@ describe('#updateSession', () => {
   });
 
   it('update session when expired date is invalid', async () => {
-    const { connector, mockGraphAPIClient } = setup();
+    const { connector, mockGraphAPIClient } = setup({
+      skipLegacyProfile: false,
+    });
     const user = {
       id: '1412611362105802',
       firstName: 'firstName',
@@ -370,7 +374,9 @@ describe('#updateSession', () => {
   });
 
   it('update session when something wrong', async () => {
-    const { connector, mockGraphAPIClient } = setup();
+    const { connector, mockGraphAPIClient } = setup({
+      skipLegacyProfile: false,
+    });
     const user = {
       id: '1412611362105802',
       firstName: 'firstName',
@@ -406,7 +412,9 @@ describe('#updateSession', () => {
   });
 
   it('update session when getUserProfile() failed', async () => {
-    const { connector, mockGraphAPIClient } = setup();
+    const { connector, mockGraphAPIClient } = setup({
+      skipLegacyProfile: false,
+    });
     const error = new Error('fail');
 
     mockGraphAPIClient.getUserProfile.mockRejectedValue(error);
@@ -435,9 +443,9 @@ describe('#updateSession', () => {
     expect(console.error).toBeCalledWith(error);
   });
 
-  it(`update session without gettiing user's profile when skipProfile setted true`, async () => {
+  it(`update session without getting user's profile when skipLegacyProfile set to true`, async () => {
     const { connector, mockGraphAPIClient } = setup({
-      skipProfile: true,
+      skipLegacyProfile: true,
     });
 
     const session = {};

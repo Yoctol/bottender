@@ -81,7 +81,7 @@ type CommonConstructorOptions = {
   appSecret: string;
   verifyToken?: string;
   batchConfig?: Record<string, any>;
-  skipProfile?: boolean;
+  skipLegacyProfile?: boolean;
   mapPageToAccessToken?: (pageId: string) => Promise<string>;
 };
 
@@ -107,7 +107,7 @@ export default class MessengerConnector
 
   _appSecret: string;
 
-  _skipProfile: boolean;
+  _skipLegacyProfile: boolean;
 
   _mapPageToAccessToken: ((pageId: string) => Promise<string>) | null = null;
 
@@ -125,7 +125,7 @@ export default class MessengerConnector
       verifyToken,
       batchConfig,
 
-      skipProfile,
+      skipLegacyProfile,
     } = options;
 
     if ('client' in options) {
@@ -146,8 +146,8 @@ export default class MessengerConnector
     this._mapPageToAccessToken = mapPageToAccessToken || null;
     this._verifyToken = verifyToken || shortid.generate();
 
-    // FIXME: maybe set this default value as true
-    this._skipProfile = typeof skipProfile === 'boolean' ? skipProfile : false;
+    this._skipLegacyProfile =
+      typeof skipLegacyProfile === 'boolean' ? skipLegacyProfile : true;
 
     this._batchConfig = batchConfig || null;
     if (this._batchConfig) {
@@ -273,7 +273,7 @@ export default class MessengerConnector
       }
 
       // FIXME: refine user
-      if (this._skipProfile) {
+      if (this._skipLegacyProfile) {
         session.user = {
           _updatedAt: new Date().toISOString(),
           id: senderId,

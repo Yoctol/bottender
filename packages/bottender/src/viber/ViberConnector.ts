@@ -17,10 +17,12 @@ type ConstructorOptionsWithoutClient = {
   accessToken: string;
   sender: ViberTypes.Sender;
   origin?: string;
+  skipLegacyProfile?: boolean;
 };
 
 type ConstructorOptionsWithClient = {
   client: ViberClient;
+  skipLegacyProfile?: boolean;
 };
 
 type ConstructorOptions =
@@ -33,7 +35,10 @@ export default class ViberConnector
 
   _client: ViberClient;
 
+  _skipLegacyProfile: boolean;
+
   constructor(options: ConstructorOptions) {
+    const { skipLegacyProfile } = options;
     if ('client' in options) {
       this._client = options.client;
     } else {
@@ -50,6 +55,8 @@ export default class ViberConnector
     }
 
     this._accessToken = this._client.accessToken;
+    this._skipLegacyProfile =
+      typeof skipLegacyProfile === 'boolean' ? skipLegacyProfile : true;
   }
 
   _getRawEventFromRequest(body: ViberRequestBody): ViberRawEvent {
@@ -104,7 +111,14 @@ export default class ViberConnector
         break;
     }
 
-    if (Object.keys(addedDiff(session.user || {}, user as any)).length > 0) {
+    if (this._skipLegacyProfile) {
+      session.user = {
+        _updatedAt: new Date().toISOString(),
+        id: (user || {}).id,
+      };
+    } else if (
+      Object.keys(addedDiff(session.user || {}, user as any)).length > 0
+    ) {
       session.user = {
         ...session.user,
         ...user,
