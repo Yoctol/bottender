@@ -371,88 +371,11 @@ context.sendFile(fs.createReadStream(<span class="hljs-string">'receipt.pdf'</sp
 </code></pre>
 <p>Available tags:</p>
 <ul>
-<li><p><code>CONFIRMED_EVENT_UPDATE</code></p></li>
-<li><p><code>POST_PURCHASE_UPDATE</code></p></li>
-<li><p><code>ACCOUNT_UPDATE</code></p></li>
-<li><p><code>HUMAN_AGENT</code></p>
-<p><br /></p></li>
+<li><code>CONFIRMED_EVENT_UPDATE</code></li>
+<li><code>POST_PURCHASE_UPDATE</code></li>
+<li><code>ACCOUNT_UPDATE</code></li>
+<li><code>HUMAN_AGENT</code></li>
 </ul>
-<h4><a class="anchor" aria-hidden="true" id="sendlisttemplateitems-buttons-options-official-docs-https-developersfacebookcom-docs-messenger-platform-send-api-reference-list-template"></a><a href="#sendlisttemplateitems-buttons-options-official-docs-https-developersfacebookcom-docs-messenger-platform-send-api-reference-list-template" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>sendListTemplate(items, buttons [, options])</code> - <a href="https://developers.facebook.com/docs/messenger-platform/send-api-reference/list-template">Official Docs</a></h4>
-<p>Send list message templates to the user using the <a href="https://developers.facebook.com/docs/messenger-platform/reference/send-api#request">Send API</a>.</p>
-<p><img src="https://user-images.githubusercontent.com/3382565/37410530-c97f03e4-27db-11e8-8331-56610e6fc3ad.png" alt="sendListTemplate" width="250" /></p>
-<table>
-<thead>
-<tr><th>Param</th><th>Type</th><th>Description</th></tr>
-</thead>
-<tbody>
-<tr><td>items</td><td><code>Object[]</code></td><td>Array of <a href="https://developers.facebook.com/docs/messenger-platform/send-messages/template/generic#element">element</a>. List view elements.</td></tr>
-<tr><td>buttons</td><td><code>Object[]</code></td><td>Array of <a href="https://developers.facebook.com/docs/messenger-platform/send-messages/template/button#button">button</a>. List of buttons associated on the list template message (maximum of 1 button).</td></tr>
-<tr><td>options</td><td><code>Object</code></td><td>Other optional parameters, such as <code>topElementStyle</code> and <a href="https://developers.facebook.com/docs/messenger-platform/send-messages#messaging_types">messaging types</a>.</td></tr>
-</tbody>
-</table>
-<p>Example:</p>
-<pre><code class="hljs css language-js">context.sendListTemplate(
-  [
-    {
-      <span class="hljs-attr">title</span>: <span class="hljs-string">'Classic T-Shirt Collection'</span>,
-      <span class="hljs-attr">imageUrl</span>: <span class="hljs-string">'https://peterssendreceiveapp.ngrok.io/img/collection.png'</span>,
-      <span class="hljs-attr">subtitle</span>: <span class="hljs-string">'See all our colors'</span>,
-      <span class="hljs-attr">defaultAction</span>: {
-        <span class="hljs-attr">type</span>: <span class="hljs-string">'web_url'</span>,
-        <span class="hljs-attr">url</span>: <span class="hljs-string">'https://peterssendreceiveapp.ngrok.io/shop_collection'</span>,
-        <span class="hljs-attr">messengerExtensions</span>: <span class="hljs-literal">true</span>,
-        <span class="hljs-attr">webviewHeightRatio</span>: <span class="hljs-string">'tall'</span>,
-        <span class="hljs-attr">fallbackUrl</span>: <span class="hljs-string">'https://peterssendreceiveapp.ngrok.io/'</span>,
-      },
-      <span class="hljs-attr">buttons</span>: [
-        {
-          <span class="hljs-attr">title</span>: <span class="hljs-string">'View'</span>,
-          <span class="hljs-attr">type</span>: <span class="hljs-string">'web_url'</span>,
-          <span class="hljs-attr">url</span>: <span class="hljs-string">'https://peterssendreceiveapp.ngrok.io/collection'</span>,
-          <span class="hljs-attr">messengerExtensions</span>: <span class="hljs-literal">true</span>,
-          <span class="hljs-attr">webviewHeightRatio</span>: <span class="hljs-string">'tall'</span>,
-          <span class="hljs-attr">fallbackUrl</span>: <span class="hljs-string">'https://peterssendreceiveapp.ngrok.io/'</span>,
-        },
-      ],
-    },
-  ],
-  [
-    {
-      <span class="hljs-attr">type</span>: <span class="hljs-string">'postback'</span>,
-      <span class="hljs-attr">title</span>: <span class="hljs-string">'View More'</span>,
-      <span class="hljs-attr">payload</span>: <span class="hljs-string">'USER_DEFINED_PAYLOAD'</span>,
-    },
-  ],
-  { <span class="hljs-attr">topElementStyle</span>: <span class="hljs-string">'compact'</span> }
-);
-</code></pre>
-<p><br /></p>
-<h4><a class="anchor" aria-hidden="true" id="sendopengraphtemplateelements-options-official-docs-https-developersfacebookcom-docs-messenger-platform-open-graph-template"></a><a href="#sendopengraphtemplateelements-options-official-docs-https-developersfacebookcom-docs-messenger-platform-open-graph-template" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>sendOpenGraphTemplate(elements [, options])</code> - <a href="https://developers.facebook.com/docs/messenger-platform/open-graph-template">Official Docs</a></h4>
-<p>Send open graph message templates to the user using the <a href="https://developers.facebook.com/docs/messenger-platform/reference/send-api#request">Send API</a>.</p>
-<p><img src="https://user-images.githubusercontent.com/3382565/37410778-4a6e77e6-27dc-11e8-9a3a-487bd2f7197e.png" alt="sendOpenGraphTemplate" width="250" /></p>
-<table>
-<thead>
-<tr><th>Param</th><th>Type</th><th>Description</th></tr>
-</thead>
-<tbody>
-<tr><td>elements</td><td><code>Object[]</code></td><td>Array of <a href="https://developers.facebook.com/docs/messenger-platform/send-messages/template/generic#element">element</a>. Only one element is allowed.</td></tr>
-<tr><td>options</td><td><code>Object</code></td><td>Other optional parameters. For example, <a href="https://developers.facebook.com/docs/messenger-platform/send-messages#messaging_types">messaging types</a>.</td></tr>
-</tbody>
-</table>
-<p>Example:</p>
-<pre><code class="hljs css language-js">context.sendOpenGraphTemplate([
-  {
-    <span class="hljs-attr">url</span>: <span class="hljs-string">'https://open.spotify.com/track/7GhIk7Il098yCjg4BQjzvb'</span>,
-    <span class="hljs-attr">buttons</span>: [
-      {
-        <span class="hljs-attr">type</span>: <span class="hljs-string">'web_url'</span>,
-        <span class="hljs-attr">url</span>: <span class="hljs-string">'https://en.wikipedia.org/wiki/Rickrolling'</span>,
-        <span class="hljs-attr">title</span>: <span class="hljs-string">'View More'</span>,
-      },
-    ],
-  },
-]);
-</code></pre>
 <p><br /></p>
 <h4><a class="anchor" aria-hidden="true" id="sendmediatemplateelements-options-official-docs-https-developersfacebookcom-docs-messenger-platform-send-messages-template-media"></a><a href="#sendmediatemplateelements-options-official-docs-https-developersfacebookcom-docs-messenger-platform-send-messages-template-media" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>sendMediaTemplate(elements [, options])</code> - <a href="https://developers.facebook.com/docs/messenger-platform/send-messages/template/media">Official Docs</a></h4>
 <p>Send media message templates to the user using the <a href="https://developers.facebook.com/docs/messenger-platform/reference/send-api#request">Send API</a>.</p>
