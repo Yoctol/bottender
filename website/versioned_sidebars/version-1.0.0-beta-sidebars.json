@@ -1,0 +1,75 @@
+{
+  "version-1.0.0-beta-docs": {
+    "Getting Started": [
+      "version-1.0.0-beta-getting-started"
+    ],
+    "The Basics": [
+      "version-1.0.0-beta-the-basics-console-mode",
+      "version-1.0.0-beta-the-basics-actions",
+      "version-1.0.0-beta-the-basics-routing",
+      "version-1.0.0-beta-the-basics-chain",
+      "version-1.0.0-beta-the-basics-state",
+      "version-1.0.0-beta-the-basics-session",
+      "version-1.0.0-beta-the-basics-errors"
+    ],
+    "Advanced Guides": [
+      "version-1.0.0-beta-advanced-guides-nlu"
+    ],
+    "Guides (Messenger)": [
+      "version-1.0.0-beta-channel-messenger-setup",
+      "version-1.0.0-beta-channel-messenger-handling-events",
+      "version-1.0.0-beta-channel-messenger-sending-messages",
+      "version-1.0.0-beta-channel-messenger-profile",
+      "version-1.0.0-beta-channel-messenger-persona"
+    ],
+    "Guides (LINE)": [
+      "version-1.0.0-beta-channel-line-setup",
+      "version-1.0.0-beta-channel-line-handling-events",
+      "version-1.0.0-beta-channel-line-flex",
+      "version-1.0.0-beta-channel-line-migrating-from-sdk"
+    ],
+    "Guides (Slack)": [
+      "version-1.0.0-beta-channel-slack-setup",
+      "version-1.0.0-beta-channel-slack-handling-events"
+    ],
+    "Guides (Telegram)": [
+      "version-1.0.0-beta-channel-telegram-setup",
+      "version-1.0.0-beta-channel-telegram-handling-events"
+    ],
+    "Guides (Viber)": [
+      "version-1.0.0-beta-channel-viber-setup",
+      "version-1.0.0-beta-channel-viber-handling-events"
+    ],
+    "FAQ": []
+  },
+  "version-1.0.0-beta-api": {
+    "Core": [
+      "version-1.0.0-beta-api-context",
+      "version-1.0.0-beta-api-event"
+    ],
+    "Messenger": [
+      "version-1.0.0-beta-api-messenger-context",
+      "version-1.0.0-beta-api-messenger-event"
+    ],
+    "LINE": [
+      "version-1.0.0-beta-api-line-context",
+      "version-1.0.0-beta-api-line-event"
+    ],
+    "Slack": [
+      "version-1.0.0-beta-api-slack-context",
+      "version-1.0.0-beta-api-slack-event"
+    ],
+    "Telegram": [
+      "version-1.0.0-beta-api-telegram-context",
+      "version-1.0.0-beta-api-telegram-event"
+    ],
+    "Viber": [
+      "version-1.0.0-beta-api-viber-context",
+      "version-1.0.0-beta-api-viber-event"
+    ],
+    "Console": [
+      "version-1.0.0-beta-api-console-context",
+      "version-1.0.0-beta-api-console-event"
+    ]
+  }
+}

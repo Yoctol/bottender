@@ -3,13 +3,22 @@ import EventEmitter from 'events';
 import debug from 'debug';
 import invariant from 'invariant';
 import pMap from 'p-map';
+import { camelcaseKeysDeep } from 'messaging-api-common';
 
 import CacheBasedSessionStore from '../session/CacheBasedSessionStore';
 import Context from '../context/Context';
 import MemoryCacheStore from '../cache/MemoryCacheStore';
 import Session from '../session/Session';
 import SessionStore from '../session/SessionStore';
-import { Action, Body, Client, Event, Plugin, Props } from '../types';
+import {
+  Action,
+  Body,
+  Client,
+  Event,
+  Plugin,
+  Props,
+  RequestContext,
+} from '../types';
 
 import { Connector } from './Connector';
 
@@ -57,7 +66,7 @@ export function run<C extends Client, E extends Event>(
 
 type RequestHandler<B> = (
   body: B,
-  requestContext?: Record<string, any> | null
+  requestContext?: RequestContext
 ) => void | Promise<void>;
 
 export default class Bot<B extends Body, C extends Client, E extends Event> {
@@ -160,17 +169,19 @@ export default class Bot<B extends Body, C extends Client, E extends Event> {
     }
 
     return async (
-      body: B,
-      requestContext?: Record<string, any> | null
+      inputBody: B,
+      requestContext?: RequestContext
     ): Promise<any> => {
-      if (!body) {
+      if (!inputBody) {
         throw new Error('Bot.createRequestHandler: Missing argument.');
       }
 
       debugRequest('Incoming request body:');
-      debugRequest(JSON.stringify(body, null, 2));
+      debugRequest(JSON.stringify(inputBody, null, 2));
 
       await this.initSessionStore();
+
+      const body = camelcaseKeysDeep(inputBody) as B;
 
       const { platform } = this._connector;
       const sessionKey = this._connector.getUniqueSessionKey(

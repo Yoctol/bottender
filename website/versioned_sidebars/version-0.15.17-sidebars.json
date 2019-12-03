@@ -21,21 +21,35 @@
       "version-0.15.17-testing",
       "version-0.15.17-custom-connector",
       "version-0.15.17-troubleshooting"
-    ],
-    "API References": [
+    ]
+  },
+  "version-0.15.17-api": {
+    "Core": [
       "version-0.15.17-api-context",
       "version-0.15.17-api-event",
-      "version-0.15.17-api-handler",
+      "version-0.15.17-api-handler"
+    ],
+    "Console": [
       "version-0.15.17-api-consolecontext",
-      "version-0.15.17-api-consoleevent",
+      "version-0.15.17-api-consoleevent"
+    ],
+    "Messenger": [
       "version-0.15.17-api-messengercontext",
-      "version-0.15.17-api-messengerevent",
+      "version-0.15.17-api-messengerevent"
+    ],
+    "LINE": [
       "version-0.15.17-api-linecontext",
-      "version-0.15.17-api-lineevent",
+      "version-0.15.17-api-lineevent"
+    ],
+    "Slack": [
       "version-0.15.17-api-slackcontext",
-      "version-0.15.17-api-slackevent",
+      "version-0.15.17-api-slackevent"
+    ],
+    "Telegram": [
       "version-0.15.17-api-telegramcontext",
-      "version-0.15.17-api-telegramevent",
+      "version-0.15.17-api-telegramevent"
+    ],
+    "Viber": [
       "version-0.15.17-api-vibercontext",
       "version-0.15.17-api-viberevent"
     ]

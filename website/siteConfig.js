@@ -30,7 +30,7 @@ const siteConfig = {
   // For no header links in the top nav bar -> headerLinks: [],
   headerLinks: [
     { doc: 'getting-started', label: 'Docs' },
-    // { doc: 'api-context', label: 'API' },
+    { doc: 'api-context', label: 'API' },
     { blog: true, label: 'Blog' },
     {
       href: 'https://github.com/Yoctol/bottender/tree/master/examples',
@@ -40,7 +40,7 @@ const siteConfig = {
   ],
 
   /* path to images for header/footer */
-  headerIcon: 'img/element_bottender_logo.svg',
+  headerIcon: 'img/bottender.svg',
   footerIcon: '',
   favicon: 'img/favicon.ico',
 
@@ -80,6 +80,7 @@ const siteConfig = {
   scripts: [
     'https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js',
     '/js/code-blocks-buttons.js',
+    '/js/sw.js',
   ],
 
   // Google Analytics tracking ID to track page views.
@@ -99,11 +100,11 @@ const siteConfig = {
   twitterUsername: 'bottenderjs',
   twitterImage: 'img/og-image.png',
 
-  disableHeaderTitle: true,
+  disableHeaderTitle: false,
 
   // For sites with a sizable amount of content, set collapsible to true.
   // Expand/collapse the links and subcategories under categories.
-  docsSideNavCollapsible: true,
+  docsSideNavCollapsible: false,
 
   // Show documentation's last contributor's name.
   // enableUpdateBy: true,

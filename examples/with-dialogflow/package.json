@@ -1,0 +1,10 @@
+{
+  "scripts": {
+    "dev": "bottender dev",
+    "start": "bottender start"
+  },
+  "dependencies": {
+    "bottender": "next",
+    "dialogflow": "^0.14.1"
+  }
+}
