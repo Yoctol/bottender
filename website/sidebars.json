@@ -22,6 +22,7 @@
       "channel-line-setup",
       "channel-line-handling-events",
       "channel-line-flex",
+      "channel-line-rich-menu",
       "channel-line-migrating-from-sdk"
     ],
     "Guides (Slack)": ["channel-slack-setup", "channel-slack-handling-events"],
