@@ -98,6 +98,9 @@
       "getting-started": {
         "title": "Getting Started"
       },
+      "migrating-v1": {
+        "title": "Migrating from v0.x to v1.x"
+      },
       "the-basics-actions": {
         "title": "Resolving Actions"
       },
