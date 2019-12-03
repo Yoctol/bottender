@@ -1,7 +1,8 @@
 {
   "version-1.0.0-beta-docs": {
     "Getting Started": [
-      "version-1.0.0-beta-getting-started"
+      "version-1.0.0-beta-getting-started",
+      "version-1.0.0-beta-migrating-v1"
     ],
     "The Basics": [
       "version-1.0.0-beta-the-basics-console-mode",
@@ -26,6 +27,7 @@
       "version-1.0.0-beta-channel-line-setup",
       "version-1.0.0-beta-channel-line-handling-events",
       "version-1.0.0-beta-channel-line-flex",
+      "version-1.0.0-beta-channel-line-rich-menu",
       "version-1.0.0-beta-channel-line-migrating-from-sdk"
     ],
     "Guides (Slack)": [

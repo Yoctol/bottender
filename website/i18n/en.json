@@ -59,6 +59,9 @@
       "channel-line-migrating-from-sdk": {
         "title": "Migrating from LINE SDK for Node.js"
       },
+      "channel-line-rich-menu": {
+        "title": "Rich Menu"
+      },
       "channel-line-setup": {
         "title": "Setup LINE"
       },
@@ -275,6 +278,9 @@
       "version-1.0.0-beta/version-1.0.0-beta-channel-line-migrating-from-sdk": {
         "title": "Migrating from LINE SDK for Node.js"
       },
+      "version-1.0.0-beta/version-1.0.0-beta-channel-line-rich-menu": {
+        "title": "Rich Menu"
+      },
       "version-1.0.0-beta/version-1.0.0-beta-channel-line-setup": {
         "title": "Setup LINE"
       },
@@ -313,6 +319,9 @@
       },
       "version-1.0.0-beta/version-1.0.0-beta-getting-started": {
         "title": "Getting Started"
+      },
+      "version-1.0.0-beta/version-1.0.0-beta-migrating-v1": {
+        "title": "Migrating from v0.x to v1.x"
       },
       "version-1.0.0-beta/version-1.0.0-beta-the-basics-actions": {
         "title": "Resolving Actions"
