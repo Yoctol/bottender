@@ -229,6 +229,28 @@ describe('#sendVideo', () => {
   });
 });
 
+describe('#sendAnimation', () => {
+  it('should call client.sendAnimation', async () => {
+    const { context, client } = setup();
+
+    await context.sendAnimation('xxx.mp4');
+
+    expect(client.sendAnimation).toBeCalledWith(
+      427770117,
+      'xxx.mp4',
+      undefined
+    );
+  });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    await context.sendAnimation('xxx.mp4');
+
+    expect(context.isHandled).toBe(true);
+  });
+});
+
 describe('#sendVoice', () => {
   it('should call client.sendVoice', async () => {
     const { context, client } = setup();
@@ -356,6 +378,35 @@ describe('#sendContact', () => {
     const contact = {};
 
     await context.sendContact(contact);
+
+    expect(context.isHandled).toBe(true);
+  });
+});
+
+describe('#sendPoll', () => {
+  it('should to call client.sendPoll', async () => {
+    const { context, client } = setup();
+
+    const question = 'question';
+    const options = ['a', 'b'];
+
+    await context.sendPoll(question, options);
+
+    expect(client.sendPoll).toBeCalledWith(
+      427770117,
+      question,
+      options,
+      undefined
+    );
+  });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    const question = 'question';
+    const options = ['a', 'b'];
+
+    await context.sendPoll(question, options);
 
     expect(context.isHandled).toBe(true);
   });
