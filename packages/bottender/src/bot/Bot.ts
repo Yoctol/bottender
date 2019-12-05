@@ -30,7 +30,7 @@ const debugRequest = debug('bottender:request');
 const debugResponse = debug('bottender:response');
 const debugSessionRead = debug('bottender:session:read');
 const debugSessionWrite = debug('bottender:session:write');
-const debugDialog = debug('bottender:dialog');
+const debugAction = debug('bottender:action');
 
 const MINUTES_IN_ONE_YEAR = 365 * 24 * 60;
 
@@ -49,13 +49,13 @@ export function run<C extends Client, E extends Event>(
     let nextDialog: Action<C, E> | void = action;
 
     // TODO: refactor this with withProps or whatever
-    debugDialog(`Current Dialog: ${nextDialog.name || 'Anonymous'}`);
+    debugAction(`Current Dialog: ${nextDialog.name || 'Anonymous'}`);
     // eslint-disable-next-line no-await-in-loop
     nextDialog = await nextDialog(context, props);
 
     while (typeof nextDialog === 'function') {
       // TODO: improve this debug helper
-      debugDialog(`Current Dialog: ${nextDialog.name || 'Anonymous'}`);
+      debugAction(`Current Dialog: ${nextDialog.name || 'Anonymous'}`);
       // eslint-disable-next-line no-await-in-loop
       nextDialog = await nextDialog(context, {});
     }
