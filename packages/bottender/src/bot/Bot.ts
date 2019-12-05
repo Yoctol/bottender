@@ -49,13 +49,13 @@ export function run<C extends Client, E extends Event>(
     let nextDialog: Action<C, E> | void = action;
 
     // TODO: refactor this with withProps or whatever
-    debugAction(`Current Dialog: ${nextDialog.name || 'Anonymous'}`);
+    debugAction(`Current Action: ${nextDialog.name || 'Anonymous'}`);
     // eslint-disable-next-line no-await-in-loop
     nextDialog = await nextDialog(context, props);
 
     while (typeof nextDialog === 'function') {
       // TODO: improve this debug helper
-      debugAction(`Current Dialog: ${nextDialog.name || 'Anonymous'}`);
+      debugAction(`Current Action: ${nextDialog.name || 'Anonymous'}`);
       // eslint-disable-next-line no-await-in-loop
       nextDialog = await nextDialog(context, {});
     }
