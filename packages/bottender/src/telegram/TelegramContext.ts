@@ -353,6 +353,38 @@ class TelegramContext extends Context<TelegramClient, TelegramEvent>
     });
   }
 
+  async editMessageMedia(
+    messageId: number,
+    media: Type.InputMedia,
+    options?: Type.EditMessageMediaOption
+  ): Promise<Type.Message | boolean | null> {
+    if (!this._session) {
+      warning(
+        false,
+        'editMessageMedia: should not be called in context without session'
+      );
+      return null;
+    }
+
+    this._isHandled = true;
+
+    const chatId = this._getChatId();
+
+    if (chatId === null) {
+      warning(
+        false,
+        'editMessageMedia: should not be called in context without chatId'
+      );
+      return null;
+    }
+
+    return this._client.editMessageMedia(media, {
+      chatId,
+      messageId,
+      ...options,
+    });
+  }
+
   async editMessageReplyMarkup(
     messageId: number,
     replyMarkup: Type.InlineKeyboardMarkup,
@@ -671,7 +703,7 @@ class TelegramContext extends Context<TelegramClient, TelegramEvent>
     if (!this._session) {
       warning(
         false,
-        'sendVideo: should not be called in context without session'
+        'sendAnimation: should not be called in context without session'
       );
       return null;
     }
@@ -683,7 +715,7 @@ class TelegramContext extends Context<TelegramClient, TelegramEvent>
     if (chatId === null) {
       warning(
         false,
-        'sendVideo: should not be called in context without chatId'
+        'sendAnimation: should not be called in context without chatId'
       );
       return null;
     }
@@ -861,7 +893,7 @@ class TelegramContext extends Context<TelegramClient, TelegramEvent>
     if (!this._session) {
       warning(
         false,
-        'sendContact: should not be called in context without session'
+        'sendPoll: should not be called in context without session'
       );
       return null;
     }
@@ -873,7 +905,7 @@ class TelegramContext extends Context<TelegramClient, TelegramEvent>
     if (chatId === null) {
       warning(
         false,
-        'sendContact: should not be called in context without chatId'
+        'sendPoll: should not be called in context without chatId'
       );
       return null;
     }
