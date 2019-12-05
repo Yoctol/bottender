@@ -179,9 +179,21 @@ context.sendGenericTemplate([
 Slack -
 
 ```js
-context.scheduleMessage({
-  text: 'Hello world!',
-  postAt: '299876400',
+context.postMessage({
+  blocks: [
+    {
+      type: 'section',
+      text: {
+        type: 'plain_text',
+        text: 'You updated the modal!',
+      },
+    },
+    {
+      type: 'image',
+      imageUrl: 'https://media.giphy.com/media/SVZGEcYt7brkFUyU90/giphy.gif',
+      altText: 'Yay! The modal was updated',
+    },
+  ],
 });
 ```
 
