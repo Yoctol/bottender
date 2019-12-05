@@ -1,12 +1,12 @@
 # Bottender
 
 [![npm](https://img.shields.io/npm/v/bottender.svg)](https://www.npmjs.com/package/bottender)
-[![npm@next](https://img.shields.io/npm/v/bottender/next.svg)](https://www.npmjs.com/package/bottender)
 [![CircleCI](https://circleci.com/gh/Yoctol/bottender.svg?style=shield)](https://circleci.com/gh/Yoctol/bottender)
 [![coverage](https://codecov.io/gh/Yoctol/bottender/branch/master/graph/badge.svg)](https://codecov.io/gh/Yoctol/bottender)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/Yoctol/bottender#contributing)
 [![join chat](https://img.shields.io/badge/discord-join%20chat-green.svg)](https://discord.gg/apNsWBz)
+[![Follow @bottenderjs](https://img.shields.io/twitter/follow/bottenderjs.svg?label=Follow%20@bottenderjs)](https://twitter.com/intent/follow?screen_name=bottenderjs)
 
 ![](https://user-images.githubusercontent.com/3382565/68366395-3080d000-016e-11ea-8bad-d9c52a215376.png)
 
