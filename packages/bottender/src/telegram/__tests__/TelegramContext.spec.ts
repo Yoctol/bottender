@@ -563,6 +563,28 @@ describe('#editMessageCaption', () => {
   });
 });
 
+describe('#editMessageMedia', () => {
+  it('should to call client.editMessageMedia', async () => {
+    const { context, client } = setup();
+
+    const media = { type: 'photo', media: 'xxx.png' };
+    await context.editMessageMedia(66, media);
+
+    expect(client.editMessageMedia).toBeCalledWith(media, {
+      chatId: 427770117,
+      messageId: 66,
+    });
+  });
+
+  it('should mark context as handled', async () => {
+    const { context } = setup();
+
+    await context.editMessageMedia(66, { type: 'photo', media: 'xxx.png' });
+
+    expect(context.isHandled).toBe(true);
+  });
+});
+
 describe('#editMessageReplyMarkup', () => {
   const markup = {
     keyboard: [[{ text: 'new_button_1' }, { text: 'new_button_2' }]],
