@@ -4,7 +4,7 @@
         <title>Bottender Blog</title>
         <link>https://bottender.js.org/blog</link>
         <description>The best place to stay up-to-date with the latest Bottender news and events.</description>
-        <lastBuildDate>Fri, 03 Aug 2018 06:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Thu, 05 Dec 2019 06:00:00 GMT</lastBuildDate>
         <docs>http://blogs.law.harvard.edu/tech/rss</docs>
         <generator>Feed for Node.js</generator>
         <image>
@@ -13,6 +13,13 @@
             <link>https://bottender.js.org/blog</link>
         </image>
         <copyright>Copyright © 2019 Yoctol.AI</copyright>
+        <item>
+            <title><![CDATA[Bottender 1.0: Create Bottender App, Router, Action Runner and Bottender.js.org]]></title>
+            <link>https://bottender.js.org/blog/2019/12/05/bottender-1.html</link>
+            <guid>https://bottender.js.org/blog/2019/12/05/bottender-1.html</guid>
+            <pubDate>Thu, 05 Dec 2019 06:00:00 GMT</pubDate>
+            <description><![CDATA[<p>We're very proud to announce the production-ready <strong>Bottender 1.0</strong> today, featuring:</p> <ul> <li><a href="#create-bottender-app">Create Bottender App</a></li> <li><a href="#conversation-made-easy-and-simple">Conversation Made Easy and Simple</a> <ul> <li><a href="#conversation-router">Conversation Router</a></li> <li><a href="#action-runner">Action Runner</a></li> </ul></li> <li><a href="#integrating-with-natural-language-understanding-nlu">Integrating with Natural Language Understanding (NLU)</a></li> <li><a href="#fundamentally-rewritten-in-typescript">Fundamentally Rewritte...</a></li></ul>]]></description>
+        </item>
         <item>
             <title><![CDATA[Bottender 0.15]]></title>
             <link>https://bottender.js.org/blog/2018/08/03/bottender-0_15.html</link>
