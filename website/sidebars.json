@@ -6,9 +6,7 @@
       "the-basics-actions",
       "the-basics-routing",
       "the-basics-chain",
-      "the-basics-state",
       "the-basics-session",
-      "the-basics-session-id",
       "the-basics-errors"
     ],
     "Advanced Guides": [
