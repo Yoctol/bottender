@@ -5,7 +5,7 @@ title: Rich Menu
 
 ## What is Rich menu
 
-Rich menu is a customizable menu that is displayed on the chat screen to help users interact with your LINE official account. For further information, you can check out the [Official Document](<[developers.line.biz/en/docs/messaging-api/using-rich-menus](https://developers.line.biz/en/docs/messaging-api/using-rich-menus)>).
+Rich menu is a customizable menu that is displayed on the chat screen to help users interact with your LINE official account. For further information, you can check out the [Official Document](https://developers.line.biz/en/docs/messaging-api/using-rich-menus).
 
 There are four steps to set up a rich menu for your users:
 
@@ -203,3 +203,5 @@ async function App(context) {
   // }
 }
 ```
+
+You can check out the full example [Here](https://github.com/Yoctol/bottender/tree/master/examples/line-rich-menu).
