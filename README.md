@@ -10,7 +10,7 @@
 
 ![](https://user-images.githubusercontent.com/3382565/68366395-3080d000-016e-11ea-8bad-d9c52a215376.png)
 
-> The readme below is the documentation for the v1 (prerelease) version of Bottender. To view the documentation for the old Bottender version visit https://bottender.js.org/docs/0.15.17/getting-started
+> The readme below is the documentation for the v1 (stable) version of Bottender. To view the documentation for the old Bottender version visit https://bottender.js.org/docs/0.15.17/getting-started
 
 - **Declarative** - Bottender takes care of the complexity of conversational UIs for you. Design actions for each event and state in your application, and Bottender will run accordingly. his approach makes your code more predictable and easier to debug.
 
