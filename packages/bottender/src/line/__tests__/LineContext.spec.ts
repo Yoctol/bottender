@@ -1885,6 +1885,53 @@ describe('batch', () => {
     );
     expect(warning).not.toBeCalled();
   });
+
+  it('should not batch after handlerDidEnd has been called', async () => {
+    const { client, context, session } = setup({ shouldBatch: true });
+
+    await context.replyText('1');
+    await context.pushText('2');
+    await context.pushText('3');
+
+    await context.handlerDidEnd();
+
+    await context.pushText('4');
+
+    expect(client.reply).toBeCalledWith(
+      REPLY_TOKEN,
+      [
+        {
+          type: 'text',
+          text: '1',
+        },
+      ],
+      { accessToken: undefined }
+    );
+    expect(client.push).toBeCalledWith(
+      session.user.id,
+      [
+        {
+          type: 'text',
+          text: '2',
+        },
+        {
+          type: 'text',
+          text: '3',
+        },
+      ],
+      { accessToken: undefined }
+    );
+    expect(client.push).toBeCalledWith(
+      session.user.id,
+      [
+        {
+          type: 'text',
+          text: '4',
+        },
+      ],
+      { accessToken: undefined }
+    );
+  });
 });
 
 describe('sendMethod', () => {

@@ -93,6 +93,9 @@ class LineContext extends Context<LineClient, LineEvent>
    */
   async handlerDidEnd() {
     if (this._shouldBatch) {
+      // After starting this batch, every api should be called out of batch mode
+      this._shouldBatch = false;
+
       if (this._replyMessages.length > 0) {
         const messageChunks = chunk(this._replyMessages, 5);
         warning(
