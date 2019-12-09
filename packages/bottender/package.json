@@ -50,7 +50,7 @@
     "lru-cache": "^5.1.1",
     "messaging-api-common": "^1.0.0-beta.5",
     "messaging-api-line": "^1.0.0-beta.5",
-    "messaging-api-messenger": "^1.0.0-beta.5",
+    "messaging-api-messenger": "^1.0.0-beta.10",
     "messaging-api-slack": "^1.0.0-beta.5",
     "messaging-api-telegram": "^1.0.0-beta.5",
     "messaging-api-viber": "^1.0.0-beta.2",
