@@ -7,6 +7,7 @@
   "references": [
     { "path": "./packages/bottender" },
     { "path": "./packages/bottender-express" },
+    { "path": "./packages/bottender-facebook" },
     { "path": "./packages/bottender-handlers" },
     { "path": "./packages/create-bottender-app" }
   ]
