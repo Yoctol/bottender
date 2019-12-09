@@ -179,7 +179,7 @@ telegram:16423...
 
 you can read [the implement detail here](https://github.com/Yoctol/bottender/blob/master/packages/bottender/src/bot/TelegramConnector.ts#L55)
 
-### Session Key in Messagenger
+### Session Key in Messenger
 
 The `sessionKey` represent for the `recipient.id` or `sender.id` in Slack platform.
 
