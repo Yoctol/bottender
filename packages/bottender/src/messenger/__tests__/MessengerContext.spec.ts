@@ -89,12 +89,11 @@ describe('#getUserProfile', () => {
     const { context, client, session } = setup();
 
     const user = {
+      id: session.user.id,
+      name: 'Kevin Durant',
       firstName: 'Kevin',
       lastName: 'Durant',
       profilePic: 'https://example.com/pic.png',
-      locale: 'en_US',
-      timezone: 8,
-      gender: 'male',
     };
 
     client.getUserProfile.mockResolvedValue(user);
@@ -107,6 +106,51 @@ describe('#getUserProfile', () => {
     expect(result).toEqual(user);
   });
 
+  it('should call client with custom fields', async () => {
+    const { context, client, session } = setup();
+
+    const user = {
+      id: session.user.id,
+      name: 'Kevin Durant',
+      firstName: 'Kevin',
+      lastName: 'Durant',
+      profilePic: 'https://example.com/pic.png',
+      locale: 'en_US',
+      timezone: 8,
+      gender: 'male',
+    };
+
+    client.getUserProfile.mockResolvedValue(user);
+
+    const result = await context.getUserProfile({
+      fields: [
+        'id',
+        'name',
+        'first_name',
+        'last_name',
+        'profile_pic',
+        'locale',
+        'timezone',
+        'gender',
+      ],
+    });
+
+    expect(client.getUserProfile).toBeCalledWith(session.user.id, {
+      fields: [
+        'id',
+        'name',
+        'first_name',
+        'last_name',
+        'profile_pic',
+        'locale',
+        'timezone',
+        'gender',
+      ],
+      accessToken: undefined,
+    });
+    expect(result).toEqual(user);
+  });
+
   it('should use custom access token', async () => {
     const { context, client, session } = setup({
       session: userSession,
@@ -114,12 +158,11 @@ describe('#getUserProfile', () => {
     });
 
     const user = {
+      id: session.user.id,
+      name: 'Kevin Durant',
       firstName: 'Kevin',
       lastName: 'Durant',
       profilePic: 'https://example.com/pic.png',
-      locale: 'en_US',
-      timezone: 8,
-      gender: 'male',
     };
 
     client.getUserProfile.mockResolvedValue(user);
