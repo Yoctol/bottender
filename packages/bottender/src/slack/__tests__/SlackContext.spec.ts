@@ -8,6 +8,45 @@ let SlackEvent;
 let sleep;
 let warning;
 
+const VIEW_PAYLOAD = {
+  id: 'VMHU10V25',
+  teamId: 'T8N4K1JN',
+  type: 'modal',
+  title: {
+    type: 'plain_text',
+    text: 'Quite a plain modal',
+  },
+  submit: {
+    type: 'plain_text',
+    text: 'Create',
+  },
+  blocks: [
+    {
+      type: 'input',
+      blockId: 'a_block_id',
+      label: {
+        type: 'plain_text',
+        text: 'A simple label',
+        emoji: true,
+      },
+      optional: false,
+      element: {
+        type: 'plain_text_input',
+        actionId: 'an_action_id',
+      },
+    },
+  ],
+  privateMetadata: 'Shh it is a secret',
+  callbackId: 'identify_your_modals',
+  externalId: '',
+  state: {
+    values: [],
+  },
+  hash: '156772938.1827394',
+  clearOnClose: false,
+  notifyOnClose: false,
+};
+
 beforeEach(() => {
   /* eslint-disable global-require */
   SlackClient = require('messaging-api-slack').SlackOAuthClient;
@@ -120,7 +159,7 @@ describe('#sendText', () => {
 });
 
 describe('#postMessage', () => {
-  it('should call client.postMessage', async () => {
+  it('should call client.chat.postMessage', async () => {
     const { context, client } = setup();
 
     await context.postMessage('hello');
@@ -211,7 +250,7 @@ describe('#postMessage', () => {
 });
 
 describe('#chat.postMessage', () => {
-  it('should call client.postMessage', async () => {
+  it('should call client.chat.postMessage', async () => {
     const { context, client } = setup();
 
     await context.chat.postMessage({ text: 'hello' });
@@ -301,7 +340,7 @@ describe('#chat.postMessage', () => {
 });
 
 describe('#postEphemeral', () => {
-  it('should call client.postEphemeral', async () => {
+  it('should call client.chat.postEphemeral', async () => {
     const { context, client } = setup();
 
     await context.postEphemeral('hello');
@@ -315,7 +354,7 @@ describe('#postEphemeral', () => {
 });
 
 describe('#chat.postEphemeral', () => {
-  it('should call client.postEphemeral', async () => {
+  it('should call client.chat.postEphemeral', async () => {
     const { context, client } = setup();
 
     await context.chat.postEphemeral({
@@ -330,29 +369,172 @@ describe('#chat.postEphemeral', () => {
   });
 });
 
-describe('#chat.update', () => {});
+describe('#chat.update', () => {
+  it('should call client.chat.update', async () => {
+    const { context, client } = setup();
 
-describe('#chat.delete', () => {});
+    await context.chat.update({
+      ts: '1405894322.002768',
+      text: 'hello',
+    });
 
-describe('#chat.meMessage', () => {});
+    expect(client.chat.update).toBeCalledWith({
+      ts: '1405894322.002768',
+      text: 'hello',
+    });
+  });
+});
 
-describe('#chat.getPermalink', () => {});
+describe('#chat.delete', () => {
+  it('should call client.chat.delete', async () => {
+    const { context, client } = setup();
 
-describe('#chat.scheduleMessage', () => {});
+    await context.chat.delete({
+      ts: '1405894322.002768',
+    });
 
-describe('#chat.deleteScheduledMessage', () => {});
+    expect(client.chat.delete).toBeCalledWith({
+      channel: 'C6A9RJJ3F',
+      ts: '1405894322.002768',
+    });
+  });
+});
 
-describe('#chat.unfurl', () => {});
+describe('#chat.meMessage', () => {
+  it('should call client.chat.meMessage', async () => {
+    const { context, client } = setup();
 
-describe('#chat.scheduledMessages', () => {});
+    await context.chat.meMessage({
+      text: 'hello',
+    });
 
-describe('#views.open', () => {});
+    expect(client.chat.meMessage).toBeCalledWith({
+      channel: 'C6A9RJJ3F',
+      text: 'hello',
+    });
+  });
+});
 
-describe('#views.publish', () => {});
+describe('#chat.getPermalink', () => {
+  it('should call client.chat.getPermalink', async () => {
+    const { context, client } = setup();
 
-describe('#views.push', () => {});
+    await context.chat.getPermalink({
+      messageTs: '1234567890.123456',
+    });
 
-describe('#views.update', () => {});
+    expect(client.chat.getPermalink).toBeCalledWith({
+      channel: 'C6A9RJJ3F',
+      messageTs: '1234567890.123456',
+    });
+  });
+});
+
+describe('#chat.scheduleMessage', () => {
+  it('should call client.chat.scheduleMessage', async () => {
+    const { context, client } = setup();
+
+    await context.chat.scheduleMessage({
+      postAt: '299876400',
+      text: 'hello',
+    });
+
+    expect(client.chat.scheduleMessage).toBeCalledWith({
+      channel: 'C6A9RJJ3F',
+      postAt: '299876400',
+      text: 'hello',
+    });
+  });
+});
+
+describe('#chat.deleteScheduledMessage', () => {
+  it('should call client.chat.deleteScheduledMessage', async () => {
+    const { context, client } = setup();
+
+    await context.chat.deleteScheduledMessage({
+      scheduledMessageId: 'Q1234ABCD',
+    });
+
+    expect(client.chat.deleteScheduledMessage).toBeCalledWith({
+      channel: 'C6A9RJJ3F',
+      scheduledMessageId: 'Q1234ABCD',
+    });
+  });
+});
+
+describe('#chat.scheduledMessages.list', () => {
+  it('should call client.chat.scheduledMessages.list', async () => {
+    const { context, client } = setup();
+
+    await context.chat.scheduledMessages.list({});
+
+    expect(client.chat.scheduledMessages.list).toBeCalledWith({});
+  });
+});
+
+describe('#views.open', () => {
+  it('should call client.views.open', async () => {
+    const { context, client } = setup();
+
+    await context.views.open({
+      triggerId: '12345.98765.abcd2358fdea',
+      view: VIEW_PAYLOAD,
+    });
+
+    expect(client.views.open).toBeCalledWith({
+      triggerId: '12345.98765.abcd2358fdea',
+      view: VIEW_PAYLOAD,
+    });
+  });
+});
+
+describe('#views.publish', () => {
+  it('should call client.views.publish', async () => {
+    const { context, client } = setup();
+
+    await context.views.publish({
+      userId: 'U0BPQUNTA',
+      view: VIEW_PAYLOAD,
+    });
+
+    expect(client.views.publish).toBeCalledWith({
+      userId: 'U0BPQUNTA',
+      view: VIEW_PAYLOAD,
+    });
+  });
+});
+
+describe('#views.push', () => {
+  it('should call client.views.push', async () => {
+    const { context, client } = setup();
+
+    await context.views.push({
+      triggerId: '12345.98765.abcd2358fdea',
+      view: VIEW_PAYLOAD,
+    });
+
+    expect(client.views.push).toBeCalledWith({
+      triggerId: '12345.98765.abcd2358fdea',
+      view: VIEW_PAYLOAD,
+    });
+  });
+});
+
+describe('#views.update', () => {
+  it('should call client.views.update', async () => {
+    const { context, client } = setup();
+
+    await context.views.update({
+      externalId: 'bmarley_view2',
+      view: VIEW_PAYLOAD,
+    });
+
+    expect(client.views.update).toBeCalledWith({
+      externalId: 'bmarley_view2',
+      view: VIEW_PAYLOAD,
+    });
+  });
+});
 
 describe('#typing', () => {
   it('avoid delay 0', async () => {
