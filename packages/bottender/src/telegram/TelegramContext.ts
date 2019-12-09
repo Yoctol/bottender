@@ -106,6 +106,49 @@ class TelegramContext extends Context<TelegramClient, TelegramEvent>
     return null;
   }
 
+  _getFileId(): string | null {
+    let fileId = null;
+    if (this.event.isAudio) {
+      fileId = this.event.audio.fileId;
+    } else if (this.event.isDocument) {
+      fileId = this.event.document.fileId;
+    } else if (this.event.isAnimation) {
+      fileId = this.event.animation.fileId;
+    } else if (this.event.isSticker) {
+      fileId = this.event.sticker.fileId;
+    } else if (this.event.isVideo) {
+      fileId = this.event.video.fileId;
+    } else if (this.event.isVoice) {
+      fileId = this.event.voice.fileId;
+    } else if (this.event.isVideoNote) {
+      fileId = this.event.videoNote.fileId;
+    } else if (this.event.isPhoto) {
+      fileId = this.event.photo[0].fileId;
+    }
+
+    return fileId;
+  }
+
+  async getFile(): Promise<Type.File | null> {
+    const fileId = this._getFileId();
+
+    if (!fileId) {
+      return null;
+    }
+
+    return this._client.getFile(fileId);
+  }
+
+  async getFileLink(): Promise<string | null> {
+    const fileId = this._getFileId();
+
+    if (!fileId) {
+      return null;
+    }
+
+    return this._client.getFileLink(fileId);
+  }
+
   async answerShippingQuery(
     ok: boolean,
     options?: Type.AnswerShippingQueryOption

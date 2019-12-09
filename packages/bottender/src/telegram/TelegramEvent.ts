@@ -1,6 +1,6 @@
 import { Event } from '../context/Event';
 
-type TelegramUser = {
+type User = {
   id: number;
   firstName: string;
   lastName?: string;
@@ -8,11 +8,14 @@ type TelegramUser = {
   languageCode?: string;
 };
 
-type Photo = {
+type PhotoSize = {
   fileId: string;
   width: number;
   height: number;
-}[];
+  fileSize?: number;
+};
+
+type Photo = PhotoSize[];
 
 type Audio = {
   fileId: string;
@@ -22,12 +25,40 @@ type Audio = {
 
 type Document = {
   fileId: string;
+  thumb?: PhotoSize;
+  fileName?: string;
+  mimeType?: string;
+  fileSize?: string;
+};
+
+type Animation = {
+  fileId: string;
+  width: number;
+  height: number;
+  duration: number;
+  thumb?: PhotoSize;
+  fileName?: string;
+  mimeType?: string;
+  fileSize?: string;
+};
+
+type MaskPosition = {
+  point: string;
+  xShift: number;
+  yShift: number;
+  scale: number;
 };
 
 type Sticker = {
   fileId: string;
   width: number;
   height: number;
+  isAnimated: boolean;
+  thumb?: PhotoSize;
+  emoji?: string;
+  setName?: string;
+  maskPosition?: MaskPosition;
+  fileSize?: string;
 };
 
 type Video = {
@@ -35,17 +66,24 @@ type Video = {
   width: number;
   height: number;
   duration: number;
+  thumb?: PhotoSize;
+  mimeType?: string;
+  fileSize?: string;
 };
 
 type Voice = {
   fileId: string;
   duration: number;
+  mimeType?: string;
+  fileSize?: string;
 };
 
 type VideoNote = {
   fileId: string;
   length: number;
   duration: number;
+  thumb?: PhotoSize;
+  fileSize?: string;
 };
 
 type Contact = {
@@ -64,30 +102,26 @@ type Venue = {
   address: string;
 };
 
-type File = {
-  fileId: string;
-};
-
 type Game = {
   title: string;
   description: string;
-  photo: {
-    fileId: string;
-    width: number;
-    height: number;
-  }[];
+  photo: PhotoSize[];
+  text?: string;
+  animation?: Animation;
+};
+
+type Chat = {
+  id: number;
+  type: 'private' | 'group' | 'supergroup' | 'channel';
+  firstName: string;
+  lastName: string;
 };
 
 type Message = {
   messageId: number;
-  from: TelegramUser;
-  chat: {
-    id: number;
-    firstName: string;
-    lastName: string;
-    type: 'private' | 'group';
-  };
+  from: User;
   date: number;
+  chat: Chat;
   text: string;
   entities: {
     type: 'bot_command';
@@ -99,6 +133,7 @@ type Message = {
   game?: Game;
   audio?: Audio;
   document?: Document;
+  animation?: Animation;
   sticker?: Sticker;
   video?: Video;
   voice?: Voice;
@@ -106,12 +141,11 @@ type Message = {
   contact?: Contact;
   location?: Location;
   venue?: Venue;
-  file?: File;
 };
 
 type InlineQuery = {
   id: string;
-  from: TelegramUser;
+  from: User;
   location?: Location;
   query: string;
   offset: string;
@@ -119,14 +153,14 @@ type InlineQuery = {
 
 type ChosenInlineResult = {
   resultId: string;
-  from: TelegramUser;
+  from: User;
   location?: Location;
   inlineMessageId?: string;
   query: string;
 };
 
 type CallbackQuery = {
-  from: TelegramUser;
+  from: User;
   message: Message;
   chatInstance: string;
   data: string;
@@ -143,7 +177,7 @@ type ShippingAddress = {
 
 type ShippingQuery = {
   id: string;
-  from: TelegramUser;
+  from: User;
   invoicePayload: string;
   shippingAddress: ShippingAddress;
 };
@@ -157,7 +191,7 @@ type OrderInfo = {
 
 type PreCheckoutQuery = {
   id: string;
-  from: TelegramUser;
+  from: User;
   currency: string;
   totalAmount: number;
   invoicePayload: string;
@@ -295,6 +329,29 @@ export default class TelegramEvent implements Event<TelegramRawEvent> {
   get document(): Document | null {
     if (this.isDocument) {
       return (this.message as any).document;
+    }
+    return null;
+  }
+
+  /**
+   * Determine if the event is a message event which includes animation.
+   *
+   */
+  get isAnimation(): boolean {
+    if (!this.isMessage) return false;
+
+    const message: Message = this.message as any;
+
+    return !!message.animation && typeof message.animation === 'object';
+  }
+
+  /**
+   * The document object from Telegram raw event.
+   *
+   */
+  get animation(): Animation | null {
+    if (this.isAnimation) {
+      return (this.message as any).animation;
     }
     return null;
   }
