@@ -26,7 +26,8 @@
     "test": "yarn compile && yarn lint && yarn testonly",
     "testonly": "jest --detectOpenHandles",
     "testonly:cov": "jest --coverage --runInBand --detectOpenHandles",
-    "testonly:watch": "jest --watch"
+    "testonly:watch": "jest --watch",
+    "version": "cp README.md packages/bottender"
   },
   "devDependencies": {
     "@types/body-parser": "^1.17.1",
