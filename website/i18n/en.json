@@ -50,6 +50,9 @@
       "api-viber-event": {
         "title": "ViberEvent"
       },
+      "channel-line-errors": {
+        "title": "Error Handling in LINE"
+      },
       "channel-line-flex": {
         "title": "Sending Flex Message"
       },
@@ -346,6 +349,21 @@
       },
       "version-1.0.0/version-1.0.0-the-basics-state": {
         "title": "State"
+      },
+      "version-1.0.1/version-1.0.1-channel-line-errors": {
+        "title": "Error Handling in LINE"
+      },
+      "version-1.0.1/version-1.0.1-channel-line-rich-menu": {
+        "title": "Rich Menu"
+      },
+      "version-1.0.1/version-1.0.1-migrating-v1": {
+        "title": "Migrating from v0.x to v1.x"
+      },
+      "version-1.0.1/version-1.0.1-the-basics-actions": {
+        "title": "Resolving Actions"
+      },
+      "version-1.0.1/version-1.0.1-the-basics-errors": {
+        "title": "Error Handling"
       }
     },
     "links": {
