@@ -3,6 +3,26 @@ id: channel-line-sending-messages
 title: Sending LINE Messages
 ---
 
+LINE has become one of the most popular chat channels between businesses and customers in Asia, especially in Japan, Taiwan, and Thailand. LINE's 2019 strategy, "[Life on LINE](https://www.youtube.com/watch?v=vrkVmOlaLis)", depicts a user daily life surrounded with LINE's service, e.g., LINE Login, LINE Pay, LINE Music, LINE Today, LINE Things, LINE Spot. This offers a more dynamic, integrated, online to offline ecosystem of LINE Bot.
+
+LINE Bots can be invited into a group, or focus on 1:1 communication. LINE Bots for group chat are benefit from the orgnaic growth - every time a bot invited into a group, make it gain more exposure. 
+
+
+#### Reply API & Push API
+
+Due to practical concerns, one thing developers should understand before sending any messages is the difference between `Reply API` and `Push API.`
+
+![messaging-api-thumb0](https://user-images.githubusercontent.com/662387/70490029-4cdea680-1b38-11ea-9979-2f9a68cb02cd.png)
+
+- `Push API` allows developers send messages directly to users anytime. Howeverm this is only free when you are using LINE developer account. In other cases, you may refer to [LINE Official Account Subscription Plans](https://www.linebiz.com/id-en/service/line-account-connect/) for the message fee.
+
+- `Reply API` is free. But bots can only reply with a message to users who interacts with your LINE official account. 
+
+
+
+
+
+
 ## Sending Message
 
 send any type of message
@@ -16,11 +36,12 @@ await context.send([
 ]);
 ```
 
+
 ## Sending Text Messages
 
 ### plain text
 
-https://developers.line.biz/en/reference/messaging-api/#text-message
+
 
 ```js
 async function SendHi(context) {
@@ -28,15 +49,23 @@ async function SendHi(context) {
 }
 ```
 
+> **Note:**
+> For more info, please refer to LINE's official doc, [`Text Message`](https://developers.line.biz/en/reference/messaging-api/#text-message)
+
+
 ### with line emoji
 
-https://developers.line.biz/media/messaging-api/emoji-list.pdf
+
 
 ```js
 async function SendHi(context) {
   await context.sendText(`${String.fromCodePoint(0x100084)} Hi!`);
 }
 ```
+
+> **Note:**
+> For more developer ready emoji, please refer to LINE's official doc, [`Emoji List`](https://developers.line.biz/media/messaging-api/emoji-list.pdf)
+
 
 ## Sending Multiple Messages
 
