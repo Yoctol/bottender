@@ -1,3 +1,53 @@
+# 1.0.1 / 2019-12-10
+
+### messenger
+
+- feat(messenger): add `fields` support to `context.getUserProfile()`:
+
+```js
+const user = await context.getUserProfile({
+  fields: [
+    'id',
+    'name',
+    'first_name',
+    'last_name',
+    'profile_pic',
+    'locale',
+    'timezone',
+    'gender',
+  ],
+});
+```
+
+- fix(example): fix `bottender.config.js` in `messenger-typing` example
+
+### line
+
+- fix(line): set `shouldBatch` to `false` after `handlerDidEnd` has been called. This may be the best way to handle errors in LINE:
+
+```js
+module.exports = async function HandleError(context, props) {
+  console.error(props.error);
+  if (process.env.NODE_ENV === 'development') {
+    await context.pushText('There are some unexpected errors happened. Please try again later, sorry for the inconvenience.');
+    await context.pushText(props.error.stack);
+  } else if (!context.isReplied) {
+    await context.replyText('There are some unexpected errors happened. Please try again later, sorry for the inconvenience.'
+  }
+  if (process.env.NODE_ENV === 'production') {
+    // send your error to the error tracker, for example: Sentry
+  }
+};
+```
+
+### telegram
+
+- feat(telegram): add telegram `context.editMessageMedia()`:
+
+```js
+await context.editMessageMedia(66, { type: 'photo', media: 'xxx.png' });
+```
+
 # 1.0.0 / 2019-12-05
 
 - The whole codebase has been fully rewritten with **TypeScript**.
