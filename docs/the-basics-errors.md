@@ -12,7 +12,8 @@ Bottender makes it easy to display custom error message for various runtime erro
 
 module.exports = async function HandleError(context, props) {
   console.error(props.error);
-  await context.sendText(
+  // or you can choose not to reply any error messages
+  await context.sendText(    
     'There are some unexpected errors happened. Please try again later, sorry for the inconvenience.'
   );
   if (process.env.NODE_ENV === 'production') {
