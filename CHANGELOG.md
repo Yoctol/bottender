@@ -1,3 +1,7 @@
+# 1.0.3 / 2019-12-12
+
+- [fix] server: require Bot using pascal case
+
 # 1.0.2 / 2019-12-12
 
 - [fix] server: add `prepare` support for production mode.
