@@ -67,6 +67,11 @@ class Server {
     });
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  public async prepare() {
+    // do nothing in production mode
+  }
+
   public getRequestHandler() {
     return this.handleRequest.bind(this);
   }
