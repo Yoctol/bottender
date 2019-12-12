@@ -1,3 +1,7 @@
+# 1.0.2 / 2019-12-12
+
+- [fix] server: add `prepare` support for production mode.
+
 # 1.0.1 / 2019-12-10
 
 ### messenger
