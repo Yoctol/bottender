@@ -4,6 +4,7 @@ import { IncomingMessage, ServerResponse } from 'http';
 
 import fromEntries from 'fromentries';
 import merge from 'lodash/merge';
+import { pascalcase } from 'messaging-api-common';
 
 import Bot from '../bot/Bot';
 import getBottenderConfig from '../shared/getBottenderConfig';
@@ -133,7 +134,8 @@ class Server {
       .filter(([, { enabled }]) => enabled)
       .map(([channel, { path: webhookPath, ...channelConfig }]) => {
         // eslint-disable-next-line import/no-dynamic-require
-        const ChannelBot = require(`../${channel}/${channel}Bot`).default;
+        const ChannelBot = require(`../${channel}/${pascalcase(channel)}Bot`)
+          .default;
         const channelBot = new ChannelBot({
           ...channelConfig,
           sessionStore,
