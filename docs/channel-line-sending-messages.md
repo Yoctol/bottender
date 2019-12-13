@@ -411,56 +411,34 @@ await context.sendCarouselTemplate(altText, template);
 <p><img width="300" src="https://user-images.githubusercontent.com/662387/70680783-38371580-1cd4-11ea-888e-336a24e67029.png"></p>
 
 ```js
-await context.sendReceiptTemplate({
-  recipientName: 'Stephane Crozatier',
-  orderNumber: '12345678902',
-  currency: 'USD',
-  paymentMethod: 'Visa 2345',
-  orderUrl: 'http://petersapparel.parseapp.com/order?order_id=123456',
-  timestamp: '1428444852',
-  elements: [
-    {
-      title: 'Classic White T-Shirt',
-      subtitle: '100% Soft and Luxurious Cotton',
-      quantity: 2,
-      price: 50,
-      currency: 'USD',
-      imageUrl: 'http://petersapparel.parseapp.com/img/whiteshirt.png',
+const template = [
+  {
+    imageUrl: 'https://example.com/bot/images/item1.jpg',
+    action: {
+      type: 'postback',
+      label: 'Buy',
+      data: 'action=buy&itemid=111',
     },
-    {
-      title: 'Classic Gray T-Shirt',
-      subtitle: '100% Soft and Luxurious Cotton',
-      quantity: 1,
-      price: 25,
-      currency: 'USD',
-      imageUrl: 'http://petersapparel.parseapp.com/img/grayshirt.png',
-    },
-  ],
-  address: {
-    street1: '1 Hacker Way',
-    street2: '',
-    city: 'Menlo Park',
-    postalCode: '94025',
-    state: 'CA',
-    country: 'US',
   },
-  summary: {
-    subtotal: 75.0,
-    shippingCost: 4.95,
-    totalTax: 6.19,
-    totalCost: 56.14,
+  {
+    imageUrl: 'https://example.com/bot/images/item2.jpg',
+    action: {
+      type: 'message',
+      label: 'Yes',
+      text: 'yes',
+    },
   },
-  adjustments: [
-    {
-      name: 'New Customer Discount',
-      amount: 20,
+  {
+    imageUrl: 'https://example.com/bot/images/item3.jpg',
+    action: {
+      type: 'uri',
+      label: 'View detail',
+      uri: 'http://example.com/page/222',
     },
-    {
-      name: '$10 Off Coupon',
-      amount: 10,
-    },
-  ],
-});
+  },
+];
+const altText = 'this is a image carousel template';
+await context.sendImageCarouselTemplate(altText, template);
 ```
 
 > **Note:**
@@ -758,10 +736,10 @@ module.exports = {
     line: {
       enabled: true,
       // sendMethod can be either "push" or "reply"
-      sendMethod: "reply", 
+      sendMethod: 'reply',
       accessToken: process.env.LINE_CHANNEL_ACCESS_TOKEN,
       channelSecret: process.env.LINE_CHANNEL_SECRET,
-    }
+    },
   },
 };
 ```
