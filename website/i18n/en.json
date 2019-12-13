@@ -358,6 +358,7 @@
       "Docs": "Docs",
       "API": "API",
       "Blog": "Blog",
+      "Users": "Users",
       "Examples": "Examples",
       "GitHub": "GitHub"
     },
@@ -384,6 +385,8 @@
     }
   },
   "pages-strings": {
+    "Who is using Bottender?|no description given": "Who is using Bottender?",
+    "Is your project using Bottender?|no description given": "Is your project using Bottender?",
     "Help Translate|recruit community translators for your project": "Help Translate",
     "Edit this Doc|recruitment message asking to edit the doc source": "Edit",
     "Translate this Doc|recruitment message asking to translate the docs": "Translate"
