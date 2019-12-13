@@ -3,29 +3,27 @@ id: channel-line-sending-messages
 title: Sending LINE Messages
 ---
 
-LINE has become one of the most popular chat channels between businesses and customers in Asia, especially in Japan, Taiwan, and Thailand. LINE's 2019 strategy, "[Life on LINE](https://www.youtube.com/watch?v=vrkVmOlaLis)", depicts a user daily life surrounded with LINE's service, e.g., LINE Login, LINE Pay, LINE Music, LINE Today, LINE Things, LINE Spot. This offers a more dynamic, integrated, online to offline ecosystem of LINE Bot.
+LINE has become one of the most popular chat channels between businesses and customers in Asia, especially in Japan, Taiwan, and Thailand. LINE's 2019 strategy, "[Life on LINE](https://www.youtube.com/watch?v=vrkVmOlaLis)," depicts a user's daily life surrounded with LINE's service, e.g., LINE Login, LINE Pay, LINE Music, LINE Today, LINE Things, LINE Spot. The completeness of the LINE's ecosystem offers more dynamic, integrated, online to offline possibilities of LINE Bots.
 
-LINE Bots can be invited into a group, or focus on 1:1 communication. LINE Bots for group chat are benefit from the orgnaic growth - every time a bot invited into a group, make it gain more exposure. 
-
+LINE Bots can be invited into a group, or focus on 1:1 communication. LINE Bots for group chat benefit from organic growth. Once a bot joined a group, it gains more exposure.
 
 #### Reply API & Push API
 
-Due to practical concerns, one thing developers should understand before sending any messages is the difference between `Reply API` and `Push API.`
+Due to cost concerns, one thing developers should clearly understand before sending any messages is the difference between `Reply API` and `Push API.`
 
 ![messaging-api-thumb0](https://user-images.githubusercontent.com/662387/70490029-4cdea680-1b38-11ea-9979-2f9a68cb02cd.png)
 
-- `Push API` allows developers send messages directly to users anytime. Howeverm this is only free when you are using LINE developer account. In other cases, you may refer to [LINE Official Account Subscription Plans](https://www.linebiz.com/id-en/service/line-account-connect/) for the message fee.
+- `Push API` allows developers to send messages directly to users anytime. However, it is only free in development. In production, you may refer to [LINE Official Account Subscription Plans](https://www.linebiz.com/id-en/service/line-account-connect/) to check out the messaging fee of your official account.
 
-- `Reply API` is free. But bots can only reply with a message to users who interacts with your LINE official account. 
+- Using `Reply API` is free. But bots can only reply once to a user who interacted with your LINE official account. For each bot reply, you can send up to 5 `Message Objects` (See LINE's official document, "[Sending reply messages](https://developers.line.biz/en/docs/messaging-api/building-bot/#sending-reply-messages)"). If you attempt to reply more than 5 `Message Objects`, you will see an error in console.
 
+> **Note:**
+>
+> - It's a bit tricky to count the number of `Message Objects.` For example, each function call of `Sending Message,` `Sending Text Message,` or `Sending Template Messages` is calculated as one `Message Object.`, while the final attached `Quick Reply` doesn't count as a `Message Object.`
 
+## Sending Messages
 
-
-
-
-## Sending Message
-
-send any type of message
+Bottender aims to support every feature of each chat channel. In the code below, you can see the most primitive way to send any LINE messages by Bottender.
 
 ```js
 await context.send([
@@ -36,12 +34,17 @@ await context.send([
 ]);
 ```
 
+Bottender also cares about "Developer Experience." In the following section, you can see a full set of syntactic sugar to make codes in Bottender much readable and expressive.
 
 ## Sending Text Messages
 
-### plain text
+`Text message` is the most frequent and common message types among all chat channels. It also offers a minimal format while carrying out dynamic data, e.g., stock price and weather info.
 
+ <p><img width="300" src="https://user-images.githubusercontent.com/662387/70680790-38cfac00-1cd4-11ea-88a3-12ed1c71effc.png"></p>
 
+### Plain Text
+
+The following example shows how to reply with plain text.
 
 ```js
 async function SendHi(context) {
@@ -52,10 +55,11 @@ async function SendHi(context) {
 > **Note:**
 > For more info, please refer to LINE's official doc, [`Text Message`](https://developers.line.biz/en/reference/messaging-api/#text-message)
 
+### Text with LINE emoji
 
-### with line emoji
+You can include LINE's original emoji (usually involves LINE Friends) in text messages using character code. You can find the list of LINE emoji in [emoji list](https://developers.line.me/media/messaging-api/emoji-list.pdf).
 
-
+<p><img width="300" src="https://user-images.githubusercontent.com/662387/70680894-82b89200-1cd4-11ea-92e8-53e222bbd12d.png"></p>
 
 ```js
 async function SendHi(context) {
@@ -63,11 +67,9 @@ async function SendHi(context) {
 }
 ```
 
-> **Note:**
-> For more developer ready emoji, please refer to LINE's official doc, [`Emoji List`](https://developers.line.biz/media/messaging-api/emoji-list.pdf)
-
-
 ## Sending Multiple Messages
+
+Bottender collects all sending messages in a single request. You can see two different approaches below.
 
 ```js
 await context.send([
@@ -89,13 +91,15 @@ await context.sendText('hello');
 await context.sendText('world');
 ```
 
-bottender collects all messages you want to send and send in a single request.
-
 ## Sending Rich Media Messages
+
+`Rich Media Messages` of LINE consist of stickers, images, videos, audios, locations, and imageMaps. `Rich Media Messages` is useful when your priority is to catch the user's attention, e.g., limited promotion. Plus, it is also handy to create an immersive experience, e.g., telling a story.
 
 ### Sticker
 
-https://developers.line.biz/en/reference/messaging-api/#sticker-message
+By `Stickers,` LINE creates a versatile, communicative language. `Stickers` make your bot expressive and engaging. To send a sticker, you need to indicate the package ID and sticker ID of the sticker.
+
+<p><img width="300" src="https://user-images.githubusercontent.com/662387/70680788-38cfac00-1cd4-11ea-81a7-880abdf1ff45.png"></p>
 
 ```js
 await context.sendSticker({
@@ -104,9 +108,18 @@ await context.sendSticker({
 });
 ```
 
+> **Note:**
+>
+> - You can only send LINE's original `Stickers.` You can find the sticker's package ID and sticker ID in the [sticker list](https://developers.line.biz/media/messaging-api/sticker_list.pdf).
+> - For more info, please refer to LINE's official doc, [`Sticker Message`](https://developers.line.biz/en/reference/messaging-api/#sticker-message)
+
 ### Image
 
-https://developers.line.biz/en/reference/messaging-api/#image-message
+To send an `Image,` you need to prepare URLs of the original image and a smaller preview image. Users can see the preview image in the chat. When the user clicked the preview image, s/he can see the original image.
+
+<p><img width="300" src="https://user-images.githubusercontent.com/662387/70680782-379e7f00-1cd4-11ea-8f41-bd18c194a55b.png"></p>
+
+If you want to set up a call to action on the image, you may refer to [ImageMaps](#imagemap).
 
 ```js
 await context.sendImage({
@@ -115,9 +128,16 @@ await context.sendImage({
 });
 ```
 
+> **Note:**
+>
+> - The URLs must use HTTPS over TLS 1.2 or later.
+> - For more info, please refer to LINE's official doc, [`Image Message`](https://developers.line.biz/en/reference/messaging-api/#image-message)
+
 ### Video
 
-https://developers.line.biz/en/reference/messaging-api/#video-message
+To send a `Video,` you need to prepare the URL of the video file and the URL of a preview image. The user can play the video by tapping on the preview image.
+
+<p><img width="300" src="https://user-images.githubusercontent.com/662387/70680791-38cfac00-1cd4-11ea-8d1f-ea98199ae363.png"></p>
 
 ```js
 await context.sendVideo({
@@ -126,9 +146,16 @@ await context.sendVideo({
 });
 ```
 
+> **Note:**
+>
+> - The URLs must use HTTPS over TLS 1.2 or later.
+> - For more info, please refer to LINE's official doc, [`Video Message`](https://developers.line.biz/en/reference/messaging-api/#video-message)
+
 ### Audio
 
-https://developers.line.biz/en/reference/messaging-api/#audio-message
+To send an `Audio` file, you need to prepare the URL of the file and the duration of the audio.
+
+<p><img width="300" src="https://user-images.githubusercontent.com/662387/70680776-3705e880-1cd4-11ea-843b-782a95aaa30d.png"></p>
 
 ```js
 await context.sendAudio({
@@ -137,9 +164,16 @@ await context.sendAudio({
 });
 ```
 
+> **Note:**
+>
+> - The URLs must use HTTPS over TLS 1.2 or later.
+> - For more info, please refer to LINE's official doc, [`Audio Message`](https://developers.line.biz/en/reference/messaging-api/#audio-message)
+
 ### Location
 
-https://developers.line.biz/en/reference/messaging-api/#location-message
+To send your location information to users, you have to prepare a title, address, and latitude and longitude.
+
+<p><img width="300" src="https://user-images.githubusercontent.com/662387/70680786-38371580-1cd4-11ea-9755-e8f335183ebd.png"></p>
 
 ```js
 await context.sendLocation({
@@ -150,9 +184,16 @@ await context.sendLocation({
 });
 ```
 
+> **Note:**
+>
+> - The URLs must use HTTPS over TLS 1.2 or later.
+> - For more info, please refer to LINE's official doc, [`Location Message`](https://developers.line.biz/en/reference/messaging-api/#location-message)
+
 ### Imagemap
 
-https://developers.line.biz/en/reference/messaging-api/#imagemap-message
+`Imagemap` offers very flexible and interactive usage. It is an image with multiple tappable areas. When a user taps one of these areas, the user can link to a webpage or send a message on their behalf.
+
+<p><img width="300" src="https://user-images.githubusercontent.com/662387/70680785-38371580-1cd4-11ea-98ce-c41438379fe8.png"></p>
 
 ```js
 const imagemap = {
@@ -188,7 +229,20 @@ const altText = 'this is an imagemap';
 await context.sendImagemap(altText, imagemap);
 ```
 
+> **Note:**
+> For more info, please refer to LINE's official doc, [`Imagemap Message`](https://developers.line.biz/en/reference/messaging-api/#imagemap-message)
+
 ## Sending Template Messages
+
+`Template message` is an interactive gallery composed of image, video, title, subtitle, and buttons.
+
+`Template message` is the key to offer rich media interaction. It usually used in the scenario of display multiple choices, and next actions to the user, e.g., applying coupons, booking a room, making a reservation.
+
+> **Note:**
+> Compared with `Template Message,` we highly depend on [`Flex Message`](./channel-line-flex.md) once it is available. There are two main reasons:
+>
+> - `Flex Message` supports both desktop and mobile devices, while `Template Message` only supports mobile devices.
+> - `Flex Message` is an HTML-like chat UI, which creates a better, engaging user experience.
 
 ```js
 const template = {
@@ -218,9 +272,40 @@ const altText = 'this is a template';
 await context.sendTemplate(altText, template);
 ```
 
+### Confirm Template
+
+A `Confirm Template` is designed for confirmation.
+
+<p><img width="300" src="https://user-images.githubusercontent.com/662387/70680779-379e7f00-1cd4-11ea-9706-941b6a30e003.png"></p>
+
+```js
+const template = {
+ text: 'Are you sure?',
+ actions: [
+ {
+ type: 'message',
+ label: 'Yes',
+ text: 'yes',
+ },
+ {
+ type: 'message',
+ label: 'No',
+ text: 'no',
+ },
+ ],
+};
+const altText = 'this is a confirm template'
+await context.sendConfirmTemplate(, template);
+```
+
+> **Note:**
+> For more info, please refer to LINE's official doc, [`Confirm Template`](https://developers.line.biz/en/reference/messaging-api/#confirm)
+
 ### Buttons Template
 
-https://developers.line.biz/en/reference/messaging-api/#buttons
+A `Buttons Template` has an image, title, text, and multiple action buttons.
+
+<p><img width="300" src="https://user-images.githubusercontent.com/662387/70680777-3705e880-1cd4-11ea-896d-c0f53257276c.png"></p>
 
 ```js
 const template = {
@@ -249,35 +334,18 @@ const altText = 'this is a button template';
 await context.sendButtonTemplate(altText, template);
 ```
 
-alias: sendBottonsTemplate
-
-### Confirm Template
-
-https://developers.line.biz/en/reference/messaging-api/#confirm
-
-```js
-const template = {
-  text: 'Are you sure?',
-  actions: [
-    {
-      type: 'message',
-      label: 'Yes',
-      text: 'yes',
-    },
-    {
-      type: 'message',
-      label: 'No',
-      text: 'no',
-    },
-  ],
-};
-const altText = 'this is a confirm template'
-await context.sendConfirmTemplate(, template);
-```
+> **Note:**
+>
+> - Depending on the character width, the message text may not fully be displayed due to the height limitation of the text area.
+> - For more info, please refer to LINE's official doc, [`Buttons Template`](https://developers.line.biz/en/reference/messaging-api/#buttons)
 
 ### Carousel Template
 
-https://developers.line.biz/en/reference/messaging-api/#carousel
+A `Carousel Template` is an upgraded version of `Buttons Template.` For each `Buttons Template,` you can have an image, title, text, and multiple action buttons.
+
+You can have up to 10 `Buttons Template` in a row to compose a `Carousel Template.`
+
+<p><img width="300" src="https://user-images.githubusercontent.com/662387/70680778-3705e880-1cd4-11ea-8bcd-7e38aa45f74e.png"></p>
 
 ```js
 const template = [
@@ -330,9 +398,17 @@ const altText = 'this is a carousel template';
 await context.sendCarouselTemplate(altText, template);
 ```
 
+> **Note:**
+>
+> - Depending on the character width, the message text may not fully be displayed due to the height limitation of the text area.
+> - You have to keep the number of actions consistent for all columns.
+> - For more info, please refer to LINE's official doc, [`Carousel Template`](https://developers.line.biz/en/reference/messaging-api/#carousel)
+
 ### Image Carousel Template
 
-https://developers.line.biz/en/reference/messaging-api/#image-carousel
+`Image Carousel Template` has multiple images that can be cycled like a carousel. Users can scroll the images horizontally to browse possible choices. Without the bother of buttons, it helps your user focus on the product images.
+
+<p><img width="300" src="https://user-images.githubusercontent.com/662387/70680783-38371580-1cd4-11ea-888e-336a24e67029.png"></p>
 
 ```js
 await context.sendReceiptTemplate({
@@ -387,124 +463,26 @@ await context.sendReceiptTemplate({
 });
 ```
 
+> **Note:**
+> For more info, please refer to LINE's official doc, [`Image Carousel Template`](https://developers.line.biz/en/reference/messaging-api/#image-carousel)
+
 ## Sending Flex Messages
 
-https://developers.line.biz/en/reference/messaging-api/#flex-message
+<p><img width="800" src="https://user-images.githubusercontent.com/662387/70701503-6bdf6300-1d07-11ea-86d6-924d676a1f80.png"></p>
 
-### bubble
-
-https://developers.line.biz/en/reference/messaging-api/#bubble
-
-```js
-const contents = {
-  type: 'bubble',
-  header: {
-    type: 'box',
-    layout: 'vertical',
-    contents: [
-      {
-        type: 'text',
-        text: 'Header text',
-      },
-    ],
-  },
-  hero: {
-    type: 'image',
-    url: 'https://example.com/flex/images/image.jpg',
-  },
-  body: {
-    type: 'box',
-    layout: 'vertical',
-    contents: [
-      {
-        type: 'text',
-        text: 'Body text',
-      },
-    ],
-  },
-  footer: {
-    type: 'box',
-    layout: 'vertical',
-    contents: [
-      {
-        type: 'text',
-        text: 'Footer text',
-      },
-    ],
-  },
-  styles: {
-    comment: 'See the example of a bubble style object',
-  },
-};
-
-const altText = 'this is a flex';
-await context.sendFlex(altText, contents);
-```
-
-### carousel
-
-https://developers.line.biz/en/reference/messaging-api/#f-carousel
-
-```js
-const bubble = {
-  type: 'bubble',
-  header: {
-    type: 'box',
-    layout: 'vertical',
-    contents: [
-      {
-        type: 'text',
-        text: 'Header text',
-      },
-    ],
-  },
-  hero: {
-    type: 'image',
-    url: 'https://example.com/flex/images/image.jpg',
-  },
-  body: {
-    type: 'box',
-    layout: 'vertical',
-    contents: [
-      {
-        type: 'text',
-        text: 'Body text',
-      },
-    ],
-  },
-  footer: {
-    type: 'box',
-    layout: 'vertical',
-    contents: [
-      {
-        type: 'text',
-        text: 'Footer text',
-      },
-    ],
-  },
-  styles: {
-    comment: 'See the example of a bubble style object',
-  },
-};
-
-const contents = {
-  type: 'carousel',
-  contents: [bubble, bubble],
-};
-
-const altText = 'this is a flex';
-await context.sendFlex(altText, contents);
-```
+Since we love [`Flex Message`](./channel-line-flex.md) and inspired by its flexiblity and interactive, we wrote a seperate doc, [`Flex Message`](./channel-line-flex.md)
 
 ## Sending with Quick Replies
 
-https://developers.line.biz/en/reference/messaging-api/#message-common-properties
+We would recommend you to treat `Quick Reply` as an alternative to user text input.
 
-https://developers.line.biz/en/docs/messaging-api/using-quick-reply/
+When a user receives a message that contains `Quick Reply Buttons` from a LINE official account, those buttons appear at the bottom of the chat screen. The user can tap one of the buttons as a reply.
 
-quickReply items limit : upto 13 items
+A `Quick Reply` consists of up to 13 `Quick Reply Buttons.` When the user taps a `Quick Reply Button,` the `Quick Reply` dismissed. Then, the title of the tapped button posts to the conversation as a response. Meanwhile, the user triggers the action bound with the `Quick Reply Button.`
 
-quickReply object
+`Quick Reply` can be used in a 1:1 chat with a LINE official account, a group, and a room.
+
+<p><img width="300" src="https://user-images.githubusercontent.com/662387/70680787-38cfac00-1cd4-11ea-92ea-e7a2379ce9c2.png"></p>
 
 ```js
 const quickReply = {
@@ -527,9 +505,66 @@ const quickReply = {
 };
 ```
 
+> **Note:**
+> For more info, please refer to LINE's official doc, [`Using Quick Reply`](https://developers.line.biz/en/docs/messaging-api/using-quick-reply/)
+
+### Sending Quick Reply
+
+Since `Quick Reply` works as an alternative of user input, you have to send `Quick Reply` as an attachment of other messages, e.g., `Text Message,` `Template Message,` or `Flex.`
+
+#### Sending Quick Reply with Message
+
+```js
+await context.send([
+  {
+    type: 'text',
+    text: 'hello',
+    quickReply,
+  },
+]);
+```
+
+#### Sending Quick Reply with Text Message
+
+```js
+await context.sendText('hello', { quickReply });
+```
+
+#### Sending Quick Reply with Template Message
+
+```js
+await context.sendTemplate(altText, template, { quickReply });
+```
+
+#### Sending Quick Reply with Buttons Template Message
+
+```js
+await context.sendButtonTemplate(altText, template, { quickReply });
+```
+
+#### Sending Quick Reply with Confirm Template Message
+
+```js
+await context.sendConfirmTemplate(altText, template, { quickReply });
+```
+
+#### Sending Quick Reply with Carousel Template Message
+
+```js
+await context.sendCarouselTemplate(altText, template, { quickReply });
+```
+
+#### Sending Quick Reply with Flex Message
+
+```js
+await context.sendFlex(altText, contents, { quickReply });
+```
+
+In the following sections, you can see various types of `Quick Reply.`
+
 ### Text Quick Reply
 
-https://developers.line.biz/en/reference/messaging-api/#message-action
+When this action is tapped, the string in the text property is sent as a message from the user.
 
 ```js
 const quickReply = {
@@ -546,9 +581,12 @@ const quickReply = {
 };
 ```
 
+> **Note:**
+> For more info, please refer to LINE's official doc, [`Message Actions`](https://developers.line.biz/en/reference/messaging-api/#message-action)
+
 ### Postback Quick Replay
 
-https://developers.line.biz/en/reference/messaging-api/#postback-action
+When the action is tapped, a postback event is returned via webhook with the specified string in the data property.
 
 ```js
 const quickReply = {
@@ -566,9 +604,25 @@ const quickReply = {
 };
 ```
 
+> **Note:**
+> For more info, please refer to LINE's official doc, [`Postback Actions`](https://developers.line.biz/en/reference/messaging-api/#postback-action)
+
 ### URI Quick Reply
 
-https://developers.line.biz/en/reference/messaging-api/#uri-action
+The URI opened when the action is performed. The available schemes for URI are `http`, `https,` `line,` and `tel.` For the LINE URL scheme, you can trigger the following actions:
+
+- Opening the camera and camera roll
+- Opening the location screen
+- Sharing your LINE official account
+- Opening your LINE official account's Timeline and account page
+- Sending text messages
+- Opening profile information
+- Opening common LINE screens
+- Opening LINE settings screens
+- Opening the Sticker Shop
+- Opening the Theme Shop
+- Making phone calls with LINE Out
+- Opening a LIFF app
 
 ```js
 const quickReply = {
@@ -588,27 +642,21 @@ const quickReply = {
 };
 ```
 
-Note: The altUri.desktop property is supported only when you set URI actions in Flex Messages.
-
-USE URI Scheme
-https://developers.line.biz/en/docs/line-login/using-line-url-scheme/
-
-- Opening the camera and camera roll
-- Opening the location screen
-- Sharing your LINE official account
-- Opening your LINE official account's Timeline and account page
-- Sending text messages
-- Opening profile information
-- Opening common LINE screens
-- Opening LINE settings screens
-- Opening the Sticker Shop
-- Opening the Theme Shop
-- Making phone calls with LINE Out
-- Opening a LIFF app
+> **Note:**
+>
+> - The altUri.desktop property is supported only when you set URI actions in Flex Messages.
+> - For more information about the LINE URL scheme, see Using the [`LINE URL Scheme`](https://developers.line.biz/en/docs/line-login/using-line-url-scheme/).
+> - For more info, please refer to LINE's official doc, [`URI Actions`](https://developers.line.biz/en/reference/messaging-api/#uri-action)
 
 ### Datetime Picker Quick Reply
 
-https://developers.line.biz/en/reference/messaging-api/#datetime-picker-action
+When a control associated with this action is tapped, a postback event is returned via webhook with the date and time selected by the user from the date and time selection dialog. The `Datetime Picker` action does not support time zones.
+
+There are three different modes:
+
+- date: Pick a date
+- time: Pick time
+- datetime: Pick date and time
 
 ```js
 const quickReply = {
@@ -626,15 +674,14 @@ const quickReply = {
 };
 ```
 
-Action mode
-
-- date: Pick date
-- time: Pick time
-- datetime: Pick date and time
+> **Note:**
+>
+> - The datetime picker action is only supported on versions equal to or later than LINE 7.9.0 for iOS and LINE 7.12.0 for Android.
+> - For more info, please refer to LINE's official doc, [`Datatime Picker Actions`](https://developers.line.biz/en/reference/messaging-api/#datetime-picker-action)
 
 ### Camera Quick Reply
 
-https://developers.line.biz/en/reference/messaging-api/#camera-action
+This action can be configured only with quick reply buttons. When a button associated with this action is tapped, the camera screen in LINE is opened.
 
 ```js
 const quickReply = {
@@ -650,9 +697,13 @@ const quickReply = {
 };
 ```
 
+> **Note:**
+>
+> - For more info, please refer to LINE's official doc, [`Camera Actions`](https://developers.line.biz/en/reference/messaging-api/#camera-action)
+
 ### Camera Roll Quick Reply
 
-https://developers.line.biz/en/reference/messaging-api/#camera-roll-action
+This action can be configured only with quick reply buttons. When a button associated with this action is tapped, the camera roll screen in LINE is opened.
 
 ```js
 const quickReply = {
@@ -668,9 +719,13 @@ const quickReply = {
 };
 ```
 
+> **Note:**
+>
+> - For more info, please refer to LINE's official doc, [`Camera Roll Actions`](https://developers.line.biz/en/reference/messaging-api/#camera-roll-action)
+
 ### Location Quick Reply
 
-https://developers.line.biz/en/reference/messaging-api/#location-action
+This action can be configured only with quick reply buttons. When a button associated with this action is tapped, the location screen in LINE is opened.
 
 ```js
 const quickReply = {
@@ -686,83 +741,19 @@ const quickReply = {
 };
 ```
 
-### how to send quick reply
+> **Note:**
+>
+> - For more info, please refer to LINE's official doc, [`Location Action`](https://developers.line.biz/en/reference/messaging-api/#location-action)
 
-send
+## Thinking in Bottender: Send Messages, Reply Messages & Push Messages
 
-```js
-await context.send([
-  {
-    type: 'text',
-    text: 'hello',
-    quickReply,
-  },
-]);
-```
+Bottender aims to offer better abstract concepts for multiple chat channels support. Apart from LINE's unique `Reply API` and `Push API,` Bottender offers `Send API` as a configurable middleware.
 
-sendText
-
-```js
-await context.sendText('hello', { quickReply });
-```
-
-send template
-
-```js
-await context.sendTemplate(altText, template, { quickReply });
-```
-
-send button template
-
-```js
-await context.sendButtonTemplate(altText, template, { quickReply });
-```
-
-send confirm template
-
-```js
-await context.sendConfirmTemplate(altText, template, { quickReply });
-```
-
-send carousel template
-
-```js
-await context.sendCarouselTemplate(altText, template, { quickReply });
-```
-
-sendFlex
-
-```js
-await context.sendFlex(altText, contents, { quickReply });
-```
-
-## Sending with Reply Token
+For example, If you don't want to pay extra fee for bot response, in `bottender.config.js,` you can config your `Send API` sending messages by `Reply API.` However, if you want to send more than 5 `Message Objects` in one reply, you can also ask Bottender use `Push API` to send extra messages by `Send API.`
 
 ### Send Messages
 
-Bottender support automatically reply or push message
-
-if reply token exists, use reply token to send message.
-
-send
-
-```js
-await context.send([
-  {
-    type: 'text',
-    text: 'hello',
-    quickReply,
-  },
-]);
-```
-
-sendText
-
-```js
-await context.sendText('hello', { quickReply });
-```
-
-all method with send:
+Bottender offers the following `Send API:`
 
 - send
 - sendText
@@ -781,31 +772,9 @@ all method with send:
 
 ### Reply Messages
 
-https://developers.line.biz/en/reference/messaging-api/#send-reply-message
+If you are confident that all you need is `Reply API,` you can use the following `Reply API.` Bottender helps you manage the reply token, so you don't have to manage it by yourself.
 
-Bottender support reply message
-
-you don't need to handle the replytoken yourself.
-
-reply
-
-```js
-await context.reply([
-  {
-    type: 'text',
-    text: 'hello',
-    quickReply,
-  },
-]);
-```
-
-replyText
-
-```js
-await context.replyText('hello', { quickReply });
-```
-
-all method with reply:
+Bottender offers the following `Reply API:`
 
 - reply
 - replyText
@@ -822,26 +791,14 @@ all method with reply:
 - replyCarouselTemplate
 - replyImageCarouselTemplate
 
+> **Note:**
+> For sample code, please refer to Bottender's API doc, [Reply API](https://bottender.js.org/docs/api-line-context#reply-api)
+
 ### Push Messages
 
-https://developers.line.biz/en/reference/messaging-api/#send-push-message
+If messaging cost is not an issue to you, you may focus on `Push API.`
 
-Bottender support push message
-
-```js
-await context.push([
-  {
-    type: 'text',
-    text: 'hello',
-  },
-]);
-```
-
-```js
-await context.pushText('hello');
-```
-
-all method with push:
+Bottender offers the following `Push API:`
 
 - push
 - pushText
@@ -858,29 +815,20 @@ all method with push:
 - pushCarouselTemplate
 - pushImageCarouselTemplate
 
-### Multicast Messages
-
-https://developers.line.biz/en/reference/messaging-api/#send-multicast-message
-
-### Broadcast Messages
-
-https://developers.line.biz/en/reference/messaging-api/#send-broadcast-message
+> **Note:**
+> For sample code, please refer to Bottender's API doc, [Push API](https://bottender.js.org/docs/api-line-context#push-api)
 
 ## Rate Limits
 
-https://developers.line.biz/en/reference/messaging-api/#rate-limits
+Just like many chat channels, LINE has rate limits for each endpoint. If you continue to send requests exceeding the rate limit for an extended period, your bot might stop responding. It is because LINE blocks incoming requests to your bot.
 
-### send message
+You have to take care `Rate Limits` if you attempt to build a campaign bot with massive sudden traffic, e.g., super discount for Black Friday.
 
+### Send API
+
+For `Send API,` you have to follow the below `Rate Limits`:
 100,000 requests per minute
-1,700 requests per second\*
+1,700 requests per second
 
-### Send multicast message
-
-100,000 requests per minute
-1,700 requests per second\*
-2,000,000 recipients per minute
-
-### Send a broadcast message
-
-60 requests per hour
+> **Note:**
+> For more info, please refer to LINE's API doc, [Rate Limits](https://developers.line.biz/en/reference/messaging-api/#rate-limits)
