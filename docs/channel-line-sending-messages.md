@@ -749,7 +749,22 @@ const quickReply = {
 
 Bottender aims to offer better abstract concepts for multiple chat channels support. Apart from LINE's unique `Reply API` and `Push API,` Bottender offers `Send API` as a configurable middleware.
 
-For example, If you don't want to pay extra fee for bot response, in `bottender.config.js,` you can config your `Send API` sending messages by `Reply API.` However, if you want to send more than 5 `Message Objects` in one reply, you can also ask Bottender use `Push API` to send extra messages by `Send API.`
+For example, If you don't want to pay extra fee for bot response, in `bottender.config.js,` you can config your `Send API` sending messages by `Reply API.` However, if you want to send more than 5 `Message Objects` in one reply, you can also ask Bottender use `Push API` to send every message by `Send API.`
+
+```js
+// bottender.config.js
+module.exports = {
+  channels: {
+    line: {
+      enabled: true,
+      // sendMethod can be either "push" or "reply"
+      sendMethod: "reply", 
+      accessToken: process.env.LINE_CHANNEL_ACCESS_TOKEN,
+      channelSecret: process.env.LINE_CHANNEL_SECRET,
+    }
+  },
+};
+```
 
 ### Send Messages
 
