@@ -10,7 +10,7 @@
 const React = require('react');
 
 // eslint-disable-next-line import/no-unresolved
-const CompLibrary = require('../../core/CompLibrary.js');
+const CompLibrary = require('../../core/CompLibrary');
 
 const { Component } = React;
 
