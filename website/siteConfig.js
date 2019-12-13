@@ -42,7 +42,7 @@ const siteConfig = {
   /* path to images for header/footer */
   headerIcon: 'img/bottender.svg',
   footerIcon: '',
-  favicon: 'img/favicon.ico',
+  favicon: 'img/favicon-192x192.png',
 
   /* Colors for website */
   colors: {
