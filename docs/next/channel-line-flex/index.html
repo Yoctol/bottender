@@ -79,7 +79,7 @@
 <p>The following is a simple example based on a <code>bubble</code> type container with two text components arranged horizontally.</p>
 <p>To send flex messages, call <code>context.sendFlex()</code> with your flex content:</p>
 <pre><code class="hljs css language-js"><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params">context</span>) </span>{
-  <span class="hljs-keyword">await</span> context.sendFlex({
+  <span class="hljs-keyword">await</span> context.sendFlex(<span class="hljs-string">'This is a hello world flex'</span>, {
     <span class="hljs-attr">type</span>: <span class="hljs-string">'bubble'</span>,
     <span class="hljs-attr">body</span>: {
       <span class="hljs-attr">type</span>: <span class="hljs-string">'box'</span>,
@@ -102,7 +102,7 @@
 <p>Let's see a much more complicated example. This example offers a better user experience, where information is positioned carefully with proper emphasis.</p>
 <p><img src="https://user-images.githubusercontent.com/3382565/68481175-783c5000-0271-11ea-8749-5a0b6ebf8d34.png" alt=""></p>
 <pre><code class="hljs css language-js"><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params">context</span>) </span>{
-  <span class="hljs-keyword">await</span> context.sendFlex({
+  <span class="hljs-keyword">await</span> context.sendFlex(<span class="hljs-string">'This is an advanced flex'</span>, {
     <span class="hljs-attr">type</span>: <span class="hljs-string">'bubble'</span>,
     <span class="hljs-attr">hero</span>: {
       <span class="hljs-attr">type</span>: <span class="hljs-string">'image'</span>,
@@ -182,7 +182,7 @@
     <span class="hljs-attr">type</span>: <span class="hljs-string">'bubble'</span>,
     <span class="hljs-comment">// ...other attributes</span>
   };
-  <span class="hljs-keyword">await</span> context.sendFlex({
+  <span class="hljs-keyword">await</span> context.sendFlex(<span class="hljs-string">'This is a carousel flex'</span>, {
     <span class="hljs-attr">type</span>: <span class="hljs-string">'carousel'</span>,
     <span class="hljs-attr">contents</span>: [
       <span class="hljs-comment">// put multiple bubbles in your carousel</span>
