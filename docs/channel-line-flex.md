@@ -32,7 +32,7 @@ To send flex messages, call `context.sendFlex()` with your flex content:
 
 ```js
 async function App(context) {
-  await context.sendFlex({
+  await context.sendFlex('BasicSample', {
     type: 'bubble',
     body: {
       type: 'box',
@@ -60,7 +60,7 @@ Let's see a much more complicated example. This example offers a better user exp
 
 ```js
 async function App(context) {
-  await context.sendFlex({
+  await context.sendFlex('AdvancedSample', {
     type: 'bubble',
     hero: {
       type: 'image',
@@ -142,7 +142,7 @@ async function App(context) {
     type: 'bubble',
     // ...other attributes
   };
-  await context.sendFlex({
+  await context.sendFlex('CarouselSample', {
     type: 'carousel',
     contents: [
       // put multiple bubbles in your carousel
