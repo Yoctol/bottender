@@ -5,15 +5,14 @@ title: Migrating from v0.x to v1.x
 
 To make bot developers have a happier development experience, we made some changes in terms of a better-structured config file, unifying cases to camel case, and introduction of two design patterns: `Router` and `Chain`.
 
-You can follow the below guide to migrate your Bottender's code from v0.x to v1.x. 
+You can follow the below guide to migrate your Bottender's code from v0.x to v1.x.
 
 > **Note:** The following sample code is based on a Messenger bot, [tweet us](https://twitter.com/bottenderjs) if you need a sample code of other chat channels.
 
-
 ## Configure Session Driver and Channel Settings in `bottender.config.js`
 
-
 ### v0.x
+
 In v0.x, only part of channel settings are put into `bottender.config.js` file:
 
 ```js
@@ -58,7 +57,7 @@ server.listen(5000, () => {
 
 ### v1.x
 
-In v1.x, we move the session store settings and channel settings into `bottender.config.js`. 
+In v1.x, we move the session store settings and channel settings into `bottender.config.js`.
 
 Also, the channel section of the config file is ready to support multiple chat channels. For each channel, you can see an extra `enable` parameter. It is handy when you want to deploy the bot on specific chat channels first.
 
@@ -110,12 +109,12 @@ module.exports = async function App(context) {
 
 ## Unify Cases to Camel Case
 
-The mixed-use of camel case and snake case is error-prone, which results in an unpredictable development progress. For example, the JavaScript community embraces camel case keys on objects, while Messenger, Slack, Telegram, and Viber usually using snake case string as object keys. 
+The mixed-use of camel case and snake case is error-prone, which results in an unpredictable development progress. For example, the JavaScript community embraces camel case keys on objects, while Messenger, Slack, Telegram, and Viber usually using snake case string as object keys.
 
 In Bottender v1.x, you can use the camel case consistently. Let Bottender handle the case transform automatically for you.
 
-
 ### v0.x
+
 In v1.x, keys represent in the snake case:
 
 ```js
@@ -141,7 +140,9 @@ context.sendGenericTemplate([
   },
 ]);
 ```
+
 ### v1.x
+
 In v1.x, keys represent in the camel case:
 
 ```js
@@ -168,20 +169,17 @@ context.sendGenericTemplate([
 ]);
 ```
 
-
 ### Migrate to v1.x by `bottender-codemod`
 
-[`bottender-codemod`](https://github.com/bottenderjs/bottender-codemod) is a command-line tool to help you change snake case in Bottender v0.x to camel case for Bottender v1.x. It helps you migrate the majority of your code to the camel case. 
+[`bottender-codemod`](https://github.com/bottenderjs/bottender-codemod) is a command-line tool to help you change snake case in Bottender v0.x to camel case for Bottender v1.x. It helps you migrate the majority of your code to the camel case.
 
 Please remember to commit your current code before running [`bottender-codemod`](https://github.com/bottenderjs/bottender-codemod).
-
 
 ```js
 npx bottender-codemod camelcase <your_file_path>
 ```
 
 If you want to try it without file changed, you can dry run and print it with the following command.
-
 
 ```js
 npx bottender-codemod camelcase <your_file_path> --dry --print

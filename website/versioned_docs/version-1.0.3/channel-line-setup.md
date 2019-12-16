@@ -20,7 +20,7 @@ Please make sure the `line` option is enabled:
 
 ![](https://user-images.githubusercontent.com/3382565/67851224-f2b7f200-fb44-11e9-9ccb-afd7eee74b00.png)
 
-After finishing `Create Bottender App` process, `bottender.config.js`, a config file, will be generated automatically for furthur LINE channel settings.
+After finishing `Create Bottender App` process, `bottender.config.js`, a config file, will be generated automatically for further LINE channel settings.
 
 ### Enable LINE Channel for Existing Apps
 
@@ -60,8 +60,8 @@ LINE_CHANNEL_SECRET=
 
 > **Note:**
 >
-> - It is recommended to develop your LINE Bot with your developer LINE@ account, furthur information could be found in LINE's official article, [Getting Started](https://developers.line.biz/en/docs/messaging-api/getting-started/).
-> - Your LINE@ accounts could be accessed from your [provider list](https://developers.line.biz/console/).
+> - It is recommended to develop your LINE Bot with your developer LINE@ account, further information could be found in LINE's official article, [Getting Started](https://developers.line.biz/en/docs/messaging-api/getting-started/).
+> - Your LINE@ account can be accessed from your [provider list](https://developers.line.biz/console/).
 > - To get your LINE access token and LINE channel secrect, you may refer to LINE's official article, [Building a Bot](https://developers.line.biz/en/docs/messaging-api/building-bot/).
 
 ### Webhook
@@ -80,4 +80,4 @@ Then, you have to manually copy your webhook url to LINE@ account's setting page
 
 > **Note:**
 >
-> - For furthur instruction of webhook setting, please check LINE's official article, [Building a Bot](https://developers.line.biz/en/docs/messaging-api/building-bot/).
+> - For further instructions on webhook settings, please check LINE's official article, [Building a Bot](https://developers.line.biz/en/docs/messaging-api/building-bot/).
