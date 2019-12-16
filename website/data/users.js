@@ -3,7 +3,7 @@ module.exports = [
   {
     caption: 'Creator',
     image: '/img/users/creator.svg',
-    infoLink: 'https://yoctol.ai/',
+    infoLink: 'https://yoctol.ai/creator/',
     pinned: true,
   },
   {
