@@ -19,13 +19,13 @@ module.exports = [
     pinned: true,
   },
   {
-    caption: '午餐隊長',
+    caption: 'Leader of Lunch',
     image: '/img/users/lol.png',
     infoLink: 'https://github.com/Yoctol/leader-of-lunch',
     pinned: true,
   },
   {
-    caption: '農家樂計算機',
+    caption: 'Agricola Score Calculator',
     image: '/img/users/agricolaScore.png',
     infoLink:
       'https://medium.com/@EtrexKuo/line-bot-%E8%BE%B2%E5%AE%B6%E6%A8%82%E8%A8%88%E7%AE%97%E6%A9%9F-c0450b5aca3f',
