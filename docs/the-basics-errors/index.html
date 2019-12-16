@@ -69,7 +69,7 @@
 <span class="hljs-built_in">module</span>.exports = <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">HandleError</span>(<span class="hljs-params">context, props</span>) </span>{
   <span class="hljs-built_in">console</span>.error(props.error);
   <span class="hljs-comment">// or you can choose not to reply any error messages</span>
-  <span class="hljs-keyword">await</span> context.sendText(
+  <span class="hljs-keyword">await</span> context.sendText(    
     <span class="hljs-string">'There are some unexpected errors happened. Please try again later, sorry for the inconvenience.'</span>
   );
   <span class="hljs-keyword">if</span> (process.env.NODE_ENV === <span class="hljs-string">'production'</span>) {
