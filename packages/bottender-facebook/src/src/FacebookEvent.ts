@@ -25,7 +25,7 @@ type Post = {
   createdTime: number;
 };
 
-type Comment = {
+export type Comment = {
   from: {
     id: string;
     name?: string;
@@ -37,6 +37,7 @@ type Comment = {
   parentId: string;
   createdTime: number;
   message: string;
+  canReplyPrivately?: boolean
 };
 
 type Like = {
@@ -65,9 +66,9 @@ type Reaction = {
   createdTime: number;
 };
 
-interface FacebookFeedRawEvent extends MessengerRawEvent {
+export interface FacebookFeedRawEvent extends MessengerRawEvent {
   field: string;
-  value: Status | Post | Comment | Like | Reaction | null;
+  value: Status | Post | Comment | Like | Reaction;
 }
 
 export default class FacebookEvent extends MessengerEvent {

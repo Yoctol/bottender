@@ -1,19 +1,50 @@
 import warning from 'warning';
 import { MessengerContext } from 'bottender';
 
+import { Options } from 'bottender/dist/messenger/MessengerContext';
+
 import FacebookBatch from './FacebookBatch';
 
+import  FacebookEvent, { Comment } from './FacebookEvent';
+
 export default class FacebookContext extends MessengerContext {
+  _event: FacebookEvent;
+
+  constructor({
+    appId,
+    client,
+    event,
+    session,
+    initialState,
+    requestContext,
+    customAccessToken,
+    batchQueue,
+    emitter,
+  }: Options) {
+    super({
+      appId,
+      client,
+      event,
+      session,
+      initialState,
+      requestContext,
+      customAccessToken,
+      batchQueue,
+      emitter,
+    });
+    this._event = event as FacebookEvent;
+  }
+
   _callFacebookClientMethod(method: string, args: any[]) {
     if (this._batchQueue) {
-      return this._batchQueue.push(FacebookBatch[method](...args));
+      return this._batchQueue.push((FacebookBatch as any)[method] (...args));
     }
-    return this._client[method](...args);
+    return (this._client as any)[method] (...args);
   }
 
   // https://developers.facebook.com/docs/graph-api/reference/v3.1/object/private_replies
-  sendPrivateReply(message: string): Promise<any> {
-    const objectId = this._event.rawEvent.value.commentId; // FIXME: postId
+  async sendPrivateReply(message: string): Promise<any> {
+    const objectId = (this._event.rawEvent.value as Comment).commentId; // FIXME: postId
 
     if (this._event.isSentByPage) {
       warning(false, 'Could not sendPrivateReply to page itself.');
@@ -32,7 +63,7 @@ export default class FacebookContext extends MessengerContext {
   }
 
   // https://developers.facebook.com/docs/graph-api/reference/v3.1/object/comments/
-  sendComment(
+  async sendComment(
     message:
       | string
       | {
@@ -43,8 +74,8 @@ export default class FacebookContext extends MessengerContext {
         }
   ): Promise<{ id: string }> {
     const objectId = this._event.isFirstLayerComment
-      ? this._event.rawEvent.value.commentId
-      : this._event.rawEvent.value.parentId; // FIXME: postId
+      ? (this._event.rawEvent.value as Comment).commentId
+      : (this._event.rawEvent.value as Comment).parentId; // FIXME: postId
 
     if (this._event.isSentByPage) {
       warning(false, 'Could not sendComment to page itself.');
@@ -64,7 +95,7 @@ export default class FacebookContext extends MessengerContext {
 
   // https://developers.facebook.com/docs/graph-api/reference/v3.1/object/likes
   sendLike(): Promise<{ success: boolean }> {
-    const objectId = this._event.rawEvent.value.commentId; // FIXME: postId
+    const objectId = (this._event.rawEvent.value as Comment).commentId; // FIXME: postId
 
     const args = [
       objectId,
@@ -77,12 +108,12 @@ export default class FacebookContext extends MessengerContext {
   }
 
   // https://developers.facebook.com/docs/graph-api/reference/v3.1/comment
-  getComment(options: Record<string, any>): Promise<any[]> {
-    const commentId = this._event.rawEvent.value.commentId;
+  async getComment(options: Record<string, any>): Promise<Comment | null> {
+    const commentId = (this._event.rawEvent.value as Comment).commentId;
 
     if (!commentId) {
       warning(false, 'Could not getComment if there is no comment.');
-      return;
+      return null;
     }
 
     const args = [
@@ -98,7 +129,7 @@ export default class FacebookContext extends MessengerContext {
 
   // https://developers.facebook.com/docs/graph-api/reference/v2.12/object/likes
   getLikes(options: Record<string, any>) {
-    const objectId = this._event.rawEvent.value.commentId; // FIXME: postId
+    const objectId = (this._event.rawEvent.value as Comment).commentId; // FIXME: postId
 
     const args = [
       objectId,
@@ -112,10 +143,10 @@ export default class FacebookContext extends MessengerContext {
   }
 
   async canReplyPrivately(): Promise<boolean> {
-    const comment = await this.getComment({ fields: ['can_reply_privately'] });
+    const comment = await this.getComment({ fields: ['canReplyPrivately'] });
 
     if (!comment) return false;
 
-    return comment.canReplyPrivately;
+    return Boolean(comment.canReplyPrivately);
   }
 }

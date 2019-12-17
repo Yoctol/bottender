@@ -16,7 +16,7 @@ import { RequestContext } from '../types';
 
 import MessengerEvent from './MessengerEvent';
 
-type Options = {
+export type Options = {
   appId?: string;
   client: MessengerClient;
   event: MessengerEvent;
