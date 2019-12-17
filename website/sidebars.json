@@ -10,7 +10,10 @@
       "the-basics-session",
       "the-basics-errors"
     ],
-    "Advanced Guides": ["advanced-guides-nlu"],
+    "Advanced Guides": [
+      "advanced-guides-nlu",
+      "multi-messaging-channel-support"
+    ],
     "Guides (Messenger)": [
       "channel-messenger-setup",
       "channel-messenger-handling-events",
