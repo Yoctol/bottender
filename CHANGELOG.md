@@ -1,3 +1,7 @@
+# 1.0.4 / 2019-12-17
+
+- [fix] session: use Windows safe key separator for file session
+
 # 1.0.3 / 2019-12-12
 
 - [fix] server: require Bot using pascal case
