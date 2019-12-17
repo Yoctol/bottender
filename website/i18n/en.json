@@ -107,6 +107,9 @@
       "migrating-v1": {
         "title": "Migrating from v0.x to v1.x"
       },
+      "multi-messaging-channel-support": {
+        "title": "Multi-Messaging Channel Support"
+      },
       "the-basics-actions": {
         "title": "Resolving Actions"
       },
