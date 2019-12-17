@@ -65,6 +65,9 @@
       "channel-line-rich-menu": {
         "title": "Rich Menu"
       },
+      "channel-line-sending-messages": {
+        "title": "Sending LINE Messages"
+      },
       "channel-line-setup": {
         "title": "Setup LINE"
       },
@@ -129,10 +132,7 @@
         "title": "Routing"
       },
       "the-basics-session": {
-        "title": "Session Storage"
-      },
-      "the-basics-state": {
-        "title": "State"
+        "title": "Sesstion"
       },
       "version-0.15.17/version-0.15.17-api-consolecontext": {
         "title": "ConsoleContext"
@@ -290,6 +290,9 @@
       "version-1.0.3/version-1.0.3-channel-line-rich-menu": {
         "title": "Rich Menu"
       },
+      "version-1.0.3/version-1.0.3-channel-line-sending-messages": {
+        "title": "Sending LINE Messages"
+      },
       "version-1.0.3/version-1.0.3-channel-line-setup": {
         "title": "Setup LINE"
       },
@@ -332,6 +335,9 @@
       "version-1.0.3/version-1.0.3-migrating-v1": {
         "title": "Migrating from v0.x to v1.x"
       },
+      "version-1.0.3/version-1.0.3-multi-messaging-channel-support": {
+        "title": "Multi-Messaging Channel Support"
+      },
       "version-1.0.3/version-1.0.3-the-basics-actions": {
         "title": "Resolving Actions"
       },
@@ -351,10 +357,7 @@
         "title": "Routing"
       },
       "version-1.0.3/version-1.0.3-the-basics-session": {
-        "title": "Session Storage"
-      },
-      "version-1.0.3/version-1.0.3-the-basics-state": {
-        "title": "State"
+        "title": "Sesstion"
       }
     },
     "links": {

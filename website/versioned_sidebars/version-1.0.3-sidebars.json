@@ -9,12 +9,12 @@
       "version-1.0.3-the-basics-actions",
       "version-1.0.3-the-basics-routing",
       "version-1.0.3-the-basics-chain",
-      "version-1.0.3-the-basics-state",
       "version-1.0.3-the-basics-session",
       "version-1.0.3-the-basics-errors"
     ],
     "Advanced Guides": [
-      "version-1.0.3-advanced-guides-nlu"
+      "version-1.0.3-advanced-guides-nlu",
+      "version-1.0.3-multi-messaging-channel-support"
     ],
     "Guides (Messenger)": [
       "version-1.0.3-channel-messenger-setup",
@@ -26,6 +26,7 @@
     "Guides (LINE)": [
       "version-1.0.3-channel-line-setup",
       "version-1.0.3-channel-line-handling-events",
+      "version-1.0.3-channel-line-sending-messages",
       "version-1.0.3-channel-line-flex",
       "version-1.0.3-channel-line-rich-menu",
       "version-1.0.3-channel-line-errors",
