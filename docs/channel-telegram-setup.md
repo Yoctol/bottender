@@ -5,6 +5,8 @@ title: Setup Telegram
 
 ## Enable Telegram Channel
 
+<!-- Add a happy path to create a new telegram app , ask for bot father and test in telegram -->
+
 ### Create a New Telegram Bottender App
 
 `Create Bottender App` is the best way to start building a new application in Bottender.
@@ -56,6 +58,8 @@ TELEGRAM_ACCESS_TOKEN=
 
 ### Webhook
 
+<!-- Make seperated exaplataion for dev mode and in production with gif -->
+
 After finishing above settings, you can start your server with Telegram webhook event listening using following commands:
 
 ```sh
@@ -65,6 +69,8 @@ npm start
 # or in development mode
 npm run dev
 ```
+
+<!-- Leave an example of webhook -->
 
 By the following command, you can finish the Telegram webhook setting.
 
