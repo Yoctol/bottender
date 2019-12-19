@@ -3,7 +3,49 @@ id: channel-telegram-sending-messages
 title: Sending Telegram Messages
 ---
 
+The more I know about Telegram, the more I love it.
+
+Although Telegram is not one of the top 5 chat channels, I surprisingly found that Telegram is the most activity chat channels for bots from [Google Trends.](https://trends.google.com/trends/explore?date=2018-01-01%202019-01-01&q=Telegram%20Bot,Slack%20App,LINE%20Bot,Messenger%20Bot,Viber%20Bot)
+
+<p><img width="100%" src="https://user-images.githubusercontent.com/662387/71064407-fad9f880-21a9-11ea-9022-9d0a566fc29c.png">
+</p>
+
+Plus, I may argue that Telegram is the most developer-friendly chat channel. For example:
+
+- Setup Telegram Bot is so easy (see Bottender doc, ["Setup Telegram"](./channel-telegram-setup.md) for more info)
+  - Talk to @BotFather to create a bot and get the bot access token. (You don't have to apply for a developer account.)
+  - By Bottender, you can set your Telegram Bot webhook with one command `npx bottender telegram webhook set.`
+- The desktop and mobile version of Telegram has the same behavior
+- Your app can proactively send messages to your users without extra cost, while Messenger or LINE asked for extra cost for push messages.
+- It's free, fast, and secure.
+
+<p><img width="300" src="https://user-images.githubusercontent.com/662387/70965210-e292ac80-20c9-11ea-9f1b-74abced2ff9e.jpeg">
+<br/> <em>@BotFather controls every Telegram Bots!</em> </p>
+
+Telegram also cares about user's privacy. For example, you may check ["Privacy Mode"](https://core.telegram.org/bots#privacy-mode) before building a Telegram Bot for group chat. By default, A bot running in privacy mode only receives certain types of messages instead of full chat history.
+
+#### Basic Factors of Telegram Bots: Messages, Reply Markup, Updatable
+
+While using Bottender, you can get full access to Telegram features.
+
+Telegram Bots support a bunch of rich messages. For example, even you can send `Markdown` or `HTML` in `Text Messages.` You can even send `Invoice Message` if your bot has a payment feature. Don't miss the lovely `Sticker Message.` You can even upload your `Sticker Pack` for your Telegram Bots.
+
+`Reply Markup` is similar to the combination of `Quick Replies` and `Buttons` on Messenger or LINE. It is attached after a message and offered several choices to guide your users to open a webpage, trigger a bot action, reply a message on user's behalf,
+
+Every `Messages` and `Reply Markup` is updatable. Remember to manage your bot sent messages if you tend to make a message update in the future.
+
+In the following code, you can see a quick example of message update.
+
+```js
+const response = await context.sendMessage('hello');
+await context.editMessageText(response.messageId, '*world*', {
+  parseMode: 'markdown',
+});
+```
+
 ## Sending Text Messages
+
+Find setup telegram
 
 https://core.telegram.org/bots/api#sendmessage
 
@@ -15,16 +57,18 @@ await context.sendMessage('hello');
 
 https://core.telegram.org/bots/api#formatting-options
 
-```markdown
-_bold text_
+<!-- prettier-ignore-start -->
+````markdown
+*bold text*
 _italic text_
 [inline URL](http://www.example.com/)
 [inline mention of a user](tg://user?id=123456789)
 `inline fixed-width code`
-\`\`\`block_language
+```block_language
 pre-formatted fixed-width code block
-\`\`\`
 ```
+````
+<!-- prettier-ignore-end -->
 
 ```js
 await context.sendMessage('*hello*', { parseMode: 'markdown' });
@@ -72,6 +116,7 @@ await context.sendDocument('https://www.example.com/example.gif');
 
 ### Video
 
+This object represents a video file.
 https://core.telegram.org/bots/api#sendvideo
 
 ```js
@@ -86,16 +131,34 @@ https://core.telegram.org/bots/api#sendanimation
 await context.sendAnimation('https://www.example.com/example.mp4');
 ```
 
+No sound
+This object represents an animation file (GIF or H.264/MPEG-4 AVC video without sound).
+
 ### Sticker
 
+CAADAgADDQADWbv8JS5RHx3i_HUDFgQ
 https://core.telegram.org/bots/api#sendsticker
 
 ```js
 await context.sendSticker('CAADAgADQAADyIsGAAE7MpzFPFQX5QI');
 ```
 
+get sticker id
+
+```js
+module.exports = async function App(context) {
+  if (context.event.isSticker) {
+    await context.sendText(
+      `received the sticker: ${context.event.sticker.fileId}`
+    );
+  }
+};
+```
+
 ### Voice
 
+// your audio must be in an .ogg file encoded with OPU
+// download
 https://core.telegram.org/bots/api#sendvoice
 
 ```js
@@ -112,15 +175,19 @@ await context.sendVideoNote('https://www.example.com/example.mp4');
 
 ### MediaGroup
 
+Use this method to send a group of photos or videos as an album.
 https://core.telegram.org/bots/api#sendmediagroup
 
 ```js
 await context.sendMediaGroup([
-  { type: 'photo', media: 'BQADBAADApYAAgcZZAfj2-xeidueWwI' },
+  { type: 'photo', media: 'https://http.cat/100' },
+  { type: 'photo', media: 'https://http.cat/101' },
 ]);
 ```
 
 ### Location
+
+sanpshot of google map
 
 https://core.telegram.org/bots/api#sendlocation
 
@@ -169,14 +236,24 @@ await context.sendContact(
 
 https://core.telegram.org/bots/api#sendpoll
 
+Use this method to send a native poll. A native poll can't be sent to a private chat (`"description": "Bad Request: polls can't be sent to private chats"`). On success, the sent Message is returned.
+
+Note: Can't in private talk
+
 ```js
-await context.sendPoll({
-  question: 'Which one is your favorite food?',
-  options: ['🍔', '🍕', '🌮', '🍱'],
-});
+await context.sendPoll('Which one is your favorite food?', [
+  '🍔',
+  '🍕',
+  '🌮',
+  '🍱',
+]);
 ```
 
 ### Invoice
+
+Payment Provider Invalided ..
+https://core.telegram.org/bots/api#sendvoice
+（從官方文件找圖）
 
 ```js
 const invoice = {
@@ -232,6 +309,8 @@ await context.forwardMessageTo(chatId, 'messageId', {
 
 ### Inline Keyboard
 
+Remeber to manually remove
+
 https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating
 https://core.telegram.org/bots/2-0-intro#new-inline-keyboards
 https://core.telegram.org/bots/api#inlinekeyboardmarkup
@@ -272,6 +351,15 @@ const replyMarkup = {
   ],
 };
 ```
+
+#### Remove Keyboard
+
+https://core.telegram.org/bots/api/#replykeyboardremove
+說錯了是 replyKeyboardRemove
+
+one_time_keyboard
+
+selective 只有指定對象會看到
 
 ### How To Send Reply Markup
 
@@ -373,7 +461,9 @@ await context.editMessageText(response.messageId, '*world*', {
 https://core.telegram.org/bots/api#editmessagecaption
 
 ```js
-const response = await context.sendPhoto('https://www.example.com/example.png');
+const response = await context.sendPhoto('https://http.cat/302', {
+  caption: `original caption`,
+});
 await context.editMessageCaption(response.messageId, 'new caption');
 ```
 
@@ -382,15 +472,16 @@ await context.editMessageCaption(response.messageId, 'new caption');
 https://core.telegram.org/bots/api#editmessagemedia
 
 ```js
-const response = await context.sendPhoto('https://www.example.com/example.png');
+const response = await context.sendPhoto('https://http.cat/100');
 await context.editMessageMedia(response.messageId, {
   type: 'photo',
-  media: 'https://www.example.com/example2.png',
+  media: 'https://http.cat/302',
 });
 ```
 
 ### Update ReplyMarkup
 
+add / appended reply Markup
 https://core.telegram.org/bots/api#editmessagereplymarkup
 
 ```js
