@@ -233,7 +233,7 @@ Example:
 
 ```js
 context.sendCarouselContent({
-  Type: 'rich_media',
+  type: 'rich_media',
   buttonsGroupColumns: 6,
   buttonsGroupRows: 7,
   bgColor: '#FFFFFF',

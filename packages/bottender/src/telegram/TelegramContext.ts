@@ -353,6 +353,38 @@ class TelegramContext extends Context<TelegramClient, TelegramEvent>
     });
   }
 
+  async editMessageMedia(
+    messageId: number,
+    media: Type.InputMedia,
+    options?: Type.EditMessageMediaOption
+  ): Promise<Type.Message | boolean | null> {
+    if (!this._session) {
+      warning(
+        false,
+        'editMessageMedia: should not be called in context without session'
+      );
+      return null;
+    }
+
+    this._isHandled = true;
+
+    const chatId = this._getChatId();
+
+    if (chatId === null) {
+      warning(
+        false,
+        'editMessageMedia: should not be called in context without chatId'
+      );
+      return null;
+    }
+
+    return this._client.editMessageMedia(media, {
+      chatId,
+      messageId,
+      ...options,
+    });
+  }
+
   async editMessageReplyMarkup(
     messageId: number,
     replyMarkup: Type.InlineKeyboardMarkup,
@@ -664,6 +696,33 @@ class TelegramContext extends Context<TelegramClient, TelegramEvent>
     return this._client.sendVideo(chatId, video, options);
   }
 
+  async sendAnimation(
+    animation: string,
+    options?: Type.SendAnimationOption
+  ): Promise<Type.Message | null> {
+    if (!this._session) {
+      warning(
+        false,
+        'sendAnimation: should not be called in context without session'
+      );
+      return null;
+    }
+
+    this._isHandled = true;
+
+    const chatId = this._getChatId();
+
+    if (chatId === null) {
+      warning(
+        false,
+        'sendAnimation: should not be called in context without chatId'
+      );
+      return null;
+    }
+
+    return this._client.sendAnimation(chatId, animation, options);
+  }
+
   async sendVoice(
     voice: string,
     options?: Type.SendVoiceOption
@@ -824,6 +883,34 @@ class TelegramContext extends Context<TelegramClient, TelegramEvent>
     }
 
     return this._client.sendContact(chatId, requiredOptions, options);
+  }
+
+  async sendPoll(
+    question: string,
+    options: string[],
+    otherOptions?: Type.SendPollOption
+  ): Promise<Type.Message | null> {
+    if (!this._session) {
+      warning(
+        false,
+        'sendPoll: should not be called in context without session'
+      );
+      return null;
+    }
+
+    this._isHandled = true;
+
+    const chatId = this._getChatId();
+
+    if (chatId === null) {
+      warning(
+        false,
+        'sendPoll: should not be called in context without chatId'
+      );
+      return null;
+    }
+
+    return this._client.sendPoll(chatId, question, options, otherOptions);
   }
 
   async sendChatAction(action: Type.ChatAction): Promise<boolean | null> {

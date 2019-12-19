@@ -8,6 +8,8 @@
 // See https://docusaurus.io/docs/site-config for all the possible
 // site configuration options.
 
+const users = require('./data/users');
+
 const siteConfig = {
   title: 'Bottender', // Title for your website.
   tagline: 'A framework for building conversational user interfaces.',
@@ -32,6 +34,7 @@ const siteConfig = {
     { doc: 'getting-started', label: 'Docs' },
     { doc: 'api-context', label: 'API' },
     { blog: true, label: 'Blog' },
+    { page: 'users', label: 'Users' },
     {
       href: 'https://github.com/Yoctol/bottender/tree/master/examples',
       label: 'Examples',
@@ -42,7 +45,7 @@ const siteConfig = {
   /* path to images for header/footer */
   headerIcon: 'img/bottender.svg',
   footerIcon: '',
-  favicon: 'img/favicon.ico',
+  favicon: 'img/favicon-192x192.png',
 
   /* Colors for website */
   colors: {
@@ -93,6 +96,9 @@ const siteConfig = {
 
   // URL for editing docs, usage example: editUrl + 'en/doc1.md'.
   editUrl: 'https://github.com/Yoctol/bottender/edit/master/docs/',
+
+  // The users array.
+  users,
 
   // Open Graph and Twitter card images.
   ogImage: 'img/og-image.png',

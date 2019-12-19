@@ -1,3 +1,5 @@
+import os from 'os';
+
 import JFSStore, { Instance } from 'jfs';
 import isBefore from 'date-fns/isBefore';
 import subMinutes from 'date-fns/subMinutes';
@@ -44,9 +46,11 @@ export default class FileSessionStore implements SessionStore {
   }
 
   async read(key: string): Promise<Session | null> {
+    const safeKey = os.platform() === 'win32' ? key.replace(':', '@') : key;
+
     try {
       const session: Session | null = await new Promise((resolve, reject) => {
-        this._jfs.get(key, (err, obj) => {
+        this._jfs.get(safeKey, (err, obj) => {
           if (err) {
             reject(err);
           } else {
@@ -78,10 +82,12 @@ export default class FileSessionStore implements SessionStore {
   }
 
   async write(key: string, sess: Session): Promise<void> {
+    const safeKey = os.platform() === 'win32' ? key.replace(':', '@') : key;
+
     sess.lastActivity = Date.now();
 
     await new Promise((resolve, reject) => {
-      this._jfs.save(key, sess, err => {
+      this._jfs.save(safeKey, sess, err => {
         if (err) {
           reject(err);
         } else {
@@ -92,8 +98,10 @@ export default class FileSessionStore implements SessionStore {
   }
 
   async destroy(key: string): Promise<void> {
+    const safeKey = os.platform() === 'win32' ? key.replace(':', '@') : key;
+
     return new Promise((resolve, reject) => {
-      this._jfs.delete(key, err => {
+      this._jfs.delete(safeKey, err => {
         if (err) {
           reject(err);
         } else {

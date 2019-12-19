@@ -20,7 +20,7 @@ export default class LineBot extends Bot<
     mapDestinationToAccessToken,
     shouldBatch,
     sendMethod,
-    skipProfile,
+    skipLegacyProfile,
   }: {
     accessToken: string;
     channelSecret: string;
@@ -30,7 +30,7 @@ export default class LineBot extends Bot<
     shouldBatch?: boolean;
     sendMethod?: string;
     origin?: string;
-    skipProfile?: boolean;
+    skipLegacyProfile?: boolean;
   }) {
     const connector = new LineConnector({
       accessToken,
@@ -39,7 +39,7 @@ export default class LineBot extends Bot<
       shouldBatch,
       sendMethod,
       origin,
-      skipProfile,
+      skipLegacyProfile,
     });
     super({ connector, sessionStore, sync });
   }

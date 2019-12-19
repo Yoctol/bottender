@@ -293,7 +293,10 @@ function setup() {
   TelegramClient.connect.mockReturnValue(mockTelegramClient);
   return {
     mockTelegramClient,
-    connector: new TelegramConnector({ accessToken: ACCESS_TOKEN }),
+    connector: new TelegramConnector({
+      accessToken: ACCESS_TOKEN,
+      skipLegacyProfile: false,
+    }),
   };
 }
 

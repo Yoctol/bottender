@@ -22,7 +22,7 @@ Example:
 context.postMessage({ text: 'Hello!' });
 context.postMessage({ attachments: [someAttachments] });
 context.postMessage('Hello!');
-context.postMessage('Hello!', { as_user: true });
+context.postMessage('Hello!', { asUser: true });
 ```
 
 If you send message with `attachments`, `messaging-api-slack` will automatically stringify the `attachments` field for you.

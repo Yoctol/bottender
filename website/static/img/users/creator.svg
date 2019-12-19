@@ -1,0 +1,17 @@
+<svg width="160" height="160" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="160" height="160" rx="80" fill="#001E40"/>
+<path d="M34 85.1428L50.5158 85.1429C51.7521 98.9772 63.5851 109.828 78 109.828C92.4147 109.828 104.248 98.9775 105.484 85.1435L122 85.1434C120.732 107.917 101.518 126 78 126C54.4823 126 35.2674 107.917 34 85.1428Z" fill="url(#paint0_linear)"/>
+<path d="M105.96 38L122 38L122 77.2857H105.549L105.549 54.522H65.2568C57.0798 54.522 50.4511 61.1795 50.4511 69.3919L50.4505 77.2851H34L34.0002 69.3919C34.0002 52.228 47.7158 38.2814 64.7399 38.0042L65.2568 38H105.96Z" fill="url(#paint1_linear)"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M67.7855 85.1429C69.9552 85.1429 71.7141 83.384 71.7141 81.2143C71.7141 79.0446 69.9552 77.2858 67.7855 77.2858C65.6158 77.2858 63.8569 79.0446 63.8569 81.2143C63.8569 83.384 65.6158 85.1429 67.7855 85.1429Z" fill="white"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M89.7855 85.1429C91.9552 85.1429 93.7141 83.384 93.7141 81.2143C93.7141 79.0446 91.9552 77.2858 89.7855 77.2858C87.6158 77.2858 85.8569 79.0446 85.8569 81.2143C85.8569 83.384 87.6158 85.1429 89.7855 85.1429Z" fill="white"/>
+<defs>
+<linearGradient id="paint0_linear" x1="70.8866" y1="114.458" x2="97.4407" y2="135.714" gradientUnits="userSpaceOnUse">
+<stop stop-color="#50D5FF"/>
+<stop offset="1" stop-color="#3C5AD0"/>
+</linearGradient>
+<linearGradient id="paint1_linear" x1="13.5858" y1="60.7946" x2="32.204" y2="95.4345" gradientUnits="userSpaceOnUse">
+<stop stop-color="#3C5AD0"/>
+<stop offset="1" stop-color="#50D5FF"/>
+</linearGradient>
+</defs>
+</svg>

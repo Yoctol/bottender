@@ -3,7 +3,11 @@ import EventEmitter from 'events';
 import invariant from 'invariant';
 import sleep from 'delay';
 import warning from 'warning';
-import { MessengerBatch, MessengerClient } from 'messaging-api-messenger';
+import {
+  MessengerBatch,
+  MessengerClient,
+  MessengerTypes,
+} from 'messaging-api-messenger';
 
 import Context from '../context/Context';
 import Session from '../session/Session';
@@ -142,16 +146,9 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent>
     return this._callClientMethod('sendText', args);
   }
 
-  /**
-   * Sender Actions
-   *
-   * https://github.com/Yoctol/messaging-apis/tree/master/packages/messaging-api-messenger#sender-actions
-   */
-
-  /**
-   * https://github.com/Yoctol/messaging-apis/tree/master/packages/messaging-api-messenger#typingonuserid
-   */
-  async getUserProfile(): Promise<Record<string, any> | null> {
+  async getUserProfile(options: {
+    fields?: MessengerTypes.UserProfileField[];
+  }): Promise<MessengerTypes.User | null> {
     if (!this._session) {
       warning(
         false,
@@ -166,6 +163,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent>
         ...(this._customAccessToken
           ? { accessToken: this._customAccessToken }
           : undefined),
+        ...options,
       },
     ];
 
@@ -182,7 +180,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent>
    * https://github.com/Yoctol/messaging-apis/tree/master/packages/messaging-api-messenger#sendsenderactionuserid-action
    */
   async sendSenderAction(
-    action: string,
+    senderAction: MessengerTypes.SenderAction,
     options?: Record<string, any>
   ): Promise<any> {
     if (!this._session) {
@@ -197,7 +195,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent>
 
     const args = [
       this._session.user.id,
-      action,
+      senderAction,
       {
         ...(this._customAccessToken
           ? { accessToken: this._customAccessToken }
