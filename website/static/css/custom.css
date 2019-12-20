@@ -292,6 +292,7 @@ a {
 
 .mobile {
   display: none;
+  margin-top: 24px;
 }
 
 .nav-footer {

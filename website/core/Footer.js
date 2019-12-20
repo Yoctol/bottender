@@ -168,7 +168,7 @@ class Footer extends React.Component {
 
           <div className="footer-contacts">
             <h4 className="title">Contact Us</h4>
-            <p className="text">Yoctol Info. Inc.</p>
+            <p className="text">YOCTOL.AI</p>
             <p className="text">service@yoctol.com</p>
           </div>
 
