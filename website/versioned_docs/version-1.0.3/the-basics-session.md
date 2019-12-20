@@ -1,6 +1,6 @@
 ---
 id: version-1.0.3-the-basics-session
-title: Sesstion
+title: Session
 original_id: the-basics-session
 ---
 
