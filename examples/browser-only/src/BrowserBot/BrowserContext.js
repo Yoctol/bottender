@@ -1,28 +1,8 @@
-import BrowserEvent from './BrowserEvent';
+import { Context } from 'bottender';
 
-class BrowserContext {
-  constructor({ client, rawEvent, session }) {
-    this._client = client;
-    this._event = new BrowserEvent(rawEvent);
-    this._session = session;
-  }
-
-  sendText = text => {
+class BrowserContext extends Context {
+  sendText(text) {
     this._client.sendText(text);
-  };
-
-  sendTextWithDelay = (delay, text) => {
-    setTimeout(() => {
-      this.sendText(text);
-    }, delay);
-  };
-
-  get event() {
-    return this._event;
-  }
-
-  get session() {
-    return this._session;
   }
 }
 
