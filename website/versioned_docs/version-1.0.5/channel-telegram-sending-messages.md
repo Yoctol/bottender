@@ -76,18 +76,7 @@ await context.sendMessage('*hello*', { parseMode: 'markdown' });
 
 You can see the possible `Markdown` format below.
 
-<!-- prettier-ignore-start -->
-````markdown
-*bold text*
-_italic text_
-[inline URL](http://www.example.com/)
-[inline mention of a user](tg://user?id=123456789)
-`inline fixed-width code`
-```block_language
-pre-formatted fixed-width code block
-```
-````
-<!-- prettier-ignore-end -->
+ <p><img width="800" src="https://user-images.githubusercontent.com/662387/71338571-5ed63580-258b-11ea-8362-8de4a081c4b0.png"></p>
 
 > **Note:**
 > For more info, please refer to Telegram's official doc, [Formatting Options](https://core.telegram.org/bots/api#formatting-options).
