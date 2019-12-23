@@ -95,6 +95,9 @@
       "channel-telegram-handling-events": {
         "title": "Handling Telegram Events"
       },
+      "channel-telegram-sending-messages": {
+        "title": "Sending Telegram Messages"
+      },
       "channel-telegram-setup": {
         "title": "Setup Telegram"
       },
@@ -358,6 +361,12 @@
       },
       "version-1.0.3/version-1.0.3-the-basics-session": {
         "title": "Session"
+      },
+      "version-1.0.5/version-1.0.5-channel-telegram-sending-messages": {
+        "title": "Sending Telegram Messages"
+      },
+      "version-1.0.5/version-1.0.5-channel-telegram-setup": {
+        "title": "Setup Telegram"
       }
     },
     "links": {
