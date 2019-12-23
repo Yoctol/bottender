@@ -1,0 +1,158 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Messenger · Bottender</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="This guide will give you some basic concepts of developing a Messenger bot. For more detail, see [official docs](https://developers.facebook.com/docs/messenger-platform)."/><meta name="docsearch:version" content="1.0.3"/><meta name="docsearch:language" content="en"/><meta property="og:title" content="Messenger · Bottender"/><meta property="og:type" content="website"/><meta property="og:url" content="https://bottender.js.org/"/><meta property="og:description" content="This guide will give you some basic concepts of developing a Messenger bot. For more detail, see [official docs](https://developers.facebook.com/docs/messenger-platform)."/><meta property="og:image" content="https://bottender.js.org/img/og-image.png"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://bottender.js.org/img/og-image.png"/><link rel="shortcut icon" href="/img/favicon-192x192.png"/><link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-dark.min.css"/><link rel="alternate" type="application/atom+xml" href="https://bottender.js.org/blog/atom.xml" title="Bottender Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://bottender.js.org/blog/feed.xml" title="Bottender Blog RSS Feed"/><script>
+              (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+              (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+              m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+              })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+              ga('create', 'UA-70309045-11', 'auto');
+              ga('send', 'pageview');
+            </script><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:700|Roboto&amp;display=swap"/><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script><script type="text/javascript" src="/js/code-blocks-buttons.js"></script><script type="text/javascript" src="/js/sw.js"></script><script src="/js/scrollSpy.js"></script><link rel="stylesheet" href="/css/main.css"/><script src="/js/codetabs.js"></script></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/"><img class="logo" src="/img/bottender.svg" alt="Bottender"/><h2 class="headerTitleWithLogo">Bottender</h2></a><a href="/versions"><h3>1.0.3</h3></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class=""><a href="/docs/1.0.3/getting-started" target="_self">Docs</a></li><li class=""><a href="/docs/1.0.3/api-context" target="_self">API</a></li><li class=""><a href="/blog/" target="_self">Blog</a></li><li class=""><a href="/users" target="_self">Users</a></li><li class=""><a href="https://github.com/Yoctol/bottender/tree/master/examples" target="_self">Examples</a></li><li class=""><a href="https://github.com/yoctol/bottender" target="_self">GitHub</a></li><li class="navSearchWrapper reactNavSearchWrapper"><input type="text" id="search_input_react" placeholder="Search" title="Search"/></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://github.com/Yoctol/bottender/edit/master/docs/Platforms-Messenger.md" target="_blank" rel="noreferrer noopener">Edit</a><h1 class="postHeaderTitle">Messenger</h1></header><article><div><span><p>This guide will give you some basic concepts of developing a Messenger bot. For more detail, see <a href="https://developers.facebook.com/docs/messenger-platform">official docs</a>.</p>
+<h2><a class="anchor" aria-hidden="true" id="requirements"></a><a href="#requirements" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Requirements</h2>
+<p>To develop a Messenger bot, you need the following requirements:</p>
+<ul>
+<li>A Page Access Token</li>
+<li>An App Secret</li>
+</ul>
+<p>In order to get Page Access Token and App secret, you need:</p>
+<ul>
+<li><a href="https://www.facebook.com/pages/create/">A Facebook Page</a></li>
+<li><a href="https://developers.facebook.com/">A Facebook App</a></li>
+</ul>
+<p>After you get a Facebook Page and a Facebook App, you can get the <code>Page Access Token</code>. Check the <a href="https://developers.facebook.com/docs/messenger-platform/getting-started/app-setup">official docs</a>.
+Also, remember to copy the <code>App Secret</code> on app dashboard. Click <code>Show</code> button on the dashboard and type your password to get the App Secret.</p>
+<p>Before leaving this section, make sure you have the following requirements:</p>
+<ul>
+<li>A Page Access Token</li>
+<li>An App Secret</li>
+</ul>
+<p>We will use them to develop our messenger bot later.</p>
+<h2><a class="anchor" aria-hidden="true" id="build-your-first-messenger-bot"></a><a href="#build-your-first-messenger-bot" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Build Your First Messenger Bot</h2>
+<p>The following is a partial sample code, see the full example <a href="https://github.com/Yoctol/bottender/tree/v0.15.x/examples/messenger-hello-world">here</a>.</p>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">const</span> { MessengerBot } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'bottender'</span>);
+
+<span class="hljs-keyword">const</span> bot = <span class="hljs-keyword">new</span> MessengerBot({
+  <span class="hljs-attr">accessToken</span>: <span class="hljs-string">'__FILL_YOUR_TOKEN_HERE__'</span>,
+  <span class="hljs-attr">appSecret</span>: <span class="hljs-string">'__FILL_YOUR_SECRET_HERE__'</span>,
+});
+</code></pre>
+<p>After you fill the <code>accessToken</code> and <code>appSecret</code>, run your server and try it out by talking to your Facebook Page! It works!</p>
+<h3><a class="anchor" aria-hidden="true" id="full-example"></a><a href="#full-example" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Full Example</h3>
+<p>Here is the complete example for <a href="https://github.com/Yoctol/bottender/tree/v0.15.x/examples/messenger-hello-world">messenger-hello-world</a>.</p>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">const</span> { MessengerBot } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'bottender'</span>);
+<span class="hljs-keyword">const</span> { createServer } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'bottender/express'</span>);
+
+<span class="hljs-keyword">const</span> bot = <span class="hljs-keyword">new</span> MessengerBot({
+  <span class="hljs-attr">accessToken</span>: <span class="hljs-string">'__FILL_YOUR_TOKEN_HERE__'</span>,
+  <span class="hljs-attr">appSecret</span>: <span class="hljs-string">'__FILL_YOUR_SECRET_HERE__'</span>,
+});
+
+bot.onEvent(<span class="hljs-keyword">async</span> context =&gt; {
+  <span class="hljs-keyword">await</span> context.sendText(<span class="hljs-string">'Hello World'</span>);
+});
+
+<span class="hljs-keyword">const</span> server = createServer(bot);
+
+server.listen(<span class="hljs-number">5000</span>, () =&gt; {
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'server is running on 5000 port...'</span>);
+});
+</code></pre>
+<h3><a class="anchor" aria-hidden="true" id="options"></a><a href="#options" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Options</h3>
+<p>If you want to use your own verify token, you can pass options object into <code>createServer()</code> with <code>verifyToken</code> key.</p>
+<p>For example:</p>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">const</span> server = createServer(bot, {
+  <span class="hljs-attr">verifyToken</span>: <span class="hljs-string">'__FILL_YOUR_VERIFY_TOKEN_HERE__'</span>,
+});
+</code></pre>
+<p>more on <a href="server#options">Guides Server</a>.</p>
+<h2><a class="anchor" aria-hidden="true" id="events"></a><a href="#events" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Events</h2>
+<p>Bottender supports several types of events. You are able to access them via <code>context.event</code>.
+For more information, check <a href="api-event">Event Reference</a>.</p>
+<h3><a class="anchor" aria-hidden="true" id="messenger-event-properties"></a><a href="#messenger-event-properties" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Messenger Event Properties</h3>
+<ul>
+<li>isText</li>
+<li>isImage</li>
+<li>isQuickReply</li>
+<li>isPostback</li>
+<li>isEcho</li>
+<li>quickReply</li>
+<li>postback</li>
+<li>payload</li>
+<li>...</li>
+</ul>
+<p>more on <a href="api-messengerevent">MessengerEvent Reference</a>.</p>
+<p>For example:</p>
+<pre><code class="hljs css language-js">bot.onEvent(<span class="hljs-keyword">async</span> context =&gt; {
+  <span class="hljs-keyword">if</span> (context.event.isQuickReply) {
+    <span class="hljs-keyword">await</span> context.sendText(<span class="hljs-string">'I know this is a quick reply.'</span>);
+  } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (context.event.payload === <span class="hljs-string">'A_DEVELOPER_DEFINED_PAYLOAD'</span>) {
+    <span class="hljs-keyword">await</span> context.sendText(<span class="hljs-string">'Got you!'</span>);
+  } <span class="hljs-keyword">else</span> {
+    <span class="hljs-keyword">await</span> context.sendText(<span class="hljs-string">'I do not understand.'</span>);
+  }
+});
+</code></pre>
+<h2><a class="anchor" aria-hidden="true" id="send-apis"></a><a href="#send-apis" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Send APIs</h2>
+<p>After receiving the request from Messenger, you can send API by using context send API.</p>
+<h3><a class="anchor" aria-hidden="true" id="messaging_type"></a><a href="#messaging_type" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>messaging_type</code></h3>
+<p>Messenger introduced a <code>messaging_type</code> field in Messenger Platform 2.2 and it will be required starting from May 7, 2018.</p>
+<p>When using Bottender, we automatically set <code>messaging_type</code> to <code>RESPONSE</code> when using send APIs in context so you don't need to worry about it. You can still pass other <code>messaging_types</code> in the <code>options</code> argument.</p>
+<h3><a class="anchor" aria-hidden="true" id="messenger-specific-context-send-api"></a><a href="#messenger-specific-context-send-api" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Messenger-Specific Context Send API</h3>
+<ul>
+<li>sendText</li>
+<li>sendImage</li>
+<li>sendGenericTemplate</li>
+<li>...</li>
+</ul>
+<p>more on <a href="api-messengercontext">MessengerContext Reference</a>.</p>
+<p>For example:</p>
+<pre><code class="hljs css language-js">bot.onEvent(<span class="hljs-keyword">async</span> context =&gt; {
+  <span class="hljs-keyword">await</span> context.sendText(<span class="hljs-string">'Hello World!'</span>);
+  <span class="hljs-keyword">await</span> context.sendImage(<span class="hljs-string">'http://example.com/pic.png'</span>);
+  <span class="hljs-keyword">await</span> context.sendGenericTemplate([
+    {
+      <span class="hljs-attr">title</span>: <span class="hljs-string">"Welcome to Peter's Hats"</span>,
+      <span class="hljs-attr">image_url</span>: <span class="hljs-string">'https://petersfancybrownhats.com/company_image.png'</span>,
+      <span class="hljs-attr">subtitle</span>: <span class="hljs-string">"We've got the right hat for everyone."</span>,
+      <span class="hljs-attr">default_action</span>: {
+        <span class="hljs-attr">type</span>: <span class="hljs-string">'web_url'</span>,
+        <span class="hljs-attr">url</span>: <span class="hljs-string">'https://peterssendreceiveapp.ngrok.io/view?item=103'</span>,
+        <span class="hljs-attr">messenger_extensions</span>: <span class="hljs-literal">true</span>,
+        <span class="hljs-attr">webview_height_ratio</span>: <span class="hljs-string">'tall'</span>,
+        <span class="hljs-attr">fallback_url</span>: <span class="hljs-string">'https://peterssendreceiveapp.ngrok.io/'</span>,
+      },
+      <span class="hljs-attr">buttons</span>: [
+        {
+          <span class="hljs-attr">type</span>: <span class="hljs-string">'postback'</span>,
+          <span class="hljs-attr">title</span>: <span class="hljs-string">'Start Chatting'</span>,
+          <span class="hljs-attr">payload</span>: <span class="hljs-string">'DEVELOPER_DEFINED_PAYLOAD'</span>,
+        },
+      ],
+    },
+  ]);
+});
+</code></pre>
+<h2><a class="anchor" aria-hidden="true" id="references"></a><a href="#references" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>References</h2>
+<ul>
+<li><a href="https://github.com/Yoctol/messaging-apis/tree/master/packages/messaging-api-messenger">Messaging-api-messenger</a>: Our open source Messenger API client project.</li>
+<li><a href="https://developers.facebook.com/docs/messenger-platform">Messenger Platform</a>: The Messenger Platform docs.</li>
+</ul>
+</span></div></article></div><div class="docs-prevnext"></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#requirements">Requirements</a></li><li><a href="#build-your-first-messenger-bot">Build Your First Messenger Bot</a><ul class="toc-headings"><li><a href="#full-example">Full Example</a></li><li><a href="#options">Options</a></li></ul></li><li><a href="#events">Events</a><ul class="toc-headings"><li><a href="#messenger-event-properties">Messenger Event Properties</a></li></ul></li><li><a href="#send-apis">Send APIs</a><ul class="toc-headings"><li><a href="#messaging_type"><code>messaging_type</code></a></li><li><a href="#messenger-specific-context-send-api">Messenger-Specific Context Send API</a></li></ul></li><li><a href="#references">References</a></li></ul></nav></div><footer class="nav-footer" id="footer"><div class="footer-layout"><div><div style="margin-bottom:16px"><a href="https://yoctol.ai" target="_blank" rel="noopener noreferrer"><img width="104px" src="/img/element_YOCTOL.AI_horizontal_S.svg" alt="YOCTOL.AI Logo"/></a></div><div class="desktop"><p class="text">© 2019 - PRESENT YOCTOL.AI ALL RIGHTS RESERVED.</p><a class="text" href="https://yoctol.ai/terms-of-use" target="_blank" rel="noopener noreferrer">Terms of Use</a><a class="text" href="https://yoctol.ai/privacy-policy" target="_blank" rel="noopener noreferrer" style="margin-left:16px">Privacy Policy</a></div></div><div class="footer-contacts"><h4 class="title">Contact Us</h4><p class="text">YOCTOL.AI</p><p class="text">service@yoctol.com</p></div><div class="footer-medias"><h4 class="title">Social Media</h4><div class="icons"><a href="https://twitter.com/yoctol" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#FFF" fill-rule="nonzero" d="M1.5 0h21A1.5 1.5 0 0 1 24 1.5v21a1.5 1.5 0 0 1-1.5 1.5h-21A1.5 1.5 0 0 1 0 22.5v-21A1.5 1.5 0 0 1 1.5 0zm7.532 18c6.037 0 9.34-4.617 9.34-8.621 0-.131 0-.262-.01-.392A6.419 6.419 0 0 0 20 7.42c-.6.245-1.235.406-1.885.477a3.097 3.097 0 0 0 1.443-1.676 6.92 6.92 0 0 1-2.085.735c-1.017-.999-2.634-1.243-3.944-.596-1.31.647-1.986 2.024-1.65 3.36-2.64-.123-5.099-1.273-6.765-3.166-.872 1.384-.427 3.155 1.016 4.045a3.468 3.468 0 0 1-1.49-.38v.039c0 1.442 1.102 2.684 2.634 2.97-.484.122-.99.14-1.483.052.43 1.234 1.663 2.08 3.067 2.104a6.945 6.945 0 0 1-4.077 1.3c-.26 0-.522-.015-.781-.044a9.867 9.867 0 0 0 5.032 1.359V18z"></path></svg></a><a href="https://www.linkedin.com/company/yoctol/" target="_blank" rel="noopener noreferrer" style="margin-left:8px"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#FFF" fill-rule="nonzero" d="M1.5 0h21A1.5 1.5 0 0 1 24 1.5v21a1.5 1.5 0 0 1-1.5 1.5h-21A1.5 1.5 0 0 1 0 22.5v-21A1.5 1.5 0 0 1 1.5 0zm6.086 19.636V9.281H4.368v10.355h3.218zM5.944 7.801A1.877 1.877 0 0 0 7.82 5.925 1.876 1.876 0 1 0 5.945 7.8zm13.697 11.835v-5.679c0-2.788-.602-4.933-3.861-4.933-1.565 0-2.615.859-3.045 1.672h-.043V9.281H9.604v10.355h3.216v-5.123c0-1.35.258-2.658 1.932-2.658 1.65 0 1.673 1.545 1.673 2.746v5.035h3.216z"></path></svg></a></div></div><div class="footer-product"><h4 class="title">Product</h4><div class="icons"><a href="https://yoctol.ai/creator" target="_blank" rel="noopener noreferrer" style="margin-top:1px;margin-right:10px"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22"><g fill="none" fill-rule="nonzero"><path d="M-1-2h24v24H-1z"></path><path fill="#FFF" d="M4.129 12c.309 3.386 3.267 6.042 6.871 6.042 3.604 0 6.562-2.656 6.871-6.042H22c-.317 5.574-5.12 10-11 10S.317 17.574 0 12h4.129zM14 9a1 1 0 1 1 0 2 1 1 0 0 1 0-2zM8 9a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm14-9v10h-4.113V4.116H7.814A3.703 3.703 0 0 0 4.113 7.82V10H0V7.82A7.817 7.817 0 0 1 7.685.001L7.815 0H22z"></path></g></svg></a><a href="https://yoctol.ai/seeker" target="_blank" rel="noopener noreferrer" style="margin-right:10px"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="24" viewBox="0 0 22 24"><g fill="none" fill-rule="nonzero"><path d="M-1 0h24v24H-1z"></path><path fill="#FFF" d="M2.81 7.033l.004.004 3.123 3.137a.112.112 0 0 1 .017.137 5.957 5.957 0 0 0 .843 7.356 5.936 5.936 0 0 0 8.41.003 5.957 5.957 0 0 0 .839-7.355.112.112 0 0 1 .016-.138l3.122-3.136a.11.11 0 0 1 .158 0l.01.012c3.182 4.182 2.79 10.14-.915 13.86-4.1 4.117-10.77 4.115-14.87-.002-3.699-3.714-4.1-9.656-.941-13.836a.111.111 0 0 1 .184-.042zM8.5 11a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm5 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm5.942-7.854l.015.014a.175.175 0 0 1 0 .23L15.32 7.952a.138.138 0 0 1-.182.024 7.294 7.294 0 0 0-8.27-.002.138.138 0 0 1-.182-.024L2.544 3.384a.175.175 0 0 1 .014-.245c4.97-4.188 11.913-4.185 16.884.007z"></path></g></svg></a><a href="https://bottender.js.org/" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="24" viewBox="0 0 22 24"><g fill="none" fill-rule="evenodd"><path fill-rule="nonzero" d="M-1 0h24v24H-1z"></path><path fill="#FFF" d="M1.668 8.51c.258.075.548.159.867.244a9.055 9.055 0 0 0 .959 11.639l.206.202.102.098.022.139a2.63 2.63 0 0 1-.314 1.745c.351-.162.683-.36.99-.59l.227-.178.242-.196.264.162a9.343 9.343 0 0 0 4.898 1.379c5.115 0 9.276-4.107 9.276-9.154 0-.806-.107-1.607-.32-2.385.33.027.63.047.9.06.184.762.289 1.543.288 2.326 0 5.513-4.534 9.999-10.12 9.999a10.128 10.128 0 0 1-5.067-1.352c-1.039.78-2.395 1.228-3.574 1.289l-.269.007v-.845c.928-.002 1.807-.82 1.808-1.831 0-.057-.05-.113-.056-.17A9.891 9.891 0 0 1 1.668 8.51zM10 11a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm6 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2zM9.379.02c2.551.437 3.144 1.75 3.144 1.75s1.02-1.037 3.57-.6c2.302.394 3.731 6.79 3.99 8.047 1.233.338 1.946.614 1.916.775l-.143.719c-.074.409-4.997-.07-10.837-1.07C5.179 8.638.506 7.495.579 7.086l.144-.74c.03-.162.797-.185 2.075-.091C3.484 5.161 7.08-.374 9.378.02z"></path></g></svg></a></div></div><div class="mobile"><p class="text">© 2019 - PRESENT YOCTOL.AI ALL RIGHTS RESERVED.</p><a class="text" href="https://yoctol.ai/terms-of-use" target="_blank" rel="noopener noreferrer">Terms of Use</a><a class="text" href="https://yoctol.ai/privacy-policy" target="_blank" rel="noopener noreferrer" style="margin-left:16px">Privacy Policy</a></div></div></footer></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script><script>window.twttr=(function(d,s, id){var js,fjs=d.getElementsByTagName(s)[0],t=window.twttr||{};if(d.getElementById(id))return t;js=d.createElement(s);js.id=id;js.src='https://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js, fjs);t._e = [];t.ready = function(f) {t._e.push(f);};return t;}(document, 'script', 'twitter-wjs'));</script><script>
+                document.addEventListener('keyup', function(e) {
+                  if (e.target !== document.body) {
+                    return;
+                  }
+                  // keyCode for '/' (slash)
+                  if (e.keyCode === 191) {
+                    const search = document.getElementById('search_input_react');
+                    search && search.focus();
+                  }
+                });
+              </script><script>
+              var search = docsearch({
+                
+                apiKey: '3498a488684b0324b9d56808fad17a33',
+                indexName: 'bottender',
+                inputSelector: '#search_input_react',
+                algoliaOptions: {"facetFilters":["language:en","version:1.0.3"]}
+              });
+            </script></body></html>
