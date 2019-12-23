@@ -28,7 +28,11 @@ export default class MemoryCacheStore implements CacheStore {
     // cloneDeep: To make sure save as writable object
     const val = value && typeof value === 'object' ? cloneDeep(value) : value;
 
-    this._lru.set(key, val, minutes * 60 * 1000);
+    if (minutes) {
+      this._lru.set(key, val, minutes * 60 * 1000);
+    } else {
+      this._lru.set(key, val);
+    }
   }
 
   async forget(key: string): Promise<void> {
