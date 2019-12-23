@@ -377,7 +377,7 @@ This object represents an inline keyboard that appears right next to the message
 
 ```js
 const replyMarkup = {
-  inline_keyboard: [
+  inlineKeyboard: [
     [
       {
         text: 'hi',
@@ -385,7 +385,7 @@ const replyMarkup = {
       },
       {
         text: 'yo',
-        callback_data: 'yo',
+        callbackData: 'yo',
       },
     ],
   ],
@@ -406,7 +406,7 @@ Whenever your bot sends a message, it can pass along a special keyboard with pre
 
 Telegram apps that receive the message display your keyboard to the user. Tapping any of the buttons immediately sends the respective command.
 
-If you want your keyboard disappears after any tap, try to set `one_time_keyboard` to `true`. Set `selective` to `true` if you just want to offer keyboards to the mentioned users.
+If you want your keyboard disappears after any tap, try to set `oneTimeKeyboard` to `true`. Set `selective` to `true` if you just want to offer keyboards to the mentioned users.
 
 ```js
 const replyMarkup = {
@@ -563,7 +563,7 @@ await context.editMessageMedia(response.messageId, {
 
 ```js
 const replyMarkup = {
-  inline_keyboard: [
+  inlineKeyboard: [
     [
       {
         text: 'hi',
@@ -571,7 +571,7 @@ const replyMarkup = {
       },
       {
         text: 'yo',
-        callback_data: 'yo',
+        callbackData: 'yo',
       },
     ],
   ],
