@@ -24,7 +24,7 @@ export default class LineBot extends Bot<
   }: {
     accessToken: string;
     channelSecret: string;
-    sessionStore: SessionStore;
+    sessionStore?: SessionStore;
     sync?: boolean;
     mapDestinationToAccessToken?: (destination: string) => Promise<string>;
     shouldBatch?: boolean;

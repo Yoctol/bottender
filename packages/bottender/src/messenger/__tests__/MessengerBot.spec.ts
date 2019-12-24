@@ -5,9 +5,13 @@ beforeEach(() => {
   console.error = jest.fn();
 });
 
+const ACCESS_TOKEN = 'FAKE_TOKEN';
+const APP_SECRET = 'FAKE_SECRET';
+
 it('should construct bot with MessengerConnector', () => {
   const bot = new MessengerBot({
-    accessToken: 'FAKE_TOKEN',
+    accessToken: ACCESS_TOKEN,
+    appSecret: APP_SECRET,
   });
   expect(bot).toBeDefined();
   expect(bot.onEvent).toBeDefined();

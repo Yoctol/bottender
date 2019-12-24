@@ -23,7 +23,7 @@ export default class SlackBot extends Bot<
     skipLegacyProfile,
   }: {
     accessToken: string;
-    sessionStore: SessionStore;
+    sessionStore?: SessionStore;
     sync?: boolean;
     verificationToken?: string;
     origin?: string;

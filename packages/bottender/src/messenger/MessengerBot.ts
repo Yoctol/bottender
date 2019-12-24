@@ -27,7 +27,7 @@ export default class MessengerBot extends Bot<
     accessToken: string;
     appId: string;
     appSecret: string;
-    sessionStore: SessionStore;
+    sessionStore?: SessionStore;
     sync?: boolean;
     mapPageToAccessToken?: (pageId: string) => Promise<string>;
     verifyToken?: string;

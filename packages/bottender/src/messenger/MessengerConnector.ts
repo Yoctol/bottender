@@ -2,6 +2,7 @@ import EventEmitter from 'events';
 import crypto from 'crypto';
 import { URL } from 'url';
 
+import invariant from 'invariant';
 import isAfter from 'date-fns/isAfter';
 import isValid from 'date-fns/isValid';
 import shortid from 'shortid';
@@ -132,6 +133,16 @@ export default class MessengerConnector
       this._client = options.client;
     } else {
       const { accessToken, origin, skipAppSecretProof } = options;
+
+      invariant(
+        accessToken || mapPageToAccessToken,
+        'Messenger access token is required. Please make sure you have filled it correctly in `bottender.config.js` or `.env` file.'
+      );
+      invariant(
+        appSecret,
+        'Messenger app secret is required. Please make sure you have filled it correctly in `bottender.config.js` or `.env` file.'
+      );
+
       this._client = MessengerClient.connect({
         accessToken: accessToken || '',
         appSecret,

@@ -1,6 +1,7 @@
 import EventEmitter from 'events';
 import crypto from 'crypto';
 
+import invariant from 'invariant';
 import pProps from 'p-props';
 import warning from 'warning';
 import { SlackOAuthClient } from 'messaging-api-slack';
@@ -68,6 +69,12 @@ export default class SlackConnector
       this._client = options.client;
     } else {
       const { accessToken, origin } = options;
+
+      invariant(
+        accessToken,
+        'Viber access token is required. Please make sure you have filled it correctly in `bottender.config.js` or `.env` file.'
+      );
+
       this._client = SlackOAuthClient.connect({
         accessToken,
         origin,

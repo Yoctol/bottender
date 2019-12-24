@@ -29,7 +29,7 @@ export default class TelegramBot extends Bot<
     origin,
   }: {
     accessToken: string;
-    sessionStore: SessionStore;
+    sessionStore?: SessionStore;
     sync?: boolean;
     origin?: string;
   }) {

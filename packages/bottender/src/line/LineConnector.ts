@@ -1,6 +1,7 @@
 import EventEmitter from 'events';
 import crypto from 'crypto';
 
+import invariant from 'invariant';
 import warning from 'warning';
 import { LineClient } from 'messaging-api-line';
 
@@ -66,6 +67,15 @@ export default class LineConnector
       this._channelSecret = '';
     } else {
       const { accessToken, channelSecret, origin } = options;
+
+      invariant(
+        options.accessToken,
+        'LINE access token is required. Please make sure you have filled it correctly in `bottender.config.js` or `.env` file.'
+      );
+      invariant(
+        options.channelSecret,
+        'LINE channel secret is required. Please make sure you have filled it correctly in `bottender.config.js` or `.env` file.'
+      );
 
       this._client = LineClient.connect({
         accessToken,
