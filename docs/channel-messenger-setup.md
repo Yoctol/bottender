@@ -82,6 +82,14 @@ npm start
 npm run dev
 ```
 
+When you run bottender in development mode, Bottender automatically run up a Ngrok client, and then you can get the information of webhook URL from the console like this:
+
+```
+App has started
+messenger webhook url: https://42bbf602.ngrok.io/webhooks/messenger
+server is running on 5000 port...
+```
+
 Then, you can finish your Messenger webhook setting with the following command.
 
 ```sh

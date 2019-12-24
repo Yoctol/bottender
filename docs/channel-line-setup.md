@@ -75,6 +75,14 @@ npm start
 npm run dev
 ```
 
+When you run bottender in development mode, Bottender automatically run up a Ngrok client, and then you can get the information of webhook URL from the console like this:
+
+```
+App has started
+line webhook url: https://42bbf602.ngrok.io/webhooks/line
+server is running on 5000 port...
+```
+
 Then, you have to manually copy your webhook url to LINE@ account's setting page. Finally, you are ready to interact with your bot on LINE :)
 
 > **Note:**
