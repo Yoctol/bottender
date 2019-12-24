@@ -114,6 +114,15 @@ describe('#put', () => {
     expect(redis.setex).toBeCalledWith('123', 300, '"xyz"');
   });
 
+  it('should store cache item', async () => {
+    const store = new RedisCacheStore();
+    const redis = store.getRedis();
+
+    await store.put('123', 'xyz', 0);
+
+    expect(redis.set).toBeCalledWith('123', '"xyz"');
+  });
+
   it('can store mixed data types', async () => {
     const store = new RedisCacheStore();
     const redis = store.getRedis();

@@ -3,8 +3,6 @@ import MemoryCacheStore from '../cache/MemoryCacheStore';
 import CacheBasedSessionStore from './CacheBasedSessionStore';
 import SessionStore from './SessionStore';
 
-const MINUTES_IN_ONE_YEAR = 365 * 24 * 60;
-
 type MemoryOption =
   | number
   | {
@@ -31,6 +29,6 @@ export default class MemorySessionStore extends CacheBasedSessionStore
 
     const cache = new MemoryCacheStore(maxSize);
 
-    super(cache, expiresIn || MINUTES_IN_ONE_YEAR);
+    super(cache, expiresIn);
   }
 }
