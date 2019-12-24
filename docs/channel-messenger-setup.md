@@ -19,7 +19,7 @@ Make sure that you checked the `messenger` option:
 
 ![](https://user-images.githubusercontent.com/3382565/67851223-f2b7f200-fb44-11e9-960a-4f58d68ab37d.png)
 
-After finishing `Create Bottender App` process, `bottender.config.js`, a config file, will be generated automatically for furthur channel settings.
+After finishing `Create Bottender App` process, `bottender.config.js`, a config file, will be generated automatically for further channel settings.
 
 ### Enable Messenger Channel for Existing Apps
 
@@ -56,7 +56,7 @@ To make a Messenger bot work, you have to setup the following values:
 
 ### Messenger Page Id, Messenger Access Token, Messenger App Id, Messenger App Secret, and Messenger Verify Token
 
-These fields could be found on your Facebook App page, which you can accessed from your [Facebook App Dashboard](https://developers.facebook.com/apps). Then, you need to fill in corresponding fields in `.env` for loading those values correctly into `bottender.config.js`:
+These fields could be found on your Facebook App page, which you can access from your [Facebook App Dashboard](https://developers.facebook.com/apps). Then, you need to fill in corresponding fields in `.env` for loading those values correctly into `bottender.config.js`:
 
 ```
 MESSENGER_PAGE_ID=
@@ -72,7 +72,7 @@ MESSENGER_VERIFY_TOKEN=
 
 ### Webhook
 
-After finishing above settings, you can start your server with Messenger webhook event listening using following commands:
+After finishing the above settings, you can start your server with Messenger webhook event listening using the following commands:
 
 ```sh
 # in production mode
@@ -92,4 +92,4 @@ Now you are ready to interact with your bot on Messenger :)
 
 > **Note:**
 >
-> - Before you release your bot to the public, you have to submit your App to Facebook to get relevant permissions, e.g. `pages_message`. See Facebook's official document, [Submitting Your Messenger App](https://developers.facebook.com/docs/messenger-platform/app-review/), for more information.
+> - Before you release your bot to the public, you have to submit your App to Facebook to get relevant permissions, e.g., `pages_message`. See Facebook's official document, [Submitting Your Messenger App](https://developers.facebook.com/docs/messenger-platform/app-review/), for more information.
