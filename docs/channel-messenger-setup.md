@@ -67,6 +67,7 @@ Before going further, we assumed that you have already prepared:
 - A Facebook Page for your Messenger Bot
 - A Bottender Project
 
+
 > **Note:** If you are not familiar with Facebook App, you can refer to Facebook's official doc, [Setting Up Your Facebook App](https://developers.facebook.com/docs/messenger-platform/getting-started/app-setup/).
 
 Then you can open your App page and ready to prepare relevant environment variables. You can find detailed instructions in the following sections.

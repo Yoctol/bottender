@@ -9,12 +9,12 @@ Although the document is about "sending messages," in most of the cases, Messeng
 
 > **Note:**
 >
-> - If you want to know better about when your bots can send message proactively, please refer to Messenger's guide link about [Messenger Platform Policy Overview](https://developers.facebook.com/docs/messenger-platform/policy/policy-overview#standard_messaging)
-> - We have a separate document to introduce user event handling, please refer to [Handling Messenger Events](./channel-messenger-handling-events.md)
+> - If you want to know better about when your bots can send message proactively, please refer to Messenger's guide link about [Messenger Platform Policy Overview](https://developers.facebook.com/docs/messenger-platform/policy/policy-overview#standard_messaging).
+> - We have a separate document to introduce user event handling, please refer to [Handling Messenger Events](./channel-messenger-handling-events.md).
 
 If you are not familiar with Messenger messages, we would like to recommend a short happy path.
 
-To begin with, please try the basis of communication, [`Text Messages`](#sending-text-messages). Secondly, try [`Generic Template Messages`](#sending-template-messages) to help you display a collection of items (e.g., recommended restaurants, songs, or books). Finally, - [`Quick Replies`](#sending-with-quick-reply), which continuously guide your users for the next possible actions.
+To begin with, please try the basis of communication, [`Text Messages`](#sending-text-messages). Secondly, try [`Generic Template Messages`](#sending-template-messages) to help you display a collection of items (e.g., recommended restaurants, songs, or books). Finally, - [`Quick Replies`](#sending-with-quick-reply), which continuously guides your users for the next possible actions.
 
 If you have experienced with Messenger messages, don't miss [`Rich Media Messages`](#sending-rich-media-messages) to show the personality of your bots. [`Rich Media Messages`](#sending-rich-media-messages) and [`Media Template Messages`](#media-template) are necessary if you are building a media-driven, storytelling bot. Take a look at [`Persona`](#sending-with-persona), if you offer bot auto-reply and human agent customer support at the same time. Finally, if you are making a chatbot for campaign purposes, please dive into [`Rate Limits`](#rate-limits) to ensure your bot is ready for high traffic.
 
@@ -59,7 +59,7 @@ If you want to benefit from Facebook's cache, i.e., a much pleasant loading spee
 
 Firstly, you need to get a page-scoped `Attachment Id` by [Attachment Upload API](https://developers.facebook.com/docs/messenger-platform/send-messages/saving-assets#attachment_upload_api).
 
-Once you have get your `Attachment Id`, you can send rich media messages with the following code.
+Once you get your `Attachment Id`, you can send rich media messages with the following code.
 
 ```js
 await context.sendImage({ attachmentId: '<ATTACHMENT_ID>' });
@@ -319,7 +319,7 @@ The `User Email Quick Reply` can be treated as an agree button to collect the us
 Messenger automatically pre-fill the displayed quick reply with the Email from the user's profile information. Since many CRM (Customer Relationship Management) use the Email as a unique id, it is handy for future user mapping.
 
 > **Note:**
-> If the user's profile does not have a Email, the quick reply doesn't show up. Also, the bot only receives the Email until the user clicks the quick reply.
+> If the user's profile does not have an Email, the quick reply doesn't show up. Also, the bot only receives the Email until the user clicks the quick reply.
 
 ```js
 await context.sendText('Hi!', {
@@ -343,7 +343,7 @@ await context.sendText('Hi!', {
 
 ## Rate Limits
 
-If you are making a bot with a sudden high traffic, e.g., a campaign bot for Black Friday, you should deal with `Rate Limits` before you receive [error code 613](https://developers.facebook.com/docs/messenger-platform/reference/send-api/error-codes).
+If you are making a bot with sudden high traffic, e.g., a campaign bot for Black Friday, you should deal with `Rate Limits` before you receive [error code 613](https://developers.facebook.com/docs/messenger-platform/reference/send-api/error-codes).
 
 Page Rate limits are in place to prevent malicious behavior and poor user experiences. For Pages with large audiences, Messenger recommends a send rate of 250 requests per second.
 

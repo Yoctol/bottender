@@ -117,7 +117,7 @@ async function App(context) {
 
 ### Group/Room Events
 
-A bot inside group/room makes various kinds of group vote possible, e.g., the restaurant for lunch, the destination for the company trip, or gifts for lucky draw. In the following example, you can see how to handle `Join Event` and `Leave Event.`
+A bot inside group/room makes various kinds of group vote possible, e.g., the restaurant for lunch, the destination for the company trip, or gifts for a lucky draw. In the following example, you can see how to handle `Join Event` and `Leave Event.`
 
 > **Note:**
 > We are preparing an advanced `Group/Room Events` tutorial to illustrate more practical group bot usages. If you are interested in it, please tell us on [Bottender Discord/#LINE](https://discord.gg/BsS9Fwe) to upvote :D

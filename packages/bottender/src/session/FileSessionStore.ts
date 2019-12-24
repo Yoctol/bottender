@@ -7,8 +7,6 @@ import subMinutes from 'date-fns/subMinutes';
 import Session from './Session';
 import SessionStore from './SessionStore';
 
-const MINUTES_IN_ONE_YEAR = 365 * 24 * 60;
-
 type FileOption =
   | string
   | {
@@ -32,7 +30,7 @@ export default class FileSessionStore implements SessionStore {
   _expiresIn: number;
 
   constructor(arg: FileOption, expiresIn?: number) {
-    this._expiresIn = expiresIn || MINUTES_IN_ONE_YEAR;
+    this._expiresIn = expiresIn || 0;
 
     const dirname = getDirname(arg) || '.sessions';
 
@@ -116,6 +114,10 @@ export default class FileSessionStore implements SessionStore {
   }
 
   _expired(sess: Session): boolean {
+    if (!this._expiresIn) {
+      return false;
+    }
+
     return (
       sess.lastActivity !== undefined &&
       isBefore(sess.lastActivity, subMinutes(Date.now(), this._expiresIn))

@@ -50,11 +50,15 @@ export default class RedisCacheStore implements CacheStore {
   }
 
   async put(key: string, value: CacheValue, minutes: number): Promise<void> {
-    await this._redis.setex(
-      `${this._prefix}${key}`,
-      minutes * 60,
-      this._serialize(value)
-    );
+    if (minutes) {
+      await this._redis.setex(
+        `${this._prefix}${key}`,
+        minutes * 60,
+        this._serialize(value)
+      );
+    } else {
+      await this._redis.set(`${this._prefix}${key}`, this._serialize(value));
+    }
   }
 
   async forget(key: string): Promise<void> {

@@ -3,17 +3,15 @@ import CacheStore from '../cache/CacheStore';
 import Session from './Session';
 import SessionStore from './SessionStore';
 
-const MINUTES_IN_ONE_YEAR = 365 * 24 * 60;
-
 export default class CacheBasedSessionStore implements SessionStore {
   _cache: CacheStore;
 
   // The number of minutes to store the data in the session.
   _expiresIn: number;
 
-  constructor(cache: CacheStore, expiresIn: number) {
+  constructor(cache: CacheStore, expiresIn?: number) {
     this._cache = cache;
-    this._expiresIn = expiresIn || MINUTES_IN_ONE_YEAR;
+    this._expiresIn = expiresIn || 0;
   }
 
   async init(): Promise<CacheBasedSessionStore> {

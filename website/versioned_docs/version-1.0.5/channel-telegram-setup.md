@@ -84,6 +84,14 @@ By the following command, Bottender runs a bot server by `ngrok,` which makes yo
 npm run dev
 ```
 
+When you run bottender in development mode, Bottender automatically run up a Ngrok client, and then you can get the information of webhook URL from the console like this:
+
+```
+App has started
+telegram webhook url: https://42bbf602.ngrok.io/webhooks/telegram
+server is running on 5000 port...
+```
+
 Then, you can open a new tab in the terminal and finish the webhook setting by the below command.
 
 ```sh
