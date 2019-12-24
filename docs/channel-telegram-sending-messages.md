@@ -44,7 +44,7 @@ await context.editMessageText(response.messageId, '*world*', {
 
 If you can't wait to try Telegram Bots features, we prepared a simple demo bot for you, [Bottender Playground](https://t.me/BottenderPlaygroundBot).
 
- <p><a href="https://t.me/BottenderPlaygroundBot" target="_blank"><img width="400" src="https://user-images.githubusercontent.com/662387/71264165-6c6aa000-237e-11ea-9be5-626a6eadcdba.jpg"></a></p>
+ <p><a href="https://t.me/BottenderPlaygroundBot" target="_blank"><img width="400" src="https://user-images.githubusercontent.com/662387/71342435-c0040600-2597-11ea-8258-ae8e06c89575.gif"></a></p>
 
 <hr />
 
