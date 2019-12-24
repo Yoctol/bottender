@@ -19,7 +19,7 @@ Make sure that you checked the `messenger` option:
 
 ![](https://user-images.githubusercontent.com/3382565/67851223-f2b7f200-fb44-11e9-960a-4f58d68ab37d.png)
 
-After finishing `Create Bottender App` process, `bottender.config.js`, a config file, will be generated automatically for further channel settings.
+After finishing the `Create Bottender App` process, `bottender.config.js,` a config file is generated automatically for further channel settings.
 
 ### Enable Messenger Channel for Existing Apps
 
@@ -41,24 +41,18 @@ module.exports = {
 };
 ```
 
-By default, webhook listens on path - `/webhooks/messenger`. You can set your own webhook path in the `path` field.
+By default, webhook listens on path - `/webhooks/messenger`.
+You can set your webhook path in the `path` field.
 
 ## Complete Messenger Channel Settings
 
-To make a Messenger bot work, you have to setup the following values:
+When you run a Bottender app, Bottender loads environment variables in the config file, `bottender.config.js`. Then, `bottender.config.js` loads sensitive or environment-dependent variables in `.env`.
 
-- Messenger Page Id
-- Messenger Access Token
-- Messenger App Id
-- Messenger App Secret
-- Messenger Verify Token
-- Webhook
-
-### Messenger Page Id, Messenger Access Token, Messenger App Id, Messenger App Secret, and Messenger Verify Token
-
-These fields could be found on your Facebook App page, which you can access from your [Facebook App Dashboard](https://developers.facebook.com/apps). Then, you need to fill in corresponding fields in `.env` for loading those values correctly into `bottender.config.js`:
+To make a Messenger Bot works, you have to fill in the below environment variables in `.env`.
 
 ```
+// .env
+
 MESSENGER_PAGE_ID=
 MESSENGER_ACCESS_TOKEN=
 MESSENGER_APP_ID=
@@ -66,38 +60,102 @@ MESSENGER_APP_SECRET=
 MESSENGER_VERIFY_TOKEN=
 ```
 
-> **Note:**
->
-> - If you are not familiar with how messenger bots work, you may refer to Facebook's official document, [Setting Up Your Facebook App](https://developers.facebook.com/docs/messenger-platform/getting-started/app-setup/).
+Before going further, we assumed that you have already prepared:
 
-### Webhook
+- A Facebook Developer account
+- A Facebook App for your Messenger Bot
+- A Facebook Page for your Messenger Bot
+- A Bottender Project
 
-After finishing the above settings, you can start your server with Messenger webhook event listening using the following commands:
+
+> **Note:** If you are not familiar with Facebook App, you can refer to Facebook's official doc, [Setting Up Your Facebook App](https://developers.facebook.com/docs/messenger-platform/getting-started/app-setup/).
+
+Then you can open your App page and ready to prepare relevant environment variables. You can find detailed instructions in the following sections.
+
+### Prepare `MESSENGER_APP_ID` and `MESSENGER_APP_SECRET`
+
+Traverse to [Your Facebook Apps](https://developers.facebook.com/apps) → \${Your App Page} → Settings → Basic.
+
+You can see your App ID and App Secret. Facebook will ask your Facebook password again before display your App Secret. Fill these two values to `MESSENGER_APP_ID` and `MESSENGER_APP_SECRET` in `.env`.
+
+![](https://user-images.githubusercontent.com/662387/71390359-fe9ecc80-263a-11ea-9a3a-e7188992e471.png)
+
+### Prepare `MESSENGER_PAGE_ID` and `MESSENGER_ACCESS_TOKEN`
+
+First, please make sure that you have added `Messenger` as a product of your Facebook App.
+
+![](https://user-images.githubusercontent.com/662387/71392717-19297380-2644-11ea-9bea-4362d0cc72c3.png)
+
+Traverse to [Your Facebook Apps](https://developers.facebook.com/apps) → \${Your App Page} → Messenger → Settings → Access Tokens. Add your Facebook Page to your Facebook App.
+
+![](https://user-images.githubusercontent.com/662387/71392720-19c20a00-2644-11ea-9961-97b39fef24c2.png)
+
+Once you have added your Facebook Page for your App, you can find the `Facebook ID`. Click the `Generate Token` button to generate `Messenger Access Token.`
+
+![](https://user-images.githubusercontent.com/662387/71392721-19c20a00-2644-11ea-8b61-ea3f97296b5e.png)
+
+Facebook has a strict security policy. You can only have one chance to save your `Access Token.` Remember to have your access token copied before closing the `Token Generated` pop up. If you forgot or lost your `Access Token,` the only thing you can do is to revoke a new one.
+
+![](https://user-images.githubusercontent.com/662387/71392723-1a5aa080-2644-11ea-874d-0d21b1e0da17.png)
+
+### Prepare `MESSENGER_VERIFY_TOKEN`
+
+You can define your `Verify Token` in the filed of `MESSENGER_VERIFY_TOKEN` in `.env`. It is a token for Facebook to confirm the origin of the response is from your bot server.
+
+![](https://user-images.githubusercontent.com/662387/71392880-cb613b00-2644-11ea-928f-7941a6d955d0.png)
+
+### Prepare `Webhook`, and `Subscriptions`
+
+Before going further, please make sure you have filled in the following fields: `MESSENGER_PAGE_ID,` `MESSENGER_ACCESS_TOKEN,` `MESSENGER_APP_ID,` `MESSENGER_APP_SECRET,` `MESSENGER_VERIFY_TOKEN.`
+
+#### In Development
+
+You can run your Bottender project by the following commands.
 
 ```sh
-# in production mode
-npm start
-
-# or in development mode
 npm run dev
 ```
 
-When you run bottender in development mode, Bottender automatically run up a Ngrok client, and then you can get the information of webhook URL from the console like this:
-
-```
-App has started
-messenger webhook url: https://42bbf602.ngrok.io/webhooks/messenger
-server is running on 5000 port...
-```
-
-Then, you can finish your Messenger webhook setting with the following command.
+Then you can run the following commands to set webhook and enable bot related Messenger subscriptions.
 
 ```sh
 npx bottender messenger webhook set
 ```
 
-Now you are ready to interact with your bot on Messenger :)
+Finally, you are ready to test your bot on Messenger.
 
-> **Note:**
->
-> - Before you release your bot to the public, you have to submit your App to Facebook to get relevant permissions, e.g., `pages_message`. See Facebook's official document, [Submitting Your Messenger App](https://developers.facebook.com/docs/messenger-platform/app-review/), for more information.
+#### In Production
+
+Run your Bottender project on your hosting by the following commands.
+
+```sh
+npm start
+```
+
+If you deployed your bot on `https://example.com/`, your Messenger Bot webhook is `https://example.com/webhooks/messenger` with the default settings.
+
+#### Set up Webhook and Enable Subscriptions by Command
+
+You can set your webhook by the command below.
+
+```sh
+npx bottender telegram webhook set -w https://example.com/webhooks/messenger
+```
+
+#### Set up Webhook and Enable Subscriptions on Facebook App Page
+
+However, there are many more options and information on Facebook App page. You can also set up your webhook on Facebook App Page.
+
+Traverse to [Your Facebook Apps](https://developers.facebook.com/apps) → \${Your App Page} → Messenger → Settings → Webhook. Click button `Add Callback URL.`
+
+![](https://user-images.githubusercontent.com/662387/71392724-1a5aa080-2644-11ea-9293-37f9570e5ac7.png)
+
+Fill your webhook URL in the `Callback URL` and copy your `MESSENGER_VERIFY_TOKEN` from `.env` and paste to `Verify Token.`
+
+![](https://user-images.githubusercontent.com/662387/71392725-1a5aa080-2644-11ea-8e80-10ea96d19379.png)
+
+Please make sure that you have enabled `Subscriptions` you need by clicking `Edit` Button. We usually recommend developers to enable the following subscriptions: `messages, messaging_postbacks, messaging_optins, messaging_referrals, messaging_handovers, messaging_policy_enforcement.`
+
+![](https://user-images.githubusercontent.com/662387/71398058-3c5f1d80-265a-11ea-98ff-1bc8035ead60.png)
+
+Last but not least, let's echo again about Messenger's strict security policy. Before you release your bot to the public, you have to submit your App to Facebook to get relevant permissions, e.g., `pages_message.` See Facebook's official document, [Submitting Your Messenger App](https://developers.facebook.com/docs/messenger-platform/app-review/), for more information.
