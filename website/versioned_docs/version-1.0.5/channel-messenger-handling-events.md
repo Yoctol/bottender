@@ -86,7 +86,7 @@ async function App(context) {
 
 ### Media Related Events
 
-In our current experience, image and location are comparatively accessible. For example, an `Image Event` could be a starting point for a image-based search engine to find relevant products. And `Location Event` is often used under the context that when your bot tries to recommendation your user nearby shops or branches.
+In our current experience, image and location are comparatively accessible. For example, an `Image Event` could be a starting point for an image-based search engine to find relevant products. And `Location Event` is often used under the context that when your bot tries to recommendation your user nearby shops or branches.
 
 In the following example, you can see a bunch of `Media Related Events` from image, audio, video, file, and location.
 

@@ -237,7 +237,7 @@ await context.sendImagemap(altText, imagemap);
 
 `Template message` is an interactive gallery composed of image, video, title, subtitle, and buttons.
 
-`Template message` is the key to offer rich media interaction. It usually used in the scenario of display multiple choices, and next actions to the user, e.g., applying coupons, booking a room, making a reservation.
+`Template message` is the key to offer rich media interaction. It is usually used in the scenario of display multiple choices and next actions to the user, e.g., applying coupons, booking a room, making a reservation.
 
 > **Note:**
 > Compared with `Template Message,` we highly depend on [`Flex Message`](./channel-line-flex.md) once it is available. There are two main reasons:
