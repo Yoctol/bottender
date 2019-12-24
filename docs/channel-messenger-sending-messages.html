@@ -67,12 +67,12 @@
 <blockquote>
 <p><strong>Note:</strong></p>
 <ul>
-<li>If you want to know better about when your bots can send message proactively, please refer to Messenger's guide link about <a href="https://developers.facebook.com/docs/messenger-platform/policy/policy-overview#standard_messaging">Messenger Platform Policy Overview</a></li>
-<li>We have a separate document to introduce user event handling, please refer to <a href="/docs/channel-messenger-handling-events">Handling Messenger Events</a></li>
+<li>If you want to know better about when your bots can send message proactively, please refer to Messenger's guide link about <a href="https://developers.facebook.com/docs/messenger-platform/policy/policy-overview#standard_messaging">Messenger Platform Policy Overview</a>.</li>
+<li>We have a separate document to introduce user event handling, please refer to <a href="/docs/channel-messenger-handling-events">Handling Messenger Events</a>.</li>
 </ul>
 </blockquote>
 <p>If you are not familiar with Messenger messages, we would like to recommend a short happy path.</p>
-<p>To begin with, please try the basis of communication, <a href="#sending-text-messages"><code>Text Messages</code></a>. Secondly, try <a href="#sending-template-messages"><code>Generic Template Messages</code></a> to help you display a collection of items (e.g., recommended restaurants, songs, or books). Finally, - <a href="#sending-with-quick-reply"><code>Quick Replies</code></a>, which continuously guide your users for the next possible actions.</p>
+<p>To begin with, please try the basis of communication, <a href="#sending-text-messages"><code>Text Messages</code></a>. Secondly, try <a href="#sending-template-messages"><code>Generic Template Messages</code></a> to help you display a collection of items (e.g., recommended restaurants, songs, or books). Finally, - <a href="#sending-with-quick-reply"><code>Quick Replies</code></a>, which continuously guides your users for the next possible actions.</p>
 <p>If you have experienced with Messenger messages, don't miss <a href="#sending-rich-media-messages"><code>Rich Media Messages</code></a> to show the personality of your bots. <a href="#sending-rich-media-messages"><code>Rich Media Messages</code></a> and <a href="#media-template"><code>Media Template Messages</code></a> are necessary if you are building a media-driven, storytelling bot. Take a look at <a href="#sending-with-persona"><code>Persona</code></a>, if you offer bot auto-reply and human agent customer support at the same time. Finally, if you are making a chatbot for campaign purposes, please dive into <a href="#rate-limits"><code>Rate Limits</code></a> to ensure your bot is ready for high traffic.</p>
 <h2><a class="anchor" aria-hidden="true" id="sending-text-messages"></a><a href="#sending-text-messages" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Sending Text Messages</h2>
 <p><img src="https://user-images.githubusercontent.com/662387/69112041-4e2d2e00-0aba-11ea-8e44-02aaaf804b5d.png" alt="39993793_311437072745802_2909561891720265728_n"></p>
@@ -97,7 +97,7 @@
 <h3><a class="anchor" aria-hidden="true" id="approach-2-attaching-saved-assets"></a><a href="#approach-2-attaching-saved-assets" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Approach 2: Attaching Saved Assets</h3>
 <p>If you want to benefit from Facebook's cache, i.e., a much pleasant loading speed, you should try this a bit complicated approach.</p>
 <p>Firstly, you need to get a page-scoped <code>Attachment Id</code> by <a href="https://developers.facebook.com/docs/messenger-platform/send-messages/saving-assets#attachment_upload_api">Attachment Upload API</a>.</p>
-<p>Once you have get your <code>Attachment Id</code>, you can send rich media messages with the following code.</p>
+<p>Once you get your <code>Attachment Id</code>, you can send rich media messages with the following code.</p>
 <pre><code class="hljs css language-js"><span class="hljs-keyword">await</span> context.sendImage({ <span class="hljs-attr">attachmentId</span>: <span class="hljs-string">'&lt;ATTACHMENT_ID&gt;'</span> });
 <span class="hljs-keyword">await</span> context.sendVideo({ <span class="hljs-attr">attachmentId</span>: <span class="hljs-string">'&lt;ATTACHMENT_ID&gt;'</span> });
 <span class="hljs-keyword">await</span> context.sendAudio({ <span class="hljs-attr">attachmentId</span>: <span class="hljs-string">'&lt;ATTACHMENT_ID&gt;'</span> });
@@ -313,7 +313,7 @@ If the user's profile does not have a phone number, the quick reply doesn't show
 <p>Messenger automatically pre-fill the displayed quick reply with the Email from the user's profile information. Since many CRM (Customer Relationship Management) use the Email as a unique id, it is handy for future user mapping.</p>
 <blockquote>
 <p><strong>Note:</strong>
-If the user's profile does not have a Email, the quick reply doesn't show up. Also, the bot only receives the Email until the user clicks the quick reply.</p>
+If the user's profile does not have an Email, the quick reply doesn't show up. Also, the bot only receives the Email until the user clicks the quick reply.</p>
 </blockquote>
 <pre><code class="hljs css language-js"><span class="hljs-keyword">await</span> context.sendText(<span class="hljs-string">'Hi!'</span>, {
   <span class="hljs-attr">quickReplies</span>: [
@@ -330,7 +330,7 @@ If the user's profile does not have a Email, the quick reply doesn't show up. Al
 });
 </code></pre>
 <h2><a class="anchor" aria-hidden="true" id="rate-limits"></a><a href="#rate-limits" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Rate Limits</h2>
-<p>If you are making a bot with a sudden high traffic, e.g., a campaign bot for Black Friday, you should deal with <code>Rate Limits</code> before you receive <a href="https://developers.facebook.com/docs/messenger-platform/reference/send-api/error-codes">error code 613</a>.</p>
+<p>If you are making a bot with sudden high traffic, e.g., a campaign bot for Black Friday, you should deal with <code>Rate Limits</code> before you receive <a href="https://developers.facebook.com/docs/messenger-platform/reference/send-api/error-codes">error code 613</a>.</p>
 <p>Page Rate limits are in place to prevent malicious behavior and poor user experiences. For Pages with large audiences, Messenger recommends a send rate of 250 requests per second.</p>
 <p><code>Rate Limits</code> is various from the size of your Page audience.</p>
 <pre><code class="hljs css language-sh">Calls within 24 hours = 200 * Total Messenger Audience
