@@ -7,7 +7,7 @@
     "type": "git",
     "url": "https://github.com/Yoctol/bottender.git"
   },
-  "version": "1.0.5",
+  "version": "1.0.6",
   "main": "dist/index.js",
   "browser": "dist/browser.js",
   "bin": {
