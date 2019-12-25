@@ -1,6 +1,5 @@
 import Context from '../context/Context';
 import { Action, Client, Event, Props } from '../types';
-import { PlatformContext } from '../context/PlatformContext';
 
 type MatchPattern = string | Array<string> | RegExp;
 
@@ -9,7 +8,7 @@ type RoutePattern<C extends Client, E extends Event> =
   | RoutePredicate<C, E>;
 
 type RoutePredicate<C extends Client, E extends Event> = (
-  context: Context<C, E> | PlatformContext
+  context: Context<C, E>
 ) => boolean | Record<string, any> | Promise<boolean | Record<string, any>>;
 
 type Route<C extends Client, E extends Event> = {
@@ -163,14 +162,14 @@ function platform<C extends Client = any, E extends Event = any>(
     }
 
     return {
-      predicate: (context: PlatformContext) => context.platform === pattern,
+      predicate: (context: Context<C, E>) => context.platform === pattern,
       action,
     };
   }
 
   if (pattern instanceof RegExp) {
     return {
-      predicate: (context: PlatformContext) => {
+      predicate: (context: Context<C, E>) => {
         return pattern.exec(context.platform);
       },
       action,
@@ -179,8 +178,7 @@ function platform<C extends Client = any, E extends Event = any>(
 
   if (Array.isArray(pattern)) {
     return {
-      predicate: (context: PlatformContext) =>
-        pattern.includes(context.platform),
+      predicate: (context: Context<C, E>) => pattern.includes(context.platform),
       action,
     };
   }

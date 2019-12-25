@@ -3,12 +3,10 @@ import warning from 'warning';
 import { ViberClient, ViberTypes } from 'messaging-api-viber';
 
 import Context from '../context/Context';
-import { PlatformContext } from '../context/PlatformContext';
 
 import ViberEvent from './ViberEvent';
 
-class ViberContext extends Context<ViberClient, ViberEvent>
-  implements PlatformContext {
+class ViberContext extends Context<ViberClient, ViberEvent> {
   /**
    * The name of the platform.
    *

@@ -6,7 +6,6 @@ import { SlackOAuthClient, SlackTypes } from 'messaging-api-slack';
 
 import Context from '../context/Context';
 import Session from '../session/Session';
-import { PlatformContext } from '../context/PlatformContext';
 import { RequestContext } from '../types';
 
 import SlackEvent from './SlackEvent';
@@ -20,8 +19,10 @@ type Options = {
   emitter?: EventEmitter | null;
 };
 
-export default class SlackContext extends Context<SlackOAuthClient, SlackEvent>
-  implements PlatformContext {
+export default class SlackContext extends Context<
+  SlackOAuthClient,
+  SlackEvent
+> {
   chat: {
     postMessage: (
       options: Omit<SlackTypes.PostMessageOptions, 'channel'>

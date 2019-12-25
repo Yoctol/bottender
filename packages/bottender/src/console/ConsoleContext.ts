@@ -4,7 +4,6 @@ import sleep from 'delay';
 
 import Context from '../context/Context';
 import Session from '../session/Session';
-import { PlatformContext } from '../context/PlatformContext';
 import { RequestContext } from '../types';
 
 import ConsoleEvent from './ConsoleEvent';
@@ -27,8 +26,10 @@ const methodBlackList = [
   'handlerDidEnd', // context lifecycle
 ];
 
-export default class ConsoleContext extends Context<ConsoleClient, ConsoleEvent>
-  implements PlatformContext {
+export default class ConsoleContext extends Context<
+  ConsoleClient,
+  ConsoleEvent
+> {
   _fallbackMethods = false;
 
   _mockPlatform = 'console';
