@@ -11,7 +11,6 @@ import {
 
 import Context from '../context/Context';
 import Session from '../session/Session';
-import { PlatformContext } from '../context/PlatformContext';
 import { RequestContext } from '../types';
 
 import MessengerEvent from './MessengerEvent';
@@ -28,8 +27,7 @@ type Options = {
   emitter?: EventEmitter;
 };
 
-class MessengerContext extends Context<MessengerClient, MessengerEvent>
-  implements PlatformContext {
+class MessengerContext extends Context<MessengerClient, MessengerEvent> {
   _appId: string | null;
 
   _customAccessToken: string | null;

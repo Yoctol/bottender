@@ -8,7 +8,6 @@ import { Line, LineClient, LineTypes } from 'messaging-api-line';
 
 import Context from '../context/Context';
 import Session from '../session/Session';
-import { PlatformContext } from '../context/PlatformContext';
 import { RequestContext } from '../types';
 
 import LineEvent from './LineEvent';
@@ -25,8 +24,7 @@ type Options = {
   emitter?: EventEmitter | null;
 };
 
-class LineContext extends Context<LineClient, LineEvent>
-  implements PlatformContext {
+class LineContext extends Context<LineClient, LineEvent> {
   _customAccessToken: string | null;
 
   _isReplied = false;

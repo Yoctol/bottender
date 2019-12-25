@@ -3,30 +3,29 @@ id: channel-slack-sending-messages
 title: Sending Slack Messages
 ---
 
+Since Slack is a messaging channel specialized for team communication, Slack bots are usually expected to work either inside a channel or 1:1 chat.
 
-Since Slack is a messaging channel specialized for team communication, Slack bots are usually expected to work either inside a channel or 1:1 chat. 
-
-Chatting in the channel makes collecting individual preferences efficiently. For example, we have a Slack bot to collect colleagues' afternoon tea orders. 
+Chatting in the channel makes collecting individual preferences efficiently. For example, we have a Slack bot to collect colleagues' afternoon tea orders.
 
 Plus, Slack bot is especially good at notification scenarios, e.g., monitoring the health status of online service, or current stars of [Bottender GitHub repo](https://github.com/Yoctol/bottender)(Star it if you like it!). It is because Slack apps can post messages to channels, groups, or users without any extra fee.
 
 While developing with Official Slack API, developers have to manage token, channel id, user id of each dialog. Bottender helps developers manage those parameters by `context.` Bot developers can always make a bot respond to its current context, no matter the context is `Public Channels,` `Private Channels,` `Private Groups,` or `Direct Messaging.`
 
 > **Note:**
+>
 > - The idea of `Bot` connects to Slack's `APP.` It is important when you are cross-referencing Bottender doc with Slack's official doc.
 > - Since Slack is one of the sophisticated chat channels, in this doc, we only cover the most frequent use of methods. To access the full list of Slack API support of Bottender, you may refer to [Bottender's API](https://bottender.js.org/docs/api-slack-context).
-> If you are interested in Slack's complete methods, you may refer to Slack's official document, "[API Methods.](https://api.slack.com/methods)". Don't miss the `Test` tab next to each method; it offers a handy way to try native Slack API better.
-
+>   If you are interested in Slack's complete methods, you may refer to Slack's official document, "[API Methods.](https://api.slack.com/methods)". Don't miss the `Test` tab next to each method; it offers a handy way to try native Slack API better.
 
 ## Sending Text Messages
 
 ![Screen Shot 2019-12-02 at 6 38 26 PM](https://user-images.githubusercontent.com/662387/69952866-0f27bf80-1533-11ea-8cbc-41b68e2f733e.png)
 
-`Text message` is the most frequent and common message types. It also offers a minimal medium carrying out dynamic data, e.g., stock price and weather info. 
+`Text message` is the most frequent and common message types. It also offers a minimal medium carrying out dynamic data, e.g., stock price and weather info.
 
 ```js
 async function SendHi(context) {
- await context.sendText('Hi!');
+  await context.sendText('Hi!');
 }
 ```
 
@@ -36,19 +35,17 @@ async function SendHi(context) {
 
 This method posts a message to a public channel, private channel, or direct message. To fully support Slack's chat UI features, Bottender passes message parameters to Slack's API.
 
-
 ```js
 await context.chat.postMessage({
- text: 'Hello world!',
+  text: 'Hello world!',
 });
 ```
 
 > **Note:**
 > For more info, please refer to Slack's official doc, [`chat.postMessage`](https://api.slack.com/methods/chat.postMessage)
 
-
-
 ## Updating Messages
+
 ![image](https://user-images.githubusercontent.com/662387/70304195-5e743580-183c-11ea-8859-fab3b2d1b55b.png)
 
 Updating existing messages is one of the unique features of Slack. It is useful when your bot displays a real-time date, and you don't want to have a frequently scrolling window.
@@ -57,32 +54,31 @@ In the above image, the second message is updated by Bottender. You may notice t
 
 ```js
 await context.chat.update({
- text: 'Hello world!',
- ts: '1405894322.002768',
+  text: 'Hello world!',
+  ts: '1405894322.002768',
 });
 ```
 
 > **Note:**
+>
 > - The `ts` parameter in the code above, refers to the timestamp of the message, which is a (per-channel) unique id of each message,
 > - Ephemeral messages created by chat.postEphemeral or otherwise cannot be updated with this method.
 > - For more info, please refer to Slack's official doc, [`chat.update`](https://api.slack.com/methods/chat.update)
 
-
 ## Deleting Messages
 
-This method deletes a message posted by the bot from a channel. 
+This method deletes a message posted by the bot from a channel.
 
 ```js
 await context.chat.delete({
- ts: '1405894322.002768',
+  ts: '1405894322.002768',
 });
 ```
 
 > **Note:**
+>
 > - The `ts` parameter in the code above, refers to the timestamp of the message, which is a (per-channel) unique id of each message,
 > - For more info, please refer to Slack's official doc, [`chat.delete`](https://api.slack.com/methods/chat.delete)
-
-
 
 ## Posting Ephemeral Messages
 
@@ -91,18 +87,19 @@ await context.chat.delete({
 Bots can post `Ephemeral Messages` only visible to the assigned user in a specific public channel, private channel, or private conversation. In short, `Ephemeral Messages` allows bots to replies context-sensitive information to the user under current Bottender `context.` For example, when a user inputs `check-in`, the bot could post an `Ephemeral Message` to the user check-in time.
 
 > **Note:**
-> - `Ephemeral Message` delivery is not guaranteed — the user must be currently active in Slack and a member of the specified channel. 
+>
+> - `Ephemeral Message` delivery is not guaranteed — the user must be currently active in Slack and a member of the specified channel.
 > - For more info, please refer to Slack's official doc, [`chat.postEphemeral`](https://api.slack.com/methods/chat.postEphemeral)
 
 ```js
 await context.chat.postEphemeral({
- text: 'Hello world!',
+  text: 'Hello world!',
 });
 ```
 
 > **Note:**
+>
 > - For more info, please refer to Slack's official doc, [`chat.postEphemeral`](https://api.slack.com/methods/chat.postEphemeral)
-
 
 ## Sharing Me Messages
 
@@ -112,12 +109,13 @@ Share a me message into a channel.
 
 ```js
 await context.chat.meMessage({
- text: 'Hello world!',
+  text: 'Hello world!',
 });
 ```
-> **Note:**
-> - For more info, please refer to Slack's official doc, [`chat.meMessage`](https://api.slack.com/methods/chat.meMessage)
 
+> **Note:**
+>
+> - For more info, please refer to Slack's official doc, [`chat.meMessage`](https://api.slack.com/methods/chat.meMessage)
 
 ## Retrieving A Permalink URL for Specific Extant Messages
 
@@ -125,16 +123,16 @@ await context.chat.meMessage({
 
 Retrieve a permalink URL for a specific extant message
 
-
 ```js
 await context.chat.getPermalink({
- messageTs: '1234567890.123456',
+  messageTs: '1234567890.123456',
 });
 ```
+
 > **Note:**
+>
 > - The `messageTs` parameter in the code above, refers to the timestamp of the message, which is a (per-channel) unique id of each message,
 > - For more info, please refer to Slack's official doc, [`chat.getPermalink`](https://api.slack.com/methods/chat.getPermalink)
-
 
 ## Scheduling Messages
 
@@ -148,15 +146,15 @@ Schedules a message to be sent to a channel.
 
 ```js
 await context.chat.scheduleMessage({
- text: 'Hello world!',
- postAt: '299876400',
+  text: 'Hello world!',
+  postAt: '299876400',
 });
 ```
 
 > **Note:**
+>
 > - The `postAt` parameter in the code above follows Unix EPOCH timestamp.
 > - For more info, please refer to Slack's official doc, [`chat.scheduleMessage`](https://api.slack.com/methods/chat.scheduleMessage)
-
 
 ### Getting a List of Scheduled Messages
 
@@ -167,8 +165,8 @@ await context.chat.scheduledMessages.list();
 ```
 
 > **Note:**
+>
 > - For more info, please refer to Slack's official doc, [`chat.scheduledMessages.list`](https://api.slack.com/methods/chat.scheduledMessages.list)
-
 
 ### Deleting Pending Scheduled Messages
 
@@ -176,9 +174,10 @@ First, you have to use `chat.scheduledMessages.list` to figure out the `<SCHEDUL
 
 ```js
 await context.chat.deleteScheduledMessage({
- scheduledMessageId: '<SCHEDULED_MESSAGE_ID>',
+  scheduledMessageId: '<SCHEDULED_MESSAGE_ID>',
 });
 ```
 
 > **Note:**
+>
 > - For more info, please refer to Slack's official doc, [`chat.deleteScheduledMessage`](https://api.slack.com/methods/chat.deleteScheduledMessage)

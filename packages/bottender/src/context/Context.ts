@@ -23,7 +23,16 @@ type Response = {
   body: any;
 };
 
-export default class Context<C extends Client, E extends Event> {
+export default abstract class Context<C extends Client, E extends Event> {
+  /**
+   * The name of the platform.
+   *
+   */
+  abstract get platform(): string;
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  abstract sendText(text: string, options?: Record<string, any>): any;
+
   _isHandled = false;
 
   _isSessionWritten = false;
