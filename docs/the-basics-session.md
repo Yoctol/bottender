@@ -1,6 +1,6 @@
 ---
 id: the-basics-session
-title: Sesstion
+title: Session
 ---
 
 ## Introduction

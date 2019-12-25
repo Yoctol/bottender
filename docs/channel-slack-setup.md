@@ -78,4 +78,12 @@ npm start
 npm run dev
 ```
 
+When you run bottender in development mode, Bottender automatically run up a Ngrok client, and then you can get the information of webhook URL from the console like this:
+
+```
+App has started
+slack webhook url: https://42bbf602.ngrok.io/webhooks/slack
+server is running on 5000 port...
+```
+
 Then, you have to copy your Slack webhook url to [Slack Developer Console](https://api.slack.com/apps) / [YourApp] / Event Subscriptions, where you can pick which bot events to subscribe.

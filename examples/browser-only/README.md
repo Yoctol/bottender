@@ -11,6 +11,8 @@ npm install
 npm run start
 ```
 
+![](https://user-images.githubusercontent.com/3382565/71249572-75487b00-2358-11ea-90a3-f4fdbd6dd4bb.gif)
+
 ## Idea of this example
 
 This example is a simple bot running on your browser.

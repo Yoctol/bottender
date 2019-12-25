@@ -32,7 +32,8 @@
     "Guides (Slack)": ["channel-slack-setup", "channel-slack-handling-events"],
     "Guides (Telegram)": [
       "channel-telegram-setup",
-      "channel-telegram-handling-events"
+      "channel-telegram-handling-events",
+      "channel-telegram-sending-messages"
     ],
     "Guides (Viber)": ["channel-viber-setup", "channel-viber-handling-events"],
     "FAQ": []

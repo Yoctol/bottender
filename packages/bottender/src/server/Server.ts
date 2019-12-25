@@ -50,6 +50,8 @@ function createSessionStore(
 }
 
 class Server {
+  _channelBots: { webhookPath: string; bot: Bot<any, any, any> }[] = [];
+
   useConsole: boolean;
 
   constructor({ useConsole = false } = {}) {
@@ -68,19 +70,7 @@ class Server {
     });
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  public async prepare() {
-    // do nothing in production mode
-  }
-
-  public getRequestHandler() {
-    return this.handleRequest.bind(this);
-  }
-
-  protected async run(
-    req: IncomingMessage,
-    res: ServerResponse
-  ): Promise<void> {
+  public async prepare(): Promise<void> {
     const bottenderConfig = getBottenderConfig();
 
     const { initialState, plugins, session, channels } = merge(
@@ -149,14 +139,29 @@ class Server {
         };
       });
 
+    this._channelBots = channelBots;
+  }
+
+  public getRequestHandler() {
+    return this.handleRequest.bind(this);
+  }
+
+  protected async run(
+    req: IncomingMessage,
+    res: ServerResponse
+  ): Promise<void> {
+    if (this.useConsole) {
+      return;
+    }
+
     const { pathname, searchParams } = new url.URL(
       `http://${req.headers.host}${req.url}`
     );
 
     const query = fromEntries(searchParams.entries());
 
-    for (let i = 0; i < channelBots.length; i++) {
-      const { webhookPath, bot } = channelBots[i];
+    for (let i = 0; i < this._channelBots.length; i++) {
+      const { webhookPath, bot } = this._channelBots[i];
 
       if (pathname === webhookPath) {
         const result = (bot.connector as any).preprocess({

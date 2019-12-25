@@ -95,6 +95,9 @@
       "channel-telegram-handling-events": {
         "title": "Handling Telegram Events"
       },
+      "channel-telegram-sending-messages": {
+        "title": "Sending Telegram Messages"
+      },
       "channel-telegram-setup": {
         "title": "Setup Telegram"
       },
@@ -132,7 +135,7 @@
         "title": "Routing"
       },
       "the-basics-session": {
-        "title": "Sesstion"
+        "title": "Session"
       },
       "version-0.15.17/version-0.15.17-api-consolecontext": {
         "title": "ConsoleContext"
@@ -233,131 +236,134 @@
       "version-0.15.17/version-0.15.17-viber": {
         "title": "Viber"
       },
-      "version-1.0.3/version-1.0.3-advanced-guides-nlu": {
+      "version-1.0.5/version-1.0.5-advanced-guides-nlu": {
         "title": "Natural Language Understanding"
       },
-      "version-1.0.3/version-1.0.3-api-console-context": {
+      "version-1.0.5/version-1.0.5-api-console-context": {
         "title": "ConsoleContext"
       },
-      "version-1.0.3/version-1.0.3-api-context": {
+      "version-1.0.5/version-1.0.5-api-context": {
         "title": "Context"
       },
-      "version-1.0.3/version-1.0.3-api-event": {
+      "version-1.0.5/version-1.0.5-api-event": {
         "title": "Event"
       },
-      "version-1.0.3/version-1.0.3-api-line-context": {
+      "version-1.0.5/version-1.0.5-api-line-context": {
         "title": "LineContext"
       },
-      "version-1.0.3/version-1.0.3-api-line-event": {
+      "version-1.0.5/version-1.0.5-api-line-event": {
         "title": "LineEvent"
       },
-      "version-1.0.3/version-1.0.3-api-messenger-context": {
+      "version-1.0.5/version-1.0.5-api-messenger-context": {
         "title": "MessengerContext"
       },
-      "version-1.0.3/version-1.0.3-api-messenger-event": {
+      "version-1.0.5/version-1.0.5-api-messenger-event": {
         "title": "MessengerEvent"
       },
-      "version-1.0.3/version-1.0.3-api-slack-context": {
+      "version-1.0.5/version-1.0.5-api-slack-context": {
         "title": "SlackContext"
       },
-      "version-1.0.3/version-1.0.3-api-slack-event": {
+      "version-1.0.5/version-1.0.5-api-slack-event": {
         "title": "SlackEvent"
       },
-      "version-1.0.3/version-1.0.3-api-telegram-context": {
+      "version-1.0.5/version-1.0.5-api-telegram-context": {
         "title": "TelegramContext"
       },
-      "version-1.0.3/version-1.0.3-api-telegram-event": {
+      "version-1.0.5/version-1.0.5-api-telegram-event": {
         "title": "TelegramEvent"
       },
-      "version-1.0.3/version-1.0.3-api-viber-context": {
+      "version-1.0.5/version-1.0.5-api-viber-context": {
         "title": "ViberContext"
       },
-      "version-1.0.3/version-1.0.3-api-viber-event": {
+      "version-1.0.5/version-1.0.5-api-viber-event": {
         "title": "ViberEvent"
       },
-      "version-1.0.3/version-1.0.3-channel-line-errors": {
+      "version-1.0.5/version-1.0.5-channel-line-errors": {
         "title": "Error Handling in LINE"
       },
-      "version-1.0.3/version-1.0.3-channel-line-flex": {
+      "version-1.0.5/version-1.0.5-channel-line-flex": {
         "title": "Sending Flex Message"
       },
-      "version-1.0.3/version-1.0.3-channel-line-handling-events": {
+      "version-1.0.5/version-1.0.5-channel-line-handling-events": {
         "title": "Handling LINE Events"
       },
-      "version-1.0.3/version-1.0.3-channel-line-migrating-from-sdk": {
+      "version-1.0.5/version-1.0.5-channel-line-migrating-from-sdk": {
         "title": "Migrating from LINE SDK for Node.js"
       },
-      "version-1.0.3/version-1.0.3-channel-line-rich-menu": {
+      "version-1.0.5/version-1.0.5-channel-line-rich-menu": {
         "title": "Rich Menu"
       },
-      "version-1.0.3/version-1.0.3-channel-line-sending-messages": {
+      "version-1.0.5/version-1.0.5-channel-line-sending-messages": {
         "title": "Sending LINE Messages"
       },
-      "version-1.0.3/version-1.0.3-channel-line-setup": {
+      "version-1.0.5/version-1.0.5-channel-line-setup": {
         "title": "Setup LINE"
       },
-      "version-1.0.3/version-1.0.3-channel-messenger-handling-events": {
+      "version-1.0.5/version-1.0.5-channel-messenger-handling-events": {
         "title": "Handling Messenger Events"
       },
-      "version-1.0.3/version-1.0.3-channel-messenger-persona": {
+      "version-1.0.5/version-1.0.5-channel-messenger-persona": {
         "title": "Using Persona"
       },
-      "version-1.0.3/version-1.0.3-channel-messenger-profile": {
+      "version-1.0.5/version-1.0.5-channel-messenger-profile": {
         "title": "Messenger Profile"
       },
-      "version-1.0.3/version-1.0.3-channel-messenger-sending-messages": {
+      "version-1.0.5/version-1.0.5-channel-messenger-sending-messages": {
         "title": "Sending Messenger Messages"
       },
-      "version-1.0.3/version-1.0.3-channel-messenger-setup": {
+      "version-1.0.5/version-1.0.5-channel-messenger-setup": {
         "title": "Setup Messenger"
       },
-      "version-1.0.3/version-1.0.3-channel-slack-handling-events": {
+      "version-1.0.5/version-1.0.5-channel-slack-handling-events": {
         "title": "Handling Slack Events"
       },
-      "version-1.0.3/version-1.0.3-channel-slack-setup": {
+      "version-1.0.5/version-1.0.5-channel-slack-setup": {
         "title": "Setup Slack"
       },
-      "version-1.0.3/version-1.0.3-channel-telegram-handling-events": {
+      "version-1.0.5/version-1.0.5-channel-telegram-handling-events": {
         "title": "Handling Telegram Events"
       },
-      "version-1.0.3/version-1.0.3-channel-telegram-setup": {
+      "version-1.0.5/version-1.0.5-channel-telegram-sending-messages": {
+        "title": "Sending Telegram Messages"
+      },
+      "version-1.0.5/version-1.0.5-channel-telegram-setup": {
         "title": "Setup Telegram"
       },
-      "version-1.0.3/version-1.0.3-channel-viber-handling-events": {
+      "version-1.0.5/version-1.0.5-channel-viber-handling-events": {
         "title": "Handling Viber Events"
       },
-      "version-1.0.3/version-1.0.3-channel-viber-setup": {
+      "version-1.0.5/version-1.0.5-channel-viber-setup": {
         "title": "Setup Viber"
       },
-      "version-1.0.3/version-1.0.3-getting-started": {
+      "version-1.0.5/version-1.0.5-getting-started": {
         "title": "Getting Started"
       },
-      "version-1.0.3/version-1.0.3-migrating-v1": {
+      "version-1.0.5/version-1.0.5-migrating-v1": {
         "title": "Migrating from v0.x to v1.x"
       },
-      "version-1.0.3/version-1.0.3-multi-messaging-channel-support": {
+      "version-1.0.5/version-1.0.5-multi-messaging-channel-support": {
         "title": "Multi-Messaging Channel Support"
       },
-      "version-1.0.3/version-1.0.3-the-basics-actions": {
+      "version-1.0.5/version-1.0.5-the-basics-actions": {
         "title": "Resolving Actions"
       },
-      "version-1.0.3/version-1.0.3-the-basics-chain": {
+      "version-1.0.5/version-1.0.5-the-basics-chain": {
         "title": "Chain of Responsibility"
       },
-      "version-1.0.3/version-1.0.3-the-basics-console-mode": {
+      "version-1.0.5/version-1.0.5-the-basics-console-mode": {
         "title": "Console Mode"
       },
-      "version-1.0.3/version-1.0.3-the-basics-context-event": {
+      "version-1.0.5/version-1.0.5-the-basics-context-event": {
         "title": "Context and Event"
       },
-      "version-1.0.3/version-1.0.3-the-basics-errors": {
+      "version-1.0.5/version-1.0.5-the-basics-errors": {
         "title": "Error Handling"
       },
-      "version-1.0.3/version-1.0.3-the-basics-routing": {
+      "version-1.0.5/version-1.0.5-the-basics-routing": {
         "title": "Routing"
       },
-      "version-1.0.3/version-1.0.3-the-basics-session": {
-        "title": "Sesstion"
+      "version-1.0.5/version-1.0.5-the-basics-session": {
+        "title": "Session"
       }
     },
     "links": {

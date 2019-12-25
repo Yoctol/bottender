@@ -50,7 +50,7 @@ To make a LINE bot work, you have to setup three values:
 
 ### LINE Access Token & Channel Secret
 
-`bottender.config.js` looks up `.env` for LINE access token and LINE channel secrect. Those two values have to be copied from LINE@ account settings and pasted to the the following fields in `.env`.
+`bottender.config.js` looks up `.env` for LINE access token and LINE channel secret. Those two values have to be copied from LINE@ account settings and pasted to the following fields in `.env`.
 
 ```
 LINE_ACCESS_TOKEN=
@@ -61,11 +61,11 @@ LINE_CHANNEL_SECRET=
 >
 > - It is recommended to develop your LINE Bot with your developer LINE@ account, further information could be found in LINE's official article, [Getting Started](https://developers.line.biz/en/docs/messaging-api/getting-started/).
 > - Your LINE@ account can be accessed from your [provider list](https://developers.line.biz/console/).
-> - To get your LINE access token and LINE channel secrect, you may refer to LINE's official article, [Building a Bot](https://developers.line.biz/en/docs/messaging-api/building-bot/).
+> - To get your LINE access token and LINE channel secret, you may refer to LINE's official article, [Building a Bot](https://developers.line.biz/en/docs/messaging-api/building-bot/).
 
 ### Webhook
 
-After finishing above settings, you can start your server with LINE webhook event listening using following commands:
+After finishing the above settings, you can start your server with LINE webhook event listening using the following commands:
 
 ```sh
 # in production mode
@@ -75,7 +75,15 @@ npm start
 npm run dev
 ```
 
-Then, you have to manually copy your webhook url to LINE@ account's setting page. Finally, you are ready to interact with your bot on LINE :)
+When you run bottender in development mode, Bottender automatically run up a Ngrok client, and then you can get the information of webhook URL from the console like this:
+
+```
+App has started
+line webhook url: https://42bbf602.ngrok.io/webhooks/line
+server is running on 5000 port...
+```
+
+Then, you have to manually copy your webhook url to LINE@ account's settings page. Finally, you are ready to interact with your bot on LINE :)
 
 > **Note:**
 >

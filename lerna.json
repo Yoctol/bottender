@@ -5,9 +5,7 @@
   "version": "1.1.0-alpha.0",
   "command": {
     "publish": {
-      "ignoreChanges": [
-        "__tests__/**"
-      ]
+      "ignoreChanges": ["__tests__/**"]
     }
   },
   "publishConfig": {

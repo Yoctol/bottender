@@ -1,3 +1,11 @@
+# 1.0.6 / 2019-12-24
+
+- [fix] session should never expire by default #595
+
+# 1.0.5 / 2019-12-19
+
+- [fix] move init session and bots into server prepare step #589
+
 # 1.0.4 / 2019-12-17
 
 - [fix] session: use Windows safe key separator for file session

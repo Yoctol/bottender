@@ -42,7 +42,7 @@ After setting environment variables correctly (if not, please check [this](chann
 npx bottender messenger profile set
 ```
 
-> **Note:** Calls to the Messenger Profile API are limited to **10 API calls per 10 minute** interval. This rate limit is enforced per Page. You can retry it a few minutes later if rate limit exceeded.
+> **Note:** Calls to the Messenger Profile API are limited to **10 API calls per 10 minute** interval. This rate limit is enforced per Page. You could retry it a few minutes later if the rate limit exceeded.
 
 To view all set messenger profile, you may use the `messenger profile get` command:
 
@@ -219,7 +219,7 @@ module.exports = {
 
 `question` will be posted on the thread as the user asking the question and `payload` will be returned as a postback webhook event.
 
-> **Note:** Some of the profile elements like Ice Breakers and Get Started button are incompatible with each other. So when both are set one will take precedence over the other. Here is the priority from highest to lowest:
+> **Note:** Some of the profile elements like Ice Breakers and Get Started button are incompatible with each other. So when both are set, one will take precedence over the other. Here is the priority from highest to lowest:
 >
 > - API Ice Breakers
 > - Get Started button
