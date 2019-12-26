@@ -1,5 +1,6 @@
 import Context from '../context/Context';
 import line from '../line/routes';
+import messenger from '../messenger/routes';
 import { Action, Client, Event, Props } from '../types';
 
 type MatchPattern = string | Array<string> | RegExp;
@@ -192,4 +193,4 @@ function platform<C extends Client = any, E extends Event = any>(
 
 export default router;
 
-export { router, route, text, payload, platform, line };
+export { router, route, text, payload, platform, line, messenger };

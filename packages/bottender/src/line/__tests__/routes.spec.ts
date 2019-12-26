@@ -306,14 +306,14 @@ class TestContext extends Context<any, any> {
 }
 
 describe('#line', () => {
-  it('should call action when it receives line event', async () => {
+  it('should call action when it receives a line event', async () => {
     await expectRouteMatchLineEvent({
       route: line(Action),
       event: lineEventTextMessage,
     });
   });
 
-  it('should not call action when it receives non-line event', async () => {
+  it('should not call action when it receives a non-line event', async () => {
     await expectRouteNotMatchContext({
       route: line(Action),
       context: new TestContext({
@@ -331,7 +331,7 @@ describe('#line', () => {
       });
     });
 
-    it('should not call action when it receives non-message event', async () => {
+    it('should not call action when it receives a non-message event', async () => {
       await expectRouteNotMatchLineEvent({
         route: line.message(Action),
         event: lineEventFollow,
@@ -347,7 +347,7 @@ describe('#line', () => {
       });
     });
 
-    it('should not call action when it receives non-follow event', async () => {
+    it('should not call action when it receives a non-follow event', async () => {
       await expectRouteNotMatchLineEvent({
         route: line.follow(Action),
         event: lineEventUnfollow,
@@ -363,7 +363,7 @@ describe('#line', () => {
       });
     });
 
-    it('should not call action when it receives non-unfollow event', async () => {
+    it('should not call action when it receives a non-unfollow event', async () => {
       await expectRouteNotMatchLineEvent({
         route: line.unfollow(Action),
         event: lineEventFollow,
@@ -379,7 +379,7 @@ describe('#line', () => {
       });
     });
 
-    it('should not call action when it receives non-join event', async () => {
+    it('should not call action when it receives a non-join event', async () => {
       await expectRouteNotMatchLineEvent({
         route: line.join(Action),
         event: lineEventLeave,
@@ -395,7 +395,7 @@ describe('#line', () => {
       });
     });
 
-    it('should not call action when it receives non-leave event', async () => {
+    it('should not call action when it receives a non-leave event', async () => {
       await expectRouteNotMatchLineEvent({
         route: line.leave(Action),
         event: lineEventJoin,
@@ -411,7 +411,7 @@ describe('#line', () => {
       });
     });
 
-    it('should not call action when it receives non-memberJoined event', async () => {
+    it('should not call action when it receives a non-memberJoined event', async () => {
       await expectRouteNotMatchLineEvent({
         route: line.memberJoined(Action),
         event: lineEventMemberLeft,
@@ -427,7 +427,7 @@ describe('#line', () => {
       });
     });
 
-    it('should not call action when it receives non-memberLeft event', async () => {
+    it('should not call action when it receives a non-memberLeft event', async () => {
       await expectRouteNotMatchLineEvent({
         route: line.memberLeft(Action),
         event: lineEventMemberJoined,
@@ -443,7 +443,7 @@ describe('#line', () => {
       });
     });
 
-    it('should not call action when it receives non-postback event', async () => {
+    it('should not call action when it receives a non-postback event', async () => {
       await expectRouteNotMatchLineEvent({
         route: line.postback(Action),
         event: lineEventTextMessage,
@@ -459,7 +459,7 @@ describe('#line', () => {
       });
     });
 
-    it('should not call action when it receives non-beacon event', async () => {
+    it('should not call action when it receives a non-beacon event', async () => {
       await expectRouteNotMatchLineEvent({
         route: line.beacon(Action),
         event: lineEventTextMessage,
@@ -474,7 +474,7 @@ describe('#line', () => {
         });
       });
 
-      it('should not call action when it receives non-beacon.enter event', async () => {
+      it('should not call action when it receives a non-beacon.enter event', async () => {
         await expectRouteNotMatchLineEvent({
           route: line.beacon.enter(Action),
           event: lineEventBeaconBanner,
@@ -490,7 +490,7 @@ describe('#line', () => {
         });
       });
 
-      it('should not call action when it receives non-beacon.banner event', async () => {
+      it('should not call action when it receives a non-beacon.banner event', async () => {
         await expectRouteNotMatchLineEvent({
           route: line.beacon.banner(Action),
           event: lineEventBeaconStay,
@@ -506,7 +506,7 @@ describe('#line', () => {
         });
       });
 
-      it('should not call action when it receives non-beacon.stay event', async () => {
+      it('should not call action when it receives a non-beacon.stay event', async () => {
         await expectRouteNotMatchLineEvent({
           route: line.beacon.stay(Action),
           event: lineEventBeaconEnter,
@@ -523,7 +523,7 @@ describe('#line', () => {
       });
     });
 
-    it('should not call action when it receives non-accountLink event', async () => {
+    it('should not call action when it receives a non-accountLink event', async () => {
       await expectRouteNotMatchLineEvent({
         route: line.accountLink(Action),
         event: lineEventTextMessage,
@@ -539,7 +539,7 @@ describe('#line', () => {
       });
     });
 
-    it('should not call action when it receives non-things event', async () => {
+    it('should not call action when it receives a non-things event', async () => {
       await expectRouteNotMatchLineEvent({
         route: line.things(Action),
         event: lineEventTextMessage,
@@ -554,7 +554,7 @@ describe('#line', () => {
         });
       });
 
-      it('should not call action when it receives non-things.link event', async () => {
+      it('should not call action when it receives a non-things.link event', async () => {
         await expectRouteNotMatchLineEvent({
           route: line.things.link(Action),
           event: lineEventThingsUnlink,
@@ -570,7 +570,7 @@ describe('#line', () => {
         });
       });
 
-      it('should not call action when it receives non-things.unlink event', async () => {
+      it('should not call action when it receives a non-things.unlink event', async () => {
         await expectRouteNotMatchLineEvent({
           route: line.things.unlink(Action),
           event: lineEventThingsLink,
@@ -586,7 +586,7 @@ describe('#line', () => {
         });
       });
 
-      it('should not call action when it receives non-things.scenarioResult event', async () => {
+      it('should not call action when it receives a non-things.scenarioResult event', async () => {
         await expectRouteNotMatchLineEvent({
           route: line.things.scenarioResult(Action),
           event: lineEventThingsLink,
