@@ -69,7 +69,7 @@ TELEGRAM_ACCESS_TOKEN=
 >
 > - BotFather is a super elegant mechanism to create/edit/delete your bots. You don't even need to apply for a developer account or permission to send messages.
 > - Keep your token secure and store it safely; it can be used by anyone to control your bot. When you have to generate a new access token, you can send `/revoke` to BotFather.
-> - For more info, please refer to Telegram's official doc, [BotFather](https://core.telegram.org/bots#6-botfather)).
+> - For more info, please refer to Telegram's official doc, [BotFather](https://core.telegram.org/bots#6-botfather).
 
 ### Webhook
 
