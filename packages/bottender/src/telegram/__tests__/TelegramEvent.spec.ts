@@ -547,6 +547,19 @@ const preCheckoutQuery = {
   },
 };
 
+const poll = {
+  updateId: 141921690,
+  poll: {
+    id: '123',
+    question: 'What is it?',
+    options: [
+      { text: 'A', voterCount: 0 },
+      { text: 'B', voterCount: 0 },
+    ],
+    isClosed: false,
+  },
+};
+
 const replyToTextMessage = {
   message: {
     messageId: 666,
@@ -602,6 +615,7 @@ it('#rawEvent', () => {
   expect(new TelegramEvent(preCheckoutQuery).rawEvent).toEqual(
     preCheckoutQuery
   );
+  expect(new TelegramEvent(poll).rawEvent).toEqual(poll);
   expect(new TelegramEvent(replyToTextMessage).rawEvent).toEqual(
     replyToTextMessage
   );
@@ -618,6 +632,7 @@ it('#isMessage', () => {
   expect(new TelegramEvent(callbackQuery).isMessage).toEqual(false);
   expect(new TelegramEvent(shippingQuery).isMessage).toEqual(false);
   expect(new TelegramEvent(preCheckoutQuery).isMessage).toEqual(false);
+  expect(new TelegramEvent(poll).isMessage).toEqual(false);
   expect(new TelegramEvent(replyToTextMessage).isMessage).toEqual(true);
 });
 
@@ -666,6 +681,7 @@ it('#message', () => {
   expect(new TelegramEvent(callbackQuery).message).toEqual(null);
   expect(new TelegramEvent(shippingQuery).message).toEqual(null);
   expect(new TelegramEvent(preCheckoutQuery).message).toEqual(null);
+  expect(new TelegramEvent(poll).message).toEqual(null);
   expect(new TelegramEvent(replyToTextMessage).message).toEqual({
     messageId: 666,
     from: {
@@ -729,6 +745,7 @@ it('#isReplyToMessage', () => {
   expect(new TelegramEvent(callbackQuery).isReplyToMessage).toEqual(false);
   expect(new TelegramEvent(shippingQuery).isReplyToMessage).toEqual(false);
   expect(new TelegramEvent(preCheckoutQuery).isReplyToMessage).toEqual(false);
+  expect(new TelegramEvent(poll).isReplyToMessage).toEqual(false);
   expect(new TelegramEvent(replyToTextMessage).isReplyToMessage).toEqual(true);
 });
 
@@ -742,6 +759,7 @@ it('#replyToMessage', () => {
   expect(new TelegramEvent(callbackQuery).replyToMessage).toEqual(null);
   expect(new TelegramEvent(shippingQuery).replyToMessage).toEqual(null);
   expect(new TelegramEvent(preCheckoutQuery).replyToMessage).toEqual(null);
+  expect(new TelegramEvent(poll).replyToMessage).toEqual(null);
   expect(new TelegramEvent(replyToTextMessage).replyToMessage).toEqual({
     messageId: 777,
     from: {
@@ -989,6 +1007,7 @@ it('#isEditedMessage', () => {
   expect(new TelegramEvent(callbackQuery).isEditedMessage).toEqual(false);
   expect(new TelegramEvent(shippingQuery).isEditedMessage).toEqual(false);
   expect(new TelegramEvent(preCheckoutQuery).isEditedMessage).toEqual(false);
+  expect(new TelegramEvent(poll).isEditedMessage).toEqual(false);
   expect(new TelegramEvent(replyToTextMessage).isEditedMessage).toEqual(false);
 });
 
@@ -1039,6 +1058,7 @@ it('#editedMessage', () => {
   expect(new TelegramEvent(callbackQuery).editedMessage).toEqual(null);
   expect(new TelegramEvent(shippingQuery).editedMessage).toEqual(null);
   expect(new TelegramEvent(preCheckoutQuery).editedMessage).toEqual(null);
+  expect(new TelegramEvent(poll).editedMessage).toEqual(null);
   expect(new TelegramEvent(replyToTextMessage).editedMessage).toEqual(null);
 });
 
@@ -1052,6 +1072,7 @@ it('#isChannelPost', () => {
   expect(new TelegramEvent(callbackQuery).isChannelPost).toEqual(false);
   expect(new TelegramEvent(shippingQuery).isChannelPost).toEqual(false);
   expect(new TelegramEvent(preCheckoutQuery).isChannelPost).toEqual(false);
+  expect(new TelegramEvent(poll).isChannelPost).toEqual(false);
   expect(new TelegramEvent(replyToTextMessage).isChannelPost).toEqual(false);
 });
 
@@ -1074,6 +1095,7 @@ it('#channelPost', () => {
   expect(new TelegramEvent(callbackQuery).channelPost).toEqual(null);
   expect(new TelegramEvent(shippingQuery).channelPost).toEqual(null);
   expect(new TelegramEvent(preCheckoutQuery).channelPost).toEqual(null);
+  expect(new TelegramEvent(poll).channelPost).toEqual(null);
   expect(new TelegramEvent(replyToTextMessage).channelPost).toEqual(null);
 });
 
@@ -1093,6 +1115,7 @@ it('#isEditedChannelPost', () => {
   expect(new TelegramEvent(preCheckoutQuery).isEditedChannelPost).toEqual(
     false
   );
+  expect(new TelegramEvent(poll).isEditedChannelPost).toEqual(false);
   expect(new TelegramEvent(replyToTextMessage).isEditedChannelPost).toEqual(
     false
   );
@@ -1118,6 +1141,7 @@ it('#editedChannelPost', () => {
   expect(new TelegramEvent(callbackQuery).editedChannelPost).toEqual(null);
   expect(new TelegramEvent(shippingQuery).editedChannelPost).toEqual(null);
   expect(new TelegramEvent(preCheckoutQuery).editedChannelPost).toEqual(null);
+  expect(new TelegramEvent(poll).editedChannelPost).toEqual(null);
   expect(new TelegramEvent(replyToTextMessage).editedChannelPost).toEqual(null);
 });
 
@@ -1131,6 +1155,7 @@ it('#isInlineQuery', () => {
   expect(new TelegramEvent(callbackQuery).isInlineQuery).toEqual(false);
   expect(new TelegramEvent(shippingQuery).isInlineQuery).toEqual(false);
   expect(new TelegramEvent(preCheckoutQuery).isInlineQuery).toEqual(false);
+  expect(new TelegramEvent(poll).isInlineQuery).toEqual(false);
   expect(new TelegramEvent(replyToTextMessage).isInlineQuery).toEqual(false);
 });
 
@@ -1155,6 +1180,7 @@ it('#inlineQuery', () => {
   expect(new TelegramEvent(callbackQuery).inlineQuery).toEqual(null);
   expect(new TelegramEvent(shippingQuery).inlineQuery).toEqual(null);
   expect(new TelegramEvent(preCheckoutQuery).inlineQuery).toEqual(null);
+  expect(new TelegramEvent(poll).inlineQuery).toEqual(null);
   expect(new TelegramEvent(replyToTextMessage).inlineQuery).toEqual(null);
 });
 
@@ -1174,6 +1200,7 @@ it('#isChosenInlineResult', () => {
   expect(new TelegramEvent(preCheckoutQuery).isChosenInlineResult).toEqual(
     false
   );
+  expect(new TelegramEvent(poll).isChosenInlineResult).toEqual(false);
   expect(new TelegramEvent(replyToTextMessage).isChosenInlineResult).toEqual(
     false
   );
@@ -1200,6 +1227,7 @@ it('#chosenInlineResult', () => {
   expect(new TelegramEvent(callbackQuery).chosenInlineResult).toEqual(null);
   expect(new TelegramEvent(shippingQuery).chosenInlineResult).toEqual(null);
   expect(new TelegramEvent(preCheckoutQuery).chosenInlineResult).toEqual(null);
+  expect(new TelegramEvent(poll).chosenInlineResult).toEqual(null);
   expect(new TelegramEvent(replyToTextMessage).chosenInlineResult).toEqual(
     null
   );
@@ -1216,6 +1244,7 @@ it('#isCallbackQuery', () => {
   expect(new TelegramEvent(groupCallbackQuery).isCallbackQuery).toEqual(true);
   expect(new TelegramEvent(shippingQuery).isCallbackQuery).toEqual(false);
   expect(new TelegramEvent(preCheckoutQuery).isCallbackQuery).toEqual(false);
+  expect(new TelegramEvent(poll).isCallbackQuery).toEqual(false);
   expect(new TelegramEvent(replyToTextMessage).isCallbackQuery).toEqual(false);
 });
 
@@ -1286,6 +1315,7 @@ it('#callbackQuery', () => {
   });
   expect(new TelegramEvent(shippingQuery).callbackQuery).toEqual(null);
   expect(new TelegramEvent(preCheckoutQuery).callbackQuery).toEqual(null);
+  expect(new TelegramEvent(poll).callbackQuery).toEqual(null);
   expect(new TelegramEvent(replyToTextMessage).callbackQuery).toEqual(null);
 });
 
@@ -1300,6 +1330,7 @@ it('#isPayload', () => {
   expect(new TelegramEvent(groupCallbackQuery).isPayload).toEqual(true);
   expect(new TelegramEvent(shippingQuery).isPayload).toEqual(false);
   expect(new TelegramEvent(preCheckoutQuery).isPayload).toEqual(false);
+  expect(new TelegramEvent(poll).isPayload).toEqual(false);
   expect(new TelegramEvent(replyToTextMessage).isPayload).toEqual(false);
 });
 
@@ -1314,5 +1345,6 @@ it('#payload', () => {
   expect(new TelegramEvent(groupCallbackQuery).payload).toEqual('123');
   expect(new TelegramEvent(shippingQuery).payload).toEqual(null);
   expect(new TelegramEvent(preCheckoutQuery).payload).toEqual(null);
+  expect(new TelegramEvent(poll).payload).toEqual(null);
   expect(new TelegramEvent(replyToTextMessage).payload).toEqual(null);
 });

@@ -338,7 +338,7 @@ async function expectRouteMatchContext({ route, context }) {
   expect(context.sendText).toBeCalledWith('hello');
 }
 
-async function expectRouteMatchLineEvent({ route, event }) {
+async function expectRouteMatchMessengerEvent({ route, event }) {
   const context = new MessengerContext({
     client: {} as any,
     event,
@@ -362,7 +362,7 @@ async function expectRouteNotMatchContext({ route, context }) {
   expect(context.sendText).not.toBeCalledWith('hello');
 }
 
-async function expectRouteNotMatchLineEvent({ route, event }) {
+async function expectRouteNotMatchMessengerEvent({ route, event }) {
   const context = new MessengerContext({
     client: {} as any,
     event,
@@ -385,7 +385,7 @@ class TestContext extends Context<any, any> {
 
 describe('#messenger', () => {
   it('should call action when it receives a messenger event', async () => {
-    await expectRouteMatchLineEvent({
+    await expectRouteMatchMessengerEvent({
       route: messenger(Action),
       event: messengerEventTextMessage,
     });
@@ -403,14 +403,14 @@ describe('#messenger', () => {
 
   describe('#messenger.message', () => {
     it('should call action when it receives a messenger message event', async () => {
-      await expectRouteMatchLineEvent({
+      await expectRouteMatchMessengerEvent({
         route: messenger.message(Action),
         event: messengerEventTextMessage,
       });
     });
 
     it('should not call action when it receives a non-message event', async () => {
-      await expectRouteNotMatchLineEvent({
+      await expectRouteNotMatchMessengerEvent({
         route: messenger.message(Action),
         event: messengerEventPostback,
       });
@@ -419,14 +419,14 @@ describe('#messenger', () => {
 
   describe('#messenger.accountLinking', () => {
     it('should call action when it receives a messenger accountLinking event', async () => {
-      await expectRouteMatchLineEvent({
+      await expectRouteMatchMessengerEvent({
         route: messenger.accountLinking(Action),
         event: messengerEventAccountLinkingLinked,
       });
     });
 
     it('should not call action when it receives a non-accountLinking event', async () => {
-      await expectRouteNotMatchLineEvent({
+      await expectRouteNotMatchMessengerEvent({
         route: messenger.accountLinking(Action),
         event: messengerEventTextMessage,
       });
@@ -434,14 +434,14 @@ describe('#messenger', () => {
 
     describe('#messenger.accountLinking.linked', () => {
       it('should call action when it receives a messenger accountLinking.linked event', async () => {
-        await expectRouteMatchLineEvent({
+        await expectRouteMatchMessengerEvent({
           route: messenger.accountLinking.linked(Action),
           event: messengerEventAccountLinkingLinked,
         });
       });
 
       it('should not call action when it receives a non-accountLinking.linked event', async () => {
-        await expectRouteNotMatchLineEvent({
+        await expectRouteNotMatchMessengerEvent({
           route: messenger.accountLinking.linked(Action),
           event: messengerEventAccountLinkingUnlinked,
         });
@@ -450,14 +450,14 @@ describe('#messenger', () => {
 
     describe('#messenger.accountLinking.unlinked', () => {
       it('should call action when it receives a messenger accountLinking.unlinked event', async () => {
-        await expectRouteMatchLineEvent({
+        await expectRouteMatchMessengerEvent({
           route: messenger.accountLinking.unlinked(Action),
           event: messengerEventAccountLinkingUnlinked,
         });
       });
 
       it('should not call action when it receives a non-accountLinking.unlinked event', async () => {
-        await expectRouteNotMatchLineEvent({
+        await expectRouteNotMatchMessengerEvent({
           route: messenger.accountLinking.unlinked(Action),
           event: messengerEventAccountLinkingLinked,
         });
@@ -467,14 +467,14 @@ describe('#messenger', () => {
 
   describe('#messenger.checkoutUpdate', () => {
     it('should call action when it receives a messenger checkoutUpdate event', async () => {
-      await expectRouteMatchLineEvent({
+      await expectRouteMatchMessengerEvent({
         route: messenger.checkoutUpdate(Action),
         event: messengerEventCheckoutUpdate,
       });
     });
 
     it('should not call action when it receives a non-checkoutUpdate event', async () => {
-      await expectRouteNotMatchLineEvent({
+      await expectRouteNotMatchMessengerEvent({
         route: messenger.checkoutUpdate(Action),
         event: messengerEventTextMessage,
       });
@@ -483,14 +483,14 @@ describe('#messenger', () => {
 
   describe('#messenger.delivery', () => {
     it('should call action when it receives a messenger delivery event', async () => {
-      await expectRouteMatchLineEvent({
+      await expectRouteMatchMessengerEvent({
         route: messenger.delivery(Action),
         event: messengerEventDelivery,
       });
     });
 
     it('should not call action when it receives a non-delivery event', async () => {
-      await expectRouteNotMatchLineEvent({
+      await expectRouteNotMatchMessengerEvent({
         route: messenger.delivery(Action),
         event: messengerEventTextMessage,
       });
@@ -499,14 +499,14 @@ describe('#messenger', () => {
 
   describe('#messenger.echo', () => {
     it('should call action when it receives a messenger echo event', async () => {
-      await expectRouteMatchLineEvent({
+      await expectRouteMatchMessengerEvent({
         route: messenger.echo(Action),
         event: messengerEventEcho,
       });
     });
 
     it('should not call action when it receives a non-echo event', async () => {
-      await expectRouteNotMatchLineEvent({
+      await expectRouteNotMatchMessengerEvent({
         route: messenger.echo(Action),
         event: messengerEventTextMessage,
       });
@@ -515,14 +515,14 @@ describe('#messenger', () => {
 
   describe('#messenger.gamePlay', () => {
     it('should call action when it receives a messenger gamePlay event', async () => {
-      await expectRouteMatchLineEvent({
+      await expectRouteMatchMessengerEvent({
         route: messenger.gamePlay(Action),
         event: messengerEventGamePlay,
       });
     });
 
     it('should not call action when it receives a non-gamePlay event', async () => {
-      await expectRouteNotMatchLineEvent({
+      await expectRouteNotMatchMessengerEvent({
         route: messenger.gamePlay(Action),
         event: messengerEventTextMessage,
       });
@@ -531,14 +531,14 @@ describe('#messenger', () => {
 
   describe('#messenger.passThreadControl', () => {
     it('should call action when it receives a messenger passThreadControl event', async () => {
-      await expectRouteMatchLineEvent({
+      await expectRouteMatchMessengerEvent({
         route: messenger.passThreadControl(Action),
         event: messengerEventPassThreadControl,
       });
     });
 
     it('should not call action when it receives a non-passThreadControl event', async () => {
-      await expectRouteNotMatchLineEvent({
+      await expectRouteNotMatchMessengerEvent({
         route: messenger.passThreadControl(Action),
         event: messengerEventTextMessage,
       });
@@ -547,14 +547,14 @@ describe('#messenger', () => {
 
   describe('#messenger.takeThreadControl', () => {
     it('should call action when it receives a messenger takeThreadControl event', async () => {
-      await expectRouteMatchLineEvent({
+      await expectRouteMatchMessengerEvent({
         route: messenger.takeThreadControl(Action),
         event: messengerEventTakeThreadControl,
       });
     });
 
     it('should not call action when it receives a non-takeThreadControl event', async () => {
-      await expectRouteNotMatchLineEvent({
+      await expectRouteNotMatchMessengerEvent({
         route: messenger.takeThreadControl(Action),
         event: messengerEventTextMessage,
       });
@@ -563,14 +563,14 @@ describe('#messenger', () => {
 
   describe('#messenger.requestThreadControl', () => {
     it('should call action when it receives a messenger requestThreadControl event', async () => {
-      await expectRouteMatchLineEvent({
+      await expectRouteMatchMessengerEvent({
         route: messenger.requestThreadControl(Action),
         event: messengerEventRequestThreadControl,
       });
     });
 
     it('should not call action when it receives a non-requestThreadControl event', async () => {
-      await expectRouteNotMatchLineEvent({
+      await expectRouteNotMatchMessengerEvent({
         route: messenger.requestThreadControl(Action),
         event: messengerEventTextMessage,
       });
@@ -579,14 +579,14 @@ describe('#messenger', () => {
 
   describe('#messenger.appRoles', () => {
     it('should call action when it receives a messenger appRoles event', async () => {
-      await expectRouteMatchLineEvent({
+      await expectRouteMatchMessengerEvent({
         route: messenger.appRoles(Action),
         event: messengerEventAppRoles,
       });
     });
 
     it('should not call action when it receives a non-appRoles event', async () => {
-      await expectRouteNotMatchLineEvent({
+      await expectRouteNotMatchMessengerEvent({
         route: messenger.appRoles(Action),
         event: messengerEventTextMessage,
       });
@@ -595,14 +595,14 @@ describe('#messenger', () => {
 
   describe('#messenger.optin', () => {
     it('should call action when it receives a messenger optin event', async () => {
-      await expectRouteMatchLineEvent({
+      await expectRouteMatchMessengerEvent({
         route: messenger.optin(Action),
         event: messengerEventOptin,
       });
     });
 
     it('should not call action when it receives a non-optin event', async () => {
-      await expectRouteNotMatchLineEvent({
+      await expectRouteNotMatchMessengerEvent({
         route: messenger.optin(Action),
         event: messengerEventTextMessage,
       });
@@ -611,14 +611,14 @@ describe('#messenger', () => {
 
   describe('#messenger.payment', () => {
     it('should call action when it receives a messenger payment event', async () => {
-      await expectRouteMatchLineEvent({
+      await expectRouteMatchMessengerEvent({
         route: messenger.payment(Action),
         event: messengerEventPayment,
       });
     });
 
     it('should not call action when it receives a non-payment event', async () => {
-      await expectRouteNotMatchLineEvent({
+      await expectRouteNotMatchMessengerEvent({
         route: messenger.payment(Action),
         event: messengerEventTextMessage,
       });
@@ -627,14 +627,14 @@ describe('#messenger', () => {
 
   describe('#messenger.policyEnforcement', () => {
     it('should call action when it receives a messenger policyEnforcement event', async () => {
-      await expectRouteMatchLineEvent({
+      await expectRouteMatchMessengerEvent({
         route: messenger.policyEnforcement(Action),
         event: messengerEventPolicyEnforcement,
       });
     });
 
     it('should not call action when it receives a non-policyEnforcement event', async () => {
-      await expectRouteNotMatchLineEvent({
+      await expectRouteNotMatchMessengerEvent({
         route: messenger.policyEnforcement(Action),
         event: messengerEventTextMessage,
       });
@@ -643,14 +643,14 @@ describe('#messenger', () => {
 
   describe('#messenger.postback', () => {
     it('should call action when it receives a messenger postback event', async () => {
-      await expectRouteMatchLineEvent({
+      await expectRouteMatchMessengerEvent({
         route: messenger.postback(Action),
         event: messengerEventPostback,
       });
     });
 
     it('should not call action when it receives a non-postback event', async () => {
-      await expectRouteNotMatchLineEvent({
+      await expectRouteNotMatchMessengerEvent({
         route: messenger.postback(Action),
         event: messengerEventTextMessage,
       });
@@ -659,14 +659,14 @@ describe('#messenger', () => {
 
   describe('#messenger.preCheckout', () => {
     it('should call action when it receives a messenger preCheckout event', async () => {
-      await expectRouteMatchLineEvent({
+      await expectRouteMatchMessengerEvent({
         route: messenger.preCheckout(Action),
         event: messengerEventPreCheckout,
       });
     });
 
     it('should not call action when it receives a non-preCheckout event', async () => {
-      await expectRouteNotMatchLineEvent({
+      await expectRouteNotMatchMessengerEvent({
         route: messenger.preCheckout(Action),
         event: messengerEventTextMessage,
       });
@@ -675,14 +675,14 @@ describe('#messenger', () => {
 
   describe('#messenger.read', () => {
     it('should call action when it receives a messenger read event', async () => {
-      await expectRouteMatchLineEvent({
+      await expectRouteMatchMessengerEvent({
         route: messenger.read(Action),
         event: messengerEventRead,
       });
     });
 
     it('should not call action when it receives a non-read event', async () => {
-      await expectRouteNotMatchLineEvent({
+      await expectRouteNotMatchMessengerEvent({
         route: messenger.read(Action),
         event: messengerEventTextMessage,
       });
@@ -691,14 +691,14 @@ describe('#messenger', () => {
 
   describe('#messenger.referral', () => {
     it('should call action when it receives a messenger referral event', async () => {
-      await expectRouteMatchLineEvent({
+      await expectRouteMatchMessengerEvent({
         route: messenger.referral(Action),
         event: messengerEventReferral,
       });
     });
 
     it('should not call action when it receives a non-referral event', async () => {
-      await expectRouteNotMatchLineEvent({
+      await expectRouteNotMatchMessengerEvent({
         route: messenger.referral(Action),
         event: messengerEventTextMessage,
       });
@@ -707,14 +707,14 @@ describe('#messenger', () => {
 
   describe('#messenger.standby', () => {
     it('should call action when it receives a messenger standby event', async () => {
-      await expectRouteMatchLineEvent({
+      await expectRouteMatchMessengerEvent({
         route: messenger.standby(Action),
         event: messengerEventStandby,
       });
     });
 
     it('should not call action when it receives a non-standby event', async () => {
-      await expectRouteNotMatchLineEvent({
+      await expectRouteNotMatchMessengerEvent({
         route: messenger.standby(Action),
         event: messengerEventTextMessage,
       });

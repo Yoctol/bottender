@@ -165,6 +165,18 @@ type PreCheckoutQuery = {
   orderInfo?: OrderInfo;
 };
 
+type PollOption = {
+  text: string;
+  voterCount: number;
+};
+
+type Poll = {
+  id: string;
+  question: string;
+  options: PollOption[];
+  isClosed: boolean;
+};
+
 export type TelegramRawEvent = {
   updateId: number;
   message?: Message;
@@ -176,6 +188,7 @@ export type TelegramRawEvent = {
   callbackQuery?: CallbackQuery;
   shippingQuery?: ShippingQuery;
   preCheckoutQuery?: PreCheckoutQuery;
+  poll?: Poll;
 };
 
 export default class TelegramEvent implements Event<TelegramRawEvent> {
@@ -654,5 +667,21 @@ export default class TelegramEvent implements Event<TelegramRawEvent> {
    */
   get preCheckoutQuery(): PreCheckoutQuery | null {
     return this._rawEvent.preCheckoutQuery || null;
+  }
+
+  /**
+   * Determine if the event is a poll event.
+   *
+   */
+  get isPoll(): boolean {
+    return !!this.poll && typeof this.poll === 'object';
+  }
+
+  /**
+   * The poll from Telegram raw event.
+   *
+   */
+  get poll(): Poll | null {
+    return this._rawEvent.poll || null;
   }
 }
