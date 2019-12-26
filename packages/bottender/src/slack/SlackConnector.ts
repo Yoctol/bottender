@@ -139,8 +139,8 @@ export default class SlackConnector
     }
 
     // For slack modal
-    if (rawEvent.view && rawEvent.view.private_metadata) {
-      return JSON.parse(rawEvent.view.private_metadata).channelId;
+    if (rawEvent.view && rawEvent.view.privateMetadata) {
+      return JSON.parse(rawEvent.view.privateMetadata).channelId;
     }
 
     // For reaction_added format
