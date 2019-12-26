@@ -1,6 +1,6 @@
 import { run } from '../../bot/Bot';
 
-import router, { payload, platform, route, text } from '..';
+import router, { line, payload, platform, route, text } from '..';
 
 function textContext(message = '') {
   return {
@@ -340,4 +340,8 @@ describe('#platform', () => {
     await expectPlatformConversation(app, 'telegram', 'hello');
     await expectPlatformConversation(app, 'slack', 'hello');
   });
+});
+
+it('#line should be exported', () => {
+  expect(line).toBeDefined();
 });
