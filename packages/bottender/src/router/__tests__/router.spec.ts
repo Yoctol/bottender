@@ -8,6 +8,7 @@ import router, {
   route,
   telegram,
   text,
+  viber,
 } from '..';
 
 function textContext(message = '') {
@@ -360,4 +361,8 @@ it('#messenger should be exported', () => {
 
 it('#telegram should be exported', () => {
   expect(telegram).toBeDefined();
+});
+
+it('#viber should be exported', () => {
+  expect(viber).toBeDefined();
 });
