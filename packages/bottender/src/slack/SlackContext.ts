@@ -13,7 +13,7 @@ import SlackEvent from './SlackEvent';
 type Options = {
   client: SlackOAuthClient;
   event: SlackEvent;
-  session: Session | null;
+  session?: Session | null;
   initialState?: Record<string, any> | null;
   requestContext?: RequestContext;
   emitter?: EventEmitter | null;

@@ -2,7 +2,7 @@ import pascalCase from 'pascal-case';
 
 import { Event } from '../context/Event';
 
-export type EventAPITypes =
+export type EventTypes =
   | 'message'
   | 'app_uninstalled'
   | 'channel_archive'
@@ -58,7 +58,7 @@ export type EventAPITypes =
   | 'user_change';
 
 export type Message = {
-  type: EventAPITypes;
+  type: EventTypes;
   subtype?: string;
   channel: string;
   user: string;

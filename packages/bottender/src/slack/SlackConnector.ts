@@ -12,7 +12,7 @@ import { RequestContext } from '../types';
 import SlackContext from './SlackContext';
 import SlackEvent, {
   BlockActionEvent,
-  EventAPITypes,
+  EventTypes,
   InteractiveMessageEvent,
   Message,
   SlackRawEvent,
@@ -27,7 +27,7 @@ type EventsAPIBody = {
   token: string;
   teamId: string;
   apiAppId: string;
-  type: EventAPITypes;
+  type: EventTypes;
   event: Message;
   authedUsers: string[];
   eventId: string;
