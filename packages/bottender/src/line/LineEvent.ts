@@ -1,5 +1,7 @@
 import { Event } from '../context/Event';
 
+import warning = require('warning');
+
 type UserSource = {
   type: 'user';
   userId: string;
@@ -90,6 +92,7 @@ type Message =
 type MessageEvent = {
   replyToken: string;
   type: 'message';
+  mode: 'active' | 'standby';
   timestamp: number;
   source: Source;
   message: Message;
@@ -98,12 +101,14 @@ type MessageEvent = {
 type FollowEvent = {
   replyToken: string;
   type: 'follow';
+  mode: 'active' | 'standby';
   timestamp: number;
   source: Source;
 };
 
 type UnfollowEvent = {
   type: 'unfollow';
+  mode: 'active' | 'standby';
   timestamp: number;
   source: Source;
 };
@@ -111,12 +116,14 @@ type UnfollowEvent = {
 type JoinEvent = {
   replyToken: string;
   type: 'join';
+  mode: 'active' | 'standby';
   timestamp: number;
   source: GroupSource | RoomSource;
 };
 
 type LeaveEvent = {
   type: 'leave';
+  mode: 'active' | 'standby';
   timestamp: number;
   source: GroupSource | RoomSource;
 };
@@ -124,6 +131,7 @@ type LeaveEvent = {
 type MemberJoinedEvent = {
   replyToken: string;
   type: 'memberJoined';
+  mode: 'active' | 'standby';
   timestamp: number;
   source: GroupSource | RoomSource;
   joined: {
@@ -133,6 +141,7 @@ type MemberJoinedEvent = {
 
 type MemberLeftEvent = {
   type: 'memberLeft';
+  mode: 'active' | 'standby';
   timestamp: number;
   source: GroupSource | RoomSource;
   left: {
@@ -143,6 +152,7 @@ type MemberLeftEvent = {
 type PostbackEvent = {
   replyToken: string;
   type: 'postback';
+  mode: 'active' | 'standby';
   timestamp: number;
   source: Source;
   postback: Postback;
@@ -161,6 +171,7 @@ type Postback = {
 type BeaconEvent = {
   replyToken: string;
   type: 'beacon';
+  mode: 'active' | 'standby';
   timestamp: number;
   source: Source;
   beacon: Beacon;
@@ -168,13 +179,14 @@ type BeaconEvent = {
 
 type Beacon = {
   hwid: string;
-  type: 'enter' | 'banner';
+  type: 'enter' | 'banner' | 'stay';
   dm?: string;
 };
 
 type AccountLinkEvent = {
   replyToken: string;
   type: 'accountLink';
+  mode: 'active' | 'standby';
   timestamp: number;
   source: Source;
   link: AccountLink;
@@ -188,6 +200,7 @@ type AccountLink = {
 type ThingsEvent = {
   replyToken: string;
   type: 'things';
+  mode: 'active' | 'standby';
   timestamp: number;
   source: Source;
   things: Things;
@@ -613,10 +626,18 @@ export default class LineEvent implements Event<LineRawEvent> {
   }
 
   /**
-   * Determine if the event is an deviceLink event.
+   * Determine if the event is a things event.
    *
    */
-  get isDeviceLink(): boolean {
+  get isThings(): boolean {
+    return this._rawEvent.type === 'things';
+  }
+
+  /**
+   * Determine if the event is a things link event.
+   *
+   */
+  get isThingsLink(): boolean {
     return (
       this._rawEvent.type === 'things' &&
       typeof this._rawEvent.things !== 'undefined' &&
@@ -625,15 +646,53 @@ export default class LineEvent implements Event<LineRawEvent> {
   }
 
   /**
-   * Determine if the event is an deviceUnlink event.
+   * Determine if the event is a things unlink event.
    *
    */
-  get isDeviceUnlink(): boolean {
+  get isThingsUnlink(): boolean {
     return (
       this._rawEvent.type === 'things' &&
       typeof this._rawEvent.things !== 'undefined' &&
       this._rawEvent.things.type === 'unlink'
     );
+  }
+
+  /**
+   * Determine if the event is a things scenarioResult event.
+   *
+   */
+  get isThingsScenarioResult(): boolean {
+    return (
+      this._rawEvent.type === 'things' &&
+      typeof this._rawEvent.things !== 'undefined' &&
+      this._rawEvent.things.type === 'scenarioResult'
+    );
+  }
+
+  /**
+   * Determine if the event is a device link event.
+   *
+   */
+  get isDeviceLink(): boolean {
+    warning(
+      false,
+      '`event.isDeviceLink` is deprecated. Use `event.isThingsLink` instead.'
+    );
+
+    return this.isThingsLink;
+  }
+
+  /**
+   * Determine if the event is a device unlink event.
+   *
+   */
+  get isDeviceUnlink(): boolean {
+    warning(
+      false,
+      '`event.isDeviceUnlink` is deprecated. Use `event.isThingsUnlink` instead.'
+    );
+
+    return this.isThingsUnlink;
   }
 
   /**

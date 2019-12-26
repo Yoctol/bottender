@@ -261,7 +261,7 @@ const memberLeft = {
   },
 };
 
-const deviceLink = {
+const thingsLink = {
   type: 'things',
   replyToken: 'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA',
   timestamp: 1462629479859,
@@ -275,7 +275,7 @@ const deviceLink = {
   },
 };
 
-const deviceUnlink = {
+const thingsUnlink = {
   type: 'things',
   replyToken: 'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA',
   timestamp: 1462629479859,
@@ -286,6 +286,35 @@ const deviceUnlink = {
   things: {
     deviceId: 't2c449c9d1...',
     type: 'unlink',
+  },
+};
+
+const thingsScenarioResult = {
+  type: 'things',
+  replyToken: 'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA',
+  source: {
+    userId: 'U206d25c2ea6bd87c17655609a1c37cb8',
+    type: 'user',
+  },
+  mode: 'active',
+  timestamp: 1547817848122,
+  things: {
+    type: 'scenarioResult',
+    deviceId: 'tXXX',
+    result: {
+      scenarioId: 'XXX',
+      revision: 2,
+      startTime: 1547817845950,
+      endTime: 1547817845952,
+      resultCode: 'success',
+      bleNotificationPayload: 'AQ==',
+      actionResults: [
+        {
+          type: 'binary',
+          data: '/w==',
+        },
+      ],
+    },
   },
 };
 
@@ -308,63 +337,18 @@ it('#rawEvent', () => {
   expect(new LineEvent(beacon).rawEvent).toEqual(beacon);
   expect(new LineEvent(memberJoined).rawEvent).toEqual(memberJoined);
   expect(new LineEvent(memberLeft).rawEvent).toEqual(memberLeft);
-  expect(new LineEvent(deviceLink).rawEvent).toEqual(deviceLink);
-  expect(new LineEvent(deviceUnlink).rawEvent).toEqual(deviceUnlink);
+  expect(new LineEvent(thingsLink).rawEvent).toEqual(thingsLink);
+  expect(new LineEvent(thingsUnlink).rawEvent).toEqual(thingsUnlink);
+  expect(new LineEvent(thingsScenarioResult).rawEvent).toEqual(
+    thingsScenarioResult
+  );
 });
 
 it('#destination', () => {
   expect(new LineEvent(textMessage, { destination }).destination).toEqual(
     'Uea8667adaf43586706170ff25ff47ae6'
   );
-  expect(new LineEvent(imageMessage, { destination }).destination).toEqual(
-    'Uea8667adaf43586706170ff25ff47ae6'
-  );
-  expect(new LineEvent(videoMessage, { destination }).destination).toEqual(
-    'Uea8667adaf43586706170ff25ff47ae6'
-  );
-  expect(new LineEvent(audioMessage, { destination }).destination).toEqual(
-    'Uea8667adaf43586706170ff25ff47ae6'
-  );
-  expect(new LineEvent(locationMessage, { destination }).destination).toEqual(
-    'Uea8667adaf43586706170ff25ff47ae6'
-  );
-  expect(new LineEvent(stickerMessage, { destination }).destination).toEqual(
-    'Uea8667adaf43586706170ff25ff47ae6'
-  );
-  expect(new LineEvent(follow, { destination }).destination).toEqual(
-    'Uea8667adaf43586706170ff25ff47ae6'
-  );
-  expect(new LineEvent(unfollow, { destination }).destination).toEqual(
-    'Uea8667adaf43586706170ff25ff47ae6'
-  );
-  expect(new LineEvent(join, { destination }).destination).toEqual(
-    'Uea8667adaf43586706170ff25ff47ae6'
-  );
-  expect(new LineEvent(leave, { destination }).destination).toEqual(
-    'Uea8667adaf43586706170ff25ff47ae6'
-  );
-  expect(new LineEvent(postback, { destination }).destination).toEqual(
-    'Uea8667adaf43586706170ff25ff47ae6'
-  );
-  expect(new LineEvent(beacon, { destination }).destination).toEqual(
-    'Uea8667adaf43586706170ff25ff47ae6'
-  );
-  expect(new LineEvent(accountLink, { destination }).destination).toEqual(
-    'Uea8667adaf43586706170ff25ff47ae6'
-  );
-  expect(new LineEvent(memberJoined, { destination }).destination).toEqual(
-    'Uea8667adaf43586706170ff25ff47ae6'
-  );
-  expect(new LineEvent(memberLeft, { destination }).destination).toEqual(
-    'Uea8667adaf43586706170ff25ff47ae6'
-  );
 
-  expect(new LineEvent(deviceLink, { destination }).destination).toEqual(
-    'Uea8667adaf43586706170ff25ff47ae6'
-  );
-  expect(new LineEvent(deviceUnlink, { destination }).destination).toEqual(
-    'Uea8667adaf43586706170ff25ff47ae6'
-  );
   expect(new LineEvent(textMessage).destination).toEqual(null);
 });
 
@@ -394,10 +378,13 @@ it('#replyToken', () => {
   );
   expect(new LineEvent(memberLeft).replyToken).toEqual(null);
 
-  expect(new LineEvent(deviceLink).replyToken).toEqual(
+  expect(new LineEvent(thingsLink).replyToken).toEqual(
     'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA'
   );
-  expect(new LineEvent(deviceUnlink).replyToken).toEqual(
+  expect(new LineEvent(thingsUnlink).replyToken).toEqual(
+    'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA'
+  );
+  expect(new LineEvent(thingsScenarioResult).replyToken).toEqual(
     'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA'
   );
 });
@@ -443,11 +430,15 @@ it('#source', () => {
     type: 'group',
     groupId: 'cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
   });
-  expect(new LineEvent(deviceLink).source).toEqual({
+  expect(new LineEvent(thingsLink).source).toEqual({
     type: 'user',
     userId: 'U206d25c2ea6bd87c17655609a1c37cb8',
   });
-  expect(new LineEvent(deviceUnlink).source).toEqual({
+  expect(new LineEvent(thingsUnlink).source).toEqual({
+    type: 'user',
+    userId: 'U206d25c2ea6bd87c17655609a1c37cb8',
+  });
+  expect(new LineEvent(thingsScenarioResult).source).toEqual({
     type: 'user',
     userId: 'U206d25c2ea6bd87c17655609a1c37cb8',
   });
@@ -465,8 +456,9 @@ it('#isMessage', () => {
   expect(new LineEvent(accountLink).isMessage).toEqual(false);
   expect(new LineEvent(memberJoined).isMessage).toEqual(false);
   expect(new LineEvent(memberLeft).isMessage).toEqual(false);
-  expect(new LineEvent(deviceLink).isMessage).toEqual(false);
-  expect(new LineEvent(deviceUnlink).isMessage).toEqual(false);
+  expect(new LineEvent(thingsLink).isMessage).toEqual(false);
+  expect(new LineEvent(thingsUnlink).isMessage).toEqual(false);
+  expect(new LineEvent(thingsScenarioResult).isMessage).toEqual(false);
 });
 
 it('#message', () => {
@@ -505,6 +497,9 @@ it('#message', () => {
   expect(new LineEvent(accountLink).message).toEqual(null);
   expect(new LineEvent(memberJoined).message).toEqual(null);
   expect(new LineEvent(memberLeft).message).toEqual(null);
+  expect(new LineEvent(thingsLink).message).toEqual(null);
+  expect(new LineEvent(thingsUnlink).message).toEqual(null);
+  expect(new LineEvent(thingsScenarioResult).message).toEqual(null);
 });
 
 it('#isText', () => {
@@ -646,9 +641,10 @@ it('#isFollow', () => {
   expect(new LineEvent(beacon).isFollow).toEqual(false);
   expect(new LineEvent(memberJoined).isFollow).toEqual(false);
   expect(new LineEvent(memberLeft).isFollow).toEqual(false);
-  expect(new LineEvent(deviceLink).isMessage).toEqual(false);
-  expect(new LineEvent(deviceLink).isFollow).toEqual(false);
-  expect(new LineEvent(deviceUnlink).isFollow).toEqual(false);
+  expect(new LineEvent(thingsLink).isMessage).toEqual(false);
+  expect(new LineEvent(thingsLink).isFollow).toEqual(false);
+  expect(new LineEvent(thingsUnlink).isFollow).toEqual(false);
+  expect(new LineEvent(thingsScenarioResult).isFollow).toEqual(false);
 });
 
 it('#follow', () => {
@@ -664,8 +660,9 @@ it('#follow', () => {
   expect(new LineEvent(beacon).follow).toEqual(null);
   expect(new LineEvent(memberJoined).follow).toEqual(null);
   expect(new LineEvent(memberLeft).follow).toEqual(null);
-  expect(new LineEvent(deviceLink).follow).toEqual(null);
-  expect(new LineEvent(deviceUnlink).follow).toEqual(null);
+  expect(new LineEvent(thingsLink).follow).toEqual(null);
+  expect(new LineEvent(thingsUnlink).follow).toEqual(null);
+  expect(new LineEvent(thingsScenarioResult).follow).toEqual(null);
 });
 
 it('#isUnfollow', () => {
@@ -679,8 +676,9 @@ it('#isUnfollow', () => {
   expect(new LineEvent(accountLink).isUnfollow).toEqual(false);
   expect(new LineEvent(memberJoined).isUnfollow).toEqual(false);
   expect(new LineEvent(memberLeft).isUnfollow).toEqual(false);
-  expect(new LineEvent(deviceLink).isUnfollow).toEqual(false);
-  expect(new LineEvent(deviceUnlink).isUnfollow).toEqual(false);
+  expect(new LineEvent(thingsLink).isUnfollow).toEqual(false);
+  expect(new LineEvent(thingsUnlink).isUnfollow).toEqual(false);
+  expect(new LineEvent(thingsScenarioResult).isUnfollow).toEqual(false);
 });
 
 it('#unfollow', () => {
@@ -697,8 +695,9 @@ it('#unfollow', () => {
   expect(new LineEvent(accountLink).unfollow).toEqual(null);
   expect(new LineEvent(memberJoined).unfollow).toEqual(null);
   expect(new LineEvent(memberLeft).unfollow).toEqual(null);
-  expect(new LineEvent(deviceLink).unfollow).toEqual(null);
-  expect(new LineEvent(deviceUnlink).unfollow).toEqual(null);
+  expect(new LineEvent(thingsLink).unfollow).toEqual(null);
+  expect(new LineEvent(thingsUnlink).unfollow).toEqual(null);
+  expect(new LineEvent(thingsScenarioResult).unfollow).toEqual(null);
 });
 
 it('#isJoin', () => {
@@ -712,8 +711,9 @@ it('#isJoin', () => {
   expect(new LineEvent(accountLink).isJoin).toEqual(false);
   expect(new LineEvent(memberJoined).isJoin).toEqual(false);
   expect(new LineEvent(memberLeft).isJoin).toEqual(false);
-  expect(new LineEvent(deviceLink).isJoin).toEqual(false);
-  expect(new LineEvent(deviceUnlink).isJoin).toEqual(false);
+  expect(new LineEvent(thingsLink).isJoin).toEqual(false);
+  expect(new LineEvent(thingsUnlink).isJoin).toEqual(false);
+  expect(new LineEvent(thingsScenarioResult).isJoin).toEqual(false);
 });
 
 it('#join', () => {
@@ -730,8 +730,9 @@ it('#join', () => {
   expect(new LineEvent(accountLink).join).toEqual(null);
   expect(new LineEvent(memberJoined).join).toEqual(null);
   expect(new LineEvent(memberLeft).join).toEqual(null);
-  expect(new LineEvent(deviceLink).join).toEqual(null);
-  expect(new LineEvent(deviceUnlink).join).toEqual(null);
+  expect(new LineEvent(thingsLink).join).toEqual(null);
+  expect(new LineEvent(thingsUnlink).join).toEqual(null);
+  expect(new LineEvent(thingsScenarioResult).join).toEqual(null);
 });
 
 it('#isLeave', () => {
@@ -745,8 +746,9 @@ it('#isLeave', () => {
   expect(new LineEvent(accountLink).isLeave).toEqual(false);
   expect(new LineEvent(memberJoined).isLeave).toEqual(false);
   expect(new LineEvent(memberLeft).isLeave).toEqual(false);
-  expect(new LineEvent(deviceLink).isLeave).toEqual(false);
-  expect(new LineEvent(deviceUnlink).isLeave).toEqual(false);
+  expect(new LineEvent(thingsLink).isLeave).toEqual(false);
+  expect(new LineEvent(thingsUnlink).isLeave).toEqual(false);
+  expect(new LineEvent(thingsScenarioResult).isLeave).toEqual(false);
 });
 
 it('#leave', () => {
@@ -763,8 +765,9 @@ it('#leave', () => {
   expect(new LineEvent(accountLink).leave).toEqual(null);
   expect(new LineEvent(memberJoined).leave).toEqual(null);
   expect(new LineEvent(memberLeft).leave).toEqual(null);
-  expect(new LineEvent(deviceLink).leave).toEqual(null);
-  expect(new LineEvent(deviceUnlink).leave).toEqual(null);
+  expect(new LineEvent(thingsLink).leave).toEqual(null);
+  expect(new LineEvent(thingsUnlink).leave).toEqual(null);
+  expect(new LineEvent(thingsScenarioResult).leave).toEqual(null);
 });
 
 it('#isPostback', () => {
@@ -781,8 +784,9 @@ it('#isPostback', () => {
   expect(new LineEvent(accountLink).isPostback).toEqual(false);
   expect(new LineEvent(memberJoined).isPostback).toEqual(false);
   expect(new LineEvent(memberLeft).isPostback).toEqual(false);
-  expect(new LineEvent(deviceLink).isPostback).toEqual(false);
-  expect(new LineEvent(deviceUnlink).isPostback).toEqual(false);
+  expect(new LineEvent(thingsLink).isPostback).toEqual(false);
+  expect(new LineEvent(thingsUnlink).isPostback).toEqual(false);
+  expect(new LineEvent(thingsScenarioResult).isPostback).toEqual(false);
 });
 
 it('#postback', () => {
@@ -824,8 +828,9 @@ it('#isPayload', () => {
   expect(new LineEvent(accountLink).isPayload).toEqual(false);
   expect(new LineEvent(memberJoined).isPayload).toEqual(false);
   expect(new LineEvent(memberLeft).isPayload).toEqual(false);
-  expect(new LineEvent(deviceLink).isPayload).toEqual(false);
-  expect(new LineEvent(deviceUnlink).isPayload).toEqual(false);
+  expect(new LineEvent(thingsLink).isPayload).toEqual(false);
+  expect(new LineEvent(thingsUnlink).isPayload).toEqual(false);
+  expect(new LineEvent(thingsScenarioResult).isPayload).toEqual(false);
 });
 
 it('#payload', () => {
@@ -879,6 +884,9 @@ it('#isBeacon', () => {
   expect(new LineEvent(accountLink).isBeacon).toEqual(false);
   expect(new LineEvent(memberJoined).isBeacon).toEqual(false);
   expect(new LineEvent(memberLeft).isBeacon).toEqual(false);
+  expect(new LineEvent(thingsLink).isBeacon).toEqual(false);
+  expect(new LineEvent(thingsUnlink).isBeacon).toEqual(false);
+  expect(new LineEvent(thingsScenarioResult).isBeacon).toEqual(false);
 });
 
 it('#beacon', () => {
@@ -895,8 +903,9 @@ it('#beacon', () => {
   expect(new LineEvent(accountLink).beacon).toEqual(null);
   expect(new LineEvent(memberJoined).beacon).toEqual(null);
   expect(new LineEvent(memberLeft).beacon).toEqual(null);
-  expect(new LineEvent(deviceLink).beacon).toEqual(null);
-  expect(new LineEvent(deviceUnlink).beacon).toEqual(null);
+  expect(new LineEvent(thingsLink).beacon).toEqual(null);
+  expect(new LineEvent(thingsUnlink).beacon).toEqual(null);
+  expect(new LineEvent(thingsScenarioResult).beacon).toEqual(null);
 });
 
 it('#isAccountLink', () => {
@@ -910,8 +919,9 @@ it('#isAccountLink', () => {
   expect(new LineEvent(accountLink).isAccountLink).toEqual(true);
   expect(new LineEvent(memberJoined).isAccountLink).toEqual(false);
   expect(new LineEvent(memberLeft).isAccountLink).toEqual(false);
-  expect(new LineEvent(deviceLink).isAccountLink).toEqual(false);
-  expect(new LineEvent(deviceUnlink).isAccountLink).toEqual(false);
+  expect(new LineEvent(thingsLink).isAccountLink).toEqual(false);
+  expect(new LineEvent(thingsUnlink).isAccountLink).toEqual(false);
+  expect(new LineEvent(thingsScenarioResult).isAccountLink).toEqual(false);
 });
 
 it('#accountLink', () => {
@@ -928,8 +938,9 @@ it('#accountLink', () => {
   });
   expect(new LineEvent(memberJoined).accountLink).toEqual(null);
   expect(new LineEvent(memberLeft).accountLink).toEqual(null);
-  expect(new LineEvent(deviceLink).accountLink).toEqual(null);
-  expect(new LineEvent(deviceUnlink).accountLink).toEqual(null);
+  expect(new LineEvent(thingsLink).accountLink).toEqual(null);
+  expect(new LineEvent(thingsUnlink).accountLink).toEqual(null);
+  expect(new LineEvent(thingsScenarioResult).accountLink).toEqual(null);
 });
 
 it('#isMemberJoined', () => {
@@ -943,8 +954,9 @@ it('#isMemberJoined', () => {
   expect(new LineEvent(accountLink).isMemberJoined).toEqual(false);
   expect(new LineEvent(memberJoined).isMemberJoined).toEqual(true);
   expect(new LineEvent(memberLeft).isMemberJoined).toEqual(false);
-  expect(new LineEvent(deviceLink).isMemberJoined).toEqual(false);
-  expect(new LineEvent(deviceUnlink).isMemberJoined).toEqual(false);
+  expect(new LineEvent(thingsLink).isMemberJoined).toEqual(false);
+  expect(new LineEvent(thingsUnlink).isMemberJoined).toEqual(false);
+  expect(new LineEvent(thingsScenarioResult).isMemberJoined).toEqual(false);
 });
 
 it('#memberJoined', () => {
@@ -968,8 +980,9 @@ it('#memberJoined', () => {
     ],
   });
   expect(new LineEvent(memberLeft).memberJoined).toEqual(null);
-  expect(new LineEvent(deviceLink).memberJoined).toEqual(null);
-  expect(new LineEvent(deviceUnlink).memberJoined).toEqual(null);
+  expect(new LineEvent(thingsLink).memberJoined).toEqual(null);
+  expect(new LineEvent(thingsUnlink).memberJoined).toEqual(null);
+  expect(new LineEvent(thingsScenarioResult).memberJoined).toEqual(null);
 });
 
 it('#isMemberLeft', () => {
@@ -983,8 +996,9 @@ it('#isMemberLeft', () => {
   expect(new LineEvent(accountLink).isMemberLeft).toEqual(false);
   expect(new LineEvent(memberJoined).isMemberLeft).toEqual(false);
   expect(new LineEvent(memberLeft).isMemberLeft).toEqual(true);
-  expect(new LineEvent(deviceLink).isMemberLeft).toEqual(false);
-  expect(new LineEvent(deviceUnlink).isMemberLeft).toEqual(false);
+  expect(new LineEvent(thingsLink).isMemberLeft).toEqual(false);
+  expect(new LineEvent(thingsUnlink).isMemberLeft).toEqual(false);
+  expect(new LineEvent(thingsScenarioResult).isMemberLeft).toEqual(false);
 });
 
 it('#memberLeft', () => {
@@ -1008,8 +1022,41 @@ it('#memberLeft', () => {
       },
     ],
   });
-  expect(new LineEvent(deviceLink).memberLeft).toEqual(null);
-  expect(new LineEvent(deviceUnlink).memberLeft).toEqual(null);
+  expect(new LineEvent(thingsLink).memberLeft).toEqual(null);
+  expect(new LineEvent(thingsUnlink).memberLeft).toEqual(null);
+  expect(new LineEvent(thingsScenarioResult).memberLeft).toEqual(null);
+});
+
+it('#isThingsLink', () => {
+  expect(new LineEvent(textMessage).isThingsLink).toEqual(false);
+  expect(new LineEvent(follow).isThingsLink).toEqual(false);
+  expect(new LineEvent(unfollow).isThingsLink).toEqual(false);
+  expect(new LineEvent(join).isThingsLink).toEqual(false);
+  expect(new LineEvent(leave).isThingsLink).toEqual(false);
+  expect(new LineEvent(postback).isThingsLink).toEqual(false);
+  expect(new LineEvent(beacon).isThingsLink).toEqual(false);
+  expect(new LineEvent(accountLink).isThingsLink).toEqual(false);
+  expect(new LineEvent(memberJoined).isThingsLink).toEqual(false);
+  expect(new LineEvent(memberLeft).isThingsLink).toEqual(false);
+  expect(new LineEvent(thingsLink).isThingsLink).toEqual(true);
+  expect(new LineEvent(thingsUnlink).isThingsLink).toEqual(false);
+  expect(new LineEvent(thingsScenarioResult).isThingsLink).toEqual(false);
+});
+
+it('#isThingsUnlink', () => {
+  expect(new LineEvent(textMessage).isThingsUnlink).toEqual(false);
+  expect(new LineEvent(follow).isThingsUnlink).toEqual(false);
+  expect(new LineEvent(unfollow).isThingsUnlink).toEqual(false);
+  expect(new LineEvent(join).isThingsUnlink).toEqual(false);
+  expect(new LineEvent(leave).isThingsUnlink).toEqual(false);
+  expect(new LineEvent(postback).isThingsUnlink).toEqual(false);
+  expect(new LineEvent(beacon).isThingsUnlink).toEqual(false);
+  expect(new LineEvent(accountLink).isThingsUnlink).toEqual(false);
+  expect(new LineEvent(memberJoined).isThingsUnlink).toEqual(false);
+  expect(new LineEvent(memberLeft).isThingsUnlink).toEqual(false);
+  expect(new LineEvent(thingsLink).isThingsUnlink).toEqual(false);
+  expect(new LineEvent(thingsUnlink).isThingsUnlink).toEqual(true);
+  expect(new LineEvent(thingsScenarioResult).isThingsUnlink).toEqual(false);
 });
 
 it('#isDeviceLink', () => {
@@ -1023,8 +1070,9 @@ it('#isDeviceLink', () => {
   expect(new LineEvent(accountLink).isDeviceLink).toEqual(false);
   expect(new LineEvent(memberJoined).isDeviceLink).toEqual(false);
   expect(new LineEvent(memberLeft).isDeviceLink).toEqual(false);
-  expect(new LineEvent(deviceLink).isDeviceLink).toEqual(true);
-  expect(new LineEvent(deviceUnlink).isDeviceLink).toEqual(false);
+  expect(new LineEvent(thingsLink).isDeviceLink).toEqual(true);
+  expect(new LineEvent(thingsUnlink).isDeviceLink).toEqual(false);
+  expect(new LineEvent(thingsScenarioResult).isDeviceLink).toEqual(false);
 });
 
 it('#isDeviceUnlink', () => {
@@ -1038,8 +1086,9 @@ it('#isDeviceUnlink', () => {
   expect(new LineEvent(accountLink).isDeviceUnlink).toEqual(false);
   expect(new LineEvent(memberJoined).isDeviceUnlink).toEqual(false);
   expect(new LineEvent(memberLeft).isDeviceUnlink).toEqual(false);
-  expect(new LineEvent(deviceLink).isDeviceUnlink).toEqual(false);
-  expect(new LineEvent(deviceUnlink).isDeviceUnlink).toEqual(true);
+  expect(new LineEvent(thingsLink).isDeviceUnlink).toEqual(false);
+  expect(new LineEvent(thingsUnlink).isDeviceUnlink).toEqual(true);
+  expect(new LineEvent(thingsScenarioResult).isDeviceUnlink).toEqual(false);
 });
 
 it('#things', () => {
@@ -1052,12 +1101,30 @@ it('#things', () => {
   expect(new LineEvent(beacon).things).toEqual(null);
   expect(new LineEvent(memberJoined).things).toEqual(null);
   expect(new LineEvent(memberLeft).things).toEqual(null);
-  expect(new LineEvent(deviceLink).things).toEqual({
+  expect(new LineEvent(thingsLink).things).toEqual({
     deviceId: 't2c449c9d1...',
     type: 'link',
   });
-  expect(new LineEvent(deviceUnlink).things).toEqual({
+  expect(new LineEvent(thingsUnlink).things).toEqual({
     deviceId: 't2c449c9d1...',
     type: 'unlink',
+  });
+  expect(new LineEvent(thingsScenarioResult).things).toEqual({
+    deviceId: 'tXXX',
+    type: 'scenarioResult',
+    result: {
+      actionResults: [
+        {
+          data: '/w==',
+          type: 'binary',
+        },
+      ],
+      bleNotificationPayload: 'AQ==',
+      endTime: 1547817845952,
+      resultCode: 'success',
+      revision: 2,
+      scenarioId: 'XXX',
+      startTime: 1547817845950,
+    },
   });
 });

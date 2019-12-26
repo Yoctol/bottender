@@ -1,4 +1,5 @@
 import Context from '../context/Context';
+import line from '../line/routes';
 import { Action, Client, Event, Props } from '../types';
 
 type MatchPattern = string | Array<string> | RegExp;
@@ -7,7 +8,7 @@ type RoutePattern<C extends Client, E extends Event> =
   | '*'
   | RoutePredicate<C, E>;
 
-type RoutePredicate<C extends Client, E extends Event> = (
+export type RoutePredicate<C extends Client, E extends Event> = (
   context: Context<C, E>
 ) => boolean | Record<string, any> | Promise<boolean | Record<string, any>>;
 
@@ -191,4 +192,4 @@ function platform<C extends Client = any, E extends Event = any>(
 
 export default router;
 
-export { router, route, text, payload, platform };
+export { router, route, text, payload, platform, line };
