@@ -19,7 +19,7 @@ Make sure that you checked the `slack` option:
 
 ![](https://user-images.githubusercontent.com/3382565/67851225-f2b7f200-fb44-11e9-8c86-eee0cbd7cb0d.png)
 
-After finishing the `Create Bottender App` process, `bottender.config.js,` a config file, will be generated automatically for further channel settings.
+After finishing the `Create Bottender App` process, `bottender.config.js`, a config file, will be generated automatically for further channel settings.
 
 ### Enable Slack Channel for Existing Apps
 
@@ -90,7 +90,7 @@ Follow the below steps to find your access token and verification token.
 
 - Slack access token could is in [Slack Developer Console](https://api.slack.com/apps) → \${YourApp} → Install App → Bot User OAuth Access Token
 
-<p><img width="800" src="https://user-images.githubusercontent.com/662387/71443864-65f67280-2748-11ea-86db-48a8bef9da72.png"></p>
+<p><img width="800" src="https://user-images.githubusercontent.com/662387/71455592-a7cafb80-27d0-11ea-8ac7-3633c2b4d429.png"></p>
 
 - Slack verification token could is in [Slack Developer Console](https://api.slack.com/apps) → \${YourApp} → Basic Information → Verification Token.
 
@@ -126,5 +126,5 @@ Then, you have to copy your Slack webhook URL to [Slack Developer Console](https
 
 > **Note:**
 >
-> - If your bot doesn't respond after webhook settings, please take a closer look at the bot events you subscribed to. Slack doesn't pick any bot events subscription by default. The first bot event you may subscribe to is `message.im`, which is the event whenever a user posts a direct message to your bot.
+> - If your bot doesn't respond after webhook settings, please take a closer look at bot events you subscribed to. Slack doesn't pick any bot events subscription by default. The first bot event you may subscribe to is `message.im`, which is the event whenever a user posts a direct message to your bot.
 > - For more info about Slack Events, please refer to Slack's official doc, [API Event Types](https://api.slack.com/events)
