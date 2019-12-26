@@ -1,6 +1,6 @@
 import { run } from '../../bot/Bot';
 
-import router, { line, payload, platform, route, text } from '..';
+import router, { line, messenger, payload, platform, route, text } from '..';
 
 function textContext(message = '') {
   return {
@@ -344,4 +344,8 @@ describe('#platform', () => {
 
 it('#line should be exported', () => {
   expect(line).toBeDefined();
+});
+
+it('#messenger should be exported', () => {
+  expect(messenger).toBeDefined();
 });

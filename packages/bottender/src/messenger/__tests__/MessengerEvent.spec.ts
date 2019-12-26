@@ -583,6 +583,33 @@ const brandedCamera = {
   },
 };
 
+const accountLinkingLinked = {
+  sender: {
+    id: '1476077422222289',
+  },
+  recipient: {
+    id: '707356222221168',
+  },
+  timestamp: 1469111400000,
+  accountLinking: {
+    status: 'linked',
+    authorizationCode: 'PASS_THROUGH_AUTHORIZATION_CODE',
+  },
+};
+
+const accountLinkingUnlinked = {
+  sender: {
+    id: '1476077422222289',
+  },
+  recipient: {
+    id: '707356222221168',
+  },
+  timestamp: 1469111400000,
+  accountLinking: {
+    status: 'unlinked',
+  },
+};
+
 it('#rawEvent', () => {
   expect(new MessengerEvent(textMessage).rawEvent).toEqual(textMessage);
   expect(new MessengerEvent(imageMessage).rawEvent).toEqual(imageMessage);
@@ -595,6 +622,12 @@ it('#rawEvent', () => {
   expect(new MessengerEvent(echoMessage).rawEvent).toEqual(echoMessage);
   expect(new MessengerEvent(postback).rawEvent).toEqual(postback);
   expect(new MessengerEvent(payment).rawEvent).toEqual(payment);
+  expect(new MessengerEvent(accountLinkingLinked).rawEvent).toEqual(
+    accountLinkingLinked
+  );
+  expect(new MessengerEvent(accountLinkingUnlinked).rawEvent).toEqual(
+    accountLinkingUnlinked
+  );
 });
 
 it('#isMessage', () => {
@@ -608,6 +641,8 @@ it('#isMessage', () => {
   expect(new MessengerEvent(echoMessage).isMessage).toEqual(true);
   expect(new MessengerEvent(postback).isMessage).toEqual(false);
   expect(new MessengerEvent(payment).isMessage).toEqual(false);
+  expect(new MessengerEvent(accountLinkingLinked).isMessage).toEqual(false);
+  expect(new MessengerEvent(accountLinkingUnlinked).isMessage).toEqual(false);
 });
 
 it('#message', () => {
@@ -897,6 +932,8 @@ it('#isDelivery', () => {
   expect(new MessengerEvent(echoMessage).isDelivery).toEqual(false);
   expect(new MessengerEvent(postback).isDelivery).toEqual(false);
   expect(new MessengerEvent(payment).isDelivery).toEqual(false);
+  expect(new MessengerEvent(accountLinkingLinked).isDelivery).toEqual(false);
+  expect(new MessengerEvent(accountLinkingUnlinked).isDelivery).toEqual(false);
 });
 
 it('#delivery', () => {
@@ -910,6 +947,8 @@ it('#delivery', () => {
   expect(new MessengerEvent(echoMessage).delivery).toEqual(null);
   expect(new MessengerEvent(postback).delivery).toEqual(null);
   expect(new MessengerEvent(payment).delivery).toEqual(null);
+  expect(new MessengerEvent(accountLinkingLinked).delivery).toEqual(null);
+  expect(new MessengerEvent(accountLinkingUnlinked).delivery).toEqual(null);
 });
 
 it('#isRead', () => {
@@ -919,6 +958,8 @@ it('#isRead', () => {
   expect(new MessengerEvent(echoMessage).isRead).toEqual(false);
   expect(new MessengerEvent(postback).isRead).toEqual(false);
   expect(new MessengerEvent(payment).isRead).toEqual(false);
+  expect(new MessengerEvent(accountLinkingLinked).isRead).toEqual(false);
+  expect(new MessengerEvent(accountLinkingUnlinked).isRead).toEqual(false);
 });
 
 it('#read', () => {
@@ -931,6 +972,8 @@ it('#read', () => {
   expect(new MessengerEvent(echoMessage).read).toEqual(null);
   expect(new MessengerEvent(postback).read).toEqual(null);
   expect(new MessengerEvent(payment).read).toEqual(null);
+  expect(new MessengerEvent(accountLinkingLinked).read).toEqual(null);
+  expect(new MessengerEvent(accountLinkingUnlinked).read).toEqual(null);
 });
 
 it('#isEcho', () => {
@@ -949,6 +992,8 @@ it('#isPostback', () => {
   expect(new MessengerEvent(echoMessage).isPostback).toEqual(false);
   expect(new MessengerEvent(postback).isPostback).toEqual(true);
   expect(new MessengerEvent(payment).isPostback).toEqual(false);
+  expect(new MessengerEvent(accountLinkingLinked).isPostback).toEqual(false);
+  expect(new MessengerEvent(accountLinkingUnlinked).isPostback).toEqual(false);
 });
 
 it('#postback', () => {
@@ -964,6 +1009,8 @@ it('#isPayload', () => {
   expect(new MessengerEvent(echoMessage).isPayload).toEqual(false);
   expect(new MessengerEvent(quickReplyMessage).isPayload).toEqual(true);
   expect(new MessengerEvent(postback).isPayload).toEqual(true);
+  expect(new MessengerEvent(accountLinkingLinked).isPayload).toEqual(false);
+  expect(new MessengerEvent(accountLinkingUnlinked).isPayload).toEqual(false);
 });
 
 it('#postback', () => {
@@ -985,6 +1032,8 @@ it('#isGamePlay', () => {
   expect(new MessengerEvent(gamePlayWithNonValidPayload).isGamePlay).toEqual(
     true
   );
+  expect(new MessengerEvent(accountLinkingLinked).isGamePlay).toEqual(false);
+  expect(new MessengerEvent(accountLinkingUnlinked).isGamePlay).toEqual(false);
 });
 
 it('#gamePlay', () => {
@@ -1012,6 +1061,8 @@ it('#gamePlay', () => {
     score: 99,
     payload: 'SOME_STRING',
   });
+  expect(new MessengerEvent(accountLinkingLinked).gamePlay).toEqual(null);
+  expect(new MessengerEvent(accountLinkingUnlinked).gamePlay).toEqual(null);
 });
 
 it('#isOptin', () => {
@@ -1022,6 +1073,8 @@ it('#isOptin', () => {
   expect(new MessengerEvent(quickReplyMessage).isOptin).toEqual(false);
   expect(new MessengerEvent(postback).isOptin).toEqual(false);
   expect(new MessengerEvent(optin).isOptin).toEqual(true);
+  expect(new MessengerEvent(accountLinkingLinked).isOptin).toEqual(false);
+  expect(new MessengerEvent(accountLinkingUnlinked).isOptin).toEqual(false);
 });
 
 it('#optin', () => {
@@ -1034,6 +1087,8 @@ it('#optin', () => {
   expect(new MessengerEvent(optin).optin).toEqual({
     ref: 'PASS_THROUGH_PARAM',
   });
+  expect(new MessengerEvent(accountLinkingLinked).optin).toEqual(null);
+  expect(new MessengerEvent(accountLinkingUnlinked).optin).toEqual(null);
 });
 
 it('#isPayment', () => {
@@ -1044,6 +1099,8 @@ it('#isPayment', () => {
   expect(new MessengerEvent(quickReplyMessage).isPayment).toEqual(false);
   expect(new MessengerEvent(postback).isPayment).toEqual(false);
   expect(new MessengerEvent(payment).isPayment).toEqual(true);
+  expect(new MessengerEvent(accountLinkingLinked).isPayment).toEqual(false);
+  expect(new MessengerEvent(accountLinkingUnlinked).isPayment).toEqual(false);
 });
 
 it('#payment', () => {
@@ -1079,6 +1136,12 @@ it('#isCheckoutUpdate', () => {
   expect(new MessengerEvent(quickReplyMessage).isCheckoutUpdate).toEqual(false);
   expect(new MessengerEvent(postback).isCheckoutUpdate).toEqual(false);
   expect(new MessengerEvent(checkoutUpdate).isCheckoutUpdate).toEqual(true);
+  expect(new MessengerEvent(accountLinkingLinked).isCheckoutUpdate).toEqual(
+    false
+  );
+  expect(new MessengerEvent(accountLinkingUnlinked).isCheckoutUpdate).toEqual(
+    false
+  );
 });
 
 it('#checkoutUpdate', () => {
@@ -1100,6 +1163,10 @@ it('#checkoutUpdate', () => {
       postalCode: '94025',
     },
   });
+  expect(new MessengerEvent(accountLinkingLinked).checkoutUpdate).toEqual(null);
+  expect(new MessengerEvent(accountLinkingUnlinked).checkoutUpdate).toEqual(
+    null
+  );
 });
 
 it('#isPreCheckout', () => {
@@ -1110,6 +1177,10 @@ it('#isPreCheckout', () => {
   expect(new MessengerEvent(quickReplyMessage).isPreCheckout).toEqual(false);
   expect(new MessengerEvent(postback).isPreCheckout).toEqual(false);
   expect(new MessengerEvent(preCheckout).isPreCheckout).toEqual(true);
+  expect(new MessengerEvent(accountLinkingLinked).isPreCheckout).toEqual(false);
+  expect(new MessengerEvent(accountLinkingUnlinked).isPreCheckout).toEqual(
+    false
+  );
 });
 
 it('#preCheckout', () => {
@@ -1138,6 +1209,8 @@ it('#preCheckout', () => {
       amount: '2.70',
     },
   });
+  expect(new MessengerEvent(accountLinkingLinked).preCheckout).toEqual(null);
+  expect(new MessengerEvent(accountLinkingUnlinked).preCheckout).toEqual(null);
 });
 
 it('#isPolicyEnforcement', () => {
@@ -1349,5 +1422,36 @@ it('#brandedCamera', () => {
   expect(new MessengerEvent(brandedCamera).brandedCamera).toEqual({
     contentIds: ['<CAMERA-EFFECT-ID>', '<CAMERA-EFFECT-ID>'],
     event: 'dismiss',
+  });
+});
+
+it('#isAccountLinking', () => {
+  expect(new MessengerEvent(textMessage).isAccountLinking).toEqual(false);
+  expect(new MessengerEvent(delivery).isAccountLinking).toEqual(false);
+  expect(new MessengerEvent(read).isAccountLinking).toEqual(false);
+  expect(new MessengerEvent(echoMessage).isAccountLinking).toEqual(false);
+  expect(new MessengerEvent(postback).isAccountLinking).toEqual(false);
+  expect(new MessengerEvent(payment).isAccountLinking).toEqual(false);
+  expect(new MessengerEvent(accountLinkingLinked).isAccountLinking).toEqual(
+    true
+  );
+  expect(new MessengerEvent(accountLinkingUnlinked).isAccountLinking).toEqual(
+    true
+  );
+});
+
+it('#accountLinking', () => {
+  expect(new MessengerEvent(textMessage).accountLinking).toEqual(null);
+  expect(new MessengerEvent(delivery).accountLinking).toEqual(null);
+  expect(new MessengerEvent(read).accountLinking).toEqual(null);
+  expect(new MessengerEvent(echoMessage).accountLinking).toEqual(null);
+  expect(new MessengerEvent(postback).accountLinking).toEqual(null);
+  expect(new MessengerEvent(payment).accountLinking).toEqual(null);
+  expect(new MessengerEvent(accountLinkingLinked).accountLinking).toEqual({
+    authorizationCode: 'PASS_THROUGH_AUTHORIZATION_CODE',
+    status: 'linked',
+  });
+  expect(new MessengerEvent(accountLinkingUnlinked).accountLinking).toEqual({
+    status: 'unlinked',
   });
 });
