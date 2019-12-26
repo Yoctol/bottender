@@ -3,6 +3,8 @@ id: channel-slack-setup
 title: Setup Slack
 ---
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/7aISWF9_jO4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 ## Enable Slack Channel
 
 ### Create a New Slack Bottender App
