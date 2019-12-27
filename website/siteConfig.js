@@ -101,10 +101,10 @@ const siteConfig = {
   users,
 
   // Open Graph and Twitter card images.
-  ogImage: 'img/og-image.png',
+  ogImage: 'img/og-image-holidays.png',
   twitter: true,
   twitterUsername: 'bottenderjs',
-  twitterImage: 'img/og-image.png',
+  twitterImage: 'img/og-image-holidays.png',
 
   disableHeaderTitle: false,
 
