@@ -75,9 +75,9 @@ function blockTemplate1(user) {
         },
         accessory: {
           type: 'image',
-          image_url:
+          imageUrl:
             'https://s3-media3.fl.yelpcdn.com/bphoto/c7ed05m9lC2EmA3Aruue7A/o.jpg',
-          alt_text: 'alt text for image',
+          altText: 'alt text for image',
         },
       },
       {
@@ -89,9 +89,9 @@ function blockTemplate1(user) {
         },
         accessory: {
           type: 'image',
-          image_url:
+          imageUrl:
             'https://s3-media2.fl.yelpcdn.com/bphoto/korel-1YjNtFtJlMTaC26A/o.jpg',
-          alt_text: 'alt text for image',
+          altText: 'alt text for image',
         },
       },
       {
@@ -103,9 +103,9 @@ function blockTemplate1(user) {
         },
         accessory: {
           type: 'image',
-          image_url:
+          imageUrl:
             'https://s3-media2.fl.yelpcdn.com/bphoto/DawwNigKJ2ckPeDeDM7jAg/o.jpg',
-          alt_text: 'alt text for image',
+          altText: 'alt text for image',
         },
       },
       {
