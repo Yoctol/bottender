@@ -86,8 +86,14 @@
       "channel-messenger-setup": {
         "title": "Setup Messenger"
       },
+      "channel-slack-block-kit": {
+        "title": "Slack Block Kit"
+      },
       "channel-slack-handling-events": {
         "title": "Handling Slack Events"
+      },
+      "channel-slack-sending-messages": {
+        "title": "Sending Slack Messages"
       },
       "channel-slack-setup": {
         "title": "Setup Slack"
@@ -364,6 +370,12 @@
       },
       "version-1.0.5/version-1.0.5-the-basics-session": {
         "title": "Session"
+      },
+      "version-1.1.0/version-1.1.0-channel-slack-block-kit": {
+        "title": "Slack Block Kit"
+      },
+      "version-1.1.0/version-1.1.0-channel-slack-sending-messages": {
+        "title": "Sending Slack Messages"
       }
     },
     "links": {
