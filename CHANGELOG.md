@@ -1,3 +1,192 @@
+# 1.1.0 / 2019-12-27
+
+- [new] improve error messages for bots configuration:
+
+```
+LINE channel secret is required. Please make sure you have filled it correctly in `bottender.config.js` or `.env` file.
+```
+
+Instead of:
+
+```
+TypeError [ERR_INVALID_ARG_TYPE]: The "key" argument must be one of type Buffer, TypedArray, DataView, string, or KeyObject. Received type undefined
+```
+
+### messenger
+
+- [new] Added Messenger routes:
+
+```js
+const { router, messenger } = require('bottender/router');
+
+function Action() {
+  // ...
+}
+
+function App() {
+  return router([
+    messenger.message(Action),
+    messenger.accountLinking.linked(Action),
+    messenger.accountLinking.unlinked(Action),
+    messenger.accountLinking(Action),
+    messenger.checkoutUpdate(Action),
+    messenger.delivery(Action),
+    messenger.echo(Action),
+    messenger.gamePlay(Action),
+    messenger.passThreadControl(Action),
+    messenger.takeThreadControl(Action),
+    messenger.requestThreadControl(Action),
+    messenger.appRoles(Action),
+    messenger.optin(Action),
+    messenger.payment(Action),
+    messenger.policyEnforcement(Action),
+    messenger.postback(Action),
+    messenger.preCheckout(Action),
+    messenger.read(Action),
+    messenger.referral(Action),
+    messenger.standby(Action),
+    messenger(Action),
+  ]);
+}
+```
+
+### line
+
+- [new] Added LINE routes:
+
+```js
+const { router, line } = require('bottender/router');
+
+function Action() {
+  // ...
+}
+
+function App() {
+  return router([
+    line.follow(Action),
+    line.unfollow(Action),
+    line.join(Action),
+    line.leave(Action),
+    line.memberJoined(Action),
+    line.memberLeft(Action),
+    line.postback(Action),
+    line.beacon.enter(Action),
+    line.beacon.banner(Action),
+    line.beacon.stay(Action),
+    line.beacon(Action),
+    line.accountLink(Action),
+    line.things.link(Action),
+    line.things.unlink(Action),
+    line.things.scenarioResult(Action),
+    line.things(Action),
+    line(Action),
+  ]);
+}
+```
+
+### slack
+
+- [new] Implemented native Slack chat APIs, see Slack API Doc for further information.
+  e.g.
+
+```js
+context.chat.postMessage(...);
+context.chat.postEphemeral(...);
+context.chat.update(...);
+context.chat.delete(...);
+context.chat.meMessage(...);
+context.chat.getPermalink(...);
+context.chat.scheduleMessage(...);
+context.chat.deleteScheduledMessage(...);
+context.chat.scheduledMessages.list(...);
+```
+
+`context.postMessage`and`context.postEphemeral`is now deprecated, use`context.chat.postMessage`and`context.chat.postEphemeral` instead.
+
+- [new] Implemented native Slack views APIs, see [Slack API Doc](https://api.slack.com/methods) for further information.
+  e.g.
+
+```js
+context.views.open(...);
+context.views.publish(...);
+context.views.push(...);
+context.views.update(...);
+```
+
+For views, we keep `channelId` in `privateMetadata` to get session key for upcoming view events. ([ref](https://github.com/Yoctol/bottender/pull/545))
+
+- [new] Added Slack routes:
+
+```js
+const { router, slack } = require('bottender/router');
+
+function Action() {
+  // ...
+}
+
+function App() {
+  return router([
+    slack.message(Action),
+    slack.event('pin_added', Action),
+    slack.event('star_added', Action),
+    slack(Action),
+  ]);
+}
+```
+
+### telegram
+
+- [new] Added Telegram routes:
+
+```js
+const { router, telegram } = require('bottender/router');
+
+function Action() {
+  // ...
+}
+
+function App() {
+  return router([
+    telegram.message(Action),
+    telegram.editedMessage(Action),
+    telegram.channelPost(Action),
+    telegram.editedChannelPost(Action),
+    telegram.inlineQuery(Action),
+    telegram.chosenInlineResult(Action),
+    telegram.callbackQuery(Action),
+    telegram.shippingQuery(Action),
+    telegram.preCheckoutQuery(Action),
+    telegram.poll(Action),
+    telegram(Action),
+  ]);
+}
+```
+
+### viber
+
+- [new] Added Viber routes:
+
+```js
+const { router, viber } = require('bottender/router');
+
+function Action() {
+  // ...
+}
+
+function App() {
+  return router([
+    viber.message(Action),
+    viber.subscribed(Action),
+    viber.unsubscribed(Action),
+    viber.conversationStarted(Action),
+    viber.delivered(Action),
+    viber.seen(Action),
+    viber.failed(Action),
+    viber(Action),
+  ]);
+}
+```
+
 # 1.0.6 / 2019-12-24
 
 - [fix] session should never expire by default #595
