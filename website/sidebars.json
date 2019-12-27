@@ -1,6 +1,9 @@
 {
   "docs": {
-    "Getting Started": ["getting-started", "migrating-v1"],
+    "Getting Started": [
+      "getting-started", 
+      "migrating-v1"
+    ],
     "The Basics": [
       "the-basics-console-mode",
       "the-basics-actions",
@@ -32,14 +35,18 @@
     "Guides (Slack)": [
       "channel-slack-setup",
       "channel-slack-handling-events",
-      "channel-slack-sending-messages"
+      "channel-slack-sending-messages",
+      "channel-slack-block-kit"
     ],
     "Guides (Telegram)": [
       "channel-telegram-setup",
       "channel-telegram-handling-events",
       "channel-telegram-sending-messages"
     ],
-    "Guides (Viber)": ["channel-viber-setup", "channel-viber-handling-events"],
+    "Guides (Viber)": [
+      "channel-viber-setup", 
+      "channel-viber-handling-events"
+    ],
     "FAQ": []
   },
   "api": {
