@@ -1,6 +1,8 @@
 {
   "docs": {
-    "Getting Started": ["getting-started"],
+    "Getting Started": [
+      "getting-started"
+    ],
     "The Basics": [
       "the-basics-console-mode",
       "the-basics-actions",
@@ -26,8 +28,15 @@
       "channel-telegram-setup",
       "channel-telegram-handling-events"
     ],
-    "Guides (Slack)": ["channel-slack-setup", "channel-slack-handling-events", "add channel-slack-block-kit.md"],
-    "Guides (Viber)": ["channel-viber-setup", "channel-viber-handling-events"],
+    "Guides (Slack)": [
+      "channel-slack-setup",
+      "channel-slack-handling-events",
+      "channel-slack-block-kit"
+    ],
+    "Guides (Viber)": [
+      "channel-viber-setup",
+      "channel-viber-handling-events"
+    ],
     "FAQ": []
   },
   "api": {}
