@@ -63,6 +63,7 @@ function Action() {
 
 function App() {
   return router([
+    line.message(Action),
     line.follow(Action),
     line.unfollow(Action),
     line.join(Action),
