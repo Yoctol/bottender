@@ -1,5 +1,6 @@
 import EventEmitter from 'events';
 
+import invariant from 'invariant';
 import { TelegramClient } from 'messaging-api-telegram';
 
 import Session from '../session/Session';
@@ -38,6 +39,11 @@ export default class TelegramConnector
       this._client = options.client;
     } else {
       const { accessToken, origin } = options;
+
+      invariant(
+        options.accessToken,
+        'Telegram access token is required. Please make sure you have filled it correctly in `bottender.config.js` or `.env` file.'
+      );
 
       this._client = TelegramClient.connect({
         accessToken,

@@ -1,6 +1,7 @@
 import EventEmitter from 'events';
 import crypto from 'crypto';
 
+import invariant from 'invariant';
 import { ViberClient, ViberTypes } from 'messaging-api-viber';
 import { addedDiff } from 'deep-object-diff';
 
@@ -43,6 +44,11 @@ export default class ViberConnector
       this._client = options.client;
     } else {
       const { accessToken, sender, origin } = options;
+
+      invariant(
+        options.accessToken,
+        'Viber access token is required. Please make sure you have filled it correctly in `bottender.config.js` or `.env` file.'
+      );
 
       this._client = ViberClient.connect(
         {
