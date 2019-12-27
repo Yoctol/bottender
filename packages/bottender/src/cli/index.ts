@@ -1,10 +1,10 @@
 import path from 'path';
 
-import camelCase from 'camel-case';
 import fs from 'fs-extra';
 import get from 'lodash/get';
 import updateNotifier from 'update-notifier';
 import { Result } from 'arg';
+import { camelcase } from 'messaging-api-common';
 
 import { error } from '../shared/log';
 
@@ -78,9 +78,9 @@ const main = async (argvFrom2: string[]) => {
   };
 
   try {
-    const method = get(provider, camelCase(subcommand));
+    const method = get(provider, camelcase(subcommand));
     if (method) {
-      await (provider as any)[camelCase(subcommand)](ctx);
+      await (provider as any)[camelcase(subcommand)](ctx);
     } else {
       const subcommands = Array.from(provider.subcommands).join(', ');
       error(`Please specify a valid subcommand: ${subcommands}`);

@@ -1,0 +1,16 @@
+{
+  "scripts": {
+    "dev": "nodemon server.js",
+    "start": "cross-env NODE_ENV=production node server.js"
+  },
+  "dependencies": {
+    "bottender": "next",
+    "cross-env": "^6.0.3",
+    "koa": "^2.11.0",
+    "koa-bodyparser": "^4.2.1",
+    "koa-router": "^7.4.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.1"
+  }
+}

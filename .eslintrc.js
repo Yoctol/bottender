@@ -28,6 +28,7 @@ module.exports = {
       },
     ],
     '@typescript-eslint/camelcase': 'off',
+    '@typescript-eslint/explicit-function-return-type': 'off',
   },
   overrides: [
     {

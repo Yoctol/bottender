@@ -72,24 +72,24 @@ Bottender will call the `SayHi` action with `{ name: 'Bob' }` as the `props` and
 
 ## How to Debug
 
-Bottender use famous [debug](https://www.npmjs.com/package/debug) package internally to collect some helpful information that can be showed up when you provide corresponding `DEBUG` environment variable. To debug your actions, you may run your command with `DEBUG=bottender:dialog`, for example:
+Bottender use famous [debug](https://www.npmjs.com/package/debug) package internally to collect some helpful information that can be showed up when you provide corresponding `DEBUG` environment variable. To debug your actions, you may run your command with `DEBUG=bottender:action`, for example:
 
 ```sh
-DEBUG=bottender:dialog npm start
+DEBUG=bottender:action npm start
 ```
 
 > **Note:** If you are developing your bots on Windows, you may use [cross-env](https://www.npmjs.com/package/cross-env) to assign `DEBUG` environment variable:
 
 ```sh
-cross-env DEBUG=bottender:dialog npm start
+cross-env DEBUG=bottender:action npm start
 ```
 
 Or you may put your `DEBUG` environment setting into your `.env` file:
 
 ```
-DEBUG=bottender:dialog
+DEBUG=bottender:action
 ```
 
-![](https://user-images.githubusercontent.com/3382565/67746734-0cccd400-fa62-11e9-9318-3517a983eb64.png)
+![](https://user-images.githubusercontent.com/3382565/70204869-0dd9db00-175d-11ea-814f-140b3807f39d.gif)
 
 We recommend that you should always name your actions, so it will print meaningful paths for you to debug instead of showing `Anonymous` as action name.

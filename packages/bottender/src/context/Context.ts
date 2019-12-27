@@ -4,6 +4,7 @@ import cloneDeep from 'lodash/cloneDeep';
 import debug from 'debug';
 import warning from 'warning';
 
+import Session from '../session/Session';
 import { Client, Event, RequestContext } from '../types';
 
 const debugContext = debug('bottender:context');
@@ -11,7 +12,7 @@ const debugContext = debug('bottender:context');
 type Options<C extends Client, E extends Event> = {
   client: C;
   event: E;
-  session: any;
+  session?: Session | null;
   initialState?: Record<string, any> | null;
   requestContext?: RequestContext;
   emitter?: EventEmitter | null;
@@ -23,7 +24,16 @@ type Response = {
   body: any;
 };
 
-export default class Context<C extends Client, E extends Event> {
+export default abstract class Context<C extends Client, E extends Event> {
+  /**
+   * The name of the platform.
+   *
+   */
+  abstract get platform(): string;
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  abstract sendText(text: string, options?: Record<string, any>): any;
+
   _isHandled = false;
 
   _isSessionWritten = false;
@@ -32,7 +42,7 @@ export default class Context<C extends Client, E extends Event> {
 
   _event: E;
 
-  _session: Record<string, any> | null;
+  _session: Session | null;
 
   _initialState?: Record<string, any> | null;
 
@@ -52,7 +62,7 @@ export default class Context<C extends Client, E extends Event> {
   }: Options<C, E>) {
     this._client = client;
     this._event = event;
-    this._session = session;
+    this._session = session || null;
     this._initialState = initialState || {};
     this._requestContext = requestContext || null;
     this._emitter = emitter || null;
@@ -100,7 +110,7 @@ export default class Context<C extends Client, E extends Event> {
    * The session state of the context.
    *
    */
-  get session(): Record<string, any> | null {
+  get session(): Session | null {
     return this._session;
   }
 

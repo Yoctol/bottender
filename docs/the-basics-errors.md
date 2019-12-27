@@ -11,10 +11,11 @@ Bottender makes it easy to display custom error message for various runtime erro
 // _error.js
 
 module.exports = async function HandleError(context, props) {
+  console.error(props.error);
+  // or you can choose not to reply any error messages
   await context.sendText(
     'There are some unexpected errors happened. Please try again later, sorry for the inconvenience.'
   );
-  console.error(props.error);
   if (process.env.NODE_ENV === 'production') {
     // send your error to the error tracker, for example: Sentry
   }
@@ -30,6 +31,8 @@ The example code above will do following things for you while an error occurred:
 2. Log error to the console.
 3. Log error into error tracker.
 4. Send `error.stack` as text message to the user (only in the development)
+
+> **Note:** In LINE channel, errors should be handled in a different way because reply API can only be called once. You can read more about it in the [Error Handling in LINE documentation](channel-line-errors.md).
 
 ## Sending Errors to Sentry
 

@@ -8,6 +8,8 @@
 // See https://docusaurus.io/docs/site-config for all the possible
 // site configuration options.
 
+const users = require('./data/users');
+
 const siteConfig = {
   title: 'Bottender', // Title for your website.
   tagline: 'A framework for building conversational user interfaces.',
@@ -30,8 +32,9 @@ const siteConfig = {
   // For no header links in the top nav bar -> headerLinks: [],
   headerLinks: [
     { doc: 'getting-started', label: 'Docs' },
-    // { doc: 'api-context', label: 'API' },
+    { doc: 'api-context', label: 'API' },
     { blog: true, label: 'Blog' },
+    { page: 'users', label: 'Users' },
     {
       href: 'https://github.com/Yoctol/bottender/tree/master/examples',
       label: 'Examples',
@@ -42,7 +45,7 @@ const siteConfig = {
   /* path to images for header/footer */
   headerIcon: 'img/bottender.svg',
   footerIcon: '',
-  favicon: 'img/favicon.ico',
+  favicon: 'img/favicon-192x192.png',
 
   /* Colors for website */
   colors: {
@@ -69,7 +72,7 @@ const siteConfig = {
   */
 
   // This copyright info is used in /core/Footer.js and blog RSS/Atom feeds.
-  copyright: `Copyright © ${new Date().getFullYear()} Yoctol.AI`,
+  copyright: '© 2019 - PRESENT YOCTOL.AI ALL RIGHTS RESERVED.',
 
   highlight: {
     // Highlight.js theme to use for syntax highlighting in code blocks.
@@ -94,6 +97,9 @@ const siteConfig = {
   // URL for editing docs, usage example: editUrl + 'en/doc1.md'.
   editUrl: 'https://github.com/Yoctol/bottender/edit/master/docs/',
 
+  // The users array.
+  users,
+
   // Open Graph and Twitter card images.
   ogImage: 'img/og-image.png',
   twitter: true,
@@ -104,7 +110,7 @@ const siteConfig = {
 
   // For sites with a sizable amount of content, set collapsible to true.
   // Expand/collapse the links and subcategories under categories.
-  docsSideNavCollapsible: true,
+  docsSideNavCollapsible: false,
 
   // Show documentation's last contributor's name.
   // enableUpdateBy: true,

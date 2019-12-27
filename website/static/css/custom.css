@@ -33,24 +33,38 @@ a:focus {
   outline: none;
 }
 
-.mainContainer {
+.indexContainer {
   padding: 40px 0 0;
 }
 
-.mainContainer article pre {
+.indexContainer article pre {
   margin-top: 24px;
   margin-bottom: 28px;
 }
 
-.mainContainer article a:not(.anchor):not(.hash-link) {
-  background-color: rgba(187, 239, 253, 0.3);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-  color: #1a1a1a;
+.post p a {
+  text-decoration: underline !important;
+}
+.post a {
+  font-weight: 600;
 }
 
-.mainContainer article a:not(.anchor):not(.hash-link):hover {
-  background-color: #bbeffd;
-  border-bottom-color: #1a1a1a;
+h1 a {
+  color: #24292e;
+}
+
+a {
+  color: #4a90e2;
+}
+
+.post p a {
+  text-decoration: inherit !important;
+}
+.post p a:hover {
+  text-decoration: underline !important;
+}
+.post a {
+  font-weight: inherit;
 }
 
 .homeContainer {
@@ -278,6 +292,7 @@ a:focus {
 
 .mobile {
   display: none;
+  margin-top: 24px;
 }
 
 .nav-footer {
@@ -459,4 +474,52 @@ a:focus {
 }
 
 @media only screen and (min-width: 1500px) {
+}
+
+/**
+ * Showcase
+ */
+.showcase {
+  align-items: center;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.showcase .link {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 180px;
+  margin: 5px;
+  padding: 5px;
+}
+
+.showcase .link:hover {
+  text-decoration: underline;
+}
+
+.showcase .link .caption {
+  line-height: 20px;
+  height: 20px;
+}
+
+.showcase .link img {
+  max-height: 110px;
+  padding: 20px;
+  width: 110px;
+  align-self: center;
+}
+
+@media only screen and (max-width: 735px) {
+  .showcase .link {
+    height: 134px;
+  }
+
+  .showcase .link img {
+    max-height: 64px;
+    padding: 20px;
+    width: 64px;
+  }
 }

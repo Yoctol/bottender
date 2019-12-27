@@ -1,4 +1,4 @@
-import Context from '../context/Context';
+import SimulatedContext from './SimulatedContext';
 
 declare let jest: any;
 
@@ -116,7 +116,7 @@ class ContextSimulator {
     event: Record<string, any>;
     state?: Record<string, any>;
   }): Record<string, any> {
-    const context: any = new Context<any, any>({
+    const context: any = new SimulatedContext<any, any>({
       client: this.createClient(),
       event: this.createEvent(event),
       session: {
@@ -127,9 +127,9 @@ class ContextSimulator {
       initialState: this._initialState,
       requestContext: undefined,
       emitter: null,
+      platform: this._platform || 'other',
     });
 
-    context.platform = 'other';
     context.setState = this._mockFn(context.setState.bind(context));
     context.resetState = this._mockFn(context.resetState.bind(context));
     context.sendText = this._mockFn();
@@ -137,7 +137,6 @@ class ContextSimulator {
 
     switch (this._platform) {
       case 'messenger':
-        context.platform = 'messenger';
         context.sendMessage = this._mockFn();
         context.sendAttachment = this._mockFn();
         context.sendImage = this._mockFn();
@@ -167,7 +166,6 @@ class ContextSimulator {
         context.getAssociatedLabels = this._mockFn();
         break;
       case 'line':
-        context.platform = 'line';
         context.isReplied = false;
         context.sendText = this._mockFn();
         context.sendImage = this._mockFn();
@@ -210,11 +208,9 @@ class ContextSimulator {
         context.unlinkRichMenu = this._mockFn();
         break;
       case 'slack':
-        context.platform = 'slack';
         context.postMessage = this._mockFn();
         break;
       case 'telegram':
-        context.platform = 'telegram';
         context.sendMessage = this._mockFn();
         context.sendPhoto = this._mockFn();
         context.sendAudio = this._mockFn();
