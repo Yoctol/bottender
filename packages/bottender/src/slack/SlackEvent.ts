@@ -102,10 +102,15 @@ export type BlockActionEvent = UIEvent & {
   type: 'block_actions';
 };
 
+export type ViewEvent = UIEvent & {
+  type: 'view_submission' | 'view_closed';
+};
+
 export type SlackRawEvent =
   | Message
   | InteractiveMessageEvent
-  | BlockActionEvent;
+  | BlockActionEvent
+  | ViewEvent;
 
 export default class SlackEvent implements Event<SlackRawEvent> {
   _rawEvent: SlackRawEvent;
@@ -223,6 +228,22 @@ export default class SlackEvent implements Event<SlackRawEvent> {
    */
   get isBlockAction(): boolean {
     return this._rawEvent.type === 'block_actions';
+  }
+
+  /**
+   * Determine if the event is a view submission event.
+   *
+   */
+  get isViewSubmission(): boolean {
+    return this._rawEvent.type === 'view_submission';
+  }
+
+  /**
+   * Determine if the event is a view closed event.
+   *
+   */
+  get isViewClosed(): boolean {
+    return this._rawEvent.type === 'view_closed';
   }
 
   /**

@@ -100,6 +100,43 @@ const interactiveMessageRequest = {
   },
 };
 
+const viewSubmissionRequest = {
+  body: {
+    type: 'view_submission',
+    team: { id: 'T02RUPSBS', domain: 'yoctolinfo' },
+    user: {
+      id: 'UCL2D708M',
+      username: 'darkbtf',
+      name: 'darkbtf',
+      teamId: 'T02RUPSBS',
+    },
+    apiAppId: 'A604E7GSJ',
+    token: 'zBoHd4fjrvVcVuN9yTmlHMKC',
+    triggerId: '873508362498.2878808400.763026ca2acb11b3dfbcb85836d1c3d8',
+    view: {
+      id: 'VRQQ7JA4T',
+      teamId: 'T02RUPSBS',
+      type: 'modal',
+      blocks: [[Object]],
+      privateMetadata: '{"channelId":"C02ELGNBH"}',
+      callbackId: '截止',
+      state: { values: {} },
+      hash: '1577340522.d58ea69f',
+      title: { type: 'plain_text', text: '確認截止？', emoji: true },
+      clearOnClose: false,
+      notifyOnClose: false,
+      close: { type: 'plain_text', text: '取消', emoji: true },
+      submit: { type: 'plain_text', text: '送出 :boom:', emoji: true },
+      previousViewId: null,
+      rootViewId: 'VRQQ7JA4T',
+      appId: 'A604E7GSJ',
+      externalId: '',
+      appInstalledTeamId: 'T02RUPSBS',
+      botId: 'B618CBATV',
+    },
+  },
+};
+
 const RtmMessage = {
   type: 'message',
   channel: 'G7W5WAAAA',
@@ -182,6 +219,12 @@ describe('#getUniqueSessionKey', () => {
   it('extract correct channel id from pin_added event', () => {
     const { connector } = setup();
     const channelId = connector.getUniqueSessionKey(PinAddedRequest.body);
+    expect(channelId).toBe('C02ELGNBH');
+  });
+
+  it("extract correct channel id from view event's private_metadata", () => {
+    const { connector } = setup();
+    const channelId = connector.getUniqueSessionKey(viewSubmissionRequest.body);
     expect(channelId).toBe('C02ELGNBH');
   });
 });

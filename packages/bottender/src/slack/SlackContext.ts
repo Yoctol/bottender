@@ -8,7 +8,7 @@ import Context from '../context/Context';
 import Session from '../session/Session';
 import { RequestContext } from '../types';
 
-import SlackEvent from './SlackEvent';
+import SlackEvent, { UIEvent } from './SlackEvent';
 
 type Options = {
   client: SlackOAuthClient;
@@ -374,7 +374,16 @@ export default class SlackContext extends Context<
   _openView(options: SlackTypes.OpenViewOptions): Promise<any> {
     this._isHandled = true;
 
-    return this._client.views.open(options);
+    return this._client.views.open({
+      ...options,
+      view: {
+        ...options.view,
+        privateMetadata: JSON.stringify({
+          original: options.view.privateMetadata,
+          channelId: (this._event.rawEvent as UIEvent).channel.id,
+        }),
+      },
+    });
   }
 
   /**
