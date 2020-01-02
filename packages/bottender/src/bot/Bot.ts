@@ -239,11 +239,11 @@ export default class Bot<B extends Body, C extends Client, E extends Event> {
       );
 
       // Call all of extension functions before passing to handler.
-      contexts.forEach(context => {
-        this._plugins.forEach(ext => {
-          ext(context);
-        });
-      });
+      await Promise.all(
+        contexts.map(async context =>
+          Promise.all(this._plugins.map(ext => ext(context)))
+        )
+      );
 
       if (this._handler == null) {
         throw new Error(
