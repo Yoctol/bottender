@@ -1,3 +1,7 @@
+# 1.1.1 / 2020-01-02
+
+- [fix] improve error message when there are errors in bottender.config.js (#611)
+
 # 1.1.0 / 2019-12-27
 
 - [new] improve error messages for bots configuration:
