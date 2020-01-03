@@ -1,4 +1,4 @@
-# Slack hello world
+# Slack Hello World
 
 ## Install and Run
 
@@ -15,7 +15,9 @@ Install dependencies:
 npm install
 ```
 
-You must put `accessToken` and `verificationToken` into `index.js`.
+You have to put `accessToken` and `verificationToken` into `bottender.config.js`.
+
+If you are not familiar with Slack Bot, you may refer to Bottender's doc, [Setup Slack](https://bottender.js.org/docs/channel-slack-setup), to find detailed instructions.
 
 After that, you can run the bot with this npm script:
 
@@ -25,18 +27,18 @@ npm run dev
 
 This command will start server for bot developing at `http://localhost:5000`.
 
-If you successfully start the server, you will get a webhook url like `https://xxxxxxxx.ngrok.io/webhooks/slack` from command line.
+If you successfully start the server, you will get a webhook URL like `https://xxxxxxxx.ngrok.io/webhooks/slack` from command line.
 
-## Set webhook
+## Set Webhook
 
-To set the webhook, go to [Slack Developer Console](https://api.slack.com/apps) / [YourApp] / Event Subscriptions, and use the webhook url you get from running `npm run dev` to edit Request URL for your bot.
+To set the webhook, go to [Slack Developer Console](https://api.slack.com/apps) / [YourApp] / Event Subscriptions, and use the webhook URL you get from running `npm run dev` to edit Request URL for your bot.
 
-## Idea of this example
+## Idea of this Example
 
 This example is a simple bot running on [Slack](https://slack.com/).
 For more information, check our [Slack guides](https://bottender.js.org/docs/channel-slack-setup).
 
-## Related examples
+## Related Examples
 
 - [messenger-hello-world](../messenger-hello-world)
 - [slack-hello-world](../slack-hello-world)

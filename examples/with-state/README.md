@@ -11,13 +11,13 @@ npm install
 npm run dev --console
 ```
 
-## Idea of this example
+## Idea of this Example
 
 This example shows how to use Session State to store some information from
 users. For more information, check our
 [session guide](https://bottender.js.org/docs/the-basics-session).
 
-## Related examples
+## Related Examples
 
 - [session-memory](../session-memory)
 - [session-file](../session-file)
