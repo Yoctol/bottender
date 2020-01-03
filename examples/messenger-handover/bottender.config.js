@@ -15,7 +15,7 @@ module.exports = {
         'messaging_referrals',
         'messaging_handovers',
         'messaging_policy_enforcement',
-        'messaging_echoes',
+        'message_echoes',
       ],
     },
   },
