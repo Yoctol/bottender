@@ -19,7 +19,7 @@ You have to put `appId`, `appSecret`, `pageId`, `accessToken` and `verifyToken` 
 
 If you are not familiar with Messenger Bot, you may refer to Bottender's doc, [Setup Messenger](https://bottender.js.org/docs/channel-messenger-setup), to find detailed instructions.
 
-To make this example works, you may found that we enabled a few necessary `Messenger Subscriptions` in `bottender.config.js`, e.g., `message_echoes`, `standby`, and `messaging_handovers`.
+To make this example works, you may found that we enabled a few necessary `Page Subscriptions Fields` in `bottender.config.js`, e.g., `message_echoes`, `standby`, and `messaging_handovers`.
 
 `Messenger Subscriptions` take effect when you run the below `Set Webhook` script.
 
