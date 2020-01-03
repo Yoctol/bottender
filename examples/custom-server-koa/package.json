@@ -4,7 +4,7 @@
     "start": "cross-env NODE_ENV=production node server.js"
   },
   "dependencies": {
-    "bottender": "next",
+    "bottender": "latest",
     "cross-env": "^6.0.3",
     "koa": "^2.11.0",
     "koa-bodyparser": "^4.2.1",
