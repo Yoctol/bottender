@@ -1,6 +1,6 @@
 # Messenger Handover
 
-## Install
+## Install and Run
 
 Download this example or clone [bottender](https://github.com/Yoctol/bottender).
 
@@ -15,17 +15,13 @@ Install dependencies:
 npm install
 ```
 
-## Fill in Environment Variables
+You have to put `appId`, `appSecret`, `pageId`, `accessToken` and `verifyToken` into `bottender.config.js`.
 
-First, you have to put `appId`, `appSecret`, `pageId`, `accessToken` and `verifyToken` into `bottender.config.js`.
+If you are not familiar with Messenger Bot, you may refer to Bottender's doc, [Setup Messenger](https://bottender.js.org/docs/channel-messenger-setup), to find detailed instructions.
 
-If you are not familiar with Messenger Bot, you may refer to Bottender's doc, [Setup Messenger](https://bottender.js.org/docs/channel-messenger-setup) to find detailed instructions.
-
-To make this example works, you may also found that we enabled a few necessary `Messenger Subscriptions` in `bottender.js.config`, e.g., `message_echoes`, `standby`, and `messaging_handovers`.
+To make this example works, you may found that we enabled a few necessary `Page Subscriptions Fields` in `bottender.config.js`, e.g., `message_echoes`, `standby`, and `messaging_handovers`.
 
 `Messenger Subscriptions` take effect when you run the below `Set Webhook` script.
-
-## Run
 
 After that, you can run the bot with this npm script:
 

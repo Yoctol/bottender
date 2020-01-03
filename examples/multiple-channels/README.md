@@ -27,7 +27,7 @@ This command will start server for bot developing at `http://localhost:5000`.
 
 If you successfully start the server, you will get webhook urls correspond to each platform from command line.
 
-## Set webhook
+## Set Webhook
 
 You must set webhooks correspond to mounted paths properly:
 
@@ -41,13 +41,13 @@ You must set webhooks correspond to mounted paths properly:
 
 > Note: See related examples to know how to set webhook on each platform
 
-## Idea of this example
+## Idea of this Example
 
 This example shows the basic idea of building a cross-platform bot. The best
 feature of this example is that you can only develop one handler for five
 different bots, instead of developing one handler for each platform.
 
-## Related examples
+## Related Examples
 
 - [messenger-hello-world](../messenger-hello-world)
 - [line-hello-world](../line-hello-world)
