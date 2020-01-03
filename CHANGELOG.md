@@ -1,3 +1,7 @@
+# 1.1.2 / 2020-01-03
+
+- [fix] fix(DevServer): call `super.prepare()` in `prepare` method to avoid overwriting parent method
+
 # 1.1.1 / 2020-01-02
 
 - [fix] improve error message when there are errors in bottender.config.js (#611)
@@ -191,6 +195,10 @@ function App() {
   ]);
 }
 ```
+
+# 1.0.7 / 2020-01-03
+
+- [fix] fix(DevServer): call `super.prepare()` in `prepare` method to avoid overwriting parent method
 
 # 1.0.6 / 2019-12-24
 
