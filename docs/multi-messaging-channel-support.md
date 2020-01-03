@@ -161,3 +161,13 @@ module.exports = async function App(context) {
   ]);
 };
 ```
+
+### Platform Specific Routes
+
+Bottender includes a bunch of helpers to route within your multi-platform application. To learn more about the details of those specific routes, check out their documentation:
+
+- [Messenger Routes](channel-messenger-routing.md)
+- [LINE Routes](channel-line-routing.md)
+- [Slack Routes](channel-slack-routing.md)
+- [Telegram Routes](channel-telegram-routing.md)
+- [Viber Routes](channel-viber-routing.md)

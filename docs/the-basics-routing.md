@@ -118,5 +118,50 @@ async function App(context) {
 
 > **Note:** The fallback route should always be the last route registered in your router.
 
-<!--## Payload Routes-->
-<!--## Custom Routes-->
+## Payload Routes
+
+Payload events typically happen when user sending payload data by clicking button, selecting menu, or clicking keyboard. For example, you may catch `GET_STARTED` payload that send by button click and respond with `SayHi` action:
+
+```js
+const { router, payload } = require('bottender/router');
+
+async function App(context) {
+  return router([
+    payload('GET_STARTED', SayHi),
+    // return Unknown when when no other route matches the incoming event
+    route('*', Unknown),
+  ]);
+}
+```
+
+## Custom Routes
+
+If you wish to use your own route predicate, you may use `route` to create your own route wrapper.
+
+```js
+const { router, route } = require('bottender/router');
+
+function sayHiTo(name, Action) {
+  return route(context => context.event.text === `Hi ${name}`, Action);
+}
+
+async function App(context) {
+  return router([
+    sayHiTo('Bottender', SayHi),
+    // return Unknown when when no other route matches the incoming event
+    route('*', Unknown),
+  ]);
+}
+```
+
+In the above example, the custom route matches `Hi Bottender` text message and resolve `SayHi` action.
+
+## Platform Specific Routes
+
+Bottender includes a bunch of helpers to route within your multi-platform application. To learn more about the details of those specific routes, check out their documentation:
+
+- [Messenger Routes](channel-messenger-routing.md)
+- [LINE Routes](channel-line-routing.md)
+- [Slack Routes](channel-slack-routing.md)
+- [Telegram Routes](channel-telegram-routing.md)
+- [Viber Routes](channel-viber-routing.md)
