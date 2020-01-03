@@ -4,6 +4,6 @@
     "start": "bottender start"
   },
   "dependencies": {
-    "bottender": "next"
+    "bottender": "latest"
   }
 }
