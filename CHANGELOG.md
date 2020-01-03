@@ -1,3 +1,7 @@
+# 1.0.7 / 2020-01-03
+
+- [fix] fix(DevServer): call `super.prepare()` in `prepare` method to avoid overwriting parent method
+
 # 1.0.6 / 2019-12-24
 
 - [fix] session should never expire by default #595
