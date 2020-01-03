@@ -16,6 +16,7 @@ module.exports = {
         'messaging_handovers',
         'messaging_policy_enforcement',
         'message_echoes',
+        'standby',
       ],
     },
   },
