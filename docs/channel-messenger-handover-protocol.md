@@ -3,7 +3,7 @@ id: channel-messenger-handover-protocol
 title: Messenger Handover Protocol
 ---
 
- <p><img width="360" src="https://user-images.githubusercontent.com/662387/71710521-a5534c00-2e37-11ea-8bb4-c3c0ea6656d9.jpg"></p>
+<p><img width="360" src="https://user-images.githubusercontent.com/662387/71710521-a5534c00-2e37-11ea-8bb4-c3c0ea6656d9.jpg"></p>
 
 Since Messenger has become a critical customer support channel between brands and customers, the cooperation between Messenger Bots and human agents creates a complete customer journey on messaging business.
 
@@ -18,7 +18,7 @@ Here comes the Messenger handover protocol, which aims to make a smooth transiti
 
 Before going further, you have to know the concept of `Thread Control`. Assume that there are multiple Facebook Apps behind a single Facebook page. Only one Facebook owns the `Thread Control` of a specific customer at a time, which means only one Facebook App can reply to the customer.
 
-### `Primary Receiver` : The Privilege App Role
+### `Primary Receiver`: The Privilege App Role
 
 Among all the apps behind the Facebook Page, only a single app could be `Primary Receiver`, the rest are `Secondary Receivers`.
 
@@ -36,8 +36,8 @@ In the following table, you can see the difference in capability between `Primar
 
 ![](https://user-images.githubusercontent.com/662387/71662894-0aeafe00-2d8e-11ea-9de8-df807e7cfdd9.png)
 
-**> Note:**
-
+> **Note:**
+>
 > - If you can't wait to begin with an example, you can jump to Bottender's example, [Messenger Handover](https://github.com/Yoctol/bottender/tree/master/examples/messenger-handover).
 > - For more info, you can refer to Facebook's official doc, [Assigning App Roles](https://developers.facebook.com/docs/messenger-platform/handover-protocol/assign-app-roles)
 
@@ -104,7 +104,7 @@ The Thread Owner API may be called by `Primary Receiver` and `Secondary Receiver
 ```js
 async function App(context) {
   const threadOwner = await context.getThreadOwner();
-  console.log(threadOwner); // { appId: 'thread-owner-app-id' }
+  console.log(threadOwner); // { appId: "thread-owner-app-id" }
 }
 ```
 
@@ -130,14 +130,14 @@ async function App(context) {
   const secondaryReceivers = await context.client.getSecondaryReceivers();
   console.log(secondaryReceivers);
   // [
-  // {
-  // "id": "12345678910",
-  // "name": "David's Composer"
-  // },
-  // {
-  // "id": "23456789101",
-  // "name": "Messenger Rocks"
-  // }
+  //   {
+  //     id: "12345678910",
+  //     name: "David's Composer"
+  //   },
+  //   {
+  //     id: "23456789101",
+  //     name: "Messenger Rocks"
+  //   }
   // ]
 }
 ```
@@ -156,13 +156,13 @@ Once a role is assigned, either `Primary Receiver` or `Secondary Receiver` app g
 
 ```js
 {
- "recipient":{
- "id":"<PSID>"
- },
- "timestamp":1458692752478,
- "app_roles":{
- "123456789":["primary_receiver"]
- }
+  recipient: {
+    id: '<PSID>'
+  },
+  timestamp: 1458692752478,
+  appRoles: {
+    123456789: ['primary_receiver'],
+  },
 }
 ```
 
