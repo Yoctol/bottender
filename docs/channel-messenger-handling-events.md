@@ -3,10 +3,10 @@ id: channel-messenger-handling-events
 title: Handling Messenger Events
 ---
 
-For a Messenger bot, the two most frequent LINE events are `Text Event` and `Payload Event.`
+For a Messenger bot, the two most frequent Messenger events are `Text Event` and `Payload Event.`
 
 - `Text Event` is triggered when a user inputs text.
-- `Payload Event` can be triggered by postback buttons on template, imagemap, flex messages and rich menus, or quick replies.
+- `Payload Event` can be triggered by postback buttons on all kinds of templates, buttons, persistent menu, or quick replies.
 
 Apart from the above events, Messenger also supports advanced events for better user experience. For example, [`Media Related Events`](#media-related-events) offer a bunch of events when users send a piece of rich media to a bot, for instance, image, video, audio, and file. [Delivery/Read Event](#deliveryread-events) is handy while calculating how many users received a broadcast message. A humor response of [Sticker Event](#sticker-events), makes your bot more human-like.
 
@@ -85,9 +85,9 @@ async function App(context) {
 
 ### Media Related Events
 
-In our current experience, image and location is comparatively accessible. For example, an `Image Event` could be a starting point for image-based search engine to find relevant products. And `Location Event` is often used under the context that when your bot tries to recommendation your user nearby shops or branches.
+In our current experience, image and location are comparatively accessible. For example, an `Image Event` could be a starting point for an image-based search engine to find relevant products. And `Location Event` is often used under the context that when your bot tries to recommendation your user nearby shops or branches.
 
-In the following example, you can see a bunch of `Media Related Events,` from image, audio, video, file, and location.
+In the following example, you can see a bunch of `Media Related Events` from image, audio, video, file, and location.
 
 ```js
 async function HandleImage(context) {
@@ -161,7 +161,7 @@ async function App(context) {
 
 ### Sticker Events
 
-A proper response of `Sticker Event` would make your bot more human-like. For example, you can define a set of stickers that your bots understand as a shortcut (or sercret code). It offers an alternative way for your user to interact with your bot.
+A proper response of `Sticker Event` would make your bot more human-like. For example, you can define a set of stickers that your bots understand as a shortcut (or secret code). It offers an alternative way for your user to interact with your bot.
 
 In the following example, you can see an example of the famous `Like Sticker` (a growing big thumb up).
 

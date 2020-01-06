@@ -1,10 +1,10 @@
 import path from 'path';
 
-import camelCase from 'camel-case';
 import fs from 'fs-extra';
 import get from 'lodash/get';
 import updateNotifier from 'update-notifier';
 import { Result } from 'arg';
+import { camelcase } from 'messaging-api-common';
 
 import { error } from '../shared/log';
 
@@ -78,9 +78,9 @@ const main = async (argvFrom2: string[]) => {
   };
 
   try {
-    const method = get(provider, camelCase(subcommand));
+    const method = get(provider, camelcase(subcommand));
     if (method) {
-      await (provider as any)[camelCase(subcommand)](ctx);
+      await (provider as any)[camelcase(subcommand)](ctx);
     } else {
       const subcommands = Array.from(provider.subcommands).join(', ');
       error(`Please specify a valid subcommand: ${subcommands}`);
@@ -89,7 +89,8 @@ const main = async (argvFrom2: string[]) => {
   } catch (err) {
     console.error(
       error(
-        `An unexpected error occurred in provider ${subcommand}: ${err.stack}`
+        `An unexpected error occurred in provider ${subcommand}: ${err.message}
+${err.stack}`
       )
     );
   }
@@ -97,7 +98,8 @@ const main = async (argvFrom2: string[]) => {
 
 const handleUnexpected = (err: Error): void => {
   console.error(
-    error(`An unexpected error occurred!\n  ${err.stack} ${err.stack}`)
+    error(`An unexpected error occurred: ${err.message}
+${err.stack}`)
   );
   process.exit(1);
 };
@@ -107,7 +109,7 @@ const handleRejection = (reason: Error | any): void => {
     if (reason instanceof Error) {
       handleUnexpected(reason);
     } else {
-      console.error(error(`An unexpected rejection occurred\n  ${reason}`));
+      console.error(error(`An unexpected rejection occurred: ${reason}`));
     }
   } else {
     console.error(error('An unexpected empty rejection occurred'));

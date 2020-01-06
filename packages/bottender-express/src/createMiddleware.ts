@@ -24,8 +24,10 @@ function createMiddleware(bot: Bot) {
         ...req.body,
       },
       {
-        req,
-        res,
+        method: req.method,
+        path: req.path,
+        query: req.query,
+        headers: req.headers,
       }
     );
     if (response) {

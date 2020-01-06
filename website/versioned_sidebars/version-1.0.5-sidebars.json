@@ -1,0 +1,80 @@
+{
+  "version-1.0.5-docs": {
+    "Getting Started": [
+      "version-1.0.5-getting-started",
+      "version-1.0.5-migrating-v1"
+    ],
+    "The Basics": [
+      "version-1.0.5-the-basics-console-mode",
+      "version-1.0.5-the-basics-actions",
+      "version-1.0.5-the-basics-routing",
+      "version-1.0.5-the-basics-chain",
+      "version-1.0.5-the-basics-session",
+      "version-1.0.5-the-basics-errors"
+    ],
+    "Advanced Guides": [
+      "version-1.0.5-advanced-guides-nlu",
+      "version-1.0.5-multi-messaging-channel-support"
+    ],
+    "Guides (Messenger)": [
+      "version-1.0.5-channel-messenger-setup",
+      "version-1.0.5-channel-messenger-handling-events",
+      "version-1.0.5-channel-messenger-sending-messages",
+      "version-1.0.5-channel-messenger-profile",
+      "version-1.0.5-channel-messenger-persona"
+    ],
+    "Guides (LINE)": [
+      "version-1.0.5-channel-line-setup",
+      "version-1.0.5-channel-line-handling-events",
+      "version-1.0.5-channel-line-sending-messages",
+      "version-1.0.5-channel-line-flex",
+      "version-1.0.5-channel-line-rich-menu",
+      "version-1.0.5-channel-line-errors",
+      "version-1.0.5-channel-line-migrating-from-sdk"
+    ],
+    "Guides (Slack)": [
+      "version-1.0.5-channel-slack-setup",
+      "version-1.0.5-channel-slack-handling-events"
+    ],
+    "Guides (Telegram)": [
+      "version-1.0.5-channel-telegram-setup",
+      "version-1.0.5-channel-telegram-handling-events",
+      "version-1.0.5-channel-telegram-sending-messages"
+    ],
+    "Guides (Viber)": [
+      "version-1.0.5-channel-viber-setup",
+      "version-1.0.5-channel-viber-handling-events"
+    ],
+    "FAQ": []
+  },
+  "version-1.0.5-api": {
+    "Core": [
+      "version-1.0.5-api-context",
+      "version-1.0.5-api-event"
+    ],
+    "Messenger": [
+      "version-1.0.5-api-messenger-context",
+      "version-1.0.5-api-messenger-event"
+    ],
+    "LINE": [
+      "version-1.0.5-api-line-context",
+      "version-1.0.5-api-line-event"
+    ],
+    "Slack": [
+      "version-1.0.5-api-slack-context",
+      "version-1.0.5-api-slack-event"
+    ],
+    "Telegram": [
+      "version-1.0.5-api-telegram-context",
+      "version-1.0.5-api-telegram-event"
+    ],
+    "Viber": [
+      "version-1.0.5-api-viber-context",
+      "version-1.0.5-api-viber-event"
+    ],
+    "Console": [
+      "version-1.0.5-api-console-context",
+      "version-1.0.5-api-console-event"
+    ]
+  }
+}

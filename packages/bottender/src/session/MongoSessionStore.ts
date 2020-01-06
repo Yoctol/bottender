@@ -5,8 +5,6 @@ import { Collection, Db, MongoClient } from 'mongodb';
 import Session from './Session';
 import SessionStore from './SessionStore';
 
-const MINUTES_IN_ONE_YEAR = 365 * 24 * 60;
-
 type MongoOption =
   | string
   | {
@@ -32,7 +30,7 @@ export default class MongoSessionStore implements SessionStore {
       this._url = options.url;
       this._collectionName = options.collectionName || 'sessions';
     }
-    this._expiresIn = expiresIn || MINUTES_IN_ONE_YEAR;
+    this._expiresIn = expiresIn || 0;
   }
 
   async init(): Promise<MongoSessionStore> {
@@ -89,6 +87,10 @@ export default class MongoSessionStore implements SessionStore {
   }
 
   _expired(sess: Session): boolean {
+    if (!this._expiresIn) {
+      return false;
+    }
+
     return (
       sess.lastActivity !== undefined &&
       isBefore(sess.lastActivity, subMinutes(Date.now(), this._expiresIn))
