@@ -1,18 +1,27 @@
-const axios = require('axios');
+const { chain } = require('bottender');
 
-module.exports = async function App(context) {
-  if (context.event.isText) {
-    const { data } = await axios.post(`http://localhost:5005/model/parse`, {
-      text: context.event.text,
-    });
+// FIXME: use @bottender/rasa package
+const rasa = require('../../packages/bottender-rasa');
 
-    const { intent } = data;
+async function SayHello(context) {
+  await context.sendText('Hello!');
+}
 
-    // You can define your own score threshold here.
-    if (intent.confidence > 0.7) {
-      if (intent.name === 'greeting') {
-        await context.sendText('Hello!');
-      }
-    }
-  }
+async function Unknown(context) {
+  await context.sendText('Sorry, I don’t know what you say.');
+}
+
+const Rasa = rasa({
+  origin: 'http://localhost:5005',
+  actions: {
+    greeting: SayHello,
+  },
+  confidenceThreshold: 0.7,
+});
+
+module.exports = async function App() {
+  return chain([
+    Rasa, //
+    Unknown,
+  ]);
 };

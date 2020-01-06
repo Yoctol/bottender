@@ -1,24 +1,24 @@
-const axios = require('axios');
+const { chain } = require('bottender');
+
+// FIXME: use @bottender/qna-maker package
+const qnaMaker = require('../../packages/bottender-qna-maker');
 
 const { RESOURCE_NAME, KNOWLEDGE_BASE_ID, ENDPOINT_KEY } = process.env;
 
-module.exports = async function App(context) {
-  if (context.event.isText) {
-    const { data } = await axios.post(
-      `https://${RESOURCE_NAME}.azurewebsites.net/qnamaker/knowledgebases/${KNOWLEDGE_BASE_ID}/generateAnswer`,
-      { question: context.event.text },
-      {
-        headers: {
-          Authorization: `EndpointKey ${ENDPOINT_KEY}`,
-        },
-      }
-    );
+async function Unknown(context) {
+  await context.sendText('Sorry, I don’t know what you say.');
+}
 
-    const topAnswer = data.answers[0];
+const QnaMaker = qnaMaker({
+  resourceName: RESOURCE_NAME,
+  knowledgeBaseId: KNOWLEDGE_BASE_ID,
+  endpointKey: ENDPOINT_KEY,
+  scoreThreshold: 70,
+});
 
-    // You can define your own score threshold here.
-    if (topAnswer.score > 70) {
-      await context.sendText(topAnswer.answer);
-    }
-  }
+module.exports = async function App() {
+  return chain([
+    QnaMaker, //
+    Unknown,
+  ]);
 };

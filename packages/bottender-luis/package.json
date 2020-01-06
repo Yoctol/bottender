@@ -1,0 +1,33 @@
+{
+  "name": "@bottender/luis",
+  "description": "LUIS integration for Bottender.",
+  "license": "MIT",
+  "homepage": "https://bottender.js.org/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Yoctol/bottender.git"
+  },
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "types": "dist/index.d.ts",
+  "dependencies": {
+    "axios": "^0.19.0",
+    "bottender": "file:../bottender"
+  },
+  "devDependencies": {
+    "nock": "^11.7.2"
+  },
+  "keywords": [
+    "bot",
+    "bottender",
+    "chatbot",
+    "language",
+    "luis",
+    "messaging",
+    "nlu",
+    "understanding"
+  ]
+}

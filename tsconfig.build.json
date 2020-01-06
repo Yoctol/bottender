@@ -6,8 +6,12 @@
   "include": [],
   "references": [
     { "path": "./packages/bottender" },
+    { "path": "./packages/bottender-dialogflow" },
     { "path": "./packages/bottender-express" },
     { "path": "./packages/bottender-handlers" },
+    { "path": "./packages/bottender-luis" },
+    { "path": "./packages/bottender-qna-maker" },
+    { "path": "./packages/bottender-rasa" },
     { "path": "./packages/create-bottender-app" }
   ]
 }

@@ -1,34 +1,26 @@
-const dialogflow = require('dialogflow');
+const { chain } = require('bottender');
 
-const PROJECT_ID = process.env.GOOGLE_APPLICATION_PROJECT_ID;
+// FIXME: use @bottender/dialogflow package
+const dialogflow = require('../../packages/bottender-dialogflow');
 
-const sessionClient = new dialogflow.SessionsClient();
+async function SayHello(context) {
+  await context.sendText('Hello!');
+}
 
-module.exports = async function App(context) {
-  if (context.event.isText) {
-    const sessionPath = sessionClient.sessionPath(
-      PROJECT_ID,
-      context.session.id
-    );
+async function Unknown(context) {
+  await context.sendText('Sorry, I don’t know what you say.');
+}
 
-    const request = {
-      session: sessionPath,
-      queryInput: {
-        text: {
-          text: context.event.text,
-          languageCode: 'en',
-        },
-      },
-      queryParams: {
-        timeZone: '',
-      },
-    };
+const Dialogflow = dialogflow({
+  projectId: process.env.GOOGLE_APPLICATION_PROJECT_ID,
+  actions: {
+    greeting: SayHello,
+  },
+});
 
-    const responses = await sessionClient.detectIntent(request);
-    const { intent } = responses[0].queryResult;
-
-    if (intent.displayName === 'greeting') {
-      await context.sendText('Hello!');
-    }
-  }
+module.exports = async function App() {
+  return chain([
+    Dialogflow, //
+    Unknown,
+  ]);
 };
