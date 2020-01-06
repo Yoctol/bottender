@@ -142,7 +142,7 @@ async function App(context) {
 }
 ```
 
-> - For more info, you can refer to Facebook's official doc, [Get Thread Owner](https://developers.facebook.com/docs/messenger-platform/handover-protocol/get-thread-owner)
+> - For more info, you can refer to Facebook's official doc, [Secondary Receivers List API Reference](https://developers.facebook.com/docs/messenger-platform/reference/handover-protocol/secondary-receivers/)
 
 ## Webhook Events
 
