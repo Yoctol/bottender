@@ -50,6 +50,8 @@ export default abstract class Context<C extends Client, E extends Event> {
 
   _emitter: EventEmitter | null;
 
+  _intent: string | null;
+
   response: Response;
 
   constructor({
@@ -66,6 +68,7 @@ export default abstract class Context<C extends Client, E extends Event> {
     this._initialState = initialState || {};
     this._requestContext = requestContext || null;
     this._emitter = emitter || null;
+    this._intent = null;
 
     debugContext('Context created with rawEvent:');
     debugContext(JSON.stringify(this._event.rawEvent, null, 2));
@@ -99,7 +102,7 @@ export default abstract class Context<C extends Client, E extends Event> {
   }
 
   /**
-   * The context of request.
+   * The context of the request.
    *
    */
   get requestContext(): Record<string, any> | null {
@@ -127,7 +130,7 @@ export default abstract class Context<C extends Client, E extends Event> {
   }
 
   /**
-   * The state in the conversation context.
+   * The state of the conversation context.
    *
    */
   get state(): Record<string, any> {
@@ -184,6 +187,22 @@ export default abstract class Context<C extends Client, E extends Event> {
         'resetState: should not be called in context without session'
       );
     }
+  }
+
+  /**
+   * The intent of the conversation context.
+   *
+   */
+  get intent(): string | null {
+    return this._intent;
+  }
+
+  /**
+   * Set intent to the conversation context.
+   *
+   */
+  setIntent(intent: string): void {
+    this._intent = intent;
   }
 
   emitError(err: Error): void {
