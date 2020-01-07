@@ -5,6 +5,9 @@
     "previous": "Previous",
     "tagline": "A framework for building conversational user interfaces.",
     "docs": {
+      "advanced-guides-multi-channel": {
+        "title": "Multi-Messaging Channel Support"
+      },
       "advanced-guides-nlu": {
         "title": "Natural Language Understanding"
       },
@@ -65,6 +68,9 @@
       "channel-line-rich-menu": {
         "title": "Rich Menu"
       },
+      "channel-line-routing": {
+        "title": "LINE Routing"
+      },
       "channel-line-sending-messages": {
         "title": "Sending LINE Messages"
       },
@@ -74,11 +80,17 @@
       "channel-messenger-handling-events": {
         "title": "Handling Messenger Events"
       },
+      "channel-messenger-handover-protocol": {
+        "title": "Messenger Handover Protocol"
+      },
       "channel-messenger-persona": {
         "title": "Using Persona"
       },
       "channel-messenger-profile": {
         "title": "Messenger Profile"
+      },
+      "channel-messenger-routing": {
+        "title": "Messenger Routing"
       },
       "channel-messenger-sending-messages": {
         "title": "Sending Messenger Messages"
@@ -92,6 +104,9 @@
       "channel-slack-handling-events": {
         "title": "Handling Slack Events"
       },
+      "channel-slack-routing": {
+        "title": "Slack Routing"
+      },
       "channel-slack-sending-messages": {
         "title": "Sending Slack Messages"
       },
@@ -100,6 +115,9 @@
       },
       "channel-telegram-handling-events": {
         "title": "Handling Telegram Events"
+      },
+      "channel-telegram-routing": {
+        "title": "Telegram Routings"
       },
       "channel-telegram-sending-messages": {
         "title": "Sending Telegram Messages"
@@ -110,6 +128,9 @@
       "channel-viber-handling-events": {
         "title": "Handling Viber Events"
       },
+      "channel-viber-routing": {
+        "title": "Viber Routing"
+      },
       "channel-viber-setup": {
         "title": "Setup Viber"
       },
@@ -118,9 +139,6 @@
       },
       "migrating-v1": {
         "title": "Migrating from v0.x to v1.x"
-      },
-      "multi-messaging-channel-support": {
-        "title": "Multi-Messaging Channel Support"
       },
       "the-basics-actions": {
         "title": "Resolving Actions"
@@ -347,7 +365,7 @@
       "version-1.0.5/version-1.0.5-migrating-v1": {
         "title": "Migrating from v0.x to v1.x"
       },
-      "version-1.0.5/version-1.0.5-multi-messaging-channel-support": {
+      "version-1.0.5/version-1.0.5-advanced-guides-multi-channel": {
         "title": "Multi-Messaging Channel Support"
       },
       "version-1.0.5/version-1.0.5-the-basics-actions": {
@@ -371,11 +389,50 @@
       "version-1.0.5/version-1.0.5-the-basics-session": {
         "title": "Session"
       },
+      "version-1.1.0/version-1.1.0-advanced-guides-multi-channel": {
+        "title": "Multi-Messaging Channel Support"
+      },
+      "version-1.1.0/version-1.1.0-channel-line-handling-events": {
+        "title": "Handling LINE Events"
+      },
+      "version-1.1.0/version-1.1.0-channel-line-routing": {
+        "title": "LINE Routing"
+      },
+      "version-1.1.0/version-1.1.0-channel-messenger-handling-events": {
+        "title": "Handling Messenger Events"
+      },
+      "version-1.1.0/version-1.1.0-channel-messenger-handover-protocol": {
+        "title": "Messenger Handover Protocol"
+      },
+      "version-1.1.0/version-1.1.0-channel-messenger-routing": {
+        "title": "Messenger Routing"
+      },
       "version-1.1.0/version-1.1.0-channel-slack-block-kit": {
         "title": "Slack Block Kit"
       },
+      "version-1.1.0/version-1.1.0-channel-slack-handling-events": {
+        "title": "Handling Slack Events"
+      },
+      "version-1.1.0/version-1.1.0-channel-slack-routing": {
+        "title": "Slack Routing"
+      },
       "version-1.1.0/version-1.1.0-channel-slack-sending-messages": {
         "title": "Sending Slack Messages"
+      },
+      "version-1.1.0/version-1.1.0-channel-telegram-handling-events": {
+        "title": "Handling Telegram Events"
+      },
+      "version-1.1.0/version-1.1.0-channel-telegram-routing": {
+        "title": "Telegram Routings"
+      },
+      "version-1.1.0/version-1.1.0-channel-viber-handling-events": {
+        "title": "Handling Viber Events"
+      },
+      "version-1.1.0/version-1.1.0-channel-viber-routing": {
+        "title": "Viber Routing"
+      },
+      "version-1.1.0/version-1.1.0-the-basics-routing": {
+        "title": "Routing"
       }
     },
     "links": {

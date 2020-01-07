@@ -1,7 +1,7 @@
 ---
-id: version-1.0.5-multi-messaging-channel-support
+id: version-1.0.5-advanced-guides-multi-channel
 title: Multi-Messaging Channel Support
-original_id: multi-messaging-channel-support
+original_id: advanced-guides-multi-channel
 ---
 
 ## Build a Cross-Platform Bot

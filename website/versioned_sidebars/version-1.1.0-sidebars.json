@@ -14,19 +14,22 @@
     ],
     "Advanced Guides": [
       "version-1.1.0-advanced-guides-nlu",
-      "version-1.1.0-multi-messaging-channel-support"
+      "version-1.1.0-advanced-guides-multi-channel"
     ],
     "Guides (Messenger)": [
       "version-1.1.0-channel-messenger-setup",
       "version-1.1.0-channel-messenger-handling-events",
       "version-1.1.0-channel-messenger-sending-messages",
+      "version-1.1.0-channel-messenger-routing",
       "version-1.1.0-channel-messenger-profile",
+      "version-1.1.0-channel-messenger-handover-protocol",
       "version-1.1.0-channel-messenger-persona"
     ],
     "Guides (LINE)": [
       "version-1.1.0-channel-line-setup",
       "version-1.1.0-channel-line-handling-events",
       "version-1.1.0-channel-line-sending-messages",
+      "version-1.1.0-channel-line-routing",
       "version-1.1.0-channel-line-flex",
       "version-1.1.0-channel-line-rich-menu",
       "version-1.1.0-channel-line-errors",
@@ -36,16 +39,19 @@
       "version-1.1.0-channel-slack-setup",
       "version-1.1.0-channel-slack-handling-events",
       "version-1.1.0-channel-slack-sending-messages",
+      "version-1.1.0-channel-slack-routing",
       "version-1.1.0-channel-slack-block-kit"
     ],
     "Guides (Telegram)": [
       "version-1.1.0-channel-telegram-setup",
       "version-1.1.0-channel-telegram-handling-events",
-      "version-1.1.0-channel-telegram-sending-messages"
+      "version-1.1.0-channel-telegram-sending-messages",
+      "version-1.1.0-channel-telegram-routing"
     ],
     "Guides (Viber)": [
       "version-1.1.0-channel-viber-setup",
-      "version-1.1.0-channel-viber-handling-events"
+      "version-1.1.0-channel-viber-handling-events",
+      "version-1.1.0-channel-viber-routing"
     ],
     "FAQ": []
   },
