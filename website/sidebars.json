@@ -21,6 +21,7 @@
       "channel-messenger-handling-events",
       "channel-messenger-sending-messages",
       "channel-messenger-profile",
+      "channel-messenger-handover-protocol",
       "channel-messenger-persona"
     ],
     "Guides (LINE)": [
