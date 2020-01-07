@@ -46,3 +46,7 @@ async function App(context) {
   }
 }
 ```
+
+## Handling Events with Router
+
+Bottender offers a bunch of helpers to routes within your Telegram or multi-platform application. To learn more, please check out Bottender's doc, [Telegram Routing](channel-telegram-routing.md).

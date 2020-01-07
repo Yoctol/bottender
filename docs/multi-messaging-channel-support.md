@@ -3,31 +3,23 @@ id: multi-messaging-channel-support
 title: Multi-Messaging Channel Support
 ---
 
-## Build a Cross-Platform Bot
+Bottender intends to meet enterprise project needs. So, Bottender supports multiple chat channels in the very early stage. For example, you can put the environment variables of each chat channel in one config file; you can use [`Platform Specific Routes`](the-basics-routing#platform-specific-routes) to organize user events from various platforms.
 
-Through Bottender, we can build chatbots that support multiple platforms at the same time. In other words, we can develop only one action to handle messages from different platforms such as Messenger, LINE, Telegram, etc.
+Plus, Bottender aims to support the full features of each chat channel, e.g., `Block Kit` of Slack, `Rich Menu` of LINE, `Handover Protocol` of Messenger. That is why we didn't design cross-platform `Generic Chat UIs`. And you don't have to learn extra `Generic Chat UIs` and worry about if these still apply to the latest `Chat UI` of each chat channel.
 
-There are three steps to set up a simple cross-platform bot:
+The primary three steps to build a basic cross-platform bot are as follows:
 
-1. Setup each platform
-2. Enable each channel for the App
-3. Develop the action
+1. Setup each chat channel
+2. Enable each chat channel
+3. Develop cross-platform bot actions
 
-## Setup Each Platform
+## Setup Each Chat Channel
 
-To build a cross-platform bot, we have to setup each platform first. We can setup the platforms by following these guides:
+To build a cross-platform bot, you have to set up each platform first. In short, you have to fill in environment variables in your `.env` for the chat channels supported by your bot.
 
-- [Setup Messenger](https://bottender.js.org/docs/channel-messenger-setup)
-- [Setup LINE](https://bottender.js.org/docs/channel-line-setup)
-- [Setup Slack](https://bottender.js.org/docs/channel-slack-setup)
-- [Setup Telegram](https://bottender.js.org/docs/channel-telegram-setup)
-- [Setup Viber](https://bottender.js.org/docs/channel-viber-setup)
+```sh
+// .env
 
-After we set up for the platforms which we want to handle, we have to put the required values to the `.env` file.
-
-`.env`
-
-```
 MESSENGER_PAGE_ID=
 MESSENGER_ACCESS_TOKEN=
 MESSENGER_APP_ID=
@@ -45,15 +37,24 @@ SLACK_VERIFICATION_TOKEN=
 VIBER_ACCESS_TOKEN=
 ```
 
-## Enable Each Channel for the Apps
+> **Note:**
+> If you are not familiar with set up chat channels, you may refer to the following Bottender docs:
 
-Next, we have to enable the channel we want to handle in the `bottender.config.js` file.
+- [Setup Messenger](https://bottender.js.org/docs/channel-messenger-setup)
+- [Setup LINE](https://bottender.js.org/docs/channel-line-setup)
+- [Setup Slack](https://bottender.js.org/docs/channel-slack-setup)
+- [Setup Telegram](https://bottender.js.org/docs/channel-telegram-setup)
+- [Setup Viber](https://bottender.js.org/docs/channel-viber-setup)
 
-For example, if we want to enable our bot to support Messenger, we have to set `channels.messenger.enabled` as `true`.
+## Enable Each Chat channel
 
-`bottender.config.js`
+Next, you have to make sure you have enable the channel you want to support in `bottender.config.js`.
+
+For example, if you want to enable your bot to support Messenger, you have to set `channels.messenger.enabled` as `true`.
 
 ```js
+// `bottender.config.js`
+
 module.exports = {
   channels: {
     messenger: {
@@ -94,11 +95,17 @@ module.exports = {
 };
 ```
 
-## Develop the Action
+## Develop Cross-Platform Bot Actions
 
-Now, we can develop an action to handle messages from different platforms. We can use [`context.platform`](https://bottender.js.org/docs/api-context#platform) in our App to tell which platform the messages are coming from.
+Now, you can develop actions to handle messages from different platforms.
 
-Here, we develop a simple action that replies to the users with the platform they are using.
+A right bot action relates to the current user status with the incoming event. In the following section, you can see various approaches to cross-platform event handling.
+
+### Using `context.platform` to Manage Cross-Platform Events
+
+You can use [`context.platform`](https://bottender.js.org/docs/api-context#platform) to check that each message belongs to which platform.
+
+In the following code, you can see a simple action that replies to the users with the platform they are using.
 
 ```js
 module.exports = async function App(context) {
@@ -108,13 +115,13 @@ module.exports = async function App(context) {
 
 You can check out the repository of the above example [here](https://github.com/Yoctol/bottender/tree/master/examples/multiple-channels).
 
-## Define Platform-Specific Actions
+### Using `router` and `platform` to Manage Cross-Platform Events
 
-Different platforms support some different advanced events for better user experience. For example, Messenger supports Button Template while LINE supports Flex Message. Therefore, we might want to define some platform-specific actions to handle these advanced events.
+Different platforms provide different advanced events for better user experience. For example, Messenger supports Button Template, while LINE supports Flex Message. Therefore, you might want to define some platform-specific actions to handle these advanced events.
 
-To better organize bot actions, we can use `router` and `platform` functions from `bottender/router` to handle routing between different platforms.
+To better organize bot actions, you can use `router` and `platform` functions from `bottender/router` to handle routing between different platforms.
 
-In the example app, we define two additional actions to leverage the platform-specific events.
+In the example app, you can see two additional actions to leverage the platform-specific events.
 
 ```js
 import { platform, router } from 'bottender/router';
@@ -161,3 +168,13 @@ module.exports = async function App(context) {
   ]);
 };
 ```
+
+### Using `Platform Specific Routes` to Manage Cross-Platform Events
+
+By Bottender 1.1+, you can use `Platform Specific Routes` as an alternative to organize events from various chat channels. To learn more about the details of those specific routes, check out their documentation:
+
+- [Messenger Routes](channel-messenger-routing.md)
+- [LINE Routes](channel-line-routing.md)
+- [Slack Routes](channel-slack-routing.md)
+- [Telegram Routes](channel-telegram-routing.md)
+- [Viber Routes](channel-viber-routing.md)
