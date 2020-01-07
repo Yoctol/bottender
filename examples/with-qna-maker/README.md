@@ -8,7 +8,7 @@ Download this example or clone [Bottender](https://github.com/Yoctol/bottender).
 curl https://codeload.github.com/Yoctol/bottender/tar.gz/master | tar -xz --strip=2 bottender-master/examples/with-qna-maker
 cd with-qna-maker
 npm install
-npm run dev --console
+npm run dev -- --console
 ```
 
 ## Idea of this Example
