@@ -3,6 +3,24 @@ id: channel-messenger-multi-page
 title: Multi-page Support
 ---
 
+(thumbnail)
+
+context to reply to ...
+(a clear define)
+(when we need this?)
+Bottender easily
+Setup Messenger
+(basic idea)
+
+（.env 命名的部分）
+
+## Prequistics
+
+Testing_01
+Testing_02
+
+> Jump to Example
+
 ## Support Multiple Facebook Pages In One App
 
 `bottender.config.js`
@@ -38,7 +56,6 @@ function mapPageToAccessToken(pageId) {
     case PAGE_1_PAGE_ID:
       return PAGE_1_ACCESS_TOKEN;
     case PAGE_2_PAGE_ID:
-    default:
       return PAGE_2_ACCESS_TOKEN;
   }
 }
@@ -61,7 +78,13 @@ const messenger = new MessengerClient(config.channels.messenger);
 await messenger.axios.post(
   `/${pageId}/subscribed_apps?access_token=${accessToken}`,
   {
-    subscribedFields: fields.join(','),
+    subscribedFields: [
+      'messages',
+      'messaging_postbacks',
+      'messaging_optins',
+      'messaging_referrals',
+      'messaging_policy_enforcement',
+    ].join(','),
   }
 );
 ```
