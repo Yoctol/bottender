@@ -1,3 +1,7 @@
+# 1.1.3 / 2020-01-08
+
+- [fix] fix(Bot, LineConnector, MessengerConnector): when receiving multiple events, construct session with event instead of request #621
+
 # 1.1.2 / 2020-01-03
 
 - [fix] fix(DevServer): call `super.prepare()` in `prepare` method to avoid overwriting parent method
@@ -195,6 +199,10 @@ function App() {
   ]);
 }
 ```
+
+# 1.0.8 / 2020-01-08
+
+- [fix] fix(Bot, LineConnector, MessengerConnector): when receiving multiple events, construct session with event instead of request #621
 
 # 1.0.7 / 2020-01-03
 
