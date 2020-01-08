@@ -1,7 +1,7 @@
 {
   "docs": {
     "Getting Started": [
-      "getting-started", 
+      "getting-started",
       "migrating-v1"
     ],
     "The Basics": [
@@ -14,19 +14,22 @@
     ],
     "Advanced Guides": [
       "advanced-guides-nlu",
-      "multi-messaging-channel-support"
+      "advanced-guides-multi-channel"
     ],
     "Guides (Messenger)": [
       "channel-messenger-setup",
       "channel-messenger-handling-events",
       "channel-messenger-sending-messages",
+      "channel-messenger-routing",
       "channel-messenger-profile",
+      "channel-messenger-handover-protocol",
       "channel-messenger-persona"
     ],
     "Guides (LINE)": [
       "channel-line-setup",
       "channel-line-handling-events",
       "channel-line-sending-messages",
+      "channel-line-routing",
       "channel-line-flex",
       "channel-line-rich-menu",
       "channel-line-errors",
@@ -36,16 +39,19 @@
       "channel-slack-setup",
       "channel-slack-handling-events",
       "channel-slack-sending-messages",
+      "channel-slack-routing",
       "channel-slack-block-kit"
     ],
     "Guides (Telegram)": [
       "channel-telegram-setup",
       "channel-telegram-handling-events",
-      "channel-telegram-sending-messages"
+      "channel-telegram-sending-messages",
+      "channel-telegram-routing"
     ],
     "Guides (Viber)": [
-      "channel-viber-setup", 
-      "channel-viber-handling-events"
+      "channel-viber-setup",
+      "channel-viber-handling-events",
+      "channel-viber-routing"
     ],
     "FAQ": []
   },

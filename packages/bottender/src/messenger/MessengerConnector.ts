@@ -242,8 +242,13 @@ export default class MessengerConnector
     return this._verifyToken;
   }
 
-  getUniqueSessionKey(body: MessengerRequestBody): string | null {
-    const rawEvent = this._getRawEventsFromRequest(body)[0];
+  getUniqueSessionKey(
+    bodyOrEvent: MessengerRequestBody | MessengerEvent
+  ): string | null {
+    const rawEvent =
+      bodyOrEvent instanceof MessengerEvent
+        ? bodyOrEvent.rawEvent
+        : this._getRawEventsFromRequest(bodyOrEvent)[0];
     if (
       rawEvent &&
       rawEvent.message &&
@@ -260,12 +265,17 @@ export default class MessengerConnector
 
   async updateSession(
     session: Session,
-    body: MessengerRequestBody
+    bodyOrEvent: MessengerRequestBody | MessengerEvent
   ): Promise<void> {
     if (!session.user || this._profilePicExpired(session.user)) {
-      const senderId = this.getUniqueSessionKey(body);
+      const senderId = this.getUniqueSessionKey(bodyOrEvent);
 
-      const rawEvent = this._getRawEventsFromRequest(body)[0];
+      const rawEvent =
+        bodyOrEvent instanceof MessengerEvent
+          ? bodyOrEvent.rawEvent
+          : this._getRawEventsFromRequest(bodyOrEvent)[0];
+
+      // TODO: use this info from event
       const pageId = this._getPageIdFromRawEvent(rawEvent);
       let customAccessToken;
 

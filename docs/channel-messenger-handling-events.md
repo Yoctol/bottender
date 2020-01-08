@@ -172,3 +172,7 @@ async function App(context) {
   }
 }
 ```
+
+## Handling Events with Router
+
+Bottender offers a bunch of helpers to routes within your Messenger or multi-platform application. To learn more, please check out Bottender's doc, [Messenger Routing](channel-messenger-routing.md).

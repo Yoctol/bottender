@@ -1,4 +1,4 @@
-# Viber hello world
+# Viber Hello World
 
 ## Install and Run
 
@@ -25,11 +25,11 @@ npm run dev
 
 This command will start server for bot developing at `http://localhost:5000`.
 
-If you successfully start the server, you will get a webhook url like `https://xxxxxxxx.ngrok.io/webhooks/viber` from command line.
+If you successfully start the server, you will get a webhook URL like `https://xxxxxxxx.ngrok.io/webhooks/viber` from command line.
 
-## Set webhook
+## Set Webhook
 
-While the server running, you can run following command with `bottender` to set up the webhook with the webhook url you get from running `npm run dev`:
+While the server running, you can run following command with `bottender` to set up the webhook with the webhook URL you get from running `npm run dev`:
 
 ```sh
 npx bottender viber webhook set -w <YOUR_WEBHOOK_URL>
@@ -37,12 +37,12 @@ npx bottender viber webhook set -w <YOUR_WEBHOOK_URL>
 
 > Note: You must put `accessToken` into `bottender.config.js` before running this command.
 
-## Idea of this example
+## Idea of this Example
 
 This example is a simple bot running on [Viber](https://www.viber.com/).
 For more information, check our [Viber guides](https://bottender.js.org/docs/channel-viber-setup).
 
-## Related examples
+## Related Examples
 
 - [messenger-hello-world](../messenger-hello-world)
 - [line-hello-world](../line-hello-world)

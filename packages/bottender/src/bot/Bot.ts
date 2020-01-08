@@ -183,56 +183,62 @@ export default class Bot<B extends Body, C extends Client, E extends Event> {
 
       const body = camelcaseKeysDeep(inputBody) as B;
 
-      const { platform } = this._connector;
-      const sessionKey = this._connector.getUniqueSessionKey(
-        body,
-        requestContext
-      );
-
-      // Create or retrieve session if possible
-      let sessionId: string | undefined;
-      let session: Session | undefined;
-      if (sessionKey) {
-        sessionId = `${platform}:${sessionKey}`;
-
-        session =
-          (await this._sessions.read(sessionId)) ||
-          (Object.create(null) as Session);
-
-        debugSessionRead(`Read session: ${sessionId}`);
-        debugSessionRead(JSON.stringify(session, null, 2));
-
-        Object.defineProperty(session, 'id', {
-          configurable: false,
-          enumerable: true,
-          writable: false,
-          value: session.id || sessionId,
-        });
-
-        if (!session.platform) session.platform = platform;
-
-        Object.defineProperty(session, 'platform', {
-          configurable: false,
-          enumerable: true,
-          writable: false,
-          value: session.platform,
-        });
-
-        await this._connector.updateSession(session, body);
-      }
-
       const events = this._connector.mapRequestToEvents(body);
 
       const contexts = await pMap(
         events,
-        event =>
-          this._connector.createContext({
+        async event => {
+          const { platform } = this._connector;
+          const sessionKey = this._connector.getUniqueSessionKey(
+            // TODO: may deprecating passing request body in v2
+            events.length === 1 ? body : event,
+            requestContext
+          );
+
+          // Create or retrieve session if possible
+          let sessionId: string | undefined;
+          let session: Session | undefined;
+          if (sessionKey) {
+            sessionId = `${platform}:${sessionKey}`;
+
+            session =
+              (await this._sessions.read(sessionId)) ||
+              (Object.create(null) as Session);
+
+            debugSessionRead(`Read session: ${sessionId}`);
+            debugSessionRead(JSON.stringify(session, null, 2));
+
+            Object.defineProperty(session, 'id', {
+              configurable: false,
+              enumerable: true,
+              writable: false,
+              value: session.id || sessionId,
+            });
+
+            if (!session.platform) session.platform = platform;
+
+            Object.defineProperty(session, 'platform', {
+              configurable: false,
+              enumerable: true,
+              writable: false,
+              value: session.platform,
+            });
+
+            await this._connector.updateSession(
+              session,
+              // TODO: may deprecating passing request body in v2
+              events.length === 1 ? body : event
+            );
+          }
+
+          return this._connector.createContext({
             event,
             session,
             initialState: this._initialState,
             requestContext,
             emitter: this._emitter,
-          }),
+          });
+        },
         {
           concurrency: 5,
         }
@@ -252,6 +258,8 @@ export default class Bot<B extends Body, C extends Client, E extends Event> {
       }
       const handler: Action<C, E> = this._handler;
       const errorHandler: Action<C, E> | null = this._errorHandler;
+
+      // TODO: only run concurrently for different session id
       const promises = Promise.all(
         contexts.map(context =>
           Promise.resolve()
@@ -277,17 +285,24 @@ export default class Bot<B extends Body, C extends Client, E extends Event> {
       if (this._sync) {
         try {
           await promises;
-          if (sessionId && session) {
-            session.lastActivity = Date.now();
-            contexts.forEach(context => {
+
+          await Promise.all(
+            contexts.map(async context => {
               context.isSessionWritten = true;
-            });
 
-            debugSessionWrite(`Write session: ${sessionId}`);
-            debugSessionWrite(JSON.stringify(session, null, 2));
+              const { session } = context;
 
-            await this._sessions.write(sessionId, session);
-          }
+              if (session) {
+                session.lastActivity = Date.now();
+
+                debugSessionWrite(`Write session: ${session.id}`);
+                debugSessionWrite(JSON.stringify(session, null, 2));
+
+                // eslint-disable-next-line no-await-in-loop
+                await this._sessions.write(session.id, session);
+              }
+            })
+          );
         } catch (err) {
           console.error(err);
         }
@@ -301,19 +316,27 @@ export default class Bot<B extends Body, C extends Client, E extends Event> {
         return response;
       }
       promises
-        .then((): Promise<any> | void => {
-          if (sessionId && session) {
-            session.lastActivity = Date.now();
-            contexts.forEach(context => {
-              context.isSessionWritten = true;
-            });
+        .then(
+          async (): Promise<any> => {
+            await Promise.all(
+              contexts.map(async context => {
+                context.isSessionWritten = true;
 
-            debugSessionWrite(`Write session: ${sessionId}`);
-            debugSessionWrite(JSON.stringify(session, null, 2));
+                const { session } = context;
 
-            return this._sessions.write(sessionId, session);
+                if (session) {
+                  session.lastActivity = Date.now();
+
+                  debugSessionWrite(`Write session: ${session.id}`);
+                  debugSessionWrite(JSON.stringify(session, null, 2));
+
+                  // eslint-disable-next-line no-await-in-loop
+                  await this._sessions.write(session.id, session);
+                }
+              })
+            );
           }
-        })
+        )
         .catch(console.error);
     };
   }
