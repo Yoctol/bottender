@@ -4,14 +4,14 @@
 
 Download this example or clone [bottender](https://github.com/Yoctol/bottender).
 
-```
+```sh
 curl https://codeload.github.com/Yoctol/bottender/tar.gz/master | tar -xz --strip=2 bottender-master/examples/todos
 cd todos
 npm install
 npm run dev --console
 ```
 
-## Idea of this example
+## Idea of this Example
 
 Building a todo app is the best way to understand new tools. This example shows
 what a To-Do console bot looks like. We suggest that you read our
@@ -72,6 +72,6 @@ async function ClearTodos(context) {
 For more information about Bottender, please visit our
 [Docs Website](https://bottender.js.org/).
 
-## Related examples
+## Related Examples
 
 - [with-state](../with-state)

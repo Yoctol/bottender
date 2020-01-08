@@ -4,14 +4,14 @@
 
 Download this example or clone [bottender](https://github.com/Yoctol/bottender).
 
-```
+```sh
 curl https://codeload.github.com/Yoctol/bottender/tar.gz/master | tar -xz --strip=2 bottender-master/examples/session-redis
 cd session-redis
 npm install
 npm run dev -- --console
 ```
 
-## Redis connection settings
+## Redis Connection Settings
 
 ```js
 module.exports = {
@@ -29,13 +29,13 @@ module.exports = {
 };
 ```
 
-## Idea of this example
+## Idea of this Example
 
 This example shows how to use Session to store some information from users and
 store sessions in your Redis server. For more information, check our
-[session guide](https://bottender.js.org/docs/Guides-Session).
+[session guide](https://bottender.js.org/docs/the-basics-session).
 
-## Related examples
+## Related Examples
 
 - [session-memory](../session-memory)
 - [session-file](../session-file)

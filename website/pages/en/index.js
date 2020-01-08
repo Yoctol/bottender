@@ -10,7 +10,7 @@
 const React = require('react');
 
 // eslint-disable-next-line import/no-unresolved
-const CompLibrary = require('../../core/CompLibrary.js');
+const CompLibrary = require('../../core/CompLibrary');
 
 const { Component } = React;
 
@@ -66,7 +66,7 @@ class Index extends Component {
     return (
       <div>
         <HomeSplash siteConfig={siteConfig} language={language} />
-        <div className="mainContainer">
+        <div className="mainContainer indexContainer">
           <div className="features">
             <h2>Why Bottender?</h2>
             <Block layout="twoColumn">
@@ -99,7 +99,7 @@ class Index extends Component {
                 },
                 {
                   content:
-                    'There are thousands of bots are powered by Bottender.\n\nIt has been optimized for real world use cases, automatic batching request and dozens of other compelling features.',
+                    'There are thousands of bots powered by Bottender.\n\nIt has been optimized for real world use cases, automatic batching request and dozens of other compelling features.',
                   image: `${baseUrl}img/element_anywhere.svg`,
                   imageAlign: 'left',
                   title: 'Ready for Production',
@@ -118,11 +118,11 @@ class Index extends Component {
 ~~~javascript
 const { router, text } = require('bottender/router');
 
-function SayHi(context) {
+async function SayHi(context) {
   await context.sendText('Hi!');
 }
 
-function Unknown(context) {
+async function Unknown(context) {
   await context.sendText('Sorry, I don’t know what you say.');
 }
 

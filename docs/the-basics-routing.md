@@ -3,8 +3,9 @@ id: the-basics-routing
 title: Routing
 ---
 
-Routing is a handy design pattern to help you organize bot actions.  
-The most basic Bottender route is composed by a text and an action, providing a very simple and expressive method of route definition:
+`Routing` is a handy design pattern to help you organize bot actions.
+
+The most basic Bottender `Route` is composed of a text and an action, providing a straightforward and expressive definition:
 
 ```js
 const { router, text } = require('bottender/router');
@@ -25,7 +26,7 @@ async function App() {
 }
 ```
 
-`router` is consist of an array of routes. It returns the action of the first matched route. It's possible to have nested routers or any pattern that compatible with actions.
+`Router` is consists of an array of `Routes`. It returns the action of the first matched route. It is possible to have nested routers or any pattern that compatible with actions.
 
 The first argument of route defines the matching rule, which could be an array of strings. The action of the route will be returned when one of the strings is matched:
 
@@ -73,20 +74,20 @@ async function Command(
     },
   }
 ) {
-  // | input     | command    |
+  // | input | command |
   // | --------- | ---------- |
-  // | /join     | `join`     |
-  // | /invite   | `invite`   |
+  // | /join | `join` |
+  // | /invite | `invite` |
   // | /whatever | `whatever` |
   await context.sendText(`Executing command: ${command}`);
 }
 ```
 
-> **Note:** `RegExp Named Capturing Groups` is supported from Node 10.
+> **Note:** `RegExp Named Capturing Groups` is supported by Node 10+.
 
 ## Fallback Routes
 
-By using the `*` as the first argument, you may define a route for unhandled events, which will be triggered whenever no other routes match the incoming event. Meanwhile, reply of unhandled events is a chance to introudce bot features by sending a fallback message or a user's manual.
+By using the `*` as the first argument, you may define a route for unhandled events, which triggers whenever no other routes match the incoming event. Meanwhile, reply to unhandled events is a chance to introduce bot features by sending a fallback message or a user's manual.
 
 ```js
 async function Unknown(context) {
@@ -116,7 +117,52 @@ async function App(context) {
 }
 ```
 
-> **Note:** The fallback route should always be the last route registered in your router.
+> **Note:** The fallback route must be the final route in your router.
 
-<!--## Payload Routes-->
-<!--## Custom Routes-->
+## Payload Routes
+
+Payload events typically happen when users send payload data by clicking buttons, selecting menus, or clicking keyboards. For example, you may catch `GET_STARTED` payload that send by button click and respond with `SayHi` action:
+
+```js
+const { router, payload } = require('bottender/router');
+
+async function App(context) {
+  return router([
+    payload('GET_STARTED', SayHi),
+    // return Unknown when when no other route matches the incoming event
+    route('*', Unknown),
+  ]);
+}
+```
+
+## Custom Routes
+
+If you wish to use your route predicate, you may use the `route` to create your route wrapper.
+
+```js
+const { router, route } = require('bottender/router');
+
+function sayHiTo(name, Action) {
+  return route(context => context.event.text === `Hi ${name}`, Action);
+}
+
+async function App(context) {
+  return router([
+    sayHiTo('Bottender', SayHi),
+    // return Unknown when when no other route matches the incoming event
+    route('*', Unknown),
+  ]);
+}
+```
+
+In the above example, the custom route matches `Hi Bottender` text message and resolve `SayHi` action.
+
+## Platform Specific Routes
+
+Bottender includes a bunch of helpers to route within your multi-platform application. To learn more about the details of those specific routes, check out their documentation:
+
+- [Messenger Routes](channel-messenger-routing.md)
+- [LINE Routes](channel-line-routing.md)
+- [Slack Routes](channel-slack-routing.md)
+- [Telegram Routes](channel-telegram-routing.md)
+- [Viber Routes](channel-viber-routing.md)

@@ -1,10 +1,10 @@
 /* eslint-disable consistent-return */
 import chalk from 'chalk';
 import invariant from 'invariant';
-import snakecase from 'snake-case';
 import { MessengerClient, MessengerTypes } from 'messaging-api-messenger';
 import { addedDiff, deletedDiff, diff, updatedDiff } from 'deep-object-diff';
 import { omit, pick } from 'lodash';
+import { snakecase } from 'messaging-api-common';
 
 import getChannelConfig from '../../../shared/getChannelConfig';
 import getSubArgs from '../sh/utils/getSubArgs';

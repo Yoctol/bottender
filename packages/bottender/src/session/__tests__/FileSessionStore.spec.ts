@@ -1,8 +1,12 @@
+import os from 'os';
+
 import subMinutes from 'date-fns/subMinutes';
 
 import FileSessionStore from '../FileSessionStore';
 
 const expiresIn = 10;
+
+const KEY_SEPARATOR = os.platform() === 'win32' ? '@' : ':';
 
 function setup() {
   const store = new FileSessionStore('.session', expiresIn);
@@ -40,7 +44,10 @@ describe('#read', () => {
     jfs.get.mockImplementation((_, cb) => cb(null, { x: 1 }));
 
     expect(await store.read('yoctol:1')).toEqual({ x: 1 });
-    expect(jfs.get).toBeCalledWith('yoctol:1', expect.any(Function));
+    expect(jfs.get).toBeCalledWith(
+      `yoctol${KEY_SEPARATOR}1`,
+      expect.any(Function)
+    );
   });
 
   it('should return null when jfs throw error', async () => {
@@ -50,7 +57,10 @@ describe('#read', () => {
     jfs.get.mockImplementation((_, cb) => cb(new Error()));
 
     expect(await store.read('yoctol:1')).toBeNull();
-    expect(jfs.get).toBeCalledWith('yoctol:1', expect.any(Function));
+    expect(jfs.get).toBeCalledWith(
+      `yoctol${KEY_SEPARATOR}1`,
+      expect.any(Function)
+    );
   });
 
   it('should return null when session expires', async () => {
@@ -61,7 +71,10 @@ describe('#read', () => {
     jfs.get.mockImplementation((_, cb) => cb(null, sess));
 
     expect(await store.read('yoctol:1')).toBeNull();
-    expect(jfs.get).toBeCalledWith('yoctol:1', expect.any(Function));
+    expect(jfs.get).toBeCalledWith(
+      `yoctol${KEY_SEPARATOR}1`,
+      expect.any(Function)
+    );
   });
 });
 
@@ -98,7 +111,11 @@ describe('#write', () => {
 
     await store.write('yoctol:1', sess);
 
-    expect(jfs.save).toBeCalledWith('yoctol:1', sess, expect.any(Function));
+    expect(jfs.save).toBeCalledWith(
+      `yoctol${KEY_SEPARATOR}1`,
+      sess,
+      expect.any(Function)
+    );
   });
 });
 
@@ -111,6 +128,9 @@ describe('#destroy', () => {
 
     await store.destroy('yoctol:1');
 
-    expect(jfs.delete).toBeCalledWith('yoctol:1', expect.any(Function));
+    expect(jfs.delete).toBeCalledWith(
+      `yoctol${KEY_SEPARATOR}1`,
+      expect.any(Function)
+    );
   });
 });

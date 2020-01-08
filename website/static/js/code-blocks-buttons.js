@@ -3,6 +3,16 @@
 // Turn off ESLint for this file because it's sent down to users as-is.
 /* eslint-disable */
 window.addEventListener('load', function() {
+  const width =
+    window.innerWidth ||
+    document.documentElement.clientWidth ||
+    document.body.clientWidth;
+
+  // don't show copy buttons on phone screen
+  if (width < 576) {
+    return;
+  }
+
   function button(label, ariaLabel, icon, className) {
     const btn = document.createElement('button');
     btn.classList.add('btnIcon', className);

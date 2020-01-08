@@ -1,0 +1,23 @@
+environment:
+  matrix:
+    - nodejs_version: "10"
+    - nodejs_version: "12"
+
+install:
+  - ps: Install-Product node $env:nodejs_version x64
+  - node --version
+  - yarn --version
+  - yarn
+  - npm run bootstrap
+
+cache:
+  - node_modules
+  - "%LOCALAPPDATA%\\Yarn"
+
+test_script:
+  - npm run lint -- --color
+  - npm run compile
+  - npm run testonly -- --coverage --colors
+
+# Don't actually build.
+build: off

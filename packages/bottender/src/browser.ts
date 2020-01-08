@@ -1,8 +1,10 @@
+/* Core */
+export { default as Bot } from './bot/Bot';
+export { default as Context } from './context/Context';
+
+/* Action */
 export { default as chain } from './chain';
 export { default as withProps } from './withProps';
-
-/* Bot */
-export { default as Bot } from './bot/Bot';
 
 /* Cache */
 export { default as MemoryCacheStore } from './cache/MemoryCacheStore';
@@ -14,9 +16,6 @@ export { default as MemorySessionStore } from './session/MemorySessionStore';
 /**
  * Private Exports (unstable)
  */
-
-/* Context */
-export { default as Context } from './context/Context';
 
 /* Plugins */
 export { default as withTyping } from './plugins/withTyping';

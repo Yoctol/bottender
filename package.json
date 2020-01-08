@@ -24,9 +24,10 @@
     "publish": "lerna publish",
     "prepublishOnly": "yarn clean && yarn && yarn test",
     "test": "yarn compile && yarn lint && yarn testonly",
-    "testonly": "jest --detectOpenHandles --forceExit",
-    "testonly:cov": "jest --coverage --runInBand --detectOpenHandles --forceExit",
-    "testonly:watch": "jest --watch"
+    "testonly": "jest --detectOpenHandles",
+    "testonly:cov": "jest --coverage --runInBand --detectOpenHandles",
+    "testonly:watch": "jest --watch",
+    "version": "cp README.md packages/bottender"
   },
   "devDependencies": {
     "@types/body-parser": "^1.17.1",
