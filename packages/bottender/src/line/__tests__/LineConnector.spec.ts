@@ -131,7 +131,7 @@ describe('#getUniqueSessionKey', () => {
     expect(senderId).toBe('U206d25c2ea6bd87c17655609a1c37cb8');
   });
 
-  it('extract groupId from user source', () => {
+  it('extract groupId from group source', () => {
     const { connector } = setup();
     const senderId = connector.getUniqueSessionKey({
       events: [
@@ -154,7 +154,7 @@ describe('#getUniqueSessionKey', () => {
     expect(senderId).toBe('U206d25c2ea6bd87c17655609a1c37cb8');
   });
 
-  it('extract roomId from user source', () => {
+  it('extract roomId from room source', () => {
     const { connector } = setup();
     const senderId = connector.getUniqueSessionKey({
       events: [
@@ -174,6 +174,27 @@ describe('#getUniqueSessionKey', () => {
         },
       ],
     });
+    expect(senderId).toBe('U206d25c2ea6bd87c17655609a1c37cb8');
+  });
+
+  it('extract from line event', () => {
+    const { connector } = setup();
+    const senderId = connector.getUniqueSessionKey(
+      new LineEvent({
+        replyToken: 'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA',
+        type: 'message',
+        timestamp: 1462629479859,
+        source: {
+          type: 'user',
+          userId: 'U206d25c2ea6bd87c17655609a1c37cb8',
+        },
+        message: {
+          id: '325708',
+          type: 'text',
+          text: 'Hello, world',
+        },
+      })
+    );
     expect(senderId).toBe('U206d25c2ea6bd87c17655609a1c37cb8');
   });
 
