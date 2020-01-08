@@ -260,6 +260,27 @@ describe('#getUniqueSessionKey', () => {
     const senderId = connector.getUniqueSessionKey(webhookTestRequest.body);
     expect(senderId).toBe(null);
   });
+
+  it('extract from messenger event', () => {
+    const { connector } = setup();
+    const senderId = connector.getUniqueSessionKey(
+      new MessengerEvent({
+        sender: {
+          id: '1412611362105802',
+        },
+        recipient: {
+          id: '1895382890692545',
+        },
+        timestamp: 1486464322190,
+        message: {
+          mid: 'mid.1486464322190:cb04e5a654',
+          seq: 339979,
+          text: 'text',
+        },
+      })
+    );
+    expect(senderId).toBe('1412611362105802');
+  });
 });
 
 describe('#updateSession', () => {

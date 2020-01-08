@@ -123,8 +123,14 @@ export default class LineConnector
     return this._client;
   }
 
-  getUniqueSessionKey(body: LineRequestBody): string {
-    const { source } = body.events[0];
+  getUniqueSessionKey(bodyOrEvent: LineRequestBody | LineEvent): string {
+    const rawEvent =
+      bodyOrEvent instanceof LineEvent
+        ? bodyOrEvent.rawEvent
+        : bodyOrEvent.events[0];
+
+    const { source } = rawEvent;
+
     if (source.type === 'user') {
       return source.userId;
     }
@@ -139,8 +145,16 @@ export default class LineConnector
     );
   }
 
-  async updateSession(session: Session, body: LineRequestBody): Promise<void> {
-    const { source } = body.events[0];
+  async updateSession(
+    session: Session,
+    bodyOrEvent: LineRequestBody | LineEvent
+  ): Promise<void> {
+    const rawEvent =
+      bodyOrEvent instanceof LineEvent
+        ? bodyOrEvent.rawEvent
+        : bodyOrEvent.events[0];
+
+    const { source } = rawEvent;
 
     if (!session.type) {
       session.type = source.type;
