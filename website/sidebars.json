@@ -23,7 +23,8 @@
       "channel-messenger-routing",
       "channel-messenger-profile",
       "channel-messenger-handover-protocol",
-      "channel-messenger-persona"
+      "channel-messenger-persona",
+      "channel-messenger-multi-page"
     ],
     "Guides (LINE)": [
       "channel-line-setup",

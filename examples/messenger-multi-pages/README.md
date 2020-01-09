@@ -1,4 +1,4 @@
-# Messenger multi-pages example
+# Messenger Multi-Pages Example
 
 ## Install and Run
 
@@ -15,7 +15,17 @@ Install dependencies:
 npm install
 ```
 
-You must put `accessToken`, `appSecret` and `verifyToken` into `bottender.config.js`.
+You have to put `appId`, `appSecret`, `pageId`, `accessToken` and `verifyToken` into `bottender.config.js`.
+
+If you are not familiar with Messenger Bot, you may refer to Bottender's doc, [Setup Messenger](https://bottender.js.org/docs/channel-messenger-setup), to find detailed instructions.
+
+> **Note:** `Page Subscriptions Fields` take effect for the 1st Facebook Page when you run the below `Set Webhook` script. However, in this example, you might have multiple Pages. Please double check your `Page Subscriptions Fields` for each Page. We recommend you at least enable the following fields:
+>
+> - `messages`
+> - `messaging_postbacks`
+> - `messaging_optins`
+> - `messaging_referrals`
+> - `messaging_policy_enforcement`
 
 After that, you can run the bot with this npm script:
 
@@ -23,28 +33,25 @@ After that, you can run the bot with this npm script:
 npm run dev
 ```
 
-This command will start server for bot developing at `http://localhost:5000`.
+This command starts server for bot developing at `http://localhost:5000`.
 
-If you successfully start the server, you will get a webhook url like `https://xxxxxxxx.ngrok.io/webhooks/messenger` from command line.
+If you successfully start the server, you can get a webhook URL like `https://xxxxxxxx.ngrok.io/webhooks/messenger` from command line.
 
-> Note: You must set `PAGE_ID` and `ACCESS_TOKEN` env variables pairs before running this command.
+## Set Webhook
 
-## Set webhook
-
-While the server running, you can run following command with `bottender` to set up the webhook with the webhook url you get from running `npm run dev`:
+While the server running, you can run following command with `bottender` to set up the webhook with the webhook URL you get from running `npm run dev`:
 
 ```sh
 npx bottender messenger webhook set -w <YOUR_WEBHOOK_URL>
 ```
 
-> Note: You must put `appId`, `appSecret` and `verifyToken` into `bottender.config.js` before running this command.
+> Note: You must put `appId`, `appSecret`, `pageId`, `accessToken` and `verifyToken` into `bottender.config.js` before running this command.
 
-## Idea of this example
+## Idea of this Example
 
-This example is a simple bot running on [Messenger](https://www.messenger.com/) to reply separately by different page.\
-For more information, check our [Messenger guides](https://bottender.js.org/docs/channel-messenger-setup).
+This example shows how to make a single Facebook app to serve multiple Facebook Pages. For more information, check our [Messenger guides](https://bottender.js.org/docs/channel-messenger-setup).
 
-## Related examples
+## Related Examples
 
 - [messenger-hello-world](../messenger-hello-world)
 - [messenger-batch-multi-pages](../messenger-batch-multi-pages)
