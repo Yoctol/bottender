@@ -9,7 +9,7 @@ This doc outlines how to build a single Bottender app to serve multiple Facebook
 
 In our case, we use Bottender to build our online chatbot builder, [Creator](https://yoctol.ai/creator/). Every user can use [Creator](https://yoctol.ai/creator/) to build his/her bots. Technically speaking, each user's outcome of Creator is `bot configs` followed by a predefined structure. Finally, we use a single Bottender app with different `bot configs` to provider various Messenger Bots for each Facebook Page.
 
-The core concept that makes one Bottender app serves multiple Facebook Pages is `context`. It stores not only the user's message, Page Id, but also the Page token for bot response. For more info, you may check out Bottender's doc, [Handling Messenger Events](https://bottender.js.org/docs/channel-messenger-handling-events).
+The core concept that makes one Bottender app serves multiple Facebook Pages is `context`. It covers not only the user's message, Page Id, but also the Page token for bot response. For more info, you may check out Bottender's doc, [Handling Messenger Events](https://bottender.js.org/docs/channel-messenger-handling-events).
 
 In the following sections, you can see three essential steps:
 
@@ -50,7 +50,7 @@ module.exports = {
 
 To make your bot to reply to users, you need `Facebook Page Access Token` for each Facebook Page. So, you have to implement your `mapPageToAccessToken` function to tell Bottender how to get the corresponding access token of each Facebook Page.
 
-> **Note:** All operations require a `Facebook Page Access Token` with either the [`publish_pages`](https://developers.facebook.com/docs/facebook-login/permissions/#reference-publish_pages), or [`manage_pages`](https://developers.facebook.com/docs/facebook-login/permissions/#reference-manage_pages) permission.
+> **Note:** All operations require a `Facebook Page Access Token` with [`manage_pages`](https://developers.facebook.com/docs/facebook-login/permissions/#reference-manage_pages) permission.
 
 ### Fetching Token Statically
 
