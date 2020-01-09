@@ -25,11 +25,6 @@ You have to tell Bottender you are developing a Bottender app to serve for multi
 
 ```js
 // bottender.config.js
-
-function mapPageToAccessToken(pageId) {
-  // ...
-}
-
 module.exports = {
   channels: {
     messenger: {
@@ -40,7 +35,9 @@ module.exports = {
       appId: process.env.MESSENGER_APP_ID,
       appSecret: process.env.MESSENGER_APP_SECRET,
       verifyToken: process.env.MESSENGER_VERIFY_TOKEN,
-      mapPageToAccessToken,
+      mapPageToAccessToken: pageId => {
+        // resolve corresponding access token
+      },
     },
   },
 };
@@ -104,7 +101,7 @@ const config = require('./bottender.config.js');
 
 const messenger = new MessengerClient(config.channels.messenger);
 
-// createSubscribedApp
+// subscribe app for page
 await messenger.axios.post(
   `/${pageId}/subscribed_apps?access_token=${accessToken}`,
   {
@@ -124,7 +121,7 @@ await messenger.axios.post(
 We assume that you might need to remove your bot from Facebook Pages dynamically. In the following code, you can see how to unsubscribe `Facebook Page Subscriptions Fields` your bot have subscribed.
 
 ```js
-// createUnsubscribedApp
+// unsubscribe app for page
 await messenger.axios.delete(
   `/${pageId}/subscribed_apps?access_token=${accessToken}`
 );
