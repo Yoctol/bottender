@@ -83,6 +83,9 @@
       "channel-messenger-handover-protocol": {
         "title": "Messenger Handover Protocol"
       },
+      "channel-messenger-multi-page": {
+        "title": "Messenger Multi-Page Support"
+      },
       "channel-messenger-persona": {
         "title": "Using Persona"
       },
@@ -403,6 +406,9 @@
       },
       "version-1.1.0/version-1.1.0-channel-messenger-handover-protocol": {
         "title": "Messenger Handover Protocol"
+      },
+      "version-1.1.0/version-1.1.0-channel-messenger-multi-page": {
+        "title": "Messenger Multi-Page Support"
       },
       "version-1.1.0/version-1.1.0-channel-messenger-routing": {
         "title": "Messenger Routing"
