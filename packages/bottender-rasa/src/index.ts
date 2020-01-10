@@ -54,6 +54,8 @@ module.exports = function rasa({
     const { intent, entities } = data;
 
     if (intent && intent.confidence > confidenceThreshold) {
+      context.setIntent(intent.name);
+
       const Action = actions[intent.name];
       if (Action) {
         return withProps(Action as any, { intent, entities });

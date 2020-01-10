@@ -69,6 +69,10 @@ module.exports = function qnaMaker({
     }
 
     return async function TopAnswer() {
+      if (topAnswer.id !== -1) {
+        context.setIntent(`qna_${topAnswer.id}`);
+      }
+
       await context.sendText(topAnswer.answer);
     };
   };
