@@ -1,7 +1,5 @@
 const { chain } = require('bottender');
-
-// FIXME: use @bottender/qna-maker package
-const qnaMaker = require('../../packages/bottender-qna-maker');
+const qnaMaker = require('@bottender/qna-maker');
 
 const { RESOURCE_NAME, KNOWLEDGE_BASE_ID, ENDPOINT_KEY } = process.env;
 

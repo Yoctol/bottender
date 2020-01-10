@@ -1,7 +1,5 @@
 const { chain } = require('bottender');
-
-// FIXME: use @bottender/dialogflow package
-const dialogflow = require('../../packages/bottender-dialogflow');
+const dialogflow = require('@bottender/dialogflow');
 
 async function SayHello(context) {
   await context.sendText('Hello!');

@@ -1,7 +1,5 @@
 const { chain } = require('bottender');
-
-// FIXME: use @bottender/rasa package
-const rasa = require('../../packages/bottender-rasa');
+const rasa = require('@bottender/rasa');
 
 async function SayHello(context) {
   await context.sendText('Hello!');

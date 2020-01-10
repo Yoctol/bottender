@@ -1,7 +1,5 @@
 const { chain } = require('bottender');
-
-// FIXME: use @bottender/luis package
-const luis = require('../../packages/bottender-luis');
+const luis = require('@bottender/luis');
 
 const { LUIS_APP_KEY, LUIS_APP_ENDPOINT, LUIS_APP_ID } = process.env;
 
