@@ -1,17 +1,17 @@
 ---
 id: advanced-guides-deployment
-title: Bot Deployment
+title: Deployment
 ---
 
  <p><img width="500" src="https://user-images.githubusercontent.com/662387/72043275-b7c3fe80-32eb-11ea-9a49-f2d5c073f397.jpg"></p>
 
-Once you finished your bot in development, the next step is to deploy your bot to a hosting for production!
+Once you finished your bot in development, the next step is to deploy your bot to a hosting service!
 
-> **Note:** We aim to offer development guides for every popular modern hosting services. [Tweet us](https://twitter.com/bottenderjs) if you haven't seen your favorite one.
+> **Note:** We aim to offer deployment guides for every popular modern hosting services. [Tweet us](https://twitter.com/bottenderjs) if you haven't seen your favorite one.
 
 ### Before Going Further
 
-We assumed that you already build at least one basic Bottender app in development. If you haven't, you may check [Getting Started](https://bottender.js.org/docs/getting-started) first to create your first Bottender Bot in a few minutes, then jump to the setup doc of your favorite chat channel:
+We assumed that you already built at least one basic Bottender app in development. If you haven't, you may check [Getting Started](https://bottender.js.org/docs/getting-started) first to create your first Bottender app in a few minutes, then jump to the setup doc of your favorite chat channel:
 
 - [Setup Messenger](https://bottender.js.org/docs/channel-messenger-setup)
 - [Setup LINE](https://bottender.js.org/docs/channel-line-setup)
@@ -33,7 +33,7 @@ First, [sign up](https://www.heroku.com/) a Heroku account if you haven't, then 
 
 > **Note:** For the full command list, please refer to Heroku's doc, [Heroku CLI Commands](https://devcenter.heroku.com/articles/heroku-cli).
 
-### Step 2: Heroku Login and Create a Heroku App
+### Step 2: Heroku Login & Create a Heroku App
 
 Before going further, make sure you have login your Heroku account by:
 
@@ -41,17 +41,21 @@ Before going further, make sure you have login your Heroku account by:
 heroku login
 ```
 
-Then you can create a Heroku app by the below command. You may see some app name regulation like `Name must start with a letter, end with a letter or digit and can only contain lowercase letters, digits, and dashes` if you don't meet it.
+Then, you can create a Heroku app by the below command.
 
 ```sh
 heroku create <your-heroku-app-name>
 ```
 
-If you created your Heroku app successfully, you could see a deployment address for your app like `https://<your-heroku-app-name>.herokuapp.com/`. You can note it down for future webhook setting.
+You may see some app name regulation if you don't meet it. For example:
+
+> Name must start with a letter, end with a letter or digit and can only contain lowercase letters, digits, and dashes
+
+Once you created your Heroku app successfully, you could see a deployment address for your app like `https://<your-heroku-app-name>.herokuapp.com/`. You can note it down for the coming webhook setting.
 
 ### Step 3: Fill in Environment Variables to Heroku
 
-Deployment of Heroku depends on Git, and we usually put `.env` in `.gitignore`. So you have to config in the environment variables of your Heroku app with the following commands: `heroku config:set -a <your-heroku-app-name> <ENV_KEY_01>=<ENV_VALUE_01>`.
+Config the environment variables of your Heroku app with the following commands: `heroku config:set -a <your-heroku-app-name> <ENV_KEY_01>=<ENV_VALUE_01>`.
 
 For chat channels require multiple environment variables, you may use commands like `heroku config:set -a <your-heroku-app-name> <ENV_KEY_01>=<ENV_VALUE_01> <ENV_KEY_02>=<ENV_VALUE_02>`.
 
@@ -63,7 +67,7 @@ heroku config:set -a <your-heroku-app-name> MESSENGER_PAGE_ID=xxxxxx MESSENGER_A
 
 ### Step 4: Using Git in Your Bottender App
 
-Since deployment of Heroku depends on Git, make sure you have run `git init` and make the first commit in your Bottender app.
+Deployment of Heroku depends on Git. Make sure you have run `git init` and make the first commit in your Bottender app.
 
 For example:
 
@@ -75,16 +79,16 @@ git commit -am "first commit"
 
 ### Step 5: Deploy Your Bot to Heroku and Set Up Webhook
 
-When you set up the webhook, some chat channels (e.g., Messenger) asked for an immediate bot server verification. So, we recommend you to set up the webhook after your Bottender bot server running.
+When you try to set up the webhook, some chat channels (e.g., Messenger) might ask for an immediate bot server verification. So, we recommend you to set up the webhook after your Bottender app server running.
 
 There are two basic types of webhook setup:
 
-1. Set up webhook by UI of Developer Console, e.g., Messenger, LINE, Slack
+1. Set up webhook by Developer Console UI, e.g., Messenger, LINE, Slack
 2. Set up webhook by CLI, e.g., Messenger, Telegram, Viber
 
-#### Step 5a: Set up webhook by UI of Developer Console
+#### Step 5a: Set up Webhook by UI of Developer Console
 
-You can use Heroku CLI by Git push to complete the deployment.
+Use Heroku CLI by Git push to complete the deployment.
 
 ```sh
 heroku git:remote -a <your-heroku-app-name>
@@ -93,20 +97,20 @@ git push heroku master
 
 Then fill in your webhook URL on the developer console of the chat channel.
 
-> **Note:** If you are not familiar with webhook setup, you may refer to Bottender docs, [Setup Messenger](https://bottender.js.org/docs/channel-messenger-setup), [Setup LINE](https://bottender.js.org/docs/channel-line-setup), [Setup Slack](https://bottender.js.org/docs/channel-slack-setup).
+> **Note:** If you are not familiar with webhook setup, you may refer to Bottender docs, [Setup Messenger](https://bottender.js.org/docs/channel-messenger-setup), and [Setup LINE](https://bottender.js.org/docs/channel-line-setup), [Setup Slack](https://bottender.js.org/docs/channel-slack-setup).
 
 **> Note:** If you haven't changed your webhook path in `bottender.config.js`, by default, your Messenger Bot Webhook is `https://<your-heroku-app-name>.herokuapp.com/webhooks/messenger`; your LINE Bot Webhook is `https://<your-heroku-app-name>.herokuapp.com/webhooks/line`, and so on.
 
-#### Step 5b: Set up webhook by CLI
+#### Step 5b: Set up Webhook by CLI
 
-You can benefit from the `Procfile` of Heroku, which specifies the commands that are executed by the app on startup. We are going to use two process types of `Procfile`:
+You can benefit from the `Procfile` feature of Heroku, which specifies the commands executed by the app on startup. We are going to use two process types of `Procfile`:
 
-- `web` process type: to tell Heroku to run your bot server
-- `release` process type: set up webhook
+- `web` process type: tell Heroku to run your bot server for every `dyno`
+- `release` process type: set up webhook before a new release is deployed to production
 
 > **Note:** For more info about `Procfile`, you may refer to Heroku's guide, [The Procfile](https://devcenter.heroku.com/articles/procfile).
 
-Using a Messenger Bot as an example, the `Procfile` looks like the below by default:
+Using a Messenger Bot as an example, the `Procfile` looks like the below with default webhook path settings:
 
 ```js
 // Procfile
@@ -121,7 +125,7 @@ release: echo "Y" | npx bottender messenger webhook set -w https://<your-heroku-
 > - The `echo "Y"` aims to answer the first interactive CLI prompt
 > - If you haven't changed your webhook path in `bottender.config.js`, by default, your Messenger Bot Webhook is `https://<your-heroku-app-name>.herokuapp.com/webhooks/messenger`; your LINE Bot Webhook is `https://<your-heroku-app-name>.herokuapp.com/webhooks/line`, and so on.
 
-Finally, You can use Heroku CLI by Git push to complete the deployment process and let Heroku runs the `Procfile` to help you finish the webhook setup.
+Finally, You can use Heroku CLI by Git push to complete the deployment and let Heroku runs the `Procfile` to help you finish the webhook setup.
 
 ```sh
 heroku git:remote -a <your-heroku-app-name>
@@ -148,7 +152,7 @@ First, [create](https://ZEIT.co/signup) a ZEIT Account if you haven't.
 
 ### Step 2: Install ZEIT Now CLI
 
-We prefer to deploy with CLI. Install ZEIT Now CLI with npm by:
+We love to deploy with CLI! Install ZEIT Now CLI with npm by:
 
 ```sh
 npm install -g now
@@ -156,7 +160,7 @@ npm install -g now
 
 ### Step 3: Create a `server.js`
 
-ZEIT Now 2.0 doesn't support `npm` scripts, so we need a server.js as entry point.
+ZEIT Now 2.0 doesn't support `npm` scripts, so we need a `server.js` as the entry point.
 
 ```js
 // server.js
@@ -195,57 +199,59 @@ app.prepare().then(() => {
 });
 ```
 
-### Step 4: Create Your `now.js`
+### Step 4: Update Your `now.json`
 
-In the following configuration, we made a few settings:
+In the following configuration, you will make a few settings:
 
 - Set ZEIT Now to version 2.0
 - Use `@now/node` to bundle `server.js`
 - Put `bottender.config.js` and `index.js` into `includeFiles`. ZEIT Now uses `ncc` and `webpack bundler` under the hood, so we need to tell them to put those two files into the bundle)
-- Route all (/.\*) to server.js
+- Route all (/.\*) to `server.js`
 - Add your chat channel specific environment variables from `.env` to env. The number of environment variables various from the chat channel you use.
 - (optional) If you are debugging your app, you may set `DEBUG` env to `bottender*,messaging-api*`
 
-The following example is based on a Messenger Bot.
+Using a Messenger Bot as an example. your `now.json` is like:
 
 ```js
-// now.js
+// now.json
 
 {
- "version": 2,
- "builds": [
- {
- "src": "server.js",
- "use": "@now/node",
- "config": {
- "includeFiles": [
- "bottender.config.js",
- "index.js"
- ],
- "bundle": true
- }
- }
- ],
- "routes": [{
- "src": "/.*",
- "dest": "/server.js"
- }],
- "env": {
- "MESSENGER_PAGE_ID":"xxxxxx",
- "MESSENGER_ACCESS_TOKEN":"xxxxxx",
- "MESSENGER_APP_ID":"xxxxxx",
- "MESSENGER_APP_SECRET":"xxxxxx",
- "MESSENGER_VERIFY_TOKEN":"xxxxxx",
- "DEBUG": "bottender*,messaging-api*"
- }
+  "version": 2,
+  "builds": [
+    {
+      "src": "server.js",
+      "use": "@now/node",
+      "config": {
+        "includeFiles": [
+          "bottender.config.js",
+          "index.js"
+        ],
+        "bundle": true
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/.*",
+      "dest": "/server.js"
+    }
+  ],
+  "env": {
+    "MESSENGER_PAGE_ID": "xxxxxx",
+    "MESSENGER_ACCESS_TOKEN": "xxxxxx",
+    "MESSENGER_APP_ID": "xxxxxx",
+    "MESSENGER_APP_SECRET": "xxxxxx",
+    "MESSENGER_VERIFY_TOKEN": "xxxxxx",
+    "DEBUG": "bottender*,messaging-api*"
+  }
 }
 ```
 
 ### Step 5: Update Your `bottender.config.js`
 
-To make the Bottender app works on ZEIT Now, you must configure chat channels with `sync: true` in `bottender.config.js` to make the Bottender app executes in the synchronous mode.
-
 ZEIT Now 2.0 is a serverless hosting service, and serverless functions terminated right after HTTP response. So you have to make Bottender work synchronously, i.e., respond to chat channel right after received an event.
+
+to make the Bottender app executes in the synchronous mode, you must configure chat channels with `sync: true` in `bottender.config.js`.
 
 ```js
 // bottender.config.js
@@ -289,8 +295,9 @@ Set up Node.js version in the `engines` env to avoid warnings.
 
 ```js
 ///package.json
+
 {
- //skip
+ // ...skip
  "engines": { "node": "12.x" }
 }
 ```
@@ -315,16 +322,16 @@ If you haven't changed your webhook path in `bottender.config.js`, by default, y
 
 There are two basic types of webhook setup:
 
-1. Set up webhook by UI of Developer Console, e.g., Messenger, LINE, Slack
+1. Set up webhook by Developer Console UI, e.g., Messenger, LINE, Slack
 2. Set up webhook by CLI, e.g., Messenger, Telegram, Viber
 
-#### Step 8a: Set up webhook by UI of Developer Console
+#### Step 8a: Set up Webhook by Developer Console UI
 
 Fill in your webhook URL on the developer console of the chat channel.
 
 > **Note:** If you are not familiar with webhook setup, you may refer to Bottender docs, [Setup Messenger](https://bottender.js.org/docs/channel-messenger-setup), [Setup LINE](https://bottender.js.org/docs/channel-line-setup), [Setup Slack](https://bottender.js.org/docs/channel-slack-setup).
 
-#### Step 8b: Set up webhook by CLI
+#### Step 8b: Set up Webhook by CLI
 
 Make sure you have the same environment variable settings in your local `.env` file and `now.js`. Then you can use the following command to set up the webhook.
 
