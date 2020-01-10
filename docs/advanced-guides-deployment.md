@@ -11,7 +11,7 @@ Once you finished your bot in development, the next step is to deploy your bot t
 
 ### Before Going Further
 
-We assumed that you already built at least one basic Bottender app in development. If you haven't, you may check [Getting Started](https://bottender.js.org/docs/getting-started) first to create your first Bottender app in a few minutes, then jump to the setup doc of your favorite chat channel:
+We assumed that you already built at least one basic Bottender app in development. If you haven't, you may check [Getting Started](https://bottender.js.org/docs/getting-started) to create your first Bottender app in a few minutes, then jump to the setup doc of your favorite chat channel:
 
 - [Setup Messenger](https://bottender.js.org/docs/channel-messenger-setup)
 - [Setup LINE](https://bottender.js.org/docs/channel-line-setup)
@@ -23,7 +23,7 @@ We assumed that you already built at least one basic Bottender app in developmen
 
 <p><img width="300" src="https://user-images.githubusercontent.com/662387/72130857-a8a98300-33b5-11ea-9ec6-10c8aac37230.jpg"></p>
 
-Heroku is one of the most popular hosting services for developers. Not only the clear document, ease of scalability, using Git for deployment, but also the friendly [free pricing plan](https://www.heroku.com/pricing) for experiment purpose.
+Heroku is one of the most popular hosting services. Not only the clear document, ease of scalability, using Git for deployment, but also the friendly [free pricing plan](https://www.heroku.com/pricing) for experiment purpose.
 
 In the following, you can see the necessary steps of Heroku Deployment:
 
@@ -47,9 +47,7 @@ Then, you can create a Heroku app by the below command.
 heroku create <your-heroku-app-name>
 ```
 
-You may see some app name regulation if you don't meet it. For example:
-
-> Name must start with a letter, end with a letter or digit and can only contain lowercase letters, digits, and dashes
+> **Note:** You may see some app name regulation if you don't meet it. For example: `Name must start with a letter, end with a letter or digit and can only contain lowercase letters, digits, and dashes`
 
 Once you created your Heroku app successfully, you could see a deployment address for your app like `https://<your-heroku-app-name>.herokuapp.com/`. You can note it down for the coming webhook setting.
 
@@ -97,9 +95,9 @@ git push heroku master
 
 Then fill in your webhook URL on the developer console of the chat channel.
 
-> **Note:** If you are not familiar with webhook setup, you may refer to Bottender docs, [Setup Messenger](https://bottender.js.org/docs/channel-messenger-setup), and [Setup LINE](https://bottender.js.org/docs/channel-line-setup), [Setup Slack](https://bottender.js.org/docs/channel-slack-setup).
+> **Note:** If you are not familiar with webhook setup, you may refer to Bottender docs, [Setup Messenger](https://bottender.js.org/docs/channel-messenger-setup), [Setup LINE](https://bottender.js.org/docs/channel-line-setup), and [Setup Slack](https://bottender.js.org/docs/channel-slack-setup).
 
-**> Note:** If you haven't changed your webhook path in `bottender.config.js`, by default, your Messenger Bot Webhook is `https://<your-heroku-app-name>.herokuapp.com/webhooks/messenger`; your LINE Bot Webhook is `https://<your-heroku-app-name>.herokuapp.com/webhooks/line`, and so on.
+> **Note:** If you haven't changed your webhook path in `bottender.config.js`, by default, your Messenger Bot webhook is `https://<your-heroku-app-name>.herokuapp.com/webhooks/messenger`; your LINE Bot webhook is `https://<your-heroku-app-name>.herokuapp.com/webhooks/line`, and so on.
 
 #### Step 5b: Set up Webhook by CLI
 
@@ -117,13 +115,12 @@ Using a Messenger Bot as an example, the `Procfile` looks like the below with de
 
 web: npm start
 release: echo "Y" | npx bottender messenger webhook set -w https://<your-heroku-app-name>.com/webhooks/messenger
-
 ```
 
 > **Note:**
 >
 > - The `echo "Y"` aims to answer the first interactive CLI prompt
-> - If you haven't changed your webhook path in `bottender.config.js`, by default, your Messenger Bot Webhook is `https://<your-heroku-app-name>.herokuapp.com/webhooks/messenger`; your LINE Bot Webhook is `https://<your-heroku-app-name>.herokuapp.com/webhooks/line`, and so on.
+> - If you haven't changed your webhook path in `bottender.config.js`, by default, your Messenger Bot webhook is `https://<your-heroku-app-name>.herokuapp.com/webhooks/messenger`; your LINE Bot webhook is `https://<your-heroku-app-name>.herokuapp.com/webhooks/line`, and so on.
 
 Finally, You can use Heroku CLI by Git push to complete the deployment and let Heroku runs the `Procfile` to help you finish the webhook setup.
 
@@ -132,11 +129,11 @@ heroku git:remote -a <your-heroku-app-name>
 git push heroku master
 ```
 
-### Step 6: Deploy Completed!
+### Step 6: Completed!
 
 Congratulations! You have made your Bottender bot production-ready. Share your fantastic bot with your friends!
 
-> **Note:** If you would like to share your Bottender Bot with the community, please feel free to add your project to the list of [Bottender Users](https://bottender.js.org/users).
+> **Note:** If you would like to share your Bottender Bot with the community, please feel free to add your project to [Bottender Users](https://bottender.js.org/users).
 
 ## ZEIT Now 2.0
 
@@ -318,7 +315,7 @@ Then you will see something like the screenshot below.
 
 ### Step 8: Webhook Setup
 
-If you haven't changed your webhook path in `bottender.config.js`, by default, your Messenger Bot Webhook is `https://<your-app-name>.<your-user-name>.now.sh/webhooks/messenger`; your LINE Bot Webhook is `https://<your-app-name>.<your-user-name>.now.sh/webhooks/line`, and so on.
+If you haven't changed your webhook path in `bottender.config.js`, by default, your Messenger Bot webhook is `https://<your-app-name>.<your-user-name>.now.sh/webhooks/messenger`; your LINE Bot webhook is `https://<your-app-name>.<your-user-name>.now.sh/webhooks/line`, and so on.
 
 There are two basic types of webhook setup:
 
@@ -341,8 +338,8 @@ Using a Messenger Bot as an example, your command is like:
 npx bottender messenger webhook set -w https://<your-app-name>.<your-user-name>.now.sh/webhooks/messenger
 ```
 
-### Step 9: Deploy Completed!
+### Step 9: Completed!
 
 Congratulations! You have made your Bottender bot production-ready. Share your fantastic bot with your friends!
 
-> **Note:** If you would like to share your Bottender Bot with the community, please feel free to add your project to the list of [Bottender Users](https://bottender.js.org/users).
+> **Note:** If you would like to share your Bottender Bot with the community, please feel free to add your project to [Bottender Users](https://bottender.js.org/users).
