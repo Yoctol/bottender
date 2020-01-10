@@ -23,7 +23,8 @@
       "version-1.1.0-channel-messenger-routing",
       "version-1.1.0-channel-messenger-profile",
       "version-1.1.0-channel-messenger-handover-protocol",
-      "version-1.1.0-channel-messenger-persona"
+      "version-1.1.0-channel-messenger-persona",
+      "version-1.1.0-channel-messenger-multi-page"
     ],
     "Guides (LINE)": [
       "version-1.1.0-channel-line-setup",

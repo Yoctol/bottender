@@ -4,6 +4,7 @@
     "start": "bottender start"
   },
   "dependencies": {
+    "@bottender/luis": "^1.2.0-alpha.5",
     "axios": "^0.19.0",
     "bottender": "latest"
   }
