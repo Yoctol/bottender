@@ -14,8 +14,13 @@
   ],
   "types": "dist/index.d.ts",
   "dependencies": {
-    "bottender": "file:../bottender",
     "dialogflow": "^1.0.0"
+  },
+  "peerDependencies": {
+    "bottender": ">= 1.2.0-0"
+  },
+  "devDependencies": {
+    "bottender": "file:../bottender"
   },
   "keywords": [
     "bot",

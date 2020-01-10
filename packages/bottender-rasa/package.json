@@ -15,11 +15,14 @@
   "types": "dist/index.d.ts",
   "dependencies": {
     "axios": "^0.19.0",
-    "bottender": "file:../bottender",
     "lodash": "^4.17.15"
   },
+  "peerDependencies": {
+    "bottender": ">= 1.2.0-0"
+  },
   "devDependencies": {
-    "nock": "^11.7.1"
+    "bottender": "file:../bottender",
+    "nock": "^11.7.2"
   },
   "keywords": [
     "bot",

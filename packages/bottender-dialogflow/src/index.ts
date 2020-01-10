@@ -57,6 +57,10 @@ module.exports = function dialogflow({
 
     const { intent, parameters } = responses[0].queryResult as QueryResult;
 
+    if (intent) {
+      context.setIntent(intent.displayName);
+    }
+
     const Action = actions[intent.name] || actions[intent.displayName];
     if (Action) {
       return withProps(Action as any, { intent, parameters });

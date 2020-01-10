@@ -136,6 +136,7 @@ it('should resolve corresponding action if intent score > scoreThreshold', async
   await app(context);
 
   expect(context.sendText).toBeCalledWith('Hello!');
+  expect(context.intent).toEqual('greeting');
 
   expect(requestHeaders['ocp-apim-subscription-key']).toEqual('APP_KEY');
   expect(requestQuery).toEqual({
@@ -217,6 +218,7 @@ it('should go next if intent confidence < confidenceThreshold', async () => {
   await app(context);
 
   expect(context.sendText).toBeCalledWith('Sorry, I don’t know what you say.');
+  expect(context.intent).toBeNull();
 });
 
 it('should support parameters of luis', async () => {

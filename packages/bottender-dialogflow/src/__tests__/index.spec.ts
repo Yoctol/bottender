@@ -100,6 +100,7 @@ it('should resolve corresponding action if intent match name', async () => {
   await app(context);
 
   expect(context.sendText).toBeCalledWith('Hello!');
+  expect(context.intent).toEqual('greeting');
 
   expect(sessionClient.sessionPath).toBeCalledWith('PROJECT_ID', 'test:1');
   expect(sessionClient.detectIntent).toBeCalledWith({
@@ -220,6 +221,7 @@ it('should resolve corresponding action if intent match name', async () => {
   await app(context);
 
   expect(context.sendText).toBeCalledWith('Hello!');
+  expect(context.intent).toEqual('greeting');
 });
 
 it('should go next if intent does not match any name', async () => {
@@ -328,6 +330,7 @@ it('should go next if intent does not match any name', async () => {
   await app(context);
 
   expect(context.sendText).toBeCalledWith('Sorry, I don’t know what you say.');
+  expect(context.intent).toEqual('order');
 });
 
 it('should support parameters of dialogflow', async () => {

@@ -74,7 +74,10 @@ module.exports = function luis({
     const { topScoringIntent, entities, sentimentAnalysis } = data;
 
     if (topScoringIntent && topScoringIntent.score > scoreThreshold) {
+      context.setIntent(topScoringIntent.intent);
+
       const Action = actions[topScoringIntent.intent];
+
       if (Action) {
         return withProps(Action as any, {
           topScoringIntent,
