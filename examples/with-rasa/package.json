@@ -4,7 +4,7 @@
     "start": "bottender start"
   },
   "dependencies": {
-    "@bottender/rasa": "^1.2.0-alpha.5",
+    "@bottender/rasa": "latest",
     "axios": "^0.19.0",
     "bottender": "latest"
   }
