@@ -5,7 +5,6 @@ function setup({
   connector = {
     platform: 'any',
     getUniqueSessionKey: jest.fn(),
-    shouldSessionUpdate: jest.fn(),
     updateSession: jest.fn(),
     mapRequestToEvents: jest.fn(() => [{}]),
     createContext: jest.fn(() => ({})),
@@ -16,7 +15,7 @@ function setup({
     read: jest.fn(),
     write: jest.fn(),
   },
-  sync = false,
+  sync = true,
   mapPageToAccessToken,
 }) {
   const bot = new Bot({ connector, sessionStore, sync, mapPageToAccessToken });
@@ -85,7 +84,6 @@ describe('#createRequestHandler', () => {
     const { bot, connector, sessionStore } = setup({});
 
     connector.getUniqueSessionKey.mockReturnValue('__id__');
-    connector.shouldSessionUpdate.mockReturnValue(true);
     sessionStore.read.mockResolvedValue(null);
 
     const handler = () => {};
@@ -105,7 +103,6 @@ describe('#createRequestHandler', () => {
     const connector = {
       platform: 'any',
       getUniqueSessionKey: jest.fn(),
-      shouldSessionUpdate: jest.fn(),
       updateSession: jest.fn(),
       mapRequestToEvents: jest.fn(() => [event]),
       createContext: jest.fn(() => ({ event, session })),
@@ -129,10 +126,12 @@ describe('#createRequestHandler', () => {
 
     expect(receivedContext).toEqual({
       event: {},
+      isSessionWritten: true,
       session: expect.objectContaining({
         id: 'any:__id__',
         platform: 'any',
         user: {},
+        lastActivity: expect.any(Number),
       }),
     });
   });
@@ -152,7 +151,6 @@ describe('#createRequestHandler', () => {
     const connector = {
       platform: 'any',
       getUniqueSessionKey: jest.fn(),
-      shouldSessionUpdate: jest.fn(),
       updateSession: jest.fn(),
       mapRequestToEvents: jest.fn(() => [event]),
       createContext: jest.fn(() => context),
@@ -195,7 +193,6 @@ describe('#createRequestHandler', () => {
     const connector = {
       platform: 'any',
       getUniqueSessionKey: jest.fn(),
-      shouldSessionUpdate: jest.fn(),
       updateSession: jest.fn(),
       mapRequestToEvents: jest.fn(() => [event]),
       createContext: jest.fn(() => ({ event, session: undefined })),
@@ -223,7 +220,6 @@ describe('#createRequestHandler', () => {
     const connector = {
       platform: 'any',
       getUniqueSessionKey: jest.fn(),
-      shouldSessionUpdate: jest.fn(),
       updateSession: jest.fn(),
       mapRequestToEvents: jest.fn(() => [event]),
       createContext: jest.fn(() => ({ event, session: undefined })),
@@ -256,7 +252,6 @@ describe('#createRequestHandler', () => {
     const connector = {
       platform: 'any',
       getUniqueSessionKey: jest.fn(),
-      shouldSessionUpdate: jest.fn(),
       updateSession: jest.fn(),
       mapRequestToEvents: jest.fn(() => [event]),
       createContext: jest.fn(() => ({ event, session: 123456 })),
@@ -290,7 +285,6 @@ describe('#createRequestHandler', () => {
     const connector = {
       platform: 'any',
       getUniqueSessionKey: jest.fn(),
-      shouldSessionUpdate: jest.fn(),
       updateSession: jest.fn(),
       mapRequestToEvents: jest.fn(() => [event]),
       createContext: jest.fn(() => ({ event, session: 123456 })),
@@ -327,7 +321,6 @@ describe('#createRequestHandler', () => {
     const connector = {
       platform: 'any',
       getUniqueSessionKey: jest.fn(),
-      shouldSessionUpdate: jest.fn(),
       updateSession: jest.fn(),
       mapRequestToEvents: jest.fn(() => [event]),
       createContext: jest.fn(() => ({ event, session })),
@@ -353,6 +346,65 @@ describe('#createRequestHandler', () => {
     });
     Date.now = _now;
   });
+
+  it('should work with multiple events in one request', async () => {
+    const event1 = {};
+    const event2 = {};
+    const connector = {
+      platform: 'any',
+      getUniqueSessionKey: jest.fn(),
+      updateSession: jest.fn(),
+      mapRequestToEvents: jest.fn(() => [event1, event2]),
+      createContext: jest.fn(({ event, session }) => ({ event, session })),
+    };
+    const { bot, sessionStore } = setup({ connector });
+
+    connector.getUniqueSessionKey
+      .mockReturnValueOnce('1')
+      .mockReturnValueOnce('2');
+    sessionStore.read.mockResolvedValue(null);
+
+    const handler = () => {};
+    bot.onEvent(handler);
+
+    const requestHandler = bot.createRequestHandler();
+
+    const body = {};
+    await requestHandler(body);
+
+    expect(sessionStore.read).toBeCalledWith('any:1');
+    expect(sessionStore.read).toBeCalledWith('any:2');
+
+    expect(connector.getUniqueSessionKey).toBeCalledWith(event1, undefined);
+    expect(connector.getUniqueSessionKey).toBeCalledWith(event2, undefined);
+
+    expect(connector.createContext).toBeCalledWith(
+      expect.objectContaining({
+        event: event1,
+        session: expect.objectContaining({ id: 'any:1', platform: 'any' }),
+      })
+    );
+    expect(connector.createContext).toBeCalledWith(
+      expect.objectContaining({
+        event: event2,
+        session: expect.objectContaining({ id: 'any:2', platform: 'any' }),
+      })
+    );
+
+    expect(connector.updateSession).toBeCalledWith(expect.any(Object), body);
+    expect(connector.updateSession).toBeCalledWith(expect.any(Object), body);
+
+    expect(sessionStore.write).toBeCalledWith('any:1', {
+      id: 'any:1',
+      platform: 'any',
+      lastActivity: expect.any(Number),
+    });
+    expect(sessionStore.write).toBeCalledWith('any:2', {
+      id: 'any:2',
+      platform: 'any',
+      lastActivity: expect.any(Number),
+    });
+  });
 });
 
 describe('#use', () => {
@@ -361,7 +413,6 @@ describe('#use', () => {
     const connector = {
       platform: 'any',
       getUniqueSessionKey: jest.fn(),
-      shouldSessionUpdate: jest.fn(),
       updateSession: jest.fn(),
       mapRequestToEvents: jest.fn(() => [event]),
       createContext: jest.fn(() => ({ event, session: undefined })),
@@ -377,7 +428,6 @@ describe('#use', () => {
     const connector = {
       platform: 'any',
       getUniqueSessionKey: jest.fn(),
-      shouldSessionUpdate: jest.fn(),
       updateSession: jest.fn(),
       mapRequestToEvents: jest.fn(() => [event]),
       createContext: jest.fn(() => ({ event, session: undefined })),
@@ -411,7 +461,6 @@ describe('#onEvent', () => {
     const connector = {
       platform: 'any',
       getUniqueSessionKey: jest.fn(),
-      shouldSessionUpdate: jest.fn(),
       updateSession: jest.fn(),
       mapRequestToEvents: jest.fn(() => [event]),
       createContext: jest.fn(() => ({ event, session: undefined })),
@@ -429,7 +478,6 @@ describe('#onError', () => {
     const connector = {
       platform: 'any',
       getUniqueSessionKey: jest.fn(),
-      shouldSessionUpdate: jest.fn(),
       updateSession: jest.fn(),
       mapRequestToEvents: jest.fn(() => [event]),
       createContext: ({ emitter }) =>
@@ -468,7 +516,6 @@ describe('#onError', () => {
     const connector = {
       platform: 'any',
       getUniqueSessionKey: jest.fn(),
-      shouldSessionUpdate: jest.fn(),
       updateSession: jest.fn(),
       mapRequestToEvents: jest.fn(() => [event]),
       createContext: jest.fn(() => ({ event, session: undefined })),
@@ -486,7 +533,6 @@ describe('#setInitialState', () => {
     const connector = {
       platform: 'any',
       getUniqueSessionKey: jest.fn(),
-      shouldSessionUpdate: jest.fn(),
       updateSession: jest.fn(),
       mapRequestToEvents: jest.fn(() => [event]),
       createContext: jest.fn(() => ({ event, session: undefined })),
@@ -502,7 +548,6 @@ describe('#setInitialState', () => {
     const connector = {
       platform: 'any',
       getUniqueSessionKey: jest.fn(),
-      shouldSessionUpdate: jest.fn(),
       updateSession: jest.fn(),
       mapRequestToEvents: jest.fn(() => [event]),
       createContext: jest.fn(() => ({ event, session: undefined })),
@@ -545,7 +590,6 @@ describe('request context', () => {
     const connector = {
       platform: 'any',
       getUniqueSessionKey: jest.fn(),
-      shouldSessionUpdate: jest.fn(),
       updateSession: jest.fn(),
       mapRequestToEvents: jest.fn(() => [event]),
       createContext: jest.fn(() => ({ event, session: undefined })),
@@ -578,7 +622,6 @@ describe('context lifecycle', () => {
     const connector = {
       platform: 'any',
       getUniqueSessionKey: jest.fn(),
-      shouldSessionUpdate: jest.fn(),
       updateSession: jest.fn(),
       mapRequestToEvents: jest.fn(() => [event]),
       createContext: jest.fn(() => ({

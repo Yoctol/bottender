@@ -3,6 +3,7 @@ import EventEmitter from 'events';
 import debug from 'debug';
 import invariant from 'invariant';
 import pMap from 'p-map';
+import { camelcaseKeysDeep } from 'messaging-api-common';
 
 import CacheBasedSessionStore from '../session/CacheBasedSessionStore';
 import Context from '../context/Context';
@@ -29,7 +30,7 @@ const debugRequest = debug('bottender:request');
 const debugResponse = debug('bottender:response');
 const debugSessionRead = debug('bottender:session:read');
 const debugSessionWrite = debug('bottender:session:write');
-const debugDialog = debug('bottender:dialog');
+const debugAction = debug('bottender:action');
 
 const MINUTES_IN_ONE_YEAR = 365 * 24 * 60;
 
@@ -48,13 +49,13 @@ export function run<C extends Client, E extends Event>(
     let nextDialog: Action<C, E> | void = action;
 
     // TODO: refactor this with withProps or whatever
-    debugDialog(`Current Dialog: ${nextDialog.name || 'Anonymous'}`);
+    debugAction(`Current Action: ${nextDialog.name || 'Anonymous'}`);
     // eslint-disable-next-line no-await-in-loop
     nextDialog = await nextDialog(context, props);
 
     while (typeof nextDialog === 'function') {
       // TODO: improve this debug helper
-      debugDialog(`Current Dialog: ${nextDialog.name || 'Anonymous'}`);
+      debugAction(`Current Action: ${nextDialog.name || 'Anonymous'}`);
       // eslint-disable-next-line no-await-in-loop
       nextDialog = await nextDialog(context, {});
     }
@@ -167,66 +168,77 @@ export default class Bot<B extends Body, C extends Client, E extends Event> {
       this._emitter.on('error', console.error);
     }
 
-    return async (body: B, requestContext?: RequestContext): Promise<any> => {
-      if (!body) {
+    return async (
+      inputBody: B,
+      requestContext?: RequestContext
+    ): Promise<any> => {
+      if (!inputBody) {
         throw new Error('Bot.createRequestHandler: Missing argument.');
       }
 
       debugRequest('Incoming request body:');
-      debugRequest(JSON.stringify(body, null, 2));
+      debugRequest(JSON.stringify(inputBody, null, 2));
 
       await this.initSessionStore();
 
-      const { platform } = this._connector;
-      const sessionKey = this._connector.getUniqueSessionKey(
-        body,
-        requestContext
-      );
-
-      // Create or retrieve session if possible
-      let sessionId: string | undefined;
-      let session: Session | undefined;
-      if (sessionKey) {
-        sessionId = `${platform}:${sessionKey}`;
-
-        session =
-          (await this._sessions.read(sessionId)) ||
-          (Object.create(null) as Session);
-
-        debugSessionRead(`Read session: ${sessionId}`);
-        debugSessionRead(JSON.stringify(session, null, 2));
-
-        Object.defineProperty(session, 'id', {
-          configurable: false,
-          enumerable: true,
-          writable: false,
-          value: session.id || sessionId,
-        });
-
-        if (!session.platform) session.platform = platform;
-
-        Object.defineProperty(session, 'platform', {
-          configurable: false,
-          enumerable: true,
-          writable: false,
-          value: session.platform,
-        });
-
-        await this._connector.updateSession(session, body);
-      }
+      const body = camelcaseKeysDeep(inputBody) as B;
 
       const events = this._connector.mapRequestToEvents(body);
 
       const contexts = await pMap(
         events,
-        event =>
-          this._connector.createContext({
+        async event => {
+          const { platform } = this._connector;
+          const sessionKey = this._connector.getUniqueSessionKey(
+            // TODO: may deprecating passing request body in v2
+            events.length === 1 ? body : event,
+            requestContext
+          );
+
+          // Create or retrieve session if possible
+          let sessionId: string | undefined;
+          let session: Session | undefined;
+          if (sessionKey) {
+            sessionId = `${platform}:${sessionKey}`;
+
+            session =
+              (await this._sessions.read(sessionId)) ||
+              (Object.create(null) as Session);
+
+            debugSessionRead(`Read session: ${sessionId}`);
+            debugSessionRead(JSON.stringify(session, null, 2));
+
+            Object.defineProperty(session, 'id', {
+              configurable: false,
+              enumerable: true,
+              writable: false,
+              value: session.id || sessionId,
+            });
+
+            if (!session.platform) session.platform = platform;
+
+            Object.defineProperty(session, 'platform', {
+              configurable: false,
+              enumerable: true,
+              writable: false,
+              value: session.platform,
+            });
+
+            await this._connector.updateSession(
+              session,
+              // TODO: may deprecating passing request body in v2
+              events.length === 1 ? body : event
+            );
+          }
+
+          return this._connector.createContext({
             event,
             session,
             initialState: this._initialState,
             requestContext,
             emitter: this._emitter,
-          }),
+          });
+        },
         {
           concurrency: 5,
         }
@@ -246,6 +258,8 @@ export default class Bot<B extends Body, C extends Client, E extends Event> {
       }
       const handler: Action<C, E> = this._handler;
       const errorHandler: Action<C, E> | null = this._errorHandler;
+
+      // TODO: only run concurrently for different session id
       const promises = Promise.all(
         contexts.map(context =>
           Promise.resolve()
@@ -271,17 +285,24 @@ export default class Bot<B extends Body, C extends Client, E extends Event> {
       if (this._sync) {
         try {
           await promises;
-          if (sessionId && session) {
-            session.lastActivity = Date.now();
-            contexts.forEach(context => {
+
+          await Promise.all(
+            contexts.map(async context => {
               context.isSessionWritten = true;
-            });
 
-            debugSessionWrite(`Write session: ${sessionId}`);
-            debugSessionWrite(JSON.stringify(session, null, 2));
+              const { session } = context;
 
-            await this._sessions.write(sessionId, session);
-          }
+              if (session) {
+                session.lastActivity = Date.now();
+
+                debugSessionWrite(`Write session: ${session.id}`);
+                debugSessionWrite(JSON.stringify(session, null, 2));
+
+                // eslint-disable-next-line no-await-in-loop
+                await this._sessions.write(session.id, session);
+              }
+            })
+          );
         } catch (err) {
           console.error(err);
         }
@@ -295,19 +316,27 @@ export default class Bot<B extends Body, C extends Client, E extends Event> {
         return response;
       }
       promises
-        .then((): Promise<any> | void => {
-          if (sessionId && session) {
-            session.lastActivity = Date.now();
-            contexts.forEach(context => {
-              context.isSessionWritten = true;
-            });
+        .then(
+          async (): Promise<any> => {
+            await Promise.all(
+              contexts.map(async context => {
+                context.isSessionWritten = true;
 
-            debugSessionWrite(`Write session: ${sessionId}`);
-            debugSessionWrite(JSON.stringify(session, null, 2));
+                const { session } = context;
 
-            return this._sessions.write(sessionId, session);
+                if (session) {
+                  session.lastActivity = Date.now();
+
+                  debugSessionWrite(`Write session: ${session.id}`);
+                  debugSessionWrite(JSON.stringify(session, null, 2));
+
+                  // eslint-disable-next-line no-await-in-loop
+                  await this._sessions.write(session.id, session);
+                }
+              })
+            );
           }
-        })
+        )
         .catch(console.error);
     };
   }

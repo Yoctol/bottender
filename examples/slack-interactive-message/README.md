@@ -1,4 +1,4 @@
-# Slack interactive message
+# Slack Interactive Message
 
 ## Install and Run
 
@@ -15,7 +15,9 @@ Install dependencies:
 npm install
 ```
 
-You must put `accessToken` and `verificationToken` into `index.js`.
+You have to put `accessToken` and `verificationToken` into `bottender.config.js`.
+
+If you are not familiar with Slack Bot, you may refer to Bottender's doc, [Setup Slack](https://bottender.js.org/docs/channel-slack-setup), to find detailed instructions.
 
 After that, you can run the bot with this npm script:
 
@@ -25,13 +27,13 @@ npm run dev
 
 This command will start server for bot developing at `http://localhost:5000`.
 
-If you successfully start the server, you will get a webhook url like `https://xxxxxxxx.ngrok.io/webhooks/slack` from command line.
+If you successfully start the server, you will get a webhook URL like `https://xxxxxxxx.ngrok.io/webhooks/slack` from command line.
 
-## Set webhook
+## Set Webhook
 
-To set the webhook, go to [Slack Developer Console](https://api.slack.com/apps) / [YourApp] / Event Subscriptions, and use the webhook url you get from running `npm run dev` to edit Request URL for your bot.
+To set the webhook, go to [Slack Developer Console](https://api.slack.com/apps) / [YourApp] / Event Subscriptions, and use the webhook URL you get from running `npm run dev` to edit Request URL for your bot.
 
-## Idea of this example
+## Idea of this Example
 
 This example shows how to send [messages with interactive components (button/menu)](https://api.slack.com/interactive-messages) and handle the event triggered by users clicking the button/menu.
 
@@ -45,6 +47,6 @@ After that, type 'heyo' to the bot and it will respond you with buttons and menu
 
 ![default](https://user-images.githubusercontent.com/1003146/33164927-e2ec8da6-d06f-11e7-9378-e8a3e9b37257.png)
 
-## Related examples
+## Related Examples
 
 - [slack-hello-world](../slack-hello-world)

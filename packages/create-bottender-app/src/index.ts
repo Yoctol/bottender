@@ -231,7 +231,7 @@ const run = async (
 ): Promise<void> => {
   try {
     const allDependencies = {
-      dependencies: ['bottender@next'],
+      dependencies: ['bottender'],
       devDependencies: [
         'jest',
         'eslint',

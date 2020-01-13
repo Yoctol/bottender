@@ -1,39 +1,69 @@
 {
   "docs": {
-    "Getting Started": ["getting-started"],
+    "Getting Started": [
+      "getting-started",
+      "migrating-v1"
+    ],
     "The Basics": [
       "the-basics-console-mode",
       "the-basics-actions",
       "the-basics-routing",
       "the-basics-chain",
-      "the-basics-state",
       "the-basics-session",
       "the-basics-errors"
     ],
-    "Advanced Guides": ["advanced-guides-nlu"],
+    "Advanced Guides": [
+      "advanced-guides-nlu",
+      "advanced-guides-multi-channel"
+    ],
     "Guides (Messenger)": [
       "channel-messenger-setup",
       "channel-messenger-handling-events",
+      "channel-messenger-sending-messages",
+      "channel-messenger-routing",
       "channel-messenger-profile",
-      "channel-messenger-persona"
+      "channel-messenger-handover-protocol",
+      "channel-messenger-persona",
+      "channel-messenger-multi-page"
     ],
     "Guides (LINE)": [
       "channel-line-setup",
       "channel-line-handling-events",
+      "channel-line-sending-messages",
+      "channel-line-routing",
       "channel-line-flex",
+      "channel-line-rich-menu",
+      "channel-line-errors",
       "channel-line-migrating-from-sdk"
     ],
-    "Guides (Slack)": ["channel-slack-setup", "channel-slack-handling-events"],
+    "Guides (Slack)": [
+      "channel-slack-setup",
+      "channel-slack-handling-events",
+      "channel-slack-sending-messages",
+      "channel-slack-routing",
+      "channel-slack-block-kit"
+    ],
     "Guides (Telegram)": [
       "channel-telegram-setup",
-      "channel-telegram-handling-events"
+      "channel-telegram-handling-events",
+      "channel-telegram-sending-messages",
+      "channel-telegram-routing"
     ],
     "Guides (Viber)": [
       "channel-viber-setup",
       "channel-viber-handling-events",
-      "channel-viber-sending-messages"
+      "channel-viber-sending-messages",
+      "channel-viber-routing"
     ],
     "FAQ": []
   },
-  "api": {}
+  "api": {
+    "Core": ["api-context", "api-event"],
+    "Messenger": ["api-messenger-context", "api-messenger-event"],
+    "LINE": ["api-line-context", "api-line-event"],
+    "Slack": ["api-slack-context", "api-slack-event"],
+    "Telegram": ["api-telegram-context", "api-telegram-event"],
+    "Viber": ["api-viber-context", "api-viber-event"],
+    "Console": ["api-console-context", "api-console-event"]
+  }
 }

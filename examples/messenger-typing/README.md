@@ -15,7 +15,9 @@ Install dependencies:
 npm install
 ```
 
-You must put `accessToken`, `appSecret` and `verifyToken` into `bottender.config.js`.
+You have to put `appId`, `appSecret`, `pageId`, `accessToken` and `verifyToken` into `bottender.config.js`.
+
+If you are not familiar with Messenger Bot, you may refer to Bottender's doc, [Setup Messenger](https://bottender.js.org/docs/channel-messenger-setup), to find detailed instructions.
 
 After that, you can run the bot with this npm script:
 
@@ -25,11 +27,11 @@ npm run dev
 
 This command will start server for bot developing at `http://localhost:5000`.
 
-If you successfully start the server, you will get a webhook url like `https://xxxxxxxx.ngrok.io/webhooks/messenger` from command line.
+If you successfully start the server, you will get a webhook URL like `https://xxxxxxxx.ngrok.io/webhooks/messenger` from command line.
 
-## Set webhook
+## Set Webhook
 
-While the server running, you can run following command with `bottender` to set up the webhook with the webhook url you get from running `npm run dev`:
+While the server running, you can run following command with `bottender` to set up the webhook with the webhook URL you get from running `npm run dev`:
 
 ```sh
 npx bottender messenger webhook set -w <YOUR_WEBHOOK_URL>
@@ -37,7 +39,7 @@ npx bottender messenger webhook set -w <YOUR_WEBHOOK_URL>
 
 > Note: You must put `appId`, `appSecret` and `verifyToken` into `bottender.config.js` before running this command.
 
-## Idea of this example
+## Idea of this Example
 
 This example shows using `withTyping` to make your bot user experience better.
 It will show typing indicator and delay all your send request for seconds. For
@@ -45,6 +47,6 @@ example, this is
 [Messenger sender action](https://developers.facebook.com/docs/messenger-platform/send-messages/sender-actions/).
 Notice that the unit of optional number of delay seconds is **millisecond**.
 
-## Related examples
+## Related Examples
 
 - [messenger-hello-world](../messenger-hello-world)

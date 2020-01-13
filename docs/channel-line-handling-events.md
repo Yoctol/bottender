@@ -56,7 +56,7 @@ async function App(context) {
 
 ## Retrieve Media Content from Message
 
-When you receive a media message, e.g., image, video, or audio message, the message content is not covered in the request. 
+When you receive a media message, e.g., image, video, or audio message, the message content is not covered in the request.
 You can make further responses based on the user's message content, e.g., add a photo frame, convert the audio message into text. You can get message content by `context.getMessageContent()`:
 
 ```js
@@ -117,7 +117,7 @@ async function App(context) {
 
 ### Group/Room Events
 
-A bot inside group/room makes various kinds of group vote possible, e.g., the restaurant for lunch, the destination for the company trip, or gifts for lucky draw. In the following example, you can see how to handle `Join Event` and `Leave Event.`
+A bot inside group/room makes various kinds of group vote possible, e.g., the restaurant for lunch, the destination for the company trip, or gifts for a lucky draw. In the following example, you can see how to handle `Join Event` and `Leave Event.`
 
 > **Note:**
 > We are preparing an advanced `Group/Room Events` tutorial to illustrate more practical group bot usages. If you are interested in it, please tell us on [Bottender Discord/#LINE](https://discord.gg/BsS9Fwe) to upvote :D
@@ -148,3 +148,7 @@ async function App(context) {
   }
 }
 ```
+
+## Handling Events with Router
+
+Bottender includes a bunch of helpers to routes within your LINE or multi-platform application. To learn more about how to use them with router, check out [the documentation](channel-line-routing.md).

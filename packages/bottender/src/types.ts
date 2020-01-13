@@ -4,19 +4,19 @@ import { SlackOAuthClient } from 'messaging-api-slack';
 import { TelegramClient } from 'messaging-api-telegram';
 import { ViberClient } from 'messaging-api-viber';
 
-import ConsoleEvent, { ConsoleRawEvent } from './context/ConsoleEvent';
+import ConsoleEvent, { ConsoleRawEvent } from './console/ConsoleEvent';
 import Context from './context/Context';
-import LineEvent from './context/LineEvent';
-import MessengerEvent from './context/MessengerEvent';
-import SlackEvent from './context/SlackEvent';
-import TelegramEvent from './context/TelegramEvent';
-import ViberEvent from './context/ViberEvent';
-import { ConsoleClient } from './context/ConsoleClient';
-import { LineRequestBody } from './bot/LineConnector';
-import { MessengerRequestBody } from './bot/MessengerConnector';
-import { SlackRequestBody } from './bot/SlackConnector';
-import { TelegramRequestBody } from './bot/TelegramConnector';
-import { ViberRequestBody } from './bot/ViberConnector';
+import LineEvent from './line/LineEvent';
+import MessengerEvent from './messenger/MessengerEvent';
+import SlackEvent from './slack/SlackEvent';
+import TelegramEvent from './telegram/TelegramEvent';
+import ViberEvent from './viber/ViberEvent';
+import { ConsoleClient } from './console/ConsoleClient';
+import { LineRequestBody } from './line/LineConnector';
+import { MessengerRequestBody } from './messenger/MessengerConnector';
+import { SlackRequestBody } from './slack/SlackConnector';
+import { TelegramRequestBody } from './telegram/TelegramConnector';
+import { ViberRequestBody } from './viber/ViberConnector';
 
 export type Client =
   | ConsoleClient
@@ -72,30 +72,32 @@ export enum SessionDriver {
   Mongo = 'mongo',
 }
 
-export type BottenderConfig = {
-  plugins?: any[];
-  session?: {
-    driver: SessionDriver;
-    expiresIn?: number;
-    stores: {
-      memory: {
-        maxSize?: number;
-      };
-      file: {
-        dirname?: string;
-      };
-      redis: {
-        port?: number;
-        host?: string;
-        password?: string;
-        db: number;
-      };
-      mongo: {
-        url: string;
-        collectionName?: string;
-      };
+export type SessionConfig = {
+  driver: SessionDriver;
+  expiresIn?: number;
+  stores: {
+    memory?: {
+      maxSize?: number;
+    };
+    file?: {
+      dirname?: string;
+    };
+    redis?: {
+      port?: number;
+      host?: string;
+      password?: string;
+      db: number;
+    };
+    mongo?: {
+      url: string;
+      collectionName?: string;
     };
   };
+};
+
+export type BottenderConfig = {
+  plugins?: any[];
+  session?: SessionConfig;
   initialState?: Record<string, any>;
   channels?: {
     [Channel.Messenger]: {

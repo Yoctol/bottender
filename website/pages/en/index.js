@@ -10,7 +10,7 @@
 const React = require('react');
 
 // eslint-disable-next-line import/no-unresolved
-const CompLibrary = require('../../core/CompLibrary.js');
+const CompLibrary = require('../../core/CompLibrary');
 
 const { Component } = React;
 
@@ -66,7 +66,7 @@ class Index extends Component {
     return (
       <div>
         <HomeSplash siteConfig={siteConfig} language={language} />
-        <div className="mainContainer">
+        <div className="mainContainer indexContainer">
           <div className="features">
             <h2>Why Bottender?</h2>
             <Block layout="twoColumn">
