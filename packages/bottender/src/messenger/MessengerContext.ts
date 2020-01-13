@@ -123,8 +123,6 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       return;
     }
 
-    this._isHandled = true;
-
     const messagingType =
       options && 'tag' in options ? 'MESSAGE_TAG' : 'RESPONSE';
 
@@ -189,8 +187,6 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       return;
     }
 
-    this._isHandled = true;
-
     const args = [
       this._session.user.id,
       senderAction,
@@ -218,8 +214,6 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       return;
     }
 
-    this._isHandled = true;
-
     const args = [
       this._session.user.id,
       {
@@ -246,8 +240,6 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       return;
     }
 
-    this._isHandled = true;
-
     const args = [
       this._session.user.id,
       {
@@ -273,8 +265,6 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       );
       return;
     }
-
-    this._isHandled = true;
 
     const args = [
       this._session.user.id,
@@ -311,8 +301,6 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       return;
     }
 
-    this._isHandled = true;
-
     const args = [
       this._session.user.id,
       targetAppId,
@@ -339,8 +327,6 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       return;
     }
 
-    this._isHandled = true;
-
     const args = [
       this._session.user.id,
       metadata,
@@ -366,8 +352,6 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       return;
     }
 
-    this._isHandled = true;
-
     const args = [
       this._session.user.id,
       metadata,
@@ -392,8 +376,6 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       );
       return;
     }
-
-    this._isHandled = true;
 
     const args = [
       this._session.user.id,
@@ -563,7 +545,6 @@ sendMethods.forEach(([method, arity]) => {
         );
         return;
       }
-      this._isHandled = true;
 
       const options = args[arity - 2];
       const messagingType = options && options.tag ? 'MESSAGE_TAG' : 'RESPONSE';

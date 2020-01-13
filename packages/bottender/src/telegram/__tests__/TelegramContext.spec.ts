@@ -91,14 +91,6 @@ describe('#sendText', () => {
     expect(client.sendMessage).toBeCalledWith(427770117, 'hello', undefined);
   });
 
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    await context.sendText('hello');
-
-    expect(context._isHandled).toBe(true);
-  });
-
   it('should call warning and not to send if dont have session', async () => {
     const { context, client } = setup({ session: false });
 
@@ -118,14 +110,6 @@ describe('#sendMessage', () => {
     expect(client.sendMessage).toBeCalledWith(427770117, 'hello', undefined);
   });
 
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    await context.sendMessage('hello');
-
-    expect(context.isHandled).toBe(true);
-  });
-
   it('should not call send method if dont have session', async () => {
     const { context, client } = setup({ session: null });
 
@@ -143,14 +127,6 @@ describe('#sendPhoto', () => {
 
     expect(client.sendPhoto).toBeCalledWith(427770117, 'xxx.png', undefined);
   });
-
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    await context.sendPhoto('xxx.png');
-
-    expect(context.isHandled).toBe(true);
-  });
 });
 
 describe('#sendAudio', () => {
@@ -161,14 +137,6 @@ describe('#sendAudio', () => {
 
     expect(client.sendAudio).toBeCalledWith(427770117, 'xxx.mp3', undefined);
   });
-
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    await context.sendAudio('xxx.mp3');
-
-    expect(context.isHandled).toBe(true);
-  });
 });
 
 describe('#sendDocument', () => {
@@ -178,14 +146,6 @@ describe('#sendDocument', () => {
     await context.sendDocument('xxx.gif');
 
     expect(client.sendDocument).toBeCalledWith(427770117, 'xxx.gif', undefined);
-  });
-
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    await context.sendDocument('xxx.gif');
-
-    expect(context.isHandled).toBe(true);
   });
 });
 
@@ -201,14 +161,6 @@ describe('#sendSticker', () => {
       undefined
     );
   });
-
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    await context.sendSticker('CAADAgADQAADyIsGAAE7MpzFPFQX5QI');
-
-    expect(context.isHandled).toBe(true);
-  });
 });
 
 describe('#sendVideo', () => {
@@ -218,14 +170,6 @@ describe('#sendVideo', () => {
     await context.sendVideo('xxx.mp4');
 
     expect(client.sendVideo).toBeCalledWith(427770117, 'xxx.mp4', undefined);
-  });
-
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    await context.sendVideo('xxx.mp4');
-
-    expect(context.isHandled).toBe(true);
   });
 });
 
@@ -241,14 +185,6 @@ describe('#sendAnimation', () => {
       undefined
     );
   });
-
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    await context.sendAnimation('xxx.mp4');
-
-    expect(context.isHandled).toBe(true);
-  });
 });
 
 describe('#sendVoice', () => {
@@ -258,14 +194,6 @@ describe('#sendVoice', () => {
     await context.sendVoice('xxx.ogg');
 
     expect(client.sendVoice).toBeCalledWith(427770117, 'xxx.ogg', undefined);
-  });
-
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    await context.sendVoice('xxx.ogg');
-
-    expect(context.isHandled).toBe(true);
   });
 });
 
@@ -280,14 +208,6 @@ describe('#sendVideoNote', () => {
       'xxx.mp4',
       undefined
     );
-  });
-
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    await context.sendVideoNote('xxx.mp4');
-
-    expect(context.isHandled).toBe(true);
   });
 });
 
@@ -305,16 +225,6 @@ describe('#sendMediaGroup', () => {
       undefined
     );
   });
-
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    await context.sendMediaGroup([
-      { type: 'photo', media: 'BQADBAADApYAAgcZZAfj2-xeidueWwI' },
-    ]);
-
-    expect(context.isHandled).toBe(true);
-  });
 });
 
 describe('#sendLocation', () => {
@@ -326,16 +236,6 @@ describe('#sendLocation', () => {
     await context.sendLocation(location);
 
     expect(client.sendLocation).toBeCalledWith(427770117, location, undefined);
-  });
-
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    const location = {};
-
-    await context.sendLocation(location);
-
-    expect(context.isHandled).toBe(true);
   });
 });
 
@@ -349,16 +249,6 @@ describe('#sendVenue', () => {
 
     expect(client.sendVenue).toBeCalledWith(427770117, venue, undefined);
   });
-
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    const venue = {};
-
-    await context.sendVenue(venue);
-
-    expect(context.isHandled).toBe(true);
-  });
 });
 
 describe('#sendContact', () => {
@@ -370,16 +260,6 @@ describe('#sendContact', () => {
     await context.sendContact(contact);
 
     expect(client.sendContact).toBeCalledWith(427770117, contact, undefined);
-  });
-
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    const contact = {};
-
-    await context.sendContact(contact);
-
-    expect(context.isHandled).toBe(true);
   });
 });
 
@@ -399,17 +279,6 @@ describe('#sendPoll', () => {
       undefined
     );
   });
-
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    const question = 'question';
-    const options = ['a', 'b'];
-
-    await context.sendPoll(question, options);
-
-    expect(context.isHandled).toBe(true);
-  });
 });
 
 describe('#sendChatAction', () => {
@@ -419,14 +288,6 @@ describe('#sendChatAction', () => {
     await context.sendChatAction('typing');
 
     expect(client.sendChatAction).toBeCalledWith(427770117, 'typing');
-  });
-
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    await context.sendChatAction('typing');
-
-    expect(context.isHandled).toBe(true);
   });
 });
 
@@ -450,14 +311,6 @@ describe('#sendInvoice', () => {
 
     expect(client.sendInvoice).toBeCalledWith(427770117, invoice, undefined);
   });
-
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    await context.sendInvoice(invoice);
-
-    expect(context.isHandled).toBe(true);
-  });
 });
 
 describe('#sendGame', () => {
@@ -468,14 +321,6 @@ describe('#sendGame', () => {
 
     expect(client.sendGame).toBeCalledWith(427770117, 'Mario Bros.', undefined);
   });
-
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    await context.sendGame('Mario Bros.');
-
-    expect(context.isHandled).toBe(true);
-  });
 });
 
 describe('#setGameScore', () => {
@@ -485,14 +330,6 @@ describe('#setGameScore', () => {
     await context.setGameScore(427770117, 999);
 
     expect(client.setGameScore).toBeCalledWith(427770117, 999, undefined);
-  });
-
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    await context.setGameScore(427770117, 999);
-
-    expect(context.isHandled).toBe(true);
   });
 });
 
@@ -532,14 +369,6 @@ describe('#editMessageText', () => {
       messageId: 66,
     });
   });
-
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    await context.editMessageText('new text');
-
-    expect(context.isHandled).toBe(true);
-  });
 });
 
 describe('#editMessageCaption', () => {
@@ -552,14 +381,6 @@ describe('#editMessageCaption', () => {
       chatId: 427770117,
       messageId: 66,
     });
-  });
-
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    await context.editMessageCaption('new caption');
-
-    expect(context.isHandled).toBe(true);
   });
 });
 
@@ -574,14 +395,6 @@ describe('#editMessageMedia', () => {
       chatId: 427770117,
       messageId: 66,
     });
-  });
-
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    await context.editMessageMedia(66, { type: 'photo', media: 'xxx.png' });
-
-    expect(context.isHandled).toBe(true);
   });
 });
 
@@ -602,14 +415,6 @@ describe('#editMessageReplyMarkup', () => {
       messageId: 66,
     });
   });
-
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    await context.editMessageReplyMarkup(markup);
-
-    expect(context.isHandled).toBe(true);
-  });
 });
 
 describe('#deleteMessage', () => {
@@ -619,14 +424,6 @@ describe('#deleteMessage', () => {
     await context.deleteMessage(66);
 
     expect(client.deleteMessage).toBeCalledWith(427770117, 66);
-  });
-
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    await context.deleteMessage(66);
-
-    expect(context.isHandled).toBe(true);
   });
 });
 
@@ -646,14 +443,6 @@ describe('#editMessageLiveLocation', () => {
       messageId: 66,
     });
   });
-
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    await context.editMessageLiveLocation(location);
-
-    expect(context.isHandled).toBe(true);
-  });
 });
 
 describe('#stopMessageLiveLocation', () => {
@@ -665,14 +454,6 @@ describe('#stopMessageLiveLocation', () => {
     expect(client.stopMessageLiveLocation).toBeCalledWith({
       chatId: 427770117,
     });
-  });
-
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    await context.stopMessageLiveLocation();
-
-    expect(context.isHandled).toBe(true);
   });
 });
 
@@ -693,16 +474,6 @@ describe('#forwardMessageFrom', () => {
       }
     );
   });
-
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    await context.forwardMessageFrom(313534466, 'messageId', {
-      disableNotification: true,
-    });
-
-    expect(context.isHandled).toBe(true);
-  });
 });
 
 describe('#forwardMessageTo', () => {
@@ -722,16 +493,6 @@ describe('#forwardMessageTo', () => {
       }
     );
   });
-
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    await context.forwardMessageTo(413534466, 'messageId', {
-      disableNotification: true,
-    });
-
-    expect(context.isHandled).toBe(true);
-  });
 });
 
 describe('#kickChatMember', () => {
@@ -746,14 +507,6 @@ describe('#kickChatMember', () => {
       untilDate: 1502855973,
     });
   });
-
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    await context.kickChatMember(313534466);
-
-    expect(context.isHandled).toBe(true);
-  });
 });
 
 describe('#unbanChatMember', () => {
@@ -763,14 +516,6 @@ describe('#unbanChatMember', () => {
     await context.unbanChatMember(313534466);
 
     expect(client.unbanChatMember).toBeCalledWith(427770117, 313534466);
-  });
-
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    await context.unbanChatMember(313534466);
-
-    expect(context.isHandled).toBe(true);
   });
 });
 
@@ -793,14 +538,6 @@ describe('#restrictChatMember', () => {
       undefined
     );
   });
-
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    await context.restrictChatMember(313534466);
-
-    expect(context.isHandled).toBe(true);
-  });
 });
 
 describe('#promoteChatMember', () => {
@@ -819,14 +556,6 @@ describe('#promoteChatMember', () => {
       canDeleteMessages: true,
     });
   });
-
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    await context.promoteChatMember(313534466);
-
-    expect(context.isHandled).toBe(true);
-  });
 });
 
 describe('#exportChatInviteLink', () => {
@@ -836,14 +565,6 @@ describe('#exportChatInviteLink', () => {
     await context.exportChatInviteLink();
 
     expect(client.exportChatInviteLink).toBeCalledWith(427770117);
-  });
-
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    await context.exportChatInviteLink();
-
-    expect(context.isHandled).toBe(true);
   });
 });
 
@@ -855,14 +576,6 @@ describe('#deleteChatPhoto', () => {
 
     expect(client.deleteChatPhoto).toBeCalledWith(427770117);
   });
-
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    await context.deleteChatPhoto();
-
-    expect(context.isHandled).toBe(true);
-  });
 });
 
 describe('#setChatTitle', () => {
@@ -872,14 +585,6 @@ describe('#setChatTitle', () => {
     await context.setChatTitle('New Title');
 
     expect(client.setChatTitle).toBeCalledWith(427770117, 'New Title');
-  });
-
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    await context.setChatTitle('New Title');
-
-    expect(context.isHandled).toBe(true);
   });
 });
 
@@ -894,14 +599,6 @@ describe('#setChatDescription', () => {
       'New Description'
     );
   });
-
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    await context.setChatDescription('New Description');
-
-    expect(context.isHandled).toBe(true);
-  });
 });
 
 describe('#setChatStickerSet', () => {
@@ -915,14 +612,6 @@ describe('#setChatStickerSet', () => {
       'Sticker Set Name'
     );
   });
-
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    await context.setChatStickerSet('Sticker Set Name');
-
-    expect(context.isHandled).toBe(true);
-  });
 });
 
 describe('#deleteChatStickerSet', () => {
@@ -932,14 +621,6 @@ describe('#deleteChatStickerSet', () => {
     await context.deleteChatStickerSet();
 
     expect(client.deleteChatStickerSet).toBeCalledWith(427770117);
-  });
-
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    await context.deleteChatStickerSet();
-
-    expect(context.isHandled).toBe(true);
   });
 });
 
@@ -955,14 +636,6 @@ describe('#pinChatMessage', () => {
       disableNotification: true,
     });
   });
-
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    await context.pinChatMessage(1);
-
-    expect(context.isHandled).toBe(true);
-  });
 });
 
 describe('#unpinChatMessage', () => {
@@ -973,14 +646,6 @@ describe('#unpinChatMessage', () => {
 
     expect(client.unpinChatMessage).toBeCalledWith(427770117);
   });
-
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    await context.unpinChatMessage();
-
-    expect(context.isHandled).toBe(true);
-  });
 });
 
 describe('#leaveChat', () => {
@@ -990,14 +655,6 @@ describe('#leaveChat', () => {
     await context.leaveChat();
 
     expect(client.leaveChat).toBeCalledWith(427770117);
-  });
-
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    await context.leaveChat();
-
-    expect(context.isHandled).toBe(true);
   });
 });
 
@@ -1038,14 +695,6 @@ describe('#answerShippingQuery', () => {
 
     expect(client.answerShippingQuery).toBeCalledWith('123', true, undefined);
     expect(result).toEqual(response);
-  });
-
-  it('should mark context as handled', async () => {
-    const { context } = setup({ rawEvent: shippingQuery });
-
-    await context.answerShippingQuery(true);
-
-    expect(context.isHandled).toBe(true);
   });
 
   it('should not call answerShippingQuery method if event type is not ShippingQuery', async () => {
@@ -1092,14 +741,6 @@ describe('#answerPreCheckoutQuery', () => {
       undefined
     );
     expect(result).toEqual(response);
-  });
-
-  it('should mark context as handled', async () => {
-    const { context } = setup({ rawEvent: preCheckoutQuery });
-
-    await context.answerPreCheckoutQuery(true);
-
-    expect(context.isHandled).toBe(true);
   });
 
   it('should not call answerPreCheckoutQuery method if event type is not PreCheckoutQuery', async () => {
@@ -1178,32 +819,6 @@ describe('#answerInlineQuery', () => {
       }
     );
     expect(result).toEqual(response);
-  });
-
-  it('should mark context as handled', async () => {
-    const { context } = setup({ rawEvent: inlineQuery });
-
-    await context.answerInlineQuery(
-      [
-        {
-          type: 'photo',
-          id: 'UNIQUE_ID',
-          photoFileId: 'FILE_ID',
-          title: 'PHOTO_TITLE',
-        },
-        {
-          type: 'audio',
-          id: 'UNIQUE_ID',
-          audioFileId: 'FILE_ID',
-          caption: 'AUDIO_TITLE',
-        },
-      ],
-      {
-        cacheTime: 1000,
-      }
-    );
-
-    expect(context.isHandled).toBe(true);
   });
 
   it('should not call answerInlineQuery method if event type is not InlineQuery', async () => {

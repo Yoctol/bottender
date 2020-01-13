@@ -75,6 +75,7 @@ module.exports = function luis({
 
     if (topScoringIntent && topScoringIntent.score > scoreThreshold) {
       context.setIntent(topScoringIntent.intent);
+      context.setAsHandled();
 
       const Action = actions[topScoringIntent.intent];
 
@@ -85,6 +86,8 @@ module.exports = function luis({
           sentimentAnalysis,
         });
       }
+    } else {
+      context.setAsNotHandled();
     }
 
     return next;

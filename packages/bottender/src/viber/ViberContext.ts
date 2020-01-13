@@ -41,8 +41,6 @@ class ViberContext extends Context<ViberClient, ViberEvent> {
       return;
     }
 
-    this._isHandled = true;
-
     return this._client.sendText(this._session.user.id, text, options);
   }
 
@@ -88,8 +86,6 @@ class ViberContext extends Context<ViberClient, ViberEvent> {
       return;
     }
 
-    this._isHandled = true;
-
     return this._client.sendMessage(this._session.user.id, message);
   }
 
@@ -104,8 +100,6 @@ class ViberContext extends Context<ViberClient, ViberEvent> {
       );
       return;
     }
-
-    this._isHandled = true;
 
     return this._client.sendPicture(this._session.user.id, picture, options);
   }
@@ -122,8 +116,6 @@ class ViberContext extends Context<ViberClient, ViberEvent> {
       return;
     }
 
-    this._isHandled = true;
-
     return this._client.sendVideo(this._session.user.id, video, options);
   }
 
@@ -138,8 +130,6 @@ class ViberContext extends Context<ViberClient, ViberEvent> {
       );
       return;
     }
-
-    this._isHandled = true;
 
     return this._client.sendFile(this._session.user.id, file, options);
   }
@@ -156,8 +146,6 @@ class ViberContext extends Context<ViberClient, ViberEvent> {
       return;
     }
 
-    this._isHandled = true;
-
     return this._client.sendContact(this._session.user.id, contact, options);
   }
 
@@ -172,8 +160,6 @@ class ViberContext extends Context<ViberClient, ViberEvent> {
       );
       return;
     }
-
-    this._isHandled = true;
 
     return this._client.sendLocation(this._session.user.id, location, options);
   }
@@ -190,8 +176,6 @@ class ViberContext extends Context<ViberClient, ViberEvent> {
       return;
     }
 
-    this._isHandled = true;
-
     return this._client.sendURL(this._session.user.id, url, options);
   }
 
@@ -207,8 +191,6 @@ class ViberContext extends Context<ViberClient, ViberEvent> {
       return;
     }
 
-    this._isHandled = true;
-
     return this._client.sendSticker(this._session.user.id, stickerId, options);
   }
 
@@ -223,8 +205,6 @@ class ViberContext extends Context<ViberClient, ViberEvent> {
       );
       return;
     }
-
-    this._isHandled = true;
 
     return this._client.sendCarouselContent(
       this._session.user.id,

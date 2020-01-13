@@ -86,14 +86,6 @@ describe('#sendText', () => {
     expect(client.sendText).toBeCalledWith('hello');
   });
 
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    await context.sendText('hello');
-
-    expect(context.isHandled).toBe(true);
-  });
-
   it('should support fallbackMethods with other args', async () => {
     const { context, client } = setup({ fallbackMethods: true });
 
@@ -129,14 +121,6 @@ describe('method missing', () => {
         2
       )}`
     );
-  });
-
-  it('should mark context as handled', async () => {
-    const { context } = setup({ fallbackMethods: true });
-
-    await context.sendABC('hello');
-
-    expect(context.isHandled).toBe(true);
   });
 
   it('should not proxy blacklisted methods', async () => {

@@ -170,8 +170,6 @@ export default class SlackContext extends Context<
       return Promise.resolve();
     }
 
-    this._isHandled = true;
-
     return this._client.chat.postMessage({
       threadTs: this._event.rawEvent.threadTs,
       channel,
@@ -219,8 +217,6 @@ export default class SlackContext extends Context<
       return Promise.resolve();
     }
 
-    this._isHandled = true;
-
     return this._client.chat.postEphemeral({
       channel,
       user: (this._session as any).user.id,
@@ -242,8 +238,6 @@ export default class SlackContext extends Context<
    * https://api.slack.com/methods/chat.update
    */
   _updateMessage(options: SlackTypes.UpdateMessageOptions): Promise<any> {
-    this._isHandled = true;
-
     return this._client.chat.update(options);
   }
 
@@ -260,8 +254,6 @@ export default class SlackContext extends Context<
     if (!channel) {
       return Promise.resolve();
     }
-
-    this._isHandled = true;
 
     return this._client.chat.delete({
       channel,
@@ -283,8 +275,6 @@ export default class SlackContext extends Context<
       return Promise.resolve();
     }
 
-    this._isHandled = true;
-
     return this._client.chat.meMessage({ channel, ...options });
   }
 
@@ -302,8 +292,6 @@ export default class SlackContext extends Context<
       return Promise.resolve();
     }
 
-    this._isHandled = true;
-
     return this._client.chat.getPermalink({ channel, ...options });
   }
 
@@ -320,8 +308,6 @@ export default class SlackContext extends Context<
     if (!channel) {
       return Promise.resolve();
     }
-
-    this._isHandled = true;
 
     return this._client.chat.scheduleMessage({
       channel,
@@ -345,8 +331,6 @@ export default class SlackContext extends Context<
       return Promise.resolve();
     }
 
-    this._isHandled = true;
-
     return this._client.chat.deleteScheduledMessage({
       channel,
       ...options,
@@ -361,8 +345,6 @@ export default class SlackContext extends Context<
   _getScheduledMessages(
     options: SlackTypes.GetScheduledMessagesOptions
   ): Promise<any> {
-    this._isHandled = true;
-
     return this._client.chat.scheduledMessages.list(options);
   }
 
@@ -372,8 +354,6 @@ export default class SlackContext extends Context<
    * https://api.slack.com/methods/views.open
    */
   _openView(options: SlackTypes.OpenViewOptions): Promise<any> {
-    this._isHandled = true;
-
     return this._client.views.open({
       ...options,
       view: {
@@ -392,8 +372,6 @@ export default class SlackContext extends Context<
    * https://api.slack.com/methods/views.publish
    */
   _publishView(options: SlackTypes.PublishViewOptions): Promise<any> {
-    this._isHandled = true;
-
     return this._client.views.publish(options);
   }
 
@@ -403,8 +381,6 @@ export default class SlackContext extends Context<
    * https://api.slack.com/methods/views.update
    */
   _updateView(options: SlackTypes.UpdateViewOptions): Promise<any> {
-    this._isHandled = true;
-
     return this._client.views.update(options);
   }
 
@@ -414,8 +390,6 @@ export default class SlackContext extends Context<
    * https://api.slack.com/methods/views.push
    */
   _pushView(options: SlackTypes.PushViewOptions): Promise<any> {
-    this._isHandled = true;
-
     return this._client.views.push(options);
   }
 }

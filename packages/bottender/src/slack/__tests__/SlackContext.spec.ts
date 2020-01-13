@@ -201,14 +201,6 @@ describe('#postMessage', () => {
     });
   });
 
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    await context.postMessage('hello');
-
-    expect(context.isHandled).toBe(true);
-  });
-
   it('should call warning and not to send if dont have channelId', async () => {
     const { context, client } = setup({ session: false });
 
@@ -289,14 +281,6 @@ describe('#chat.postMessage', () => {
       channel: 'C6A9RJJ3F',
       text: 'hello',
     });
-  });
-
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    await context.chat.postMessage({ text: 'hello' });
-
-    expect(context.isHandled).toBe(true);
   });
 
   it('should call warning and not to send if dont have channelId', async () => {

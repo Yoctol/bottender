@@ -91,7 +91,6 @@ export default class ConsoleContext extends Context<
    *
    */
   async sendText(text: string, ...args: any[]): Promise<void> {
-    this._isHandled = true;
     if (args.length > 0 && this._fallbackMethods) {
       this._client.sendText(
         `${text}\nwith other args:\n${JSON.stringify(args, null, 2)}`
@@ -102,7 +101,6 @@ export default class ConsoleContext extends Context<
   }
 
   async _methodMissing(method: string, args: any[]): Promise<void> {
-    this._isHandled = true;
     this._client.sendText(
       `${method} with args:\n${JSON.stringify(args, null, 2)}`
     );

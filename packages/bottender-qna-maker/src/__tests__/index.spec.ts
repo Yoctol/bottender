@@ -96,6 +96,7 @@ it('should reply with answer if id of answer is not -1', async () => {
     'There is no direct integration of LUIS with QnA Maker. But, in your bot code, you can use LUIS and QnA Maker together. [View a sample bot](https://github.com/Microsoft/BotBuilder-CognitiveServices/tree/master/Node/samples/QnAMaker/QnAWithLUIS)'
   );
   expect(context.intent).toEqual('qna_20');
+  expect(context.isHandled).toEqual(true);
 
   expect(requestBody).toEqual({
     question: 'text',
@@ -138,6 +139,7 @@ it('should go next if id of answer is -1', async () => {
 
   expect(context.sendText).toBeCalledWith('Sorry, I don’t know what you say.');
   expect(context.intent).toBeNull();
+  expect(context.isHandled).toEqual(false);
 });
 
 it('should reply unknown answer from qna maker if id of answer is -1 and no next in chain', async () => {
@@ -172,6 +174,7 @@ it('should reply unknown answer from qna maker if id of answer is -1 and no next
 
   expect(context.sendText).toBeCalledWith('No good match found in KB.');
   expect(context.intent).toBeNull();
+  expect(context.isHandled).toEqual(false);
 });
 
 it('should go next when receiving a non-text event', async () => {

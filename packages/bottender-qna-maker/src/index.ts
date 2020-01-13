@@ -65,12 +65,16 @@ module.exports = function qnaMaker({
     const topAnswer = data.answers[0];
 
     if (!topAnswer || (next && topAnswer.id === -1)) {
+      context.setAsNotHandled();
       return next;
     }
 
     return async function TopAnswer() {
       if (topAnswer.id !== -1) {
         context.setIntent(`qna_${topAnswer.id}`);
+        context.setAsHandled();
+      } else {
+        context.setAsNotHandled();
       }
 
       await context.sendText(topAnswer.answer);
