@@ -52,6 +52,7 @@
     "Guides (Viber)": [
       "channel-viber-setup",
       "channel-viber-handling-events",
+      "channel-viber-sending-messages",
       "channel-viber-routing"
     ],
     "FAQ": []
