@@ -288,11 +288,10 @@ module.exports = {
 
 ### Step 6: Update Your `package.json`
 
-Set up Node.js version in the `engines` env to avoid warnings.
+Set up Node.js version to `10.x` or `12.x` in the `engines` env to avoid warnings for deprecated node 8.
 
 ```js
-///package.json
-
+// package.json
 {
  // ...skip
  "engines": { "node": "12.x" }
