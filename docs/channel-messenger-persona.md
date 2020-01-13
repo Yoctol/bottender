@@ -1,6 +1,6 @@
 ---
 id: channel-messenger-persona
-title: Using Persona
+title: Using Messenger Persona
 ---
 
 ## Messenger Persona Practical Guide

@@ -1,6 +1,6 @@
 ---
 id: advanced-guides-multi-channel
-title: Multi-Messaging Channel Support
+title: Multi-Channel Support
 ---
 
 Bottender intends to meet enterprise project needs. So, Bottender supports multiple chat channels in the very early stage. For example, you can put the environment variables of each chat channel in one config file; you can use [`Platform Specific Routes`](the-basics-routing#platform-specific-routes) to organize user events from various platforms.
