@@ -37,4 +37,10 @@ module.exports = [
     infoLink: 'https://github.com/louis70109/Taiwan-ABL-games',
     pinned: true,
   },
+  {
+    caption: 'Todo Bot',
+    image: '/img/users/todoBot.jpg',
+    infoLink: 'https://github.com/HcwXd/messenger-todo-bot',
+    pinned: true,
+  },
 ];
