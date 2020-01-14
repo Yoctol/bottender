@@ -5,6 +5,8 @@ title: Natural Language Understanding
 
 ## Leverage NLU Technologies
 
+(add customer service / ai)
+
 If you want to have more general intent recognition, you can leverage modern NLU (Natural Language Understanding) technologies. They can help you recognize the intent of user input sentences. There are several online services you can choose from, for example:
 
 - [Dialogflow](advanced-guides-nlu.md#building-with-dialogflow)
@@ -25,6 +27,8 @@ GOOGLE_APPLICATION_PROJECT_ID=
 Next, you can build an agent following the [official document](https://cloud.google.com/dialogflow/docs/quick/build-agent). In this example, we build an agent and create a simple intent with display name `greeting`. You can set your own training phrases on the Dialogflow console for this intent.
 
 After you finish the settings of the agent, you can then call Dialogflow's API to detect the intention of the message the bot receives. We use [Dialogflow Node SDK](https://github.com/googleapis/nodejs-dialogflow) to integrate our bot with Dialogflow.
+
+(update example code)
 
 ```js
 const dialogflow = require('dialogflow');
@@ -82,6 +86,8 @@ ENDPOINT_KEY=
 
 Next, we can get the answer by calling the API endpoint. In the example, we use `axios` as our HTTP client. For other Node HTTP clients like `request-promise`, you can see this [document](https://docs.microsoft.com/en-us/azure/cognitive-services/qnamaker/quickstarts/get-answer-from-knowledge-base-nodejs). The returned response will contain an array with possible QA pairs and corresponding scores. You can define your own score threshold in the code.
 
+(update example code)
+
 ```js
 const axios = require('axios');
 
@@ -125,6 +131,8 @@ LUIS_APP_ENDPOINT=
 Next, you can add a simple intent. In this example, we create a simple intent with the intent name `greeting`. You can set your own training phrases on the LUIS console for this intent. And then you have to train the model and publish it.
 
 After publishing successfully, you can call LUIS's API to detect the intention of the message the bot receives. In this example, we use `axios` as our HTTP client to call the API.
+
+(update example code)
 
 ```js
 const axios = require('axios');
@@ -176,6 +184,8 @@ rasa run --enable-api -m models/nlu-your-model-id.tar.gz
 This will start a server with your NLU model locally on port 5005. Next, you can request predictions from your model by calling the `/model/parse` endpoint. You can see [here](https://rasa.com/docs/rasa/api/http-api/#operation/parseModelMessage) for the document of this API.
 
 In this example, we use `axios` as our HTTP client. The returned response will contain an intent with its corresponding confidence. You can define your own confidence threshold in the code.
+
+(update example code)
 
 ```js
 const axios = require('axios');
