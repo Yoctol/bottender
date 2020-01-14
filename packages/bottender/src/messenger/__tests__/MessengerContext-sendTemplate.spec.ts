@@ -145,17 +145,6 @@ describe('#sendGenericTemplate', () => {
     );
   });
 
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    const elements = {};
-    const ratio = '';
-
-    await context.sendGenericTemplate(elements, { imageAspectRatio: ratio });
-
-    expect(context.isHandled).toBe(true);
-  });
-
   it('should call warning and not to send if dont have session', async () => {
     const { context, client } = setup({ session: false });
 
@@ -233,16 +222,6 @@ describe('#sendButtonTemplate', () => {
         messagingType: 'RESPONSE',
       }
     );
-  });
-
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    const buttons = [];
-
-    await context.sendButtonTemplate('yayaya', buttons);
-
-    expect(context.isHandled).toBe(true);
   });
 
   it('should call warning and not to send if dont have session', async () => {
@@ -339,16 +318,6 @@ describe('#sendMediaTemplate', () => {
     );
   });
 
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    const elements = [];
-
-    await context.sendMediaTemplate(elements);
-
-    expect(context.isHandled).toBe(true);
-  });
-
   it('should call warning and not to send if dont have session', async () => {
     const { context, client } = setup({ session: false });
 
@@ -421,16 +390,6 @@ describe('#sendReceiptTemplate', () => {
         messagingType: 'RESPONSE',
       }
     );
-  });
-
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    const receipt = {};
-
-    await context.sendReceiptTemplate(receipt);
-
-    expect(context.isHandled).toBe(true);
   });
 
   it('should call warning and not to send if dont have session', async () => {
@@ -507,16 +466,6 @@ describe('#sendAirlineBoardingPassTemplate', () => {
     );
   });
 
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    const boardingPass = {};
-
-    await context.sendAirlineBoardingPassTemplate(boardingPass);
-
-    expect(context.isHandled).toBe(true);
-  });
-
   it('should call warning and not to send if dont have session', async () => {
     const { context, client } = setup({ session: false });
 
@@ -589,16 +538,6 @@ describe('#sendAirlineCheckinTemplate', () => {
         messagingType: 'RESPONSE',
       }
     );
-  });
-
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    const checkin = {};
-
-    await context.sendAirlineCheckinTemplate(checkin);
-
-    expect(context.isHandled).toBe(true);
   });
 
   it('should call warning and not to send if dont have session', async () => {
@@ -675,16 +614,6 @@ describe('#sendAirlineItineraryTemplate', () => {
     );
   });
 
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    const itinerary = {};
-
-    await context.sendAirlineItineraryTemplate(itinerary);
-
-    expect(context.isHandled).toBe(true);
-  });
-
   it('should call warning and not to send if dont have session', async () => {
     const { context, client } = setup({ session: false });
 
@@ -757,16 +686,6 @@ describe('#sendAirlineUpdateTemplate', () => {
         messagingType: 'RESPONSE',
       }
     );
-  });
-
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    const flightUpdate = {};
-
-    await context.sendAirlineUpdateTemplate(flightUpdate);
-
-    expect(context.isHandled).toBe(true);
   });
 
   it('should call warning and not to send if dont have session', async () => {

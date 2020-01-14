@@ -59,11 +59,14 @@ module.exports = function dialogflow({
 
     if (intent) {
       context.setIntent(intent.displayName);
-    }
+      context.setAsHandled();
 
-    const Action = actions[intent.name] || actions[intent.displayName];
-    if (Action) {
-      return withProps(Action as any, { intent, parameters });
+      const Action = actions[intent.name] || actions[intent.displayName];
+      if (Action) {
+        return withProps(Action as any, { intent, parameters });
+      }
+    } else {
+      context.setAsNotHandled();
     }
 
     return next;

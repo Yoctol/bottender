@@ -104,6 +104,7 @@ it('should resolve corresponding action if intent confidence > confidenceThresho
 
   expect(context.sendText).toBeCalledWith('Hello!');
   expect(context.intent).toEqual('greeting');
+  expect(context.isHandled).toEqual(true);
 
   expect(requestBody).toEqual({
     text: 'text',
@@ -156,6 +157,7 @@ it('should go next if intent confidence < confidenceThreshold', async () => {
 
   expect(context.sendText).toBeCalledWith('Sorry, I don’t know what you say.');
   expect(context.intent).toBeNull();
+  expect(context.isHandled).toEqual(false);
 });
 
 it('should support JWT', async () => {

@@ -179,14 +179,12 @@ class LineContext extends Context<LineClient, LineEvent> {
 
     switch (this._session.type) {
       case 'room':
-        this._isHandled = true;
         return this._client.leaveRoom(this._session.room.id, {
           ...(this._customAccessToken
             ? { accessToken: this._customAccessToken }
             : undefined),
         } as any);
       case 'group':
-        this._isHandled = true;
         return this._client.leaveGroup(this._session.group.id, {
           ...(this._customAccessToken
             ? { accessToken: this._customAccessToken }
@@ -446,8 +444,6 @@ class LineContext extends Context<LineClient, LineEvent> {
   reply(messages: LineTypes.Message[], options: LineTypes.MessageOptions = {}) {
     invariant(!this._isReplied, 'Can not reply event multiple times');
 
-    this._isHandled = true;
-
     if (this._shouldBatch) {
       this._replyMessages.push(...messages);
 
@@ -613,8 +609,6 @@ class LineContext extends Context<LineClient, LineEvent> {
       warning(false, `push: should not be called in context without session`);
       return;
     }
-
-    this._isHandled = true;
 
     if (this._shouldBatch) {
       this._pushMessages.push(...messages);

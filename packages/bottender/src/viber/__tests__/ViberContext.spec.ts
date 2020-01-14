@@ -86,14 +86,6 @@ describe('#sendText', () => {
     expect(client.sendText).toBeCalledWith(session.user.id, 'hello', undefined);
   });
 
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    await context.sendText('hello');
-
-    expect(context.isHandled).toBe(true);
-  });
-
   it('should call warning and not to send if dont have session', async () => {
     const { context, client } = setup({ session: false });
 
@@ -123,18 +115,6 @@ describe('#sendPicture', () => {
       },
       undefined
     );
-  });
-
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    await context.sendPicture({
-      text: 'Photo description',
-      media: 'http://www.images.com/img.jpg',
-      thumbnail: 'http://www.images.com/thumb.jpg',
-    });
-
-    expect(context.isHandled).toBe(true);
   });
 
   it('should not call send method if dont have session', async () => {
@@ -173,19 +153,6 @@ describe('#sendVideo', () => {
     );
   });
 
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    await context.sendVideo({
-      media: 'http://www.images.com/video.mp4',
-      size: 10000,
-      thumbnail: 'http://www.images.com/thumb.jpg',
-      duration: 10,
-    });
-
-    expect(context.isHandled).toBe(true);
-  });
-
   it('should not call send method if dont have session', async () => {
     const { context, client } = setup({ session: undefined });
 
@@ -221,18 +188,6 @@ describe('#sendFile', () => {
     );
   });
 
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    await context.sendFile({
-      media: 'http://www.images.com/file.doc',
-      size: 10000,
-      fileName: 'name_of_file.doc',
-    });
-
-    expect(context.isHandled).toBe(true);
-  });
-
   it('should not call send method if dont have session', async () => {
     const { context, client } = setup({ session: undefined });
 
@@ -263,17 +218,6 @@ describe('#sendContact', () => {
       },
       undefined
     );
-  });
-
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    await context.sendContact({
-      name: 'Itamar',
-      phoneNumber: '+972511123123',
-    });
-
-    expect(context.isHandled).toBe(true);
   });
 
   it('should not call send method if dont have session', async () => {
@@ -307,17 +251,6 @@ describe('#sendLocation', () => {
     );
   });
 
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    await context.sendLocation({
-      lat: '37.7898',
-      lon: '-122.3942',
-    });
-
-    expect(context.isHandled).toBe(true);
-  });
-
   it('should not call send method if dont have session', async () => {
     const { context, client } = setup({ session: undefined });
 
@@ -343,14 +276,6 @@ describe('#sendURL', () => {
     );
   });
 
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    await context.sendURL('http://developers.viber.com');
-
-    expect(context.isHandled).toBe(true);
-  });
-
   it('should not call send method if dont have session', async () => {
     const { context, client } = setup({ session: undefined });
 
@@ -371,14 +296,6 @@ describe('#sendSticker', () => {
       46105,
       undefined
     );
-  });
-
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    await context.sendSticker(46105);
-
-    expect(context.isHandled).toBe(true);
   });
 
   it('should not call send method if dont have session', async () => {
@@ -488,14 +405,6 @@ describe('#sendCarouselContent', () => {
       richMedia,
       undefined
     );
-  });
-
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    await context.sendCarouselContent(richMedia);
-
-    expect(context.isHandled).toBe(true);
   });
 
   it('should not call send method if dont have session', async () => {

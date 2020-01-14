@@ -34,7 +34,7 @@ export default abstract class Context<C extends Client, E extends Event> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   abstract sendText(text: string, options?: Record<string, any>): any;
 
-  _isHandled = false;
+  _isHandled: boolean | null = null;
 
   _isSessionWritten = false;
 
@@ -117,7 +117,7 @@ export default abstract class Context<C extends Client, E extends Event> {
     return this._session;
   }
 
-  get isHandled(): boolean {
+  get isHandled(): boolean | null {
     return this._isHandled;
   }
 
@@ -203,6 +203,22 @@ export default abstract class Context<C extends Client, E extends Event> {
    */
   setIntent(intent: string): void {
     this._intent = intent;
+  }
+
+  /**
+   * Set the conversation context as handled or not handled by boolean.
+   *
+   */
+  setAsHandled(handled = true) {
+    this._isHandled = handled;
+  }
+
+  /**
+   * Set the conversation context as not handled.
+   *
+   */
+  setAsNotHandled() {
+    this.setAsHandled(false);
   }
 
   emitError(err: Error): void {

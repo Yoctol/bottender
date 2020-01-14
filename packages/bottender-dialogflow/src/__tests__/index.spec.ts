@@ -101,6 +101,7 @@ it('should resolve corresponding action if intent match name', async () => {
 
   expect(context.sendText).toBeCalledWith('Hello!');
   expect(context.intent).toEqual('greeting');
+  expect(context.isHandled).toEqual(true);
 
   expect(sessionClient.sessionPath).toBeCalledWith('PROJECT_ID', 'test:1');
   expect(sessionClient.detectIntent).toBeCalledWith({
@@ -222,6 +223,7 @@ it('should resolve corresponding action if intent match name', async () => {
 
   expect(context.sendText).toBeCalledWith('Hello!');
   expect(context.intent).toEqual('greeting');
+  expect(context.isHandled).toEqual(true);
 });
 
 it('should go next if intent does not match any name', async () => {
@@ -331,6 +333,98 @@ it('should go next if intent does not match any name', async () => {
 
   expect(context.sendText).toBeCalledWith('Sorry, I don’t know what you say.');
   expect(context.intent).toEqual('order');
+  expect(context.isHandled).toEqual(true);
+});
+
+it('should go next if no intent', async () => {
+  const { context } = setup();
+
+  const sessionPath = {};
+  let sessionClient;
+
+  dialogflowSdk.SessionsClient.mockImplementationOnce(() => {
+    sessionClient = {
+      sessionPath: jest.fn().mockReturnValue(sessionPath),
+      detectIntent: jest.fn().mockResolvedValue([
+        {
+          responseId: 'cb8e7a38-910a-4386-b312-eac8660d66f7-b4ef8d5f',
+          queryResult: {
+            fulfillmentMessages: [
+              {
+                platform: 'PLATFORM_UNSPECIFIED',
+                text: {
+                  text: ['?'],
+                },
+                message: 'text',
+              },
+            ],
+            outputContexts: [
+              {
+                name:
+                  'projects/PROJECT_ID/agent/sessions/console:1/contexts/__system_counters__',
+                lifespanCount: 1,
+                parameters: {
+                  fields: {
+                    'no-match': {
+                      numberValue: 5,
+                      kind: 'numberValue',
+                    },
+                    'no-input': {
+                      numberValue: 0,
+                      kind: 'numberValue',
+                    },
+                  },
+                },
+              },
+            ],
+            queryText: 'hi',
+            speechRecognitionConfidence: 0,
+            action: 'input.unknown',
+            parameters: {
+              fields: {},
+            },
+            allRequiredParamsPresent: true,
+            fulfillmentText: '?',
+            webhookSource: '',
+            webhookPayload: null,
+            intent: null,
+            intentDetectionConfidence: 1,
+            diagnosticInfo: null,
+            languageCode: 'zh-tw',
+            sentimentAnalysisResult: null,
+          },
+          webhookStatus: null,
+          outputAudio: {
+            type: 'Buffer',
+            data: [],
+          },
+          outputAudioConfig: null,
+        },
+        null,
+        null,
+      ]),
+    };
+
+    return sessionClient;
+  });
+
+  const app = run(
+    chain([
+      dialogflow({
+        projectId: 'PROJECT_ID',
+        actions: {
+          greeting: SayHello,
+        },
+      }),
+      Unknown,
+    ])
+  );
+
+  await app(context);
+
+  expect(context.sendText).toBeCalledWith('Sorry, I don’t know what you say.');
+  expect(context.intent).toBeNull();
+  expect(context.isHandled).toEqual(false);
 });
 
 it('should support parameters of dialogflow', async () => {

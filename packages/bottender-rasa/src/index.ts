@@ -55,11 +55,14 @@ module.exports = function rasa({
 
     if (intent && intent.confidence > confidenceThreshold) {
       context.setIntent(intent.name);
+      context.setAsHandled();
 
       const Action = actions[intent.name];
       if (Action) {
         return withProps(Action as any, { intent, entities });
       }
+    } else {
+      context.setAsNotHandled();
     }
 
     return next;
