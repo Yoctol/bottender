@@ -38,7 +38,7 @@ const Dialogflow = dialogflow({
 
 module.exports = async function App() {
   return chain([
-    Dialogflow, //
+    Dialogflow,
     Unknown,
   ]);
 };
