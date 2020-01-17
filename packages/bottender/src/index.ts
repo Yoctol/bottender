@@ -5,6 +5,7 @@ export { bottender };
 /* Core */
 export { default as Bot } from './bot/Bot';
 export { default as Context } from './context/Context';
+export { default as getSessionStore } from './getSessionStore';
 
 /* Action */
 export { default as chain } from './chain';

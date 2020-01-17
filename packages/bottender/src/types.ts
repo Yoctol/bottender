@@ -86,10 +86,10 @@ export type SessionConfig = {
       port?: number;
       host?: string;
       password?: string;
-      db: number;
+      db?: number;
     };
     mongo?: {
-      url: string;
+      url?: string;
       collectionName?: string;
     };
   };

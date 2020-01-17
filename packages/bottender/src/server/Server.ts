@@ -8,46 +8,13 @@ import { pascalcase } from 'messaging-api-common';
 
 import Bot from '../bot/Bot';
 import getBottenderConfig from '../shared/getBottenderConfig';
-import {
-  Action,
-  BottenderConfig,
-  Plugin,
-  SessionConfig,
-  SessionDriver,
-} from '../types';
+import getSessionStore from '../getSessionStore';
+import { Action, BottenderConfig, Plugin } from '../types';
 
 export type ServerOptions = {
   useConsole?: boolean;
   dev?: boolean;
 };
-
-function createSessionStore(
-  sessionConfig: SessionConfig = { driver: SessionDriver.Memory, stores: {} }
-) {
-  const sessionDriver = (sessionConfig && sessionConfig.driver) || 'memory';
-  let SessionStore;
-  switch (sessionDriver) {
-    case 'file':
-      SessionStore = require('../session/FileSessionStore').default;
-      break;
-    case 'mongo':
-      SessionStore = require('../session/MongoSessionStore').default;
-      break;
-    case 'redis':
-      SessionStore = require('../session/RedisSessionStore').default;
-      break;
-    default:
-      SessionStore = require('../session/MemorySessionStore').default;
-  }
-
-  const sessionDriverConfig =
-    ((sessionConfig && sessionConfig.stores) || {})[sessionDriver] || {};
-
-  return new SessionStore(
-    sessionDriverConfig,
-    sessionConfig && sessionConfig.expiresIn
-  );
-}
 
 class Server {
   _channelBots: { webhookPath: string; bot: Bot<any, any, any> }[] = [];
@@ -73,11 +40,11 @@ class Server {
   public async prepare(): Promise<void> {
     const bottenderConfig = getBottenderConfig();
 
-    const { initialState, plugins, session, channels } = merge(
+    const { initialState, plugins, channels } = merge(
       bottenderConfig /* , config */
     ) as BottenderConfig;
 
-    const sessionStore = createSessionStore(session);
+    const sessionStore = getSessionStore();
 
     // TODO: refine handler entry, improve error message and hint
     // eslint-disable-next-line import/no-dynamic-require, @typescript-eslint/no-var-requires

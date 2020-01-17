@@ -8,7 +8,7 @@ import SessionStore from './SessionStore';
 type MongoOption =
   | string
   | {
-      url: string;
+      url?: string;
       collectionName?: string;
     };
 
@@ -27,7 +27,7 @@ export default class MongoSessionStore implements SessionStore {
       this._url = options;
       this._collectionName = 'sessions';
     } else {
-      this._url = options.url;
+      this._url = options.url || 'mongodb://localhost:27017';
       this._collectionName = options.collectionName || 'sessions';
     }
     this._expiresIn = expiresIn || 0;

@@ -51,6 +51,10 @@ describe('core', () => {
     expect(core.createServer).toBeDefined();
   });
 
+  it('export getSessionStore', () => {
+    expect(core.getSessionStore).toBeDefined();
+  });
+
   it('export chain', () => {
     expect(core.chain).toBeDefined();
   });
