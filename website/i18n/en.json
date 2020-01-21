@@ -5,8 +5,11 @@
     "previous": "Previous",
     "tagline": "A framework for building conversational user interfaces.",
     "docs": {
+      "advanced-guides-deployment": {
+        "title": "Deployment"
+      },
       "advanced-guides-multi-channel": {
-        "title": "Multi-Messaging Channel Support"
+        "title": "Multi-Channel Support"
       },
       "advanced-guides-nlu": {
         "title": "Natural Language Understanding"
@@ -57,7 +60,7 @@
         "title": "Error Handling in LINE"
       },
       "channel-line-flex": {
-        "title": "Sending Flex Message"
+        "title": "Sending LINE Flex Message"
       },
       "channel-line-handling-events": {
         "title": "Handling LINE Events"
@@ -66,7 +69,7 @@
         "title": "Migrating from LINE SDK for Node.js"
       },
       "channel-line-rich-menu": {
-        "title": "Rich Menu"
+        "title": "LINE Rich Menu"
       },
       "channel-line-routing": {
         "title": "LINE Routing"
@@ -87,7 +90,7 @@
         "title": "Messenger Multi-Page Support"
       },
       "channel-messenger-persona": {
-        "title": "Using Persona"
+        "title": "Using Messenger Persona"
       },
       "channel-messenger-profile": {
         "title": "Messenger Profile"
@@ -133,6 +136,9 @@
       },
       "channel-viber-routing": {
         "title": "Viber Routing"
+      },
+      "channel-viber-sending-messages": {
+        "title": "Sending Viber Messages"
       },
       "channel-viber-setup": {
         "title": "Setup Viber"
@@ -392,8 +398,11 @@
       "version-1.0.5/version-1.0.5-the-basics-session": {
         "title": "Session"
       },
+      "version-1.1.0/version-1.1.0-advanced-guides-deployment": {
+        "title": "Deployment"
+      },
       "version-1.1.0/version-1.1.0-advanced-guides-multi-channel": {
-        "title": "Multi-Messaging Channel Support"
+        "title": "Multi-Channel Support"
       },
       "version-1.1.0/version-1.1.0-channel-line-handling-events": {
         "title": "Handling LINE Events"
@@ -436,6 +445,9 @@
       },
       "version-1.1.0/version-1.1.0-channel-viber-routing": {
         "title": "Viber Routing"
+      },
+      "version-1.1.0/version-1.1.0-channel-viber-sending-messages": {
+        "title": "Sending Viber Messages"
       },
       "version-1.1.0/version-1.1.0-the-basics-routing": {
         "title": "Routing"

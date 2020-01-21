@@ -1,6 +1,6 @@
 ---
 id: channel-line-flex
-title: Sending Flex Message
+title: Sending LINE Flex Message
 ---
 
 ## Flex Message, the User Experience Bridge Between Web and Bot

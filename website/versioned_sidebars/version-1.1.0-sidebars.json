@@ -13,6 +13,7 @@
       "version-1.1.0-the-basics-errors"
     ],
     "Advanced Guides": [
+      "version-1.1.0-advanced-guides-deployment",
       "version-1.1.0-advanced-guides-nlu",
       "version-1.1.0-advanced-guides-multi-channel"
     ],
@@ -52,6 +53,7 @@
     "Guides (Viber)": [
       "version-1.1.0-channel-viber-setup",
       "version-1.1.0-channel-viber-handling-events",
+      "version-1.1.0-channel-viber-sending-messages",
       "version-1.1.0-channel-viber-routing"
     ],
     "FAQ": []

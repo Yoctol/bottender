@@ -5,159 +5,227 @@ title: Natural Language Understanding
 
 ## Leverage NLU Technologies
 
-If you want to have more general intent recognition, you can leverage modern NLU (Natural Language Understanding) technologies. They can help you recognize the intent of user input sentences. There are several online services you can choose from, for example:
+When it comes to building a bot for open questions, e.g., FAQ of customer support, or an in-bot search engine, you may think of making a bot with the NLU engine to analyze the user's input. The primary mission of NLU is to analyze the user's intent and entities to respond with the right answer.
 
-- [Dialogflow](advanced-guides-nlu.md#building-with-dialogflow)
+A well-trained NLU engine usually has a 90%+ accurate rate in terms of telling the right intent or find the user input is beyond the current knowledge base. Sometimes, it takes time and a few iterations to find the best intent structure and train the NLU engine smart.
+
+In the following sections, you can see how to integrate Bottender with various modern NLU services:
+
 - [QnA Maker](advanced-guides-nlu.md#building-with-qna-maker)
+- [Dialogflow](advanced-guides-nlu.md#building-with-dialogflow)
 - [LUIS](advanced-guides-nlu.md#building-with-luis)
 - [Rasa](advanced-guides-nlu.md#building-with-rasa-nlu)
 
-## Building with Dialogflow
-
-To build a bot integrated with [Dialogflow](https://dialogflow.com/), you have to setup Dialogflow following the [Official Setup Guide](https://cloud.google.com/dialogflow/docs/quick/setup) and fill the two values: `GOOGLE_APPLICATION_CREDENTIALS` (the file path of the JSON file that contains your service account key) and `GOOGLE_APPLICATION_PROJECT_ID` (the GCP project ID) into the `.env` file.
-
-```
-# .env
-GOOGLE_APPLICATION_CREDENTIALS=
-GOOGLE_APPLICATION_PROJECT_ID=
-```
-
-Next, you can build an agent following the [official document](https://cloud.google.com/dialogflow/docs/quick/build-agent). In this example, we build an agent and create a simple intent with display name `greeting`. You can set your own training phrases on the Dialogflow console for this intent.
-
-After you finish the settings of the agent, you can then call Dialogflow's API to detect the intention of the message the bot receives. We use [Dialogflow Node SDK](https://github.com/googleapis/nodejs-dialogflow) to integrate our bot with Dialogflow.
-
-```js
-const dialogflow = require('dialogflow');
-
-const PROJECT_ID = process.env.GOOGLE_APPLICATION_PROJECT_ID;
-
-const sessionClient = new dialogflow.SessionsClient();
-
-module.exports = async function App(context) {
-  if (context.event.isText) {
-    const sessionPath = sessionClient.sessionPath(
-      PROJECT_ID,
-      context.session.id
-    );
-
-    const request = {
-      session: sessionPath,
-      queryInput: {
-        text: {
-          text: context.event.text,
-          languageCode: 'en',
-        },
-      },
-      queryParams: {
-        timeZone: '',
-      },
-    };
-
-    const responses = await sessionClient.detectIntent(request);
-    const { intent } = responses[0].queryResult;
-
-    if (intent.displayName === 'greeting') {
-      await context.sendText('Hello!');
-    }
-  }
-};
-```
-
-You can check out the full example [Here](https://github.com/Yoctol/bottender/tree/master/examples/with-dialogflow).
-
-For more information about how to use Dialogflow with Node.js, you can check [Dialogflow: Node.js Client Document](https://googleapis.dev/nodejs/dialogflow/latest/index.html).
-
 ## Building with QnA Maker
+
+The reason that we choose QnA Maker in the first place is because of the friendly building process. Unlike other NLU service requires a certain amount of time to build the intent and write the training phrases. In QnA Maker, you just need to copy & paster your FAQ, and the NLU engine is ready to use.
+
+> **Note:** [Tweet us](https://twitter.com/bottenderjs) if you would like to share your QnA Maker engine performance with us :)
+
+### Step 1: QnA Maker Setup
 
 To build a bot integrated with [QnA Maker](https://www.qnamaker.ai/), you have to create the QnA Maker knowledge base and publish it following the [Official Guide](https://docs.microsoft.com/en-us/azure/cognitive-services/qnamaker/quickstarts/create-publish-knowledge-base).
 
 After you publish your knowledge base, you will get `RESOURCE_NAME`, `KNOWLEDGE_BASE_ID`, and `ENDPOINT_KEY` (See [Here](https://docs.microsoft.com/en-us/azure/cognitive-services/qnamaker/quickstarts/get-answer-from-knowledge-base-using-url-tool?pivots=url-test-tool-postman) for detailed guide). Make sure you copy them into the `.env` file.
 
 ```
-# .env
+// .env
+
 RESOURCE_NAME=
 KNOWLEDGE_BASE_ID=
 ENDPOINT_KEY=
 ```
 
-Next, we can get the answer by calling the API endpoint. In the example, we use `axios` as our HTTP client. For other Node HTTP clients like `request-promise`, you can see this [document](https://docs.microsoft.com/en-us/azure/cognitive-services/qnamaker/quickstarts/get-answer-from-knowledge-base-nodejs). The returned response will contain an array with possible QA pairs and corresponding scores. You can define your own score threshold in the code.
+### Step 2: Connect Bottender with QnA Maker by `bottender/qna-maker`
+
+To make the bot development enjoyable, we made a [`bottender/qna-maker`](https://github.com/Yoctol/bottender/tree/master/packages/bottender-qna-maker) package. You can install the package with `npm` or `yarn`.
+
+With `npm`:
+
+```sh
+npm install @bottender/qna-maker
+```
+
+Or with `yarn`:
+
+```sh
+yarn add @bottender/qna-maker
+```
+
+In the following sample code, you can see how elegant it is to integrate Bottender with QnA Maker. All you need to do is to fill in your environment variables, and score thread, then Bottender uses answers from QnA Maker as the response.
 
 ```js
-const axios = require('axios');
+const qnaMaker = require('@bottender/qna-maker');
 
-const { RESOURCE_NAME, KNOWLEDGE_BASE_ID, ENDPOINT_KEY } = process.env;
+async function Unknown(context) {
+  await context.sendText('Sorry, I don’t know what you say.');
+}
 
-module.exports = async function App(context) {
-  if (context.event.isText) {
-    const { data } = await axios.post(
-      `https://${RESOURCE_NAME}.azurewebsites.net/qnamaker/knowledgebases/${KNOWLEDGE_BASE_ID}/generateAnswer`,
-      { question: context.event.text },
-      {
-        headers: {
-          Authorization: `EndpointKey ${ENDPOINT_KEY}`,
-        },
-      }
-    );
+const QnaMaker = qnaMaker({
+  resourceName: process.env.RESOURCE_NAME,
+  knowledgeBaseId: process.env.KNOWLEDGE_BASE_ID,
+  endpointKey: process.env.ENDPOINT_KEY,
+  scoreThreshold: 70,
+});
 
-    const topAnswer = data.answers[0];
-
-    // You can define your own score threshold here.
-    if (topAnswer.score > 70) {
-      await context.sendText(topAnswer.answer);
-    }
-  }
+module.exports = async function App() {
+  return chain([
+    QnaMaker, //
+    Unknown,
+  ]);
 };
 ```
 
-You can check out the full example [Here](https://github.com/Yoctol/bottender/tree/master/examples/with-qna-maker).
+> **Note:**
+>
+> - Fore the full example code, please refer to Bottender example, [With QnA Maker](https://github.com/Yoctol/bottender/tree/master/examples/with-qna-maker).
+
+## Building with Dialogflow
+
+Google creates Dialogflow. Since 2019 Google announced its NLU pre-training [BERT](https://www.blog.google/products/search/search-language-understanding-bert), we are confident in Google's NLU solution; at least we can think it might be the state-of-the-art.
+
+### Step 1: Dialogflow Setup
+
+To build a bot integrated with [Dialogflow](https://dialogflow.com/), you have to set up Dialogflow following the Dialogflow doc, [Quickstart: Setup](https://cloud.google.com/dialogflow/docs/quick/setup) and fill in the two values into the `.env` file:
+
+- `GOOGLE_APPLICATION_CREDENTIALS`, which is the file path of the JSON file that contains your service account key
+- `GOOGLE_APPLICATION_PROJECT_ID`, which stands for the GCP project ID
+
+```
+// .env
+
+GOOGLE_APPLICATION_CREDENTIALS=
+GOOGLE_APPLICATION_PROJECT_ID=
+```
+
+### Step 2: Create a Dialogflow Agent
+
+Next, you can build a Dialogflow agent following the Dialogflow doc, [Quickstart: Build an Agent](https://cloud.google.com/dialogflow/docs/quick/build-agent). In this example, we make an agent and create an intent with the display name `greeting.` You can set your training phrases on the Dialogflow console for this intent.
+
+After you finish the settings of the agent, you can call Dialogflow's API to analyze the intent of the message the bot receives.
+
+### Step 3: Connect Bottender with Dialogflow by `bottender/dialogflow`
+
+To make the bot development enjoyable, we made a [`bottender/dialogflow`](https://github.com/Yoctol/bottender/tree/master/packages/bottender-dialogflow) package. You can install the package with `npm` or `yarn`.
+
+With `npm`:
+
+```sh
+npm install @bottender/dialogflow
+```
+
+or with `yarn`:
+
+```sh
+yarn add @bottender/dialogflow
+```
+
+In the following sample code, you can see how elegant it is to integrate Bottender with Dialogflow. All you need to do is to fill in your environment variables, write a map between `intents` (e.g., `greeting`) and corresponding `functions` (e.g., `SayHello`).
+
+```js
+const dialogflow = require('@bottender/dialogflow');
+
+async function SayHello(context) {
+  await context.sendText('Hello!');
+}
+
+async function Unknown(context) {
+  await context.sendText('Sorry, I don’t know what you say.');
+}
+
+const Dialogflow = dialogflow({
+  projectId: process.env.GOOGLE_APPLICATION_PROJECT_ID,
+  actions: {
+    greeting: SayHello,
+  },
+});
+
+module.exports = async function App() {
+  return chain([
+    Dialogflow, //
+    Unknown,
+  ]);
+};
+```
+
+> **Note:**
+>
+> - Dialogflow offers `intent name` and `intent display name`. The value of the former one is fixed once it is created; the value of the latter one can be change at any time. While writing the map between `intents` and `functions` at `bottender/dialogflow`, you can use any of the two to represent a single `intent.`
+> - Fore the full example code, please refer to Bottender example, [With Dialogflow](https://github.com/Yoctol/bottender/tree/master/examples/with-dialogflow)
 
 ## Building with LUIS
+
+### Step 1: LUIS Setup
 
 To build a bot integrated with [LUIS (Language Understanding Intelligent Service)](https://luis.ai/), you have to create a new app in the LUIS portal following the [Official Setup Guide](https://docs.microsoft.com/en-us/azure/cognitive-services/LUIS/get-started-portal-build-app) and fill the three values: `LUIS_APP_ID`, `LUIS_APP_KEY`, and `LUIS_APP_ENDPOINT` into the `.env` file.
 
 ```
-# .env
+// .env
 LUIS_APP_ID=
 LUIS_APP_KEY=
 LUIS_APP_ENDPOINT=
 ```
 
-Next, you can add a simple intent. In this example, we create a simple intent with the intent name `greeting`. You can set your own training phrases on the LUIS console for this intent. And then you have to train the model and publish it.
+### Step 2: Train and Publish Your LUIS Project
 
-After publishing successfully, you can call LUIS's API to detect the intention of the message the bot receives. In this example, we use `axios` as our HTTP client to call the API.
+In this example, we create an intent with the intent name `greeting`. You can set your training phrases on the LUIS console for this intent. And then you have to train the model and publish it.
+
+### Step 3: Connect Bottender with LUIS by `bottender/luis`
+
+To make the bot development enjoyable, we made a [`bottender/luis`](https://github.com/Yoctol/bottender/tree/master/packages/bottender-luis) package. You can install the package with `npm` or `yarn`.
+
+With `npm`:
+
+```sh
+npm install @bottender/luis
+```
+
+Or with `yarn`:
+
+```sh
+yarn add @bottender/luis
+```
+
+In the following sample code, you can see how elegant it is to integrate Bottender with LUIS. All you need to do is to fill in your environment variables, and score threshold, then write a map between `intents` (e.g., `greeting`) and corresponding `functions` (e.g., `SayHello`).
 
 ```js
-const axios = require('axios');
+const luis = require('@bottender/luis');
 
-const { LUIS_APP_KEY, LUIS_APP_ENDPOINT, LUIS_APP_ID } = process.env;
+async function SayHello(context) {
+  await context.sendText('Hello!');
+}
 
-module.exports = async function App(context) {
-  if (context.event.isText) {
-    const queryParams = {
-      verbose: true,
-      q: context.event.text,
-      'subscription-key': LUIS_APP_KEY,
-    };
+async function Unknown(context) {
+  await context.sendText('Sorry, I don’t know what you say.');
+}
 
-    const { data } = await axios.get(
-      `${LUIS_APP_ENDPOINT}luis/v2.0/apps/${LUIS_APP_ID}`,
-      {
-        params: queryParams,
-      }
-    );
+const Luis = luis({
+  appId: process.env.LUIS_APP_ID,
+  appKey: process.env.LUIS_APP_KEY,
+  endpoint: 'https://westus.api.cognitive.microsoft.com',
+  actions: {
+    greeting: SayHello,
+  },
+  scoreThreshold: 0.7,
+});
 
-    const { topScoringIntent } = data;
-
-    if (topScoringIntent.intent === 'greeting') {
-      await context.sendText('Hello!');
-    }
-  }
+module.exports = async function App() {
+  return chain([
+    Luis, //
+    Unknown,
+  ]);
 };
 ```
 
-You can check out the full example [Here](https://github.com/Yoctol/bottender/tree/master/examples/with-luis.ai).
+> **Note:**
+>
+> - Fore the full example code, please refer to Bottender example, [With LUIS.ai](https://github.com/Yoctol/bottender/tree/master/examples/with-luis.ai).
 
 ## Building with Rasa NLU
+
+You may choose Rasa NLU if you're finding an on-premises NLU solution.
+
+### Step 1: Rasa NLU Setup
 
 To build a bot integrated with [Rasa NLU](https://rasa.com/docs/rasa/nlu/about/), you have to install Rasa first following the [Official Installation Guide](https://rasa.com/docs/rasa/user-guide/installation/). Next, you can train your NLU model by running:
 
@@ -165,7 +233,7 @@ To build a bot integrated with [Rasa NLU](https://rasa.com/docs/rasa/nlu/about/)
 rasa train nlu
 ```
 
-This command will look for the training data files in the data/ directory and saves the model in the models/ directory. For information about how to generate training data, you can see [here](https://rasa.com/docs/rasa/nlu/training-data-format/).
+This command will look for the training data files in the data/ directory and saves the model in the models/ directory. For information about how to generate training data, you can see Rasa's document, [Training Data Format](https://rasa.com/docs/rasa/nlu/training-data-format/).
 
 After you get your NLU model ready, you can run the following command:
 
@@ -173,29 +241,53 @@ After you get your NLU model ready, you can run the following command:
 rasa run --enable-api -m models/nlu-your-model-id.tar.gz
 ```
 
-This will start a server with your NLU model locally on port 5005. Next, you can request predictions from your model by calling the `/model/parse` endpoint. You can see [here](https://rasa.com/docs/rasa/api/http-api/#operation/parseModelMessage) for the document of this API.
+This command starts a server with your NLU model locally on port 5005. Next, you can request predictions from your model by calling the `/model/parse` endpoint. You can see [here](https://rasa.com/docs/rasa/api/http-api/#operation/parseModelMessage) for the document of this API.
 
-In this example, we use `axios` as our HTTP client. The returned response will contain an intent with its corresponding confidence. You can define your own confidence threshold in the code.
+### Step 2: Connect Bottender with Rasa by `bottender/rasa`
+
+To make the bot development enjoyable, we made a [`bottender/rasa`](https://github.com/Yoctol/bottender/tree/master/packages/bottender-rasa) package. You can install the package with `npm` or `yarn`.
+
+With `npm`:
+
+```sh
+npm install @bottender/rasa
+```
+
+Or with `yarn`:
+
+```sh
+yarn add @bottender/rasa
+```
+
+In the following sample code, you can see how elegant it is to integrate Bottender with Rasa. All you need to do is to set up the origin URL, and confidence threshold, then write a map between `intents` (e.g., `greeting`) and corresponding `functions` (e.g., `SayHello`).
 
 ```js
-const axios = require('axios');
+const rasa = require('@bottender/rasa');
 
-module.exports = async function App(context) {
-  if (context.event.isText) {
-    const { data } = await axios.post(`http://localhost:5005/model/parse`, {
-      text: context.event.text,
-    });
+async function SayHello(context) {
+  await context.sendText('Hello!');
+}
 
-    const { intent } = data;
+async function Unknown(context) {
+  await context.sendText('Sorry, I don’t know what you say.');
+}
 
-    // You can define your own confidence threshold here.
-    if (intent.confidence > 0.7) {
-      if (intent.name === 'greeting') {
-        await context.sendText('Hello!');
-      }
-    }
-  }
+const Rasa = rasa({
+  origin: 'http://localhost:5005',
+  actions: {
+    greeting: SayHello,
+  },
+  confidenceThreshold: 0.7,
+});
+
+module.exports = async function App() {
+  return chain([
+    Rasa, //
+    Unknown,
+  ]);
 };
 ```
 
-You can check out the full example [Here](https://github.com/Yoctol/bottender/tree/master/examples/with-rasa).
+> **Note:**
+>
+> - Fore the full example code, please refer to Bottender example, [With Rasa](https://github.com/Yoctol/bottender/tree/master/examples/with-rasa).

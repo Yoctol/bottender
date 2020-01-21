@@ -13,6 +13,7 @@
       "the-basics-errors"
     ],
     "Advanced Guides": [
+      "advanced-guides-deployment",
       "advanced-guides-nlu",
       "advanced-guides-multi-channel"
     ],
@@ -52,17 +53,39 @@
     "Guides (Viber)": [
       "channel-viber-setup",
       "channel-viber-handling-events",
+      "channel-viber-sending-messages",
       "channel-viber-routing"
     ],
     "FAQ": []
   },
   "api": {
-    "Core": ["api-context", "api-event"],
-    "Messenger": ["api-messenger-context", "api-messenger-event"],
-    "LINE": ["api-line-context", "api-line-event"],
-    "Slack": ["api-slack-context", "api-slack-event"],
-    "Telegram": ["api-telegram-context", "api-telegram-event"],
-    "Viber": ["api-viber-context", "api-viber-event"],
-    "Console": ["api-console-context", "api-console-event"]
+    "Core": [
+      "api-context",
+      "api-event"
+    ],
+    "Messenger": [
+      "api-messenger-context",
+      "api-messenger-event"
+    ],
+    "LINE": [
+      "api-line-context",
+      "api-line-event"
+    ],
+    "Slack": [
+      "api-slack-context",
+      "api-slack-event"
+    ],
+    "Telegram": [
+      "api-telegram-context",
+      "api-telegram-event"
+    ],
+    "Viber": [
+      "api-viber-context",
+      "api-viber-event"
+    ],
+    "Console": [
+      "api-console-context",
+      "api-console-event"
+    ]
   }
 }

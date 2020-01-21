@@ -1,6 +1,6 @@
 ---
 id: channel-line-rich-menu
-title: Rich Menu
+title: LINE Rich Menu
 ---
 
 ## What is Rich Menu
