@@ -1,3 +1,89 @@
+# 1.2.0 / 2020-01-22
+
+- [new] Added four NLU packages:
+
+  - [@bottender/dialogflow](https://github.com/Yoctol/bottender/tree/master/packages/bottender-dialogflow)
+  - [@bottender/luis](https://github.com/Yoctol/bottender/tree/master/packages/bottender-luis)
+  - [@bottender/qna-maker](https://github.com/Yoctol/bottender/tree/master/packages/bottender-qna-maker)
+  - [@bottender/rasa](https://github.com/Yoctol/bottender/tree/master/packages/bottender-rasa)
+
+- [new] Added `context.setIntent()` for intent tracking purpose (#617):
+
+```js
+context.intent; // null
+
+context.setIntent('greeting');
+
+context.intent; // 'greeting'
+```
+
+- [new] Added `context.setAsHandled()` and `context.setAsNotHandled()` for tracking handling status (#624):
+
+```js
+context.setAsHandled();
+
+context.isHandled; // true
+
+context.setAsNotHandled();
+
+context.isHandled; // false
+```
+
+- [new] Added `getSessionStore` helper function to get the session store that configured by `bottender.config.js` (#633):
+
+```js
+const { getSessionStore } = require('bottender');
+
+const sessionStore = getSessionStore();
+```
+
+- [new] Added `getClient` helper function to access underlying messaging client configured by `bottender.config.js` (#634):
+
+```js
+const { getClient } = require('bottender');
+
+const messenger = getClient('messenger');
+
+messenger.sendText(USER_ID, 'Hello!', { tag: 'CONFIRMED_EVENT_UPDATE' });
+
+const line = getClient('line');
+
+line.pushText(USER_ID, 'Hello!');
+```
+
+- [new] Added async plugin support.
+- [docs] Updated [Natural Language Understanding Guide](https://bottender.js.org/docs/advanced-guides-nlu) to use NLU packages.
+- [example] Using NLU packages in NLU examples.
+
+### slack
+
+- [new] add `includeBotMessages` option for interacting with `bot_message` (#635):
+
+```js
+// bottender.config.js
+
+module.exports = {
+  // ...
+  slack: {
+    enabled: true,
+    path: '/webhooks/slack',
+    accessToken: process.env.SLACK_ACCESS_TOKEN,
+    verificationToken: process.env.SLACK_VERIFICATION_TOKEN,
+    includeBotMessages: true, // add this line
+  },
+};
+```
+
+Then you can use `context.event.isBotMessage` to determine if the event is a bot message event:
+
+```js
+module.exports = function App(context) {
+  if (context.event.isBotMessage) {
+    console.log(context.event.rawEvent.botId);
+  }
+};
+```
+
 # 1.1.3 / 2020-01-08
 
 - [fix] fix(Bot, LineConnector, MessengerConnector): when receiving multiple events, construct session with event instead of request #621
