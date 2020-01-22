@@ -2,12 +2,36 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://bottender.js.org/blog</id>
     <title>Bottender Blog</title>
-    <updated>2019-12-27T06:00:00Z</updated>
+    <updated>2020-01-22T06:00:00Z</updated>
     <generator>Feed for Node.js</generator>
     <link rel="alternate" href="https://bottender.js.org/blog"/>
     <subtitle>The best place to stay up-to-date with the latest Bottender news and events.</subtitle>
     <logo>https://bottender.js.org/img/bottender.svg</logo>
     <rights>© 2019 - PRESENT YOCTOL.AI ALL RIGHTS RESERVED.</rights>
+    <entry>
+        <title type="html"><![CDATA[Bottender 1.2: Serverless, NLU Integration, and More]]></title>
+        <id>https://bottender.js.org/blog/2020/01/22/bottender-1_2.html</id>
+        <link href="https://bottender.js.org/blog/2020/01/22/bottender-1_2.html">
+        </link>
+        <updated>2020-01-22T06:00:00Z</updated>
+        <summary type="html"><![CDATA[<p><img src="https://user-images.githubusercontent.com/3382565/72883961-41d68300-3d40-11ea-9e86-323d77871e41.png" alt=""></p>
+<p>We are excited to introduce Bottender 1.2 today, featuring:</p>
+<ul>
+<li><strong>Serverless Support and Documentation:</strong> Zeit Now v2 and AWS Lambda</li>
+<li><strong>Built-In Support for Intent Labeling:</strong> Bottender context now support labeling user intent and handled status.</li>
+<li><strong>Packages to Integrate with NLU Services:</strong> Bots can now integrate with popular NLU services DialogFlow, LUIS, QnA Maker, and Rasa with less efforts.</li>
+<li><strong>Accessing Session Store:</strong> Manipulating session data directly if you needed.</li>
+<li><strong>Accessing Messaging Clients:</strong> Getting configured messaging clients out of the box to call API anytime.</li>
+</ul>
+<p>All of these benefits are non-breaking and fully backward compatible. You can update it by running:</p>
+<pre><code class="hljs css language-sh">npm install bottender@latest 
+</code></pre>
+]]></summary>
+        <author>
+            <name>C. T. Lin</name>
+            <uri>https://twitter.com/chentsulin</uri>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Bottender 1.1: Multi-Channel Routing, Better Slack APIs Support in Chat, View, Block Kit]]></title>
         <id>https://bottender.js.org/blog/2019/12/27/bottender-1_1.html</id>
