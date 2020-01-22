@@ -451,6 +451,12 @@
       },
       "version-1.1.0/version-1.1.0-the-basics-routing": {
         "title": "Routing"
+      },
+      "version-1.2.0/version-1.2.0-advanced-guides-nlu": {
+        "title": "Natural Language Understanding"
+      },
+      "version-1.2.0/version-1.2.0-channel-messenger-multi-page": {
+        "title": "Messenger Multi-Page Support"
       }
     },
     "links": {
