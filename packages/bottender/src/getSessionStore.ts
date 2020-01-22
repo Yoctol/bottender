@@ -3,9 +3,7 @@ import warning from 'warning';
 import getBottenderConfig from './shared/getBottenderConfig';
 
 function getSessionStore() {
-  const bottenderConfig = getBottenderConfig();
-
-  const { session } = bottenderConfig;
+  const { session } = getBottenderConfig();
 
   const sessionDriver = (session && session.driver) || 'memory';
 
