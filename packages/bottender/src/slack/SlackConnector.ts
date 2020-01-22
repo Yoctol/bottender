@@ -38,8 +38,9 @@ type EventsAPIBody = {
 export type SlackRequestBody = EventsAPIBody | { payload: string };
 
 type CommonConstructorOptions = {
-  skipLegacyProfile?: boolean | null;
+  skipLegacyProfile?: boolean;
   verificationToken?: string;
+  includeBotMessages?: boolean;
 };
 
 type ConstructorOptionsWithoutClient = {
@@ -63,8 +64,14 @@ export default class SlackConnector
 
   _skipLegacyProfile: boolean;
 
+  _includeBotMessages: boolean;
+
   constructor(options: ConstructorOptions) {
-    const { verificationToken, skipLegacyProfile } = options;
+    const {
+      verificationToken,
+      skipLegacyProfile,
+      includeBotMessages,
+    } = options;
     if ('client' in options) {
       this._client = options.client;
     } else {
@@ -83,15 +90,17 @@ export default class SlackConnector
 
     this._verificationToken = verificationToken || '';
 
-    this._skipLegacyProfile =
-      typeof skipLegacyProfile === 'boolean' ? skipLegacyProfile : true;
-
     if (!this._verificationToken) {
       warning(
         false,
         '`verificationToken` is not set. Will bypass Slack event verification.\nPass in `verificationToken` to perform Slack event verification.'
       );
     }
+
+    this._skipLegacyProfile =
+      typeof skipLegacyProfile === 'boolean' ? skipLegacyProfile : true;
+
+    this._includeBotMessages = includeBotMessages || false;
   }
 
   _getRawEventFromRequest(body: SlackRequestBody): SlackRawEvent {
@@ -304,8 +313,8 @@ export default class SlackConnector
   mapRequestToEvents(body: SlackRequestBody): SlackEvent[] {
     const rawEvent = this._getRawEventFromRequest(body);
 
-    if (this._isBotEventRequest(body)) {
-      return []; // FIXME
+    if (!this._includeBotMessages && this._isBotEventRequest(body)) {
+      return [];
     }
 
     return [new SlackEvent(rawEvent)];

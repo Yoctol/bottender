@@ -21,19 +21,22 @@ export default class SlackBot extends Bot<
     verificationToken,
     origin,
     skipLegacyProfile,
+    includeBotMessages,
   }: {
     accessToken: string;
     sessionStore?: SessionStore;
     sync?: boolean;
     verificationToken?: string;
     origin?: string;
-    skipLegacyProfile?: boolean | null;
+    skipLegacyProfile?: boolean;
+    includeBotMessages?: boolean;
   }) {
     const connector = new SlackConnector({
       accessToken,
       verificationToken,
       origin,
       skipLegacyProfile,
+      includeBotMessages,
     });
     super({ connector, sessionStore, sync });
     this._accessToken = accessToken;
