@@ -150,6 +150,7 @@ const RtmMessage = {
 function setup({
   verificationToken = 'xxxxxxxxxxxxxxxxxxxxxxxxxxx',
   skipLegacyProfile,
+  includeBotMessages,
 } = {}) {
   const mockSlackOAuthClient = {
     getUserInfo: jest.fn(),
@@ -164,6 +165,7 @@ function setup({
       accessToken,
       verificationToken,
       skipLegacyProfile,
+      includeBotMessages,
     }),
     mockSlackOAuthClient,
   };
@@ -392,6 +394,23 @@ describe('#mapRequestToEvents', () => {
   it('should map request to SlackEvents', () => {
     const { connector } = setup();
     const events = connector.mapRequestToEvents(request.body);
+
+    expect(events).toHaveLength(1);
+    expect(events[0]).toBeInstanceOf(SlackEvent);
+  });
+
+  it('should not include bot message by default', () => {
+    const { connector } = setup();
+    const events = connector.mapRequestToEvents(botRequest.body);
+
+    expect(events).toHaveLength(0);
+  });
+
+  it('should include bot message when includeBotMessages is true', () => {
+    const { connector } = setup({
+      includeBotMessages: true,
+    });
+    const events = connector.mapRequestToEvents(botRequest.body);
 
     expect(events).toHaveLength(1);
     expect(events[0]).toBeInstanceOf(SlackEvent);

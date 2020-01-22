@@ -272,6 +272,16 @@ const message = {
   ts: '1355517523.000005',
 };
 
+const botMessage = {
+  type: 'message',
+  subtype: 'bot_message',
+  ts: '1358877455.000010',
+  text: 'Pushing is the answer',
+  botId: 'BB12033',
+  username: 'github',
+  icons: {},
+};
+
 const channelsMessage = {
   type: 'message',
   channel: 'C2147483705',
@@ -893,4 +903,9 @@ describe('interactive message event', () => {
     });
     expect(new SlackEvent(message).action).toEqual(null);
   });
+});
+
+it('#isBotMessage', () => {
+  expect(new SlackEvent(message).isBotMessage).toEqual(false);
+  expect(new SlackEvent(botMessage).isBotMessage).toEqual(true);
 });

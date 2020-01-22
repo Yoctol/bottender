@@ -278,6 +278,14 @@ export default class SlackEvent implements Event<SlackRawEvent> {
     }
     return null;
   }
+
+  /**
+   * Determine if the event is a bot message event.
+   *
+   */
+  get isBotMessage(): boolean {
+    return (this._rawEvent as any).subtype === 'bot_message';
+  }
 }
 
 // https://api.slack.com/events
