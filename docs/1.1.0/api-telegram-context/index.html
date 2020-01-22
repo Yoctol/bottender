@@ -1,0 +1,899 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>TelegramContext · Bottender</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="- [Send API](#send-api)"/><meta name="docsearch:version" content="1.1.0"/><meta name="docsearch:language" content="en"/><meta property="og:title" content="TelegramContext · Bottender"/><meta property="og:type" content="website"/><meta property="og:url" content="https://bottender.js.org/"/><meta property="og:description" content="- [Send API](#send-api)"/><meta property="og:image" content="https://bottender.js.org/img/og-image.png"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://bottender.js.org/img/og-image.png"/><link rel="shortcut icon" href="/img/favicon-192x192.png"/><link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-dark.min.css"/><link rel="alternate" type="application/atom+xml" href="https://bottender.js.org/blog/atom.xml" title="Bottender Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://bottender.js.org/blog/feed.xml" title="Bottender Blog RSS Feed"/><script>
+              (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+              (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+              m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+              })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+              ga('create', 'UA-70309045-11', 'auto');
+              ga('send', 'pageview');
+            </script><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:700|Roboto&amp;display=swap"/><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script><script type="text/javascript" src="/js/code-blocks-buttons.js"></script><script type="text/javascript" src="/js/sw.js"></script><script src="/js/scrollSpy.js"></script><link rel="stylesheet" href="/css/main.css"/><script src="/js/codetabs.js"></script></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/"><img class="logo" src="/img/bottender.svg" alt="Bottender"/><h2 class="headerTitleWithLogo">Bottender</h2></a><a href="/versions"><h3>1.1.0</h3></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class=""><a href="/docs/1.1.0/getting-started" target="_self">Docs</a></li><li class="siteNavGroupActive"><a href="/docs/1.1.0/api-context" target="_self">API</a></li><li class=""><a href="/blog/" target="_self">Blog</a></li><li class=""><a href="/users" target="_self">Users</a></li><li class=""><a href="https://github.com/Yoctol/bottender/tree/master/examples" target="_self">Examples</a></li><li class=""><a href="https://github.com/yoctol/bottender" target="_self">GitHub</a></li><li class="navSearchWrapper reactNavSearchWrapper"><input type="text" id="search_input_react" placeholder="Search" title="Search"/></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><div class="hamburger-menu"><div class="line1"></div><div class="line2"></div><div class="line3"></div></div></div><h2><i>›</i><span>Telegram</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle">Core</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/1.1.0/api-context">Context</a></li><li class="navListItem"><a class="navItem" href="/docs/1.1.0/api-event">Event</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Messenger</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/1.1.0/api-messenger-context">MessengerContext</a></li><li class="navListItem"><a class="navItem" href="/docs/1.1.0/api-messenger-event">MessengerEvent</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">LINE</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/1.1.0/api-line-context">LineContext</a></li><li class="navListItem"><a class="navItem" href="/docs/1.1.0/api-line-event">LineEvent</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Slack</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/1.1.0/api-slack-context">SlackContext</a></li><li class="navListItem"><a class="navItem" href="/docs/1.1.0/api-slack-event">SlackEvent</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Telegram</h3><ul class=""><li class="navListItem navListItemActive"><a class="navItem" href="/docs/1.1.0/api-telegram-context">TelegramContext</a></li><li class="navListItem"><a class="navItem" href="/docs/1.1.0/api-telegram-event">TelegramEvent</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Viber</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/1.1.0/api-viber-context">ViberContext</a></li><li class="navListItem"><a class="navItem" href="/docs/1.1.0/api-viber-event">ViberEvent</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Console</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/1.1.0/api-console-context">ConsoleContext</a></li><li class="navListItem"><a class="navItem" href="/docs/1.1.0/api-console-event">ConsoleEvent</a></li></ul></div></div></section></div><script>
+            var coll = document.getElementsByClassName('collapsible');
+            var checkActiveCategory = true;
+            for (var i = 0; i < coll.length; i++) {
+              var links = coll[i].nextElementSibling.getElementsByTagName('*');
+              if (checkActiveCategory){
+                for (var j = 0; j < links.length; j++) {
+                  if (links[j].classList.contains('navListItemActive')){
+                    coll[i].nextElementSibling.classList.toggle('hide');
+                    coll[i].childNodes[1].classList.toggle('rotate');
+                    checkActiveCategory = false;
+                    break;
+                  }
+                }
+              }
+
+              coll[i].addEventListener('click', function() {
+                var arrow = this.childNodes[1];
+                arrow.classList.toggle('rotate');
+                var content = this.nextElementSibling;
+                content.classList.toggle('hide');
+              });
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
+              createToggler('#tocToggler', 'body', 'tocActive');
+
+              var headings = document.querySelector('.toc-headings');
+              headings && headings.addEventListener('click', function(event) {
+                var el = event.target;
+                while(el !== headings){
+                  if (el.tagName === 'A') {
+                    document.body.classList.remove('tocActive');
+                    break;
+                  } else{
+                    el = el.parentNode;
+                  }
+                }
+              }, false);
+
+              function createToggler(togglerSelector, targetSelector, className) {
+                var toggler = document.querySelector(togglerSelector);
+                var target = document.querySelector(targetSelector);
+
+                if (!toggler) {
+                  return;
+                }
+
+                toggler.onclick = function(event) {
+                  event.preventDefault();
+
+                  target.classList.toggle(className);
+                };
+              }
+            });
+        </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://github.com/Yoctol/bottender/edit/master/docs/api-telegram-context.md" target="_blank" rel="noreferrer noopener">Edit</a><h1 class="postHeaderTitle">TelegramContext</h1></header><article><div><span><ul>
+<li><a href="#send-api">Send API</a></li>
+<li><a href="#get-api">Get API</a></li>
+<li><a href="#updating-api">Updating API</a></li>
+<li><a href="#group-api">Group API</a></li>
+<li><a href="#payments-api">Payments API</a></li>
+<li><a href="#inline-mode-api">Inline Mode API</a></li>
+<li><a href="#game-api">Game API</a></li>
+<li><a href="#others">Others</a></li>
+</ul>
+<p><a id="send-api" /></p>
+<h3><a class="anchor" aria-hidden="true" id="send-api-official-docs-https-coretelegramorg-bots-api-available-methods"></a><a href="#send-api-official-docs-https-coretelegramorg-bots-api-available-methods" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Send API - <a href="https://core.telegram.org/bots/api#available-methods">Official Docs</a></h3>
+<h4><a class="anchor" aria-hidden="true" id="sendmessagetext-options-official-docs-https-coretelegramorg-bots-api-sendmessage"></a><a href="#sendmessagetext-options-official-docs-https-coretelegramorg-bots-api-sendmessage" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>sendMessage(text [, options])</code> - <a href="https://core.telegram.org/bots/api/#sendmessage">Official Docs</a></h4>
+<p>Sends text messages.</p>
+<table>
+<thead>
+<tr><th>Param</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>text</td><td><code>String</code></td><td>Text of the message to be sent.</td></tr>
+<tr><td>options</td><td><code>Object</code></td><td>Other optional parameters.</td></tr>
+</tbody>
+</table>
+<p>Exmaple:</p>
+<pre><code class="hljs css language-js">context.sendMessage(<span class="hljs-string">'hi'</span>, {
+  <span class="hljs-attr">disableWebPagePreview</span>: <span class="hljs-literal">true</span>,
+  <span class="hljs-attr">disableNotification</span>: <span class="hljs-literal">true</span>,
+});
+</code></pre>
+<p><br /></p>
+<h4><a class="anchor" aria-hidden="true" id="sendphotophoto-options-official-docs-https-coretelegramorg-bots-api-sendphoto"></a><a href="#sendphotophoto-options-official-docs-https-coretelegramorg-bots-api-sendphoto" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>sendPhoto(photo [, options])</code> - <a href="https://core.telegram.org/bots/api/#sendphoto">Official Docs</a></h4>
+<p>Sends photos.</p>
+<table>
+<thead>
+<tr><th>Param</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>photo</td><td><code>String</code></td><td>Pass a file id (recommended) or HTTP URL to send photo.</td></tr>
+<tr><td>options</td><td><code>Object</code></td><td>Other optional parameters.</td></tr>
+</tbody>
+</table>
+<p>Example:</p>
+<pre><code class="hljs css language-js">context.sendPhoto(<span class="hljs-string">'https://example.com/image.png'</span>, {
+  <span class="hljs-attr">caption</span>: <span class="hljs-string">'gooooooodPhoto'</span>,
+  <span class="hljs-attr">disableNotification</span>: <span class="hljs-literal">true</span>,
+});
+</code></pre>
+<p><br /></p>
+<h4><a class="anchor" aria-hidden="true" id="sendaudioaudio-options-official-docs-https-coretelegramorg-bots-api-sendaudio"></a><a href="#sendaudioaudio-options-official-docs-https-coretelegramorg-bots-api-sendaudio" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>sendAudio(audio [, options])</code> - <a href="https://core.telegram.org/bots/api/#sendaudio">Official Docs</a></h4>
+<p>Sends audio files.</p>
+<table>
+<thead>
+<tr><th>Param</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>audio</td><td><code>String</code></td><td>Pass a file id (recommended) or HTTP URL to send audio.</td></tr>
+<tr><td>options</td><td><code>Object</code></td><td>Other optional parameters.</td></tr>
+</tbody>
+</table>
+<p>Example:</p>
+<pre><code class="hljs css language-js">context.sendAudio(<span class="hljs-string">'https://example.com/audio.mp3'</span>, {
+  <span class="hljs-attr">caption</span>: <span class="hljs-string">'gooooooodAudio'</span>,
+  <span class="hljs-attr">disableNotification</span>: <span class="hljs-literal">true</span>,
+});
+</code></pre>
+<p><br /></p>
+<h4><a class="anchor" aria-hidden="true" id="senddocumentdocument-options-official-docs-https-coretelegramorg-bots-api-senddocument"></a><a href="#senddocumentdocument-options-official-docs-https-coretelegramorg-bots-api-senddocument" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>sendDocument(document [, options])</code> - <a href="https://core.telegram.org/bots/api/#senddocument">Official Docs</a></h4>
+<p>Sends general files.</p>
+<table>
+<thead>
+<tr><th>Param</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>document</td><td><code>String</code></td><td>Pass a file id (recommended) or HTTP URL to send document.</td></tr>
+<tr><td>options</td><td><code>Object</code></td><td>Other optional parameters.</td></tr>
+</tbody>
+</table>
+<p>Example:</p>
+<pre><code class="hljs css language-js">context.sendDocument(<span class="hljs-string">'https://example.com/doc.gif'</span>, {
+  <span class="hljs-attr">caption</span>: <span class="hljs-string">'gooooooodDocument'</span>,
+  <span class="hljs-attr">disableNotification</span>: <span class="hljs-literal">true</span>,
+});
+</code></pre>
+<p><br /></p>
+<h4><a class="anchor" aria-hidden="true" id="sendstickersticker-options-official-docs-https-coretelegramorg-bots-api-sendsticker"></a><a href="#sendstickersticker-options-official-docs-https-coretelegramorg-bots-api-sendsticker" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>sendSticker(sticker [, options])</code> - <a href="https://core.telegram.org/bots/api/#sendsticker">Official Docs</a></h4>
+<p>Sends <code>.webp</code> stickers.</p>
+<table>
+<thead>
+<tr><th>Param</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>sticker</td><td><code>String</code></td><td>Pass a file id (recommended) or HTTP URL to send sticker.</td></tr>
+<tr><td>options</td><td><code>Object</code></td><td>Other optional parameters.</td></tr>
+</tbody>
+</table>
+<p>Example:</p>
+<pre><code class="hljs css language-js">context.sendSticker(<span class="hljs-string">'CAADAgADQAADyIsGAAE7MpzFPFQX5QI'</span>, {
+  <span class="hljs-attr">disableNotification</span>: <span class="hljs-literal">true</span>,
+});
+</code></pre>
+<p><br /></p>
+<h4><a class="anchor" aria-hidden="true" id="sendvideovideo-options-official-docs-https-coretelegramorg-bots-api-sendvideo"></a><a href="#sendvideovideo-options-official-docs-https-coretelegramorg-bots-api-sendvideo" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>sendVideo(video [, options])</code> - <a href="https://core.telegram.org/bots/api/#sendvideo">Official Docs</a></h4>
+<p>Sends video files, Telegram clients support <code>mp4</code> videos (other formats may be sent as Document).</p>
+<table>
+<thead>
+<tr><th>Param</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>video</td><td><code>String</code></td><td>Pass a file id (recommended) or HTTP URL to send video.</td></tr>
+<tr><td>options</td><td><code>Object</code></td><td>Other optional parameters.</td></tr>
+</tbody>
+</table>
+<p>Example:</p>
+<pre><code class="hljs css language-js">context.sendVideo(<span class="hljs-string">'https://example.com/video.mp4'</span>, {
+  <span class="hljs-attr">caption</span>: <span class="hljs-string">'gooooooodVideo'</span>,
+  <span class="hljs-attr">disableNotification</span>: <span class="hljs-literal">true</span>,
+});
+</code></pre>
+<p><br /></p>
+<h4><a class="anchor" aria-hidden="true" id="sendvoicevoice-options-official-docs-https-coretelegramorg-bots-api-sendvoice"></a><a href="#sendvoicevoice-options-official-docs-https-coretelegramorg-bots-api-sendvoice" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>sendVoice(voice [, options])</code> - <a href="https://core.telegram.org/bots/api/#sendvoice">Official Docs</a></h4>
+<p>Sends audio files.</p>
+<table>
+<thead>
+<tr><th>Param</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>voice</td><td><code>String</code></td><td>Pass a file id (recommended) or HTTP URL to send voice.</td></tr>
+<tr><td>options</td><td><code>Object</code></td><td>Other optional parameters.</td></tr>
+</tbody>
+</table>
+<p>Example:</p>
+<pre><code class="hljs css language-js">context.sendVoice(<span class="hljs-string">'https://example.com/voice.ogg'</span>, {
+  <span class="hljs-attr">caption</span>: <span class="hljs-string">'gooooooodVoice'</span>,
+  <span class="hljs-attr">disableNotification</span>: <span class="hljs-literal">true</span>,
+});
+</code></pre>
+<p><br /></p>
+<h4><a class="anchor" aria-hidden="true" id="sendvideonotevideonote-options-official-docs-https-coretelegramorg-bots-api-sendvideonote"></a><a href="#sendvideonotevideonote-options-official-docs-https-coretelegramorg-bots-api-sendvideonote" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>sendVideoNote(videoNote [, options])</code> - <a href="https://core.telegram.org/bots/api/#sendvideonote">Official Docs</a></h4>
+<p>Sends video messages. As of v.4.0, Telegram clients support rounded square mp4 videos of up to 1 minute long.</p>
+<table>
+<thead>
+<tr><th>Param</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>videoNote</td><td><code>String</code></td><td>Pass a file id (recommended) or HTTP URL to send video note.</td></tr>
+<tr><td>options</td><td><code>Object</code></td><td>Other optional parameters.</td></tr>
+</tbody>
+</table>
+<p>Example:</p>
+<pre><code class="hljs css language-js">context.sendVideoNote(<span class="hljs-string">'https://example.com/video_note.mp4'</span>, {
+  <span class="hljs-attr">duration</span>: <span class="hljs-number">40</span>,
+  <span class="hljs-attr">disableNotification</span>: <span class="hljs-literal">true</span>,
+});
+</code></pre>
+<p><br /></p>
+<h4><a class="anchor" aria-hidden="true" id="sendmediagroupmedia-options-official-docs-https-coretelegramorg-bots-api-sendmediagroup"></a><a href="#sendmediagroupmedia-options-official-docs-https-coretelegramorg-bots-api-sendmediagroup" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>sendMediaGroup(media [, options])</code> - <a href="https://core.telegram.org/bots/api/#sendmediagroup">Official Docs</a></h4>
+<p>send a group of photos or videos as an album.</p>
+<table>
+<thead>
+<tr><th>Param</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>media</td><td><a href="https://core.telegram.org/bots/api#inputmedia">InputMedia</a>[]</td><td>A JSON-serialized array describing photos and videos to be sent, must include 2–10 items</td></tr>
+<tr><td>options</td><td><code>Object</code></td><td>Other optional parameters.</td></tr>
+</tbody>
+</table>
+<p>Example:</p>
+<pre><code class="hljs css language-js">context.sendMediaGroup([
+  { <span class="hljs-attr">type</span>: <span class="hljs-string">'photo'</span>, <span class="hljs-attr">media</span>: <span class="hljs-string">'BQADBAADApYAAgcZZAfj2-xeidueWwI'</span> },
+]);
+</code></pre>
+<p><br /></p>
+<h4><a class="anchor" aria-hidden="true" id="sendlocationlocation-options-official-docs-https-coretelegramorg-bots-api-sendlocation"></a><a href="#sendlocationlocation-options-official-docs-https-coretelegramorg-bots-api-sendlocation" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>sendLocation(location [, options])</code> - <a href="https://core.telegram.org/bots/api/#sendlocation">Official Docs</a></h4>
+<p>Sends point on the map.</p>
+<table>
+<thead>
+<tr><th>Param</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>location</td><td><code>Object</code></td><td>Object contains latitude and longitude.</td></tr>
+<tr><td>location.latitude</td><td><code>Number</code></td><td>Latitude of the location.</td></tr>
+<tr><td>location.longitude</td><td><code>Number</code></td><td>Longitude of the location.</td></tr>
+<tr><td>options</td><td><code>Object</code></td><td>Other optional parameters.</td></tr>
+</tbody>
+</table>
+<p>Example:</p>
+<pre><code class="hljs css language-js">context.sendLocation(
+  {
+    <span class="hljs-attr">latitude</span>: <span class="hljs-number">30</span>,
+    <span class="hljs-attr">longitude</span>: <span class="hljs-number">45</span>,
+  },
+  {
+    <span class="hljs-attr">disableNotification</span>: <span class="hljs-literal">true</span>,
+  }
+);
+</code></pre>
+<p><br /></p>
+<h4><a class="anchor" aria-hidden="true" id="sendvenuevenue-options-official-docs-https-coretelegramorg-bots-api-sendvenue"></a><a href="#sendvenuevenue-options-official-docs-https-coretelegramorg-bots-api-sendvenue" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>sendVenue(venue [, options])</code> - <a href="https://core.telegram.org/bots/api/#sendvenue">Official Docs</a></h4>
+<p>Sends information about a venue.</p>
+<table>
+<thead>
+<tr><th>Param</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>venue</td><td><code>Object</code></td><td>Object contains information of the venue.</td></tr>
+<tr><td>venue.latitude</td><td><code>Number</code></td><td>Latitude of the venue.</td></tr>
+<tr><td>venue.longitude</td><td><code>Number</code></td><td>Longitude of the venue.</td></tr>
+<tr><td>venue.title</td><td><code>String</code></td><td>Name of the venue.</td></tr>
+<tr><td>venue.address</td><td><code>String</code></td><td>Address of the venue.</td></tr>
+<tr><td>options</td><td><code>Object</code></td><td>Other optional parameters.</td></tr>
+</tbody>
+</table>
+<p>Example:</p>
+<pre><code class="hljs css language-js">context.sendVenue(
+  {
+    <span class="hljs-attr">latitude</span>: <span class="hljs-number">30</span>,
+    <span class="hljs-attr">longitude</span>: <span class="hljs-number">45</span>,
+    <span class="hljs-attr">title</span>: <span class="hljs-string">'a_title'</span>,
+    <span class="hljs-attr">address</span>: <span class="hljs-string">'an_address'</span>,
+  },
+  {
+    <span class="hljs-attr">disableNotification</span>: <span class="hljs-literal">true</span>,
+  }
+);
+</code></pre>
+<p><br /></p>
+<h4><a class="anchor" aria-hidden="true" id="sendcontactcontact-options-official-docs-https-coretelegramorg-bots-api-sendcontact"></a><a href="#sendcontactcontact-options-official-docs-https-coretelegramorg-bots-api-sendcontact" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>sendContact(contact [, options])</code> - <a href="https://core.telegram.org/bots/api/#sendcontact">Official Docs</a></h4>
+<p>Sends phone contacts.</p>
+<table>
+<thead>
+<tr><th>Param</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>contact</td><td><code>Object</code></td><td>Object contains information of the contact.</td></tr>
+<tr><td>contact.phoneNumber</td><td><code>String</code></td><td>Phone number of the contact.</td></tr>
+<tr><td>contact.firstName</td><td><code>String</code></td><td>First name of the contact.</td></tr>
+<tr><td>options</td><td><code>Object</code></td><td>Other optional parameters.</td></tr>
+</tbody>
+</table>
+<p>Example:</p>
+<pre><code class="hljs css language-js">context.sendContact(
+  {
+    <span class="hljs-attr">phoneNumber</span>: <span class="hljs-string">'886123456789'</span>,
+    <span class="hljs-attr">firstName</span>: <span class="hljs-string">'first'</span>,
+  },
+  { <span class="hljs-attr">lastName</span>: <span class="hljs-string">'last'</span> }
+);
+</code></pre>
+<p><br /></p>
+<h4><a class="anchor" aria-hidden="true" id="sendchatactionaction-official-docs-https-coretelegramorg-bots-api-sendchataction"></a><a href="#sendchatactionaction-official-docs-https-coretelegramorg-bots-api-sendchataction" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>sendChatAction(action)</code> - <a href="https://core.telegram.org/bots/api/#sendchataction">Official Docs</a></h4>
+<p>Tells the user that something is happening on the bot's side.</p>
+<table>
+<thead>
+<tr><th>Param</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>action</td><td><code>String</code></td><td>Type of action to broadcast.</td></tr>
+</tbody>
+</table>
+<p>Example:</p>
+<pre><code class="hljs css language-js">context.sendChatAction(<span class="hljs-string">'typing'</span>);
+</code></pre>
+<p><br /></p>
+<h3><a class="anchor" aria-hidden="true" id="get-api"></a><a href="#get-api" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Get API</h3>
+<h4><a class="anchor" aria-hidden="true" id="getuserprofilephotosoptions-official-docs-https-coretelegramorg-bots-api-getuserprofilephotos"></a><a href="#getuserprofilephotosoptions-official-docs-https-coretelegramorg-bots-api-getuserprofilephotos" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>getUserProfilePhotos(options)</code> - <a href="https://core.telegram.org/bots/api/#getuserprofilephotos">Official Docs</a></h4>
+<p>Gets a list of profile pictures for a user.</p>
+<table>
+<thead>
+<tr><th>Param</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>options</td><td><code>Object</code></td><td>Other optional parameters</td></tr>
+</tbody>
+</table>
+<p>Example:</p>
+<pre><code class="hljs css language-js">context.getUserProfilePhotos().then(<span class="hljs-function"><span class="hljs-params">result</span> =&gt;</span> {
+  <span class="hljs-built_in">console</span>.log(result);
+  <span class="hljs-comment">// {</span>
+  <span class="hljs-comment">//   totalCount: 3,</span>
+  <span class="hljs-comment">//   photos: [</span>
+  <span class="hljs-comment">//     [</span>
+  <span class="hljs-comment">//       {</span>
+  <span class="hljs-comment">//         fileId: 'AgADBAADGTo4Gz8cZAeR-ouu4XBx78EeqRkABHahi76pN-aO0UoDA050',</span>
+  <span class="hljs-comment">//         fileSize: 14650,</span>
+  <span class="hljs-comment">//         width: 160,</span>
+  <span class="hljs-comment">//         height: 160,</span>
+  <span class="hljs-comment">//       },</span>
+  <span class="hljs-comment">//       {</span>
+  <span class="hljs-comment">//         fileId: 'AgADBAADGTo4Gz8cZAeR-ouu4XBx78EeqRkABKCfooqTgFUX0EoD5B1C',</span>
+  <span class="hljs-comment">//         fileSize: 39019,</span>
+  <span class="hljs-comment">//         width: 320,</span>
+  <span class="hljs-comment">//         height: 320,</span>
+  <span class="hljs-comment">//       },</span>
+  <span class="hljs-comment">//       {</span>
+  <span class="hljs-comment">//         fileId: 'AgADBAADGTo4Gz8cZAeR-ouu4XBx78EeqRkABPL_pC9K3UpI0koD1B1C',</span>
+  <span class="hljs-comment">//         fileSize: 132470,</span>
+  <span class="hljs-comment">//         width: 640,</span>
+  <span class="hljs-comment">//         height: 640,</span>
+  <span class="hljs-comment">//       },</span>
+  <span class="hljs-comment">//     ],</span>
+  <span class="hljs-comment">//   ],</span>
+  <span class="hljs-comment">// }</span>
+});
+</code></pre>
+<h4><a class="anchor" aria-hidden="true" id="getchat-official-docs-https-coretelegramorg-bots-api-getchat"></a><a href="#getchat-official-docs-https-coretelegramorg-bots-api-getchat" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>getChat()</code> - <a href="https://core.telegram.org/bots/api/#getchat">Official Docs</a></h4>
+<p>Gets up to date information about the chat (current name of the user for one-on-one conversations, current username of a user, group or channel, etc.)</p>
+<p>Example:</p>
+<pre><code class="hljs css language-js">context.getChat().then(<span class="hljs-function"><span class="hljs-params">result</span> =&gt;</span> {
+  <span class="hljs-built_in">console</span>.log(result);
+  <span class="hljs-comment">// {</span>
+  <span class="hljs-comment">//   id: 313534466,</span>
+  <span class="hljs-comment">//   firstName: 'first',</span>
+  <span class="hljs-comment">//   lastName: 'last',</span>
+  <span class="hljs-comment">//   username: 'username',</span>
+  <span class="hljs-comment">//   type: 'private',</span>
+  <span class="hljs-comment">// }</span>
+});
+</code></pre>
+<p><br /></p>
+<h4><a class="anchor" aria-hidden="true" id="getchatadministrators-official-docs-https-coretelegramorg-bots-api-getchatadministrators"></a><a href="#getchatadministrators-official-docs-https-coretelegramorg-bots-api-getchatadministrators" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>getChatAdministrators()</code> - <a href="https://core.telegram.org/bots/api/#getchatadministrators">Official Docs</a></h4>
+<p>Gets a list of administrators in the chat.</p>
+<p>Example:</p>
+<pre><code class="hljs css language-js">context.getChatAdministrators().then(<span class="hljs-function"><span class="hljs-params">result</span> =&gt;</span> {
+  <span class="hljs-built_in">console</span>.log(result);
+  <span class="hljs-comment">// [</span>
+  <span class="hljs-comment">//   {</span>
+  <span class="hljs-comment">//     user: {</span>
+  <span class="hljs-comment">//       id: 313534466,</span>
+  <span class="hljs-comment">//       firstName: 'first',</span>
+  <span class="hljs-comment">//       lastName: 'last',</span>
+  <span class="hljs-comment">//       username: 'username',</span>
+  <span class="hljs-comment">//       languangeCode: 'zh-TW',</span>
+  <span class="hljs-comment">//     },</span>
+  <span class="hljs-comment">//     status: 'creator',</span>
+  <span class="hljs-comment">//   },</span>
+  <span class="hljs-comment">// ]</span>
+});
+</code></pre>
+<p><br /></p>
+<h4><a class="anchor" aria-hidden="true" id="getchatmemberscount-official-docs-https-coretelegramorg-bots-api-getchatmemberscount"></a><a href="#getchatmemberscount-official-docs-https-coretelegramorg-bots-api-getchatmemberscount" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>getChatMembersCount()</code> - <a href="https://core.telegram.org/bots/api/#getchatmemberscount">Official Docs</a></h4>
+<p>Gets the number of members in the chat.</p>
+<p>Example:</p>
+<pre><code class="hljs css language-js">context.getChatMembersCount().then(<span class="hljs-function"><span class="hljs-params">result</span> =&gt;</span> {
+  <span class="hljs-built_in">console</span>.log(result);
+  <span class="hljs-comment">// '6'</span>
+});
+</code></pre>
+<p><br /></p>
+<h4><a class="anchor" aria-hidden="true" id="getchatmemberuserid-official-docs-https-coretelegramorg-bots-api-getchatmember"></a><a href="#getchatmemberuserid-official-docs-https-coretelegramorg-bots-api-getchatmember" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>getChatMember(userId)</code> - <a href="https://core.telegram.org/bots/api/#getchatmember">Official Docs</a></h4>
+<p>Gets information about a member of the chat.</p>
+<table>
+<thead>
+<tr><th>Param</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>userId</td><td><code>Number</code></td><td>Unique identifier of the target user.</td></tr>
+</tbody>
+</table>
+<p>Example:</p>
+<pre><code class="hljs css language-js">context.getChatMember(USER_ID).then(<span class="hljs-function"><span class="hljs-params">result</span> =&gt;</span> {
+  <span class="hljs-built_in">console</span>.log(result);
+  <span class="hljs-comment">// {</span>
+  <span class="hljs-comment">//   user: {</span>
+  <span class="hljs-comment">//     id: 313534466,</span>
+  <span class="hljs-comment">//     firstName: 'first',</span>
+  <span class="hljs-comment">//     lastName: 'last',</span>
+  <span class="hljs-comment">//     username: 'username',</span>
+  <span class="hljs-comment">//     languangeCode: 'zh-TW',</span>
+  <span class="hljs-comment">//   },</span>
+  <span class="hljs-comment">//   status: 'creator',</span>
+  <span class="hljs-comment">// }</span>
+});
+</code></pre>
+<p><br /></p>
+<h3><a class="anchor" aria-hidden="true" id="updating-api"></a><a href="#updating-api" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Updating API</h3>
+<h4><a class="anchor" aria-hidden="true" id="editmessagetexttext-options-official-docs-https-coretelegramorg-bots-api-editmessagetext"></a><a href="#editmessagetexttext-options-official-docs-https-coretelegramorg-bots-api-editmessagetext" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>editMessageText(text [, options])</code> - <a href="https://core.telegram.org/bots/api/#editmessagetext">Official Docs</a></h4>
+<p>Edits text and game messages sent by the bot or via the bot (for inline bots).</p>
+<table>
+<thead>
+<tr><th>Param</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>text</td><td><code>String</code></td><td>New text of the message.</td></tr>
+<tr><td>options</td><td><code>Object</code></td><td>Other optional parameters.</td></tr>
+</tbody>
+</table>
+<p>Example:</p>
+<pre><code class="hljs css language-js">context.editMessageText(<span class="hljs-string">'new_text'</span>);
+</code></pre>
+<p><br /></p>
+<h4><a class="anchor" aria-hidden="true" id="editmessagecaptioncaption-options-official-docs-https-coretelegramorg-bots-api-editmessagecaption"></a><a href="#editmessagecaptioncaption-options-official-docs-https-coretelegramorg-bots-api-editmessagecaption" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>editMessageCaption(caption [, options])</code> - <a href="https://core.telegram.org/bots/api/#editmessagecaption">Official Docs</a></h4>
+<p>Edits captions of messages sent by the bot or via the bot (for inline bots).</p>
+<table>
+<thead>
+<tr><th>Param</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>caption</td><td><code>String</code></td><td>New caption of the message.</td></tr>
+<tr><td>options</td><td><code>Object</code></td><td>Other optional parameters.</td></tr>
+</tbody>
+</table>
+<p>Example:</p>
+<pre><code class="hljs css language-js">context.editMessageCaption(<span class="hljs-string">'new_caption'</span>);
+</code></pre>
+<p><br /></p>
+<h4><a class="anchor" aria-hidden="true" id="editmessagereplymarkupreplymarkup-options-official-docs-https-coretelegramorg-bots-api-editmessagereplymarkup"></a><a href="#editmessagereplymarkupreplymarkup-options-official-docs-https-coretelegramorg-bots-api-editmessagereplymarkup" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>editMessageReplyMarkup(replyMarkup [, options])</code> - <a href="https://core.telegram.org/bots/api/#editmessagereplymarkup">Official Docs</a></h4>
+<p>Edits only the reply markup of messages sent by the bot or via the bot (for inline bots).</p>
+<table>
+<thead>
+<tr><th>Param</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>replyMarkup</td><td><code>Object</code></td><td>New replyMarkup of the message.</td></tr>
+<tr><td>options</td><td><code>Object</code></td><td>Other optional parameters.</td></tr>
+</tbody>
+</table>
+<p>Example:</p>
+<pre><code class="hljs css language-js">context.editMessageReplyMarkup({
+  <span class="hljs-attr">keyboard</span>: [[{ <span class="hljs-attr">text</span>: <span class="hljs-string">'new_button_1'</span> }, { <span class="hljs-attr">text</span>: <span class="hljs-string">'new_button_2'</span> }]],
+  <span class="hljs-attr">resizeKeyboard</span>: <span class="hljs-literal">true</span>,
+  <span class="hljs-attr">oneTimeKeyboard</span>: <span class="hljs-literal">true</span>,
+});
+</code></pre>
+<p><br /></p>
+<h4><a class="anchor" aria-hidden="true" id="deletemessagemessageid-official-docs-https-coretelegramorg-bots-api-deletemessage"></a><a href="#deletemessagemessageid-official-docs-https-coretelegramorg-bots-api-deletemessage" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>deleteMessage(messageId)</code> - <a href="https://core.telegram.org/bots/api/#deletemessage">Official Docs</a></h4>
+<p>Deletes a message, including service messages.</p>
+<table>
+<thead>
+<tr><th>Param</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>messageId</td><td><code>Number</code></td><td>Identifier of the message to delete.</td></tr>
+</tbody>
+</table>
+<p>Example:</p>
+<pre><code class="hljs css language-js">context.deleteMessage(MESSAGE_ID);
+</code></pre>
+<p><br /></p>
+<h4><a class="anchor" aria-hidden="true" id="editmessagelivelocationlocation-options-official-docs-https-coretelegramorg-bots-api-editmessagelivelocation"></a><a href="#editmessagelivelocationlocation-options-official-docs-https-coretelegramorg-bots-api-editmessagelivelocation" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>editMessageLiveLocation(location [, options])</code> - <a href="https://core.telegram.org/bots/api/#editmessagelivelocation">Official Docs</a></h4>
+<p>Edit live location messages sent by the bot or via the bot (for inline bots).</p>
+<table>
+<thead>
+<tr><th>Param</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>location</td><td><code>Object</code></td><td>Object contains new latitude and longitude.</td></tr>
+<tr><td>location.latitude</td><td><code>Number</code></td><td>Latitude of new location.</td></tr>
+<tr><td>location.longitude</td><td><code>Number</code></td><td>Longitude of new location.</td></tr>
+<tr><td>options</td><td><code>Object</code></td><td>Other optional parameters.</td></tr>
+</tbody>
+</table>
+<p>Example:</p>
+<pre><code class="hljs css language-js">context.editMessageLiveLocation({
+  <span class="hljs-attr">latitude</span>: <span class="hljs-number">30</span>,
+  <span class="hljs-attr">longitude</span>: <span class="hljs-number">45</span>,
+});
+</code></pre>
+<p><br /></p>
+<h4><a class="anchor" aria-hidden="true" id="stopmessagelivelocationoptions-official-docs-https-coretelegramorg-bots-api-stopmessagelivelocation"></a><a href="#stopmessagelivelocationoptions-official-docs-https-coretelegramorg-bots-api-stopmessagelivelocation" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>stopMessageLiveLocation(options)</code> - <a href="https://core.telegram.org/bots/api/#stopmessagelivelocation">Official Docs</a></h4>
+<p>Stop updating a live location message sent by the bot or via the bot (for inline bots) before <em>live_period</em> expires.</p>
+<table>
+<thead>
+<tr><th>Param</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>options</td><td><code>Object</code></td><td>Other optional parameters.</td></tr>
+</tbody>
+</table>
+<p>Example:</p>
+<pre><code class="hljs css language-js">context.stopMessageLiveLocation();
+</code></pre>
+<h3><a class="anchor" aria-hidden="true" id="group-api"></a><a href="#group-api" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Group API</h3>
+<h4><a class="anchor" aria-hidden="true" id="kickchatmemberuserid-options-official-docs-https-coretelegramorg-bots-api-kickchatmember"></a><a href="#kickchatmemberuserid-options-official-docs-https-coretelegramorg-bots-api-kickchatmember" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>kickChatMember(userId [, options])</code> - <a href="https://core.telegram.org/bots/api/#kickchatmember">Official Docs</a></h4>
+<p>Kicks a user from the group, the supergroup or the channel.</p>
+<table>
+<thead>
+<tr><th>Param</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>userId</td><td><code>Number</code></td><td>Unique identifier of the target user.</td></tr>
+<tr><td>options</td><td><code>Object</code></td><td>Other optional parameters.</td></tr>
+</tbody>
+</table>
+<p>Example:</p>
+<pre><code class="hljs css language-js">context.kickChatMember(USER_ID, { <span class="hljs-attr">untilDate</span>: UNIX_TIME });
+</code></pre>
+<p><br /></p>
+<h4><a class="anchor" aria-hidden="true" id="unbanchatmemberuserid-official-docs-https-coretelegramorg-bots-api-unbanchatmember"></a><a href="#unbanchatmemberuserid-official-docs-https-coretelegramorg-bots-api-unbanchatmember" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>unbanChatMember(userId)</code> - <a href="https://core.telegram.org/bots/api/#unbanchatmember">Official Docs</a></h4>
+<p>Unbans a previously kicked user in the supergroup or channel.</p>
+<table>
+<thead>
+<tr><th>Param</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>userId</td><td><code>Number</code></td><td>Unique identifier of the target user.</td></tr>
+</tbody>
+</table>
+<p>Example:</p>
+<pre><code class="hljs css language-js">context.unbanChatMember(USER_ID);
+</code></pre>
+<p><br /></p>
+<h4><a class="anchor" aria-hidden="true" id="restrictchatmemberuserid-options-official-docs-https-coretelegramorg-bots-api-restrictchatmember"></a><a href="#restrictchatmemberuserid-options-official-docs-https-coretelegramorg-bots-api-restrictchatmember" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>restrictChatMember(userId [, options])</code> - <a href="https://core.telegram.org/bots/api/#restrictchatmember">Official Docs</a></h4>
+<p>Restricts a user in the supergroup</p>
+<table>
+<thead>
+<tr><th>Param</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>userId</td><td><code>Number</code></td><td>Unique identifier of the target user.</td></tr>
+<tr><td>options</td><td><code>Object</code></td><td>Other optional parameters.</td></tr>
+</tbody>
+</table>
+<p>Example:</p>
+<pre><code class="hljs css language-js">context.restrictChatMember(USER_ID, { <span class="hljs-attr">canSendMessages</span>: <span class="hljs-literal">true</span> });
+</code></pre>
+<p><br /></p>
+<h4><a class="anchor" aria-hidden="true" id="promotechatmemberuserid-options-official-docs-https-coretelegramorg-bots-api-promotechatmember"></a><a href="#promotechatmemberuserid-options-official-docs-https-coretelegramorg-bots-api-promotechatmember" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>promoteChatMember(userId [, options])</code> - <a href="https://core.telegram.org/bots/api/#promotechatmember">Official Docs</a></h4>
+<p>Promotes or demotes a user in the supergroup or the channel.</p>
+<table>
+<thead>
+<tr><th>Param</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>userId</td><td><code>Number</code></td><td>Unique identifier of the target user.</td></tr>
+<tr><td>options</td><td><code>Object</code></td><td>Other optional parameters.</td></tr>
+</tbody>
+</table>
+<p>Example:</p>
+<pre><code class="hljs css language-js">context.promoteChatMember(USER_ID, {
+  <span class="hljs-attr">canChangeInfo</span>: <span class="hljs-literal">true</span>,
+  <span class="hljs-attr">canInviteUsers</span>: <span class="hljs-literal">true</span>,
+});
+</code></pre>
+<p><br /></p>
+<h4><a class="anchor" aria-hidden="true" id="exportchatinvitelink-official-docs-https-coretelegramorg-bots-api-exportchatinvitelink"></a><a href="#exportchatinvitelink-official-docs-https-coretelegramorg-bots-api-exportchatinvitelink" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>exportChatInviteLink()</code> - <a href="https://core.telegram.org/bots/api/#exportchatinvitelink">Official Docs</a></h4>
+<p>Exports an invite link to the supergroup or the channel.</p>
+<p>Example:</p>
+<pre><code class="hljs css language-js">context.exportChatInviteLink();
+</code></pre>
+<p><br /></p>
+<h4><a class="anchor" aria-hidden="true" id="setchatphotophoto-official-docs-https-coretelegramorg-bots-api-setchatphoto"></a><a href="#setchatphotophoto-official-docs-https-coretelegramorg-bots-api-setchatphoto" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>setChatPhoto(photo)</code> - <a href="https://core.telegram.org/bots/api/#setchatphoto">Official Docs</a></h4>
+<p>Sets a new profile photo for the chat.</p>
+<table>
+<thead>
+<tr><th>Param</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>photo</td><td><code>String</code></td><td>Pass a file id (recommended) or HTTP URL to send photo.</td></tr>
+</tbody>
+</table>
+<p>Example:</p>
+<pre><code class="hljs css language-js">context.setChatPhoto(<span class="hljs-string">'https://example.com/image.png'</span>);
+</code></pre>
+<p><br /></p>
+<h4><a class="anchor" aria-hidden="true" id="deletechatphoto-official-docs-https-coretelegramorg-bots-api-deletechatphoto"></a><a href="#deletechatphoto-official-docs-https-coretelegramorg-bots-api-deletechatphoto" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>deleteChatPhoto()</code> - <a href="https://core.telegram.org/bots/api/#deletechatphoto">Official Docs</a></h4>
+<p>Deletes the chat photo.</p>
+<p>Example:</p>
+<pre><code class="hljs css language-js">context.deleteChatPhoto();
+</code></pre>
+<p><br /></p>
+<h4><a class="anchor" aria-hidden="true" id="setchattitletitle-official-docs-https-coretelegramorg-bots-api-setchattitle"></a><a href="#setchattitletitle-official-docs-https-coretelegramorg-bots-api-setchattitle" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>setChatTitle(title)</code> - <a href="https://core.telegram.org/bots/api/#setchattitle">Official Docs</a></h4>
+<p>Changes the title of the chat.</p>
+<table>
+<thead>
+<tr><th>Param</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>title</td><td><code>String</code></td><td>New chat title, 1-255 characters.</td></tr>
+</tbody>
+</table>
+<p>Example:</p>
+<pre><code class="hljs css language-js">context.setChatTitle(<span class="hljs-string">'New Title'</span>);
+</code></pre>
+<p><br /></p>
+<h4><a class="anchor" aria-hidden="true" id="setchatdescriptiondescription-official-docs-https-coretelegramorg-bots-api-setchatdescription"></a><a href="#setchatdescriptiondescription-official-docs-https-coretelegramorg-bots-api-setchatdescription" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>setChatDescription(description)</code> - <a href="https://core.telegram.org/bots/api/#setchatdescription">Official Docs</a></h4>
+<p>Changes the description of the supergroup or the channel.</p>
+<table>
+<thead>
+<tr><th>Param</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>description</td><td><code>String</code></td><td>New chat description, 0-255 characters.</td></tr>
+</tbody>
+</table>
+<p>Example:</p>
+<pre><code class="hljs css language-js">context.setChatDescription(<span class="hljs-string">'New Description'</span>);
+</code></pre>
+<p><br /></p>
+<h4><a class="anchor" aria-hidden="true" id="setchatstickersetstickersetname-official-docs-https-coretelegramorg-bots-api-setchatstickerset"></a><a href="#setchatstickersetstickersetname-official-docs-https-coretelegramorg-bots-api-setchatstickerset" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>setChatStickerSet(stickerSetName)</code> - <a href="https://core.telegram.org/bots/api/#setchatstickerset">Official Docs</a></h4>
+<p>Set a new group sticker set for the supergroup.</p>
+<table>
+<thead>
+<tr><th>Param</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>stickerSetName</td><td><code>String</code></td><td>Name of the sticker set to be set as the group sticker set.</td></tr>
+</tbody>
+</table>
+<p>Example:</p>
+<pre><code class="hljs css language-js">context.setChatStickerSet(<span class="hljs-string">'Sticker Set Name'</span>);
+</code></pre>
+<p><br /></p>
+<h4><a class="anchor" aria-hidden="true" id="deletechatstickerset-official-docs-https-coretelegramorg-bots-api-deletechatstickerset"></a><a href="#deletechatstickerset-official-docs-https-coretelegramorg-bots-api-deletechatstickerset" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>deleteChatStickerSet()</code> - <a href="https://core.telegram.org/bots/api/#deletechatstickerset">Official Docs</a></h4>
+<p>Delete a group sticker set from the supergroup.</p>
+<p>Example:</p>
+<pre><code class="hljs css language-js">context.deleteChatStickerSet();
+</code></pre>
+<p><br /></p>
+<h4><a class="anchor" aria-hidden="true" id="pinchatmessagemessageid-options-official-docs-https-coretelegramorg-bots-api-pinchatmessage"></a><a href="#pinchatmessagemessageid-options-official-docs-https-coretelegramorg-bots-api-pinchatmessage" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>pinChatMessage(messageId [, options])</code> - <a href="https://core.telegram.org/bots/api/#pinChatMessage">Official Docs</a></h4>
+<p>Pins a message in the supergroup.</p>
+<table>
+<thead>
+<tr><th>Param</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>messageId</td><td><code>Number</code></td><td>Identifier of a message to pin.</td></tr>
+<tr><td>options</td><td><code>Object</code></td><td>Other optional parameters.</td></tr>
+</tbody>
+</table>
+<p>Example:</p>
+<pre><code class="hljs css language-js">context.pinChatMessage(MESSAGE_ID, { <span class="hljs-attr">disableNotification</span>: <span class="hljs-literal">true</span> });
+</code></pre>
+<p><br /></p>
+<h4><a class="anchor" aria-hidden="true" id="unpinchatmessage-official-docs-https-coretelegramorg-bots-api-unpinchatmessage"></a><a href="#unpinchatmessage-official-docs-https-coretelegramorg-bots-api-unpinchatmessage" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>unpinChatMessage()</code> - <a href="https://core.telegram.org/bots/api/#unpinchatmessage">Official Docs</a></h4>
+<p>Unpins a message in the supergroup chat.</p>
+<p>Example:</p>
+<pre><code class="hljs css language-js">context.unpinChatMessage();
+</code></pre>
+<p><br /></p>
+<h4><a class="anchor" aria-hidden="true" id="leavechat-official-docs-https-coretelegramorg-bots-api-leavechat"></a><a href="#leavechat-official-docs-https-coretelegramorg-bots-api-leavechat" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>leaveChat()</code> - <a href="https://core.telegram.org/bots/api/#leavechat">Official Docs</a></h4>
+<p>Leaves the group, supergroup or channel.</p>
+<p>Example:</p>
+<pre><code class="hljs css language-js">context.leaveChat();
+</code></pre>
+<p><br /></p>
+<h3><a class="anchor" aria-hidden="true" id="payments-api"></a><a href="#payments-api" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Payments API</h3>
+<h4><a class="anchor" aria-hidden="true" id="sendinvoiceproduct-options-official-docs-https-coretelegramorg-bots-api-sendinvoice"></a><a href="#sendinvoiceproduct-options-official-docs-https-coretelegramorg-bots-api-sendinvoice" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>sendInvoice(product [, options])</code> - <a href="https://core.telegram.org/bots/api/#sendinvoice">Official Docs</a></h4>
+<p>Sends invoice.</p>
+<table>
+<thead>
+<tr><th>Param</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>product</td><td><code>Object</code></td><td>Object of the product.</td></tr>
+<tr><td>product.title</td><td><code>String</code></td><td>Product name.</td></tr>
+<tr><td>product.description</td><td><code>String</code></td><td>Product description.</td></tr>
+<tr><td>product.payload</td><td><code>String</code></td><td>Bot defined invoice payload.</td></tr>
+<tr><td>product.providerToken</td><td><code>String</code></td><td>Payments provider token.</td></tr>
+<tr><td>product.startParameter</td><td><code>String</code></td><td>Deep-linking parameter.</td></tr>
+<tr><td>product.currency</td><td><code>String</code></td><td>Three-letter ISO 4217 currency code.</td></tr>
+<tr><td>product.prices</td><td><code>Object[]</code></td><td>Breakdown of prices.</td></tr>
+<tr><td>options</td><td><code>Object</code></td><td>Additional Telegram query options.</td></tr>
+</tbody>
+</table>
+<p>Example:</p>
+<pre><code class="hljs css language-js">context.sendInvoice({
+  <span class="hljs-attr">title</span>: <span class="hljs-string">'product name'</span>,
+  <span class="hljs-attr">description</span>: <span class="hljs-string">'product description'</span>,
+  <span class="hljs-attr">payload</span>: <span class="hljs-string">'bot-defined invoice payload'</span>,
+  <span class="hljs-attr">providerToken</span>: <span class="hljs-string">'PROVIDER_TOKEN'</span>,
+  <span class="hljs-attr">startParameter</span>: <span class="hljs-string">'pay'</span>,
+  <span class="hljs-attr">currency</span>: <span class="hljs-string">'USD'</span>,
+  <span class="hljs-attr">prices</span>: [
+    { <span class="hljs-attr">label</span>: <span class="hljs-string">'product'</span>, <span class="hljs-attr">amount</span>: <span class="hljs-number">11000</span> },
+    { <span class="hljs-attr">label</span>: <span class="hljs-string">'tax'</span>, <span class="hljs-attr">amount</span>: <span class="hljs-number">11000</span> },
+  ],
+});
+</code></pre>
+<p><br /></p>
+<h4><a class="anchor" aria-hidden="true" id="answershippingqueryok-options-official-docs-https-coretelegramorg-bots-api-answershippingquery"></a><a href="#answershippingqueryok-options-official-docs-https-coretelegramorg-bots-api-answershippingquery" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>answerShippingQuery(ok [, options])</code> - <a href="https://core.telegram.org/bots/api/#answershippingquery">Official Docs</a></h4>
+<p>Reply to the shipping query.</p>
+<table>
+<thead>
+<tr><th>Param</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>ok</td><td><code>Boolean</code></td><td>Specify if delivery of the product is possible.</td></tr>
+<tr><td>options</td><td><code>Object</code></td><td>Additional Telegram query options.</td></tr>
+</tbody>
+</table>
+<p>Example:</p>
+<pre><code class="hljs css language-js">context.answerShippingQuery(<span class="hljs-literal">true</span>);
+</code></pre>
+<p><br /></p>
+<h4><a class="anchor" aria-hidden="true" id="answerprecheckoutqueryok-options-official-docs-https-coretelegramorg-bots-api-answerprecheckoutquery"></a><a href="#answerprecheckoutqueryok-options-official-docs-https-coretelegramorg-bots-api-answerprecheckoutquery" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>answerPreCheckoutQuery(ok [, options])</code> - <a href="https://core.telegram.org/bots/api/#answerprecheckoutquery">Official Docs</a></h4>
+<p>Respond to the pre-checkout query.</p>
+<table>
+<thead>
+<tr><th>Param</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>ok</td><td><code>Boolean</code></td><td>Specify if delivery of the product is possible.</td></tr>
+<tr><td>options</td><td><code>Object</code></td><td>Additional Telegram query options.</td></tr>
+</tbody>
+</table>
+<p>Example:</p>
+<pre><code class="hljs css language-js">context.answerPreCheckoutQuery(<span class="hljs-literal">true</span>);
+</code></pre>
+<p><br /></p>
+<h3><a class="anchor" aria-hidden="true" id="inline-mode-api"></a><a href="#inline-mode-api" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Inline mode API</h3>
+<h4><a class="anchor" aria-hidden="true" id="answerinlinequeryresults-options-official-docs-https-coretelegramorg-bots-api-answerinlinequery"></a><a href="#answerinlinequeryresults-options-official-docs-https-coretelegramorg-bots-api-answerinlinequery" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>answerInlineQuery(results [, options])</code> - <a href="https://core.telegram.org/bots/api/#answerinlinequery">Official Docs</a></h4>
+<p>Send answers to the inline query.</p>
+<table>
+<thead>
+<tr><th>Param</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>results</td><td><a href="https://core.telegram.org/bots/api#inlinequeryresult">InlineQueryResult</a>[]</td><td>Array of object represents one result of an inline query.</td></tr>
+<tr><td>options</td><td><code>Object</code></td><td>Additional Telegram query options.</td></tr>
+</tbody>
+</table>
+<p>Example:</p>
+<pre><code class="hljs css language-js">context.answerInlineQuery(
+  [
+    {
+      <span class="hljs-attr">type</span>: <span class="hljs-string">'photo'</span>,
+      <span class="hljs-attr">id</span>: <span class="hljs-string">'UNIQUE_ID'</span>,
+      <span class="hljs-attr">photoFileId</span>: <span class="hljs-string">'FILE_ID'</span>,
+      <span class="hljs-attr">title</span>: <span class="hljs-string">'PHOTO_TITLE'</span>,
+    },
+    {
+      <span class="hljs-attr">type</span>: <span class="hljs-string">'audio'</span>,
+      <span class="hljs-attr">id</span>: <span class="hljs-string">'UNIQUE_ID'</span>,
+      <span class="hljs-attr">audioFileId</span>: <span class="hljs-string">'FILE_ID'</span>,
+      <span class="hljs-attr">caption</span>: <span class="hljs-string">'AUDIO_TITLE'</span>,
+    },
+  ],
+  {
+    <span class="hljs-attr">cacheTime</span>: <span class="hljs-number">1000</span>,
+  }
+);
+</code></pre>
+<p><br /></p>
+<h3><a class="anchor" aria-hidden="true" id="game-api"></a><a href="#game-api" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Game API</h3>
+<h4><a class="anchor" aria-hidden="true" id="sendgamegameshortname-options-official-docs-https-coretelegramorg-bots-api-sendgame"></a><a href="#sendgamegameshortname-options-official-docs-https-coretelegramorg-bots-api-sendgame" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>sendGame(gameShortName [, options])</code> - <a href="https://core.telegram.org/bots/api#sendgame">Official Docs</a></h4>
+<p>Sends a game.</p>
+<table>
+<thead>
+<tr><th>Param</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>gameShortName</td><td>String</td><td>Short name of the game.</td></tr>
+<tr><td>options</td><td><code>Object</code></td><td>Additional Telegram query options.</td></tr>
+</tbody>
+</table>
+<p>Example:</p>
+<pre><code class="hljs css language-js">context.sendGame(<span class="hljs-string">'Mario Bros.'</span>, {
+  <span class="hljs-attr">disableNotification</span>: <span class="hljs-literal">true</span>,
+});
+</code></pre>
+<p><br /></p>
+<h4><a class="anchor" aria-hidden="true" id="setgamescorescore-options-official-docs-https-coretelegramorg-bots-api-setgamescore"></a><a href="#setgamescorescore-options-official-docs-https-coretelegramorg-bots-api-setgamescore" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>setGameScore(score [, options])</code> - <a href="https://core.telegram.org/bots/api#setgamescore">Official Docs</a></h4>
+<p>Sets the score of the specified user in a game.</p>
+<table>
+<thead>
+<tr><th>Param</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>score</td><td>Number</td><td>New score, must be non-negative.</td></tr>
+<tr><td>options</td><td><code>Object</code></td><td>Additional Telegram query options.</td></tr>
+</tbody>
+</table>
+<p>Example:</p>
+<pre><code class="hljs css language-js">context.setGameScore(<span class="hljs-number">999</span>);
+</code></pre>
+<p><br /></p>
+<h4><a class="anchor" aria-hidden="true" id="getgamehighscores-official-docs-https-coretelegramorg-bots-api-getgamehighscores"></a><a href="#getgamehighscores-official-docs-https-coretelegramorg-bots-api-getgamehighscores" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>getGameHighScores()</code> - <a href="https://core.telegram.org/bots/api#getgamehighscores">Official Docs</a></h4>
+<p>Gets data for high score tables.</p>
+<table>
+<thead>
+<tr><th>Param</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>options</td><td><code>Object</code></td><td>Additional Telegram query options.</td></tr>
+</tbody>
+</table>
+<p>Example:</p>
+<pre><code class="hljs css language-js">context.getGameHighScores();
+</code></pre>
+<p><br /></p>
+<h3><a class="anchor" aria-hidden="true" id="others"></a><a href="#others" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Others</h3>
+<h4><a class="anchor" aria-hidden="true" id="forwardmessagefromfromchatid-messageid-options-official-docs-https-coretelegramorg-bots-api-forwardmessage"></a><a href="#forwardmessagefromfromchatid-messageid-options-official-docs-https-coretelegramorg-bots-api-forwardmessage" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>forwardMessageFrom(fromChatId, messageId [, options])</code> - <a href="https://core.telegram.org/bots/api/#forwardmessage">Official Docs</a></h4>
+<p>Forwards messages of any kind.</p>
+<table>
+<thead>
+<tr><th>Param</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>fromChatId</td><td><code>Number | String</code></td><td>Unique identifier for the chat where the original message was sent.</td></tr>
+<tr><td>messageId</td><td><code>Number</code></td><td>Message identifier in the chat specified in fromChatId.</td></tr>
+<tr><td>options</td><td><code>Object</code></td><td>Other optional parameters.</td></tr>
+</tbody>
+</table>
+<p>Example:</p>
+<pre><code class="hljs css language-js">context.forwardMessageFrom(CHAT_ID, MESSAGE_ID, {
+  <span class="hljs-attr">disableNotification</span>: <span class="hljs-literal">true</span>,
+});
+</code></pre>
+<h4><a class="anchor" aria-hidden="true" id="forwardmessagetotochatid-messageid-options-official-docs-https-coretelegramorg-bots-api-forwardmessage"></a><a href="#forwardmessagetotochatid-messageid-options-official-docs-https-coretelegramorg-bots-api-forwardmessage" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>forwardMessageTo(toChatId, messageId [, options])</code> - <a href="https://core.telegram.org/bots/api/#forwardmessage">Official Docs</a></h4>
+<p>Forwards messages of any kind.</p>
+<table>
+<thead>
+<tr><th>Param</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>toChatId</td><td><code>Number | String</code></td><td>Unique identifier for the target chat or username of the target channel.</td></tr>
+<tr><td>messageId</td><td><code>Number</code></td><td>Message identifier in the chat specified in fromChatId.</td></tr>
+<tr><td>options</td><td><code>Object</code></td><td>Other optional parameters.</td></tr>
+</tbody>
+</table>
+<p>Example:</p>
+<pre><code class="hljs css language-js">context.forwardMessageTo(CHAT_ID, MESSAGE_ID, {
+  <span class="hljs-attr">disableNotification</span>: <span class="hljs-literal">true</span>,
+});
+</code></pre>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/docs/1.1.0/api-slack-event"><span class="arrow-prev">← </span><span class="function-name-prevnext">SlackEvent</span></a><a class="docs-next button" href="/docs/1.1.0/api-telegram-event"><span class="function-name-prevnext">TelegramEvent</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"></nav></div><footer class="nav-footer" id="footer"><div class="footer-layout"><div><div style="margin-bottom:16px"><a href="https://yoctol.ai" target="_blank" rel="noopener noreferrer"><img width="104px" src="/img/element_YOCTOL.AI_horizontal_S.svg" alt="YOCTOL.AI Logo"/></a></div><div class="desktop"><p class="text">© 2019 - PRESENT YOCTOL.AI ALL RIGHTS RESERVED.</p><a class="text" href="https://yoctol.ai/terms-of-use" target="_blank" rel="noopener noreferrer">Terms of Use</a><a class="text" href="https://yoctol.ai/privacy-policy" target="_blank" rel="noopener noreferrer" style="margin-left:16px">Privacy Policy</a></div></div><div class="footer-contacts"><h4 class="title">Contact Us</h4><p class="text">YOCTOL.AI</p><p class="text">service@yoctol.com</p></div><div class="footer-medias"><h4 class="title">Social Media</h4><div class="icons"><a href="https://twitter.com/yoctol" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#FFF" fill-rule="nonzero" d="M1.5 0h21A1.5 1.5 0 0 1 24 1.5v21a1.5 1.5 0 0 1-1.5 1.5h-21A1.5 1.5 0 0 1 0 22.5v-21A1.5 1.5 0 0 1 1.5 0zm7.532 18c6.037 0 9.34-4.617 9.34-8.621 0-.131 0-.262-.01-.392A6.419 6.419 0 0 0 20 7.42c-.6.245-1.235.406-1.885.477a3.097 3.097 0 0 0 1.443-1.676 6.92 6.92 0 0 1-2.085.735c-1.017-.999-2.634-1.243-3.944-.596-1.31.647-1.986 2.024-1.65 3.36-2.64-.123-5.099-1.273-6.765-3.166-.872 1.384-.427 3.155 1.016 4.045a3.468 3.468 0 0 1-1.49-.38v.039c0 1.442 1.102 2.684 2.634 2.97-.484.122-.99.14-1.483.052.43 1.234 1.663 2.08 3.067 2.104a6.945 6.945 0 0 1-4.077 1.3c-.26 0-.522-.015-.781-.044a9.867 9.867 0 0 0 5.032 1.359V18z"></path></svg></a><a href="https://www.linkedin.com/company/yoctol/" target="_blank" rel="noopener noreferrer" style="margin-left:8px"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#FFF" fill-rule="nonzero" d="M1.5 0h21A1.5 1.5 0 0 1 24 1.5v21a1.5 1.5 0 0 1-1.5 1.5h-21A1.5 1.5 0 0 1 0 22.5v-21A1.5 1.5 0 0 1 1.5 0zm6.086 19.636V9.281H4.368v10.355h3.218zM5.944 7.801A1.877 1.877 0 0 0 7.82 5.925 1.876 1.876 0 1 0 5.945 7.8zm13.697 11.835v-5.679c0-2.788-.602-4.933-3.861-4.933-1.565 0-2.615.859-3.045 1.672h-.043V9.281H9.604v10.355h3.216v-5.123c0-1.35.258-2.658 1.932-2.658 1.65 0 1.673 1.545 1.673 2.746v5.035h3.216z"></path></svg></a></div></div><div class="footer-product"><h4 class="title">Product</h4><div class="icons"><a href="https://yoctol.ai/creator" target="_blank" rel="noopener noreferrer" style="margin-top:1px;margin-right:10px"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22"><g fill="none" fill-rule="nonzero"><path d="M-1-2h24v24H-1z"></path><path fill="#FFF" d="M4.129 12c.309 3.386 3.267 6.042 6.871 6.042 3.604 0 6.562-2.656 6.871-6.042H22c-.317 5.574-5.12 10-11 10S.317 17.574 0 12h4.129zM14 9a1 1 0 1 1 0 2 1 1 0 0 1 0-2zM8 9a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm14-9v10h-4.113V4.116H7.814A3.703 3.703 0 0 0 4.113 7.82V10H0V7.82A7.817 7.817 0 0 1 7.685.001L7.815 0H22z"></path></g></svg></a><a href="https://yoctol.ai/seeker" target="_blank" rel="noopener noreferrer" style="margin-right:10px"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="24" viewBox="0 0 22 24"><g fill="none" fill-rule="nonzero"><path d="M-1 0h24v24H-1z"></path><path fill="#FFF" d="M2.81 7.033l.004.004 3.123 3.137a.112.112 0 0 1 .017.137 5.957 5.957 0 0 0 .843 7.356 5.936 5.936 0 0 0 8.41.003 5.957 5.957 0 0 0 .839-7.355.112.112 0 0 1 .016-.138l3.122-3.136a.11.11 0 0 1 .158 0l.01.012c3.182 4.182 2.79 10.14-.915 13.86-4.1 4.117-10.77 4.115-14.87-.002-3.699-3.714-4.1-9.656-.941-13.836a.111.111 0 0 1 .184-.042zM8.5 11a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm5 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm5.942-7.854l.015.014a.175.175 0 0 1 0 .23L15.32 7.952a.138.138 0 0 1-.182.024 7.294 7.294 0 0 0-8.27-.002.138.138 0 0 1-.182-.024L2.544 3.384a.175.175 0 0 1 .014-.245c4.97-4.188 11.913-4.185 16.884.007z"></path></g></svg></a><a href="https://bottender.js.org/" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="24" viewBox="0 0 22 24"><g fill="none" fill-rule="evenodd"><path fill-rule="nonzero" d="M-1 0h24v24H-1z"></path><path fill="#FFF" d="M1.668 8.51c.258.075.548.159.867.244a9.055 9.055 0 0 0 .959 11.639l.206.202.102.098.022.139a2.63 2.63 0 0 1-.314 1.745c.351-.162.683-.36.99-.59l.227-.178.242-.196.264.162a9.343 9.343 0 0 0 4.898 1.379c5.115 0 9.276-4.107 9.276-9.154 0-.806-.107-1.607-.32-2.385.33.027.63.047.9.06.184.762.289 1.543.288 2.326 0 5.513-4.534 9.999-10.12 9.999a10.128 10.128 0 0 1-5.067-1.352c-1.039.78-2.395 1.228-3.574 1.289l-.269.007v-.845c.928-.002 1.807-.82 1.808-1.831 0-.057-.05-.113-.056-.17A9.891 9.891 0 0 1 1.668 8.51zM10 11a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm6 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2zM9.379.02c2.551.437 3.144 1.75 3.144 1.75s1.02-1.037 3.57-.6c2.302.394 3.731 6.79 3.99 8.047 1.233.338 1.946.614 1.916.775l-.143.719c-.074.409-4.997-.07-10.837-1.07C5.179 8.638.506 7.495.579 7.086l.144-.74c.03-.162.797-.185 2.075-.091C3.484 5.161 7.08-.374 9.378.02z"></path></g></svg></a></div></div><div class="mobile"><p class="text">© 2019 - PRESENT YOCTOL.AI ALL RIGHTS RESERVED.</p><a class="text" href="https://yoctol.ai/terms-of-use" target="_blank" rel="noopener noreferrer">Terms of Use</a><a class="text" href="https://yoctol.ai/privacy-policy" target="_blank" rel="noopener noreferrer" style="margin-left:16px">Privacy Policy</a></div></div></footer></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script><script>window.twttr=(function(d,s, id){var js,fjs=d.getElementsByTagName(s)[0],t=window.twttr||{};if(d.getElementById(id))return t;js=d.createElement(s);js.id=id;js.src='https://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js, fjs);t._e = [];t.ready = function(f) {t._e.push(f);};return t;}(document, 'script', 'twitter-wjs'));</script><script>
+                document.addEventListener('keyup', function(e) {
+                  if (e.target !== document.body) {
+                    return;
+                  }
+                  // keyCode for '/' (slash)
+                  if (e.keyCode === 191) {
+                    const search = document.getElementById('search_input_react');
+                    search && search.focus();
+                  }
+                });
+              </script><script>
+              var search = docsearch({
+                
+                apiKey: '3498a488684b0324b9d56808fad17a33',
+                indexName: 'bottender',
+                inputSelector: '#search_input_react',
+                algoliaOptions: {"facetFilters":["language:en","version:1.1.0"]}
+              });
+            </script></body></html>
