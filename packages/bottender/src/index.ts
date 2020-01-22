@@ -6,6 +6,7 @@ export { bottender };
 export { default as Bot } from './bot/Bot';
 export { default as Context } from './context/Context';
 export { default as getSessionStore } from './getSessionStore';
+export { default as getClient } from './getClient';
 
 /* Action */
 export { default as chain } from './chain';

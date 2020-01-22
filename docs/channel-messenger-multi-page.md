@@ -95,11 +95,9 @@ We recommend you at least enable the following fields:
 We assume that you might need to add your bot to a Facebook Pages dynamically. In the following code, you can see how to subscribe `Facebook Page Subscriptions Fields` your bot needs.
 
 ```js
-const { MessengerClient } = require('messaging-api-messenger');
+const { getClient } = require('bottender');
 
-const config = require('./bottender.config.js');
-
-const messenger = new MessengerClient(config.channels.messenger);
+const messenger = getClient('messenger');
 
 // subscribe app for page
 await messenger.axios.post(
