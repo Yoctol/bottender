@@ -9,12 +9,10 @@ curl https://codeload.github.com/Yoctol/bottender/tar.gz/master | tar -xz --stri
 cd with-aws-lambda
 ```
 
-or use `serverless` npm global tool to create project:
+or use `npx serverless` to create your project:
 
 ```sh
-npm install -g serverless
-
-serverless install --url https://github.com/Yoctol/bottender/tree/master/examples/with-aws-lambda -n <PORJECT_NAME>
+npx serverless install --url https://github.com/Yoctol/bottender/tree/master/examples/with-aws-lambda -n <PORJECT_NAME>
 cd <PROJECT_NAME>
 ```
 
