@@ -1,5 +1,6 @@
 # Bottender
 
+[![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/Yoctol/bottender)
 [![npm](https://img.shields.io/npm/v/bottender.svg)](https://www.npmjs.com/package/bottender)
 [![CircleCI](https://circleci.com/gh/Yoctol/bottender.svg?style=shield)](https://circleci.com/gh/Yoctol/bottender)
 [![coverage](https://codecov.io/gh/Yoctol/bottender/branch/master/graph/badge.svg)](https://codecov.io/gh/Yoctol/bottender)
@@ -124,6 +125,12 @@ Install the dependencies:
 cd bottender
 yarn
 ```
+
+### Contribute using online one click setup
+
+You can use gitpod(a free online vs code like ide) for contributing with a single click it will launch a ready to code workspace with repo already cloned, all the dependencies pre-installed and the server for the website running so that you can start coding straight away without wasting time on the setup.
+
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/Yoctol/bottender)
 
 Make sure the tests pass (including eslint, flow checks and jest tests):
 
