@@ -9,6 +9,13 @@ curl https://codeload.github.com/Yoctol/bottender/tar.gz/master | tar -xz --stri
 cd with-aws-lambda
 ```
 
+or use `npx serverless` to create your project:
+
+```sh
+npx serverless install --url https://github.com/Yoctol/bottender/tree/master/examples/with-aws-lambda -n <PORJECT_NAME>
+cd <PROJECT_NAME>
+```
+
 Install dependencies:
 
 ```sh
