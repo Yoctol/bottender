@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BOTTENDER LINE LIFF V2 DEMO</title>
+</head>
+
+<body>
+  <button id="button">send test message</button>
+  <script src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
+  <script>
+    function initializeLiff(myLiffId) {
+      liff.init({
+        liffId: myLiffId,
+      }).then(() => {
+        setButtonHandler();
+      }).catch(err => {
+        alert(`error: ${JSON.stringify(err)}`);
+      });
+    }
+
+    function setButtonHandler() {
+      let button = document.getElementById('button')
+      button.addEventListener('click', function () {
+        alert('clicked: sendMessages');
+        liff.sendMessages([{
+          type: "text",
+          text: "Hello, LIFF!"
+        }]).then(function () {
+          alert("message sent");
+          liff.closeWindow();
+        }).catch(function (error) {
+          window.alert('Error sending message: ' + error);
+        });
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      fetch(`/send-id`).then(function (reqResponse) {
+        return reqResponse.json();
+      }).then(function (jsonResponse) {
+        let myLiffId = jsonResponse.id;
+        initializeLiff(myLiffId);
+      }).catch(function (error) {
+        alert(`error: ${JSON.stringify(error)}`);
+      });
+    })
+  </script>
+</body>
+
+</html>
