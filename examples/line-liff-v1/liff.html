@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BOTTENDER LINE LIFF V1 DEMO</title>
+</head>
+
+<body>
+  <button id="button">send test message</button>
+  <script src="https://d.line-scdn.net/liff/1.0/sdk.js"></script>
+  <script>
+    function setButtonHandler() {
+      let button = document.getElementById("button");
+      button.addEventListener("click", function () {
+        liff.sendMessages([{
+            type: "text",
+            text: "Hello, LIFF!"
+          }])
+          .then(() => {
+            alert("message sent");
+            liff.closeWindow();
+          })
+          .catch((err) => {
+            alert("error" + JSON.stringify(err));
+          });
+      })
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      if (liff) {
+        liff.init(
+          data => {
+            setButtonHandler();
+          },
+          err => {
+            alert("error:" + JSON.stringify(err));
+          }
+        );
+      } else {
+        alert("Can't init liff correctly.");
+      }
+    });
+  </script>
+</body>
+</html>
