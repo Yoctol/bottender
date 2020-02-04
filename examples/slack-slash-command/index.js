@@ -14,7 +14,7 @@ async function HandleDefaultEvent(context) {
 
 module.exports = async function App(context) {
   // check if an event is from slash command
-  if (context.event.isSlashCommand) {
+  if (context.event.isCommand) {
     return HandleSlashCommand;
   }
 

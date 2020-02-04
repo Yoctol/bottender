@@ -566,6 +566,21 @@ const slashCommandMessageEvent = {
   triggerId: '300680200000.5223100000.e4f5ce4d607d59005675000000000000',
 };
 
+const slashCommandMessageEventWithoutArguments = {
+  token: 'xxxxxxxxxxxxxxxxxxxxxxxx',
+  teamId: 'T056K0000',
+  teamDomain: 'domain',
+  channelId: 'G7W5W0000',
+  channelName: 'channel_name',
+  userId: 'U056K0000',
+  userName: 'user_name',
+  command: '/command',
+  text: '',
+  responseUrl:
+    'https://hooks.slack.com/commands/T056K0000/300680000000/xxxxxxxxxxxxxxxxxxxxxxxx',
+  triggerId: '300680200000.5223100000.e4f5ce4d607d59005675000000000000',
+};
+
 it('#rawEvent', () => {
   expect(new SlackEvent(message).rawEvent).toEqual(message);
 });
@@ -764,19 +779,28 @@ it('#isMessage', () => {
   expect(new SlackEvent(mpimMessage).isMessage).toEqual(true);
   expect(new SlackEvent(interactiveMessageEvent).isMessage).toEqual(false);
   expect(new SlackEvent(slashCommandMessageEvent).isMessage).toEqual(false);
+  expect(
+    new SlackEvent(slashCommandMessageEventWithoutArguments).isMessage
+  ).toEqual(false);
 });
 
 it('#isText', () => {
   const event = new SlackEvent(message);
   expect(event.isText).toEqual(true);
   expect(new SlackEvent(interactiveMessageEvent).isText).toEqual(false);
-  expect(new SlackEvent(slashCommandMessageEvent).isText).toEqual(true);
+  expect(new SlackEvent(slashCommandMessageEvent).isText).toEqual(false);
+  expect(
+    new SlackEvent(slashCommandMessageEventWithoutArguments).isText
+  ).toEqual(false);
 });
 
 it('#text', () => {
   expect(new SlackEvent(message).text).toEqual('Hello world');
   expect(new SlackEvent(interactiveMessageEvent).text).toEqual(null);
   expect(new SlackEvent(slashCommandMessageEvent).text).toEqual('arguments');
+  expect(new SlackEvent(slashCommandMessageEventWithoutArguments).text).toEqual(
+    ''
+  );
 });
 
 it('#message', () => {
@@ -790,6 +814,9 @@ it('#message', () => {
   expect(new SlackEvent({ type: 'notMessage' }).message).toBeNull();
   expect(new SlackEvent(interactiveMessageEvent).message).toBeNull();
   expect(new SlackEvent(slashCommandMessageEvent).message).toBeNull();
+  expect(
+    new SlackEvent(slashCommandMessageEventWithoutArguments).message
+  ).toBeNull();
 });
 
 it('#isChannelsMessage', () => {
@@ -930,17 +957,21 @@ it('#isBotMessage', () => {
 });
 
 describe('slash command event', () => {
-  it('#isSlashCommand', () => {
-    expect(new SlackEvent(slashCommandMessageEvent).isSlashCommand).toEqual(
-      true
-    );
-    expect(new SlackEvent(message).isSlashCommand).toEqual(false);
+  it('#isCommand', () => {
+    expect(new SlackEvent(slashCommandMessageEvent).isCommand).toEqual(true);
+    expect(
+      new SlackEvent(slashCommandMessageEventWithoutArguments).isCommand
+    ).toEqual(true);
+    expect(new SlackEvent(message).isCommand).toEqual(false);
   });
 
-  it('#slashCommand', () => {
-    expect(new SlackEvent(slashCommandMessageEvent).slashCommand).toEqual(
+  it('#command', () => {
+    expect(new SlackEvent(slashCommandMessageEvent).command).toEqual(
       '/command'
     );
-    expect(new SlackEvent(message).slashCommand).toEqual(null);
+    expect(
+      new SlackEvent(slashCommandMessageEventWithoutArguments).command
+    ).toEqual('/command');
+    expect(new SlackEvent(message).command).toEqual(null);
   });
 });

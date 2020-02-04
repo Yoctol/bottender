@@ -13,11 +13,11 @@ import { RequestContext } from '../types';
 import SlackContext from './SlackContext';
 import SlackEvent, {
   BlockActionEvent,
+  CommandEvent,
   EventTypes,
   InteractiveMessageEvent,
   Message,
   SlackRawEvent,
-  SlashCommandEvent,
   UIEvent,
 } from './SlackEvent';
 // FIXME
@@ -169,7 +169,7 @@ export default class SlackConnector
     }
 
     return (
-      (rawEvent as Message).channel || (rawEvent as SlashCommandEvent).channelId
+      (rawEvent as Message).channel || (rawEvent as CommandEvent).channelId
     );
   }
 
@@ -189,7 +189,7 @@ export default class SlackConnector
       userFromBody = (rawEvent as UIEvent).user.id;
     } else {
       userFromBody =
-        (rawEvent as Message).user || (rawEvent as SlashCommandEvent).userId;
+        (rawEvent as Message).user || (rawEvent as CommandEvent).userId;
     }
 
     if (
