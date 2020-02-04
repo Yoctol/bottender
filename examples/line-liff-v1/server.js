@@ -24,11 +24,7 @@ app.prepare().then(() => {
     })
   );
 
-  server.get('/api', (req, res) => {
-    res.json({ ok: true });
-  });
-
-  server.all('/liff', (req, res) => {
+  server.get('/liff', (req, res) => {
     const filename = path.join(`${__dirname}/liff.html`);
     ejs.renderFile(filename, {}, {}, function(err, str) {
       if (err) {
@@ -39,7 +35,7 @@ app.prepare().then(() => {
     });
   });
 
-  server.all('*', (req, res) => {
+  server.post('/webhooks/line', (req, res) => {
     return handle(req, res);
   });
 
