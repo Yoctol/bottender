@@ -3,7 +3,6 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const express = require('express');
 const { bottender } = require('bottender');
-const ejs = require('ejs');
 
 const app = bottender({
   dev: process.env.NODE_ENV !== 'production',
@@ -30,16 +29,11 @@ app.prepare().then(() => {
 
   server.get('/liff', (req, res) => {
     const filename = path.join(`${__dirname}/liff.html`);
-    ejs.renderFile(filename, {}, {}, function(err, str) {
-      if (err) {
-        console.log('err:');
-        console.log(err);
-      }
-      res.send(str);
-    });
+    res.sendFile(filename);
   });
 
-  server.post('/webhooks/line', (req, res) => {
+  // delegate other requests to bottender
+  server.all('*', (req, res) => {
     return handle(req, res);
   });
 
