@@ -35,7 +35,7 @@ const { createServer } = require('bottender/express');
 
 const config = require('./bottender.config').messenger;
 
-const maxSize = 500; // The maxSizeimum size of the cache, default will be 500.
+const maxSize = 500; // The maximum size of the cache, default will be 500.
 
 const bot = new MessengerBot({
   accessToken: config.accessToken,
@@ -211,6 +211,6 @@ const {
 + } = require('@bottender/handlers');
 ```
 
-<!-- ## Change Log
+## Change Log
 
-You can find [v1 changelog here](TODO...........). -->
+You can find [v1 changelog here](https://github.com/Yoctol/bottender/releases/tag/v1.0.0).

@@ -6,7 +6,7 @@ original_id: the-basics-session
 
 ## Introduction
 
-Bottender provide a mechanism for you to recognize each conversation and store temporary data on ecah conversation. just like session of the web server.
+Bottender provides a mechanism for you to recognize each conversation and store temporary data on ecah conversation. just like session of the web server.
 
 - [Session state](the-basics-session.md#session-state): store and retrieve data on each conversation
 - [Session id](the-basics-session.md#session-id): a identifier to recognize each conversation
@@ -121,7 +121,7 @@ Bot > { "count": 1 }
 
 ## Session Id
 
-Bottender provide a consistent interface `session.id` as a unique identifier for all platform in all kinds of request.
+Bottender provides a consistent interface `session.id` as a unique identifier for all platform in all kinds of request.
 
 ### Usage
 

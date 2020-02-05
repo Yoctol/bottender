@@ -5,19 +5,19 @@ title: Session
 
 ## Introduction
 
-Bottender provide a mechanism for you to recognize each conversation and store temporary data on ecah conversation. just like session of the web server.
+Conversations may happen in an 1 on 1 private chat or even in a channel with a lot of people in there. Due to this, Bottender provides a mechanism called "session" to distinguish different conversations and store temporary data on the corresponding conversation. It's just like how sessions works in the typical web server. The following are jargon that you may want to know when using the session:
 
-- [Session state](the-basics-session.md#session-state): store and retrieve data on each conversation
-- [Session id](the-basics-session.md#session-id): a identifier to recognize each conversation
-- [Session storage](the-basics-session.md#session-storage): specify what kind of storage you want to use
+- [Session state](the-basics-session.md#session-state): temporary data on the conversation.
+- [Session id](the-basics-session.md#session-id): an unique identifier of the conversation.
+- [Session storage](the-basics-session.md#session-storage): where to store the session.
 
 ## Session State
 
-`State` is widely used in flow control of daily mahcines, e.g. traffic light. The change of state is in response to external inputs and/or conditions is satisfied. For example, a green traffic light (a state) changes to yellow traffic light after 60 sec (a satisfied time condition).
+`State` is widely used in flow control of daily machines, e.g., traffic light. The change of state is in response to external inputs and/or conditions are satisfied. For example, a green traffic light (a state) changes to the yellow traffic light after 60 sec (a satisfied time condition).
 
 ### A Counting Bot Example
 
-Considering a couting bot which responds the number of message events it received, for example:
+Considering a counting bot which replies the number of message events it received, for example:
 
 ```
 You > Hi
@@ -26,7 +26,7 @@ You > Hi
 Bot > Count: 2
 ```
 
-In this section, we will explain how to use state correctly to build a counter. It begins with a count state variable, which will be updated when the bot receives an event.
+In this section, we will explain how to use the state correctly to build a counter. It begins with a count state variable, which will be updated when the bot receives an event.
 
 Let's start with a static action like this:
 
@@ -48,7 +48,7 @@ module.exports = {
 };
 ```
 
-After adding this, Bottender will set initial state to this object for the new conversation session.
+After adding this, Bottender will set the initial state to the specified object for the new conversation session.
 
 2. Access state value using `context.state`:
 
@@ -59,7 +59,7 @@ async function EventCount(context) {
 }
 ```
 
-Even though we use state variable to render the message content, it always gets `Count: 1` as result. That's why step 3 is necessary.
+Even though we use the state variable to render the message content, it always gets `Count: 1` as the result. That's why step 3 is necessary.
 
 3. Set state value using `context.setState()`:
 
@@ -112,99 +112,43 @@ In ["Console Mode"](the-basics-console-mode.md), you can leverage the convenient
 You > /state
 ```
 
-This commmand formats the state with `JSON.stringify()` and send the result as a bot message to you:
+This command formats the state with `JSON.stringify()` and send the result as a bot message to you:
 
 ```
 Bot > { "count": 1 }
 ```
 
-## Session Id
+## Session ID
 
-Bottender provide a consistent interface `session.id` as a unique identifier for all platform in all kinds of request.
+Every session has an unique identifier on it. You can access it using `session.id`. For demonstration, The following code sends platform and session id information to the user:
 
-### Usage
-
-The following code is a demo to reply session.id to user:
-
-```
+```js
 module.exports = async function App(context) {
-  await context.sendText(`session.platform: ${context.session.platform}`);
+  await context.sendText(`context.platform: ${context.platform}`);
   await context.sendText(`session.id: ${context.session.id}`);
 };
 ```
 
-`session.id` includes the platform name and channel id to avoid any confiction when a bot connect to multiple platform.
+To avoid ID conflict between platforms, Bottender adds platform prefix to the session key.
 
-[The defination of `session.id`](https://github.com/Yoctol/bottender/blob/master/packages/bottender/src/bot/Bot.ts#L185) in Bottender is:
+For example, `telegram:16423...` on Telegram and `line:U4af4980629...` on LINE.
 
-```
-sessionId = `${platform}:${sessionKey}`
-```
+The session key itself can be very different between platforms. It may come from user id, channel id, group id, room id, or whatever can be used to distinguish the conversation.
 
-`platform` is the platform name, the `sessionKey` come from different sources in different situations.
-
-### Session Key of LINE
-
-there are 3 type of source in LINE playform defined in [the LINE official document](https://developers.line.biz/en/reference/messaging-api/#common-properties), Source user, Source group and Source room.
-
-if a request come from source user, then the sessionKey will be source.userId, for example:
-
-```
-line:U4af4980629...
-```
-
-if a request come from source group, then the sessionKey will be source.groupId, for example:
-
-```
-line:Ca56f94637c...
-```
-
-if a request come from source room, then the sessionKey will be source.roomId, for example:
-
-```
-line:Ra8dbf4673c...
-```
-
-you can read [the implement detail here](https://github.com/Yoctol/bottender/blob/master/packages/bottender/src/bot/LineConnector.ts#L115)
-
-### Session Key in Telegram
-
-The `sessionKey` represent for the `chat.id` in Telegram platform. The principal is the same as the LINE platform, but the implement is more complicated.
-
-this is an example of `session.id`:
-
-```
-telegram:16423...
-```
-
-you can read [the implement detail here](https://github.com/Yoctol/bottender/blob/master/packages/bottender/src/bot/TelegramConnector.ts#L55)
-
-### Session Key in Messenger
-
-The `sessionKey` represent for the `recipient.id` or `sender.id` in Slack platform.
-
-you can read [the implement detail here](https://github.com/Yoctol/bottender/blob/master/packages/bottender/src/bot/MessengerConnector.ts#L233)
-
-### Session Key in Slack
-
-The `sessionKey` represent for the `channel.id` in Slack platform.
-
-you can read [the implement detail here](https://github.com/Yoctol/bottender/blob/master/packages/bottender/src/bot/SlackConnector.ts#L117)
-
-### Session Key in Viper
-
-The `sessionKey` represent for the `user.id` or `sender.id` in Slack platform.
-
-you can read [the implement detail here](https://github.com/Yoctol/bottender/blob/master/packages/bottender/src/bot/ViberConnector.ts#L66)
+> **Note:** There are three types of sources on the LINE platform defined in [the LINE official document](https://developers.line.biz/en/reference/messaging-api/#common-properties): user, group and room.
+>
+> If a request comes from a user, the session key will be `source.userId`, for example: `line:U4af4980629...`.
+> If a request comes from a group, the session key will be `source.groupId`, for example: `line:Ca56f94637c...`.
+> If a request comes from a room, the session key will be `source.roomId`, for example: `line:Ra8dbf4673c...`
 
 ## Session Storage
 
-Since HTTP driven applications are stateless, the mission of sessions is to store context of users during conversations. Bottender offers a variety of session drivers right out of the box, e.g. memory, file, redis, and mongo. These drivers could be accessed through an expressive, unified API.
+Since HTTP driven applications are stateless, the mission of sessions is to store the context of users during conversations. Bottender offers a variety of session drivers right out of the box, e.g., memory, file, redis, and mongo. These drivers could be accessed through an expressive, unified API.
 
-From connectors, the information of session could be accessed, e.g. session id,
+From connectors, the information of session could be accessed, e.g., session id,
 plus, whether the session is between a bot and single user, or between a bot and a group of users. One bot could support multiple messaging platforms at once, and one connector refers to one messaging platform.
 
-You can specify an explicit session expiration time to reset the state. It makes a bot more human-like by forgetting (initializing) the state after conversation has been inactive for a while
+You can specify an explicit session expiration time to reset the state. It makes a bot more human-like by forgetting (initializing) the state after the conversation has been inactive for a while.
 
 ### Configuring Session Driver
 

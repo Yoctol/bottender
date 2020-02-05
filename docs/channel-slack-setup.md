@@ -50,7 +50,7 @@ To make a Slack bot work, you have to set up the following values:
 - Slack Verification Token
 - Webhook
 
-### Prequirements
+### Requirements
 
 Before going further, we assumed that you already have:
 
