@@ -28,7 +28,7 @@
 <li><strong><a href="/blog/2020/01/22/bottender-1_2#accessing-messaging-clients">Accessing Messaging Clients</a>:</strong> Getting configured messaging clients out of the box to call API anytime.</li>
 </ul>
 <p>All of these benefits are non-breaking and fully backward compatible. You can update it by running:</p>
-<pre><code class="hljs css language-sh">npm install bottender@latest 
+<pre><code class="hljs css language-sh">npm install bottender@latest
 </code></pre>
 ]]></description>
         </item>

@@ -70,7 +70,7 @@
 </code></pre>
 <p>Make sure that you checked the <code>viber</code> option:</p>
 <p><img src="https://user-images.githubusercontent.com/3382565/67851228-f3508880-fb44-11e9-90aa-c5bcc2d96aa2.png" alt=""></p>
-<p>After finishing <code>Create Bottender App</code> process, <code>bottender.config.js</code>, a config file, will be generated automatically for furthur channel settings.</p>
+<p>After finishing <code>Create Bottender App</code> process, <code>bottender.config.js</code>, a config file, will be generated automatically for further channel settings.</p>
 <h3><a class="anchor" aria-hidden="true" id="enable-viber-channel-for-existing-apps"></a><a href="#enable-viber-channel-for-existing-apps" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Enable Viber Channel for Existing Apps</h3>
 <p>First, you need to have a <code>bottender.config.js</code> file that sets <code>channels.viber.enabled</code> as <code>true</code>:</p>
 <pre><code class="hljs css language-js"><span class="hljs-built_in">module</span>.exports = {
@@ -94,11 +94,11 @@
 <li>Webhook</li>
 </ul>
 <h3><a class="anchor" aria-hidden="true" id="viber-access-token"></a><a href="#viber-access-token" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Viber Access Token</h3>
-<p><code>bottender.config.js</code> looks up <code>.env</code> for access token, which could be found in Viber Admin Panel (see Viber's official document, <a href="https://developers.viber.com/docs/api/rest-bot-api/#authentication-token">Authentication Token</a> for more information). Then, paste your Viber bot token to the follwing field in <code>.env</code>.</p>
+<p><code>bottender.config.js</code> looks up <code>.env</code> for access token, which could be found in Viber Admin Panel (see Viber's official document, <a href="https://developers.viber.com/docs/api/rest-bot-api/#authentication-token">Authentication Token</a> for more information). Then, paste your Viber bot token to the following field in <code>.env</code>.</p>
 <pre><code class="hljs"><span class="hljs-attr">VIBER_ACCESS_TOKEN</span>=
 </code></pre>
 <h3><a class="anchor" aria-hidden="true" id="webhook"></a><a href="#webhook" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Webhook</h3>
-<p>After finshing above settings, you can start your server with Viber webhook event listening using following commands:</p>
+<p>After finishing above settings, you can start your server with Viber webhook event listening using following commands:</p>
 <pre><code class="hljs css language-sh"><span class="hljs-comment"># in production mode</span>
 npm start
 
