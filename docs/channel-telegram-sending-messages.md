@@ -162,7 +162,7 @@ await context.sendAnimation('https://www.example.com/example.mp4');
 
 ### Sticker
 
-Use this method to send static .WEBP or animated .TGS stickers. On success, the sent message is returned.
+Use this method to send static `.WEBP` or animated `.TGS` stickers. On success, the sent message is returned.
 
 ```js
 await context.sendSticker('CAADAgADQAADyIsGAAE7MpzFPFQX5QI');

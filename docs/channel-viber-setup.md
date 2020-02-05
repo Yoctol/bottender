@@ -19,7 +19,7 @@ Make sure that you checked the `viber` option:
 
 ![](https://user-images.githubusercontent.com/3382565/67851228-f3508880-fb44-11e9-90aa-c5bcc2d96aa2.png)
 
-After finishing `Create Bottender App` process, `bottender.config.js`, a config file, will be generated automatically for furthur channel settings.
+After finishing `Create Bottender App` process, `bottender.config.js`, a config file, will be generated automatically for further channel settings.
 
 ### Enable Viber Channel for Existing Apps
 
@@ -51,7 +51,7 @@ To make Viber bots work, you have to setup the following values:
 
 ### Viber Access Token
 
-`bottender.config.js` looks up `.env` for access token, which could be found in Viber Admin Panel (see Viber's official document, [Authentication Token](https://developers.viber.com/docs/api/rest-bot-api/#authentication-token) for more information). Then, paste your Viber bot token to the follwing field in `.env`.
+`bottender.config.js` looks up `.env` for access token, which could be found in Viber Admin Panel (see Viber's official document, [Authentication Token](https://developers.viber.com/docs/api/rest-bot-api/#authentication-token) for more information). Then, paste your Viber bot token to the following field in `.env`.
 
 ```
 VIBER_ACCESS_TOKEN=
@@ -59,7 +59,7 @@ VIBER_ACCESS_TOKEN=
 
 ### Webhook
 
-After finshing above settings, you can start your server with Viber webhook event listening using following commands:
+After finishing above settings, you can start your server with Viber webhook event listening using following commands:
 
 ```sh
 # in production mode

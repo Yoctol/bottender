@@ -280,22 +280,22 @@ A `Confirm Template` is designed for confirmation.
 
 ```js
 const template = {
- text: 'Are you sure?',
- actions: [
- {
- type: 'message',
- label: 'Yes',
- text: 'yes',
- },
- {
- type: 'message',
- label: 'No',
- text: 'no',
- },
- ],
+  text: 'Are you sure?',
+  actions: [
+    {
+      type: 'message',
+      label: 'Yes',
+      text: 'yes',
+    },
+    {
+      type: 'message',
+      label: 'No',
+      text: 'no',
+    },
+  ],
 };
-const altText = 'this is a confirm template'
-await context.sendConfirmTemplate(, template);
+const altText = 'this is a confirm template';
+await context.sendConfirmTemplate(altText, template);
 ```
 
 > **Note:**
@@ -448,7 +448,7 @@ await context.sendImageCarouselTemplate(altText, template);
 
 <p><img width="800" src="https://user-images.githubusercontent.com/662387/70701503-6bdf6300-1d07-11ea-86d6-924d676a1f80.png"></p>
 
-Since we love [`Flex Message`](./channel-line-flex.md) and inspired by its flexiblity and interactive, we wrote a seperate doc, [`Flex Message`](./channel-line-flex.md)
+Since we love [`Flex Message`](./channel-line-flex.md) and inspired by its flexibility and interactive, we wrote a separate doc, [`Flex Message`](./channel-line-flex.md)
 
 ## Sending with Quick Replies
 
