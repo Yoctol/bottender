@@ -455,8 +455,29 @@
       "version-1.2.0/version-1.2.0-advanced-guides-nlu": {
         "title": "Natural Language Understanding"
       },
+      "version-1.2.0/version-1.2.0-channel-line-sending-messages": {
+        "title": "Sending LINE Messages"
+      },
       "version-1.2.0/version-1.2.0-channel-messenger-multi-page": {
         "title": "Messenger Multi-Page Support"
+      },
+      "version-1.2.0/version-1.2.0-channel-slack-setup": {
+        "title": "Setup Slack"
+      },
+      "version-1.2.0/version-1.2.0-channel-telegram-sending-messages": {
+        "title": "Sending Telegram Messages"
+      },
+      "version-1.2.0/version-1.2.0-channel-viber-setup": {
+        "title": "Setup Viber"
+      },
+      "version-1.2.0/version-1.2.0-migrating-v1": {
+        "title": "Migrating from v0.x to v1.x"
+      },
+      "version-1.2.0/version-1.2.0-the-basics-console-mode": {
+        "title": "Console Mode"
+      },
+      "version-1.2.0/version-1.2.0-the-basics-session": {
+        "title": "Session"
       }
     },
     "links": {

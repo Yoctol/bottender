@@ -13,7 +13,7 @@ A well-trained NLU engine usually has a 90%+ accurate rate in terms of telling t
 In the following sections, you can see how to integrate Bottender with various modern NLU services:
 
 - [QnA Maker](advanced-guides-nlu.md#building-with-qna-maker)
-- [Dialogflow](advanced-guides-nlu.md#building-with-dialogflow)
+- [DialogFlow](advanced-guides-nlu.md#building-with-dialogflow)
 - [LUIS](advanced-guides-nlu.md#building-with-luis)
 - [Rasa](advanced-guides-nlu.md#building-with-rasa-nlu)
 
@@ -81,13 +81,13 @@ module.exports = async function App() {
 >
 > - Fore the full example code, please refer to Bottender example, [With QnA Maker](https://github.com/Yoctol/bottender/tree/master/examples/with-qna-maker).
 
-## Building with Dialogflow
+## Building with DialogFlow
 
-Google creates Dialogflow. Since 2019 Google announced its NLU pre-training [BERT](https://www.blog.google/products/search/search-language-understanding-bert), we are confident in Google's NLU solution; at least we can think it might be the state-of-the-art.
+Google creates DialogFlow. Since 2019 Google announced its NLU pre-training [BERT](https://www.blog.google/products/search/search-language-understanding-bert), we are confident in Google's NLU solution; at least we can think it might be the state-of-the-art.
 
-### Step 1: Dialogflow Setup
+### Step 1: DialogFlow Setup
 
-To build a bot integrated with [Dialogflow](https://dialogflow.com/), you have to set up Dialogflow following the Dialogflow doc, [Quickstart: Setup](https://cloud.google.com/dialogflow/docs/quick/setup) and fill in the two values into the `.env` file:
+To build a bot integrated with [DialogFlow](https://dialogflow.com/), you have to set up DialogFlow following the DialogFlow doc, [Quickstart: Setup](https://cloud.google.com/dialogflow/docs/quick/setup) and fill in the two values into the `.env` file:
 
 - `GOOGLE_APPLICATION_CREDENTIALS`, which is the file path of the JSON file that contains your service account key
 - `GOOGLE_APPLICATION_PROJECT_ID`, which stands for the GCP project ID
@@ -99,13 +99,13 @@ GOOGLE_APPLICATION_CREDENTIALS=
 GOOGLE_APPLICATION_PROJECT_ID=
 ```
 
-### Step 2: Create a Dialogflow Agent
+### Step 2: Create a DialogFlow Agent
 
-Next, you can build a Dialogflow agent following the Dialogflow doc, [Quickstart: Build an Agent](https://cloud.google.com/dialogflow/docs/quick/build-agent). In this example, we make an agent and create an intent with the display name `greeting.` You can set your training phrases on the Dialogflow console for this intent.
+Next, you can build a DialogFlow agent following the DialogFlow doc, [Quickstart: Build an Agent](https://cloud.google.com/dialogflow/docs/quick/build-agent). In this example, we make an agent and create an intent with the display name `greeting.` You can set your training phrases on the DialogFlow console for this intent.
 
-After you finish the settings of the agent, you can call Dialogflow's API to analyze the intent of the message the bot receives.
+After you finish the settings of the agent, you can call DialogFlow's API to analyze the intent of the message the bot receives.
 
-### Step 3: Connect Bottender with Dialogflow by `bottender/dialogflow`
+### Step 3: Connect Bottender with DialogFlow by `bottender/dialogflow`
 
 To make the bot development enjoyable, we made a [`bottender/dialogflow`](https://github.com/Yoctol/bottender/tree/master/packages/bottender-dialogflow) package. You can install the package with `npm` or `yarn`.
 
@@ -121,7 +121,7 @@ or with `yarn`:
 yarn add @bottender/dialogflow
 ```
 
-In the following sample code, you can see how elegant it is to integrate Bottender with Dialogflow. All you need to do is to fill in your environment variables, write a map between `intents` (e.g., `greeting`) and corresponding `functions` (e.g., `SayHello`).
+In the following sample code, you can see how elegant it is to integrate Bottender with DialogFlow. All you need to do is to fill in your environment variables, write a map between `intents` (e.g., `greeting`) and corresponding `functions` (e.g., `SayHello`).
 
 ```js
 const dialogflow = require('@bottender/dialogflow');
@@ -151,8 +151,8 @@ module.exports = async function App() {
 
 > **Note:**
 >
-> - Dialogflow offers `intent name` and `intent display name`. The value of the former one is fixed once it is created; the value of the latter one can be change at any time. While writing the map between `intents` and `functions` at `bottender/dialogflow`, you can use any of the two to represent a single `intent.`
-> - Fore the full example code, please refer to Bottender example, [With Dialogflow](https://github.com/Yoctol/bottender/tree/master/examples/with-dialogflow)
+> - DialogFlow offers `intent name` and `intent display name`. The value of the former one is fixed once it is created; the value of the latter one can be change at any time. While writing the map between `intents` and `functions` at `bottender/dialogflow`, you can use any of the two to represent a single `intent.`
+> - Fore the full example code, please refer to Bottender example, [With DialogFlow](https://github.com/Yoctol/bottender/tree/master/examples/with-dialogflow)
 
 ## Building with LUIS
 
