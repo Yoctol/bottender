@@ -1,9 +1,9 @@
 ---
 id: advanced-guides-custom-server
-title: How To Run Bottender In Custom Server
+title: How to Run Bottender in Custom Server
 ---
 
-## The concept
+## The Concept
 
 The behavior of `bottender dev` and `bottender start` commands are start a default express server and load `index.js` from project root directory as the root action of the chatbot.
 
@@ -25,7 +25,7 @@ In order to run bottender in the custom http server, we need to run a http serve
 
 ## Express
 
-### Create new project with custom express
+### Create New Project with Custom Express
 
 If you want to have a clean project with custom express, you could start from [this example](https://github.com/Yoctol/bottender/tree/master/examples/custom-server-express) to develop your project.
 
@@ -38,7 +38,7 @@ It's very simple.
 
 Or you want to have the folder structure we recommanded, you could start with [create-bottender-app](getting-started#create-a-new-bottender-app) command and migrate to custom express server by follow the migration instructions below.
 
-### Migrate existing project to custom express
+### Migrate Existing Project to Custom Express
 
 Assume you have a project build from [create-bottender-app](getting-started#create-a-new-bottender-app) command and you want to have your custom express server. You need to write a custom express server and delegate all webhook request to bottender app.
 
