@@ -40,6 +40,7 @@ export type SlackRequestBody = EventsAPIBody | { payload: string };
 type CommonConstructorOptions = {
   skipLegacyProfile?: boolean;
   verificationToken?: string;
+  signingSecret?: string;
   includeBotMessages?: boolean;
 };
 
@@ -62,6 +63,8 @@ export default class SlackConnector
 
   _verificationToken: string;
 
+  _signingSecret: string;
+
   _skipLegacyProfile: boolean;
 
   _includeBotMessages: boolean;
@@ -71,6 +74,7 @@ export default class SlackConnector
       verificationToken,
       skipLegacyProfile,
       includeBotMessages,
+      signingSecret,
     } = options;
     if ('client' in options) {
       this._client = options.client;
@@ -79,7 +83,7 @@ export default class SlackConnector
 
       invariant(
         accessToken,
-        'Viber access token is required. Please make sure you have filled it correctly in `bottender.config.js` or `.env` file.'
+        'Slack access token is required. Please make sure you have filled it correctly in `bottender.config.js` or `.env` file.'
       );
 
       this._client = SlackOAuthClient.connect({
@@ -88,6 +92,7 @@ export default class SlackConnector
       });
     }
 
+    this._signingSecret = signingSecret || '';
     this._verificationToken = verificationToken || '';
 
     if (!this._verificationToken) {
@@ -346,9 +351,40 @@ export default class SlackConnector
     return crypto.timingSafeEqual(bufferFromBot, bufferFromBody);
   }
 
+  verifySignatureBySigningSecret({
+    rawBody,
+    signature,
+    timestamp,
+  }: {
+    rawBody: string;
+    signature: string;
+    timestamp: number;
+  }): boolean {
+    // ignore this request if the timestamp is 5 more minutes away from now
+    if (Math.abs(Date.now() - timestamp)) {
+      return false;
+    }
+
+    const SIGNATURE_VERSION = 'v0'; // currently it's always 'v0'
+    const signatureBaseString = `${SIGNATURE_VERSION}:${timestamp}:${rawBody}`;
+
+    const digest = crypto
+      .createHmac('sha256', this._signingSecret)
+      .update(signatureBaseString, 'utf8')
+      .digest('hex');
+    const calculatedSignature = `${SIGNATURE_VERSION}=${digest}`;
+
+    return crypto.timingSafeEqual(
+      Buffer.from(signature, 'utf8'),
+      Buffer.from(calculatedSignature, 'utf8')
+    );
+  }
+
   preprocess({
     method,
+    headers,
     body,
+    rawBody,
   }: {
     method: string;
     headers: Record<string, any>;
@@ -362,12 +398,39 @@ export default class SlackConnector
       };
     }
 
+    const timestamp = headers['X-Slack-Request-Timestamp'];
+    const signature = headers['X-Slack-Signature'];
+
+    if (
+      this._signingSecret &&
+      !this.verifySignatureBySigningSecret({
+        rawBody,
+        timestamp,
+        signature,
+      })
+    ) {
+      const error = {
+        message: 'Slack Signing Secret Validation Failed!',
+        request: {
+          body,
+        },
+      };
+
+      return {
+        shouldNext: false,
+        response: {
+          status: 400,
+          body: { error },
+        },
+      };
+    }
+
     const token =
       !body.token && body.payload && typeof body.payload === 'string'
         ? JSON.parse(body.payload).token
         : body.token;
 
-    if (!this.verifySignature(token)) {
+    if (this._verificationToken && !this.verifySignature(token)) {
       const error = {
         message: 'Slack Verification Token Validation Failed!',
         request: {
