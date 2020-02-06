@@ -18,9 +18,7 @@ LIFF provide more possibility to create the best user experience. One of the com
 - [Open link in external browser](https://developers.line.biz/en/reference/liff/#open-window)
 - [Scan QR Code](https://developers.line.biz/en/reference/liff/#scan-code)
 - [Connect to bluetooth devices](https://developers.line.biz/en/reference/liff/#bluetooth-request-device)
-- Others
-
-You can test all features in [LIFF playground](https://playground-for-liff.linecorp.com/)
+- Others features in [LIFF playground](https://playground-for-liff.linecorp.com/)
 
 ### Workflow
 
@@ -132,7 +130,7 @@ app.prepare().then(() => {
   ...
   "scripts": {
     "dev": "nodemon server.js",
-    "start": "node server.js",
+    "start": "cross-env NODE_ENV=production node server.js",
     ...
   },
   ...
@@ -214,44 +212,54 @@ replace the body in `liff.html` with the following code:
   <script src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
   <script>
     function initializeLiff(myLiffId) {
-      liff.init({
-        liffId: myLiffId,
-      }).then(() => {
-        setButtonHandler();
-      }).catch(err => {
-        alert(`error: ${JSON.stringify(err)}`);
-      });
+      liff
+        .init({
+          liffId: myLiffId,
+        })
+        .then(() => {
+          setButtonHandler();
+        })
+        .catch(err => {
+          alert(`error: ${JSON.stringify(err)}`);
+        });
     }
 
     function setButtonHandler() {
-      let button = document.getElementById('button')
-      button.addEventListener('click', function () {
+      let button = document.getElementById('button');
+      button.addEventListener('click', function() {
         alert('clicked: sendMessages');
-        liff.sendMessages([{
-          type: "text",
-          text: "Hello, LIFF!"
-        }]).then(function () {
-          alert("message sent");
-          liff.closeWindow();
-        }).catch(function (error) {
-          window.alert('Error sending message: ' + error);
-        });
+        liff
+          .sendMessages([
+            {
+              type: 'text',
+              text: 'Hello, LIFF!',
+            },
+          ])
+          .then(function() {
+            alert('message sent');
+            liff.closeWindow();
+          })
+          .catch(function(error) {
+            window.alert('Error sending message: ' + error);
+          });
       });
     }
 
-    document.addEventListener("DOMContentLoaded", function () {
-      fetch(`/send-id`).then(function (reqResponse) {
-        return reqResponse.json();
-      }).then(function (jsonResponse) {
-        let myLiffId = jsonResponse.id;
-        initializeLiff(myLiffId);
-      }).catch(function (error) {
-        alert(`error: ${JSON.stringify(error)}`);
-      });
-    })
+    document.addEventListener('DOMContentLoaded', function() {
+      fetch(`/send-id`)
+        .then(function(reqResponse) {
+          return reqResponse.json();
+        })
+        .then(function(jsonResponse) {
+          let myLiffId = jsonResponse.id;
+          initializeLiff(myLiffId);
+        })
+        .catch(function(error) {
+          alert(`error: ${JSON.stringify(error)}`);
+        });
+    });
   </script>
 </body>
-</html>
 ```
 
 ### Send LIFF LINK to User
@@ -267,19 +275,7 @@ module.exports = async function App(context) {
 
 ### start server in local
 
-update the scripts part in the `package.json` with the following value:
-
-```json
-{
-  "scripts": {
-    "dev": "nodemon server.js",
-    "start": "cross-env NODE_ENV=production node server.js"
-  },
-  ...
-}
-```
-
-Then type the following command to start server.
+Type the following command to start server.
 
 ```bash
 yarn dev
