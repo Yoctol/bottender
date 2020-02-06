@@ -90,6 +90,7 @@ For more details about LIFF ID: https://developers.line.biz/en/docs/liff/registe
 const bodyParser = require('body-parser');
 const express = require('express');
 const { bottender } = require('bottender');
+const path = require('path');
 
 const app = bottender({
   dev: process.env.NODE_ENV !== 'production',
