@@ -7,7 +7,7 @@ title: LINE Front-end Framework (LIFF)
 
 LIFF provide three different size of embedded webviews in LINE App.
 
-https://user-images.githubusercontent.com/563929/73712876-6a01b100-4746-11ea-8f85-22b8026882d5.png
+![different size of liff](https://user-images.githubusercontent.com/563929/73712876-6a01b100-4746-11ea-8f85-22b8026882d5.png)
 
 LIFF provide more possibility to create the best user experience. One of the common scenarios is submit a form in LINE Bot.
 
