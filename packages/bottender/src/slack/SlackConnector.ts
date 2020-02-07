@@ -361,7 +361,11 @@ export default class SlackConnector
     timestamp: number;
   }): boolean {
     // ignore this request if the timestamp is 5 more minutes away from now
-    if (Math.abs(Date.now() - timestamp)) {
+    const FIVE_MINUTES_IN_MILLISECONDS = 5 * 1000 * 60;
+
+    if (
+      Math.abs(Date.now() - timestamp * 1000) > FIVE_MINUTES_IN_MILLISECONDS
+    ) {
       return false;
     }
 
@@ -372,6 +376,7 @@ export default class SlackConnector
       .createHmac('sha256', this._signingSecret)
       .update(signatureBaseString, 'utf8')
       .digest('hex');
+
     const calculatedSignature = `${SIGNATURE_VERSION}=${digest}`;
 
     return crypto.timingSafeEqual(
@@ -398,8 +403,8 @@ export default class SlackConnector
       };
     }
 
-    const timestamp = headers['X-Slack-Request-Timestamp'];
-    const signature = headers['X-Slack-Signature'];
+    const timestamp = headers['x-slack-request-timestamp'];
+    const signature = headers['x-slack-signature'];
 
     if (
       this._signingSecret &&
