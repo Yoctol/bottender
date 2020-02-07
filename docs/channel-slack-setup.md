@@ -34,7 +34,8 @@ module.exports = {
       enabled: true,
       path: '/webhooks/slack',
       accessToken: process.env.SLACK_ACCESS_TOKEN,
-      verificationToken: process.env.SLACK_VERIFICATION_TOKEN,
+      signingSecret: process.env.SLACK_SIGNING_SECRET,
+      // verificationToken: process.env.SLACK_VERIFICATION_TOKEN, // deprecated, use signingSecret
     },
   },
 };
@@ -47,7 +48,7 @@ The default webhook path is `/webhooks/slack`, but you can set your webhook path
 To make a Slack bot work, you have to set up the following values:
 
 - Slack Access Token
-- Slack Verification Token
+- Slack Signing Secret (or Verification Token)
 - Webhook
 
 ### Requirements
@@ -79,7 +80,7 @@ Remember to install the Slack App in your workspace.
 >
 > - If you are not familiar with how Slack bots work, you can find detailed instructions from DialogFlow's [Slack Integration Document](https://cloud.google.com/dialogflow/docs/integrations/slack)
 
-### Access Token & Verification Token
+### Access Token & Signing Secret (or Verification Token)
 
 `bottender.config.js` looks up `.env` for Slack access token and Slack verification token.
 
@@ -87,16 +88,23 @@ Remember to install the Slack App in your workspace.
 // .env
 
 SLACK_ACCESS_TOKEN=
-SLACK_VERIFICATION_TOKEN=
+SLACK_SIGNING_SECRET=
+# SLACK_VERIFICATION_TOKEN= # deprecated, use SLACK_SIGNING_SECRET
 ```
 
-Follow the below steps to find your access token and verification token.
+Follow the below steps to find your access token and signing secret (or verification token).
 
 - Slack access token could is in [Slack Developer Console](https://api.slack.com/apps) → \${YourApp} → Install App → Bot User OAuth Access Token
 
 <p><img width="800" src="https://user-images.githubusercontent.com/662387/71455592-a7cafb80-27d0-11ea-8ac7-3633c2b4d429.png"></p>
 
-- Slack verification token could is in [Slack Developer Console](https://api.slack.com/apps) → \${YourApp} → Basic Information → Verification Token.
+- Slack signing secret could be find in [Slack Developer Console](https://api.slack.com/apps) → \${YourApp} → Basic Information → Signing Secret.
+
+<p><img width="800" src="https://user-images.githubusercontent.com/4010549/74005498-07155180-49b4-11ea-9f15-f2e0e869f677.png"></p>
+
+We recommend use signing secret instead of verification token, but we also support verification token:
+
+- Slack verification token could be find in [Slack Developer Console](https://api.slack.com/apps) → \${YourApp} → Basic Information → Verification Token.
 
 <p><img width="800" src="https://user-images.githubusercontent.com/662387/71443865-668f0900-2748-11ea-9637-158575626c53.png"></p>
 
