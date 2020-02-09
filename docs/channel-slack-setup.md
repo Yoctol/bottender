@@ -98,7 +98,7 @@ Follow the below steps to find your access token and signing secret (or verifica
 
 <p><img width="800" src="https://user-images.githubusercontent.com/662387/71455592-a7cafb80-27d0-11ea-8ac7-3633c2b4d429.png"></p>
 
-- Slack signing secret could be find in [Slack Developer Console](https://api.slack.com/apps) → \${YourApp} → Basic Information → Signing Secret.
+- Slack signing secret could be found in [Slack Developer Console](https://api.slack.com/apps) → \${YourApp} → Basic Information → Signing Secret.
 
 <p><img width="800" src="https://user-images.githubusercontent.com/4010549/74005498-07155180-49b4-11ea-9f15-f2e0e869f677.png"></p>
 
