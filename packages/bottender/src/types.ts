@@ -123,7 +123,8 @@ export type BottenderConfig = {
       enabled: boolean;
       path: string;
       accessToken: string;
-      verificationToken: string;
+      verificationToken?: string;
+      signingSecret?: string;
     };
     [Channel.Viber]: {
       enabled: boolean;

@@ -19,6 +19,7 @@ export default class SlackBot extends Bot<
     sessionStore,
     sync,
     verificationToken,
+    signingSecret,
     origin,
     skipLegacyProfile,
     includeBotMessages,
@@ -27,6 +28,7 @@ export default class SlackBot extends Bot<
     sessionStore?: SessionStore;
     sync?: boolean;
     verificationToken?: string;
+    signingSecret?: string;
     origin?: string;
     skipLegacyProfile?: boolean;
     includeBotMessages?: boolean;
@@ -34,6 +36,7 @@ export default class SlackBot extends Bot<
     const connector = new SlackConnector({
       accessToken,
       verificationToken,
+      signingSecret,
       origin,
       skipLegacyProfile,
       includeBotMessages,

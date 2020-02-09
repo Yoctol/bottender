@@ -8,6 +8,7 @@ jest.mock('messaging-api-slack');
 jest.mock('warning');
 
 const accessToken = 'SLACK_accessTOKEN';
+const SLACK_SIGNING_SECRET = '8f742231b10e8888abcd99yyyzzz85a5';
 
 const request = {
   body: {
@@ -148,6 +149,7 @@ const RtmMessage = {
 };
 
 function setup({
+  signingSecret = null,
   verificationToken = 'xxxxxxxxxxxxxxxxxxxxxxxxxxx',
   skipLegacyProfile,
   includeBotMessages,
@@ -163,6 +165,7 @@ function setup({
   return {
     connector: new SlackConnector({
       accessToken,
+      signingSecret,
       verificationToken,
       skipLegacyProfile,
       includeBotMessages,
@@ -433,6 +436,48 @@ describe('#createContext', () => {
   });
 });
 
+describe('#verifySignatureBySigningSecret', () => {
+  it('should return true if signature is equal to verification token', () => {
+    const _now = Date.now;
+    Date.now = jest.fn(() => 1531420618050);
+
+    const { connector } = setup({
+      signingSecret: SLACK_SIGNING_SECRET,
+    });
+
+    const result = connector.verifySignatureBySigningSecret({
+      rawBody:
+        'token=xyzz0WbapA4vBCDEFasx0q6G&team_id=T1DC2JH3J&team_domain=testteamnow&channel_id=G8PSS9T3V&channel_name=foobar&user_id=U2CERLKJA&user_name=roadrunner&command=%2Fwebhook-collect&text=&response_url=https%3A%2F%2Fhooks.slack.com%2Fcommands%2FT1DC2JH3J%2F397700885554%2F96rGlfmibIGlgcZRskXaIFfN&trigger_id=398738663015.47445629121.803a0bc887a14d10d2c447fce8b6703c',
+      timestamp: 1531420618,
+      signature:
+        'v0=a2114d57b48eac39b9ad189dd8316235a7b4a8d21a10bd27519666489c69b503',
+    });
+
+    expect(result).toBe(true);
+    Date.now = _now;
+  });
+
+  it('should return false if given timestamp is 5 more minutes away from now', () => {
+    const _now = Date.now;
+    Date.now = jest.fn(() => 1601420618050);
+
+    const { connector } = setup({
+      signingSecret: SLACK_SIGNING_SECRET,
+    });
+
+    const result = connector.verifySignatureBySigningSecret({
+      rawBody:
+        'token=xyzz0WbapA4vBCDEFasx0q6G&team_id=T1DC2JH3J&team_domain=testteamnow&channel_id=G8PSS9T3V&channel_name=foobar&user_id=U2CERLKJA&user_name=roadrunner&command=%2Fwebhook-collect&text=&response_url=https%3A%2F%2Fhooks.slack.com%2Fcommands%2FT1DC2JH3J%2F397700885554%2F96rGlfmibIGlgcZRskXaIFfN&trigger_id=398738663015.47445629121.803a0bc887a14d10d2c447fce8b6703c',
+      timestamp: 1531420618,
+      signature:
+        'v0=a2114d57b48eac39b9ad189dd8316235a7b4a8d21a10bd27519666489c69b503',
+    });
+
+    expect(result).toBe(false);
+    Date.now = _now;
+  });
+});
+
 describe('#verifySignature', () => {
   it('should return true if signature is equal to verification token', () => {
     const { connector } = setup({ verificationToken: 'mytoken' });
@@ -445,7 +490,7 @@ describe('#verifySignature', () => {
 
 describe('#preprocess', () => {
   it('should return shouldNext: true if request method is get', () => {
-    const { connector } = setup();
+    const { connector } = setup({ signingSecret: SLACK_SIGNING_SECRET });
 
     expect(
       connector.preprocess({
@@ -461,12 +506,18 @@ describe('#preprocess', () => {
   });
 
   it('should return shouldNext: true if signature match', () => {
-    const { connector } = setup();
+    const _now = Date.now;
+    Date.now = jest.fn(() => 1531420618050);
+    const { connector } = setup({ signingSecret: SLACK_SIGNING_SECRET });
 
     expect(
       connector.preprocess({
         method: 'post',
-        headers: {},
+        headers: {
+          'x-slack-request-timestamp': 1531420618,
+          'x-slack-signature':
+            'v0=d3407c7ed1bcfc33483f6c0162e34eb5c44122ee9d2f31570390f5117715e25b',
+        },
         query: {},
         rawBody: '{"token":"xxxxxxxxxxxxxxxxxxxxxxxxxxx"}',
         body: {
@@ -476,15 +527,22 @@ describe('#preprocess', () => {
     ).toEqual({
       shouldNext: true,
     });
+    Date.now = _now;
   });
 
   it('should return shouldNext: true if signature match (token is in payload)', () => {
-    const { connector } = setup();
+    const _now = Date.now;
+    Date.now = jest.fn(() => 1531420618050);
+    const { connector } = setup({ signingSecret: SLACK_SIGNING_SECRET });
 
     expect(
       connector.preprocess({
         method: 'post',
-        headers: {},
+        headers: {
+          'x-slack-request-timestamp': 1531420618,
+          'x-slack-signature':
+            'v0=1ab07950dd7ab795a742e4c147691238156da491ec999b1d8c5fb4710ee3d94c',
+        },
         query: {},
         rawBody:
           '{"payload":"{\\"token\\":\\"xxxxxxxxxxxxxxxxxxxxxxxxxxx\\"}"}',
@@ -495,15 +553,22 @@ describe('#preprocess', () => {
     ).toEqual({
       shouldNext: true,
     });
+    Date.now = _now;
   });
 
   it('should return shouldNext: false and error if signature does not match', () => {
+    const _now = Date.now;
+    Date.now = jest.fn(() => 1531420618050);
     const { connector } = setup();
 
     expect(
       connector.preprocess({
         method: 'post',
-        headers: {},
+        headers: {
+          'x-slack-request-timestamp': 1531420618,
+          'x-slack-signature':
+            'v0=walawalawalawalawalawalawalawalawalawalawalawalawalawalawalawala',
+        },
         query: {},
         rawBody: '{"token":"yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy"}',
         body: {
@@ -526,5 +591,6 @@ describe('#preprocess', () => {
         },
       },
     });
+    Date.now = _now;
   });
 });
