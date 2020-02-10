@@ -1,75 +1,67 @@
 ---
-id: channel-line-flex
+id: channel-line-liff
 title: LINE Front-end Framework (LIFF)
 ---
 
 ## LINE Front-end Framework (LIFF), the Webview Solution in LINE App
 
-LIFF provide three different size of embedded webviews in LINE App.
+There are three different sizes of embedded webviews provided by LIFF. You may use those sizes to enrich your users' experience.
 
-![different size of liff](https://user-images.githubusercontent.com/563929/73712876-6a01b100-4746-11ea-8f85-22b8026882d5.png)
+![different sizes of liff](https://user-images.githubusercontent.com/563929/73712876-6a01b100-4746-11ea-8f85-22b8026882d5.png)
 
-LIFF provide more possibility to create the best user experience. One of the common scenarios is submit a form in LINE Bot.
+Besides, LIFF gives you more chances to improve interactions between users and the chatbot. One of the common scenarios is submitting a form in LINE Bots.
 
 ### Features in LIFF
 
-- [Get user profile](https://developers.line.biz/en/reference/liff/#get-profile)
-- [Send messages to LINE](https://developers.line.biz/en/reference/liff/#send-messages)
-- [Open link in external browser](https://developers.line.biz/en/reference/liff/#open-window)
-- [Scan QR Code](https://developers.line.biz/en/reference/liff/#scan-code)
-- [Connect to bluetooth devices](https://developers.line.biz/en/reference/liff/#bluetooth-request-device)
+LIFF lets you access a lot of different APIs on your web pages. Before getting started, you may want to grab some basic knowledge from LINE official docs:
+
+- [Getting user profile](https://developers.line.biz/en/reference/liff/#get-profile)
+- [Sending messages to LINE](https://developers.line.biz/en/reference/liff/#send-messages)
+- [Opening link in external browser](https://developers.line.biz/en/reference/liff/#open-window)
+- [Scanning QR Code](https://developers.line.biz/en/reference/liff/#scan-code)
+- [Connecting to Bluetooth devices](https://developers.line.biz/en/reference/liff/#bluetooth-request-device)
 - Others features in [LIFF playground](https://playground-for-liff.linecorp.com/)
-
-### Workflow
-
-- Create a LINE Login channel in [LINE Developers console](https://developers.line.biz/console/)
-- Add a LIFF app in the LINE Login channel
-- Develop the LIFF page
 
 ## LIFF V2
 
-LIFF v2 introduces new features for developers to scan QR Code and allow user to opne LIFF page in PC version of LINE app.
+LIFF v2 introduces some new features to developers, e.g., scanning QR codes, allowing users to open LIFF pages on the Desktop version of the LINE app.
 
-For quick catch up, this is a minimal implementation for [Bottender example with LIFF v2](https://github.com/Yoctol/bottender/tree/master/examples/line-liff-v2).
+For catching up quickly, this is a minimal implementation - [Bottender example with LIFF v2](https://github.com/Yoctol/bottender/tree/master/examples/line-liff-v2).
 
-The following sections are step by step toturials about how to send messages with LIFF in a bottender project created by command [create bottender app]().
+The following sections are step by step tutorials about how to send messages with LIFF in a Bottender project created by [Create Bottender App](https://bottender.js.org/docs/getting-started#create-a-new-bottender-app).
 
-### Run Ngrok
+> **Note:** LIFF v1 is not recommended anymore. If you're using it, you should migrate to LIFF v2. However, you could still find an example for [LIFF v1 here](https://github.com/Yoctol/bottender/tree/master/examples/line-liff-v1).
 
-[Ngrok](https://ngrok.com/) is a service that provide a public URLs for your local http server.
+## Workflow
 
-Type following command to run ngrok after install it.
+For making your LIFF pages work, your typical workflow should look like this:
 
-```bash
-ngrok http 5000
-```
+- Creating a LINE Login channel in [LINE Developers console](https://developers.line.biz/console/)
+- Adding a LIFF app in the LINE Login channel
+- Developing the LIFF page
 
-Keep this alive, you will need a public domain for the [step: Add LIFF in the LINE Login Channel](channel-line-liff#add-liff-in-the-line-login-channel).
+### Creating LINE Login Channel
 
-### Create LINE Login Channel
+First of all, you need to open [LINE Developers Console](https://developers.line.biz/console/) to create a LINE Login channel.
 
-Open [LINE Developers console](https://developers.line.biz/console/) to create a LINE Login channel.
+For more details about creating a LINE Login channel, please checkout [Creating A Provider and Channel](https://developers.line.biz/en/docs/liff/getting-started/#creating-a-provider-and-channel).
 
-For more detail about create a LINE Login channel: https://developers.line.biz/en/docs/liff/getting-started/#creating-a-provider-and-channel
-
-### Add LIFF in the LINE Login Channel
+### Adding LIFF in the LINE Login Channel
 
 - Click the "LIFF" tab in the LINE Login Channel you just created.
-- Click Add button
-- fill Endpoint URL like this format: https://{your ngrok domain}.ngrok.io/liff
-- fill other values
+- Click the "Add" button
+- Fill in the "Endpoint URL" in this format: `https://{your domain}.ngrok.io/liff`
+- Fill in other values
 
-For more detail about registering a liff app:
-https://developers.line.biz/en/docs/liff/registering-liff-apps/#registering-liff-app
+For more details about registering a LIFF app, please checkout [Registering LIFF App](https://developers.line.biz/en/docs/liff/registering-liff-apps/#registering-liff-app).
 
-### Start from Create Bottender App
-
-Using [create-bottender-app](getting-started#create-a-new-bottender-app) to create a new bottender project with LINE platform.
+> **Note:** [Ngrok](https://ngrok.com/) is a well-known service that provides public HTTPs URLs for your local server using the tunnel. It's handy when you develop your bot locally. You may want to use it when developing.
 
 ### Environment Variables Setting
 
-1. Create a file `.env` in the root directory of project.
-2. Fill the environment variables with the following format:
+If you are familiar with any official Bottender example, you may already know about how to use `.env` file to manage your environment variables in your local project.
+
+In this case, you need to add another `LINE_LIFF_ID` env to `.env` file, so your file will have at least those three LINE related environment variables:
 
 ```
 LINE_ACCESS_TOKEN={your LINE access token from LINE Messaging API channel}
@@ -77,88 +69,32 @@ LINE_CHANNEL_SECRET={your LINE channel secret from LINE Messaging API channel}
 LINE_LIFF_ID={your LIFF id from LINE Login channel}
 ```
 
-You can find your LIFF ID in the LIFF URL, the format of LIFF URL is `line://app/{your LIFF ID}`.
+You could find your LIFF ID in the LIFF URL. The format of LIFF URL looks like `line://app/{your LIFF ID}`.
 
-For more details about LIFF ID: https://developers.line.biz/en/docs/liff/registering-liff-apps/#registering-liff-app (in the step 4)
+For more details about LIFF ID, please checkout [Registering LIFF App (in step 4)](https://developers.line.biz/en/docs/liff/registering-liff-apps/#registering-liff-app).
 
-### Develop Custom HTTP Server
+### Adding Custom Routes to HTTP Server for LIFF Pages
 
-1. Create a file `server.js` in the root directory of project.
-2. Copy the following code into server.js
+To serve LIFF webpages, we need to add additional routes to the server. Fortunately, [custom server](advanced-guides-custom-server#the-concept) come to the rescue!
 
-```javascript
-const bodyParser = require('body-parser');
-const express = require('express');
-const { bottender } = require('bottender');
-const path = require('path');
+You could use express, koa, restify, or whatever you like, but we are going to use express in this guide. Before going down, make sure that you set up correctly according to [this guide](advanced-guides-custom-server#express).
 
-const app = bottender({
-  dev: process.env.NODE_ENV !== 'production',
+After having a custom server, you could add the following two routes into `server.js` to handle requests from LIFF.
+
+```js
+server.get('/send-id', (req, res) => {
+  res.json({ id: process.env.LINE_LIFF_ID });
 });
 
-const port = Number(process.env.PORT) || 5000;
-
-// the request handler of the bottender app
-const handle = app.getRequestHandler();
-
-app.prepare().then(() => {
-  const server = express();
-
-  server.use(
-    bodyParser.json({
-      verify: (req, _, buf) => {
-        req.rawBody = buf.toString();
-      },
-    })
-  );
-
-  // route for webhook request
-  server.all('*', (req, res) => {
-    return handle(req, res);
-  });
-
-  server.listen(port, err => {
-    if (err) throw err;
-    console.log(`> Ready on http://localhost:${port}`);
-  });
+server.get('/liff', (req, res) => {
+  const filename = path.join(`${__dirname}/liff.html`);
+  res.sendFile(filename);
 });
 ```
 
-3. Modify the package.json like this.
+### Initializing the LIFF Page
 
-```json
-{
-  ...
-  "scripts": {
-    "dev": "nodemon server.js",
-    "start": "cross-env NODE_ENV=production node server.js",
-    ...
-  },
-  ...
-}
-```
-
-For more detail about custom server: [custom server - the concept](advanced-guides-custom-server#the-concept)
-
-### Add Route for LIFF Page
-
-Add the following code snippet into server.js to handle request from LIFF.
-
-```
-  server.get('/send-id', (req, res) => {
-    res.json({ id: process.env.LINE_LIFF_ID });
-  });
-
-  server.get('/liff', (req, res) => {
-    const filename = path.join(`${__dirname}/liff.html`);
-    res.sendFile(filename);
-  });
-```
-
-### Implement the LIFF Page
-
-1. Create a file `liff.html` in the root directory of project.
-2. Copy the following code into `liff.html`
+Before starting using any feature provided by LIFF, you need to create a `liff.html` file in the root directory of the project and copy the following code into it for LIFF initialization:
 
 ```html
 <!DOCTYPE html>
@@ -185,17 +121,15 @@ Add the following code snippet into server.js to handle request from LIFF.
           });
       }
 
-      document.addEventListener('DOMContentLoaded', function() {
+      document.addEventListener('DOMContentLoaded', () => {
         fetch(`/send-id`)
-          .then(function(reqResponse) {
-            return reqResponse.json();
-          })
-          .then(function(jsonResponse) {
+          .then(reqResponse => reqResponse.json())
+          .then(jsonResponse => {
             let myLiffId = jsonResponse.id;
             initializeLiff(myLiffId);
           })
-          .catch(function(error) {
-            alert(`error: ${JSON.stringify(error)}`);
+          .catch(err => {
+            alert(`error: ${JSON.stringify(err)}`);
           });
       });
     </script>
@@ -203,9 +137,24 @@ Add the following code snippet into server.js to handle request from LIFF.
 </html>
 ```
 
-### Send Messages from LIFF
+It is worth mentioning that `liff.init()` and some other `liff` methods return `Promise` as results, so you should handle those asynchronous code carefully.
 
-replace the body in `liff.html` with the following code:
+### Sending Messages from LIFF page
+
+After initializing the LIFF page, we can call `liff.sendMessages` to send messages in the thread imperatively. For example:
+
+```js
+liff.sendMessages([
+  {
+    type: 'text',
+    text: 'Hello, LIFF!',
+  },
+]);
+```
+
+Up to five text, image, video, audio, location, template (only a URI action can be set as an action), and flex messages are acceptable.
+
+Let's add a click event listener to send messages on click. You could replace the body tag in `liff.html` with the following implementation:
 
 ```html
 <body>
@@ -227,8 +176,8 @@ replace the body in `liff.html` with the following code:
 
     function setButtonHandler() {
       let button = document.getElementById('button');
-      button.addEventListener('click', function() {
-        alert('clicked: sendMessages');
+      button.addEventListener('click', () => {
+        window.alert('clicked: sendMessages');
         liff
           .sendMessages([
             {
@@ -236,36 +185,34 @@ replace the body in `liff.html` with the following code:
               text: 'Hello, LIFF!',
             },
           ])
-          .then(function() {
+          .then(() => {
             alert('message sent');
             liff.closeWindow();
           })
-          .catch(function(error) {
-            window.alert('Error sending message: ' + error);
+          .catch(err => {
+            window.alert('Error sending message: ' + err);
           });
       });
     }
 
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', () => {
       fetch(`/send-id`)
-        .then(function(reqResponse) {
-          return reqResponse.json();
-        })
-        .then(function(jsonResponse) {
+        .then(reqResponse => reqResponse.json())
+        .then(jsonResponse => {
           let myLiffId = jsonResponse.id;
           initializeLiff(myLiffId);
         })
-        .catch(function(error) {
-          alert(`error: ${JSON.stringify(error)}`);
+        .catch(err => {
+          alert(`error: ${JSON.stringify(err)}`);
         });
     });
   </script>
 </body>
 ```
 
-### Send LIFF LINK to User
+### Sending LIFF LINK to the User
 
-replace the code in `index.js` with the following code:
+To test the LIFF page, you could replace the code in `index.js` to send the LIFF URL to the user:
 
 ```js
 module.exports = async function App(context) {
@@ -274,16 +221,4 @@ module.exports = async function App(context) {
 };
 ```
 
-### start server in local
-
-Type the following command to start server.
-
-```bash
-yarn dev
-```
-
-Done, now you have a LINE Bot with a simple function of LIFF.
-
-## LIFF V1 (not recommend)
-
-For existing project using LIFF v1, we recommend you migrate to LIFF v2, but we also provide a minimal implementation for [Bottender example with LIFF v1](https://github.com/Yoctol/bottender/tree/master/examples/line-liff-v1).
+Now, you could execute `yarn dev` or `npm run dev` to start the server, and you will have a LINE Bot with a simple LIFF page.
