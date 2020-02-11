@@ -12,7 +12,7 @@ To enable this feature, you need to:
 1. Configure slash command in your Slack app settings
 2. Handle slash command events in your slack bot
 
-### Configure slash command in your Slack app settings
+### Configuring Slash Command in Your Slack App Settings
 
 - Slack's slash command can be created in [Slack Developer Console](https://api.slack.com/apps) → \${YourApp} → Slash Commands → Create New Command
 
@@ -26,7 +26,7 @@ To enable this feature, you need to:
 
 <p><img width="800" src="https://user-images.githubusercontent.com/4010549/74179896-53dd7e80-4c79-11ea-83f8-01f84ca38fae.png"></p>
 
-### Handle slash command events in your slack bot
+### Handling Slash Command Events in Your Slack Bot
 
 To determine whether the event is a slash command event, you may check the boolean value: `context.event.isCommand`:
 
