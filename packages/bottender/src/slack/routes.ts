@@ -20,6 +20,13 @@ type Slack = Route & {
     predicate: RoutePredicate<C, E>;
     action: Action<C, E>;
   };
+  command: <C extends Client = any, E extends Event = any>(
+    commandText: string,
+    action: Action<C, E>
+  ) => {
+    predicate: RoutePredicate<C, E>;
+    action: Action<C, E>;
+  };
 };
 
 const slack: Slack = <C extends Client = any, E extends Event = any>(
@@ -53,6 +60,19 @@ function event<C extends Client = any, E extends Event = any>(
 
 slack.event = event;
 
-// TODO: support slack.command
+function command<C extends Client = any, E extends Event = any>(
+  commandText: string,
+  action: Action<C, E>
+) {
+  return route(
+    (context: Context<C, E>) =>
+      context.platform === 'slack' &&
+      context.event.command &&
+      context.event.command === commandText,
+    action
+  );
+}
+
+slack.command = command;
 
 export default slack;

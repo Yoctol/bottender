@@ -42,6 +42,7 @@
       "channel-slack-handling-events",
       "channel-slack-sending-messages",
       "channel-slack-routing",
+      "channel-slack-slash-command",
       "channel-slack-block-kit"
     ],
     "Guides (Telegram)": [

@@ -21,6 +21,22 @@ const slackEventPinAdded = new SlackEvent({
   eventTs: '1360782804.083113',
 });
 
+const slackEventSlashCommand = new SlackEvent({
+  token: 'gIkuvaNzQIHg97ATvDxqgjtO',
+  teamId: 'T0001',
+  teamDomain: 'example',
+  enterpriseId: 'E0001',
+  enterpriseName: 'Globular%20Construct%20Inc',
+  channelId: 'C2147483705',
+  channelName: 'test',
+  userId: 'U2147483697',
+  userName: 'Steve',
+  command: '/weather',
+  text: '94070',
+  responseUrl: 'https://hooks.slack.com/commands/1234/5678',
+  triggerId: '13345224609.738474920.8088930838d88f008e0',
+});
+
 async function Action(context) {
   await context.sendText('hello');
 }
@@ -128,6 +144,15 @@ describe('#slack', () => {
       await expectRouteNotMatchSlackEvent({
         route: slack.event('pin_added', Action),
         event: slackEventTextMessage,
+      });
+    });
+  });
+
+  describe('#slack.command', () => {
+    it('should call action when it receives a slack slash command event', async () => {
+      await expectRouteMatchSlackEvent({
+        route: slack.command('/weather', Action),
+        event: slackEventSlashCommand,
       });
     });
   });

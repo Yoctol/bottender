@@ -8,7 +8,7 @@ import Context from '../context/Context';
 import Session from '../session/Session';
 import { RequestContext } from '../types';
 
-import SlackEvent, { UIEvent } from './SlackEvent';
+import SlackEvent, { Message, UIEvent } from './SlackEvent';
 
 type Options = {
   client: SlackOAuthClient;
@@ -171,7 +171,7 @@ export default class SlackContext extends Context<
     }
 
     return this._client.chat.postMessage({
-      threadTs: this._event.rawEvent.threadTs,
+      threadTs: (this._event.rawEvent as Message).threadTs,
       channel,
       ...options,
     });
