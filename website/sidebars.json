@@ -35,6 +35,7 @@
       "channel-line-routing",
       "channel-line-flex",
       "channel-line-rich-menu",
+      "channel-line-liff",
       "channel-line-errors",
       "channel-line-migrating-from-sdk"
     ],
