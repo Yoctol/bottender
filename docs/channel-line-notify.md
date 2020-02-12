@@ -5,27 +5,11 @@ title: LINE Notify
 
 ## What is LINE Notify
 
-LINE Notify is a service that provide a way to push message free to user.
-As long as user subscribed you on LINE Notify, and then you can send messages to user through LINE Notify. User automatically add LINE Notify as friend when they first authorize.
+LINE Notify is a LINE service that lets you push messages to the subscribed users for free. Once the user subscribed to your service on LINE Notify, you could send messages to the user through LINE Notify without extra cost.
 
-official document: https://notify-bot.line.me
+The user will add LINE Notify as a friend automatically when the first time they authorize to connect to the service.
 
-## LINE Notify API
-
-LINE Notify uses OAuth2 as the authorization mechanism. The operation process is as follows：
-
-1. Guide users to the LINE Notify authorization page
-2. Receive response code from redirect
-3. Exchange access token with code
-4. Send notification by access token
-
-Three APIs provided by LINE Notify are used:
-
-1. GET https://notify-bot.line.me/oauth/authorize
-2. POST https://notify-bot.line.me/oauth/token
-3. POST https://notify-api.line.me/api/notify
-
-official API document：https://notify-bot.line.me/doc/en/
+For more details about LINE Notify, please checkout [LINE Notify's website](https://notify-bot.line.me).
 
 ## How to Use LINE Notify in Bottender
 
@@ -33,37 +17,26 @@ If you want to have a clean project with the LINE Notify, you could start from [
 
 1. Download the code from [this example](https://github.com/Yoctol/bottender/tree/master/examples/line-notify).
 2. Run `yarn` or `npm install` command to install all dependencies.
-3. Fill the `.env` file with correct value.
+3. Fill the `.env` file with the correct value.
 4. Run `yarn dev` or `npm run dev` to start the dev server.
 
 If you want to have the folder structure we recommended, you could start with create-bottender-app command and migrate it by following the migration instructions below.
 
-### Run Ngrok
+### Creating a LINE Notify Service
 
-[Ngrok](https://ngrok.com/) is a service that provide a public URLs for your local http server.
+To create a new Notify Service, open this [link](https://notify-bot.line.me/my/services/new) and submit the form after you finish it.
 
-Type following command to run ngrok after install it.
+![](https://user-images.githubusercontent.com/3382565/74317707-da4baa80-4db6-11ea-93b0-68b5e6f2c8a9.png)
 
-```bash
-ngrok http 5000
-```
+The value of callback URL should look like: `https://{your domain}.ngrok.io/notify/redirect`
 
-Keep this alive, you will need the public domain for the [step: Create a LINE Notify service](channel-line-notify#add-liff-in-the-line-login-channel) and the [step: Environment Variables Setting](channel-line-notify#environment-variables-setting).
-
-### Create a LINE Notify service
-
-Click this [link](https://notify-bot.line.me/my/services/new) and submit the form.
-
-The value of callback URL should be: `https://{your ngrok domain}.ngrok.io/notify/redirect`
-
-### Start from Create Bottender App
-
-Using [create-bottender-app](getting-started#create-a-new-bottender-app) to create a new bottender project with LINE platform.
+> **Note:** [Ngrok](https://ngrok.com/) is a well-known service that provides public HTTPs URLs for your local server using the tunnel. It's handy when you develop your bot locally. You may want to use it when developing.
 
 ### Environment Variables Setting
 
-1. Create a file `.env` in the root directory of project.
-2. Fill the environment variables with the following format:
+If you are familiar with any official Bottender example, you may already know about how to use `.env` file to manage your environment variables in your local project.
+
+In this case, you need to add `LINE_NOTIFY_CLIENT_ID`, `LINE_NOTIFY_CLIENT_SECRET` and `ROOT_PATH` env to `.env` file, so your file will have at least those three LINE related environment variables:
 
 ```
 LINE_ACCESS_TOKEN={your LINE access token from LINE Messaging API channel}
@@ -74,66 +47,22 @@ LINE_NOTIFY_CLIENT_SECRET={your LINE Notify client secret}
 ROOT_PATH={the ngrok public link}
 ```
 
-### Develop Custom HTTP Server
+### Implementing the LINE Notify SDK
 
-1. Run `yarn add express body-parser nodemon` or `npm install express body-parser nodemon` command to install dependencies we need.
-2. Create a server.js file in the root directory of the project and copy the following code into it.
+LINE Notify uses OAuth2 as the authorization mechanism. The operation process is as follows：
 
-```js
-const bodyParser = require('body-parser');
-const express = require('express');
-const { bottender } = require('bottender');
-const path = require('path');
+1. Guide users to the LINE Notify authorization page
+2. Receive response code from redirect
+3. Exchange access token with code
+4. Send notification by access token
 
-const app = bottender({
-  dev: process.env.NODE_ENV !== 'production',
-});
+Three APIs provided by LINE Notify are used:
 
-const port = Number(process.env.PORT) || 5000;
+1. `GET https://notify-bot.line.me/oauth/authorize`
+2. `POST https://notify-bot.line.me/oauth/token`
+3. `POST https://notify-api.line.me/api/notify`
 
-// the request handler of the bottender app
-const handle = app.getRequestHandler();
-
-app.prepare().then(() => {
-  const server = express();
-
-  server.use(
-    bodyParser.json({
-      verify: (req, _, buf) => {
-        req.rawBody = buf.toString();
-      },
-    })
-  );
-
-  // route for webhook request
-  server.all('*', (req, res) => {
-    return handle(req, res);
-  });
-
-  server.listen(port, err => {
-    if (err) throw err;
-    console.log(`> Ready on http://localhost:${port}`);
-  });
-});
-```
-
-3. Modify scripts in the package.json to nodemon server.js and node server.js instead:
-
-```json
-{
-  ...
-  "scripts": {
-    "dev": "nodemon server.js",
-    "start": "cross-env NODE_ENV=production node server.js",
-    ...
-  },
-  ...
-}
-```
-
-This is the document about the detail of [Bottender with custom server](advanced-guides-custom-server)
-
-### Implement the LINE Notify SDK
+official API document：https://notify-bot.line.me/doc/en/
 
 1. Run `yarn add axios` or `npm install axios` command to install dependencies we need.
 2. Create a `lineNotify.js` file in the root directory of the project and copy the following code into it.
@@ -150,7 +79,7 @@ function getAuthLink(clientId, redirectUrl, state) {
     scope: 'notify',
     state,
   };
-  querystring.encode(data);
+
   return `https://notify-bot.line.me/oauth/authorize?${querystring.encode(
     data
   )}`;
@@ -190,32 +119,35 @@ module.exports = {
 };
 ```
 
-### Guide user to the LINE Notify authorization page
+### Guiding User to the LINE Notify Authorization Page
+
+To serve LIFF webpages, we need to add additional routes to the server. Fortunately, [custom server](advanced-guides-custom-server#the-concept) come to the rescue!
+
+You could use express, koa, restify, or whatever you like, but we are going to use express in this guide. Before going down, make sure that you set up correctly according to [this guide](advanced-guides-custom-server#express).
 
 1. Run `yarn add ejs` or `npm install ejs` command to install dependencies we need.
-2. modify `server.js` to create a web page to redirect user to LINE Notify authorization link
+2. modify `server.js` to create a web page to redirect the user to LINE Notify authorization link
 
 ```js
-...
-
+// ...
 const lineNotify = require('./lineNotify')
 const ejs = require('ejs')
 
-...
+// ...
 
-const clientId = process.env.LINE_NOTIFY_CLIENT_ID
-const clientSecret = process.env.LINE_NOTIFY_CLIENT_SECRET
-const redirectUri = `${process.env.ROOT_PATH}/notify/redirect`
+const clientId = process.env.LINE_NOTIFY_CLIENT_ID;
+const clientSecret = process.env.LINE_NOTIFY_CLIENT_SECRET;
+const redirectUri = `${process.env.ROOT_PATH}/notify/redirect`;
 
 app.prepare().then(() => {
 
-  ...
+  // ...
 
   server.get('/notify/new', (req, res) => {
     const filename = path.join(`${__dirname}/notify.html`);
-    const url = lineNotify.getAuthLink(clientId, redirectUri, "test")
+    const url = lineNotify.getAuthLink(clientId, redirectUri, 'test');
     ejs.renderFile(filename, { url }, {}, function(err, str) {
-      if(err){
+      if (err) {
         console.log('err:')
         console.log(err)
       }
@@ -224,7 +156,7 @@ app.prepare().then(() => {
   });
 
   // route for webhook request
-  ...
+  // ...
 });
 ```
 
@@ -254,9 +186,9 @@ module.exports = async function App(context) {
 };
 ```
 
-### Receive response code from redirect and Send notification by access token
+### Receiving Response Code from Redirect and Send Notification by Access Token
 
-Add the following code snippet into `server.js` to handle request from LINE Notify redirect.
+Add the following code snippet into `server.js` to handle requests from LINE Notify redirect.
 
 ```js
   ...
@@ -272,12 +204,12 @@ Add the following code snippet into `server.js` to handle request from LINE Noti
   ...
 ```
 
-The access token is reuseable, we don't store it at here because it's just a demo.
+To be noticed that the access token is reuseable, we don't store it here, because it helps us simplify this demo.
 
-You can found all your subscriptions [here](https://notify-bot.line.me/my/)
+You can found all your subscriptions [here](https://notify-bot.line.me/my/).
 
 ## Limitation
 
-1. The message format only allows text, image and basic sticker, you can't send message with button.
-2. Can't have more then 1000 charactor in a single text message.
-3. the rate limit is 1000 message per hours.
+1. The message format only allows text, image, and basic sticker, so you can't send, for example, a message with some buttons.
+2. Can't have more than 1000 characters in a single text message.
+3. the rate limit is 1000 messages per hour.
