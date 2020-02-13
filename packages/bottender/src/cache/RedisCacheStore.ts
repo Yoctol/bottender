@@ -46,7 +46,7 @@ export default class RedisCacheStore implements CacheStore {
       keys = keys.concat(newkeys);
     }
 
-    return this._redis.mget(...keys);
+    return this._redis.mget(...keys) as any;
   }
 
   async put(key: string, value: CacheValue, minutes: number): Promise<void> {

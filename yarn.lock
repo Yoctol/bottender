@@ -138,47 +138,6 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
-"@bottender/dialogflow@file:packages/bottender-dialogflow":
-  version "1.2.0"
-  dependencies:
-    "@types/dialogflow" "^4.0.4"
-    dialogflow "^1.0.0"
-
-"@bottender/express@file:packages/bottender-express":
-  version "1.0.0"
-  dependencies:
-    "@types/body-parser" "^1.19.0"
-    "@types/express" "^4.17.2"
-    "@types/lodash" "^4.14.149"
-    body-parser "^1.19.0"
-    express "^4.17.1"
-    lodash "^4.17.15"
-
-"@bottender/handlers@file:packages/bottender-handlers":
-  version "1.0.0"
-  dependencies:
-    "@types/koa-compose" "^3.2.5"
-    "@types/warning" "^3.0.0"
-    koa-compose "^4.1.0"
-    warning "^4.0.3"
-
-"@bottender/luis@file:packages/bottender-luis":
-  version "1.2.0"
-  dependencies:
-    axios "^0.19.0"
-
-"@bottender/qna-maker@file:packages/bottender-qna-maker":
-  version "1.2.0"
-  dependencies:
-    axios "^0.19.0"
-
-"@bottender/rasa@file:packages/bottender-rasa":
-  version "1.2.0"
-  dependencies:
-    "@types/lodash" "^4.14.149"
-    axios "^0.19.0"
-    lodash "^4.17.15"
-
 "@cnakazawa/watch@^1.0.3":
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/@cnakazawa/watch/-/watch-1.0.3.tgz#099139eaec7ebf07a27c1786a3ff64f39464d2ef"
@@ -2559,75 +2518,6 @@ body-parser@1.19.0, body-parser@^1.19.0:
     raw-body "2.4.0"
     type-is "~1.6.17"
 
-"bottender@file:packages/bottender":
-  version "1.2.0"
-  dependencies:
-    "@bottender/express" "file:../../../Library/Caches/Yarn/v4/npm-bottender-1.2.0-610e8969-7a71-4ca7-aed5-a5564f1a2f32-1581582462297/node_modules/bottender-express"
-    "@hapi/joi" "^15.1.1"
-    "@slack/rtm-api" "^5.0.3"
-    "@types/debug" "^4.1.5"
-    "@types/dotenv" "^8.2.0"
-    "@types/express" "^4.17.2"
-    "@types/figures" "^3.0.1"
-    "@types/fs-extra" "^8.0.1"
-    "@types/hapi__joi" "^15.0.4"
-    "@types/inquirer" "^6.5.0"
-    "@types/invariant" "^2.2.31"
-    "@types/ioredis" "^4.14.7"
-    "@types/jfs" "^0.2.3"
-    "@types/jsonfile" "^5.0.0"
-    "@types/lodash" "^4.14.149"
-    "@types/lru-cache" "^5.1.0"
-    "@types/mongodb" "^3.3.16"
-    "@types/shortid" "^0.0.29"
-    "@types/update-notifier" "^2.5.0"
-    "@types/warning" "^3.0.0"
-    arg "^4.1.1"
-    axios "^0.19.0"
-    chalk "~2.4.2"
-    cli-table3 "^0.5.1"
-    date-fns "^2.7.0"
-    debug "^4.1.1"
-    deep-object-diff "^1.1.0"
-    delay "^4.3.0"
-    dotenv "^8.2.0"
-    express "^4.17.1"
-    figures "^3.1.0"
-    file-type "^12.4.0"
-    fromentries "^1.2.0"
-    fs-extra "^8.1.0"
-    hasha "^5.1.0"
-    import-fresh "^3.2.1"
-    inquirer "^7.0.0"
-    invariant "^2.2.4"
-    ioredis "^4.14.1"
-    jfs "^0.3.0"
-    jsonfile "^5.0.0"
-    lodash "^4.17.15"
-    lru-cache "^5.1.1"
-    messaging-api-common "^1.0.0-beta.5"
-    messaging-api-line "^1.0.0-beta.5"
-    messaging-api-messenger "^1.0.0-beta.10"
-    messaging-api-slack "^1.0.0-beta.10"
-    messaging-api-telegram "^1.0.0-beta.5"
-    messaging-api-viber "^1.0.0-beta.2"
-    messenger-batch "^0.3.1"
-    minimist "^1.2.0"
-    mongodb "^3.3.4"
-    ngrok "^3.2.5"
-    nodemon "^1.19.4"
-    p-map "^3.0.0"
-    p-props "^3.1.0"
-    pascal-case "^2.0.1"
-    pkg-dir "^4.2.0"
-    prompt-confirm "^2.0.4"
-    read-chunk "^3.2.0"
-    readline "^1.3.0"
-    recursive-readdir "^2.2.2"
-    shortid "^2.2.15"
-    update-notifier "^3.0.1"
-    warning "^4.0.3"
-
 boxen@^1.2.1:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/boxen/-/boxen-1.3.0.tgz#55c6c39a8ba58d9c61ad22cd877532deb665a20b"
@@ -3402,22 +3292,6 @@ cosmiconfig@^5.1.0, cosmiconfig@^5.2.1:
     is-directory "^0.3.1"
     js-yaml "^3.13.1"
     parse-json "^4.0.0"
-
-"create-bottender-app@file:packages/create-bottender-app":
-  version "1.0.0"
-  dependencies:
-    "@types/cross-spawn" "^6.0.1"
-    "@types/figures" "^3.0.1"
-    "@types/fs-extra" "^8.0.1"
-    "@types/inquirer" "^6.5.0"
-    chalk "^2.4.2"
-    commander "^3.0.2"
-    cross-spawn "^7.0.0"
-    envinfo "^7.4.0"
-    figures "^3.0.0"
-    fs-extra "^8.1.0"
-    inquirer "^7.0.0"
-    validate-npm-package-name "^3.0.0"
 
 create-error-class@^3.0.0:
   version "3.0.2"

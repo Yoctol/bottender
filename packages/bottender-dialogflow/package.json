@@ -20,6 +20,9 @@
   "peerDependencies": {
     "bottender": ">= 1.2.0-0"
   },
+  "devDependencies": {
+    "bottender": "1.2.0"
+  },
   "keywords": [
     "bot",
     "bottender",

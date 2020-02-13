@@ -29,16 +29,6 @@
     "testonly:watch": "jest --watch",
     "version": "cp README.md packages/bottender"
   },
-  "dependencies": {
-    "@bottender/dialogflow": "file:packages/bottender-dialogflow",
-    "@bottender/express": "file:packages/bottender-express",
-    "@bottender/handlers": "file:packages/bottender-handlers",
-    "@bottender/luis": "file:packages/bottender-luis",
-    "@bottender/qna-maker": "file:packages/bottender-qna-maker",
-    "@bottender/rasa": "file:packages/bottender-rasa",
-    "bottender": "file:packages/bottender",
-    "create-bottender-app": "file:packages/create-bottender-app"
-  },
   "devDependencies": {
     "@types/jest": "^24.0.22",
     "@typescript-eslint/eslint-plugin": "^2.6.1",
