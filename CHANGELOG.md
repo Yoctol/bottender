@@ -1,3 +1,7 @@
+# 1.2.1 / 2020-02-13
+
+- [fix] install @types packages in package dependencies instead of workspace.
+
 # 1.2.0 / 2020-01-22
 
 - [new] Added four NLU packages:

@@ -1,0 +1,93 @@
+{
+  "version-1.2.0-docs": {
+    "Getting Started": [
+      "version-1.2.0-getting-started",
+      "version-1.2.0-migrating-v1"
+    ],
+    "The Basics": [
+      "version-1.2.0-the-basics-console-mode",
+      "version-1.2.0-the-basics-actions",
+      "version-1.2.0-the-basics-routing",
+      "version-1.2.0-the-basics-chain",
+      "version-1.2.0-the-basics-session",
+      "version-1.2.0-the-basics-errors"
+    ],
+    "Advanced Guides": [
+      "version-1.2.0-advanced-guides-custom-server",
+      "version-1.2.0-advanced-guides-deployment",
+      "version-1.2.0-advanced-guides-nlu",
+      "version-1.2.0-advanced-guides-multi-channel"
+    ],
+    "Guides (Messenger)": [
+      "version-1.2.0-channel-messenger-setup",
+      "version-1.2.0-channel-messenger-handling-events",
+      "version-1.2.0-channel-messenger-sending-messages",
+      "version-1.2.0-channel-messenger-routing",
+      "version-1.2.0-channel-messenger-profile",
+      "version-1.2.0-channel-messenger-handover-protocol",
+      "version-1.2.0-channel-messenger-persona",
+      "version-1.2.0-channel-messenger-multi-page"
+    ],
+    "Guides (LINE)": [
+      "version-1.2.0-channel-line-setup",
+      "version-1.2.0-channel-line-handling-events",
+      "version-1.2.0-channel-line-sending-messages",
+      "version-1.2.0-channel-line-routing",
+      "version-1.2.0-channel-line-flex",
+      "version-1.2.0-channel-line-rich-menu",
+      "version-1.2.0-channel-line-liff",
+      "version-1.2.0-channel-line-errors",
+      "version-1.2.0-channel-line-migrating-from-sdk"
+    ],
+    "Guides (Slack)": [
+      "version-1.2.0-channel-slack-setup",
+      "version-1.2.0-channel-slack-handling-events",
+      "version-1.2.0-channel-slack-sending-messages",
+      "version-1.2.0-channel-slack-routing",
+      "version-1.2.0-channel-slack-block-kit"
+    ],
+    "Guides (Telegram)": [
+      "version-1.2.0-channel-telegram-setup",
+      "version-1.2.0-channel-telegram-handling-events",
+      "version-1.2.0-channel-telegram-sending-messages",
+      "version-1.2.0-channel-telegram-routing"
+    ],
+    "Guides (Viber)": [
+      "version-1.2.0-channel-viber-setup",
+      "version-1.2.0-channel-viber-handling-events",
+      "version-1.2.0-channel-viber-sending-messages",
+      "version-1.2.0-channel-viber-routing"
+    ],
+    "FAQ": []
+  },
+  "version-1.2.0-api": {
+    "Core": [
+      "version-1.2.0-api-context",
+      "version-1.2.0-api-event"
+    ],
+    "Messenger": [
+      "version-1.2.0-api-messenger-context",
+      "version-1.2.0-api-messenger-event"
+    ],
+    "LINE": [
+      "version-1.2.0-api-line-context",
+      "version-1.2.0-api-line-event"
+    ],
+    "Slack": [
+      "version-1.2.0-api-slack-context",
+      "version-1.2.0-api-slack-event"
+    ],
+    "Telegram": [
+      "version-1.2.0-api-telegram-context",
+      "version-1.2.0-api-telegram-event"
+    ],
+    "Viber": [
+      "version-1.2.0-api-viber-context",
+      "version-1.2.0-api-viber-event"
+    ],
+    "Console": [
+      "version-1.2.0-api-console-context",
+      "version-1.2.0-api-console-event"
+    ]
+  }
+}
