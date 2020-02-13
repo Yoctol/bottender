@@ -19,10 +19,6 @@
   "peerDependencies": {
     "bottender": ">= 1.2.0-0"
   },
-  "devDependencies": {
-    "bottender": "file:../bottender",
-    "nock": "^11.7.2"
-  },
   "keywords": [
     "bot",
     "bottender",

@@ -28,6 +28,7 @@
     "@types/debug": "^4.1.5",
     "@types/dotenv": "^8.2.0",
     "@types/express": "^4.17.2",
+    "@types/figures": "^3.0.1",
     "@types/fs-extra": "^8.0.1",
     "@types/hapi__joi": "^15.0.4",
     "@types/inquirer": "^6.5.0",
@@ -86,12 +87,6 @@
     "shortid": "^2.2.15",
     "update-notifier": "^3.0.1",
     "warning": "^4.0.3"
-  },
-  "devDependencies": {
-    "jest-create-mock-instance": "^1.1.0",
-    "ngrok": "^3.2.5",
-    "once": "^1.4.0",
-    "supertest": "^4.0.2"
   },
   "keywords": [
     "bot",
