@@ -6,6 +6,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/Yoctol/bottender#contributing)
 [![join chat](https://img.shields.io/badge/discord-join%20chat-green.svg)](https://discord.gg/apNsWBz)
+[![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/Yoctol/bottender)
 [![Follow @bottenderjs](https://img.shields.io/twitter/follow/bottenderjs.svg?label=Follow%20@bottenderjs)](https://twitter.com/intent/follow?screen_name=bottenderjs)
 
 ![](https://user-images.githubusercontent.com/3382565/68366395-3080d000-016e-11ea-8bad-d9c52a215376.png)
@@ -132,6 +133,12 @@ yarn test
 ```
 
 Make your changes and tests, and make sure the tests pass.
+
+### Contribute using online one click setup
+
+You can use gitpod(a free online vs code like ide) for contributing with a single click it will launch a ready to code workspace with repo already cloned, all the dependencies pre-installed and the server for the website running so that you can start coding straight away without wasting time on the setup.
+
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/Yoctol/bottender)
 
 ## License
 
