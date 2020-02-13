@@ -14,6 +14,7 @@
   ],
   "types": "dist/index.d.ts",
   "dependencies": {
+    "@types/dialogflow": "^4.0.4",
     "dialogflow": "^1.0.0"
   },
   "peerDependencies": {

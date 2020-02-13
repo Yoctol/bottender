@@ -13,6 +13,8 @@
   ],
   "types": "dist/index.d.ts",
   "dependencies": {
+    "@types/koa-compose": "^3.2.5",
+    "@types/warning": "^3.0.0",
     "koa-compose": "^4.1.0",
     "warning": "^4.0.3"
   }
