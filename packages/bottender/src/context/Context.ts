@@ -89,7 +89,7 @@ export default abstract class Context<C extends Client, E extends Event> {
    * The client instance.
    *
    */
-  get client(): Record<string, any> {
+  get client(): C {
     return this._client;
   }
 
