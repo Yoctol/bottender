@@ -1,38 +1,40 @@
+import { SlackOAuthClient } from 'messaging-api-slack';
+
 import Context from '../context/Context';
-import { Action, Client, Event } from '../types';
+import { Action } from '../types';
 import { RoutePredicate, route } from '../router';
 
-import { EventTypes } from './SlackEvent';
+import SlackEvent, { EventTypes } from './SlackEvent';
 
-type Route = <C extends Client = any, E extends Event = any>(
-  action: Action<C, E>
+type SlackContext = Context<SlackOAuthClient, SlackEvent>;
+type SlackAction = Action<SlackOAuthClient, SlackEvent>;
+type SlackRoutePredicate = RoutePredicate<SlackOAuthClient, SlackEvent>;
+
+type Route = (
+  action: SlackAction
 ) => {
-  predicate: RoutePredicate<C, E>;
-  action: Action<C, E>;
+  predicate: SlackRoutePredicate;
+  action: SlackAction;
 };
 
 type Slack = Route & {
   message: Route;
-  event: <C extends Client = any, E extends Event = any>(
+  event: (
     eventType: EventTypes,
-    action: Action<C, E>
+    action: SlackAction
   ) => {
-    predicate: RoutePredicate<C, E>;
-    action: Action<C, E>;
+    predicate: SlackRoutePredicate;
+    action: SlackAction;
   };
 };
 
-const slack: Slack = <C extends Client = any, E extends Event = any>(
-  action: Action<C, E>
-) => {
+const slack: Slack = (action: SlackAction) => {
   return route(context => context.platform === 'slack', action);
 };
 
-function message<C extends Client = any, E extends Event = any>(
-  action: Action<C, E>
-) {
+function message(action: SlackAction) {
   return route(
-    (context: Context<C, E>) =>
+    (context: SlackContext) =>
       context.platform === 'slack' && context.event.isMessage,
     action
   );
@@ -40,12 +42,9 @@ function message<C extends Client = any, E extends Event = any>(
 
 slack.message = message;
 
-function event<C extends Client = any, E extends Event = any>(
-  eventType: EventTypes,
-  action: Action<C, E>
-) {
+function event(eventType: EventTypes, action: SlackAction) {
   return route(
-    (context: Context<C, E>) =>
+    (context: SlackContext) =>
       context.platform === 'slack' && context.event.rawEvent.type === eventType,
     action
   );

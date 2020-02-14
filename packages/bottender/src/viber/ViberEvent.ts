@@ -123,6 +123,22 @@ export default class ViberEvent implements Event<ViberRawEvent> {
   }
 
   /**
+   * Determine if the event is a postback event.
+   *
+   */
+  get isPayload(): boolean {
+    return false;
+  }
+
+  /**
+   * The payload string from event.
+   *
+   */
+  get payload(): string | null {
+    return null;
+  }
+
+  /**
    * The message object from Viber raw event.
    *
    */

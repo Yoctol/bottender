@@ -83,7 +83,7 @@ function text<C extends Client = any, E extends Event = any>(
   if (pattern instanceof RegExp) {
     return {
       predicate: (context: Context<C, E>) => {
-        const match = pattern.exec(context.event.text);
+        const match = pattern.exec(context.event.text ?? '');
         return match
           ? {
               match,
@@ -97,7 +97,7 @@ function text<C extends Client = any, E extends Event = any>(
   if (Array.isArray(pattern)) {
     return {
       predicate: (context: Context<C, E>) =>
-        pattern.includes(context.event.text),
+        pattern.includes(context.event.text ?? ''),
       action,
     };
   }
@@ -129,7 +129,7 @@ function payload<C extends Client = any, E extends Event = any>(
   if (pattern instanceof RegExp) {
     return {
       predicate: (context: Context<C, E>) => {
-        const match = pattern.exec(context.event.payload);
+        const match = pattern.exec(context.event.payload ?? '');
         return match
           ? {
               match,
@@ -143,7 +143,7 @@ function payload<C extends Client = any, E extends Event = any>(
   if (Array.isArray(pattern)) {
     return {
       predicate: (context: Context<C, E>) =>
-        pattern.includes(context.event.payload),
+        pattern.includes(context.event.payload ?? ''),
       action,
     };
   }

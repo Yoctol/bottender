@@ -1,12 +1,20 @@
+import { LineClient } from 'messaging-api-line';
+
 import Context from '../context/Context';
-import { Action, Client, Event } from '../types';
+import { Action } from '../types';
 import { RoutePredicate, route } from '../router';
 
-type Route = <C extends Client = any, E extends Event = any>(
-  action: Action<C, E>
+import { LineEvent } from '..';
+
+type LineContext = Context<LineClient, LineEvent>;
+type LineAction = Action<LineClient, LineEvent>;
+type LineRoutePredicate = RoutePredicate<LineClient, LineEvent>;
+
+type Route = (
+  action: LineAction
 ) => {
-  predicate: RoutePredicate<C, E>;
-  action: Action<C, E>;
+  predicate: LineRoutePredicate;
+  action: LineAction;
 };
 
 type Line = Route & {
@@ -31,17 +39,13 @@ type Line = Route & {
   };
 };
 
-const line: Line = <C extends Client = any, E extends Event = any>(
-  action: Action<C, E>
-) => {
+const line: Line = (action: LineAction) => {
   return route(context => context.platform === 'line', action);
 };
 
-function message<C extends Client = any, E extends Event = any>(
-  action: Action<C, E>
-) {
+function message(action: LineAction) {
   return route(
-    (context: Context<C, E>) =>
+    (context: LineContext) =>
       context.platform === 'line' && context.event.isMessage,
     action
   );
@@ -49,11 +53,9 @@ function message<C extends Client = any, E extends Event = any>(
 
 line.message = message;
 
-function follow<C extends Client = any, E extends Event = any>(
-  action: Action<C, E>
-) {
+function follow(action: LineAction) {
   return route(
-    (context: Context<C, E>) =>
+    (context: LineContext) =>
       context.platform === 'line' && context.event.isFollow,
     action
   );
@@ -61,11 +63,9 @@ function follow<C extends Client = any, E extends Event = any>(
 
 line.follow = follow;
 
-function unfollow<C extends Client = any, E extends Event = any>(
-  action: Action<C, E>
-) {
+function unfollow(action: LineAction) {
   return route(
-    (context: Context<C, E>) =>
+    (context: LineContext) =>
       context.platform === 'line' && context.event.isUnfollow,
     action
   );
@@ -73,11 +73,9 @@ function unfollow<C extends Client = any, E extends Event = any>(
 
 line.unfollow = unfollow;
 
-function join<C extends Client = any, E extends Event = any>(
-  action: Action<C, E>
-) {
+function join(action: LineAction) {
   return route(
-    (context: Context<C, E>) =>
+    (context: LineContext) =>
       context.platform === 'line' && context.event.isJoin,
     action
   );
@@ -85,11 +83,9 @@ function join<C extends Client = any, E extends Event = any>(
 
 line.join = join;
 
-function leave<C extends Client = any, E extends Event = any>(
-  action: Action<C, E>
-) {
+function leave(action: LineAction) {
   return route(
-    (context: Context<C, E>) =>
+    (context: LineContext) =>
       context.platform === 'line' && context.event.isLeave,
     action
   );
@@ -97,11 +93,9 @@ function leave<C extends Client = any, E extends Event = any>(
 
 line.leave = leave;
 
-function memberJoined<C extends Client = any, E extends Event = any>(
-  action: Action<C, E>
-) {
+function memberJoined(action: LineAction) {
   return route(
-    (context: Context<C, E>) =>
+    (context: LineContext) =>
       context.platform === 'line' && context.event.isMemberJoined,
     action
   );
@@ -109,11 +103,9 @@ function memberJoined<C extends Client = any, E extends Event = any>(
 
 line.memberJoined = memberJoined;
 
-function memberLeft<C extends Client = any, E extends Event = any>(
-  action: Action<C, E>
-) {
+function memberLeft(action: LineAction) {
   return route(
-    (context: Context<C, E>) =>
+    (context: LineContext) =>
       context.platform === 'line' && context.event.isMemberLeft,
     action
   );
@@ -121,11 +113,9 @@ function memberLeft<C extends Client = any, E extends Event = any>(
 
 line.memberLeft = memberLeft;
 
-function postback<C extends Client = any, E extends Event = any>(
-  action: Action<C, E>
-) {
+function postback(action: LineAction) {
   return route(
-    (context: Context<C, E>) =>
+    (context: LineContext) =>
       context.platform === 'line' && context.event.isPostback,
     action
   );
@@ -133,11 +123,9 @@ function postback<C extends Client = any, E extends Event = any>(
 
 line.postback = postback;
 
-function beacon<C extends Client = any, E extends Event = any>(
-  action: Action<C, E>
-) {
+function beacon(action: LineAction) {
   return route(
-    (context: Context<C, E>) =>
+    (context: LineContext) =>
       context.platform === 'line' && context.event.isBeacon,
     action
   );
@@ -145,53 +133,45 @@ function beacon<C extends Client = any, E extends Event = any>(
 
 line.beacon = beacon;
 
-function beaconEnter<C extends Client = any, E extends Event = any>(
-  action: Action<C, E>
-) {
+function beaconEnter(action: LineAction) {
   return route(
-    (context: Context<C, E>) =>
+    (context: LineContext) =>
       context.platform === 'line' &&
       context.event.isBeacon &&
-      context.event.beacon.type === 'enter',
+      context.event.beacon?.type === 'enter',
     action
   );
 }
 
 beacon.enter = beaconEnter;
 
-function beaconBanner<C extends Client = any, E extends Event = any>(
-  action: Action<C, E>
-) {
+function beaconBanner(action: LineAction) {
   return route(
-    (context: Context<C, E>) =>
+    (context: LineContext) =>
       context.platform === 'line' &&
       context.event.isBeacon &&
-      context.event.beacon.type === 'banner',
+      context.event.beacon?.type === 'banner',
     action
   );
 }
 
 beacon.banner = beaconBanner;
 
-function beaconStay<C extends Client = any, E extends Event = any>(
-  action: Action<C, E>
-) {
+function beaconStay(action: LineAction) {
   return route(
-    (context: Context<C, E>) =>
+    (context: LineContext) =>
       context.platform === 'line' &&
       context.event.isBeacon &&
-      context.event.beacon.type === 'stay',
+      context.event.beacon?.type === 'stay',
     action
   );
 }
 
 beacon.stay = beaconStay;
 
-function accountLink<C extends Client = any, E extends Event = any>(
-  action: Action<C, E>
-) {
+function accountLink(action: LineAction) {
   return route(
-    (context: Context<C, E>) =>
+    (context: LineContext) =>
       context.platform === 'line' && context.event.isAccountLink,
     action
   );
@@ -199,11 +179,9 @@ function accountLink<C extends Client = any, E extends Event = any>(
 
 line.accountLink = accountLink;
 
-function things<C extends Client = any, E extends Event = any>(
-  action: Action<C, E>
-) {
+function things(action: LineAction) {
   return route(
-    (context: Context<C, E>) =>
+    (context: LineContext) =>
       context.platform === 'line' && context.event.isThings,
     action
   );
@@ -211,42 +189,36 @@ function things<C extends Client = any, E extends Event = any>(
 
 line.things = things;
 
-function thingsLink<C extends Client = any, E extends Event = any>(
-  action: Action<C, E>
-) {
+function thingsLink(action: LineAction) {
   return route(
-    (context: Context<C, E>) =>
+    (context: LineContext) =>
       context.platform === 'line' &&
       context.event.isThings &&
-      context.event.things.type === 'link',
+      context.event.things?.type === 'link',
     action
   );
 }
 
 things.link = thingsLink;
 
-function thingsUnlink<C extends Client = any, E extends Event = any>(
-  action: Action<C, E>
-) {
+function thingsUnlink(action: LineAction) {
   return route(
-    (context: Context<C, E>) =>
+    (context: LineContext) =>
       context.platform === 'line' &&
       context.event.isThings &&
-      context.event.things.type === 'unlink',
+      context.event.things?.type === 'unlink',
     action
   );
 }
 
 things.unlink = thingsUnlink;
 
-function thingsScenarioResult<C extends Client = any, E extends Event = any>(
-  action: Action<C, E>
-) {
+function thingsScenarioResult(action: LineAction) {
   return route(
-    (context: Context<C, E>) =>
+    (context: LineContext) =>
       context.platform === 'line' &&
       context.event.isThings &&
-      context.event.things.type === 'scenarioResult',
+      context.event.things?.type === 'scenarioResult',
     action
   );
 }

@@ -1,12 +1,19 @@
+import { MessengerClient } from 'messaging-api-messenger';
+
 import Context from '../context/Context';
-import { Action, Client, Event } from '../types';
+import { Action } from '../types';
 import { RoutePredicate, route } from '../router';
 
-type Route = <C extends Client = any, E extends Event = any>(
-  action: Action<C, E>
+import { MessengerEvent } from '..';
+
+type MessengerContext = Context<MessengerClient, MessengerEvent>;
+type MessengerAction = Action<MessengerClient, MessengerEvent>;
+type MessengerRoutePredicate = RoutePredicate<MessengerClient, MessengerEvent>;
+type Route = (
+  action: MessengerAction
 ) => {
-  predicate: RoutePredicate<C, E>;
-  action: Action<C, E>;
+  predicate: MessengerRoutePredicate;
+  action: MessengerAction;
 };
 
 type Messenger = Route & {
@@ -33,17 +40,13 @@ type Messenger = Route & {
   standby: Route;
 };
 
-const messenger: Messenger = <C extends Client = any, E extends Event = any>(
-  action: Action<C, E>
-) => {
+const messenger: Messenger = (action: MessengerAction) => {
   return route(context => context.platform === 'messenger', action);
 };
 
-function message<C extends Client = any, E extends Event = any>(
-  action: Action<C, E>
-) {
+function message(action: MessengerAction) {
   return route(
-    (context: Context<C, E>) =>
+    (context: Context<MessengerClient, MessengerEvent>) =>
       context.platform === 'messenger' && context.event.isMessage,
     action
   );
@@ -51,11 +54,9 @@ function message<C extends Client = any, E extends Event = any>(
 
 messenger.message = message;
 
-function accountLinking<C extends Client = any, E extends Event = any>(
-  action: Action<C, E>
-) {
+function accountLinking(action: MessengerAction) {
   return route(
-    (context: Context<C, E>) =>
+    (context: MessengerContext) =>
       context.platform === 'messenger' && context.event.isAccountLinking,
     action
   );
@@ -63,39 +64,35 @@ function accountLinking<C extends Client = any, E extends Event = any>(
 
 messenger.accountLinking = accountLinking;
 
-function accountLinkingLinked<C extends Client = any, E extends Event = any>(
-  action: Action<C, E>
-) {
+function accountLinkingLinked(action: MessengerAction) {
   return route(
-    (context: Context<C, E>) =>
+    (context: MessengerContext) =>
       context.platform === 'messenger' &&
       context.event.isAccountLinking &&
-      context.event.accountLinking.status === 'linked',
+      // eslint-disable-next-line no-restricted-globals
+      context.event.accountLinking?.status === 'linked',
     action
   );
 }
 
 accountLinking.linked = accountLinkingLinked;
 
-function accountLinkingUnlinked<C extends Client = any, E extends Event = any>(
-  action: Action<C, E>
-) {
+function accountLinkingUnlinked(action: MessengerAction) {
   return route(
-    (context: Context<C, E>) =>
+    (context: MessengerContext) =>
       context.platform === 'messenger' &&
       context.event.isAccountLinking &&
-      context.event.accountLinking.status === 'unlinked',
+      // eslint-disable-next-line no-restricted-globals
+      context.event.accountLinking?.status === 'unlinked',
     action
   );
 }
 
 accountLinking.unlinked = accountLinkingUnlinked;
 
-function checkoutUpdate<C extends Client = any, E extends Event = any>(
-  action: Action<C, E>
-) {
+function checkoutUpdate(action: MessengerAction) {
   return route(
-    (context: Context<C, E>) =>
+    (context: MessengerContext) =>
       context.platform === 'messenger' && context.event.isCheckoutUpdate,
     action
   );
@@ -103,11 +100,9 @@ function checkoutUpdate<C extends Client = any, E extends Event = any>(
 
 messenger.checkoutUpdate = checkoutUpdate;
 
-function delivery<C extends Client = any, E extends Event = any>(
-  action: Action<C, E>
-) {
+function delivery(action: MessengerAction) {
   return route(
-    (context: Context<C, E>) =>
+    (context: MessengerContext) =>
       context.platform === 'messenger' && context.event.isDelivery,
     action
   );
@@ -115,11 +110,9 @@ function delivery<C extends Client = any, E extends Event = any>(
 
 messenger.delivery = delivery;
 
-function echo<C extends Client = any, E extends Event = any>(
-  action: Action<C, E>
-) {
+function echo(action: MessengerAction) {
   return route(
-    (context: Context<C, E>) =>
+    (context: MessengerContext) =>
       context.platform === 'messenger' && context.event.isEcho,
     action
   );
@@ -127,11 +120,9 @@ function echo<C extends Client = any, E extends Event = any>(
 
 messenger.echo = echo;
 
-function gamePlay<C extends Client = any, E extends Event = any>(
-  action: Action<C, E>
-) {
+function gamePlay(action: MessengerAction) {
   return route(
-    (context: Context<C, E>) =>
+    (context: MessengerContext) =>
       context.platform === 'messenger' && context.event.isGamePlay,
     action
   );
@@ -139,11 +130,9 @@ function gamePlay<C extends Client = any, E extends Event = any>(
 
 messenger.gamePlay = gamePlay;
 
-function passThreadControl<C extends Client = any, E extends Event = any>(
-  action: Action<C, E>
-) {
+function passThreadControl(action: MessengerAction) {
   return route(
-    (context: Context<C, E>) =>
+    (context: MessengerContext) =>
       context.platform === 'messenger' && context.event.isPassThreadControl,
     action
   );
@@ -151,11 +140,9 @@ function passThreadControl<C extends Client = any, E extends Event = any>(
 
 messenger.passThreadControl = passThreadControl;
 
-function takeThreadControl<C extends Client = any, E extends Event = any>(
-  action: Action<C, E>
-) {
+function takeThreadControl(action: MessengerAction) {
   return route(
-    (context: Context<C, E>) =>
+    (context: MessengerContext) =>
       context.platform === 'messenger' && context.event.isTakeThreadControl,
     action
   );
@@ -163,11 +150,9 @@ function takeThreadControl<C extends Client = any, E extends Event = any>(
 
 messenger.takeThreadControl = takeThreadControl;
 
-function requestThreadControl<C extends Client = any, E extends Event = any>(
-  action: Action<C, E>
-) {
+function requestThreadControl(action: MessengerAction) {
   return route(
-    (context: Context<C, E>) =>
+    (context: MessengerContext) =>
       context.platform === 'messenger' && context.event.isRequestThreadControl,
     action
   );
@@ -175,11 +160,9 @@ function requestThreadControl<C extends Client = any, E extends Event = any>(
 
 messenger.requestThreadControl = requestThreadControl;
 
-function appRoles<C extends Client = any, E extends Event = any>(
-  action: Action<C, E>
-) {
+function appRoles(action: MessengerAction) {
   return route(
-    (context: Context<C, E>) =>
+    (context: MessengerContext) =>
       context.platform === 'messenger' && context.event.isAppRoles,
     action
   );
@@ -187,11 +170,9 @@ function appRoles<C extends Client = any, E extends Event = any>(
 
 messenger.appRoles = appRoles;
 
-function optin<C extends Client = any, E extends Event = any>(
-  action: Action<C, E>
-) {
+function optin(action: MessengerAction) {
   return route(
-    (context: Context<C, E>) =>
+    (context: MessengerContext) =>
       context.platform === 'messenger' && context.event.isOptin,
     action
   );
@@ -199,11 +180,9 @@ function optin<C extends Client = any, E extends Event = any>(
 
 messenger.optin = optin;
 
-function payment<C extends Client = any, E extends Event = any>(
-  action: Action<C, E>
-) {
+function payment(action: MessengerAction) {
   return route(
-    (context: Context<C, E>) =>
+    (context: MessengerContext) =>
       context.platform === 'messenger' && context.event.isPayment,
     action
   );
@@ -211,11 +190,9 @@ function payment<C extends Client = any, E extends Event = any>(
 
 messenger.payment = payment;
 
-function policyEnforcement<C extends Client = any, E extends Event = any>(
-  action: Action<C, E>
-) {
+function policyEnforcement(action: MessengerAction) {
   return route(
-    (context: Context<C, E>) =>
+    (context: MessengerContext) =>
       context.platform === 'messenger' && context.event.isPolicyEnforcement,
     action
   );
@@ -223,11 +200,9 @@ function policyEnforcement<C extends Client = any, E extends Event = any>(
 
 messenger.policyEnforcement = policyEnforcement;
 
-function postback<C extends Client = any, E extends Event = any>(
-  action: Action<C, E>
-) {
+function postback(action: MessengerAction) {
   return route(
-    (context: Context<C, E>) =>
+    (context: MessengerContext) =>
       context.platform === 'messenger' && context.event.isPostback,
     action
   );
@@ -235,11 +210,9 @@ function postback<C extends Client = any, E extends Event = any>(
 
 messenger.postback = postback;
 
-function preCheckout<C extends Client = any, E extends Event = any>(
-  action: Action<C, E>
-) {
+function preCheckout(action: MessengerAction) {
   return route(
-    (context: Context<C, E>) =>
+    (context: MessengerContext) =>
       context.platform === 'messenger' && context.event.isPreCheckout,
     action
   );
@@ -247,11 +220,9 @@ function preCheckout<C extends Client = any, E extends Event = any>(
 
 messenger.preCheckout = preCheckout;
 
-function read<C extends Client = any, E extends Event = any>(
-  action: Action<C, E>
-) {
+function read(action: MessengerAction) {
   return route(
-    (context: Context<C, E>) =>
+    (context: MessengerContext) =>
       context.platform === 'messenger' && context.event.isRead,
     action
   );
@@ -259,11 +230,9 @@ function read<C extends Client = any, E extends Event = any>(
 
 messenger.read = read;
 
-function referral<C extends Client = any, E extends Event = any>(
-  action: Action<C, E>
-) {
+function referral(action: MessengerAction) {
   return route(
-    (context: Context<C, E>) =>
+    (context: MessengerContext) =>
       context.platform === 'messenger' && context.event.isReferral,
     action
   );
@@ -271,11 +240,9 @@ function referral<C extends Client = any, E extends Event = any>(
 
 messenger.referral = referral;
 
-function standby<C extends Client = any, E extends Event = any>(
-  action: Action<C, E>
-) {
+function standby(action: MessengerAction) {
   return route(
-    (context: Context<C, E>) =>
+    (context: MessengerContext) =>
       context.platform === 'messenger' && context.event.isStandby,
     action
   );
