@@ -105,7 +105,7 @@ export default abstract class Context<C extends Client, E extends Event> {
    * The context of the request.
    *
    */
-  get requestContext(): Record<string, any> | null {
+  get requestContext(): RequestContext | null {
     return this._requestContext;
   }
 
