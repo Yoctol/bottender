@@ -96,11 +96,18 @@ export default class SlackConnector
     this._signingSecret = signingSecret || '';
     this._verificationToken = verificationToken || '';
 
-    if (!this._verificationToken) {
-      warning(
-        false,
-        '`verificationToken` is not set. Will bypass Slack event verification.\nPass in `verificationToken` to perform Slack event verification.'
-      );
+    if (!this._signingSecret) {
+      if (!this._verificationToken) {
+        warning(
+          false,
+          'Both `signingSecret` and `verificationToken` is not set. Will bypass Slack event verification.\nPass in `signingSecret` to perform Slack event verification.'
+        );
+      } else {
+        warning(
+          false,
+          "It's deprecated to use `verificationToken` here, use `signingSecret` instead."
+        );
+      }
     }
 
     this._skipLegacyProfile =
