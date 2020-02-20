@@ -122,7 +122,7 @@ class Server {
     }
 
     const { pathname, searchParams } = new url.URL(
-      `http://${req.headers.host}${req.url}`
+      `https://${req.headers.host}${req.url}`
     );
 
     const query = fromEntries(searchParams.entries());
@@ -133,6 +133,7 @@ class Server {
       if (pathname === webhookPath) {
         const result = (bot.connector as any).preprocess({
           method: req.method,
+          url: `https://${req.headers.host}${req.url}`,
           headers: req.headers,
           query,
           rawBody: (req as any).rawBody,
