@@ -1,9 +1,10 @@
+import prettier from 'prettier';
+
 import { Platform, Session } from '../types';
 
-const generateConfig = (
-  session: Session,
-  platforms: Platform[]
-): string => `module.exports = {
+const generateConfig = (session: Session, platforms: Platform[]): string =>
+  prettier.format(
+    `module.exports = {
   session: {
     driver: '${session}',
     stores: {
@@ -63,6 +64,12 @@ const generateConfig = (
     },
   },
 };
-`;
+`,
+    {
+      trailingComma: 'es5',
+      singleQuote: true,
+      parser: 'babel',
+    }
+  );
 
 export default generateConfig;

@@ -3,3 +3,5 @@ dist
 !.eslintrc.js
 !.babelrc.js
 examples/browser-only
+packages/create-bottender-app/template
+packages/create-bottender-app/template-typescript

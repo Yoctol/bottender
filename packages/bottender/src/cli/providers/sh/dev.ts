@@ -1,3 +1,6 @@
+import fs from 'fs';
+import path from 'path';
+
 import ngrok from 'ngrok';
 import nodemon from 'nodemon';
 
@@ -23,9 +26,18 @@ const dev = async (ctx: CliContext): Promise<void> => {
 
   const { channels } = config;
 
+  const isTypescript = fs.statSync(path.resolve('tsconfig.json')).isFile;
+
   // watch
   nodemon(
-    `--exec "bottender start ${isConsole ? '--console' : ''} --port ${port}"`
+    [
+      isTypescript ? '--ext js,mjs,json,ts --ignore dist/ ' : '',
+      '--exec "',
+      isTypescript ? 'tsc && ' : '',
+      'bottender start',
+      isConsole ? ' --console' : '',
+      ` --port ${port}"`,
+    ].join('')
   )
     // TODO: improve messages
     .on('start', () => {
