@@ -72,7 +72,7 @@ This will create and run a bot which always reply "Hello World" in the console.
 - Messenger Profile Sync
 - Attachment Upload
 - Handover Protocol
-- Targeting Broadcast Messages
+- Persona
 - Built-in NLP
 - Multiple Pages
 
