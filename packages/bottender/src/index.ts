@@ -34,30 +34,35 @@ export { default as MessengerBot } from './messenger/MessengerBot';
 export { default as MessengerConnector } from './messenger/MessengerConnector';
 export { default as MessengerContext } from './messenger/MessengerContext';
 export { default as MessengerEvent } from './messenger/MessengerEvent';
+export { MessengerTypes } from 'messaging-api-messenger';
 
 /* LINE */
 export { default as LineBot } from './line/LineBot';
 export { default as LineConnector } from './line/LineConnector';
 export { default as LineContext } from './line/LineContext';
 export { default as LineEvent } from './line/LineEvent';
+export { LineTypes } from 'messaging-api-line';
 
 /* Slack */
 export { default as SlackBot } from './slack/SlackBot';
 export { default as SlackConnector } from './slack/SlackConnector';
 export { default as SlackContext } from './slack/SlackContext';
 export { default as SlackEvent } from './slack/SlackEvent';
+export { SlackTypes } from 'messaging-api-slack';
 
 /* Telegram */
 export { default as TelegramBot } from './telegram/TelegramBot';
 export { default as TelegramConnector } from './telegram/TelegramConnector';
 export { default as TelegramContext } from './telegram/TelegramContext';
 export { default as TelegramEvent } from './telegram/TelegramEvent';
+export { TelegramTypes } from 'messaging-api-telegram';
 
 /* Viber */
 export { default as ViberBot } from './viber/ViberBot';
 export { default as ViberConnector } from './viber/ViberConnector';
 export { default as ViberContext } from './viber/ViberContext';
 export { default as ViberEvent } from './viber/ViberEvent';
+export { ViberTypes } from 'messaging-api-viber';
 
 /**
  * Private Exports (unstable)
