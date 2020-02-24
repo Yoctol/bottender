@@ -384,7 +384,7 @@ const init = async (): Promise<void> => {
       answer.session
     );
 
-    const command = useYarn ? 'yarn' : 'npm';
+    const command = useYarn ? 'yarn' : 'npm run';
 
     print('Success!');
     print(`Created ${name} at ${root}`);

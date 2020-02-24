@@ -1,3 +1,9 @@
+# 1.2.2 / 2020-02-24
+
+## create-bottender-app
+
+- [fix] Fixed wrong npm scripts in the instruction.
+
 # 1.2.1 / 2020-02-13
 
 - [fix] install @types packages in package dependencies instead of workspace.
