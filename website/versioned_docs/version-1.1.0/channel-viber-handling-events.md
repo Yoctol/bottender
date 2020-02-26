@@ -28,4 +28,4 @@ async function App(context) {
 
 ## Handling Events with Router
 
-Bottender offers a bunch of helpers to routes within your Viber or multi-platform application. To learn more, please check out Bottender's doc, [Viber Routing](channel-messenger-routing.md).
+Bottender offers a bunch of helpers to routes within your Viber or multi-platform application. To learn more, please check out Bottender's doc, [Viber Routing](channel-viber-routing.md).
