@@ -74,7 +74,7 @@ const getQuestions = (): Record<string, any>[] => [
     name: 'platforms',
     message: 'What platform of bot do you want to create?',
     type: 'checkbox',
-    choices: ['messenger', 'line', 'slack', 'telegram', 'viber'],
+    choices: ['messenger', 'whatsapp', 'line', 'slack', 'telegram', 'viber'],
   },
   {
     name: 'session',

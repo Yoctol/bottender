@@ -17,8 +17,11 @@ function registerRoutes(
       return;
     }
 
+    const url = `https://${req.get('host')}${req.originalUrl}`;
+
     const { shouldNext, response } = bot.connector.preprocess({
       method: req.method,
+      url,
       headers: req.headers,
       query: req.query,
       rawBody,

@@ -10,13 +10,16 @@ import LineEvent from './line/LineEvent';
 import MessengerEvent from './messenger/MessengerEvent';
 import SlackEvent from './slack/SlackEvent';
 import TelegramEvent from './telegram/TelegramEvent';
+import TwilioClient from './whatsapp/TwilioClient';
 import ViberEvent from './viber/ViberEvent';
+import WhatsappEvent from './whatsapp/WhatsappEvent';
 import { ConsoleClient } from './console/ConsoleClient';
 import { LineRequestBody } from './line/LineConnector';
 import { MessengerRequestBody } from './messenger/MessengerConnector';
 import { SlackRequestBody } from './slack/SlackConnector';
 import { TelegramRequestBody } from './telegram/TelegramConnector';
 import { ViberRequestBody } from './viber/ViberConnector';
+import { WhatsappRequestBody } from './whatsapp/WhatsappConnector';
 
 export type Client =
   | ConsoleClient
@@ -24,7 +27,8 @@ export type Client =
   | LineClient
   | SlackOAuthClient
   | TelegramClient
-  | ViberClient;
+  | ViberClient
+  | TwilioClient;
 
 export type Event =
   | ConsoleEvent
@@ -32,7 +36,8 @@ export type Event =
   | LineEvent
   | SlackEvent
   | TelegramEvent
-  | ViberEvent;
+  | ViberEvent
+  | WhatsappEvent;
 
 export type Body =
   | ConsoleRawEvent
@@ -40,7 +45,8 @@ export type Body =
   | LineRequestBody
   | SlackRequestBody
   | TelegramRequestBody
-  | ViberRequestBody;
+  | ViberRequestBody
+  | WhatsappRequestBody;
 
 export type Action<C extends Client, E extends Event> = (
   context: Context<C, E>,
@@ -63,6 +69,7 @@ export enum Channel {
   Slack = 'slack',
   Telegram = 'telegram',
   Viber = 'viber',
+  Whatsapp = 'whatsapp',
 }
 
 export enum SessionDriver {
@@ -133,6 +140,12 @@ export type BottenderConfig = {
       sender: {
         name: string;
       };
+    };
+    [Channel.Whatsapp]: {
+      enabled: boolean;
+      path: string;
+      accountSid: string;
+      authToken: string;
     };
   };
 };
