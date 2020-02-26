@@ -9,6 +9,7 @@ import router, {
   telegram,
   text,
   viber,
+  whatsapp,
 } from '..';
 
 function textContext(message = '') {
@@ -41,7 +42,7 @@ function platformContext(name = '') {
 }
 
 function sendText(message) {
-  return async function(context) {
+  return async function SendText(context) {
     await context.sendText(message);
   };
 }
@@ -365,4 +366,8 @@ it('#telegram should be exported', () => {
 
 it('#viber should be exported', () => {
   expect(viber).toBeDefined();
+});
+
+it('#whatsapp should be exported', () => {
+  expect(whatsapp).toBeDefined();
 });
