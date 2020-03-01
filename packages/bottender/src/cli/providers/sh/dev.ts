@@ -26,7 +26,12 @@ const dev = async (ctx: CliContext): Promise<void> => {
 
   const { channels } = config;
 
-  const isTypescript = fs.statSync(path.resolve('tsconfig.json')).isFile;
+  let isTypescript = false;
+  try {
+    isTypescript = Boolean(fs.statSync(path.resolve('tsconfig.json')).isFile);
+  } catch {
+    // fs.statSync may throw an ENOENT error when file is not found, so keep isTypescript false
+  }
 
   // watch
   nodemon(
