@@ -20,6 +20,7 @@ module.exports = {
     'no-param-reassign': 'off',
     'no-undef': 'off',
     'prefer-destructuring': 'off',
+    'import/extensions': 'off',
     'prettier/prettier': [
       'error',
       {
@@ -29,6 +30,7 @@ module.exports = {
     ],
     '@typescript-eslint/camelcase': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
+    '@typescript-eslint/no-empty-function': 'off',
   },
   overrides: [
     {
