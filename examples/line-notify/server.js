@@ -2,8 +2,8 @@ const path = require('path');
 
 const bodyParser = require('body-parser');
 const express = require('express');
-const { bottender } = require('bottender');
 const ejs = require('ejs');
+const { bottender } = require('bottender');
 
 const lineNotify = require('./lineNotify');
 
