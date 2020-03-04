@@ -2806,10 +2806,10 @@ body-parser@1.19.0, body-parser@^1.19.0:
     raw-body "2.4.0"
     type-is "~1.6.17"
 
-bottender@^1.2.2:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/bottender/-/bottender-1.2.2.tgz#d007493d086d11da84f02f3c72b325f0c52d787d"
-  integrity sha512-nteZ+RYluSquNmThq7XYAjPvOVzafnnDbKkTQpHTISZwNpYrP8xBz9wPWBu3T8jXPKqbTke/c5m63lJKnltstw==
+bottender@^1.2.3:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/bottender/-/bottender-1.2.3.tgz#46cfe7a6ceb5dc86ef2c4151057c51653c8f4c19"
+  integrity sha512-2jvDqejH/M5zVEvpSmtZpEsjEM87z13MxR/3ZCHrYUhhhxeDFm/RhLDWsCHwfx7SMBdSJsc2/fBB5fXY/wT/CA==
   dependencies:
     "@bottender/express" "^1.2.1"
     "@hapi/joi" "^15.1.1"
