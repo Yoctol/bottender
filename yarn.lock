@@ -7621,6 +7621,18 @@ messaging-api-common@^1.0.0-beta.5:
     snake-case "^2.1.0"
     url-join "^4.0.1"
 
+messaging-api-line@^1.0.0-beta.11:
+  version "1.0.0-beta.11"
+  resolved "https://registry.yarnpkg.com/messaging-api-line/-/messaging-api-line-1.0.0-beta.11.tgz#d38f7098602268041f813d46a869b9a2971e7009"
+  integrity sha512-Yq5/hQIEggaEq6HZ7A9nZ4Oe16LQHfCQbE0QJTNQz3Ox5ur0k0uaw/KC05C/QBizSnpZTryv3/eJieEyOBjg4Q==
+  dependencies:
+    axios "^0.19.0"
+    axios-error "^1.0.0-beta.5"
+    image-type "^4.1.0"
+    invariant "^2.2.4"
+    messaging-api-common "^1.0.0-beta.5"
+    warning "^4.0.3"
+
 messaging-api-line@^1.0.0-beta.5:
   version "1.0.0-beta.5"
   resolved "https://registry.yarnpkg.com/messaging-api-line/-/messaging-api-line-1.0.0-beta.5.tgz#d5f1e78761f7f75f07aeb73a64c3172ddf25199b"
