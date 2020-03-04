@@ -79,7 +79,7 @@ export default class SlackConnector
 
       invariant(
         accessToken,
-        'Viber access token is required. Please make sure you have filled it correctly in `bottender.config.js` or `.env` file.'
+        'Slack access token is required. Please make sure you have filled it correctly in `bottender.config.js` or `.env` file.'
       );
 
       this._client = SlackOAuthClient.connect({
