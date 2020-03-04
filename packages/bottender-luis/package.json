@@ -20,7 +20,7 @@
     "bottender": ">= 1.2.0-0"
   },
   "devDependencies": {
-    "bottender": "^1.2.2"
+    "bottender": "^1.2.3"
   },
   "keywords": [
     "bot",
