@@ -1,4 +1,5 @@
 import bottender from './bottender';
+import * as WhatsappTypes from './whatsapp/WhatsappTypes';
 
 export { bottender };
 
@@ -35,6 +36,13 @@ export { default as MessengerConnector } from './messenger/MessengerConnector';
 export { default as MessengerContext } from './messenger/MessengerContext';
 export { default as MessengerEvent } from './messenger/MessengerEvent';
 export { MessengerTypes } from 'messaging-api-messenger';
+
+/* WhatsApp */
+export { default as WhatsappBot } from './whatsapp/WhatsappBot';
+export { default as WhatsappConnector } from './whatsapp/WhatsappConnector';
+export { default as WhatsappContext } from './whatsapp/WhatsappContext';
+export { default as WhatsappEvent } from './whatsapp/WhatsappEvent';
+export { WhatsappTypes };
 
 /* LINE */
 export { default as LineBot } from './line/LineBot';
