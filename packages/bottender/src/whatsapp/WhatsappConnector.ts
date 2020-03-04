@@ -14,6 +14,7 @@ export type WhatsappRequestBody = any;
 type ConstructorOptionsWithoutClient = {
   accountSid: string;
   authToken: string;
+  phoneNumber: string;
   origin?: string;
 };
 
@@ -49,11 +50,12 @@ export default class WhatsappConnector
     if ('client' in options) {
       this._client = options.client;
     } else {
-      const { accountSid, authToken, origin } = options;
+      const { accountSid, authToken, phoneNumber, origin } = options;
 
       this._client = TwilioClient.connect({
         accountSid,
         authToken,
+        phoneNumber,
         origin,
       });
     }

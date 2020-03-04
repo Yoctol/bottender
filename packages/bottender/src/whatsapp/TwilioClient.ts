@@ -13,6 +13,7 @@ import {
 type ClientConfig = {
   accountSid: string;
   authToken: string;
+  phoneNumber: string;
   origin?: string;
 };
 
@@ -36,10 +37,13 @@ export default class TwilioClient {
 
   _authToken: string;
 
+  _phoneNumber: string;
+
   constructor(config: ClientConfig) {
     const twilioOrigin = `https://${config.accountSid}:${config.authToken}@api.twilio.com`;
 
     this._authToken = config.authToken;
+    this._phoneNumber = config.phoneNumber;
 
     this._axios = axios.create({
       baseURL: `${config.origin || twilioOrigin}/2010-04-01/Accounts/${
@@ -66,7 +70,7 @@ export default class TwilioClient {
   }
 
   async createMessage(message: {
-    from: string;
+    from?: string;
     body: string;
     to: string;
     maxPrice?: number;
@@ -101,7 +105,15 @@ export default class TwilioClient {
         subresource_uris: {
           uri: string;
         };
-      }>('/Messages.json', qs.stringify(pascalcaseKeys(message)));
+      }>(
+        '/Messages.json',
+        qs.stringify(
+          pascalcaseKeys({
+            from: this._phoneNumber,
+            ...message,
+          })
+        )
+      );
       return camelcaseKeys(data);
     } catch (err) {
       handleError(err);

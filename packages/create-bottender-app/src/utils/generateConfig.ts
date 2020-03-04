@@ -42,6 +42,7 @@ const generateConfig = (session: Session, platforms: Platform[]): string =>
       path: '/webhooks/whatsapp',
       accountSid: process.env.WHATSAPP_ACCOUNT_SID,
       authToken: process.env.WHATSAPP_AUTH_TOKEN,
+      phoneNumber: process.env.WHATSAPP_PHONE_NUMBER,
     },
     line: {
       enabled: ${platforms.includes('line')},

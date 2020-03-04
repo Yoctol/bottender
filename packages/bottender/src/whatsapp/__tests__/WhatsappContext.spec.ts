@@ -21,6 +21,7 @@ function setup() {
   const client = new TwilioClient({
     accountSid: 'ACCOUNT_SID',
     authToken: 'AUTH_TOKEN',
+    phoneNumber: 'whatsapp:+14155238886',
   });
 
   client.createMessage = jest.fn();
@@ -50,7 +51,6 @@ describe('#sendText', () => {
 
     expect(client.createMessage).toBeCalledWith({
       body: 'hi',
-      from: 'whatsapp:+14155238886',
       to: 'whatsapp:+886123456789',
     });
   });
@@ -70,7 +70,6 @@ describe('#sendText', () => {
 
     expect(client.createMessage).toBeCalledWith({
       body: 'hi',
-      from: 'whatsapp:+14155238886',
       to: 'whatsapp:+886123456789',
       maxPrice: 10,
       provideFeedback: true,

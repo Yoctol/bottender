@@ -28,17 +28,12 @@ class WhatsappContext extends Context<TwilioClient, WhatsappEvent> {
       mediaUrl?: string[];
     }
   ): Promise<any> {
-    const from =
-      this._event.rawEvent.smsStatus === 'received'
-        ? this._event.rawEvent.to
-        : this._event.rawEvent.from;
     const to =
       this._event.rawEvent.smsStatus === 'received'
         ? this._event.rawEvent.from
         : this._event.rawEvent.to;
 
     return this._client.createMessage({
-      from,
       to,
       body: text,
       ...options,

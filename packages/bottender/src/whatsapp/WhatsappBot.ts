@@ -13,12 +13,14 @@ export default class WhatsappBot extends Bot<
   constructor({
     accountSid,
     authToken,
+    phoneNumber,
     sessionStore,
     sync,
     origin,
   }: {
     accountSid: string;
     authToken: string;
+    phoneNumber: string;
     sessionStore?: SessionStore;
     sync?: boolean;
     origin?: string;
@@ -26,6 +28,7 @@ export default class WhatsappBot extends Bot<
     const connector = new WhatsappConnector({
       accountSid,
       authToken,
+      phoneNumber,
       origin,
     });
     super({ connector, sessionStore, sync });
