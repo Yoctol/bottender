@@ -28,6 +28,12 @@
       "channel-messenger-persona",
       "channel-messenger-multi-page"
     ],
+    "Guides (WhatsApp)": [
+      "channel-whatsapp-setup",
+      "channel-whatsapp-handling-events",
+      "channel-whatsapp-sending-messages",
+      "channel-whatsapp-routing"
+    ],
     "Guides (LINE)": [
       "channel-line-setup",
       "channel-line-handling-events",
