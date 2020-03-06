@@ -1,0 +1,545 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>TelegramEvent · Bottender</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="#### `rawEvent`"/><meta name="docsearch:version" content="1.2.0"/><meta name="docsearch:language" content="en"/><meta property="og:title" content="TelegramEvent · Bottender"/><meta property="og:type" content="website"/><meta property="og:url" content="https://bottender.js.org/"/><meta property="og:description" content="#### `rawEvent`"/><meta property="og:image" content="https://bottender.js.org/img/og-image.png"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://bottender.js.org/img/og-image.png"/><link rel="shortcut icon" href="/img/favicon-192x192.png"/><link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-dark.min.css"/><link rel="alternate" type="application/atom+xml" href="https://bottender.js.org/blog/atom.xml" title="Bottender Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://bottender.js.org/blog/feed.xml" title="Bottender Blog RSS Feed"/><script>
+              (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+              (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+              m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+              })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+              ga('create', 'UA-70309045-11', 'auto');
+              ga('send', 'pageview');
+            </script><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:700|Roboto&amp;display=swap"/><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script><script type="text/javascript" src="/js/code-blocks-buttons.js"></script><script type="text/javascript" src="/js/sw.js"></script><script src="/js/scrollSpy.js"></script><link rel="stylesheet" href="/css/main.css"/><script src="/js/codetabs.js"></script></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/"><img class="logo" src="/img/bottender.svg" alt="Bottender"/><h2 class="headerTitleWithLogo">Bottender</h2></a><a href="/versions"><h3>1.2.0</h3></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class=""><a href="/docs/1.2.0/getting-started" target="_self">Docs</a></li><li class="siteNavGroupActive"><a href="/docs/1.2.0/api-context" target="_self">API</a></li><li class=""><a href="/blog/" target="_self">Blog</a></li><li class=""><a href="/users" target="_self">Users</a></li><li class=""><a href="https://github.com/Yoctol/bottender/tree/master/examples" target="_self">Examples</a></li><li class=""><a href="https://github.com/yoctol/bottender" target="_self">GitHub</a></li><li class="navSearchWrapper reactNavSearchWrapper"><input type="text" id="search_input_react" placeholder="Search" title="Search"/></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><div class="hamburger-menu"><div class="line1"></div><div class="line2"></div><div class="line3"></div></div></div><h2><i>›</i><span>Telegram</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle">Core</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/1.2.0/api-context">Context</a></li><li class="navListItem"><a class="navItem" href="/docs/1.2.0/api-event">Event</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Messenger</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/1.2.0/api-messenger-context">MessengerContext</a></li><li class="navListItem"><a class="navItem" href="/docs/1.2.0/api-messenger-event">MessengerEvent</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">LINE</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/1.2.0/api-line-context">LineContext</a></li><li class="navListItem"><a class="navItem" href="/docs/1.2.0/api-line-event">LineEvent</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Slack</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/1.2.0/api-slack-context">SlackContext</a></li><li class="navListItem"><a class="navItem" href="/docs/1.2.0/api-slack-event">SlackEvent</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Telegram</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/1.2.0/api-telegram-context">TelegramContext</a></li><li class="navListItem navListItemActive"><a class="navItem" href="/docs/1.2.0/api-telegram-event">TelegramEvent</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Viber</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/1.2.0/api-viber-context">ViberContext</a></li><li class="navListItem"><a class="navItem" href="/docs/1.2.0/api-viber-event">ViberEvent</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Console</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/1.2.0/api-console-context">ConsoleContext</a></li><li class="navListItem"><a class="navItem" href="/docs/1.2.0/api-console-event">ConsoleEvent</a></li></ul></div></div></section></div><script>
+            var coll = document.getElementsByClassName('collapsible');
+            var checkActiveCategory = true;
+            for (var i = 0; i < coll.length; i++) {
+              var links = coll[i].nextElementSibling.getElementsByTagName('*');
+              if (checkActiveCategory){
+                for (var j = 0; j < links.length; j++) {
+                  if (links[j].classList.contains('navListItemActive')){
+                    coll[i].nextElementSibling.classList.toggle('hide');
+                    coll[i].childNodes[1].classList.toggle('rotate');
+                    checkActiveCategory = false;
+                    break;
+                  }
+                }
+              }
+
+              coll[i].addEventListener('click', function() {
+                var arrow = this.childNodes[1];
+                arrow.classList.toggle('rotate');
+                var content = this.nextElementSibling;
+                content.classList.toggle('hide');
+              });
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
+              createToggler('#tocToggler', 'body', 'tocActive');
+
+              var headings = document.querySelector('.toc-headings');
+              headings && headings.addEventListener('click', function(event) {
+                var el = event.target;
+                while(el !== headings){
+                  if (el.tagName === 'A') {
+                    document.body.classList.remove('tocActive');
+                    break;
+                  } else{
+                    el = el.parentNode;
+                  }
+                }
+              }, false);
+
+              function createToggler(togglerSelector, targetSelector, className) {
+                var toggler = document.querySelector(togglerSelector);
+                var target = document.querySelector(targetSelector);
+
+                if (!toggler) {
+                  return;
+                }
+
+                toggler.onclick = function(event) {
+                  event.preventDefault();
+
+                  target.classList.toggle(className);
+                };
+              }
+            });
+        </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://github.com/Yoctol/bottender/edit/master/docs/api-telegram-event.md" target="_blank" rel="noreferrer noopener">Edit</a><h1 class="postHeaderTitle">TelegramEvent</h1></header><article><div><span><h4><a class="anchor" aria-hidden="true" id="rawevent"></a><a href="#rawevent" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>rawEvent</code></h4>
+<p>Underlying raw event from Telegram.</p>
+<p>Example:</p>
+<pre><code class="hljs css language-js">event.rawEvent;
+<span class="hljs-comment">// {</span>
+<span class="hljs-comment">//   message: {</span>
+<span class="hljs-comment">//     messageId: 666,</span>
+<span class="hljs-comment">//     from: {</span>
+<span class="hljs-comment">//       id: 427770117,</span>
+<span class="hljs-comment">//       isBot: false,</span>
+<span class="hljs-comment">//       firstName: 'first',</span>
+<span class="hljs-comment">//       lastName: 'last',</span>
+<span class="hljs-comment">//       languageCode: 'en',</span>
+<span class="hljs-comment">//     },</span>
+<span class="hljs-comment">//     chat: {</span>
+<span class="hljs-comment">//       id: 427770117,</span>
+<span class="hljs-comment">//       first_name: 'first',</span>
+<span class="hljs-comment">//       last_name: 'last',</span>
+<span class="hljs-comment">//       type: 'private',</span>
+<span class="hljs-comment">//     },</span>
+<span class="hljs-comment">//     date: 1499402829,</span>
+<span class="hljs-comment">//     text: 'text',</span>
+<span class="hljs-comment">//   },</span>
+<span class="hljs-comment">// }</span>
+</code></pre>
+<h4><a class="anchor" aria-hidden="true" id="ismessage"></a><a href="#ismessage" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>isMessage</code></h4>
+<p>Determine if the event is a message event.</p>
+<p>Example:</p>
+<pre><code class="hljs css language-js">event.isMessage; <span class="hljs-comment">// true</span>
+</code></pre>
+<h4><a class="anchor" aria-hidden="true" id="message"></a><a href="#message" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>message</code></h4>
+<p>The message object from Telegram raw event.</p>
+<p>Example:</p>
+<pre><code class="hljs css language-js">event.message;
+<span class="hljs-comment">// {</span>
+<span class="hljs-comment">//   message_id: 666,</span>
+<span class="hljs-comment">//   from: {</span>
+<span class="hljs-comment">//     id: 427770117,</span>
+<span class="hljs-comment">//     is_bot: false,</span>
+<span class="hljs-comment">//     first_name: 'first',</span>
+<span class="hljs-comment">//     last_name: 'last',</span>
+<span class="hljs-comment">//     language_code: 'en',</span>
+<span class="hljs-comment">//   },</span>
+<span class="hljs-comment">//   chat: {</span>
+<span class="hljs-comment">//     id: 427770117,</span>
+<span class="hljs-comment">//     first_name: 'first',</span>
+<span class="hljs-comment">//     last_name: 'last',</span>
+<span class="hljs-comment">//     type: 'private',</span>
+<span class="hljs-comment">//   },</span>
+<span class="hljs-comment">//   date: 1499402829,</span>
+<span class="hljs-comment">//   text: 'text',</span>
+<span class="hljs-comment">// }</span>
+</code></pre>
+<h4><a class="anchor" aria-hidden="true" id="istext"></a><a href="#istext" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>isText</code></h4>
+<p>Determine if the event is a message event which includes text.</p>
+<p>Example:</p>
+<pre><code class="hljs css language-js">event.isText; <span class="hljs-comment">// true</span>
+</code></pre>
+<h4><a class="anchor" aria-hidden="true" id="text"></a><a href="#text" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>text</code></h4>
+<p>The text string from Telegram raw event.</p>
+<p>Example:</p>
+<pre><code class="hljs css language-js">event.text; <span class="hljs-comment">// 'text'</span>
+</code></pre>
+<h4><a class="anchor" aria-hidden="true" id="isaudio"></a><a href="#isaudio" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>isAudio</code></h4>
+<p>Determine if the event is a message event which includes audio.</p>
+<p>Example:</p>
+<pre><code class="hljs css language-js">event.isAudio; <span class="hljs-comment">// true</span>
+</code></pre>
+<h4><a class="anchor" aria-hidden="true" id="audio"></a><a href="#audio" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>audio</code></h4>
+<p>The audio object from Telegram raw event.</p>
+<p>Example:</p>
+<pre><code class="hljs css language-js">event.audio;
+<span class="hljs-comment">// {</span>
+<span class="hljs-comment">//   file_id: '321',</span>
+<span class="hljs-comment">//   duration: 100,</span>
+<span class="hljs-comment">//   title: 'audioooooooo',</span>
+<span class="hljs-comment">// }</span>
+</code></pre>
+<h4><a class="anchor" aria-hidden="true" id="isdocument"></a><a href="#isdocument" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>isDocument</code></h4>
+<p>Determine if the event is a message event which includes document.</p>
+<p>Example:</p>
+<pre><code class="hljs css language-js">event.isDocument; <span class="hljs-comment">// true</span>
+</code></pre>
+<h4><a class="anchor" aria-hidden="true" id="document"></a><a href="#document" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>document</code></h4>
+<p>The document object from Telegram raw event.</p>
+<p>Example:</p>
+<pre><code class="hljs css language-js">event.document;
+<span class="hljs-comment">// {</span>
+<span class="hljs-comment">//   file_id: '234',</span>
+<span class="hljs-comment">//   file_name: 'file',</span>
+<span class="hljs-comment">// }</span>
+</code></pre>
+<h4><a class="anchor" aria-hidden="true" id="isgame"></a><a href="#isgame" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>isGame</code></h4>
+<p>Determine if the event is a message event which includes game.</p>
+<p>Example:</p>
+<pre><code class="hljs css language-js">event.isGame; <span class="hljs-comment">// true</span>
+</code></pre>
+<h4><a class="anchor" aria-hidden="true" id="game"></a><a href="#game" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>game</code></h4>
+<p>The game object from Telegram raw event.</p>
+<p>Example:</p>
+<pre><code class="hljs css language-js">event.game;
+<span class="hljs-comment">// {</span>
+<span class="hljs-comment">//   title: 'gammmmmmmme',</span>
+<span class="hljs-comment">//   description: 'Description of the game',</span>
+<span class="hljs-comment">//   photo: [</span>
+<span class="hljs-comment">//     {</span>
+<span class="hljs-comment">//       file_id: '112',</span>
+<span class="hljs-comment">//       width: 100,</span>
+<span class="hljs-comment">//       height: 100,</span>
+<span class="hljs-comment">//     },</span>
+<span class="hljs-comment">//     {</span>
+<span class="hljs-comment">//       file_id: '116',</span>
+<span class="hljs-comment">//       width: 50,</span>
+<span class="hljs-comment">//       height: 50,</span>
+<span class="hljs-comment">//     },</span>
+<span class="hljs-comment">//   ],</span>
+<span class="hljs-comment">// }</span>
+</code></pre>
+<h4><a class="anchor" aria-hidden="true" id="isphoto"></a><a href="#isphoto" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>isPhoto</code></h4>
+<p>Determine if the event is a message event which includes photo.</p>
+<p>Example:</p>
+<pre><code class="hljs css language-js">event.isPhoto; <span class="hljs-comment">// true</span>
+</code></pre>
+<h4><a class="anchor" aria-hidden="true" id="photo"></a><a href="#photo" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>photo</code></h4>
+<p>The photo object from Telegram raw event.</p>
+<p>Example:</p>
+<pre><code class="hljs css language-js">event.photo;
+<span class="hljs-comment">// [</span>
+<span class="hljs-comment">//   {</span>
+<span class="hljs-comment">//     file_id: '112',</span>
+<span class="hljs-comment">//     width: 100,</span>
+<span class="hljs-comment">//     height: 100,</span>
+<span class="hljs-comment">//   },</span>
+<span class="hljs-comment">//   {</span>
+<span class="hljs-comment">//     file_id: '116',</span>
+<span class="hljs-comment">//     width: 50,</span>
+<span class="hljs-comment">//     height: 50,</span>
+<span class="hljs-comment">//   },</span>
+<span class="hljs-comment">// ]</span>
+</code></pre>
+<h4><a class="anchor" aria-hidden="true" id="issticker"></a><a href="#issticker" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>isSticker</code></h4>
+<p>Determine if the event is a message event which includes sticker.</p>
+<p>Example:</p>
+<pre><code class="hljs css language-js">event.isSticker; <span class="hljs-comment">// true</span>
+</code></pre>
+<h4><a class="anchor" aria-hidden="true" id="sticker"></a><a href="#sticker" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>sticker</code></h4>
+<p>The sticker object from Telegram raw event.</p>
+<p>Example:</p>
+<pre><code class="hljs css language-js">event.sticker;
+<span class="hljs-comment">// {</span>
+<span class="hljs-comment">//   file_id: '123',</span>
+<span class="hljs-comment">//   width: 50,</span>
+<span class="hljs-comment">//   height: 50,</span>
+<span class="hljs-comment">// }</span>
+</code></pre>
+<h4><a class="anchor" aria-hidden="true" id="isvideo"></a><a href="#isvideo" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>isVideo</code></h4>
+<p>Determine if the event is a message event which includes video.</p>
+<p>Example:</p>
+<pre><code class="hljs css language-js">event.isVideo; <span class="hljs-comment">// true</span>
+</code></pre>
+<h4><a class="anchor" aria-hidden="true" id="video"></a><a href="#video" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>video</code></h4>
+<p>The video object from Telegram raw event.</p>
+<p>Example:</p>
+<pre><code class="hljs css language-js">event.video;
+<span class="hljs-comment">// {</span>
+<span class="hljs-comment">//   file_id: '321',</span>
+<span class="hljs-comment">//   width: 100,</span>
+<span class="hljs-comment">//   height: 100,</span>
+<span class="hljs-comment">//   duration: 199,</span>
+<span class="hljs-comment">// }</span>
+</code></pre>
+<h4><a class="anchor" aria-hidden="true" id="isvoice"></a><a href="#isvoice" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>isVoice</code></h4>
+<p>Determine if the event is a message event which includes voice.</p>
+<p>Example:</p>
+<pre><code class="hljs css language-js">event.isVoice; <span class="hljs-comment">// true</span>
+</code></pre>
+<h4><a class="anchor" aria-hidden="true" id="voice"></a><a href="#voice" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>voice</code></h4>
+<p>The voice object from Telegram raw event.</p>
+<p>Example:</p>
+<pre><code class="hljs css language-js">event.voice;
+<span class="hljs-comment">// {</span>
+<span class="hljs-comment">//   file_id: '543',</span>
+<span class="hljs-comment">//   duration: 299,</span>
+<span class="hljs-comment">// }</span>
+</code></pre>
+<h4><a class="anchor" aria-hidden="true" id="isvideonote"></a><a href="#isvideonote" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>isVideoNote</code></h4>
+<p>Determine if the event is a message event which includes video note.</p>
+<p>Example:</p>
+<pre><code class="hljs css language-js">event.isVideoNote; <span class="hljs-comment">// true</span>
+</code></pre>
+<h4><a class="anchor" aria-hidden="true" id="videonote"></a><a href="#videonote" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>videoNote</code></h4>
+<p>The video note object from Telegram raw event.</p>
+<p>Example:</p>
+<pre><code class="hljs css language-js">event.videoNote;
+<span class="hljs-comment">// {</span>
+<span class="hljs-comment">//   file_id: '654',</span>
+<span class="hljs-comment">//   length: 100,</span>
+<span class="hljs-comment">//   duration: 399,</span>
+<span class="hljs-comment">// }</span>
+</code></pre>
+<h4><a class="anchor" aria-hidden="true" id="iscontact"></a><a href="#iscontact" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>isContact</code></h4>
+<p>Determine if the event is a message event which includes contact.</p>
+<p>Example:</p>
+<pre><code class="hljs css language-js">event.isContact; <span class="hljs-comment">// true</span>
+</code></pre>
+<h4><a class="anchor" aria-hidden="true" id="contact"></a><a href="#contact" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>contact</code></h4>
+<p>The contact object from Telegram raw event.</p>
+<p>Example:</p>
+<pre><code class="hljs css language-js">event.contact;
+<span class="hljs-comment">// {</span>
+<span class="hljs-comment">//   phone_number: '123456789',</span>
+<span class="hljs-comment">//   first_name: 'first',</span>
+<span class="hljs-comment">// }</span>
+</code></pre>
+<h4><a class="anchor" aria-hidden="true" id="islocation"></a><a href="#islocation" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>isLocation</code></h4>
+<p>Determine if the event is a message event which includes location.</p>
+<p>Example:</p>
+<pre><code class="hljs css language-js">event.isLocation; <span class="hljs-comment">// true</span>
+</code></pre>
+<h4><a class="anchor" aria-hidden="true" id="location"></a><a href="#location" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>location</code></h4>
+<p>The location object from Telegram raw event.</p>
+<p>Example:</p>
+<pre><code class="hljs css language-js">event.location;
+<span class="hljs-comment">// {</span>
+<span class="hljs-comment">//   longitude: '111.111',</span>
+<span class="hljs-comment">//   latitude: '99.99',</span>
+<span class="hljs-comment">// }</span>
+</code></pre>
+<h4><a class="anchor" aria-hidden="true" id="isvenue"></a><a href="#isvenue" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>isVenue</code></h4>
+<p>Determine if the event is a message event which includes venue.</p>
+<p>Example:</p>
+<pre><code class="hljs css language-js">event.isVenue; <span class="hljs-comment">// true</span>
+</code></pre>
+<h4><a class="anchor" aria-hidden="true" id="venue"></a><a href="#venue" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>venue</code></h4>
+<p>The venue object from Telegram raw event.</p>
+<p>Example:</p>
+<pre><code class="hljs css language-js">event.venue;
+<span class="hljs-comment">// {</span>
+<span class="hljs-comment">//   location: {</span>
+<span class="hljs-comment">//     longitude: '111.111',</span>
+<span class="hljs-comment">//     latitude: '99.99',</span>
+<span class="hljs-comment">//   },</span>
+<span class="hljs-comment">//   title: 'title',</span>
+<span class="hljs-comment">//   address: 'addressssss',</span>
+<span class="hljs-comment">// }</span>
+</code></pre>
+<h4><a class="anchor" aria-hidden="true" id="iseditedmessage"></a><a href="#iseditedmessage" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>isEditedMessage</code></h4>
+<p>Determine if the event is an edited message event.</p>
+<p>Example:</p>
+<pre><code class="hljs css language-js">event.isEditedMessage; <span class="hljs-comment">// true</span>
+</code></pre>
+<h4><a class="anchor" aria-hidden="true" id="editedmessage"></a><a href="#editedmessage" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>editedMessage</code></h4>
+<p>The edited message from Telegram raw event.</p>
+<p>Example:</p>
+<pre><code class="hljs css language-js">event.editedMessage;
+<span class="hljs-comment">// {</span>
+<span class="hljs-comment">//   message_id: 229,</span>
+<span class="hljs-comment">//   from: {</span>
+<span class="hljs-comment">//     id: 427770117,</span>
+<span class="hljs-comment">//     is_bot: false,</span>
+<span class="hljs-comment">//     first_name: 'user_first',</span>
+<span class="hljs-comment">//     last_name: 'user_last',</span>
+<span class="hljs-comment">//     language_code: 'en',</span>
+<span class="hljs-comment">//   },</span>
+<span class="hljs-comment">//   chat: {</span>
+<span class="hljs-comment">//     id: 427770117,</span>
+<span class="hljs-comment">//     first_name: 'user_first',</span>
+<span class="hljs-comment">//     last_name: 'user_last',</span>
+<span class="hljs-comment">//     language_code: 'en',</span>
+<span class="hljs-comment">//   },</span>
+<span class="hljs-comment">//   date: 1515736358,</span>
+<span class="hljs-comment">//   edit_date: 1515758017,</span>
+<span class="hljs-comment">//   text: 'hiiiii',</span>
+<span class="hljs-comment">// }</span>
+</code></pre>
+<h4><a class="anchor" aria-hidden="true" id="ischannelpost"></a><a href="#ischannelpost" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>isChannelPost</code></h4>
+<p>Determine if the event is a channel post event.</p>
+<p>Example:</p>
+<pre><code class="hljs css language-js">event.isChannelPost; <span class="hljs-comment">// true</span>
+</code></pre>
+<h4><a class="anchor" aria-hidden="true" id="channelpost"></a><a href="#channelpost" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>channelPost</code></h4>
+<p>The channel post from Telegram raw event.</p>
+<p>Example:</p>
+<pre><code class="hljs css language-js">event.channelPost;
+<span class="hljs-comment">// {</span>
+<span class="hljs-comment">//   message_id: 2,</span>
+<span class="hljs-comment">//   chat: {</span>
+<span class="hljs-comment">//     id: -1001305240521,</span>
+<span class="hljs-comment">//     title: 'channel_12345',</span>
+<span class="hljs-comment">//     type: 'channel',</span>
+<span class="hljs-comment">//   },</span>
+<span class="hljs-comment">//   date: 1515760382,</span>
+<span class="hljs-comment">//   text: 'post~~~',</span>
+<span class="hljs-comment">// }</span>
+</code></pre>
+<h4><a class="anchor" aria-hidden="true" id="iseditedchannelpost"></a><a href="#iseditedchannelpost" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>isEditedChannelPost</code></h4>
+<p>Determine if the event is an edited channel post event.</p>
+<p>Example:</p>
+<pre><code class="hljs css language-js">event.isEditedChannelPost; <span class="hljs-comment">// true</span>
+</code></pre>
+<h4><a class="anchor" aria-hidden="true" id="editedchannelpost"></a><a href="#editedchannelpost" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>editedChannelPost</code></h4>
+<p>The edited channel post from Telegram raw event.</p>
+<p>Example:</p>
+<pre><code class="hljs css language-js">event.editedChannelPost;
+<span class="hljs-comment">// {</span>
+<span class="hljs-comment">//   message_id: 2,</span>
+<span class="hljs-comment">//   chat: {</span>
+<span class="hljs-comment">//     id: -1001305240521,</span>
+<span class="hljs-comment">//     title: 'channel_12345',</span>
+<span class="hljs-comment">//     type: 'channel',</span>
+<span class="hljs-comment">//   },</span>
+<span class="hljs-comment">//   date: 1515760382,</span>
+<span class="hljs-comment">//   edit_date: 1515760478,</span>
+<span class="hljs-comment">//   text: 'post~~~edited',</span>
+<span class="hljs-comment">// }</span>
+</code></pre>
+<h4><a class="anchor" aria-hidden="true" id="isinlinequery"></a><a href="#isinlinequery" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>isInlineQuery</code></h4>
+<p>Determine if the event is an inline query event.</p>
+<p>Example:</p>
+<pre><code class="hljs css language-js">event.isInlineQuery; <span class="hljs-comment">// true</span>
+</code></pre>
+<h4><a class="anchor" aria-hidden="true" id="inlinequery"></a><a href="#inlinequery" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>inlineQuery</code></h4>
+<p>The inline query from Telegram raw event.</p>
+<p>Example:</p>
+<pre><code class="hljs css language-js">event.inlineQuery;
+<span class="hljs-comment">// {</span>
+<span class="hljs-comment">//   id: '1837258670654537434',</span>
+<span class="hljs-comment">//   from: {</span>
+<span class="hljs-comment">//     id: 427770117,</span>
+<span class="hljs-comment">//     is_bot: false,</span>
+<span class="hljs-comment">//     first_name: 'user_first',</span>
+<span class="hljs-comment">//     last_name: 'user_last',</span>
+<span class="hljs-comment">//     language_code: 'en',</span>
+<span class="hljs-comment">//   },</span>
+<span class="hljs-comment">//   query: '123',</span>
+<span class="hljs-comment">//   offset: '',</span>
+<span class="hljs-comment">// }</span>
+</code></pre>
+<h4><a class="anchor" aria-hidden="true" id="ischoseninlineresult"></a><a href="#ischoseninlineresult" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>isChosenInlineResult</code></h4>
+<p>Determine if the event is a chosen inline result event.</p>
+<p>Example:</p>
+<pre><code class="hljs css language-js">event.isChosenInlineResult; <span class="hljs-comment">// true</span>
+</code></pre>
+<h4><a class="anchor" aria-hidden="true" id="choseninlineresult"></a><a href="#choseninlineresult" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>chosenInlineResult</code></h4>
+<p>The chosen inline result from Telegram raw event.</p>
+<p>Example:</p>
+<pre><code class="hljs css language-js">event.chosenInlineResult;
+<span class="hljs-comment">// {</span>
+<span class="hljs-comment">//   result_id: '2837258670654537434',</span>
+<span class="hljs-comment">//   from: {</span>
+<span class="hljs-comment">//     id: 427770117,</span>
+<span class="hljs-comment">//     is_bot: false,</span>
+<span class="hljs-comment">//     first_name: 'user_first',</span>
+<span class="hljs-comment">//     last_name: 'user_last',</span>
+<span class="hljs-comment">//     language_code: 'en',</span>
+<span class="hljs-comment">//   },</span>
+<span class="hljs-comment">//   inline_message_id: '1837258670654537434',</span>
+<span class="hljs-comment">//   query: '123',</span>
+<span class="hljs-comment">// }</span>
+</code></pre>
+<h4><a class="anchor" aria-hidden="true" id="iscallbackquery"></a><a href="#iscallbackquery" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>isCallbackQuery</code></h4>
+<p>Determine if the event is a callback query event.</p>
+<p>Example:</p>
+<pre><code class="hljs css language-js">event.isCallbackQuery; <span class="hljs-comment">// true</span>
+</code></pre>
+<h4><a class="anchor" aria-hidden="true" id="callbackquery"></a><a href="#callbackquery" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>callbackQuery</code></h4>
+<p>The callback query from Telegram raw event.</p>
+<p>Example:</p>
+<pre><code class="hljs css language-js">event.callbackQuery;
+<span class="hljs-comment">// {</span>
+<span class="hljs-comment">//   id: '123',</span>
+<span class="hljs-comment">//   from: {</span>
+<span class="hljs-comment">//     id: 427770117,</span>
+<span class="hljs-comment">//     is_bot: false,</span>
+<span class="hljs-comment">//     first_name: 'user_first',</span>
+<span class="hljs-comment">//     last_name: 'user_last',</span>
+<span class="hljs-comment">//     language_code: 'en',</span>
+<span class="hljs-comment">//   },</span>
+<span class="hljs-comment">//   message: {</span>
+<span class="hljs-comment">//     message_id: 666,</span>
+<span class="hljs-comment">//     from: {</span>
+<span class="hljs-comment">//       id: 313534466,</span>
+<span class="hljs-comment">//       is_bot: true,</span>
+<span class="hljs-comment">//       first_name: 'bot_first',</span>
+<span class="hljs-comment">//       username: 'bot_name',</span>
+<span class="hljs-comment">//     },</span>
+<span class="hljs-comment">//     chat: {</span>
+<span class="hljs-comment">//       id: 427770117,</span>
+<span class="hljs-comment">//       first_name: 'first',</span>
+<span class="hljs-comment">//       last_name: 'last',</span>
+<span class="hljs-comment">//       type: 'private',</span>
+<span class="hljs-comment">//     },</span>
+<span class="hljs-comment">//     date: 1499402829,</span>
+<span class="hljs-comment">//     text: 'text',</span>
+<span class="hljs-comment">//   },</span>
+<span class="hljs-comment">//   chat_instance: '-1828607021492040088',</span>
+<span class="hljs-comment">//   data: 'DEVELOPER_DEFINED_PAYLOAD',</span>
+<span class="hljs-comment">// }</span>
+</code></pre>
+<h4><a class="anchor" aria-hidden="true" id="ispayload"></a><a href="#ispayload" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>isPayload</code></h4>
+<p>Determine if the event is a callback query event.</p>
+<p>Example:</p>
+<pre><code class="hljs css language-js">event.isPayload; <span class="hljs-comment">// true</span>
+</code></pre>
+<h4><a class="anchor" aria-hidden="true" id="payload"></a><a href="#payload" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>payload</code></h4>
+<p>The payload string from Telegram raw event.</p>
+<p>Example:</p>
+<pre><code class="hljs css language-js">event.payload; <span class="hljs-comment">// 'DEVELOPER_DEFINED_PAYLOAD'</span>
+</code></pre>
+<h4><a class="anchor" aria-hidden="true" id="isshippingquery"></a><a href="#isshippingquery" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>isShippingQuery</code></h4>
+<p>Determine if the event is a shipping query event.</p>
+<p>Example:</p>
+<pre><code class="hljs css language-js">event.isShippingQuery; <span class="hljs-comment">// true</span>
+</code></pre>
+<h4><a class="anchor" aria-hidden="true" id="shippingquery"></a><a href="#shippingquery" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>shippingQuery</code></h4>
+<p>The shipping query from Telegram raw event.</p>
+<p>Example:</p>
+<pre><code class="hljs css language-js">event.shippingQuery;
+<span class="hljs-comment">// {</span>
+<span class="hljs-comment">//   id: '123',</span>
+<span class="hljs-comment">//   from: {</span>
+<span class="hljs-comment">//     id: 427770117,</span>
+<span class="hljs-comment">//     is_bot: false,</span>
+<span class="hljs-comment">//     first_name: 'first',</span>
+<span class="hljs-comment">//     last_name: 'last',</span>
+<span class="hljs-comment">//     language_code: 'en',</span>
+<span class="hljs-comment">//   },</span>
+<span class="hljs-comment">//   invoice_payload: 'payload',</span>
+<span class="hljs-comment">//   shipping_address: {</span>
+<span class="hljs-comment">//     country_code: '...',</span>
+<span class="hljs-comment">//     state: '...',</span>
+<span class="hljs-comment">//     city: '...',</span>
+<span class="hljs-comment">//     street_line1: '...',</span>
+<span class="hljs-comment">//     street_line2: '...',</span>
+<span class="hljs-comment">//     post_code: '...',</span>
+<span class="hljs-comment">//   },</span>
+<span class="hljs-comment">// }</span>
+</code></pre>
+<h4><a class="anchor" aria-hidden="true" id="isprecheckoutquery"></a><a href="#isprecheckoutquery" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>isPreCheckoutQuery</code></h4>
+<p>Determine if the event is a pre checkout query event.</p>
+<p>Example:</p>
+<pre><code class="hljs css language-js">event.isPreCheckoutQuery; <span class="hljs-comment">// true</span>
+</code></pre>
+<h4><a class="anchor" aria-hidden="true" id="precheckoutquery"></a><a href="#precheckoutquery" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>preCheckoutQuery</code></h4>
+<p>The pre checkout query from Telegram raw event.</p>
+<p>Example:</p>
+<pre><code class="hljs css language-js">event.preCheckoutQuery;
+<span class="hljs-comment">// {</span>
+<span class="hljs-comment">//   id: '123',</span>
+<span class="hljs-comment">//   from: {</span>
+<span class="hljs-comment">//     id: 427770117,</span>
+<span class="hljs-comment">//     is_bot: false,</span>
+<span class="hljs-comment">//     first_name: 'first',</span>
+<span class="hljs-comment">//     last_name: 'last',</span>
+<span class="hljs-comment">//     language_code: 'en',</span>
+<span class="hljs-comment">//   },</span>
+<span class="hljs-comment">//   currency: 'USD',</span>
+<span class="hljs-comment">//   total_amount: 100,</span>
+<span class="hljs-comment">//   invoice_payload: 'payload',</span>
+<span class="hljs-comment">// }</span>
+</code></pre>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/docs/1.2.0/api-telegram-context"><span class="arrow-prev">← </span><span class="function-name-prevnext">TelegramContext</span></a><a class="docs-next button" href="/docs/1.2.0/api-viber-context"><span class="function-name-prevnext">ViberContext</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"></nav></div><footer class="nav-footer" id="footer"><div class="footer-layout"><div><div style="margin-bottom:16px"><a href="https://yoctol.ai" target="_blank" rel="noopener noreferrer"><img width="104px" src="/img/element_YOCTOL.AI_horizontal_S.svg" alt="YOCTOL.AI Logo"/></a></div><div class="desktop"><p class="text">© 2019 - PRESENT YOCTOL.AI ALL RIGHTS RESERVED.</p><a class="text" href="https://yoctol.ai/terms-of-use" target="_blank" rel="noopener noreferrer">Terms of Use</a><a class="text" href="https://yoctol.ai/privacy-policy" target="_blank" rel="noopener noreferrer" style="margin-left:16px">Privacy Policy</a></div></div><div class="footer-contacts"><h4 class="title">Contact Us</h4><p class="text">YOCTOL.AI</p><p class="text">service@yoctol.com</p></div><div class="footer-medias"><h4 class="title">Social Media</h4><div class="icons"><a href="https://twitter.com/yoctol" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#FFF" fill-rule="nonzero" d="M1.5 0h21A1.5 1.5 0 0 1 24 1.5v21a1.5 1.5 0 0 1-1.5 1.5h-21A1.5 1.5 0 0 1 0 22.5v-21A1.5 1.5 0 0 1 1.5 0zm7.532 18c6.037 0 9.34-4.617 9.34-8.621 0-.131 0-.262-.01-.392A6.419 6.419 0 0 0 20 7.42c-.6.245-1.235.406-1.885.477a3.097 3.097 0 0 0 1.443-1.676 6.92 6.92 0 0 1-2.085.735c-1.017-.999-2.634-1.243-3.944-.596-1.31.647-1.986 2.024-1.65 3.36-2.64-.123-5.099-1.273-6.765-3.166-.872 1.384-.427 3.155 1.016 4.045a3.468 3.468 0 0 1-1.49-.38v.039c0 1.442 1.102 2.684 2.634 2.97-.484.122-.99.14-1.483.052.43 1.234 1.663 2.08 3.067 2.104a6.945 6.945 0 0 1-4.077 1.3c-.26 0-.522-.015-.781-.044a9.867 9.867 0 0 0 5.032 1.359V18z"></path></svg></a><a href="https://www.linkedin.com/company/yoctol/" target="_blank" rel="noopener noreferrer" style="margin-left:8px"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#FFF" fill-rule="nonzero" d="M1.5 0h21A1.5 1.5 0 0 1 24 1.5v21a1.5 1.5 0 0 1-1.5 1.5h-21A1.5 1.5 0 0 1 0 22.5v-21A1.5 1.5 0 0 1 1.5 0zm6.086 19.636V9.281H4.368v10.355h3.218zM5.944 7.801A1.877 1.877 0 0 0 7.82 5.925 1.876 1.876 0 1 0 5.945 7.8zm13.697 11.835v-5.679c0-2.788-.602-4.933-3.861-4.933-1.565 0-2.615.859-3.045 1.672h-.043V9.281H9.604v10.355h3.216v-5.123c0-1.35.258-2.658 1.932-2.658 1.65 0 1.673 1.545 1.673 2.746v5.035h3.216z"></path></svg></a></div></div><div class="footer-product"><h4 class="title">Product</h4><div class="icons"><a href="https://yoctol.ai/creator" target="_blank" rel="noopener noreferrer" style="margin-top:1px;margin-right:10px"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22"><g fill="none" fill-rule="nonzero"><path d="M-1-2h24v24H-1z"></path><path fill="#FFF" d="M4.129 12c.309 3.386 3.267 6.042 6.871 6.042 3.604 0 6.562-2.656 6.871-6.042H22c-.317 5.574-5.12 10-11 10S.317 17.574 0 12h4.129zM14 9a1 1 0 1 1 0 2 1 1 0 0 1 0-2zM8 9a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm14-9v10h-4.113V4.116H7.814A3.703 3.703 0 0 0 4.113 7.82V10H0V7.82A7.817 7.817 0 0 1 7.685.001L7.815 0H22z"></path></g></svg></a><a href="https://yoctol.ai/seeker" target="_blank" rel="noopener noreferrer" style="margin-right:10px"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="24" viewBox="0 0 22 24"><g fill="none" fill-rule="nonzero"><path d="M-1 0h24v24H-1z"></path><path fill="#FFF" d="M2.81 7.033l.004.004 3.123 3.137a.112.112 0 0 1 .017.137 5.957 5.957 0 0 0 .843 7.356 5.936 5.936 0 0 0 8.41.003 5.957 5.957 0 0 0 .839-7.355.112.112 0 0 1 .016-.138l3.122-3.136a.11.11 0 0 1 .158 0l.01.012c3.182 4.182 2.79 10.14-.915 13.86-4.1 4.117-10.77 4.115-14.87-.002-3.699-3.714-4.1-9.656-.941-13.836a.111.111 0 0 1 .184-.042zM8.5 11a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm5 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm5.942-7.854l.015.014a.175.175 0 0 1 0 .23L15.32 7.952a.138.138 0 0 1-.182.024 7.294 7.294 0 0 0-8.27-.002.138.138 0 0 1-.182-.024L2.544 3.384a.175.175 0 0 1 .014-.245c4.97-4.188 11.913-4.185 16.884.007z"></path></g></svg></a><a href="https://bottender.js.org/" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="24" viewBox="0 0 22 24"><g fill="none" fill-rule="evenodd"><path fill-rule="nonzero" d="M-1 0h24v24H-1z"></path><path fill="#FFF" d="M1.668 8.51c.258.075.548.159.867.244a9.055 9.055 0 0 0 .959 11.639l.206.202.102.098.022.139a2.63 2.63 0 0 1-.314 1.745c.351-.162.683-.36.99-.59l.227-.178.242-.196.264.162a9.343 9.343 0 0 0 4.898 1.379c5.115 0 9.276-4.107 9.276-9.154 0-.806-.107-1.607-.32-2.385.33.027.63.047.9.06.184.762.289 1.543.288 2.326 0 5.513-4.534 9.999-10.12 9.999a10.128 10.128 0 0 1-5.067-1.352c-1.039.78-2.395 1.228-3.574 1.289l-.269.007v-.845c.928-.002 1.807-.82 1.808-1.831 0-.057-.05-.113-.056-.17A9.891 9.891 0 0 1 1.668 8.51zM10 11a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm6 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2zM9.379.02c2.551.437 3.144 1.75 3.144 1.75s1.02-1.037 3.57-.6c2.302.394 3.731 6.79 3.99 8.047 1.233.338 1.946.614 1.916.775l-.143.719c-.074.409-4.997-.07-10.837-1.07C5.179 8.638.506 7.495.579 7.086l.144-.74c.03-.162.797-.185 2.075-.091C3.484 5.161 7.08-.374 9.378.02z"></path></g></svg></a></div></div><div class="mobile"><p class="text">© 2019 - PRESENT YOCTOL.AI ALL RIGHTS RESERVED.</p><a class="text" href="https://yoctol.ai/terms-of-use" target="_blank" rel="noopener noreferrer">Terms of Use</a><a class="text" href="https://yoctol.ai/privacy-policy" target="_blank" rel="noopener noreferrer" style="margin-left:16px">Privacy Policy</a></div></div></footer></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script><script>window.twttr=(function(d,s, id){var js,fjs=d.getElementsByTagName(s)[0],t=window.twttr||{};if(d.getElementById(id))return t;js=d.createElement(s);js.id=id;js.src='https://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js, fjs);t._e = [];t.ready = function(f) {t._e.push(f);};return t;}(document, 'script', 'twitter-wjs'));</script><script>
+                document.addEventListener('keyup', function(e) {
+                  if (e.target !== document.body) {
+                    return;
+                  }
+                  // keyCode for '/' (slash)
+                  if (e.keyCode === 191) {
+                    const search = document.getElementById('search_input_react');
+                    search && search.focus();
+                  }
+                });
+              </script><script>
+              var search = docsearch({
+                
+                apiKey: '3498a488684b0324b9d56808fad17a33',
+                indexName: 'bottender',
+                inputSelector: '#search_input_react',
+                algoliaOptions: {"facetFilters":["language:en","version:1.2.0"]}
+              });
+            </script></body></html>
