@@ -125,6 +125,9 @@
       "channel-slack-setup": {
         "title": "Setup Slack"
       },
+      "channel-slack-slash-command": {
+        "title": "Handling Slack Slash Commands"
+      },
       "channel-telegram-handling-events": {
         "title": "Handling Telegram Events"
       },
@@ -490,6 +493,15 @@
       },
       "version-1.2.0/version-1.2.0-the-basics-session": {
         "title": "Session"
+      },
+      "version-1.3.0/version-1.3.0-advanced-guides-multi-channel": {
+        "title": "Multi-Channel Support"
+      },
+      "version-1.3.0/version-1.3.0-channel-slack-setup": {
+        "title": "Setup Slack"
+      },
+      "version-1.3.0/version-1.3.0-channel-slack-slash-command": {
+        "title": "Handling Slack Slash Commands"
       }
     },
     "links": {
