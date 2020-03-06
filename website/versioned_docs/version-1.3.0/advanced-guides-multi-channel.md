@@ -42,6 +42,7 @@ VIBER_ACCESS_TOKEN=
 > If you are not familiar with set up chat channels, you may refer to the following Bottender docs:
 
 - [Setup Messenger](https://bottender.js.org/docs/channel-messenger-setup)
+- [Setup WhatsApp](https://bottender.js.org/docs/channel-whatsapp-setup)
 - [Setup LINE](https://bottender.js.org/docs/channel-line-setup)
 - [Setup Slack](https://bottender.js.org/docs/channel-slack-setup)
 - [Setup Telegram](https://bottender.js.org/docs/channel-telegram-setup)
@@ -66,6 +67,13 @@ module.exports = {
       appId: process.env.MESSENGER_APP_ID,
       appSecret: process.env.MESSENGER_APP_SECRET,
       verifyToken: process.env.MESSENGER_VERIFY_TOKEN,
+    },
+    whatsapp: {
+      enabled: true,
+      path: '/webhooks/whatsapp',
+      accountSid: process.env.WHATSAPP_ACCOUNT_SID,
+      authToken: process.env.WHATSAPP_AUTH_TOKEN,
+      phoneNumber: process.env.WHATSAPP_PHONE_NUMBER,
     },
     line: {
       enabled: true,
@@ -175,6 +183,7 @@ module.exports = async function App(context) {
 By Bottender 1.1+, you can use `Platform Specific Routes` as an alternative to organize events from various chat channels. To learn more about the details of those specific routes, check out their documentation:
 
 - [Messenger Routes](channel-messenger-routing.md)
+- [WhatsApp Routes](channel-whatsapp-routing.md)
 - [LINE Routes](channel-line-routing.md)
 - [Slack Routes](channel-slack-routing.md)
 - [Telegram Routes](channel-telegram-routing.md)

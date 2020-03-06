@@ -28,6 +28,12 @@
       "version-1.3.0-channel-messenger-persona",
       "version-1.3.0-channel-messenger-multi-page"
     ],
+    "Guides (WhatsApp)": [
+      "version-1.3.0-channel-whatsapp-setup",
+      "version-1.3.0-channel-whatsapp-handling-events",
+      "version-1.3.0-channel-whatsapp-sending-messages",
+      "version-1.3.0-channel-whatsapp-routing"
+    ],
     "Guides (LINE)": [
       "version-1.3.0-channel-line-setup",
       "version-1.3.0-channel-line-handling-events",

@@ -152,6 +152,18 @@
       "channel-viber-setup": {
         "title": "Setup Viber"
       },
+      "channel-whatsapp-handling-events": {
+        "title": "Handling WhatsApp Events"
+      },
+      "channel-whatsapp-routing": {
+        "title": "WhatsApp Routing"
+      },
+      "channel-whatsapp-sending-messages": {
+        "title": "Sending WhatsApp Messages"
+      },
+      "channel-whatsapp-setup": {
+        "title": "Setup WhatsApp"
+      },
       "getting-started": {
         "title": "Getting Started"
       },
@@ -502,6 +514,21 @@
       },
       "version-1.3.0/version-1.3.0-channel-slack-slash-command": {
         "title": "Handling Slack Slash Commands"
+      },
+      "version-1.3.0/version-1.3.0-channel-whatsapp-handling-events": {
+        "title": "Handling WhatsApp Events"
+      },
+      "version-1.3.0/version-1.3.0-channel-whatsapp-routing": {
+        "title": "WhatsApp Routing"
+      },
+      "version-1.3.0/version-1.3.0-channel-whatsapp-sending-messages": {
+        "title": "Sending WhatsApp Messages"
+      },
+      "version-1.3.0/version-1.3.0-channel-whatsapp-setup": {
+        "title": "Setup WhatsApp"
+      },
+      "version-1.3.0/version-1.3.0-the-basics-routing": {
+        "title": "Routing"
       }
     },
     "links": {
@@ -517,6 +544,7 @@
       "The Basics": "The Basics",
       "Advanced Guides": "Advanced Guides",
       "Guides (Messenger)": "Guides (Messenger)",
+      "Guides (WhatsApp)": "Guides (WhatsApp)",
       "Guides (LINE)": "Guides (LINE)",
       "Guides (Slack)": "Guides (Slack)",
       "Guides (Telegram)": "Guides (Telegram)",

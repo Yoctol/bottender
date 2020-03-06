@@ -1,6 +1,7 @@
 ---
-id: the-basics-routing
+id: version-1.3.0-the-basics-routing
 title: Routing
+original_id: the-basics-routing
 ---
 
 `Routing` is a handy design pattern to help you organize bot actions.
