@@ -125,63 +125,15 @@ To serve LIFF webpages, we need to add additional routes to the server. Fortunat
 
 You could use express, koa, restify, or whatever you like, but we are going to use express in this guide. Before going down, make sure that you set up correctly according to [this guide](advanced-guides-custom-server#express).
 
-1. Run `yarn add ejs` or `npm install ejs` command to install dependencies we need.
-2. modify `server.js` to create a web page to redirect the user to LINE Notify authorization link
+Modify `src/index.js` to send the authorization link to user
 
 ```js
-// ...
-const lineNotify = require('./lineNotify')
-const ejs = require('ejs')
-
-// ...
-
+const lineNotify = require('../lineNotify');
 const clientId = process.env.LINE_NOTIFY_CLIENT_ID;
-const clientSecret = process.env.LINE_NOTIFY_CLIENT_SECRET;
 const redirectUri = `${process.env.ROOT_PATH}/notify/redirect`;
 
-app.prepare().then(() => {
-
-  // ...
-
-  server.get('/notify/new', (req, res) => {
-    const filename = path.join(`${__dirname}/notify.html`);
-    const url = lineNotify.getAuthLink(clientId, redirectUri, 'test');
-    ejs.renderFile(filename, { url }, {}, function(err, str) {
-      if (err) {
-        console.log('err:')
-        console.log(err)
-      }
-      res.send(str);
-    });
-  });
-
-  // route for webhook request
-  // ...
-});
-```
-
-3. Create a `notify.html` file in the root directory of the project and copy the following code into it.
-
-```html
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Loading...</title>
-  </head>
-  <body>
-    <script>
-      const url = '<%- url %>';
-      window.location.href = url;
-    </script>
-  </body>
-</html>
-```
-
-4. Modify `src/index.js` to send the authorization link to user
-
-```js
 module.exports = async function App(context) {
-  const url = `${process.env.ROOT_PATH}/notify/new`;
+  const url = lineNotify.getAuthLink(clientId, redirectUri, 'test');
   await context.sendText(url);
 };
 ```
@@ -191,7 +143,18 @@ module.exports = async function App(context) {
 Add the following code snippet into `server.js` to handle requests from LINE Notify redirect.
 
 ```js
-  ...
+// ...
+const lineNotify = require('../lineNotify')
+// ...
+
+const clientId = process.env.LINE_NOTIFY_CLIENT_ID;
+const clientSecret = process.env.LINE_NOTIFY_CLIENT_SECRET;
+const redirectUri = `${process.env.ROOT_PATH}/notify/redirect`;
+
+app.prepare().then(() => {
+
+  //...
+
   server.get('/notify/redirect', async function(req, res){
     const code = req.query.code
     const response = await lineNotify.getToken(code, redirectUri, clientId, clientSecret)
