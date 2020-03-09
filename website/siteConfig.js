@@ -130,6 +130,8 @@ const siteConfig = {
       facetFilters: ['language:LANGUAGE', 'version:VERSION'],
     },
   },
+
+  translationRecruitingLink: 'https://crowdin.com/project/bottender',
 };
 
 module.exports = siteConfig;

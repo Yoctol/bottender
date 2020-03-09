@@ -1,6 +1,8 @@
 {
   "scripts": {
     "build": "docusaurus-build",
+    "crowdin-download": "crowdin --config ../crowdin.yaml download -b master",
+    "crowdin-upload": "crowdin --config ../crowdin.yaml upload sources --auto-update -b master",
     "examples": "docusaurus-examples",
     "publish-gh-pages": "docusaurus-publish",
     "rename-version": "docusaurus-rename-version",
@@ -9,6 +11,6 @@
     "write-translations": "docusaurus-write-translations"
   },
   "devDependencies": {
-    "docusaurus": "^1.13.0"
+    "docusaurus": "^1.14.4"
   }
 }

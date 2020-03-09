@@ -24,3 +24,7 @@ node_modules/
 
 # Mac OS
 .DS_Store
+
+# Docusaurus i18n
+website/i18n/*
+website/translated_docs
