@@ -9,7 +9,7 @@
 [![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/Yoctol/bottender)
 [![Follow @bottenderjs](https://img.shields.io/twitter/follow/bottenderjs.svg?label=Follow%20@bottenderjs)](https://twitter.com/intent/follow?screen_name=bottenderjs)
 
-![](https://user-images.githubusercontent.com/3382565/68366395-3080d000-016e-11ea-8bad-d9c52a215376.png)
+![](https://user-images.githubusercontent.com/3382565/76295244-3c80c800-62ef-11ea-88dc-a6039b3918c2.png)
 
 > The readme below is the documentation for the v1 (stable) version of Bottender. To view the documentation for the old Bottender version visit https://bottender.js.org/docs/0.15.17/getting-started
 
