@@ -115,7 +115,7 @@ In Bottender v1.x, you can use the camel case consistently. Let Bottender handle
 
 ### v0.x
 
-In v1.x, keys represent in the snake case:
+In v0.x, keys represent in the snake case:
 
 ```js
 context.sendGenericTemplate([
