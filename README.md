@@ -134,9 +134,15 @@ yarn test
 
 Make your changes and tests, and make sure the tests pass.
 
-### Contribute using online one click setup
+### Contribute using the online one-click setup
 
-You can use gitpod(a free online vs code like ide) for contributing with a single click it will launch a ready to code workspace with repo already cloned, all the dependencies pre-installed and the server for the website running so that you can start coding straight away without wasting time on the setup.
+You can use Gitpod(a free online VS Code-like) for contributing. With a single click it will launch a workspace and automatically:
+
+- clone the bottender repo.
+- install the dependencies.
+- run `yarn run start`.
+
+So that you can start straight away.
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/Yoctol/bottender)
 
