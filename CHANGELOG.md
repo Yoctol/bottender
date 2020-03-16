@@ -1,15 +1,27 @@
+# 1.3.1 / 2020-03-16
+
+- [deps] some packages bump from dependabot.
+
+## line
+
+- [deps] update `messaging-api-line` to fix an issue about narrowcast.
+
+## create-bottender-app
+
+- [fix] hint users to edit the `.env` file (#678)
+
 # 1.3.0 / 2020-03-06
 
 - [type] export types from messaging-apis (#661):
 
 ```ts
-import { 
-  MessengerTypes, 
-  WhatsappTypes, 
-  LineTypes, 
-  TelegramTypes, 
-  SlackTypes, 
-  ViberTypes, 
+import {
+  MessengerTypes,
+  WhatsappTypes,
+  LineTypes,
+  TelegramTypes,
+  SlackTypes,
+  ViberTypes,
 } from 'bottender';
 ```
 
@@ -65,7 +77,7 @@ async function App(context) {
     );
   }
 }
-``` 
+```
 
 ## line
 
