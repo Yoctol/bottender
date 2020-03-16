@@ -165,7 +165,7 @@ module.exports = {
         maxSize: 500,
       },
       file: {
-        dirname: '.session',
+        dirname: '.sessions',
       },
       redis: {
         port: 6379,
@@ -185,7 +185,7 @@ module.exports = {
 The four valid drivers are as follows:
 
 - `memory` - sessions are stored in memory with [LRU cache](https://github.com/isaacs/node-lru-cache) and not persistent.
-- `file` - sessions are stored in files placed in `.session` directory by default.
+- `file` - sessions are stored in files placed in `.sessions` directory by default.
 - `redis` - sessions are stored in a [redis](https://redis.io/) database.
 - `mongo` - sessions are stored in a [mongo](https://www.mongodb.com/) database.
 
