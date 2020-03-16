@@ -389,7 +389,7 @@ const init = async (): Promise<void> => {
     print('Success!');
     print(`Created ${name} at ${root}`);
     print(
-      `Please make sure you have edited ${chalk.green(
+      `Please make sure you have edited ${chalk.green('.env')} or ${chalk.green(
         'bottender.config.js'
       )} before running the bot.`
     );
