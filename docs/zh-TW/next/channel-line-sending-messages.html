@@ -1,0 +1,778 @@
+<!DOCTYPE html><html lang="zh-TW"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>發送 LINE 訊息 · Bottender</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="LINE has become one of the most popular chat channels between businesses and customers in Asia, especially in Japan, Taiwan, and Thailand. LINE&#x27;s 2019 strategy, &quot;[Life on LINE](https://www.youtube.com/watch?v=vrkVmOlaLis),&quot; depicts a user&#x27;s daily life surrounded with LINE&#x27;s service, e.g., LINE Login, LINE Pay, LINE Music, LINE Today, LINE Things, LINE Spot. The completeness of the LINE&#x27;s ecosystem offers more dynamic, integrated, online to offline possibilities of LINE Bots."/><meta name="docsearch:version" content="next"/><meta name="docsearch:language" content="zh-TW"/><meta property="og:title" content="發送 LINE 訊息 · Bottender"/><meta property="og:type" content="website"/><meta property="og:url" content="https://bottender.js.org/"/><meta property="og:description" content="LINE has become one of the most popular chat channels between businesses and customers in Asia, especially in Japan, Taiwan, and Thailand. LINE&#x27;s 2019 strategy, &quot;[Life on LINE](https://www.youtube.com/watch?v=vrkVmOlaLis),&quot; depicts a user&#x27;s daily life surrounded with LINE&#x27;s service, e.g., LINE Login, LINE Pay, LINE Music, LINE Today, LINE Things, LINE Spot. The completeness of the LINE&#x27;s ecosystem offers more dynamic, integrated, online to offline possibilities of LINE Bots."/><meta property="og:image" content="https://bottender.js.org/img/og-image.png"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://bottender.js.org/img/og-image.png"/><link rel="shortcut icon" href="/img/favicon-192x192.png"/><link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-dark.min.css"/><link rel="alternate" type="application/atom+xml" href="https://bottender.js.org/blog/atom.xml" title="Bottender Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://bottender.js.org/blog/feed.xml" title="Bottender Blog RSS Feed"/><script>
+              (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+              (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+              m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+              })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+              ga('create', 'UA-70309045-11', 'auto');
+              ga('send', 'pageview');
+            </script><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:700|Roboto&amp;display=swap"/><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script><script type="text/javascript" src="/js/code-blocks-buttons.js"></script><script type="text/javascript" src="/js/sw.js"></script><script src="/js/scrollSpy.js"></script><link rel="stylesheet" href="/css/main.css"/><script src="/js/codetabs.js"></script></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/zh-TW"><img class="logo" src="/img/bottender.svg" alt="Bottender"/><h2 class="headerTitleWithLogo">Bottender</h2></a><a href="/zh-TW/versions"><h3>next</h3></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class="siteNavGroupActive"><a href="/docs/zh-TW/next/getting-started" target="_self">文件</a></li><li class=""><a href="/docs/zh-TW/next/api-context" target="_self">API</a></li><li class=""><a href="/blog/" target="_self">部落格</a></li><li class=""><a href="/zh-TW/users" target="_self">用戶</a></li><li class=""><a href="https://github.com/Yoctol/bottender/tree/master/examples" target="_self">範例</a></li><li class=""><a href="https://github.com/yoctol/bottender" target="_self">GitHub</a></li><span><li><a id="languages-menu" href="#"><img class="languages-icon" src="/img/language.svg" alt="Languages icon"/>繁體中文</a><div id="languages-dropdown" class="hide"><ul id="languages-dropdown-items"><li><a href="/docs/en/next/channel-line-sending-messages">English</a></li><li><a href="https://crowdin.com/project/bottender" target="_blank" rel="noreferrer noopener">幫忙翻譯</a></li></ul></div></li><script>
+        const languagesMenuItem = document.getElementById("languages-menu");
+        const languagesDropDown = document.getElementById("languages-dropdown");
+        languagesMenuItem.addEventListener("click", function(event) {
+          event.preventDefault();
+
+          if (languagesDropDown.className == "hide") {
+            languagesDropDown.className = "visible";
+          } else {
+            languagesDropDown.className = "hide";
+          }
+        });
+      </script></span><li class="navSearchWrapper reactNavSearchWrapper"><input type="text" id="search_input_react" placeholder="Search" title="Search"/></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><div class="hamburger-menu"><div class="line1"></div><div class="line2"></div><div class="line3"></div></div></div><h2><i>›</i><span>指南（LINE）</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle">入門</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/zh-TW/next/getting-started">入門</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/next/migrating-v1">從 v0.x 升級到 v1.x</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">基礎</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/zh-TW/next/the-basics-console-mode">Console 模式</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/next/the-basics-actions">決定 Action</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/next/the-basics-routing">路由</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/next/the-basics-chain">責任鏈</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/next/the-basics-session">Session</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/next/the-basics-errors">錯誤處理</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">進階指南</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/zh-TW/next/advanced-guides-custom-server">在自訂 Server 上執行 Bottender</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/next/advanced-guides-deployment">部署</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/next/advanced-guides-nlu">自然語言理解</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/next/advanced-guides-multi-channel">支援多平台</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">指南（Messenger）</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/zh-TW/next/channel-messenger-setup">設定 Messenger</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/next/channel-messenger-handling-events">處理 Messenger 事件</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/next/channel-messenger-sending-messages">發送 Messenger 訊息</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/next/channel-messenger-routing">Messenger 路由</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/next/channel-messenger-profile">Messenger Profile</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/next/channel-messenger-handover-protocol">Messenger Handover Protocol</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/next/channel-messenger-persona">使用 Messenger Persona</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/next/channel-messenger-multi-page">支援多個 Messenger 粉絲頁</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">指南（WhatsApp）</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/zh-TW/next/channel-whatsapp-setup">設定 WhatsApp</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/next/channel-whatsapp-handling-events">處理 WhatsApp 事件</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/next/channel-whatsapp-sending-messages">發送 WhatsApp 訊息</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/next/channel-whatsapp-routing">WhatsApp 路由</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">指南（LINE）</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/zh-TW/next/channel-line-setup">設定 LINE</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/next/channel-line-handling-events">處理 LINE 事件</a></li><li class="navListItem navListItemActive"><a class="navItem" href="/docs/zh-TW/next/channel-line-sending-messages">發送 LINE 訊息</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/next/channel-line-routing">LINE 路由</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/next/channel-line-flex">發送 LINE Flex 訊息</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/next/channel-line-rich-menu">LINE Rich Menu</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/next/channel-line-liff">LINE Front-end Framework (LIFF)</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/next/channel-line-errors">在 LINE 中錯誤處理</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/next/channel-line-migrating-from-sdk">從 Node.js LINE SDK 遷移</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">指南（Slack）</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/zh-TW/next/channel-slack-setup">設定 Slack</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/next/channel-slack-handling-events">處理 Slack 事件</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/next/channel-slack-sending-messages">發送 Slack 訊息</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/next/channel-slack-routing">Slack 路由</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/next/channel-slack-slash-command">處理 Slack Slash Commands</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/next/channel-slack-block-kit">Slack Block Kit</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">指南（Telegram）</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/zh-TW/next/channel-telegram-setup">設定 Telegram</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/next/channel-telegram-handling-events">處理 Telegram 事件</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/next/channel-telegram-sending-messages">發送 Telegram 訊息</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/next/channel-telegram-routing">Telegram 路由</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">指南（Viber）</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/zh-TW/next/channel-viber-setup">設定 Viber</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/next/channel-viber-handling-events">處理 Viber 事件</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/next/channel-viber-sending-messages">發送 Viber 訊息</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/next/channel-viber-routing">Viber 路由</a></li></ul></div></div></section></div><script>
+            var coll = document.getElementsByClassName('collapsible');
+            var checkActiveCategory = true;
+            for (var i = 0; i < coll.length; i++) {
+              var links = coll[i].nextElementSibling.getElementsByTagName('*');
+              if (checkActiveCategory){
+                for (var j = 0; j < links.length; j++) {
+                  if (links[j].classList.contains('navListItemActive')){
+                    coll[i].nextElementSibling.classList.toggle('hide');
+                    coll[i].childNodes[1].classList.toggle('rotate');
+                    checkActiveCategory = false;
+                    break;
+                  }
+                }
+              }
+
+              coll[i].addEventListener('click', function() {
+                var arrow = this.childNodes[1];
+                arrow.classList.toggle('rotate');
+                var content = this.nextElementSibling;
+                content.classList.toggle('hide');
+              });
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
+              createToggler('#tocToggler', 'body', 'tocActive');
+
+              var headings = document.querySelector('.toc-headings');
+              headings && headings.addEventListener('click', function(event) {
+                var el = event.target;
+                while(el !== headings){
+                  if (el.tagName === 'A') {
+                    document.body.classList.remove('tocActive');
+                    break;
+                  } else{
+                    el = el.parentNode;
+                  }
+                }
+              }, false);
+
+              function createToggler(togglerSelector, targetSelector, className) {
+                var toggler = document.querySelector(togglerSelector);
+                var target = document.querySelector(targetSelector);
+
+                if (!toggler) {
+                  return;
+                }
+
+                toggler.onclick = function(event) {
+                  event.preventDefault();
+
+                  target.classList.toggle(className);
+                };
+              }
+            });
+        </script></nav></div><div class="container mainContainer docsContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://crowdin.com/project/bottender/zh-TW" target="_blank" rel="noreferrer noopener">Translate</a><h1 id="__docusaurus" class="postHeaderTitle">發送 LINE 訊息</h1></header><article><div><span><p>LINE has become one of the most popular chat channels between businesses and customers in Asia, especially in Japan, Taiwan, and Thailand. LINE's 2019 strategy, &quot;<a href="https://www.youtube.com/watch?v=vrkVmOlaLis">Life on LINE</a>,&quot; depicts a user's daily life surrounded with LINE's service, e.g., LINE Login, LINE Pay, LINE Music, LINE Today, LINE Things, LINE Spot. The completeness of the LINE's ecosystem offers more dynamic, integrated, online to offline possibilities of LINE Bots.</p>
+<p>LINE Bots can be invited into a group, or focus on 1:1 communication. LINE Bots for group chat benefit from organic growth. Once a bot joined a group, it gains more exposure.</p>
+<h4><a class="anchor" aria-hidden="true" id="reply-api--push-api"></a><a href="#reply-api--push-api" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Reply API &amp; Push API</h4>
+<p>Due to cost concerns, one thing developers should clearly understand before sending any messages is the difference between <code>Reply API</code> and <code>Push API.</code></p>
+<p><img src="https://user-images.githubusercontent.com/662387/70490029-4cdea680-1b38-11ea-9979-2f9a68cb02cd.png" alt="messaging-api-thumb0"></p>
+<ul>
+<li><p><code>Push API</code> allows developers to send messages directly to users anytime. However, it is only free in development. In production, you may refer to <a href="https://www.linebiz.com/id-en/service/line-account-connect/">LINE Official Account Subscription Plans</a> to check out the messaging fee of your official account.</p></li>
+<li><p>Using <code>Reply API</code> is free. But bots can only reply once to a user who interacted with your LINE official account. For each bot reply, you can send up to 5 <code>Message Objects</code> (See LINE's official document, &quot;<a href="https://developers.line.biz/en/docs/messaging-api/building-bot/#sending-reply-messages">Sending reply messages</a>&quot;). If you attempt to reply more than 5 <code>Message Objects</code>, you will see an error in console.</p></li>
+</ul>
+<blockquote>
+<p><strong>Note:</strong></p>
+<ul>
+<li>It's a bit tricky to count the number of <code>Message Objects.</code> For example, each function call of <code>Sending Message,</code> <code>Sending Text Message,</code> or <code>Sending Template Messages</code> is calculated as one <code>Message Object.</code>, while the final attached <code>Quick Reply</code> doesn't count as a <code>Message Object.</code></li>
+</ul>
+</blockquote>
+<h2><a class="anchor" aria-hidden="true" id="sending-messages"></a><a href="#sending-messages" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Sending Messages</h2>
+<p>Bottender aims to support every feature of each chat channel. In the code below, you can see the most primitive way to send any LINE messages by Bottender.</p>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">await</span> context.send([
+  {
+    <span class="hljs-attr">type</span>: <span class="hljs-string">'text'</span>,
+    <span class="hljs-attr">text</span>: <span class="hljs-string">'hello'</span>,
+  },
+]);
+</code></pre>
+<p>Bottender also cares about &quot;Developer Experience.&quot; In the following section, you can see a full set of syntactic sugar to make codes in Bottender much readable and expressive.</p>
+<h2><a class="anchor" aria-hidden="true" id="sending-text-messages"></a><a href="#sending-text-messages" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Sending Text Messages</h2>
+<p><code>Text message</code> is the most frequent and common message types among all chat channels. It also offers a minimal format while carrying out dynamic data, e.g., stock price and weather info. <p><img width="300" src="https://user-images.githubusercontent.com/662387/70680790-38cfac00-1cd4-11ea-88a3-12ed1c71effc.png"></p></p>
+<h3><a class="anchor" aria-hidden="true" id="plain-text"></a><a href="#plain-text" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Plain Text</h3>
+<p>The following example shows how to reply with plain text.</p>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">SendHi</span>(<span class="hljs-params">context</span>) </span>{
+  <span class="hljs-keyword">await</span> context.sendText(<span class="hljs-string">'Hi!'</span>);
+}
+</code></pre>
+<blockquote>
+<p><strong>Note:</strong> For more info, please refer to LINE's official doc, <a href="https://developers.line.biz/en/reference/messaging-api/#text-message"><code>Text Message</code></a></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="text-with-line-emoji"></a><a href="#text-with-line-emoji" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Text with LINE emoji</h3>
+<p>You can include LINE's original emoji (usually involves LINE Friends) in text messages using character code. You can find the list of LINE emoji in <a href="https://developers.line.me/media/messaging-api/emoji-list.pdf">emoji list</a>.</p>
+<p><img width="300" src="https://user-images.githubusercontent.com/662387/70680894-82b89200-1cd4-11ea-92e8-53e222bbd12d.png"></p>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">SendHi</span>(<span class="hljs-params">context</span>) </span>{
+  <span class="hljs-keyword">await</span> context.sendText(<span class="hljs-string">`<span class="hljs-subst">${<span class="hljs-built_in">String</span>.fromCodePoint(<span class="hljs-number">0x100084</span>)}</span> Hi!`</span>);
+}
+</code></pre>
+<h2><a class="anchor" aria-hidden="true" id="sending-multiple-messages"></a><a href="#sending-multiple-messages" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Sending Multiple Messages</h2>
+<p>Bottender collects all sending messages in a single request. You can see two different approaches below.</p>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">await</span> context.send([
+  {
+    <span class="hljs-attr">type</span>: <span class="hljs-string">'text'</span>,
+    <span class="hljs-attr">text</span>: <span class="hljs-string">'hello'</span>,
+  },
+  {
+    <span class="hljs-attr">type</span>: <span class="hljs-string">'text'</span>,
+    <span class="hljs-attr">text</span>: <span class="hljs-string">'world'</span>,
+  },
+]);
+</code></pre>
+<p>or</p>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">await</span> context.sendText(<span class="hljs-string">'hello'</span>);
+<span class="hljs-keyword">await</span> context.sendText(<span class="hljs-string">'world'</span>);
+</code></pre>
+<h2><a class="anchor" aria-hidden="true" id="sending-rich-media-messages"></a><a href="#sending-rich-media-messages" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Sending Rich Media Messages</h2>
+<p><code>Rich Media Messages</code> of LINE consist of stickers, images, videos, audios, locations, and imageMaps. <code>Rich Media Messages</code> is useful when your priority is to catch the user's attention, e.g., limited promotion. Plus, it is also handy to create an immersive experience, e.g., telling a story.</p>
+<h3><a class="anchor" aria-hidden="true" id="sticker"></a><a href="#sticker" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Sticker</h3>
+<p>By <code>Stickers,</code> LINE creates a versatile, communicative language. <code>Stickers</code> make your bot expressive and engaging. To send a sticker, you need to indicate the package ID and sticker ID of the sticker.</p>
+<p><img width="300" src="https://user-images.githubusercontent.com/662387/70680788-38cfac00-1cd4-11ea-81a7-880abdf1ff45.png"></p>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">await</span> context.sendSticker({
+  <span class="hljs-attr">packageId</span>: <span class="hljs-string">'1'</span>,
+  <span class="hljs-attr">stickerId</span>: <span class="hljs-string">'1'</span>,
+});
+</code></pre>
+<blockquote>
+<p><strong>Note:</strong></p>
+<ul>
+<li>You can only send LINE's original <code>Stickers.</code> You can find the sticker's package ID and sticker ID in the <a href="https://developers.line.biz/media/messaging-api/sticker_list.pdf">sticker list</a>.</li>
+<li>For more info, please refer to LINE's official doc, <a href="https://developers.line.biz/en/reference/messaging-api/#sticker-message"><code>Sticker Message</code></a></li>
+</ul>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="image"></a><a href="#image" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Image</h3>
+<p>To send an <code>Image,</code> you need to prepare URLs of the original image and a smaller preview image. Users can see the preview image in the chat. When the user clicked the preview image, s/he can see the original image.</p>
+<p><img width="300" src="https://user-images.githubusercontent.com/662387/70680782-379e7f00-1cd4-11ea-8f41-bd18c194a55b.png"></p>
+<p>If you want to set up a call to action on the image, you may refer to <a href="#imagemap">ImageMaps</a>.</p>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">await</span> context.sendImage({
+  <span class="hljs-attr">originalContentUrl</span>: <span class="hljs-string">'https://example.com/image.jpg'</span>,
+  <span class="hljs-attr">previewImageUrl</span>: <span class="hljs-string">'https://example.com/preview.jpg'</span>,
+});
+</code></pre>
+<blockquote>
+<p><strong>Note:</strong></p>
+<ul>
+<li>The URLs must use HTTPS over TLS 1.2 or later.</li>
+<li>For more info, please refer to LINE's official doc, <a href="https://developers.line.biz/en/reference/messaging-api/#image-message"><code>Image Message</code></a></li>
+</ul>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="video"></a><a href="#video" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Video</h3>
+<p>To send a <code>Video,</code> you need to prepare the URL of the video file and the URL of a preview image. The user can play the video by tapping on the preview image.</p>
+<p><img width="300" src="https://user-images.githubusercontent.com/662387/70680791-38cfac00-1cd4-11ea-8d1f-ea98199ae363.png"></p>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">await</span> context.sendVideo({
+  <span class="hljs-attr">originalContentUrl</span>: <span class="hljs-string">'https://example.com/video.mp4'</span>,
+  <span class="hljs-attr">previewImageUrl</span>: <span class="hljs-string">'https://example.com/preview.jpg'</span>,
+});
+</code></pre>
+<blockquote>
+<p><strong>Note:</strong></p>
+<ul>
+<li>The URLs must use HTTPS over TLS 1.2 or later.</li>
+<li>For more info, please refer to LINE's official doc, <a href="https://developers.line.biz/en/reference/messaging-api/#video-message"><code>Video Message</code></a></li>
+</ul>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="audio"></a><a href="#audio" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Audio</h3>
+<p>To send an <code>Audio</code> file, you need to prepare the URL of the file and the duration of the audio.</p>
+<p><img width="300" src="https://user-images.githubusercontent.com/662387/70680776-3705e880-1cd4-11ea-843b-782a95aaa30d.png"></p>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">await</span> context.sendAudio({
+  <span class="hljs-attr">originalContentUrl</span>: <span class="hljs-string">'https://example.com/audio.mp3'</span>,
+  <span class="hljs-attr">duration</span>: <span class="hljs-number">240000</span>,
+});
+</code></pre>
+<blockquote>
+<p><strong>Note:</strong></p>
+<ul>
+<li>The URLs must use HTTPS over TLS 1.2 or later.</li>
+<li>For more info, please refer to LINE's official doc, <a href="https://developers.line.biz/en/reference/messaging-api/#audio-message"><code>Audio Message</code></a></li>
+</ul>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="location"></a><a href="#location" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Location</h3>
+<p>To send your location information to users, you have to prepare a title, address, and latitude and longitude.</p>
+<p><img width="300" src="https://user-images.githubusercontent.com/662387/70680786-38371580-1cd4-11ea-9755-e8f335183ebd.png"></p>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">await</span> context.sendLocation({
+  <span class="hljs-attr">title</span>: <span class="hljs-string">'my location'</span>,
+  <span class="hljs-attr">address</span>: <span class="hljs-string">'〒150-0002 東京都渋谷区渋谷２丁目２１−１'</span>,
+  <span class="hljs-attr">latitude</span>: <span class="hljs-number">35.65910807942215</span>,
+  <span class="hljs-attr">longitude</span>: <span class="hljs-number">139.70372892916203</span>,
+});
+</code></pre>
+<blockquote>
+<p><strong>Note:</strong></p>
+<ul>
+<li>The URLs must use HTTPS over TLS 1.2 or later.</li>
+<li>For more info, please refer to LINE's official doc, <a href="https://developers.line.biz/en/reference/messaging-api/#location-message"><code>Location Message</code></a></li>
+</ul>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="imagemap"></a><a href="#imagemap" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Imagemap</h3>
+<p><code>Imagemap</code> offers very flexible and interactive usage. It is an image with multiple tappable areas. When a user taps one of these areas, the user can link to a webpage or send a message on their behalf.</p>
+<p><img width="300" src="https://user-images.githubusercontent.com/662387/70680785-38371580-1cd4-11ea-98ce-c41438379fe8.png"></p>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">const</span> imagemap = {
+  <span class="hljs-attr">baseUrl</span>: <span class="hljs-string">'https://example.com/bot/images/rm001'</span>,
+  <span class="hljs-attr">baseSize</span>: {
+    <span class="hljs-attr">height</span>: <span class="hljs-number">1040</span>,
+    <span class="hljs-attr">width</span>: <span class="hljs-number">1040</span>,
+  },
+  <span class="hljs-attr">actions</span>: [
+    {
+      <span class="hljs-attr">type</span>: <span class="hljs-string">'uri'</span>,
+      <span class="hljs-attr">linkUri</span>: <span class="hljs-string">'https://example.com/'</span>,
+      <span class="hljs-attr">area</span>: {
+        <span class="hljs-attr">x</span>: <span class="hljs-number">0</span>,
+        <span class="hljs-attr">y</span>: <span class="hljs-number">0</span>,
+        <span class="hljs-attr">width</span>: <span class="hljs-number">520</span>,
+        <span class="hljs-attr">height</span>: <span class="hljs-number">1040</span>,
+      },
+    },
+    {
+      <span class="hljs-attr">type</span>: <span class="hljs-string">'message'</span>,
+      <span class="hljs-attr">text</span>: <span class="hljs-string">'hello'</span>,
+      <span class="hljs-attr">area</span>: {
+        <span class="hljs-attr">x</span>: <span class="hljs-number">520</span>,
+        <span class="hljs-attr">y</span>: <span class="hljs-number">0</span>,
+        <span class="hljs-attr">width</span>: <span class="hljs-number">520</span>,
+        <span class="hljs-attr">height</span>: <span class="hljs-number">1040</span>,
+      },
+    },
+  ],
+};
+<span class="hljs-keyword">const</span> altText = <span class="hljs-string">'this is an imagemap'</span>;
+<span class="hljs-keyword">await</span> context.sendImagemap(altText, imagemap);
+</code></pre>
+<blockquote>
+<p><strong>Note:</strong> For more info, please refer to LINE's official doc, <a href="https://developers.line.biz/en/reference/messaging-api/#imagemap-message"><code>Imagemap Message</code></a></p>
+</blockquote>
+<h2><a class="anchor" aria-hidden="true" id="sending-template-messages"></a><a href="#sending-template-messages" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Sending Template Messages</h2>
+<p><code>Template message</code> is an interactive gallery composed of image, video, title, subtitle, and buttons.</p>
+<p><code>Template message</code> is the key to offer rich media interaction. It is usually used in the scenario of display multiple choices and next actions to the user, e.g., applying coupons, booking a room, making a reservation.</p>
+<blockquote>
+<p><strong>Note:</strong> Compared with <code>Template Message,</code> we highly depend on <a href="/docs/zh-TW/next/channel-line-flex"><code>Flex Message</code></a> once it is available. There are two main reasons:</p>
+<ul>
+<li><code>Flex Message</code> supports both desktop and mobile devices, while <code>Template Message</code> only supports mobile devices.</li>
+<li><code>Flex Message</code> is an HTML-like chat UI, which creates a better, engaging user experience.</li>
+</ul>
+</blockquote>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">const</span> template = {
+  <span class="hljs-attr">type</span>: <span class="hljs-string">'buttons'</span>,
+  <span class="hljs-attr">thumbnailImageUrl</span>: <span class="hljs-string">'https://example.com/bot/images/image.jpg'</span>,
+  <span class="hljs-attr">title</span>: <span class="hljs-string">'Menu'</span>,
+  <span class="hljs-attr">text</span>: <span class="hljs-string">'Please select'</span>,
+  <span class="hljs-attr">actions</span>: [
+    {
+      <span class="hljs-attr">type</span>: <span class="hljs-string">'postback'</span>,
+      <span class="hljs-attr">label</span>: <span class="hljs-string">'Buy'</span>,
+      <span class="hljs-attr">data</span>: <span class="hljs-string">'action=buy&amp;itemid=123'</span>,
+    },
+    {
+      <span class="hljs-attr">type</span>: <span class="hljs-string">'postback'</span>,
+      <span class="hljs-attr">label</span>: <span class="hljs-string">'Add to cart'</span>,
+      <span class="hljs-attr">data</span>: <span class="hljs-string">'action=add&amp;itemid=123'</span>,
+    },
+    {
+      <span class="hljs-attr">type</span>: <span class="hljs-string">'uri'</span>,
+      <span class="hljs-attr">label</span>: <span class="hljs-string">'View detail'</span>,
+      <span class="hljs-attr">uri</span>: <span class="hljs-string">'http://example.com/page/123'</span>,
+    },
+  ],
+};
+<span class="hljs-keyword">const</span> altText = <span class="hljs-string">'this is a template'</span>;
+<span class="hljs-keyword">await</span> context.sendTemplate(altText, template);
+</code></pre>
+<h3><a class="anchor" aria-hidden="true" id="confirm-template"></a><a href="#confirm-template" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Confirm Template</h3>
+<p>A <code>Confirm Template</code> is designed for confirmation.</p>
+<p><img width="300" src="https://user-images.githubusercontent.com/662387/70680779-379e7f00-1cd4-11ea-9706-941b6a30e003.png"></p>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">const</span> template = {
+  <span class="hljs-attr">text</span>: <span class="hljs-string">'Are you sure?'</span>,
+  <span class="hljs-attr">actions</span>: [
+    {
+      <span class="hljs-attr">type</span>: <span class="hljs-string">'message'</span>,
+      <span class="hljs-attr">label</span>: <span class="hljs-string">'Yes'</span>,
+      <span class="hljs-attr">text</span>: <span class="hljs-string">'yes'</span>,
+    },
+    {
+      <span class="hljs-attr">type</span>: <span class="hljs-string">'message'</span>,
+      <span class="hljs-attr">label</span>: <span class="hljs-string">'No'</span>,
+      <span class="hljs-attr">text</span>: <span class="hljs-string">'no'</span>,
+    },
+  ],
+};
+<span class="hljs-keyword">const</span> altText = <span class="hljs-string">'this is a confirm template'</span>;
+<span class="hljs-keyword">await</span> context.sendConfirmTemplate(altText, template);
+</code></pre>
+<blockquote>
+<p><strong>Note:</strong> For more info, please refer to LINE's official doc, <a href="https://developers.line.biz/en/reference/messaging-api/#confirm"><code>Confirm Template</code></a></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="buttons-template"></a><a href="#buttons-template" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Buttons Template</h3>
+<p>A <code>Buttons Template</code> has an image, title, text, and multiple action buttons.</p>
+<p><img width="300" src="https://user-images.githubusercontent.com/662387/70680777-3705e880-1cd4-11ea-896d-c0f53257276c.png"></p>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">const</span> template = {
+  <span class="hljs-attr">thumbnailImageUrl</span>: <span class="hljs-string">'https://example.com/bot/images/image.jpg'</span>,
+  <span class="hljs-attr">title</span>: <span class="hljs-string">'Menu'</span>,
+  <span class="hljs-attr">text</span>: <span class="hljs-string">'Please select'</span>,
+  <span class="hljs-attr">actions</span>: [
+    {
+      <span class="hljs-attr">type</span>: <span class="hljs-string">'postback'</span>,
+      <span class="hljs-attr">label</span>: <span class="hljs-string">'Buy'</span>,
+      <span class="hljs-attr">data</span>: <span class="hljs-string">'action=buy&amp;itemid=123'</span>,
+    },
+    {
+      <span class="hljs-attr">type</span>: <span class="hljs-string">'postback'</span>,
+      <span class="hljs-attr">label</span>: <span class="hljs-string">'Add to cart'</span>,
+      <span class="hljs-attr">data</span>: <span class="hljs-string">'action=add&amp;itemid=123'</span>,
+    },
+    {
+      <span class="hljs-attr">type</span>: <span class="hljs-string">'uri'</span>,
+      <span class="hljs-attr">label</span>: <span class="hljs-string">'View detail'</span>,
+      <span class="hljs-attr">uri</span>: <span class="hljs-string">'http://example.com/page/123'</span>,
+    },
+  ],
+};
+<span class="hljs-keyword">const</span> altText = <span class="hljs-string">'this is a button template'</span>;
+<span class="hljs-keyword">await</span> context.sendButtonTemplate(altText, template);
+</code></pre>
+<blockquote>
+<p><strong>Note:</strong></p>
+<ul>
+<li>Depending on the character width, the message text may not fully be displayed due to the height limitation of the text area.</li>
+<li>For more info, please refer to LINE's official doc, <a href="https://developers.line.biz/en/reference/messaging-api/#buttons"><code>Buttons Template</code></a></li>
+</ul>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="carousel-template"></a><a href="#carousel-template" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Carousel Template</h3>
+<p>A <code>Carousel Template</code> is an upgraded version of <code>Buttons Template.</code> For each <code>Buttons Template,</code> you can have an image, title, text, and multiple action buttons.</p>
+<p>You can have up to 10 <code>Buttons Template</code> in a row to compose a <code>Carousel Template.</code></p>
+<p><img width="300" src="https://user-images.githubusercontent.com/662387/70680778-3705e880-1cd4-11ea-8bcd-7e38aa45f74e.png"></p>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">const</span> template = [
+  {
+    <span class="hljs-attr">thumbnailImageUrl</span>: <span class="hljs-string">'https://example.com/bot/images/item1.jpg'</span>,
+    <span class="hljs-attr">title</span>: <span class="hljs-string">'this is menu'</span>,
+    <span class="hljs-attr">text</span>: <span class="hljs-string">'description'</span>,
+    <span class="hljs-attr">actions</span>: [
+      {
+        <span class="hljs-attr">type</span>: <span class="hljs-string">'postback'</span>,
+        <span class="hljs-attr">label</span>: <span class="hljs-string">'Buy'</span>,
+        <span class="hljs-attr">data</span>: <span class="hljs-string">'action=buy&amp;itemid=111'</span>,
+      },
+      {
+        <span class="hljs-attr">type</span>: <span class="hljs-string">'postback'</span>,
+        <span class="hljs-attr">label</span>: <span class="hljs-string">'Add to cart'</span>,
+        <span class="hljs-attr">data</span>: <span class="hljs-string">'action=add&amp;itemid=111'</span>,
+      },
+      {
+        <span class="hljs-attr">type</span>: <span class="hljs-string">'uri'</span>,
+        <span class="hljs-attr">label</span>: <span class="hljs-string">'View detail'</span>,
+        <span class="hljs-attr">uri</span>: <span class="hljs-string">'http://example.com/page/111'</span>,
+      },
+    ],
+  },
+  {
+    <span class="hljs-attr">thumbnailImageUrl</span>: <span class="hljs-string">'https://example.com/bot/images/item2.jpg'</span>,
+    <span class="hljs-attr">title</span>: <span class="hljs-string">'this is menu'</span>,
+    <span class="hljs-attr">text</span>: <span class="hljs-string">'description'</span>,
+    <span class="hljs-attr">actions</span>: [
+      {
+        <span class="hljs-attr">type</span>: <span class="hljs-string">'postback'</span>,
+        <span class="hljs-attr">label</span>: <span class="hljs-string">'Buy'</span>,
+        <span class="hljs-attr">data</span>: <span class="hljs-string">'action=buy&amp;itemid=222'</span>,
+      },
+      {
+        <span class="hljs-attr">type</span>: <span class="hljs-string">'postback'</span>,
+        <span class="hljs-attr">label</span>: <span class="hljs-string">'Add to cart'</span>,
+        <span class="hljs-attr">data</span>: <span class="hljs-string">'action=add&amp;itemid=222'</span>,
+      },
+      {
+        <span class="hljs-attr">type</span>: <span class="hljs-string">'uri'</span>,
+        <span class="hljs-attr">label</span>: <span class="hljs-string">'View detail'</span>,
+        <span class="hljs-attr">uri</span>: <span class="hljs-string">'http://example.com/page/222'</span>,
+      },
+    ],
+  },
+];
+<span class="hljs-keyword">const</span> altText = <span class="hljs-string">'this is a carousel template'</span>;
+<span class="hljs-keyword">await</span> context.sendCarouselTemplate(altText, template);
+</code></pre>
+<blockquote>
+<p><strong>Note:</strong></p>
+<ul>
+<li>Depending on the character width, the message text may not fully be displayed due to the height limitation of the text area.</li>
+<li>You have to keep the number of actions consistent for all columns.</li>
+<li>For more info, please refer to LINE's official doc, <a href="https://developers.line.biz/en/reference/messaging-api/#carousel"><code>Carousel Template</code></a></li>
+</ul>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="image-carousel-template"></a><a href="#image-carousel-template" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Image Carousel Template</h3>
+<p><code>Image Carousel Template</code> has multiple images that can be cycled like a carousel. Users can scroll the images horizontally to browse possible choices. Without the bother of buttons, it helps your user focus on the product images.</p>
+<p><img width="300" src="https://user-images.githubusercontent.com/662387/70680783-38371580-1cd4-11ea-888e-336a24e67029.png"></p>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">const</span> template = [
+  {
+    <span class="hljs-attr">imageUrl</span>: <span class="hljs-string">'https://example.com/bot/images/item1.jpg'</span>,
+    <span class="hljs-attr">action</span>: {
+      <span class="hljs-attr">type</span>: <span class="hljs-string">'postback'</span>,
+      <span class="hljs-attr">label</span>: <span class="hljs-string">'Buy'</span>,
+      <span class="hljs-attr">data</span>: <span class="hljs-string">'action=buy&amp;itemid=111'</span>,
+    },
+  },
+  {
+    <span class="hljs-attr">imageUrl</span>: <span class="hljs-string">'https://example.com/bot/images/item2.jpg'</span>,
+    <span class="hljs-attr">action</span>: {
+      <span class="hljs-attr">type</span>: <span class="hljs-string">'message'</span>,
+      <span class="hljs-attr">label</span>: <span class="hljs-string">'Yes'</span>,
+      <span class="hljs-attr">text</span>: <span class="hljs-string">'yes'</span>,
+    },
+  },
+  {
+    <span class="hljs-attr">imageUrl</span>: <span class="hljs-string">'https://example.com/bot/images/item3.jpg'</span>,
+    <span class="hljs-attr">action</span>: {
+      <span class="hljs-attr">type</span>: <span class="hljs-string">'uri'</span>,
+      <span class="hljs-attr">label</span>: <span class="hljs-string">'View detail'</span>,
+      <span class="hljs-attr">uri</span>: <span class="hljs-string">'http://example.com/page/222'</span>,
+    },
+  },
+];
+<span class="hljs-keyword">const</span> altText = <span class="hljs-string">'this is a image carousel template'</span>;
+<span class="hljs-keyword">await</span> context.sendImageCarouselTemplate(altText, template);
+</code></pre>
+<blockquote>
+<p><strong>Note:</strong> For more info, please refer to LINE's official doc, <a href="https://developers.line.biz/en/reference/messaging-api/#image-carousel"><code>Image Carousel Template</code></a></p>
+</blockquote>
+<h2><a class="anchor" aria-hidden="true" id="sending-flex-messages"></a><a href="#sending-flex-messages" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Sending Flex Messages</h2>
+<p><img width="800" src="https://user-images.githubusercontent.com/662387/70701503-6bdf6300-1d07-11ea-86d6-924d676a1f80.png"></p>
+<p>Since we love <a href="/docs/zh-TW/next/channel-line-flex"><code>Flex Message</code></a> and inspired by its flexibility and interactive, we wrote a separate doc, <a href="/docs/zh-TW/next/channel-line-flex"><code>Flex Message</code></a></p>
+<h2><a class="anchor" aria-hidden="true" id="sending-with-quick-replies"></a><a href="#sending-with-quick-replies" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Sending with Quick Replies</h2>
+<p>We would recommend you to treat <code>Quick Reply</code> as an alternative to user text input.</p>
+<p>When a user receives a message that contains <code>Quick Reply Buttons</code> from a LINE official account, those buttons appear at the bottom of the chat screen. The user can tap one of the buttons as a reply.</p>
+<p>A <code>Quick Reply</code> consists of up to 13 <code>Quick Reply Buttons.</code> When the user taps a <code>Quick Reply Button,</code> the <code>Quick Reply</code> dismissed. Then, the title of the tapped button posts to the conversation as a response. Meanwhile, the user triggers the action bound with the <code>Quick Reply Button.</code></p>
+<p><code>Quick Reply</code> can be used in a 1:1 chat with a LINE official account, a group, and a room.</p>
+<p><img width="300" src="https://user-images.githubusercontent.com/662387/70680787-38cfac00-1cd4-11ea-92ea-e7a2379ce9c2.png"></p>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">const</span> quickReply = {
+  <span class="hljs-attr">items</span>: [
+    {
+      <span class="hljs-attr">type</span>: <span class="hljs-string">'action'</span>,
+      <span class="hljs-attr">action</span>: {
+        <span class="hljs-attr">type</span>: <span class="hljs-string">'cameraRoll'</span>,
+        <span class="hljs-attr">label</span>: <span class="hljs-string">'Send photo'</span>,
+      },
+    },
+    {
+      <span class="hljs-attr">type</span>: <span class="hljs-string">'action'</span>,
+      <span class="hljs-attr">action</span>: {
+        <span class="hljs-attr">type</span>: <span class="hljs-string">'camera'</span>,
+        <span class="hljs-attr">label</span>: <span class="hljs-string">'Open camera'</span>,
+      },
+    },
+  ],
+};
+</code></pre>
+<blockquote>
+<p><strong>Note:</strong> For more info, please refer to LINE's official doc, <a href="https://developers.line.biz/en/docs/messaging-api/using-quick-reply/"><code>Using Quick Reply</code></a></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="sending-quick-reply"></a><a href="#sending-quick-reply" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Sending Quick Reply</h3>
+<p>Since <code>Quick Reply</code> works as an alternative of user input, you have to send <code>Quick Reply</code> as an attachment of other messages, e.g., <code>Text Message,</code> <code>Template Message,</code> or <code>Flex.</code></p>
+<h4><a class="anchor" aria-hidden="true" id="sending-quick-reply-with-message"></a><a href="#sending-quick-reply-with-message" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Sending Quick Reply with Message</h4>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">await</span> context.send([
+  {
+    <span class="hljs-attr">type</span>: <span class="hljs-string">'text'</span>,
+    <span class="hljs-attr">text</span>: <span class="hljs-string">'hello'</span>,
+    quickReply,
+  },
+]);
+</code></pre>
+<h4><a class="anchor" aria-hidden="true" id="sending-quick-reply-with-text-message"></a><a href="#sending-quick-reply-with-text-message" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Sending Quick Reply with Text Message</h4>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">await</span> context.sendText(<span class="hljs-string">'hello'</span>, { quickReply });
+</code></pre>
+<h4><a class="anchor" aria-hidden="true" id="sending-quick-reply-with-template-message"></a><a href="#sending-quick-reply-with-template-message" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Sending Quick Reply with Template Message</h4>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">await</span> context.sendTemplate(altText, template, { quickReply });
+</code></pre>
+<h4><a class="anchor" aria-hidden="true" id="sending-quick-reply-with-buttons-template-message"></a><a href="#sending-quick-reply-with-buttons-template-message" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Sending Quick Reply with Buttons Template Message</h4>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">await</span> context.sendButtonTemplate(altText, template, { quickReply });
+</code></pre>
+<h4><a class="anchor" aria-hidden="true" id="sending-quick-reply-with-confirm-template-message"></a><a href="#sending-quick-reply-with-confirm-template-message" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Sending Quick Reply with Confirm Template Message</h4>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">await</span> context.sendConfirmTemplate(altText, template, { quickReply });
+</code></pre>
+<h4><a class="anchor" aria-hidden="true" id="sending-quick-reply-with-carousel-template-message"></a><a href="#sending-quick-reply-with-carousel-template-message" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Sending Quick Reply with Carousel Template Message</h4>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">await</span> context.sendCarouselTemplate(altText, template, { quickReply });
+</code></pre>
+<h4><a class="anchor" aria-hidden="true" id="sending-quick-reply-with-flex-message"></a><a href="#sending-quick-reply-with-flex-message" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Sending Quick Reply with Flex Message</h4>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">await</span> context.sendFlex(altText, contents, { quickReply });
+</code></pre>
+<p>In the following sections, you can see various types of <code>Quick Reply.</code></p>
+<h3><a class="anchor" aria-hidden="true" id="text-quick-reply"></a><a href="#text-quick-reply" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Text Quick Reply</h3>
+<p>When this action is tapped, the string in the text property is sent as a message from the user.</p>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">const</span> quickReply = {
+  <span class="hljs-attr">items</span>: [
+    {
+      <span class="hljs-attr">type</span>: <span class="hljs-string">'action'</span>,
+      <span class="hljs-attr">action</span>: {
+        <span class="hljs-attr">type</span>: <span class="hljs-string">'message'</span>,
+        <span class="hljs-attr">label</span>: <span class="hljs-string">'Yes'</span>,
+        <span class="hljs-attr">text</span>: <span class="hljs-string">'Yes'</span>,
+      },
+    },
+  ],
+};
+</code></pre>
+<blockquote>
+<p><strong>Note:</strong> For more info, please refer to LINE's official doc, <a href="https://developers.line.biz/en/reference/messaging-api/#message-action"><code>Message Actions</code></a></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="postback-quick-replay"></a><a href="#postback-quick-replay" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Postback Quick Replay</h3>
+<p>When the action is tapped, a postback event is returned via webhook with the specified string in the data property.</p>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">const</span> quickReply = {
+  <span class="hljs-attr">items</span>: [
+    {
+      <span class="hljs-attr">type</span>: <span class="hljs-string">'action'</span>,
+      <span class="hljs-attr">action</span>: {
+        <span class="hljs-attr">type</span>: <span class="hljs-string">'postback'</span>,
+        <span class="hljs-attr">label</span>: <span class="hljs-string">'Buy'</span>,
+        <span class="hljs-attr">data</span>: <span class="hljs-string">'action=buy&amp;itemid=111'</span>,
+        <span class="hljs-attr">text</span>: <span class="hljs-string">'Buy'</span>,
+      },
+    },
+  ],
+};
+</code></pre>
+<blockquote>
+<p><strong>Note:</strong> For more info, please refer to LINE's official doc, <a href="https://developers.line.biz/en/reference/messaging-api/#postback-action"><code>Postback Actions</code></a></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="uri-quick-reply"></a><a href="#uri-quick-reply" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>URI Quick Reply</h3>
+<p>The URI opened when the action is performed. The available schemes for URI are <code>http</code>, <code>https,</code> <code>line,</code> and <code>tel.</code> For the LINE URL scheme, you can trigger the following actions:</p>
+<ul>
+<li>Opening the camera and camera roll</li>
+<li>Opening the location screen</li>
+<li>Sharing your LINE official account</li>
+<li>Opening your LINE official account's Timeline and account page</li>
+<li>Sending text messages</li>
+<li>Opening profile information</li>
+<li>Opening common LINE screens</li>
+<li>Opening LINE settings screens</li>
+<li>Opening the Sticker Shop</li>
+<li>Opening the Theme Shop</li>
+<li>Making phone calls with LINE Out</li>
+<li>Opening a LIFF app</li>
+</ul>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">const</span> quickReply = {
+  <span class="hljs-attr">items</span>: [
+    {
+      <span class="hljs-attr">type</span>: <span class="hljs-string">'action'</span>,
+      <span class="hljs-attr">action</span>: {
+        <span class="hljs-attr">type</span>: <span class="hljs-string">'uri'</span>,
+        <span class="hljs-attr">label</span>: <span class="hljs-string">'View details'</span>,
+        <span class="hljs-attr">uri</span>: <span class="hljs-string">'http://example.com/page/222'</span>,
+        <span class="hljs-attr">altUri</span>: {
+          <span class="hljs-attr">desktop</span>: <span class="hljs-string">'http://example.com/pc/page/222'</span>,
+        },
+      },
+    },
+  ],
+};
+</code></pre>
+<blockquote>
+<p><strong>Note:</strong></p>
+<ul>
+<li>The altUri.desktop property is supported only when you set URI actions in Flex Messages.</li>
+<li>For more information about the LINE URL scheme, see Using the <a href="https://developers.line.biz/en/docs/line-login/using-line-url-scheme/"><code>LINE URL Scheme</code></a>.</li>
+<li>For more info, please refer to LINE's official doc, <a href="https://developers.line.biz/en/reference/messaging-api/#uri-action"><code>URI Actions</code></a></li>
+</ul>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="datetime-picker-quick-reply"></a><a href="#datetime-picker-quick-reply" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Datetime Picker Quick Reply</h3>
+<p>When a control associated with this action is tapped, a postback event is returned via webhook with the date and time selected by the user from the date and time selection dialog. The <code>Datetime Picker</code> action does not support time zones.</p>
+<p>There are three different modes:</p>
+<ul>
+<li>date: Pick a date</li>
+<li>time: Pick time</li>
+<li>datetime: Pick date and time</li>
+</ul>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">const</span> quickReply = {
+  <span class="hljs-attr">items</span>: [
+    {
+      <span class="hljs-attr">type</span>: <span class="hljs-string">'datetimepicker'</span>,
+      <span class="hljs-attr">label</span>: <span class="hljs-string">'Select date'</span>,
+      <span class="hljs-attr">data</span>: <span class="hljs-string">'storeId=12345'</span>,
+      <span class="hljs-attr">mode</span>: <span class="hljs-string">'datetime'</span>,
+      <span class="hljs-attr">initial</span>: <span class="hljs-string">'2017-12-25t00:00'</span>,
+      <span class="hljs-attr">max</span>: <span class="hljs-string">'2018-01-24t23:59'</span>,
+      <span class="hljs-attr">min</span>: <span class="hljs-string">'2017-12-25t00:00'</span>,
+    },
+  ],
+};
+</code></pre>
+<blockquote>
+<p><strong>Note:</strong></p>
+<ul>
+<li>The datetime picker action is only supported on versions equal to or later than LINE 7.9.0 for iOS and LINE 7.12.0 for Android.</li>
+<li>For more info, please refer to LINE's official doc, <a href="https://developers.line.biz/en/reference/messaging-api/#datetime-picker-action"><code>Datatime Picker Actions</code></a></li>
+</ul>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="camera-quick-reply"></a><a href="#camera-quick-reply" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Camera Quick Reply</h3>
+<p>This action can be configured only with quick reply buttons. When a button associated with this action is tapped, the camera screen in LINE is opened.</p>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">const</span> quickReply = {
+  <span class="hljs-attr">items</span>: [
+    {
+      <span class="hljs-attr">type</span>: <span class="hljs-string">'action'</span>,
+      <span class="hljs-attr">action</span>: {
+        <span class="hljs-attr">type</span>: <span class="hljs-string">'camera'</span>,
+        <span class="hljs-attr">label</span>: <span class="hljs-string">'Camera'</span>,
+      },
+    },
+  ],
+};
+</code></pre>
+<blockquote>
+<p><strong>Note:</strong></p>
+<ul>
+<li>For more info, please refer to LINE's official doc, <a href="https://developers.line.biz/en/reference/messaging-api/#camera-action"><code>Camera Actions</code></a></li>
+</ul>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="camera-roll-quick-reply"></a><a href="#camera-roll-quick-reply" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Camera Roll Quick Reply</h3>
+<p>This action can be configured only with quick reply buttons. When a button associated with this action is tapped, the camera roll screen in LINE is opened.</p>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">const</span> quickReply = {
+  <span class="hljs-attr">items</span>: [
+    {
+      <span class="hljs-attr">type</span>: <span class="hljs-string">'action'</span>,
+      <span class="hljs-attr">action</span>: {
+        <span class="hljs-attr">type</span>: <span class="hljs-string">'cameraRoll'</span>,
+        <span class="hljs-attr">label</span>: <span class="hljs-string">'Camera roll'</span>,
+      },
+    },
+  ],
+};
+</code></pre>
+<blockquote>
+<p><strong>Note:</strong></p>
+<ul>
+<li>For more info, please refer to LINE's official doc, <a href="https://developers.line.biz/en/reference/messaging-api/#camera-roll-action"><code>Camera Roll Actions</code></a></li>
+</ul>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="location-quick-reply"></a><a href="#location-quick-reply" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Location Quick Reply</h3>
+<p>This action can be configured only with quick reply buttons. When a button associated with this action is tapped, the location screen in LINE is opened.</p>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">const</span> quickReply = {
+  <span class="hljs-attr">items</span>: [
+    {
+      <span class="hljs-attr">type</span>: <span class="hljs-string">'action'</span>,
+      <span class="hljs-attr">action</span>: {
+        <span class="hljs-attr">type</span>: <span class="hljs-string">'location'</span>,
+        <span class="hljs-attr">label</span>: <span class="hljs-string">'Location'</span>,
+      },
+    },
+  ],
+};
+</code></pre>
+<blockquote>
+<p><strong>Note:</strong></p>
+<ul>
+<li>For more info, please refer to LINE's official doc, <a href="https://developers.line.biz/en/reference/messaging-api/#location-action"><code>Location Action</code></a></li>
+</ul>
+</blockquote>
+<h2><a class="anchor" aria-hidden="true" id="thinking-in-bottender-send-messages-reply-messages--push-messages"></a><a href="#thinking-in-bottender-send-messages-reply-messages--push-messages" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Thinking in Bottender: Send Messages, Reply Messages &amp; Push Messages</h2>
+<p>Bottender aims to offer better abstract concepts for multiple chat channels support. Apart from LINE's unique <code>Reply API</code> and <code>Push API,</code> Bottender offers <code>Send API</code> as a configurable middleware.</p>
+<p>For example, If you don't want to pay extra fee for bot response, in <code>bottender.config.js,</code> you can config your <code>Send API</code> sending messages by <code>Reply API.</code> However, if you want to send more than 5 <code>Message Objects</code> in one reply, you can also ask Bottender use <code>Push API</code> to send every message by <code>Send API.</code></p>
+<pre><code class="hljs css language-js"><span class="hljs-comment">// bottender.config.js</span>
+<span class="hljs-built_in">module</span>.exports = {
+  <span class="hljs-attr">channels</span>: {
+    <span class="hljs-attr">line</span>: {
+      <span class="hljs-attr">enabled</span>: <span class="hljs-literal">true</span>,
+      <span class="hljs-comment">// sendMethod can be either "push" or "reply"</span>
+      <span class="hljs-attr">sendMethod</span>: <span class="hljs-string">'reply'</span>,
+      <span class="hljs-attr">accessToken</span>: process.env.LINE_CHANNEL_ACCESS_TOKEN,
+      <span class="hljs-attr">channelSecret</span>: process.env.LINE_CHANNEL_SECRET,
+    },
+  },
+};
+</code></pre>
+<h3><a class="anchor" aria-hidden="true" id="send-messages"></a><a href="#send-messages" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Send Messages</h3>
+<p>Bottender offers the following <code>Send API:</code></p>
+<ul>
+<li>send</li>
+<li>sendText</li>
+<li>sendSticker</li>
+<li>sendImage</li>
+<li>sendAudio</li>
+<li>sendVideo</li>
+<li>sendLocation</li>
+<li>sendImagemap</li>
+<li>sendFlex</li>
+<li>sendTemplate</li>
+<li>sendBottonTemplate</li>
+<li>sendConfirmTemplate</li>
+<li>sendCarouselTemplate</li>
+<li>sendImageCarouselTemplate</li>
+</ul>
+<h3><a class="anchor" aria-hidden="true" id="reply-messages"></a><a href="#reply-messages" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Reply Messages</h3>
+<p>If you are confident that all you need is <code>Reply API,</code> you can use the following <code>Reply API.</code> Bottender helps you manage the reply token, so you don't have to manage it by yourself.</p>
+<p>Bottender offers the following <code>Reply API:</code></p>
+<ul>
+<li>reply</li>
+<li>replyText</li>
+<li>replySticker</li>
+<li>replyImage</li>
+<li>replyAudio</li>
+<li>replyVideo</li>
+<li>replyLocation</li>
+<li>replyImagemap</li>
+<li>replyFlex</li>
+<li>replyTemplate</li>
+<li>replyBottonTemplate</li>
+<li>replyConfirmTemplate</li>
+<li>replyCarouselTemplate</li>
+<li>replyImageCarouselTemplate</li>
+</ul>
+<blockquote>
+<p><strong>Note:</strong> For sample code, please refer to Bottender's API doc, <a href="https://bottender.js.org/docs/api-line-context#reply-api">Reply API</a></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="push-messages"></a><a href="#push-messages" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Push Messages</h3>
+<p>If messaging cost is not an issue to you, you may focus on <code>Push API.</code></p>
+<p>Bottender offers the following <code>Push API:</code></p>
+<ul>
+<li>push</li>
+<li>pushText</li>
+<li>pushSticker</li>
+<li>pushImage</li>
+<li>pushAudio</li>
+<li>pushVideo</li>
+<li>pushLocation</li>
+<li>pushImagemap</li>
+<li>pushFlex</li>
+<li>pushTemplate</li>
+<li>pushBottonTemplate</li>
+<li>pushConfirmTemplate</li>
+<li>pushCarouselTemplate</li>
+<li>pushImageCarouselTemplate</li>
+</ul>
+<blockquote>
+<p><strong>Note:</strong> For sample code, please refer to Bottender's API doc, <a href="https://bottender.js.org/docs/api-line-context#push-api">Push API</a></p>
+</blockquote>
+<h2><a class="anchor" aria-hidden="true" id="rate-limits"></a><a href="#rate-limits" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Rate Limits</h2>
+<p>Just like many chat channels, LINE has rate limits for each endpoint. If you continue to send requests exceeding the rate limit for an extended period, your bot might stop responding. It is because LINE blocks incoming requests to your bot.</p>
+<p>You have to take care <code>Rate Limits</code> if you attempt to build a campaign bot with massive sudden traffic, e.g., super discount for Black Friday.</p>
+<h3><a class="anchor" aria-hidden="true" id="send-api"></a><a href="#send-api" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Send API</h3>
+<p>For <code>Send API,</code> you have to follow the below <code>Rate Limits</code>: 100,000 requests per minute 1,700 requests per second</p>
+<blockquote>
+<p><strong>Note:</strong> For more info, please refer to LINE's API doc, <a href="https://developers.line.biz/en/reference/messaging-api/#rate-limits">Rate Limits</a></p>
+</blockquote>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/docs/zh-TW/next/channel-line-handling-events"><span class="arrow-prev">← </span><span>處理 LINE 事件</span></a><a class="docs-next button" href="/docs/zh-TW/next/channel-line-routing"><span>LINE 路由</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#sending-messages">Sending Messages</a></li><li><a href="#sending-text-messages">Sending Text Messages</a><ul class="toc-headings"><li><a href="#plain-text">Plain Text</a></li><li><a href="#text-with-line-emoji">Text with LINE emoji</a></li></ul></li><li><a href="#sending-multiple-messages">Sending Multiple Messages</a></li><li><a href="#sending-rich-media-messages">Sending Rich Media Messages</a><ul class="toc-headings"><li><a href="#sticker">Sticker</a></li><li><a href="#image">Image</a></li><li><a href="#video">Video</a></li><li><a href="#audio">Audio</a></li><li><a href="#location">Location</a></li><li><a href="#imagemap">Imagemap</a></li></ul></li><li><a href="#sending-template-messages">Sending Template Messages</a><ul class="toc-headings"><li><a href="#confirm-template">Confirm Template</a></li><li><a href="#buttons-template">Buttons Template</a></li><li><a href="#carousel-template">Carousel Template</a></li><li><a href="#image-carousel-template">Image Carousel Template</a></li></ul></li><li><a href="#sending-flex-messages">Sending Flex Messages</a></li><li><a href="#sending-with-quick-replies">Sending with Quick Replies</a><ul class="toc-headings"><li><a href="#sending-quick-reply">Sending Quick Reply</a></li><li><a href="#text-quick-reply">Text Quick Reply</a></li><li><a href="#postback-quick-replay">Postback Quick Replay</a></li><li><a href="#uri-quick-reply">URI Quick Reply</a></li><li><a href="#datetime-picker-quick-reply">Datetime Picker Quick Reply</a></li><li><a href="#camera-quick-reply">Camera Quick Reply</a></li><li><a href="#camera-roll-quick-reply">Camera Roll Quick Reply</a></li><li><a href="#location-quick-reply">Location Quick Reply</a></li></ul></li><li><a href="#thinking-in-bottender-send-messages-reply-messages--push-messages">Thinking in Bottender: Send Messages, Reply Messages &amp; Push Messages</a><ul class="toc-headings"><li><a href="#send-messages">Send Messages</a></li><li><a href="#reply-messages">Reply Messages</a></li><li><a href="#push-messages">Push Messages</a></li></ul></li><li><a href="#rate-limits">Rate Limits</a><ul class="toc-headings"><li><a href="#send-api">Send API</a></li></ul></li></ul></nav></div><footer class="nav-footer" id="footer"><div class="footer-layout"><div><div style="margin-bottom:16px"><a href="https://yoctol.ai" target="_blank" rel="noopener noreferrer"><img width="104px" src="/img/element_YOCTOL.AI_horizontal_S.svg" alt="YOCTOL.AI Logo"/></a></div><div class="desktop"><p class="text">© 2019 - PRESENT YOCTOL.AI ALL RIGHTS RESERVED.</p><a class="text" href="https://yoctol.ai/terms-of-use" target="_blank" rel="noopener noreferrer">Terms of Use</a><a class="text" href="https://yoctol.ai/privacy-policy" target="_blank" rel="noopener noreferrer" style="margin-left:16px">Privacy Policy</a></div></div><div class="footer-contacts"><h4 class="title">Contact Us</h4><p class="text">YOCTOL.AI</p><p class="text">service@yoctol.com</p></div><div class="footer-medias"><h4 class="title">Social Media</h4><div class="icons"><a href="https://twitter.com/yoctol" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#FFF" fill-rule="nonzero" d="M1.5 0h21A1.5 1.5 0 0 1 24 1.5v21a1.5 1.5 0 0 1-1.5 1.5h-21A1.5 1.5 0 0 1 0 22.5v-21A1.5 1.5 0 0 1 1.5 0zm7.532 18c6.037 0 9.34-4.617 9.34-8.621 0-.131 0-.262-.01-.392A6.419 6.419 0 0 0 20 7.42c-.6.245-1.235.406-1.885.477a3.097 3.097 0 0 0 1.443-1.676 6.92 6.92 0 0 1-2.085.735c-1.017-.999-2.634-1.243-3.944-.596-1.31.647-1.986 2.024-1.65 3.36-2.64-.123-5.099-1.273-6.765-3.166-.872 1.384-.427 3.155 1.016 4.045a3.468 3.468 0 0 1-1.49-.38v.039c0 1.442 1.102 2.684 2.634 2.97-.484.122-.99.14-1.483.052.43 1.234 1.663 2.08 3.067 2.104a6.945 6.945 0 0 1-4.077 1.3c-.26 0-.522-.015-.781-.044a9.867 9.867 0 0 0 5.032 1.359V18z"></path></svg></a><a href="https://www.linkedin.com/company/yoctol/" target="_blank" rel="noopener noreferrer" style="margin-left:8px"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#FFF" fill-rule="nonzero" d="M1.5 0h21A1.5 1.5 0 0 1 24 1.5v21a1.5 1.5 0 0 1-1.5 1.5h-21A1.5 1.5 0 0 1 0 22.5v-21A1.5 1.5 0 0 1 1.5 0zm6.086 19.636V9.281H4.368v10.355h3.218zM5.944 7.801A1.877 1.877 0 0 0 7.82 5.925 1.876 1.876 0 1 0 5.945 7.8zm13.697 11.835v-5.679c0-2.788-.602-4.933-3.861-4.933-1.565 0-2.615.859-3.045 1.672h-.043V9.281H9.604v10.355h3.216v-5.123c0-1.35.258-2.658 1.932-2.658 1.65 0 1.673 1.545 1.673 2.746v5.035h3.216z"></path></svg></a></div></div><div class="footer-product"><h4 class="title">Product</h4><div class="icons"><a href="https://yoctol.ai/creator" target="_blank" rel="noopener noreferrer" style="margin-top:1px;margin-right:10px"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22"><g fill="none" fill-rule="nonzero"><path d="M-1-2h24v24H-1z"></path><path fill="#FFF" d="M4.129 12c.309 3.386 3.267 6.042 6.871 6.042 3.604 0 6.562-2.656 6.871-6.042H22c-.317 5.574-5.12 10-11 10S.317 17.574 0 12h4.129zM14 9a1 1 0 1 1 0 2 1 1 0 0 1 0-2zM8 9a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm14-9v10h-4.113V4.116H7.814A3.703 3.703 0 0 0 4.113 7.82V10H0V7.82A7.817 7.817 0 0 1 7.685.001L7.815 0H22z"></path></g></svg></a><a href="https://yoctol.ai/seeker" target="_blank" rel="noopener noreferrer" style="margin-right:10px"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="24" viewBox="0 0 22 24"><g fill="none" fill-rule="nonzero"><path d="M-1 0h24v24H-1z"></path><path fill="#FFF" d="M2.81 7.033l.004.004 3.123 3.137a.112.112 0 0 1 .017.137 5.957 5.957 0 0 0 .843 7.356 5.936 5.936 0 0 0 8.41.003 5.957 5.957 0 0 0 .839-7.355.112.112 0 0 1 .016-.138l3.122-3.136a.11.11 0 0 1 .158 0l.01.012c3.182 4.182 2.79 10.14-.915 13.86-4.1 4.117-10.77 4.115-14.87-.002-3.699-3.714-4.1-9.656-.941-13.836a.111.111 0 0 1 .184-.042zM8.5 11a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm5 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm5.942-7.854l.015.014a.175.175 0 0 1 0 .23L15.32 7.952a.138.138 0 0 1-.182.024 7.294 7.294 0 0 0-8.27-.002.138.138 0 0 1-.182-.024L2.544 3.384a.175.175 0 0 1 .014-.245c4.97-4.188 11.913-4.185 16.884.007z"></path></g></svg></a><a href="https://bottender.js.org/" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="24" viewBox="0 0 22 24"><g fill="none" fill-rule="evenodd"><path fill-rule="nonzero" d="M-1 0h24v24H-1z"></path><path fill="#FFF" d="M1.668 8.51c.258.075.548.159.867.244a9.055 9.055 0 0 0 .959 11.639l.206.202.102.098.022.139a2.63 2.63 0 0 1-.314 1.745c.351-.162.683-.36.99-.59l.227-.178.242-.196.264.162a9.343 9.343 0 0 0 4.898 1.379c5.115 0 9.276-4.107 9.276-9.154 0-.806-.107-1.607-.32-2.385.33.027.63.047.9.06.184.762.289 1.543.288 2.326 0 5.513-4.534 9.999-10.12 9.999a10.128 10.128 0 0 1-5.067-1.352c-1.039.78-2.395 1.228-3.574 1.289l-.269.007v-.845c.928-.002 1.807-.82 1.808-1.831 0-.057-.05-.113-.056-.17A9.891 9.891 0 0 1 1.668 8.51zM10 11a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm6 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2zM9.379.02c2.551.437 3.144 1.75 3.144 1.75s1.02-1.037 3.57-.6c2.302.394 3.731 6.79 3.99 8.047 1.233.338 1.946.614 1.916.775l-.143.719c-.074.409-4.997-.07-10.837-1.07C5.179 8.638.506 7.495.579 7.086l.144-.74c.03-.162.797-.185 2.075-.091C3.484 5.161 7.08-.374 9.378.02z"></path></g></svg></a></div></div><div class="mobile"><p class="text">© 2019 - PRESENT YOCTOL.AI ALL RIGHTS RESERVED.</p><a class="text" href="https://yoctol.ai/terms-of-use" target="_blank" rel="noopener noreferrer">Terms of Use</a><a class="text" href="https://yoctol.ai/privacy-policy" target="_blank" rel="noopener noreferrer" style="margin-left:16px">Privacy Policy</a></div></div></footer></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script><script>window.twttr=(function(d,s, id){var js,fjs=d.getElementsByTagName(s)[0],t=window.twttr||{};if(d.getElementById(id))return t;js=d.createElement(s);js.id=id;js.src='https://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js, fjs);t._e = [];t.ready = function(f) {t._e.push(f);};return t;}(document, 'script', 'twitter-wjs'));</script><script>
+                document.addEventListener('keyup', function(e) {
+                  if (e.target !== document.body) {
+                    return;
+                  }
+                  // keyCode for '/' (slash)
+                  if (e.keyCode === 191) {
+                    const search = document.getElementById('search_input_react');
+                    search && search.focus();
+                  }
+                });
+              </script><script>
+              var search = docsearch({
+                
+                apiKey: '3498a488684b0324b9d56808fad17a33',
+                indexName: 'bottender',
+                inputSelector: '#search_input_react',
+                algoliaOptions: {"facetFilters":["language:zh-TW","version:next"]}
+              });
+            </script></body></html>

@@ -1,0 +1,258 @@
+<!DOCTYPE html><html lang="zh-TW"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Session · Bottender</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="## 介紹"/><meta name="docsearch:version" content="1.2.0"/><meta name="docsearch:language" content="zh-TW"/><meta property="og:title" content="Session · Bottender"/><meta property="og:type" content="website"/><meta property="og:url" content="https://bottender.js.org/"/><meta property="og:description" content="## 介紹"/><meta property="og:image" content="https://bottender.js.org/img/og-image.png"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://bottender.js.org/img/og-image.png"/><link rel="shortcut icon" href="/img/favicon-192x192.png"/><link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-dark.min.css"/><link rel="alternate" type="application/atom+xml" href="https://bottender.js.org/blog/atom.xml" title="Bottender Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://bottender.js.org/blog/feed.xml" title="Bottender Blog RSS Feed"/><script>
+              (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+              (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+              m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+              })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+              ga('create', 'UA-70309045-11', 'auto');
+              ga('send', 'pageview');
+            </script><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:700|Roboto&amp;display=swap"/><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script><script type="text/javascript" src="/js/code-blocks-buttons.js"></script><script type="text/javascript" src="/js/sw.js"></script><script src="/js/scrollSpy.js"></script><link rel="stylesheet" href="/css/main.css"/><script src="/js/codetabs.js"></script></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/zh-TW"><img class="logo" src="/img/bottender.svg" alt="Bottender"/><h2 class="headerTitleWithLogo">Bottender</h2></a><a href="/zh-TW/versions"><h3>1.2.0</h3></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class="siteNavGroupActive"><a href="/docs/zh-TW/1.2.0/getting-started" target="_self">文件</a></li><li class=""><a href="/docs/zh-TW/1.2.0/api-context" target="_self">API</a></li><li class=""><a href="/blog/" target="_self">部落格</a></li><li class=""><a href="/zh-TW/users" target="_self">用戶</a></li><li class=""><a href="https://github.com/Yoctol/bottender/tree/master/examples" target="_self">範例</a></li><li class=""><a href="https://github.com/yoctol/bottender" target="_self">GitHub</a></li><span><li><a id="languages-menu" href="#"><img class="languages-icon" src="/img/language.svg" alt="Languages icon"/>繁體中文</a><div id="languages-dropdown" class="hide"><ul id="languages-dropdown-items"><li><a href="/docs/en/1.2.0/the-basics-session">English</a></li><li><a href="https://crowdin.com/project/bottender" target="_blank" rel="noreferrer noopener">幫忙翻譯</a></li></ul></div></li><script>
+        const languagesMenuItem = document.getElementById("languages-menu");
+        const languagesDropDown = document.getElementById("languages-dropdown");
+        languagesMenuItem.addEventListener("click", function(event) {
+          event.preventDefault();
+
+          if (languagesDropDown.className == "hide") {
+            languagesDropDown.className = "visible";
+          } else {
+            languagesDropDown.className = "hide";
+          }
+        });
+      </script></span><li class="navSearchWrapper reactNavSearchWrapper"><input type="text" id="search_input_react" placeholder="Search" title="Search"/></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><div class="hamburger-menu"><div class="line1"></div><div class="line2"></div><div class="line3"></div></div></div><h2><i>›</i><span>基礎</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle">入門</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/getting-started">Getting Started</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/migrating-v1">Migrating from v0.x to v1.x</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">基礎</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/the-basics-console-mode">Console Mode</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/the-basics-actions">Resolving Actions</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/the-basics-routing">Routing</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/the-basics-chain">Chain of Responsibility</a></li><li class="navListItem navListItemActive"><a class="navItem" href="/docs/zh-TW/1.2.0/the-basics-session">Session</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/the-basics-errors">Error Handling</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">進階指南</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/advanced-guides-custom-server">Running Bottender with Custom Servers</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/advanced-guides-deployment">Deployment</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/advanced-guides-nlu">Natural Language Understanding</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/advanced-guides-multi-channel">Multi-Channel Support</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">指南（Messenger）</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/channel-messenger-setup">Setup Messenger</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/channel-messenger-handling-events">Handling Messenger Events</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/channel-messenger-sending-messages">Sending Messenger Messages</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/channel-messenger-routing">Messenger Routing</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/channel-messenger-profile">Messenger Profile</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/channel-messenger-handover-protocol">Messenger Handover Protocol</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/channel-messenger-persona">Using Persona</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/channel-messenger-multi-page">Messenger Multi-Page Support</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">指南（LINE）</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/channel-line-setup">Setup LINE</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/channel-line-handling-events">Handling LINE Events</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/channel-line-sending-messages">Sending LINE Messages</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/channel-line-routing">LINE Routing</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/channel-line-flex">Sending Flex Message</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/channel-line-rich-menu">Rich Menu</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/channel-line-liff">LINE Front-end Framework (LIFF)</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/channel-line-errors">Error Handling in LINE</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/channel-line-migrating-from-sdk">Migrating from LINE SDK for Node.js</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">指南（Slack）</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/channel-slack-setup">Setup Slack</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/channel-slack-handling-events">Handling Slack Events</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/channel-slack-sending-messages">Sending Slack Messages</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/channel-slack-routing">Slack Routing</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/channel-slack-block-kit">Slack Block Kit</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">指南（Telegram）</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/channel-telegram-setup">Setup Telegram</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/channel-telegram-handling-events">Handling Telegram Events</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/channel-telegram-sending-messages">Sending Telegram Messages</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/channel-telegram-routing">Telegram Routings</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">指南（Viber）</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/channel-viber-setup">Setup Viber</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/channel-viber-handling-events">Handling Viber Events</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/channel-viber-sending-messages">Sending Viber Messages</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/channel-viber-routing">Viber Routing</a></li></ul></div></div></section></div><script>
+            var coll = document.getElementsByClassName('collapsible');
+            var checkActiveCategory = true;
+            for (var i = 0; i < coll.length; i++) {
+              var links = coll[i].nextElementSibling.getElementsByTagName('*');
+              if (checkActiveCategory){
+                for (var j = 0; j < links.length; j++) {
+                  if (links[j].classList.contains('navListItemActive')){
+                    coll[i].nextElementSibling.classList.toggle('hide');
+                    coll[i].childNodes[1].classList.toggle('rotate');
+                    checkActiveCategory = false;
+                    break;
+                  }
+                }
+              }
+
+              coll[i].addEventListener('click', function() {
+                var arrow = this.childNodes[1];
+                arrow.classList.toggle('rotate');
+                var content = this.nextElementSibling;
+                content.classList.toggle('hide');
+              });
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
+              createToggler('#tocToggler', 'body', 'tocActive');
+
+              var headings = document.querySelector('.toc-headings');
+              headings && headings.addEventListener('click', function(event) {
+                var el = event.target;
+                while(el !== headings){
+                  if (el.tagName === 'A') {
+                    document.body.classList.remove('tocActive');
+                    break;
+                  } else{
+                    el = el.parentNode;
+                  }
+                }
+              }, false);
+
+              function createToggler(togglerSelector, targetSelector, className) {
+                var toggler = document.querySelector(togglerSelector);
+                var target = document.querySelector(targetSelector);
+
+                if (!toggler) {
+                  return;
+                }
+
+                toggler.onclick = function(event) {
+                  event.preventDefault();
+
+                  target.classList.toggle(className);
+                };
+              }
+            });
+        </script></nav></div><div class="container mainContainer docsContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://crowdin.com/project/bottender/zh-TW" target="_blank" rel="noreferrer noopener">Translate</a><h1 id="__docusaurus" class="postHeaderTitle">Session</h1></header><article><div><span><h2><a class="anchor" aria-hidden="true" id="介紹"></a><a href="#介紹" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>介紹</h2>
+<p>對話可能會發生在 1 對 1 的私訊或甚至是一個有很多人在裡面的頻道中。 正因為如此，Bottender 了一個「session」機制來分辨不同對話並儲存暫時性的資料在對應的對話上。 這就類似 session 在典型的網頁伺服器中的運作方式。 以下是在你使用 session 時可能會想知道的幾個詞彙：</p>
+<ul>
+<li><a href="/docs/zh-TW/1.2.0/the-basics-session#session-state">Session state</a>：在對話上的暫存資料。</li>
+<li><a href="/docs/zh-TW/1.2.0/the-basics-session#session-id">Session id</a>：對話的唯一識別符。</li>
+<li><a href="/docs/zh-TW/1.2.0/the-basics-session#session-storage">Session storage</a>：儲存 session 的地方。</li>
+</ul>
+<h2><a class="anchor" aria-hidden="true" id="session-state"></a><a href="#session-state" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Session State</h2>
+<p><code>State</code> 被廣泛地使用在日常裝置的流程控制，例如：紅綠燈。 State 的改變是反應外部的輸入且/或滿足了某些條件。 例如：綠燈 （state）會在六十秒後（滿足的時間條件）轉變成黃燈。</p>
+<h3><a class="anchor" aria-hidden="true" id="計數機器人範例"></a><a href="#計數機器人範例" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>計數機器人範例</h3>
+<p>試想一個計數用的機器人它回應它所收到的訊息事件總數，例如：</p>
+<pre><code class="hljs">You &gt; Hi
+<span class="hljs-keyword">Bot </span>&gt; <span class="hljs-built_in">Count</span>: <span class="hljs-number">1</span>
+You &gt; Hi
+<span class="hljs-keyword">Bot </span>&gt; <span class="hljs-built_in">Count</span>: <span class="hljs-number">2</span>
+</code></pre>
+<p>在這個章節，我們會解釋如何正確地使用 state 來建立一個記數器。 它從一個計數用的 state 變數開始，這個變數會在機器人收到事件時被更新。</p>
+<p>讓我們從一個像這樣的靜態 action 開始：</p>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">EventCount</span>(<span class="hljs-params">context</span>) </span>{
+  <span class="hljs-keyword">await</span> context.sendText(<span class="hljs-string">'Count: 1'</span>);
+}
+</code></pre>
+<h3><a class="anchor" aria-hidden="true" id="把-state-添加到對話上"></a><a href="#把-state-添加到對話上" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>把 State 添加到對話上</h3>
+<ol>
+<li>在 <code>bottender.config.js</code> 檔案裡設定初始 state：</li>
+</ol>
+<pre><code class="hljs css language-js"><span class="hljs-built_in">module</span>.exports = {
+  <span class="hljs-attr">initialState</span>: {
+    <span class="hljs-attr">count</span>: <span class="hljs-number">0</span>,
+  },
+};
+</code></pre>
+<p>在添加了這個之後，Bottender 會針對新的對話 session 把初始 state 設定成一個特定的物件。</p>
+<ol start="2">
+<li>使用 <code>context.state</code> 取用 state 的值：</li>
+</ol>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">EventCount</span>(<span class="hljs-params">context</span>) </span>{
+  <span class="hljs-keyword">const</span> count = context.state.count + <span class="hljs-number">1</span>;
+  <span class="hljs-keyword">await</span> context.sendText(<span class="hljs-string">`Count: <span class="hljs-subst">${count}</span>`</span>);
+}
+</code></pre>
+<p>即使我們已經使用了 state 變數來呈現訊息內容，它依然拿到 <code>Count: 1</code> 作為結果。 這是為什麼我們會需要步驟 3。</p>
+<ol start="3">
+<li>使用 <code>context.setState()</code> 來設定 state 的值：</li>
+</ol>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">EventCount</span>(<span class="hljs-params">context</span>) </span>{
+  <span class="hljs-keyword">const</span> count = context.state.count + <span class="hljs-number">1</span>;
+
+  context.setState({
+    count,
+  });
+
+  <span class="hljs-keyword">await</span> context.sendText(<span class="hljs-string">`Count: <span class="hljs-subst">${count}</span>`</span>);
+}
+</code></pre>
+<p>然後，他就如所預期的一般運作了。</p>
+<blockquote>
+<p><strong>注意：</strong>不要使用 <code>this.state.stateKey = stateValue;</code> 來調整 state 的值，這或許會在未來造成一些不預期的行為。</p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="state-更新會被合併"></a><a href="#state-更新會被合併" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>State 更新會被合併</h3>
+<p>當你呼叫 <code>setState()</code>，Bottender 把你提供的物件跟當前的 state 做淺層的合併。</p>
+<pre><code class="hljs css language-js">context.state; <span class="hljs-comment">// { count: 1 }</span>
+
+context.setState({
+  <span class="hljs-attr">myObject</span>: {},
+});
+
+context.state; <span class="hljs-comment">// { count: 1, myObject: {} }</span>
+</code></pre>
+<p>但如果你想要做更深的合併，你必須明確地合併它：</p>
+<pre><code class="hljs css language-js">context.setState({
+  <span class="hljs-attr">myObject</span>: {
+    ...context.myObject,
+    <span class="hljs-attr">key</span>: value,
+  },
+});
+</code></pre>
+<h3><a class="anchor" aria-hidden="true" id="在-console-模式除錯-state"></a><a href="#在-console-模式除錯-state" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>在 Console 模式除錯 State</h3>
+<p>在 <a href="/docs/zh-TW/1.2.0/the-basics-console-mode">「Console 模式」</a> 裡，你可以利用便利的內建指令 - <code>/state</code> 來幫助你除錯你的 state 變化：</p>
+<pre><code class="hljs">You &gt; /<span class="hljs-keyword">state</span>
+</code></pre>
+<p>這個指令會用 <code>JSON.stringify()</code> 格式化 state 並把這個結果當作機器人訊息發送給你：</p>
+<pre><code class="hljs"><span class="hljs-keyword">Bot </span>&gt; { <span class="hljs-string">"count"</span>: <span class="hljs-number">1</span> }
+</code></pre>
+<h2><a class="anchor" aria-hidden="true" id="session-id"></a><a href="#session-id" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Session ID</h2>
+<p>每個 session 都有一個獨一無二的識別符在上面。 你可以透過 <code>session.id</code> 取用它。 為了方便展示，下面的程式碼把平台以及 session id 資訊傳送給使用者：</p>
+<pre><code class="hljs css language-js"><span class="hljs-built_in">module</span>.exports = <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params">context</span>) </span>{
+  <span class="hljs-keyword">await</span> context.sendText(<span class="hljs-string">`context.platform: <span class="hljs-subst">${context.platform}</span>`</span>);
+  <span class="hljs-keyword">await</span> context.sendText(<span class="hljs-string">`session.id: <span class="hljs-subst">${context.session.id}</span>`</span>);
+};
+</code></pre>
+<p>為了避免平台之間的 ID 衝突，Bottender 添加了平台名稱的前綴到 session 的 key 上面。</p>
+<p>舉例來說，在 Telegram 上是 <code>telegram:16423...</code> 這樣、在 LINE 上是 <code>line:U4af4980629...</code> 這樣。</p>
+<p>在個平台之間，session 的 key 本身可以非常不同。 它可能來自使用者 id、頻道 id、群組 id、房間 id 或任何可以用來區別對話的東西。</p>
+<blockquote>
+<p><strong>注意：</strong>在 LINE platform 上有三種類型的來源，被定義在 <a href="https://developers.line.biz/en/reference/messaging-api/#common-properties">LINE 官方文件</a>：user、group 以及 room。</p>
+<p>如果請求是來自一個使用者，那 session 的 key 會是 <code>source.userId</code>，例如：<code>line:U4af4980629...</code>。 如果請求是來自一個群組，那 session 的 key 會是 <code>source.groupId</code>，例如：<code>line:Ca56f94637c...</code>。 如果請求是來自一個房間，那 session 的 key 會是 <code>source.roomId</code>，例如：<code>line:Ra8dbf4673c...</code>。</p>
+</blockquote>
+<h2><a class="anchor" aria-hidden="true" id="session-storage"></a><a href="#session-storage" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Session Storage</h2>
+<p>因為基於 HTTP 的應用程式是無狀態的，session 的任務是在對話期間儲存使用者的對話情境。 Bottender 提供數種立即可用的 session 驅動，例如：memory、file、redis 以及 mongo。 這些驅動可以透過富表達性且一致的 API 去取用。</p>
+<p>Session 的資訊可以藉由 connector 來存取，例如 Session Id。此外，不管這個 session 是介於機器人跟一個使用者之間還是一群組用者之間都可以。 一個機器人可以同時支援多個通訊平台，而一個 connector 對應到一個通訊平台。</p>
+<p>你可以指定一個明確的 session 過期時間來重置整個 state。 這讓機器人可以在對話後一段時間忘記（初始化）state，讓它行為更像人類。</p>
+<h3><a class="anchor" aria-hidden="true" id="設定-session-驅動"></a><a href="#設定-session-驅動" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>設定 Session 驅動</h3>
+<p>在 <code>bottender.config.js</code> 檔案裡，可以透過 <code>session.driver</code> 的值來設定 Session 驅動：</p>
+<pre><code class="hljs css language-js"><span class="hljs-comment">// bottender.config.js</span>
+
+<span class="hljs-built_in">module</span>.exports = {
+  <span class="hljs-attr">session</span>: {
+    <span class="hljs-attr">driver</span>: <span class="hljs-string">'memory'</span>,
+    <span class="hljs-attr">stores</span>: {
+      <span class="hljs-attr">memory</span>: {
+        <span class="hljs-attr">maxSize</span>: <span class="hljs-number">500</span>,
+      },
+      <span class="hljs-attr">file</span>: {
+        <span class="hljs-attr">dirname</span>: <span class="hljs-string">'.session'</span>,
+      },
+      <span class="hljs-attr">redis</span>: {
+        <span class="hljs-attr">port</span>: <span class="hljs-number">6379</span>,
+        <span class="hljs-attr">host</span>: <span class="hljs-string">'127.0.0.1'</span>,
+        <span class="hljs-attr">password</span>: <span class="hljs-string">'auth'</span>,
+        <span class="hljs-attr">db</span>: <span class="hljs-number">0</span>,
+      },
+      <span class="hljs-attr">mongo</span>: {
+        <span class="hljs-attr">url</span>: <span class="hljs-string">'mongodb://localhost:27017'</span>,
+        <span class="hljs-attr">collectionName</span>: <span class="hljs-string">'sessions'</span>,
+      },
+    },
+  },
+};
+</code></pre>
+<p>以下是四個可以使用的驅動：</p>
+<ul>
+<li><code>memory</code> - session 透過 <a href="https://github.com/isaacs/node-lru-cache">LRU cache</a> 被儲存在記憶體裡，沒有持久化。</li>
+<li><code>file</code> - sessions are stored in files placed in <code>.session</code> directory by default.</li>
+<li><code>redis</code> - session 被儲存在 <a href="https://redis.io/">redis</a> 資料庫。</li>
+<li><code>mongo</code> - session 被儲存在 <a href="https://www.mongodb.com/">mongo</a> 資料庫。</li>
+</ul>
+<h3><a class="anchor" aria-hidden="true" id="根據-node_env-使用不同的-session-驅動"></a><a href="#根據-node_env-使用不同的-session-驅動" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>根據 NODE_ENV 使用不同的 Session 驅動</h3>
+<p>為了更短的迭代，建議開發時使用 memory 作為 session 驅動。 透過重新啟動程式，整個 session store 可以被完全重置。</p>
+<p>你可以透過環境變數來決定哪一個 session 驅動要用在開發、哪一個 session 驅動要用在生產環境：</p>
+<pre><code class="hljs css language-js"><span class="hljs-comment">// bottender.config.js</span>
+
+<span class="hljs-built_in">module</span>.exports = {
+  <span class="hljs-attr">session</span>: {
+    <span class="hljs-attr">driver</span>: process.env.NODE_ENV === <span class="hljs-string">'production'</span> ? <span class="hljs-string">'mongo'</span> : <span class="hljs-string">'memory'</span>,
+    <span class="hljs-comment">// ...</span>
+  },
+};
+</code></pre>
+<h3><a class="anchor" aria-hidden="true" id="設定-session-過期時間"></a><a href="#設定-session-過期時間" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>設定 Session 過期時間</h3>
+<p>預設情況下，Bottender 儲存的 session 不會過期。 要設定明確的過期時間的話，可以添加 <code>session.expiresIn</code> 設定到你的 <code>bottender.config.js</code> 檔案：</p>
+<pre><code class="hljs css language-js"><span class="hljs-comment">// bottender.config.js</span>
+
+<span class="hljs-built_in">module</span>.exports = {
+  <span class="hljs-attr">session</span>: {
+    <span class="hljs-attr">driver</span>: <span class="hljs-string">'memory'</span>,
+    <span class="hljs-attr">expiresIn</span>: <span class="hljs-number">15</span>, <span class="hljs-comment">// 15 minutes</span>
+    <span class="hljs-comment">// ...</span>
+  },
+};
+</code></pre>
+<p>透過上面的設定，使用者會在閒置了 15 分鐘以後，拿到一個新的 session 以及新的 session state。</p>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/docs/zh-TW/1.2.0/the-basics-chain"><span class="arrow-prev">← </span><span>責任鏈</span></a><a class="docs-next button" href="/docs/zh-TW/1.2.0/the-basics-errors"><span>錯誤處理</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#介紹">介紹</a></li><li><a href="#session-state">Session State</a><ul class="toc-headings"><li><a href="#計數機器人範例">計數機器人範例</a></li><li><a href="#把-state-添加到對話上">把 State 添加到對話上</a></li><li><a href="#state-更新會被合併">State 更新會被合併</a></li><li><a href="#在-console-模式除錯-state">在 Console 模式除錯 State</a></li></ul></li><li><a href="#session-id">Session ID</a></li><li><a href="#session-storage">Session Storage</a><ul class="toc-headings"><li><a href="#設定-session-驅動">設定 Session 驅動</a></li><li><a href="#根據-node_env-使用不同的-session-驅動">根據 NODE_ENV 使用不同的 Session 驅動</a></li><li><a href="#設定-session-過期時間">設定 Session 過期時間</a></li></ul></li></ul></nav></div><footer class="nav-footer" id="footer"><div class="footer-layout"><div><div style="margin-bottom:16px"><a href="https://yoctol.ai" target="_blank" rel="noopener noreferrer"><img width="104px" src="/img/element_YOCTOL.AI_horizontal_S.svg" alt="YOCTOL.AI Logo"/></a></div><div class="desktop"><p class="text">© 2019 - PRESENT YOCTOL.AI ALL RIGHTS RESERVED.</p><a class="text" href="https://yoctol.ai/terms-of-use" target="_blank" rel="noopener noreferrer">Terms of Use</a><a class="text" href="https://yoctol.ai/privacy-policy" target="_blank" rel="noopener noreferrer" style="margin-left:16px">Privacy Policy</a></div></div><div class="footer-contacts"><h4 class="title">Contact Us</h4><p class="text">YOCTOL.AI</p><p class="text">service@yoctol.com</p></div><div class="footer-medias"><h4 class="title">Social Media</h4><div class="icons"><a href="https://twitter.com/yoctol" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#FFF" fill-rule="nonzero" d="M1.5 0h21A1.5 1.5 0 0 1 24 1.5v21a1.5 1.5 0 0 1-1.5 1.5h-21A1.5 1.5 0 0 1 0 22.5v-21A1.5 1.5 0 0 1 1.5 0zm7.532 18c6.037 0 9.34-4.617 9.34-8.621 0-.131 0-.262-.01-.392A6.419 6.419 0 0 0 20 7.42c-.6.245-1.235.406-1.885.477a3.097 3.097 0 0 0 1.443-1.676 6.92 6.92 0 0 1-2.085.735c-1.017-.999-2.634-1.243-3.944-.596-1.31.647-1.986 2.024-1.65 3.36-2.64-.123-5.099-1.273-6.765-3.166-.872 1.384-.427 3.155 1.016 4.045a3.468 3.468 0 0 1-1.49-.38v.039c0 1.442 1.102 2.684 2.634 2.97-.484.122-.99.14-1.483.052.43 1.234 1.663 2.08 3.067 2.104a6.945 6.945 0 0 1-4.077 1.3c-.26 0-.522-.015-.781-.044a9.867 9.867 0 0 0 5.032 1.359V18z"></path></svg></a><a href="https://www.linkedin.com/company/yoctol/" target="_blank" rel="noopener noreferrer" style="margin-left:8px"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#FFF" fill-rule="nonzero" d="M1.5 0h21A1.5 1.5 0 0 1 24 1.5v21a1.5 1.5 0 0 1-1.5 1.5h-21A1.5 1.5 0 0 1 0 22.5v-21A1.5 1.5 0 0 1 1.5 0zm6.086 19.636V9.281H4.368v10.355h3.218zM5.944 7.801A1.877 1.877 0 0 0 7.82 5.925 1.876 1.876 0 1 0 5.945 7.8zm13.697 11.835v-5.679c0-2.788-.602-4.933-3.861-4.933-1.565 0-2.615.859-3.045 1.672h-.043V9.281H9.604v10.355h3.216v-5.123c0-1.35.258-2.658 1.932-2.658 1.65 0 1.673 1.545 1.673 2.746v5.035h3.216z"></path></svg></a></div></div><div class="footer-product"><h4 class="title">Product</h4><div class="icons"><a href="https://yoctol.ai/creator" target="_blank" rel="noopener noreferrer" style="margin-top:1px;margin-right:10px"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22"><g fill="none" fill-rule="nonzero"><path d="M-1-2h24v24H-1z"></path><path fill="#FFF" d="M4.129 12c.309 3.386 3.267 6.042 6.871 6.042 3.604 0 6.562-2.656 6.871-6.042H22c-.317 5.574-5.12 10-11 10S.317 17.574 0 12h4.129zM14 9a1 1 0 1 1 0 2 1 1 0 0 1 0-2zM8 9a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm14-9v10h-4.113V4.116H7.814A3.703 3.703 0 0 0 4.113 7.82V10H0V7.82A7.817 7.817 0 0 1 7.685.001L7.815 0H22z"></path></g></svg></a><a href="https://yoctol.ai/seeker" target="_blank" rel="noopener noreferrer" style="margin-right:10px"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="24" viewBox="0 0 22 24"><g fill="none" fill-rule="nonzero"><path d="M-1 0h24v24H-1z"></path><path fill="#FFF" d="M2.81 7.033l.004.004 3.123 3.137a.112.112 0 0 1 .017.137 5.957 5.957 0 0 0 .843 7.356 5.936 5.936 0 0 0 8.41.003 5.957 5.957 0 0 0 .839-7.355.112.112 0 0 1 .016-.138l3.122-3.136a.11.11 0 0 1 .158 0l.01.012c3.182 4.182 2.79 10.14-.915 13.86-4.1 4.117-10.77 4.115-14.87-.002-3.699-3.714-4.1-9.656-.941-13.836a.111.111 0 0 1 .184-.042zM8.5 11a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm5 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm5.942-7.854l.015.014a.175.175 0 0 1 0 .23L15.32 7.952a.138.138 0 0 1-.182.024 7.294 7.294 0 0 0-8.27-.002.138.138 0 0 1-.182-.024L2.544 3.384a.175.175 0 0 1 .014-.245c4.97-4.188 11.913-4.185 16.884.007z"></path></g></svg></a><a href="https://bottender.js.org/" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="24" viewBox="0 0 22 24"><g fill="none" fill-rule="evenodd"><path fill-rule="nonzero" d="M-1 0h24v24H-1z"></path><path fill="#FFF" d="M1.668 8.51c.258.075.548.159.867.244a9.055 9.055 0 0 0 .959 11.639l.206.202.102.098.022.139a2.63 2.63 0 0 1-.314 1.745c.351-.162.683-.36.99-.59l.227-.178.242-.196.264.162a9.343 9.343 0 0 0 4.898 1.379c5.115 0 9.276-4.107 9.276-9.154 0-.806-.107-1.607-.32-2.385.33.027.63.047.9.06.184.762.289 1.543.288 2.326 0 5.513-4.534 9.999-10.12 9.999a10.128 10.128 0 0 1-5.067-1.352c-1.039.78-2.395 1.228-3.574 1.289l-.269.007v-.845c.928-.002 1.807-.82 1.808-1.831 0-.057-.05-.113-.056-.17A9.891 9.891 0 0 1 1.668 8.51zM10 11a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm6 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2zM9.379.02c2.551.437 3.144 1.75 3.144 1.75s1.02-1.037 3.57-.6c2.302.394 3.731 6.79 3.99 8.047 1.233.338 1.946.614 1.916.775l-.143.719c-.074.409-4.997-.07-10.837-1.07C5.179 8.638.506 7.495.579 7.086l.144-.74c.03-.162.797-.185 2.075-.091C3.484 5.161 7.08-.374 9.378.02z"></path></g></svg></a></div></div><div class="mobile"><p class="text">© 2019 - PRESENT YOCTOL.AI ALL RIGHTS RESERVED.</p><a class="text" href="https://yoctol.ai/terms-of-use" target="_blank" rel="noopener noreferrer">Terms of Use</a><a class="text" href="https://yoctol.ai/privacy-policy" target="_blank" rel="noopener noreferrer" style="margin-left:16px">Privacy Policy</a></div></div></footer></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script><script>window.twttr=(function(d,s, id){var js,fjs=d.getElementsByTagName(s)[0],t=window.twttr||{};if(d.getElementById(id))return t;js=d.createElement(s);js.id=id;js.src='https://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js, fjs);t._e = [];t.ready = function(f) {t._e.push(f);};return t;}(document, 'script', 'twitter-wjs'));</script><script>
+                document.addEventListener('keyup', function(e) {
+                  if (e.target !== document.body) {
+                    return;
+                  }
+                  // keyCode for '/' (slash)
+                  if (e.keyCode === 191) {
+                    const search = document.getElementById('search_input_react');
+                    search && search.focus();
+                  }
+                });
+              </script><script>
+              var search = docsearch({
+                
+                apiKey: '3498a488684b0324b9d56808fad17a33',
+                indexName: 'bottender',
+                inputSelector: '#search_input_react',
+                algoliaOptions: {"facetFilters":["language:zh-TW","version:1.2.0"]}
+              });
+            </script></body></html>

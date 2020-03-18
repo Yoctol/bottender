@@ -1,0 +1,778 @@
+<!DOCTYPE html><html lang="zh-TW"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Sending LINE Messages · Bottender</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="LINE 在亞洲已經變成了商業以及顧客之間最流行的訊息管道之一，特別是在日本、台灣以及泰國。 LINE 2019 的策略「[Life on LINE](https://www.youtube.com/watch?v=vrkVmOlaLis)」，用 LINE 的服務來描繪使用者環繞的日常生活，例如：LINE Login、LINE Pay、LINE Music、LINE Today、LINE Things 以及 LINE Spot 等等。 LINE 生態系的完整性提供了更多動態、整合的線上到線下機會給 LINE 機器人。"/><meta name="docsearch:version" content="1.2.0"/><meta name="docsearch:language" content="zh-TW"/><meta property="og:title" content="Sending LINE Messages · Bottender"/><meta property="og:type" content="website"/><meta property="og:url" content="https://bottender.js.org/"/><meta property="og:description" content="LINE 在亞洲已經變成了商業以及顧客之間最流行的訊息管道之一，特別是在日本、台灣以及泰國。 LINE 2019 的策略「[Life on LINE](https://www.youtube.com/watch?v=vrkVmOlaLis)」，用 LINE 的服務來描繪使用者環繞的日常生活，例如：LINE Login、LINE Pay、LINE Music、LINE Today、LINE Things 以及 LINE Spot 等等。 LINE 生態系的完整性提供了更多動態、整合的線上到線下機會給 LINE 機器人。"/><meta property="og:image" content="https://bottender.js.org/img/og-image.png"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://bottender.js.org/img/og-image.png"/><link rel="shortcut icon" href="/img/favicon-192x192.png"/><link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-dark.min.css"/><link rel="alternate" type="application/atom+xml" href="https://bottender.js.org/blog/atom.xml" title="Bottender Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://bottender.js.org/blog/feed.xml" title="Bottender Blog RSS Feed"/><script>
+              (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+              (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+              m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+              })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+              ga('create', 'UA-70309045-11', 'auto');
+              ga('send', 'pageview');
+            </script><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:700|Roboto&amp;display=swap"/><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script><script type="text/javascript" src="/js/code-blocks-buttons.js"></script><script type="text/javascript" src="/js/sw.js"></script><script src="/js/scrollSpy.js"></script><link rel="stylesheet" href="/css/main.css"/><script src="/js/codetabs.js"></script></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/zh-TW"><img class="logo" src="/img/bottender.svg" alt="Bottender"/><h2 class="headerTitleWithLogo">Bottender</h2></a><a href="/zh-TW/versions"><h3>1.2.0</h3></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class="siteNavGroupActive"><a href="/docs/zh-TW/1.2.0/getting-started" target="_self">文件</a></li><li class=""><a href="/docs/zh-TW/1.2.0/api-context" target="_self">API</a></li><li class=""><a href="/blog/" target="_self">部落格</a></li><li class=""><a href="/zh-TW/users" target="_self">用戶</a></li><li class=""><a href="https://github.com/Yoctol/bottender/tree/master/examples" target="_self">範例</a></li><li class=""><a href="https://github.com/yoctol/bottender" target="_self">GitHub</a></li><span><li><a id="languages-menu" href="#"><img class="languages-icon" src="/img/language.svg" alt="Languages icon"/>繁體中文</a><div id="languages-dropdown" class="hide"><ul id="languages-dropdown-items"><li><a href="/docs/en/1.2.0/channel-line-sending-messages">English</a></li><li><a href="https://crowdin.com/project/bottender" target="_blank" rel="noreferrer noopener">幫忙翻譯</a></li></ul></div></li><script>
+        const languagesMenuItem = document.getElementById("languages-menu");
+        const languagesDropDown = document.getElementById("languages-dropdown");
+        languagesMenuItem.addEventListener("click", function(event) {
+          event.preventDefault();
+
+          if (languagesDropDown.className == "hide") {
+            languagesDropDown.className = "visible";
+          } else {
+            languagesDropDown.className = "hide";
+          }
+        });
+      </script></span><li class="navSearchWrapper reactNavSearchWrapper"><input type="text" id="search_input_react" placeholder="Search" title="Search"/></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><div class="hamburger-menu"><div class="line1"></div><div class="line2"></div><div class="line3"></div></div></div><h2><i>›</i><span>指南（LINE）</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle">入門</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/getting-started">Getting Started</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/migrating-v1">Migrating from v0.x to v1.x</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">基礎</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/the-basics-console-mode">Console Mode</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/the-basics-actions">Resolving Actions</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/the-basics-routing">Routing</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/the-basics-chain">Chain of Responsibility</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/the-basics-session">Session</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/the-basics-errors">Error Handling</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">進階指南</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/advanced-guides-custom-server">Running Bottender with Custom Servers</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/advanced-guides-deployment">Deployment</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/advanced-guides-nlu">Natural Language Understanding</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/advanced-guides-multi-channel">Multi-Channel Support</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">指南（Messenger）</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/channel-messenger-setup">Setup Messenger</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/channel-messenger-handling-events">Handling Messenger Events</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/channel-messenger-sending-messages">Sending Messenger Messages</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/channel-messenger-routing">Messenger Routing</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/channel-messenger-profile">Messenger Profile</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/channel-messenger-handover-protocol">Messenger Handover Protocol</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/channel-messenger-persona">Using Persona</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/channel-messenger-multi-page">Messenger Multi-Page Support</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">指南（LINE）</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/channel-line-setup">Setup LINE</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/channel-line-handling-events">Handling LINE Events</a></li><li class="navListItem navListItemActive"><a class="navItem" href="/docs/zh-TW/1.2.0/channel-line-sending-messages">Sending LINE Messages</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/channel-line-routing">LINE Routing</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/channel-line-flex">Sending Flex Message</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/channel-line-rich-menu">Rich Menu</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/channel-line-liff">LINE Front-end Framework (LIFF)</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/channel-line-errors">Error Handling in LINE</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/channel-line-migrating-from-sdk">Migrating from LINE SDK for Node.js</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">指南（Slack）</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/channel-slack-setup">Setup Slack</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/channel-slack-handling-events">Handling Slack Events</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/channel-slack-sending-messages">Sending Slack Messages</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/channel-slack-routing">Slack Routing</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/channel-slack-block-kit">Slack Block Kit</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">指南（Telegram）</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/channel-telegram-setup">Setup Telegram</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/channel-telegram-handling-events">Handling Telegram Events</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/channel-telegram-sending-messages">Sending Telegram Messages</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/channel-telegram-routing">Telegram Routings</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">指南（Viber）</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/channel-viber-setup">Setup Viber</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/channel-viber-handling-events">Handling Viber Events</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/channel-viber-sending-messages">Sending Viber Messages</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.2.0/channel-viber-routing">Viber Routing</a></li></ul></div></div></section></div><script>
+            var coll = document.getElementsByClassName('collapsible');
+            var checkActiveCategory = true;
+            for (var i = 0; i < coll.length; i++) {
+              var links = coll[i].nextElementSibling.getElementsByTagName('*');
+              if (checkActiveCategory){
+                for (var j = 0; j < links.length; j++) {
+                  if (links[j].classList.contains('navListItemActive')){
+                    coll[i].nextElementSibling.classList.toggle('hide');
+                    coll[i].childNodes[1].classList.toggle('rotate');
+                    checkActiveCategory = false;
+                    break;
+                  }
+                }
+              }
+
+              coll[i].addEventListener('click', function() {
+                var arrow = this.childNodes[1];
+                arrow.classList.toggle('rotate');
+                var content = this.nextElementSibling;
+                content.classList.toggle('hide');
+              });
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
+              createToggler('#tocToggler', 'body', 'tocActive');
+
+              var headings = document.querySelector('.toc-headings');
+              headings && headings.addEventListener('click', function(event) {
+                var el = event.target;
+                while(el !== headings){
+                  if (el.tagName === 'A') {
+                    document.body.classList.remove('tocActive');
+                    break;
+                  } else{
+                    el = el.parentNode;
+                  }
+                }
+              }, false);
+
+              function createToggler(togglerSelector, targetSelector, className) {
+                var toggler = document.querySelector(togglerSelector);
+                var target = document.querySelector(targetSelector);
+
+                if (!toggler) {
+                  return;
+                }
+
+                toggler.onclick = function(event) {
+                  event.preventDefault();
+
+                  target.classList.toggle(className);
+                };
+              }
+            });
+        </script></nav></div><div class="container mainContainer docsContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://crowdin.com/project/bottender/zh-TW" target="_blank" rel="noreferrer noopener">Translate</a><h1 id="__docusaurus" class="postHeaderTitle">Sending LINE Messages</h1></header><article><div><span><p>LINE 在亞洲已經變成了商業以及顧客之間最流行的訊息管道之一，特別是在日本、台灣以及泰國。 LINE 2019 的策略「<a href="https://www.youtube.com/watch?v=vrkVmOlaLis">Life on LINE</a>」，用 LINE 的服務來描繪使用者環繞的日常生活，例如：LINE Login、LINE Pay、LINE Music、LINE Today、LINE Things 以及 LINE Spot 等等。 LINE 生態系的完整性提供了更多動態、整合的線上到線下機會給 LINE 機器人。</p>
+<p>LINE 機器人可以被邀請進入群組，或是專注在 1 對 1 的溝通上面。 用於群聊的 LINE 機器人受益於有機地成長。 一旦機器人加入了群組，它增加了更多的曝光。</p>
+<h4><a class="anchor" aria-hidden="true" id="reply-api--push-api"></a><a href="#reply-api--push-api" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Reply API &amp; Push API</h4>
+<p>基於成本考量，在發送任何訊息之前，開發者應該要清楚地了解 <code>Reply API</code> 和 <code>Push API</code> 之間的不同。</p>
+<p><img src="https://user-images.githubusercontent.com/662387/70490029-4cdea680-1b38-11ea-9979-2f9a68cb02cd.png" alt="messaging-api-thumb0"></p>
+<ul>
+<li><p><code>Push API</code> 允許開發者在任何時間發送訊息給使用者。 但是，只有在開發期間是免費的。 在生產環境，你可以參考 <a href="https://www.linebiz.com/id-en/service/line-account-connect/">LINE 官方帳號訂閱計劃</a> 來查看你的官方帳號的訊息費用。</p></li>
+<li><p>使用 <code>Reply API</code> 是免費的。 但是機器人只能回覆跟你的 LINE 官方帳號互動過的使用者一次。 每次的機器人回覆，你可以發送最多 5 個 <code>訊息物件</code> (參考 LINE 的官方文件「<a href="https://developers.line.biz/en/docs/messaging-api/building-bot/#sending-reply-messages">發送回覆訊息</a>」)。 如果你嘗試回覆超過 5 個 <code>訊息物件</code>，你會看到錯誤出現在 console。</p></li>
+</ul>
+<blockquote>
+<p><strong>注意：</strong></p>
+<ul>
+<li>計算 <code>訊息物件</code> 的數量有點麻煩。舉例來說，每個<code>發送訊息</code>、<code>發送文字訊息,</code> 或 <code>發送 Template 訊息</code> 的呼叫都會被計算成一個 <code>訊息物件</code>，而最後的附加的 <code>快速回覆</code> 不會被算成 <code>訊息物件</code>。</li>
+</ul>
+</blockquote>
+<h2><a class="anchor" aria-hidden="true" id="發送訊息"></a><a href="#發送訊息" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>發送訊息</h2>
+<p>Bottender 的目標是要支援每個通訊平台的所有功能。 在下面的程式碼中，你可以看到最接近原始的方式來用 Bottender 送出任何的 LINE 訊息。</p>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">await</span> context.send([
+  {
+    <span class="hljs-attr">type</span>: <span class="hljs-string">'text'</span>,
+    <span class="hljs-attr">text</span>: <span class="hljs-string">'hello'</span>,
+  },
+]);
+</code></pre>
+<p>Bottender 也在乎「開發體驗」。在接下來的段落，你可以看到一系列的語法糖 ，來讓 Bottender 裡的程式碼更有可讀性與表達性。</p>
+<h2><a class="anchor" aria-hidden="true" id="發送文字訊息"></a><a href="#發送文字訊息" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>發送文字訊息</h2>
+<p><code>文字訊息</code> 是在所有通訊平台中最常見以及最常使用的訊息類型 。 當你想攜帶一些動態資料時，它提供了最小型的格式，例如：股價和天氣資訊。 <p><img width="300" src="https://user-images.githubusercontent.com/662387/70680790-38cfac00-1cd4-11ea-88a3-12ed1c71effc.png"></p></p>
+<h3><a class="anchor" aria-hidden="true" id="純文字"></a><a href="#純文字" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>純文字</h3>
+<p>以下的範例展現了要如何用純文字來回覆。</p>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">SendHi</span>(<span class="hljs-params">context</span>) </span>{
+  <span class="hljs-keyword">await</span> context.sendText(<span class="hljs-string">'Hi!'</span>);
+}
+</code></pre>
+<blockquote>
+<p><strong>注意：</strong> 更多資訊請參考 LINE 官方文件 <a href="https://developers.line.biz/en/reference/messaging-api/#text-message"><code>文字訊息</code></a></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="包含-line-emoji-的文字"></a><a href="#包含-line-emoji-的文字" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>包含 LINE emoji 的文字</h3>
+<p>你可以在文字訊息使用對應的碼加上 LINE 的原創 emoji（通常包含 LINE Friends）。 你可以在 <a href="https://developers.line.me/media/messaging-api/emoji-list.pdf">emoji 清單</a> 找到 LINE emoji 的清單。</p>
+<p><img width="300" src="https://user-images.githubusercontent.com/662387/70680894-82b89200-1cd4-11ea-92e8-53e222bbd12d.png"></p>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">SendHi</span>(<span class="hljs-params">context</span>) </span>{
+  <span class="hljs-keyword">await</span> context.sendText(<span class="hljs-string">`<span class="hljs-subst">${<span class="hljs-built_in">String</span>.fromCodePoint(<span class="hljs-number">0x100084</span>)}</span> Hi!`</span>);
+}
+</code></pre>
+<h2><a class="anchor" aria-hidden="true" id="發送多則訊息"></a><a href="#發送多則訊息" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>發送多則訊息</h2>
+<p>Bottender 收集所有發送的訊息成單一請求。 你可以在下面看到兩種不同方法。</p>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">await</span> context.send([
+  {
+    <span class="hljs-attr">type</span>: <span class="hljs-string">'text'</span>,
+    <span class="hljs-attr">text</span>: <span class="hljs-string">'hello'</span>,
+  },
+  {
+    <span class="hljs-attr">type</span>: <span class="hljs-string">'text'</span>,
+    <span class="hljs-attr">text</span>: <span class="hljs-string">'world'</span>,
+  },
+]);
+</code></pre>
+<p>或者是</p>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">await</span> context.sendText(<span class="hljs-string">'hello'</span>);
+<span class="hljs-keyword">await</span> context.sendText(<span class="hljs-string">'world'</span>);
+</code></pre>
+<h2><a class="anchor" aria-hidden="true" id="發送-rich-media-訊息"></a><a href="#發送-rich-media-訊息" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>發送 Rich Media 訊息</h2>
+<p>LINE 的 <code>Rich Media 訊息</code> 包含貼圖、圖片、影片、音訊、地點以及 imageMap。 當你的目標放在抓住使用者的注意力時，例如：限量的促銷，<code>Rich Media 訊息</code> 非常有用。 此外，在要建立一個沈浸式的體驗時，例如：講故事，也很方便。</p>
+<h3><a class="anchor" aria-hidden="true" id="貼圖"></a><a href="#貼圖" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>貼圖</h3>
+<p>透過 <code>貼圖</code>，LINE 創造了一種泛用的、 富表達的語言。 <code>貼圖</code> 讓你的機器人富有表現力和吸引力。 要發送貼圖，你需要指定貼圖的 package ID 和 sticker ID。</p>
+<p><img width="300" src="https://user-images.githubusercontent.com/662387/70680788-38cfac00-1cd4-11ea-81a7-880abdf1ff45.png"></p>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">await</span> context.sendSticker({
+  <span class="hljs-attr">packageId</span>: <span class="hljs-string">'1'</span>,
+  <span class="hljs-attr">stickerId</span>: <span class="hljs-string">'1'</span>,
+});
+</code></pre>
+<blockquote>
+<p><strong>注意：</strong></p>
+<ul>
+<li>你只能發送 LINE 原生的 <code>貼圖</code>。你可以在 <a href="https://developers.line.biz/media/messaging-api/sticker_list.pdf">貼圖清單</a> 中找到貼圖的 package ID 和 sticker ID。</li>
+<li>更多的資訊，請參考 LINE 官方文件 <a href="https://developers.line.biz/en/reference/messaging-api/#sticker-message"><code>貼圖訊息</code></a>。</li>
+</ul>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="圖片"></a><a href="#圖片" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>圖片</h3>
+<p>要發送 <code>圖片</code>，你需要準備原始圖片的 URL以及比較小的預覽圖。 使用者可以在聊天中看到預覽圖。 當使用者點擊預覽圖，他可以看到原始的圖片。</p>
+<p><img width="300" src="https://user-images.githubusercontent.com/662387/70680782-379e7f00-1cd4-11ea-8f41-bd18c194a55b.png"></p>
+<p>如果你想要在圖片上面設定一個 call to action，你可以參考 <a href="#imagemap">ImageMap</a>。</p>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">await</span> context.sendImage({
+  <span class="hljs-attr">originalContentUrl</span>: <span class="hljs-string">'https://example.com/image.jpg'</span>,
+  <span class="hljs-attr">previewImageUrl</span>: <span class="hljs-string">'https://example.com/preview.jpg'</span>,
+});
+</code></pre>
+<blockquote>
+<p><strong>注意：</strong></p>
+<ul>
+<li>URL 必須使用 TLS 1.2 或以上的 HTTPS。</li>
+<li>更多的資訊，請參考 LINE 官方文件 <a href="https://developers.line.biz/en/reference/messaging-api/#image-message"><code>圖片訊息</code></a>。</li>
+</ul>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="影片"></a><a href="#影片" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>影片</h3>
+<p>要發送一個 <code>影片</code>，你需要準備影片檔案的 URL 和預覽圖的 URL。 這個使用者可以在點擊預覽圖時播放影片。</p>
+<p><img width="300" src="https://user-images.githubusercontent.com/662387/70680791-38cfac00-1cd4-11ea-8d1f-ea98199ae363.png"></p>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">await</span> context.sendVideo({
+  <span class="hljs-attr">originalContentUrl</span>: <span class="hljs-string">'https://example.com/video.mp4'</span>,
+  <span class="hljs-attr">previewImageUrl</span>: <span class="hljs-string">'https://example.com/preview.jpg'</span>,
+});
+</code></pre>
+<blockquote>
+<p><strong>注意：</strong></p>
+<ul>
+<li>URL 必須使用 TLS 1.2 或以上的 HTTPS。</li>
+<li>更多的資訊，請參考 LINE 的官方文件 <a href="https://developers.line.biz/en/reference/messaging-api/#video-message"><code>影片訊息</code></a></li>
+</ul>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="音訊"></a><a href="#音訊" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>音訊</h3>
+<p>要發送 <code>音訊</code> 檔，你需要準備檔案的 URL 以及音訊檔的時間長度。</p>
+<p><img width="300" src="https://user-images.githubusercontent.com/662387/70680776-3705e880-1cd4-11ea-843b-782a95aaa30d.png"></p>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">await</span> context.sendAudio({
+  <span class="hljs-attr">originalContentUrl</span>: <span class="hljs-string">'https://example.com/audio.mp3'</span>,
+  <span class="hljs-attr">duration</span>: <span class="hljs-number">240000</span>,
+});
+</code></pre>
+<blockquote>
+<p><strong>注意：</strong></p>
+<ul>
+<li>URL 必須使用 TLS 1.2 或以上的 HTTPS。</li>
+<li>更多的資訊，請參考 LINE 的官方文件 <a href="https://developers.line.biz/en/reference/messaging-api/#audio-message"><code>音訊訊息</code></a></li>
+</ul>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="地點"></a><a href="#地點" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>地點</h3>
+<p>要把你的地點資訊傳送給使用者，你必須準備標題、地址和經緯度。</p>
+<p><img width="300" src="https://user-images.githubusercontent.com/662387/70680786-38371580-1cd4-11ea-9755-e8f335183ebd.png"></p>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">await</span> context.sendLocation({
+  <span class="hljs-attr">title</span>: <span class="hljs-string">'my location'</span>,
+  <span class="hljs-attr">address</span>: <span class="hljs-string">'〒150-0002 東京都渋谷区渋谷２丁目２１−１'</span>,
+  <span class="hljs-attr">latitude</span>: <span class="hljs-number">35.65910807942215</span>,
+  <span class="hljs-attr">longitude</span>: <span class="hljs-number">139.70372892916203</span>,
+});
+</code></pre>
+<blockquote>
+<p><strong>注意：</strong></p>
+<ul>
+<li>URL 必須使用 TLS 1.2 或以上的 HTTPS。</li>
+<li>更多的資訊，請參考 LINE 的官方文件 <a href="https://developers.line.biz/en/reference/messaging-api/#location-message"><code>地點訊息</code></a></li>
+</ul>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="imagemap"></a><a href="#imagemap" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Imagemap</h3>
+<p><code>Imagemap</code> 提供非常彈性和互動式的用法。 它是一個圖片包括多個可點擊的區塊。 當使用者點擊區塊中的其中之一，使用者可以連結到一個網頁或是用他的身份送出一個訊息。</p>
+<p><img width="300" src="https://user-images.githubusercontent.com/662387/70680785-38371580-1cd4-11ea-98ce-c41438379fe8.png"></p>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">const</span> imagemap = {
+  <span class="hljs-attr">baseUrl</span>: <span class="hljs-string">'https://example.com/bot/images/rm001'</span>,
+  <span class="hljs-attr">baseSize</span>: {
+    <span class="hljs-attr">height</span>: <span class="hljs-number">1040</span>,
+    <span class="hljs-attr">width</span>: <span class="hljs-number">1040</span>,
+  },
+  <span class="hljs-attr">actions</span>: [
+    {
+      <span class="hljs-attr">type</span>: <span class="hljs-string">'uri'</span>,
+      <span class="hljs-attr">linkUri</span>: <span class="hljs-string">'https://example.com/'</span>,
+      <span class="hljs-attr">area</span>: {
+        <span class="hljs-attr">x</span>: <span class="hljs-number">0</span>,
+        <span class="hljs-attr">y</span>: <span class="hljs-number">0</span>,
+        <span class="hljs-attr">width</span>: <span class="hljs-number">520</span>,
+        <span class="hljs-attr">height</span>: <span class="hljs-number">1040</span>,
+      },
+    },
+    {
+      <span class="hljs-attr">type</span>: <span class="hljs-string">'message'</span>,
+      <span class="hljs-attr">text</span>: <span class="hljs-string">'hello'</span>,
+      <span class="hljs-attr">area</span>: {
+        <span class="hljs-attr">x</span>: <span class="hljs-number">520</span>,
+        <span class="hljs-attr">y</span>: <span class="hljs-number">0</span>,
+        <span class="hljs-attr">width</span>: <span class="hljs-number">520</span>,
+        <span class="hljs-attr">height</span>: <span class="hljs-number">1040</span>,
+      },
+    },
+  ],
+};
+<span class="hljs-keyword">const</span> altText = <span class="hljs-string">'this is an imagemap'</span>;
+<span class="hljs-keyword">await</span> context.sendImagemap(altText, imagemap);
+</code></pre>
+<blockquote>
+<p><strong>注意：</strong> 更多資訊請參考 LINE 官方文件 <a href="https://developers.line.biz/en/reference/messaging-api/#imagemap-message"><code>Imagemap 訊息</code></a></p>
+</blockquote>
+<h2><a class="anchor" aria-hidden="true" id="發送-template-訊息"></a><a href="#發送-template-訊息" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>發送 Template 訊息</h2>
+<p><code>Template 訊息</code> 是一個由圖片、影片、標題、子標題和按鈕所組成的互動式畫廊。</p>
+<p><code>Template 訊息</code> 是提供 rich media 互動的關鍵。 這常被使用在顯示多個選項以及下一步的動作給使用者的情境，例如：套用優惠券、預定房間、預約。</p>
+<blockquote>
+<p><strong>注意：</strong> 相較於 <code>Template 訊息</code>，在 <a href="/docs/zh-TW/1.2.0/channel-line-flex"><code>Flex 訊息</code></a> 可以使用之後， 我們就高度地依賴他。 有兩個主要的原因：</p>
+<ul>
+<li><code>Flex 訊息</code> 同時支援桌面跟手機版裝置，而 <code>Template 訊息</code> 只支援行動裝置。</li>
+<li><code>Flex 訊息</code> 是一種跟 HTML 類似的聊天 UI，可以創造更好、更有吸引力的使用者體驗。</li>
+</ul>
+</blockquote>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">const</span> template = {
+  <span class="hljs-attr">type</span>: <span class="hljs-string">'buttons'</span>,
+  <span class="hljs-attr">thumbnailImageUrl</span>: <span class="hljs-string">'https://example.com/bot/images/image.jpg'</span>,
+  <span class="hljs-attr">title</span>: <span class="hljs-string">'Menu'</span>,
+  <span class="hljs-attr">text</span>: <span class="hljs-string">'Please select'</span>,
+  <span class="hljs-attr">actions</span>: [
+    {
+      <span class="hljs-attr">type</span>: <span class="hljs-string">'postback'</span>,
+      <span class="hljs-attr">label</span>: <span class="hljs-string">'Buy'</span>,
+      <span class="hljs-attr">data</span>: <span class="hljs-string">'action=buy&amp;itemid=123'</span>,
+    },
+    {
+      <span class="hljs-attr">type</span>: <span class="hljs-string">'postback'</span>,
+      <span class="hljs-attr">label</span>: <span class="hljs-string">'Add to cart'</span>,
+      <span class="hljs-attr">data</span>: <span class="hljs-string">'action=add&amp;itemid=123'</span>,
+    },
+    {
+      <span class="hljs-attr">type</span>: <span class="hljs-string">'uri'</span>,
+      <span class="hljs-attr">label</span>: <span class="hljs-string">'View detail'</span>,
+      <span class="hljs-attr">uri</span>: <span class="hljs-string">'http://example.com/page/123'</span>,
+    },
+  ],
+};
+<span class="hljs-keyword">const</span> altText = <span class="hljs-string">'this is a template'</span>;
+<span class="hljs-keyword">await</span> context.sendTemplate(altText, template);
+</code></pre>
+<h3><a class="anchor" aria-hidden="true" id="confirm-template"></a><a href="#confirm-template" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Confirm Template</h3>
+<p><code>Confirm Template</code> 是設計用來確認用。</p>
+<p><img width="300" src="https://user-images.githubusercontent.com/662387/70680779-379e7f00-1cd4-11ea-9706-941b6a30e003.png"></p>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">const</span> template = {
+  <span class="hljs-attr">text</span>: <span class="hljs-string">'Are you sure?'</span>,
+  <span class="hljs-attr">actions</span>: [
+    {
+      <span class="hljs-attr">type</span>: <span class="hljs-string">'message'</span>,
+      <span class="hljs-attr">label</span>: <span class="hljs-string">'Yes'</span>,
+      <span class="hljs-attr">text</span>: <span class="hljs-string">'yes'</span>,
+    },
+    {
+      <span class="hljs-attr">type</span>: <span class="hljs-string">'message'</span>,
+      <span class="hljs-attr">label</span>: <span class="hljs-string">'No'</span>,
+      <span class="hljs-attr">text</span>: <span class="hljs-string">'no'</span>,
+    },
+  ],
+};
+<span class="hljs-keyword">const</span> altText = <span class="hljs-string">'this is a confirm template'</span>;
+<span class="hljs-keyword">await</span> context.sendConfirmTemplate(altText, template);
+</code></pre>
+<blockquote>
+<p><strong>注意：</strong> 更多資訊請參考 LINE 官方文件 <a href="https://developers.line.biz/en/reference/messaging-api/#confirm"><code>Confirm Template</code></a></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="buttons-template"></a><a href="#buttons-template" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Buttons Template</h3>
+<p><code>Buttons Template</code> 有圖片、標題、文字以及許多能觸發動作的按鈕。</p>
+<p><img width="300" src="https://user-images.githubusercontent.com/662387/70680777-3705e880-1cd4-11ea-896d-c0f53257276c.png"></p>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">const</span> template = {
+  <span class="hljs-attr">thumbnailImageUrl</span>: <span class="hljs-string">'https://example.com/bot/images/image.jpg'</span>,
+  <span class="hljs-attr">title</span>: <span class="hljs-string">'Menu'</span>,
+  <span class="hljs-attr">text</span>: <span class="hljs-string">'Please select'</span>,
+  <span class="hljs-attr">actions</span>: [
+    {
+      <span class="hljs-attr">type</span>: <span class="hljs-string">'postback'</span>,
+      <span class="hljs-attr">label</span>: <span class="hljs-string">'Buy'</span>,
+      <span class="hljs-attr">data</span>: <span class="hljs-string">'action=buy&amp;itemid=123'</span>,
+    },
+    {
+      <span class="hljs-attr">type</span>: <span class="hljs-string">'postback'</span>,
+      <span class="hljs-attr">label</span>: <span class="hljs-string">'Add to cart'</span>,
+      <span class="hljs-attr">data</span>: <span class="hljs-string">'action=add&amp;itemid=123'</span>,
+    },
+    {
+      <span class="hljs-attr">type</span>: <span class="hljs-string">'uri'</span>,
+      <span class="hljs-attr">label</span>: <span class="hljs-string">'View detail'</span>,
+      <span class="hljs-attr">uri</span>: <span class="hljs-string">'http://example.com/page/123'</span>,
+    },
+  ],
+};
+<span class="hljs-keyword">const</span> altText = <span class="hljs-string">'this is a button template'</span>;
+<span class="hljs-keyword">await</span> context.sendButtonTemplate(altText, template);
+</code></pre>
+<blockquote>
+<p><strong>注意：</strong></p>
+<ul>
+<li>根據字元的寬度，訊息文字因為文字區域的高度限制可能不會完全顯示。</li>
+<li>更多的資訊，請參考 LINE 的官方文件 <a href="https://developers.line.biz/en/reference/messaging-api/#buttons"><code>Buttons Template</code></a></li>
+</ul>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="carousel-template"></a><a href="#carousel-template" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Carousel Template</h3>
+<p><code>Carousel Template</code> 是升級版本的 <code>Buttons Template</code>。 每一個 <code>Buttons Template</code>，你可以有一個圖片、標題、文字、許多 action 按鈕。</p>
+<p>你可以有最多 10 個 Buttons Template 排在一行來組成一個 <code>Carousel Template</code>。</p>
+<p><img width="300" src="https://user-images.githubusercontent.com/662387/70680778-3705e880-1cd4-11ea-8bcd-7e38aa45f74e.png"></p>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">const</span> template = [
+  {
+    <span class="hljs-attr">thumbnailImageUrl</span>: <span class="hljs-string">'https://example.com/bot/images/item1.jpg'</span>,
+    <span class="hljs-attr">title</span>: <span class="hljs-string">'this is menu'</span>,
+    <span class="hljs-attr">text</span>: <span class="hljs-string">'description'</span>,
+    <span class="hljs-attr">actions</span>: [
+      {
+        <span class="hljs-attr">type</span>: <span class="hljs-string">'postback'</span>,
+        <span class="hljs-attr">label</span>: <span class="hljs-string">'Buy'</span>,
+        <span class="hljs-attr">data</span>: <span class="hljs-string">'action=buy&amp;itemid=111'</span>,
+      },
+      {
+        <span class="hljs-attr">type</span>: <span class="hljs-string">'postback'</span>,
+        <span class="hljs-attr">label</span>: <span class="hljs-string">'Add to cart'</span>,
+        <span class="hljs-attr">data</span>: <span class="hljs-string">'action=add&amp;itemid=111'</span>,
+      },
+      {
+        <span class="hljs-attr">type</span>: <span class="hljs-string">'uri'</span>,
+        <span class="hljs-attr">label</span>: <span class="hljs-string">'View detail'</span>,
+        <span class="hljs-attr">uri</span>: <span class="hljs-string">'http://example.com/page/111'</span>,
+      },
+    ],
+  },
+  {
+    <span class="hljs-attr">thumbnailImageUrl</span>: <span class="hljs-string">'https://example.com/bot/images/item2.jpg'</span>,
+    <span class="hljs-attr">title</span>: <span class="hljs-string">'this is menu'</span>,
+    <span class="hljs-attr">text</span>: <span class="hljs-string">'description'</span>,
+    <span class="hljs-attr">actions</span>: [
+      {
+        <span class="hljs-attr">type</span>: <span class="hljs-string">'postback'</span>,
+        <span class="hljs-attr">label</span>: <span class="hljs-string">'Buy'</span>,
+        <span class="hljs-attr">data</span>: <span class="hljs-string">'action=buy&amp;itemid=222'</span>,
+      },
+      {
+        <span class="hljs-attr">type</span>: <span class="hljs-string">'postback'</span>,
+        <span class="hljs-attr">label</span>: <span class="hljs-string">'Add to cart'</span>,
+        <span class="hljs-attr">data</span>: <span class="hljs-string">'action=add&amp;itemid=222'</span>,
+      },
+      {
+        <span class="hljs-attr">type</span>: <span class="hljs-string">'uri'</span>,
+        <span class="hljs-attr">label</span>: <span class="hljs-string">'View detail'</span>,
+        <span class="hljs-attr">uri</span>: <span class="hljs-string">'http://example.com/page/222'</span>,
+      },
+    ],
+  },
+];
+<span class="hljs-keyword">const</span> altText = <span class="hljs-string">'this is a carousel template'</span>;
+<span class="hljs-keyword">await</span> context.sendCarouselTemplate(altText, template);
+</code></pre>
+<blockquote>
+<p><strong>注意：</strong></p>
+<ul>
+<li>根據字元的寬度，訊息文字因為文字區域的高度限制可能不會完全顯示。</li>
+<li>你必須讓每列的按鈕數量保持一致。</li>
+<li>更多的資訊，請參考 LINE 的官方文件 <a href="https://developers.line.biz/en/reference/messaging-api/#carousel"><code>Carousel Template</code></a></li>
+</ul>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="image-carousel-template"></a><a href="#image-carousel-template" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Image Carousel Template</h3>
+<p><code>Image Carousel Template</code> 有數個圖片，它們可以像巡轉木馬一樣被循環。 使用者可以水平地滾動圖片來瀏覽可能的選擇。 沒有按鈕的干擾，它幫助你的使用者能專注在產品圖片上。</p>
+<p><img width="300" src="https://user-images.githubusercontent.com/662387/70680783-38371580-1cd4-11ea-888e-336a24e67029.png"></p>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">const</span> template = [
+  {
+    <span class="hljs-attr">imageUrl</span>: <span class="hljs-string">'https://example.com/bot/images/item1.jpg'</span>,
+    <span class="hljs-attr">action</span>: {
+      <span class="hljs-attr">type</span>: <span class="hljs-string">'postback'</span>,
+      <span class="hljs-attr">label</span>: <span class="hljs-string">'Buy'</span>,
+      <span class="hljs-attr">data</span>: <span class="hljs-string">'action=buy&amp;itemid=111'</span>,
+    },
+  },
+  {
+    <span class="hljs-attr">imageUrl</span>: <span class="hljs-string">'https://example.com/bot/images/item2.jpg'</span>,
+    <span class="hljs-attr">action</span>: {
+      <span class="hljs-attr">type</span>: <span class="hljs-string">'message'</span>,
+      <span class="hljs-attr">label</span>: <span class="hljs-string">'Yes'</span>,
+      <span class="hljs-attr">text</span>: <span class="hljs-string">'yes'</span>,
+    },
+  },
+  {
+    <span class="hljs-attr">imageUrl</span>: <span class="hljs-string">'https://example.com/bot/images/item3.jpg'</span>,
+    <span class="hljs-attr">action</span>: {
+      <span class="hljs-attr">type</span>: <span class="hljs-string">'uri'</span>,
+      <span class="hljs-attr">label</span>: <span class="hljs-string">'View detail'</span>,
+      <span class="hljs-attr">uri</span>: <span class="hljs-string">'http://example.com/page/222'</span>,
+    },
+  },
+];
+<span class="hljs-keyword">const</span> altText = <span class="hljs-string">'this is a image carousel template'</span>;
+<span class="hljs-keyword">await</span> context.sendImageCarouselTemplate(altText, template);
+</code></pre>
+<blockquote>
+<p><strong>注意：</strong> 更多資訊請參考 LINE 官方文件 <a href="https://developers.line.biz/en/reference/messaging-api/#image-carousel"><code>Image Carousel Template</code></a></p>
+</blockquote>
+<h2><a class="anchor" aria-hidden="true" id="sending-flex-messages"></a><a href="#sending-flex-messages" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Sending Flex Messages</h2>
+<p><img width="800" src="https://user-images.githubusercontent.com/662387/70701503-6bdf6300-1d07-11ea-86d6-924d676a1f80.png"></p>
+<p>因為我們喜愛 <a href="/docs/zh-TW/1.2.0/channel-line-flex"><code>Flex 訊息</code></a>，它的彈性跟互動性啟發了我們，我們寫了一個獨立的文件 <a href="/docs/zh-TW/1.2.0/channel-line-flex"><code>Flex 訊息</code></a></p>
+<h2><a class="anchor" aria-hidden="true" id="發送快速回覆"></a><a href="#發送快速回覆" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>發送快速回覆</h2>
+<p>我們建議你將`快速回覆&lt;/ 0&gt;視為使用者輸入文字的一種替代方式。</p></p>
+<p spaces-before="0">當使用者從一個 LINE 官方帳號收到一個包含 <code>快速回覆按鈕` 的訊息時，這些按鈕出現在聊天視窗的底部。 這個使用者可以點擊其中一個按鈕作為回覆。
+<p><code>快速回覆</code> 由最多 13 個 <code>快速回覆按鈕</code> 所組成。當這個使用者點擊一個 <code>快速回覆按鈕</code>， <code>快速回覆</code> 已消失。 接著，被點擊的按鈕的標題會被發在對話中作為回應。 同時，這個使用者觸發 <code>快速回覆按鈕</code> 綁上的 action。</p>
+<p><code>快速回覆</code> 可以用在跟 LINE 跟方帳號的 1:1 聊天、一個 group 和一個 room。</p>
+<p><img width="300" src="https://user-images.githubusercontent.com/662387/70680787-38cfac00-1cd4-11ea-92ea-e7a2379ce9c2.png"></p>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">const</span> quickReply = {
+  <span class="hljs-attr">items</span>: [
+    {
+      <span class="hljs-attr">type</span>: <span class="hljs-string">'action'</span>,
+      <span class="hljs-attr">action</span>: {
+        <span class="hljs-attr">type</span>: <span class="hljs-string">'cameraRoll'</span>,
+        <span class="hljs-attr">label</span>: <span class="hljs-string">'Send photo'</span>,
+      },
+    },
+    {
+      <span class="hljs-attr">type</span>: <span class="hljs-string">'action'</span>,
+      <span class="hljs-attr">action</span>: {
+        <span class="hljs-attr">type</span>: <span class="hljs-string">'camera'</span>,
+        <span class="hljs-attr">label</span>: <span class="hljs-string">'Open camera'</span>,
+      },
+    },
+  ],
+};
+</code></pre>
+<blockquote>
+<p><strong>注意：</strong> 更多資訊請參考 LINE 官方文件 <a href="https://developers.line.biz/en/docs/messaging-api/using-quick-reply/"><code>使用快速回覆</code></a></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="發送快速回覆-1"></a><a href="#發送快速回覆-1" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>發送快速回覆</h3>
+<p>因為 <code>快速回覆</code> 是用來代替使用者輸入，你必須送出 <code>快速回覆</code> 作為其他訊息的附件，例如：<code>文字訊息</code>， <code>Template 訊息</code> 或 <code>Flex</code>。</p>
+<h4><a class="anchor" aria-hidden="true" id="針對訊息發送快速回覆"></a><a href="#針對訊息發送快速回覆" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>針對訊息發送快速回覆</h4>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">await</span> context.send([
+  {
+    <span class="hljs-attr">type</span>: <span class="hljs-string">'text'</span>,
+    <span class="hljs-attr">text</span>: <span class="hljs-string">'hello'</span>,
+    quickReply,
+  },
+]);
+</code></pre>
+<h4><a class="anchor" aria-hidden="true" id="針對文字訊息發送快速回覆"></a><a href="#針對文字訊息發送快速回覆" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>針對文字訊息發送快速回覆</h4>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">await</span> context.sendText(<span class="hljs-string">'hello'</span>, { quickReply });
+</code></pre>
+<h4><a class="anchor" aria-hidden="true" id="針對-template-訊息發送快速回覆"></a><a href="#針對-template-訊息發送快速回覆" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>針對 Template 訊息發送快速回覆</h4>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">await</span> context.sendTemplate(altText, template, { quickReply });
+</code></pre>
+<h4><a class="anchor" aria-hidden="true" id="針對-buttons-template-訊息發送快速回覆"></a><a href="#針對-buttons-template-訊息發送快速回覆" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>針對 Buttons Template 訊息發送快速回覆</h4>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">await</span> context.sendButtonTemplate(altText, template, { quickReply });
+</code></pre>
+<h4><a class="anchor" aria-hidden="true" id="針對-confirm-template-訊息發送快速回覆"></a><a href="#針對-confirm-template-訊息發送快速回覆" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>針對 Confirm Template 訊息發送快速回覆</h4>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">await</span> context.sendConfirmTemplate(altText, template, { quickReply });
+</code></pre>
+<h4><a class="anchor" aria-hidden="true" id="針對-carousel-template-訊息發送快速回覆"></a><a href="#針對-carousel-template-訊息發送快速回覆" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>針對 Carousel Template 訊息發送快速回覆</h4>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">await</span> context.sendCarouselTemplate(altText, template, { quickReply });
+</code></pre>
+<h4><a class="anchor" aria-hidden="true" id="針對-flex-訊息發送快速回覆"></a><a href="#針對-flex-訊息發送快速回覆" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>針對 Flex 訊息發送快速回覆</h4>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">await</span> context.sendFlex(altText, contents, { quickReply });
+</code></pre>
+<p>在接下來的章節，你可以看到多種不同類型的 <code>快速回覆</code>。</p>
+<h3><a class="anchor" aria-hidden="true" id="文字快速回覆"></a><a href="#文字快速回覆" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>文字快速回覆</h3>
+<p>當這個 action 被點擊，在 text 屬性中的字串會被作為從使用者來的訊息送出。</p>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">const</span> quickReply = {
+  <span class="hljs-attr">items</span>: [
+    {
+      <span class="hljs-attr">type</span>: <span class="hljs-string">'action'</span>,
+      <span class="hljs-attr">action</span>: {
+        <span class="hljs-attr">type</span>: <span class="hljs-string">'message'</span>,
+        <span class="hljs-attr">label</span>: <span class="hljs-string">'Yes'</span>,
+        <span class="hljs-attr">text</span>: <span class="hljs-string">'Yes'</span>,
+      },
+    },
+  ],
+};
+</code></pre>
+<blockquote>
+<p><strong>注意：</strong> 更多資訊請參考 LINE 官方文件 <a href="https://developers.line.biz/en/reference/messaging-api/#message-action"><code>訊息 Action</code></a></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="postback-快速回覆"></a><a href="#postback-快速回覆" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Postback 快速回覆</h3>
+<p>當這個 action 被點擊，一個 postback 事件會藉由 webhook 回來，帶著在 data 屬性的特定字串。</p>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">const</span> quickReply = {
+  <span class="hljs-attr">items</span>: [
+    {
+      <span class="hljs-attr">type</span>: <span class="hljs-string">'action'</span>,
+      <span class="hljs-attr">action</span>: {
+        <span class="hljs-attr">type</span>: <span class="hljs-string">'postback'</span>,
+        <span class="hljs-attr">label</span>: <span class="hljs-string">'Buy'</span>,
+        <span class="hljs-attr">data</span>: <span class="hljs-string">'action=buy&amp;itemid=111'</span>,
+        <span class="hljs-attr">text</span>: <span class="hljs-string">'Buy'</span>,
+      },
+    },
+  ],
+};
+</code></pre>
+<blockquote>
+<p><strong>注意：</strong> 更多資訊請參考 LINE 官方文件 <a href="https://developers.line.biz/en/reference/messaging-api/#postback-action"><code>Postback Actions</code></a></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="uri-快速回覆"></a><a href="#uri-快速回覆" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>URI 快速回覆</h3>
+<p>當 action 被執行時會打開 URI。 URI 可以用的 scheme 有 <code>http</code>、<code>https</code>、<code>line</code> 以及 <code>tel</code>。針對這些 LINE URL scheme，你可以觸發以下 action：</p>
+<ul>
+<li>打開相機跟相簿</li>
+<li>打開地點畫面</li>
+<li>分享你的 LINE 官方帳號</li>
+<li>打開你的 LINE 官方帳號的 Timeline 跟帳號頁面</li>
+<li>發送文字訊息</li>
+<li>打開 profile 資訊</li>
+<li>打開常用 LINE 畫面</li>
+<li>打開 LINE 設定畫面</li>
+<li>打開貼圖商店</li>
+<li>打開主題商店</li>
+<li>用 LINE Out 打電話</li>
+<li>打開一個 LIFF 應用程式</li>
+</ul>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">const</span> quickReply = {
+  <span class="hljs-attr">items</span>: [
+    {
+      <span class="hljs-attr">type</span>: <span class="hljs-string">'action'</span>,
+      <span class="hljs-attr">action</span>: {
+        <span class="hljs-attr">type</span>: <span class="hljs-string">'uri'</span>,
+        <span class="hljs-attr">label</span>: <span class="hljs-string">'View details'</span>,
+        <span class="hljs-attr">uri</span>: <span class="hljs-string">'http://example.com/page/222'</span>,
+        <span class="hljs-attr">altUri</span>: {
+          <span class="hljs-attr">desktop</span>: <span class="hljs-string">'http://example.com/pc/page/222'</span>,
+        },
+      },
+    },
+  ],
+};
+</code></pre>
+<blockquote>
+<p><strong>注意：</strong></p>
+<ul>
+<li>只有當你在 Flex 訊息中設定 URI action 時才支援 altUri.desktop 屬性。</li>
+<li>更多 LINE URL scheme 相關的資訊，請看使用 <a href="https://developers.line.biz/en/docs/line-login/using-line-url-scheme/"><code>LINE URL Scheme</code></a>。</li>
+<li>更多的資訊，請參考 LINE 的官方文件 <a href="https://developers.line.biz/en/reference/messaging-api/#uri-action"><code>URI Action</code></a></li>
+</ul>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="datetime-picker-快速回覆"></a><a href="#datetime-picker-快速回覆" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Datetime Picker 快速回覆</h3>
+<p>當關聯到這個 action 的控制器被點擊，一個 postback 事件會藉由webhook 回來，帶著被使用者從日期時間選擇器選擇的日期和時間。 <code>Datetime Picker</code> action 不支援時區。</p>
+<p>有三個不同的模式：</p>
+<ul>
+<li>date：選一個日期</li>
+<li>time：選一個時間</li>
+<li>datetime：選一個日期和時間</li>
+</ul>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">const</span> quickReply = {
+  <span class="hljs-attr">items</span>: [
+    {
+      <span class="hljs-attr">type</span>: <span class="hljs-string">'datetimepicker'</span>,
+      <span class="hljs-attr">label</span>: <span class="hljs-string">'Select date'</span>,
+      <span class="hljs-attr">data</span>: <span class="hljs-string">'storeId=12345'</span>,
+      <span class="hljs-attr">mode</span>: <span class="hljs-string">'datetime'</span>,
+      <span class="hljs-attr">initial</span>: <span class="hljs-string">'2017-12-25t00:00'</span>,
+      <span class="hljs-attr">max</span>: <span class="hljs-string">'2018-01-24t23:59'</span>,
+      <span class="hljs-attr">min</span>: <span class="hljs-string">'2017-12-25t00:00'</span>,
+    },
+  ],
+};
+</code></pre>
+<blockquote>
+<p><strong>注意：</strong></p>
+<ul>
+<li>Datetime picker action 只在 iOS 的 LINE 7.9.0 和 Android 的 LINE 7.12.0 同等或以上的版本支援。</li>
+<li>更多資訊，請參考 LINE 的官方文件 <a href="https://developers.line.biz/en/reference/messaging-api/#datetime-picker-action"><code>Datatime Picker Action</code></a></li>
+</ul>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="camera-快速回覆"></a><a href="#camera-快速回覆" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Camera 快速回覆</h3>
+<p>這個 action 只能被設定在快速回覆按鈕上。 當關聯到這個 action 的按鈕被點擊時，會打開 LINE 的相機畫面。</p>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">const</span> quickReply = {
+  <span class="hljs-attr">items</span>: [
+    {
+      <span class="hljs-attr">type</span>: <span class="hljs-string">'action'</span>,
+      <span class="hljs-attr">action</span>: {
+        <span class="hljs-attr">type</span>: <span class="hljs-string">'camera'</span>,
+        <span class="hljs-attr">label</span>: <span class="hljs-string">'Camera'</span>,
+      },
+    },
+  ],
+};
+</code></pre>
+<blockquote>
+<p><strong>注意：</strong></p>
+<ul>
+<li>更多的資訊，請參考 LINE 的官方文件 <a href="https://developers.line.biz/en/reference/messaging-api/#camera-action"><code>Camera Action</code></a></li>
+</ul>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="camera-roll-快速回覆"></a><a href="#camera-roll-快速回覆" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Camera Roll 快速回覆</h3>
+<p>這個 action 只能被設定在快速回覆按鈕上。 當關聯到這個 action 的按鈕被點擊時，會打開 LINE 的相簿畫面。</p>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">const</span> quickReply = {
+  <span class="hljs-attr">items</span>: [
+    {
+      <span class="hljs-attr">type</span>: <span class="hljs-string">'action'</span>,
+      <span class="hljs-attr">action</span>: {
+        <span class="hljs-attr">type</span>: <span class="hljs-string">'cameraRoll'</span>,
+        <span class="hljs-attr">label</span>: <span class="hljs-string">'Camera roll'</span>,
+      },
+    },
+  ],
+};
+</code></pre>
+<blockquote>
+<p><strong>注意：</strong></p>
+<ul>
+<li>更多的資訊，請參考 LINE 的官方文件 <a href="https://developers.line.biz/en/reference/messaging-api/#camera-roll-action"><code>Camera Roll Action</code></a></li>
+</ul>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="地點快速回覆"></a><a href="#地點快速回覆" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>地點快速回覆</h3>
+<p>這個 action 只能被設定在快速回覆按鈕上。 當關聯到這個 action 的按鈕被點擊時，會打開 LINE 的地點畫面。</p>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">const</span> quickReply = {
+  <span class="hljs-attr">items</span>: [
+    {
+      <span class="hljs-attr">type</span>: <span class="hljs-string">'action'</span>,
+      <span class="hljs-attr">action</span>: {
+        <span class="hljs-attr">type</span>: <span class="hljs-string">'location'</span>,
+        <span class="hljs-attr">label</span>: <span class="hljs-string">'Location'</span>,
+      },
+    },
+  ],
+};
+</code></pre>
+<blockquote>
+<p><strong>注意：</strong></p>
+<ul>
+<li>更多的資訊，請參考 LINE 的官方文件 <a href="https://developers.line.biz/en/reference/messaging-api/#location-action"><code>地點 Action</code></a></li>
+</ul>
+</blockquote>
+<h2><a class="anchor" aria-hidden="true" id="用-bottender-思考：send-message、reply-messages--push-message"></a><a href="#用-bottender-思考：send-message、reply-messages--push-message" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>用 Bottender 思考：Send Message、Reply Messages &amp; Push Message</h2>
+<p>Bottender 的目標是要提供更好的抽象概念來支援數個通訊平台。 除了 LINE 獨特的 <code>Reply API</code> 和 <code>Push API</code> 以外，Bottender 提供了 <code>Send API</code> 作為一個可以設定的選擇。</p>
+<p>舉例來說，如果你不想要為了機器人回覆付額外的費用，你可以在 <code>bottender.config.js,</code> 設定你的 <code>Send API</code> 用 <code>Reply API</code> 來發送訊息。但是，如果你想要在一次回覆傳超過 5 個<code>訊息物件</code>，你也可以要求 Bottender 使用 <code>Push API</code> 來發送每一個用 <code>Send API</code> 發送的訊息。</p>
+<pre><code class="hljs css language-js"><span class="hljs-comment">// bottender.config.js</span>
+<span class="hljs-built_in">module</span>.exports = {
+  <span class="hljs-attr">channels</span>: {
+    <span class="hljs-attr">line</span>: {
+      <span class="hljs-attr">enabled</span>: <span class="hljs-literal">true</span>,
+      <span class="hljs-comment">// sendMethod can be either "push" or "reply"</span>
+      <span class="hljs-attr">sendMethod</span>: <span class="hljs-string">'reply'</span>,
+      <span class="hljs-attr">accessToken</span>: process.env.LINE_CHANNEL_ACCESS_TOKEN,
+      <span class="hljs-attr">channelSecret</span>: process.env.LINE_CHANNEL_SECRET,
+    },
+  },
+};
+</code></pre>
+<h3><a class="anchor" aria-hidden="true" id="發送訊息-1"></a><a href="#發送訊息-1" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>發送訊息</h3>
+<p>Bottender 提供以下的 <code>Send API</code>：</p>
+<ul>
+<li>send</li>
+<li>sendText</li>
+<li>sendSticker</li>
+<li>sendImage</li>
+<li>sendAudio</li>
+<li>sendVideo</li>
+<li>sendLocation</li>
+<li>sendImagemap</li>
+<li>sendFlex</li>
+<li>sendTemplate</li>
+<li>sendBottonTemplate</li>
+<li>sendConfirmTemplate</li>
+<li>sendCarouselTemplate</li>
+<li>sendImageCarouselTemplate</li>
+</ul>
+<h3><a class="anchor" aria-hidden="true" id="reply-訊息"></a><a href="#reply-訊息" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Reply 訊息</h3>
+<p>如果你有信心你所需要的就是 <code>Reply API</code>，你可以使用以下的 <code>Reply API</code>。Bottender 會幫你管理 reply token，所以你不需要自己管理它。</p>
+<p>Bottender 提供以下的 <code>Reply API</code>：</p>
+<ul>
+<li>reply</li>
+<li>replyText</li>
+<li>replySticker</li>
+<li>replyImage</li>
+<li>replyAudio</li>
+<li>replyVideo</li>
+<li>replyLocation</li>
+<li>replyImagemap</li>
+<li>replyFlex</li>
+<li>replyTemplate</li>
+<li>replyBottonTemplate</li>
+<li>replyConfirmTemplate</li>
+<li>replyCarouselTemplate</li>
+<li>replyImageCarouselTemplate</li>
+</ul>
+<blockquote>
+<p><strong>注意：</strong> 範例程式碼請參考 Bottender 的 API 文件 <a href="https://bottender.js.org/docs/api-line-context#reply-api"> Reply API</a></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="push-訊息"></a><a href="#push-訊息" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Push 訊息</h3>
+<p>如果訊息成本對你不造成問題，你可以專注在 <code>Push API</code>。</p>
+<p>Bottender 提供以下 <code>Push API</code>：</p>
+<ul>
+<li>push</li>
+<li>pushText</li>
+<li>pushSticker</li>
+<li>pushImage</li>
+<li>pushAudio</li>
+<li>pushVideo</li>
+<li>pushLocation</li>
+<li>pushImagemap</li>
+<li>pushFlex</li>
+<li>pushTemplate</li>
+<li>pushBottonTemplate</li>
+<li>pushConfirmTemplate</li>
+<li>pushCarouselTemplate</li>
+<li>pushImageCarouselTemplate</li>
+</ul>
+<blockquote>
+<p><strong>注意：</strong> 範例程式碼請參考 Bottender 的 API 文件 <a href="https://bottender.js.org/docs/api-line-context#push-api">Push API</a></p>
+</blockquote>
+<h2><a class="anchor" aria-hidden="true" id="頻率限制"></a><a href="#頻率限制" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>頻率限制</h2>
+<p>就像很多通訊平台，LINE 針對每個端點有頻率限制。 如果你長期持續地超出頻率限制送出請求，你的機器人可能會停止回應。 這是因為 LINE 擋掉了進入你機器人的請求。</p>
+<p>如果你嘗試要建置一個有巨大瞬間流量的活動機器人，例如：黑色星期五的超級折扣，你必須小心你的 <code>頻率限制</code>。</p>
+<h3><a class="anchor" aria-hidden="true" id="send-api"></a><a href="#send-api" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Send API</h3>
+<p>針對 <code>Send API</code>，你必須遵守以下 <code>頻率限制</code>： 每分鐘 100,000 請求 每秒 1,700 請求</p>
+<blockquote>
+<p><strong>注意：</strong> 更多資訊，請參考 LINE 的 API 文件 <a href="https://developers.line.biz/en/reference/messaging-api/#rate-limits">頻率限制</a></p>
+</blockquote>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/docs/zh-TW/1.2.0/channel-line-handling-events"><span class="arrow-prev">← </span><span>處理 LINE 事件</span></a><a class="docs-next button" href="/docs/zh-TW/1.2.0/channel-line-routing"><span>LINE 路由</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#發送訊息">發送訊息</a></li><li><a href="#發送文字訊息">發送文字訊息</a><ul class="toc-headings"><li><a href="#純文字">純文字</a></li><li><a href="#包含-line-emoji-的文字">包含 LINE emoji 的文字</a></li></ul></li><li><a href="#發送多則訊息">發送多則訊息</a></li><li><a href="#發送-rich-media-訊息">發送 Rich Media 訊息</a><ul class="toc-headings"><li><a href="#貼圖">貼圖</a></li><li><a href="#圖片">圖片</a></li><li><a href="#影片">影片</a></li><li><a href="#音訊">音訊</a></li><li><a href="#地點">地點</a></li><li><a href="#imagemap">Imagemap</a></li></ul></li><li><a href="#發送-template-訊息">發送 Template 訊息</a><ul class="toc-headings"><li><a href="#confirm-template">Confirm Template</a></li><li><a href="#buttons-template">Buttons Template</a></li><li><a href="#carousel-template">Carousel Template</a></li><li><a href="#image-carousel-template">Image Carousel Template</a></li></ul></li><li><a href="#sending-flex-messages">Sending Flex Messages</a></li><li><a href="#發送快速回覆">發送快速回覆</a><ul class="toc-headings"><li><a href="#發送快速回覆-1">發送快速回覆</a></li><li><a href="#文字快速回覆">文字快速回覆</a></li><li><a href="#postback-快速回覆">Postback 快速回覆</a></li><li><a href="#uri-快速回覆">URI 快速回覆</a></li><li><a href="#datetime-picker-快速回覆">Datetime Picker 快速回覆</a></li><li><a href="#camera-快速回覆">Camera 快速回覆</a></li><li><a href="#camera-roll-快速回覆">Camera Roll 快速回覆</a></li><li><a href="#地點快速回覆">地點快速回覆</a></li></ul></li><li><a href="#用-bottender-思考：send-message、reply-messages--push-message">用 Bottender 思考：Send Message、Reply Messages &amp; Push Message</a><ul class="toc-headings"><li><a href="#發送訊息-1">發送訊息</a></li><li><a href="#reply-訊息">Reply 訊息</a></li><li><a href="#push-訊息">Push 訊息</a></li></ul></li><li><a href="#頻率限制">頻率限制</a><ul class="toc-headings"><li><a href="#send-api">Send API</a></li></ul></li></ul></nav></div><footer class="nav-footer" id="footer"><div class="footer-layout"><div><div style="margin-bottom:16px"><a href="https://yoctol.ai" target="_blank" rel="noopener noreferrer"><img width="104px" src="/img/element_YOCTOL.AI_horizontal_S.svg" alt="YOCTOL.AI Logo"/></a></div><div class="desktop"><p class="text">© 2019 - PRESENT YOCTOL.AI ALL RIGHTS RESERVED.</p><a class="text" href="https://yoctol.ai/terms-of-use" target="_blank" rel="noopener noreferrer">Terms of Use</a><a class="text" href="https://yoctol.ai/privacy-policy" target="_blank" rel="noopener noreferrer" style="margin-left:16px">Privacy Policy</a></div></div><div class="footer-contacts"><h4 class="title">Contact Us</h4><p class="text">YOCTOL.AI</p><p class="text">service@yoctol.com</p></div><div class="footer-medias"><h4 class="title">Social Media</h4><div class="icons"><a href="https://twitter.com/yoctol" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#FFF" fill-rule="nonzero" d="M1.5 0h21A1.5 1.5 0 0 1 24 1.5v21a1.5 1.5 0 0 1-1.5 1.5h-21A1.5 1.5 0 0 1 0 22.5v-21A1.5 1.5 0 0 1 1.5 0zm7.532 18c6.037 0 9.34-4.617 9.34-8.621 0-.131 0-.262-.01-.392A6.419 6.419 0 0 0 20 7.42c-.6.245-1.235.406-1.885.477a3.097 3.097 0 0 0 1.443-1.676 6.92 6.92 0 0 1-2.085.735c-1.017-.999-2.634-1.243-3.944-.596-1.31.647-1.986 2.024-1.65 3.36-2.64-.123-5.099-1.273-6.765-3.166-.872 1.384-.427 3.155 1.016 4.045a3.468 3.468 0 0 1-1.49-.38v.039c0 1.442 1.102 2.684 2.634 2.97-.484.122-.99.14-1.483.052.43 1.234 1.663 2.08 3.067 2.104a6.945 6.945 0 0 1-4.077 1.3c-.26 0-.522-.015-.781-.044a9.867 9.867 0 0 0 5.032 1.359V18z"></path></svg></a><a href="https://www.linkedin.com/company/yoctol/" target="_blank" rel="noopener noreferrer" style="margin-left:8px"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#FFF" fill-rule="nonzero" d="M1.5 0h21A1.5 1.5 0 0 1 24 1.5v21a1.5 1.5 0 0 1-1.5 1.5h-21A1.5 1.5 0 0 1 0 22.5v-21A1.5 1.5 0 0 1 1.5 0zm6.086 19.636V9.281H4.368v10.355h3.218zM5.944 7.801A1.877 1.877 0 0 0 7.82 5.925 1.876 1.876 0 1 0 5.945 7.8zm13.697 11.835v-5.679c0-2.788-.602-4.933-3.861-4.933-1.565 0-2.615.859-3.045 1.672h-.043V9.281H9.604v10.355h3.216v-5.123c0-1.35.258-2.658 1.932-2.658 1.65 0 1.673 1.545 1.673 2.746v5.035h3.216z"></path></svg></a></div></div><div class="footer-product"><h4 class="title">Product</h4><div class="icons"><a href="https://yoctol.ai/creator" target="_blank" rel="noopener noreferrer" style="margin-top:1px;margin-right:10px"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22"><g fill="none" fill-rule="nonzero"><path d="M-1-2h24v24H-1z"></path><path fill="#FFF" d="M4.129 12c.309 3.386 3.267 6.042 6.871 6.042 3.604 0 6.562-2.656 6.871-6.042H22c-.317 5.574-5.12 10-11 10S.317 17.574 0 12h4.129zM14 9a1 1 0 1 1 0 2 1 1 0 0 1 0-2zM8 9a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm14-9v10h-4.113V4.116H7.814A3.703 3.703 0 0 0 4.113 7.82V10H0V7.82A7.817 7.817 0 0 1 7.685.001L7.815 0H22z"></path></g></svg></a><a href="https://yoctol.ai/seeker" target="_blank" rel="noopener noreferrer" style="margin-right:10px"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="24" viewBox="0 0 22 24"><g fill="none" fill-rule="nonzero"><path d="M-1 0h24v24H-1z"></path><path fill="#FFF" d="M2.81 7.033l.004.004 3.123 3.137a.112.112 0 0 1 .017.137 5.957 5.957 0 0 0 .843 7.356 5.936 5.936 0 0 0 8.41.003 5.957 5.957 0 0 0 .839-7.355.112.112 0 0 1 .016-.138l3.122-3.136a.11.11 0 0 1 .158 0l.01.012c3.182 4.182 2.79 10.14-.915 13.86-4.1 4.117-10.77 4.115-14.87-.002-3.699-3.714-4.1-9.656-.941-13.836a.111.111 0 0 1 .184-.042zM8.5 11a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm5 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm5.942-7.854l.015.014a.175.175 0 0 1 0 .23L15.32 7.952a.138.138 0 0 1-.182.024 7.294 7.294 0 0 0-8.27-.002.138.138 0 0 1-.182-.024L2.544 3.384a.175.175 0 0 1 .014-.245c4.97-4.188 11.913-4.185 16.884.007z"></path></g></svg></a><a href="https://bottender.js.org/" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="24" viewBox="0 0 22 24"><g fill="none" fill-rule="evenodd"><path fill-rule="nonzero" d="M-1 0h24v24H-1z"></path><path fill="#FFF" d="M1.668 8.51c.258.075.548.159.867.244a9.055 9.055 0 0 0 .959 11.639l.206.202.102.098.022.139a2.63 2.63 0 0 1-.314 1.745c.351-.162.683-.36.99-.59l.227-.178.242-.196.264.162a9.343 9.343 0 0 0 4.898 1.379c5.115 0 9.276-4.107 9.276-9.154 0-.806-.107-1.607-.32-2.385.33.027.63.047.9.06.184.762.289 1.543.288 2.326 0 5.513-4.534 9.999-10.12 9.999a10.128 10.128 0 0 1-5.067-1.352c-1.039.78-2.395 1.228-3.574 1.289l-.269.007v-.845c.928-.002 1.807-.82 1.808-1.831 0-.057-.05-.113-.056-.17A9.891 9.891 0 0 1 1.668 8.51zM10 11a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm6 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2zM9.379.02c2.551.437 3.144 1.75 3.144 1.75s1.02-1.037 3.57-.6c2.302.394 3.731 6.79 3.99 8.047 1.233.338 1.946.614 1.916.775l-.143.719c-.074.409-4.997-.07-10.837-1.07C5.179 8.638.506 7.495.579 7.086l.144-.74c.03-.162.797-.185 2.075-.091C3.484 5.161 7.08-.374 9.378.02z"></path></g></svg></a></div></div><div class="mobile"><p class="text">© 2019 - PRESENT YOCTOL.AI ALL RIGHTS RESERVED.</p><a class="text" href="https://yoctol.ai/terms-of-use" target="_blank" rel="noopener noreferrer">Terms of Use</a><a class="text" href="https://yoctol.ai/privacy-policy" target="_blank" rel="noopener noreferrer" style="margin-left:16px">Privacy Policy</a></div></div></footer></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script><script>window.twttr=(function(d,s, id){var js,fjs=d.getElementsByTagName(s)[0],t=window.twttr||{};if(d.getElementById(id))return t;js=d.createElement(s);js.id=id;js.src='https://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js, fjs);t._e = [];t.ready = function(f) {t._e.push(f);};return t;}(document, 'script', 'twitter-wjs'));</script><script>
+                document.addEventListener('keyup', function(e) {
+                  if (e.target !== document.body) {
+                    return;
+                  }
+                  // keyCode for '/' (slash)
+                  if (e.keyCode === 191) {
+                    const search = document.getElementById('search_input_react');
+                    search && search.focus();
+                  }
+                });
+              </script><script>
+              var search = docsearch({
+                
+                apiKey: '3498a488684b0324b9d56808fad17a33',
+                indexName: 'bottender',
+                inputSelector: '#search_input_react',
+                algoliaOptions: {"facetFilters":["language:zh-TW","version:1.2.0"]}
+              });
+            </script></body></html>

@@ -1,0 +1,374 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Sending Messenger Messages · Bottender</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="Messenger has become one of the most popular channels between businesses and customers. Most of the messenger bots are designed for 1:1 communication."/><meta name="docsearch:version" content="1.3.0"/><meta name="docsearch:language" content="en"/><meta property="og:title" content="Sending Messenger Messages · Bottender"/><meta property="og:type" content="website"/><meta property="og:url" content="https://bottender.js.org/"/><meta property="og:description" content="Messenger has become one of the most popular channels between businesses and customers. Most of the messenger bots are designed for 1:1 communication."/><meta property="og:image" content="https://bottender.js.org/img/og-image.png"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://bottender.js.org/img/og-image.png"/><link rel="shortcut icon" href="/img/favicon-192x192.png"/><link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-dark.min.css"/><link rel="alternate" type="application/atom+xml" href="https://bottender.js.org/blog/atom.xml" title="Bottender Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://bottender.js.org/blog/feed.xml" title="Bottender Blog RSS Feed"/><script>
+              (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+              (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+              m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+              })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+              ga('create', 'UA-70309045-11', 'auto');
+              ga('send', 'pageview');
+            </script><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:700|Roboto&amp;display=swap"/><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script><script type="text/javascript" src="/js/code-blocks-buttons.js"></script><script type="text/javascript" src="/js/sw.js"></script><script src="/js/scrollSpy.js"></script><link rel="stylesheet" href="/css/main.css"/><script src="/js/codetabs.js"></script></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/en"><img class="logo" src="/img/bottender.svg" alt="Bottender"/><h2 class="headerTitleWithLogo">Bottender</h2></a><a href="/en/versions"><h3>1.3.0</h3></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class="siteNavGroupActive"><a href="/docs/en/getting-started" target="_self">Docs</a></li><li class=""><a href="/docs/en/api-context" target="_self">API</a></li><li class=""><a href="/blog/" target="_self">Blog</a></li><li class=""><a href="/en/users" target="_self">Users</a></li><li class=""><a href="https://github.com/Yoctol/bottender/tree/master/examples" target="_self">Examples</a></li><li class=""><a href="https://github.com/yoctol/bottender" target="_self">GitHub</a></li><span><li><a id="languages-menu" href="#"><img class="languages-icon" src="/img/language.svg" alt="Languages icon"/>English</a><div id="languages-dropdown" class="hide"><ul id="languages-dropdown-items"><li><a href="/docs/zh-TW/channel-messenger-sending-messages">繁體中文</a></li><li><a href="https://crowdin.com/project/bottender" target="_blank" rel="noreferrer noopener">Help Translate</a></li></ul></div></li><script>
+        const languagesMenuItem = document.getElementById("languages-menu");
+        const languagesDropDown = document.getElementById("languages-dropdown");
+        languagesMenuItem.addEventListener("click", function(event) {
+          event.preventDefault();
+
+          if (languagesDropDown.className == "hide") {
+            languagesDropDown.className = "visible";
+          } else {
+            languagesDropDown.className = "hide";
+          }
+        });
+      </script></span><li class="navSearchWrapper reactNavSearchWrapper"><input type="text" id="search_input_react" placeholder="Search" title="Search"/></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><div class="hamburger-menu"><div class="line1"></div><div class="line2"></div><div class="line3"></div></div></div><h2><i>›</i><span>Guides (Messenger)</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle">Getting Started</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/en/getting-started">Getting Started</a></li><li class="navListItem"><a class="navItem" href="/docs/en/migrating-v1">Migrating from v0.x to v1.x</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">The Basics</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/en/the-basics-console-mode">Console Mode</a></li><li class="navListItem"><a class="navItem" href="/docs/en/the-basics-actions">Resolving Actions</a></li><li class="navListItem"><a class="navItem" href="/docs/en/the-basics-routing">Routing</a></li><li class="navListItem"><a class="navItem" href="/docs/en/the-basics-chain">Chain of Responsibility</a></li><li class="navListItem"><a class="navItem" href="/docs/en/the-basics-session">Session</a></li><li class="navListItem"><a class="navItem" href="/docs/en/the-basics-errors">Error Handling</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Advanced Guides</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/en/advanced-guides-custom-server">Running Bottender with Custom Servers</a></li><li class="navListItem"><a class="navItem" href="/docs/en/advanced-guides-deployment">Deployment</a></li><li class="navListItem"><a class="navItem" href="/docs/en/advanced-guides-nlu">Natural Language Understanding</a></li><li class="navListItem"><a class="navItem" href="/docs/en/advanced-guides-multi-channel">Multi-Channel Support</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Guides (Messenger)</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/en/channel-messenger-setup">Setup Messenger</a></li><li class="navListItem"><a class="navItem" href="/docs/en/channel-messenger-handling-events">Handling Messenger Events</a></li><li class="navListItem navListItemActive"><a class="navItem" href="/docs/en/channel-messenger-sending-messages">Sending Messenger Messages</a></li><li class="navListItem"><a class="navItem" href="/docs/en/channel-messenger-routing">Messenger Routing</a></li><li class="navListItem"><a class="navItem" href="/docs/en/channel-messenger-profile">Messenger Profile</a></li><li class="navListItem"><a class="navItem" href="/docs/en/channel-messenger-handover-protocol">Messenger Handover Protocol</a></li><li class="navListItem"><a class="navItem" href="/docs/en/channel-messenger-persona">Using Persona</a></li><li class="navListItem"><a class="navItem" href="/docs/en/channel-messenger-multi-page">Messenger Multi-Page Support</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Guides (WhatsApp)</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/en/channel-whatsapp-setup">Setup WhatsApp</a></li><li class="navListItem"><a class="navItem" href="/docs/en/channel-whatsapp-handling-events">Handling WhatsApp Events</a></li><li class="navListItem"><a class="navItem" href="/docs/en/channel-whatsapp-sending-messages">Sending WhatsApp Messages</a></li><li class="navListItem"><a class="navItem" href="/docs/en/channel-whatsapp-routing">WhatsApp Routing</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Guides (LINE)</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/en/channel-line-setup">Setup LINE</a></li><li class="navListItem"><a class="navItem" href="/docs/en/channel-line-handling-events">Handling LINE Events</a></li><li class="navListItem"><a class="navItem" href="/docs/en/channel-line-sending-messages">Sending LINE Messages</a></li><li class="navListItem"><a class="navItem" href="/docs/en/channel-line-routing">LINE Routing</a></li><li class="navListItem"><a class="navItem" href="/docs/en/channel-line-flex">Sending Flex Message</a></li><li class="navListItem"><a class="navItem" href="/docs/en/channel-line-rich-menu">Rich Menu</a></li><li class="navListItem"><a class="navItem" href="/docs/en/channel-line-liff">LINE Front-end Framework (LIFF)</a></li><li class="navListItem"><a class="navItem" href="/docs/en/channel-line-errors">Error Handling in LINE</a></li><li class="navListItem"><a class="navItem" href="/docs/en/channel-line-migrating-from-sdk">Migrating from LINE SDK for Node.js</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Guides (Slack)</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/en/channel-slack-setup">Setup Slack</a></li><li class="navListItem"><a class="navItem" href="/docs/en/channel-slack-handling-events">Handling Slack Events</a></li><li class="navListItem"><a class="navItem" href="/docs/en/channel-slack-sending-messages">Sending Slack Messages</a></li><li class="navListItem"><a class="navItem" href="/docs/en/channel-slack-routing">Slack Routing</a></li><li class="navListItem"><a class="navItem" href="/docs/en/channel-slack-slash-command">Handling Slack Slash Commands</a></li><li class="navListItem"><a class="navItem" href="/docs/en/channel-slack-block-kit">Slack Block Kit</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Guides (Telegram)</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/en/channel-telegram-setup">Setup Telegram</a></li><li class="navListItem"><a class="navItem" href="/docs/en/channel-telegram-handling-events">Handling Telegram Events</a></li><li class="navListItem"><a class="navItem" href="/docs/en/channel-telegram-sending-messages">Sending Telegram Messages</a></li><li class="navListItem"><a class="navItem" href="/docs/en/channel-telegram-routing">Telegram Routings</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Guides (Viber)</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/en/channel-viber-setup">Setup Viber</a></li><li class="navListItem"><a class="navItem" href="/docs/en/channel-viber-handling-events">Handling Viber Events</a></li><li class="navListItem"><a class="navItem" href="/docs/en/channel-viber-sending-messages">Sending Viber Messages</a></li><li class="navListItem"><a class="navItem" href="/docs/en/channel-viber-routing">Viber Routing</a></li></ul></div></div></section></div><script>
+            var coll = document.getElementsByClassName('collapsible');
+            var checkActiveCategory = true;
+            for (var i = 0; i < coll.length; i++) {
+              var links = coll[i].nextElementSibling.getElementsByTagName('*');
+              if (checkActiveCategory){
+                for (var j = 0; j < links.length; j++) {
+                  if (links[j].classList.contains('navListItemActive')){
+                    coll[i].nextElementSibling.classList.toggle('hide');
+                    coll[i].childNodes[1].classList.toggle('rotate');
+                    checkActiveCategory = false;
+                    break;
+                  }
+                }
+              }
+
+              coll[i].addEventListener('click', function() {
+                var arrow = this.childNodes[1];
+                arrow.classList.toggle('rotate');
+                var content = this.nextElementSibling;
+                content.classList.toggle('hide');
+              });
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
+              createToggler('#tocToggler', 'body', 'tocActive');
+
+              var headings = document.querySelector('.toc-headings');
+              headings && headings.addEventListener('click', function(event) {
+                var el = event.target;
+                while(el !== headings){
+                  if (el.tagName === 'A') {
+                    document.body.classList.remove('tocActive');
+                    break;
+                  } else{
+                    el = el.parentNode;
+                  }
+                }
+              }, false);
+
+              function createToggler(togglerSelector, targetSelector, className) {
+                var toggler = document.querySelector(togglerSelector);
+                var target = document.querySelector(targetSelector);
+
+                if (!toggler) {
+                  return;
+                }
+
+                toggler.onclick = function(event) {
+                  event.preventDefault();
+
+                  target.classList.toggle(className);
+                };
+              }
+            });
+        </script></nav></div><div class="container mainContainer docsContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://github.com/Yoctol/bottender/edit/master/docs/channel-messenger-sending-messages.md" target="_blank" rel="noreferrer noopener">Edit</a><h1 id="__docusaurus" class="postHeaderTitle">Sending Messenger Messages</h1></header><article><div><span><p>Messenger has become one of the most popular channels between businesses and customers. Most of the messenger bots are designed for 1:1 communication.</p>
+<p>Although the document is about &quot;sending messages,&quot; in most of the cases, Messenger bots send messages after it receives a user event.</p>
+<blockquote>
+<p><strong>Note:</strong></p>
+<ul>
+<li>If you want to know better about when your bots can send message proactively, please refer to Messenger's guide link about <a href="https://developers.facebook.com/docs/messenger-platform/policy/policy-overview#standard_messaging">Messenger Platform Policy Overview</a>.</li>
+<li>We have a separate document to introduce user event handling, please refer to <a href="/docs/en/channel-messenger-handling-events">Handling Messenger Events</a>.</li>
+</ul>
+</blockquote>
+<p>If you are not familiar with Messenger messages, we would like to recommend a short happy path.</p>
+<p>To begin with, please try the basis of communication, <a href="#sending-text-messages"><code>Text Messages</code></a>. Secondly, try <a href="#sending-template-messages"><code>Generic Template Messages</code></a> to help you display a collection of items (e.g., recommended restaurants, songs, or books). Finally, - <a href="#sending-with-quick-reply"><code>Quick Replies</code></a>, which continuously guides your users for the next possible actions.</p>
+<p>If you have experienced with Messenger messages, don't miss <a href="#sending-rich-media-messages"><code>Rich Media Messages</code></a> to show the personality of your bots. <a href="#sending-rich-media-messages"><code>Rich Media Messages</code></a> and <a href="#media-template"><code>Media Template Messages</code></a> are necessary if you are building a media-driven, storytelling bot. Take a look at <a href="#sending-with-persona"><code>Persona</code></a>, if you offer bot auto-reply and human agent customer support at the same time. Finally, if you are making a chatbot for campaign purposes, please dive into <a href="#rate-limits"><code>Rate Limits</code></a> to ensure your bot is ready for high traffic.</p>
+<h2><a class="anchor" aria-hidden="true" id="sending-text-messages"></a><a href="#sending-text-messages" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Sending Text Messages</h2>
+<p><img src="https://user-images.githubusercontent.com/662387/69112041-4e2d2e00-0aba-11ea-8e44-02aaaf804b5d.png" alt="39993793_311437072745802_2909561891720265728_n"></p>
+<p><code>Text message</code> is the most frequent and common message types among all chat channels. It also offers a minimal format while carrying out dynamic data, e.g., stock price and weather info.</p>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">SendHi</span>(<span class="hljs-params">context</span>) </span>{
+  <span class="hljs-keyword">await</span> context.sendText(<span class="hljs-string">'Hi!'</span>);
+}
+</code></pre>
+<h2><a class="anchor" aria-hidden="true" id="sending-rich-media-messages"></a><a href="#sending-rich-media-messages" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Sending Rich Media Messages</h2>
+<p><img src="https://user-images.githubusercontent.com/662387/69852152-7be65400-12be-11ea-87d3-25837d74c91c.gif" alt="ezgif-1-ef5b05e9923c"></p>
+<p>Rich media consist of images, videos, audios, and files.</p>
+<p>Rich media is useful when your priority is to catch the user's attention, e.g., limited promotion. Plus, it is also handy to create an immersive experience, e.g., telling a story.</p>
+<p>In the following section, you can see four different approaches while sending <code>Rich Media Messages</code>.</p>
+<p>If you want to benefit from Facebook's cache, i.e., much faster loader time, then you should jump to section <a href="#attaching-saved-assets">Attaching Saved Assets</a>.</p>
+<h3><a class="anchor" aria-hidden="true" id="approach-1-send-by-url"></a><a href="#approach-1-send-by-url" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Approach 1: Send by URL</h3>
+<p>Sending by URL might be the easiest way in terms of implementation. We recommend you to use this approach only for prototyping; the loading speed is probably driving your clients or customers crazy.</p>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">await</span> context.sendImage(<span class="hljs-string">'https://example.com/image.jpg'</span>);
+<span class="hljs-keyword">await</span> context.sendVideo(<span class="hljs-string">'https://example.com/video.mp4'</span>);
+<span class="hljs-keyword">await</span> context.sendAudio(<span class="hljs-string">'https://example.com/audio.mp3'</span>);
+<span class="hljs-keyword">await</span> context.sendFile(<span class="hljs-string">'https://example.com/receipt.pdf'</span>);
+</code></pre>
+<h3><a class="anchor" aria-hidden="true" id="approach-2-attaching-saved-assets"></a><a href="#approach-2-attaching-saved-assets" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Approach 2: Attaching Saved Assets</h3>
+<p>If you want to benefit from Facebook's cache, i.e., a much pleasant loading speed, you should try this a bit complicated approach.</p>
+<p>Firstly, you need to get a page-scoped <code>Attachment Id</code> by <a href="https://developers.facebook.com/docs/messenger-platform/send-messages/saving-assets#attachment_upload_api">Attachment Upload API</a>.</p>
+<p>Once you get your <code>Attachment Id</code>, you can send rich media messages with the following code.</p>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">await</span> context.sendImage({ <span class="hljs-attr">attachmentId</span>: <span class="hljs-string">'&lt;ATTACHMENT_ID&gt;'</span> });
+<span class="hljs-keyword">await</span> context.sendVideo({ <span class="hljs-attr">attachmentId</span>: <span class="hljs-string">'&lt;ATTACHMENT_ID&gt;'</span> });
+<span class="hljs-keyword">await</span> context.sendAudio({ <span class="hljs-attr">attachmentId</span>: <span class="hljs-string">'&lt;ATTACHMENT_ID&gt;'</span> });
+<span class="hljs-keyword">await</span> context.sendFile({ <span class="hljs-attr">attachmentId</span>: <span class="hljs-string">'&lt;ATTACHMENT_ID&gt;'</span> });
+</code></pre>
+<blockquote>
+<p><strong>Note:</strong> &gt; <code>Attachment Id</code> is page-scoped.</p>
+</blockquote>
+<blockquote>
+<p>A commercial bot project usually involves a staging Page for development and a production Page for production. In this case, before bot release, you have to re-upload all the attachments and update all the <code>Attachment Id</code>.</p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="approach-3-attaching-readstreams"></a><a href="#approach-3-attaching-readstreams" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Approach 3: Attaching ReadStreams</h3>
+<p>In the following example, you can send rich media by creating a readable stream. The file path is relative to your bot location.</p>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
+
+<span class="hljs-keyword">await</span> context.sendImage(fs.createReadStream(<span class="hljs-string">'image.jpg'</span>));
+<span class="hljs-keyword">await</span> context.sendVideo(fs.createReadStream(<span class="hljs-string">'video.mp4'</span>));
+<span class="hljs-keyword">await</span> context.sendAudio(fs.createReadStream(<span class="hljs-string">'audio.mp3'</span>));
+<span class="hljs-keyword">await</span> context.sendFile(fs.createReadStream(<span class="hljs-string">'receipt.pdf'</span>));
+</code></pre>
+<h3><a class="anchor" aria-hidden="true" id="approach-4-attaching-buffers"></a><a href="#approach-4-attaching-buffers" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Approach 4: Attaching Buffers</h3>
+<p>In the following example, you can send rich media by creating a buffer. The file path is relative to your bot location.</p>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">await</span> context.sendImage(imageBuffer, { <span class="hljs-attr">filename</span>: <span class="hljs-string">'image.jpg'</span> });
+<span class="hljs-keyword">await</span> context.sendVideo(videoBuffer, { <span class="hljs-attr">filename</span>: <span class="hljs-string">'video.mp4'</span> });
+<span class="hljs-keyword">await</span> context.sendAudio(audioBuffer, { <span class="hljs-attr">filename</span>: <span class="hljs-string">'audio.mp3'</span> });
+<span class="hljs-keyword">await</span> context.sendFile(fileBuffer, { <span class="hljs-attr">filename</span>: <span class="hljs-string">'receipt.pdf'</span> });
+</code></pre>
+<h2><a class="anchor" aria-hidden="true" id="sending-template-messages"></a><a href="#sending-template-messages" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Sending Template Messages</h2>
+<p><img src="https://user-images.githubusercontent.com/662387/69858895-f79bcd00-12cd-11ea-999d-2f6c97e83f51.png" alt="66391040_700974230346439_7580226164833124352_n"></p>
+<p><img src="https://user-images.githubusercontent.com/662387/69858886-f5397300-12cd-11ea-888a-c93ec4ca7288.png" alt="66362686_447994139365537_8885089546354556928_n"></p>
+<p>In short, <code>Template message</code> is an interactive gallery composed of image, video, title, subtitle, and buttons.</p>
+<p><code>Template message</code> is the key to offer rich media interaction. It usually used in the scenario of display multiple choices and next actions to the user, e.g., applying coupon, booking a room, making a reservation.</p>
+<blockquote>
+<p><strong>Note:</strong></p>
+<ul>
+<li>If you are familiar with LINE and Messenger, you can find the difference Chat UI approach. While LINE creates an HTML-like, super flexible chat UI, <a href="/docs/en/channel-line-flex"><code>Flex Messages</code></a>, Messenger tends to focus on common chat UI patterns to offer a consistent user experience.</li>
+</ul>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="generic-template"></a><a href="#generic-template" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Generic Template</h3>
+<p><img src="https://user-images.githubusercontent.com/662387/69859663-89f0a080-12cf-11ea-82d4-114745d4724d.png" alt="22880422_1740199342956641_1916832982102966272_n (1)"></p>
+<p>In a <code>Generic Template</code>, you can create up to 10 items in a row. Each item is composed of a title, subtitle, image, and up to 3 buttons.</p>
+<blockquote>
+<p><strong>Note:</strong>
+Please refer to Messenger's official guide of <a href="https://developers.facebook.com/docs/messenger-platform/send-messages/template/generic"><code>Generic Template</code></a> to find out the latest specification.</p>
+</blockquote>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">await</span> context.sendGenericTemplate([
+  {
+    <span class="hljs-attr">title</span>: <span class="hljs-string">"Welcome to Peter's Hats"</span>,
+    <span class="hljs-attr">imageUrl</span>: <span class="hljs-string">'https://petersfancybrownhats.com/company_image.png'</span>,
+    <span class="hljs-attr">subtitle</span>: <span class="hljs-string">"We've got the right hat for everyone."</span>,
+    <span class="hljs-attr">defaultAction</span>: {
+      <span class="hljs-attr">type</span>: <span class="hljs-string">'web_url'</span>,
+      <span class="hljs-attr">url</span>: <span class="hljs-string">'https://peterssendreceiveapp.ngrok.io/view?item=103'</span>,
+      <span class="hljs-attr">messengerExtensions</span>: <span class="hljs-literal">true</span>,
+      <span class="hljs-attr">webviewHeightRatio</span>: <span class="hljs-string">'tall'</span>,
+      <span class="hljs-attr">fallbackUrl</span>: <span class="hljs-string">'https://peterssendreceiveapp.ngrok.io/'</span>,
+    },
+    <span class="hljs-attr">buttons</span>: [
+      {
+        <span class="hljs-attr">type</span>: <span class="hljs-string">'postback'</span>,
+        <span class="hljs-attr">title</span>: <span class="hljs-string">'Start Chatting'</span>,
+        <span class="hljs-attr">payload</span>: <span class="hljs-string">'DEVELOPER_DEFINED_PAYLOAD'</span>,
+      },
+    ],
+  },
+]);
+</code></pre>
+<h3><a class="anchor" aria-hidden="true" id="button-template"></a><a href="#button-template" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Button Template</h3>
+<p><img src="https://user-images.githubusercontent.com/662387/69862063-9dead100-12d4-11ea-88ea-f2aef56b59c8.png" alt="23204276_131607050888932_1057585862134464512_n (1)"></p>
+<p><code>Button Template</code> is similar to <code>Generic Template</code>; the only difference is the removal of the item image.</p>
+<blockquote>
+<p><strong>Note:</strong>
+Please refer to Messenger's official guide of <a href="https://developers.facebook.com/docs/messenger-platform/send-messages/template/button"><code>Button Template</code></a> to find out the latest specification.</p>
+</blockquote>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">await</span> context.sendButtonTemplate(<span class="hljs-string">'What do you want to do next?'</span>, [
+  {
+    <span class="hljs-attr">type</span>: <span class="hljs-string">'web_url'</span>,
+    <span class="hljs-attr">url</span>: <span class="hljs-string">'https://petersapparel.parseapp.com'</span>,
+    <span class="hljs-attr">title</span>: <span class="hljs-string">'Show Website'</span>,
+  },
+  {
+    <span class="hljs-attr">type</span>: <span class="hljs-string">'postback'</span>,
+    <span class="hljs-attr">title</span>: <span class="hljs-string">'Start Chatting'</span>,
+    <span class="hljs-attr">payload</span>: <span class="hljs-string">'USER_DEFINED_PAYLOAD'</span>,
+  },
+]);
+</code></pre>
+<h3><a class="anchor" aria-hidden="true" id="receipt-template"></a><a href="#receipt-template" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Receipt Template</h3>
+<p><img src="https://user-images.githubusercontent.com/662387/69862400-4862f400-12d5-11ea-8786-2e7fa03e8408.png" alt="23208289_889588377870772_7170760265053503488_n"></p>
+<p><code>Receipt Template</code> is a template designed for order confirmation.</p>
+<blockquote>
+<p><strong>Note:</strong>
+Please refer to Messenger's official guide of <a href="https://developers.facebook.com/docs/messenger-platform/send-messages/template/receipt"><code>Receipt Template</code></a> to find out the latest specification.</p>
+</blockquote>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">await</span> context.sendReceiptTemplate({
+  <span class="hljs-attr">recipientName</span>: <span class="hljs-string">'Stephane Crozatier'</span>,
+  <span class="hljs-attr">orderNumber</span>: <span class="hljs-string">'12345678902'</span>,
+  <span class="hljs-attr">currency</span>: <span class="hljs-string">'USD'</span>,
+  <span class="hljs-attr">paymentMethod</span>: <span class="hljs-string">'Visa 2345'</span>,
+  <span class="hljs-attr">orderUrl</span>: <span class="hljs-string">'http://petersapparel.parseapp.com/order?order_id=123456'</span>,
+  <span class="hljs-attr">timestamp</span>: <span class="hljs-string">'1428444852'</span>,
+  <span class="hljs-attr">elements</span>: [
+    {
+      <span class="hljs-attr">title</span>: <span class="hljs-string">'Classic White T-Shirt'</span>,
+      <span class="hljs-attr">subtitle</span>: <span class="hljs-string">'100% Soft and Luxurious Cotton'</span>,
+      <span class="hljs-attr">quantity</span>: <span class="hljs-number">2</span>,
+      <span class="hljs-attr">price</span>: <span class="hljs-number">50</span>,
+      <span class="hljs-attr">currency</span>: <span class="hljs-string">'USD'</span>,
+      <span class="hljs-attr">imageUrl</span>: <span class="hljs-string">'http://petersapparel.parseapp.com/img/whiteshirt.png'</span>,
+    },
+    {
+      <span class="hljs-attr">title</span>: <span class="hljs-string">'Classic Gray T-Shirt'</span>,
+      <span class="hljs-attr">subtitle</span>: <span class="hljs-string">'100% Soft and Luxurious Cotton'</span>,
+      <span class="hljs-attr">quantity</span>: <span class="hljs-number">1</span>,
+      <span class="hljs-attr">price</span>: <span class="hljs-number">25</span>,
+      <span class="hljs-attr">currency</span>: <span class="hljs-string">'USD'</span>,
+      <span class="hljs-attr">imageUrl</span>: <span class="hljs-string">'http://petersapparel.parseapp.com/img/grayshirt.png'</span>,
+    },
+  ],
+  <span class="hljs-attr">address</span>: {
+    <span class="hljs-attr">street1</span>: <span class="hljs-string">'1 Hacker Way'</span>,
+    <span class="hljs-attr">street2</span>: <span class="hljs-string">''</span>,
+    <span class="hljs-attr">city</span>: <span class="hljs-string">'Menlo Park'</span>,
+    <span class="hljs-attr">postalCode</span>: <span class="hljs-string">'94025'</span>,
+    <span class="hljs-attr">state</span>: <span class="hljs-string">'CA'</span>,
+    <span class="hljs-attr">country</span>: <span class="hljs-string">'US'</span>,
+  },
+  <span class="hljs-attr">summary</span>: {
+    <span class="hljs-attr">subtotal</span>: <span class="hljs-number">75.0</span>,
+    <span class="hljs-attr">shippingCost</span>: <span class="hljs-number">4.95</span>,
+    <span class="hljs-attr">totalTax</span>: <span class="hljs-number">6.19</span>,
+    <span class="hljs-attr">totalCost</span>: <span class="hljs-number">56.14</span>,
+  },
+  <span class="hljs-attr">adjustments</span>: [
+    {
+      <span class="hljs-attr">name</span>: <span class="hljs-string">'New Customer Discount'</span>,
+      <span class="hljs-attr">amount</span>: <span class="hljs-number">20</span>,
+    },
+    {
+      <span class="hljs-attr">name</span>: <span class="hljs-string">'$10 Off Coupon'</span>,
+      <span class="hljs-attr">amount</span>: <span class="hljs-number">10</span>,
+    },
+  ],
+});
+</code></pre>
+<h3><a class="anchor" aria-hidden="true" id="media-template"></a><a href="#media-template" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Media Template</h3>
+<p><img src="https://user-images.githubusercontent.com/662387/69862411-4c8f1180-12d5-11ea-84a7-1a07b10e15c4.png" alt="23666967_188506161716866_2869776016224550912_n">
+<img src="https://user-images.githubusercontent.com/662387/69862818-4483a180-12d6-11ea-8575-96f976551963.png" alt="23065701_1942345712696886_5686788878908784640_n"></p>
+<p>You can find the simplicity and elegance of <code>Media Template</code>. Try it if you agree with &quot;A picture is worth a thousand words.&quot; The difference between it and <code>Generic Template</code> is the removal of title and subtitle.</p>
+<blockquote>
+<p><strong>Note:</strong>
+Please refer to Messenger's official guide of <a href="https://developers.facebook.com/docs/messenger-platform/send-messages/template/media"><code>Media Template</code></a> to find out the latest specification.</p>
+</blockquote>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">await</span> context.sendMediaTemplate([
+  {
+    <span class="hljs-attr">mediaType</span>: <span class="hljs-string">'image'</span>,
+    <span class="hljs-attr">attachmentId</span>: <span class="hljs-string">'1854626884821032'</span>,
+    <span class="hljs-attr">buttons</span>: [
+      {
+        <span class="hljs-attr">type</span>: <span class="hljs-string">'web_url'</span>,
+        <span class="hljs-attr">url</span>: <span class="hljs-string">'https://en.wikipedia.org/wiki/Rickrolling'</span>,
+        <span class="hljs-attr">title</span>: <span class="hljs-string">'View Website'</span>,
+      },
+    ],
+  },
+]);
+</code></pre>
+<h2><a class="anchor" aria-hidden="true" id="sending-with-quick-reply"></a><a href="#sending-with-quick-reply" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Sending with Quick Reply</h2>
+<p><img src="https://user-images.githubusercontent.com/662387/69863622-42224700-12d8-11ea-9202-cd55011a62d0.png" alt="64375249_668002483666648_541982039046356992_n (1)"></p>
+<p>We would recommend you to treat <code>Quick Reply</code> as an alternative to user text input.</p>
+<p>A <code>Quick Reply</code> consists of up to 13 <code>Quick Reply Buttons</code>. When the user taps a <code>Quick Reply Button</code>, the <code>Quick Reply</code> dismissed. Then, the title of the tapped button is posted to the conversation as a message. Meanwhile, a messages event sends to your webhook that contains the button title and an optional payload.</p>
+<p>In the following sections, you can see three different types of <code>Quick Reply</code>.</p>
+<blockquote>
+<p><strong>Note:</strong></p>
+<ul>
+<li>When we met <code>Quick Reply</code> first time, we were confused about the best practice of using <code>Quick Reply</code> or <code>Button</code>. Finally, we found out <code>Quick Reply</code> is the best solution to guide the user to keep interacting with the bot, while a <code>URL Button</code> brings user outside bot.
+What's more, the <code>Quick Reply</code> disappears when one of <code>Quick Reply Buttons</code> is tapped, which keeps <code>Quick Reply</code> only live under the present context, while a <code>Button</code> can be triggered even it is in the chat history.</li>
+<li>Please refer to Messenger's official guide of <a href="https://developers.facebook.com/docs/messenger-platform/send-messages/quick-replies"><code>Quick Replies</code></a> to find out the latest specification.</li>
+</ul>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="text-quick-reply"></a><a href="#text-quick-reply" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Text Quick Reply</h3>
+<p><img src="https://user-images.githubusercontent.com/662387/69863608-3c2c6600-12d8-11ea-97c0-e82992175a24.png" alt="27690048_220332918537125_7991605536967622656_n"></p>
+<p>You can send up to 13 <code>Text Quick Reply Buttons</code> in a <code>Quick Reply</code>. Each <code>Text Quick Reply</code> can add one optional icon next to the button title.</p>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">await</span> context.sendText(<span class="hljs-string">'Hi!'</span>, {
+  <span class="hljs-attr">quickReplies</span>: [
+    {
+      <span class="hljs-attr">contentType</span>: <span class="hljs-string">'text'</span>,
+      <span class="hljs-attr">title</span>: <span class="hljs-string">'&lt;BUTTON_TEXT&gt;'</span>,
+      <span class="hljs-attr">payload</span>: <span class="hljs-string">'&lt;DEVELOPER_DEFINED_PAYLOAD&gt;'</span>,
+    },
+  ],
+});
+</code></pre>
+<h3><a class="anchor" aria-hidden="true" id="user-phone-number-quick-reply"></a><a href="#user-phone-number-quick-reply" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>User Phone Number Quick Reply</h3>
+<p><img src="https://user-images.githubusercontent.com/662387/69863631-48182800-12d8-11ea-8d6c-f8140829163d.png" alt="23417458_1117232598379764_7436715136921894912_n"></p>
+<p>The <code>User Phone Number Quick Reply</code> can be treated as an agree button to collect the user's phone number.</p>
+<p>Messenger automatically pre-fill the displayed quick reply with the phone number from the user's profile information. Since many CRM (Customer Relationship Management) use the phone number as a unique id, it is handy for future user mapping.</p>
+<blockquote>
+<p><strong>Note:</strong>
+If the user's profile does not have a phone number, the quick reply doesn't show up. Also, the bot only receives the phone number until the user clicks the quick reply.</p>
+</blockquote>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">await</span> context.sendText(<span class="hljs-string">'Hi!'</span>, {
+  <span class="hljs-attr">quickReplies</span>: [
+    {
+      <span class="hljs-attr">contentType</span>: <span class="hljs-string">'user_phone_number'</span>,
+    },
+  ],
+});
+</code></pre>
+<h3><a class="anchor" aria-hidden="true" id="user-email-quick-reply"></a><a href="#user-email-quick-reply" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>User Email Quick Reply</h3>
+<p><img width="382" alt="27807597_203144990422079_3327502058327638016_n" src="https://user-images.githubusercontent.com/662387/69863616-3f275680-12d8-11ea-82b0-d4033f67f03c.png"></p>
+<p>The <code>User Email Quick Reply</code> can be treated as an agree button to collect the user's Email.</p>
+<p>Messenger automatically pre-fill the displayed quick reply with the Email from the user's profile information. Since many CRM (Customer Relationship Management) use the Email as a unique id, it is handy for future user mapping.</p>
+<blockquote>
+<p><strong>Note:</strong>
+If the user's profile does not have an Email, the quick reply doesn't show up. Also, the bot only receives the Email until the user clicks the quick reply.</p>
+</blockquote>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">await</span> context.sendText(<span class="hljs-string">'Hi!'</span>, {
+  <span class="hljs-attr">quickReplies</span>: [
+    {
+      <span class="hljs-attr">contentType</span>: <span class="hljs-string">'user_email'</span>,
+    },
+  ],
+});
+</code></pre>
+<h2><a class="anchor" aria-hidden="true" id="sending-with-persona"></a><a href="#sending-with-persona" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Sending with Persona</h2>
+<p>To give the customer a clear understanding of whether a human agent or a bot representing the Business Page, the <code>Persona</code> API allows a business to introduce a virtual persona into the thread. Please refer to our separate document about <code>Persona</code>.</p>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">await</span> context.sendText(<span class="hljs-string">'Hi!'</span>, {
+  <span class="hljs-attr">personaId</span>: <span class="hljs-string">'&lt;PERSONA_ID&gt;'</span>,
+});
+</code></pre>
+<h2><a class="anchor" aria-hidden="true" id="rate-limits"></a><a href="#rate-limits" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Rate Limits</h2>
+<p>If you are making a bot with sudden high traffic, e.g., a campaign bot for Black Friday, you should deal with <code>Rate Limits</code> before you receive <a href="https://developers.facebook.com/docs/messenger-platform/reference/send-api/error-codes">error code 613</a>.</p>
+<p>Page Rate limits are in place to prevent malicious behavior and poor user experiences. For Pages with large audiences, Messenger recommends a send rate of 250 requests per second.</p>
+<p><code>Rate Limits</code> is various from the size of your Page audience.</p>
+<pre><code class="hljs css language-sh">Calls within 24 hours = 200 * Total Messenger Audience
+</code></pre>
+<p>To prevent from hit <code>Rate Limits</code>, Messenger also advises us to architect our system to distribute any sudden high amounts of load over time.</p>
+<blockquote>
+<p><strong>Note:</strong>
+Refer to Messenger's official doc, <a href="https://developers.facebook.com/docs/messenger-platform/send-messages#limits">Rate Limiting</a> for the latest Messenger policy.</p>
+</blockquote>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/docs/en/channel-messenger-handling-events"><span class="arrow-prev">← </span><span>Handling Messenger Events</span></a><a class="docs-next button" href="/docs/en/channel-messenger-routing"><span>Messenger Routing</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#sending-text-messages">Sending Text Messages</a></li><li><a href="#sending-rich-media-messages">Sending Rich Media Messages</a><ul class="toc-headings"><li><a href="#approach-1-send-by-url">Approach 1: Send by URL</a></li><li><a href="#approach-2-attaching-saved-assets">Approach 2: Attaching Saved Assets</a></li><li><a href="#approach-3-attaching-readstreams">Approach 3: Attaching ReadStreams</a></li><li><a href="#approach-4-attaching-buffers">Approach 4: Attaching Buffers</a></li></ul></li><li><a href="#sending-template-messages">Sending Template Messages</a><ul class="toc-headings"><li><a href="#generic-template">Generic Template</a></li><li><a href="#button-template">Button Template</a></li><li><a href="#receipt-template">Receipt Template</a></li><li><a href="#media-template">Media Template</a></li></ul></li><li><a href="#sending-with-quick-reply">Sending with Quick Reply</a><ul class="toc-headings"><li><a href="#text-quick-reply">Text Quick Reply</a></li><li><a href="#user-phone-number-quick-reply">User Phone Number Quick Reply</a></li><li><a href="#user-email-quick-reply">User Email Quick Reply</a></li></ul></li><li><a href="#sending-with-persona">Sending with Persona</a></li><li><a href="#rate-limits">Rate Limits</a></li></ul></nav></div><footer class="nav-footer" id="footer"><div class="footer-layout"><div><div style="margin-bottom:16px"><a href="https://yoctol.ai" target="_blank" rel="noopener noreferrer"><img width="104px" src="/img/element_YOCTOL.AI_horizontal_S.svg" alt="YOCTOL.AI Logo"/></a></div><div class="desktop"><p class="text">© 2019 - PRESENT YOCTOL.AI ALL RIGHTS RESERVED.</p><a class="text" href="https://yoctol.ai/terms-of-use" target="_blank" rel="noopener noreferrer">Terms of Use</a><a class="text" href="https://yoctol.ai/privacy-policy" target="_blank" rel="noopener noreferrer" style="margin-left:16px">Privacy Policy</a></div></div><div class="footer-contacts"><h4 class="title">Contact Us</h4><p class="text">YOCTOL.AI</p><p class="text">service@yoctol.com</p></div><div class="footer-medias"><h4 class="title">Social Media</h4><div class="icons"><a href="https://twitter.com/yoctol" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#FFF" fill-rule="nonzero" d="M1.5 0h21A1.5 1.5 0 0 1 24 1.5v21a1.5 1.5 0 0 1-1.5 1.5h-21A1.5 1.5 0 0 1 0 22.5v-21A1.5 1.5 0 0 1 1.5 0zm7.532 18c6.037 0 9.34-4.617 9.34-8.621 0-.131 0-.262-.01-.392A6.419 6.419 0 0 0 20 7.42c-.6.245-1.235.406-1.885.477a3.097 3.097 0 0 0 1.443-1.676 6.92 6.92 0 0 1-2.085.735c-1.017-.999-2.634-1.243-3.944-.596-1.31.647-1.986 2.024-1.65 3.36-2.64-.123-5.099-1.273-6.765-3.166-.872 1.384-.427 3.155 1.016 4.045a3.468 3.468 0 0 1-1.49-.38v.039c0 1.442 1.102 2.684 2.634 2.97-.484.122-.99.14-1.483.052.43 1.234 1.663 2.08 3.067 2.104a6.945 6.945 0 0 1-4.077 1.3c-.26 0-.522-.015-.781-.044a9.867 9.867 0 0 0 5.032 1.359V18z"></path></svg></a><a href="https://www.linkedin.com/company/yoctol/" target="_blank" rel="noopener noreferrer" style="margin-left:8px"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#FFF" fill-rule="nonzero" d="M1.5 0h21A1.5 1.5 0 0 1 24 1.5v21a1.5 1.5 0 0 1-1.5 1.5h-21A1.5 1.5 0 0 1 0 22.5v-21A1.5 1.5 0 0 1 1.5 0zm6.086 19.636V9.281H4.368v10.355h3.218zM5.944 7.801A1.877 1.877 0 0 0 7.82 5.925 1.876 1.876 0 1 0 5.945 7.8zm13.697 11.835v-5.679c0-2.788-.602-4.933-3.861-4.933-1.565 0-2.615.859-3.045 1.672h-.043V9.281H9.604v10.355h3.216v-5.123c0-1.35.258-2.658 1.932-2.658 1.65 0 1.673 1.545 1.673 2.746v5.035h3.216z"></path></svg></a></div></div><div class="footer-product"><h4 class="title">Product</h4><div class="icons"><a href="https://yoctol.ai/creator" target="_blank" rel="noopener noreferrer" style="margin-top:1px;margin-right:10px"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22"><g fill="none" fill-rule="nonzero"><path d="M-1-2h24v24H-1z"></path><path fill="#FFF" d="M4.129 12c.309 3.386 3.267 6.042 6.871 6.042 3.604 0 6.562-2.656 6.871-6.042H22c-.317 5.574-5.12 10-11 10S.317 17.574 0 12h4.129zM14 9a1 1 0 1 1 0 2 1 1 0 0 1 0-2zM8 9a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm14-9v10h-4.113V4.116H7.814A3.703 3.703 0 0 0 4.113 7.82V10H0V7.82A7.817 7.817 0 0 1 7.685.001L7.815 0H22z"></path></g></svg></a><a href="https://yoctol.ai/seeker" target="_blank" rel="noopener noreferrer" style="margin-right:10px"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="24" viewBox="0 0 22 24"><g fill="none" fill-rule="nonzero"><path d="M-1 0h24v24H-1z"></path><path fill="#FFF" d="M2.81 7.033l.004.004 3.123 3.137a.112.112 0 0 1 .017.137 5.957 5.957 0 0 0 .843 7.356 5.936 5.936 0 0 0 8.41.003 5.957 5.957 0 0 0 .839-7.355.112.112 0 0 1 .016-.138l3.122-3.136a.11.11 0 0 1 .158 0l.01.012c3.182 4.182 2.79 10.14-.915 13.86-4.1 4.117-10.77 4.115-14.87-.002-3.699-3.714-4.1-9.656-.941-13.836a.111.111 0 0 1 .184-.042zM8.5 11a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm5 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm5.942-7.854l.015.014a.175.175 0 0 1 0 .23L15.32 7.952a.138.138 0 0 1-.182.024 7.294 7.294 0 0 0-8.27-.002.138.138 0 0 1-.182-.024L2.544 3.384a.175.175 0 0 1 .014-.245c4.97-4.188 11.913-4.185 16.884.007z"></path></g></svg></a><a href="https://bottender.js.org/" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="24" viewBox="0 0 22 24"><g fill="none" fill-rule="evenodd"><path fill-rule="nonzero" d="M-1 0h24v24H-1z"></path><path fill="#FFF" d="M1.668 8.51c.258.075.548.159.867.244a9.055 9.055 0 0 0 .959 11.639l.206.202.102.098.022.139a2.63 2.63 0 0 1-.314 1.745c.351-.162.683-.36.99-.59l.227-.178.242-.196.264.162a9.343 9.343 0 0 0 4.898 1.379c5.115 0 9.276-4.107 9.276-9.154 0-.806-.107-1.607-.32-2.385.33.027.63.047.9.06.184.762.289 1.543.288 2.326 0 5.513-4.534 9.999-10.12 9.999a10.128 10.128 0 0 1-5.067-1.352c-1.039.78-2.395 1.228-3.574 1.289l-.269.007v-.845c.928-.002 1.807-.82 1.808-1.831 0-.057-.05-.113-.056-.17A9.891 9.891 0 0 1 1.668 8.51zM10 11a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm6 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2zM9.379.02c2.551.437 3.144 1.75 3.144 1.75s1.02-1.037 3.57-.6c2.302.394 3.731 6.79 3.99 8.047 1.233.338 1.946.614 1.916.775l-.143.719c-.074.409-4.997-.07-10.837-1.07C5.179 8.638.506 7.495.579 7.086l.144-.74c.03-.162.797-.185 2.075-.091C3.484 5.161 7.08-.374 9.378.02z"></path></g></svg></a></div></div><div class="mobile"><p class="text">© 2019 - PRESENT YOCTOL.AI ALL RIGHTS RESERVED.</p><a class="text" href="https://yoctol.ai/terms-of-use" target="_blank" rel="noopener noreferrer">Terms of Use</a><a class="text" href="https://yoctol.ai/privacy-policy" target="_blank" rel="noopener noreferrer" style="margin-left:16px">Privacy Policy</a></div></div></footer></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script><script>window.twttr=(function(d,s, id){var js,fjs=d.getElementsByTagName(s)[0],t=window.twttr||{};if(d.getElementById(id))return t;js=d.createElement(s);js.id=id;js.src='https://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js, fjs);t._e = [];t.ready = function(f) {t._e.push(f);};return t;}(document, 'script', 'twitter-wjs'));</script><script>
+                document.addEventListener('keyup', function(e) {
+                  if (e.target !== document.body) {
+                    return;
+                  }
+                  // keyCode for '/' (slash)
+                  if (e.keyCode === 191) {
+                    const search = document.getElementById('search_input_react');
+                    search && search.focus();
+                  }
+                });
+              </script><script>
+              var search = docsearch({
+                
+                apiKey: '3498a488684b0324b9d56808fad17a33',
+                indexName: 'bottender',
+                inputSelector: '#search_input_react',
+                algoliaOptions: {"facetFilters":["language:en","version:1.3.0"]}
+              });
+            </script></body></html>
