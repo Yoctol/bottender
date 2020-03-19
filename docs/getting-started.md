@@ -15,7 +15,7 @@ npx create-bottender-app my-app
 
 > **Note:** `npx` comes with npm 5.2+ and higher, see [npx command introduction](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b).
 
-After your go through the interactive creation, you will see a directory named my-app containing a fresh Bottender project with every Bottender’s dependency installed:
+After your go through the interactive creation, you will see a directory named `my-app` containing a fresh Bottender project with every Bottender’s dependency installed:
 
 ![](https://user-images.githubusercontent.com/3382565/67745483-5667ef80-fa5f-11e9-8bae-39489b8544e7.png)
 ![](https://user-images.githubusercontent.com/3382565/67745485-57008600-fa5f-11e9-8fed-8d97d600a760.png)

@@ -3,8 +3,6 @@ id: advanced-guides-deployment
 title: Deployment
 ---
 
- <p><img width="500" src="https://user-images.githubusercontent.com/662387/72043275-b7c3fe80-32eb-11ea-9a49-f2d5c073f397.jpg"></p>
-
 Once you finished your bot in development, the next step is to deploy your bot to a hosting service!
 
 > **Note:** We aim to offer deployment guides for every popular modern hosting services. [Tweet us](https://twitter.com/bottenderjs) if you haven't seen your favorite one.

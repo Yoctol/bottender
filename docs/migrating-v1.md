@@ -7,7 +7,7 @@ To make bot developers have a happier development experience, we made some chang
 
 You can follow the below guide to migrate your Bottender's code from v0.x to v1.x.
 
-> **Note:** The following sample code is based on a Messenger bot, [tweet us](https://twitter.com/bottenderjs) if you need a sample code of other chat channels.
+> **Note:** The following sample code is based on a Messenger bot, but you could still apply the similar strategy to bots on any other platforms.
 
 ## Configure Session Driver and Channel Settings in `bottender.config.js`
 
