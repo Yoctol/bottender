@@ -97,7 +97,7 @@ Then fill in your webhook URL on the developer console of the chat channel.
 
 > **Note:** If you are not familiar with webhook setup, you may refer to Bottender docs, [Setup Messenger](https://bottender.js.org/docs/channel-messenger-setup), [Setup LINE](https://bottender.js.org/docs/channel-line-setup), and [Setup Slack](https://bottender.js.org/docs/channel-slack-setup).
 
-> **Note:** If you haven't changed your webhook path in `bottender.config.js`, by default, your Messenger Bot webhook is `https://<your-heroku-app-name>.herokuapp.com/webhooks/messenger`; your LINE Bot webhook is `https://<your-heroku-app-name>.herokuapp.com/webhooks/line`, and so on.
+> **Note:** If you haven't changed your webhook path in `bottender.config.js`, by default, your Messenger Bot webhook is `https://<your-heroku-app-name>.herokuapp.com/webhooks/messenger`; your **LINE Official Account(LINE OA)** webhook is `https://<your-heroku-app-name>.herokuapp.com/webhooks/line`, and so on.
 
 #### Step 5b: Set up Webhook by CLI
 
@@ -120,7 +120,7 @@ release: echo "Y" | npx bottender messenger webhook set -w https://<your-heroku-
 > **Note:**
 >
 > - The `echo "Y"` aims to answer the first interactive CLI prompt
-> - If you haven't changed your webhook path in `bottender.config.js`, by default, your Messenger Bot webhook is `https://<your-heroku-app-name>.herokuapp.com/webhooks/messenger`; your LINE Bot webhook is `https://<your-heroku-app-name>.herokuapp.com/webhooks/line`, and so on.
+> - If you haven't changed your webhook path in `bottender.config.js`, by default, your Messenger Bot webhook is `https://<your-heroku-app-name>.herokuapp.com/webhooks/messenger`; your LINE OA webhook is `https://<your-heroku-app-name>.herokuapp.com/webhooks/line`, and so on.
 
 Finally, You can use Heroku CLI by Git push to complete the deployment and let Heroku runs the `Procfile` to help you finish the webhook setup.
 
@@ -314,7 +314,7 @@ Then you will see something like the screenshot below.
 
 ### Step 8: Webhook Setup
 
-If you haven't changed your webhook path in `bottender.config.js`, by default, your Messenger Bot webhook is `https://<your-app-name>.<your-user-name>.now.sh/webhooks/messenger`; your LINE Bot webhook is `https://<your-app-name>.<your-user-name>.now.sh/webhooks/line`, and so on.
+If you haven't changed your webhook path in `bottender.config.js`, by default, your Messenger Bot webhook is `https://<your-app-name>.<your-user-name>.now.sh/webhooks/messenger`; your LINE OA webhook is `https://<your-app-name>.<your-user-name>.now.sh/webhooks/line`, and so on.
 
 There are two basic types of webhook setup:
 

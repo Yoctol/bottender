@@ -9,7 +9,7 @@ There are three different sizes of embedded webviews provided by LIFF. You may u
 
 ![different sizes of liff](https://user-images.githubusercontent.com/563929/73712876-6a01b100-4746-11ea-8f85-22b8026882d5.png)
 
-Besides, LIFF gives you more chances to improve interactions between users and the chatbot. One of the common scenarios is submitting a form in LINE Bots.
+Besides, LIFF gives you more chances to improve interactions between users and the chatbot. One of the common scenarios is submitting a form in **LINE Official Account(LINE OA)**.
 
 ### Features in LIFF
 
@@ -221,4 +221,4 @@ module.exports = async function App(context) {
 };
 ```
 
-Now, you could execute `yarn dev` or `npm run dev` to start the server, and you will have a LINE Bot with a simple LIFF page.
+Now, you could execute `yarn dev` or `npm run dev` to start the server, and you will have a LINE OA with a simple LIFF page.

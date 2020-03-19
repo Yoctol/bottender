@@ -3,7 +3,7 @@ id: channel-line-migrating-from-sdk
 title: Migrating from LINE SDK for Node.js
 ---
 
-## Bottender, the Ultimate Time Saver for LINE Bot Developers
+## Bottender, the Ultimate Time Saver for **LINE Official Account(LINE OA)** Developers
 
 Bottender aims to help LINE developers focus on project-specific business logic. It is carefully crafted to save developers' time based on real project experience.
 
@@ -54,7 +54,7 @@ If you have experienced in bot projects, you can figure out that 80% of the abov
 
 By Bottender, you can make a simple echo bot in the 3 steps:
 
-First, create a LINE Bot project by one-line command:
+First, create a LINE OA project by one-line command:
 
 ```sh
 npx create-bottender-app my-app
