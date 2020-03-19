@@ -12,7 +12,7 @@ Rich interactive UI is a crucial factor for friendly user experience, especially
 [Block Kit](https://api.slack.com/block-kit) is a UI framework for Slack apps that offers a balance of rich interactive and flexibility. Block kits can apply to messages and other [surfaces](https://api.slack.com/surfaces), e.g., modals and home tab.
 
 > **Note:**
-> If you also write **LINE Official Accounts(LINE OAs)**, you may sense some similarity between Slack Block Kit and [LINE Flex Messages](./channel-line-flex.md).
+> If you also write LINE Bot, you may sense some similarity between Slack Block Kit and [LINE Flex Messages](./channel-line-flex.md).
 
 ## Sending Hello World Block Kit Message
 
