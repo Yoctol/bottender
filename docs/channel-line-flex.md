@@ -130,7 +130,6 @@ async function App(context) {
 > **Note: When it comes to complicated Flex Messages, it is recommended to check your code by the Flex Message Simulator.**
 >
 > - [Flex Message Simulator](https://developers.line.biz/console/fx/)
-> - [Flex Message Simulator(Beta)](https://developers.line.biz/console/fx-beta/)
 
 ### A Carousel Type Flex Message
 
