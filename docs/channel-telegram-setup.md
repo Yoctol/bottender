@@ -97,7 +97,7 @@ Then, you can open a new tab in the terminal and finish the webhook setting by t
 npx bottender telegram webhook set
 ```
 
-Finally, press `Y` to allow Bottender set `ngrok` temporary URL as the webhook. Now you are ready to interact with your bot on Telegram :)
+Finally, press `Y` to allow Bottender set `ngrok` temporary URL as the webhook. Now you are ready to interact with your bot on Telegram.
 
 #### Set up Webhook for Production
 
@@ -116,4 +116,4 @@ By the following command, you can finish the Telegram webhook setting. (If you d
 npx bottender telegram webhook set -w https://example.com/webhooks/telegram
 ```
 
-Now you are ready to interact with your bot on Telegram :)
+Now you are ready to interact with your bot on Telegram.

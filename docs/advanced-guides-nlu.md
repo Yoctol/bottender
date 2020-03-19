@@ -20,8 +20,6 @@ In the following sections, you can see how to integrate Bottender with various m
 
 The reason that we choose QnA Maker in the first place is because of the friendly building process. Unlike other NLU service requires a certain amount of time to build the intent and write the training phrases. In QnA Maker, you just need to copy & paster your FAQ, and the NLU engine is ready to use.
 
-> **Note:** [Tweet us](https://twitter.com/bottenderjs) if you would like to share your QnA Maker engine performance with us :)
-
 ### Step 1: QnA Maker Setup
 
 To build a bot integrated with [QnA Maker](https://www.qnamaker.ai/), you have to create the QnA Maker knowledge base and publish it following the [Official Guide](https://docs.microsoft.com/en-us/azure/cognitive-services/qnamaker/quickstarts/create-publish-knowledge-base).

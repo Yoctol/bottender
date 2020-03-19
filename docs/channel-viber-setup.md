@@ -83,4 +83,4 @@ Then, you can finish your Viber webhook setting with the following command.
 npx bottender viber webhook set
 ```
 
-Now you are ready to interact with your bot on Viber :)
+Now you are ready to interact with your bot on Viber.
