@@ -191,7 +191,7 @@ plus, whether the session is between a bot and single user, or between a bot and
         <span class="hljs-attr">maxSize</span>: <span class="hljs-number">500</span>,
       },
       <span class="hljs-attr">file</span>: {
-        <span class="hljs-attr">dirname</span>: <span class="hljs-string">'.session'</span>,
+        <span class="hljs-attr">dirname</span>: <span class="hljs-string">'.sessions'</span>,
       },
       <span class="hljs-attr">redis</span>: {
         <span class="hljs-attr">port</span>: <span class="hljs-number">6379</span>,
@@ -210,7 +210,7 @@ plus, whether the session is between a bot and single user, or between a bot and
 <p>The four valid drivers are as follows:</p>
 <ul>
 <li><code>memory</code> - sessions are stored in memory with <a href="https://github.com/isaacs/node-lru-cache">LRU cache</a> and not persistent.</li>
-<li><code>file</code> - sessions are stored in files placed in <code>.session</code> directory by default.</li>
+<li><code>file</code> - sessions are stored in files placed in <code>.sessions</code> directory by default.</li>
 <li><code>redis</code> - sessions are stored in a <a href="https://redis.io/">redis</a> database.</li>
 <li><code>mongo</code> - sessions are stored in a <a href="https://www.mongodb.com/">mongo</a> database.</li>
 </ul>
