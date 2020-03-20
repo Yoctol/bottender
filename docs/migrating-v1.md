@@ -3,7 +3,7 @@ id: migrating-v1
 title: Migrating from v0.x to v1.x
 ---
 
-To make bot developers have a happier development experience, we made some changes in terms of a better-structured config file, unifying cases to camel case, and introduction of two design patterns: `Router` and `Chain`.
+To make bot developers have a happier development experience, we made some changes in terms of a better-structured config file, unifying cases to camel case, and introduction of two patterns: `Router` and `Chain`.
 
 You can follow the below guide to migrate your Bottender's code from v0.x to v1.x.
 

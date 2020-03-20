@@ -3,7 +3,7 @@ id: the-basics-routing
 title: Routing
 ---
 
-`Routing` is a handy design pattern to help you organize bot actions.
+`Routing` is a handy pattern to help you organize bot actions.
 
 The most basic Bottender `Route` is composed of a text and an action, providing a straightforward and expressive definition:
 
