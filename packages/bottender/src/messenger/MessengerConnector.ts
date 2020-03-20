@@ -216,7 +216,7 @@ export default class MessengerConnector
 
   _profilePicExpired(user: { profilePic: string }): boolean {
     try {
-      // Facebook CDN returns expiration time in the key `ext` in url params like:
+      // Facebook CDN returns expiration time in the key `ext` in URL params like:
       // https://platform-lookaside.fbsbx.com/platform/profilepic/?psid=11111111111111&width=1024&ext=1543379908&hash=xxxxxxxxxxxx
       const ext = new URL(user.profilePic).searchParams.get('ext');
 

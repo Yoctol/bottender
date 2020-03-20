@@ -122,7 +122,7 @@ module.exports = {
 };
 ```
 
-> **Note:** If you use any `web_url` buttons with `messengerExtensions` to `true`, you must set the domain of the url as a [whitelisted domain](channel-messenger-profile.md#setting-domain-whitelist).
+> **Note:** If you use any `web_url` buttons with `messengerExtensions` to `true`, you must set the domain of the URL as a [whitelisted domain](channel-messenger-profile.md#setting-domain-whitelist).
 
 ### Disabling User Input
 

@@ -73,7 +73,7 @@ When you run bottender in development mode, Bottender automatically run up a ngr
 
 ```
 App has started
-viber webhook url: https://42bbf602.ngrok.io/webhooks/viber
+viber webhook URL: https://42bbf602.ngrok.io/webhooks/viber
 server is running on 5000 port...
 ```
 

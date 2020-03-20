@@ -17,14 +17,14 @@ const help = () => {
   ${chalk.dim('Commands:')}
 
     list              List all personas.
-    create            Create a new persona with name and profile picture url.
+    create            Create a new persona with name and profile picture URL.
     get               Get persona by persona ID.
     del, delete       Delete persona by persona ID.
 
   ${chalk.dim('Options:')}
 
     --name            Specify persona's name when create
-    --pic             Specify persona's profile image url when create
+    --pic             Specify persona's profile image URL when create
     --id              Specify persona's ID to get or delete
 
   ${chalk.dim('Examples:')}
@@ -70,7 +70,7 @@ export async function createPersona(ctx: CliContext): Promise<void> {
     );
     invariant(
       personaUrl,
-      '`pic` is required but not found. Use --pic <url> to specify persona profile picture url'
+      '`pic` is required but not found. Use --pic <URL> to specify persona profile picture URL'
     );
 
     const client = MessengerClient.connect({
@@ -121,7 +121,7 @@ export async function listPersona(_: CliContext): Promise<void> {
     if (personas.length !== 0) {
       print('Personas');
       const table = new Table({
-        head: ['id', 'name', 'image url'],
+        head: ['id', 'name', 'image URL'],
         colWidths: [30, 30, 30],
       });
       personas.forEach(item => {

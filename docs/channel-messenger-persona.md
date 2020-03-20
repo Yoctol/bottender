@@ -29,7 +29,7 @@ In the following section, you can see the beginning usage of `Persona.`
 
 The basic idea behind creating a persona is sending a request to Page's `/persona` endpoint. Hence, please remember to finish relevant Facebook Page Token settings in your `bottender.config.js`.
 
-You can create a persona with the following commands. The property should include `name` and `profile picture url` for the persona.
+You can create a persona with the following commands. The property should include `name` and `profile picture URL` for the persona.
 
 #### Request
 

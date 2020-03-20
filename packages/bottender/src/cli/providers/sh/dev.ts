@@ -67,7 +67,7 @@ const dev = async (ctx: CliContext): Promise<void> => {
       .forEach(([channel, { path: webhookPath }]) => {
         const routePath = webhookPath || `/webhooks/${channel}`;
 
-        console.log(`${channel} webhook url: ${url}${routePath}`);
+        console.log(`${channel} webhook URL: ${url}${routePath}`);
       });
   }
 };

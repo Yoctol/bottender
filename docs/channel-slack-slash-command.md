@@ -20,7 +20,7 @@ To enable this feature, you need to:
 
 - Fill in fields in the form correspondingly and save it.
   - `Command`: Your command text, must start with `/`
-  - `Request URL`: The webhook url of your slack bot.
+  - `Request URL`: The webhook URL of your slack bot.
   - `Short Description`: Description to explain what this command does.
   - `Usage Hint`: Hint text for arguments (Optional)
 

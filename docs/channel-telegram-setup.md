@@ -87,7 +87,7 @@ When you run bottender in development mode, Bottender automatically run up a ngr
 
 ```
 App has started
-telegram webhook url: https://42bbf602.ngrok.io/webhooks/telegram
+telegram webhook URL: https://42bbf602.ngrok.io/webhooks/telegram
 server is running on 5000 port...
 ```
 

@@ -124,7 +124,7 @@ When you run bottender in development mode, Bottender automatically run up a ngr
 
 ```
 App has started
-slack webhook url: https://42bbf602.ngrok.io/webhooks/slack
+slack webhook URL: https://42bbf602.ngrok.io/webhooks/slack
 server is running on 5000 port...
 ```
 

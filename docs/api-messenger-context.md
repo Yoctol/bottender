@@ -111,7 +111,7 @@ Send sounds to the user by uploading them or sharing a URL using the [Send API](
 
 Example:
 
-- Send audio using url string:
+- Send audio using URL string:
 
 ```js
 context.sendAudio('https://example.com/audio.mp3');
@@ -144,7 +144,7 @@ Send images to the user by uploading them or sharing a URL using the [Send API](
 
 Example:
 
-- Send image using url string:
+- Send image using URL string:
 
 ```js
 context.sendImage('https://example.com/vr.jpg');
@@ -177,7 +177,7 @@ Send videos to the user by uploading them or sharing a URL using the [Send API](
 
 Example:
 
-- Send video using url string:
+- Send video using URL string:
 
 ```js
 context.sendVideo('https://example.com/video.mp4');
@@ -210,7 +210,7 @@ Send files to the user by uploading them or sharing a URL using the [Send API](h
 
 Example:
 
-- Send file using url string:
+- Send file using URL string:
 
 ```js
 context.sendFile('https://example.com/receipt.pdf');
