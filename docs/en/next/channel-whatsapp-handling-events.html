@@ -93,7 +93,9 @@
 <p>Sometimes, your bot might receive the photos sent from the user. In this case, you could use <code>context.event.media</code> to get the content type and the URL of the media.</p>
 <pre><code class="hljs css language-js"><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params">context</span>) </span>{
   <span class="hljs-keyword">if</span> (context.event.isMedia) {
-    <span class="hljs-keyword">await</span> context.sendText(<span class="hljs-string">`received the media message: <span class="hljs-subst">${context.event.media.contentType}</span> <span class="hljs-subst">${context.event.media.url}</span>`</span>);
+    <span class="hljs-keyword">await</span> context.sendText(
+      <span class="hljs-string">`received the media message: <span class="hljs-subst">${context.event.media.contentType}</span> <span class="hljs-subst">${context.event.media.url}</span>`</span>
+    );
   }
 }
 </code></pre>

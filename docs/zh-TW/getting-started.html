@@ -75,7 +75,7 @@
               }
             });
         </script></nav></div><div class="container mainContainer docsContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://crowdin.com/project/bottender/zh-TW" target="_blank" rel="noreferrer noopener">Translate</a><h1 id="__docusaurus" class="postHeaderTitle">Getting Started</h1></header><article><div><span><h2><a class="anchor" aria-hidden="true" id="建立一個新的-bottender-應用程式"></a><a href="#建立一個新的-bottender-應用程式" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>建立一個新的 Bottender 應用程式</h2>
-<p>要使用 Bottender 來開始打造一個新的應用程式，最好的辦法是使用 Create Bottender App。</p>
+<p>要使用 Bottender 來開始打造一個新的應用程式，最好的方法是使用 Create Bottender App。</p>
 <p>它會初始化一個開發環境以便你使用所有最新的 Bottender 功能，針對多平台開發提供一個良好的開發體驗，並針對生產環境上的部署去優化你的應用程式。 要建立一個專案，只要執行：</p>
 <pre><code class="hljs css language-sh">npx create-bottender-app my-app
 </code></pre>
@@ -84,12 +84,12 @@
 </blockquote>
 <p>在你完成了互動式的建立步驟之後，你會看到一個叫做 my-app 的資料夾，其中包含一個全新的 Bottender 專案並已經安裝好所有需要的套件。</p>
 <p><img src="https://user-images.githubusercontent.com/3382565/67745483-5667ef80-fa5f-11e9-8bae-39489b8544e7.png" alt=""> <img src="https://user-images.githubusercontent.com/3382565/67745485-57008600-fa5f-11e9-8fed-8d97d600a760.png" alt=""></p>
-<p>在 <a href="/docs/zh-TW/the-basics-console-mode">「Console Mode」</a>執行機器人是最簡單的方式。 要這樣做，只要把 <code>--console</code> 參數帶到指令上面：</p>
+<p>在<a href="/docs/zh-TW/the-basics-console-mode">「Console 模式」</a>執行機器人是最簡單的方式。 要這樣做，只要把 <code>--console</code> 參數帶到指令上面：</p>
 <pre><code class="hljs css language-sh"><span class="hljs-built_in">cd</span> my-app
 npm run dev -- --console
 </code></pre>
 <p><img src="https://user-images.githubusercontent.com/3382565/67745487-57991c80-fa5f-11e9-8eb7-9e4144df9e73.png" alt=""></p>
-<p>就如同你所看到的，我們已經得到了一個會總是在 console 回覆「Welcome to Bottender」的機器人了。</p>
+<p>就如同你所看到的，我們已經得到了一個會總是在 Console 回覆「Welcome to Bottender」的機器人了。</p>
 <h2><a class="anchor" aria-hidden="true" id="教你的機器人複述所聽到的話"></a><a href="#教你的機器人複述所聽到的話" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>教你的機器人複述所聽到的話</h2>
 <p>我們在前面一個章節所完成的只是一個「Hello World」範例。 讓我們來看看它是如何運作的，並對它做一些調整。</p>
 <p>Create Bottender App 產生的 <code>src/index.js</code> 是這個應用程式的進入點。這個檔案裡面只有少數的幾行：</p>
@@ -97,7 +97,7 @@ npm run dev -- --console
   <span class="hljs-keyword">await</span> context.sendText(<span class="hljs-string">'Welcome to Bottender'</span>);
 };
 </code></pre>
-<p>這段非常直覺，無論它何時被呼叫都會回應「Welcome to Bottender」。</p>
+<p>這段非常地直覺，無論它何時被呼叫都會回覆「Welcome to Bottender」。</p>
 <p>下一步是要教你的機器人把收到的內容送回去，所以讓我們在編輯器上把 <code>src/index.js</code> 檔案打開，並對程式碼做以下的修改：</p>
 <pre><code class="hljs css language-diff">module.exports = async function App(context) {
 <span class="hljs-deletion">- await context.sendText('Welcome to Bottender');</span>

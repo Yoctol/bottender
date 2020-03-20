@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="zh-TW"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Routing · Bottender</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="`路由` 是一個方便的設計模式可以幫助你組織機器人的 action。"/><meta name="docsearch:version" content="1.3.0"/><meta name="docsearch:language" content="zh-TW"/><meta property="og:title" content="Routing · Bottender"/><meta property="og:type" content="website"/><meta property="og:url" content="https://bottender.js.org/"/><meta property="og:description" content="`路由` 是一個方便的設計模式可以幫助你組織機器人的 action。"/><meta property="og:image" content="https://bottender.js.org/img/og-image.png"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://bottender.js.org/img/og-image.png"/><link rel="shortcut icon" href="/img/favicon-192x192.png"/><link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-dark.min.css"/><link rel="alternate" type="application/atom+xml" href="https://bottender.js.org/blog/atom.xml" title="Bottender Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://bottender.js.org/blog/feed.xml" title="Bottender Blog RSS Feed"/><script>
+<!DOCTYPE html><html lang="zh-TW"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Routing · Bottender</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="`路由` 是一個方便的模式可以幫助你組織機器人的 Action。"/><meta name="docsearch:version" content="1.3.0"/><meta name="docsearch:language" content="zh-TW"/><meta property="og:title" content="Routing · Bottender"/><meta property="og:type" content="website"/><meta property="og:url" content="https://bottender.js.org/"/><meta property="og:description" content="`路由` 是一個方便的模式可以幫助你組織機器人的 Action。"/><meta property="og:image" content="https://bottender.js.org/img/og-image.png"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://bottender.js.org/img/og-image.png"/><link rel="shortcut icon" href="/img/favicon-192x192.png"/><link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-dark.min.css"/><link rel="alternate" type="application/atom+xml" href="https://bottender.js.org/blog/atom.xml" title="Bottender Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://bottender.js.org/blog/feed.xml" title="Bottender Blog RSS Feed"/><script>
               (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
               (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
               m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
@@ -74,8 +74,8 @@
                 };
               }
             });
-        </script></nav></div><div class="container mainContainer docsContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://crowdin.com/project/bottender/zh-TW" target="_blank" rel="noreferrer noopener">Translate</a><h1 id="__docusaurus" class="postHeaderTitle">Routing</h1></header><article><div><span><p><code>路由</code> 是一個方便的設計模式可以幫助你組織機器人的 action。</p>
-<p>最基本的 Bottender <code>路由</code> 是由文字以及 action 組成的，提供一個直白、有表達力的定義方式。</p>
+        </script></nav></div><div class="container mainContainer docsContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://crowdin.com/project/bottender/zh-TW" target="_blank" rel="noreferrer noopener">Translate</a><h1 id="__docusaurus" class="postHeaderTitle">Routing</h1></header><article><div><span><p><code>路由</code> 是一個方便的模式可以幫助你組織機器人的 Action。</p>
+<p>最基本的 Bottender <code>路由</code> 是由文字以及 Action 組成的，提供一個直白、有表達力的定義方式。</p>
 <pre><code class="hljs css language-js"><span class="hljs-keyword">const</span> { router, text } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'bottender/router'</span>);
 
 <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">SayHi</span>(<span class="hljs-params">context</span>) </span>{
@@ -93,8 +93,8 @@
   ]);
 }
 </code></pre>
-<p><code>路由器</code> 是由一個 <code>路由</code> 的陣列所組成。 它回傳第一個命中的路由的 action。 巢狀的路由器或是任何與 action 相容的模式都是可以使用的。</p>
-<p>路由的第一個參數定義了命中的規則，它可以是一個字串的陣列。 當其中一個字串命中時，就會回傳這個路由的 action：</p>
+<p><code>路由器</code> 是由一個 <code>路由</code> 的陣列所組成。 它回傳第一個命中的路由的 Action。 巢狀的路由器或是任何與 Action 相容的模式都是可以使用的。</p>
+<p>路由的第一個參數定義了命中的規則，它可以是一個字串的陣列。 當其中一個字串命中時，就會回傳這個路由的 Action：</p>
 <pre><code class="hljs css language-js"><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params">context</span>) </span>{
   <span class="hljs-keyword">return</span> router([
     <span class="hljs-comment">// // return SayHi when receiving hi or hello or hey text message</span>
@@ -111,7 +111,7 @@
   ]);
 }
 </code></pre>
-<p>有時，你可能會想要添加 <a href="https://github.com/tc39/proposal-regexp-named-groups">named capture groups 到你的 JavaScript RegExp</a>：</p>
+<p>有時，你可能會想要添加 <a href="https://github.com/tc39/proposal-regexp-named-groups">Named Capture Groups 到你的 JavaScript RegExp</a>：</p>
 <pre><code class="hljs css language-js"><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params">context</span>) </span>{
   <span class="hljs-keyword">return</span> router([
     <span class="hljs-comment">// return Command when receiving /join, /invite, /whatever</span>
@@ -140,7 +140,7 @@
 <p><strong>注意：</strong> <code>RegExp Named Capturing Groups</code> 要 Node 10+ 才支援。</p>
 </blockquote>
 <h2><a class="anchor" aria-hidden="true" id="fallback-路由"></a><a href="#fallback-路由" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Fallback 路由</h2>
-<p>藉由使用 <code>*</code> 當作第一個參數，你可以定義一個路由給所有沒處理到的事件，它會在沒有其他路由命中進來的事件時觸發。 同時，回應沒處理到的事件是一個機會，讓你透過回覆 fallback 訊息或是一個使用手冊來介紹你的機器人的功能。</p>
+<p>藉由使用 <code>*</code> 當作第一個參數，你可以定義一個路由給所有沒處理到的事件，它會在沒有其他路由命中進來的事件時觸發。 同時，回應沒處理到的事件是一個機會，讓你透過回覆 Fallback 訊息或是一個使用手冊來介紹你的機器人的功能。</p>
 <pre><code class="hljs css language-js"><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Unknown</span>(<span class="hljs-params">context</span>) </span>{
   <span class="hljs-keyword">await</span> context.sendText(<span class="hljs-string">'Sorry. I do not understand what you say.'</span>);
 }
@@ -153,7 +153,7 @@
   ]);
 }
 </code></pre>
-<p>除了所有未處理到的文字訊息，你還可以用 <code>route('*', ...)</code> 來 fallback 所有包括文字以外的事件：</p>
+<p>除了所有未處理到的文字訊息，你還可以用 <code>route('*', ...)</code> 來 Fallback 所有包括文字以外的事件：</p>
 <pre><code class="hljs css language-js"><span class="hljs-keyword">const</span> { router, route, text } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'bottender/router'</span>);
 
 <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params">context</span>) </span>{
@@ -165,7 +165,7 @@
 }
 </code></pre>
 <blockquote>
-<p><strong>注意：</strong> 這個 fallback 路由必須是路由器中的最後一個路由。</p>
+<p><strong>注意：</strong> 這個 Fallback 路由必須是路由器中的最後一個路由。</p>
 </blockquote>
 <h2><a class="anchor" aria-hidden="true" id="payload-路由"></a><a href="#payload-路由" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Payload 路由</h2>
 <p>Payload 事件通常發生在當使用者在按按鈕、點選選單或是輸入鍵盤時送出了 payload 資料。 舉例來說，你可以命中點擊按鈕時送出的 <code>GET_STARTED</code> payload 並使用 <code>SayHi</code> action 來回應：</p>
@@ -195,7 +195,7 @@
   ]);
 }
 </code></pre>
-<p>在上面的範例中，這個自訂的路由命中 <code>Hi Bottender</code> 文字訊息，並回傳 <code>SayHi</code> action。</p>
+<p>在上面的範例中，這個自訂的路由命中 <code>Hi Bottender</code> 文字訊息，並回傳 <code>SayHi</code> Action。</p>
 <h2><a class="anchor" aria-hidden="true" id="平台特有的路由"></a><a href="#平台特有的路由" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>平台特有的路由</h2>
 <p>Bottender 包含許多東西可以幫助你在多平台應用程式中建立路由。 想要學習更多這些特有路由的細節，請參考它們的文件：</p>
 <ul>

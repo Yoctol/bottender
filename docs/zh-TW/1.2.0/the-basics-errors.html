@@ -95,23 +95,23 @@
 <p>上面的這段範例程式碼會在錯誤發生時為你做以下的幾件事情：</p>
 <ol>
 <li>送出 <code>There are some unexpected errors happened. Please try again later, sorry for the inconvenience.</code> 文字訊息給終端使用者。</li>
-<li>把錯誤印到 console。</li>
+<li>把錯誤印到 Console。</li>
 <li>把錯誤送到錯誤追蹤系統。</li>
 <li>把 <code>error.stack</code> 作為文字訊息發送給使用者 (只在開發環境)</li>
 </ol>
 <blockquote>
-<p><strong>注意：</strong>在 LINE 平台上，錯誤必須用一種不同的方式處理，因為 reply API 只能被呼叫一次。 你可以在 <a href="/docs/zh-TW/1.2.0/channel-line-errors">LINE 的錯誤處理文件中</a>閱讀更多相關內容。</p>
+<p><strong>注意：</strong>在 LINE 平台上，錯誤必須用一種不同的方式處理，因為 Reply API 只能被呼叫一次。 你可以在 <a href="/docs/zh-TW/1.2.0/channel-line-errors">LINE 的錯誤處理文件中</a>閱讀更多相關內容。</p>
 </blockquote>
 <h2><a class="anchor" aria-hidden="true" id="把錯誤送到-sentry"></a><a href="#把錯誤送到-sentry" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>把錯誤送到 Sentry</h2>
 <p><a href="https://sentry.io">Sentry</a> 是一個錯誤追蹤、監控工具，可以即時地彙整橫跨系統的錯誤訊息。</p>
-<p>要跟它整合的話，首先，你必須用套件管理下載 sdk 以使用它：</p>
+<p>要跟它整合的話，首先，你必須用套件管理下載 SDK 以使用它：</p>
 <pre><code class="hljs css language-sh"><span class="hljs-comment"># Using npm</span>
 $ npm install @sentry/node
 
 <span class="hljs-comment"># Using yarn</span>
 $ yarn add @sentry/node
 </code></pre>
-<p>Then, add those few lines of code in your <code>_error.js</code> to send your runtime errors to Sentry. 請確保你有填寫了你的 <a href="https://docs.sentry.io/error-reporting/quickstart/?platform=node">DSN (Data Source Name)</a> 來設定 Sentry：</p>
+<p>接下來，把這幾行程式碼添加到你的 <code>_error.js</code> 來把你的執行期間錯誤送到 Sentry。 請確保你有填寫了你的 <a href="https://docs.sentry.io/error-reporting/quickstart/?platform=node">DSN (Data Source Name)</a> 來設定 Sentry：</p>
 <pre><code class="hljs css language-js"><span class="hljs-comment">// _error.js</span>
 <span class="hljs-keyword">const</span> Sentry = <span class="hljs-built_in">require</span>(<span class="hljs-string">'@sentry/node'</span>);
 
