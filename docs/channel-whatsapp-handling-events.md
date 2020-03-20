@@ -32,7 +32,9 @@ Sometimes, your bot might receive the photos sent from the user. In this case, y
 ```js
 async function App(context) {
   if (context.event.isMedia) {
-    await context.sendText(`received the media message: ${context.event.media.contentType} ${context.event.media.url}`);
+    await context.sendText(
+      `received the media message: ${context.event.media.contentType} ${context.event.media.url}`
+    );
   }
 }
 ```

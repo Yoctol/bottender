@@ -17,8 +17,6 @@ To send with media URLs, you may use `mediaUrl` options:
 
 ```js
 await context.sendText('Hi', {
-  mediaUrl: [
-    'https://example.com/image.jpg',
-  ],
+  mediaUrl: ['https://example.com/image.jpg'],
 });
 ```
