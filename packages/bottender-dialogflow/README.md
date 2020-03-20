@@ -4,7 +4,7 @@
 
 ## Installation
 
-You can install it with NPM:
+You can install it with npm:
 
 ```sh
 npm install @bottender/dialogflow
