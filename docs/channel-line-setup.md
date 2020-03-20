@@ -74,7 +74,7 @@ npm start
 npm run dev
 ```
 
-When you run bottender in development mode, Bottender automatically run up a Ngrok client, and then you can get the information of webhook URL from the console like this:
+When you run bottender in development mode, Bottender automatically run up a ngrok client, and then you can get the information of webhook URL from the console like this:
 
 ```
 App has started

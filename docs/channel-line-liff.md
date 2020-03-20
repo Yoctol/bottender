@@ -55,7 +55,7 @@ For more details about creating a LINE Login channel, please checkout [Creating 
 
 For more details about registering a LIFF app, please checkout [Registering LIFF App](https://developers.line.biz/en/docs/liff/registering-liff-apps/#registering-liff-app).
 
-> **Note:** [Ngrok](https://ngrok.com/) is a well-known service that provides public HTTPs URLs for your local server using the tunnel. It's handy when you develop your bot locally. You may want to use it when developing.
+> **Note:** [ngrok](https://ngrok.com/) is a well-known service that provides public HTTPs URLs for your local server using the tunnel. It's handy when you develop your bot locally. You may want to use it when developing.
 
 ### Environment Variables Setting
 
