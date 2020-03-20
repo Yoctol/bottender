@@ -38,7 +38,7 @@ The example code above will do following things for you while an error occurred:
 
 [Sentry](https://sentry.io) is an error tracking and monitoring tool that aggregates errors across your stack in real time.
 
-To integrate with it, first, you need to download the sdk from registry to use it:
+To integrate with it, first, you need to download the SDK from registry to use it:
 
 ```sh
 # Using npm
