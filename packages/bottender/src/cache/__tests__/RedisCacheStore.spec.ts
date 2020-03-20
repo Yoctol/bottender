@@ -46,7 +46,7 @@ describe('#constructor', () => {
     });
   });
 
-  it('can call with url', () => {
+  it('can call with URL', () => {
     const store = new RedisCacheStore('redis://:authpassword@127.0.0.1:6380/4'); // eslint-disable-line no-unused-vars
 
     expect(Redis).toBeCalledWith('redis://:authpassword@127.0.0.1:6380/4');

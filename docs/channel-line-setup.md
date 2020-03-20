@@ -78,11 +78,11 @@ When you run bottender in development mode, Bottender automatically run up a ngr
 
 ```
 App has started
-line webhook url: https://42bbf602.ngrok.io/webhooks/line
+line webhook URL: https://42bbf602.ngrok.io/webhooks/line
 server is running on 5000 port...
 ```
 
-Then, you have to manually copy your webhook url to LINE official account's settings page. Finally, you are ready to interact with your bot on LINE.
+Then, you have to manually copy your webhook URL to LINE official account's settings page. Finally, you are ready to interact with your bot on LINE.
 
 > **Note:**
 >
