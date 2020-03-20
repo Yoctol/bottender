@@ -7,9 +7,9 @@ title: Migrating from LINE SDK for Node.js
 
 Bottender aims to help LINE developers focus on project-specific business logic. It is carefully crafted to save developers' time based on real project experience.
 
-To feel the magic of Bottender, you can check the section of comparison, [Creating a Bot Project by LINE SDK vs. Bottender.](#create-a-bot-project-by-line-sdk-vs-bottender) If you are keen on migrating your existing project to Bottender, you can jump to the section, [Migrate Your LINE SDK Bot Project to Bottender.](#migrate-your-line-sdk-bot-project-to-bottender-from-scratch)
+To feel the magic of Bottender, you can check the section of comparison, [Creating a Bot Project by LINE SDK vs Bottender.](#create-a-bot-project-by-line-sdk-vs-bottender) If you are keen on migrating your existing project to Bottender, you can jump to the section, [Migrate Your LINE SDK Bot Project to Bottender.](#migrate-your-line-sdk-bot-project-to-bottender-from-scratch)
 
-## Create a Bot Project by LINE SDK vs. Bottender
+## Create a Bot Project by LINE SDK vs Bottender
 
 In the following comparison, you can see a significant difference between creating an echo bot project by LINE SDK or Bottender. Comparing with the code lines of the LINE SDK project, you only need 5% code lines by Bottender.
 
