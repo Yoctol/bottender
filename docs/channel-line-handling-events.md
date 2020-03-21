@@ -3,7 +3,7 @@ id: channel-line-handling-events
 title: Handling LINE Events
 ---
 
-For a LINE bot, the two most frequent LINE events are `Text Event` and `Payload Event.`
+For a **LINE Official Account(LINE OA)**, the two most frequent LINE events are `Text Event` and `Payload Event.`
 
 - [`Text Event`](#text-events) is triggered when a user inputs text.
 - [`Payload Event`](#payload-events) can be triggered by postback buttons on template, imagemap, flex messages and rich menus, or quick replies.
