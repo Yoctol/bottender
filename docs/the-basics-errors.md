@@ -5,7 +5,7 @@ title: Error Handling
 
 ## Customizing the Error Message
 
-Bottender makes it easy to display custom error message for various runtime errors. To customize the error message sending to the user, you may create an `_error.js` file in your project root:
+Bottender makes displaying custom error messages easy for various runtime errors. To customize the error messages sending to users, you can create an `_error.js` file in your project root:
 
 ```js
 // _error.js
@@ -17,7 +17,7 @@ module.exports = async function HandleError(context, props) {
     'There are some unexpected errors happened. Please try again later, sorry for the inconvenience.'
   );
   if (process.env.NODE_ENV === 'production') {
-    // send your error to the error tracker, for example: Sentry
+    // send your error to your error tracker, for example: Sentry
   }
   if (process.env.NODE_ENV === 'development') {
     await context.sendText(props.error.stack);
@@ -25,20 +25,20 @@ module.exports = async function HandleError(context, props) {
 };
 ```
 
-The example code above will do following things for you while an error occurred:
+The above example does the following things while an error triggered:
 
-1. Send `There are some unexpected errors happened. Please try again later, sorry for the inconvenience.` text message to the end user.
-2. Log error to the console.
-3. Log error into error tracker.
-4. Send `error.stack` as text message to the user (only in the development)
+1. Send a "There are some unexpected errors happened. Please try again later, sorry for the inconvenience." text message to the end user.
+2. Log the error to the console.
+3. Log the error into your error tracker.
+4. Send `error.stack` as a text message to the user (only in development)
 
-> **Note:** In LINE channel, errors should be handled in a different way because reply API can only be called once. You can read more about it in the [Error Handling in LINE documentation](channel-line-errors.md).
+> **Note:** While building LINE bots, you must handle errors differently because the reply token can only be used once. For more information, see [Error Handling in LINE](channel-line-errors.md).
 
 ## Sending Errors to Sentry
 
-[Sentry](https://sentry.io) is an error tracking and monitoring tool that aggregates errors across your stack in real time.
+[Sentry](https://sentry.io) is an error tracking and monitoring service that aggregates errors across your stack in real time.
 
-To integrate with it, first, you need to download the SDK from registry to use it:
+To integrate with Sentry, first, you need to download the SDK from the registry to use the SDK:
 
 ```sh
 # Using npm
@@ -48,7 +48,7 @@ $ npm install @sentry/node
 $ yarn add @sentry/node
 ```
 
-Then, add those few lines of code in your `_error.js` to send your runtime errors to Sentry. Make sure that you fill in you [DSN (Data Source Name)](https://docs.sentry.io/error-reporting/quickstart/?platform=node) to configure the Sentry instance:
+Then, add the following few lines of code in your `_error.js` file to send your runtime errors to Sentry:
 
 ```js
 // _error.js
@@ -64,5 +64,7 @@ module.exports = async function HandleError(context, props) {
   }
 };
 ```
+
+> **Note:** Make sure to fill in your **[DSN (Data Source Name)](https://docs.sentry.io/error-reporting/quickstart/?platform=node)** to configure the Sentry instance.
 
 When errors happen in production, those errors will be sent to Sentry automatically.
