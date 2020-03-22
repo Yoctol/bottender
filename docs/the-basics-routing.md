@@ -3,9 +3,7 @@ id: the-basics-routing
 title: Routing
 ---
 
-`Routing` is a handy pattern to help you organize bot actions.
-
-The most basic Bottender `Route` is composed of a text and an action, providing a straightforward and expressive definition:
+**Routing** is a pattern that helps you organize your [Bottender actions]((the-basics-actions.md) in your Bottender application. For example, you can use the `router` function and the `text` function to create an action that handles "hi" and "hello" text message events with the different actions (`SayHi` and `SayHello`) as follows:
 
 ```js
 const { router, text } = require('bottender/router');
@@ -20,20 +18,24 @@ async function SayHello(context) {
 
 async function App() {
   return router([
-    text('hi', SayHi), // return SayHi when receiving hi text message
-    text('hello', SayHello), // return SayHello when receiving hello text message
+    // return the `SayHi` action when receiving "hi" text messages
+    text('hi', SayHi),
+    // return the `SayHello` action when receiving "hello" text messages
+    text('hello', SayHello),
   ]);
 }
 ```
 
-`Router` is consists of an array of `Routes`. It returns the action of the first matched route. It is possible to have nested routers or any pattern that compatible with actions.
+> **Note:** The `router` function, the `text` function, and some other functions that we introduce below are coming from the `bottender/router` module. If you want to use them, make sure to import them from the `bottender/router` module correctly.
 
-The first argument of route defines the matching rule, which could be an array of strings. The action of the route will be returned when one of the strings is matched:
+The `router` function takes an array of routes to create a router. The created router checks each route is matching the condition or not in the specified order and returns the provided action of the first matching route.
+
+The first argument of the `text` function defines the matching rule, which could also be an array of strings. In the following example, when receiving "hi", "hello" or "hey" text messages, the router returns the `SayHi` action:
 
 ```js
 async function App(context) {
   return router([
-    // // return SayHi when receiving hi or hello or hey text message
+    // return the `SayHi` action when receiving "hi", "hello" or "hey" text messages
     text(['hi', 'hello', 'hey'], SayHi),
   ]);
 }
@@ -41,29 +43,31 @@ async function App(context) {
 
 ## Regular Expression Routes
 
-If you are familiar with [regular expressions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions), it's a powerful way to extend your matching rules with JavaScript RegExp:
+If you are familiar with [regular expressions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions), you can use JavaScript `RegExp` to extend your matching rules as follows:
 
 ```js
 async function App(context) {
   return router([
-    // return SayHi when receiving case-insensitive hi or hello text message
+    // return the `SayHi` action when receiving case-insensitive "hi" or "hello" text messages
     text(/^(hi|hello)$/i, SayHi),
   ]);
 }
 ```
+
+By using the regular expression, your bot now handles "HI", "Hello" text messages as well.
 
 Sometimes you may want to add [named capture groups to your JavaScript RegExps](https://github.com/tc39/proposal-regexp-named-groups):
 
 ```js
 async function App(context) {
   return router([
-    // return Command when receiving /join, /invite, /whatever
+    // return the `Command` action when receiving "/join", "/invite", or "/whatever" text messages
     text(/^\/(?<command>\S+)$/i, Command),
   ]);
 }
 ```
 
-Then, you can access match groups result in your props:
+Then, you can access the result of the match groups in your `props`:
 
 ```js
 async function Command(
@@ -87,7 +91,7 @@ async function Command(
 
 ## Fallback Routes
 
-By using the `*` as the first argument, you may define a route for unhandled events, which triggers whenever no other routes match the incoming event. Meanwhile, reply to unhandled events is a chance to introduce bot features by sending a fallback message or a user's manual.
+By using the `*` as the first argument of the `text` function, you may define a route for the unhandled text message events. The route triggers whenever no other route matches the incoming text event. Meanwhile, handling unhandled text message events is a chance to guide your users by sending a fallback message or a user's manual. For example:
 
 ```js
 async function Unknown(context) {
@@ -97,13 +101,13 @@ async function Unknown(context) {
 async function App(context) {
   return router([
     text(/^(hi|hello)$/i, SayHi),
-    // return Unknown when when no other route matches the incoming text message
+    // return the `Unknown` action when when no other route matches the incoming text message
     text('*', Unknown),
   ]);
 }
 ```
 
-Besides all unhandled text message events, you can fallback all events by `route('*', ...)` instead:
+Besides all unhandled text message events, you can fallback all kind of events by using `route('*', ...)` instead:
 
 ```js
 const { router, route, text } = require('bottender/router');
@@ -111,17 +115,17 @@ const { router, route, text } = require('bottender/router');
 async function App(context) {
   return router([
     text(/^(hi|hello)$/i, SayHi),
-    // return Unknown when when no other route matches the incoming event
+    // return the `Unknown` action when no other route matches the incoming event
     route('*', Unknown),
   ]);
 }
 ```
 
-> **Note:** The fallback route must be the final route in your router.
+> **Note:** The fallback route must be the last route in your router.
 
 ## Payload Routes
 
-Payload events typically happen when users send payload data by clicking buttons, selecting menus, or clicking keyboards. For example, you may catch `GET_STARTED` payload that send by button click and respond with `SayHi` action:
+Payload events typically happen when users send payload data by clicking buttons, selecting menus, or clicking keyboards. For example, you may catch `GET_STARTED` payload that sends by clicking the button and respond with the `SayHi` action:
 
 ```js
 const { router, payload } = require('bottender/router');
@@ -129,7 +133,7 @@ const { router, payload } = require('bottender/router');
 async function App(context) {
   return router([
     payload('GET_STARTED', SayHi),
-    // return Unknown when when no other route matches the incoming event
+    // return the `Unknown` action when no other route matches the incoming event
     route('*', Unknown),
   ]);
 }
@@ -137,7 +141,7 @@ async function App(context) {
 
 ## Custom Routes
 
-If you wish to use your route predicate, you may use the `route` to create your route wrapper.
+If you prefer to use your route predicate, you may use the `route` function to create your route wrapper. The `route` function takes a function that returns a boolean as the first argument:
 
 ```js
 const { router, route } = require('bottender/router');
@@ -149,17 +153,17 @@ function sayHiTo(name, Action) {
 async function App(context) {
   return router([
     sayHiTo('Bottender', SayHi),
-    // return Unknown when when no other route matches the incoming event
+    // return the `Unknown` action when no other route matches the incoming event
     route('*', Unknown),
   ]);
 }
 ```
 
-In the above example, the custom route matches `Hi Bottender` text message and resolve `SayHi` action.
+In the above example, the custom route matches the "Hi Bottender" text messages and returns the `SayHi` action.
 
 ## Platform Specific Routes
 
-Bottender includes a bunch of helpers to route within your multi-platform application. To learn more about the details of those specific routes, check out their documentation:
+Bottender includes a bunch of helpers to route within your multi-platform application. To learn more about the details of those specific routes, check out their documentation accordingly:
 
 - [Messenger Routes](channel-messenger-routing.md)
 - [WhatsApp Routes](channel-whatsapp-routing.md)
