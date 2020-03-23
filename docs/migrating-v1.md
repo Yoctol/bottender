@@ -1,19 +1,23 @@
 ---
 id: migrating-v1
-title: Migrating from v0.x to v1.x
+title: Migrating from v0.x to v1
 ---
 
-To make bot developers have a happier development experience, we made some changes in terms of a better-structured config file, unifying cases to camel case, and introduction of two patterns: `Router` and `Chain`.
+To make bot developers have happier development experience, we made the following changes:
 
-You can follow the below guide to migrate your Bottender's code from v0.x to v1.x.
+- Improving the structure of the configuration file
+- Using camel case consistently
+- Introducing two new patterns: [Routing](the-basics-routing.md) and [Chain of Responsibility](the-basics-chain.md)
 
-> **Note:** The following sample code is based on a Messenger bot, but you could still apply the similar strategy to bots on any other platforms.
+You can follow the steps below to migrate your Bottender application from v0.x to v1.
 
-## Configure Session Driver and Channel Settings in `bottender.config.js`
+> **Note:** The following code samples are based on the Messenger bots, but you can still apply a similar strategy to your bots on any other platforms.
+
+## Configuring Session Driver and Channel Settings in `bottender.config.js`
 
 ### v0.x
 
-In v0.x, only part of channel settings are put into `bottender.config.js` file:
+In Bottender v0.x, the `bottender.config.js` file only includes part of the channel settings:
 
 ```js
 // bottender.config.js
@@ -26,7 +30,7 @@ module.exports = {
 };
 ```
 
-And you need to construct a session store and bot yourself in `index.js`:
+So, you must construct a session store and a bot instance yourself in the `index.js` file:
 
 ```js
 // index.js
@@ -35,7 +39,7 @@ const { createServer } = require('bottender/express');
 
 const config = require('./bottender.config').messenger;
 
-const maxSize = 500; // The maximum size of the cache, default will be 500.
+const maxSize = 500; // The maximum size of the cache, default is 500.
 
 const bot = new MessengerBot({
   accessToken: config.accessToken,
@@ -55,11 +59,9 @@ server.listen(5000, () => {
 });
 ```
 
-### v1.x
+### v1
 
-In v1.x, we move the session store settings and channel settings into `bottender.config.js`.
-
-Also, the channel section of the config file is ready to support multiple chat channels. For each channel, you can see an extra `enable` parameter. It is handy when you want to deploy the bot on specific chat channels first.
+In Bottender v1, the better `bottender.config.js` file includes the session store settings and the channel settings. The config file supports multiple chat channels out of the box. For each channel, you can enable and disable the channel by modifying the `enable` field:
 
 ```js
 // bottender.config.js
@@ -68,14 +70,14 @@ module.exports = {
     driver: 'memory',
     stores: {
       memory: {
-        maxSize: 500, // The maximum size of the cache, default will be 500.
+        maxSize: 500, // The maximum size of the cache, default is 500.
       },
     },
   },
 
   channels: {
     messenger: {
-      enabled: true,
+      enabled: true, // Modify this boolean value to enable or disable
       path: '/webhooks/messenger',
       pageId: process.env.MESSENGER_PAGE_ID,
       accessToken: process.env.MESSENGER_ACCESS_TOKEN,
@@ -87,7 +89,7 @@ module.exports = {
 };
 ```
 
-And you can put your environment variables in `.env` file:
+Also, you can put your environment variables into the `.env` file:
 
 ```
 # .env
@@ -98,7 +100,7 @@ MESSENGER_APP_SECRET=
 MESSENGER_VERIFY_TOKEN=
 ```
 
-After changes above, your `index.js` file only focus on bot logic:
+And your `index.js` file can focus on the core logic of the bot:
 
 ```js
 // index.js
@@ -109,13 +111,13 @@ module.exports = async function App(context) {
 
 ## Unify Cases to Camel Case
 
-The mixed-use of camel case and snake case is error-prone, which results in an unpredictable development progress. For example, the JavaScript community embraces camel case keys on objects, while Messenger, Slack, Telegram, and Viber usually using snake case string as object keys.
+The JavaScript communities embrace camel case keys on objects, while Messenger, Slack, Telegram, and Viber usually use snake case string as object keys. The mixed-use of camel case and snake case is error-prone.
 
-In Bottender v1.x, you can use the camel case consistently. Let Bottender handle the case transform automatically for you.
+In Bottender v1, you can use the camel case consistently. Bottender handles the case transform automatically for you.
 
 ### v0.x
 
-In v0.x, keys represent in the snake case:
+In Bottender v0.x, object keys represent in the snake case in Messenger:
 
 ```js
 context.sendGenericTemplate([
@@ -141,9 +143,9 @@ context.sendGenericTemplate([
 ]);
 ```
 
-### v1.x
+### v1
 
-In v1.x, keys represent in the camel case:
+In Bottender v1, object keys represent in the camel case in Messenger:
 
 ```js
 context.sendGenericTemplate([
@@ -169,17 +171,17 @@ context.sendGenericTemplate([
 ]);
 ```
 
-### Migrate to v1.x by `bottender-codemod`
+### Migrate to v1 by `bottender-codemod`
 
-[`bottender-codemod`](https://github.com/bottenderjs/bottender-codemod) is a command-line tool to help you change snake case in Bottender v0.x to camel case for Bottender v1.x. It helps you migrate the majority of your code to the camel case.
+[`bottender-codemod`](https://github.com/bottenderjs/bottender-codemod) is a command-line tool to help you modify your snake case code into the camel case for Bottender v1. This tool helps you migrate the majority of your code.
 
-Please remember to commit your current code before running [`bottender-codemod`](https://github.com/bottenderjs/bottender-codemod).
+> **Note:** Please make sure to commit your unmodified code before running [`bottender-codemod`](https://github.com/bottenderjs/bottender-codemod).
 
 ```js
 npx bottender-codemod camelcase <your_file_path>
 ```
 
-If you want to try it without file changed, you can dry run and print it with the following command.
+If you want to try it without files changed, you may dry run and print the result out with the `--dry` and `--print` options:
 
 ```js
 npx bottender-codemod camelcase <your_file_path> --dry --print
@@ -187,7 +189,7 @@ npx bottender-codemod camelcase <your_file_path> --dry --print
 
 ## Replace Middleware and Handlers with Router and Chain
 
-In the world of functional declarative, `middleware` and `Handlers` are not suitable due to the difficulty of composing together. So, we are deprecating those APIs in favor of new introduced [`Router`](./the-basics-routing.md) and [`Chain`](the-basics-chain.md) APIs. If you still prefer `middleware` and `Handlers`, you can still use them by installing `@bottender/handlers` package:
+Using the `middleware` function and the `Handler` classes together are very difficult. So, we are deprecating those APIs in favor of the new  APIs: [Routing](the-basics-routing.md) and [Chain](the-basics-chain.md). If you prefer the `middleware` function and the `Handler` classes, you can still use them by installing the `@bottender/handlers` package:
 
 ```js
 npm install @bottender/handlers
@@ -196,7 +198,7 @@ npm install @bottender/handlers
 yarn add @bottender/handlers
 ```
 
-And make those changes to your imports:
+Then, apply the following changes to your import statements:
 
 ```diff
 const {
@@ -213,4 +215,4 @@ const {
 
 ## Change Log
 
-You can find [v1 changelog here](https://github.com/Yoctol/bottender/releases/tag/v1.0.0).
+For more information, see [v1 changelog](https://github.com/Yoctol/bottender/releases/tag/v1.0.0).
