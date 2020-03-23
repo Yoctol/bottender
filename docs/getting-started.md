@@ -60,6 +60,6 @@ After applying the changes, Bottender restarts the application automatically.
 
 ![](https://user-images.githubusercontent.com/3382565/67745488-57991c80-fa5f-11e9-91d2-659b65df2c58.png)
 
-That's it! Now, you get a bot that can replies with what it receives to your console.
+That's it! Now, you get a bot that can reply with what it receives to your console.
 
 For more information about Create Bottender App, see [the README file of Create Bottender App](https://github.com/Yoctol/bottender/tree/master/packages/create-bottender-app/README.md).
