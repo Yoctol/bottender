@@ -1,11 +1,9 @@
 ---
 id: the-basics-actions
-title: Resolving Actions
+title: Bottender Actions
 ---
 
-Actions are the smallest building blocks of Bottender apps. An action describes what you want to respond according to the conversation context.
-
-To define an action, just write a JavaScript function or async function:
+**Bottender actions** are the smallest building blocks of Bottender applications. An action describes what you want your bot to do when receiving an event:
 
 ```js
 async function SayHi(context) {
@@ -13,13 +11,23 @@ async function SayHi(context) {
 }
 ```
 
-Actions typically accept `context` as first argument. There are a bunch of stuff in the conversation context, and you can use them to construct your actions. For instance, you may use `context.sendText()` to send a text to the user from the bot.
+A typical action takes `context` as the first argument. The `context` variable provides the data in the conversation context and various methods to interact with the user. You can use those data and methods to build your actions. For example, you may create an `Echo` action to reply with the text it receives to the user using `context.sendText(context.event.text)`:
+
+```js
+async function Echo(context) {
+  if (context.event.isText) {
+    await context.sendText(context.event.text);
+  }
+}
+```
+
+> **Note:** The `context` variable provides methods differently between the platforms. You can apply a progressive enhancement strategy using platform-specific methods.
 
 ## Composing Actions
 
-Actions can refer to other actions as their return value. This lets us use the same action abstraction for any level of detail.
+Bottender actions are composable. Actions can refer to other actions as their return value.
 
-For example, you may create an `App` action that says `Hi!` back when it receives `hi` and says sorry for anything else:
+For example, you may use the `SayHi` and `Unknown` action to create another `App` action:
 
 ```js
 async function SayHi(context) {
@@ -27,7 +35,7 @@ async function SayHi(context) {
 }
 
 async function Unknown(context) {
-  await context.sendText('Sorry. I do not understand what you say.');
+  await context.sendText('Sorry.');
 }
 
 async function App(context) {
@@ -38,19 +46,13 @@ async function App(context) {
 }
 ```
 
-> **Note:** New Bottender apps created by Create Bottender App have a single `App` action as entry point in `src/index.js`. However, if you are very familiar with Bottender, you can rename the action or even use different structure instead.
+If the `App` action receives a "hi" text message, it replies with a "Hi!" text message. Otherwise, the `App` action replies with a "Sorry." text message.
+
+> **Note:** New Bottender applications created by Create Bottender App have an `App` action as an entry point in the `src/index.js` file. However, if you are familiar with Bottender, you may rename the action or even use different structure instead.
 
 ## Passing Props to Actions
 
-Previously, you only saw Bottender actions that accept one argument - `context`:
-
-```js
-async function SayHi(context) {
-  await context.sendText('Hi!');
-}
-```
-
-However, you can access the second argument - `props` to define actions with flexibility in mind:
+In the above examples, the actions only take one argument `context`. However, you can utilize the second argument - `props` to define your actions with flexibility in mind:
 
 ```js
 async function SayHi(context, props) {
@@ -58,7 +60,7 @@ async function SayHi(context, props) {
 }
 ```
 
-Instead of returning the action directly without `props`, you can use `withProps` to pass a single object as `props` to the action:
+Instead of returning the action directly without `props`, you can use the `withProps` function to provide an object as `props` for the action:
 
 ```js
 const { withProps } = require('bottender');
@@ -68,17 +70,17 @@ async function App(context) {
 }
 ```
 
-Bottender will call the `SayHi` action with `{ name: 'Bob' }` as the `props` and send `Hi, Bob.` text message as result to the user.
+Bottender provides `{ name: 'Bob' }` as `props` for the `SayHi` action, so your bot replies the "Hi, Bob." text message as a result to the user.
 
-## How to Debug
+## How to Debug Actions
 
-Bottender use famous [debug](https://www.npmjs.com/package/debug) package internally to collect some helpful information that can be showed up when you provide corresponding `DEBUG` environment variable. To debug your actions, you may run your command with `DEBUG=bottender:action`, for example:
+Bottender uses the famous [debug](https://www.npmjs.com/package/debug) package internally to collect some helpful information that can be showed up when you provide the corresponding `DEBUG` environment variable. To debug your actions, you may run your command with `DEBUG=bottender:action`, for example:
 
 ```sh
 DEBUG=bottender:action npm start
 ```
 
-> **Note:** If you are developing your bots on Windows, you may use [cross-env](https://www.npmjs.com/package/cross-env) to assign `DEBUG` environment variable:
+> **Note:** If you are developing your bots on Windows, you may use the [cross-env](https://www.npmjs.com/package/cross-env) package to assign the `DEBUG` environment variable:
 
 ```sh
 cross-env DEBUG=bottender:action npm start
@@ -92,4 +94,4 @@ DEBUG=bottender:action
 
 ![](https://user-images.githubusercontent.com/3382565/70204869-0dd9db00-175d-11ea-814f-140b3807f39d.gif)
 
-We recommend that you should always name your actions, so it will print meaningful paths for you to debug instead of showing `Anonymous` as action name.
+We recommend that you always name your actions, so Bottender prints meaningful paths for you to debug instead of showing `Anonymous` as the action name.
