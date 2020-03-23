@@ -24,51 +24,30 @@ function App() {
   ]);
 }
 
-async function HandleMessage(context) {
-  /* skip... */
-}
-async function HandleEditedMessage(context) {
-  /* skip... */
-}
-async function HandleChannelPost(context) {
-  /* skip... */
-}
-async function HandleEditedChannelPost(context) {
-  /* skip... */
-}
-async function HandleInlineQuery(context) {
-  /* skip... */
-}
-async function HandleChosenInlineResult(context) {
-  /* skip... */
-}
-async function HandleCallbackQuery(context) {
-  /* skip... */
-}
-async function HandleShippingQuery(context) {
-  /* skip... */
-}
-async function HandlePreCheckoutQuery(context) {
-  /* skip... */
-}
-async function HandlePoll(context) {
-  /* skip... */
-}
-async function HandleTelegram(context) {
-  /* skip... */
-}
+/* Note: You need to implement those functions */
+async function HandleMessage(context) {}
+async function HandleEditedMessage(context) {}
+async function HandleChannelPost(context) {}
+async function HandleEditedChannelPost(context) {}
+async function HandleInlineQuery(context) {}
+async function HandleChosenInlineResult(context) {}
+async function HandleCallbackQuery(context) {}
+async function HandleShippingQuery(context) {}
+async function HandlePreCheckoutQuery(context) {}
+async function HandlePoll(context) {}
+async function HandleTelegram(context) {}
 ```
 
 All available routes in `telegram` that recognize different kind of events:
 
-- `telegram` - matches when receiving any telegram events.
-- `telegram.message` - matches when receiving telegram `message` events.
-- `telegram.editedMessage` - matches when receiving telegram `editedMessage` events.
-- `telegram.channelPost` - matches when receiving telegram `channelPost` events.
-- `telegram.editedChannelPost` - matches when receiving telegram `editedChannelPost` events.
-- `telegram.inlineQuery` - matches when receiving telegram `inlineQuery` events.
-- `telegram.chosenInlineResult` - matches when receiving telegram `chosenInlineResult` events.
-- `telegram.callbackQuery` - matches when receiving telegram `callbackQuery` events.
-- `telegram.shippingQuery` - matches when receiving telegram `shippingQuery` events.
-- `telegram.preCheckoutQuery` - matches when receiving telegram `preCheckoutQuery` events.
-- `telegram.poll` - matches when receiving telegram `poll` events.
+- `telegram` - triggers the action when receiving any Telegram events.
+- `telegram.message` - triggers the action when receiving Telegram `message` events.
+- `telegram.editedMessage` - triggers the action when receiving Telegram `editedMessage` events.
+- `telegram.channelPost` - triggers the action when receiving Telegram `channelPost` events.
+- `telegram.editedChannelPost` - triggers the action when receiving Telegram `editedChannelPost` events.
+- `telegram.inlineQuery` - triggers the action when receiving Telegram `inlineQuery` events.
+- `telegram.chosenInlineResult` - triggers the action when receiving Telegram `chosenInlineResult` events.
+- `telegram.callbackQuery` - triggers the action when receiving Telegram `callbackQuery` events.
+- `telegram.shippingQuery` - triggers the action when receiving Telegram `shippingQuery` events.
+- `telegram.preCheckoutQuery` - triggers the action when receiving Telegram `preCheckoutQuery` events.
+- `telegram.poll` - triggers the action when receiving Telegram `poll` events.

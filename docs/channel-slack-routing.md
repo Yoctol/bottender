@@ -17,22 +17,15 @@ function App() {
   ]);
 }
 
-async function HandleMessage(context) {
-  /* skip... */
-}
-async function HandlePinAdded(context) {
-  /* skip... */
-}
-async function HandleStarAdded(context) {
-  /* skip... */
-}
-async function HandleSlack(context) {
-  /* skip... */
-}
+/* Note: You need to implement those functions */
+async function HandleMessage(context) {}
+async function HandlePinAdded(context) {}
+async function HandleStarAdded(context) {}
+async function HandleSlack(context) {}
 ```
 
 All available routes in `slack` that recognize different kind of events:
 
-- `slack` - matches when receiving any slack events.
-- `slack.message` - matches when receiving slack message events.
-- `slack.event` - matches when receiving particular slack events. See all event types in [slack docs](https://api.slack.com/events).
+- `slack` - triggers the action when receiving any Slack events.
+- `slack.message` - triggers the action when receiving Slack message events.
+- `slack.event` - triggers the action when receiving particular Slack events. See all event types in [Slack docs](https://api.slack.com/events).
