@@ -5,9 +5,9 @@ title: Console Mode
 
 ## Introduction
 
-The console mode is a productivity feature shipped with Bottender. It speeds up bot development iteration by running bots in the console. Comparing with testing your bots fully on the existing messaging platforms (e.g., Messenger, LINE), we recommend building, testing, and debugging part of your bots in the console mode.
+Console mode is a productivity feature shipped with Bottender. It speeds up bot development iteration by running bots in the console. Comparing with testing your bots fully on existing messaging platforms (e.g., Messenger, LINE), we recommend building, testing, and debugging part of your bots in console mode.
 
-## Running in the Console Mode
+## Running in Console Mode
 
 In Bottender applications that created by Create Bottender App, you can provide the `--console` option from npm scripts to the underlying start/dev commands:
 
@@ -58,9 +58,9 @@ Bot > sendSticker with args:
 
 This helpful trick lets you test your bots with many different types of responses in the console.
 
-## Exiting the Console Mode
+## Exiting Console Mode
 
-To exit the console mode, press `ctrl + c` twice or enter the following command:
+To exit console mode, press `ctrl + c` twice or enter the following command:
 
 ```
 /exit
