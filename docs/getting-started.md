@@ -7,7 +7,7 @@ title: Getting Started
 
 **Create Bottender App** is the best way to start building a new application in Bottender.
 
-It initializes your development environment for the latest Bottender features, provides a great experience for multi-channel development, and optimizes your application for production deployment. To create a project, run:
+It initializes your development environment for latest Bottender features, provides a great experience for multi-channel development, and optimizes your application for production deployment. To create a project, run:
 
 ```sh
 npx create-bottender-app my-app
@@ -20,7 +20,7 @@ After going through the steps, you see a directory named `my-app` containing a n
 ![](https://user-images.githubusercontent.com/3382565/67745483-5667ef80-fa5f-11e9-8bae-39489b8544e7.png)
 ![](https://user-images.githubusercontent.com/3382565/67745485-57008600-fa5f-11e9-8fed-8d97d600a760.png)
 
-Running the bot in the [Bottender Console Mode](the-basics-console-mode.md) is the easiest way to run the bot. To run in the console mode, provide the `--console` option to the `npm run dev` command:
+Running the bot in [Bottender Console Mode](the-basics-console-mode.md) is the easiest way to run the bot. To run in Console Mode, provide the `--console` option to the `npm run dev` command:
 
 ```sh
 cd my-app
