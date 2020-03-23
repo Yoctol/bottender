@@ -5,7 +5,7 @@ title: Console Mode
 
 ## Introduction
 
-Console mode is a productivity feature shipped with Bottender. It speeds up bot development iteration by running bots in the console. Comparing with testing your bots fully on existing messaging platforms (e.g., Messenger, LINE), we recommend building, testing, and debugging part of your bots in console mode.
+**Console Mode** is a productivity feature shipped with Bottender. It speeds up bot development iteration by running bots in the console. Comparing with testing your bots fully on existing messaging platforms (e.g., Messenger, LINE), we recommend building, testing, and debugging part of your bots in Console Mode.
 
 ## Running in Console Mode
 
@@ -16,7 +16,7 @@ npm start -- --console
 npm run dev -- --console
 ```
 
-With the `--console` option, Bottender runs the bot in the console:
+With the `--console` option, Bottender runs the bot in Console Mode:
 
 ![](https://user-images.githubusercontent.com/3382565/67745487-57991c80-fa5f-11e9-8eb7-9e4144df9e73.png)
 
@@ -24,7 +24,7 @@ With the `--console` option, Bottender runs the bot in the console:
 
 The most common event types that sent by the end users are text message event type and payload event type.
 
-To send a text message event, enter your message text into the console:
+To send a text message event, enter your message text into your console:
 
 ```
 You > MY_TEXT
@@ -38,13 +38,13 @@ You > /payload MY_PAYLOAD
 
 ## Receiving the Responses
 
-Every response you receive from the bot is following by the `Bot >` prefix, for example:
+Every response you receive from the bot prefixes by the Bot > indicator, for example:
 
 ```
 Bot > Hi!
 ```
 
-Except for text message responses, Bottender displays other response types as the name and arguments of the invoked method:
+Bottender displays response types as the name and arguments of the invoked method, except text message responses:
 
 ```
 Bot > sendSticker with args:
@@ -60,7 +60,7 @@ This helpful trick lets you test your bots with many different types of response
 
 ## Exiting Console Mode
 
-To exit console mode, press `ctrl + c` twice or enter the following command:
+To exit Console Mode, press `ctrl + c` twice or enter the following command:
 
 ```
 /exit
