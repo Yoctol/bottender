@@ -20,35 +20,22 @@ function App() {
   ]);
 }
 
-async function HandleMessage(context) {
-  /* skip... */
-}
-async function HandleMedia(context) {
-  /* skip... */
-}
-async function HandleReceived(context) {
-  /* skip... */
-}
-async function HandleSent(context) {
-  /* skip... */
-}
-async function HandleDelivered(context) {
-  /* skip... */
-}
-async function HandleRead(context) {
-  /* skip... */
-}
-async function HandleWhatsapp(context) {
-  /* skip... */
-}
+/* Note: You need to implement those functions */
+async function HandleMessage(context) {}
+async function HandleMedia(context) {}
+async function HandleReceived(context) {}
+async function HandleSent(context) {}
+async function HandleDelivered(context) {}
+async function HandleRead(context) {}
+async function HandleWhatsapp(context) {}
 ```
 
 All available routes in `whatsapp` that recognize different kind of events:
 
-- `whatsapp` - matches when receiving any whatsapp events.
-- `whatsapp.message` - matches when receiving whatsapp `received` events. Alias: `whatsapp.received`.
-- `whatsapp.media` - matches when receiving whatsapp `received` events includes media.
-- `whatsapp.received` - matches when receiving whatsapp `received` events.
-- `whatsapp.sent` - matches when receiving whatsapp `sent` events.
-- `whatsapp.delivered` - matches when receiving whatsapp `delivered` events.
-- `whatsapp.read` - matches when receiving whatsapp `read` events.
+- `whatsapp` - triggers the action when receiving any WhatsApp events.
+- `whatsapp.message` - triggers the action when receiving WhatsApp `received` events. Alias: `whatsapp.received`.
+- `whatsapp.media` - triggers the action when receiving WhatsApp `received` events includes media.
+- `whatsapp.received` - triggers the action when receiving WhatsApp `received` events.
+- `whatsapp.sent` - triggers the action when receiving WhatsApp `sent` events.
+- `whatsapp.delivered` - triggers the action when receiving WhatsApp `delivered` events.
+- `whatsapp.read` - triggers the action when receiving WhatsApp `read` events.

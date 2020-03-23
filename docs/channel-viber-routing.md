@@ -21,39 +21,24 @@ function App() {
   ]);
 }
 
-async function HandleMessage(context) {
-  /* skip... */
-}
-async function HandleSubscribed(context) {
-  /* skip... */
-}
-async function HandleUnsubscribed(context) {
-  /* skip... */
-}
-async function HandleConversationStarted(context) {
-  /* skip... */
-}
-async function HandleDelivered(context) {
-  /* skip... */
-}
-async function HandleSeen(context) {
-  /* skip... */
-}
-async function HandleFailed(context) {
-  /* skip... */
-}
-async function HandleViber(context) {
-  /* skip... */
-}
+/* Note: You need to implement those functions */
+async function HandleMessage(context) {}
+async function HandleSubscribed(context) {}
+async function HandleUnsubscribed(context) {}
+async function HandleConversationStarted(context) {}
+async function HandleDelivered(context) {}
+async function HandleSeen(context) {}
+async function HandleFailed(context) {}
+async function HandleViber(context) {}
 ```
 
 All available routes in `viber` that recognize different kind of events:
 
-- `viber` - matches when receiving any viber events.
-- `viber.message` - matches when receiving viber `message` events.
-- `viber.subscribed` - matches when receiving viber `subscribed` events.
-- `viber.unsubscribed` - matches when receiving viber `unsubscribed` events.
-- `viber.conversationStarted` - matches when receiving viber `conversation_started` events.
-- `viber.delivered` - matches when receiving viber `delivered` events.
-- `viber.seen` - matches when receiving viber `seen` events.
-- `viber.failed` - matches when receiving viber `failed` events.
+- `viber` - triggers the action when receiving any Viber events.
+- `viber.message` - triggers the action when receiving Viber `message` events.
+- `viber.subscribed` - triggers the action when receiving Viber `subscribed` events.
+- `viber.unsubscribed` - triggers the action when receiving Viber `unsubscribed` events.
+- `viber.conversationStarted` - triggers the action when receiving Viber `conversation_started` events.
+- `viber.delivered` - triggers the action when receiving Viber `delivered` events.
+- `viber.seen` - triggers the action when receiving Viber `seen` events.
+- `viber.failed` - triggers the action when receiving Viber `failed` events.
