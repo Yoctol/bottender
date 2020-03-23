@@ -126,7 +126,7 @@ curl -v -X POST https://api.line.me/v2/bot/richmenu \
   }'
 ```
 
-If you successfully create a rich menu, you will get a response with a rich menu ID.
+If you successfully create a rich menu, you get a response with a rich menu ID.
 
 ## Upload the Rich Menu Image
 
@@ -208,11 +208,11 @@ You can check out the full example [Here](https://github.com/Yoctol/bottender/tr
 
 ## Set Up Submenu
 
-In addition to using only one image as our rich menu, we can use multiple images to create a rich menu with several submenus. We can implement this by creating multiple rich menu objects and link them to the user dynamically with Bottender. Here, we will have an example that defines two submenus under a main rich menu.
+In addition to using only one image as our rich menu, we can use multiple images to create a rich menu with several submenus. We can implement this by creating multiple rich menu objects and link them to the user dynamically with Bottender. Here, we have an example that defines two submenus under a main rich menu.
 
 ### Prepare Rich Menu Images
 
-Here are the three rich menu images we will use to create a rich menu with two submenus. The logic is pretty simple: when we click the option on the main menu, we will get to the corresponding submenu. And when we click the back option on the submenu, we will go back to the main menu.
+Here are the three rich menu images we use to create a rich menu with two submenus. The logic is pretty simple: when we click the option on the main menu, we will get to the corresponding submenu. And when we click the back option on the submenu, we will go back to the main menu.
 
 `Main Menu`
 ![main menu](https://user-images.githubusercontent.com/32091985/70420536-ebb8c380-1aa2-11ea-9ad5-48c2c9599f84.jpg)

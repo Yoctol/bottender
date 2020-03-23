@@ -37,15 +37,14 @@ SLACK_VERIFICATION_TOKEN=
 VIBER_ACCESS_TOKEN=
 ```
 
-> **Note:**
-> If you are not familiar with set up chat channels, you may refer to the following Bottender docs:
-
-- [Setup Messenger](https://bottender.js.org/docs/channel-messenger-setup)
-- [Setup WhatsApp](https://bottender.js.org/docs/channel-whatsapp-setup)
-- [Setup LINE](https://bottender.js.org/docs/channel-line-setup)
-- [Setup Slack](https://bottender.js.org/docs/channel-slack-setup)
-- [Setup Telegram](https://bottender.js.org/docs/channel-telegram-setup)
-- [Setup Viber](https://bottender.js.org/docs/channel-viber-setup)
+> **Note:** If you are not familiar with setting up chat channels, you may refer to the following Bottender docs:
+>
+> - [Setup Messenger](https://bottender.js.org/docs/channel-messenger-setup)
+> - [Setup WhatsApp](https://bottender.js.org/docs/channel-whatsapp-setup)
+> - [Setup LINE](https://bottender.js.org/docs/channel-line-setup)
+> - [Setup Slack](https://bottender.js.org/docs/channel-slack-setup)
+> - [Setup Telegram](https://bottender.js.org/docs/channel-telegram-setup)
+> - [Setup Viber](https://bottender.js.org/docs/channel-viber-setup)
 
 ## Enable Each Chat channel
 

@@ -60,8 +60,7 @@ On success, the sent message is returned. You can save the returned message for 
 await context.sendMessage('hello');
 ```
 
-> **Note:**
-> For more info, please refer to Telegram's official doc, [sendMessage](https://core.telegram.org/bots/api#sendmessage).
+For more info, please refer to Telegram's official doc, [sendMessage](https://core.telegram.org/bots/api#sendmessage).
 
 ### Markdown Style Parse Mode
 
@@ -77,8 +76,7 @@ You can see the possible `Markdown` format below.
 
  <p><img width="800" src="https://user-images.githubusercontent.com/662387/71338571-5ed63580-258b-11ea-8362-8de4a081c4b0.png"></p>
 
-> **Note:**
-> For more info, please refer to Telegram's official doc, [Formatting Options](https://core.telegram.org/bots/api#formatting-options).
+For more info, please refer to Telegram's official doc, [Formatting Options](https://core.telegram.org/bots/api#formatting-options).
 
 ### HTML Style Parse Mode
 
@@ -98,8 +96,7 @@ On success, the sent message is returned. You can save the returned message for 
 await context.sendMessage('<b>hello</b>', { parseMode: 'html' });
 ```
 
-> **Note:**
-> For more info, please refer to Telegram's official doc, [Formatting Options](https://core.telegram.org/bots/api#formatting-options).
+For more info, please refer to Telegram's official doc, [Formatting Options](https://core.telegram.org/bots/api#formatting-options).
 
 ## Sending Rich Media Messages
 
@@ -113,8 +110,7 @@ Use this method to send photos. On success, the sent message is returned.
 await context.sendPhoto('https://www.example.com/example.png');
 ```
 
-> **Note:**
-> For more info, please refer to Telegram's official doc, [sendPhoto](https://core.telegram.org/bots/api#sendphoto).
+For more info, please refer to Telegram's official doc, [sendPhoto](https://core.telegram.org/bots/api#sendphoto).
 
 ### Audio
 
@@ -124,8 +120,7 @@ Use this method to send audio. On success, the sent message is returned.
 await context.sendAudio('https://www.example.com/example.mp3');
 ```
 
-> **Note:**
-> For more info, please refer to Telegram's official doc, [sendAudio](https://core.telegram.org/bots/api#sendaudio).
+For more info, please refer to Telegram's official doc, [sendAudio](https://core.telegram.org/bots/api#sendaudio).
 
 ### Document
 
@@ -135,8 +130,7 @@ Use this method to send general files. On success, the sent message is returned.
 await context.sendDocument('https://www.example.com/example.gif');
 ```
 
-> **Note:**
-> For more info, please refer to Telegram's official doc, [sendDocument](https://core.telegram.org/bots/api#senddocument).
+For more info, please refer to Telegram's official doc, [sendDocument](https://core.telegram.org/bots/api#senddocument).
 
 ### Video
 
@@ -146,8 +140,7 @@ Use this method to send video files; Telegram clients support mp4 videos (other 
 await context.sendVideo('https://www.example.com/example.mp4');
 ```
 
-> **Note:**
-> For more info, please refer to Telegram's official doc, [sendVideo](https://core.telegram.org/bots/api#sendvideo).
+For more info, please refer to Telegram's official doc, [sendVideo](https://core.telegram.org/bots/api#sendvideo).
 
 ### Animation
 
@@ -157,8 +150,7 @@ Use this method to send animation files (GIF or H.264/MPEG-4 AVC video **without
 await context.sendAnimation('https://www.example.com/example.mp4');
 ```
 
-> **Note:**
-> For more info, please refer to Telegram's official doc, [sendAnimation](https://core.telegram.org/bots/api#sendanimation).
+For more info, please refer to Telegram's official doc, [sendAnimation](https://core.telegram.org/bots/api#sendanimation).
 
 ### Sticker
 
@@ -180,8 +172,7 @@ module.exports = async function App(context) {
 };
 ```
 
-> **Note:**
-> For more info, please refer to Telegram's official doc, [sendSticker](https://core.telegram.org/bots/api#sendsticker).
+For more info, please refer to Telegram's official doc, [sendSticker](https://core.telegram.org/bots/api#sendsticker).
 
 ### Voice
 
@@ -193,8 +184,7 @@ For this to work, your audio must be in an .ogg file encoded with OPUS (other fo
 await context.sendVoice('https://www.example.com/example.ogg');
 ```
 
-> **Note:**
-> For more info, please refer to Telegram's official doc, [sendVoice](https://core.telegram.org/bots/api#sendvoice).
+For more info, please refer to Telegram's official doc, [sendVoice](https://core.telegram.org/bots/api#sendvoice).
 
 ### VideoNote
 
@@ -204,8 +194,7 @@ As of v.4.0, Telegram clients support rounded square mp4 videos of up to 1 minut
 await context.sendVideoNote('https://www.example.com/example.mp4');
 ```
 
-> **Note:**
-> For more info, please refer to Telegram's official doc, [sendVideoNote](https://core.telegram.org/bots/api#sendvideonote).
+For more info, please refer to Telegram's official doc, [sendVideoNote](https://core.telegram.org/bots/api#sendvideonote).
 
 ### MediaGroup
 
@@ -218,8 +207,7 @@ await context.sendMediaGroup([
 ]);
 ```
 
-> **Note:**
-> For more info, please refer to Telegram's official doc, [sendMediaGroup](https://core.telegram.org/bots/api#sendmediagroup).
+For more info, please refer to Telegram's official doc, [sendMediaGroup](https://core.telegram.org/bots/api#sendmediagroup).
 
 ### Location
 
@@ -229,8 +217,7 @@ Use this method to send a location point on the map. On success, the sent messag
 await context.sendLocation({ latitude: 25.105497, longitude: 121.597366 });
 ```
 
-> **Note:**
-> For more info, please refer to Telegram's official doc, [sendLocation](https://core.telegram.org/bots/api#sendlocation).
+For more info, please refer to Telegram's official doc, [sendLocation](https://core.telegram.org/bots/api#sendlocation).
 
 ### Venue
 
@@ -244,8 +231,7 @@ await context.sendVenue({
 });
 ```
 
-> **Note:**
-> For more info, please refer to Telegram's official doc, [sendVenue](https://core.telegram.org/bots/api#sendvenue).
+For more info, please refer to Telegram's official doc, [sendVenue](https://core.telegram.org/bots/api#sendvenue).
 
 ### Contact
 
@@ -272,8 +258,7 @@ await context.sendContact(
 );
 ```
 
-> **Note:**
-> For more info, please refer to Telegram's official doc, [sendContact](https://core.telegram.org/bots/api#sendcontact).
+For more info, please refer to Telegram's official doc, [sendContact](https://core.telegram.org/bots/api#sendcontact).
 
 ### Poll
 
@@ -288,10 +273,9 @@ await context.sendPoll('Which one is your favorite food?', [
 ]);
 ```
 
-> **Note:**
->
-> - If you try to send poll in a private chat, you will get an error message like, `"description": "Bad Request: polls can't be sent to private chats"`.
-> - For more info, please refer to Telegram's official doc, [sendPoll](https://core.telegram.org/bots/api#sendpoll).
+For more info, please refer to Telegram's official doc, [sendPoll](https://core.telegram.org/bots/api#sendpoll).
+
+> **Note:** If you try to send poll in a private chat, you will get an error message like, `"description": "Bad Request: polls can't be sent to private chats"`.
 
 ### Invoice
 
@@ -313,8 +297,7 @@ const invoice = {
 await context.sendInvoice(invoice);
 ```
 
-> **Note:**
-> For more info, please refer to Telegram's official doc, [sendInvoice](https://core.telegram.org/bots/api#sendinvoice).
+For more info, please refer to Telegram's official doc, [sendInvoice](https://core.telegram.org/bots/api#sendinvoice).
 
 ### ChatAction
 
@@ -332,8 +315,7 @@ await context.sendChatAction('typing');
 `find_location` for location data,
 `record_video_note` or `upload_video_note` for video notes.
 
-> **Note:**
-> For more info, please refer to Telegram's official doc, [sendChatAction](https://core.telegram.org/bots/api#sendchataction).
+For more info, please refer to Telegram's official doc, [sendChatAction](https://core.telegram.org/bots/api#sendchataction).
 
 ### Forward Messages
 
@@ -353,8 +335,7 @@ await context.forwardMessageTo(chatId, 'messageId', {
 });
 ```
 
-> **Note:**
-> For more info, please refer to Telegram's official doc, [forwardMesasge](https://core.telegram.org/bots/api#forwardmessage).
+For more info, please refer to Telegram's official doc, [forwardMesasge](https://core.telegram.org/bots/api#forwardmessage).
 
 ## Sending with Reply Markup
 
@@ -381,9 +362,7 @@ const replyMarkup = {
 };
 ```
 
-> **Note:**
-> For more info, please refer to Telegram's official doc,
-> [Inline Keyboards Markup](https://core.telegram.org/bots/api#inlinekeyboardmarkup), [New Inline Keyboards](https://core.telegram.org/bots/2-0-intro#new-inline-keyboards), and [Inline Keyboards(On the Fly)](https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating),.
+For more info, please refer to Telegram's official doc, [Inline Keyboards Markup](https://core.telegram.org/bots/api#inlinekeyboardmarkup), [New Inline Keyboards](https://core.telegram.org/bots/2-0-intro#new-inline-keyboards), and [Inline Keyboards(On the Fly)](https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating),.
 
 ### Keyboard
 
@@ -412,9 +391,7 @@ const replyMarkup = {
 };
 ```
 
-> **Note:**
-> For more info, please refer to Telegram's official doc,
-> [Keyboards](https://core.telegram.org/bots#keyboards), [Reply Keyboards](https://core.telegram.org/bots/api/#replykeyboardmarkup), and [Remove Reply Keyboard](https://core.telegram.org/bots/api/#replykeyboardremove).
+For more info, please refer to Telegram's official doc, [Keyboards](https://core.telegram.org/bots#keyboards), [Reply Keyboards](https://core.telegram.org/bots/api/#replykeyboardmarkup), and [Remove Reply Keyboard](https://core.telegram.org/bots/api/#replykeyboardremove).
 
 ### How To Send A Reply Markup
 
@@ -504,9 +481,7 @@ Telegram offers bots the capability to update sent messages. A Telegram bots can
 
 You can see a few update example code below.
 
-> **Note:**
-> For more info, please refer to Telegram's official doc,
-> [Update Messages](https://core.telegram.org/bots/api#updating-messages)
+For more info, please refer to Telegram's official doc, [Update Messages](https://core.telegram.org/bots/api#updating-messages)
 
 ### Update Text
 
@@ -517,9 +492,7 @@ await context.editMessageText(response.messageId, '*world*', {
 });
 ```
 
-> **Note:**
-> For more info, please refer to Telegram's official doc,
-> [Edit Message Text](https://core.telegram.org/bots/api#editmessagetext)
+For more info, please refer to Telegram's official doc, [Edit Message Text](https://core.telegram.org/bots/api#editmessagetext)
 
 ### Update Caption
 
@@ -530,9 +503,7 @@ const response = await context.sendPhoto('https://http.cat/302', {
 await context.editMessageCaption(response.messageId, 'new caption');
 ```
 
-> **Note:**
-> For more info, please refer to Telegram's official doc,
-> [Edit Message Caption](https://core.telegram.org/bots/api#editmessagecaption)
+For more info, please refer to Telegram's official doc, [Edit Message Caption](https://core.telegram.org/bots/api#editmessagecaption)
 
 ### Update Media
 
@@ -544,9 +515,7 @@ await context.editMessageMedia(response.messageId, {
 });
 ```
 
-> **Note:**
-> For more info, please refer to Telegram's official doc,
-> [Edit Message Media](https://core.telegram.org/bots/api#editmessagemedia)
+For more info, please refer to Telegram's official doc, [Edit Message Media](https://core.telegram.org/bots/api#editmessagemedia)
 
 ### Update ReplyMarkup
 
@@ -569,9 +538,7 @@ const response = await context.sendMessage('hello');
 await context.editMessageReplyMarkup(response.messageId, replyMarkup);
 ```
 
-> **Note:**
-> For more info, please refer to Telegram's official doc,
-> [Edit Message Reply Markup](https://core.telegram.org/bots/api#editmessagereplymarkup)
+For more info, please refer to Telegram's official doc, [Edit Message Reply Markup](https://core.telegram.org/bots/api#editmessagereplymarkup)
 
 ## Delete Messages
 
@@ -580,9 +547,7 @@ const response = await context.sendMessage('hello');
 await context.deleteMessage(response.messageId);
 ```
 
-> **Note:**
-> For more info, please refer to Telegram's official doc,
-> [Delete Message](https://core.telegram.org/bots/api#deletemessage)
+For more info, please refer to Telegram's official doc, [Delete Message](https://core.telegram.org/bots/api#deletemessage)
 
 ## Rate Limits
 
@@ -590,5 +555,4 @@ At this moment, Telegram doesn't support sending bulk messages, e.g., notificati
 
 To avoid hitting rate limits, i.e., send messages to 30 users per second, consider spreading them over longer intervals, e.g., 8-12 hours. Otherwise, you'll start getting 429 errors.
 
-> **Note:**
-> For more info, please refer to Telegram's official doc about [Rate Limit](https://core.telegram.org/bots/faq#my-bot-is-hitting-limits-how-do-i-avoid-this)
+For more info, please refer to Telegram's official doc about [Rate Limit](https://core.telegram.org/bots/faq#my-bot-is-hitting-limits-how-do-i-avoid-this)

@@ -5,8 +5,6 @@ title: Deployment
 
 Once you finished your bot in development, the next step is to deploy your bot to a hosting service!
 
-> **Note:** We aim to offer deployment guides for every popular modern hosting services. [Tweet us](https://twitter.com/bottenderjs) if you haven't seen your favorite one.
-
 ### Before Going Further
 
 We assumed that you already built at least one basic Bottender app in development. If you haven't, you may check [Getting Started](https://bottender.js.org/docs/getting-started) to create your first Bottender app in a few minutes, then jump to the setup doc of your favorite chat channel:
@@ -137,7 +135,7 @@ Congratulations! You have made your Bottender bot production-ready. Share your f
 
 <p><img width="1000" src="https://user-images.githubusercontent.com/662387/72130872-acd5a080-33b5-11ea-8c6c-ae06dd250be6.png"></p>
 
-ZEIT Now 2.0 is a super developer-friendly hosting service. It is famous for its one-word magic command `now` in the deployment of static web hosting.
+ZEIT Now 2.0 is a super developer-friendly hosting service. ZEIT Now is famous for its one-word magic command `now` in the deployment of static web hosting.
 
 However, it needs a bit configuration to deploy a Bottender app and make it works serverless. In the following sections, you can see the necessary steps of ZEIT Now 2.0 deployment:
 
@@ -200,7 +198,7 @@ In the following configuration, you will make a few settings:
 
 - Set ZEIT Now to version 2.0
 - Use `@now/node` to bundle `server.js`
-- Put `bottender.config.js` and `index.js` into `includeFiles`. ZEIT Now uses `ncc` and `webpack bundler` under the hood, so we need to tell them to put those two files into the bundle)
+- Put `bottender.config.js` and `index.js` into `includeFiles`. ZEIT Now uses `ncc` and `webpack bundler` under the hood, so you need to tell them to put those two files into the bundle)
 - Route all (/.\*) to `server.js`
 - Add your chat channel specific environment variables from `.env` to env. The number of environment variables various from the chat channel you use.
 - (optional) If you are debugging your app, you may set `DEBUG` env to `bottender*,messaging-api*`
@@ -304,7 +302,7 @@ After all the settings, you are ready to use the magic word, `now`, for ZEIT Now
 now
 ```
 
-Then you will see something like the screenshot below.
+Then you see something like the screenshot below.
 
 ![](https://user-images.githubusercontent.com/662387/72136431-c382f400-33c3-11ea-9745-839c212c1b2e.png)
 

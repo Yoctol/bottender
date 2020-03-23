@@ -3,7 +3,7 @@ id: channel-slack-sending-messages
 title: Sending Slack Messages
 ---
 
-Since Slack is a messaging channel specialized for team communication, Slack bots are usually expected to work either inside a channel or 1:1 chat.
+Since Slack is a messaging channel specialized for team communication, Slack bots are usually expected to work either inside a channel or 1 on 1 chat.
 
 Chatting in the channel makes collecting individual preferences efficiently. For example, we have a Slack bot to collect colleagues' afternoon tea orders.
 
@@ -41,8 +41,7 @@ await context.chat.postMessage({
 });
 ```
 
-> **Note:**
-> For more info, please refer to Slack's official doc, [`chat.postMessage`](https://api.slack.com/methods/chat.postMessage)
+For more info, please refer to Slack's official doc, [`chat.postMessage`](https://api.slack.com/methods/chat.postMessage)
 
 ## Updating Messages
 
@@ -59,11 +58,12 @@ await context.chat.update({
 });
 ```
 
+For more info, please refer to Slack's official doc, [`chat.update`](https://api.slack.com/methods/chat.update)
+
 > **Note:**
 >
 > - The `ts` parameter in the code above, refers to the timestamp of the message, which is a (per-channel) unique id of each message,
 > - Ephemeral messages created by chat.postEphemeral or otherwise cannot be updated with this method.
-> - For more info, please refer to Slack's official doc, [`chat.update`](https://api.slack.com/methods/chat.update)
 
 ## Deleting Messages
 
@@ -75,10 +75,9 @@ await context.chat.delete({
 });
 ```
 
-> **Note:**
->
-> - The `ts` parameter in the code above, refers to the timestamp of the message, which is a (per-channel) unique id of each message,
-> - For more info, please refer to Slack's official doc, [`chat.delete`](https://api.slack.com/methods/chat.delete)
+For more info, please refer to Slack's official doc, [`chat.delete`](https://api.slack.com/methods/chat.delete)
+
+> **Note:** The `ts` parameter in the code above, refers to the timestamp of the message, which is a (per-channel) unique id of each message,
 
 ## Posting Ephemeral Messages
 
@@ -86,10 +85,9 @@ await context.chat.delete({
 
 Bots can post `Ephemeral Messages` only visible to the assigned user in a specific public channel, private channel, or private conversation. In short, `Ephemeral Messages` allows bots to replies context-sensitive information to the user under current Bottender `context.` For example, when a user inputs `check-in`, the bot could post an `Ephemeral Message` to the user check-in time.
 
-> **Note:**
->
-> - `Ephemeral Message` delivery is not guaranteed — the user must be currently active in Slack and a member of the specified channel.
-> - For more info, please refer to Slack's official doc, [`chat.postEphemeral`](https://api.slack.com/methods/chat.postEphemeral)
+For more info, please refer to Slack's official doc, [`chat.postEphemeral`](https://api.slack.com/methods/chat.postEphemeral)
+
+> **Note:** `Ephemeral Message` delivery is not guaranteed — the user must be currently active in Slack and a member of the specified channel.
 
 ```js
 await context.chat.postEphemeral({
@@ -97,9 +95,7 @@ await context.chat.postEphemeral({
 });
 ```
 
-> **Note:**
->
-> - For more info, please refer to Slack's official doc, [`chat.postEphemeral`](https://api.slack.com/methods/chat.postEphemeral)
+For more info, please refer to Slack's official doc, [`chat.postEphemeral`](https://api.slack.com/methods/chat.postEphemeral)
 
 ## Sharing Me Messages
 
@@ -113,9 +109,7 @@ await context.chat.meMessage({
 });
 ```
 
-> **Note:**
->
-> - For more info, please refer to Slack's official doc, [`chat.meMessage`](https://api.slack.com/methods/chat.meMessage)
+For more info, please refer to Slack's official doc, [`chat.meMessage`](https://api.slack.com/methods/chat.meMessage)
 
 ## Retrieving A Permalink URL for Specific Extant Messages
 
@@ -129,10 +123,9 @@ await context.chat.getPermalink({
 });
 ```
 
-> **Note:**
->
-> - The `messageTs` parameter in the code above, refers to the timestamp of the message, which is a (per-channel) unique id of each message,
-> - For more info, please refer to Slack's official doc, [`chat.getPermalink`](https://api.slack.com/methods/chat.getPermalink)
+For more info, please refer to Slack's official doc, [`chat.getPermalink`](https://api.slack.com/methods/chat.getPermalink)
+
+> **Note:** The `messageTs` parameter in the code above, refers to the timestamp of the message, which is a (per-channel) unique id of each message,
 
 ## Scheduling Messages
 
@@ -151,10 +144,9 @@ await context.chat.scheduleMessage({
 });
 ```
 
-> **Note:**
->
-> - The `postAt` parameter in the code above follows Unix EPOCH timestamp.
-> - For more info, please refer to Slack's official doc, [`chat.scheduleMessage`](https://api.slack.com/methods/chat.scheduleMessage)
+For more info, please refer to Slack's official doc, [`chat.scheduleMessage`](https://api.slack.com/methods/chat.scheduleMessage)
+
+> **Note:** The `postAt` parameter in the code above follows Unix EPOCH timestamp.
 
 ### Getting a List of Scheduled Messages
 
@@ -164,9 +156,7 @@ You can get a list of scheduled messages by the following code.
 await context.chat.scheduledMessages.list();
 ```
 
-> **Note:**
->
-> - For more info, please refer to Slack's official doc, [`chat.scheduledMessages.list`](https://api.slack.com/methods/chat.scheduledMessages.list)
+For more info, please refer to Slack's official doc, [`chat.scheduledMessages.list`](https://api.slack.com/methods/chat.scheduledMessages.list)
 
 ### Deleting Pending Scheduled Messages
 
@@ -178,6 +168,4 @@ await context.chat.deleteScheduledMessage({
 });
 ```
 
-> **Note:**
->
-> - For more info, please refer to Slack's official doc, [`chat.deleteScheduledMessage`](https://api.slack.com/methods/chat.deleteScheduledMessage)
+For more info, please refer to Slack's official doc, [`chat.deleteScheduledMessage`](https://api.slack.com/methods/chat.deleteScheduledMessage)

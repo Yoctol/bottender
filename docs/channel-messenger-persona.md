@@ -15,8 +15,7 @@ Today, the response from the Business Page could be a bot. To give the customer 
 
 ![39993793_311437072745802_2909561891720265728_n](https://user-images.githubusercontent.com/662387/69112041-4e2d2e00-0aba-11ea-8e44-02aaaf804b5d.png)
 
-> **Note:**
-> If you are interested in Facebook's official document, you may refer to [Using Personas](https://developers.facebook.com/docs/messenger-platform/send-messages/personas/)
+> **Note:** If you are interested in Facebook's official document, you may refer to [Using Personas](https://developers.facebook.com/docs/messenger-platform/send-messages/personas/)
 
 ## Basic Usage of the Persona API
 
@@ -45,8 +44,7 @@ Successfully create persona <PERSONA_ID>
 
 The response contains a Persona ID that can be used to send future messages. Please note that this ID is private, and it is unique to a Page.
 
-> **Note:**
-> If you are not familiar with settings of `bottender.config.js`, please refer to [Setup Messenger](./channel-messenger-setup.md)
+> **Note:** If you are not familiar with settings of `bottender.config.js`, please refer to [Setup Messenger](./channel-messenger-setup.md)
 
 ### Sending Messages as a Persona
 
@@ -60,8 +58,7 @@ async function App(context) {
 }
 ```
 
-> **Note:**
-> If you haven't created a persona, please refer to the above section [Create a Persona and Get Persona ID](#create-a-persona-and-get-persona-id)
+> **Note:** If you haven't created a persona, please refer to the above section [Create a Persona and Get Persona ID](#create-a-persona-and-get-persona-id)
 
 ### Using Sender Actions
 
@@ -92,7 +89,7 @@ async function App(context) {
 
 ### Creating Persona on the Fly
 
-You can create a persona on the fly. It is handy when you don't want to sync your entire database of agents to the Messenger Platform in advance.
+You can create a persona on the fly. When you don't want to sync your entire database of agents to the Messenger Platform in advance, creating a persona on the fly is handy.
 
 ```js
 async function App(context) {

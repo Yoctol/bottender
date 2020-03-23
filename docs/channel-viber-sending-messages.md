@@ -17,7 +17,7 @@ Which in turn will look like this:
 
 ![](https://user-images.githubusercontent.com/3382565/31481925-61e46008-aeeb-11e7-842f-79fee8066c6a.jpg)
 
-> **Note:** For more info, please refer to Viber's official doc, [Text message](https://developers.viber.com/docs/api/rest-bot-api/#text-message).
+For more info, please refer to Viber's official doc, [Text message](https://developers.viber.com/docs/api/rest-bot-api/#text-message).
 
 ## Sending Picture Messages
 
@@ -35,7 +35,7 @@ Which in turn will look like this:
 
 ![](https://user-images.githubusercontent.com/3382565/31481916-5ec6cdac-aeeb-11e7-878b-6c8c4211a760.jpg)
 
-> **Note:** For more info, please refer to Viber's official doc, [Picture message](https://developers.viber.com/docs/api/rest-bot-api/#picture-message).
+For more info, please refer to Viber's official doc, [Picture message](https://developers.viber.com/docs/api/rest-bot-api/#picture-message).
 
 ## Sending Video Messages
 
@@ -54,7 +54,7 @@ Which in turn will look like this:
 
 ![](https://user-images.githubusercontent.com/3382565/31481918-5fa12074-aeeb-11e7-8287-830197d93b5b.jpg)
 
-> **Note:** For more info, please refer to Viber's official doc, [Video message](https://developers.viber.com/docs/api/rest-bot-api/#video-message).
+For more info, please refer to Viber's official doc, [Video message](https://developers.viber.com/docs/api/rest-bot-api/#video-message).
 
 ## Sending File Messages
 
@@ -72,7 +72,7 @@ Which in turn will look like this:
 
 ![](https://user-images.githubusercontent.com/3382565/31481919-600f437e-aeeb-11e7-9f13-7269a055cb86.jpg)
 
-> **Note:** For more info, please refer to Viber's official doc, [File message](https://developers.viber.com/docs/api/rest-bot-api/#file-message).
+For more info, please refer to Viber's official doc, [File message](https://developers.viber.com/docs/api/rest-bot-api/#file-message).
 
 ## Sending Contact Messages
 
@@ -89,7 +89,7 @@ Which in turn will look like this:
 
 ![](https://user-images.githubusercontent.com/3382565/31481924-615ce8b2-aeeb-11e7-8425-2d3bfa115fc1.jpg)
 
-> **Note:** For more info, please refer to Viber's official doc, [Contact message](https://developers.viber.com/docs/api/rest-bot-api/#contact-message).
+For more info, please refer to Viber's official doc, [Contact message](https://developers.viber.com/docs/api/rest-bot-api/#contact-message).
 
 ## Sending Location Messages
 
@@ -106,7 +106,7 @@ Which in turn will look like this:
 
 ![](https://user-images.githubusercontent.com/3382565/31481923-61199a9e-aeeb-11e7-8a25-e3813eceb25b.jpg)
 
-> **Note:** For more info, please refer to Viber's official doc, [Location message](https://developers.viber.com/docs/api/rest-bot-api/#location-message).
+For more info, please refer to Viber's official doc, [Location message](https://developers.viber.com/docs/api/rest-bot-api/#location-message).
 
 ## Sending URL Messages
 
@@ -120,7 +120,7 @@ Which in turn will look like this:
 
 ![](https://user-images.githubusercontent.com/3382565/31481921-6069f346-aeeb-11e7-97bf-83a17da0bc7a.jpg)
 
-> **Note:** For more info, please refer to Viber's official doc, [URL message](https://developers.viber.com/docs/api/rest-bot-api/#url-message).
+For more info, please refer to Viber's official doc, [URL message](https://developers.viber.com/docs/api/rest-bot-api/#url-message).
 
 ## Sending Sticker Messages
 
@@ -134,7 +134,7 @@ Which in turn will look like this:
 
 ![](https://user-images.githubusercontent.com/3382565/31481922-60c2c444-aeeb-11e7-8fc9-bce2e5d06c42.jpg)
 
-> **Note:** For more info, please refer to Viber's official doc, [Sticker message](https://developers.viber.com/docs/api/rest-bot-api/#sticker-message).
+For more info, please refer to Viber's official doc, [Sticker message](https://developers.viber.com/docs/api/rest-bot-api/#sticker-message).
 
 ## Sending Carousel Content Messages
 
@@ -233,7 +233,7 @@ Which in turn will look like this:
 
 ![](https://user-images.githubusercontent.com/3382565/31481917-5f1b43b4-aeeb-11e7-8557-e25951d69b53.jpg)
 
-> **Note:** For more info, please refer to Viber's official doc, [Rich Media message / Carousel content message](https://developers.viber.com/docs/api/rest-bot-api/#rich-media-message--carousel-content-message).
+For more info, please refer to Viber's official doc, [Rich Media message / Carousel content message](https://developers.viber.com/docs/api/rest-bot-api/#rich-media-message--carousel-content-message).
 
 ## Sending with Keyboard
 
@@ -270,4 +270,4 @@ Which in turn will look like this:
 
 ![](https://camo.githubusercontent.com/fe2141c452f4cf0ed0f7854f51c589b15873a317/68747470733a2f2f646576656c6f706572732e76696265722e636f6d2f646f63732f696d672f6578616d706c655f6b6579626f6172642e706e67)
 
-> **Note:** For more info, please refer to Viber's official doc, [Keyboards](https://developers.viber.com/docs/api/rest-bot-api/#keyboards).
+For more info, please refer to Viber's official doc, [Keyboards](https://developers.viber.com/docs/api/rest-bot-api/#keyboards).
