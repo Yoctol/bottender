@@ -24,7 +24,7 @@ The reason that we choose QnA Maker in the first place is because of the friendl
 
 To build a bot integrated with [QnA Maker](https://www.qnamaker.ai/), you have to create the QnA Maker knowledge base and publish it following the [Official Guide](https://docs.microsoft.com/en-us/azure/cognitive-services/qnamaker/quickstarts/create-publish-knowledge-base).
 
-After you publish your knowledge base, you will get `RESOURCE_NAME`, `KNOWLEDGE_BASE_ID`, and `ENDPOINT_KEY` (See [Here](https://docs.microsoft.com/en-us/azure/cognitive-services/qnamaker/quickstarts/get-answer-from-knowledge-base-using-url-tool?pivots=url-test-tool-postman) for detailed guide). Make sure you copy them into the `.env` file.
+After you publish your knowledge base, you get `RESOURCE_NAME`, `KNOWLEDGE_BASE_ID`, and `ENDPOINT_KEY` (See [Here](https://docs.microsoft.com/en-us/azure/cognitive-services/qnamaker/quickstarts/get-answer-from-knowledge-base-using-url-tool?pivots=url-test-tool-postman) for detailed guide). Make sure you copy them into the `.env` file.
 
 ```
 // .env
@@ -74,9 +74,7 @@ module.exports = async function App() {
 };
 ```
 
-> **Note:**
->
-> - Fore the full example code, please refer to Bottender example, [With QnA Maker](https://github.com/Yoctol/bottender/tree/master/examples/with-qna-maker).
+For the full example code, please refer to Bottender example, [With QnA Maker](https://github.com/Yoctol/bottender/tree/master/examples/with-qna-maker).
 
 ## Building with DialogFlow
 
@@ -98,7 +96,7 @@ GOOGLE_APPLICATION_PROJECT_ID=
 
 ### Step 2: Create a DialogFlow Agent
 
-Next, you can build a DialogFlow agent following the DialogFlow doc, [Quickstart: Build an Agent](https://cloud.google.com/dialogflow/docs/quick/build-agent). In this example, we make an agent and create an intent with the display name `greeting.` You can set your training phrases on the DialogFlow console for this intent.
+Next, you can build a DialogFlow agent following the DialogFlow doc, [Quickstart: Build an Agent](https://cloud.google.com/dialogflow/docs/quick/build-agent). In this example, you make an agent and create an intent with the display name `greeting.` You can set your training phrases on the DialogFlow console for this intent.
 
 After you finish the settings of the agent, you can call DialogFlow's API to analyze the intent of the message the bot receives.
 
@@ -166,7 +164,7 @@ LUIS_APP_ENDPOINT=
 
 ### Step 2: Train and Publish Your LUIS Project
 
-In this example, we create an intent with the intent name `greeting`. You can set your training phrases on the LUIS console for this intent. And then you have to train the model and publish it.
+In this example, you create an intent with the intent name `greeting`. You can set your training phrases on the LUIS console for this intent. And then you have to train the model and publish it.
 
 ### Step 3: Connect Bottender with LUIS by `bottender/luis`
 
@@ -215,13 +213,11 @@ module.exports = async function App() {
 };
 ```
 
-> **Note:**
->
-> - Fore the full example code, please refer to Bottender example, [With LUIS.ai](https://github.com/Yoctol/bottender/tree/master/examples/with-luis.ai).
+For the full example code, please refer to Bottender example, [With LUIS.ai](https://github.com/Yoctol/bottender/tree/master/examples/with-luis.ai).
 
 ## Building with Rasa NLU
 
-You may choose Rasa NLU if you're finding an on-premises NLU solution.
+If you're finding an on-premises NLU solution, you may choose Rasa NLU.
 
 ### Step 1: Rasa NLU Setup
 
@@ -231,7 +227,7 @@ To build a bot integrated with [Rasa NLU](https://rasa.com/docs/rasa/nlu/about/)
 rasa train nlu
 ```
 
-This command will look for the training data files in the data/ directory and saves the model in the models/ directory. For information about how to generate training data, you can see Rasa's document, [Training Data Format](https://rasa.com/docs/rasa/nlu/training-data-format/).
+This command looks for the training data files in the data/ directory and saves the model in the models/ directory. For information about how to generate training data, you can see Rasa's document, [Training Data Format](https://rasa.com/docs/rasa/nlu/training-data-format/).
 
 After you get your NLU model ready, you can run the following command:
 
@@ -286,6 +282,4 @@ module.exports = async function App() {
 };
 ```
 
-> **Note:**
->
-> - Fore the full example code, please refer to Bottender example, [With Rasa](https://github.com/Yoctol/bottender/tree/master/examples/with-rasa).
+For the full example code, please refer to Bottender example, [With Rasa](https://github.com/Yoctol/bottender/tree/master/examples/with-rasa).
