@@ -1,11 +1,11 @@
 ---
 id: channel-whatsapp-setup
-title: Setup WhatsApp
+title: WhatsApp Setup
 ---
 
 ## Introduction
 
-[Twilio API for WhatsApp](https://www.twilio.com/whatsapp) is one of the most popular ways to send and receive messages programmatically in WhatsApp. It hosts and manages WhatsApp containers in a highly available and geographically redundant infrastructure, providing us a straightforward REST API to integrate with our Bottender applications.
+[Twilio API for WhatsApp](https://www.twilio.com/whatsapp) is one of the most popular ways to send and receive messages programmatically in WhatsApp. Twilio hosts and manages WhatsApp containers in a highly available and geographically redundant infrastructure, providing us a straightforward REST API to integrate with our Bottender applications.
 
 To move into production using the Twilio API for WhatsApp, you need a WhatsApp Business Profile. WhatsApp is currently limiting access to profiles during their API's limited availability stage. Business Profiles must be associated with a Twilio number. [Request to enable your Twilio numbers for WhatsApp here](https://www.twilio.com/whatsapp/request-access).
 
@@ -19,15 +19,15 @@ Once signed up, you could find your Account SID and Auth Token in the Dashboard.
 
 ![](https://user-images.githubusercontent.com/3382565/75419061-f41cee00-596f-11ea-88a0-0586a2c082e3.png)
 
-## Enabling the WhatsApp Channel
+## Enabling WhatsApp Channels
 
-To enable the WhatsApp Channel, you could start either from a new or an existing Bottender application.
+To enable WhatsApp channels, you can start either from new or existing Bottender applications.
 
-### Using a New Application
+### New Bottender Applications
 
-`Create Bottender App` is the best way to start building a new application with Bottender.
+**Create Bottender App** is the best way to start building a new application in Bottender.
 
-To create a new app, use the following command:
+To create a project, run:
 
 ```sh
 npx create-bottender-app my-app
@@ -37,17 +37,15 @@ Make sure to check the `whatsapp` option:
 
 ![](https://user-images.githubusercontent.com/3382565/75420500-1a905880-5973-11ea-80ed-623807855b70.png)
 
-Once the process is completed, `bottender.config.js` and `.env` are generated automatically for further channel settings.
+After you go through the steps, `bottender.config.js` and `.env` are generated automatically for further channel settings.
 
-### Using an Existing Application
+### Existing Bottender Applications
 
-First, you have to add the following `whatsapp` settings into your `bottender.config.js` file:
+First, you must have a `bottender.config.js` file includes the following settings:
 
 ```js
 module.exports = {
-  // other settings...
   channels: {
-    // other channels...
     whatsapp: {
       enabled: true,
       path: '/webhooks/whatsapp',
@@ -59,17 +57,17 @@ module.exports = {
 };
 ```
 
-By default, the server listens to WhatsApp requests on the path - `/webhooks/whatsapp`. However, You could overwrite it by assigning the preferred webhook path in the `path` field.
+Make sure to set the `channels.whatsapp.enabled` field to `true`.
 
-It's highly recommended to set your sensitive config using `process.env`, so you could avoid any credentials get exposed.
+By default, the Bottender server listens to the WhatsApp requests on the `/webhooks/whatsapp` path. However, You can overwrite the path by assigning the preferred webhook path in the `channels.whatsapp.path` field.
+
+We highly recommend setting your sensitive config using `process.env`, so you could avoid any credentials get exposed.
 
 ## Environment Configuration
 
-It is often helpful to have different configuration values based on the environment where the application is running.
+Bottender utilizes the [dotenv](https://www.npmjs.com/package/dotenv) package to load your environment variables when developing your application.
 
-Bottender utilizes the [dotenv](https://www.npmjs.com/package/dotenv) library to load your environment variables when developing your application.
-
-So, to make a WhatsApp Bot works, you have to fill the below environment variables in your `.env` file:
+To make a WhatsApp bot work, you must fill the following environment variables in your `.env` file:
 
 ```
 // .env
