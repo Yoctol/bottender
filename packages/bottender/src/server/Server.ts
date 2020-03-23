@@ -17,11 +17,16 @@ export type ServerOptions = {
 };
 
 class Server {
+  /** @hidden */
   _channelBots: { webhookPath: string; bot: Bot<any, any, any> }[] = [];
 
   useConsole: boolean;
 
-  constructor({ useConsole = false } = {}) {
+  /**
+   * constructor
+   */
+  constructor(options: { useConsole?: boolean } = {}) {
+    const { useConsole = false } = options
     this.useConsole = useConsole;
   }
 

@@ -11,17 +11,10 @@ export default class LineBot extends Bot<
   LineClient,
   LineEvent
 > {
-  constructor({
-    accessToken,
-    channelSecret,
-    sessionStore,
-    origin,
-    sync,
-    mapDestinationToAccessToken,
-    shouldBatch,
-    sendMethod,
-    skipLegacyProfile,
-  }: {
+  /**
+   * constructor
+   */
+  constructor(options: {
     accessToken: string;
     channelSecret: string;
     sessionStore?: SessionStore;
@@ -32,6 +25,17 @@ export default class LineBot extends Bot<
     origin?: string;
     skipLegacyProfile?: boolean;
   }) {
+    const {
+      accessToken,
+      channelSecret,
+      sessionStore,
+      origin,
+      sync,
+      mapDestinationToAccessToken,
+      shouldBatch,
+      sendMethod,
+      skipLegacyProfile,
+    } = options
     const connector = new LineConnector({
       accessToken,
       channelSecret,

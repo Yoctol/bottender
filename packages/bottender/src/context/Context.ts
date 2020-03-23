@@ -34,34 +34,47 @@ export default abstract class Context<C extends Client, E extends Event> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   abstract sendText(text: string, options?: Record<string, any>): any;
 
+  /** @hidden */
   _isHandled: boolean | null = null;
 
+  /** @hidden */
   _isSessionWritten = false;
 
+  /** @hidden */
   _client: C;
 
+  /** @hidden */
   _event: E;
 
+  /** @hidden */
   _session: Session | null;
 
+  /** @hidden */
   _initialState?: Record<string, any> | null;
 
+  /** @hidden */
   _requestContext: RequestContext | null;
 
+  /** @hidden */
   _emitter: EventEmitter | null;
 
+  /** @hidden */
   _intent: string | null;
 
   response: Response;
 
-  constructor({
-    client,
-    event,
-    session,
-    initialState,
-    requestContext,
-    emitter,
-  }: Options<C, E>) {
+  /**
+   * constructor
+   */
+  constructor(options: Options<C, E>) {
+    const {
+      client,
+      event,
+      session,
+      initialState,
+      requestContext,
+      emitter,
+    } = options
     this._client = client;
     this._event = event;
     this._session = session || null;

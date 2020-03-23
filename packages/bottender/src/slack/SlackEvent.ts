@@ -129,8 +129,12 @@ export type SlackRawEvent =
   | CommandEvent;
 
 export default class SlackEvent implements Event<SlackRawEvent> {
+  /** @hidden */
   _rawEvent: SlackRawEvent;
 
+  /**
+   * constructor
+   */
   constructor(rawEvent: SlackRawEvent) {
     this._rawEvent = rawEvent;
   }

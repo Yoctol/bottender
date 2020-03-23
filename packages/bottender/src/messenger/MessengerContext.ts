@@ -28,26 +28,28 @@ type Options = {
 };
 
 class MessengerContext extends Context<MessengerClient, MessengerEvent> {
+  /** @hidden */
   _appId: string | null;
 
+  /** @hidden */
   _customAccessToken: string | null;
 
+  /** @hidden */
   _personaId: string | null = null;
 
+  /** @hidden */
   _batchQueue: Record<string, any> | null;
 
-  constructor({
-    appId,
-    client,
-    event,
-    session,
-    initialState,
-    requestContext,
-    customAccessToken,
-    batchQueue,
-    emitter,
-  }: Options) {
-    super({ client, event, session, initialState, requestContext, emitter });
+  /**
+   * constructor
+   */
+  constructor(options: Options) {
+    super(options);
+    const {
+      appId,
+      customAccessToken,
+      batchQueue,
+    } = options
     this._customAccessToken = customAccessToken || null;
     this._batchQueue = batchQueue || null;
     this._appId = appId || null;
@@ -65,6 +67,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
     return this._customAccessToken || this._client.accessToken;
   }
 
+  /** @hidden */
   _callClientMethod(method: string, args: any[]) {
     if (this._batchQueue) {
       return (this._batchQueue as any).push(

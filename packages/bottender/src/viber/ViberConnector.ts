@@ -32,12 +32,18 @@ type ConstructorOptions =
 
 export default class ViberConnector
   implements Connector<ViberRequestBody, ViberClient> {
+  /** @hidden */
   _accessToken: string;
 
+  /** @hidden */
   _client: ViberClient;
 
+  /** @hidden */
   _skipLegacyProfile: boolean;
 
+  /**
+   * constructor
+   */
   constructor(options: ConstructorOptions) {
     const { skipLegacyProfile } = options;
     if ('client' in options) {
@@ -65,6 +71,7 @@ export default class ViberConnector
       typeof skipLegacyProfile === 'boolean' ? skipLegacyProfile : true;
   }
 
+  /** @hidden */
   _getRawEventFromRequest(body: ViberRequestBody): ViberRawEvent {
     return body;
   }

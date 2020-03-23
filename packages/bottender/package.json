@@ -102,5 +102,10 @@
   ],
   "engines": {
     "node": ">=8"
+  },
+  "scripts": {
+    "typedoc": "yarn typedoc:html && yarn typedoc:json",
+    "typedoc:html": "typedoc --out docs --exclude \"src/**/__tests__/**/*.ts\" src",
+    "typedoc:json": "typedoc --json docs/index.json --exclude \"src/**/__tests__/**/*.ts\" src"
   }
 }

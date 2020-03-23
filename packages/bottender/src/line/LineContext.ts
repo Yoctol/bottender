@@ -25,30 +25,34 @@ type Options = {
 };
 
 class LineContext extends Context<LineClient, LineEvent> {
+  /** @hidden */
   _customAccessToken: string | null;
 
+  /** @hidden */
   _isReplied = false;
 
+  /** @hidden */
   _shouldBatch: boolean;
 
+  /** @hidden */
   _replyMessages: LineTypes.Message[] = [];
 
+  /** @hidden */
   _pushMessages: LineTypes.Message[] = [];
 
+  /** @hidden */
   _sendMethod: string;
 
-  constructor({
-    client,
-    event,
-    session,
-    initialState,
-    requestContext,
-    customAccessToken,
-    shouldBatch,
-    sendMethod,
-    emitter,
-  }: Options) {
-    super({ client, event, session, initialState, requestContext, emitter });
+  /**
+   * Constructor
+   */
+  constructor(options: Options) {
+    super(options);
+    const {
+      customAccessToken,
+      shouldBatch,
+      sendMethod,
+    } = options
     this._customAccessToken = customAccessToken || null;
     this._shouldBatch = shouldBatch || false;
     this._sendMethod = sendMethod || 'reply';

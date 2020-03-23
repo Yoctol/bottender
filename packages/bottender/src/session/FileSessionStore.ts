@@ -24,11 +24,16 @@ function getDirname(arg: FileOption): string | void {
 }
 
 export default class FileSessionStore implements SessionStore {
+  /** @hidden */
   _jfs: Instance<Record<string, any>>;
 
   // The number of minutes to store the data in the session.
+  /** @hidden */
   _expiresIn: number;
 
+  /**
+   * constructor
+   */
   constructor(arg: FileOption, expiresIn?: number) {
     this._expiresIn = expiresIn || 0;
 
@@ -113,6 +118,7 @@ export default class FileSessionStore implements SessionStore {
     return this._jfs;
   }
 
+  /** @hidden */
   _expired(sess: Session): boolean {
     if (!this._expiresIn) {
       return false;

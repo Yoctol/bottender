@@ -10,8 +10,12 @@ import {
 } from './WhatsappTypes';
 
 export default class WhatsappEvent implements Event<WhatsappRawEvent> {
+  /** @hidden */
   _rawEvent: WhatsappRawEvent;
 
+  /**
+   * constructor
+   */
   constructor(rawEvent: WhatsappRawEvent) {
     this._rawEvent = rawEvent;
   }

@@ -11,19 +11,10 @@ export default class MessengerBot extends Bot<
   MessengerClient,
   MessengerEvent
 > {
-  constructor({
-    accessToken,
-    appId,
-    appSecret,
-    sessionStore,
-    sync,
-    mapPageToAccessToken,
-    verifyToken,
-    batchConfig,
-    origin,
-    skipAppSecretProof,
-    skipLegacyProfile,
-  }: {
+  /**
+   * constructor
+   */
+  constructor(options: {
     accessToken: string;
     appId: string;
     appSecret: string;
@@ -36,6 +27,19 @@ export default class MessengerBot extends Bot<
     skipAppSecretProof?: boolean;
     skipLegacyProfile?: boolean;
   }) {
+    const {
+      accessToken,
+      appId,
+      appSecret,
+      sessionStore,
+      sync,
+      mapPageToAccessToken,
+      verifyToken,
+      batchConfig,
+      origin,
+      skipAppSecretProof,
+      skipLegacyProfile,
+    } = options
     const connector = new MessengerConnector({
       accessToken,
       appId,

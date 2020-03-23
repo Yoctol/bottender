@@ -18,17 +18,24 @@ type ConstructorOptions = {
 
 export default class ConsoleConnector
   implements Connector<ConsoleRequestBody, ConsoleClient> {
+  /** @hidden */
   _client: ConsoleClient;
 
+  /** @hidden */
   _fallbackMethods: boolean;
 
+  /** @hidden */
   _platform: string;
 
-  constructor({
-    client,
-    fallbackMethods,
-    mockPlatform,
-  }: ConstructorOptions = {}) {
+  /**
+   * constructor
+   */
+  constructor(options: ConstructorOptions = {}) {
+    const {
+      client,
+      fallbackMethods,
+      mockPlatform,
+    } = options
     this._client = client || {
       sendText: (text): void => {
         process.stdout.write(`Bot > ${text}\n`);

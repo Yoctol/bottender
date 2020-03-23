@@ -60,16 +60,24 @@ type ConstructorOptions =
 
 export default class SlackConnector
   implements Connector<SlackRequestBody, SlackOAuthClient> {
+  /** @hidden */
   _client: SlackOAuthClient;
 
+  /** @hidden */
   _verificationToken: string;
 
+  /** @hidden */
   _signingSecret: string;
 
+  /** @hidden */
   _skipLegacyProfile: boolean;
 
+  /** @hidden */
   _includeBotMessages: boolean;
 
+  /**
+   * constructor
+   */
   constructor(options: ConstructorOptions) {
     const {
       verificationToken,
@@ -116,6 +124,7 @@ export default class SlackConnector
     this._includeBotMessages = includeBotMessages || false;
   }
 
+  /** @hidden */
   _getRawEventFromRequest(body: SlackRequestBody): SlackRawEvent {
     if ('event' in body) {
       return body.event as Message;
@@ -132,6 +141,7 @@ export default class SlackConnector
     return (body as any) as Message;
   }
 
+  /** @hidden */
   _isBotEventRequest(body: SlackRequestBody): boolean {
     const rawEvent = this._getRawEventFromRequest(body);
     return !!(

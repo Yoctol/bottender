@@ -12,18 +12,13 @@ export default class SlackBot extends Bot<
   SlackOAuthClient,
   SlackEvent
 > {
+  /** @hidden */
   _accessToken: string;
 
-  constructor({
-    accessToken,
-    sessionStore,
-    sync,
-    verificationToken,
-    signingSecret,
-    origin,
-    skipLegacyProfile,
-    includeBotMessages,
-  }: {
+  /**
+   * constructor
+   */
+  constructor(options: {
     accessToken: string;
     sessionStore?: SessionStore;
     sync?: boolean;
@@ -33,6 +28,16 @@ export default class SlackBot extends Bot<
     skipLegacyProfile?: boolean;
     includeBotMessages?: boolean;
   }) {
+    const {
+      accessToken,
+      sessionStore,
+      sync,
+      verificationToken,
+      signingSecret,
+      origin,
+      skipLegacyProfile,
+      includeBotMessages,
+    } = options
     const connector = new SlackConnector({
       accessToken,
       verificationToken,

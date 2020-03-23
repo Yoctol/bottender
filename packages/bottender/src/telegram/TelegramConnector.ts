@@ -29,10 +29,15 @@ type ConstructorOptions =
 
 export default class TelegramConnector
   implements Connector<TelegramRequestBody, TelegramClient> {
+  /** @hidden */
   _client: TelegramClient;
 
+  /** @hidden */
   _skipLegacyProfile: boolean;
 
+  /**
+   * constructor
+   */
   constructor(options: ConstructorOptions) {
     const { skipLegacyProfile } = options;
     if ('client' in options) {
@@ -55,6 +60,7 @@ export default class TelegramConnector
       typeof skipLegacyProfile === 'boolean' ? skipLegacyProfile : true;
   }
 
+  /** @hidden */
   _getRawEventFromRequest(body: TelegramRequestBody): TelegramRawEvent {
     return body;
   }

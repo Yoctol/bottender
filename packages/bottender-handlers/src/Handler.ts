@@ -48,10 +48,13 @@ export function matchPattern(pattern: Pattern, text: string): boolean {
 }
 
 export default class Handler {
+  /** @hidden */
   _handlers: PredicateHandler[] = [];
 
+  /** @hidden */
   _errorHandler: FunctionalHandler | null = null;
 
+  /** @hidden */
   _unhandledHandler: FunctionalHandler | null = null;
 
   on(predicate: ContextPredicate, handler: FunctionalHandler | Builder) {
