@@ -3,9 +3,9 @@ id: channel-whatsapp-handling-events
 title: Handling WhatsApp Events
 ---
 
-## Handling Text Events
+## Text Events
 
-The most common event that your bot would ever receive is text message. To determine whether the event is a text message event, you may use `context.event.isText` boolean value to do that:
+The most common events are text message events. To determine whether the event is a text message event, you may use the `context.event.isText` boolean value:
 
 ```js
 async function App(context) {
@@ -15,7 +15,7 @@ async function App(context) {
 }
 ```
 
-You can get the text content using `context.event.text` and use it in the reply:
+You can get the text content using `context.event.text` to use it in the reply:
 
 ```js
 async function App(context) {
@@ -25,9 +25,9 @@ async function App(context) {
 }
 ```
 
-## Handling Media Events
+## Media Events
 
-Sometimes, your bot might receive the photos sent from the user. In this case, you could use `context.event.media` to get the content type and the URL of the media.
+Sometimes, your bot might receive the photos sent from the user. In this case, you can use `context.event.media` to get the content type and the URL of the media.
 
 ```js
 async function App(context) {
@@ -41,4 +41,4 @@ async function App(context) {
 
 ## Handling Events with Router
 
-Bottender offers a bunch of helpers to routes within your WhatsApp or multi-platform application. To learn more, please check out Bottender's doc, [WhatsApp Routing](channel-whatsapp-routing.md).
+Bottender offers a bunch of helpers to route within your WhatsApp or multi-platform application. To learn more about how to use those WhatsApp particular routes with router, check out [WhatsApp Routing](channel-whatsapp-routing.md).
