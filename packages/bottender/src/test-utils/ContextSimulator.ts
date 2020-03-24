@@ -20,11 +20,7 @@ class ContextSimulator {
     initialState?: Record<string, any>;
     mockFn?: Function;
   }) {
-    const {
-      platform,
-      initialState,
-      mockFn,
-    } = options
+    const { platform, initialState, mockFn } = options;
     this._platform = platform;
     this._initialState = initialState || {};
     this._mockFn = mockFn || jest.fn;

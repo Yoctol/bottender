@@ -109,7 +109,7 @@ export default class Bot<B extends Body, C extends Client, E extends Event> {
       connector,
       sessionStore = createMemorySessionStore(),
       sync = false,
-    } = options
+    } = options;
     this._sessions = sessionStore;
     this._initialized = false;
     this._connector = connector;

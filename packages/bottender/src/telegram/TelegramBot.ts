@@ -33,12 +33,7 @@ export default class TelegramBot extends Bot<
     sync?: boolean;
     origin?: string;
   }) {
-    const {
-      accessToken,
-      sessionStore,
-      sync,
-      origin,
-    } = options
+    const { accessToken, sessionStore, sync, origin } = options;
     const connector = new TelegramConnector({ accessToken, origin });
     super({ connector, sessionStore, sync });
 

@@ -17,7 +17,7 @@
     "compile": "tsc --build tsconfig.build.json",
     "compile:clean": "tsc --build tsconfig.build.json --clean",
     "postinstall": "yarn compile",
-    "lint": "eslint packages examples --ext=js,ts",
+    "lint": "eslint packages examples --ext=js,ts --ignore-pattern **/docs",
     "lint:fix": "yarn lint:fix:md && yarn lint --fix",
     "lint:fix:md": "prettier --write **/*.md",
     "lint:staged": "lint-staged",

@@ -41,10 +41,7 @@ export default class ConsoleContext extends Context<
    */
   constructor(options: Options) {
     super(options);
-    const {
-      fallbackMethods,
-      mockPlatform,
-    } = options
+    const { fallbackMethods, mockPlatform } = options;
     this._mockPlatform = mockPlatform;
     this._fallbackMethods = fallbackMethods;
     if (fallbackMethods) {

@@ -45,11 +45,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
    */
   constructor(options: Options) {
     super(options);
-    const {
-      appId,
-      customAccessToken,
-      batchQueue,
-    } = options
+    const { appId, customAccessToken, batchQueue } = options;
     this._customAccessToken = customAccessToken || null;
     this._batchQueue = batchQueue || null;
     this._appId = appId || null;

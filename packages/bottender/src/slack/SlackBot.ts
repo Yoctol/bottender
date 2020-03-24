@@ -37,7 +37,7 @@ export default class SlackBot extends Bot<
       origin,
       skipLegacyProfile,
       includeBotMessages,
-    } = options
+    } = options;
     const connector = new SlackConnector({
       accessToken,
       verificationToken,

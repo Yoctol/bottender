@@ -48,11 +48,7 @@ class LineContext extends Context<LineClient, LineEvent> {
    */
   constructor(options: Options) {
     super(options);
-    const {
-      customAccessToken,
-      shouldBatch,
-      sendMethod,
-    } = options
+    const { customAccessToken, shouldBatch, sendMethod } = options;
     this._customAccessToken = customAccessToken || null;
     this._shouldBatch = shouldBatch || false;
     this._sendMethod = sendMethod || 'reply';

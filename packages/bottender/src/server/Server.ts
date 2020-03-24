@@ -26,7 +26,7 @@ class Server {
    * constructor
    */
   constructor(options: { useConsole?: boolean } = {}) {
-    const { useConsole = false } = options
+    const { useConsole = false } = options;
     this.useConsole = useConsole;
   }
 

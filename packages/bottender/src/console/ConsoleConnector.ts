@@ -31,11 +31,7 @@ export default class ConsoleConnector
    * constructor
    */
   constructor(options: ConstructorOptions = {}) {
-    const {
-      client,
-      fallbackMethods,
-      mockPlatform,
-    } = options
+    const { client, fallbackMethods, mockPlatform } = options;
     this._client = client || {
       sendText: (text): void => {
         process.stdout.write(`Bot > ${text}\n`);

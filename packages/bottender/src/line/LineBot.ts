@@ -35,7 +35,7 @@ export default class LineBot extends Bot<
       shouldBatch,
       sendMethod,
       skipLegacyProfile,
-    } = options
+    } = options;
     const connector = new LineConnector({
       accessToken,
       channelSecret,

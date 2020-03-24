@@ -39,7 +39,7 @@ export default class MessengerBot extends Bot<
       origin,
       skipAppSecretProof,
       skipLegacyProfile,
-    } = options
+    } = options;
     const connector = new MessengerConnector({
       accessToken,
       appId,

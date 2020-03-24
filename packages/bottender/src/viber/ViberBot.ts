@@ -21,13 +21,7 @@ export default class ViberBot extends Bot<
     sync?: boolean;
     origin?: string;
   }) {
-    const {
-      accessToken,
-      sender,
-      sessionStore,
-      sync,
-      origin,
-    } = options;
+    const { accessToken, sender, sessionStore, sync, origin } = options;
     const connector = new ViberConnector({ accessToken, sender, origin });
     super({ connector, sessionStore, sync });
   }

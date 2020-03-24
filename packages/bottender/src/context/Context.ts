@@ -74,7 +74,7 @@ export default abstract class Context<C extends Client, E extends Event> {
       initialState,
       requestContext,
       emitter,
-    } = options
+    } = options;
     this._client = client;
     this._event = event;
     this._session = session || null;
