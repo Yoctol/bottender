@@ -3,25 +3,7 @@ id: channel-telegram-sending-messages
 title: Sending Telegram Messages
 ---
 
-The more I know about Telegram, the more I love it. It might be the best chat channel for educational, experimental, personal bot project.
-
-Although Telegram is not one of the top 5 chat channels, I surprisingly found that Telegram is the most activity chat channels for bots from [Google Trends.](https://trends.google.com/trends/explore?date=2018-01-01%202019-01-01&q=Telegram%20Bot,Slack%20App,LINE%20Bot,Messenger%20Bot,Viber%20Bot)
-
-<p><img width="100%" src="https://user-images.githubusercontent.com/662387/71064407-fad9f880-21a9-11ea-9022-9d0a566fc29c.png">
-</p>
-
-Plus, I may argue that Telegram is the most developer-friendly chat channel. For example:
-
-- You don't need a developer account to build bots. You just needs to talk to @BotFather (see Bottender doc, ["Setup Telegram"](./channel-telegram-setup.md) for more info)
-- The desktop and mobile version of Telegram has quite similar behavior
-- Your app can proactively send messages to your users without extra cost (while Messenger or LINE asked for extra cost for push messages)
-
-<p><img width="300" src="https://user-images.githubusercontent.com/662387/70965210-e292ac80-20c9-11ea-9f1b-74abced2ff9e.jpeg">
-<br/> <em>Telegram is so freindly that developers can't refuse</em> </p>
-
-Telegram also cares about user's privacy. For example, you may check ["Privacy Mode"](https://core.telegram.org/bots#privacy-mode) before building a Telegram Bot for group chat. By default, A bot running in privacy mode only receives certain types of messages instead of complete chat history.
-
-### Basic Factors of Telegram Bots: Messages, Reply Markup, Updatable
+## Basic Factors of Telegram Bots: Messages, Reply Markup, Updatable
 
 Briefly speaking, the two basic concepts you need to know about Telegram bots are: `Messages` and `Reply Markup.` Both of them are `Updatable.`
 
@@ -40,7 +22,7 @@ await context.editMessageText(response.messageId, '*world*', {
 });
 ```
 
-### Bottender Playground
+## Bottender Playground
 
 If you can't wait to try Telegram Bots features, we prepared a simple demo bot for you, [Bottender Playground](https://t.me/BottenderPlaygroundBot).
 
