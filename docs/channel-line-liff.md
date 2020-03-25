@@ -3,9 +3,7 @@ id: channel-line-liff
 title: LINE Front-end Framework (LIFF)
 ---
 
-## LINE Front-end Framework (LIFF), the Webview Solution in LINE App
-
-There are three different sizes of embedded webviews provided by LIFF. You may use those sizes to enrich your users' experience.
+**LINE Front-end Framework (LIFF)** is the webview solution in LINE Apps. LIFF provides three different sizes of embedded webviews. You may use those sizes to enrich your users' experience:
 
 ![different sizes of liff](https://user-images.githubusercontent.com/563929/73712876-6a01b100-4746-11ea-8f85-22b8026882d5.png)
 
@@ -55,13 +53,13 @@ For more details about creating a LINE Login channel, please checkout [Creating 
 
 For more details about registering a LIFF app, please checkout [Registering LIFF App](https://developers.line.biz/en/docs/liff/registering-liff-apps/#registering-liff-app).
 
-> **Note:** [ngrok](https://ngrok.com/) is a well-known service that provides public HTTPS URLs for your local server using the tunnel. It's handy when you develop your bot locally. You may want to use it when developing.
+> **Note:** [ngrok](https://ngrok.com/) is a well-known service that provides public HTTPS URLs for your local server using the tunnel. When you develop your bot, you may want to use ngrok to get a temporary HTTPS URL.
 
 ### Environment Variables Setting
 
-If you are familiar with any official Bottender example, you may already know about how to use `.env` file to manage your environment variables in your local project.
+If you are familiar with any official Bottender example, you may already know about how to use the `.env` file to manage your environment variables in your local project.
 
-In this case, you need to add another `LINE_LIFF_ID` env to `.env` file, so your file will have at least those three LINE related environment variables:
+In this case, you need to add another `LINE_LIFF_ID` env to `.env` file, so there are at least those three LINE related environment variables in your file:
 
 ```
 LINE_ACCESS_TOKEN={your LINE access token from LINE Messaging API channel}
@@ -152,7 +150,7 @@ liff.sendMessages([
 ]);
 ```
 
-Up to five text, image, video, audio, location, template (only a URI action can be set as an action), and flex messages are acceptable.
+Up to five texts, images, videos, audios, locations, templates (only a URI action can be set as an action), and flex messages are acceptable.
 
 Let's add a click event listener to send messages on click. You could replace the body tag in `liff.html` with the following implementation:
 
@@ -221,4 +219,4 @@ module.exports = async function App(context) {
 };
 ```
 
-Now, you could execute `yarn dev` or `npm run dev` to start the server, and you will have a LINE Bot with a simple LIFF page.
+Now, you could execute `yarn dev` or `npm run dev` to start the server, and you have a LINE Bot with a simple LIFF page.

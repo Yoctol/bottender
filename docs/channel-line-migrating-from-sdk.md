@@ -3,11 +3,9 @@ id: channel-line-migrating-from-sdk
 title: Migrating from LINE SDK for Node.js
 ---
 
-## Bottender, the Ultimate Time Saver for LINE Bot Developers
+Bottender aims to help LINE developers focus on project-specific business logic. We carefully craft Bottender to save developers' time based on real project experience.
 
-Bottender aims to help LINE developers focus on project-specific business logic. It is carefully crafted to save developers' time based on real project experience.
-
-To feel the magic of Bottender, you can check the section of comparison, [Creating a Bot Project by LINE SDK vs Bottender.](#create-a-bot-project-by-line-sdk-vs-bottender) If you are keen on migrating your existing project to Bottender, you can jump to the section, [Migrate Your LINE SDK Bot Project to Bottender.](#migrate-your-line-sdk-bot-project-to-bottender-from-scratch)
+To feel the magic of Bottender, you can check the section of comparison, [Creating a Bot Project by LINE SDK vs Bottender](#create-a-bot-project-by-line-sdk-vs-bottender). If you are keen on migrating your existing project to Bottender, you can jump to the section, [Migrate Your LINE SDK Bot Project to Bottender](#migrate-your-line-sdk-bot-project-to-bottender-from-scratch).
 
 ## Create a Bot Project by LINE SDK vs Bottender
 
@@ -52,9 +50,9 @@ If you have experienced in bot projects, you can figure out that 80% of the abov
 
 ### Create a Bot Project by Bottender
 
-By Bottender, you can make a simple echo bot in the 3 steps:
+By Bottender, you can make a simple echo bot in 3 steps:
 
-First, create a LINE Bot project by one-line command:
+First, create a LINE bot project by the following one-line command:
 
 ```sh
 npx create-bottender-app my-app
@@ -62,19 +60,19 @@ npx create-bottender-app my-app
 
 Finish the LINE project environment setup. Please refer to LINE environment [setup guide](./channel-line-setup.md), if you are not familiar with it.
 
-Finally, add Bot echo feature by editing `src/index.js` file and add one line of code.
+Finally, add bot echo feature by editing the `src/index.js` file and add one line of code.
 
 ```js
 module.exports = function App(context) {
   await context.sendText(context.event.text);
-}
+};
 ```
 
 ## Migrate Your LINE SDK Bot Project to Bottender
 
 In the case that you have an existing bot project, you can follow the below steps to migrate your bot from LINE SDK to Bottender.
 
-To begin with, install Bottender and uninstall LINE Bot SDK.
+To begin with, install Bottender and uninstall LINE Bot SDK:
 
 ```sh
 // Using npm
@@ -88,7 +86,7 @@ yarn remove @line/bot-sdk
 
 Then, create your Bottender config file.
 
-Edit your `bottender.config.js` file as:
+Edit your `bottender.config.js` file as follows:
 
 ```js
 module.exports = {
@@ -99,7 +97,7 @@ module.exports = {
 };
 ```
 
-Create the main logic of your bot project by editing your bot logic in `index.js`:
+Create the main logic of your bot project by editing your bot logic in the `index.js` file:
 
 ```js
 module.exports = function App(context) {
