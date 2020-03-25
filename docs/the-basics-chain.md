@@ -3,19 +3,25 @@ id: the-basics-chain
 title: Chain of Responsibility
 ---
 
-An advanced way to organize your actions is using the ["Chain of Responsibility"](https://en.wikipedia.org/wiki/Chain-of-responsibility_pattern). This enables you to prioritize your actions explicitly by the order of the actions.
+Using the [Chain of Responsibility](https://en.wikipedia.org/wiki/Chain-of-responsibility_pattern) pattern is another way to organize your [Bottender actions](the-basics-actions.md) in your Bottender application. This pattern lets you explicitly prioritize your actions by specifying the order of the actions.
 
-Considering a customer service bot app with three very different layers: `RuleBased` layer, `MachineLearning` layer and `HumanAgent` layer, generally speaking, you may want to put the cheapest layer on the top of the chain:
+Considering a customer service bot application with three very different layers:
+
+- `RuleBased`: Use JavaScript rules to handle incoming events.
+- `MachineLearning`: Use machine learning models to handle incoming events.
+- `HumanAgent`: Use human agents to handle incoming events.
+
+In general, you may want to put the cheapest layer at the top of the chain. For example, you may put the `RuleBased` action at the top:
 
 ```js
 const { chain } = require('bottender');
 
 function RuleBased(context, props) {
   if (context.event.text === 'hi') {
-    // discontinue and return SayHi
+    // discontinue and return the `SayHi` action
     return SayHi;
   }
-  // continue to next
+  // continue to the `next` action
   return props.next;
 }
 
@@ -29,7 +35,7 @@ function HumanAgent(context, props) {
 
 function App() {
   return chain([
-    // will execute in following order
+    // execute in the following order
     RuleBased,
     MachineLearningBased,
     HumanAgent,
@@ -37,25 +43,27 @@ function App() {
 }
 ```
 
-If the bot receives `hi` as input in the `RuleBased` layer, it returns `SayHi` and exits this chain. Otherwise, it follows the chain and goes to the `MachineLearningBased` layer.
+If your bot receives a "hi" text message, the `RuleBased` action returns the `SayHi` action and exits the chain. Otherwise, the `RuleBased` action returns `props.next` and goes down to the `MachineLearningBased` action.
 
-`chain` accepts an array of actions and returns an action as return value, so it's possible to work with any pattern that compatible with actions.
+The `chain` function takes an array of actions and returns an action as the return value, so it can work with all patterns that compatible with the Bottender actions.
 
 ## Using with Router
 
-This pattern can be used with the routing mechanism we provided and mentioned in [previous section](the-basics-routing.md).
+You can use the Chain of Responsibility pattern with the [routing mechanism](the-basics-routing.md) that Bottender provides. For example, you may use the `router` function to create a router within the `RuleBased` layer:
 
 ```js
 function RuleBased(context, { next }) {
   return router([
-    text('hi', SayHi), // return SayHi when receiving hi text message
-    route('*', next), // return next
+    // return the `SayHi` action when receiving a "hi" text message
+    text('hi', SayHi),
+    // return the `next` action
+    route('*', next),
   ]);
 }
 
 function App() {
   return chain([
-    // will execute in following order
+    // execute in the following order
     RuleBased,
     MachineLearningBased,
     HumanAgent,
