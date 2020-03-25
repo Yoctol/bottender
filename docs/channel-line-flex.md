@@ -1,32 +1,32 @@
 ---
 id: channel-line-flex
-title: Sending LINE Flex Message
+title: Flex Messages
 ---
 
-When you are building a LINE bot, you should never miss one of the killer features of LINE, [Flex Messages](https://developers.line.biz/en/docs/messaging-api/using-flex-messages/). As its name suggests, Flex Messages are highly flexible for various bot scenarios. For example, booking the hotel, showing product catalog, displaying task progress, or rating for tourism.
+## Introduction
+
+[Flex messages](https://developers.line.biz/en/docs/messaging-api/using-flex-messages/) are one of the killer features of LINE. As its name suggests, flex messages are highly flexible for various bot scenarios. For example, booking the hotel, showing product catalog, displaying task progress, or rating for tourism.
 
 ![](https://user-images.githubusercontent.com/3382565/68373526-1222d080-017e-11ea-9461-8f26fdfdc527.png)
 
-If you are familiar with web programming, you find similarities between the intentions of Flex Messages and HTML. For example:
+If you are familiar with web programming, you find similarities between the structure of flex messages and HTML. For example:
 
 - The size of a container is calculated based on its components and layout
 - The hierarchical structure for the display of nested content
 
-We also argue that Flex Messages as a practical approach towards highly customized chat UI, although flexibility usually comes with complexity (in terms of the amount of code).
+Although flexibility usually comes with complexity (in terms of the amount of code), flex messages are a practical approach to build highly customized chat UI.
 
-Another benefit of Flex Messages is better desktop support, compared with mobile-only Template Messages and quick replies.
+Another benefit of flex messages is better desktop support, compared with mobile-only template messages and quick replies.
 
-In the following sections, we guide you through Flex Messages examples from simple to complex ones.
+In the following sections, we will guide you through flex messages examples from simple to complex ones.
 
-## Flex Message Examples
+## A Minimum Flex Message
 
-### A Hello World Flex Message
+The following is a minimum "Hello World" example.
 
 ![](https://user-images.githubusercontent.com/3382565/68481176-783c5000-0271-11ea-9ab1-c9869a11f42a.png)
 
-The following is a simple example based on a `bubble` type container with two text components arranged horizontally.
-
-To send flex messages, call `context.sendFlex()` with your flex content:
+To send flex messages, you can call `context.sendFlex()` with your alt text and flex contents:
 
 ```js
 async function App(context) {
@@ -50,7 +50,9 @@ async function App(context) {
 }
 ```
 
-### An Advanced Flex Message Example
+The above example is a [`bubble`](https://developers.line.biz/en/docs/messaging-api/flex-message-elements/#bubble) type container with two [text](https://developers.line.biz/en/docs/messaging-api/flex-message-elements/#text) components (`Hello,` and `World!`) arranged horizontally by a [box](https://developers.line.biz/en/docs/messaging-api/flex-message-elements/#box) component.
+
+## An Advanced Flex Message Example
 
 Let's see a much more complicated example. This example offers a better user experience, where information is positioned carefully with proper emphasis.
 
@@ -125,13 +127,17 @@ async function App(context) {
 }
 ```
 
-> **Note: When it comes to complicated Flex Messages, it is recommended to check your code by the Flex Message Simulator.**
->
-> - [Flex Message Simulator](https://developers.line.biz/flex-simulator)
+For more information, see [Flex Message Elements](https://developers.line.biz/en/docs/messaging-api/flex-message-elements/).
 
-### A Carousel Type Flex Message
+> **Note:** When your flex messages are complicated, we recommend checking your code by [Flex Message Simulator](https://developers.line.biz/flex-simulator).
 
-You can send carousel Flex Messages by using the `carousel` as the top-level container. It is handy when you are displaying multiple choices, e.g., clothes, restaurants, tourism for the user to choose.
+## Carousel Type Flex Messages
+
+A [carousel](https://developers.line.biz/en/docs/messaging-api/flex-message-elements/#carousel) is a container that contains multiple bubble elements. Users can browse the bubbles in the carousel by scrolling horizontally. Carousels are helpful when you are displaying multiple choices, e.g., clothes, restaurants, tourism for the user to choose.
+
+![](https://user-images.githubusercontent.com/3382565/77495528-d44feb80-6e83-11ea-9300-ac5dae922c0d.png)
+
+To send carousel flex messages, use the `carousel` as the top-level container:
 
 ```js
 async function App(context) {
