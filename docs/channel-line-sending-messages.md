@@ -723,6 +723,34 @@ const quickReply = {
 >
 > - For more info, please refer to LINE's official doc, [`Location Action`](https://developers.line.biz/en/reference/messaging-api/#location-action)
 
+## Sending with dynamic icon and display name
+
+You can dynamically change the icon and display name by specify the `sender` properties in message options.
+
+![](https://developers.line.biz/assets/img/icon-nickname-switch.7ad52e1a.jpg)
+
+The `sender.name` and `sender.iconUrl` are both optional parameters. See the following example:
+
+```js
+const sender = {
+  name: 'dynamic name',
+  iconUrl: 'https://example.com/icon.jpg'
+}
+
+await context.send([
+  {
+    type: 'text',
+    text: 'hello',
+    sender,
+  },
+]);
+
+// or
+await context.sendText('hello', { sender });
+```
+
+> - For more info, refer to LINE's official doc, [`Change icon and display name`](https://developers.line.biz/zh-hant/docs/messaging-api/icon-nickname-switch/#summary)
+
 ## Rate Limits
 
 Just like many chat channels, LINE has rate limits for each endpoint. If you continue to send requests exceeding the rate limit for an extended period, your bot might stop responding. It is because LINE blocks incoming requests to your bot.
