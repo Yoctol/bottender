@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="zh-TW"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>路由 · Bottender</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="`Routing` is a handy design pattern to help you organize bot actions."/><meta name="docsearch:version" content="next"/><meta name="docsearch:language" content="zh-TW"/><meta property="og:title" content="路由 · Bottender"/><meta property="og:type" content="website"/><meta property="og:url" content="https://bottender.js.org/"/><meta property="og:description" content="`Routing` is a handy design pattern to help you organize bot actions."/><meta property="og:image" content="https://bottender.js.org/img/og-image.png"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://bottender.js.org/img/og-image.png"/><link rel="shortcut icon" href="/img/favicon-192x192.png"/><link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-dark.min.css"/><link rel="alternate" type="application/atom+xml" href="https://bottender.js.org/blog/atom.xml" title="Bottender Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://bottender.js.org/blog/feed.xml" title="Bottender Blog RSS Feed"/><script>
+<!DOCTYPE html><html lang="zh-TW"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>路由 · Bottender</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="**Routing** is a pattern that helps you organize your \[Bottender actions\]((the-basics-actions.md) in your Bottender app. For example, you can use the `router` function and the `text` function to create an action that handles &quot;hi&quot; and &quot;hello&quot; text message events with the different actions (`SayHi` and `SayHello`) as follows:"/><meta name="docsearch:version" content="next"/><meta name="docsearch:language" content="zh-TW"/><meta property="og:title" content="路由 · Bottender"/><meta property="og:type" content="website"/><meta property="og:url" content="https://bottender.js.org/"/><meta property="og:description" content="**Routing** is a pattern that helps you organize your \[Bottender actions\]((the-basics-actions.md) in your Bottender app. For example, you can use the `router` function and the `text` function to create an action that handles &quot;hi&quot; and &quot;hello&quot; text message events with the different actions (`SayHi` and `SayHello`) as follows:"/><meta property="og:image" content="https://bottender.js.org/img/og-image.png"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://bottender.js.org/img/og-image.png"/><link rel="shortcut icon" href="/img/favicon-192x192.png"/><link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-dark.min.css"/><link rel="alternate" type="application/atom+xml" href="https://bottender.js.org/blog/atom.xml" title="Bottender Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://bottender.js.org/blog/feed.xml" title="Bottender Blog RSS Feed"/><script>
               (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
               (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
               m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
@@ -74,8 +74,7 @@
                 };
               }
             });
-        </script></nav></div><div class="container mainContainer docsContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://crowdin.com/project/bottender/zh-TW" target="_blank" rel="noreferrer noopener">Translate</a><h1 id="__docusaurus" class="postHeaderTitle">路由</h1></header><article><div><span><p><code>Routing</code> is a handy design pattern to help you organize bot actions.</p>
-<p>The most basic Bottender <code>Route</code> is composed of a text and an action, providing a straightforward and expressive definition:</p>
+        </script></nav></div><div class="container mainContainer docsContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://crowdin.com/project/bottender/zh-TW" target="_blank" rel="noreferrer noopener">Translate</a><h1 id="__docusaurus" class="postHeaderTitle">路由</h1></header><article><div><span><p><strong>Routing</strong> is a pattern that helps you organize your [Bottender actions]((the-basics-actions.md) in your Bottender app. For example, you can use the <code>router</code> function and the <code>text</code> function to create an action that handles &quot;hi&quot; and &quot;hello&quot; text message events with the different actions (<code>SayHi</code> and <code>SayHello</code>) as follows:</p>
 <pre><code class="hljs css language-js"><span class="hljs-keyword">const</span> { router, text } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'bottender/router'</span>);
 
 <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">SayHi</span>(<span class="hljs-params">context</span>) </span>{
@@ -88,38 +87,44 @@
 
 <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params"></span>) </span>{
   <span class="hljs-keyword">return</span> router([
-    text(<span class="hljs-string">'hi'</span>, SayHi), <span class="hljs-comment">// return SayHi when receiving hi text message</span>
-    text(<span class="hljs-string">'hello'</span>, SayHello), <span class="hljs-comment">// return SayHello when receiving hello text message</span>
+    <span class="hljs-comment">// return the `SayHi` action when receiving "hi" text messages</span>
+    text(<span class="hljs-string">'hi'</span>, SayHi),
+    <span class="hljs-comment">// return the `SayHello` action when receiving "hello" text messages</span>
+    text(<span class="hljs-string">'hello'</span>, SayHello),
   ]);
 }
 </code></pre>
-<p><code>Router</code> is consists of an array of <code>Routes</code>. It returns the action of the first matched route. It is possible to have nested routers or any pattern that compatible with actions.</p>
-<p>The first argument of route defines the matching rule, which could be an array of strings. The action of the route will be returned when one of the strings is matched:</p>
+<blockquote>
+<p><strong>Note:</strong> The <code>router</code> function, the <code>text</code> function, and some other functions that we introduce below are coming from the <code>bottender/router</code> module. If you want to use them, make sure to import them from the <code>bottender/router</code> module correctly.</p>
+</blockquote>
+<p>The <code>router</code> function takes an array of routes to create a router. The created router checks each route is matching the condition or not in the specified order and returns the provided action of the first matching route.</p>
+<p>The first argument of the <code>text</code> function defines the matching rule, which could also be an array of strings. In the following example, when receiving &quot;hi&quot;, &quot;hello&quot; or &quot;hey&quot; text messages, the router returns the <code>SayHi</code> action:</p>
 <pre><code class="hljs css language-js"><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params">context</span>) </span>{
   <span class="hljs-keyword">return</span> router([
-    <span class="hljs-comment">// // return SayHi when receiving hi or hello or hey text message</span>
+    <span class="hljs-comment">// return the `SayHi` action when receiving "hi", "hello" or "hey" text messages</span>
     text([<span class="hljs-string">'hi'</span>, <span class="hljs-string">'hello'</span>, <span class="hljs-string">'hey'</span>], SayHi),
   ]);
 }
 </code></pre>
 <h2><a class="anchor" aria-hidden="true" id="regular-expression-routes"></a><a href="#regular-expression-routes" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Regular Expression Routes</h2>
-<p>If you are familiar with <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions">regular expressions</a>, it's a powerful way to extend your matching rules with JavaScript RegExp:</p>
+<p>If you are familiar with <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions">regular expressions</a>, you can use JavaScript <code>RegExp</code> to extend your matching rules as follows:</p>
 <pre><code class="hljs css language-js"><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params">context</span>) </span>{
   <span class="hljs-keyword">return</span> router([
-    <span class="hljs-comment">// return SayHi when receiving case-insensitive hi or hello text message</span>
+    <span class="hljs-comment">// return the `SayHi` action when receiving case-insensitive "hi" or "hello" text messages</span>
     text(<span class="hljs-regexp">/^(hi|hello)$/i</span>, SayHi),
   ]);
 }
 </code></pre>
+<p>By using the regular expression, your bot now handles &quot;HI&quot;, &quot;Hello&quot; text messages as well.</p>
 <p>Sometimes you may want to add <a href="https://github.com/tc39/proposal-regexp-named-groups">named capture groups to your JavaScript RegExps</a>:</p>
 <pre><code class="hljs css language-js"><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params">context</span>) </span>{
   <span class="hljs-keyword">return</span> router([
-    <span class="hljs-comment">// return Command when receiving /join, /invite, /whatever</span>
+    <span class="hljs-comment">// return the `Command` action when receiving "/join", "/invite", or "/whatever" text messages</span>
     text(<span class="hljs-regexp">/^\/(?&lt;command&gt;\S+)$/i</span>, Command),
   ]);
 }
 </code></pre>
-<p>Then, you can access match groups result in your props:</p>
+<p>Then, you can access the result of the match groups in your <code>props</code>:</p>
 <pre><code class="hljs css language-js"><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Command</span>(<span class="hljs-params">
   context,
   {
@@ -140,7 +145,7 @@
 <p><strong>Note:</strong> <code>RegExp Named Capturing Groups</code> is supported by Node 10+.</p>
 </blockquote>
 <h2><a class="anchor" aria-hidden="true" id="fallback-routes"></a><a href="#fallback-routes" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Fallback Routes</h2>
-<p>By using the <code>*</code> as the first argument, you may define a route for unhandled events, which triggers whenever no other routes match the incoming event. Meanwhile, reply to unhandled events is a chance to introduce bot features by sending a fallback message or a user's manual.</p>
+<p>By using the <code>*</code> as the first argument of the <code>text</code> function, you may define a route for the unhandled text message events. The route triggers whenever no other route matches the incoming text event. Meanwhile, handling unhandled text message events is a chance to guide your users by sending a fallback message or a user's manual. For example:</p>
 <pre><code class="hljs css language-js"><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Unknown</span>(<span class="hljs-params">context</span>) </span>{
   <span class="hljs-keyword">await</span> context.sendText(<span class="hljs-string">'Sorry. I do not understand what you say.'</span>);
 }
@@ -148,39 +153,39 @@
 <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params">context</span>) </span>{
   <span class="hljs-keyword">return</span> router([
     text(<span class="hljs-regexp">/^(hi|hello)$/i</span>, SayHi),
-    <span class="hljs-comment">// return Unknown when when no other route matches the incoming text message</span>
+    <span class="hljs-comment">// return the `Unknown` action when when no other route matches the incoming text message</span>
     text(<span class="hljs-string">'*'</span>, Unknown),
   ]);
 }
 </code></pre>
-<p>Besides all unhandled text message events, you can fallback all events by <code>route('*', ...)</code> instead:</p>
+<p>Besides all unhandled text message events, you can fallback all kind of events by using <code>route('*', ...)</code> instead:</p>
 <pre><code class="hljs css language-js"><span class="hljs-keyword">const</span> { router, route, text } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'bottender/router'</span>);
 
 <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params">context</span>) </span>{
   <span class="hljs-keyword">return</span> router([
     text(<span class="hljs-regexp">/^(hi|hello)$/i</span>, SayHi),
-    <span class="hljs-comment">// return Unknown when when no other route matches the incoming event</span>
+    <span class="hljs-comment">// return the `Unknown` action when no other route matches the incoming event</span>
     route(<span class="hljs-string">'*'</span>, Unknown),
   ]);
 }
 </code></pre>
 <blockquote>
-<p><strong>Note:</strong> The fallback route must be the final route in your router.</p>
+<p><strong>Note:</strong> The fallback route must be the last route in your router.</p>
 </blockquote>
 <h2><a class="anchor" aria-hidden="true" id="payload-routes"></a><a href="#payload-routes" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Payload Routes</h2>
-<p>Payload events typically happen when users send payload data by clicking buttons, selecting menus, or clicking keyboards. For example, you may catch <code>GET_STARTED</code> payload that send by button click and respond with <code>SayHi</code> action:</p>
+<p>Payload events typically happen when users send payload data by clicking buttons, selecting menus, or clicking keyboards. For example, you may catch <code>GET_STARTED</code> payload that sends by clicking the button and respond with the <code>SayHi</code> action:</p>
 <pre><code class="hljs css language-js"><span class="hljs-keyword">const</span> { router, payload } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'bottender/router'</span>);
 
 <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params">context</span>) </span>{
   <span class="hljs-keyword">return</span> router([
     payload(<span class="hljs-string">'GET_STARTED'</span>, SayHi),
-    <span class="hljs-comment">// return Unknown when when no other route matches the incoming event</span>
+    <span class="hljs-comment">// return the `Unknown` action when no other route matches the incoming event</span>
     route(<span class="hljs-string">'*'</span>, Unknown),
   ]);
 }
 </code></pre>
 <h2><a class="anchor" aria-hidden="true" id="custom-routes"></a><a href="#custom-routes" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Custom Routes</h2>
-<p>If you wish to use your route predicate, you may use the <code>route</code> to create your route wrapper.</p>
+<p>If you prefer to use your route predicate, you may use the <code>route</code> function to create your route wrapper. The <code>route</code> function takes a function that returns a boolean as the first argument:</p>
 <pre><code class="hljs css language-js"><span class="hljs-keyword">const</span> { router, route } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'bottender/router'</span>);
 
 <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">sayHiTo</span>(<span class="hljs-params">name, Action</span>) </span>{
@@ -190,14 +195,14 @@
 <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params">context</span>) </span>{
   <span class="hljs-keyword">return</span> router([
     sayHiTo(<span class="hljs-string">'Bottender'</span>, SayHi),
-    <span class="hljs-comment">// return Unknown when when no other route matches the incoming event</span>
+    <span class="hljs-comment">// return the `Unknown` action when no other route matches the incoming event</span>
     route(<span class="hljs-string">'*'</span>, Unknown),
   ]);
 }
 </code></pre>
-<p>In the above example, the custom route matches <code>Hi Bottender</code> text message and resolve <code>SayHi</code> action.</p>
+<p>In the above example, the custom route matches the &quot;Hi Bottender&quot; text messages and returns the <code>SayHi</code> action.</p>
 <h2><a class="anchor" aria-hidden="true" id="platform-specific-routes"></a><a href="#platform-specific-routes" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Platform Specific Routes</h2>
-<p>Bottender includes a bunch of helpers to route within your multi-platform application. To learn more about the details of those specific routes, check out their documentation:</p>
+<p>Bottender includes a bunch of helpers to route within your multi-platform app. To learn more about the details of those specific routes, check out their documentation accordingly:</p>
 <ul>
 <li><a href="/docs/zh-TW/next/channel-messenger-routing">Messenger Routes</a></li>
 <li><a href="/docs/zh-TW/next/channel-whatsapp-routing">WhatsApp Routes</a></li>

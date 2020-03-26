@@ -1,0 +1,2639 @@
+<!DOCTYPE html><html lang="zh-TW"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>TelegramContext · Bottender</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="- [Send API](#send-api)"/><meta name="docsearch:version" content="1.3.0"/><meta name="docsearch:language" content="zh-TW"/><meta property="og:title" content="TelegramContext · Bottender"/><meta property="og:type" content="website"/><meta property="og:url" content="https://bottender.js.org/"/><meta property="og:description" content="- [Send API](#send-api)"/><meta property="og:image" content="https://bottender.js.org/img/og-image.png"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://bottender.js.org/img/og-image.png"/><link rel="shortcut icon" href="/img/favicon-192x192.png"/><link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-dark.min.css"/><link rel="alternate" type="application/atom+xml" href="https://bottender.js.org/blog/atom.xml" title="Bottender Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://bottender.js.org/blog/feed.xml" title="Bottender Blog RSS Feed"/><script>
+              (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+              (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+              m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+              })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+              ga('create', 'UA-70309045-11', 'auto');
+              ga('send', 'pageview');
+            </script><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:700|Roboto&amp;display=swap"/><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script><script type="text/javascript" src="/js/code-blocks-buttons.js"></script><script type="text/javascript" src="/js/sw.js"></script><script src="/js/scrollSpy.js"></script><link rel="stylesheet" href="/css/main.css"/><script src="/js/codetabs.js"></script></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/zh-TW"><img class="logo" src="/img/bottender.svg" alt="Bottender"/><h2 class="headerTitleWithLogo">Bottender</h2></a><a href="/zh-TW/versions"><h3>1.3.0</h3></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class=""><a href="/docs/zh-TW/1.3.0/getting-started" target="_self">文件</a></li><li class="siteNavGroupActive"><a href="/docs/zh-TW/1.3.0/api-context" target="_self">API</a></li><li class=""><a href="/blog/" target="_self">部落格</a></li><li class=""><a href="/zh-TW/users" target="_self">用戶</a></li><li class=""><a href="https://github.com/Yoctol/bottender/tree/master/examples" target="_self">範例</a></li><li class=""><a href="https://github.com/yoctol/bottender" target="_self">GitHub</a></li><span><li><a id="languages-menu" href="#"><img class="languages-icon" src="/img/language.svg" alt="Languages icon"/>繁體中文</a><div id="languages-dropdown" class="hide"><ul id="languages-dropdown-items"><li><a href="/docs/en/1.3.0/api-telegram-context">English</a></li><li><a href="https://crowdin.com/project/bottender" target="_blank" rel="noreferrer noopener">幫忙翻譯</a></li></ul></div></li><script>
+        const languagesMenuItem = document.getElementById("languages-menu");
+        const languagesDropDown = document.getElementById("languages-dropdown");
+        languagesMenuItem.addEventListener("click", function(event) {
+          event.preventDefault();
+
+          if (languagesDropDown.className == "hide") {
+            languagesDropDown.className = "visible";
+          } else {
+            languagesDropDown.className = "hide";
+          }
+        });
+      </script></span><li class="navSearchWrapper reactNavSearchWrapper"><input type="text" id="search_input_react" placeholder="Search" title="Search"/></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><div class="hamburger-menu"><div class="line1"></div><div class="line2"></div><div class="line3"></div></div></div><h2><i>›</i><span>Telegram</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle">核心概念</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.3.0/api-context">Context</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.3.0/api-event">Event</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Messenger</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.3.0/api-messenger-context">MessengerContext</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.3.0/api-messenger-event">MessengerEvent</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">LINE</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.3.0/api-line-context">LineContext</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.3.0/api-line-event">LineEvent</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Slack</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.3.0/api-slack-context">SlackContext</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.3.0/api-slack-event">SlackEvent</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Telegram</h3><ul class=""><li class="navListItem navListItemActive"><a class="navItem" href="/docs/zh-TW/1.3.0/api-telegram-context">TelegramContext</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.3.0/api-telegram-event">TelegramEvent</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Viber</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.3.0/api-viber-context">ViberContext</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.3.0/api-viber-event">ViberEvent</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Console</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.3.0/api-console-context">ConsoleContext</a></li><li class="navListItem"><a class="navItem" href="/docs/zh-TW/1.3.0/api-console-event">ConsoleEvent</a></li></ul></div></div></section></div><script>
+            var coll = document.getElementsByClassName('collapsible');
+            var checkActiveCategory = true;
+            for (var i = 0; i < coll.length; i++) {
+              var links = coll[i].nextElementSibling.getElementsByTagName('*');
+              if (checkActiveCategory){
+                for (var j = 0; j < links.length; j++) {
+                  if (links[j].classList.contains('navListItemActive')){
+                    coll[i].nextElementSibling.classList.toggle('hide');
+                    coll[i].childNodes[1].classList.toggle('rotate');
+                    checkActiveCategory = false;
+                    break;
+                  }
+                }
+              }
+
+              coll[i].addEventListener('click', function() {
+                var arrow = this.childNodes[1];
+                arrow.classList.toggle('rotate');
+                var content = this.nextElementSibling;
+                content.classList.toggle('hide');
+              });
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
+              createToggler('#tocToggler', 'body', 'tocActive');
+
+              var headings = document.querySelector('.toc-headings');
+              headings && headings.addEventListener('click', function(event) {
+                var el = event.target;
+                while(el !== headings){
+                  if (el.tagName === 'A') {
+                    document.body.classList.remove('tocActive');
+                    break;
+                  } else{
+                    el = el.parentNode;
+                  }
+                }
+              }, false);
+
+              function createToggler(togglerSelector, targetSelector, className) {
+                var toggler = document.querySelector(togglerSelector);
+                var target = document.querySelector(targetSelector);
+
+                if (!toggler) {
+                  return;
+                }
+
+                toggler.onclick = function(event) {
+                  event.preventDefault();
+
+                  target.classList.toggle(className);
+                };
+              }
+            });
+        </script></nav></div><div class="container mainContainer docsContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://crowdin.com/project/bottender/zh-TW" target="_blank" rel="noreferrer noopener">Translate</a><h1 id="__docusaurus" class="postHeaderTitle">TelegramContext</h1></header><article><div><span><ul>
+<li><a href="#send-api">Send API</a></li>
+<li><a href="#get-api">Get API</a></li>
+<li><a href="#updating-api">Updating API</a></li>
+<li><a href="#group-api">Group API</a></li>
+<li><a href="#payments-api">Payments API</a></li>
+<li><a href="#inline-mode-api">Inline Mode API</a></li>
+<li><a href="#game-api">Game API</a></li>
+<li><a href="#others">Others</a></li>
+</ul>
+<p><a id="send-api" ></p></p>
+<p><h3 spaces-before="0">
+Send API - <a href="https://core.telegram.org/bots/api#available-methods">Official Docs</a>
+</h3></p>
+<p><h4 spaces-before="0">
+<code>sendMessage(text [, options])</code> - <a href="https://core.telegram.org/bots/api/#sendmessage">Official Docs</a>
+</h4></p>
+<p spaces-before="0">
+  Sends text messages.
+</p>
+<table spaces-before="0" line-breaks-before="2">
+  <tr>
+    <th>
+      Param
+    </th>
+<pre><code class="hljs">&lt;th&gt;
+  Type
+&lt;/th&gt;
+
+&lt;th&gt;
+  Description
+&lt;/th&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      text
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;String&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Text of the message to be sent.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      options
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;Object&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Other optional parameters.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+</table>
+<p spaces-before="0">
+  Exmaple:
+</p>
+<pre><code class="js">context.sendMessage('hi', {
+  disableWebPagePreview: true,
+  disableNotification: true,
+});
+</code></pre>
+<p spaces-before="0">
+  <br />
+</p>
+<p><h4 spaces-before="0">
+<code>sendPhoto(photo [, options])</code> - <a href="https://core.telegram.org/bots/api/#sendphoto">Official Docs</a>
+</h4></p>
+<p spaces-before="0">
+  Sends photos.
+</p>
+<table spaces-before="0" line-breaks-before="2">
+  <tr>
+    <th>
+      Param
+    </th>
+<pre><code class="hljs">&lt;th&gt;
+  Type
+&lt;/th&gt;
+
+&lt;th&gt;
+  Description
+&lt;/th&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      photo
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;String&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Pass a file id (recommended) or HTTP URL to send photo.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      options
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;Object&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Other optional parameters.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+</table>
+<p spaces-before="0">
+  Example:
+</p>
+<pre><code class="js">context.sendPhoto('https://example.com/image.png', {
+  caption: 'gooooooodPhoto',
+  disableNotification: true,
+});
+</code></pre>
+<p spaces-before="0">
+  <br />
+</p>
+<p><h4 spaces-before="0">
+<code>sendAudio(audio [, options])</code> - <a href="https://core.telegram.org/bots/api/#sendaudio">Official Docs</a>
+</h4></p>
+<p spaces-before="0">
+  Sends audio files.
+</p>
+<table spaces-before="0" line-breaks-before="2">
+  <tr>
+    <th>
+      Param
+    </th>
+<pre><code class="hljs">&lt;th&gt;
+  Type
+&lt;/th&gt;
+
+&lt;th&gt;
+  Description
+&lt;/th&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      audio
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;String&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Pass a file id (recommended) or HTTP URL to send audio.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      options
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;Object&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Other optional parameters.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+</table>
+<p spaces-before="0">
+  Example:
+</p>
+<pre><code class="js">context.sendAudio('https://example.com/audio.mp3', {
+  caption: 'gooooooodAudio',
+  disableNotification: true,
+});
+</code></pre>
+<p spaces-before="0">
+  <br />
+</p>
+<p><h4 spaces-before="0">
+<code>sendDocument(document [, options])</code> - <a href="https://core.telegram.org/bots/api/#senddocument">Official Docs</a>
+</h4></p>
+<p spaces-before="0">
+  Sends general files.
+</p>
+<table spaces-before="0" line-breaks-before="2">
+  <tr>
+    <th>
+      Param
+    </th>
+<pre><code class="hljs">&lt;th&gt;
+  Type
+&lt;/th&gt;
+
+&lt;th&gt;
+  Description
+&lt;/th&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      document
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;String&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Pass a file id (recommended) or HTTP URL to send document.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      options
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;Object&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Other optional parameters.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+</table>
+<p spaces-before="0">
+  Example:
+</p>
+<pre><code class="js">context.sendDocument('https://example.com/doc.gif', {
+  caption: 'gooooooodDocument',
+  disableNotification: true,
+});
+</code></pre>
+<p spaces-before="0">
+  <br />
+</p>
+<p><h4 spaces-before="0">
+<code>sendSticker(sticker [, options])</code> - <a href="https://core.telegram.org/bots/api/#sendsticker">Official Docs</a>
+</h4></p>
+<p spaces-before="0">
+  Sends <code>.webp</code> stickers.
+</p>
+<table spaces-before="0" line-breaks-before="2">
+  <tr>
+    <th>
+      Param
+    </th>
+<pre><code class="hljs">&lt;th&gt;
+  Type
+&lt;/th&gt;
+
+&lt;th&gt;
+  Description
+&lt;/th&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      sticker
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;String&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Pass a file id (recommended) or HTTP URL to send sticker.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      options
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;Object&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Other optional parameters.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+</table>
+<p spaces-before="0">
+  Example:
+</p>
+<pre><code class="js">context.sendSticker('CAADAgADQAADyIsGAAE7MpzFPFQX5QI', {
+  disableNotification: true,
+});
+</code></pre>
+<p spaces-before="0">
+  <br />
+</p>
+<p><h4 spaces-before="0">
+<code>sendVideo(video [, options])</code> - <a href="https://core.telegram.org/bots/api/#sendvideo">Official Docs</a>
+</h4></p>
+<p spaces-before="0">
+  Sends video files, Telegram clients support <code>mp4</code> videos (other formats may be sent as Document).
+</p>
+<table spaces-before="0" line-breaks-before="2">
+  <tr>
+    <th>
+      Param
+    </th>
+<pre><code class="hljs">&lt;th&gt;
+  Type
+&lt;/th&gt;
+
+&lt;th&gt;
+  Description
+&lt;/th&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      video
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;String&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Pass a file id (recommended) or HTTP URL to send video.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      options
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;Object&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Other optional parameters.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+</table>
+<p spaces-before="0">
+  Example:
+</p>
+<pre><code class="js">context.sendVideo('https://example.com/video.mp4', {
+  caption: 'gooooooodVideo',
+  disableNotification: true,
+});
+</code></pre>
+<p spaces-before="0">
+  <br />
+</p>
+<p><h4 spaces-before="0">
+<code>sendVoice(voice [, options])</code> - <a href="https://core.telegram.org/bots/api/#sendvoice">Official Docs</a>
+</h4></p>
+<p spaces-before="0">
+  Sends audio files.
+</p>
+<table spaces-before="0" line-breaks-before="2">
+  <tr>
+    <th>
+      Param
+    </th>
+<pre><code class="hljs">&lt;th&gt;
+  Type
+&lt;/th&gt;
+
+&lt;th&gt;
+  Description
+&lt;/th&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      voice
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;String&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Pass a file id (recommended) or HTTP URL to send voice.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      options
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;Object&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Other optional parameters.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+</table>
+<p spaces-before="0">
+  Example:
+</p>
+<pre><code class="js">context.sendVoice('https://example.com/voice.ogg', {
+  caption: 'gooooooodVoice',
+  disableNotification: true,
+});
+</code></pre>
+<p spaces-before="0">
+  <br />
+</p>
+<p><h4 spaces-before="0">
+<code>sendVideoNote(videoNote [, options])</code> - <a href="https://core.telegram.org/bots/api/#sendvideonote">Official Docs</a>
+</h4></p>
+<p spaces-before="0">
+  Sends video messages. As of v.4.0, Telegram clients support rounded square mp4 videos of up to 1 minute long.
+</p>
+<table spaces-before="0" line-breaks-before="2">
+  <tr>
+    <th>
+      Param
+    </th>
+<pre><code class="hljs">&lt;th&gt;
+  Type
+&lt;/th&gt;
+
+&lt;th&gt;
+  Description
+&lt;/th&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      videoNote
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;String&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Pass a file id (recommended) or HTTP URL to send video note.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      options
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;Object&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Other optional parameters.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+</table>
+<p spaces-before="0">
+  Example:
+</p>
+<pre><code class="js">context.sendVideoNote('https://example.com/video_note.mp4', {
+  duration: 40,
+  disableNotification: true,
+});
+</code></pre>
+<p spaces-before="0">
+  <br />
+</p>
+<p><h4 spaces-before="0">
+<code>sendMediaGroup(media [, options])</code> - <a href="https://core.telegram.org/bots/api/#sendmediagroup">Official Docs</a>
+</h4></p>
+<p spaces-before="0">
+  send a group of photos or videos as an album.
+</p>
+<table spaces-before="0" line-breaks-before="2">
+  <tr>
+    <th>
+      Param
+    </th>
+<pre><code class="hljs">&lt;th&gt;
+  Type
+&lt;/th&gt;
+
+&lt;th&gt;
+  Description
+&lt;/th&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      media
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;a href=&quot;https://core.telegram.org/bots/api#inputmedia&quot;&gt;InputMedia&lt;/a&gt;[]
+&lt;/td&gt;
+
+&lt;td&gt;
+  A JSON-serialized array describing photos and videos to be sent, must include 2–10 items
+&lt;/td&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      options
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;Object&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Other optional parameters.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+</table>
+<p spaces-before="0">
+  Example:
+</p>
+<pre><code class="js">context.sendMediaGroup([
+  { type: 'photo', media: 'BQADBAADApYAAgcZZAfj2-xeidueWwI' },
+]);
+</code></pre>
+<p spaces-before="0">
+  <br />
+</p>
+<p><h4 spaces-before="0">
+<code>sendLocation(location [, options])</code> - <a href="https://core.telegram.org/bots/api/#sendlocation">Official Docs</a>
+</h4></p>
+<p spaces-before="0">
+  Sends point on the map.
+</p>
+<table spaces-before="0" line-breaks-before="2">
+  <tr>
+    <th>
+      Param
+    </th>
+<pre><code class="hljs">&lt;th&gt;
+  Type
+&lt;/th&gt;
+
+&lt;th&gt;
+  Description
+&lt;/th&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      location
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;Object&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Object contains latitude and longitude.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      location.latitude
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;Number&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Latitude of the location.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      location.longitude
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;Number&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Longitude of the location.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      options
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;Object&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Other optional parameters.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+</table>
+<p spaces-before="0">
+  Example:
+</p>
+<pre><code class="js">context.sendLocation(
+  {
+    latitude: 30,
+    longitude: 45,
+  },
+  {
+    disableNotification: true,
+  }
+);
+</code></pre>
+<p spaces-before="0">
+  <br />
+</p>
+<p><h4 spaces-before="0">
+<code>sendVenue(venue [, options])</code> - <a href="https://core.telegram.org/bots/api/#sendvenue">Official Docs</a>
+</h4></p>
+<p spaces-before="0">
+  Sends information about a venue.
+</p>
+<table spaces-before="0" line-breaks-before="2">
+  <tr>
+    <th>
+      Param
+    </th>
+<pre><code class="hljs">&lt;th&gt;
+  Type
+&lt;/th&gt;
+
+&lt;th&gt;
+  Description
+&lt;/th&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      venue
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;Object&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Object contains information of the venue.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      venue.latitude
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;Number&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Latitude of the venue.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      venue.longitude
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;Number&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Longitude of the venue.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      venue.title
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;String&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Name of the venue.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      venue.address
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;String&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Address of the venue.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      options
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;Object&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Other optional parameters.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+</table>
+<p spaces-before="0">
+  Example:
+</p>
+<pre><code class="js">context.sendVenue(
+  {
+    latitude: 30,
+    longitude: 45,
+    title: 'a_title',
+    address: 'an_address',
+  },
+  {
+    disableNotification: true,
+  }
+);
+</code></pre>
+<p spaces-before="0">
+  <br />
+</p>
+<p><h4 spaces-before="0">
+<code>sendContact(contact [, options])</code> - <a href="https://core.telegram.org/bots/api/#sendcontact">Official Docs</a>
+</h4></p>
+<p spaces-before="0">
+  Sends phone contacts.
+</p>
+<table spaces-before="0" line-breaks-before="2">
+  <tr>
+    <th>
+      Param
+    </th>
+<pre><code class="hljs">&lt;th&gt;
+  Type
+&lt;/th&gt;
+
+&lt;th&gt;
+  Description
+&lt;/th&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      contact
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;Object&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Object contains information of the contact.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      contact.phoneNumber
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;String&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Phone number of the contact.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      contact.firstName
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;String&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  First name of the contact.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      options
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;Object&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Other optional parameters.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+</table>
+<p spaces-before="0">
+  Example:
+</p>
+<pre><code class="js">context.sendContact(
+  {
+    phoneNumber: '886123456789',
+    firstName: 'first',
+  },
+  { lastName: 'last' }
+);
+</code></pre>
+<p spaces-before="0">
+  <br />
+</p>
+<p><h4 spaces-before="0">
+<code>sendChatAction(action)</code> - <a href="https://core.telegram.org/bots/api/#sendchataction">Official Docs</a>
+</h4></p>
+<p spaces-before="0">
+  Tells the user that something is happening on the bot's side.
+</p>
+<table spaces-before="0" line-breaks-before="2">
+  <tr>
+    <th>
+      Param
+    </th>
+<pre><code class="hljs">&lt;th&gt;
+  Type
+&lt;/th&gt;
+
+&lt;th&gt;
+  Description
+&lt;/th&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      action
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;String&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Type of action to broadcast.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+</table>
+<p spaces-before="0">
+  Example:
+</p>
+<pre><code class="js">context.sendChatAction('typing');
+</code></pre>
+<p spaces-before="0">
+  <br />
+</p>
+<p><h3 spaces-before="0">
+Get API
+</h3></p>
+<p><h4 spaces-before="0">
+<code>getUserProfilePhotos(options)</code> - <a href="https://core.telegram.org/bots/api/#getuserprofilephotos">Official Docs</a>
+</h4></p>
+<p spaces-before="0">
+  Gets a list of profile pictures for a user.
+</p>
+<table spaces-before="0" line-breaks-before="2">
+  <tr>
+    <th>
+      Param
+    </th>
+<pre><code class="hljs">&lt;th&gt;
+  Type
+&lt;/th&gt;
+
+&lt;th&gt;
+  Description
+&lt;/th&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      options
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;Object&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Other optional parameters
+&lt;/td&gt;
+</code></pre>
+  </tr>
+</table>
+<p spaces-before="0">
+  Example:
+</p>
+<pre><code class="js">context.getUserProfilePhotos().then(result =&gt; {
+  console.log(result);
+  // {
+  //   totalCount: 3,
+  //   photos: [
+  //     [
+  //       {
+  //         fileId: 'AgADBAADGTo4Gz8cZAeR-ouu4XBx78EeqRkABHahi76pN-aO0UoDA050',
+  //         fileSize: 14650,
+  //         width: 160,
+  //         height: 160,
+  //       },
+  //       {
+  //         fileId: 'AgADBAADGTo4Gz8cZAeR-ouu4XBx78EeqRkABKCfooqTgFUX0EoD5B1C',
+  //         fileSize: 39019,
+  //         width: 320,
+  //         height: 320,
+  //       },
+  //       {
+  //         fileId: 'AgADBAADGTo4Gz8cZAeR-ouu4XBx78EeqRkABPL_pC9K3UpI0koD1B1C',
+  //         fileSize: 132470,
+  //         width: 640,
+  //         height: 640,
+  //       },
+  //     ],
+  //   ],
+  // }
+});
+</code></pre>
+<p><h4 spaces-before="0">
+<code>getChat()</code> - <a href="https://core.telegram.org/bots/api/#getchat">Official Docs</a>
+</h4></p>
+<p spaces-before="0">
+  Gets up to date information about the chat (current name of the user for one-on-one conversations, current username of a user, group or channel, etc.)
+</p>
+<p spaces-before="0">
+  Example:
+</p>
+<pre><code class="js">context.getChat().then(result =&gt; {
+  console.log(result);
+  // {
+  //   id: 313534466,
+  //   firstName: 'first',
+  //   lastName: 'last',
+  //   username: 'username',
+  //   type: 'private',
+  // }
+});
+</code></pre>
+<p spaces-before="0">
+  <br />
+</p>
+<p><h4 spaces-before="0">
+<code>getChatAdministrators()</code> - <a href="https://core.telegram.org/bots/api/#getchatadministrators">Official Docs</a>
+</h4></p>
+<p spaces-before="0">
+  Gets a list of administrators in the chat.
+</p>
+<p spaces-before="0">
+  Example:
+</p>
+<pre><code class="js">context.getChatAdministrators().then(result =&gt; {
+  console.log(result);
+  // [
+  //   {
+  //     user: {
+  //       id: 313534466,
+  //       firstName: 'first',
+  //       lastName: 'last',
+  //       username: 'username',
+  //       languangeCode: 'zh-TW',
+  //     },
+  //     status: 'creator',
+  //   },
+  // ]
+});
+</code></pre>
+<p spaces-before="0">
+  <br />
+</p>
+<p><h4 spaces-before="0">
+<code>getChatMembersCount()</code> - <a href="https://core.telegram.org/bots/api/#getchatmemberscount">Official Docs</a>
+</h4></p>
+<p spaces-before="0">
+  Gets the number of members in the chat.
+</p>
+<p spaces-before="0">
+  Example:
+</p>
+<pre><code class="js">context.getChatMembersCount().then(result =&gt; {
+  console.log(result);
+  // '6'
+});
+</code></pre>
+<p spaces-before="0">
+  <br />
+</p>
+<p><h4 spaces-before="0">
+<code>getChatMember(userId)</code> - <a href="https://core.telegram.org/bots/api/#getchatmember">Official Docs</a>
+</h4></p>
+<p spaces-before="0">
+  Gets information about a member of the chat.
+</p>
+<table spaces-before="0" line-breaks-before="2">
+  <tr>
+    <th>
+      Param
+    </th>
+<pre><code class="hljs">&lt;th&gt;
+  Type
+&lt;/th&gt;
+
+&lt;th&gt;
+  Description
+&lt;/th&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      userId
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;Number&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Unique identifier of the target user.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+</table>
+<p spaces-before="0">
+  Example:
+</p>
+<pre><code class="js">context.getChatMember(USER_ID).then(result =&gt; {
+  console.log(result);
+  // {
+  //   user: {
+  //     id: 313534466,
+  //     firstName: 'first',
+  //     lastName: 'last',
+  //     username: 'username',
+  //     languangeCode: 'zh-TW',
+  //   },
+  //   status: 'creator',
+  // }
+});
+</code></pre>
+<p spaces-before="0">
+  <br />
+</p>
+<p><h3 spaces-before="0">
+Updating API
+</h3></p>
+<p><h4 spaces-before="0">
+<code>editMessageText(text [, options])</code> - <a href="https://core.telegram.org/bots/api/#editmessagetext">Official Docs</a>
+</h4></p>
+<p spaces-before="0">
+  Edits text and game messages sent by the bot or via the bot (for inline bots).
+</p>
+<table spaces-before="0" line-breaks-before="2">
+  <tr>
+    <th>
+      Param
+    </th>
+<pre><code class="hljs">&lt;th&gt;
+  Type
+&lt;/th&gt;
+
+&lt;th&gt;
+  Description
+&lt;/th&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      text
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;String&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  New text of the message.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      options
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;Object&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Other optional parameters.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+</table>
+<p spaces-before="0">
+  Example:
+</p>
+<pre><code class="js">context.editMessageText('new_text');
+</code></pre>
+<p spaces-before="0">
+  <br />
+</p>
+<p><h4 spaces-before="0">
+<code>editMessageCaption(caption [, options])</code> - <a href="https://core.telegram.org/bots/api/#editmessagecaption">Official Docs</a>
+</h4></p>
+<p spaces-before="0">
+  Edits captions of messages sent by the bot or via the bot (for inline bots).
+</p>
+<table spaces-before="0" line-breaks-before="2">
+  <tr>
+    <th>
+      Param
+    </th>
+<pre><code class="hljs">&lt;th&gt;
+  Type
+&lt;/th&gt;
+
+&lt;th&gt;
+  Description
+&lt;/th&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      caption
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;String&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  New caption of the message.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      options
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;Object&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Other optional parameters.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+</table>
+<p spaces-before="0">
+  Example:
+</p>
+<pre><code class="js">context.editMessageCaption('new_caption');
+</code></pre>
+<p spaces-before="0">
+  <br />
+</p>
+<p><h4 spaces-before="0">
+<code>editMessageReplyMarkup(replyMarkup [, options])</code> - <a href="https://core.telegram.org/bots/api/#editmessagereplymarkup">Official Docs</a>
+</h4></p>
+<p spaces-before="0">
+  Edits only the reply markup of messages sent by the bot or via the bot (for inline bots).
+</p>
+<table spaces-before="0" line-breaks-before="2">
+  <tr>
+    <th>
+      Param
+    </th>
+<pre><code class="hljs">&lt;th&gt;
+  Type
+&lt;/th&gt;
+
+&lt;th&gt;
+  Description
+&lt;/th&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      replyMarkup
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;Object&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  New replyMarkup of the message.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      options
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;Object&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Other optional parameters.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+</table>
+<p spaces-before="0">
+  Example:
+</p>
+<pre><code class="js">context.editMessageReplyMarkup({
+  keyboard: [[{ text: 'new_button_1' }, { text: 'new_button_2' }]],
+  resizeKeyboard: true,
+  oneTimeKeyboard: true,
+});
+</code></pre>
+<p spaces-before="0">
+  <br />
+</p>
+<p><h4 spaces-before="0">
+<code>deleteMessage(messageId)</code> - <a href="https://core.telegram.org/bots/api/#deletemessage">Official Docs</a>
+</h4></p>
+<p spaces-before="0">
+  Deletes a message, including service messages.
+</p>
+<table spaces-before="0" line-breaks-before="2">
+  <tr>
+    <th>
+      Param
+    </th>
+<pre><code class="hljs">&lt;th&gt;
+  Type
+&lt;/th&gt;
+
+&lt;th&gt;
+  Description
+&lt;/th&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      messageId
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;Number&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Identifier of the message to delete.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+</table>
+<p spaces-before="0">
+  Example:
+</p>
+<pre><code class="js">context.deleteMessage(MESSAGE_ID);
+</code></pre>
+<p spaces-before="0">
+  <br />
+</p>
+<p><h4 spaces-before="0">
+<code>editMessageLiveLocation(location [, options])</code> - <a href="https://core.telegram.org/bots/api/#editmessagelivelocation">Official Docs</a>
+</h4></p>
+<p spaces-before="0">
+  Edit live location messages sent by the bot or via the bot (for inline bots).
+</p>
+<table spaces-before="0" line-breaks-before="2">
+  <tr>
+    <th>
+      Param
+    </th>
+<pre><code class="hljs">&lt;th&gt;
+  Type
+&lt;/th&gt;
+
+&lt;th&gt;
+  Description
+&lt;/th&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      location
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;Object&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Object contains new latitude and longitude.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      location.latitude
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;Number&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Latitude of new location.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      location.longitude
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;Number&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Longitude of new location.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      options
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;Object&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Other optional parameters.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+</table>
+<p spaces-before="0">
+  Example:
+</p>
+<pre><code class="js">context.editMessageLiveLocation({
+  latitude: 30,
+  longitude: 45,
+});
+</code></pre>
+<p spaces-before="0">
+  <br />
+</p>
+<p><h4 spaces-before="0">
+<code>stopMessageLiveLocation(options)</code> - <a href="https://core.telegram.org/bots/api/#stopmessagelivelocation">Official Docs</a>
+</h4></p>
+<p spaces-before="0">
+  Stop updating a live location message sent by the bot or via the bot (for inline bots) before <em x-id="4">live_period</em> expires.
+</p>
+<table spaces-before="0" line-breaks-before="2">
+  <tr>
+    <th>
+      Param
+    </th>
+<pre><code class="hljs">&lt;th&gt;
+  Type
+&lt;/th&gt;
+
+&lt;th&gt;
+  Description
+&lt;/th&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      options
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;Object&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Other optional parameters.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+</table>
+<p spaces-before="0">
+  Example:
+</p>
+<pre><code class="js">context.stopMessageLiveLocation();
+</code></pre>
+<p><h3 spaces-before="0">
+Group API
+</h3></p>
+<p><h4 spaces-before="0">
+<code>kickChatMember(userId [, options])</code> - <a href="https://core.telegram.org/bots/api/#kickchatmember">Official Docs</a>
+</h4></p>
+<p spaces-before="0">
+  Kicks a user from the group, the supergroup or the channel.
+</p>
+<table spaces-before="0" line-breaks-before="2">
+  <tr>
+    <th>
+      Param
+    </th>
+<pre><code class="hljs">&lt;th&gt;
+  Type
+&lt;/th&gt;
+
+&lt;th&gt;
+  Description
+&lt;/th&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      userId
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;Number&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Unique identifier of the target user.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      options
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;Object&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Other optional parameters.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+</table>
+<p spaces-before="0">
+  Example:
+</p>
+<pre><code class="js">context.kickChatMember(USER_ID, { untilDate: UNIX_TIME });
+</code></pre>
+<p spaces-before="0">
+  <br />
+</p>
+<p><h4 spaces-before="0">
+<code>unbanChatMember(userId)</code> - <a href="https://core.telegram.org/bots/api/#unbanchatmember">Official Docs</a>
+</h4></p>
+<p spaces-before="0">
+  Unbans a previously kicked user in the supergroup or channel.
+</p>
+<table spaces-before="0" line-breaks-before="2">
+  <tr>
+    <th>
+      Param
+    </th>
+<pre><code class="hljs">&lt;th&gt;
+  Type
+&lt;/th&gt;
+
+&lt;th&gt;
+  Description
+&lt;/th&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      userId
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;Number&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Unique identifier of the target user.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+</table>
+<p spaces-before="0">
+  Example:
+</p>
+<pre><code class="js">context.unbanChatMember(USER_ID);
+</code></pre>
+<p spaces-before="0">
+  <br />
+</p>
+<p><h4 spaces-before="0">
+<code>restrictChatMember(userId [, options])</code> - <a href="https://core.telegram.org/bots/api/#restrictchatmember">Official Docs</a>
+</h4></p>
+<p spaces-before="0">
+  Restricts a user in the supergroup
+</p>
+<table spaces-before="0" line-breaks-before="2">
+  <tr>
+    <th>
+      Param
+    </th>
+<pre><code class="hljs">&lt;th&gt;
+  Type
+&lt;/th&gt;
+
+&lt;th&gt;
+  Description
+&lt;/th&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      userId
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;Number&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Unique identifier of the target user.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      options
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;Object&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Other optional parameters.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+</table>
+<p spaces-before="0">
+  Example:
+</p>
+<pre><code class="js">context.restrictChatMember(USER_ID, { canSendMessages: true });
+</code></pre>
+<p spaces-before="0">
+  <br />
+</p>
+<p><h4 spaces-before="0">
+<code>promoteChatMember(userId [, options])</code> - <a href="https://core.telegram.org/bots/api/#promotechatmember">Official Docs</a>
+</h4></p>
+<p spaces-before="0">
+  Promotes or demotes a user in the supergroup or the channel.
+</p>
+<table spaces-before="0" line-breaks-before="2">
+  <tr>
+    <th>
+      Param
+    </th>
+<pre><code class="hljs">&lt;th&gt;
+  Type
+&lt;/th&gt;
+
+&lt;th&gt;
+  Description
+&lt;/th&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      userId
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;Number&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Unique identifier of the target user.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      options
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;Object&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Other optional parameters.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+</table>
+<p spaces-before="0">
+  Example:
+</p>
+<pre><code class="js">context.promoteChatMember(USER_ID, {
+  canChangeInfo: true,
+  canInviteUsers: true,
+});
+</code></pre>
+<p spaces-before="0">
+  <br />
+</p>
+<p><h4 spaces-before="0">
+<code>exportChatInviteLink()</code> - <a href="https://core.telegram.org/bots/api/#exportchatinvitelink">Official Docs</a>
+</h4></p>
+<p spaces-before="0">
+  Exports an invite link to the supergroup or the channel.
+</p>
+<p spaces-before="0">
+  Example:
+</p>
+<pre><code class="js">context.exportChatInviteLink();
+</code></pre>
+<p spaces-before="0">
+  <br />
+</p>
+<p><h4 spaces-before="0">
+<code>setChatPhoto(photo)</code> - <a href="https://core.telegram.org/bots/api/#setchatphoto">Official Docs</a>
+</h4></p>
+<p spaces-before="0">
+  Sets a new profile photo for the chat.
+</p>
+<table spaces-before="0" line-breaks-before="2">
+  <tr>
+    <th>
+      Param
+    </th>
+<pre><code class="hljs">&lt;th&gt;
+  Type
+&lt;/th&gt;
+
+&lt;th&gt;
+  Description
+&lt;/th&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      photo
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;String&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Pass a file id (recommended) or HTTP URL to send photo.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+</table>
+<p spaces-before="0">
+  Example:
+</p>
+<pre><code class="js">context.setChatPhoto('https://example.com/image.png');
+</code></pre>
+<p spaces-before="0">
+  <br />
+</p>
+<p><h4 spaces-before="0">
+<code>deleteChatPhoto()</code> - <a href="https://core.telegram.org/bots/api/#deletechatphoto">Official Docs</a>
+</h4></p>
+<p spaces-before="0">
+  Deletes the chat photo.
+</p>
+<p spaces-before="0">
+  Example:
+</p>
+<pre><code class="js">context.deleteChatPhoto();
+</code></pre>
+<p spaces-before="0">
+  <br />
+</p>
+<p><h4 spaces-before="0">
+<code>setChatTitle(title)</code> - <a href="https://core.telegram.org/bots/api/#setchattitle">Official Docs</a>
+</h4></p>
+<p spaces-before="0">
+  Changes the title of the chat.
+</p>
+<table spaces-before="0" line-breaks-before="2">
+  <tr>
+    <th>
+      Param
+    </th>
+<pre><code class="hljs">&lt;th&gt;
+  Type
+&lt;/th&gt;
+
+&lt;th&gt;
+  Description
+&lt;/th&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      title
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;String&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  New chat title, 1-255 characters.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+</table>
+<p spaces-before="0">
+  Example:
+</p>
+<pre><code class="js">context.setChatTitle('New Title');
+</code></pre>
+<p spaces-before="0">
+  <br />
+</p>
+<p><h4 spaces-before="0">
+<code>setChatDescription(description)</code> - <a href="https://core.telegram.org/bots/api/#setchatdescription">Official Docs</a>
+</h4></p>
+<p spaces-before="0">
+  Changes the description of the supergroup or the channel.
+</p>
+<table spaces-before="0" line-breaks-before="2">
+  <tr>
+    <th>
+      Param
+    </th>
+<pre><code class="hljs">&lt;th&gt;
+  Type
+&lt;/th&gt;
+
+&lt;th&gt;
+  Description
+&lt;/th&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      description
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;String&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  New chat description, 0-255 characters.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+</table>
+<p spaces-before="0">
+  Example:
+</p>
+<pre><code class="js">context.setChatDescription('New Description');
+</code></pre>
+<p spaces-before="0">
+  <br />
+</p>
+<p><h4 spaces-before="0">
+<code>setChatStickerSet(stickerSetName)</code> - <a href="https://core.telegram.org/bots/api/#setchatstickerset">Official Docs</a>
+</h4></p>
+<p spaces-before="0">
+  Set a new group sticker set for the supergroup.
+</p>
+<table spaces-before="0" line-breaks-before="2">
+  <tr>
+    <th>
+      Param
+    </th>
+<pre><code class="hljs">&lt;th&gt;
+  Type
+&lt;/th&gt;
+
+&lt;th&gt;
+  Description
+&lt;/th&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      stickerSetName
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;String&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Name of the sticker set to be set as the group sticker set.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+</table>
+<p spaces-before="0">
+  Example:
+</p>
+<pre><code class="js">context.setChatStickerSet('Sticker Set Name');
+</code></pre>
+<p spaces-before="0">
+  <br />
+</p>
+<p><h4 spaces-before="0">
+<code>deleteChatStickerSet()</code> - <a href="https://core.telegram.org/bots/api/#deletechatstickerset">Official Docs</a>
+</h4></p>
+<p spaces-before="0">
+  Delete a group sticker set from the supergroup.
+</p>
+<p spaces-before="0">
+  Example:
+</p>
+<pre><code class="js">context.deleteChatStickerSet();
+</code></pre>
+<p spaces-before="0">
+  <br />
+</p>
+<p><h4 spaces-before="0">
+<code>pinChatMessage(messageId [, options])</code> - <a href="https://core.telegram.org/bots/api/#pinChatMessage">Official Docs</a>
+</h4></p>
+<p spaces-before="0">
+  Pins a message in the supergroup.
+</p>
+<table spaces-before="0" line-breaks-before="2">
+  <tr>
+    <th>
+      Param
+    </th>
+<pre><code class="hljs">&lt;th&gt;
+  Type
+&lt;/th&gt;
+
+&lt;th&gt;
+  Description
+&lt;/th&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      messageId
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;Number&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Identifier of a message to pin.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      options
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;Object&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Other optional parameters.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+</table>
+<p spaces-before="0">
+  Example:
+</p>
+<pre><code class="js">context.pinChatMessage(MESSAGE_ID, { disableNotification: true });
+</code></pre>
+<p spaces-before="0">
+  <br />
+</p>
+<p><h4 spaces-before="0">
+<code>unpinChatMessage()</code> - <a href="https://core.telegram.org/bots/api/#unpinchatmessage">Official Docs</a>
+</h4></p>
+<p spaces-before="0">
+  Unpins a message in the supergroup chat.
+</p>
+<p spaces-before="0">
+  Example:
+</p>
+<pre><code class="js">context.unpinChatMessage();
+</code></pre>
+<p spaces-before="0">
+  <br />
+</p>
+<p><h4 spaces-before="0">
+<code>leaveChat()</code> - <a href="https://core.telegram.org/bots/api/#leavechat">Official Docs</a>
+</h4></p>
+<p spaces-before="0">
+  Leaves the group, supergroup or channel.
+</p>
+<p spaces-before="0">
+  Example:
+</p>
+<pre><code class="js">context.leaveChat();
+</code></pre>
+<p spaces-before="0">
+  <br />
+</p>
+<p><h3 spaces-before="0">
+Payments API
+</h3></p>
+<p><h4 spaces-before="0">
+<code>sendInvoice(product [, options])</code> - <a href="https://core.telegram.org/bots/api/#sendinvoice">Official Docs</a>
+</h4></p>
+<p spaces-before="0">
+  Sends invoice.
+</p>
+<table spaces-before="0" line-breaks-before="2">
+  <tr>
+    <th>
+      Param
+    </th>
+<pre><code class="hljs">&lt;th&gt;
+  Type
+&lt;/th&gt;
+
+&lt;th&gt;
+  Description
+&lt;/th&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      product
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;Object&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Object of the product.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      product.title
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;String&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Product name.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      product.description
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;String&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Product description.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      product.payload
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;String&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Bot defined invoice payload.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      product.providerToken
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;String&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Payments provider token.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      product.startParameter
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;String&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Deep-linking parameter.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      product.currency
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;String&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Three-letter ISO 4217 currency code.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      product.prices
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;Object[]&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Breakdown of prices.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      options
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;Object&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Additional Telegram query options.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+</table>
+<p spaces-before="0">
+  Example:
+</p>
+<pre><code class="js">context.sendInvoice({
+  title: 'product name',
+  description: 'product description',
+  payload: 'bot-defined invoice payload',
+  providerToken: 'PROVIDER_TOKEN',
+  startParameter: 'pay',
+  currency: 'USD',
+  prices: [
+    { label: 'product', amount: 11000 },
+    { label: 'tax', amount: 11000 },
+  ],
+});
+</code></pre>
+<p spaces-before="0">
+  <br />
+</p>
+<p><h4 spaces-before="0">
+<code>answerShippingQuery(ok [, options])</code> - <a href="https://core.telegram.org/bots/api/#answershippingquery">Official Docs</a>
+</h4></p>
+<p spaces-before="0">
+  Reply to the shipping query.
+</p>
+<table spaces-before="0" line-breaks-before="2">
+  <tr>
+    <th>
+      Param
+    </th>
+<pre><code class="hljs">&lt;th&gt;
+  Type
+&lt;/th&gt;
+
+&lt;th&gt;
+  Description
+&lt;/th&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      ok
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;Boolean&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Specify if delivery of the product is possible.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      options
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;Object&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Additional Telegram query options.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+</table>
+<p spaces-before="0">
+  Example:
+</p>
+<pre><code class="js">context.answerShippingQuery(true);
+</code></pre>
+<p spaces-before="0">
+  <br />
+</p>
+<p><h4 spaces-before="0">
+<code>answerPreCheckoutQuery(ok [, options])</code> - <a href="https://core.telegram.org/bots/api/#answerprecheckoutquery">Official Docs</a>
+</h4></p>
+<p spaces-before="0">
+  Respond to the pre-checkout query.
+</p>
+<table spaces-before="0" line-breaks-before="2">
+  <tr>
+    <th>
+      Param
+    </th>
+<pre><code class="hljs">&lt;th&gt;
+  Type
+&lt;/th&gt;
+
+&lt;th&gt;
+  Description
+&lt;/th&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      ok
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;Boolean&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Specify if delivery of the product is possible.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      options
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;Object&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Additional Telegram query options.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+</table>
+<p spaces-before="0">
+  Example:
+</p>
+<pre><code class="js">context.answerPreCheckoutQuery(true);
+</code></pre>
+<p spaces-before="0">
+  <br />
+</p>
+<p><h3 spaces-before="0">
+Inline mode API
+</h3></p>
+<p><h4 spaces-before="0">
+<code>answerInlineQuery(results [, options])</code> - <a href="https://core.telegram.org/bots/api/#answerinlinequery">Official Docs</a>
+</h4></p>
+<p spaces-before="0">
+  Send answers to the inline query.
+</p>
+<table spaces-before="0" line-breaks-before="2">
+  <tr>
+    <th>
+      Param
+    </th>
+<pre><code class="hljs">&lt;th&gt;
+  Type
+&lt;/th&gt;
+
+&lt;th&gt;
+  Description
+&lt;/th&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      results
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;a href=&quot;https://core.telegram.org/bots/api#inlinequeryresult&quot;&gt;InlineQueryResult&lt;/a&gt;[]
+&lt;/td&gt;
+
+&lt;td&gt;
+  Array of object represents one result of an inline query.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      options
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;Object&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Additional Telegram query options.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+</table>
+<p spaces-before="0">
+  Example:
+</p>
+<pre><code class="js">context.answerInlineQuery(
+  [
+    {
+      type: 'photo',
+      id: 'UNIQUE_ID',
+      photoFileId: 'FILE_ID',
+      title: 'PHOTO_TITLE',
+    },
+    {
+      type: 'audio',
+      id: 'UNIQUE_ID',
+      audioFileId: 'FILE_ID',
+      caption: 'AUDIO_TITLE',
+    },
+  ],
+  {
+    cacheTime: 1000,
+  }
+);
+</code></pre>
+<p spaces-before="0">
+  <br />
+</p>
+<p><h3 spaces-before="0">
+Game API
+</h3></p>
+<p><h4 spaces-before="0">
+<code>sendGame(gameShortName [, options])</code> - <a href="https://core.telegram.org/bots/api#sendgame">Official Docs</a>
+</h4></p>
+<p spaces-before="0">
+  Sends a game.
+</p>
+<table spaces-before="0" line-breaks-before="2">
+  <tr>
+    <th>
+      Param
+    </th>
+<pre><code class="hljs">&lt;th&gt;
+  Type
+&lt;/th&gt;
+
+&lt;th&gt;
+  Description
+&lt;/th&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      gameShortName
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  String
+&lt;/td&gt;
+
+&lt;td&gt;
+  Short name of the game.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      options
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;Object&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Additional Telegram query options.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+</table>
+<p spaces-before="0">
+  Example:
+</p>
+<pre><code class="js">context.sendGame('Mario Bros.', {
+  disableNotification: true,
+});
+</code></pre>
+<p spaces-before="0">
+  <br />
+</p>
+<p><h4 spaces-before="0">
+<code>setGameScore(score [, options])</code> - <a href="https://core.telegram.org/bots/api#setgamescore">Official Docs</a>
+</h4></p>
+<p spaces-before="0">
+  Sets the score of the specified user in a game.
+</p>
+<table spaces-before="0" line-breaks-before="2">
+  <tr>
+    <th>
+      Param
+    </th>
+<pre><code class="hljs">&lt;th&gt;
+  Type
+&lt;/th&gt;
+
+&lt;th&gt;
+  Description
+&lt;/th&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      score
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  Number
+&lt;/td&gt;
+
+&lt;td&gt;
+  New score, must be non-negative.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      options
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;Object&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Additional Telegram query options.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+</table>
+<p spaces-before="0">
+  Example:
+</p>
+<pre><code class="js">context.setGameScore(999);
+</code></pre>
+<p spaces-before="0">
+  <br />
+</p>
+<p><h4 spaces-before="0">
+<code>getGameHighScores()</code> - <a href="https://core.telegram.org/bots/api#getgamehighscores">Official Docs</a>
+</h4></p>
+<p spaces-before="0">
+  Gets data for high score tables.
+</p>
+<table spaces-before="0" line-breaks-before="2">
+  <tr>
+    <th>
+      Param
+    </th>
+<pre><code class="hljs">&lt;th&gt;
+  Type
+&lt;/th&gt;
+
+&lt;th&gt;
+  Description
+&lt;/th&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      options
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;Object&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Additional Telegram query options.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+</table>
+<p spaces-before="0">
+  Example:
+</p>
+<pre><code class="js">context.getGameHighScores();
+</code></pre>
+<p spaces-before="0">
+  <br />
+</p>
+<p><h3 spaces-before="0">
+Others
+</h3></p>
+<p><h4 spaces-before="0">
+<code>forwardMessageFrom(fromChatId, messageId [, options])</code> - <a href="https://core.telegram.org/bots/api/#forwardmessage">Official Docs</a>
+</h4></p>
+<p spaces-before="0">
+  Forwards messages of any kind.
+</p>
+<table spaces-before="0" line-breaks-before="2">
+  <tr>
+    <th>
+      Param
+    </th>
+<pre><code class="hljs">&lt;th&gt;
+  Type
+&lt;/th&gt;
+
+&lt;th&gt;
+  Description
+&lt;/th&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      fromChatId
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;Number &amp;#124; String&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Unique identifier for the chat where the original message was sent.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      messageId
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;Number&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Message identifier in the chat specified in fromChatId.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      options
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;Object&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Other optional parameters.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+</table>
+<p spaces-before="0">
+  Example:
+</p>
+<pre><code class="js">context.forwardMessageFrom(CHAT_ID, MESSAGE_ID, {
+  disableNotification: true,
+});
+</code></pre>
+<p><h4 spaces-before="0">
+<code>forwardMessageTo(toChatId, messageId [, options])</code> - <a href="https://core.telegram.org/bots/api/#forwardmessage">Official Docs</a>
+</h4></p>
+<p spaces-before="0">
+  Forwards messages of any kind.
+</p>
+<table spaces-before="0" line-breaks-before="2">
+  <tr>
+    <th>
+      Param
+    </th>
+<pre><code class="hljs">&lt;th&gt;
+  Type
+&lt;/th&gt;
+
+&lt;th&gt;
+  Description
+&lt;/th&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      toChatId
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;Number &amp;#124; String&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Unique identifier for the target chat or username of the target channel.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      messageId
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;Number&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Message identifier in the chat specified in fromChatId.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+  <tr>
+    <td>
+      options
+    </td>
+<pre><code class="hljs">&lt;td&gt;
+  &lt;code&gt;Object&lt;/code&gt;
+&lt;/td&gt;
+
+&lt;td&gt;
+  Other optional parameters.
+&lt;/td&gt;
+</code></pre>
+  </tr>
+</table>
+<p spaces-before="0">
+  Example:
+</p>
+<pre><code class="js">context.forwardMessageTo(CHAT_ID, MESSAGE_ID, {
+  disableNotification: true,
+});
+</code></pre>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/docs/zh-TW/1.3.0/api-slack-event"><span class="arrow-prev">← </span><span class="function-name-prevnext">SlackEvent</span></a><a class="docs-next button" href="/docs/zh-TW/1.3.0/api-telegram-event"><span class="function-name-prevnext">TelegramEvent</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"></nav></div><footer class="nav-footer" id="footer"><div class="footer-layout"><div><div style="margin-bottom:16px"><a href="https://yoctol.ai" target="_blank" rel="noopener noreferrer"><img width="104px" src="/img/element_YOCTOL.AI_horizontal_S.svg" alt="YOCTOL.AI Logo"/></a></div><div class="desktop"><p class="text">© 2019 - PRESENT YOCTOL.AI ALL RIGHTS RESERVED.</p><a class="text" href="https://yoctol.ai/terms-of-use" target="_blank" rel="noopener noreferrer">Terms of Use</a><a class="text" href="https://yoctol.ai/privacy-policy" target="_blank" rel="noopener noreferrer" style="margin-left:16px">Privacy Policy</a></div></div><div class="footer-contacts"><h4 class="title">Contact Us</h4><p class="text">YOCTOL.AI</p><p class="text">service@yoctol.com</p></div><div class="footer-medias"><h4 class="title">Social Media</h4><div class="icons"><a href="https://twitter.com/yoctol" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#FFF" fill-rule="nonzero" d="M1.5 0h21A1.5 1.5 0 0 1 24 1.5v21a1.5 1.5 0 0 1-1.5 1.5h-21A1.5 1.5 0 0 1 0 22.5v-21A1.5 1.5 0 0 1 1.5 0zm7.532 18c6.037 0 9.34-4.617 9.34-8.621 0-.131 0-.262-.01-.392A6.419 6.419 0 0 0 20 7.42c-.6.245-1.235.406-1.885.477a3.097 3.097 0 0 0 1.443-1.676 6.92 6.92 0 0 1-2.085.735c-1.017-.999-2.634-1.243-3.944-.596-1.31.647-1.986 2.024-1.65 3.36-2.64-.123-5.099-1.273-6.765-3.166-.872 1.384-.427 3.155 1.016 4.045a3.468 3.468 0 0 1-1.49-.38v.039c0 1.442 1.102 2.684 2.634 2.97-.484.122-.99.14-1.483.052.43 1.234 1.663 2.08 3.067 2.104a6.945 6.945 0 0 1-4.077 1.3c-.26 0-.522-.015-.781-.044a9.867 9.867 0 0 0 5.032 1.359V18z"></path></svg></a><a href="https://www.linkedin.com/company/yoctol/" target="_blank" rel="noopener noreferrer" style="margin-left:8px"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#FFF" fill-rule="nonzero" d="M1.5 0h21A1.5 1.5 0 0 1 24 1.5v21a1.5 1.5 0 0 1-1.5 1.5h-21A1.5 1.5 0 0 1 0 22.5v-21A1.5 1.5 0 0 1 1.5 0zm6.086 19.636V9.281H4.368v10.355h3.218zM5.944 7.801A1.877 1.877 0 0 0 7.82 5.925 1.876 1.876 0 1 0 5.945 7.8zm13.697 11.835v-5.679c0-2.788-.602-4.933-3.861-4.933-1.565 0-2.615.859-3.045 1.672h-.043V9.281H9.604v10.355h3.216v-5.123c0-1.35.258-2.658 1.932-2.658 1.65 0 1.673 1.545 1.673 2.746v5.035h3.216z"></path></svg></a></div></div><div class="footer-product"><h4 class="title">Product</h4><div class="icons"><a href="https://yoctol.ai/creator" target="_blank" rel="noopener noreferrer" style="margin-top:1px;margin-right:10px"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22"><g fill="none" fill-rule="nonzero"><path d="M-1-2h24v24H-1z"></path><path fill="#FFF" d="M4.129 12c.309 3.386 3.267 6.042 6.871 6.042 3.604 0 6.562-2.656 6.871-6.042H22c-.317 5.574-5.12 10-11 10S.317 17.574 0 12h4.129zM14 9a1 1 0 1 1 0 2 1 1 0 0 1 0-2zM8 9a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm14-9v10h-4.113V4.116H7.814A3.703 3.703 0 0 0 4.113 7.82V10H0V7.82A7.817 7.817 0 0 1 7.685.001L7.815 0H22z"></path></g></svg></a><a href="https://yoctol.ai/seeker" target="_blank" rel="noopener noreferrer" style="margin-right:10px"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="24" viewBox="0 0 22 24"><g fill="none" fill-rule="nonzero"><path d="M-1 0h24v24H-1z"></path><path fill="#FFF" d="M2.81 7.033l.004.004 3.123 3.137a.112.112 0 0 1 .017.137 5.957 5.957 0 0 0 .843 7.356 5.936 5.936 0 0 0 8.41.003 5.957 5.957 0 0 0 .839-7.355.112.112 0 0 1 .016-.138l3.122-3.136a.11.11 0 0 1 .158 0l.01.012c3.182 4.182 2.79 10.14-.915 13.86-4.1 4.117-10.77 4.115-14.87-.002-3.699-3.714-4.1-9.656-.941-13.836a.111.111 0 0 1 .184-.042zM8.5 11a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm5 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm5.942-7.854l.015.014a.175.175 0 0 1 0 .23L15.32 7.952a.138.138 0 0 1-.182.024 7.294 7.294 0 0 0-8.27-.002.138.138 0 0 1-.182-.024L2.544 3.384a.175.175 0 0 1 .014-.245c4.97-4.188 11.913-4.185 16.884.007z"></path></g></svg></a><a href="https://bottender.js.org/" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="24" viewBox="0 0 22 24"><g fill="none" fill-rule="evenodd"><path fill-rule="nonzero" d="M-1 0h24v24H-1z"></path><path fill="#FFF" d="M1.668 8.51c.258.075.548.159.867.244a9.055 9.055 0 0 0 .959 11.639l.206.202.102.098.022.139a2.63 2.63 0 0 1-.314 1.745c.351-.162.683-.36.99-.59l.227-.178.242-.196.264.162a9.343 9.343 0 0 0 4.898 1.379c5.115 0 9.276-4.107 9.276-9.154 0-.806-.107-1.607-.32-2.385.33.027.63.047.9.06.184.762.289 1.543.288 2.326 0 5.513-4.534 9.999-10.12 9.999a10.128 10.128 0 0 1-5.067-1.352c-1.039.78-2.395 1.228-3.574 1.289l-.269.007v-.845c.928-.002 1.807-.82 1.808-1.831 0-.057-.05-.113-.056-.17A9.891 9.891 0 0 1 1.668 8.51zM10 11a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm6 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2zM9.379.02c2.551.437 3.144 1.75 3.144 1.75s1.02-1.037 3.57-.6c2.302.394 3.731 6.79 3.99 8.047 1.233.338 1.946.614 1.916.775l-.143.719c-.074.409-4.997-.07-10.837-1.07C5.179 8.638.506 7.495.579 7.086l.144-.74c.03-.162.797-.185 2.075-.091C3.484 5.161 7.08-.374 9.378.02z"></path></g></svg></a></div></div><div class="mobile"><p class="text">© 2019 - PRESENT YOCTOL.AI ALL RIGHTS RESERVED.</p><a class="text" href="https://yoctol.ai/terms-of-use" target="_blank" rel="noopener noreferrer">Terms of Use</a><a class="text" href="https://yoctol.ai/privacy-policy" target="_blank" rel="noopener noreferrer" style="margin-left:16px">Privacy Policy</a></div></div></footer></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script><script>window.twttr=(function(d,s, id){var js,fjs=d.getElementsByTagName(s)[0],t=window.twttr||{};if(d.getElementById(id))return t;js=d.createElement(s);js.id=id;js.src='https://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js, fjs);t._e = [];t.ready = function(f) {t._e.push(f);};return t;}(document, 'script', 'twitter-wjs'));</script><script>
+                document.addEventListener('keyup', function(e) {
+                  if (e.target !== document.body) {
+                    return;
+                  }
+                  // keyCode for '/' (slash)
+                  if (e.keyCode === 191) {
+                    const search = document.getElementById('search_input_react');
+                    search && search.focus();
+                  }
+                });
+              </script><script>
+              var search = docsearch({
+                
+                apiKey: '3498a488684b0324b9d56808fad17a33',
+                indexName: 'bottender',
+                inputSelector: '#search_input_react',
+                algoliaOptions: {"facetFilters":["language:zh-TW","version:1.3.0"]}
+              });
+            </script></body></html>
