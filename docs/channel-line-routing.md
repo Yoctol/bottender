@@ -3,7 +3,7 @@ id: channel-line-routing
 title: LINE Routing
 ---
 
-Bottender offers a bunch of helpers to route within your LINE or multi-platform application. For example, you may use LINE particular routes within your [`router`](the-basics-routing.md):
+Bottender offers a bunch of helpers to route within your LINE or multi-platform app. For example, you may use LINE particular routes within your [`router`](the-basics-routing.md):
 
 ```js
 const { router, line } = require('bottender/router');

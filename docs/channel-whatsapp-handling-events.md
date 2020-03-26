@@ -41,4 +41,4 @@ async function App(context) {
 
 ## Handling Events with Router
 
-Bottender offers a bunch of helpers to route within your WhatsApp or multi-platform application. To learn more about how to use those WhatsApp particular routes with router, check out [WhatsApp Routing](channel-whatsapp-routing.md).
+Bottender offers a bunch of helpers to route within your WhatsApp or multi-platform app. To learn more about how to use those WhatsApp particular routes with router, check out [WhatsApp Routing](channel-whatsapp-routing.md).

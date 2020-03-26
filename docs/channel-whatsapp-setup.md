@@ -5,11 +5,11 @@ title: WhatsApp Setup
 
 ## Introduction
 
-[Twilio API for WhatsApp](https://www.twilio.com/whatsapp) is one of the most popular ways to send and receive messages programmatically in WhatsApp. Twilio hosts and manages WhatsApp containers in a highly available and geographically redundant infrastructure, providing us a straightforward REST API to integrate with our Bottender applications.
+[Twilio API for WhatsApp](https://www.twilio.com/whatsapp) is one of the most popular ways to send and receive messages programmatically in WhatsApp. Twilio hosts and manages WhatsApp containers in a highly available and geographically redundant infrastructure, providing us a straightforward REST API to integrate with our Bottender apps.
 
 To move into production using the Twilio API for WhatsApp, you need a WhatsApp Business Profile. WhatsApp is currently limiting access to profiles during their API's limited availability stage. Business Profiles must be associated with a Twilio number. [Request to enable your Twilio numbers for WhatsApp here](https://www.twilio.com/whatsapp/request-access).
 
-However, it doesn't mean you have to wait to start building your application. With developer tools like the [Twilio Sandbox for WhatsApp](https://www.twilio.com/console/sms/whatsapp/sandbox), you can test your app in a development environment without the approval from WhatsApp.
+However, it doesn't mean you have to wait to start building your app. With developer tools like the [Twilio Sandbox for WhatsApp](https://www.twilio.com/console/sms/whatsapp/sandbox), you can test your app in a development environment without the approval from WhatsApp.
 
 ## Requirements
 
@@ -21,11 +21,11 @@ Once signed up, you could find your Account SID and Auth Token in the Dashboard.
 
 ## Enabling WhatsApp Channels
 
-To enable WhatsApp channels, you can start either from new or existing Bottender applications.
+To enable WhatsApp channels, you can start either from new or existing Bottender apps.
 
-### New Bottender Applications
+### New Bottender Apps
 
-**Create Bottender App** is the best way to start building a new application in Bottender.
+**Create Bottender App** is the best way to start building a new app in Bottender.
 
 To create a project, run:
 
@@ -33,13 +33,13 @@ To create a project, run:
 npx create-bottender-app my-app
 ```
 
-Make sure to check the `whatsapp` option:
+Make sure to select the `whatsapp` option:
 
 ![](https://user-images.githubusercontent.com/3382565/75420500-1a905880-5973-11ea-80ed-623807855b70.png)
 
 After you go through the steps, `bottender.config.js` and `.env` are generated automatically for further channel settings.
 
-### Existing Bottender Applications
+### Existing Bottender Apps
 
 First, you must have a `bottender.config.js` file includes the following settings:
 
@@ -65,7 +65,7 @@ We highly recommend setting your sensitive config using `process.env`, so you co
 
 ## Environment Configuration
 
-Bottender utilizes the [dotenv](https://www.npmjs.com/package/dotenv) package to load your environment variables when developing your application.
+Bottender utilizes the [dotenv](https://www.npmjs.com/package/dotenv) package to load your environment variables when developing your app.
 
 To make a WhatsApp bot work, you must fill the following environment variables in your `.env` file:
 

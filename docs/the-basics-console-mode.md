@@ -5,11 +5,11 @@ title: Console Mode
 
 ## Introduction
 
-**Console Mode** is a productivity feature shipped with Bottender. It speeds up bot development iteration by running bots in the console. Comparing with testing your bots fully on existing messaging platforms (e.g., Messenger, LINE), we recommend building, testing, and debugging part of your bots in Console Mode.
+**Console Mode** is a productivity feature shipped with Bottender. It speeds up bot development iteration by running bots in the console. Comparing with testing your bots fully on existing messaging platforms, we recommend building, testing, and debugging part of your bots in Console Mode.
 
 ## Running in Console Mode
 
-In Bottender applications that created by Create Bottender App, you can provide the `--console` option from npm scripts to the underlying start/dev commands:
+In Bottender apps that created by Create Bottender App, you can provide the `--console` option from npm scripts to the underlying start/dev commands:
 
 ```sh
 npm start -- --console

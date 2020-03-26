@@ -126,7 +126,7 @@ You can check out the repository of the above example [here](https://github.com/
 
 Different platforms provide different advanced events for better user experience. For example, Messenger supports Button Template, while LINE supports Flex Message. Therefore, you might want to define some platform-specific actions to handle these advanced events.
 
-To better organize bot actions, you can use `router` and `platform` functions from `bottender/router` to handle routing between different platforms.
+To better organize bot actions, you can use `router` and `platform` functions from `bottender/router` to handle routing among different platforms.
 
 In the example app, you can see two additional actions to leverage the platform-specific events.
 

@@ -3,7 +3,7 @@ id: the-basics-actions
 title: Bottender Actions
 ---
 
-**Bottender actions** are the smallest building blocks of Bottender applications. An action describes what you want your bot to do when receiving an event:
+**Bottender actions** are the smallest building blocks of Bottender apps. An action describes what you want your bot to do when receiving an event:
 
 ```js
 async function SayHi(context) {
@@ -21,7 +21,7 @@ async function Echo(context) {
 }
 ```
 
-> **Note:** The `context` variable provides methods differently between the platforms. You can apply a progressive enhancement strategy using platform-specific methods.
+> **Note:** The `context` variable provides methods differently among platforms. You can apply a progressive enhancement strategy using platform-specific methods.
 
 ## Composing Actions
 
@@ -48,7 +48,7 @@ async function App(context) {
 
 If the `App` action receives a "hi" text message, it replies with a "Hi!" text message. Otherwise, the `App` action replies with a "Sorry." text message.
 
-> **Note:** New Bottender applications created by Create Bottender App have an `App` action as an entry point in the `src/index.js` file. However, if you are familiar with Bottender, you may rename the action or even use different structure instead.
+> **Note:** New Bottender apps created by Create Bottender App have an `App` action as an entry point in the `src/index.js` file. However, if you are familiar with Bottender, you may rename the action or even use different structure instead.
 
 ## Passing Props to Actions
 

@@ -5,25 +5,25 @@ title: LINE Setup
 
 ## Enabling LINE Channels
 
-To enable LINE channels, you can start either from new or existing Bottender applications.
+To enable LINE channels, you can start either from new or existing Bottender apps.
 
-### New Bottender Applications
+### New Bottender Apps
 
-**Create Bottender App** is the best way to start building a new application in Bottender.
+**Create Bottender App** is the best way to start building a new app in Bottender.
 
-To create a new application, run:
+To create a new app, run:
 
 ```sh
 npx create-bottender-app my-app
 ```
 
-Make sure to check the `line` option:
+Make sure to select the `line` option:
 
 ![](https://user-images.githubusercontent.com/3382565/67851224-f2b7f200-fb44-11e9-9ccb-afd7eee74b00.png)
 
 After you go through the steps, `bottender.config.js` and `.env` are generated automatically for further channel settings.
 
-### Existing Bottender Applications
+### Existing Bottender Apps
 
 First, you must have a `bottender.config.js` file includes the following settings:
 
@@ -48,14 +48,14 @@ We highly recommend setting your sensitive config using `process.env`, so you co
 
 ## Environment Configuration
 
-Bottender utilizes the [dotenv](https://www.npmjs.com/package/dotenv) package to load your environment variables when developing your application.
+Bottender utilizes the [dotenv](https://www.npmjs.com/package/dotenv) package to load your environment variables when developing your app.
 
 To make a LINE bot work, you must prepare the following environment variables, which you may put into your `.env` file later:
 
 - LINE Access Token
 - LINE Channel Secret
 
-### LINE Access Token & Channel Secret
+### LINE Access Token and Channel Secret
 
 You can find your **LINE Access Token** and **LINE Channel Secret** from LINE official account settings.
 

@@ -142,7 +142,7 @@ This means your bot can only be interacted with via the persistent menu, postbac
 
 ## Setting Greeting Text
 
-The [greeting](https://developers.facebook.com/docs/messenger-platform/reference/messenger-profile-api/greeting) of your bot's Messenger profile allows you to specify the greeting message people will see on the welcome screen of your bot. The welcome screen is displayed for people interacting with your bot for the first time.
+The [greeting](https://developers.facebook.com/docs/messenger-platform/reference/messenger-profile-api/greeting) of your bot's Messenger profile lets you specify the greeting message people will see on the welcome screen of your bot. The welcome screen is displayed for people interacting with your bot for the first time.
 
 ![](https://user-images.githubusercontent.com/3382565/68740031-273bab80-0625-11ea-806b-b22cfa464d5d.png)
 

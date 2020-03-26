@@ -3,9 +3,9 @@ id: the-basics-chain
 title: Chain of Responsibility
 ---
 
-Using the [Chain of Responsibility](https://en.wikipedia.org/wiki/Chain-of-responsibility_pattern) pattern is another way to organize your [Bottender actions](the-basics-actions.md) in your Bottender application. This pattern lets you explicitly prioritize your actions by specifying the order of the actions.
+Using the [Chain of Responsibility](https://en.wikipedia.org/wiki/Chain-of-responsibility_pattern) pattern is another way to organize your [Bottender actions](the-basics-actions.md) in your Bottender app. This pattern lets you explicitly prioritize your actions by specifying the order of the actions.
 
-Considering a customer service bot application with three very different layers:
+Considering a customer service bot app with three very different layers:
 
 - `RuleBased`: Use JavaScript rules to handle incoming events.
 - `MachineLearning`: Use machine learning models to handle incoming events.

@@ -5,11 +5,11 @@ title: Viber Setup
 
 ## Enabling Viber Channels
 
-To enable Viber channels, you can start either from new or existing Bottender applications.
+To enable Viber channels, you can start either from new or existing Bottender apps.
 
-### New Bottender Applications
+### New Bottender Apps
 
-**Create Bottender App** is the best way to start building a new application in Bottender.
+**Create Bottender App** is the best way to start building a new app in Bottender.
 
 To create a project, run:
 
@@ -17,13 +17,13 @@ To create a project, run:
 npx create-bottender-app my-app
 ```
 
-Make sure to check the `viber` option:
+Make sure to select the `viber` option:
 
 ![](https://user-images.githubusercontent.com/3382565/67851228-f3508880-fb44-11e9-90aa-c5bcc2d96aa2.png)
 
 After you go through the steps, `bottender.config.js` and `.env` are generated automatically for further channel settings.
 
-### Existing Bottender Applications
+### Existing Bottender Apps
 
 First, you must have a `bottender.config.js` file includes the following settings:
 
@@ -52,7 +52,7 @@ You can find more information about `sender` field on Viber's official document,
 
 ## Environment Configuration
 
-Bottender utilizes the [dotenv](https://www.npmjs.com/package/dotenv) package to load your environment variables when developing your application.
+Bottender utilizes the [dotenv](https://www.npmjs.com/package/dotenv) package to load your environment variables when developing your app.
 
 To make a Viber bot work, you must prepare the following environment variable, which you may put into your `.env` file later:
 

@@ -69,7 +69,7 @@ async function App(context) {
 
 > - For more information, you can refer to Facebook's official doc, [Passing Thread Control](https://developers.facebook.com/docs/messenger-platform/handover-protocol/pass-thread-control)
 
-## Taking Thread Control & Requesting Thread Control
+## Taking Thread Control and Requesting Thread Control
 
 Take Thread Control API allows the `Primary Receiver` to take control of the conversation from `Secondary Receivers`. It is useful when `Secondary Receiver` is not responding. An optional metadata string may also be sent in the request.
 
@@ -180,7 +180,7 @@ The messaging_handovers webhook event notifies an app's webhook when the followi
 
 ### standby
 
-For bots using the handover protocol, this callback occurs when a message has been sent to your page, but your application is not the current thread owner.
+For bots using the handover protocol, this callback occurs when a message has been sent to your page, but your app is not the current thread owner.
 
 > - For more information, you can refer to Facebook's official doc, [standby](https://developers.facebook.com/docs/messenger-platform/reference/webhook-events/standby)
 

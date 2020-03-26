@@ -12,7 +12,7 @@ Before going further, we assume that you already have:
 - a Slack Account
 - a [Slack Workspace](https://slack.com/create#email)
 
-### Slack App & Bot User
+### Slack App and Bot User
 
 Create a [Slack App](https://api.slack.com/apps?new_app=1) if you haven't.
 
@@ -34,11 +34,11 @@ Remember to install the Slack App in your workspace.
 
 ## Enabling Slack Channels
 
-To enable Slack channels, you can start either from new or existing Bottender applications.
+To enable Slack channels, you can start either from new or existing Bottender apps.
 
-### New Bottender Applications
+### New Bottender Apps
 
-**Create Bottender App** is the best way to start building a new application in Bottender.
+**Create Bottender App** is the best way to start building a new app in Bottender.
 
 To create a project, run:
 
@@ -46,13 +46,13 @@ To create a project, run:
 npx create-bottender-app my-app
 ```
 
-Make sure to check the `slack` option:
+Make sure to select the `slack` option:
 
 ![](https://user-images.githubusercontent.com/3382565/67851225-f2b7f200-fb44-11e9-8c86-eee0cbd7cb0d.png)
 
 After you go through the steps, `bottender.config.js` and `.env` are generated automatically for further channel settings.
 
-### Existing Bottender Applications
+### Existing Bottender Apps
 
 First, you must have a `bottender.config.js` file includes the following settings:
 
@@ -78,7 +78,7 @@ We highly recommend setting your sensitive config using `process.env`, so you co
 
 ## Environment Configuration
 
-Bottender utilizes the [dotenv](https://www.npmjs.com/package/dotenv) package to load your environment variables when developing your application.
+Bottender utilizes the [dotenv](https://www.npmjs.com/package/dotenv) package to load your environment variables when developing your app.
 
 To make a Slack bot work, you must prepare the following environment variables, which you may put into your `.env` file later:
 

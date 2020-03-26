@@ -11,11 +11,11 @@ title: Telegram Setup
 
 ## Enabling Telegram Channels
 
-To enable Telegram channels, you can start either from new or existing Bottender applications.
+To enable Telegram channels, you can start either from new or existing Bottender apps.
 
-### New Bottender Applications
+### New Bottender Apps
 
-**Create Bottender App** is the best way to start building a new application in Bottender.
+**Create Bottender App** is the best way to start building a new app in Bottender.
 
 To create a project, run:
 
@@ -23,13 +23,13 @@ To create a project, run:
 npx create-bottender-app my-app
 ```
 
-Make sure to check the `telegram` option:
+Make sure to select the `telegram` option:
 
 ![](https://user-images.githubusercontent.com/3382565/67851226-f2b7f200-fb44-11e9-951d-c0050db88ed3.png)
 
 After you go through the steps, `bottender.config.js` and `.env` are generated automatically for further channel settings.
 
-### Existing Bottender Applications
+### Existing Bottender Apps
 
 First, you must have a `bottender.config.js` file includes the following settings:
 
@@ -53,7 +53,7 @@ We highly recommend setting your sensitive config using `process.env`, so you co
 
 ## Environment Configuration
 
-Bottender utilizes the [dotenv](https://www.npmjs.com/package/dotenv) package to load your environment variables when developing your application.
+Bottender utilizes the [dotenv](https://www.npmjs.com/package/dotenv) package to load your environment variables when developing your app.
 
 To make a Telegram bot work, you must prepare the following environment variable, which you may put into your `.env` file later:
 

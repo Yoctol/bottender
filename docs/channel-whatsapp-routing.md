@@ -3,7 +3,7 @@ id: channel-whatsapp-routing
 title: WhatsApp Routing
 ---
 
-Bottender offers a bunch of helpers to route within your WhatsApp or multi-platform application. For example, you may use WhatsApp particular routes within your [`router`](the-basics-routing.md):
+Bottender offers a bunch of helpers to route within your WhatsApp or multi-platform app. For example, you may use WhatsApp particular routes within your [`router`](the-basics-routing.md):
 
 ```js
 const { router, whatsapp } = require('bottender/router');

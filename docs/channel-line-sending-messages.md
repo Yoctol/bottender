@@ -3,7 +3,7 @@ id: channel-line-sending-messages
 title: Sending LINE Messages
 ---
 
-## Reply API & Push API
+## Reply API and Push API
 
 Due to cost concerns, you should clearly understand before sending any messages is the difference between Reply API and Push API:
 

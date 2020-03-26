@@ -3,7 +3,7 @@ id: channel-slack-routing
 title: Slack Routing
 ---
 
-Bottender offers a bunch of helpers to route within your Slack or multi-platform application. For example, you may use Slack particular routes within your [`router`](the-basics-routing.md):
+Bottender offers a bunch of helpers to route within your Slack or multi-platform app. For example, you may use Slack particular routes within your [`router`](the-basics-routing.md):
 
 ```js
 const { router, slack } = require('bottender/router');

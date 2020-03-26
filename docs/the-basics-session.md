@@ -131,7 +131,7 @@ module.exports = async function App(context) {
 };
 ```
 
-To avoid ID conflict between platforms, Bottender combines the name of the platform and the session key to create the unique session ID. For example:
+To avoid ID conflict among platforms, Bottender combines the name of the platform and the session key to create the unique session ID. For example:
 
 - `telegram:16423...` on Telegram
 - `line:U4af4980629...` on LINE
@@ -146,7 +146,7 @@ For example, the LINE platform defines three types of sources (user, group, and 
 
 ## Session Storage
 
-Since HTTP driven applications are stateless, the mission of sessions is to store the context of users during conversations.
+Since HTTP driven apps are stateless, the mission of sessions is to store the context of users during conversations.
 
 ### Configuring Session Driver
 

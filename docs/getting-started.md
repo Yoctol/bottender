@@ -5,9 +5,9 @@ title: Getting Started
 
 ## Create a New Bottender App
 
-**Create Bottender App** is the best way to start building a new application in Bottender.
+**Create Bottender App** is the best way to start building a new app in Bottender.
 
-It initializes your development environment for latest Bottender features, provides a great experience for multi-channel development, and optimizes your application for production deployment. To create a project, run:
+It initializes your development environment for latest Bottender features, provides a great experience for multi-channel development, and optimizes your app for production deployment. To create a project, run:
 
 ```sh
 npx create-bottender-app my-app
@@ -35,7 +35,7 @@ As you can see, you get a bot that always replies with the "Welcome to Bottender
 
 The next step is teaching your bot to send back what it receives. Let's see how the bot works before making any changes to the bot.
 
-The `src/index.js` file is the entry point of the application created by Create Bottender App. You may find the following few lines of code in the `src/index.js` file:
+The `src/index.js` file is the entry point of the app created by Create Bottender App. You may find the following few lines of code in the `src/index.js` file:
 
 ```js
 module.exports = async function App(context) {
@@ -56,7 +56,7 @@ module.exports = async function App(context) {
 });
 ```
 
-After applying the changes, Bottender restarts the application automatically.
+After applying the changes, Bottender restarts the app automatically.
 
 ![](https://user-images.githubusercontent.com/3382565/67745488-57991c80-fa5f-11e9-91d2-659b65df2c58.png)
 

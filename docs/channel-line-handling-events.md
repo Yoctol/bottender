@@ -146,4 +146,4 @@ async function App(context) {
 
 ## Handling Events with Router
 
-Bottender includes a bunch of helpers to route within your LINE or multi-platform application. To learn more about how to use those LINE particular routes with router, check out [LINE Routing](channel-line-routing.md).
+Bottender includes a bunch of helpers to route within your LINE or multi-platform app. To learn more about how to use those LINE particular routes with router, check out [LINE Routing](channel-line-routing.md).

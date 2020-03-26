@@ -3,7 +3,7 @@ id: channel-messenger-routing
 title: Messenger Routing
 ---
 
-Bottender offers a bunch of helpers to route within your Messenger or multi-platform application. For example, you may use Messenger particular routes within your [`router`](the-basics-routing.md):
+Bottender offers a bunch of helpers to route within your Messenger or multi-platform app. For example, you may use Messenger particular routes within your [`router`](the-basics-routing.md):
 
 ```js
 const { router, messenger } = require('bottender/router');

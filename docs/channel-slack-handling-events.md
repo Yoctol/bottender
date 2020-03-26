@@ -27,4 +27,4 @@ async function App(context) {
 
 ## Handling Events with Router
 
-Bottender offers a bunch of helpers to route within your Slack or multi-platform application. To learn more about how to use those Slack particular routes with router, check out [Slack Routing](channel-slack-routing.md).
+Bottender offers a bunch of helpers to route within your Slack or multi-platform app. To learn more about how to use those Slack particular routes with router, check out [Slack Routing](channel-slack-routing.md).
