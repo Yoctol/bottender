@@ -149,7 +149,16 @@ class Server {
               res.setHeader(key, value as string);
             });
             res.statusCode = response.status || 200;
-            res.end(response.body || '');
+            if (
+              response.body &&
+              typeof response.body === 'object' &&
+              !Buffer.isBuffer(response.body)
+            ) {
+              res.setHeader('Content-Type', 'application/json; charset=utf-8');
+              res.end(JSON.stringify(response.body));
+            } else {
+              res.end(response.body || '');
+            }
           } else {
             res.statusCode = 200;
             res.end('');
