@@ -1,0 +1,12 @@
+//-
+  Copyright 2017-present, Facebook, Inc. All rights reserved.
+
+  This source code is licensed under the license found in the
+  LICENSE file in the root directory of fbsamples/messenger-bot-samples.
+
+extends layout
+
+block content
+  h1= message
+  h2= error.status
+  pre #{error.stack}
