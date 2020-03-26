@@ -5,15 +5,17 @@ title: Session
 
 ## Introduction
 
-Conversations may happen in an 1 on 1 private chat or even in a channel with a lot of people in there. Due to this, Bottender provides a mechanism called "session" to distinguish different conversations and store temporary data on the corresponding conversation. It's just like how sessions works in the typical web server. The following are jargon that you may want to know when using the session:
+Conversations may happen in a 1 on 1 chat or even in a channel with thousands of people in there. So, Bottender provides a mechanism called **session** to distinguish different conversations and store temporary data on the corresponding conversation. The session mechanism in Bottender bots is similar to the session mechanism in typical web servers.
 
-- [Session state](the-basics-session.md#session-state): temporary data on the conversation.
-- [Session id](the-basics-session.md#session-id): an unique identifier of the conversation.
-- [Session storage](the-basics-session.md#session-storage): where to store the session.
+Before using the session, you may want to know the following terminologies:
+
+- [Session State](the-basics-session.md#session-state): temporary data on the conversation.
+- [Session ID](the-basics-session.md#session-id): an unique identifier of the conversation.
+- [Session Storage](the-basics-session.md#session-storage): where to store the session.
 
 ## Session State
 
-`State` is widely used in flow control of daily machines, e.g., traffic light. The change of state is in response to external inputs and/or conditions are satisfied. For example, a green traffic light (a state) changes to the yellow traffic light after 60 sec (a satisfied time condition).
+Session state is the temporary data stored on the corresponding conversation. You can provide customized user experience with session state. For example, you can session state to count the number of the received messages.
 
 ### A Counting Bot Example
 
@@ -26,9 +28,9 @@ You > Hi
 Bot > Count: 2
 ```
 
-In this section, we will explain how to use the state correctly to build a counter. It begins with a count state variable, which will be updated when the bot receives an event.
+In this section, we will explain how to use the state correctly to build a counter. It begins with a count state variable, which is updated when the bot receives an event.
 
-Let's start with a static action like this:
+Let's start with a static [Bottender action](the-basics-actions.md) as follows:
 
 ```js
 async function EventCount(context) {
@@ -38,7 +40,7 @@ async function EventCount(context) {
 
 ### Adding State to the Conversation
 
-1. Set initial state in `bottender.config.js` file:
+1. Set initial state in the `bottender.config.js` file:
 
 ```js
 module.exports = {
@@ -48,7 +50,7 @@ module.exports = {
 };
 ```
 
-After adding this, Bottender will set the initial state to the specified object for the new conversation session.
+After adding the above settings, Bottender sets the initial state to the specified object for the new conversation session.
 
 2. Access state value using `context.state`:
 
@@ -59,7 +61,7 @@ async function EventCount(context) {
 }
 ```
 
-Even though we use the state variable to render the message content, it always gets `Count: 1` as the result. That's why step 3 is necessary.
+Even though we use the state variable to render the message content, it always gets `Count: 1` as a result. That's why step 3 is necessary.
 
 3. Set state value using `context.setState()`:
 
@@ -93,7 +95,7 @@ context.setState({
 context.state; // { count: 1, myObject: {} }
 ```
 
-But if you want to do a deeper merge, you need to do it explicitly:
+If you want to do a deeper merge, you need to do it explicitly:
 
 ```js
 context.setState({
@@ -106,13 +108,13 @@ context.setState({
 
 ### Debug State in Console Mode
 
-In ["Console Mode"](the-basics-console-mode.md), you can leverage the convenient built-in command - `/state` to help you debugging you state transition:
+In [Console Mode](the-basics-console-mode.md), you can leverage the convenient built-in command - `/state` to help you debug you state transition:
 
 ```
 You > /state
 ```
 
-This command formats the state with `JSON.stringify()` and send the result as a bot message to you:
+The `/state` command formats the state with `JSON.stringify()` and send the result as a bot message to you:
 
 ```
 Bot > { "count": 1 }
@@ -120,39 +122,35 @@ Bot > { "count": 1 }
 
 ## Session ID
 
-Every session has an unique identifier on it. You can access it using `session.id`. For demonstration, The following code sends platform and session id information to the user:
+Every session has a unique identifier. You can get the unique identifier on the context by accessing `context.session.id`. For example, you may let your bot replies with the platform and session ID information to the user:
 
 ```js
 module.exports = async function App(context) {
-  await context.sendText(`context.platform: ${context.platform}`);
-  await context.sendText(`session.id: ${context.session.id}`);
+  await context.sendText(`Platform: ${context.platform}`);
+  await context.sendText(`Session ID: ${context.session.id}`);
 };
 ```
 
-To avoid ID conflict between platforms, Bottender adds platform prefix to the session key.
+To avoid ID conflict between platforms, Bottender combines the name of the platform and the session key to create the unique session ID. For example:
 
-For example, `telegram:16423...` on Telegram and `line:U4af4980629...` on LINE.
+- `telegram:16423...` on Telegram
+- `line:U4af4980629...` on LINE
 
-The session key itself can be very different between platforms. It may come from user id, channel id, group id, room id, or whatever can be used to distinguish the conversation.
+To support all kinds of 1 on 1 chats and channel chats on all platforms, Bottender gets session keys from user IDs, channel IDs, group IDs, room IDs, or whatever that Bottender can use to distinguish the conversations.
 
-> **Note:** There are three types of sources on the LINE platform defined in [the LINE official document](https://developers.line.biz/en/reference/messaging-api/#common-properties): user, group and room.
->
-> If a request comes from a user, the session key will be `source.userId`, for example: `line:U4af4980629...`.
-> If a request comes from a group, the session key will be `source.groupId`, for example: `line:Ca56f94637c...`.
-> If a request comes from a room, the session key will be `source.roomId`, for example: `line:Ra8dbf4673c...`
+For example, the LINE platform defines three types of sources (user, group, and room) in [the LINE official document](https://developers.line.biz/en/reference/messaging-api/#common-properties):
+
+- If an event comes from a user, the session key is the value of `source.userId`, so the entire session ID looks like: `line:U4af4980629...`;
+- If an event comes from a group, the session key is the value of `source.groupId`, so the entire session ID looks like: `line:Ca56f94637c...`.
+- If an event comes from a room, the session key is the value of `source.roomId`, so the entire session ID looks like: `line:Ra8dbf4673c...`
 
 ## Session Storage
 
-Since HTTP driven applications are stateless, the mission of sessions is to store the context of users during conversations. Bottender offers a variety of session drivers right out of the box, e.g., memory, file, redis, and mongo. These drivers could be accessed through an expressive, unified API.
-
-From connectors, the information of session could be accessed, e.g., session id,
-plus, whether the session is between a bot and single user, or between a bot and a group of users. One bot could support multiple messaging platforms at once, and one connector refers to one messaging platform.
-
-You can specify an explicit session expiration time to reset the state. It makes a bot more human-like by forgetting (initializing) the state after the conversation has been inactive for a while.
+Since HTTP driven applications are stateless, the mission of sessions is to store the context of users during conversations.
 
 ### Configuring Session Driver
 
-Session driver can be set by `session.driver` value in the `bottender.config.js` file:
+The session driver configuration option defines where session data are stored for each conversation. To set the session driver, edit the `session.driver` field in the `bottender.config.js` file:
 
 ```js
 // bottender.config.js
@@ -182,18 +180,18 @@ module.exports = {
 };
 ```
 
-The four valid drivers are as follows:
+Bottender ships with several great drivers out of the box:
 
 - `memory` - sessions are stored in memory with [LRU cache](https://github.com/isaacs/node-lru-cache) and not persistent.
-- `file` - sessions are stored in files placed in `.sessions` directory by default.
-- `redis` - sessions are stored in a [redis](https://redis.io/) database.
-- `mongo` - sessions are stored in a [mongo](https://www.mongodb.com/) database.
+- `file` - sessions are stored in the files placed in the `.sessions` directory.
+- `redis` - sessions are stored in a [Redis](https://redis.io/) database.
+- `mongo` - sessions are stored in a [MongoDB](https://www.mongodb.com/) database.
 
 ### Using Different Session Driver Based on NODE_ENV
 
-It is recommended to use memory as the session driver in the development for shorter iteration. By restarting the process, the session store could be reset completely.
+We recommend using memory as the session driver in development for shorter iteration. By restarting the process, you can reset the session store completely.
 
-You can determine which session driver to use in the development or production by env variable:
+Also, you can determine which session driver to use in development or production separately by using an environment variable:
 
 ```js
 // bottender.config.js
@@ -208,7 +206,9 @@ module.exports = {
 
 ### Setting the Session Expiration Time
 
-By default, the sessions stored by Bottender never expire. To set explicit session expiration time, add the `session.expiresIn` setting in your `bottender.config.js` file:
+You can specify an explicit session expiration time to reset the state. It makes a bot more human-like by forgetting (re-initializing) the state after the conversation has been inactive for a while.
+
+By default, Bottender never expires the stored sessions. To set explicit session expiration time, add the `session.expiresIn` setting in your `bottender.config.js` file:
 
 ```js
 // bottender.config.js
@@ -222,4 +222,4 @@ module.exports = {
 };
 ```
 
-With settings above, the user will get a new session and new [session state](the-basics-session.md#session-state) after inactive for 15 minutes.
+With the above settings, the users get a new session and [state](the-basics-session.md#session-state) after 15 minutes of user inactive.
