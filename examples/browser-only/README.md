@@ -8,7 +8,7 @@ Download this example or clone [bottender](https://github.com/Yoctol/bottender).
 curl https://codeload.github.com/Yoctol/bottender/tar.gz/master | tar -xz --strip=2 bottender-master/examples/browser-only
 cd browser-only
 npm install
-npm run start
+npm start
 ```
 
 ![](https://user-images.githubusercontent.com/3382565/71249572-75487b00-2358-11ea-90a3-f4fdbd6dd4bb.gif)
