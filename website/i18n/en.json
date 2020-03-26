@@ -63,7 +63,7 @@
         "title": "Error Handling in LINE"
       },
       "channel-line-flex": {
-        "title": "Sending LINE Flex Message"
+        "title": "Flex Messages"
       },
       "channel-line-handling-events": {
         "title": "Handling LINE Events"
@@ -84,7 +84,7 @@
         "title": "Sending LINE Messages"
       },
       "channel-line-setup": {
-        "title": "Setup LINE"
+        "title": "LINE Setup"
       },
       "channel-messenger-handling-events": {
         "title": "Handling Messenger Events"
@@ -108,7 +108,7 @@
         "title": "Sending Messenger Messages"
       },
       "channel-messenger-setup": {
-        "title": "Setup Messenger"
+        "title": "Messenger Setup"
       },
       "channel-slack-block-kit": {
         "title": "Slack Block Kit"
@@ -123,7 +123,7 @@
         "title": "Sending Slack Messages"
       },
       "channel-slack-setup": {
-        "title": "Setup Slack"
+        "title": "Slack Setup"
       },
       "channel-slack-slash-command": {
         "title": "Handling Slack Slash Commands"
@@ -138,7 +138,7 @@
         "title": "Sending Telegram Messages"
       },
       "channel-telegram-setup": {
-        "title": "Setup Telegram"
+        "title": "Telegram Setup"
       },
       "channel-viber-handling-events": {
         "title": "Handling Viber Events"
@@ -150,7 +150,7 @@
         "title": "Sending Viber Messages"
       },
       "channel-viber-setup": {
-        "title": "Setup Viber"
+        "title": "Viber Setup"
       },
       "channel-whatsapp-handling-events": {
         "title": "Handling WhatsApp Events"
@@ -162,7 +162,7 @@
         "title": "Sending WhatsApp Messages"
       },
       "channel-whatsapp-setup": {
-        "title": "Setup WhatsApp"
+        "title": "WhatsApp Setup"
       },
       "getting-started": {
         "title": "Getting Started"
@@ -171,7 +171,7 @@
         "title": "Migrating from v0.x to v1.x"
       },
       "the-basics-actions": {
-        "title": "Resolving Actions"
+        "title": "Bottender Actions"
       },
       "the-basics-chain": {
         "title": "Chain of Responsibility"
@@ -529,6 +529,150 @@
       },
       "version-1.3.0/version-1.3.0-the-basics-routing": {
         "title": "Routing"
+      },
+      "version-1.3.1/version-1.3.1-advanced-guides-custom-server": {
+        "title": "Running Bottender with Custom Servers"
+      },
+      "version-1.3.1/version-1.3.1-advanced-guides-deployment": {
+        "title": "Deployment"
+      },
+      "version-1.3.1/version-1.3.1-advanced-guides-multi-channel": {
+        "title": "Multi-Channel Support"
+      },
+      "version-1.3.1/version-1.3.1-advanced-guides-nlu": {
+        "title": "Natural Language Understanding"
+      },
+      "version-1.3.1/version-1.3.1-api-context": {
+        "title": "Context"
+      },
+      "version-1.3.1/version-1.3.1-api-messenger-context": {
+        "title": "MessengerContext"
+      },
+      "version-1.3.1/version-1.3.1-channel-line-errors": {
+        "title": "Error Handling in LINE"
+      },
+      "version-1.3.1/version-1.3.1-channel-line-flex": {
+        "title": "Flex Messages"
+      },
+      "version-1.3.1/version-1.3.1-channel-line-handling-events": {
+        "title": "Handling LINE Events"
+      },
+      "version-1.3.1/version-1.3.1-channel-line-liff": {
+        "title": "LINE Front-end Framework (LIFF)"
+      },
+      "version-1.3.1/version-1.3.1-channel-line-migrating-from-sdk": {
+        "title": "Migrating from LINE SDK for Node.js"
+      },
+      "version-1.3.1/version-1.3.1-channel-line-rich-menu": {
+        "title": "LINE Rich Menu"
+      },
+      "version-1.3.1/version-1.3.1-channel-line-routing": {
+        "title": "LINE Routing"
+      },
+      "version-1.3.1/version-1.3.1-channel-line-sending-messages": {
+        "title": "Sending LINE Messages"
+      },
+      "version-1.3.1/version-1.3.1-channel-line-setup": {
+        "title": "LINE Setup"
+      },
+      "version-1.3.1/version-1.3.1-channel-messenger-handling-events": {
+        "title": "Handling Messenger Events"
+      },
+      "version-1.3.1/version-1.3.1-channel-messenger-handover-protocol": {
+        "title": "Messenger Handover Protocol"
+      },
+      "version-1.3.1/version-1.3.1-channel-messenger-multi-page": {
+        "title": "Messenger Multi-Page Support"
+      },
+      "version-1.3.1/version-1.3.1-channel-messenger-persona": {
+        "title": "Using Messenger Persona"
+      },
+      "version-1.3.1/version-1.3.1-channel-messenger-profile": {
+        "title": "Messenger Profile"
+      },
+      "version-1.3.1/version-1.3.1-channel-messenger-routing": {
+        "title": "Messenger Routing"
+      },
+      "version-1.3.1/version-1.3.1-channel-messenger-sending-messages": {
+        "title": "Sending Messenger Messages"
+      },
+      "version-1.3.1/version-1.3.1-channel-messenger-setup": {
+        "title": "Messenger Setup"
+      },
+      "version-1.3.1/version-1.3.1-channel-slack-block-kit": {
+        "title": "Slack Block Kit"
+      },
+      "version-1.3.1/version-1.3.1-channel-slack-handling-events": {
+        "title": "Handling Slack Events"
+      },
+      "version-1.3.1/version-1.3.1-channel-slack-routing": {
+        "title": "Slack Routing"
+      },
+      "version-1.3.1/version-1.3.1-channel-slack-sending-messages": {
+        "title": "Sending Slack Messages"
+      },
+      "version-1.3.1/version-1.3.1-channel-slack-setup": {
+        "title": "Slack Setup"
+      },
+      "version-1.3.1/version-1.3.1-channel-slack-slash-command": {
+        "title": "Handling Slack Slash Commands"
+      },
+      "version-1.3.1/version-1.3.1-channel-telegram-handling-events": {
+        "title": "Handling Telegram Events"
+      },
+      "version-1.3.1/version-1.3.1-channel-telegram-routing": {
+        "title": "Telegram Routings"
+      },
+      "version-1.3.1/version-1.3.1-channel-telegram-sending-messages": {
+        "title": "Sending Telegram Messages"
+      },
+      "version-1.3.1/version-1.3.1-channel-telegram-setup": {
+        "title": "Telegram Setup"
+      },
+      "version-1.3.1/version-1.3.1-channel-viber-handling-events": {
+        "title": "Handling Viber Events"
+      },
+      "version-1.3.1/version-1.3.1-channel-viber-routing": {
+        "title": "Viber Routing"
+      },
+      "version-1.3.1/version-1.3.1-channel-viber-sending-messages": {
+        "title": "Sending Viber Messages"
+      },
+      "version-1.3.1/version-1.3.1-channel-viber-setup": {
+        "title": "Viber Setup"
+      },
+      "version-1.3.1/version-1.3.1-channel-whatsapp-handling-events": {
+        "title": "Handling WhatsApp Events"
+      },
+      "version-1.3.1/version-1.3.1-channel-whatsapp-routing": {
+        "title": "WhatsApp Routing"
+      },
+      "version-1.3.1/version-1.3.1-channel-whatsapp-setup": {
+        "title": "WhatsApp Setup"
+      },
+      "version-1.3.1/version-1.3.1-getting-started": {
+        "title": "Getting Started"
+      },
+      "version-1.3.1/version-1.3.1-migrating-v1": {
+        "title": "Migrating from v0.x to v1.x"
+      },
+      "version-1.3.1/version-1.3.1-the-basics-actions": {
+        "title": "Bottender Actions"
+      },
+      "version-1.3.1/version-1.3.1-the-basics-chain": {
+        "title": "Chain of Responsibility"
+      },
+      "version-1.3.1/version-1.3.1-the-basics-console-mode": {
+        "title": "Console Mode"
+      },
+      "version-1.3.1/version-1.3.1-the-basics-errors": {
+        "title": "Error Handling"
+      },
+      "version-1.3.1/version-1.3.1-the-basics-routing": {
+        "title": "Routing"
+      },
+      "version-1.3.1/version-1.3.1-the-basics-session": {
+        "title": "Session"
       }
     },
     "links": {
