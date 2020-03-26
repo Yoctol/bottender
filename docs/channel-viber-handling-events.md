@@ -3,9 +3,9 @@ id: channel-viber-handling-events
 title: Handling Viber Events
 ---
 
-## Handling Text Events
+## Text Events
 
-The most common event that your bot would ever receive is text message. To determine whether the event is a text message event, you may use `context.event.isText` boolean value to do that:
+The most common events are text message events. To determine whether the event is a text message event, you may use the `context.event.isText` boolean value:
 
 ```js
 async function App(context) {
@@ -15,7 +15,7 @@ async function App(context) {
 }
 ```
 
-You can get the text content using `context.event.text` and use it in the reply:
+You can get the text content using `context.event.text` to use it in the reply:
 
 ```js
 async function App(context) {
@@ -27,4 +27,4 @@ async function App(context) {
 
 ## Handling Events with Router
 
-Bottender offers a bunch of helpers to routes within your Viber or multi-platform application. To learn more, please check out Bottender's doc, [Viber Routing](channel-viber-routing.md).
+Bottender offers a bunch of helpers to route within your Viber or multi-platform application. To learn more about how to use those Viber particular routes with router, check out [Viber Routing](channel-viber-routing.md).
