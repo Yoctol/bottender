@@ -157,6 +157,6 @@ Then, you have to copy your Slack webhook URL to [Slack Developer Console](https
 
 <p><img width="800" src="https://user-images.githubusercontent.com/662387/71443869-67279f80-2748-11ea-82cb-16c0ac8668de.png"></p>
 
-For more info about Slack Events, please refer to Slack's official doc, [API Event Types](https://api.slack.com/events)
+For more information about Slack Events, please refer to Slack's official doc, [API Event Types](https://api.slack.com/events)
 
 > **Note:** If your bot doesn't respond after webhook settings, please take a closer look at bot events you subscribed to. Slack doesn't pick any bot events subscription by default. The first bot event you may subscribe to is `message.im`, which is the event whenever a user posts a direct message to your bot.

@@ -102,7 +102,7 @@ You can benefit from the `Procfile` feature of Heroku, which specifies the comma
 - `web` process type: tell Heroku to run your bot server for every `dyno`
 - `release` process type: set up webhook before a new release is deployed to production
 
-> **Note:** For more info about `Procfile`, you may refer to Heroku's guide, [The Procfile](https://devcenter.heroku.com/articles/procfile).
+> **Note:** For more information about `Procfile`, see [The Procfile](https://devcenter.heroku.com/articles/procfile).
 
 Using a Messenger Bot as an example, the `Procfile` looks like the below with default webhook path settings:
 

@@ -12,7 +12,7 @@ Here comes the Messenger handover protocol, which aims to make a smooth transiti
 > **Note:**
 >
 > - If you are curious how to change the profile image between Messenger Bot and human agents, please check Bottender's doc, [Using Persona](https://bottender.js.org/docs/channel-messenger-persona).
-> - For more info about handover protocol, please check Facebook's official doc, [Handover Protocol](https://developers.facebook.com/docs/messenger-platform/handover-protocol/)
+> - For more information about handover protocol, please check Facebook's official doc, [Handover Protocol](https://developers.facebook.com/docs/messenger-platform/handover-protocol/)
 
 ### `Thread Control`: Who is Answering the Customer
 
@@ -39,7 +39,7 @@ In the following table, you can see the difference in capability between `Primar
 > **Note:**
 >
 > - If you can't wait to begin with an example, you can jump to Bottender's example, [Messenger Handover](https://github.com/Yoctol/bottender/tree/master/examples/messenger-handover).
-> - For more info, you can refer to Facebook's official doc, [Assigning App Roles](https://developers.facebook.com/docs/messenger-platform/handover-protocol/assign-app-roles)
+> - For more information, you can refer to Facebook's official doc, [Assigning App Roles](https://developers.facebook.com/docs/messenger-platform/handover-protocol/assign-app-roles)
 
 ## Passing Thread Control
 
@@ -67,7 +67,7 @@ async function App(context) {
 }
 ```
 
-> - For more info, you can refer to Facebook's official doc, [Passing Thread Control](https://developers.facebook.com/docs/messenger-platform/handover-protocol/pass-thread-control)
+> - For more information, you can refer to Facebook's official doc, [Passing Thread Control](https://developers.facebook.com/docs/messenger-platform/handover-protocol/pass-thread-control)
 
 ## Taking Thread Control & Requesting Thread Control
 
@@ -81,7 +81,7 @@ async function App(context) {
 }
 ```
 
-> - For more info, you can refer to Facebook's official doc, [Take Thread Control](https://developers.facebook.com/docs/messenger-platform/handover-protocol/take-thread-control)
+> - For more information, you can refer to Facebook's official doc, [Take Thread Control](https://developers.facebook.com/docs/messenger-platform/handover-protocol/take-thread-control)
 
 The Request Thread Control API allows a `Secondary Receiver` to notify the `Primary Receiver` that it wants control of the chat. The `Primary Receiver` can then take control of the chat if necessary, then pass control to the `Secondary Receiver` that sent the request. An optional metadata string may also be sent in the request.
 
@@ -93,7 +93,7 @@ async function App(context) {
 }
 ```
 
-> - For more info, you can refer to Facebook's official doc, [Request Thread Control](https://developers.facebook.com/docs/messenger-platform/handover-protocol/request-thread-control)
+> - For more information, you can refer to Facebook's official doc, [Request Thread Control](https://developers.facebook.com/docs/messenger-platform/handover-protocol/request-thread-control)
 
 ## Getting the Thread Owner
 
@@ -117,7 +117,7 @@ async function App(context) {
 }
 ```
 
-> - For more info, you can refer to Facebook's official doc, [Get Thread Owner](https://developers.facebook.com/docs/messenger-platform/handover-protocol/get-thread-owner)
+> - For more information, you can refer to Facebook's official doc, [Get Thread Owner](https://developers.facebook.com/docs/messenger-platform/handover-protocol/get-thread-owner)
 
 ## Retrieving the List of Secondary Receivers
 
@@ -142,7 +142,7 @@ async function App(context) {
 }
 ```
 
-> - For more info, you can refer to Facebook's official doc, [Secondary Receivers List API Reference](https://developers.facebook.com/docs/messenger-platform/reference/handover-protocol/secondary-receivers/)
+> - For more information, you can refer to Facebook's official doc, [Secondary Receivers List API Reference](https://developers.facebook.com/docs/messenger-platform/reference/handover-protocol/secondary-receivers/)
 
 ## Webhook Events
 
@@ -166,7 +166,7 @@ Once a role is assigned, either `Primary Receiver` or `Secondary Receiver` app g
 }
 ```
 
-> - For more info, you can refer to Facebook's official doc, [Assign App Roles.](https://developers.facebook.com/docs/messenger-platform/handover-protocol/assign-app-roles)
+> - For more information, you can refer to Facebook's official doc, [Assign App Roles.](https://developers.facebook.com/docs/messenger-platform/handover-protocol/assign-app-roles)
 
 ### messaging_handovers
 
@@ -176,13 +176,13 @@ The messaging_handovers webhook event notifies an app's webhook when the followi
 - Thread control is taken from the app
 - App role is changed
 
-> - For more info, you can refer to Facebook's official doc, [messaging_handovers](https://developers.facebook.com/docs/messenger-platform/reference/webhook-events/messaging_handovers)
+> - For more information, you can refer to Facebook's official doc, [messaging_handovers](https://developers.facebook.com/docs/messenger-platform/reference/webhook-events/messaging_handovers)
 
 ### standby
 
 For bots using the handover protocol, this callback occurs when a message has been sent to your page, but your application is not the current thread owner.
 
-> - For more info, you can refer to Facebook's official doc, [standby](https://developers.facebook.com/docs/messenger-platform/reference/webhook-events/standby)
+> - For more information, you can refer to Facebook's official doc, [standby](https://developers.facebook.com/docs/messenger-platform/reference/webhook-events/standby)
 
 ### echo
 
@@ -192,4 +192,4 @@ It is helpful when your `Primary Receiver` app, e.g., Bottender code, has passed
 
 You can subscribe to this callback by selecting the message_echoes field when setting up your webhook.
 
-> - For more info, you can refer to Facebook's official doc, [echo](https://developers.facebook.com/docs/messenger-platform/reference/webhook-events/message-echoes)
+> - For more information, you can refer to Facebook's official doc, [echo](https://developers.facebook.com/docs/messenger-platform/reference/webhook-events/message-echoes)
