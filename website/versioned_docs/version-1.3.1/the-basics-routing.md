@@ -4,7 +4,7 @@ title: Routing
 original_id: the-basics-routing
 ---
 
-**Routing** is a pattern that helps you organize your [Bottender actions]((the-basics-actions.md) in your Bottender app. For example, you can use the `router` function and the `text` function to create an action that handles "hi" and "hello" text message events with the different actions (`SayHi` and `SayHello`) as follows:
+**Routing** is a pattern that helps you organize your [Bottender actions](the-basics-actions.md) in your Bottender app. For example, you can use the `router` function and the `text` function to create an action that handles "hi" and "hello" text message events with the different actions (`SayHi` and `SayHello`) as follows:
 
 ```js
 const { router, text } = require('bottender/router');
