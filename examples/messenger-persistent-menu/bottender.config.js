@@ -9,14 +9,14 @@ module.exports = {
       appSecret: process.env.MESSENGER_APP_SECRET,
       verifyToken: process.env.MESSENGER_VERIFY_TOKEN,
       profile: {
-        get_started: {
+        getStarted: {
           payload: 'GET_STARTED',
         },
-        persistent_menu: [
+        persistentMenu: [
           {
             locale: 'default',
-            composer_input_disabled: false,
-            call_to_actions: [
+            composerInputDisabled: false,
+            callToActions: [
               {
                 type: 'web_url',
                 title: 'URL 1',
