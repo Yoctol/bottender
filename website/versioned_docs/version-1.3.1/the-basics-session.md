@@ -16,7 +16,7 @@ Before using the session, you may want to know the following terminologies:
 
 ## Session State
 
-Session state is the temporary data stored on the corresponding conversation. You can provide customized user experience with session state. For example, you can session state to count the number of the received messages.
+Session state is the temporary data stored on the corresponding conversation. You can provide customized user experience with session state. For example, you can use session state to count the number of the received messages.
 
 ### A Counting Bot Example
 
@@ -123,7 +123,7 @@ Bot > { "count": 1 }
 
 ## Session ID
 
-Every session has a unique identifier. You can get the unique identifier on the context by accessing `context.session.id`. For example, you may let your bot replies with the platform and session ID information to the user:
+Every session has a unique identifier. You can get the unique identifier on the `context` by accessing `context.session.id`. For example, you may let your bot replies with the platform and session ID information to the user:
 
 ```js
 module.exports = async function App(context) {
@@ -141,9 +141,9 @@ To support all kinds of 1 on 1 chats and channel chats on all platforms, Bottend
 
 For example, the LINE platform defines three types of sources (user, group, and room) in [the LINE official document](https://developers.line.biz/en/reference/messaging-api/#common-properties):
 
-- If an event comes from a user, the session key is the value of `source.userId`, so the entire session ID looks like: `line:U4af4980629...`;
+- If an event comes from a user, the session key is the value of `source.userId`, so the entire session ID looks like: `line:U4af4980629...`.
 - If an event comes from a group, the session key is the value of `source.groupId`, so the entire session ID looks like: `line:Ca56f94637c...`.
-- If an event comes from a room, the session key is the value of `source.roomId`, so the entire session ID looks like: `line:Ra8dbf4673c...`
+- If an event comes from a room, the session key is the value of `source.roomId`, so the entire session ID looks like: `line:Ra8dbf4673c...`.
 
 ## Session Storage
 
@@ -190,7 +190,7 @@ Bottender ships with several great drivers out of the box:
 
 ### Using Different Session Driver Based on NODE_ENV
 
-We recommend using memory as the session driver in development for shorter iteration. By restarting the process, you can reset the session store completely.
+We recommend using `memory` as the session driver in development for shorter iteration. By restarting the process, you can reset the session store completely.
 
 Also, you can determine which session driver to use in development or production separately by using an environment variable:
 
