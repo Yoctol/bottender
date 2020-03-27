@@ -1,0 +1,18 @@
+//-
+  Copyright 2017-present, Facebook, Inc. All rights reserved.
+
+  This source code is licensed under the license found in the
+  LICENSE file in the root directory of fbsamples/messenger-bot-samples.
+
+doctype html
+html
+    block head
+      - var title = title ? title : "Jasper's Market - Account Linking Demo"
+    title #{title}
+    link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Roboto:100,300,400')
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    script(src="/scripts/disable-submit.js")
+    meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0')
+
+  body
+    block content

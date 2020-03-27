@@ -1,0 +1,42 @@
+//-
+  Copyright 2017-present, Facebook, Inc. All rights reserved.
+
+  This source code is licensed under the license found in the
+  LICENSE file in the root directory of fbsamples/messenger-bot-samples.
+
+extends layout
+block head
+   - var title = 'Log In'
+block content
+  div(class='main row')
+    div(class='column')
+      div(class='header')
+        h2 Log In
+      div(class='subtitle')
+        p The demo username is “dave” and password is “12345678”.
+      form(action='/users/login', method='post', class='column')
+        div(class='formFields')
+          fieldset(id='usernameField')
+            div(class='input')
+              label(for='username') Username
+              input(class='required',id='username',type='text',value=username,placeholder='Enter your username',name='username')
+            div(class='inputStatus')
+              if errorInput === 'username'
+                img(class='statusIcon warning' src='/images/warning.svg')
+          fieldset(id='passwordField')
+            div(class='input')
+              label(for='password') Password
+              input(class='required',id='password',type='password',value=password,placeholder='Enter password',name='password')
+            div(class='inputStatus')
+              if errorInput === 'password'
+                img(class='statusIcon warning' src='/images/warning.svg')
+          input(type='hidden' name='accountLinkingToken' value='#{accountLinkingToken}')
+          input(type='hidden' name='redirectURI' value='#{redirectURI}')
+        div(id='error')
+          if locals.errorMessage
+            p #{errorMessage}
+        button(class='submitButton' id='submit',type='submit')
+          div(class='row' id='submitInternal')
+            img(class='icon' id='spinner' src='/images/loading.svg' style='display:none')
+            span(class='buttonText') Log In
+      p(class='subtitle') Don’t have an account? #[a(href=`/users/create?account_linking_token=${accountLinkingToken}&redirect_uri=${redirectURI}`) Create an Account]
