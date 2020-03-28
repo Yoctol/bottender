@@ -168,7 +168,7 @@
         "title": "Getting Started"
       },
       "migrating-v1": {
-        "title": "Migrating from v0.x to v1.x"
+        "title": "Migrating from v0.x to v1"
       },
       "the-basics-actions": {
         "title": "Bottender Actions"
@@ -654,7 +654,7 @@
         "title": "Getting Started"
       },
       "version-1.3.1/version-1.3.1-migrating-v1": {
-        "title": "Migrating from v0.x to v1.x"
+        "title": "Migrating from v0.x to v1"
       },
       "version-1.3.1/version-1.3.1-the-basics-actions": {
         "title": "Bottender Actions"
