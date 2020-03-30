@@ -44,7 +44,7 @@ module.exports = {
 
 Make sure to set the `channels.viber.enabled` field to `true`.
 
-By default, the Bottender server listens to the Viber requests on the `/webhooks/viber` path. However, You can overwrite the path by assigning the preferred webhook path in the `channels.viber.path` field.
+By default, the Bottender server listens to the Viber requests on the `/webhooks/viber` path. However, you can overwrite the path by assigning the preferred webhook path in the `channels.viber.path` field.
 
 We highly recommend setting your sensitive config using `process.env`, so you could avoid any credentials get exposed.
 

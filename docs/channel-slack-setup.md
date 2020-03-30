@@ -72,7 +72,7 @@ module.exports = {
 
 Make sure to set the `channels.slack.enabled` field to `true`.
 
-By default, the Bottender server listens to the Slack requests on the `/webhooks/slack` path. However, You can overwrite the path by assigning the preferred webhook path in the `channels.slack.path` field.
+By default, the Bottender server listens to the Slack requests on the `/webhooks/slack` path. However, you can overwrite the path by assigning the preferred webhook path in the `channels.slack.path` field.
 
 We highly recommend setting your sensitive config using `process.env`, so you could avoid any credentials get exposed.
 

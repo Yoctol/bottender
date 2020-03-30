@@ -60,7 +60,7 @@ module.exports = {
 };
 ```
 
-By default, the server listens to WhatsApp requests on the path - `/webhooks/whatsapp`. However, You could overwrite it by assigning the preferred webhook path in the `path` field.
+By default, the server listens to WhatsApp requests on the path - `/webhooks/whatsapp`. However, you could overwrite it by assigning the preferred webhook path in the `path` field.
 
 It's highly recommended to set your sensitive config using `process.env`, so you could avoid any credentials get exposed.
 

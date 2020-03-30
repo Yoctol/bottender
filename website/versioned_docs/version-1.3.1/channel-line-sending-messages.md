@@ -64,7 +64,7 @@ async function SendHi(context) {
 }
 ```
 
-For more information, please refer to LINE's official doc, [Text Message](https://developers.line.biz/en/reference/messaging-api/#text-message)
+For more information, please refer to LINE's official doc, [Text Message](https://developers.line.biz/en/reference/messaging-api/#text-message).
 
 ### Text with LINE emoji
 
@@ -76,30 +76,6 @@ You can include LINE's original emoji (usually involves LINE Friends) in text me
 async function SendHi(context) {
   await context.sendText(`${String.fromCodePoint(0x100084)} Hi!`);
 }
-```
-
-## Sending Multiple Messages
-
-Bottender collects all sending messages in a single request. You can see two different approaches below.
-
-```js
-await context.send([
-  {
-    type: 'text',
-    text: 'hello',
-  },
-  {
-    type: 'text',
-    text: 'world',
-  },
-]);
-```
-
-or
-
-```js
-await context.sendText('hello');
-await context.sendText('world');
 ```
 
 ## Sending Rich Media Messages
@@ -119,7 +95,7 @@ await context.sendSticker({
 });
 ```
 
-For more information, please refer to LINE's official doc, [Sticker Message](https://developers.line.biz/en/reference/messaging-api/#sticker-message)
+For more information, please refer to LINE's official doc, [Sticker Message](https://developers.line.biz/en/reference/messaging-api/#sticker-message).
 
 > **Note:** You can only send LINE's original Stickers. You can find the sticker's package ID and sticker ID in the [sticker list](https://developers.line.biz/media/messaging-api/sticker_list.pdf).
 
@@ -138,7 +114,7 @@ await context.sendImage({
 });
 ```
 
-For more information, please refer to LINE's official doc, [`Image Message`](https://developers.line.biz/en/reference/messaging-api/#image-message)
+For more information, please refer to LINE's official doc, [Image Message](https://developers.line.biz/en/reference/messaging-api/#image-message).
 
 > **Note:** The URLs must use HTTPS over TLS 1.2 or later.
 
@@ -155,7 +131,7 @@ await context.sendVideo({
 });
 ```
 
-For more information, please refer to LINE's official doc, [`Video Message`](https://developers.line.biz/en/reference/messaging-api/#video-message)
+For more information, please refer to LINE's official doc, [Video Message](https://developers.line.biz/en/reference/messaging-api/#video-message).
 
 > **Note:** The URLs must use HTTPS over TLS 1.2 or later.
 
@@ -172,7 +148,7 @@ await context.sendAudio({
 });
 ```
 
-For more information, please refer to LINE's official doc, [`Audio Message`](https://developers.line.biz/en/reference/messaging-api/#audio-message)
+For more information, please refer to LINE's official doc, [Audio Message](https://developers.line.biz/en/reference/messaging-api/#audio-message).
 
 > **Note:** The URLs must use HTTPS over TLS 1.2 or later.
 
@@ -191,7 +167,7 @@ await context.sendLocation({
 });
 ```
 
-For more information, please refer to LINE's official doc, [`Location Message`](https://developers.line.biz/en/reference/messaging-api/#location-message)
+For more information, please refer to LINE's official doc, [Location Message](https://developers.line.biz/en/reference/messaging-api/#location-message).
 
 ### Imagemap
 
@@ -233,7 +209,7 @@ const altText = 'this is an imagemap';
 await context.sendImagemap(altText, imagemap);
 ```
 
-For more information, please refer to LINE's official doc, [Imagemap Message](https://developers.line.biz/en/reference/messaging-api/#imagemap-message)
+For more information, please refer to LINE's official doc, [Imagemap Message](https://developers.line.biz/en/reference/messaging-api/#imagemap-message).
 
 ## Sending Template Messages
 
@@ -301,7 +277,7 @@ const altText = 'this is a confirm template';
 await context.sendConfirmTemplate(altText, template);
 ```
 
-For more information, please refer to LINE's official doc, [Confirm Template](https://developers.line.biz/en/reference/messaging-api/#confirm)
+For more information, please refer to LINE's official doc, [Confirm Template](https://developers.line.biz/en/reference/messaging-api/#confirm).
 
 ### Buttons Template
 
@@ -336,7 +312,7 @@ const altText = 'this is a button template';
 await context.sendButtonTemplate(altText, template);
 ```
 
-For more information, please refer to LINE's official doc, [Buttons Template](https://developers.line.biz/en/reference/messaging-api/#buttons)
+For more information, please refer to LINE's official doc, [Buttons Template](https://developers.line.biz/en/reference/messaging-api/#buttons).
 
 > **Note:** Depending on the character width, the message text may not fully be displayed due to the height limitation of the text area.
 
@@ -399,7 +375,7 @@ const altText = 'this is a carousel template';
 await context.sendCarouselTemplate(altText, template);
 ```
 
-For more information, please refer to LINE's official doc, [Carousel Template](https://developers.line.biz/en/reference/messaging-api/#carousel)
+For more information, please refer to LINE's official doc, [Carousel Template](https://developers.line.biz/en/reference/messaging-api/#carousel).
 
 > **Note:**
 >
@@ -443,13 +419,13 @@ const altText = 'this is a image carousel template';
 await context.sendImageCarouselTemplate(altText, template);
 ```
 
-For more information, please refer to LINE's official doc, [`Image Carousel Template`](https://developers.line.biz/en/reference/messaging-api/#image-carousel)
+For more information, please refer to LINE's official doc, [Image Carousel Template](https://developers.line.biz/en/reference/messaging-api/#image-carousel).
 
 ## Sending Flex Messages
 
 <p><img width="800" src="https://user-images.githubusercontent.com/662387/70701503-6bdf6300-1d07-11ea-86d6-924d676a1f80.png"></p>
 
-Since we love [Flex Message](./channel-line-flex.md) and inspired by its flexibility and interactive, we wrote a separate doc, [Flex Message](./channel-line-flex.md)
+Since we love [Flex Message](./channel-line-flex.md) and inspired by its flexibility and interactive, we wrote a separate doc, [Flex Message](./channel-line-flex.md).
 
 ## Sending with Quick Replies
 
@@ -484,7 +460,7 @@ const quickReply = {
 };
 ```
 
-For more information, please refer to LINE's official doc, [Using Quick Reply](https://developers.line.biz/en/docs/messaging-api/using-quick-reply/)
+For more information, please refer to LINE's official doc, [Using Quick Reply](https://developers.line.biz/en/docs/messaging-api/using-quick-reply/).
 
 ### Sending Quick Reply
 
@@ -559,7 +535,7 @@ const quickReply = {
 };
 ```
 
-For more information, please refer to LINE's official doc, [Message Actions](https://developers.line.biz/en/reference/messaging-api/#message-action)
+For more information, please refer to LINE's official doc, [Message Actions](https://developers.line.biz/en/reference/messaging-api/#message-action).
 
 ### Postback Quick Replay
 
@@ -581,7 +557,7 @@ const quickReply = {
 };
 ```
 
-For more information, please refer to LINE's official doc, [Postback Actions](https://developers.line.biz/en/reference/messaging-api/#postback-action)
+For more information, please refer to LINE's official doc, [Postback Actions](https://developers.line.biz/en/reference/messaging-api/#postback-action).
 
 ### URI Quick Reply
 
@@ -618,7 +594,7 @@ const quickReply = {
 };
 ```
 
-For more information, please refer to LINE's official doc, [URI Actions](https://developers.line.biz/en/reference/messaging-api/#uri-action)
+For more information, please refer to LINE's official doc, [URI Actions](https://developers.line.biz/en/reference/messaging-api/#uri-action).
 
 > **Note:**
 >
@@ -651,7 +627,7 @@ const quickReply = {
 };
 ```
 
-For more information, please refer to LINE's official doc, [Datatime Picker Actions](https://developers.line.biz/en/reference/messaging-api/#datetime-picker-action)
+For more information, please refer to LINE's official doc, [Datatime Picker Actions](https://developers.line.biz/en/reference/messaging-api/#datetime-picker-action).
 
 > **Note:** The datetime picker action is only supported on versions equal to or later than LINE 7.9.0 for iOS and LINE 7.12.0 for Android.
 
@@ -673,7 +649,7 @@ const quickReply = {
 };
 ```
 
-For more information, please refer to LINE's official doc, [Camera Actions](https://developers.line.biz/en/reference/messaging-api/#camera-action)
+For more information, please refer to LINE's official doc, [Camera Actions](https://developers.line.biz/en/reference/messaging-api/#camera-action).
 
 ### Camera Roll Quick Reply
 
@@ -693,7 +669,7 @@ const quickReply = {
 };
 ```
 
-For more information, please refer to LINE's official doc, [Camera Roll Actions](https://developers.line.biz/en/reference/messaging-api/#camera-roll-action)
+For more information, please refer to LINE's official doc, [Camera Roll Actions](https://developers.line.biz/en/reference/messaging-api/#camera-roll-action).
 
 ### Location Quick Reply
 
@@ -713,7 +689,7 @@ const quickReply = {
 };
 ```
 
-For more information, please refer to LINE's official doc, [Location Action](https://developers.line.biz/en/reference/messaging-api/#location-action)
+For more information, please refer to LINE's official doc, [Location Action](https://developers.line.biz/en/reference/messaging-api/#location-action).
 
 ## Rate Limits
 

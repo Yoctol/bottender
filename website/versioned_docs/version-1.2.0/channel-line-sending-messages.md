@@ -449,7 +449,7 @@ await context.sendImageCarouselTemplate(altText, template);
 
 <p><img width="800" src="https://user-images.githubusercontent.com/662387/70701503-6bdf6300-1d07-11ea-86d6-924d676a1f80.png"></p>
 
-Since we love [`Flex Message`](./channel-line-flex.md) and inspired by its flexibility and interactive, we wrote a separate doc, [`Flex Message`](./channel-line-flex.md)
+Since we love [`Flex Message`](./channel-line-flex.md) and inspired by its flexibility and interactive, we wrote a separate doc, [`Flex Message`](./channel-line-flex.md).
 
 ## Sending with Quick Replies
 
@@ -656,7 +656,7 @@ const quickReply = {
 > **Note:**
 >
 > - The datetime picker action is only supported on versions equal to or later than LINE 7.9.0 for iOS and LINE 7.12.0 for Android.
-> - For more info, please refer to LINE's official doc, [`Datatime Picker Actions`](https://developers.line.biz/en/reference/messaging-api/#datetime-picker-action)
+> - For more info, please refer to LINE's official doc, [`Datatime Picker Actions`](https://developers.line.biz/en/reference/messaging-api/#datetime-picker-action).
 
 ### Camera Quick Reply
 

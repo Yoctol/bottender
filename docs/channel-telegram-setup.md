@@ -47,7 +47,7 @@ module.exports = {
 
 Make sure to set the `channels.telegram.enabled` field to `true`.
 
-By default, the Bottender server listens to the Telegram requests on the `/webhooks/telegram` path. However, You can overwrite the path by assigning the preferred webhook path in the `channels.telegram.path` field.
+By default, the Bottender server listens to the Telegram requests on the `/webhooks/telegram` path. However, you can overwrite the path by assigning the preferred webhook path in the `channels.telegram.path` field.
 
 We highly recommend setting your sensitive config using `process.env`, so you could avoid any credentials get exposed.
 
