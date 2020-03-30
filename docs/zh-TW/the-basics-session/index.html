@@ -166,14 +166,13 @@ context.state; <span class="hljs-comment">// { count: 1, myObject: {} }</span>
   <span class="hljs-keyword">await</span> context.sendText(<span class="hljs-string">`Session ID: <span class="hljs-subst">${context.session.id}</span>`</span>);
 };
 </code></pre>
-<p>為了避免 ID 在平台之間衝突，Bottender 結合了平台的榠成以及 Session Key 來建立一個唯一的 Session ID。 例如：</p>
+<p>為了避免 ID 在平台之間衝突，Bottender 結合了平台的名稱以及 Session Key 來建立一個唯一的 Session ID。 例如：</p>
 <ul>
 <li><code>telegram:16423...</code> 在 Telegram 上</li>
 <li><code>line:U4af4980629...</code> 在 LINE 上</li>
 </ul>
 <p>為了支援所有平台上所有種類的 1 對 1 聊天以及頻道聊天，Bottender 從 User ID、Channel ID、Group ID、Room ID 或任何 Bottender 可以用來區分對話的東西去取得 Session Key。</p>
-<p>例如，LINE 平台在</p>
-<p>LINE 官方文件/a&gt; 定義了三種類型的來源 (使用者、群組以及房間)：</p></p>
+<p>例如，LINE 平台在 <a href="https://developers.line.biz/en/reference/messaging-api/#common-properties">LINE 官方文件</a> 定義了三種類型的來源 (使用者、群組以及房間)：</p>
 <ul>
 <li>如果一個事件是從使用者來，Session Key 會是 <code>source.userId</code> 的值，而完整的 Session ID 看起來會像這樣: <code>line:U4af4980629...</code>。</li>
 <li>如果一個事件是從群組來，Session Key 會是 <code>source.groupId</code> 的值，而完整的 Session ID 看起來會像這樣: <code>line:Ca56f94637c...</code>。</li>
