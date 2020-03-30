@@ -246,6 +246,7 @@ const run = async (
               'typescript',
               '@typescript-eslint/parser',
               '@typescript-eslint/eslint-plugin',
+              'eslint-plugin-import',
             ]
           : []),
       ],
