@@ -9,9 +9,12 @@
 [![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/Yoctol/bottender)
 [![Follow @bottenderjs](https://img.shields.io/twitter/follow/bottenderjs.svg?label=Follow%20@bottenderjs)](https://twitter.com/intent/follow?screen_name=bottenderjs)
 
-![](https://user-images.githubusercontent.com/3382565/68366395-3080d000-016e-11ea-8bad-d9c52a215376.png)
+![](https://user-images.githubusercontent.com/3382565/76295244-3c80c800-62ef-11ea-88dc-a6039b3918c2.png)
 
-> The readme below is the documentation for the v1 (stable) version of Bottender. To view the documentation for the old Bottender version visit https://bottender.js.org/docs/0.15.17/getting-started
+> The readme below is the documentation for the v1 (stable) version of Bottender. To view the documentation:
+>
+> - for the latest Bottender version (v1.x), visit https://bottender.js.org/docs/en/getting-started
+> - for the legacy Bottender version (v0.15), visit https://bottender.js.org/docs/en/0.15.17/getting-started
 
 - **Declarative** - Bottender takes care of the complexity of conversational UIs for you. Design actions for each event and state in your application, and Bottender will run accordingly. his approach makes your code more predictable and easier to debug.
 
@@ -38,7 +41,7 @@ Installation may fail on Windows during compilation of the native dependencies w
 
 You can find the Bottender documentation [on the website](https://bottender.js.org?new).
 
-Check out the [Getting Started](https://bottender.js.org/docs/getting-started?new) page for a quick overview.
+Check out the [Getting Started](https://bottender.js.org/docs/en/getting-started) page for a quick overview.
 
 ## Community
 
@@ -134,9 +137,15 @@ yarn test
 
 Make your changes and tests, and make sure the tests pass.
 
-### Contribute using online one click setup
+### Contribute using the online one-click setup
 
-You can use gitpod(a free online vs code like ide) for contributing with a single click it will launch a ready to code workspace with repo already cloned, all the dependencies pre-installed and the server for the website running so that you can start coding straight away without wasting time on the setup.
+You can use Gitpod(a free online VS Code-like) for contributing. With a single click it will launch a workspace and automatically:
+
+- clone the bottender repo.
+- install the dependencies.
+- run `yarn run start`.
+
+So that you can start straight away.
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/Yoctol/bottender)
 
