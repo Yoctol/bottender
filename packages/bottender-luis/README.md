@@ -19,6 +19,7 @@ yarn add @bottender/luis
 ## Usage
 
 ```js
+const { chain } = require('bottender');
 const luis = require('@bottender/luis');
 
 async function SayHello(context) {

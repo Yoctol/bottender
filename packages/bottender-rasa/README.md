@@ -19,6 +19,7 @@ yarn add @bottender/rasa
 ## Usage
 
 ```js
+const { chain } = require('bottender');
 const rasa = require('@bottender/rasa');
 
 async function SayHello(context) {

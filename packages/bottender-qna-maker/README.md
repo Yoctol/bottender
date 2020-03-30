@@ -19,6 +19,7 @@ yarn add @bottender/qna-maker
 ## Usage
 
 ```js
+const { chain } = require('bottender');
 const qnaMaker = require('@bottender/qna-maker');
 
 async function Unknown(context) {

@@ -19,6 +19,7 @@ yarn add @bottender/dialogflow
 ## Usage
 
 ```js
+const { chain } = require('bottender');
 const dialogflow = require('@bottender/dialogflow');
 
 async function SayHello(context) {
