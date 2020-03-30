@@ -3,6 +3,24 @@ import { Action, Context, withProps } from 'bottender';
 
 import { QueryResult } from './types';
 
+function getFulfillments(
+  fulfillmentMessages: Array<Record<string, any>>
+): string[] {
+  if (!fulfillmentMessages) {
+    return [];
+  }
+
+  const fulfillmentTexts = fulfillmentMessages.filter(
+    m => m.platform === 'PLATFORM_UNSPECIFIED' && m.message === 'text'
+  );
+
+  return fulfillmentTexts.map(fulfillmentText => {
+    const texts: string[] = fulfillmentText.text.text;
+    const index = Math.floor(Math.random() * texts.length);
+    return texts[index];
+  });
+}
+
 /**
  * const Dialogflow = dialogflow({
  *   projectId: 'PROJECT_ID',
@@ -16,7 +34,7 @@ import { QueryResult } from './types';
 module.exports = function dialogflow({
   projectId,
   languageCode = 'en',
-  actions,
+  actions = {},
   timeZone,
 }: {
   projectId: string;
@@ -54,16 +72,26 @@ module.exports = function dialogflow({
 
     // API Reference: https://cloud.google.com/dialogflow/docs/reference/rest/v2/projects.agent.sessions/detectIntent
     const responses = await sessionsClient.detectIntent(request);
-
-    const { intent, parameters } = responses[0].queryResult as QueryResult;
+    const queryResult = responses[0].queryResult as QueryResult;
+    const { intent, fulfillmentMessages } = queryResult;
 
     if (intent) {
       context.setIntent(intent.displayName);
       context.setAsHandled();
 
+      // fulfillment by Bottender
       const TargetAction = actions[intent.name] || actions[intent.displayName];
       if (TargetAction) {
-        return withProps(TargetAction, { intent, parameters });
+        return withProps(TargetAction, { ...queryResult });
+      }
+
+      // fulfillment by Dialogflow
+      const fulfillments = getFulfillments(fulfillmentMessages);
+      if (fulfillments.length > 0) {
+        Promise.all(
+          fulfillments.map(fulfillment => context.sendText(fulfillment))
+        );
+        return;
       }
     } else {
       context.setAsNotHandled();
