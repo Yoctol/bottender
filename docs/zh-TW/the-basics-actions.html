@@ -117,7 +117,7 @@
   <span class="hljs-keyword">await</span> context.sendText(<span class="hljs-string">`Hi, <span class="hljs-subst">${props.name}</span>.`</span>);
 }
 </code></pre>
-<p>替代直接回傳一個沒有 <code>props</code> 的 Action，你可以使用 <code>withProps</code> 函式來提供一個物件作為 <code>props</code> 給這個 Action：</p>
+<p>你可以使用 <code>withProps</code> 函式來提供一個物件作為給這個 Action 的 <code>props</code> ，而不是直接回傳一個沒有 <code>props</code> 的 Action：</p>
 <pre><code class="hljs css language-js"><span class="hljs-keyword">const</span> { withProps } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'bottender'</span>);
 
 <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params">context</span>) </span>{

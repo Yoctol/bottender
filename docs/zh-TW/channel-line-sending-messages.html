@@ -78,7 +78,7 @@
 <p>基於成本考量，在發送任何訊息之前，你應該要清楚地了解 Reply API 和 Push API 之間的不同：</p>
 <p><img src="https://user-images.githubusercontent.com/662387/70490029-4cdea680-1b38-11ea-9979-2f9a68cb02cd.png" alt="messaging-api-thumb0"></p>
 <ul>
-<li><p>使用 <strong>Reply API</strong> 是免費的。 然而，你的機器人只能在使用者跟你的 LINE 官方帳號互動後回覆它一次。 每次的機器人回覆，你可以發送最多 5 個 <strong>訊息物件</strong> (參考 LINE 的官方文件「<a href="https://developers.line.biz/en/reference/messaging-api/#send-reply-message">發送回覆訊息</a>」)。 如果你嘗試回覆超過 5 個 訊息物件，你會看到錯誤出現在你的 console。</p></li>
+<li><p>使用 <strong>Reply API</strong> 是免費的。 然而，你的機器人只能在使用者跟你的 LINE 官方帳號互動後回覆它一次。 每次的機器人回覆，你可以發送最多 5 個 <strong>訊息物件</strong> (參考 LINE 的官方文件「<a href="https://developers.line.biz/en/reference/messaging-api/#send-reply-message">發送回覆訊息</a>」)。 如果你嘗試回覆超過 5 個訊息物件，你會看到錯誤出現在你的 console。</p></li>
 <li><p><strong>Push API</strong> 允許開發者在任何時間發送訊息給使用者。 然而，這可能會根據你的國家的價格方案產生一些費用。</p></li>
 </ul>
 <p>預設情況下，Bottender 使用 <strong>Reply API</strong> 來在對話中發送訊息給使用者。</p>
@@ -89,7 +89,7 @@
 <p>預設情況下，Bottender 在 Batch 模式中執行。 要回覆的訊息會被放到佇列中，並用一個請求送出去給 LINE。</p>
 <p>要用兩個訊息發送「hello」和「world」，你可以使用下面其中一種用法：</p>
 <ol>
-<li>互叫 <code>context.sendText()</code> 兩次：</li>
+<li>呼叫 <code>context.sendText()</code> 兩次：</li>
 </ol>
 <pre><code class="hljs css language-js"><span class="hljs-keyword">await</span> context.sendText(<span class="hljs-string">'hello'</span>);
 <span class="hljs-keyword">await</span> context.sendText(<span class="hljs-string">'world'</span>);
@@ -126,7 +126,7 @@
 }
 </code></pre>
 <h2><a class="anchor" aria-hidden="true" id="發送-rich-media-訊息"></a><a href="#發送-rich-media-訊息" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>發送 Rich Media 訊息</h2>
-<p>LINE 的 <strong>Rich Media 訊息</strong> 包含貼圖、圖片、影片、音訊、地點以及 imageMap。 當你的目標放在抓住使用者的注意力時，例如：限量的促銷，Rich Media 訊息 非常有用。 此外，在要建立一個沈浸式的體驗時，例如：講故事，也很方便。</p>
+<p>LINE 的 <strong>Rich Media 訊息</strong> 包含貼圖、圖片、影片、音訊、地點以及 imageMap。 當你的目標放在抓住使用者的注意力時，例如：限量的促銷，Rich Media 訊息非常有用。 此外，在要建立一個沈浸式的體驗時，例如：講故事，也很方便。</p>
 <h3><a class="anchor" aria-hidden="true" id="貼圖"></a><a href="#貼圖" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>貼圖</h3>
 <p>透過<strong>貼圖</strong>，LINE 創造了一種泛用的、 富表達的語言。 貼圖讓你的機器人富有表現力和吸引力。 要發送貼圖，你需要指定貼圖的 Package ID 和 Sticker ID。</p>
 <p><img width="300" src="https://user-images.githubusercontent.com/662387/70680788-38cfac00-1cd4-11ea-81a7-880abdf1ff45.png"></p>
@@ -227,9 +227,9 @@
 <p><strong>Template 訊息</strong> 是一個由圖片、影片、標題、子標題和按鈕所組成的互動式畫廊。</p>
 <p>Template 訊息 是提供 Rich Media 互動的關鍵。 這常被使用在顯示多個選項以及下一步的動作給使用者的情境，例如：套用優惠券、預定房間、預約。</p>
 <blockquote>
-<p><strong>注意：</strong> 相較於 Template 訊息，在 <a href="/docs/zh-TW/channel-line-flex">Flex 訊息</a> 可以使用之後， 我們就高度地依賴他。 有兩個主要的原因：</p>
+<p><strong>注意：</strong> 相較於 Template 訊息，在 <a href="/docs/zh-TW/channel-line-flex">Flex 訊息</a>可以使用之後，我們就高度地依賴他。 有兩個主要的原因：</p>
 <ul>
-<li>Flex 訊息 同時支援桌面跟手機版裝置，而 Template 訊息 只支援行動裝置。</li>
+<li>Flex 訊息 同時支援桌面跟手機版裝置，而 Template 訊息只支援行動裝置。</li>
 <li>Flex 訊息 是一種跟 HTML 類似的聊天 UI，可以創造更好、更有吸引力的使用者體驗。</li>
 </ul>
 </blockquote>
@@ -375,7 +375,7 @@
 </ul>
 </blockquote>
 <h3><a class="anchor" aria-hidden="true" id="image-carousel-template"></a><a href="#image-carousel-template" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Image Carousel Template</h3>
-<p><strong>Image Carousel Template</strong> 有數個圖片，它們可以像巡轉木馬一樣被循環。 使用者可以水平地滾動圖片來瀏覽可能的選擇。 沒有按鈕的干擾，它幫助你的使用者能專注在產品圖片上。</p>
+<p><strong>Image Carousel Template</strong> 有數個圖片，它們可以像旋轉木馬一樣被循環。 使用者可以水平地滾動圖片來瀏覽可能的選擇。 沒有按鈕的干擾，它幫助你的使用者能專注在產品圖片上。</p>
 <p><img width="300" src="https://user-images.githubusercontent.com/662387/70680783-38371580-1cd4-11ea-888e-336a24e67029.png"></p>
 <pre><code class="hljs css language-js"><span class="hljs-keyword">const</span> template = [
   {
