@@ -3,50 +3,64 @@ This project was bootstrapped with
 
 ## Sending Feedback
 
-Always feel free to open issue to
-[Bottender](https://github.com/Yoctol/bottender/issues).
+Always feel free to open an issue to
+[Bottender](https://github.com/Yoctol/bottender/issues) repository.
 
-## Folder Structure
+## Configuration
 
-After creation, your project should look like this:
+### The `bottender.config.js` File
 
-```
-my-bot/
-  .gitignore
-  node_modules/
-  bottender.config.js
-  index.js
-  package.json
-  README.md
-  yarn.lock
-```
+Bottender configuration file. You can use this file to provide settings for the session store and channels.
 
-### index.js
+### The `.env` File
 
-All functionalities start from here.\
-Mainly it's a server which listen on port 5000. You are encouraged to add more [event listener](https://bottender.js.org/docs/APIReference-Event?new)
-and [`Handler`](https://bottender.js.org/docs/APIReference-Handler?new) to enrich the bot.
+Bottender utilizes the [dotenv](https://www.npmjs.com/package/dotenv) package to load your environment variables when developing your app.
 
-See more examples, please refer to
-[Bottender examples](https://github.com/Yoctol/bottender/tree/master/examples).
-
-### bottender.config.js
-
-The config file for the bot.\
-We suggests you to put all platform configs into this file and use it as a parameter
-of createServer.
+To make the bot work, you must put required environment variables into your `.env` file.
 
 ## Available Scripts
 
-There are two default scripts you can run:
+In the project directory, you can run:
 
 ### `npm run dev`
 
-Run the bot in the development mode.\
-It will automatically restart the bot if there are any changes in `index.js`.\
-For more information, check [nodemon's repo](https://github.com/remy/nodemon)
+Runs the app in development mode.<br>
+The bot will automatically reload if you make changes to the code.<br>
+By default, server runs on [http://localhost:5000](http://localhost:5000) and ngrok runs on [http://localhost:4040](http://localhost:4040).
+
+To run in [Console Mode](https://bottender.js.org/docs/en/the-basics-console-mode), provide the `--console` option:
+
+```sh
+npm run dev -- --console
+yarn dev --console
+```
+
+### `npm run build`
+
+Build the app from TypeScript to JavaScript for production usage.
 
 ### `npm start`
 
-Run the bot without being monitored.\
-The bot won't be restarted when you change anything in `index.js`
+Runs the app in production mode.<br>
+By default, server runs on [http://localhost:5000](http://localhost:5000).
+
+To run in [Console Mode](https://bottender.js.org/docs/en/the-basics-console-mode), provide the `--console` option:
+
+```sh
+npm start -- --console
+yarn start --console
+```
+
+### `npm run lint`
+
+Runs the linter rules using [Eslint](https://eslint.org/).
+
+### `npm test`
+
+Runs the test cases using [Jest](https://jestjs.io/).
+
+## Learn More
+
+To learn Bottender, check out the [Bottender documentation](https://bottender.js.org/docs/en/getting-started).
+
+For more examples, see [Bottender examples](https://github.com/Yoctol/bottender/tree/master/examples).
