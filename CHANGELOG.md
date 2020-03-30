@@ -1,3 +1,15 @@
+# 1.3.2 / 2020-03-20
+
+- [fix] improve the error message of missing entry action (#705).
+- [fix] fix responding with application/json when using custom server (#700).
+- [deps] update `messaging-api-line`.
+
+## create-bottender-app
+
+- [fix] rewrite generated README (#708).
+- [fix] install `eslint-plugin-import` for `--typescript`.
+- [fix] add `dist` to `.gitignore` for TypeScript (#697).
+
 # 1.3.1 / 2020-03-16
 
 - [deps] some packages bump from dependabot.
