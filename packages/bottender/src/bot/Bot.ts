@@ -48,17 +48,22 @@ export function run<C extends Client, E extends Event>(
   ): Promise<void> {
     let nextDialog: Action<C, E> | void = action;
 
+    /* eslint-disable no-await-in-loop */
+    invariant(
+      typeof nextDialog === 'function',
+      'Invalid entry action. You may have forgotten to export your entry action in your `index.js` or `src/index.js`.'
+    );
+
     // TODO: refactor this with withProps or whatever
     debugAction(`Current Action: ${nextDialog.name || 'Anonymous'}`);
-    // eslint-disable-next-line no-await-in-loop
     nextDialog = await nextDialog(context, props);
 
     while (typeof nextDialog === 'function') {
       // TODO: improve this debug helper
       debugAction(`Current Action: ${nextDialog.name || 'Anonymous'}`);
-      // eslint-disable-next-line no-await-in-loop
       nextDialog = await nextDialog(context, {});
     }
+    /* eslint-enable no-await-in-loop */
 
     return nextDialog;
   };
