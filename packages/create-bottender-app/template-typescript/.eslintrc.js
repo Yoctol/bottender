@@ -19,7 +19,7 @@ module.exports = {
       },
     ],
   },
-  plugins: ['prettier', '@typescript-eslint'],
+  plugins: ['import', 'prettier', '@typescript-eslint'],
   overrides: [
     {
       files: ['**/*.test.ts'],
