@@ -119,6 +119,7 @@ yarn add @bottender/dialogflow
 In the following sample code, you can see how elegant it is to integrate Bottender with DialogFlow. All you need to do is to fill in your environment variables, write a map between `intents` (e.g., `greeting`) and corresponding `functions` (e.g., `SayHello`).
 
 ```js
+const { chain } = require('bottender');
 const dialogflow = require('@bottender/dialogflow');
 
 async function SayHello(context) {
