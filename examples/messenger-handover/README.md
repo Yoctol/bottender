@@ -43,7 +43,7 @@ npx bottender messenger webhook set -w <YOUR_WEBHOOK_URL>
 
 > Note: You must put `appId`, `appSecret`, `pageId`, `accessToken` and `verifyToken` into `bottender.config.js` before running this command.
 
-## Idea of this Example
+## Idea of This Example
 
 This example shows how to use [Messenger Handover Protocol](https://developers.facebook.com/docs/messenger-platform/handover-protocol) in Bottender bots.
 For more information, check our [Messenger guides](https://bottender.js.org/docs/channel-messenger-setup).

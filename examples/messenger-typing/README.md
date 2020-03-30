@@ -39,7 +39,7 @@ npx bottender messenger webhook set -w <YOUR_WEBHOOK_URL>
 
 > Note: You must put `appId`, `appSecret` and `verifyToken` into `bottender.config.js` before running this command.
 
-## Idea of this Example
+## Idea of This Example
 
 This example shows using `withTyping` to make your bot user experience better.
 It will show typing indicator and delay all your send request for seconds. For

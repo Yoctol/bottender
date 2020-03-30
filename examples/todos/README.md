@@ -11,7 +11,7 @@ npm install
 npm run dev --console
 ```
 
-## Idea of this Example
+## Idea of This Example
 
 Building a todo app is the best way to understand new tools. This example shows
 what a To-Do console bot looks like. We suggest that you read our
@@ -19,7 +19,7 @@ what a To-Do console bot looks like. We suggest that you read our
 help you come to a better understanding.
 
 To begin with, the bot sets a initial state in `bottender.config.js`. Noticed that
-state must be an **`Object`**.
+state must be an **Object**.
 
 ```js
 module.exports = {

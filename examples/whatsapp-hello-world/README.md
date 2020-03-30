@@ -27,7 +27,7 @@ This command will start server for bot developing at `http://localhost:5000`.
 
 If you successfully start the server, you will get a webhook URL like `https://xxxxxxxx.ngrok.io/webhooks/whatsapp` from command line.
 
-## Idea of this Example
+## Idea of This Example
 
 This example is a simple bot running on [Twilio API for WhatsApp](https://www.twilio.com/whatsapp).
 For more information, check our [WhatsApp guides](https://bottender.js.org/docs/channel-whatsapp-setup).

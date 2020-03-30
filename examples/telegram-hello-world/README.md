@@ -39,7 +39,7 @@ npx bottender telegram webhook set -w <YOUR_WEBHOOK_URL>
 
 > Note: You must put `accessToken` into `bottender.config.js` before running this command.
 
-## Idea of this Example
+## Idea of This Example
 
 This example is a simple bot running on [Telegram](https://telegram.org/).
 For more information, check our [Telegram guides](https://bottender.js.org/docs/channel-telegram-setup).

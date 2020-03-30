@@ -51,6 +51,6 @@ httpsTrigger:
 
 To set the webhook, we have to go to the Developers Console of the Facebook Messenger Platform and use the endpoints we get to set the webhook. Don't forget to add `webhooks/messenger` at the end of the endpoint string. For example, here we have to use `https://xxxxxx.cloudfunctions.net/bottender-with-gcp-cloud-function/webhooks/messenger` as our webhook.
 
-## Idea of this Example
+## Idea of This Example
 
 This example is a simple bot running on [Messenger](https://www.messenger.com/) and deployed on GCP Cloud Function. The bot deployed on a serverless service such as GCP Cloud Function should not store session locally since the serverless service can not maintain the state.

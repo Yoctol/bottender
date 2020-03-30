@@ -1,4 +1,4 @@
-# Browser only
+# Browser Only
 
 ## Install and Run
 
@@ -13,7 +13,7 @@ npm start
 
 ![](https://user-images.githubusercontent.com/3382565/71249572-75487b00-2358-11ea-90a3-f4fdbd6dd4bb.gif)
 
-## Idea of this Example
+## Idea of This Example
 
 This example is a simple bot running on your browser.
 It shows how to build a frontend bot (no server) with React.

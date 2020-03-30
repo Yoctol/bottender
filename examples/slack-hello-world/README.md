@@ -33,7 +33,7 @@ If you successfully start the server, you will get a webhook URL like `https://x
 
 To set the webhook, go to [Slack Developer Console](https://api.slack.com/apps) / [YourApp] / Event Subscriptions, and use the webhook URL you get from running `npm run dev` to edit Request URL for your bot.
 
-## Idea of this Example
+## Idea of This Example
 
 This example is a simple bot running on [Slack](https://slack.com/).
 For more information, check our [Slack guides](https://bottender.js.org/docs/channel-slack-setup).

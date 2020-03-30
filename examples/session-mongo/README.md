@@ -11,7 +11,7 @@ npm install
 npm run dev -- --console
 ```
 
-## Idea of this Example
+## Idea of This Example
 
 This example shows how to use Session to store some information from users and
 store sessions in your MongoDB. For more information, check our

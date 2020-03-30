@@ -33,7 +33,7 @@ If you successfully start the server, you will get a webhook URL like `https://x
 
 To set the webhook, go to [Slack Developer Console](https://api.slack.com/apps) / [YourApp] / Event Subscriptions, and use the webhook URL you get from running `npm run dev` to edit Request URL for your bot.
 
-## Idea of this Example
+## Idea of This Example
 
 This example shows how to send [messages with interactive components (button/menu)](https://api.slack.com/interactive-messages) and handle the event triggered by users clicking the button/menu.
 

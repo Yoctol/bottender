@@ -29,7 +29,7 @@ module.exports = {
 };
 ```
 
-## Idea of this Example
+## Idea of This Example
 
 This example shows how to use Session to store some information from users and
 store sessions in your Redis server. For more information, check our

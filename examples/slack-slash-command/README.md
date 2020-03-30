@@ -1,12 +1,12 @@
-# Slack Hello World
+# Slack Slash Command
 
 ## Install and Run
 
 Download this example or clone [bottender](https://github.com/Yoctol/bottender).
 
 ```sh
-curl https://codeload.github.com/Yoctol/bottender/tar.gz/master | tar -xz --strip=2 bottender-master/examples/slack-hello-world
-cd slack-hello-world
+curl https://codeload.github.com/Yoctol/bottender/tar.gz/master | tar -xz --strip=2 bottender-master/examples/slack-slash-command
+cd slack-slash-command
 ```
 
 Install dependencies:
@@ -33,7 +33,7 @@ If you successfully start the server, you will get a webhook URL like `https://x
 
 To set the webhook, go to [Slack Developer Console](https://api.slack.com/apps) / [YourApp] / Event Subscriptions, and use the webhook URL you get from running `npm run dev` to edit Request URL for your bot.
 
-## Idea of this Example
+## Idea of This Example
 
 This example is a simple bot running on [Slack](https://slack.com/).
 For more information, check our [Slack guides](https://bottender.js.org/docs/channel-slack-setup).

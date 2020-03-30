@@ -11,7 +11,7 @@ npm install
 npm run dev -- --console
 ```
 
-## Idea of this Example
+## Idea of This Example
 
 This is a simple console bot which will echo what you said and shows how to
 distinguish what kind of message the bot has received. The easiest way is to use

@@ -39,7 +39,7 @@ npx bottender messenger webhook set -w <YOUR_WEBHOOK_URL>
 
 > Note: You must put `appId`, `appSecret` and `verifyToken` into `bottender.config.js` before running this command.
 
-## Idea of this Example
+## Idea of This Example
 
 This example is a bot which sents multiple requsets (up to 50) in batches using `batchConfig` in bottender.config.js:
 

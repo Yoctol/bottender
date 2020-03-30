@@ -11,6 +11,6 @@ npm install
 npm run dev -- --console
 ```
 
-## Idea of this Example
+## Idea of This Example
 
 This example shows how to integrate your bot with [QnA Maker](https://www.qnamaker.ai/).

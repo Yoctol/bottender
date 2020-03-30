@@ -33,7 +33,7 @@ If you successfully start the server, you will get a webhook URL like `https://x
 
 To set the webhook, go to [LINE developers console](https://developers.line.me/console/) and use the webhook URL you get from running `npm run dev` to edit webhook information for your channel.
 
-## Idea of this Example
+## Idea of This Example
 
 This example is a simple bot running on [LINE](https://line.me/).
 For more information, check our [LINE guides](https://bottender.js.org/docs/channel-line-setup).

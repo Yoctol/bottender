@@ -37,7 +37,7 @@ npx bottender viber webhook set -w <YOUR_WEBHOOK_URL>
 
 > Note: You must put `accessToken` into `bottender.config.js` before running this command.
 
-## Idea of this Example
+## Idea of This Example
 
 This example is a simple bot running on [Viber](https://www.viber.com/).
 For more information, check our [Viber guides](https://bottender.js.org/docs/channel-viber-setup).

@@ -11,7 +11,7 @@ npm install
 npm run dev -- --console
 ```
 
-## Idea of this Example
+## Idea of This Example
 
 This example shows how to combine your bot with modern NLU (Natural Language Understanding) technologies. In
 this case, we take [DialogFlow](https://dialogflow.com/) as an example. Before you run
