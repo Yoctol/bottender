@@ -18,8 +18,8 @@ export type QueryResult = {
 
 export type Message = {
   platform: Platform;
-  text: string[];
-};
+  message: string;
+} & Record<string, any>;
 
 export type DialogflowContext = {
   name: string;

@@ -1,11 +1,9 @@
 import dialogflowSdk from 'dialogflow';
 import { Action, Context, withProps } from 'bottender';
 
-import { QueryResult } from './types';
+import { Message, QueryResult } from './types';
 
-function getFulfillments(
-  fulfillmentMessages: Array<Record<string, any>>
-): string[] {
+function getFulfillments(fulfillmentMessages: Message[]): string[] {
   if (!fulfillmentMessages) {
     return [];
   }
