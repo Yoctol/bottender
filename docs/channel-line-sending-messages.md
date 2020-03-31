@@ -725,7 +725,7 @@ const quickReply = {
 
 ## Sending with dynamic icon and display name
 
-You can dynamically change the icon and display name by specify the `sender` properties in message options.
+You can dynamically change the icon and display name by specifying the `sender` property in message options.
 
 ![](https://developers.line.biz/assets/img/icon-nickname-switch.7ad52e1a.jpg)
 
