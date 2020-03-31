@@ -104,7 +104,8 @@ ENDPOINT_KEY=
 <pre><code class="hljs css language-sh">yarn add @bottender/qna-maker
 </code></pre>
 <p>In the following sample code, you can see how elegant it is to integrate Bottender with QnA Maker. All you need to do is to fill in your environment variables, and score thread, then Bottender uses answers from QnA Maker as the response.</p>
-<pre><code class="hljs css language-js"><span class="hljs-keyword">const</span> qnaMaker = <span class="hljs-built_in">require</span>(<span class="hljs-string">'@bottender/qna-maker'</span>);
+<pre><code class="hljs css language-js"><span class="hljs-keyword">const</span> { chain } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'bottender'</span>);
+<span class="hljs-keyword">const</span> qnaMaker = <span class="hljs-built_in">require</span>(<span class="hljs-string">'@bottender/qna-maker'</span>);
 
 <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Unknown</span>(<span class="hljs-params">context</span>) </span>{
   <span class="hljs-keyword">await</span> context.sendText(<span class="hljs-string">'Sorry, I don’t know what you say.'</span>);
@@ -150,7 +151,8 @@ GOOGLE_APPLICATION_PROJECT_ID=
 <pre><code class="hljs css language-sh">yarn add @bottender/dialogflow
 </code></pre>
 <p>In the following sample code, you can see how elegant it is to integrate Bottender with DialogFlow. All you need to do is to fill in your environment variables, write a map between <code>intents</code> (e.g., <code>greeting</code>) and corresponding <code>functions</code> (e.g., <code>SayHello</code>).</p>
-<pre><code class="hljs css language-js"><span class="hljs-keyword">const</span> dialogflow = <span class="hljs-built_in">require</span>(<span class="hljs-string">'@bottender/dialogflow'</span>);
+<pre><code class="hljs css language-js"><span class="hljs-keyword">const</span> { chain } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'bottender'</span>);
+<span class="hljs-keyword">const</span> dialogflow = <span class="hljs-built_in">require</span>(<span class="hljs-string">'@bottender/dialogflow'</span>);
 
 <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">SayHello</span>(<span class="hljs-params">context</span>) </span>{
   <span class="hljs-keyword">await</span> context.sendText(<span class="hljs-string">'Hello!'</span>);
@@ -200,7 +202,8 @@ LUIS_APP_ENDPOINT=
 <pre><code class="hljs css language-sh">yarn add @bottender/luis
 </code></pre>
 <p>In the following sample code, you can see how elegant it is to integrate Bottender with LUIS. All you need to do is to fill in your environment variables, and score threshold, then write a map between <code>intents</code> (e.g., <code>greeting</code>) and corresponding <code>functions</code> (e.g., <code>SayHello</code>).</p>
-<pre><code class="hljs css language-js"><span class="hljs-keyword">const</span> luis = <span class="hljs-built_in">require</span>(<span class="hljs-string">'@bottender/luis'</span>);
+<pre><code class="hljs css language-js"><span class="hljs-keyword">const</span> { chain } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'bottender'</span>);
+<span class="hljs-keyword">const</span> luis = <span class="hljs-built_in">require</span>(<span class="hljs-string">'@bottender/luis'</span>);
 
 <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">SayHello</span>(<span class="hljs-params">context</span>) </span>{
   <span class="hljs-keyword">await</span> context.sendText(<span class="hljs-string">'Hello!'</span>);
@@ -248,7 +251,8 @@ LUIS_APP_ENDPOINT=
 <pre><code class="hljs css language-sh">yarn add @bottender/rasa
 </code></pre>
 <p>In the following sample code, you can see how elegant it is to integrate Bottender with Rasa. All you need to do is to set up the origin URL, and confidence threshold, then write a map between <code>intents</code> (e.g., <code>greeting</code>) and corresponding <code>functions</code> (e.g., <code>SayHello</code>).</p>
-<pre><code class="hljs css language-js"><span class="hljs-keyword">const</span> rasa = <span class="hljs-built_in">require</span>(<span class="hljs-string">'@bottender/rasa'</span>);
+<pre><code class="hljs css language-js"><span class="hljs-keyword">const</span> { chain } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'bottender'</span>);
+<span class="hljs-keyword">const</span> rasa = <span class="hljs-built_in">require</span>(<span class="hljs-string">'@bottender/rasa'</span>);
 
 <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">SayHello</span>(<span class="hljs-params">context</span>) </span>{
   <span class="hljs-keyword">await</span> context.sendText(<span class="hljs-string">'Hello!'</span>);
