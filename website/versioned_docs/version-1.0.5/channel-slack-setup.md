@@ -85,7 +85,7 @@ Remember to install the Slack App in your workspace.
 `bottender.config.js` looks up `.env` for Slack access token and Slack verification token.
 
 ```
-// .env
+# .env
 
 SLACK_ACCESS_TOKEN=
 SLACK_VERIFICATION_TOKEN=

@@ -94,7 +94,7 @@ You can find Slack access token in [Slack Developer Console](https://api.slack.c
 After you get your **Slack Access Token**, paste the value into the `SLACK_ACCESS_TOKEN` field in your `.env` file:
 
 ```
-// .env
+# .env
 
 SLACK_ACCESS_TOKEN=<YOUR SLACK ACCESS TOKEN>
 ```
@@ -108,7 +108,7 @@ You can find Slack signing secret in [Slack Developer Console](https://api.slack
 After you get your **Slack Signing Secret**, paste the value into the `SLACK_SIGNING_SECRET` field in your `.env` file:
 
 ```
-// .env
+# .env
 
 SLACK_SIGNING_SECRET=<YOUR SLACK SIGNING SECRET>
 ```
@@ -117,14 +117,14 @@ SLACK_SIGNING_SECRET=<YOUR SLACK SIGNING SECRET>
 
 We recommend using signing secret instead of verification token, but we also support verification token.
 
-You can find  Slack verification token in [Slack Developer Console](https://api.slack.com/apps) → \${YourApp} → Basic Information → Verification Token.
+You can find Slack verification token in [Slack Developer Console](https://api.slack.com/apps) → \${YourApp} → Basic Information → Verification Token.
 
 <p><img width="800" src="https://user-images.githubusercontent.com/662387/71443865-668f0900-2748-11ea-9637-158575626c53.png"></p>
 
 After you get your **Slack Verification Token**, paste the value into the `SLACK_VERIFICATION_TOKEN` field in your `.env` file:
 
 ```
-// .env
+# .env
 
 # SLACK_VERIFICATION_TOKEN=<YOUR SLACK VERIFICATION TOKEN> # deprecated, use `SLACK_SIGNING_SECRET` instead
 ```

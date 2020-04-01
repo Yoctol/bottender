@@ -73,7 +73,7 @@ Bottender utilizes the [dotenv](https://www.npmjs.com/package/dotenv) library to
 So, to make a WhatsApp Bot works, you have to fill the below environment variables in your `.env` file:
 
 ```
-// .env
+# .env
 
 WHATSAPP_ACCOUNT_SID=
 WHATSAPP_AUTH_TOKEN=

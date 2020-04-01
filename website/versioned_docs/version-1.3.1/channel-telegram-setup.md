@@ -69,13 +69,12 @@ You can get a Telegram bot account and a bot token by sending the `/newbot` comm
 After you get your **Telegram Bot Token**, paste the value into the `TELEGRAM_ACCESS_TOKEN` field in your `.env` file:
 
 ```
-// .env
+# .env
 
 TELEGRAM_ACCESS_TOKEN=<Your Telegram Bot Token>
 ```
 
 For more information, please refer to Telegram's official doc, [BotFather](https://core.telegram.org/bots#6-botfather).
-
 
 > **Note:** Keep your token secure and store it safely; it can be used by anyone to control your bot. When you have to generate a new access token, you can send `/revoke` to BotFather.
 
