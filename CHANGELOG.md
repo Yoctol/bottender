@@ -1,5 +1,7 @@
 # 1.3.3 / 2020-04-01
 
+## line
+
 - [deps] update `messaging-api-line` for [domain name change for certain endpoints](https://developers.line.biz/en/news/2019/11/08/domain-name-change/).
 
 # 1.3.2 / 2020-03-20
