@@ -8,14 +8,14 @@ original_id: advanced-guides-nlu
 
 If you want to have more general intent recognition, you can leverage modern NLU (Natural Language Understanding) technologies. They can help you recognize the intent of user input sentences. There are several online services you can choose from, for example:
 
-- [DialogFlow](advanced-guides-nlu.md#building-with-dialogflow)
+- [Dialogflow](advanced-guides-nlu.md#building-with-dialogflow)
 - [QnA Maker](advanced-guides-nlu.md#building-with-qna-maker)
 - [LUIS](advanced-guides-nlu.md#building-with-luis)
 - [Rasa](advanced-guides-nlu.md#building-with-rasa-nlu)
 
-## Building with DialogFlow
+## Building with Dialogflow
 
-To build a bot integrated with [DialogFlow](https://dialogflow.com/), you have to setup Dialogflow following the [Official Setup Guide](https://cloud.google.com/dialogflow/docs/quick/setup) and fill the two values: `GOOGLE_APPLICATION_CREDENTIALS` (the file path of the JSON file that contains your service account key) and `GOOGLE_APPLICATION_PROJECT_ID` (the GCP project ID) into the `.env` file.
+To build a bot integrated with [Dialogflow](https://dialogflow.com/), you have to setup Dialogflow following the [Official Setup Guide](https://cloud.google.com/dialogflow/docs/quick/setup) and fill the two values: `GOOGLE_APPLICATION_CREDENTIALS` (the file path of the JSON file that contains your service account key) and `GOOGLE_APPLICATION_PROJECT_ID` (the GCP project ID) into the `.env` file.
 
 ```
 # .env

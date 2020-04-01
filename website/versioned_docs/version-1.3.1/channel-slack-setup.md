@@ -31,7 +31,7 @@ Remember to install the Slack App in your workspace.
 <p><img width="800" src="https://user-images.githubusercontent.com/662387/71443862-65f67280-2748-11ea-83a8-ca04340d6217.png"></p>
 <p><img width="800" src="https://user-images.githubusercontent.com/662387/71443863-65f67280-2748-11ea-8de7-2be1f0419729.png"></p>
 
-> **Note:** If you are not familiar with how Slack bots work, you can find detailed instructions from DialogFlow's [Slack Integration Document](https://cloud.google.com/dialogflow/docs/integrations/slack)
+> **Note:** If you are not familiar with how Slack bots work, you can find detailed instructions from Dialogflow's [Slack Integration Document](https://cloud.google.com/dialogflow/docs/integrations/slack)
 
 ## Enabling Slack Channels
 
