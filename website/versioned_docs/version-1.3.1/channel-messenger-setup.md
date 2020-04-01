@@ -67,7 +67,7 @@ When you run a Bottender app, Bottender loads environment variables in the confi
 To make a Messenger Bot works, you have to fill in the below environment variables in `.env`.
 
 ```
-// .env
+# .env
 
 MESSENGER_PAGE_ID=
 MESSENGER_ACCESS_TOKEN=

@@ -63,7 +63,7 @@ To make a Viber bot work, you must prepare the following environment variable, w
 After you find your **Viber Authentication Token** on **Viber Admin Panel**, paste the value into the `VIBER_ACCESS_TOKEN` field in your `.env` file:
 
 ```
-// .env
+# .env
 
 VIBER_ACCESS_TOKEN=<Your Viber Authentication Token>
 ```

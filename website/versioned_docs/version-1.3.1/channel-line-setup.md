@@ -63,7 +63,7 @@ You can find your **LINE Access Token** and **LINE Channel Secret** from LINE of
 After you get your **LINE Access Token** and **LINE Channel Secret**, paste the values into the `LINE_ACCESS_TOKEN` field and `LINE_CHANNEL_SECRET` field accordingly in your `.env` file:
 
 ```
-// .env
+# .env
 
 LINE_ACCESS_TOKEN=<Your LINE Access Token>
 LINE_CHANNEL_SECRET=<Your LINE Channel Token>
