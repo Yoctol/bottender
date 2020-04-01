@@ -6,7 +6,7 @@ original_id: intents
 
 ## Events
 
-Every time when there is an incoming request, the [handler](api-handler) will be called and parse out events from the request. Afterwards, the Event instance is attached to [context](api-context) so that you can access it via `context.event`.  
+Every time when there is an incoming request, the [handler](api-handler) will be called and parse out events from the request. Afterwards, the Event instance is attached to [context](api-context) so that you can access it via `context.event`.
 Bottender help you recognize what kind of messages or payloads are sent from users. In this way, you are able to handle intents more easily.
 
 Check [Event Reference](api-event) to get more information about event.
@@ -74,6 +74,6 @@ Now, not only `hello`, `hi` but also `Hello`, `hi~` will be matched.
 If you want to have more general intent recognition, you can leverage modern NLU (Natural Language Understanding) technologies. They can help you recognize the intent of user input sentences. There are several online services you can choose from, for example:
 
 - [LUIS.ai](https://www.luis.ai/) from Microsoft
-- [DialogFlow](https://dialogflow.com/) (formerly api.ai) from Google
+- [Dialogflow](https://dialogflow.com/) (formerly api.ai) from Google
 - [wit.ai](https://wit.ai/) from Facebook
 - [Watson](https://www.ibm.com/watson/) from IBM

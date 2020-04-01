@@ -1,6 +1,6 @@
 # @bottender/dialogflow
 
-[DialogFlow](https://dialogflow.com/) integration for Bottender.
+[Dialogflow](https://dialogflow.com/) integration for Bottender.
 
 ## Installation
 
@@ -49,7 +49,7 @@ module.exports = async function App() {
 
 ### projectId
 
-The ID of your DialogFlow Project.
+The ID of your Dialogflow Project.
 
 Type: `string`.
 Required.

@@ -79,7 +79,7 @@ Remember to install the Slack App in your workspace.
 
 > **Note:**
 >
-> - If you are not familiar with how Slack bots work, you can find detailed instructions from DialogFlow's [Slack Integration Document](https://cloud.google.com/dialogflow/docs/integrations/slack)
+> - If you are not familiar with how Slack bots work, you can find detailed instructions from Dialogflow's [Slack Integration Document](https://cloud.google.com/dialogflow/docs/integrations/slack)
 
 ### Access Token & Signing Secret (or Verification Token)
 
