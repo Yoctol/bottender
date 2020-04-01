@@ -54,6 +54,7 @@ yarn add @bottender/qna-maker
 In the following sample code, you can see how elegant it is to integrate Bottender with QnA Maker. All you need to do is to fill in your environment variables, and score thread, then Bottender uses answers from QnA Maker as the response.
 
 ```js
+const { chain } = require('bottender');
 const qnaMaker = require('@bottender/qna-maker');
 
 async function Unknown(context) {
@@ -120,6 +121,7 @@ yarn add @bottender/dialogflow
 In the following sample code, you can see how elegant it is to integrate Bottender with DialogFlow. All you need to do is to fill in your environment variables, write a map between `intents` (e.g., `greeting`) and corresponding `functions` (e.g., `SayHello`).
 
 ```js
+const { chain } = require('bottender');
 const dialogflow = require('@bottender/dialogflow');
 
 async function SayHello(context) {
@@ -186,6 +188,7 @@ yarn add @bottender/luis
 In the following sample code, you can see how elegant it is to integrate Bottender with LUIS. All you need to do is to fill in your environment variables, and score threshold, then write a map between `intents` (e.g., `greeting`) and corresponding `functions` (e.g., `SayHello`).
 
 ```js
+const { chain } = require('bottender');
 const luis = require('@bottender/luis');
 
 async function SayHello(context) {
@@ -257,6 +260,7 @@ yarn add @bottender/rasa
 In the following sample code, you can see how elegant it is to integrate Bottender with Rasa. All you need to do is to set up the origin URL, and confidence threshold, then write a map between `intents` (e.g., `greeting`) and corresponding `functions` (e.g., `SayHello`).
 
 ```js
+const { chain } = require('bottender');
 const rasa = require('@bottender/rasa');
 
 async function SayHello(context) {
