@@ -51,7 +51,7 @@ Or with `yarn`:
 yarn add @bottender/qna-maker
 ```
 
-In the following sample code, you can see how elegant it is to integrate Bottender with QnA Maker. All you need to do is to fill in your environment variables, and score thread, then Bottender uses answers from QnA Maker as the response.
+In the following sample code, you can see how elegant it is to integrate Bottender with QnA Maker. All you need to do is to fill in your environment variables, and score threshold, then Bottender uses answers from QnA Maker as the response.
 
 ```js
 const { chain } = require('bottender');

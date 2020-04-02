@@ -4,9 +4,9 @@ title: Multi-Channel Support
 original_id: advanced-guides-multi-channel
 ---
 
-Bottender intends to meet enterprise project needs. So, Bottender supports multiple chat channels in the very early stage. For example, you can put the environment variables of each chat channel in one config file; you can use [`Platform Specific Routes`](the-basics-routing#platform-specific-routes) to organize user events from various platforms.
+Bottender intends to meet enterprise project needs. So, Bottender supports multiple chat channels in the very early stage. For example, you can put the environment variables of each chat channel in one config file; you can use [Platform Specific Routes](the-basics-routing#platform-specific-routes) to organize user events from various platforms.
 
-Plus, Bottender aims to support the full features of each chat channel, e.g., `Block Kit` of Slack, `Rich Menu` of LINE, `Handover Protocol` of Messenger. That is why we didn't design cross-platform `Generic Chat UIs`. And you don't have to learn extra `Generic Chat UIs` and worry about if these still apply to the latest `Chat UI` of each chat channel.
+Plus, Bottender aims to support the full features of each chat channel, e.g., Block Kit of Slack, Rich Menu of LINE, Handover Protocol of Messenger. And you don't have to learn extra generic chat UIs and worry about if these still apply to the latest chat UI of each chat channel.
 
 The primary three steps to build a basic cross-platform bot are as follows:
 
@@ -47,14 +47,14 @@ VIBER_ACCESS_TOKEN=
 > - [Telegram Setup](https://bottender.js.org/docs/channel-telegram-setup)
 > - [Viber Setup](https://bottender.js.org/docs/channel-viber-setup)
 
-## Enable Each Chat channel
+## Enable Each Chat Channel
 
 Next, you have to make sure you have enable the channel you want to support in `bottender.config.js`.
 
 For example, if you want to enable your bot to support Messenger, you have to set `channels.messenger.enabled` as `true`.
 
 ```js
-// `bottender.config.js`
+// bottender.config.js
 
 module.exports = {
   channels: {
