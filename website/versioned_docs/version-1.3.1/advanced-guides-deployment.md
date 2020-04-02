@@ -4,13 +4,14 @@ title: Deployment
 original_id: advanced-guides-deployment
 ---
 
-Once you finished your bot in development, the next step is to deploy your bot to a hosting service!
+Once you finished your bot in development, the next step is to deploy your bot to a hosting service.
 
 ### Before Going Further
 
 We assumed that you already built at least one basic Bottender app in development. If you haven't, you may check [Getting Started](https://bottender.js.org/docs/getting-started) to create your first Bottender app in a few minutes, then jump to the setup doc of your favorite chat channel:
 
 - [Messenger Setup](https://bottender.js.org/docs/channel-messenger-setup)
+- [WhatsApp] Setup](https://bottender.js.org/docs/channel-whatsapp-setup)
 - [LINE Setup](https://bottender.js.org/docs/channel-line-setup)
 - [Slack Setup](https://bottender.js.org/docs/channel-slack-setup)
 - [Telegram Setup](https://bottender.js.org/docs/channel-telegram-setup)

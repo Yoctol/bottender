@@ -4,7 +4,7 @@ title: Multi-Channel Support
 original_id: advanced-guides-multi-channel
 ---
 
-Bottender intends to meet enterprise project needs. So, Bottender supports multiple chat channels in the very early stage. For example, you can put the environment variables of each chat channel in one config file; you can use [Platform Specific Routes](the-basics-routing#platform-specific-routes) to organize user events from various platforms.
+Bottender intends to meet enterprise project needs. So, Bottender supports multiple chat channels in the very early stage. For example, you can put the environment variables of each chat channel in one config file; you can use [platform specific routes](the-basics-routing#platform-specific-routes) to organize user events from various platforms.
 
 Plus, Bottender aims to support the full features of each chat channel, e.g., Block Kit of Slack, Rich Menu of LINE, Handover Protocol of Messenger. And you don't have to learn extra generic chat UIs and worry about if these still apply to the latest chat UI of each chat channel.
 
@@ -26,6 +26,10 @@ MESSENGER_ACCESS_TOKEN=
 MESSENGER_APP_ID=
 MESSENGER_APP_SECRET=
 MESSENGER_VERIFY_TOKEN=
+
+WHATSAPP_ACCOUNT_SID=
+WHATSAPP_AUTH_TOKEN=
+WHATSAPP_PHONE_NUMBER=
 
 LINE_ACCESS_TOKEN=
 LINE_CHANNEL_SECRET=
@@ -177,9 +181,9 @@ module.exports = async function App(context) {
 };
 ```
 
-### Using `Platform Specific Routes` to Manage Cross-Platform Events
+### Using Platform Specific Routes to Manage Cross-Platform Events
 
-By Bottender 1.1+, you can use `Platform Specific Routes` as an alternative to organize events from various chat channels. To learn more about the details of those specific routes, check out their documentation:
+By Bottender 1.1+, you can use platform specific routes as an alternative to organize events from various chat channels. To learn more about the details of those specific routes, check out their documentation:
 
 - [Messenger Routes](channel-messenger-routing.md)
 - [WhatsApp Routes](channel-whatsapp-routing.md)
