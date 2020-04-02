@@ -16,7 +16,7 @@ There are three steps to set up a simple cross-platform bot:
 
 ## Setup Each Platform
 
-To build a cross-platform bot, we have to setup each platform first. We can setup the platforms by following these guides:
+To build a cross-platform bot, we have to set up each platform first. We can set up the platforms by following these guides:
 
 - [Setup Messenger](https://bottender.js.org/docs/channel-messenger-setup)
 - [Setup LINE](https://bottender.js.org/docs/channel-line-setup)

@@ -43,7 +43,7 @@ The default webhook path is `/webhooks/line`, but you can set your own webhook p
 
 ## Complete LINE Channel Settings
 
-To make a LINE bot work, you have to setup three values:
+To make a LINE bot work, you have to set up three values:
 
 - LINE Access Token
 - LINE Channel Secret

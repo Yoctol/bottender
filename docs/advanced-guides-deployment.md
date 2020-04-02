@@ -9,11 +9,11 @@ Once you finished your bot in development, the next step is to deploy your bot t
 
 We assumed that you already built at least one basic Bottender app in development. If you haven't, you may check [Getting Started](https://bottender.js.org/docs/getting-started) to create your first Bottender app in a few minutes, then jump to the setup doc of your favorite chat channel:
 
-- [Setup Messenger](https://bottender.js.org/docs/channel-messenger-setup)
-- [Setup LINE](https://bottender.js.org/docs/channel-line-setup)
-- [Setup Slack](https://bottender.js.org/docs/channel-slack-setup)
-- [Setup Telegram](https://bottender.js.org/docs/channel-telegram-setup)
-- [Setup Viber](https://bottender.js.org/docs/channel-viber-setup)
+- [Messenger Setup](https://bottender.js.org/docs/channel-messenger-setup)
+- [LINE Setup](https://bottender.js.org/docs/channel-line-setup)
+- [Slack Setup](https://bottender.js.org/docs/channel-slack-setup)
+- [Telegram Setup](https://bottender.js.org/docs/channel-telegram-setup)
+- [Viber Setup](https://bottender.js.org/docs/channel-viber-setup)
 
 ## Heroku
 

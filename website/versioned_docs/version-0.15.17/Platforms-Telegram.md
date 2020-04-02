@@ -60,7 +60,7 @@ server.listen(5000, () => {
 });
 ```
 
-After running up the bot server, you can use [bottender CLI](commands) command to setup webhook.
+After running up the bot server, you can use [bottender CLI](commands) command to set up webhook.
 
 ```
 $ bottender telegram webhook set -w <YOUR_WEBHOOK_URL>

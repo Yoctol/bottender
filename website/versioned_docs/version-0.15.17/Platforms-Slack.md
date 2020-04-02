@@ -13,7 +13,7 @@ This guide will give you some basic concepts of developing a Slack bot. For more
   - Permissions
   - Bots
 
-First, create an app on [Slack API](https://api.slack.com/apps?new_app=1) site. Then setup its features:
+First, create an app on [Slack API](https://api.slack.com/apps?new_app=1) site. Then set up its features:
 
 - Event Subscriptions:
   - Subscribe to `message.channels` event, so your bot can receive message events.

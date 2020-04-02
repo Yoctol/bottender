@@ -3,17 +3,17 @@ id: advanced-guides-multi-channel
 title: Multi-Channel Support
 ---
 
-Bottender intends to meet enterprise project needs. So, Bottender supports multiple chat channels in the very early stage. For example, you can put the environment variables of each chat channel in one config file; you can use [`Platform Specific Routes`](the-basics-routing#platform-specific-routes) to organize user events from various platforms.
+Bottender intends to meet enterprise project needs. So, Bottender supports multiple chat channels in the very early stage. For example, you can put the environment variables of each chat channel in one config file; you can use [Platform Specific Routes](the-basics-routing#platform-specific-routes) to organize user events from various platforms.
 
-Plus, Bottender aims to support the full features of each chat channel, e.g., `Block Kit` of Slack, `Rich Menu` of LINE, `Handover Protocol` of Messenger. That is why we didn't design cross-platform `Generic Chat UIs`. And you don't have to learn extra `Generic Chat UIs` and worry about if these still apply to the latest `Chat UI` of each chat channel.
+Plus, Bottender aims to support the full features of each chat channel, e.g., Block Kit of Slack, Rich Menu of LINE, Handover Protocol of Messenger. And you don't have to learn extra generic chat UIs and worry about if these still apply to the latest chat UI of each chat channel.
 
 The primary three steps to build a basic cross-platform bot are as follows:
 
-1. Setup each chat channel
+1. Set up each chat channel
 2. Enable each chat channel
 3. Develop cross-platform bot actions
 
-## Setup Each Chat Channel
+## Set up Each Chat Channel
 
 To build a cross-platform bot, you have to set up each platform first. In short, you have to fill in environment variables in your `.env` for the chat channels supported by your bot.
 
@@ -39,21 +39,21 @@ VIBER_ACCESS_TOKEN=
 
 > **Note:** If you are not familiar with setting up chat channels, you may refer to the following Bottender docs:
 >
-> - [Setup Messenger](https://bottender.js.org/docs/channel-messenger-setup)
-> - [Setup WhatsApp](https://bottender.js.org/docs/channel-whatsapp-setup)
-> - [Setup LINE](https://bottender.js.org/docs/channel-line-setup)
-> - [Setup Slack](https://bottender.js.org/docs/channel-slack-setup)
-> - [Setup Telegram](https://bottender.js.org/docs/channel-telegram-setup)
-> - [Setup Viber](https://bottender.js.org/docs/channel-viber-setup)
+> - [Messenger Setup](https://bottender.js.org/docs/channel-messenger-setup)
+> - [WhatsApp Setup](https://bottender.js.org/docs/channel-whatsapp-setup)
+> - [LINE Setup](https://bottender.js.org/docs/channel-line-setup)
+> - [Slack Setup](https://bottender.js.org/docs/channel-slack-setup)
+> - [Telegram Setup](https://bottender.js.org/docs/channel-telegram-setup)
+> - [Viber Setup](https://bottender.js.org/docs/channel-viber-setup)
 
-## Enable Each Chat channel
+## Enable Each Chat Channel
 
 Next, you have to make sure you have enable the channel you want to support in `bottender.config.js`.
 
 For example, if you want to enable your bot to support Messenger, you have to set `channels.messenger.enabled` as `true`.
 
 ```js
-// `bottender.config.js`
+// bottender.config.js
 
 module.exports = {
   channels: {

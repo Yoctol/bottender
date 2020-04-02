@@ -45,7 +45,7 @@ The default webhook path is `/webhooks/viber`, but you can set your own webhook 
 
 ## Complete Viber Channel Settings
 
-To make Viber bots work, you have to setup the following values:
+To make Viber bots work, you have to set up the following values:
 
 - Viber Access Token
 - Webhook

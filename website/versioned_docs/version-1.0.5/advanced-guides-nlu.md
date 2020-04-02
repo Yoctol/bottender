@@ -15,7 +15,7 @@ If you want to have more general intent recognition, you can leverage modern NLU
 
 ## Building with Dialogflow
 
-To build a bot integrated with [Dialogflow](https://dialogflow.com/), you have to setup Dialogflow following the [Official Setup Guide](https://cloud.google.com/dialogflow/docs/quick/setup) and fill the two values: `GOOGLE_APPLICATION_CREDENTIALS` (the file path of the JSON file that contains your service account key) and `GOOGLE_APPLICATION_PROJECT_ID` (the GCP project ID) into the `.env` file.
+To build a bot integrated with [Dialogflow](https://dialogflow.com/), you have to set up Dialogflow following the [Official Setup Guide](https://cloud.google.com/dialogflow/docs/quick/setup) and fill the two values: `GOOGLE_APPLICATION_CREDENTIALS` (the file path of the JSON file that contains your service account key) and `GOOGLE_APPLICATION_PROJECT_ID` (the GCP project ID) into the `.env` file.
 
 ```
 # .env

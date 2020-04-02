@@ -91,7 +91,7 @@ export async function setWebhook(ctx: CliContext): Promise<void> {
 
     invariant(
       webhook,
-      '`webhook` is required but not found. Use -w <webhook> to setup or make sure you are running ngrok server.'
+      '`webhook` is required but not found. Use -w <webhook> to set up or make sure you are running ngrok server.'
     );
 
     const defaultFields = [

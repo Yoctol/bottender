@@ -22,7 +22,7 @@ Thus, You can find those lines in your generated `package.json`:
 }
 ```
 
-When executing one of `bottender dev` or `bottender start` command, under the hood, it setups a default express server for Bottender and load `index.js` from the project root directory as the root action of the chatbot.
+When executing one of `bottender dev` or `bottender start` command, under the hood, it sets up a default express server for Bottender and load `index.js` from the project root directory as the root action of the chatbot.
 
 To run Bottender with the custom HTTP server, we need to prepare an HTTP server, delegate the webhook routes to Bottender, and modify the setting of `package.json`.
 

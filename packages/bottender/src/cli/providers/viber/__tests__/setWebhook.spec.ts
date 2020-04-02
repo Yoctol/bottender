@@ -94,7 +94,7 @@ describe('resolve', () => {
     expect(log.print).toBeCalled();
   });
 
-  it('get ngrok webhook to setup', async () => {
+  it('get ngrok webhook to set up', async () => {
     const { client } = setup();
 
     const ctx = {

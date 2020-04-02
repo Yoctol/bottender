@@ -41,7 +41,7 @@ For more information, check our [Slack guides](https://bottender.js.org/docs/cha
 
 ## Usage
 
-To receive interactive message requests, you need to setup **Interactive Components** in your Slack app with the same URL as **Event Subscriptions** URL.
+To receive interactive message requests, you need to set up **Interactive Components** in your Slack app with the same URL as **Event Subscriptions** URL.
 
 After that, type 'heyo' to the bot and it will respond you with buttons and menu. Then click them to see what happens!
 
