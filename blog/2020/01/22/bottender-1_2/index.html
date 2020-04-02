@@ -79,7 +79,7 @@
 <ul>
 <li><strong><a href="/blog/2020/01/22/bottender-1_2#serverless-supporting-and-documentation">Serverless Support and Documentation</a>:</strong> Zeit Now v2 and AWS Lambda</li>
 <li><strong><a href="/blog/2020/01/22/bottender-1_2#built-in-support-for-intent-labeling">Built-In Support for Intent Labeling</a>:</strong> Bottender context now support labeling user intent and handled status.</li>
-<li><strong><a href="/blog/2020/01/22/bottender-1_2#packages-to-integrate-with-nlu-services">Packages to Integrate with NLU Services</a>:</strong> Bots can now integrate with popular NLU services DialogFlow, LUIS, QnA Maker, and Rasa with less efforts.</li>
+<li><strong><a href="/blog/2020/01/22/bottender-1_2#packages-to-integrate-with-nlu-services">Packages to Integrate with NLU Services</a>:</strong> Bots can now integrate with popular NLU services Dialogflow, LUIS, QnA Maker, and Rasa with less efforts.</li>
 <li><strong><a href="https://bottender.js.org/blog/2020/01/22/bottender-1_2#accessing-session-store">Accessing Session Store</a>:</strong> Manipulating session data directly if you needed.</li>
 <li><strong><a href="/blog/2020/01/22/bottender-1_2#accessing-messaging-clients">Accessing Messaging Clients</a>:</strong> Getting configured messaging clients out of the box to call API anytime.</li>
 </ul>
@@ -110,14 +110,14 @@ context.isHandled; <span class="hljs-comment">// false</span>
 <p>This feature might found not very useful at this moment, but it's the key to the chatbot analytics, and we will soon introduce <a href="https://chatbase.com/">Chatbase</a> and <a href="https://www.dashbot.io/">Dashbot</a> integrations on top of it in the future release.</p>
 <h2><a class="anchor" aria-hidden="true" id="packages-to-integrate-with-nlu-services"></a><a href="#packages-to-integrate-with-nlu-services" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Packages to Integrate with NLU Services</h2>
 <p>In v1.2, we announced four npm packages to integrate with the great natural language understanding (NLU) services:
-<a href="https://dialogflow.com/">Google DialogFlow</a>, <a href="https://www.luis.ai/">Microsoft LUIS</a>, <a href="https://www.qnamaker.ai/">Microsoft QnA Maker</a> and <a href="https://rasa.com/">Rasa</a>.</p>
+<a href="https://dialogflow.com/">Google Dialogflow</a>, <a href="https://www.luis.ai/">Microsoft LUIS</a>, <a href="https://www.qnamaker.ai/">Microsoft QnA Maker</a> and <a href="https://rasa.com/">Rasa</a>.</p>
 <ul>
 <li><code>@bottender/dialogflow</code></li>
 <li><code>@bottender/luis</code></li>
 <li><code>@bottender/qna-maker</code></li>
 <li><code>@bottender/rasa</code></li>
 </ul>
-<p>To understand how those packages work, let's use <code>DialogFlow</code> as an example.</p>
+<p>To understand how those packages work, let's use <code>Dialogflow</code> as an example.</p>
 <p>After installing the <code>@bottender/dialogflow</code> package, you can create an action using <code>dialogflow</code> function and put it in your bot:</p>
 <pre><code class="hljs css language-js"><span class="hljs-keyword">const</span> dialogflow = <span class="hljs-built_in">require</span>(<span class="hljs-string">'@bottender/dialogflow'</span>);
 
@@ -143,7 +143,7 @@ context.isHandled; <span class="hljs-comment">// false</span>
   ]);
 };
 </code></pre>
-<p>The bot in the above example says <code>Hello!</code> when the intent received from DialogFlow is <code>greeting</code>. Otherwise, it replies with a fallback sentence.</p>
+<p>The bot in the above example says <code>Hello!</code> when the intent received from Dialogflow is <code>greeting</code>. Otherwise, it replies with a fallback sentence.</p>
 <p>In addition, it automatically calls <code>context.setIntent()</code> or <code>context.setAsNotHandled()</code> methods that we mentioned earlier to label the intent and handled status under the hood.</p>
 <h2><a class="anchor" aria-hidden="true" id="accessing-session-store"></a><a href="#accessing-session-store" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Accessing Session Store</h2>
 <p>Bottender now supports accessing underlying session store configured by <code>bottender.config.js</code>:</p>

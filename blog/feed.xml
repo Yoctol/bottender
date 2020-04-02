@@ -30,7 +30,7 @@
 <ul>
 <li><strong><a href="/blog/2020/01/22/bottender-1_2#serverless-supporting-and-documentation">Serverless Support and Documentation</a>:</strong> Zeit Now v2 and AWS Lambda</li>
 <li><strong><a href="/blog/2020/01/22/bottender-1_2#built-in-support-for-intent-labeling">Built-In Support for Intent Labeling</a>:</strong> Bottender context now support labeling user intent and handled status.</li>
-<li><strong><a href="/blog/2020/01/22/bottender-1_2#packages-to-integrate-with-nlu-services">Packages to Integrate with NLU Services</a>:</strong> Bots can now integrate with popular NLU services DialogFlow, LUIS, QnA Maker, and Rasa with less efforts.</li>
+<li><strong><a href="/blog/2020/01/22/bottender-1_2#packages-to-integrate-with-nlu-services">Packages to Integrate with NLU Services</a>:</strong> Bots can now integrate with popular NLU services Dialogflow, LUIS, QnA Maker, and Rasa with less efforts.</li>
 <li><strong><a href="https://bottender.js.org/blog/2020/01/22/bottender-1_2#accessing-session-store">Accessing Session Store</a>:</strong> Manipulating session data directly if you needed.</li>
 <li><strong><a href="/blog/2020/01/22/bottender-1_2#accessing-messaging-clients">Accessing Messaging Clients</a>:</strong> Getting configured messaging clients out of the box to call API anytime.</li>
 </ul>

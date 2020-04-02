@@ -91,7 +91,7 @@
 <p><img width="800" src="https://user-images.githubusercontent.com/662387/71443862-65f67280-2748-11ea-83a8-ca04340d6217.png"></p>
 <p><img width="800" src="https://user-images.githubusercontent.com/662387/71443863-65f67280-2748-11ea-8de7-2be1f0419729.png"></p>
 <blockquote>
-<p><strong>Note:</strong> If you are not familiar with how Slack bots work, you can find detailed instructions from DialogFlow's <a href="https://cloud.google.com/dialogflow/docs/integrations/slack">Slack Integration Document</a></p>
+<p><strong>Note:</strong> If you are not familiar with how Slack bots work, you can find detailed instructions from Dialogflow's <a href="https://cloud.google.com/dialogflow/docs/integrations/slack">Slack Integration Document</a></p>
 </blockquote>
 <h2><a class="anchor" aria-hidden="true" id="enabling-slack-channels"></a><a href="#enabling-slack-channels" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Enabling Slack Channels</h2>
 <p>To enable Slack channels, you can start either from new or existing Bottender apps.</p>
@@ -131,26 +131,26 @@
 <p>You can find Slack access token in <a href="https://api.slack.com/apps">Slack Developer Console</a> → ${YourApp} → Install App → Bot User OAuth Access Token</p>
 <p><img width="800" src="https://user-images.githubusercontent.com/662387/71455592-a7cafb80-27d0-11ea-8ac7-3633c2b4d429.png"></p>
 <p>After you get your <strong>Slack Access Token</strong>, paste the value into the <code>SLACK_ACCESS_TOKEN</code> field in your <code>.env</code> file:</p>
-<pre><code class="hljs"><span class="hljs-comment">// .env</span>
+<pre><code class="hljs"><span class="hljs-comment"># .env</span>
 
-SLACK_ACCESS_TOKEN=<span class="hljs-params">&lt;YOUR SLACK ACCESS TOKEN&gt;</span>
+<span class="hljs-attr">SLACK_ACCESS_TOKEN</span>=&lt;YOUR SLACK ACCESS TOKEN&gt;
 </code></pre>
 <h3><a class="anchor" aria-hidden="true" id="slack-signing-secret"></a><a href="#slack-signing-secret" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Slack Signing Secret</h3>
 <p>You can find Slack signing secret in <a href="https://api.slack.com/apps">Slack Developer Console</a> → ${YourApp} → Basic Information → Signing Secret.</p>
 <p><img width="800" src="https://user-images.githubusercontent.com/4010549/74005498-07155180-49b4-11ea-9f15-f2e0e869f677.png"></p>
 <p>After you get your <strong>Slack Signing Secret</strong>, paste the value into the <code>SLACK_SIGNING_SECRET</code> field in your <code>.env</code> file:</p>
-<pre><code class="hljs"><span class="hljs-comment">// .env</span>
+<pre><code class="hljs"><span class="hljs-comment"># .env</span>
 
-SLACK_SIGNING_SECRET=<span class="hljs-params">&lt;YOUR SLACK SIGNING SECRET&gt;</span>
+<span class="hljs-attr">SLACK_SIGNING_SECRET</span>=&lt;YOUR SLACK SIGNING SECRET&gt;
 </code></pre>
 <h3><a class="anchor" aria-hidden="true" id="slack-verification-token-deprecated"></a><a href="#slack-verification-token-deprecated" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Slack Verification Token (Deprecated)</h3>
 <p>We recommend using signing secret instead of verification token, but we also support verification token.</p>
-<p>You can find  Slack verification token in <a href="https://api.slack.com/apps">Slack Developer Console</a> → ${YourApp} → Basic Information → Verification Token.</p>
+<p>You can find Slack verification token in <a href="https://api.slack.com/apps">Slack Developer Console</a> → ${YourApp} → Basic Information → Verification Token.</p>
 <p><img width="800" src="https://user-images.githubusercontent.com/662387/71443865-668f0900-2748-11ea-9637-158575626c53.png"></p>
 <p>After you get your <strong>Slack Verification Token</strong>, paste the value into the <code>SLACK_VERIFICATION_TOKEN</code> field in your <code>.env</code> file:</p>
-<pre><code class="hljs"><span class="hljs-comment">// .env</span>
+<pre><code class="hljs"><span class="hljs-meta"># .env</span>
 
-# SLACK_VERIFICATION_TOKEN=&lt;YOUR SLACK VERIFICATION TOKEN&gt; # deprecated, use `SLACK_SIGNING_SECRET` instead
+<span class="hljs-meta"># SLACK_VERIFICATION_TOKEN=&lt;YOUR SLACK VERIFICATION TOKEN&gt; # deprecated, use `SLACK_SIGNING_SECRET` instead</span>
 </code></pre>
 <h2><a class="anchor" aria-hidden="true" id="webhook"></a><a href="#webhook" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Webhook</h2>
 <p>After finishing the above settings, you can start your server with Slack webhook event listening using the following commands:</p>
