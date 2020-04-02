@@ -1,6 +1,6 @@
 ---
 id: version-1.0.5-channel-messenger-setup
-title: Setup Messenger
+title: Messenger Setup
 original_id: channel-messenger-setup
 ---
 

@@ -44,7 +44,7 @@ Successfully create persona <PERSONA_ID>
 
 The response contains a Persona ID that can be used to send future messages. Please note that this ID is private, and it is unique to a Page.
 
-> **Note:** If you are not familiar with settings of `bottender.config.js`, please refer to [Setup Messenger](./channel-messenger-setup.md)
+> **Note:** If you are not familiar with settings of `bottender.config.js`, please refer to [Messenger Setup](./channel-messenger-setup.md)
 
 ### Sending Messages as a Persona
 

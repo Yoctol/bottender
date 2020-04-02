@@ -17,7 +17,7 @@ npm install
 
 You must put `accessToken` and `channelSecret` into `bottender.config.js`.
 
-If you are not familiar with LINE Bot, you may refer to Bottender's doc, [Setup LINE](https://bottender.js.org/docs/channel-line-setup) to find detailed instructions.
+If you are not familiar with LINE Bot, you may refer to Bottender's doc, [LINE Setup](https://bottender.js.org/docs/channel-line-setup) to find detailed instructions.
 
 After that, you should follow this [document](https://bottender.js.org/docs/channel-line-rich-menu) to set up the rich menu on LINE. You can use the file `rich_menu.jpg` as the rich menu image.
 

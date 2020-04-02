@@ -91,7 +91,7 @@ git push heroku master
 
 Then fill in your webhook URL on the developer console of the chat channel.
 
-> **Note:** If you are not familiar with webhook setup, you may refer to Bottender docs, [Setup Messenger](https://bottender.js.org/docs/channel-messenger-setup), [Setup LINE](https://bottender.js.org/docs/channel-line-setup), and [Setup Slack](https://bottender.js.org/docs/channel-slack-setup).
+> **Note:** If you are not familiar with webhook setup, you may refer to Bottender docs, [Messenger Setup](https://bottender.js.org/docs/channel-messenger-setup), [LINE Setup](https://bottender.js.org/docs/channel-line-setup), and [Slack Setup](https://bottender.js.org/docs/channel-slack-setup).
 
 > **Note:** If you haven't changed your webhook path in `bottender.config.js`, by default, your Messenger Bot webhook is `https://<your-heroku-app-name>.herokuapp.com/webhooks/messenger`; your LINE Bot webhook is `https://<your-heroku-app-name>.herokuapp.com/webhooks/line`, etc.
 
@@ -321,7 +321,7 @@ There are two basic types of webhook setup:
 
 Fill in your webhook URL on the developer console of the chat channel.
 
-> **Note:** If you are not familiar with webhook setup, you may refer to Bottender docs, [Setup Messenger](https://bottender.js.org/docs/channel-messenger-setup), [Setup LINE](https://bottender.js.org/docs/channel-line-setup), [Setup Slack](https://bottender.js.org/docs/channel-slack-setup).
+> **Note:** If you are not familiar with webhook setup, you may refer to Bottender docs, [Messenger Setup](https://bottender.js.org/docs/channel-messenger-setup), [LINE Setup](https://bottender.js.org/docs/channel-line-setup), [Slack Setup](https://bottender.js.org/docs/channel-slack-setup).
 
 #### Step 8b: Set up Webhook by CLI
 

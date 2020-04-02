@@ -17,12 +17,12 @@ First, create an app on [Slack API](https://api.slack.com/apps?new_app=1) site. 
 
 - Event Subscriptions:
   - Subscribe to `message.channels` event, so your bot can receive message events.
-  - Setup webhook URL after your bot server is up.
+  - Set up webhook URL after your bot server is up.
 - Permissions:
   - Add **bot** [scope](https://api.slack.com/bot-users#api_usage) to your app
   - Copy **Bot User OAuth Access Token** (access token) for later use.
 - Bots:
-  - Setup your bot's display name.
+  - Set up your bot's display name.
 
 ## Build Your First Slack Bot
 

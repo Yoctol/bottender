@@ -17,7 +17,7 @@ npm install
 
 You have to put `appId`, `appSecret`, `pageId`, `accessToken` and `verifyToken` into `bottender.config.js`.
 
-If you are not familiar with Messenger Bot, you may refer to Bottender's doc, [Setup Messenger](https://bottender.js.org/docs/channel-messenger-setup), to find detailed instructions.
+If you are not familiar with Messenger Bot, you may refer to Bottender's doc, [Messenger Setup](https://bottender.js.org/docs/channel-messenger-setup), to find detailed instructions.
 
 To make this example works, you may found that we enabled a few necessary `Page Subscriptions Fields` in `bottender.config.js`, e.g., `message_echoes`, `standby`, and `messaging_handovers`.
 

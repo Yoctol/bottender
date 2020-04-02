@@ -10,11 +10,11 @@ Plus, Bottender aims to support the full features of each chat channel, e.g., `B
 
 The primary three steps to build a basic cross-platform bot are as follows:
 
-1. Setup each chat channel
+1. Set up each chat channel
 2. Enable each chat channel
 3. Develop cross-platform bot actions
 
-## Setup Each Chat Channel
+## Set Up Each Chat Channel
 
 To build a cross-platform bot, you have to set up each platform first. In short, you have to fill in environment variables in your `.env` for the chat channels supported by your bot.
 
@@ -41,12 +41,12 @@ VIBER_ACCESS_TOKEN=
 > **Note:**
 > If you are not familiar with set up chat channels, you may refer to the following Bottender docs:
 
-- [Setup Messenger](https://bottender.js.org/docs/channel-messenger-setup)
-- [Setup WhatsApp](https://bottender.js.org/docs/channel-whatsapp-setup)
-- [Setup LINE](https://bottender.js.org/docs/channel-line-setup)
-- [Setup Slack](https://bottender.js.org/docs/channel-slack-setup)
-- [Setup Telegram](https://bottender.js.org/docs/channel-telegram-setup)
-- [Setup Viber](https://bottender.js.org/docs/channel-viber-setup)
+- [Messenger Setup](https://bottender.js.org/docs/channel-messenger-setup)
+- [WhatsApp Setup](https://bottender.js.org/docs/channel-whatsapp-setup)
+- [LINE Setup](https://bottender.js.org/docs/channel-line-setup)
+- [Slack Setup](https://bottender.js.org/docs/channel-slack-setup)
+- [Telegram Setup](https://bottender.js.org/docs/channel-telegram-setup)
+- [Viber Setup](https://bottender.js.org/docs/channel-viber-setup)
 
 ## Enable Each Chat channel
 

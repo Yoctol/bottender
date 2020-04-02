@@ -10,19 +10,19 @@ Through Bottender, we can build chatbots that support multiple platforms at the 
 
 There are three steps to set up a simple cross-platform bot:
 
-1. Setup each platform
+1. Set up each platform
 2. Enable each channel for the App
 3. Develop the action
 
-## Setup Each Platform
+## Set up Each Platform
 
 To build a cross-platform bot, we have to set up each platform first. We can set up the platforms by following these guides:
 
-- [Setup Messenger](https://bottender.js.org/docs/channel-messenger-setup)
-- [Setup LINE](https://bottender.js.org/docs/channel-line-setup)
-- [Setup Slack](https://bottender.js.org/docs/channel-slack-setup)
-- [Setup Telegram](https://bottender.js.org/docs/channel-telegram-setup)
-- [Setup Viber](https://bottender.js.org/docs/channel-viber-setup)
+- [Messenger Setup](https://bottender.js.org/docs/channel-messenger-setup)
+- [LINE Setup](https://bottender.js.org/docs/channel-line-setup)
+- [Slack Setup](https://bottender.js.org/docs/channel-slack-setup)
+- [Telegram Setup](https://bottender.js.org/docs/channel-telegram-setup)
+- [Viber Setup](https://bottender.js.org/docs/channel-viber-setup)
 
 After we set up for the platforms which we want to handle, we have to put the required values to the `.env` file.
 

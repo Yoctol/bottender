@@ -13,7 +13,7 @@ Although Telegram is not one of the top 5 chat channels, I surprisingly found th
 
 Plus, I may argue that Telegram is the most developer-friendly chat channel. For example:
 
-- You don't need a developer account to build bots. You just needs to talk to @BotFather (see Bottender doc, ["Setup Telegram"](./channel-telegram-setup.md) for more info)
+- You don't need a developer account to build bots. You just needs to talk to @BotFather (see Bottender doc, [Telegram Setup](./channel-telegram-setup.md) for more info)
 - The desktop and mobile version of Telegram has quite similar behavior
 - Your app can proactively send messages to your users without extra cost (while Messenger or LINE asked for extra cost for push messages)
 

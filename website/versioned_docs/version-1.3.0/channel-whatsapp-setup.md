@@ -1,6 +1,6 @@
 ---
 id: version-1.3.0-channel-whatsapp-setup
-title: Setup WhatsApp
+title: WhatsApp Setup
 original_id: channel-whatsapp-setup
 ---
 

@@ -165,4 +165,4 @@ Interactive blocks (e.g., buttons, drop-down menus, date pickers) are part of bl
 >
 > - There are two kinds of webhook that need to handle on your Slack app configuration page. The first one is in the `Event Subscriptions` tab, and the second one is in the `Interactive Components` tab.
 > - By default, the webhook URL you need to fill in `Interactive Components` is like `https://example.com/webhooks/slack`. And you can fill in the same webhook URL for `Event Subscriptions` and `Interactive Components`.
-> - If you are not familiar with `Event Subscriptions`, you may refer to another Bottender doc, [Setup Slack](./channel-slack-setup.md). You must complete the settings of `Event Subscriptions` to make your bot work.
+> - If you are not familiar with `Event Subscriptions`, you may refer to another Bottender doc, [Slack Setup](./channel-slack-setup.md). You must complete the settings of `Event Subscriptions` to make your bot work.

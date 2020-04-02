@@ -1,6 +1,6 @@
 ---
 id: version-1.0.5-channel-line-setup
-title: Setup LINE
+title: LINE Setup
 original_id: channel-line-setup
 ---
 

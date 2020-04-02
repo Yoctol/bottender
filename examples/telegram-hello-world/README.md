@@ -17,7 +17,7 @@ npm install
 
 You have to put `accessToken` into `bottender.config.js`.
 
-If you are not familiar with Telegram Bot, you may refer to Bottender's doc, [Setup Telegram](https://bottender.js.org/docs/channel-telegram-setup), to find detailed instructions.
+If you are not familiar with Telegram Bot, you may refer to Bottender's doc, [Telegram Setup](https://bottender.js.org/docs/channel-telegram-setup), to find detailed instructions.
 
 After that, you can run the bot with this npm script:
 

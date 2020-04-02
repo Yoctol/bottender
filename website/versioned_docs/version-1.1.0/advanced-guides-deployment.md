@@ -14,11 +14,11 @@ Once you finished your bot in development, the next step is to deploy your bot t
 
 We assumed that you already built at least one basic Bottender app in development. If you haven't, you may check [Getting Started](https://bottender.js.org/docs/getting-started) to create your first Bottender app in a few minutes, then jump to the setup doc of your favorite chat channel:
 
-- [Setup Messenger](https://bottender.js.org/docs/channel-messenger-setup)
-- [Setup LINE](https://bottender.js.org/docs/channel-line-setup)
-- [Setup Slack](https://bottender.js.org/docs/channel-slack-setup)
-- [Setup Telegram](https://bottender.js.org/docs/channel-telegram-setup)
-- [Setup Viber](https://bottender.js.org/docs/channel-viber-setup)
+- [Messenger Setup](https://bottender.js.org/docs/channel-messenger-setup)
+- [LINE Setup](https://bottender.js.org/docs/channel-line-setup)
+- [Slack Setup](https://bottender.js.org/docs/channel-slack-setup)
+- [Telegram Setup](https://bottender.js.org/docs/channel-telegram-setup)
+- [Viber Setup](https://bottender.js.org/docs/channel-viber-setup)
 
 ## Heroku
 
@@ -96,7 +96,7 @@ git push heroku master
 
 Then fill in your webhook URL on the developer console of the chat channel.
 
-> **Note:** If you are not familiar with webhook setup, you may refer to Bottender docs, [Setup Messenger](https://bottender.js.org/docs/channel-messenger-setup), [Setup LINE](https://bottender.js.org/docs/channel-line-setup), and [Setup Slack](https://bottender.js.org/docs/channel-slack-setup).
+> **Note:** If you are not familiar with webhook setup, you may refer to Bottender docs, [Messenger Setup](https://bottender.js.org/docs/channel-messenger-setup), [LINE Setup](https://bottender.js.org/docs/channel-line-setup), and [Slack Setup](https://bottender.js.org/docs/channel-slack-setup).
 
 > **Note:** If you haven't changed your webhook path in `bottender.config.js`, by default, your Messenger Bot webhook is `https://<your-heroku-app-name>.herokuapp.com/webhooks/messenger`; your LINE Bot webhook is `https://<your-heroku-app-name>.herokuapp.com/webhooks/line`, and so on.
 
@@ -326,7 +326,7 @@ There are two basic types of webhook setup:
 
 Fill in your webhook URL on the developer console of the chat channel.
 
-> **Note:** If you are not familiar with webhook setup, you may refer to Bottender docs, [Setup Messenger](https://bottender.js.org/docs/channel-messenger-setup), [Setup LINE](https://bottender.js.org/docs/channel-line-setup), [Setup Slack](https://bottender.js.org/docs/channel-slack-setup).
+> **Note:** If you are not familiar with webhook setup, you may refer to Bottender docs, [Messenger Setup](https://bottender.js.org/docs/channel-messenger-setup), [LINE Setup](https://bottender.js.org/docs/channel-line-setup), [Slack Setup](https://bottender.js.org/docs/channel-slack-setup).
 
 #### Step 8b: Set up Webhook by CLI
 

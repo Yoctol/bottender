@@ -13,7 +13,7 @@ The primary three steps to build a basic cross-platform bot are as follows:
 2. Enable each chat channel
 3. Develop cross-platform bot actions
 
-## Set up Each Chat Channel
+## Set Up Each Chat Channel
 
 To build a cross-platform bot, you have to set up each platform first. In short, you have to fill in environment variables in your `.env` for the chat channels supported by your bot.
 

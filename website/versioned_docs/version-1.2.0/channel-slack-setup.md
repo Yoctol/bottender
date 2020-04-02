@@ -1,6 +1,6 @@
 ---
 id: version-1.2.0-channel-slack-setup
-title: Setup Slack
+title: Slack Setup
 original_id: channel-slack-setup
 ---
 

@@ -24,7 +24,7 @@ npm install
 
 This is an example that runs on Facebook Messenger Platform. Therefore, you have to put `appId`, `appSecret`, `pageId`, `accessToken` and `verifyToken` into the `.env` file.
 
-If you are not familiar with Messenger Bot, you may refer to Bottender's doc, [Setup Messenger](https://bottender.js.org/docs/channel-messenger-setup), to find detailed instructions.
+If you are not familiar with Messenger Bot, you may refer to Bottender's doc, [Messenger Setup](https://bottender.js.org/docs/channel-messenger-setup), to find detailed instructions.
 
 ### Deploy on AWS
 

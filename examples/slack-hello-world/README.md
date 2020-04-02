@@ -17,7 +17,7 @@ npm install
 
 You have to put `accessToken` and `verificationToken` into `bottender.config.js`.
 
-If you are not familiar with Slack Bot, you may refer to Bottender's doc, [Setup Slack](https://bottender.js.org/docs/channel-slack-setup), to find detailed instructions.
+If you are not familiar with Slack Bot, you may refer to Bottender's doc, [Slack Setup](https://bottender.js.org/docs/channel-slack-setup), to find detailed instructions.
 
 After that, you can run the bot with this npm script:
 

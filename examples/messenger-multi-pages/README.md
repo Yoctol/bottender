@@ -17,7 +17,7 @@ npm install
 
 You have to put `appId`, `appSecret`, `pageId`, `accessToken` and `verifyToken` into `bottender.config.js`.
 
-If you are not familiar with Messenger Bot, you may refer to Bottender's doc, [Setup Messenger](https://bottender.js.org/docs/channel-messenger-setup), to find detailed instructions.
+If you are not familiar with Messenger Bot, you may refer to Bottender's doc, [Messenger Setup](https://bottender.js.org/docs/channel-messenger-setup), to find detailed instructions.
 
 > **Note:** `Page Subscriptions Fields` take effect for the 1st Facebook Page when you run the below `Set Webhook` script. However, in this example, you might have multiple Pages. Please double check your `Page Subscriptions Fields` for each Page. We recommend you at least enable the following fields:
 >
