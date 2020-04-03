@@ -73,11 +73,11 @@ TELEGRAM_ACCESS_TOKEN=
 
 ### Webhook
 
-#### Set up Webhook for Development
+#### Set Up Webhook for Development
 
 Before setting the webhook, please make sure you have set your access token correctly in `.env`.
 
-By the following command, Bottender runs a bot server by `ngrok,` which makes your local bot server accessible from the Internet.
+By the following command, Bottender runs a bot server by ngrok, which makes your local bot server accessible from the Internet.
 
 ```sh
 # in development
@@ -100,7 +100,7 @@ npx bottender telegram webhook set
 
 Finally, press `Y` to allow Bottender set `ngrok` temporary URL as the webhook. Now you are ready to interact with your bot on Telegram :)
 
-#### Set up Webhook for Production
+#### Set Up Webhook for Production
 
 Before setting the webhook, please make sure you set your access token correctly as the environment variable.
 

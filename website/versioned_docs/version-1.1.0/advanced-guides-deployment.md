@@ -85,7 +85,7 @@ There are two basic types of webhook setup:
 1. Set up webhook by Developer Console UI, e.g., Messenger, LINE, Slack
 2. Set up webhook by CLI, e.g., Messenger, Telegram, Viber
 
-#### Step 5a: Set up Webhook by UI of Developer Console
+#### Step 5a: Set Up Webhook by UI of Developer Console
 
 Use Heroku CLI by Git push to complete the deployment.
 
@@ -100,7 +100,7 @@ Then fill in your webhook URL on the developer console of the chat channel.
 
 > **Note:** If you haven't changed your webhook path in `bottender.config.js`, by default, your Messenger Bot webhook is `https://<your-heroku-app-name>.herokuapp.com/webhooks/messenger`; your LINE Bot webhook is `https://<your-heroku-app-name>.herokuapp.com/webhooks/line`, and so on.
 
-#### Step 5b: Set up Webhook by CLI
+#### Step 5b: Set Up Webhook by CLI
 
 You can benefit from the `Procfile` feature of Heroku, which specifies the commands executed by the app on startup. We are going to use two process types of `Procfile`:
 
@@ -322,13 +322,13 @@ There are two basic types of webhook setup:
 1. Set up webhook by Developer Console UI, e.g., Messenger, LINE, Slack
 2. Set up webhook by CLI, e.g., Messenger, Telegram, Viber
 
-#### Step 8a: Set up Webhook by Developer Console UI
+#### Step 8a: Set Up Webhook by Developer Console UI
 
 Fill in your webhook URL on the developer console of the chat channel.
 
 > **Note:** If you are not familiar with webhook setup, you may refer to Bottender docs, [Messenger Setup](https://bottender.js.org/docs/channel-messenger-setup), [LINE Setup](https://bottender.js.org/docs/channel-line-setup), [Slack Setup](https://bottender.js.org/docs/channel-slack-setup).
 
-#### Step 8b: Set up Webhook by CLI
+#### Step 8b: Set Up Webhook by CLI
 
 Make sure you have the same environment variable settings in your local `.env` file and `now.js`. Then you can use the following command to set up the webhook.
 

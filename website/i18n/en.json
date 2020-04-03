@@ -351,7 +351,7 @@
         "title": "Sending LINE Messages"
       },
       "version-1.0.5/version-1.0.5-channel-line-setup": {
-        "title": "Setup LINE"
+        "title": "LINE Setup"
       },
       "version-1.0.5/version-1.0.5-channel-messenger-handling-events": {
         "title": "Handling Messenger Events"
@@ -366,13 +366,13 @@
         "title": "Sending Messenger Messages"
       },
       "version-1.0.5/version-1.0.5-channel-messenger-setup": {
-        "title": "Setup Messenger"
+        "title": "Messenger Setup"
       },
       "version-1.0.5/version-1.0.5-channel-slack-handling-events": {
         "title": "Handling Slack Events"
       },
       "version-1.0.5/version-1.0.5-channel-slack-setup": {
-        "title": "Setup Slack"
+        "title": "Slack Setup"
       },
       "version-1.0.5/version-1.0.5-channel-telegram-handling-events": {
         "title": "Handling Telegram Events"
@@ -381,13 +381,13 @@
         "title": "Sending Telegram Messages"
       },
       "version-1.0.5/version-1.0.5-channel-telegram-setup": {
-        "title": "Setup Telegram"
+        "title": "Telegram Setup"
       },
       "version-1.0.5/version-1.0.5-channel-viber-handling-events": {
         "title": "Handling Viber Events"
       },
       "version-1.0.5/version-1.0.5-channel-viber-setup": {
-        "title": "Setup Viber"
+        "title": "Viber Setup"
       },
       "version-1.0.5/version-1.0.5-getting-started": {
         "title": "Getting Started"
@@ -489,13 +489,13 @@
         "title": "Messenger Multi-Page Support"
       },
       "version-1.2.0/version-1.2.0-channel-slack-setup": {
-        "title": "Setup Slack"
+        "title": "Slack Setup"
       },
       "version-1.2.0/version-1.2.0-channel-telegram-sending-messages": {
         "title": "Sending Telegram Messages"
       },
       "version-1.2.0/version-1.2.0-channel-viber-setup": {
-        "title": "Setup Viber"
+        "title": "Viber Setup"
       },
       "version-1.2.0/version-1.2.0-migrating-v1": {
         "title": "Migrating from v0.x to v1.x"
@@ -510,7 +510,7 @@
         "title": "Multi-Channel Support"
       },
       "version-1.3.0/version-1.3.0-channel-slack-setup": {
-        "title": "Setup Slack"
+        "title": "Slack Setup"
       },
       "version-1.3.0/version-1.3.0-channel-slack-slash-command": {
         "title": "Handling Slack Slash Commands"
@@ -525,7 +525,7 @@
         "title": "Sending WhatsApp Messages"
       },
       "version-1.3.0/version-1.3.0-channel-whatsapp-setup": {
-        "title": "Setup WhatsApp"
+        "title": "WhatsApp Setup"
       },
       "version-1.3.0/version-1.3.0-the-basics-routing": {
         "title": "Routing"

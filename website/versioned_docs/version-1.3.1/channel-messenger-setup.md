@@ -138,7 +138,7 @@ npm start
 
 If you deployed your bot on `https://example.com/`, your Messenger Bot webhook is `https://example.com/webhooks/messenger` with the default settings.
 
-### Set up Webhook and Enable Subscriptions by Command
+### Set Up Webhook and Enable Subscriptions by Command
 
 You can set your webhook by the command below.
 
@@ -146,7 +146,7 @@ You can set your webhook by the command below.
 npx bottender telegram webhook set -w https://example.com/webhooks/messenger
 ```
 
-### Set up Webhook and Enable Subscriptions on Facebook App Page
+### Set Up Webhook and Enable Subscriptions on Facebook App Page
 
 However, there are many more options and information on Facebook App page. You can also set up your webhook on Facebook App Page.
 
