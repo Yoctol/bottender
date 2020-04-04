@@ -1,3 +1,7 @@
+# 1.3.5 / 2020-04-04
+
+- [fix] put `router.d.ts` into package files whitelist
+
 # 1.3.4 / 2020-04-04
 
 - [fix] fix `bottender/router` import statement in TypeScript (#715)
