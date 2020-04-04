@@ -12,10 +12,11 @@
 ![](https://user-images.githubusercontent.com/3382565/76295244-3c80c800-62ef-11ea-88dc-a6039b3918c2.png)
 
 > The readme below is the documentation for the v1 (stable) version of Bottender. To view the documentation:
+>
 > - for the latest Bottender version (v1.x), visit https://bottender.js.org/docs/en/getting-started
 > - for the legacy Bottender version (v0.15), visit https://bottender.js.org/docs/en/0.15.17/getting-started
 
-- **Declarative** - Bottender takes care of the complexity of conversational UIs for you. Design actions for each event and state in your application, and Bottender will run accordingly. his approach makes your code more predictable and easier to debug.
+- **Declarative** - Bottender takes care of the complexity of conversational UIs for you. Design actions for each event and state in your application, and Bottender will run accordingly. This approach makes your code more predictable and easier to debug.
 
 - **Native User Experience** - Bottender lets you create apps on every channel and never compromise on your users’ experience. You can apply progressive enhancement or graceful degradation strategy on your building blocks.
 
@@ -28,7 +29,7 @@ Bottender is built on top of
 
 ## Installation
 
-You can create a new Bottender app using the cli tools:
+You can create a new Bottender app using the CLI tools:
 
 ```sh
 npx create-bottender-app my-app
@@ -65,7 +66,7 @@ module.export = async function App(context) {
 npx bottender start --console
 ```
 
-This will create and run a bot which always reply "Hello World" in the console.
+It creates and runs a bot that always replies with "Hello World" in the console.
 
 ## Notable Features
 
@@ -80,21 +81,25 @@ This will create and run a bot which always reply "Hello World" in the console.
 
 ### LINE
 
-- Reply, Push, Multicast
+- Reply, Push, Multicast, Narrowcast
 - Imagemap
 - Rich Menu
 - Room, Group Chat
 - Beacon
+- Icon Switch
+- Line Notify
+- LIFF (LINE Front-end Framework)
 
 ### Slack
 
 - Channel Chat
 - Interactive Message
+- Slash Command
 
 ### Telegram
 
 - Webhook, Long Polling
-- Update, Delete Messages
+- Updating, Deleting Messages
 - Keyboard
 - Group Chat
 - Inline Query
@@ -112,8 +117,7 @@ This will create and run a bot which always reply "Hello World" in the console.
 
 ## Contributing
 
-Pull Requests and issue reports are welcome. You can follow steps below to
-submit your pull requests:
+Pull Requests and issue reports are welcome. You can follow steps below to submit your pull requests:
 
 Fork, then clone the repo:
 
@@ -128,7 +132,7 @@ cd bottender
 yarn
 ```
 
-Make sure the tests pass (including eslint, flow checks and jest tests):
+Make sure the tests pass (including ESLint, TypeScript checks and Jest tests):
 
 ```sh
 yarn test
