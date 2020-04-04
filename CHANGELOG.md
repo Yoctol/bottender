@@ -1,3 +1,7 @@
+# 1.3.4 / 2020-04-04
+
+- [fix] fix `bottender/router` import statement in TypeScript (#715)
+
 # 1.3.3 / 2020-04-01
 
 ## line
