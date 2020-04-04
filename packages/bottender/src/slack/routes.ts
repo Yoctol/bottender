@@ -1,58 +1,53 @@
 import Context from '../context/Context';
-import { Action, Client, Event } from '../types';
+import { Action } from '../types';
 import { RoutePredicate, route } from '../router';
 
 import { EventTypes } from './SlackEvent';
 
-type Route = <C extends Client = any, E extends Event = any>(
-  action: Action<C, E>
+type Route = <C extends Context<any, any>>(
+  action: Action<C, any>
 ) => {
-  predicate: RoutePredicate<C, E>;
-  action: Action<C, E>;
+  predicate: RoutePredicate<C>;
+  action: Action<C, any>;
 };
 
 type Slack = Route & {
   message: Route;
-  event: <C extends Client = any, E extends Event = any>(
+  event: <C extends Context<any, any>>(
     eventType: EventTypes,
-    action: Action<C, E>
+    action: Action<C, any>
   ) => {
-    predicate: RoutePredicate<C, E>;
-    action: Action<C, E>;
+    predicate: RoutePredicate<C>;
+    action: Action<C, any>;
   };
-  command: <C extends Client = any, E extends Event = any>(
+  command: <C extends Context<any, any>>(
     commandText: string,
-    action: Action<C, E>
+    action: Action<C, any>
   ) => {
-    predicate: RoutePredicate<C, E>;
-    action: Action<C, E>;
+    predicate: RoutePredicate<C>;
+    action: Action<C, any>;
   };
 };
 
-const slack: Slack = <C extends Client = any, E extends Event = any>(
-  action: Action<C, E>
-) => {
-  return route(context => context.platform === 'slack', action);
+const slack: Slack = <C extends Context<any, any>>(action: Action<C, any>) => {
+  return route((context: C) => context.platform === 'slack', action);
 };
 
-function message<C extends Client = any, E extends Event = any>(
-  action: Action<C, E>
-) {
+function message<C extends Context<any, any>>(action: Action<C, any>) {
   return route(
-    (context: Context<C, E>) =>
-      context.platform === 'slack' && context.event.isMessage,
+    (context: C) => context.platform === 'slack' && context.event.isMessage,
     action
   );
 }
 
 slack.message = message;
 
-function event<C extends Client = any, E extends Event = any>(
+function event<C extends Context<any, any>>(
   eventType: EventTypes,
-  action: Action<C, E>
+  action: Action<C, any>
 ) {
   return route(
-    (context: Context<C, E>) =>
+    (context: C) =>
       context.platform === 'slack' && context.event.rawEvent.type === eventType,
     action
   );
@@ -60,12 +55,12 @@ function event<C extends Client = any, E extends Event = any>(
 
 slack.event = event;
 
-function command<C extends Client = any, E extends Event = any>(
+function command<C extends Context<any, any>>(
   commandText: string,
-  action: Action<C, E>
+  action: Action<C, any>
 ) {
   return route(
-    (context: Context<C, E>) =>
+    (context: C) =>
       context.platform === 'slack' &&
       context.event.command &&
       context.event.command === commandText,

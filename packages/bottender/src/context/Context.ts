@@ -226,4 +226,6 @@ export default abstract class Context<C extends Client, E extends Event> {
       this._emitter.emit('error', err, this);
     }
   }
+
+  handlerDidEnd(): any {}
 }

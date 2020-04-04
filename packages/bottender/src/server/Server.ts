@@ -17,7 +17,7 @@ export type ServerOptions = {
 };
 
 class Server {
-  _channelBots: { webhookPath: string; bot: Bot<any, any, any> }[] = [];
+  _channelBots: { webhookPath: string; bot: Bot<any, any, any, any> }[] = [];
 
   useConsole: boolean;
 
@@ -55,13 +55,13 @@ class Server {
       ErrorEntry = require(path.resolve('_error.js'));
     } catch (err) {} // eslint-disable-line no-empty
 
-    function initializeBot(bot: Bot<any, any, any>): void {
+    function initializeBot(bot: Bot<any, any, any, any>): void {
       if (initialState) {
         bot.setInitialState(initialState);
       }
 
       if (plugins) {
-        plugins.forEach((plugin: Plugin<any, any>) => {
+        plugins.forEach((plugin: Plugin<any>) => {
           bot.use(plugin);
         });
       }
@@ -96,7 +96,7 @@ class Server {
         const channelBot = new ChannelBot({
           ...channelConfig,
           sessionStore,
-        }) as Bot<any, any, any>;
+        }) as Bot<any, any, any, any>;
 
         initializeBot(channelBot);
 

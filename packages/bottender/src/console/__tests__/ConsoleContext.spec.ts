@@ -126,7 +126,6 @@ describe('method missing', () => {
   it('should not proxy blacklisted methods', async () => {
     const { context } = setup({ fallbackMethods: true });
 
-    expect(context.handlerDidEnd).toBeUndefined();
     expect(context.then).toBeUndefined();
     expect(context.inspect).toBeUndefined();
   });

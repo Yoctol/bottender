@@ -46,13 +46,13 @@ function initializeServer({
     ErrorEntry = require(path.resolve('_error.js'));
   } catch (err) {} // eslint-disable-line no-empty
 
-  function initializeBot(bot: Bot<any, any, any>): void {
+  function initializeBot(bot: Bot<any, any, any, any>): void {
     if (initialState) {
       bot.setInitialState(initialState);
     }
 
     if (plugins) {
-      plugins.forEach((plugin: Plugin<any, any>) => {
+      plugins.forEach((plugin: Plugin<any>) => {
         bot.use(plugin);
       });
     }

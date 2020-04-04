@@ -4,12 +4,14 @@ import Bot from '../bot/Bot';
 import SessionStore from '../session/SessionStore';
 
 import ViberConnector, { ViberRequestBody } from './ViberConnector';
+import ViberContext from './ViberContext';
 import ViberEvent from './ViberEvent';
 
 export default class ViberBot extends Bot<
   ViberRequestBody,
   ViberClient,
-  ViberEvent
+  ViberEvent,
+  ViberContext
 > {
   constructor({
     accessToken,

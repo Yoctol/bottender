@@ -4,6 +4,7 @@ import Bot from '../bot/Bot';
 import SessionStore from '../session/SessionStore';
 
 import TelegramConnector, { TelegramRequestBody } from './TelegramConnector';
+import TelegramContext from './TelegramContext';
 import TelegramEvent from './TelegramEvent';
 
 type PollingOptions = {
@@ -16,7 +17,8 @@ type PollingOptions = {
 export default class TelegramBot extends Bot<
   TelegramRequestBody,
   TelegramClient,
-  TelegramEvent
+  TelegramEvent,
+  TelegramContext
 > {
   _offset: number | null;
 

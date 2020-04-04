@@ -5,12 +5,14 @@ import Bot from '../bot/Bot';
 import SessionStore from '../session/SessionStore';
 
 import SlackConnector, { SlackRequestBody } from './SlackConnector';
+import SlackContext from './SlackContext';
 import SlackEvent from './SlackEvent';
 
 export default class SlackBot extends Bot<
   SlackRequestBody,
   SlackOAuthClient,
-  SlackEvent
+  SlackEvent,
+  SlackContext
 > {
   _accessToken: string;
 

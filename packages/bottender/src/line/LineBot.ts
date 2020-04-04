@@ -4,12 +4,14 @@ import Bot from '../bot/Bot';
 import SessionStore from '../session/SessionStore';
 
 import LineConnector, { LineRequestBody } from './LineConnector';
+import LineContext from './LineContext';
 import LineEvent from './LineEvent';
 
 export default class LineBot extends Bot<
   LineRequestBody,
   LineClient,
-  LineEvent
+  LineEvent,
+  LineContext
 > {
   constructor({
     accessToken,

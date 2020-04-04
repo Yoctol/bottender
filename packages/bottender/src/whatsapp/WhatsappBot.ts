@@ -3,12 +3,14 @@ import SessionStore from '../session/SessionStore';
 
 import TwilioClient from './TwilioClient';
 import WhatsappConnector, { WhatsappRequestBody } from './WhatsappConnector';
+import WhatsappContext from './WhatsappContext';
 import WhatsappEvent from './WhatsappEvent';
 
 export default class WhatsappBot extends Bot<
   WhatsappRequestBody,
   TwilioClient,
-  WhatsappEvent
+  WhatsappEvent,
+  WhatsappContext
 > {
   constructor({
     accountSid,

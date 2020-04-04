@@ -1,12 +1,12 @@
 import Context from '../context/Context';
-import { Action, Client, Event } from '../types';
+import { Action } from '../types';
 import { RoutePredicate, route } from '../router';
 
-type Route = <C extends Client = any, E extends Event = any>(
-  action: Action<C, E>
+type Route = <C extends Context<any, any>>(
+  action: Action<C, any>
 ) => {
-  predicate: RoutePredicate<C, E>;
-  action: Action<C, E>;
+  predicate: RoutePredicate<C>;
+  action: Action<C, any>;
 };
 
 type Whatsapp = Route & {
@@ -18,65 +18,51 @@ type Whatsapp = Route & {
   read: Route;
 };
 
-const whatsapp: Whatsapp = <C extends Client = any, E extends Event = any>(
-  action: Action<C, E>
+const whatsapp: Whatsapp = <C extends Context<any, any>>(
+  action: Action<C, any>
 ) => {
   return route(context => context.platform === 'whatsapp', action);
 };
 
-function message<C extends Client = any, E extends Event = any>(
-  action: Action<C, E>
-) {
+function message<C extends Context<any, any>>(action: Action<C, any>) {
   return route(
-    (context: Context<C, E>) =>
-      context.platform === 'whatsapp' && context.event.isMessage,
+    (context: C) => context.platform === 'whatsapp' && context.event.isMessage,
     action
   );
 }
 
 whatsapp.message = message;
 
-function media<C extends Client = any, E extends Event = any>(
-  action: Action<C, E>
-) {
+function media<C extends Context<any, any>>(action: Action<C, any>) {
   return route(
-    (context: Context<C, E>) =>
-      context.platform === 'whatsapp' && context.event.isMedia,
+    (context: C) => context.platform === 'whatsapp' && context.event.isMedia,
     action
   );
 }
 
 whatsapp.media = media;
 
-function received<C extends Client = any, E extends Event = any>(
-  action: Action<C, E>
-) {
+function received<C extends Context<any, any>>(action: Action<C, any>) {
   return route(
-    (context: Context<C, E>) =>
-      context.platform === 'whatsapp' && context.event.isReceived,
+    (context: C) => context.platform === 'whatsapp' && context.event.isReceived,
     action
   );
 }
 
 whatsapp.received = received;
 
-function sent<C extends Client = any, E extends Event = any>(
-  action: Action<C, E>
-) {
+function sent<C extends Context<any, any>>(action: Action<C, any>) {
   return route(
-    (context: Context<C, E>) =>
-      context.platform === 'whatsapp' && context.event.isSent,
+    (context: C) => context.platform === 'whatsapp' && context.event.isSent,
     action
   );
 }
 
 whatsapp.sent = sent;
 
-function delivered<C extends Client = any, E extends Event = any>(
-  action: Action<C, E>
-) {
+function delivered<C extends Context<any, any>>(action: Action<C, any>) {
   return route(
-    (context: Context<C, E>) =>
+    (context: C) =>
       context.platform === 'whatsapp' && context.event.isDelivered,
     action
   );
@@ -84,12 +70,9 @@ function delivered<C extends Client = any, E extends Event = any>(
 
 whatsapp.delivered = delivered;
 
-function read<C extends Client = any, E extends Event = any>(
-  action: Action<C, E>
-) {
+function read<C extends Context<any, any>>(action: Action<C, any>) {
   return route(
-    (context: Context<C, E>) =>
-      context.platform === 'whatsapp' && context.event.isRead,
+    (context: C) => context.platform === 'whatsapp' && context.event.isRead,
     action
   );
 }
