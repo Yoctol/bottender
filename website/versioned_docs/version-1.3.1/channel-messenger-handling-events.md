@@ -82,9 +82,7 @@ async function App(context) {
 
 > **Note:** You must enable events - `messaging_postbacks`.
 
-## Other Events
-
-### Media Related Events
+## Media Related Events
 
 In our current experience, image and location are comparatively accessible. For example, an `Image Event` could be a starting point for an image-based search engine to find relevant products. And `Location Event` is often used under the context that when your bot tries to recommendation your user nearby shops or branches.
 
@@ -133,7 +131,7 @@ async function App(context) {
 }
 ```
 
-### Delivery/Read Events
+## Delivery/Read Events
 
 `Delivery Event` and `Read Event` are necessary when you try to estimate how many users read your message — for example, the influence of a PR campaign.
 
@@ -160,7 +158,7 @@ async function App(context) {
 
 > **Note:** You must enable events - `message_reads` and `message_deliveries`.
 
-### Sticker Events
+## Sticker Events
 
 A proper response of `Sticker Event` would make your bot more human-like. For example, you can define a set of stickers that your bots understand as a shortcut (or secret code). It offers an alternative way for your user to interact with your bot.
 
