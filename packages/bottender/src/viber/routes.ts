@@ -10,6 +10,7 @@ type Route = <C extends Context<any, any>>(
 };
 
 type Viber = Route & {
+  any: Route;
   message: Route;
   subscribed: Route;
   unsubscribed: Route;
@@ -22,6 +23,8 @@ type Viber = Route & {
 const viber: Viber = <C extends Context<any, any>>(action: Action<C, any>) => {
   return route(context => context.platform === 'viber', action);
 };
+
+viber.any = viber;
 
 function message<C extends Context<any, any>>(action: Action<C, any>) {
   return route(

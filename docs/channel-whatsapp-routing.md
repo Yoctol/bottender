@@ -16,7 +16,7 @@ function App() {
     whatsapp.sent(HandleSent),
     whatsapp.delivered(HandleDelivered),
     whatsapp.read(HandleRead),
-    whatsapp(HandleWhatsapp),
+    whatsapp.any(HandleWhatsapp),
   ]);
 }
 
@@ -32,7 +32,7 @@ async function HandleWhatsapp(context) {}
 
 All available routes in `whatsapp` that recognize different kind of events:
 
-- `whatsapp` - triggers the action when receiving any WhatsApp events.
+- `whatsapp.any` - triggers the action when receiving any WhatsApp events.
 - `whatsapp.message` - triggers the action when receiving WhatsApp `received` events. Alias: `whatsapp.received`.
 - `whatsapp.media` - triggers the action when receiving WhatsApp `received` events includes media.
 - `whatsapp.received` - triggers the action when receiving WhatsApp `received` events.

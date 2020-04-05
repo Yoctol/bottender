@@ -27,7 +27,7 @@ function App() {
     messenger.read(HandleRead),
     messenger.referral(HandleReferral),
     messenger.standby(HandleStandby),
-    messenger(HandleMessenger),
+    messenger.any(HandleMessenger),
   ]);
 }
 
@@ -54,7 +54,7 @@ async function HandleMessenger(context) {}
 
 All available routes in `messenger` that recognize different kind of events:
 
-- `messenger` - triggers the action when receiving any Messenger events.
+- `messenger.any` - triggers the action when receiving any Messenger events.
 - `messenger.message` - triggers the action when receiving Messenger `message` events.
 - `messenger.accountLinking.linked` - triggers the action when receiving Messenger `account_linking` events with status `linked`.
 - `messenger.accountLinking.unlinked` - triggers the action when receiving Messenger `account_linking` events with status `unlinked`.

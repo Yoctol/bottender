@@ -17,7 +17,7 @@ function App() {
     viber.delivered(HandleDelivered),
     viber.seen(HandleSeen),
     viber.failed(HandleFailed),
-    viber(HandleViber),
+    viber.any(HandleViber),
   ]);
 }
 
@@ -34,7 +34,7 @@ async function HandleViber(context) {}
 
 All available routes in `viber` that recognize different kind of events:
 
-- `viber` - triggers the action when receiving any Viber events.
+- `viber.any` - triggers the action when receiving any Viber events.
 - `viber.message` - triggers the action when receiving Viber `message` events.
 - `viber.subscribed` - triggers the action when receiving Viber `subscribed` events.
 - `viber.unsubscribed` - triggers the action when receiving Viber `unsubscribed` events.
