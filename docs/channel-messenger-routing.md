@@ -24,6 +24,9 @@ function App() {
     messenger.optin(HandleOptin),
     messenger.policyEnforcement(HandlePolicyEnforcement),
     messenger.postback(HandlePostback),
+    messenger.reaction.react(HandleReactionReact),
+    messenger.reaction.unreact(HandleReactionUnreact),
+    messenger.reaction(HandleReaction),
     messenger.read(HandleRead),
     messenger.referral(HandleReferral),
     messenger.standby(HandleStandby),
@@ -46,6 +49,9 @@ async function HandleAppRoles(context) {}
 async function HandleOptin(context) {}
 async function HandlePolicyEnforcement(context) {}
 async function HandlePostback(context) {}
+async function HandleReactionReact(context) {}
+async function HandleReactionUnreact(context) {}
+async function HandleReaction(context) {}
 async function HandleRead(context) {}
 async function HandleReferral(context) {}
 async function HandleStandby(context) {}
@@ -70,6 +76,9 @@ All available routes in `messenger` that recognize different kind of events:
 - `messenger.policyEnforcement` - triggers the action when receiving Messenger `policy_enforcement` events.
 - `messenger.postback` - triggers the action when receiving Messenger `postback` events.
 - `messenger.preCheckout` - triggers the action when receiving Messenger `pre_checkout` events.
+- `messenger.reaction.react` - triggers the action when receiving Messenger `reaction` events with action `react`.
+- `messenger.reaction.unreact` - triggers the action when receiving Messenger `reaction` events with action `unreact`.
+- `messenger.reaction` - triggers the action when receiving Messenger `reaction` events.
 - `messenger.read` - triggers the action when receiving Messenger `read` events.
 - `messenger.referral` - triggers the action when receiving Messenger `referral` events.
 - `messenger.standby` - triggers the action when receiving Messenger `standby` events.
