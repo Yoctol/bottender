@@ -322,6 +322,38 @@ const messengerEventStandby = new MessengerEvent(
   { isStandby: true }
 );
 
+const messengerEventReactionReact = new MessengerEvent({
+  sender: {
+    id: '1476077422222289',
+  },
+  recipient: {
+    id: '707356222221168',
+  },
+  timestamp: 1469111400000,
+  reaction: {
+    reaction: 'smile',
+    emoji: '\u{2764}\u{FE0F}',
+    action: 'react',
+    mid: 'mid.$cAAE1UUyiiwthh0NPrVbVf4HFNDGl',
+  },
+});
+
+const messengerEventReactionUnreact = new MessengerEvent({
+  sender: {
+    id: '1476077422222289',
+  },
+  recipient: {
+    id: '707356222221168',
+  },
+  timestamp: 1469111400000,
+  reaction: {
+    reaction: 'smile',
+    emoji: '\u{2764}\u{FE0F}',
+    action: 'unreact',
+    mid: 'mid.$cAAE1UUyiiwthh0NPrVbVf4HFNDGl',
+  },
+});
+
 async function Action(context) {
   await context.sendText('hello');
 }
@@ -736,6 +768,54 @@ describe('#messenger', () => {
       await expectRouteNotMatchMessengerEvent({
         route: messenger.standby(Action),
         event: messengerEventTextMessage,
+      });
+    });
+  });
+
+  describe('#messenger.reaction', () => {
+    it('should call action when it receives a messenger reaction event', async () => {
+      await expectRouteMatchMessengerEvent({
+        route: messenger.reaction(Action),
+        event: messengerEventReactionReact,
+      });
+    });
+
+    it('should not call action when it receives a non-reaction event', async () => {
+      await expectRouteNotMatchMessengerEvent({
+        route: messenger.reaction(Action),
+        event: messengerEventTextMessage,
+      });
+    });
+
+    describe('#messenger.reaction.react', () => {
+      it('should call action when it receives a messenger reaction.react event', async () => {
+        await expectRouteMatchMessengerEvent({
+          route: messenger.reaction.react(Action),
+          event: messengerEventReactionReact,
+        });
+      });
+
+      it('should not call action when it receives a non-reaction.react event', async () => {
+        await expectRouteNotMatchMessengerEvent({
+          route: messenger.reaction.react(Action),
+          event: messengerEventReactionUnreact,
+        });
+      });
+    });
+
+    describe('#messenger.reaction.unreact', () => {
+      it('should call action when it receives a messenger reaction.unreact event', async () => {
+        await expectRouteMatchMessengerEvent({
+          route: messenger.reaction.unreact(Action),
+          event: messengerEventReactionUnreact,
+        });
+      });
+
+      it('should not call action when it receives a non-reaction.unreact event', async () => {
+        await expectRouteNotMatchMessengerEvent({
+          route: messenger.reaction.unreact(Action),
+          event: messengerEventReactionReact,
+        });
       });
     });
   });

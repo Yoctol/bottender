@@ -610,6 +610,38 @@ const accountLinkingUnlinked = {
   },
 };
 
+const reactionReact = {
+  sender: {
+    id: '1476077422222289',
+  },
+  recipient: {
+    id: '707356222221168',
+  },
+  timestamp: 1469111400000,
+  reaction: {
+    reaction: 'smile',
+    emoji: '\u{2764}\u{FE0F}',
+    action: 'react',
+    mid: 'mid.$cAAE1UUyiiwthh0NPrVbVf4HFNDGl',
+  },
+};
+
+const reactionUnreact = {
+  sender: {
+    id: '1476077422222289',
+  },
+  recipient: {
+    id: '707356222221168',
+  },
+  timestamp: 1469111400000,
+  reaction: {
+    reaction: 'smile',
+    emoji: '\u{2764}\u{FE0F}',
+    action: 'unreact',
+    mid: 'mid.$cAAE1UUyiiwthh0NPrVbVf4HFNDGl',
+  },
+};
+
 it('#rawEvent', () => {
   expect(new MessengerEvent(textMessage).rawEvent).toEqual(textMessage);
   expect(new MessengerEvent(imageMessage).rawEvent).toEqual(imageMessage);
@@ -1453,5 +1485,29 @@ it('#accountLinking', () => {
   });
   expect(new MessengerEvent(accountLinkingUnlinked).accountLinking).toEqual({
     status: 'unlinked',
+  });
+});
+
+it('#isReaction', () => {
+  expect(new MessengerEvent(textMessage).isReaction).toEqual(false);
+  expect(new MessengerEvent(postback).isReaction).toEqual(false);
+  expect(new MessengerEvent(reactionReact).isReaction).toEqual(true);
+  expect(new MessengerEvent(reactionUnreact).isReaction).toEqual(true);
+});
+
+it('#reaction', () => {
+  expect(new MessengerEvent(textMessage).reaction).toEqual(null);
+  expect(new MessengerEvent(postback).reaction).toEqual(null);
+  expect(new MessengerEvent(reactionReact).reaction).toEqual({
+    reaction: 'smile',
+    emoji: '\u{2764}\u{FE0F}',
+    action: 'react',
+    mid: 'mid.$cAAE1UUyiiwthh0NPrVbVf4HFNDGl',
+  });
+  expect(new MessengerEvent(reactionUnreact).reaction).toEqual({
+    reaction: 'smile',
+    emoji: '\u{2764}\u{FE0F}',
+    action: 'unreact',
+    mid: 'mid.$cAAE1UUyiiwthh0NPrVbVf4HFNDGl',
   });
 });

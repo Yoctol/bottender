@@ -32,6 +32,10 @@ type Messenger = Route & {
   read: Route;
   referral: Route;
   standby: Route;
+  reaction: Route & {
+    react: Route;
+    unreact: Route;
+  };
 };
 
 const messenger: Messenger = <C extends Context<any, any>>(
@@ -251,5 +255,39 @@ function standby<C extends Context<any, any>>(action: Action<C, any>) {
 }
 
 messenger.standby = standby;
+
+function reaction<C extends Context<any, any>>(action: Action<C, any>) {
+  return route(
+    (context: C) =>
+      context.platform === 'messenger' && context.event.isReaction,
+    action
+  );
+}
+
+messenger.reaction = reaction;
+
+function reactionReact<C extends Context<any, any>>(action: Action<C, any>) {
+  return route(
+    (context: C) =>
+      context.platform === 'messenger' &&
+      context.event.isReaction &&
+      context.event.reaction.action === 'react',
+    action
+  );
+}
+
+reaction.react = reactionReact;
+
+function reactionUnreact<C extends Context<any, any>>(action: Action<C, any>) {
+  return route(
+    (context: C) =>
+      context.platform === 'messenger' &&
+      context.event.isReaction &&
+      context.event.reaction.action === 'unreact',
+    action
+  );
+}
+
+reaction.unreact = reactionUnreact;
 
 export default messenger;

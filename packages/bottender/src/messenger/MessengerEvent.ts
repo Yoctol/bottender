@@ -175,6 +175,21 @@ export type AccountLinking =
   | { status: 'linked'; authorizationCode: string }
   | { status: 'unlinked' };
 
+export type Reaction = {
+  reaction:
+    | 'smile'
+    | 'angry'
+    | 'sad'
+    | 'wow'
+    | 'love'
+    | 'like'
+    | 'dislike'
+    | 'other';
+  emoji: string;
+  action: 'react' | 'unreact';
+  mid: string;
+};
+
 export type MessengerRawEvent = {
   sender?: Sender;
   recipient?: Recipient;
@@ -196,6 +211,7 @@ export type MessengerRawEvent = {
   referral?: Referral;
   brandedCamera?: BrandedCamera;
   accountLinking?: AccountLinking;
+  reaction?: Reaction;
 };
 
 type MessengerEventOptions = {
@@ -863,5 +879,26 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
       return null;
     }
     return (this._rawEvent as any).accountLinking;
+  }
+
+  /**
+   * Determine if the event is a reaction event.
+   *
+   */
+  get isReaction(): boolean {
+    return (
+      !!this._rawEvent.reaction && typeof this._rawEvent.reaction === 'object'
+    );
+  }
+
+  /**
+   * The reaction object from Messenger event.
+   *
+   */
+  get reaction(): Reaction | null {
+    if (!this.isReaction) {
+      return null;
+    }
+    return (this._rawEvent as any).reaction;
   }
 }
