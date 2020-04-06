@@ -10,6 +10,7 @@ type Route = <C extends Context<any, any>>(
 };
 
 type Telegram = Route & {
+  any: Route;
   message: Route;
   editedMessage: Route;
   channelPost: Route;
@@ -27,6 +28,8 @@ const telegram: Telegram = <C extends Context<any, any>>(
 ) => {
   return route(context => context.platform === 'telegram', action);
 };
+
+telegram.any = telegram;
 
 function message<C extends Context<any, any>>(action: Action<C, any>) {
   return route(

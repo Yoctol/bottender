@@ -163,6 +163,25 @@ describe('#viber', () => {
     });
   });
 
+  describe('#viber.any', () => {
+    it('should call action when it receives a viber event', async () => {
+      await expectRouteMatchViberEvent({
+        route: viber.any(Action),
+        event: viberEventTextMessage,
+      });
+    });
+
+    it('should not call action when it receives a non-viber event', async () => {
+      await expectRouteNotMatchContext({
+        route: viber.any(Action),
+        context: new TestContext({
+          client: {} as any,
+          event: {},
+        }),
+      });
+    });
+  });
+
   describe('#viber.message', () => {
     it('should call action when it receives a viber message event', async () => {
       await expectRouteMatchViberEvent({

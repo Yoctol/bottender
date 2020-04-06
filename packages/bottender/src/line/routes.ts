@@ -10,6 +10,7 @@ type Route = <C extends Context<any, any>>(
 };
 
 type Line = Route & {
+  any: Route;
   message: Route;
   follow: Route;
   unfollow: Route;
@@ -34,6 +35,8 @@ type Line = Route & {
 const line: Line = <C extends Context<any, any>>(action: Action<C, any>) => {
   return route(context => context.platform === 'line', action);
 };
+
+line.any = line;
 
 function message<C extends Context<any, any>>(action: Action<C, any>) {
   return route(

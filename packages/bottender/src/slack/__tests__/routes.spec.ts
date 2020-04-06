@@ -116,6 +116,25 @@ describe('#slack', () => {
     });
   });
 
+  describe('#slack.any', () => {
+    it('should call action when it receives a slack event', async () => {
+      await expectRouteMatchSlackEvent({
+        route: slack.any(Action),
+        event: slackEventTextMessage,
+      });
+    });
+
+    it('should not call action when it receives a non-slack event', async () => {
+      await expectRouteNotMatchContext({
+        route: slack.any(Action),
+        context: new TestContext({
+          client: {} as any,
+          event: {},
+        }),
+      });
+    });
+  });
+
   describe('#slack.message', () => {
     it('should call action when it receives a slack message event', async () => {
       await expectRouteMatchSlackEvent({

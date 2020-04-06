@@ -20,7 +20,7 @@ function App() {
     telegram.shippingQuery(HandleShippingQuery),
     telegram.preCheckoutQuery(HandlePreCheckoutQuery),
     telegram.poll(HandlePoll),
-    telegram(HandleTelegram),
+    telegram.any(HandleTelegram),
   ]);
 }
 
@@ -40,7 +40,7 @@ async function HandleTelegram(context) {}
 
 All available routes in `telegram` that recognize different kind of events:
 
-- `telegram` - triggers the action when receiving any Telegram events.
+- `telegram.any` - triggers the action when receiving any Telegram events.
 - `telegram.message` - triggers the action when receiving Telegram `message` events.
 - `telegram.editedMessage` - triggers the action when receiving Telegram `editedMessage` events.
 - `telegram.channelPost` - triggers the action when receiving Telegram `channelPost` events.

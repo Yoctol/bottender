@@ -25,7 +25,7 @@ function App() {
     line.things.link(HandleThingsLink),
     line.things.unlink(HandleThingsUnlink),
     line.things.scenarioResult(HandleThingsScenarioResult),
-    line(HandleLine),
+    line.any(HandleLine),
   ]);
 }
 
@@ -50,7 +50,7 @@ async function HandleLine(context) {}
 
 All available routes in `line` that recognize different kind of events:
 
-- `line` - triggers the action when receiving any LINE events.
+- `line.any` - triggers the action when receiving any LINE events.
 - `line.message` - triggers the action when receiving LINE `message` events.
 - `line.follow` - triggers the action when receiving LINE `follow` events.
 - `line.unfollow` - triggers the action when receiving LINE `unfollow` events.

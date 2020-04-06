@@ -10,6 +10,7 @@ type Route = <C extends Context<any, any>>(
 };
 
 type Messenger = Route & {
+  any: Route;
   message: Route;
   accountLinking: Route & {
     linked: Route;
@@ -38,6 +39,8 @@ const messenger: Messenger = <C extends Context<any, any>>(
 ) => {
   return route(context => context.platform === 'messenger', action);
 };
+
+messenger.any = messenger;
 
 function message<C extends Context<any, any>>(action: Action<C, any>) {
   return route(

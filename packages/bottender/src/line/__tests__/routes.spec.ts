@@ -323,6 +323,25 @@ describe('#line', () => {
     });
   });
 
+  describe('#line.any', () => {
+    it('should call action when it receives a line event', async () => {
+      await expectRouteMatchLineEvent({
+        route: line.any(Action),
+        event: lineEventTextMessage,
+      });
+    });
+
+    it('should not call action when it receives a non-line event', async () => {
+      await expectRouteNotMatchContext({
+        route: line.any(Action),
+        context: new TestContext({
+          client: {} as any,
+          event: {},
+        }),
+      });
+    });
+  });
+
   describe('#line.message', () => {
     it('should call action when it receives a line message event', async () => {
       await expectRouteMatchLineEvent({

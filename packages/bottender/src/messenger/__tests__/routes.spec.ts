@@ -401,6 +401,25 @@ describe('#messenger', () => {
     });
   });
 
+  describe('#messenger.any', () => {
+    it('should call action when it receives a messenger event', async () => {
+      await expectRouteMatchMessengerEvent({
+        route: messenger.any(Action),
+        event: messengerEventTextMessage,
+      });
+    });
+
+    it('should not call action when it receives a non-messenger event', async () => {
+      await expectRouteNotMatchContext({
+        route: messenger.any(Action),
+        context: new TestContext({
+          client: {} as any,
+          event: {},
+        }),
+      });
+    });
+  });
+
   describe('#messenger.message', () => {
     it('should call action when it receives a messenger message event', async () => {
       await expectRouteMatchMessengerEvent({

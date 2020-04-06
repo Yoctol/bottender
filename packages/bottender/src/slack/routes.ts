@@ -12,6 +12,7 @@ type Route = <C extends Context<any, any>>(
 };
 
 type Slack = Route & {
+  any: Route;
   message: Route;
   event: <C extends Context<any, any>>(
     eventType: EventTypes,
@@ -32,6 +33,8 @@ type Slack = Route & {
 const slack: Slack = <C extends Context<any, any>>(action: Action<C, any>) => {
   return route((context: C) => context.platform === 'slack', action);
 };
+
+slack.any = slack;
 
 function message<C extends Context<any, any>>(action: Action<C, any>) {
   return route(

@@ -10,6 +10,7 @@ type Route = <C extends Context<any, any>>(
 };
 
 type Whatsapp = Route & {
+  any: Route;
   message: Route;
   media: Route;
   received: Route;
@@ -23,6 +24,8 @@ const whatsapp: Whatsapp = <C extends Context<any, any>>(
 ) => {
   return route(context => context.platform === 'whatsapp', action);
 };
+
+whatsapp.any = whatsapp;
 
 function message<C extends Context<any, any>>(action: Action<C, any>) {
   return route(

@@ -160,6 +160,25 @@ describe('#whatsapp', () => {
     });
   });
 
+  describe('#whatsapp.any', () => {
+    it('should call action when it receives a whatsapp event', async () => {
+      await expectRouteMatchWhatsappEvent({
+        route: whatsapp.any(Action),
+        event: whatsappEventTextMessageReceived,
+      });
+    });
+
+    it('should not call action when it receives a non-whatsapp event', async () => {
+      await expectRouteNotMatchContext({
+        route: whatsapp.any(Action),
+        context: new TestContext({
+          client: {} as any,
+          event: {},
+        }),
+      });
+    });
+  });
+
   describe('#whatsapp.message', () => {
     it('should call action when it receives a whatsapp message event', async () => {
       await expectRouteMatchWhatsappEvent({

@@ -273,6 +273,25 @@ describe('#telegram', () => {
     });
   });
 
+  describe('#telegram.any', () => {
+    it('should call action when it receives a telegram event', async () => {
+      await expectRouteMatchTelegramEvent({
+        route: telegram.any(Action),
+        event: telegramEventTextMessage,
+      });
+    });
+
+    it('should not call action when it receives a non-telegram event', async () => {
+      await expectRouteNotMatchContext({
+        route: telegram.any(Action),
+        context: new TestContext({
+          client: {} as any,
+          event: {},
+        }),
+      });
+    });
+  });
+
   describe('#telegram.message', () => {
     it('should call action when it receives a telegram message event', async () => {
       await expectRouteMatchTelegramEvent({

@@ -13,7 +13,7 @@ function App() {
     slack.message(HandleMessage),
     slack.event('pin_added', HandlePinAdded),
     slack.event('star_added', HandleStarAdded),
-    slack(HandleSlack),
+    slack.any(HandleSlack),
   ]);
 }
 
@@ -26,6 +26,6 @@ async function HandleSlack(context) {}
 
 All available routes in `slack` that recognize different kind of events:
 
-- `slack` - triggers the action when receiving any Slack events.
+- `slack.any` - triggers the action when receiving any Slack events.
 - `slack.message` - triggers the action when receiving Slack message events.
 - `slack.event` - triggers the action when receiving particular Slack events. See all event types in [Slack docs](https://api.slack.com/events).
