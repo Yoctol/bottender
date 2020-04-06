@@ -12,6 +12,7 @@ export { default as getClient } from './getClient';
 /* Action */
 export { default as chain } from './chain';
 export { default as withProps } from './withProps';
+export { Action } from './types';
 
 /* Cache */
 export { default as MemoryCacheStore } from './cache/MemoryCacheStore';

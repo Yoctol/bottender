@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Context, withProps } from 'bottender';
+import { Action, Context, withProps } from 'bottender';
 
 import { LuisResult } from './types';
 
@@ -34,7 +34,7 @@ module.exports = function luis({
   appKey: string;
   endpoint: string;
   scoreThreshold: number;
-  actions: Record<string, Function>;
+  actions: Record<string, Action<Context<any, any>, any>>;
   verbose?: boolean;
   timezoneOffset?: number;
   spellCheck?: boolean;
@@ -44,7 +44,7 @@ module.exports = function luis({
 }) {
   return async function Luis(
     context: Context<any, any>,
-    { next }: { next: Function }
+    { next }: { next?: Action<Context<any, any>, any> }
   ) {
     if (!context.event.isText) {
       return next;
@@ -77,10 +77,10 @@ module.exports = function luis({
       context.setIntent(topScoringIntent.intent);
       context.setAsHandled();
 
-      const Action = actions[topScoringIntent.intent];
+      const TargetAction = actions[topScoringIntent.intent];
 
-      if (Action) {
-        return withProps(Action as any, {
+      if (TargetAction) {
+        return withProps(TargetAction, {
           topScoringIntent,
           entities,
           sentimentAnalysis,

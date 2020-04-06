@@ -50,7 +50,7 @@ export type Body =
 
 export type Action<
   C extends Context<any, any>,
-  P extends Record<string, any>
+  P extends Record<string, any> = {}
 > = (
   context: C,
   props?: Props<C> & P

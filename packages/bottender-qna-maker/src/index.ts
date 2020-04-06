@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Context } from 'bottender';
+import { Action, Context } from 'bottender';
 
 import { MetadataDTO, QnaSearchResultList } from './types';
 
@@ -34,7 +34,7 @@ module.exports = function qnaMaker({
 }) {
   return async function QnaMaker(
     context: Context<any, any>,
-    { next }: { next: Function }
+    { next }: { next?: Action<Context<any, any>, any> }
   ) {
     if (!context.event.isText || !context.session) {
       return next;
