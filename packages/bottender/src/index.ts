@@ -50,7 +50,7 @@ export { default as LineBot } from './line/LineBot';
 export { default as LineConnector } from './line/LineConnector';
 export { default as LineContext } from './line/LineContext';
 export { default as LineEvent } from './line/LineEvent';
-export { LineTypes } from 'messaging-api-line';
+export { LineTypes, LineNotify } from 'messaging-api-line';
 
 /* Slack */
 export { default as SlackBot } from './slack/SlackBot';
