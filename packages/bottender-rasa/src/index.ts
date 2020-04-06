@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Context, withProps } from 'bottender';
+import { Action, Context, withProps } from 'bottender';
 import { get } from 'lodash';
 
 import { ParsedResult } from './types';
@@ -23,14 +23,14 @@ module.exports = function rasa({
   jwt,
 }: {
   origin: string;
-  actions: Record<string, Function>;
+  actions: Record<string, Action<Context<any, any>, any>>;
   confidenceThreshold: number;
   emulationMode?: 'WIT' | 'LUIS' | 'DIALOGFLOW';
   jwt?: string;
 }) {
   return async function Rasa(
     context: Context<any, any>,
-    { next }: { next: Function }
+    { next }: { next?: Action<Context<any, any>, any> }
   ) {
     if (!context.event.isText) {
       return next;
@@ -57,9 +57,9 @@ module.exports = function rasa({
       context.setIntent(intent.name);
       context.setAsHandled();
 
-      const Action = actions[intent.name];
-      if (Action) {
-        return withProps(Action as any, { intent, entities });
+      const TargetAction = actions[intent.name];
+      if (TargetAction) {
+        return withProps(TargetAction, { intent, entities });
       }
     } else {
       context.setAsNotHandled();

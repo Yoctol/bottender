@@ -1,5 +1,5 @@
 import dialogflowSdk from 'dialogflow';
-import { Context, withProps } from 'bottender';
+import { Action, Context, withProps } from 'bottender';
 
 import { QueryResult } from './types';
 
@@ -21,14 +21,14 @@ module.exports = function dialogflow({
 }: {
   projectId: string;
   languageCode: string;
-  actions: Record<string, Function>;
+  actions: Record<string, Action<Context<any, any>, any>>;
   timeZone?: string;
 }) {
   const sessionsClient = new dialogflowSdk.SessionsClient();
 
   return async function Dialogflow(
     context: Context<any, any>,
-    { next }: { next: Function }
+    { next }: { next?: Action<Context<any, any>, any> }
   ) {
     if (!context.event.isText || !context.session) {
       return next;
@@ -61,9 +61,9 @@ module.exports = function dialogflow({
       context.setIntent(intent.displayName);
       context.setAsHandled();
 
-      const Action = actions[intent.name] || actions[intent.displayName];
-      if (Action) {
-        return withProps(Action as any, { intent, parameters });
+      const TargetAction = actions[intent.name] || actions[intent.displayName];
+      if (TargetAction) {
+        return withProps(TargetAction, { intent, parameters });
       }
     } else {
       context.setAsNotHandled();
