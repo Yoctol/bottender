@@ -30,6 +30,8 @@ To create a new Notify Service, open this [link](https://notify-bot.line.me/my/s
 
 The value of callback URL should look like: `https://{your domain}.ngrok.io/notify/redirect`
 
+official API document：https://notify-bot.line.me/doc/en/
+
 > **Note:** [Ngrok](https://ngrok.com/) is a well-known service that provides public HTTPs URLs for your local server using the tunnel. It's handy when you develop your bot locally. You may want to use it when developing.
 
 ### Environment Variables Setting
@@ -47,7 +49,7 @@ LINE_NOTIFY_CLIENT_SECRET={your LINE Notify client secret}
 ROOT_PATH={the ngrok public link}
 ```
 
-### Implementing the LINE Notify SDK
+### Preparing the LINE Notify Instance
 
 LINE Notify uses OAuth2 as the authorization mechanism. The operation process is as follows：
 
@@ -56,72 +58,21 @@ LINE Notify uses OAuth2 as the authorization mechanism. The operation process is
 3. Exchange access token with code
 4. Send notification by access token
 
-Three APIs provided by LINE Notify are used:
-
-1. `GET https://notify-bot.line.me/oauth/authorize`
-2. `POST https://notify-bot.line.me/oauth/token`
-3. `POST https://notify-api.line.me/api/notify`
-
-official API document：https://notify-bot.line.me/doc/en/
-
-1. Run `yarn add axios` or `npm install axios` command to install dependencies we need.
-2. Create a `lineNotify.js` file in the root directory of the project and copy the following code into it.
+Bottender provide a class `LineNotify` to help you deal with LINE Notify. You can create an instance of LINE Notify for later use. Create a `lineNotify.js` file in the root directory of the project and copy the following code into it.
 
 ```js
-const querystring = require('querystring');
-const axios = require('axios');
+const { LineNotify } = require('bottender');
 
-function getAuthLink(clientId, redirectUrl, state) {
-  const data = {
-    response_type: 'code',
-    client_id: clientId,
-    redirect_uri: redirectUrl,
-    scope: 'notify',
-    state,
-  };
-
-  return `https://notify-bot.line.me/oauth/authorize?${querystring.encode(
-    data
-  )}`;
-}
-
-async function getToken(code, redirectUri, clientId, clientSecret) {
-  const url = 'https://notify-bot.line.me/oauth/token';
-  const headers = {
-    'Content-Type': 'application/x-www-form-urlencoded',
-  };
-  const formData = {
-    grant_type: 'authorization_code',
-    code,
-    redirect_uri: redirectUri,
-    client_id: clientId,
-    client_secret: clientSecret,
-  };
-  return await axios.post(url, querystring.encode(formData), { headers });
-}
-
-async function sendNotify(token, message) {
-  const url = 'https://notify-api.line.me/api/notify';
-  const headers = {
-    'Content-Type': 'application/x-www-form-urlencoded',
-    Authorization: `Bearer ${token}`,
-  };
-  const formData = {
-    message,
-  };
-  return await axios.post(url, querystring.encode(formData), { headers });
-}
-
-module.exports = {
-  getAuthLink,
-  getToken,
-  sendNotify,
-};
+export default new LineNotify({
+  clientId: process.env.LINE_NOTIFY_CLIENT_ID,
+  clientSecret: process.env.LINE_NOTIFY_CLIENT_SECRET,
+  redirectUri: `${process.env.ROOT_PATH}/notify/redirect`,
+});
 ```
 
 ### Guiding User to the LINE Notify Authorization Page
 
-To serve LIFF webpages, we need to add additional routes to the server. Fortunately, [custom server](advanced-guides-custom-server#the-concept) come to the rescue!
+To serve webpages, we need to add additional routes to the server. Fortunately, [custom server](advanced-guides-custom-server#the-concept) come to the rescue!
 
 You could use express, koa, restify, or whatever you like, but we are going to use express in this guide. Before going down, make sure that you set up correctly according to [this guide](advanced-guides-custom-server#express).
 
@@ -129,11 +80,9 @@ Modify `src/index.js` to send the authorization link to user
 
 ```js
 const lineNotify = require('../lineNotify');
-const clientId = process.env.LINE_NOTIFY_CLIENT_ID;
-const redirectUri = `${process.env.ROOT_PATH}/notify/redirect`;
 
 module.exports = async function App(context) {
-  const url = lineNotify.getAuthLink(clientId, redirectUri, 'test');
+  const url = lineNotify.getAuthLink('test');
   await context.sendText(url);
 };
 ```
@@ -147,18 +96,13 @@ Add the following code snippet into `server.js` to handle requests from LINE Not
 const lineNotify = require('../lineNotify')
 // ...
 
-const clientId = process.env.LINE_NOTIFY_CLIENT_ID;
-const clientSecret = process.env.LINE_NOTIFY_CLIENT_SECRET;
-const redirectUri = `${process.env.ROOT_PATH}/notify/redirect`;
-
 app.prepare().then(() => {
 
   //...
 
   server.get('/notify/redirect', async function(req, res){
     const code = req.query.code
-    const response = await lineNotify.getToken(code, redirectUri, clientId, clientSecret)
-    const token = response.data.access_token
+    const token = await lineNotify.getToken(code)
     await lineNotify.sendNotify(token, "Hello bottender!")
     res.send('Subscribe successfully. Please close this page.');
   });
@@ -175,4 +119,4 @@ You can found all your subscriptions [here](https://notify-bot.line.me/my/).
 
 1. The message format only allows text, image, and basic sticker, so you can't send, for example, a message with some buttons.
 2. Can't have more than 1000 characters in a single text message.
-3. the rate limit is 1000 messages per hour.
+3. the rate limit is 1000 messages per token per hour.
