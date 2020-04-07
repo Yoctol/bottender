@@ -20,7 +20,7 @@ If you want to have a clean project with the LINE Notify, you could start from [
 3. Fill the `.env` file with the correct value.
 4. Run `yarn dev` or `npm run dev` to start the dev server.
 
-If you want to have the folder structure we recommended, you could start with create-bottender-app command and migrate it by following the migration instructions below.
+If you want to have the folder structure we recommended, you could start with [create-bottender-app](getting-started#create-a-new-bottender-app) command and migrate it by following the migration instructions below.
 
 ### Creating a LINE Notify Service
 
