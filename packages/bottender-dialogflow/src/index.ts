@@ -9,7 +9,7 @@ function getFulfillments(fulfillmentMessages: Message[]): string[] {
   }
 
   const fulfillmentTexts = fulfillmentMessages.filter(
-    m => m.platform === 'PLATFORM_UNSPECIFIED' && m.message === 'text'
+    m => m.platform === 'PLATFORM_UNSPECIFIED' && m.text !== undefined
   );
 
   return fulfillmentTexts.map(fulfillmentText => {
@@ -86,7 +86,7 @@ module.exports = function dialogflow({
       // fulfillment by Dialogflow
       const fulfillments = getFulfillments(fulfillmentMessages);
       if (fulfillments.length > 0) {
-        Promise.all(
+        await Promise.all(
           fulfillments.map(fulfillment => context.sendText(fulfillment))
         );
         return;
