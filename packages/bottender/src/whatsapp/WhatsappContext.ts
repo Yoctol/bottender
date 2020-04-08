@@ -8,7 +8,7 @@ class WhatsappContext extends Context<TwilioClient, WhatsappEvent> {
    * The name of the platform.
    *
    */
-  get platform(): string {
+  get platform(): 'whatsapp' {
     return 'whatsapp';
   }
 

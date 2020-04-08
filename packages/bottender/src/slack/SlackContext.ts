@@ -94,7 +94,7 @@ export default class SlackContext extends Context<
    * The name of the platform.
    *
    */
-  get platform(): string {
+  get platform(): 'slack' {
     return 'slack';
   }
 
