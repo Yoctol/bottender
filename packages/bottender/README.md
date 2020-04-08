@@ -83,7 +83,7 @@ It creates and runs a bot that always replies with "Hello World" in the console.
 
 - Reply, Push, Multicast, Narrowcast
 - Imagemap
-- Rich Menu
+- Rich menu
 - Room, Group Chat
 - Beacon
 - Icon Switch

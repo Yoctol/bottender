@@ -164,7 +164,7 @@ To link a rich menu to an individual user, you can do it using Bottender when ha
 await context.linkRichMenu('rich-menu-id');
 ```
 
-And to unlink a rich Menu from a user, you can use:
+And to unlink a rich menu from a user, you can use:
 
 ```js
 await context.unlinkRichMenu();

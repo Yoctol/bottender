@@ -37,7 +37,7 @@ To set the webhook, go to [LINE developers console](https://developers.line.me/c
 
 ## Idea of This Example
 
-This example is a simple bot running on [LINE](https://line.me/) to demonstrate how to use Rich menu.
+This example is a simple bot running on [LINE](https://line.me/) to demonstrate how to use rich menu.
 For more information, check our [LINE API Document](https://developers.line.biz/en/reference/messaging-api/#rich-menu).
 
 ## Related Examples
