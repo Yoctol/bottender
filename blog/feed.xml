@@ -4,7 +4,7 @@
         <title>Bottender Blog</title>
         <link>https://bottender.js.org/blog</link>
         <description>The best place to stay up-to-date with the latest Bottender news and events.</description>
-        <lastBuildDate>Fri, 06 Mar 2020 06:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Wed, 08 Apr 2020 06:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <image>
@@ -13,6 +13,13 @@
             <link>https://bottender.js.org/blog</link>
         </image>
         <copyright>© 2019 - PRESENT YOCTOL.AI ALL RIGHTS RESERVED.</copyright>
+        <item>
+            <title><![CDATA[Notice of LINE domain name change for certain endpoints]]></title>
+            <link>https://bottender.js.org/blog/2020/04/08/line-domain-name-change.html</link>
+            <guid>https://bottender.js.org/blog/2020/04/08/line-domain-name-change.html</guid>
+            <pubDate>Wed, 08 Apr 2020 06:00:00 GMT</pubDate>
+            <description><![CDATA[<p>According to the <a href="https://developers.line.biz/en/news/2019/11/08/domain-name-change/">Notice of domain name change for certain endpoints</a> post on LINE Developer News, the domain name of the following LINE Messaging API endpoints has been changed from <code>api.line.me</code> to <code>api-data.line.me</code> during the transition period:</p> <ul> <li><a href="https://developers.line.biz/en/reference/messaging-api/#get-content">Get co...</a></li></ul>]]></description>
+        </item>
         <item>
             <title><![CDATA[Bottender 1.3: WhatsApp Support, TypeScript Improvement]]></title>
             <link>https://bottender.js.org/blog/2020/03/06/bottender-1_3.html</link>
