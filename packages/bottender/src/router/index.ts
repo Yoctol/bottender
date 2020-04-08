@@ -15,9 +15,9 @@ export type RoutePredicate<C extends Context<any, any>> = (
   context: C
 ) => boolean | Record<string, any> | Promise<boolean | Record<string, any>>;
 
-type Route<C extends Context<any, any>> = {
+type Route<C extends Context<any, any>, AC extends Context<any, any> = C> = {
   predicate: RoutePredicate<C>;
-  action: Action<C, any>;
+  action: Action<AC, any>;
 };
 
 function router<C extends Context<any, any>>(routes: Route<C>[]) {
@@ -39,9 +39,9 @@ function router<C extends Context<any, any>>(routes: Route<C>[]) {
   };
 }
 
-function route<C extends Context<any, any>>(
+function route<C extends Context<any, any>, AC extends Context<any, any> = C>(
   pattern: RoutePattern<C>,
-  action: Action<C, any>
+  action: Action<AC, any>
 ) {
   if (pattern === '*') {
     return {
