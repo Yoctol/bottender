@@ -78,7 +78,7 @@ WHATSAPP_PHONE_NUMBER=
 ```
 
 > **Note:**
-> The WHATSAPP_PHONE_NUMBER variable must be formated as follows: `whatsapp:{phone-number-in-e164-format}`.
+> The `WHATSAPP_PHONE_NUMBER` variable must be formated as follows: `whatsapp:{phone-number-in-e164-format}`.
 > The phone number must be [e.164](https://www.twilio.com/docs/glossary/what-e164) formatted.
 > As an example: `WHATSAPP_PHONE_NUMBER=whatsapp:+14155552671`
 
