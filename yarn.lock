@@ -1341,6 +1341,11 @@ axios-error@^0.7.11:
   resolved "https://registry.yarnpkg.com/axios-error/-/axios-error-0.7.11.tgz#b4fb2ee20491146e6aaa23bcf29e92ca933a9b68"
   integrity sha512-Oq7HbcAIabBcanV8qu950ZiyszlrXvKyMdYKOWveet6Vzy9ey1moyT8asWyTSlKJ5DYG4nEPMirdhxfUw/Dp7w==
 
+axios-error@^0.7.18:
+  version "0.7.18"
+  resolved "https://registry.yarnpkg.com/axios-error/-/axios-error-0.7.18.tgz#9d5fd6942b5ecd7f162b700b58a4c981c704859c"
+  integrity sha512-96qeJNpA9yBtWvWI3mTZzDAGow0VNw/FlWnMMNDP2GQizyKVEbHPA4JwBZ365rm1uGTFtU4F+uAI7TWxlZ/NoQ==
+
 axios-mock-adapter@^1.15.0:
   version "1.15.0"
   resolved "https://registry.yarnpkg.com/axios-mock-adapter/-/axios-mock-adapter-1.15.0.tgz#fbc06825d8302c95c3334d21023bba996255d45d"
@@ -5404,13 +5409,13 @@ merge@^1.2.0:
   resolved "https://registry.yarnpkg.com/merge/-/merge-1.2.0.tgz#7531e39d4949c281a66b8c5a6e0265e8b05894da"
   integrity sha1-dTHjnUlJwoGma4xabgJl6LBYlNo=
 
-messaging-api-line@^0.7.15:
-  version "0.7.15"
-  resolved "https://registry.yarnpkg.com/messaging-api-line/-/messaging-api-line-0.7.15.tgz#509e6087dd99beddce7a18d02209da57679459b2"
-  integrity sha512-NJQMO5exyAWUygNakIixRmxYjDFF3WiRC6/UpOIbNCo5dEx1y5nxvdhzRoW+BPKXOlRE7ZETOjSa9veiTbn9rg==
+messaging-api-line@^0.7.18:
+  version "0.7.18"
+  resolved "https://registry.yarnpkg.com/messaging-api-line/-/messaging-api-line-0.7.18.tgz#7ee4dd926880d76511f8d22f78307e43725adad1"
+  integrity sha512-RJG0dj1PeZ6ML+0MJbFlb3D4wjXQzmDpZi6l9zk75IDJzEO6l86LKdcfEusbzqoIVm2xHLJhJDDusDBSGfIK1Q==
   dependencies:
-    axios "^0.18.0"
-    axios-error "^0.7.11"
+    axios "^0.19.0"
+    axios-error "^0.7.18"
     debug "^4.0.1"
     image-type "^3.0.0"
     invariant "^2.2.4"
