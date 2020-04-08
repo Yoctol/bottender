@@ -206,7 +206,7 @@
 <p>To link a rich menu to an individual user, you can do it using Bottender when handling a user's event:</p>
 <pre><code class="hljs css language-js"><span class="hljs-keyword">await</span> context.linkRichMenu(<span class="hljs-string">'rich-menu-id'</span>);
 </code></pre>
-<p>And to unlink a rich Menu from a user, you can use:</p>
+<p>And to unlink a rich menu from a user, you can use:</p>
 <pre><code class="hljs css language-js"><span class="hljs-keyword">await</span> context.unlinkRichMenu();
 </code></pre>
 <p>Still, you can link and unlink a rich menu by sending an HTTP POST request to the <code>https://api.line.me/v2/bot/user/{userId}/richmenu/{richMenuId}</code> and <code>https://api.line.me/v2/bot/richmenu/bulk/unlink</code> endpoints.</p>
