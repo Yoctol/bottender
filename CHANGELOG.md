@@ -1,3 +1,9 @@
+# 0.15.18 / 2020-04-08
+
+### line
+
+- [deps] bump `messaging-api-line` to 0.7.18 to support LINE domain changes.
+
 # 0.15.17 / 2019-02-01
 
 ### line
