@@ -57,7 +57,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
    * The name of the platform.
    *
    */
-  get platform(): string {
+  get platform(): 'messenger' {
     return 'messenger';
   }
 

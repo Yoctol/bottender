@@ -58,7 +58,7 @@ class LineContext extends Context<LineClient, LineEvent> {
    * The name of the platform.
    *
    */
-  get platform(): string {
+  get platform(): 'line' {
     return 'line';
   }
 

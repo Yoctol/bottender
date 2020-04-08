@@ -11,7 +11,7 @@ class ViberContext extends Context<ViberClient, ViberEvent> {
    * The name of the platform.
    *
    */
-  get platform(): string {
+  get platform(): 'viber' {
     return 'viber';
   }
 

@@ -11,7 +11,7 @@ class TelegramContext extends Context<TelegramClient, TelegramEvent> {
    * The name of the platform.
    *
    */
-  get platform(): string {
+  get platform(): 'telegram' {
     return 'telegram';
   }
 
