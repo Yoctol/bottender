@@ -94,7 +94,7 @@ await context.sendText('world');
 
 ## Sending Rich Media Messages
 
-`Rich Media Messages` of LINE consist of stickers, images, videos, audios, locations, and imageMaps. `Rich Media Messages` is useful when your priority is to catch the user's attention, e.g., limited promotion. Plus, it is also handy to create an immersive experience, e.g., telling a story.
+`Rich Media Messages` of LINE consist of stickers, images, videos, audios, locations, and imagemaps. `Rich Media Messages` is useful when your priority is to catch the user's attention, e.g., limited promotion. Plus, it is also handy to create an immersive experience, e.g., telling a story.
 
 ### Sticker
 
@@ -120,7 +120,7 @@ To send an `Image,` you need to prepare URLs of the original image and a smaller
 
 <p><img width="300" src="https://user-images.githubusercontent.com/662387/70680782-379e7f00-1cd4-11ea-8f41-bd18c194a55b.png"></p>
 
-If you want to set up a call to action on the image, you may refer to [ImageMaps](#imagemap).
+If you want to set up a call to action on the image, you may refer to [Imagemaps](#imagemap).
 
 ```js
 await context.sendImage({

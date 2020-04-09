@@ -2127,7 +2127,7 @@ See [official docs](https://api.slack.com/methods/chat.postMessage) for more ava
 
 ### line
 
-- [new] Implement richmenu api methods on context [#23](https://github.com/Yoctol/bottender/pull/23)
+- [new] Implement rich menu api methods on context [#23](https://github.com/Yoctol/bottender/pull/23)
 
   - `context.getLinkedRichMenu()`
   - `context.linkRichMenu(richMenuId)`

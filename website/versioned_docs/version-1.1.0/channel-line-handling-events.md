@@ -85,7 +85,7 @@ async function App(context) {
 
 > **Note:**
 >
-> - Alternative entry point of bot introduction is `Rich Menu.` You can set your `Rich Menu` open as default, to help your users understand and access the major features of your bot.
+> - Alternative entry point of bot introduction is `rich menu.` You can set your `rich menu` open as default, to help your users understand and access the major features of your bot.
 
 `Unfollow Event` is triggered when a user blocked your bot, which implies that you can't send more messages to your previous user. The only thing you can do is clean up your previous user data, or think about how to improve bot user experience to keep your users engaged.
 

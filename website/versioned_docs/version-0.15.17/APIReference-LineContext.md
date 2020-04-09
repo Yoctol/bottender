@@ -179,7 +179,7 @@ context.replyLocation({
 
 #### `replySticker(packageId, stickerId)` - [Official Docs](https://developers.line.me/en/docs/messaging-api/reference/#sticker-message)
 
-Responds sticker message to the receiver using reply token.  
+Responds sticker message to the receiver using reply token.
 For a list of stickers that can be sent with the Messaging API, see the [sticker list](https://developers.line.me/media/messaging-api/messages/sticker_list.pdf).
 
 <img src="https://developers.line.me/media/messaging-api/messages/sticker-cb1a6a3a.png" width="250px" />
@@ -1187,7 +1187,7 @@ context.getMemberProfile(USER_ID).then(member => {
 
 #### `getMemberIds(start)`
 
-Gets the ID of the users of the members of the group/room that the bot is in. This includes the user IDs of users who have not added the bot as a friend or has blocked the bot.  
+Gets the ID of the users of the members of the group/room that the bot is in. This includes the user IDs of users who have not added the bot as a friend or has blocked the bot.
 This feature is only available for LINE@ Approved accounts or official accounts.
 
 | Param | Type     | Description          |
@@ -1214,7 +1214,7 @@ context.getMemberIds(CURSOR).then(res => {
 
 #### `getAllMemberIds()`
 
-Recursively gets the ID of the users of the members of the group/room that the bot is in using cursors.  
+Recursively gets the ID of the users of the members of the group/room that the bot is in using cursors.
 This feature is only available for LINE@ Approved accounts or official accounts.
 
 Example:
