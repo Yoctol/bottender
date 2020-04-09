@@ -2,11 +2,13 @@ import Context from '../context/Context';
 import { Action } from '../types';
 import { RoutePredicate, route } from '../router';
 
+import ViberContext from './ViberContext';
+
 type Route = <C extends Context<any, any>>(
-  action: Action<C, any>
+  action: Action<ViberContext, any>
 ) => {
   predicate: RoutePredicate<C>;
-  action: Action<C, any>;
+  action: Action<ViberContext, any>;
 };
 
 type Viber = Route & {
@@ -20,13 +22,17 @@ type Viber = Route & {
   failed: Route;
 };
 
-const viber: Viber = <C extends Context<any, any>>(action: Action<C, any>) => {
-  return route(context => context.platform === 'viber', action);
+const viber: Viber = <C extends Context<any, any>>(
+  action: Action<ViberContext, any>
+) => {
+  return route((context: C) => context.platform === 'viber', action);
 };
 
 viber.any = viber;
 
-function message<C extends Context<any, any>>(action: Action<C, any>) {
+function message<C extends Context<any, any>>(
+  action: Action<ViberContext, any>
+) {
   return route(
     (context: C) => context.platform === 'viber' && context.event.isMessage,
     action
@@ -35,7 +41,9 @@ function message<C extends Context<any, any>>(action: Action<C, any>) {
 
 viber.message = message;
 
-function subscribed<C extends Context<any, any>>(action: Action<C, any>) {
+function subscribed<C extends Context<any, any>>(
+  action: Action<ViberContext, any>
+) {
   return route(
     (context: C) => context.platform === 'viber' && context.event.isSubscribed,
     action
@@ -44,7 +52,9 @@ function subscribed<C extends Context<any, any>>(action: Action<C, any>) {
 
 viber.subscribed = subscribed;
 
-function unsubscribed<C extends Context<any, any>>(action: Action<C, any>) {
+function unsubscribed<C extends Context<any, any>>(
+  action: Action<ViberContext, any>
+) {
   return route(
     (context: C) =>
       context.platform === 'viber' && context.event.isUnsubscribed,
@@ -55,7 +65,7 @@ function unsubscribed<C extends Context<any, any>>(action: Action<C, any>) {
 viber.unsubscribed = unsubscribed;
 
 function conversationStarted<C extends Context<any, any>>(
-  action: Action<C, any>
+  action: Action<ViberContext, any>
 ) {
   return route(
     (context: C) =>
@@ -66,7 +76,9 @@ function conversationStarted<C extends Context<any, any>>(
 
 viber.conversationStarted = conversationStarted;
 
-function delivered<C extends Context<any, any>>(action: Action<C, any>) {
+function delivered<C extends Context<any, any>>(
+  action: Action<ViberContext, any>
+) {
   return route(
     (context: C) => context.platform === 'viber' && context.event.delivered,
     action
@@ -75,7 +87,7 @@ function delivered<C extends Context<any, any>>(action: Action<C, any>) {
 
 viber.delivered = delivered;
 
-function seen<C extends Context<any, any>>(action: Action<C, any>) {
+function seen<C extends Context<any, any>>(action: Action<ViberContext, any>) {
   return route(
     (context: C) => context.platform === 'viber' && context.event.seen,
     action
@@ -84,7 +96,9 @@ function seen<C extends Context<any, any>>(action: Action<C, any>) {
 
 viber.seen = seen;
 
-function failed<C extends Context<any, any>>(action: Action<C, any>) {
+function failed<C extends Context<any, any>>(
+  action: Action<ViberContext, any>
+) {
   return route(
     (context: C) => context.platform === 'viber' && context.event.failed,
     action

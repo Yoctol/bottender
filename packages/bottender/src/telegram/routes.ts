@@ -2,11 +2,13 @@ import Context from '../context/Context';
 import { Action } from '../types';
 import { RoutePredicate, route } from '../router';
 
+import TelegramContext from './TelegramContext';
+
 type Route = <C extends Context<any, any>>(
-  action: Action<C, any>
+  action: Action<TelegramContext, any>
 ) => {
   predicate: RoutePredicate<C>;
-  action: Action<C, any>;
+  action: Action<TelegramContext, any>;
 };
 
 type Telegram = Route & {
@@ -24,14 +26,16 @@ type Telegram = Route & {
 };
 
 const telegram: Telegram = <C extends Context<any, any>>(
-  action: Action<C, any>
+  action: Action<TelegramContext, any>
 ) => {
-  return route(context => context.platform === 'telegram', action);
+  return route((context: C) => context.platform === 'telegram', action);
 };
 
 telegram.any = telegram;
 
-function message<C extends Context<any, any>>(action: Action<C, any>) {
+function message<C extends Context<any, any>>(
+  action: Action<TelegramContext, any>
+) {
   return route(
     (context: C) => context.platform === 'telegram' && context.event.isMessage,
     action
@@ -40,7 +44,9 @@ function message<C extends Context<any, any>>(action: Action<C, any>) {
 
 telegram.message = message;
 
-function editedMessage<C extends Context<any, any>>(action: Action<C, any>) {
+function editedMessage<C extends Context<any, any>>(
+  action: Action<TelegramContext, any>
+) {
   return route(
     (context: C) =>
       context.platform === 'telegram' && context.event.isEditedMessage,
@@ -50,7 +56,9 @@ function editedMessage<C extends Context<any, any>>(action: Action<C, any>) {
 
 telegram.editedMessage = editedMessage;
 
-function channelPost<C extends Context<any, any>>(action: Action<C, any>) {
+function channelPost<C extends Context<any, any>>(
+  action: Action<TelegramContext, any>
+) {
   return route(
     (context: C) =>
       context.platform === 'telegram' && context.event.isChannelPost,
@@ -61,7 +69,7 @@ function channelPost<C extends Context<any, any>>(action: Action<C, any>) {
 telegram.channelPost = channelPost;
 
 function editedChannelPost<C extends Context<any, any>>(
-  action: Action<C, any>
+  action: Action<TelegramContext, any>
 ) {
   return route(
     (context: C) =>
@@ -72,7 +80,9 @@ function editedChannelPost<C extends Context<any, any>>(
 
 telegram.editedChannelPost = editedChannelPost;
 
-function inlineQuery<C extends Context<any, any>>(action: Action<C, any>) {
+function inlineQuery<C extends Context<any, any>>(
+  action: Action<TelegramContext, any>
+) {
   return route(
     (context: C) =>
       context.platform === 'telegram' && context.event.isInlineQuery,
@@ -83,7 +93,7 @@ function inlineQuery<C extends Context<any, any>>(action: Action<C, any>) {
 telegram.inlineQuery = inlineQuery;
 
 function chosenInlineResult<C extends Context<any, any>>(
-  action: Action<C, any>
+  action: Action<TelegramContext, any>
 ) {
   return route(
     (context: C) =>
@@ -94,7 +104,9 @@ function chosenInlineResult<C extends Context<any, any>>(
 
 telegram.chosenInlineResult = chosenInlineResult;
 
-function callbackQuery<C extends Context<any, any>>(action: Action<C, any>) {
+function callbackQuery<C extends Context<any, any>>(
+  action: Action<TelegramContext, any>
+) {
   return route(
     (context: C) =>
       context.platform === 'telegram' && context.event.isCallbackQuery,
@@ -104,7 +116,9 @@ function callbackQuery<C extends Context<any, any>>(action: Action<C, any>) {
 
 telegram.callbackQuery = callbackQuery;
 
-function shippingQuery<C extends Context<any, any>>(action: Action<C, any>) {
+function shippingQuery<C extends Context<any, any>>(
+  action: Action<TelegramContext, any>
+) {
   return route(
     (context: C) =>
       context.platform === 'telegram' && context.event.isShippingQuery,
@@ -114,7 +128,9 @@ function shippingQuery<C extends Context<any, any>>(action: Action<C, any>) {
 
 telegram.shippingQuery = shippingQuery;
 
-function preCheckoutQuery<C extends Context<any, any>>(action: Action<C, any>) {
+function preCheckoutQuery<C extends Context<any, any>>(
+  action: Action<TelegramContext, any>
+) {
   return route(
     (context: C) =>
       context.platform === 'telegram' && context.event.isPreCheckoutQuery,
@@ -124,7 +140,9 @@ function preCheckoutQuery<C extends Context<any, any>>(action: Action<C, any>) {
 
 telegram.preCheckoutQuery = preCheckoutQuery;
 
-function poll<C extends Context<any, any>>(action: Action<C, any>) {
+function poll<C extends Context<any, any>>(
+  action: Action<TelegramContext, any>
+) {
   return route(
     (context: C) => context.platform === 'telegram' && context.event.isPoll,
     action
