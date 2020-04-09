@@ -116,7 +116,7 @@ it('should resolve corresponding action if intent match name', async () => {
   });
 });
 
-it('should resolve corresponding action if intent match name', async () => {
+it('should resolve corresponding action if intent match id', async () => {
   const { context } = setup();
 
   const sessionPath = {};
@@ -226,7 +226,7 @@ it('should resolve corresponding action if intent match name', async () => {
   expect(context.isHandled).toEqual(true);
 });
 
-it('should go next if intent does not match any name', async () => {
+it('should resolve by fulfillmentMessages if intent match name without actions', async () => {
   const { context } = setup();
 
   const sessionPath = {};
@@ -248,6 +248,105 @@ it('should go next if intent does not match any name', async () => {
                 message: 'text',
               },
             ],
+            outputContexts: [
+              {
+                name:
+                  'projects/PROJECT_ID/agent/sessions/console:1/contexts/__system_counters__',
+                lifespanCount: 1,
+                parameters: {
+                  fields: {
+                    'no-match': {
+                      numberValue: 5,
+                      kind: 'numberValue',
+                    },
+                    'no-input': {
+                      numberValue: 0,
+                      kind: 'numberValue',
+                    },
+                  },
+                },
+              },
+            ],
+            queryText: 'hi',
+            speechRecognitionConfidence: 0,
+            action: 'input.unknown',
+            parameters: {
+              fields: {},
+            },
+            allRequiredParamsPresent: true,
+            fulfillmentText: '?',
+            webhookSource: '',
+            webhookPayload: null,
+            intent: {
+              inputContextNames: [],
+              events: [],
+              trainingPhrases: [],
+              outputContexts: [],
+              parameters: [],
+              messages: [],
+              defaultResponsePlatforms: [],
+              followupIntentInfo: [],
+              name: 'projects/PROJECT_ID/agent/intents/INTENT_ID',
+              displayName: 'greeting',
+              priority: 0,
+              isFallback: true,
+              webhookState: 'WEBHOOK_STATE_UNSPECIFIED',
+              action: '',
+              resetContexts: false,
+              rootFollowupIntentName: '',
+              parentFollowupIntentName: '',
+              mlDisabled: false,
+            },
+            intentDetectionConfidence: 1,
+            diagnosticInfo: null,
+            languageCode: 'zh-tw',
+            sentimentAnalysisResult: null,
+          },
+          webhookStatus: null,
+          outputAudio: {
+            type: 'Buffer',
+            data: [],
+          },
+          outputAudioConfig: null,
+        },
+        null,
+        null,
+      ]),
+    };
+
+    return sessionClient;
+  });
+
+  const app = run(
+    chain([
+      dialogflow({
+        projectId: 'PROJECT_ID',
+      }),
+      Unknown,
+    ])
+  );
+
+  await app(context);
+
+  expect(context.sendText).toBeCalledWith('?');
+  expect(context.intent).toEqual('greeting');
+  expect(context.isHandled).toEqual(true);
+});
+
+it('should go next if intent does not match any name', async () => {
+  const { context } = setup();
+
+  const sessionPath = {};
+  let sessionClient;
+
+  dialogflowSdk.SessionsClient.mockImplementationOnce(() => {
+    sessionClient = {
+      sessionPath: jest.fn().mockReturnValue(sessionPath),
+      detectIntent: jest.fn().mockResolvedValue([
+        {
+          responseId: 'cb8e7a38-910a-4386-b312-eac8660d66f7-b4ef8d5f',
+          queryResult: {
+            fulfillmentMessages: [],
             outputContexts: [
               {
                 name:
