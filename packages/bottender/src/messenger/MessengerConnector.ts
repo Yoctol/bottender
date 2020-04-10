@@ -1,5 +1,5 @@
-import EventEmitter from 'events';
 import crypto from 'crypto';
+import { EventEmitter } from 'events';
 import { URL } from 'url';
 
 import invariant from 'invariant';

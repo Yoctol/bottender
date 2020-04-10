@@ -1,5 +1,5 @@
-import EventEmitter from 'events';
 import crypto from 'crypto';
+import { EventEmitter } from 'events';
 
 import Session from '../session/Session';
 import { Connector } from '../bot/Connector';

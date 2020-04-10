@@ -1,4 +1,4 @@
-import EventEmitter from 'events';
+import { EventEmitter } from 'events';
 
 import invariant from 'invariant';
 import sleep from 'delay';
