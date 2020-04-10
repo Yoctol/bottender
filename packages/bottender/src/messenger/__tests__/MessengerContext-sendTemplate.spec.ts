@@ -744,3 +744,92 @@ describe('#sendAirlineUpdateTemplate', () => {
     expect(client.sendImage).not.toBeCalled();
   });
 });
+
+describe('#sendOneTimeNotifReqTemplate', () => {
+  it('should call client.sendOneTimeNotifReqTemplate', async () => {
+    const { context, client, session } = setup();
+
+    const attrs = {
+      title: '<TITLE_TEXT>',
+      payload: '<USER_DEFINED_PAYLOAD>',
+    };
+
+    await context.sendOneTimeNotifReqTemplate(attrs);
+
+    expect(client.sendOneTimeNotifReqTemplate).toBeCalledWith(
+      session.user.id,
+      attrs,
+      {
+        messagingType: 'RESPONSE',
+      }
+    );
+  });
+
+  it('should call warning and not to send if dont have session', async () => {
+    const { context, client } = setup({ session: false });
+
+    const attrs = {
+      title: '<TITLE_TEXT>',
+      payload: '<USER_DEFINED_PAYLOAD>',
+    };
+
+    await context.sendOneTimeNotifReqTemplate(attrs);
+
+    expect(warning).toBeCalledWith(
+      false,
+      'sendOneTimeNotifReqTemplate: should not be called in context without session'
+    );
+    expect(client.sendImage).not.toBeCalled();
+  });
+
+  it('should call warning and not to send if created with read event', async () => {
+    const { context, client } = setup({ rawEvent: read });
+
+    const attrs = {
+      title: '<TITLE_TEXT>',
+      payload: '<USER_DEFINED_PAYLOAD>',
+    };
+
+    await context.sendOneTimeNotifReqTemplate(attrs);
+
+    expect(warning).toBeCalledWith(
+      false,
+      'sendOneTimeNotifReqTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
+    );
+    expect(client.sendImage).not.toBeCalled();
+  });
+
+  it('should call warning and not to send if created with delivery event', async () => {
+    const { context, client } = setup({ rawEvent: delivery });
+
+    const attrs = {
+      title: '<TITLE_TEXT>',
+      payload: '<USER_DEFINED_PAYLOAD>',
+    };
+
+    await context.sendOneTimeNotifReqTemplate(attrs);
+
+    expect(warning).toBeCalledWith(
+      false,
+      'sendOneTimeNotifReqTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
+    );
+    expect(client.sendImage).not.toBeCalled();
+  });
+
+  it('should call warning and not to send if created with echo event', async () => {
+    const { context, client } = setup({ rawEvent: echo });
+
+    const attrs = {
+      title: '<TITLE_TEXT>',
+      payload: '<USER_DEFINED_PAYLOAD>',
+    };
+
+    await context.sendOneTimeNotifReqTemplate(attrs);
+
+    expect(warning).toBeCalledWith(
+      false,
+      'sendOneTimeNotifReqTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
+    );
+    expect(client.sendImage).not.toBeCalled();
+  });
+});

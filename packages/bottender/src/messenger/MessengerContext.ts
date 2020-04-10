@@ -34,6 +34,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
 
   _personaId: string | null = null;
 
+  // FIXME: add typing for BatchQueue
   _batchQueue: Record<string, any> | null;
 
   constructor({
@@ -65,6 +66,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
     return this._customAccessToken || this._client.accessToken;
   }
 
+  // TODO: Avoid this to improve typing
   _callClientMethod(method: string, args: any[]) {
     if (this._batchQueue) {
       return (this._batchQueue as any).push(
@@ -72,6 +74,52 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       );
     }
     return (this._client as any)[method](...args);
+  }
+
+  _getMethodOptions<O extends object>(
+    options: O
+  ): {
+    accessToken?: string;
+  } & O {
+    return {
+      ...(this._customAccessToken
+        ? { accessToken: this._customAccessToken }
+        : undefined),
+      ...options,
+    };
+  }
+
+  _getSenderActionMethodOptions<O extends object>(
+    options: O
+  ): {
+    accessToken?: string;
+    personaId?: string;
+  } & O {
+    return {
+      ...(this._personaId ? { personaId: this._personaId } : undefined),
+      ...this._getMethodOptions(options),
+    };
+  }
+
+  _getSendMethodOptions<
+    O extends {
+      tag?: MessengerTypes.MessageTag;
+    }
+  >(
+    options: O
+  ): {
+    accessToken?: string;
+    personaId?: string;
+    messagingType: MessengerTypes.MessagingType;
+  } & O {
+    const messagingType: MessengerTypes.MessagingType =
+      options && options.tag ? 'MESSAGE_TAG' : 'RESPONSE';
+
+    return {
+      messagingType,
+      ...(this._personaId ? { personaId: this._personaId } : undefined),
+      ...this._getMethodOptions(options),
+    };
   }
 
   /**
@@ -103,10 +151,13 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
   }
 
   /**
-   * Send text to the owner of then session.
+   * Send text to the owner of the session.
    *
    */
-  async sendText(text: string, options?: Record<string, any>): Promise<any> {
+  async sendText(
+    text: string,
+    options: MessengerTypes.SendOption = {}
+  ): Promise<any> {
     if (!this._session) {
       warning(
         false,
@@ -123,23 +174,11 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       return;
     }
 
-    const messagingType =
-      options && 'tag' in options ? 'MESSAGE_TAG' : 'RESPONSE';
-
-    const args = [
+    return this._callClientMethod('sendText', [
       this._session.user.id,
       text,
-      {
-        messagingType,
-        ...(this._customAccessToken
-          ? { accessToken: this._customAccessToken }
-          : undefined),
-        ...(this._personaId ? { personaId: this._personaId } : undefined),
-        ...options,
-      },
-    ];
-
-    return this._callClientMethod('sendText', args);
+      this._getSendMethodOptions(options),
+    ]);
   }
 
   async getUserProfile(options: {
@@ -153,17 +192,10 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       return null;
     }
 
-    const args = [
+    return this._callClientMethod('getUserProfile', [
       this._session.user.id,
-      {
-        ...(this._customAccessToken
-          ? { accessToken: this._customAccessToken }
-          : undefined),
-        ...options,
-      },
-    ];
-
-    return this._callClientMethod('getUserProfile', args);
+      this._getMethodOptions(options),
+    ]);
   }
 
   /**
@@ -177,8 +209,8 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
    */
   async sendSenderAction(
     senderAction: MessengerTypes.SenderAction,
-    options?: Record<string, any>
-  ): Promise<any> {
+    options: MessengerTypes.SendOption = {}
+  ): Promise<MessengerTypes.SendSenderActionResponse | undefined> {
     if (!this._session) {
       warning(
         false,
@@ -187,25 +219,19 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       return;
     }
 
-    const args = [
+    return this._callClientMethod('sendSenderAction', [
       this._session.user.id,
       senderAction,
-      {
-        ...(this._customAccessToken
-          ? { accessToken: this._customAccessToken }
-          : undefined),
-        ...(this._personaId ? { personaId: this._personaId } : undefined),
-        ...options,
-      },
-    ];
-
-    return this._callClientMethod('sendSenderAction', args);
+      this._getSenderActionMethodOptions(options),
+    ]);
   }
 
   /**
    * https://github.com/Yoctol/messaging-apis/tree/master/packages/messaging-api-messenger#typingonuserid
    */
-  async typingOn(options?: Record<string, any>): Promise<any> {
+  async typingOn(
+    options: MessengerTypes.SendOption = {}
+  ): Promise<MessengerTypes.SendSenderActionResponse | undefined> {
     if (!this._session) {
       warning(
         false,
@@ -214,24 +240,18 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       return;
     }
 
-    const args = [
+    return this._callClientMethod('typingOn', [
       this._session.user.id,
-      {
-        ...(this._customAccessToken
-          ? { accessToken: this._customAccessToken }
-          : undefined),
-        ...(this._personaId ? { personaId: this._personaId } : undefined),
-        ...options,
-      },
-    ];
-
-    return this._callClientMethod('typingOn', args);
+      this._getSenderActionMethodOptions(options),
+    ]);
   }
 
   /**
    * https://github.com/Yoctol/messaging-apis/tree/master/packages/messaging-api-messenger#typingoffuserid
    */
-  async typingOff(options?: Record<string, any>): Promise<any> {
+  async typingOff(
+    options: MessengerTypes.SendOption = {}
+  ): Promise<MessengerTypes.SendSenderActionResponse | undefined> {
     if (!this._session) {
       warning(
         false,
@@ -240,24 +260,18 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       return;
     }
 
-    const args = [
+    return this._callClientMethod('typingOff', [
       this._session.user.id,
-      {
-        ...(this._customAccessToken
-          ? { accessToken: this._customAccessToken }
-          : undefined),
-        ...(this._personaId ? { personaId: this._personaId } : undefined),
-        ...options,
-      },
-    ];
-
-    return this._callClientMethod('typingOff', args);
+      this._getSenderActionMethodOptions(options),
+    ]);
   }
 
   /**
    * https://github.com/Yoctol/messaging-apis/tree/master/packages/messaging-api-messenger#markseenuserid
    */
-  async markSeen(options?: Record<string, any>): Promise<any> {
+  async markSeen(
+    options: MessengerTypes.SendOption = {}
+  ): Promise<MessengerTypes.SendSenderActionResponse | undefined> {
     if (!this._session) {
       warning(
         false,
@@ -266,18 +280,10 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       return;
     }
 
-    const args = [
+    return this._callClientMethod('markSeen', [
       this._session.user.id,
-      {
-        ...(this._customAccessToken
-          ? { accessToken: this._customAccessToken }
-          : undefined),
-        ...(this._personaId ? { personaId: this._personaId } : undefined),
-        ...options,
-      },
-    ];
-
-    return this._callClientMethod('markSeen', args);
+      this._getSenderActionMethodOptions(options),
+    ]);
   }
 
   /**
@@ -301,18 +307,12 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       return;
     }
 
-    const args = [
+    return this._callClientMethod('passThreadControl', [
       this._session.user.id,
       targetAppId,
       metadata,
-      {
-        ...(this._customAccessToken
-          ? { accessToken: this._customAccessToken }
-          : undefined),
-      },
-    ];
-
-    return this._callClientMethod('passThreadControl', args);
+      this._getMethodOptions({}),
+    ]);
   }
 
   /**
@@ -327,17 +327,11 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       return;
     }
 
-    const args = [
+    return this._callClientMethod('passThreadControlToPageInbox', [
       this._session.user.id,
       metadata,
-      {
-        ...(this._customAccessToken
-          ? { accessToken: this._customAccessToken }
-          : undefined),
-      },
-    ];
-
-    return this._callClientMethod('passThreadControlToPageInbox', args);
+      this._getMethodOptions({}),
+    ]);
   }
 
   /**
@@ -352,17 +346,11 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       return;
     }
 
-    const args = [
+    return this._callClientMethod('takeThreadControl', [
       this._session.user.id,
       metadata,
-      {
-        ...(this._customAccessToken
-          ? { accessToken: this._customAccessToken }
-          : undefined),
-      },
-    ];
-
-    return this._callClientMethod('takeThreadControl', args);
+      this._getMethodOptions({}),
+    ]);
   }
 
   /**
@@ -377,17 +365,11 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       return;
     }
 
-    const args = [
+    return this._callClientMethod('requestThreadControl', [
       this._session.user.id,
       metadata,
-      {
-        ...(this._customAccessToken
-          ? { accessToken: this._customAccessToken }
-          : undefined),
-      },
-    ];
-
-    return this._callClientMethod('requestThreadControl', args);
+      this._getMethodOptions({}),
+    ]);
   }
 
   /**
@@ -402,16 +384,10 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       return;
     }
 
-    const args = [
+    return this._callClientMethod('getThreadOwner', [
       this._session.user.id,
-      {
-        ...(this._customAccessToken
-          ? { accessToken: this._customAccessToken }
-          : undefined),
-      },
-    ];
-
-    return this._callClientMethod('getThreadOwner', args);
+      this._getMethodOptions({}),
+    ]);
   }
 
   async isThreadOwner(): Promise<boolean> {
@@ -442,17 +418,11 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       return;
     }
 
-    const args = [
+    return this._callClientMethod('associateLabel', [
       this._session.user.id,
       labelId,
-      {
-        ...(this._customAccessToken
-          ? { accessToken: this._customAccessToken }
-          : undefined),
-      },
-    ];
-
-    return this._callClientMethod('associateLabel', args);
+      this._getMethodOptions({}),
+    ]);
   }
 
   /**
@@ -467,17 +437,11 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       return;
     }
 
-    const args = [
+    return this._callClientMethod('dissociateLabel', [
       this._session.user.id,
       labelId,
-      {
-        ...(this._customAccessToken
-          ? { accessToken: this._customAccessToken }
-          : undefined),
-      },
-    ];
-
-    return this._callClientMethod('dissociateLabel', args);
+      this._getMethodOptions({}),
+    ]);
   }
 
   /**
@@ -492,76 +456,459 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       return;
     }
 
-    const args = [
+    return this._callClientMethod('getAssociatedLabels', [
       this._session.user.id,
-      {
-        ...(this._customAccessToken
-          ? { accessToken: this._customAccessToken }
-          : undefined),
-      },
-    ];
+      this._getMethodOptions({}),
+    ]);
+  }
 
-    return this._callClientMethod('getAssociatedLabels', args);
+  async sendMessage(
+    message: MessengerTypes.Message,
+    options: MessengerTypes.SendOption = {}
+  ): Promise<MessengerTypes.SendMessageSuccessResponse | undefined> {
+    if (!this._session) {
+      warning(
+        false,
+        'sendMessage: should not be called in context without session'
+      );
+      return;
+    }
+
+    if (this._event.isEcho || this._event.isDelivery || this._event.isRead) {
+      warning(
+        false,
+        `sendMessage: calling Send APIs in \`message_reads\`(event.isRead), \`message_deliveries\`(event.isDelivery) or \`message_echoes\`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.`
+      );
+      return;
+    }
+
+    return this._callClientMethod('sendMessage', [
+      this._session.user.id,
+      message,
+      this._getSendMethodOptions(options),
+    ]);
+  }
+
+  async sendAttachment(
+    attachment: MessengerTypes.Attachment,
+    options: MessengerTypes.SendOption = {}
+  ): Promise<MessengerTypes.SendMessageSuccessResponse | undefined> {
+    if (!this._session) {
+      warning(
+        false,
+        'sendAttachment: should not be called in context without session'
+      );
+      return;
+    }
+
+    if (this._event.isEcho || this._event.isDelivery || this._event.isRead) {
+      warning(
+        false,
+        'sendAttachment: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
+      );
+      return;
+    }
+
+    return this._callClientMethod('sendAttachment', [
+      this._session.user.id,
+      attachment,
+      this._getSendMethodOptions(options),
+    ]);
+  }
+
+  async sendImage(
+    image:
+      | string
+      | MessengerTypes.FileData
+      | MessengerTypes.MediaAttachmentPayload,
+    options: MessengerTypes.SendOption = {}
+  ): Promise<MessengerTypes.SendMessageSuccessResponse | undefined> {
+    if (!this._session) {
+      warning(
+        false,
+        'sendImage: should not be called in context without session'
+      );
+      return;
+    }
+
+    if (this._event.isEcho || this._event.isDelivery || this._event.isRead) {
+      warning(
+        false,
+        'sendImage: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
+      );
+      return;
+    }
+
+    return this._callClientMethod('sendImage', [
+      this._session.user.id,
+      image,
+      this._getSendMethodOptions(options),
+    ]);
+  }
+
+  async sendAudio(
+    audio:
+      | string
+      | MessengerTypes.FileData
+      | MessengerTypes.MediaAttachmentPayload,
+    options: MessengerTypes.SendOption = {}
+  ): Promise<MessengerTypes.SendMessageSuccessResponse | undefined> {
+    if (!this._session) {
+      warning(
+        false,
+        'sendAudio: should not be called in context without session'
+      );
+      return;
+    }
+
+    if (this._event.isEcho || this._event.isDelivery || this._event.isRead) {
+      warning(
+        false,
+        'sendAudio: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
+      );
+      return;
+    }
+
+    return this._callClientMethod('sendAudio', [
+      this._session.user.id,
+      audio,
+      this._getSendMethodOptions(options),
+    ]);
+  }
+
+  async sendVideo(
+    video:
+      | string
+      | MessengerTypes.FileData
+      | MessengerTypes.MediaAttachmentPayload,
+    options: MessengerTypes.SendOption = {}
+  ): Promise<MessengerTypes.SendMessageSuccessResponse | undefined> {
+    if (!this._session) {
+      warning(
+        false,
+        'sendVideo: should not be called in context without session'
+      );
+      return;
+    }
+
+    if (this._event.isEcho || this._event.isDelivery || this._event.isRead) {
+      warning(
+        false,
+        'sendVideo: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
+      );
+      return;
+    }
+
+    return this._callClientMethod('sendVideo', [
+      this._session.user.id,
+      video,
+      this._getSendMethodOptions(options),
+    ]);
+  }
+
+  async sendFile(
+    file:
+      | string
+      | MessengerTypes.FileData
+      | MessengerTypes.MediaAttachmentPayload,
+    options: MessengerTypes.SendOption = {}
+  ): Promise<MessengerTypes.SendMessageSuccessResponse | undefined> {
+    if (!this._session) {
+      warning(
+        false,
+        'sendFile: should not be called in context without session'
+      );
+      return;
+    }
+
+    if (this._event.isEcho || this._event.isDelivery || this._event.isRead) {
+      warning(
+        false,
+        'sendFile: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
+      );
+      return;
+    }
+
+    return this._callClientMethod('sendFile', [
+      this._session.user.id,
+      file,
+      this._getSendMethodOptions(options),
+    ]);
+  }
+
+  async sendTemplate(
+    payload: MessengerTypes.TemplateAttachmentPayload,
+    options: MessengerTypes.SendOption = {}
+  ): Promise<MessengerTypes.SendMessageSuccessResponse | undefined> {
+    if (!this._session) {
+      warning(
+        false,
+        'sendTemplate: should not be called in context without session'
+      );
+      return;
+    }
+
+    if (this._event.isEcho || this._event.isDelivery || this._event.isRead) {
+      warning(
+        false,
+        'sendTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
+      );
+      return;
+    }
+
+    return this._callClientMethod('sendTemplate', [
+      this._session.user.id,
+      payload,
+      this._getSendMethodOptions(options),
+    ]);
+  }
+
+  async sendGenericTemplate(
+    elements: MessengerTypes.TemplateElement[],
+    options: {
+      imageAspectRatio?: 'horizontal' | 'square';
+    } & MessengerTypes.SendOption
+  ): Promise<MessengerTypes.SendMessageSuccessResponse | undefined> {
+    if (!this._session) {
+      warning(
+        false,
+        'sendGenericTemplate: should not be called in context without session'
+      );
+      return;
+    }
+
+    if (this._event.isEcho || this._event.isDelivery || this._event.isRead) {
+      warning(
+        false,
+        'sendGenericTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
+      );
+      return;
+    }
+
+    return this._callClientMethod('sendGenericTemplate', [
+      this._session.user.id,
+      elements,
+      this._getSendMethodOptions(options),
+    ]);
+  }
+
+  async sendButtonTemplate(
+    text: string,
+    buttons: MessengerTypes.TemplateButton[],
+    options: MessengerTypes.SendOption = {}
+  ): Promise<MessengerTypes.SendMessageSuccessResponse | undefined> {
+    if (!this._session) {
+      warning(
+        false,
+        'sendButtonTemplate: should not be called in context without session'
+      );
+      return;
+    }
+
+    if (this._event.isEcho || this._event.isDelivery || this._event.isRead) {
+      warning(
+        false,
+        'sendButtonTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
+      );
+      return;
+    }
+
+    return this._callClientMethod('sendButtonTemplate', [
+      this._session.user.id,
+      text,
+      buttons,
+      this._getSendMethodOptions(options),
+    ]);
+  }
+
+  async sendMediaTemplate(
+    elements: MessengerTypes.MediaElement[],
+    options: MessengerTypes.SendOption = {}
+  ): Promise<MessengerTypes.SendMessageSuccessResponse | undefined> {
+    if (!this._session) {
+      warning(
+        false,
+        'sendMediaTemplate: should not be called in context without session'
+      );
+      return;
+    }
+
+    if (this._event.isEcho || this._event.isDelivery || this._event.isRead) {
+      warning(
+        false,
+        'sendMediaTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
+      );
+      return;
+    }
+
+    return this._callClientMethod('sendMediaTemplate', [
+      this._session.user.id,
+      elements,
+      this._getSendMethodOptions(options),
+    ]);
+  }
+
+  async sendReceiptTemplate(
+    attrs: MessengerTypes.ReceiptAttributes,
+    options: MessengerTypes.SendOption = {}
+  ): Promise<MessengerTypes.SendMessageSuccessResponse | undefined> {
+    if (!this._session) {
+      warning(
+        false,
+        'sendReceiptTemplate: should not be called in context without session'
+      );
+      return;
+    }
+
+    if (this._event.isEcho || this._event.isDelivery || this._event.isRead) {
+      warning(
+        false,
+        'sendReceiptTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
+      );
+      return;
+    }
+
+    return this._callClientMethod('sendReceiptTemplate', [
+      this._session.user.id,
+      attrs,
+      this._getSendMethodOptions(options),
+    ]);
+  }
+
+  async sendAirlineBoardingPassTemplate(
+    attrs: MessengerTypes.AirlineBoardingPassAttributes,
+    options: MessengerTypes.SendOption = {}
+  ): Promise<MessengerTypes.SendMessageSuccessResponse | undefined> {
+    if (!this._session) {
+      warning(
+        false,
+        'sendAirlineBoardingPassTemplate: should not be called in context without session'
+      );
+      return;
+    }
+
+    if (this._event.isEcho || this._event.isDelivery || this._event.isRead) {
+      warning(
+        false,
+        'sendAirlineBoardingPassTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
+      );
+      return;
+    }
+
+    return this._callClientMethod('sendAirlineBoardingPassTemplate', [
+      this._session.user.id,
+      attrs,
+      this._getSendMethodOptions(options),
+    ]);
+  }
+
+  async sendAirlineCheckinTemplate(
+    attrs: MessengerTypes.AirlineCheckinAttributes,
+    options: MessengerTypes.SendOption = {}
+  ): Promise<MessengerTypes.SendMessageSuccessResponse | undefined> {
+    if (!this._session) {
+      warning(
+        false,
+        'sendAirlineCheckinTemplate: should not be called in context without session'
+      );
+      return;
+    }
+
+    if (this._event.isEcho || this._event.isDelivery || this._event.isRead) {
+      warning(
+        false,
+        'sendAirlineCheckinTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
+      );
+      return;
+    }
+
+    return this._callClientMethod('sendAirlineCheckinTemplate', [
+      this._session.user.id,
+      attrs,
+      this._getSendMethodOptions(options),
+    ]);
+  }
+
+  async sendAirlineItineraryTemplate(
+    attrs: MessengerTypes.AirlineItineraryAttributes,
+    options: MessengerTypes.SendOption = {}
+  ): Promise<MessengerTypes.SendMessageSuccessResponse | undefined> {
+    if (!this._session) {
+      warning(
+        false,
+        'sendAirlineItineraryTemplate: should not be called in context without session'
+      );
+      return;
+    }
+
+    if (this._event.isEcho || this._event.isDelivery || this._event.isRead) {
+      warning(
+        false,
+        'sendAirlineItineraryTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
+      );
+      return;
+    }
+
+    return this._callClientMethod('sendAirlineItineraryTemplate', [
+      this._session.user.id,
+      attrs,
+      this._getSendMethodOptions(options),
+    ]);
+  }
+
+  async sendAirlineUpdateTemplate(
+    attrs: MessengerTypes.AirlineUpdateAttributes,
+    options: MessengerTypes.SendOption = {}
+  ): Promise<MessengerTypes.SendMessageSuccessResponse | undefined> {
+    if (!this._session) {
+      warning(
+        false,
+        'sendAirlineUpdateTemplate: should not be called in context without session'
+      );
+      return;
+    }
+
+    if (this._event.isEcho || this._event.isDelivery || this._event.isRead) {
+      warning(
+        false,
+        'sendAirlineUpdateTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
+      );
+      return;
+    }
+
+    return this._callClientMethod('sendAirlineUpdateTemplate', [
+      this._session.user.id,
+      attrs,
+      this._getSendMethodOptions(options),
+    ]);
+  }
+
+  async sendOneTimeNotifReqTemplate(
+    attrs: MessengerTypes.OneTimeNotifReqAttributes,
+    options: MessengerTypes.SendOption = {}
+  ): Promise<MessengerTypes.SendMessageSuccessResponse | undefined> {
+    if (!this._session) {
+      warning(
+        false,
+        'sendOneTimeNotifReqTemplate: should not be called in context without session'
+      );
+      return;
+    }
+
+    if (this._event.isEcho || this._event.isDelivery || this._event.isRead) {
+      warning(
+        false,
+        'sendOneTimeNotifReqTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
+      );
+      return;
+    }
+
+    return this._callClientMethod('sendOneTimeNotifReqTemplate', [
+      this._session.user.id,
+      attrs,
+      this._getSendMethodOptions(options),
+    ]);
   }
 }
-
-const sendMethods: [string, number][] = [
-  // type name, arguments length
-  ['sendMessage', 3],
-  ['sendAttachment', 3],
-  ['sendImage', 3],
-  ['sendAudio', 3],
-  ['sendVideo', 3],
-  ['sendFile', 3],
-  ['sendTemplate', 3],
-  ['sendGenericTemplate', 3],
-  ['sendButtonTemplate', 4],
-  ['sendMediaTemplate', 3],
-  ['sendReceiptTemplate', 3],
-  ['sendAirlineBoardingPassTemplate', 3],
-  ['sendAirlineCheckinTemplate', 3],
-  ['sendAirlineItineraryTemplate', 3],
-  ['sendAirlineUpdateTemplate', 3],
-  ['sendOneTimeNotifReqTemplate', 3],
-];
-
-sendMethods.forEach(([method, arity]) => {
-  Object.defineProperty(MessengerContext.prototype, method, {
-    enumerable: false,
-    configurable: true,
-    writable: true,
-    async value(...args: any[]) {
-      if (!this._session) {
-        warning(
-          false,
-          `${method}: should not be called in context without session`
-        );
-        return;
-      }
-
-      if (this._event.isEcho || this._event.isDelivery || this._event.isRead) {
-        warning(
-          false,
-          `${method}: calling Send APIs in \`message_reads\`(event.isRead), \`message_deliveries\`(event.isDelivery) or \`message_echoes\`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.`
-        );
-        return;
-      }
-
-      const options = args[arity - 2];
-      const messagingType = options && options.tag ? 'MESSAGE_TAG' : 'RESPONSE';
-
-      args[arity - 2] = {
-        messagingType,
-        ...(this._customAccessToken
-          ? { accessToken: this._customAccessToken }
-          : undefined),
-        ...(this._personaId ? { personaId: this._personaId } : undefined),
-        ...options,
-      };
-
-      return this._callClientMethod(method, [this._session.user.id, ...args]);
-    },
-  });
-});
 
 export default MessengerContext;

@@ -502,7 +502,7 @@ describe('#sendSenderAction', () => {
       session.user.id,
       'typing_on',
       {
-        accessYoken: undefined,
+        accessToken: undefined,
       }
     );
   });
@@ -544,7 +544,7 @@ describe('#typingOn', () => {
     await context.typingOn();
 
     expect(client.typingOn).toBeCalledWith(session.user.id, {
-      accessYoken: undefined,
+      accessToken: undefined,
     });
   });
 
@@ -581,7 +581,7 @@ describe('#typingOff', () => {
     await context.typingOff();
 
     expect(client.typingOff).toBeCalledWith(session.user.id, {
-      accessYoken: undefined,
+      accessToken: undefined,
     });
   });
 
@@ -618,7 +618,7 @@ describe('#markSeen', () => {
     await context.markSeen();
 
     expect(client.markSeen).toBeCalledWith(session.user.id, {
-      accessYoken: undefined,
+      accessToken: undefined,
     });
   });
 
