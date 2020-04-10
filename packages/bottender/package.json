@@ -66,7 +66,7 @@
     "lodash": "^4.17.15",
     "lru-cache": "^5.1.1",
     "messaging-api-common": "^1.0.0-beta.16",
-    "messaging-api-line": "^1.0.0-beta.16",
+    "messaging-api-line": "^1.0.0-beta.17",
     "messaging-api-messenger": "^1.0.0-beta.16",
     "messaging-api-slack": "^1.0.0-beta.16",
     "messaging-api-telegram": "^1.0.0-beta.16",
