@@ -3,21 +3,24 @@ import SimulatedContext from './SimulatedContext';
 declare let jest: any;
 
 class ContextSimulator {
+  /** @hidden */
   _platform: string;
 
+  /** @hidden */
   _initialState: Record<string, any>;
 
+  /** @hidden */
   _mockFn: Function;
 
-  constructor({
-    platform,
-    initialState,
-    mockFn,
-  }: {
+  /**
+   * constructor
+   */
+  constructor(options: {
     platform: string;
     initialState?: Record<string, any>;
     mockFn?: Function;
   }) {
+    const { platform, initialState, mockFn } = options;
     this._platform = platform;
     this._initialState = initialState || {};
     this._mockFn = mockFn || jest.fn;

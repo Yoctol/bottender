@@ -65,6 +65,7 @@ class TelegramContext extends Context<TelegramClient, TelegramEvent> {
     return this.sendText(text, options);
   }
 
+  /** @hidden */
   _getChatId(): number | null {
     if (this._event.isMessage) {
       return (this._event.message as any).chat.id;

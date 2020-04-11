@@ -192,8 +192,12 @@ export type TelegramRawEvent = {
 };
 
 export default class TelegramEvent implements Event<TelegramRawEvent> {
+  /** @hidden */
   _rawEvent: TelegramRawEvent;
 
+  /**
+   * constructor
+   */
   constructor(rawEvent: TelegramRawEvent) {
     this._rawEvent = rawEvent;
   }

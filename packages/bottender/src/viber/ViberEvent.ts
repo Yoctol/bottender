@@ -100,8 +100,12 @@ export type ViberRawEvent =
   | MessageEvent;
 
 export default class ViberEvent implements Event<ViberRawEvent> {
+  /** @hidden */
   _rawEvent: ViberRawEvent;
 
+  /**
+   * constructor
+   */
   constructor(rawEvent: ViberRawEvent) {
     this._rawEvent = rawEvent;
   }

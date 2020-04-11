@@ -5,8 +5,12 @@ export default class SimulatedContext<
   C extends Client,
   E extends Event
 > extends Context<C, E> {
+  /** @hidden */
   _platform: string;
 
+  /**
+   * constructor
+   */
   constructor(options: any) {
     super(options);
 

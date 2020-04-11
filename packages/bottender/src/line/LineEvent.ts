@@ -230,10 +230,15 @@ export type LineRawEvent =
   | ThingsEvent;
 
 export default class LineEvent implements Event<LineRawEvent> {
+  /** @hidden */
   _rawEvent: LineRawEvent;
 
+  /** @hidden */
   _destination: string | undefined;
 
+  /**
+   * constructor
+   */
   constructor(rawEvent: LineRawEvent, options: LineEventOptions = {}) {
     this._rawEvent = rawEvent;
     this._destination = options.destination;

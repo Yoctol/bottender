@@ -58,16 +58,11 @@ export default class SlackContext extends Context<
     update: (options: SlackTypes.UpdateViewOptions) => Promise<any>;
   };
 
-  constructor({
-    client,
-    event,
-    session,
-    initialState,
-    requestContext,
-    emitter,
-  }: Options) {
-    super({ client, event, session, initialState, requestContext, emitter });
-
+  /**
+   * constructor
+   */
+  constructor(options: Options) {
+    super(options);
     this.chat = {
       postMessage: this._postMessage.bind(this),
       postEphemeral: this._postEphemeral.bind(this),
@@ -109,6 +104,7 @@ export default class SlackContext extends Context<
   }
 
   // FIXME: this is to fix type checking
+  /** @hidden */
   _getChannelIdFromSession(callerMethodName = ''): string | null {
     if (
       this._session &&
@@ -157,6 +153,7 @@ export default class SlackContext extends Context<
   }
 
   /**
+   * @hidden
    * Sends a message to a channel.
    *
    * https://api.slack.com/methods/chat.postMessage
@@ -204,6 +201,7 @@ export default class SlackContext extends Context<
   }
 
   /**
+   * @hidden
    * Sends an ephemeral message to a user in a channel.
    *
    * https://api.slack.com/methods/chat.postEphemeral
@@ -233,6 +231,7 @@ export default class SlackContext extends Context<
   }
 
   /**
+   * @hidden
    * Updates a message.
    *
    * https://api.slack.com/methods/chat.update
@@ -242,6 +241,7 @@ export default class SlackContext extends Context<
   }
 
   /**
+   * @hidden
    * Deletes a message.
    *
    * https://api.slack.com/methods/chat.delete
@@ -262,6 +262,7 @@ export default class SlackContext extends Context<
   }
 
   /**
+   * @hidden
    * Share a me message into a channel.
    *
    * https://api.slack.com/methods/chat.meMessage
@@ -279,6 +280,7 @@ export default class SlackContext extends Context<
   }
 
   /**
+   * @hidden
    * Retrieve a permalink URL for a specific extant message
    *
    * https://api.slack.com/methods/chat.getPermalink
@@ -296,6 +298,7 @@ export default class SlackContext extends Context<
   }
 
   /**
+   * @hidden
    * Schedules a message to be sent to a channel.
    *
    * https://api.slack.com/methods/chat.scheduleMessage
@@ -316,6 +319,7 @@ export default class SlackContext extends Context<
   }
 
   /**
+   * @hidden
    * Deletes a pending scheduled message from the queue.
    *
    * https://api.slack.com/methods/chat.deleteScheduledMessage
@@ -338,6 +342,7 @@ export default class SlackContext extends Context<
   }
 
   /**
+   * @hidden
    * Returns a list of scheduled messages.
    *
    * https://api.slack.com/methods/chat.scheduledMessages.list
@@ -349,6 +354,7 @@ export default class SlackContext extends Context<
   }
 
   /**
+   * @hidden
    * Open a view for a user.
    *
    * https://api.slack.com/methods/views.open
@@ -367,6 +373,7 @@ export default class SlackContext extends Context<
   }
 
   /**
+   * @hidden
    * Publish a static view for a User.
    *
    * https://api.slack.com/methods/views.publish
@@ -376,6 +383,7 @@ export default class SlackContext extends Context<
   }
 
   /**
+   * @hidden
    * Update an existing view.
    *
    * https://api.slack.com/methods/views.update
@@ -385,6 +393,7 @@ export default class SlackContext extends Context<
   }
 
   /**
+   * @hidden
    * Push a view onto the stack of a root view.
    *
    * https://api.slack.com/methods/views.push

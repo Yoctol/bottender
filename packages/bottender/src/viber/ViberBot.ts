@@ -11,19 +11,17 @@ export default class ViberBot extends Bot<
   ViberClient,
   ViberEvent
 > {
-  constructor({
-    accessToken,
-    sender,
-    sessionStore,
-    sync,
-    origin,
-  }: {
+  /**
+   * constructor
+   */
+  constructor(options: {
     accessToken: string;
     sender: ViberTypes.Sender;
     sessionStore?: SessionStore;
     sync?: boolean;
     origin?: string;
   }) {
+    const { accessToken, sender, sessionStore, sync, origin } = options;
     const connector = new ViberConnector({ accessToken, sender, origin });
     super({ connector, sessionStore, sync });
   }

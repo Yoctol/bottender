@@ -4,11 +4,16 @@ import Session from './Session';
 import SessionStore from './SessionStore';
 
 export default class CacheBasedSessionStore implements SessionStore {
+  /** @hidden */
   _cache: CacheStore;
 
   // The number of minutes to store the data in the session.
+  /** @hidden */
   _expiresIn: number;
 
+  /**
+   * constructor
+   */
   constructor(cache: CacheStore, expiresIn?: number) {
     this._cache = cache;
     this._expiresIn = expiresIn || 0;

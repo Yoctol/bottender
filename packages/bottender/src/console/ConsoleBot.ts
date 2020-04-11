@@ -13,6 +13,9 @@ export default class ConsoleBot extends Bot<
   ConsoleClient,
   ConsoleEvent
 > {
+  /**
+   * constructor
+   */
   constructor({
     sessionStore,
     fallbackMethods,

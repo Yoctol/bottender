@@ -40,18 +40,24 @@ type ConstructorOptions =
 
 export default class LineConnector
   implements Connector<LineRequestBody, LineClient> {
+  /** @hidden */
   _client: LineClient;
 
+  /** @hidden */
   _channelSecret: string;
 
+  /** @hidden */
   _skipLegacyProfile: boolean;
 
+  /** @hidden */
   _mapDestinationToAccessToken:
     | ((destination: string) => Promise<string>)
     | null;
 
+  /** @hidden */
   _shouldBatch: boolean;
 
+  /** @hidden */
   _sendMethod: string;
 
   constructor(options: ConstructorOptions) {
@@ -99,6 +105,7 @@ export default class LineConnector
       typeof skipLegacyProfile === 'boolean' ? skipLegacyProfile : true;
   }
 
+  /** @hidden */
   _isWebhookVerifyEvent(event: LineRawEvent): boolean {
     return (
       (event as any).replyToken === '00000000000000000000000000000000' ||

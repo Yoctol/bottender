@@ -13,15 +13,22 @@ type MongoOption =
     };
 
 export default class MongoSessionStore implements SessionStore {
+  /** @hidden */
   _url: string;
 
+  /** @hidden */
   _collectionName: string;
 
   // The number of minutes to store the data in the session.
+  /** @hidden */
   _expiresIn: number;
 
+  /** @hidden */
   _connection?: Db;
 
+  /**
+   * constructor
+   */
   constructor(options: MongoOption, expiresIn?: number) {
     if (typeof options === 'string') {
       this._url = options;
@@ -86,6 +93,7 @@ export default class MongoSessionStore implements SessionStore {
     }
   }
 
+  /** @hidden */
   _expired(sess: Session): boolean {
     if (!this._expiresIn) {
       return false;
@@ -97,6 +105,7 @@ export default class MongoSessionStore implements SessionStore {
     );
   }
 
+  /** @hidden */
   get _sessions(): Collection<any> {
     if (this._connection == null) {
       throw new Error(

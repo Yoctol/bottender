@@ -15,8 +15,12 @@ type PayloadEvent = {
 export type ConsoleRawEvent = MessageEvent | PayloadEvent;
 
 export default class ConsoleEvent implements Event<ConsoleRawEvent> {
+  /** @hidden */
   _rawEvent: ConsoleRawEvent;
 
+  /**
+   * constructor
+   */
   constructor(rawEvent: ConsoleRawEvent) {
     this._rawEvent = rawEvent;
   }

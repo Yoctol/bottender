@@ -75,33 +75,46 @@ type RequestHandler<B> = (
 ) => void | Promise<void>;
 
 export default class Bot<B extends Body, C extends Client, E extends Event> {
+  /** @hidden */
   _sessions: SessionStore;
 
+  /** @hidden */
   _initialized: boolean;
 
+  /** @hidden */
   _connector: Connector<B, C>;
 
+  /** @hidden */
   _handler: Action<C, E> | null;
 
+  /** @hidden */
   _errorHandler: Action<C, E> | null;
 
+  /** @hidden */
   _initialState: Record<string, any> = {};
 
+  /** @hidden */
   _plugins: Function[] = [];
 
+  /** @hidden */
   _sync: boolean;
 
+  /** @hidden */
   _emitter: EventEmitter;
 
-  constructor({
-    connector,
-    sessionStore = createMemorySessionStore(),
-    sync = false,
-  }: {
+  /**
+   * constructor
+   */
+  constructor(options: {
     connector: Connector<B, C>;
     sessionStore?: SessionStore;
     sync?: boolean;
   }) {
+    const {
+      connector,
+      sessionStore = createMemorySessionStore(),
+      sync = false,
+    } = options;
     this._sessions = sessionStore;
     this._initialized = false;
     this._connector = connector;

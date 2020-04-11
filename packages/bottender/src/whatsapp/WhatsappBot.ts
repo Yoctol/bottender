@@ -10,14 +10,10 @@ export default class WhatsappBot extends Bot<
   TwilioClient,
   WhatsappEvent
 > {
-  constructor({
-    accountSid,
-    authToken,
-    phoneNumber,
-    sessionStore,
-    sync,
-    origin,
-  }: {
+  /**
+   * constructor
+   */
+  constructor(options: {
     accountSid: string;
     authToken: string;
     phoneNumber: string;
@@ -25,6 +21,14 @@ export default class WhatsappBot extends Bot<
     sync?: boolean;
     origin?: string;
   }) {
+    const {
+      accountSid,
+      authToken,
+      phoneNumber,
+      sessionStore,
+      sync,
+      origin,
+    } = options;
     const connector = new WhatsappConnector({
       accountSid,
       authToken,

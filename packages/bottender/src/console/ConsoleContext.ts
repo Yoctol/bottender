@@ -30,21 +30,18 @@ export default class ConsoleContext extends Context<
   ConsoleClient,
   ConsoleEvent
 > {
+  /** @hidden */
   _fallbackMethods = false;
 
+  /** @hidden */
   _mockPlatform = 'console';
 
-  constructor({
-    client,
-    event,
-    session,
-    initialState,
-    requestContext,
-    fallbackMethods,
-    mockPlatform,
-    emitter,
-  }: Options) {
-    super({ client, event, session, initialState, requestContext, emitter });
+  /**
+   * constructor
+   */
+  constructor(options: Options) {
+    super(options);
+    const { fallbackMethods, mockPlatform } = options;
     this._mockPlatform = mockPlatform;
     this._fallbackMethods = fallbackMethods;
     if (fallbackMethods) {

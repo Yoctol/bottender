@@ -204,12 +204,18 @@ type MessengerEventOptions = {
 };
 
 export default class MessengerEvent implements Event<MessengerRawEvent> {
+  /** @hidden */
   _rawEvent: MessengerRawEvent;
 
+  /** @hidden */
   _isStandby: boolean;
 
+  /** @hidden */
   _pageId: string | null;
 
+  /**
+   * constructor
+   */
   constructor(
     rawEvent: MessengerRawEvent,
     options: MessengerEventOptions = {}

@@ -31,14 +31,21 @@ export default class TwilioClient {
     return new TwilioClient(config);
   }
 
+  /** @hidden */
   _onRequest: OnRequestFunction | undefined;
 
+  /** @hidden */
   _axios: AxiosInstance;
 
+  /** @hidden */
   _authToken: string;
 
+  /** @hidden */
   _phoneNumber: string;
 
+  /**
+   * constructor
+   */
   constructor(config: ClientConfig) {
     const twilioOrigin = `https://${config.accountSid}:${config.authToken}@api.twilio.com`;
 

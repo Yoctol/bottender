@@ -18,21 +18,22 @@ export default class TelegramBot extends Bot<
   TelegramClient,
   TelegramEvent
 > {
+  /** @hidden */
   _offset: number | null;
 
+  /** @hidden */
   _shouldGetUpdates: boolean;
 
-  constructor({
-    accessToken,
-    sessionStore,
-    sync,
-    origin,
-  }: {
+  /**
+   * constructor
+   */
+  constructor(options: {
     accessToken: string;
     sessionStore?: SessionStore;
     sync?: boolean;
     origin?: string;
   }) {
+    const { accessToken, sessionStore, sync, origin } = options;
     const connector = new TelegramConnector({ accessToken, origin });
     super({ connector, sessionStore, sync });
 

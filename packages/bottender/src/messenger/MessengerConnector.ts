@@ -102,22 +102,33 @@ type ConstructorOptions =
 
 export default class MessengerConnector
   implements Connector<MessengerRequestBody, MessengerClient> {
+  /** @hidden */
   _client: MessengerClient;
 
+  /** @hidden */
   _appId: string;
 
+  /** @hidden */
   _appSecret: string;
 
+  /** @hidden */
   _skipLegacyProfile: boolean;
 
+  /** @hidden */
   _mapPageToAccessToken: ((pageId: string) => Promise<string>) | null = null;
 
+  /** @hidden */
   _verifyToken: string | null = null;
 
+  /** @hidden */
   _batchConfig: Record<string, any> | null = null;
 
+  /** @hidden */
   _batchQueue: Record<string, any> | null = null;
 
+  /**
+   * constructor
+   */
   constructor(options: ConstructorOptions) {
     const {
       appId,
@@ -169,6 +180,7 @@ export default class MessengerConnector
     }
   }
 
+  /** @hidden */
   _getRawEventsFromRequest(body: MessengerRequestBody): MessengerRawEvent[] {
     if ('entry' in body) {
       const { entry } = body as EntryRequestBody;
@@ -196,6 +208,7 @@ export default class MessengerConnector
     return [body as MessengerRawEvent];
   }
 
+  /** @hidden */
   _getPageIdFromRawEvent(rawEvent: MessengerRawEvent): string | null {
     if (rawEvent.message && rawEvent.message.isEcho && rawEvent.sender) {
       return rawEvent.sender.id;
@@ -207,6 +220,7 @@ export default class MessengerConnector
     return null;
   }
 
+  /** @hidden */
   _isStandby(body: MessengerRequestBody): boolean {
     if (!('entry' in body)) return false;
     const entry = (body as EntryRequestBody).entry[0];
@@ -214,6 +228,7 @@ export default class MessengerConnector
     return !!entry.standby;
   }
 
+  /** @hidden */
   _profilePicExpired(user: { profilePic: string }): boolean {
     try {
       // Facebook CDN returns expiration time in the key `ext` in URL params like:
