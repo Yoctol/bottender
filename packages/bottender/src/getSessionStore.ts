@@ -1,8 +1,9 @@
 import warning from 'warning';
 
+import SessionStore from './session/SessionStore';
 import getBottenderConfig from './shared/getBottenderConfig';
 
-function getSessionStore() {
+function getSessionStore(): SessionStore {
   const { session } = getBottenderConfig();
 
   const sessionDriver = (session && session.driver) || 'memory';
@@ -44,6 +45,14 @@ function getSessionStore() {
       );
     }
     default: {
+      // Support custom session stores by returning the session store instance
+      const customSessionStore:
+        | SessionStore
+        | undefined = (storesConfig as any)[sessionDriver];
+      if (customSessionStore) {
+        return customSessionStore;
+      }
+
       warning(
         false,
         `Received unknown driver: ${sessionDriver}, so fallback it to \`memory\` driver.`

@@ -1,3 +1,4 @@
+import MemorySessionStore from '../session/MemorySessionStore';
 import getBottenderConfig from '../shared/getBottenderConfig';
 import getSessionStore from '../getSessionStore';
 import { SessionDriver } from '../types';
@@ -71,4 +72,19 @@ it('should get RedisSessionStore when assigning redis as driver', () => {
     },
   });
   expect(getSessionStore().constructor.name).toEqual('RedisSessionStore');
+});
+
+it('should get provided SessionStore when assigning custom driver', () => {
+  const memory2SessionStore = new MemorySessionStore();
+
+  getBottenderConfigMocked.mockReturnValueOnce({
+    session: {
+      driver: 'memory2',
+      stores: {
+        memory2: memory2SessionStore,
+      },
+    },
+  });
+
+  expect(getSessionStore()).toEqual(memory2SessionStore);
 });

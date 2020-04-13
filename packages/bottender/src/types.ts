@@ -8,6 +8,7 @@ import ConsoleEvent, { ConsoleRawEvent } from './console/ConsoleEvent';
 import Context from './context/Context';
 import LineEvent from './line/LineEvent';
 import MessengerEvent from './messenger/MessengerEvent';
+import SessionStore from './session/SessionStore';
 import SlackEvent from './slack/SlackEvent';
 import TelegramEvent from './telegram/TelegramEvent';
 import TwilioClient from './whatsapp/TwilioClient';
@@ -81,26 +82,30 @@ export enum SessionDriver {
 }
 
 export type SessionConfig = {
-  driver: SessionDriver;
+  driver: string;
   expiresIn?: number;
-  stores: {
-    memory?: {
-      maxSize?: number;
-    };
-    file?: {
-      dirname?: string;
-    };
-    redis?: {
-      port?: number;
-      host?: string;
-      password?: string;
-      db?: number;
-    };
-    mongo?: {
-      url?: string;
-      collectionName?: string;
-    };
-  };
+  stores:
+    | {
+        memory?: {
+          maxSize?: number;
+        };
+        file?: {
+          dirname?: string;
+        };
+        redis?: {
+          port?: number;
+          host?: string;
+          password?: string;
+          db?: number;
+        };
+        mongo?: {
+          url?: string;
+          collectionName?: string;
+        };
+      }
+    | {
+        [P in Exclude<string, SessionDriver>]: SessionStore;
+      };
 };
 
 export type BottenderConfig = {
