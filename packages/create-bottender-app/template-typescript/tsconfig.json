@@ -3,7 +3,7 @@
   "exclude": ["**/__tests__", "**/*.{spec,test}.ts"],
   "compilerOptions": {
     "target": "es2016",
-    "lib": ["es2017", "esnext.asynciterable"],
+    "lib": ["es2017", "es2018", "es2019", "es2020", "esnext.asynciterable"],
     "module": "commonjs",
     "skipLibCheck": true,
     "moduleResolution": "node",
