@@ -7379,10 +7379,10 @@ messaging-api-common@^1.0.0-beta.16:
     snake-case "^3.0.3"
     url-join "^4.0.1"
 
-messaging-api-line@^1.0.0-beta.17:
-  version "1.0.0-beta.17"
-  resolved "https://registry.yarnpkg.com/messaging-api-line/-/messaging-api-line-1.0.0-beta.17.tgz#58cfad0362ccc9f5a54c45b71424df93f504d94e"
-  integrity sha512-F6R0dLm3Wk7YP2e8ZrFxe7BlhuibXB/aDBBQwYeXuu8jp+lEsKm8yJWuEZx2Y875o/Dvn6ekkBYsSBa15t7m4A==
+messaging-api-line@^1.0.0-beta.18:
+  version "1.0.0-beta.18"
+  resolved "https://registry.yarnpkg.com/messaging-api-line/-/messaging-api-line-1.0.0-beta.18.tgz#9f80e687dfc2205607212873d78d12a66ff9a90a"
+  integrity sha512-n2czrjumFIWGortkEtGk1GF2Hmoohp6A46U3Gp6lybAuTqm6ebCJyPMQJRel8b8d/MXZqIAUZFyQGdU/qT/eaw==
   dependencies:
     axios "^0.19.2"
     axios-error "^1.0.0-beta.16"
@@ -7391,10 +7391,10 @@ messaging-api-line@^1.0.0-beta.17:
     messaging-api-common "^1.0.0-beta.16"
     warning "^4.0.3"
 
-messaging-api-messenger@^1.0.0-beta.16:
-  version "1.0.0-beta.16"
-  resolved "https://registry.yarnpkg.com/messaging-api-messenger/-/messaging-api-messenger-1.0.0-beta.16.tgz#c00ddb921058c0408a88bf5156b95e4657fbd15b"
-  integrity sha512-CUDSwiM3QmUL1Ojj03MbrQG6QjzwBbu16g1XmGFm80Kkd7xwj8ispS2CSALMvcO6e+tve7YmbmPMwNXyYuoiVQ==
+messaging-api-messenger@^1.0.0-beta.18:
+  version "1.0.0-beta.18"
+  resolved "https://registry.yarnpkg.com/messaging-api-messenger/-/messaging-api-messenger-1.0.0-beta.18.tgz#50ef461dc3743712d7bb459bf5c0d6e1893b342e"
+  integrity sha512-2epVMxyGReG/mmKn0ugYEEZr6sHrdtz7Np4yRs855zqTOqzNzLYvfDwpEUwNbbGe0serDsyt8s4s2tbr5FJPbg==
   dependencies:
     append-query "^2.1.0"
     axios "^0.19.2"
