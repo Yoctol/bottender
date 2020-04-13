@@ -2,7 +2,7 @@ import axios from 'axios';
 import { Action, Context, withProps } from 'bottender';
 import { get } from 'lodash';
 
-import { ParsedResult } from './types';
+import { Entity, Intent, ParsedResult } from './types';
 
 /**
  * const Rasa = rasa({
@@ -23,15 +23,24 @@ module.exports = function rasa({
   jwt,
 }: {
   origin: string;
-  actions: Record<string, Action<Context<any, any>, any>>;
+  actions: Record<
+    string,
+    Action<
+      Context<any, any>,
+      {
+        intent: Intent;
+        entities: Entity[];
+      }
+    >
+  >;
   confidenceThreshold: number;
   emulationMode?: 'WIT' | 'LUIS' | 'DIALOGFLOW';
   jwt?: string;
-}) {
+}): Action<Context<any, any>> {
   return async function Rasa(
     context: Context<any, any>,
-    { next }: { next?: Action<Context<any, any>, any> }
-  ) {
+    { next }: { next?: Action<Context<any, any>> }
+  ): Promise<Action<Context<any, any>> | void> {
     if (!context.event.isText) {
       return next;
     }

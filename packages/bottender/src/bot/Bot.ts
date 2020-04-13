@@ -270,7 +270,7 @@ export default class Bot<
       const promises = Promise.all(
         contexts.map((context: Ctx) =>
           Promise.resolve()
-            .then(() => run(handler)(context))
+            .then(() => run(handler)(context, {}))
             .then(() => {
               if (context.handlerDidEnd) {
                 return context.handlerDidEnd();

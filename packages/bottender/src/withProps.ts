@@ -1,11 +1,11 @@
 import partial from 'lodash/partial';
 
 import Context from './context/Context';
-import { Action, Props } from './types';
+import { Action } from './types';
 
-function withProps<C extends Context<any, any>>(
-  action: Action<C, any>,
-  props: Props<C>
+function withProps<C extends Context<any, any>, P extends Record<string, any>>(
+  action: Action<C, P>,
+  props: P
 ): Action<C, any> {
   // TODO: we may only apply this on dev env
   Object.freeze(props);

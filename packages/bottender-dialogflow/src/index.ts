@@ -37,15 +37,15 @@ module.exports = function dialogflow({
 }: {
   projectId: string;
   languageCode: string;
-  actions: Record<string, Action<Context<any, any>, any>>;
+  actions: Record<string, Action<Context<any, any>, QueryResult>>;
   timeZone?: string;
-}) {
+}): Action<Context<any, any>> {
   const sessionsClient = new dialogflowSdk.SessionsClient();
 
   return async function Dialogflow(
     context: Context<any, any>,
-    { next }: { next?: Action<Context<any, any>, any> }
-  ) {
+    { next }: { next?: Action<Context<any, any>> }
+  ): Promise<Action<Context<any, any>> | void> {
     if (!context.event.isText || !context.session) {
       return next;
     }
