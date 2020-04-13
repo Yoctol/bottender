@@ -31,11 +31,11 @@ module.exports = function qnaMaker({
   qnaId?: string;
   scoreThreshold?: number;
   strictFilters?: MetadataDTO[];
-}) {
+}): Action<Context<any, any>> {
   return async function QnaMaker(
     context: Context<any, any>,
-    { next }: { next?: Action<Context<any, any>, any> }
-  ) {
+    { next }: { next?: Action<Context<any, any>> }
+  ): Promise<Action<Context<any, any>> | void> {
     if (!context.event.isText || !context.session) {
       return next;
     }
