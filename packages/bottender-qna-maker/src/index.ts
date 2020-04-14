@@ -1,4 +1,5 @@
 import axios from 'axios';
+import invariant from 'invariant';
 import { Action, Context } from 'bottender';
 
 import { MetadataDTO, QnaSearchResultList } from './types';
@@ -32,6 +33,21 @@ module.exports = function qnaMaker({
   scoreThreshold?: number;
   strictFilters?: MetadataDTO[];
 }): Action<Context<any, any>> {
+  invariant(
+    typeof resourceName === 'string' && resourceName.length > 0,
+    'Resource name is required parameter.'
+  );
+
+  invariant(
+    typeof knowledgeBaseId === 'string' && knowledgeBaseId.length > 0,
+    'Knowledge base ID is required parameter.'
+  );
+
+  invariant(
+    typeof endpointKey === 'string' && endpointKey.length > 0,
+    'Endpoint key is required parameter.'
+  );
+
   return async function QnaMaker(
     context: Context<any, any>,
     { next }: { next?: Action<Context<any, any>> }
