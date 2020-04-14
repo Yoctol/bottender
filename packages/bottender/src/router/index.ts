@@ -19,7 +19,7 @@ type Route<C extends AnyContext, AC extends AnyContext = C> = {
   action: Action<AC, any>;
 };
 
-function router<C extends AnyContext>(routes: Route<C>[]) {
+function router<C extends AnyContext>(routes: Route<C, any>[]) {
   return async function Router(context: C, props: Props<C> = {}) {
     for (const r of routes) {
       // eslint-disable-next-line no-await-in-loop
