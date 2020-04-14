@@ -1,26 +1,25 @@
-import Context from '../context/Context';
 import line from '../line/routes';
 import messenger from '../messenger/routes';
 import slack from '../slack/routes';
 import telegram from '../telegram/routes';
 import viber from '../viber/routes';
 import whatsapp from '../whatsapp/routes';
-import { Action, Props } from '../types';
+import { Action, AnyContext, Props } from '../types';
 
 type MatchPattern = string | Array<string> | RegExp;
 
-type RoutePattern<C extends Context<any, any>> = '*' | RoutePredicate<C>;
+type RoutePattern<C extends AnyContext> = '*' | RoutePredicate<C>;
 
-export type RoutePredicate<C extends Context<any, any>> = (
+export type RoutePredicate<C extends AnyContext> = (
   context: C
 ) => boolean | Record<string, any> | Promise<boolean | Record<string, any>>;
 
-type Route<C extends Context<any, any>, AC extends Context<any, any> = C> = {
+type Route<C extends AnyContext, AC extends AnyContext = C> = {
   predicate: RoutePredicate<C>;
   action: Action<AC, any>;
 };
 
-function router<C extends Context<any, any>>(routes: Route<C>[]) {
+function router<C extends AnyContext>(routes: Route<C>[]) {
   return async function Router(context: C, props: Props<C> = {}) {
     for (const r of routes) {
       // eslint-disable-next-line no-await-in-loop
@@ -39,7 +38,7 @@ function router<C extends Context<any, any>>(routes: Route<C>[]) {
   };
 }
 
-function route<C extends Context<any, any>, AC extends Context<any, any> = C>(
+function route<C extends AnyContext, AC extends AnyContext = C>(
   pattern: RoutePattern<C>,
   action: Action<AC, any>
 ) {
@@ -56,7 +55,7 @@ function route<C extends Context<any, any>, AC extends Context<any, any> = C>(
   };
 }
 
-function text<C extends Context<any, any>>(
+function text<C extends AnyContext>(
   pattern: MatchPattern,
   action: Action<C, any>
 ) {
@@ -101,7 +100,7 @@ function text<C extends Context<any, any>>(
   };
 }
 
-function payload<C extends Context<any, any>>(
+function payload<C extends AnyContext>(
   pattern: MatchPattern,
   action: Action<C, any>
 ) {
@@ -146,7 +145,7 @@ function payload<C extends Context<any, any>>(
   };
 }
 
-function platform<C extends Context<any, any>>(
+function platform<C extends AnyContext>(
   pattern: MatchPattern,
   action: Action<C, any>
 ) {

@@ -1,7 +1,6 @@
-import Context from './context/Context';
-import { Action, Props } from './types';
+import { Action, AnyContext, Props } from './types';
 
-function chain<C extends Context<any, any>>(actions: Action<C, any>[]) {
+function chain<C extends AnyContext>(actions: Action<C, any>[]) {
   if (!Array.isArray(actions))
     throw new TypeError('Chain stack must be an array!');
   for (const action of actions) {

@@ -49,8 +49,10 @@ export type Body =
   | ViberRequestBody
   | WhatsappRequestBody;
 
+export type AnyContext = Context<any, any>;
+
 export type Action<
-  C extends Context<any, any>,
+  C extends AnyContext,
   P extends Record<string, any> = {},
   RAP extends Record<string, any> = {}
 > = (
@@ -58,12 +60,12 @@ export type Action<
   props: Props<C> & P
 ) => void | Action<C, RAP> | Promise<Action<C, RAP> | void>;
 
-export type Props<C extends Context<any, any>> = {
+export type Props<C extends AnyContext> = {
   next?: Action<C, any>;
   error?: Error;
 };
 
-export type Plugin<C extends Context<any, any>> = (context: C) => void;
+export type Plugin<C extends AnyContext> = (context: C) => void;
 
 export enum Channel {
   Messenger = 'messenger',

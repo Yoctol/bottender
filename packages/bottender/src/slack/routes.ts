@@ -1,11 +1,10 @@
-import Context from '../context/Context';
-import { Action } from '../types';
+import { Action, AnyContext } from '../types';
 import { RoutePredicate, route } from '../router';
 
 import SlackContext from './SlackContext';
 import { EventTypes } from './SlackEvent';
 
-type Route = <C extends Context<any, any>>(
+type Route = <C extends AnyContext>(
   action: Action<SlackContext, any>
 ) => {
   predicate: RoutePredicate<C>;
@@ -15,14 +14,14 @@ type Route = <C extends Context<any, any>>(
 type Slack = Route & {
   any: Route;
   message: Route;
-  event: <C extends Context<any, any>>(
+  event: <C extends AnyContext>(
     eventType: EventTypes,
     action: Action<SlackContext, any>
   ) => {
     predicate: RoutePredicate<C>;
     action: Action<SlackContext, any>;
   };
-  command: <C extends Context<any, any>>(
+  command: <C extends AnyContext>(
     commandText: string,
     action: Action<SlackContext, any>
   ) => {
@@ -31,7 +30,7 @@ type Slack = Route & {
   };
 };
 
-const slack: Slack = <C extends Context<any, any>>(
+const slack: Slack = <C extends AnyContext>(
   action: Action<SlackContext, any>
 ) => {
   return route((context: C) => context.platform === 'slack', action);
@@ -39,9 +38,7 @@ const slack: Slack = <C extends Context<any, any>>(
 
 slack.any = slack;
 
-function message<C extends Context<any, any>>(
-  action: Action<SlackContext, any>
-) {
+function message<C extends AnyContext>(action: Action<SlackContext, any>) {
   return route(
     (context: C) => context.platform === 'slack' && context.event.isMessage,
     action
@@ -50,7 +47,7 @@ function message<C extends Context<any, any>>(
 
 slack.message = message;
 
-function event<C extends Context<any, any>>(
+function event<C extends AnyContext>(
   eventType: EventTypes,
   action: Action<SlackContext, any>
 ) {
@@ -63,7 +60,7 @@ function event<C extends Context<any, any>>(
 
 slack.event = event;
 
-function command<C extends Context<any, any>>(
+function command<C extends AnyContext>(
   commandText: string,
   action: Action<SlackContext, any>
 ) {
