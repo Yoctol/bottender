@@ -15,7 +15,7 @@ Install dependencies:
 npm install
 ```
 
-You must put `accountSid` and `authToken` into `bottender.config.js`.
+You must put `ACCOUNT_SID`, `AUTH_TOKEN` and `PHONE_NUMBER` into `.env`.
 
 After that, you can run the bot with this npm script:
 
