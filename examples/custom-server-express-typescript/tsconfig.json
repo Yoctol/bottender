@@ -1,0 +1,19 @@
+{
+  "include": ["src/**/*"],
+  "exclude": ["**/__tests__", "**/*.{spec,test}.ts"],
+  "compilerOptions": {
+    "target": "es2016",
+    "lib": ["es2017", "es2018", "es2019", "esnext.asynciterable"],
+    "module": "commonjs",
+    "skipLibCheck": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "types": ["node"]
+  }
+}
