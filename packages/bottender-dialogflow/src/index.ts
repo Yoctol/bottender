@@ -1,4 +1,5 @@
 import dialogflowSdk from 'dialogflow';
+import invariant from 'invariant';
 import { Action, Context, withProps } from 'bottender';
 
 import { Message, QueryResult } from './types';
@@ -40,6 +41,17 @@ module.exports = function dialogflow({
   actions: Record<string, Action<Context<any, any>, QueryResult>>;
   timeZone?: string;
 }): Action<Context<any, any>> {
+  invariant(
+    typeof projectId === 'string' && projectId.length > 0,
+    'dialogflow: `projectId` is a required parameter.'
+  );
+
+  const credentials = process.env.GOOGLE_APPLICATION_CREDENTIALS;
+  invariant(
+    typeof credentials === 'string' && credentials.length > 0,
+    'dialogflow: `GOOGLE_APPLICATION_CREDENTIALS` is required. Please make sure you have filled it correctly in `.env` file.'
+  );
+
   const sessionsClient = new dialogflowSdk.SessionsClient();
 
   return async function Dialogflow(

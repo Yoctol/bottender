@@ -202,7 +202,7 @@ async function Unknown(context) {
 const Luis = luis({
   appId: process.env.LUIS_APP_ID,
   appKey: process.env.LUIS_APP_KEY,
-  endpoint: 'https://westus.api.cognitive.microsoft.com',
+  endpoint: process.env.LUIS_APP_ENDPOINT,
   actions: {
     greeting: SayHello,
   },

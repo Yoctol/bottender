@@ -15,7 +15,8 @@
   "types": "dist/index.d.ts",
   "dependencies": {
     "@types/dialogflow": "^4.0.4",
-    "dialogflow": "^1.2.0"
+    "dialogflow": "^1.2.0",
+    "invariant": "^2.2.4"
   },
   "peerDependencies": {
     "bottender": ">= 1.2.0-0"

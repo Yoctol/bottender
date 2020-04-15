@@ -14,7 +14,9 @@ module.exports = async function HandleError(context, props) {
   console.error(props.error);
   if (!context.isReplied) {
     // or you can choose not to reply any error messages
-    await context.replyText('There are some unexpected errors happened. Please try again later, sorry for the inconvenience.');
+    await context.replyText(
+      'There are some unexpected errors happened. Please try again later, sorry for the inconvenience.'
+    );
   }
   if (process.env.NODE_ENV === 'production') {
     // send your error to the error tracker, for example: Sentry

@@ -3,6 +3,8 @@ import { Context, chain } from 'bottender';
 // FIXME: export public API for testing
 import { run } from 'bottender/dist/bot/Bot';
 
+process.env.GOOGLE_APPLICATION_CREDENTIALS = 'test';
+
 const dialogflow = require('..'); // eslint-disable-line @typescript-eslint/no-var-requires
 
 jest.mock('dialogflow');

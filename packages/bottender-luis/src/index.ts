@@ -1,4 +1,5 @@
 import axios from 'axios';
+import invariant from 'invariant';
 import { Action, Context, withProps } from 'bottender';
 
 import { EntityModel, IntentModel, LuisResult, Sentiment } from './types';
@@ -52,6 +53,21 @@ module.exports = function luis({
   bingSpellCheckSubscriptionKey?: string;
   log?: boolean;
 }): Action<Context<any, any>> {
+  invariant(
+    typeof appId === 'string' && appId.length > 0,
+    'luis: `appId` is a required parameter.'
+  );
+
+  invariant(
+    typeof appKey === 'string' && appKey.length > 0,
+    'luis: `appKey` is a required parameter.'
+  );
+
+  invariant(
+    typeof endpoint === 'string' && endpoint.length > 0,
+    'luis: `endpoint` is a required parameter.'
+  );
+
   return async function Luis(
     context: Context<any, any>,
     { next }: { next?: Action<Context<any, any>> }
