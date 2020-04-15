@@ -1,4 +1,4 @@
-import EventEmitter from 'events';
+import { EventEmitter } from 'events';
 
 import debug from 'debug';
 import invariant from 'invariant';

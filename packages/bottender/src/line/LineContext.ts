@@ -1,4 +1,4 @@
-import EventEmitter from 'events';
+import { EventEmitter } from 'events';
 
 import chunk from 'lodash/chunk';
 import invariant from 'invariant';
