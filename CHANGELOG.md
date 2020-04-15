@@ -1,3 +1,111 @@
+# 1.4.0 / 2020-04-15
+
+- [new] route: provides `namespace.any` for better readability (#719):
+
+```js
+function App() {
+  return router([
+    messenger.any(HandleMessenger),
+    line.any(HandleLine),
+    slack.any(HandleSlack),
+    telegram.any(HandleTelegram),
+    viber.any(HandleViber),
+    whatsapp.any(HandleWhatsapp),
+  ]);
+}
+```
+
+- [new] support custom session store (#732):
+
+```js
+// bottender.config.js
+
+const { MemorySessionStore } = require('bottender');
+
+module.exports = {
+  session: {
+    driver: 'memory2',
+    stores: {
+      memory2: new MemorySessionStore();
+    },
+  },
+};
+```
+
+- [fix] context: let getters return literal instead of string type (#724)
+- [type] improve types of withProps (#731)
+
+## messenger
+
+- [new] messenger: use v6.0 graph api as default (messaging-apis#556)
+- [new] support reaction event and routing (#718):
+
+Support `event.isReaction` & `event.react`:
+
+```js
+function App(context) {
+  if (context.event.isReaction) {
+    console.log(context.event.reaction);
+    // {
+    //   reaction: 'smile',
+    //   emoji: '\u{2764}\u{FE0F}',
+    //   action: 'react',
+    //   mid: 'mid.$cAAE1UUyiiwthh0NPrVbVf4HFNDGl',
+    //  }
+  }
+}
+```
+
+Support detect events in routers:
+
+```js
+const { router, messenger } = require('bottender/router');
+
+function App() {
+  return router([
+    messenger.reaction.react(HandleReactionReact),
+    messenger.reaction.unreact(HandleReactionUnreact),
+    messenger.reaction(HandleReaction),
+  ]);
+}
+
+async function HandleReactionReact(context) {}
+async function HandleReactionUnreact(context) {}
+async function HandleReaction(context) {}
+```
+
+- [new] add `context.sendOneTimeNotifReqTemplate` (#722):
+
+```js
+context.sendOneTimeNotifReqTemplate({
+  title: '<TITLE_TEXT>',
+  payload: '<USER_DEFINED_PAYLOAD>',
+});
+```
+
+- [type] improve types of MessengerContext send methods (#729)
+
+## line
+
+- [new] export `LineNotify` (#721):
+
+```js
+const { LineNotify } = require('bottender');
+```
+
+- [type] add `language` to `User` (messaging-apis#563)
+- [type] add `sticon` to `TextMessage` (messaging-apis#564)
+- [type] export LINE flex types (messaging-apis#558)
+
+## bottender-dialogflow
+
+- [new] support text responses filled on Dialogflow.
+
+## create-bottender-app
+
+- [new] add `lib` es2018-es2020 by default.
+- [fix] let `App` action accept Action as return value (#734)
+
 # 1.3.5 / 2020-04-04
 
 - [fix] put `router.d.ts` into package files whitelist
