@@ -1,0 +1,18 @@
+{
+  "scripts": {
+    "build": "tsc",
+    "dev": "nodemon --exec ts-node src/server.ts",
+    "start": "cross-env NODE_ENV=production node dist/server.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "bottender": "latest",
+    "cross-env": "^6.0.3",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.1",
+    "ts-node": "^8.8.2",
+    "typescript": "^3.8.3"
+  }
+}
