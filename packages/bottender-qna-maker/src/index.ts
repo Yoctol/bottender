@@ -35,17 +35,17 @@ module.exports = function qnaMaker({
 }): Action<Context<any, any>> {
   invariant(
     typeof resourceName === 'string' && resourceName.length > 0,
-    'Resource name is required parameter.'
+    'qna-maker: `resourceName` is a required parameter.'
   );
 
   invariant(
     typeof knowledgeBaseId === 'string' && knowledgeBaseId.length > 0,
-    'Knowledge base ID is required parameter.'
+    'qna-maker: `knowledgeBaseId` is a required parameter.'
   );
 
   invariant(
     typeof endpointKey === 'string' && endpointKey.length > 0,
-    'Endpoint key is required parameter.'
+    'qna-maker: `endpointKey` is a required parameter.'
   );
 
   return async function QnaMaker(

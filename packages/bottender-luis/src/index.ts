@@ -55,17 +55,17 @@ module.exports = function luis({
 }): Action<Context<any, any>> {
   invariant(
     typeof appId === 'string' && appId.length > 0,
-    'App ID is required parameter.'
+    'luis: `appId` is a required parameter.'
   );
 
   invariant(
     typeof appKey === 'string' && appKey.length > 0,
-    'App key is required parameter.'
+    'luis: `appKey` is a required parameter.'
   );
 
   invariant(
     typeof endpoint === 'string' && endpoint.length > 0,
-    'Endpoint is required parameter.'
+    'luis: `endpoint` is a required parameter.'
   );
 
   return async function Luis(

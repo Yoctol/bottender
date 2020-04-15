@@ -43,13 +43,13 @@ module.exports = function dialogflow({
 }): Action<Context<any, any>> {
   invariant(
     typeof projectId === 'string' && projectId.length > 0,
-    'Project ID is required parameter.'
+    'dialogflow: `projectId` is a required parameter.'
   );
 
   const credentials = process.env.GOOGLE_APPLICATION_CREDENTIALS;
   invariant(
     typeof credentials === 'string' && credentials.length > 0,
-    'GOOGLE_APPLICATION_CREDENTIALS is required. Please make sure you have filled it correctly in `.env` file.'
+    'dialogflow: `GOOGLE_APPLICATION_CREDENTIALS` is required. Please make sure you have filled it correctly in `.env` file.'
   );
 
   const sessionsClient = new dialogflowSdk.SessionsClient();
