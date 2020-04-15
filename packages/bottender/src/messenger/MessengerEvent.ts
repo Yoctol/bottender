@@ -95,10 +95,16 @@ export type GamePlay = {
   payload: string;
 };
 
-export type Optin = {
-  ref: string;
-  userRef?: string;
-};
+export type Optin =
+  | {
+      ref: string;
+      userRef?: string;
+    }
+  | {
+      type: 'one_time_notif_req';
+      payload: string;
+      oneTimeNotifToken: string;
+    };
 
 export type Payment = {
   payload: string;
