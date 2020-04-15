@@ -27,11 +27,11 @@ module.exports = async function App(context) {
 
   return prettier.format(
     `
-import { ${contexts.join(', ')} } from 'bottender';
+import { Action, ${contexts.join(', ')} } from 'bottender';
 
 export default async function App(context: ${contexts.join(
       ' | '
-    )}): Promise<void> {
+    )}): Promise<Action<${contexts.join(', ')}> |void> {
   await context.sendText('Welcome to Bottender');
 };
 `,
