@@ -36,7 +36,7 @@ If you want to have a clean project with the custom express, you could start fro
 3. Fill the `.env` file with correct value.
 4. Run `yarn dev` or `npm run dev` to start the dev server.
 
-If you want to have the folder structure we recommended, you could start with [create-bottender-app](getting-started#create-a-new-bottender-app) command and migrate it to the custom express server by following the migration instructions below.
+If you want to have the folder structure we recommend, you could start with [create-bottender-app](getting-started#create-a-new-bottender-app) command and migrate it to the custom express server by following the migration instructions below.
 
 ### Migrating An Existing Project to Custom Express Server
 
@@ -116,7 +116,7 @@ If you want to have a clean project with the custom koa, you could start from [t
 3. Fill the `.env` file with correct value.
 4. Run `yarn dev` to start server.
 
-If you want to have the folder structure we recommended, you could start with [create-bottender-app](getting-started#create-a-new-bottender-app) command and migrate it to the custom koa server by following the migration instructions below.
+If you want to have the folder structure we recommend, you could start with [create-bottender-app](getting-started#create-a-new-bottender-app) command and migrate it to the custom koa server by following the migration instructions below.
 
 ### Migrating An Existing Project to Custom Koa Server
 
@@ -196,7 +196,7 @@ If you want to have a clean project with the custom restify, you could start fro
 3. Fill the `.env` file with correct value.
 4. Run `yarn dev` to start server.
 
-If you want to have the folder structure we recommended, you could start with [create-bottender-app](getting-started#create-a-new-bottender-app) command and migrate it to the custom restify server by following the migration instructions below.
+If you want to have the folder structure we recommend, you could start with [create-bottender-app](getting-started#create-a-new-bottender-app) command and migrate it to the custom restify server by following the migration instructions below.
 
 ### Migrating An Existing Project to Custom Restify Server
 
