@@ -461,7 +461,10 @@ class LineContext extends Context<LineClient, LineEvent> {
     });
   }
 
-  replyText(text: string, options?: LineTypes.MessageOptions) {
+  replyText(
+    text: string,
+    options?: LineTypes.MessageOptions & { emojis?: LineTypes.Emoji[] }
+  ) {
     return this.reply([Line.createText(text, options)], options);
   }
 
@@ -624,7 +627,10 @@ class LineContext extends Context<LineClient, LineEvent> {
     });
   }
 
-  pushText(text: string, options?: LineTypes.MessageOptions) {
+  pushText(
+    text: string,
+    options?: LineTypes.MessageOptions & { emojis?: LineTypes.Emoji[] }
+  ) {
     return this.push([Line.createText(text, options)], options);
   }
 
@@ -774,7 +780,10 @@ class LineContext extends Context<LineClient, LineEvent> {
     return this.reply(messages, options);
   }
 
-  sendText(text: string, options?: LineTypes.MessageOptions) {
+  sendText(
+    text: string,
+    options?: LineTypes.MessageOptions & { emojis?: LineTypes.Emoji[] }
+  ) {
     return this.send([Line.createText(text, options)], options);
   }
 
