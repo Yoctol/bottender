@@ -7379,10 +7379,10 @@ messaging-api-common@^1.0.0-beta.16:
     snake-case "^3.0.3"
     url-join "^4.0.1"
 
-messaging-api-line@^1.0.0-beta.19:
-  version "1.0.0-beta.19"
-  resolved "https://registry.yarnpkg.com/messaging-api-line/-/messaging-api-line-1.0.0-beta.19.tgz#0236e1dc02993f70c79b21849fbb68a210809fdf"
-  integrity sha512-HC7YkwwptrBvEFS+F31NgHOx8wNuqq5BXmQuDuJG6I5oNLA/WOnpD7NURvJXaMK/u7sE1faXyv0PoTw55Un0+Q==
+messaging-api-line@^1.0.0-beta.20:
+  version "1.0.0-beta.20"
+  resolved "https://registry.yarnpkg.com/messaging-api-line/-/messaging-api-line-1.0.0-beta.20.tgz#7470ff978b43ccf0d7d291cd74c0008c78a1284d"
+  integrity sha512-LNWdAc59YuMh5pp4QZkO692pdkpXe6UOLwcXWNu6ABSxZoJnO6ss49m9bQcx6p8nOc5xbnRqIJAyRt3uNDNxAA==
   dependencies:
     axios "^0.19.2"
     axios-error "^1.0.0-beta.16"
