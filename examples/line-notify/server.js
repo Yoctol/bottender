@@ -17,8 +17,8 @@ const handle = app.getRequestHandler();
 const lineNotify = new LineNotify({
   clientId: process.env.LINE_NOTIFY_CLIENT_ID,
   clientSecret: process.env.LINE_NOTIFY_CLIENT_SECRET,
-  redirectUri: `${process.env.ROOT_PATH}/notify/redirect`
-})
+  redirectUri: `${process.env.ROOT_PATH}/notify/redirect`,
+});
 
 app.prepare().then(() => {
   const server = express();
