@@ -94,7 +94,7 @@ const { LineNotify } = require('bottender');
 ```
 
 - [type] add `language` to `User` (messaging-apis#563)
-- [type] add `sticon` to `TextMessage` (messaging-apis#564)
+- [type] add `emoji` to `TextMessage` (messaging-apis#564)
 - [type] export LINE flex types (messaging-apis#558)
 
 ## bottender-dialogflow
