@@ -1,13 +1,13 @@
 version: 2
 # Reference variables.
 references:
-  docker_default: &docker_12
+  docker_12: &docker_12
     working_directory: /tmp/app
     docker:
       - image: node:12
     environment:
       TZ: "/usr/share/zoneinfo/Asia/Taipei"
-  docker_default: &docker_10
+  docker_10: &docker_10
     working_directory: /tmp/app
     docker:
       - image: node:10
