@@ -723,33 +723,44 @@ const quickReply = {
 >
 > - For more info, please refer to LINE's official doc, [`Location Action`](https://developers.line.biz/en/reference/messaging-api/#location-action)
 
-## Sending with dynamic icon and display name
+## Sending Messages with Icon and Display Name
 
-You can dynamically change the icon and display name by specifying the `sender` property in message options.
+![](https://user-images.githubusercontent.com/3382565/79414458-44faab80-7fdd-11ea-9b72-d039df1addf3.png)
 
-![](https://developers.line.biz/assets/img/icon-nickname-switch.7ad52e1a.jpg)
-
-The `sender.name` and `sender.iconUrl` are both optional parameters. See the following example:
+You can specify the icon and display name by providing the `sender` property in the message options:
 
 ```js
 const sender = {
-  name: 'dynamic name',
-  iconUrl: 'https://example.com/icon.jpg'
-}
+  name: 'Cony',
+  iconUrl: 'https://line.me/conyprof',
+};
 
+await context.sendText('Hello, I am Cony!!', { sender });
+await context.sendImage(
+  {
+    originalContentUrl: 'https://example.com/image.jpg',
+    previewImageUrl: 'https://example.com/preview.jpg',
+  },
+  { sender }
+);
+```
+
+If you prefer to send messages with LINE original [message objects](https://developers.line.biz/en/reference/messaging-api/#message-objects), you can provide the `sender` property in the message object:
+
+```js
 await context.send([
   {
     type: 'text',
-    text: 'hello',
-    sender,
+    text: 'Hello, I am Cony!!',
+    sender: {
+      name: 'Cony',
+      iconUrl: 'https://line.me/conyprof',
+    },
   },
 ]);
-
-// or
-await context.sendText('hello', { sender });
 ```
 
-> - For more info, refer to LINE's official doc, [`Change icon and display name`](https://developers.line.biz/zh-hant/docs/messaging-api/icon-nickname-switch/#summary)
+For more info, refer to LINE's official doc, [Change icon and display name](https://developers.line.biz/zh-hant/docs/messaging-api/icon-nickname-switch/#summary).
 
 ## Rate Limits
 
