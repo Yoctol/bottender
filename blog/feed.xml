@@ -4,7 +4,7 @@
         <title>Bottender Blog</title>
         <link>https://bottender.js.org/blog</link>
         <description>The best place to stay up-to-date with the latest Bottender news and events.</description>
-        <lastBuildDate>Wed, 08 Apr 2020 06:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Fri, 17 Apr 2020 06:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <image>
@@ -13,6 +13,26 @@
             <link>https://bottender.js.org/blog</link>
         </image>
         <copyright>© 2019 - PRESENT YOCTOL.AI ALL RIGHTS RESERVED.</copyright>
+        <item>
+            <title><![CDATA[Bottender 1.4: Customizable Session Store, Messenger, LINE Features, Multi-language Documentation]]></title>
+            <link>https://bottender.js.org/blog/2020/04/17/bottender-1_4.html</link>
+            <guid>https://bottender.js.org/blog/2020/04/17/bottender-1_4.html</guid>
+            <pubDate>Fri, 17 Apr 2020 06:00:00 GMT</pubDate>
+            <description><![CDATA[<p><img src="https://user-images.githubusercontent.com/3382565/79356403-7f2e6380-7f71-11ea-9180-c13b47642a42.png" alt=""></p>
+<p>Today we are very excited to introduce Bottender 1.4, featuring:</p>
+<ul>
+<li><strong><a href="/blog/2020/04/17/bottender-1_4#routes-readability-improvement">Routes Readability Improvement</a></strong></li>
+<li><strong><a href="/blog/2020/04/17/bottender-1_4#customizable-session-store">Customizable Session Store</a></strong></li>
+<li><strong><a href="/blog/2020/04/17/bottender-1_4#messenger-one-time-notification-beta">Messenger One-Time Notification (Beta)</a></strong></li>
+<li><strong><a href="/blog/2020/04/17/bottender-1_4#messenger-message-reaction-event">Messenger Message Reaction Event</a></strong></li>
+<li><strong><a href="/blog/2020/04/17/bottender-1_4#built-in-line-notify-support">Built-In LINE Notify Support</a></strong></li>
+<li><strong><a href="/blog/2020/04/17/bottender-1_4#line-icon-and-display-name-switch">LINE Icon and Display Name Switch</a></strong></li>
+<li><strong><a href="/blog/2020/04/17/bottender-1_4#line-emoji-in-text-messages">LINE Emoji in Text Messages</a></strong></li>
+<li><strong><a href="/blog/2020/04/17/bottender-1_4#multi-language-documentation-website">Multi-language Documentation Website</a></strong></li>
+</ul>
+<p>Besides, we also bring a bunch of TypeScript improvements into this release. If you're using TypeScript with Bottender in your project, you may want to upgrade and see the changes.</p>
+]]></description>
+        </item>
         <item>
             <title><![CDATA[Notice of LINE domain name change for certain endpoints]]></title>
             <link>https://bottender.js.org/blog/2020/04/08/line-domain-name-change.html</link>
