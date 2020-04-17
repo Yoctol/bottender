@@ -1,3 +1,9 @@
+# 1.4.1 / 2020-04-17
+
+## line
+
+- [fix] bump messaging-api-line to beta.20 and fix types in text methods (#742)
+
 # 1.4.0 / 2020-04-15
 
 - [new] route: provides `namespace.any` for better readability (#719):
