@@ -42,6 +42,7 @@
       "channel-line-flex",
       "channel-line-rich-menu",
       "channel-line-liff",
+      "channel-line-notify",
       "channel-line-errors",
       "channel-line-migrating-from-sdk"
     ],

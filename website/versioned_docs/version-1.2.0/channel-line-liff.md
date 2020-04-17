@@ -60,7 +60,7 @@ For more details about registering a LIFF app, please checkout [Registering LIFF
 
 ### Environment Variables Setting
 
-If you are familiar with any official Bottender example, you may already know about how to use `.env` file to manage your environment variables in your local project.
+If you are familiar with any official Bottender example, you may already know about how to use the `.env` file to manage your environment variables in your local project.
 
 In this case, you need to add another `LINE_LIFF_ID` env to `.env` file, so your file will have at least those three LINE related environment variables:
 
