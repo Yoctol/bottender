@@ -690,6 +690,45 @@ const quickReply = {
 
 For more information, please refer to LINE's official doc, [Location Action](https://developers.line.biz/en/reference/messaging-api/#location-action).
 
+## Sending Messages with Icon and Display Name
+
+![](https://user-images.githubusercontent.com/3382565/79414458-44faab80-7fdd-11ea-9b72-d039df1addf3.png)
+
+You can specify the icon and display name by providing the `sender` property in the message options:
+
+```js
+const sender = {
+  name: 'Cony',
+  iconUrl: 'https://line.me/conyprof',
+};
+
+await context.sendText('Hello, I am Cony!!', { sender });
+await context.sendImage(
+  {
+    originalContentUrl: 'https://example.com/image.jpg',
+    previewImageUrl: 'https://example.com/preview.jpg',
+  },
+  { sender }
+);
+```
+
+If you prefer to send messages with LINE original [message objects](https://developers.line.biz/en/reference/messaging-api/#message-objects), you can provide the `sender` property in the message object:
+
+```js
+await context.send([
+  {
+    type: 'text',
+    text: 'Hello, I am Cony!!',
+    sender: {
+      name: 'Cony',
+      iconUrl: 'https://line.me/conyprof',
+    },
+  },
+]);
+```
+
+For more info, refer to LINE's official doc, [Change icon and display name](https://developers.line.biz/zh-hant/docs/messaging-api/icon-nickname-switch/#summary).
+
 ## Rate Limits
 
 Just like many chat channels, LINE has rate limits for each endpoint. If you continue to send requests exceeding the rate limit for an extended period, your bot might stop responding. It is because LINE blocks incoming requests to your bot.
