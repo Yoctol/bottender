@@ -206,7 +206,7 @@
 <p>要連結 Rich Menu 到個別使用者上，你可以使用 Bottender 在處理使用者的事件時進行：</p>
 <pre><code class="hljs css language-js"><span class="hljs-keyword">await</span> context.linkRichMenu(<span class="hljs-string">'rich-menu-id'</span>);
 </code></pre>
-<p>而要從使用者解除 Rich Menu 連結，你可以使用：</p>
+<p>And to unlink a rich menu from a user, you can use:</p>
 <pre><code class="hljs css language-js"><span class="hljs-keyword">await</span> context.unlinkRichMenu();
 </code></pre>
 <p>你依然可以透過發送 HTTP POST 請求到 <code>https://api.line.me/v2/bot/user/{userId}/richmenu/{richMenuId}</code> 和 <code>https://api.line.me/v2/bot/richmenu/bulk/unlink</code> 端點來連結和解除連結 Rich Menu。</p>
