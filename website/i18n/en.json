@@ -74,6 +74,9 @@
       "channel-line-migrating-from-sdk": {
         "title": "Migrating from LINE SDK for Node.js"
       },
+      "channel-line-notify": {
+        "title": "LINE Notify"
+      },
       "channel-line-rich-menu": {
         "title": "LINE Rich Menu"
       },
@@ -673,6 +676,39 @@
       },
       "version-1.3.1/version-1.3.1-the-basics-session": {
         "title": "Session"
+      },
+      "version-1.4/version-1.4-advanced-guides-nlu": {
+        "title": "Natural Language Understanding"
+      },
+      "version-1.4/version-1.4-channel-line-errors": {
+        "title": "Error Handling in LINE"
+      },
+      "version-1.4/version-1.4-channel-line-notify": {
+        "title": "LINE Notify"
+      },
+      "version-1.4/version-1.4-channel-line-routing": {
+        "title": "LINE Routing"
+      },
+      "version-1.4/version-1.4-channel-line-sending-messages": {
+        "title": "Sending LINE Messages"
+      },
+      "version-1.4/version-1.4-channel-messenger-routing": {
+        "title": "Messenger Routing"
+      },
+      "version-1.4/version-1.4-channel-slack-routing": {
+        "title": "Slack Routing"
+      },
+      "version-1.4/version-1.4-channel-telegram-routing": {
+        "title": "Telegram Routings"
+      },
+      "version-1.4/version-1.4-channel-viber-routing": {
+        "title": "Viber Routing"
+      },
+      "version-1.4/version-1.4-channel-whatsapp-routing": {
+        "title": "WhatsApp Routing"
+      },
+      "version-1.4/version-1.4-migrating-v1": {
+        "title": "Migrating from v0.x to v1"
       }
     },
     "links": {
