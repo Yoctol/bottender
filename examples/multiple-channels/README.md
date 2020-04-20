@@ -23,7 +23,7 @@ After that, you can run the bot with this npm script:
 npm run dev
 ```
 
-This command will start server for bot developing at `http://localhost:5000`.
+This command starts a server listening at `http://localhost:5000` for bot development.
 
 If you successfully start the server, you will get webhook urls correspond to each platform from command line.
 

@@ -15,5 +15,5 @@ npm start
 
 ## Idea of This Example
 
-This example is a simple bot running on your browser.
-It shows how to build a frontend bot (no server) with React.
+This example is a bot running in your browser.
+It shows how to build a frontend bot (no server) with Bottender and React.

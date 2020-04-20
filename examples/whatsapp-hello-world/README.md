@@ -23,11 +23,11 @@ After that, you can run the bot with this npm script:
 npm run dev
 ```
 
-This command will start server for bot developing at `http://localhost:5000`.
+This command starts a server listening at `http://localhost:5000` for bot development.
 
-If you successfully start the server, you will get a webhook URL like `https://xxxxxxxx.ngrok.io/webhooks/whatsapp` from command line.
+If you successfully start the server, you get a webhook URL in the format of `https://xxxxxxxx.ngrok.io/webhooks/whatsapp` from your terminal.
 
 ## Idea of This Example
 
-This example is a simple bot running on [Twilio API for WhatsApp](https://www.twilio.com/whatsapp).
+This example is a bot running on [Twilio API for WhatsApp](https://www.twilio.com/whatsapp).
 For more information, check our [WhatsApp guides](https://bottender.js.org/docs/channel-whatsapp-setup).

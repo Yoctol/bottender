@@ -12,7 +12,7 @@ Due to cost concerns, you should clearly understand before sending any messages 
 
 - **Reply API** is free. However, your bot can only reply to the user once after a user interacts with your LINE official account. For each bot reply, you can send up to 5 **message objects** (See LINE's official document, [Sending Reply Messages](https://developers.line.biz/en/reference/messaging-api/#send-reply-message)). If you attempt to reply with more than 5 message objects, you may see an error in your console.
 
-- **Push API** allows developers to send messages directly to users anytime. However, it might cost some money depends on the price plan in your country.
+- **Push API** allows developers to send messages directly to users anytime. However, it might cost some money depends on the pricing plan in your country.
 
 By default, Bottender uses **Reply API** to send messages to users in conversations.
 

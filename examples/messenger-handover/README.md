@@ -15,7 +15,7 @@ Install dependencies:
 npm install
 ```
 
-You have to put `appId`, `appSecret`, `pageId`, `accessToken` and `verifyToken` into `bottender.config.js`.
+You must fill `APP_ID`, `APP_SECRET`, `PAGE_ID`, `ACCESS_TOKEN` and `VERIFY_TOKEN` in your `.env` file.
 
 If you are not familiar with Messenger Bot, you may refer to Bottender's doc, [Messenger Setup](https://bottender.js.org/docs/channel-messenger-setup), to find detailed instructions.
 
@@ -35,10 +35,10 @@ If you successfully start the server, you can get a webhook URL like `https://xx
 
 ## Set Webhook
 
-While the server running, you can run following command with `bottender` to set up the webhook with the webhook URL you get from running `npm run dev`:
+While the server is running, you can run the following command with `bottender` to set up the webhook with the webhook URL you got from running `npm run dev`:
 
 ```sh
-npx bottender messenger webhook set -w <YOUR_WEBHOOK_URL>
+npx bottender messenger webhook set
 ```
 
 > Note: You must put `appId`, `appSecret`, `pageId`, `accessToken` and `verifyToken` into `bottender.config.js` before running this command.

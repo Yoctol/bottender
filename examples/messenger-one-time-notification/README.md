@@ -1,12 +1,12 @@
-# Messenger Hello world
+# Messenger One-Time Notification
 
 ## Install and Run
 
 Download this example or clone [bottender](https://github.com/Yoctol/bottender).
 
 ```sh
-curl https://codeload.github.com/Yoctol/bottender/tar.gz/master | tar -xz --strip=2 bottender-master/examples/messenger-hello-world
-cd messenger-hello-world
+curl https://codeload.github.com/Yoctol/bottender/tar.gz/master | tar -xz --strip=2 bottender-master/examples/messenger-one-time-notification
+cd messenger-one-time-notification
 ```
 
 Install dependencies:
@@ -16,6 +16,8 @@ npm install
 ```
 
 You must fill `APP_ID`, `APP_SECRET`, `PAGE_ID`, `ACCESS_TOKEN` and `VERIFY_TOKEN` in your `.env` file.
+
+> **Note:** Pages interested in using [Messenger One-Time Notification](https://developers.facebook.com/docs/messenger-platform/send-messages/one-time-notification/) API need to apply for the "One-Time Notification" permission within the "Advanced Messaging" section of Page Settings. For more info, see [Permissions](https://developers.facebook.com/docs/messenger-platform/send-messages/one-time-notification#permissions).
 
 If you are not familiar with Messenger Bot, you may refer to Bottender's doc, [Messenger Setup](https://bottender.js.org/docs/channel-messenger-setup), to find detailed instructions.
 
@@ -41,12 +43,4 @@ npx bottender messenger webhook set
 
 ## Idea of This Example
 
-This example is a bot running on [Messenger](https://www.messenger.com/).
-For more information, check our [Messenger guides](https://bottender.js.org/docs/channel-messenger-setup).
-
-## Related Examples
-
-- [line-hello-world](../line-hello-world)
-- [slack-hello-world](../slack-hello-world)
-- [telegram-hello-world](../telegram-hello-world)
-- [viber-hello-world](../viber-hello-world)
+This example is a bot running on [Messenger](https://www.messenger.com/) that shows you how to use [Messenger One-Time Notification](https://developers.facebook.com/docs/messenger-platform/send-messages/one-time-notification/) in your Bottender app.
