@@ -3,25 +3,6 @@ id: channel-telegram-sending-messages
 title: Sending Telegram Messages
 ---
 
-## Basic Factors of Telegram Bots: Messages, Reply Markup, Updatable
-
-Briefly speaking, the two basic concepts you need to know about Telegram bots are: `Messages` and `Reply Markup.` Both of them are `Updatable.`
-
-Telegram Bots support a bunch of rich messages. For example, even you can send `Markdown` or `HTML` in `Text Messages.` You can even send `Invoice Message` if your bot has a payment feature. Don't miss the lovely `Sticker Message.` Telegram helps you to host `Sticker Pack`.
-
-`Reply Markup` is similar to the combination of `Quick Replies` and `Buttons` on Messenger or LINE. It is attached under a message and offered multiple choices to guide your users to open a webpage, trigger a bot action, reply a message on user's behalf,
-
-Every `Messages` and `Reply Markup` is updatable. Remember to manage your bot sent messages if you tend to make a message update afterward.
-
-In the following code, you can see a quick example of the message update.
-
-```js
-const response = await context.sendMessage('hello');
-await context.editMessageText(response.messageId, '*world*', {
-  parseMode: 'markdown',
-});
-```
-
 ## Bottender Playground
 
 If you can't wait to try Telegram Bots features, we prepared a simple demo bot for you, [Bottender Playground](https://t.me/BottenderPlaygroundBot).
