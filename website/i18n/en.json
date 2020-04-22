@@ -29,11 +29,17 @@
       "api-event": {
         "title": "Event"
       },
+      "api-line-client": {
+        "title": "LineClient"
+      },
       "api-line-context": {
         "title": "LineContext"
       },
       "api-line-event": {
         "title": "LineEvent"
+      },
+      "api-messenger-client": {
+        "title": "MessengerClient"
       },
       "api-messenger-context": {
         "title": "MessengerContext"
@@ -41,17 +47,26 @@
       "api-messenger-event": {
         "title": "MessengerEvent"
       },
+      "api-slack-client": {
+        "title": "SlackClient"
+      },
       "api-slack-context": {
         "title": "SlackContext"
       },
       "api-slack-event": {
         "title": "SlackEvent"
       },
+      "api-telegram-client": {
+        "title": "TelegramClient"
+      },
       "api-telegram-context": {
         "title": "TelegramContext"
       },
       "api-telegram-event": {
         "title": "TelegramEvent"
+      },
+      "api-viber-client": {
+        "title": "ViberClient"
       },
       "api-viber-context": {
         "title": "ViberContext"
@@ -694,6 +709,9 @@
       },
       "version-1.4/version-1.4-channel-messenger-routing": {
         "title": "Messenger Routing"
+      },
+      "version-1.4/version-1.4-channel-messenger-sending-messages": {
+        "title": "Sending Messenger Messages"
       },
       "version-1.4/version-1.4-channel-slack-routing": {
         "title": "Slack Routing"

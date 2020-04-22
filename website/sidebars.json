@@ -75,23 +75,28 @@
     ],
     "Messenger": [
       "api-messenger-context",
-      "api-messenger-event"
+      "api-messenger-event",
+      "api-messenger-client"
     ],
     "LINE": [
       "api-line-context",
-      "api-line-event"
+      "api-line-event",
+      "api-line-client"
     ],
     "Slack": [
       "api-slack-context",
-      "api-slack-event"
+      "api-slack-event",
+      "api-slack-client"
     ],
     "Telegram": [
       "api-telegram-context",
-      "api-telegram-event"
+      "api-telegram-event",
+      "api-telegram-client"
     ],
     "Viber": [
       "api-viber-context",
-      "api-viber-event"
+      "api-viber-event",
+      "api-viber-client"
     ],
     "Console": [
       "api-console-context",

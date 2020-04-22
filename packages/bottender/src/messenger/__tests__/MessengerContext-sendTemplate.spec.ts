@@ -117,14 +117,16 @@ describe('#sendGenericTemplate', () => {
 
     const elements = {};
 
-    await context.sendGenericTemplate(elements, { tag: 'ISSUE_RESOLUTION' });
+    await context.sendGenericTemplate(elements, {
+      tag: 'CONFIRMED_EVENT_UPDATE',
+    });
 
     expect(client.sendGenericTemplate).toBeCalledWith(
       session.user.id,
       elements,
       {
         messagingType: 'MESSAGE_TAG',
-        tag: 'ISSUE_RESOLUTION',
+        tag: 'CONFIRMED_EVENT_UPDATE',
       }
     );
   });
