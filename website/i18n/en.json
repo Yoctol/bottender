@@ -701,6 +701,9 @@
       "version-1.4/version-1.4-channel-telegram-routing": {
         "title": "Telegram Routings"
       },
+      "version-1.4/version-1.4-channel-telegram-sending-messages": {
+        "title": "Sending Telegram Messages"
+      },
       "version-1.4/version-1.4-channel-viber-routing": {
         "title": "Viber Routing"
       },

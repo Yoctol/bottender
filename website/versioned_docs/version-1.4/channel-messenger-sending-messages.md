@@ -1,6 +1,7 @@
 ---
-id: channel-messenger-sending-messages
+id: version-1.4-channel-messenger-sending-messages
 title: Sending Messenger Messages
+original_id: channel-messenger-sending-messages
 ---
 
 ## Sending Text Messages
