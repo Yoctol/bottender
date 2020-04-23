@@ -1,7 +1,14 @@
+import { LineClient } from 'messaging-api-line';
+import { MessengerClient } from 'messaging-api-messenger';
+import { SlackOAuthClient } from 'messaging-api-slack';
+import { TelegramClient } from 'messaging-api-telegram';
+import { ViberClient } from 'messaging-api-viber';
+
 import LineBot from './line/LineBot';
 import MessengerBot from './messenger/MessengerBot';
 import SlackBot from './slack/SlackBot';
 import TelegramBot from './telegram/TelegramBot';
+import TwilioClient from './whatsapp/TwilioClient';
 import ViberBot from './viber/ViberBot';
 import WhatsappBot from './whatsapp/WhatsappBot';
 import getBottenderConfig from './shared/getBottenderConfig';
@@ -17,24 +24,40 @@ const BOT_MAP = {
   whatsapp: WhatsappBot,
 };
 
-function getClient(channel: Channel) {
+function getClient<C extends string>(
+  channel: C
+): C extends Channel.Messenger
+  ? MessengerClient
+  : C extends Channel.Line
+  ? LineClient
+  : C extends Channel.Slack
+  ? SlackOAuthClient
+  : C extends Channel.Telegram
+  ? TelegramClient
+  : C extends Channel.Viber
+  ? ViberClient
+  : C extends Channel.Whatsapp
+  ? TwilioClient
+  : any {
   const { channels = {} } = getBottenderConfig();
   const sessionStore = getSessionStore();
 
-  const channelConfig = (channels as any)[channel];
+  const channelConfig = (channels as Record<string, any>)[channel];
 
   if (!channelConfig) {
-    return null;
+    throw new Error(
+      `getClient: ${channel} config is missing in \`bottender.config.js\`.`
+    );
   }
 
-  const ChannelBot = BOT_MAP[channel];
+  const ChannelBot = BOT_MAP[channel as Channel];
 
   const channelBot = new ChannelBot({
     ...channelConfig,
     sessionStore,
   } as any);
 
-  return channelBot.connector.client;
+  return channelBot.connector.client as any;
 }
 
 export default getClient;
