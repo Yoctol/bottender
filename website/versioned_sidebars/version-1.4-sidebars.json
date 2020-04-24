@@ -75,23 +75,28 @@
     ],
     "Messenger": [
       "version-1.4-api-messenger-context",
-      "version-1.4-api-messenger-event"
+      "version-1.4-api-messenger-event",
+      "version-1.4-api-messenger-client"
     ],
     "LINE": [
       "version-1.4-api-line-context",
-      "version-1.4-api-line-event"
+      "version-1.4-api-line-event",
+      "version-1.4-api-line-client"
     ],
     "Slack": [
       "version-1.4-api-slack-context",
-      "version-1.4-api-slack-event"
+      "version-1.4-api-slack-event",
+      "version-1.4-api-slack-client"
     ],
     "Telegram": [
       "version-1.4-api-telegram-context",
-      "version-1.4-api-telegram-event"
+      "version-1.4-api-telegram-event",
+      "version-1.4-api-telegram-client"
     ],
     "Viber": [
       "version-1.4-api-viber-context",
-      "version-1.4-api-viber-event"
+      "version-1.4-api-viber-event",
+      "version-1.4-api-viber-client"
     ],
     "Console": [
       "version-1.4-api-console-context",

@@ -29,7 +29,7 @@ context.sendMessage({
 });
 ```
 
-You can specifiy [messaging type](https://developers.facebook.com/docs/messenger-platform/send-messages#messaging_types) using options. If `messaging_type` and `tag` is not provided, `UPDATE` will be used as default messaging type.
+You can specify [messaging type](https://developers.facebook.com/docs/messenger-platform/send-messages#messaging_types) using options. If `messaging_type` and `tag` is not provided, `UPDATE` will be used as default messaging type.
 
 Example:
 
@@ -74,7 +74,7 @@ context.sendText('Hello!');
 With `ISSUE_RESOLUTION` tag:
 
 ```js
-context.sendText('Hello!', { tag: 'ISSUE_RESOLUTION' });
+context.sendText('Hello!', { tag: 'CONFIRMED_EVENT_UPDATE' });
 ```
 
 <br />
@@ -346,7 +346,7 @@ context.sendGenericTemplate(
       // ...
     },
   ],
-  { tag: 'ISSUE_RESOLUTION' }
+  { tag: 'CONFIRMED_EVENT_UPDATE' }
 );
 ```
 
