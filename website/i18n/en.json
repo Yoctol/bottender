@@ -695,6 +695,24 @@
       "version-1.4/version-1.4-advanced-guides-nlu": {
         "title": "Natural Language Understanding"
       },
+      "version-1.4/version-1.4-api-context": {
+        "title": "Context"
+      },
+      "version-1.4/version-1.4-api-line-client": {
+        "title": "LineClient"
+      },
+      "version-1.4/version-1.4-api-messenger-client": {
+        "title": "MessengerClient"
+      },
+      "version-1.4/version-1.4-api-slack-client": {
+        "title": "SlackClient"
+      },
+      "version-1.4/version-1.4-api-telegram-client": {
+        "title": "TelegramClient"
+      },
+      "version-1.4/version-1.4-api-viber-client": {
+        "title": "ViberClient"
+      },
       "version-1.4/version-1.4-channel-line-errors": {
         "title": "Error Handling in LINE"
       },
