@@ -26,7 +26,7 @@ LIFF v2 introduces some new features to developers, e.g., scanning QR codes, all
 
 For catching up quickly, this is a minimal implementation - [Bottender example with LIFF v2](https://github.com/Yoctol/bottender/tree/master/examples/line-liff-v2).
 
-The following sections are step by step tutorials about how to send messages with LIFF in a Bottender project created by [Create Bottender App](https://bottender.js.org/docs/getting-started#create-a-new-bottender-app).
+The following sections are step by step tutorials about how to send messages with LIFF in a Bottender project created by [Create Bottender App](getting-started#create-a-new-bottender-app).
 
 > **Note:** LIFF v1 is not recommended anymore. If you're using it, you should migrate to LIFF v2. However, you could still find an example for [LIFF v1 here](https://github.com/Yoctol/bottender/tree/master/examples/line-liff-v1).
 

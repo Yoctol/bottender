@@ -43,12 +43,12 @@ VIBER_ACCESS_TOKEN=
 
 > **Note:** If you are not familiar with setting up chat channels, you may refer to the following Bottender docs:
 >
-> - [Messenger Setup](https://bottender.js.org/docs/channel-messenger-setup)
-> - [WhatsApp Setup](https://bottender.js.org/docs/channel-whatsapp-setup)
-> - [LINE Setup](https://bottender.js.org/docs/channel-line-setup)
-> - [Slack Setup](https://bottender.js.org/docs/channel-slack-setup)
-> - [Telegram Setup](https://bottender.js.org/docs/channel-telegram-setup)
-> - [Viber Setup](https://bottender.js.org/docs/channel-viber-setup)
+> - [Messenger Setup](channel-messenger-setup)
+> - [WhatsApp Setup](channel-whatsapp-setup)
+> - [LINE Setup](channel-line-setup)
+> - [Slack Setup](channel-slack-setup)
+> - [Telegram Setup](channel-telegram-setup)
+> - [Viber Setup](channel-viber-setup)
 
 ## Enable Each Chat Channel
 
@@ -114,7 +114,7 @@ A right bot action relates to the current user status with the incoming event. I
 
 ### Using `context.platform` to Manage Cross-Platform Events
 
-You can use [`context.platform`](https://bottender.js.org/docs/api-context#platform) to check that each message belongs to which platform.
+You can use [`context.platform`](api-context#platform) to check that each message belongs to which platform.
 
 In the following code, you can see a simple action that replies to the users with the platform they are using.
 
