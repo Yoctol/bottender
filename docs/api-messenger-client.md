@@ -110,7 +110,7 @@ Send messages to specified user using the [Send API](https://developers.facebook
 
 | Param   | Type                              | Description                                                                                                                                                                                                                       |
 | ------- | --------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| userId  | <code>String &#124; Object</code> | Page-scoped user ID of the recipient or [recipient](https://developers.facebook.com/docs/messenger-platform/send-api-reference#recipient) object.                                                                                                                                         |
+| userId  | <code>String &#124; Object</code> | Page-scoped user ID of the recipient or [recipient](https://developers.facebook.com/docs/messenger-platform/send-api-reference#recipient) object.                                                                                 |
 | message | `Object`                          | [message](https://developers.facebook.com/docs/messenger-platform/reference/send-api#message) object.                                                                                                                             |
 | options | `Object`                          | Other optional parameters. For example, [messaging types](https://developers.facebook.com/docs/messenger-platform/send-messages#messaging_types) or [tags](https://developers.facebook.com/docs/messenger-platform/message-tags). |
 
@@ -156,7 +156,7 @@ Send plain text messages to specified user using the [Send API](https://develope
 
 | Param   | Type                              | Description                                                                                                                                                                                                                       |
 | ------- | --------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| userId  | <code>String &#124; Object</code> | Page-scoped user ID of the recipient or [recipient](https://developers.facebook.com/docs/messenger-platform/send-api-reference#recipient) object.                                                                                                                                         |
+| userId  | <code>String &#124; Object</code> | Page-scoped user ID of the recipient or [recipient](https://developers.facebook.com/docs/messenger-platform/send-api-reference#recipient) object.                                                                                 |
 | text    | `String`                          | Text of the message to be sent.                                                                                                                                                                                                   |
 | options | `Object`                          | Other optional parameters. For example, [messaging types](https://developers.facebook.com/docs/messenger-platform/send-messages#messaging_types) or [tags](https://developers.facebook.com/docs/messenger-platform/message-tags). |
 
@@ -174,10 +174,10 @@ Send attachment messages to specified user using the [Send API](https://develope
 
 | Param            | Type                              | Description                                                                                                                                                                                                                       |
 | ---------------- | --------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| userId           | <code>String &#124; Object</code> | Page-scoped user ID of the recipient or [recipient](https://developers.facebook.com/docs/messenger-platform/send-api-reference#recipient) object.                                                                                                                                         |
+| userId           | <code>String &#124; Object</code> | Page-scoped user ID of the recipient or [recipient](https://developers.facebook.com/docs/messenger-platform/send-api-reference#recipient) object.                                                                                 |
 | attachment       | `Object`                          | [attachment](https://developers.facebook.com/docs/messenger-platform/reference/send-api#attachment) object.                                                                                                                       |
 | options          | `Object`                          | Other optional parameters. For example, [messaging types](https://developers.facebook.com/docs/messenger-platform/send-messages#messaging_types) or [tags](https://developers.facebook.com/docs/messenger-platform/message-tags). |
-| options.filename | `String` | Required when upload from buffer. |
+| options.filename | `String`                          | Required when upload from buffer.                                                                                                                                                                                                 |
 
 Example:
 
@@ -198,10 +198,10 @@ Send sounds to specified user by uploading them or sharing a URL using the [Send
 
 | Param            | Type                                                                         | Description                                                                                                                                       |
 | ---------------- | ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| userId           | <code>String &#124; Object</code>                                            | Page-scoped user ID of the recipient or [recipient](https://developers.facebook.com/docs/messenger-platform/send-api-reference#recipient) object.                                                         |
+| userId           | <code>String &#124; Object</code>                                            | Page-scoped user ID of the recipient or [recipient](https://developers.facebook.com/docs/messenger-platform/send-api-reference#recipient) object. |
 | audio            | <code>String &#124; Buffer &#124; ReadStream &#124; AttachmentPayload</code> | The audio to be sent.                                                                                                                             |
 | options          | `Object`                                                                     | Other optional parameters. For example, [messaging types](https://developers.facebook.com/docs/messenger-platform/send-messages#messaging_types). |
-| options.filename | `String` | Required when upload from buffer.                                            |
+| options.filename | `String`                                                                     | Required when upload from buffer.                                                                                                                 |
 
 Example:
 
@@ -239,10 +239,10 @@ Send images to specified user by uploading them or sharing a URL using the [Send
 
 | Param            | Type                                                                         | Description                                                                                                                                       |
 | ---------------- | ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| userId           | <code>String &#124; Object</code>                                            | Page-scoped user ID of the recipient or [recipient](https://developers.facebook.com/docs/messenger-platform/send-api-reference#recipient) object.                                                         |
+| userId           | <code>String &#124; Object</code>                                            | Page-scoped user ID of the recipient or [recipient](https://developers.facebook.com/docs/messenger-platform/send-api-reference#recipient) object. |
 | image            | <code>String &#124; Buffer &#124; ReadStream &#124; AttachmentPayload</code> | The image to be sent.                                                                                                                             |
 | options          | `Object`                                                                     | Other optional parameters. For example, [messaging types](https://developers.facebook.com/docs/messenger-platform/send-messages#messaging_types). |
-| options.filename | `String` | Required when upload from buffer.                                            |
+| options.filename | `String`                                                                     | Required when upload from buffer.                                                                                                                 |
 
 Example:
 
@@ -280,10 +280,10 @@ Send videos to specified user by uploading them or sharing a URL using the [Send
 
 | Param            | Type                                                                         | Description                                                                                                                                       |
 | ---------------- | ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| userId           | <code>String &#124; Object</code>                                            | Page-scoped user ID of the recipient or [recipient](https://developers.facebook.com/docs/messenger-platform/send-api-reference#recipient) object.                                                         |
+| userId           | <code>String &#124; Object</code>                                            | Page-scoped user ID of the recipient or [recipient](https://developers.facebook.com/docs/messenger-platform/send-api-reference#recipient) object. |
 | video            | <code>String &#124; Buffer &#124; ReadStream &#124; AttachmentPayload</code> | The video to be sent.                                                                                                                             |
 | options          | `Object`                                                                     | Other optional parameters. For example, [messaging types](https://developers.facebook.com/docs/messenger-platform/send-messages#messaging_types). |
-| options.filename | `String` | Required when upload from buffer.                                            |
+| options.filename | `String`                                                                     | Required when upload from buffer.                                                                                                                 |
 
 Example:
 
@@ -321,10 +321,10 @@ Send files to specified user by uploading them or sharing a URL using the [Send 
 
 | Param            | Type                                                                         | Description                                                                                                                                       |
 | ---------------- | ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| userId           | <code>String &#124; Object</code>                                            | Page-scoped user ID of the recipient or [recipient](https://developers.facebook.com/docs/messenger-platform/send-api-reference#recipient) object.                                                         |
+| userId           | <code>String &#124; Object</code>                                            | Page-scoped user ID of the recipient or [recipient](https://developers.facebook.com/docs/messenger-platform/send-api-reference#recipient) object. |
 | file             | <code>String &#124; Buffer &#124; ReadStream &#124; AttachmentPayload</code> | The file to be sent.                                                                                                                              |
 | options          | `Object`                                                                     | Other optional parameters. For example, [messaging types](https://developers.facebook.com/docs/messenger-platform/send-messages#messaging_types). |
-| options.filename | `String` |Required when upload from buffer.                                            |
+| options.filename | `String`                                                                     | Required when upload from buffer.                                                                                                                 |
 
 Example:
 
@@ -366,7 +366,7 @@ Send structured message templates to specified user using the [Send API](https:/
 
 | Param    | Type                              | Description                                                                                                                                                                                                                       |
 | -------- | --------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| userId   | <code>String &#124; Object</code> | Page-scoped user ID of the recipient or [recipient](https://developers.facebook.com/docs/messenger-platform/send-api-reference#recipient) object.                                                                                                                                         |
+| userId   | <code>String &#124; Object</code> | Page-scoped user ID of the recipient or [recipient](https://developers.facebook.com/docs/messenger-platform/send-api-reference#recipient) object.                                                                                 |
 | template | `Object`                          | Object of the template.                                                                                                                                                                                                           |
 | options  | `Object`                          | Other optional parameters. For example, [messaging types](https://developers.facebook.com/docs/messenger-platform/send-messages#messaging_types) or [tags](https://developers.facebook.com/docs/messenger-platform/message-tags). |
 
@@ -396,7 +396,7 @@ Send button message templates to specified user using the [Send API](https://dev
 
 | Param   | Type                              | Description                                                                                                                                                         |
 | ------- | --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| userId  | <code>String &#124; Object</code> | Page-scoped user ID of the recipient or [recipient](https://developers.facebook.com/docs/messenger-platform/send-api-reference#recipient) object.                                                                           |
+| userId  | <code>String &#124; Object</code> | Page-scoped user ID of the recipient or [recipient](https://developers.facebook.com/docs/messenger-platform/send-api-reference#recipient) object.                   |
 | title   | `String`                          | Text that appears above the buttons.                                                                                                                                |
 | buttons | `Array<Object>`                   | Array of [button](https://developers.facebook.com/docs/messenger-platform/send-messages/template/button#button). Set of 1-3 buttons that appear as call-to-actions. |
 | options | `Object`                          | Other optional parameters. For example, [messaging types](https://developers.facebook.com/docs/messenger-platform/send-messages#messaging_types).                   |
@@ -428,7 +428,7 @@ Send generic message templates to specified user using the [Send API](https://de
 
 | Param    | Type                              | Description                                                                                                                                                                                                                                       |
 | -------- | --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| userId   | <code>String &#124; Object</code> | Page-scoped user ID of the recipient or [recipient](https://developers.facebook.com/docs/messenger-platform/send-api-reference#recipient) object.                                                                                                                                                         |
+| userId   | <code>String &#124; Object</code> | Page-scoped user ID of the recipient or [recipient](https://developers.facebook.com/docs/messenger-platform/send-api-reference#recipient) object.                                                                                                 |
 | elements | `Array<Object>`                   | Array of [element](https://developers.facebook.com/docs/messenger-platform/send-messages/template/generic#element). Data for each bubble in message.                                                                                              |
 | options  | `Object`                          | Other optional parameters, such as `imageAspectRatio`, [messaging types](https://developers.facebook.com/docs/messenger-platform/send-messages#messaging_types) and [tags](https://developers.facebook.com/docs/messenger-platform/message-tags). |
 
@@ -495,7 +495,7 @@ Send media message templates to specified user using the [Send API](https://deve
 
 | Param    | Type                              | Description                                                                                                                                       |
 | -------- | --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| userId   | <code>String &#124; Object</code> | Page-scoped user ID of the recipient or [recipient](https://developers.facebook.com/docs/messenger-platform/send-api-reference#recipient) object.                                                         |
+| userId   | <code>String &#124; Object</code> | Page-scoped user ID of the recipient or [recipient](https://developers.facebook.com/docs/messenger-platform/send-api-reference#recipient) object. |
 | elements | `Array<Object>`                   | Array of [element](https://developers.facebook.com/docs/messenger-platform/reference/template/media#payload). Only one element is allowed.        |
 | options  | `Object`                          | Other optional parameters. For example, [messaging types](https://developers.facebook.com/docs/messenger-platform/send-messages#messaging_types). |
 
@@ -527,7 +527,7 @@ Send receipt message templates to specified user using the [Send API](https://de
 
 | Param   | Type                              | Description                                                                                                                                       |
 | ------- | --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| userId  | <code>String &#124; Object</code> | Page-scoped user ID of the recipient or [recipient](https://developers.facebook.com/docs/messenger-platform/send-api-reference#recipient) object.                                                         |
+| userId  | <code>String &#124; Object</code> | Page-scoped user ID of the recipient or [recipient](https://developers.facebook.com/docs/messenger-platform/send-api-reference#recipient) object. |
 | receipt | `Object`                          | [payload](https://developers.facebook.com/docs/messenger-platform/send-messages/template/receipt#payload) of receipt template.                    |
 | options | `Object`                          | Other optional parameters. For example, [messaging types](https://developers.facebook.com/docs/messenger-platform/send-messages#messaging_types). |
 
@@ -596,7 +596,7 @@ Send airline boarding pass message templates to specified user using the [Send A
 
 | Param      | Type                              | Description                                                                                                                                        |
 | ---------- | --------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
-| userId     | <code>String &#124; Object</code> | Page-scoped user ID of the recipient or [recipient](https://developers.facebook.com/docs/messenger-platform/send-api-reference#recipient) object.                                                          |
+| userId     | <code>String &#124; Object</code> | Page-scoped user ID of the recipient or [recipient](https://developers.facebook.com/docs/messenger-platform/send-api-reference#recipient) object.  |
 | attributes | `Object`                          | [payload](https://developers.facebook.com/docs/messenger-platform/send-messages/template/airline-boarding-pass#payload) of boarding pass template. |
 | options    | `Object`                          | Other optional parameters. For example, [messaging types](https://developers.facebook.com/docs/messenger-platform/send-messages#messaging_types).  |
 
@@ -731,7 +731,7 @@ Send airline checkin message templates to specified user using the [Send API](ht
 
 | Param      | Type                              | Description                                                                                                                                       |
 | ---------- | --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| userId     | <code>String &#124; Object</code> | Page-scoped user ID of the recipient or [recipient](https://developers.facebook.com/docs/messenger-platform/send-api-reference#recipient) object.                                                         |
+| userId     | <code>String &#124; Object</code> | Page-scoped user ID of the recipient or [recipient](https://developers.facebook.com/docs/messenger-platform/send-api-reference#recipient) object. |
 | attributes | `Object`                          | [payload](https://developers.facebook.com/docs/messenger-platform/send-api-reference/airline-checkin-template#payload) of checkin template.       |
 | options    | `Object`                          | Other optional parameters. For example, [messaging types](https://developers.facebook.com/docs/messenger-platform/send-messages#messaging_types). |
 
@@ -778,7 +778,7 @@ Send airline itinerary message templates to specified user using the [Send API](
 
 | Param      | Type                              | Description                                                                                                                                       |
 | ---------- | --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| userId     | <code>String &#124; Object</code> | Page-scoped user ID of the recipient or [recipient](https://developers.facebook.com/docs/messenger-platform/send-api-reference#recipient) object.                                                         |
+| userId     | <code>String &#124; Object</code> | Page-scoped user ID of the recipient or [recipient](https://developers.facebook.com/docs/messenger-platform/send-api-reference#recipient) object. |
 | attributes | `Object`                          | [payload](https://developers.facebook.com/docs/messenger-platform/send-api-reference/airline-itinerary-template#payload) of itinerary template.   |
 | options    | `Object`                          | Other optional parameters. For example, [messaging types](https://developers.facebook.com/docs/messenger-platform/send-messages#messaging_types). |
 
@@ -919,7 +919,7 @@ Send airline flight update message templates to specified user using the [Send A
 
 | Param      | Type                              | Description                                                                                                                                       |
 | ---------- | --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| userId     | <code>String &#124; Object</code> | Page-scoped user ID of the recipient or [recipient](https://developers.facebook.com/docs/messenger-platform/send-api-reference#recipient) object.                                                         |
+| userId     | <code>String &#124; Object</code> | Page-scoped user ID of the recipient or [recipient](https://developers.facebook.com/docs/messenger-platform/send-api-reference#recipient) object. |
 | attributes | `Object`                          | [payload](https://developers.facebook.com/docs/messenger-platform/send-api-reference/airline-update-template#payload) of update template.         |
 | options    | `Object`                          | Other optional parameters. For example, [messaging types](https://developers.facebook.com/docs/messenger-platform/send-messages#messaging_types). |
 
@@ -1004,10 +1004,10 @@ It works with all of send message methods.
 
 Send sender actions to specified user using the [Send API](https://developers.facebook.com/docs/messenger-platform/reference/send-api#request), to let users know you are processing their request.
 
-| Param  | Type                              | Description                                                                               |
-| ------ | --------------------------------- | ----------------------------------------------------------------------------------------- |
+| Param  | Type                              | Description                                                                                                                                       |
+| ------ | --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
 | userId | <code>String &#124; Object</code> | Page-scoped user ID of the recipient or [recipient](https://developers.facebook.com/docs/messenger-platform/send-api-reference#recipient) object. |
-| action | `String`                          | Name of the action.                                                                       |
+| action | `String`                          | Name of the action.                                                                                                                               |
 
 Example:
 
@@ -1021,8 +1021,8 @@ client.sendSenderAction(USER_ID, 'typing_on');
 
 Mark last message as read for specified user.
 
-| Param  | Type                              | Description                                                                               |
-| ------ | --------------------------------- | ----------------------------------------------------------------------------------------- |
+| Param  | Type                              | Description                                                                                                                                       |
+| ------ | --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
 | userId | <code>String &#124; Object</code> | Page-scoped user ID of the recipient or [recipient](https://developers.facebook.com/docs/messenger-platform/send-api-reference#recipient) object. |
 
 Example:
@@ -1037,8 +1037,8 @@ client.markSeen(USER_ID);
 
 Turn typing indicators on for specified user.
 
-| Param  | Type                              | Description                                                                               |
-| ------ | --------------------------------- | ----------------------------------------------------------------------------------------- |
+| Param  | Type                              | Description                                                                                                                                       |
+| ------ | --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
 | userId | <code>String &#124; Object</code> | Page-scoped user ID of the recipient or [recipient](https://developers.facebook.com/docs/messenger-platform/send-api-reference#recipient) object. |
 
 Example:
@@ -1053,8 +1053,8 @@ client.typingOn(USER_ID);
 
 Turn typing indicators off for specified user.
 
-| Param  | Type                              | Description                                                                               |
-| ------ | --------------------------------- | ----------------------------------------------------------------------------------------- |
+| Param  | Type                              | Description                                                                                                                                       |
+| ------ | --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
 | userId | <code>String &#124; Object</code> | Page-scoped user ID of the recipient or [recipient](https://developers.facebook.com/docs/messenger-platform/send-api-reference#recipient) object. |
 
 Example:
@@ -1075,11 +1075,11 @@ client.typingOff(USER_ID);
 
 Upload specified type attachment using URL address, buffer, or stream.
 
-| Param              | Type                                                                                             | Description                                    |
-| ------------------ | ------------------------------------------------------------------------------------------------ | ---------------------------------------------- |
+| Param              | Type                                                                                             | Description                                         |
+| ------------------ | ------------------------------------------------------------------------------------------------ | --------------------------------------------------- |
 | type               | `String`                                                                                         | Must be one of `image`, `video`, `audio` or `file`. |
-| attachment         | <code>String &#124; Buffer &#124; ReadStream</code>                                              | Attachment to be uploaded.                     |
-| options            | `Object`                                                                                         | Other optional parameters.                     |
+| attachment         | <code>String &#124; Buffer &#124; ReadStream</code>                                              | Attachment to be uploaded.                          |
+| options            | `Object`                                                                                         | Other optional parameters.                          |
 | options.isReusable | Set to `true` to make the saved asset sendable to other message recipients. Defaults to `false`. |
 | options.filename   | Required when upload from buffer.                                                                |
 
@@ -2860,7 +2860,10 @@ module.exports = {
       appId: process.env.MESSENGER_APP_ID,
       appSecret: process.env.MESSENGER_APP_SECRET,
       verifyToken: process.env.MESSENGER_VERIFY_TOKEN,
-      origin: process.env.NODE_ENV === 'test' ? 'https://mydummytestserver.com' : undefined,
+      origin:
+        process.env.NODE_ENV === 'test'
+          ? 'https://mydummytestserver.com'
+          : undefined,
     },
   },
 };

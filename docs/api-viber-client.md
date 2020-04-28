@@ -663,7 +663,10 @@ module.exports = {
       sender: {
         name: 'Sender Name',
       },
-      origin: process.env.NODE_ENV === 'test' ? 'https://mydummytestserver.com' : undefined,
+      origin:
+        process.env.NODE_ENV === 'test'
+          ? 'https://mydummytestserver.com'
+          : undefined,
     },
   },
 };

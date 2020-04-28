@@ -441,7 +441,10 @@ module.exports = {
       path: '/webhooks/slack',
       accessToken: process.env.SLACK_ACCESS_TOKEN,
       signingSecret: process.env.SLACK_SIGNING_SECRET,
-      origin: process.env.NODE_ENV === 'test' ? 'https://mydummytestserver.com' : undefined,
+      origin:
+        process.env.NODE_ENV === 'test'
+          ? 'https://mydummytestserver.com'
+          : undefined,
     },
   },
 };

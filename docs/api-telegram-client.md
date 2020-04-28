@@ -1270,14 +1270,16 @@ DEBUG=messaging-api-telegram
 To avoid sending requests to the real Telegram server, provide the `origin` option in your `bottender.js.config` file:
 
 ```js
-
 module.exports = {
   channels: {
     telegram: {
       enabled: true,
       path: '/webhooks/telegram',
       accessToken: process.env.TELEGRAM_ACCESS_TOKEN,
-      origin: process.env.NODE_ENV === 'test' ? 'https://mydummytestserver.com' : undefined,
+      origin:
+        process.env.NODE_ENV === 'test'
+          ? 'https://mydummytestserver.com'
+          : undefined,
     },
   },
 };
