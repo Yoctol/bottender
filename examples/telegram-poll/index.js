@@ -34,7 +34,7 @@ async function RecordPollAnswer(context) {
       : `${username} voted to ${voteOptions}.`;
 
   const chatId = pollChatMappings[pollId];
-  await context._client.sendMessage(chatId, replyText);
+  await context.client.sendMessage(chatId, replyText);
 }
 
 async function DefaultAction(context) {
