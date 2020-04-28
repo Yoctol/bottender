@@ -23,11 +23,6 @@ async function NewPoll(context) {
   pollChatMappings[message.poll.id] = message.chat.id;
 }
 
-async function replyTextToPoll(context, pollId, replyText) {
-  const chatId = pollChatMappings[pollId];
-  context._client.sendMessage(chatId, replyText);
-}
-
 async function RecordPollAnswer(context) {
   const pollAnswer = context.event.rawEvent.pollAnswer;
   const pollId = pollAnswer.pollId;
@@ -41,7 +36,9 @@ async function RecordPollAnswer(context) {
   if (voteOptions.length === 0) {
     replyText = `${username} want to retract the vote.`;
   }
-  await replyTextToPoll(context, pollId, replyText);
+
+  const chatId = pollChatMappings[pollId];
+  await context._client.sendMessage(chatId, replyText);
 }
 
 async function DefaultAction(context) {
