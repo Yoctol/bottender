@@ -69,7 +69,7 @@
     "messaging-api-line": "^1.0.0-beta.20",
     "messaging-api-messenger": "^1.0.0-beta.18",
     "messaging-api-slack": "^1.0.0-beta.16",
-    "messaging-api-telegram": "^1.0.0-beta.16",
+    "messaging-api-telegram": "^1.0.0-beta.21",
     "messaging-api-viber": "^1.0.0-beta.16",
     "messenger-batch": "^0.3.1",
     "minimist": "^1.2.0",

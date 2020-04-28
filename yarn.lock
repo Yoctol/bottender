@@ -7415,10 +7415,10 @@ messaging-api-slack@^1.0.0-beta.16:
     lodash "^4.17.15"
     messaging-api-common "^1.0.0-beta.16"
 
-messaging-api-telegram@^1.0.0-beta.16:
-  version "1.0.0-beta.16"
-  resolved "https://registry.yarnpkg.com/messaging-api-telegram/-/messaging-api-telegram-1.0.0-beta.16.tgz#9091df3838a35ea0d735dc48814eacc490e77439"
-  integrity sha512-R9lWthXQrJw6ySEDyM5oOoBHCwERrOc1YriUAwCq1XD7yqBQae6lMPucJqa0jj2Rzcua4ZrOOQrKqvHJKV7Pog==
+messaging-api-telegram@^1.0.0-beta.21:
+  version "1.0.0-beta.21"
+  resolved "https://registry.yarnpkg.com/messaging-api-telegram/-/messaging-api-telegram-1.0.0-beta.21.tgz#2e2aa523e2c0e000741941da67f74f389fbc8163"
+  integrity sha512-D42vPpdLYLmfmbuAKfm252OKEGRXX/MvH1v/WNaQC5upFudrDnELErqLeGePUiO1561BoJ60KyL12SNQpVxIjA==
   dependencies:
     axios "^0.19.2"
     axios-error "^1.0.0-beta.16"
