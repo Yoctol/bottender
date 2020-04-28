@@ -24,18 +24,14 @@ async function NewPoll(context) {
 }
 
 async function RecordPollAnswer(context) {
-  const pollAnswer = context.event.rawEvent.pollAnswer;
-  const pollId = pollAnswer.pollId;
-  const user = pollAnswer.user;
-  const optionIds = pollAnswer.optionIds;
-
+  const { pollId, user, optionIds } = context.event.rawEvent.pollAnswer;
   const username = user.username || `${user.firstName} ${user.lastName}`;
   const voteOptions = optionIds.map(id => pollOptions[id]).join(', ');
 
-  let replyText = `${username} voted to ${voteOptions}.`;
-  if (voteOptions.length === 0) {
-    replyText = `${username} want to retract the vote.`;
-  }
+  const replyText =
+    voteOptions.length === 0
+      ? `${username} want to retract the vote.`
+      : `${username} voted to ${voteOptions}.`;
 
   const chatId = pollChatMappings[pollId];
   await context._client.sendMessage(chatId, replyText);
