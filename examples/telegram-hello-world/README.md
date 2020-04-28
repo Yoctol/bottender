@@ -27,7 +27,7 @@ npm run dev
 
 This command starts a server listening at `http://localhost:5000` for bot development.
 
-If you successfully start the server, you get a webhook URL in the format of `https://xxxxxxxx.ngrok.io/webhooks/slack` from your terminal.
+If you successfully start the server, you get a webhook URL in the format of `https://xxxxxxxx.ngrok.io/webhooks/telegram` from your terminal.
 
 ## Set Webhook
 
