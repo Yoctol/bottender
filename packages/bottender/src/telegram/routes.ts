@@ -22,6 +22,7 @@ type Telegram = Route & {
   shippingQuery: Route;
   preCheckoutQuery: Route;
   poll: Route;
+  pollAnswer: Route;
 };
 
 const telegram: Telegram = <C extends AnyContext>(
@@ -145,5 +146,17 @@ function poll<C extends AnyContext>(action: Action<TelegramContext, any>) {
 }
 
 telegram.poll = poll;
+
+function pollAnswer<C extends AnyContext>(
+  action: Action<TelegramContext, any>
+) {
+  return route(
+    (context: C) =>
+      context.platform === 'telegram' && context.event.isPollAnswer,
+    action
+  );
+}
+
+telegram.pollAnswer = pollAnswer;
 
 export default telegram;
