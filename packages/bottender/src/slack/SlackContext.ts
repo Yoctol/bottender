@@ -1,23 +1,10 @@
-import { EventEmitter } from 'events';
-
 import sleep from 'delay';
 import warning from 'warning';
 import { SlackOAuthClient, SlackTypes } from 'messaging-api-slack';
 
-import Context from '../context/Context';
-import Session from '../session/Session';
-import { RequestContext } from '../types';
+import Context, { ContextOptions } from '../context/Context';
 
 import SlackEvent, { Message, UIEvent } from './SlackEvent';
-
-type Options = {
-  client: SlackOAuthClient;
-  event: SlackEvent;
-  session?: Session | null;
-  initialState?: Record<string, any> | null;
-  requestContext?: RequestContext;
-  emitter?: EventEmitter | null;
-};
 
 export default class SlackContext extends Context<
   SlackOAuthClient,
@@ -65,7 +52,7 @@ export default class SlackContext extends Context<
     initialState,
     requestContext,
     emitter,
-  }: Options) {
+  }: ContextOptions<SlackOAuthClient, SlackEvent>) {
     super({ client, event, session, initialState, requestContext, emitter });
 
     this.chat = {

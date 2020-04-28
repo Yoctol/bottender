@@ -1,28 +1,12 @@
-import { EventEmitter } from 'events';
-
 import chunk from 'lodash/chunk';
 import invariant from 'invariant';
 import sleep from 'delay';
 import warning from 'warning';
 import { Line, LineClient, LineTypes } from 'messaging-api-line';
 
-import Context from '../context/Context';
-import Session from '../session/Session';
-import { RequestContext } from '../types';
+import Context, { ContextOptions } from '../context/Context';
 
 import LineEvent from './LineEvent';
-
-type Options = {
-  client: LineClient;
-  event: LineEvent;
-  session?: Session | null;
-  initialState?: Record<string, any> | null;
-  requestContext?: RequestContext;
-  customAccessToken?: string;
-  shouldBatch?: boolean;
-  sendMethod?: string;
-  emitter?: EventEmitter | null;
-};
 
 class LineContext extends Context<LineClient, LineEvent> {
   _customAccessToken: string | null;
@@ -47,7 +31,11 @@ class LineContext extends Context<LineClient, LineEvent> {
     shouldBatch,
     sendMethod,
     emitter,
-  }: Options) {
+  }: ContextOptions<LineClient, LineEvent> & {
+    customAccessToken?: string;
+    shouldBatch?: boolean;
+    sendMethod?: string;
+  }) {
     super({ client, event, session, initialState, requestContext, emitter });
     this._customAccessToken = customAccessToken || null;
     this._shouldBatch = shouldBatch || false;

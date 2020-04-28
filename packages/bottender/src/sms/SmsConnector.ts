@@ -1,25 +1,27 @@
 import crypto from 'crypto';
 
 import Session from '../session/Session';
-import TwilioClient from '../sms/TwilioClient';
 import { Connector } from '../bot/Connector';
 import { ContextOptions } from '../context/Context';
 
-import WhatsappContext from './WhatsappContext';
-import WhatsappEvent from './WhatsappEvent';
+import SmsContext from './SmsContext';
+import SmsEvent from './SmsEvent';
+import TwilioClient from './TwilioClient';
 
-export type WhatsappRequestBody = any;
+export type SmsRequestBody = any;
 
 type ConstructorOptionsWithoutClient = {
   accountSid: string;
   authToken: string;
   phoneNumber: string;
   origin?: string;
+  includeStatusCallback?: boolean;
 };
 
 type ConstructorOptionsWithClient = {
   client: TwilioClient;
   origin?: string;
+  includeStatusCallback?: boolean;
 };
 
 type ConstructorOptions =
@@ -41,9 +43,11 @@ function getExpectedTwilioSignature(
     .digest('base64');
 }
 
-export default class WhatsappConnector
-  implements Connector<WhatsappRequestBody, TwilioClient> {
+export default class SmsConnector
+  implements Connector<SmsRequestBody, TwilioClient> {
   _client: TwilioClient;
+
+  _includeStatusCallback: boolean;
 
   constructor(options: ConstructorOptions) {
     if ('client' in options) {
@@ -58,24 +62,23 @@ export default class WhatsappConnector
         origin,
       });
     }
+
+    this._includeStatusCallback = options.includeStatusCallback ?? false;
   }
 
-  get platform(): 'whatsapp' {
-    return 'whatsapp';
+  get platform(): 'sms' {
+    return 'sms';
   }
 
   get client(): TwilioClient {
     return this._client;
   }
 
-  getUniqueSessionKey(body: WhatsappRequestBody): string {
+  getUniqueSessionKey(body: SmsRequestBody): string {
     return body.smsStatus === 'received' ? body.from : body.to;
   }
 
-  async updateSession(
-    session: Session,
-    body: WhatsappRequestBody
-  ): Promise<void> {
+  async updateSession(session: Session, body: SmsRequestBody): Promise<void> {
     const userId = body.smsStatus === 'received' ? body.from : body.to;
 
     session.user = {
@@ -92,16 +95,17 @@ export default class WhatsappConnector
     });
   }
 
-  mapRequestToEvents(body: WhatsappRequestBody): WhatsappEvent[] {
-    return [new WhatsappEvent(body)];
+  mapRequestToEvents(body: SmsRequestBody): SmsEvent[] {
+    return [new SmsEvent(body)];
   }
 
   createContext(
-    params: Omit<ContextOptions<WhatsappClient, WhatsappEvent>>
-  ): WhatsappContext {
-    return new WhatsappContext({
+    params: Omit<ContextOptions<TwilioClient, SmsEvent>, 'client'>
+  ): SmsContext {
+    return new SmsContext({
       ...params,
       client: this._client,
+      includeStatusCallback: this._includeStatusCallback,
     });
   }
 
@@ -158,7 +162,7 @@ export default class WhatsappConnector
     }
 
     const error = {
-      message: 'WhatsApp Signature Validation Failed!',
+      message: 'SMS Signature Validation Failed!',
       request: {
         rawBody,
         headers: {

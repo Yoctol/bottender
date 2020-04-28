@@ -1,5 +1,4 @@
 import crypto from 'crypto';
-import { EventEmitter } from 'events';
 
 import invariant from 'invariant';
 import { ViberClient, ViberTypes } from 'messaging-api-viber';
@@ -7,7 +6,7 @@ import { addedDiff } from 'deep-object-diff';
 
 import Session from '../session/Session';
 import { Connector } from '../bot/Connector';
-import { RequestContext } from '../types';
+import { ContextOptions } from '../context/Context';
 
 import ViberContext from './ViberContext';
 import ViberEvent, { ViberRawEvent } from './ViberEvent';
@@ -146,13 +145,9 @@ export default class ViberConnector
     return [new ViberEvent(rawEvent)];
   }
 
-  createContext(params: {
-    event: ViberEvent;
-    session: Session | null;
-    initialState?: Record<string, any> | null;
-    requestContext?: RequestContext;
-    emitter?: EventEmitter | null;
-  }): ViberContext {
+  createContext(
+    params: Omit<ContextOptions<ViberClient, ViberEvent>, 'client'>
+  ): ViberContext {
     return new ViberContext({
       ...params,
       client: this._client,

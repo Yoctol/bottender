@@ -1,5 +1,4 @@
 import crypto from 'crypto';
-import { EventEmitter } from 'events';
 
 import invariant from 'invariant';
 import pProps from 'p-props';
@@ -8,7 +7,7 @@ import { SlackOAuthClient } from 'messaging-api-slack';
 
 import Session from '../session/Session';
 import { Connector } from '../bot/Connector';
-import { RequestContext } from '../types';
+import { ContextOptions } from '../context/Context';
 
 import SlackContext from './SlackContext';
 import SlackEvent, {
@@ -335,13 +334,9 @@ export default class SlackConnector
     return [new SlackEvent(rawEvent)];
   }
 
-  createContext(params: {
-    event: SlackEvent;
-    session: Session | null;
-    initialState?: Record<string, any> | null;
-    requestContext?: RequestContext;
-    emitter?: EventEmitter | null;
-  }): SlackContext {
+  createContext(
+    params: Omit<ContextOptions<SlackOAuthClient, SlackEvent>, 'client'>
+  ): SlackContext {
     return new SlackContext({
       ...params,
       client: this._client,

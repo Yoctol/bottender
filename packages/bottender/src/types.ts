@@ -10,14 +10,16 @@ import LineEvent from './line/LineEvent';
 import MessengerEvent from './messenger/MessengerEvent';
 import SessionStore from './session/SessionStore';
 import SlackEvent from './slack/SlackEvent';
+import SmsEvent from './sms/SmsEvent';
 import TelegramEvent from './telegram/TelegramEvent';
-import TwilioClient from './whatsapp/TwilioClient';
+import TwilioClient from './sms/TwilioClient';
 import ViberEvent from './viber/ViberEvent';
 import WhatsappEvent from './whatsapp/WhatsappEvent';
 import { ConsoleClient } from './console/ConsoleClient';
 import { LineRequestBody } from './line/LineConnector';
 import { MessengerRequestBody } from './messenger/MessengerConnector';
 import { SlackRequestBody } from './slack/SlackConnector';
+import { SmsRequestBody } from './sms/SmsConnector';
 import { TelegramRequestBody } from './telegram/TelegramConnector';
 import { ViberRequestBody } from './viber/ViberConnector';
 import { WhatsappRequestBody } from './whatsapp/WhatsappConnector';
@@ -38,7 +40,8 @@ export type Event =
   | SlackEvent
   | TelegramEvent
   | ViberEvent
-  | WhatsappEvent;
+  | WhatsappEvent
+  | SmsEvent;
 
 export type Body =
   | ConsoleRawEvent
@@ -47,7 +50,8 @@ export type Body =
   | SlackRequestBody
   | TelegramRequestBody
   | ViberRequestBody
-  | WhatsappRequestBody;
+  | WhatsappRequestBody
+  | SmsRequestBody;
 
 export type AnyContext = Context<any, any>;
 

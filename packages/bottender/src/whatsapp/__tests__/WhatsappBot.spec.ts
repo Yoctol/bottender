@@ -3,8 +3,9 @@ import WhatsappConnector from '../WhatsappConnector';
 
 it('should construct bot with WhatsappConnector', () => {
   const bot = new WhatsappBot({
-    accountSid: 'ACCOUNT_SID',
-    authToken: 'AUTH_TOKEN',
+    accountSid: 'ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+    authToken: '<AUTH_TOKEN>',
+    phoneNumber: 'whatsapp:+15005550006',
   });
   expect(bot).toBeDefined();
   expect(bot.onEvent).toBeDefined();

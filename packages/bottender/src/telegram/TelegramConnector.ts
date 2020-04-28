@@ -1,11 +1,9 @@
-import { EventEmitter } from 'events';
-
 import invariant from 'invariant';
 import { TelegramClient } from 'messaging-api-telegram';
 
 import Session from '../session/Session';
 import { Connector } from '../bot/Connector';
-import { RequestContext } from '../types';
+import { ContextOptions } from '../context/Context';
 
 import TelegramContext from './TelegramContext';
 import TelegramEvent, { TelegramRawEvent } from './TelegramEvent';
@@ -201,13 +199,9 @@ export default class TelegramConnector
     return [new TelegramEvent(rawEvent)];
   }
 
-  createContext(params: {
-    event: TelegramEvent;
-    session: Session | null;
-    initialState?: Record<string, any> | null;
-    requestContext?: RequestContext;
-    emitter?: EventEmitter | null;
-  }): TelegramContext {
+  createContext(
+    params: Omit<ContextOptions<TelegramClient, TelegramEvent>, 'client'>
+  ): TelegramContext {
     return new TelegramContext({
       ...params,
       client: this._client,

@@ -1,5 +1,3 @@
-import { EventEmitter } from 'events';
-
 import invariant from 'invariant';
 import sleep from 'delay';
 import warning from 'warning';
@@ -9,23 +7,9 @@ import {
   MessengerTypes,
 } from 'messaging-api-messenger';
 
-import Context from '../context/Context';
-import Session from '../session/Session';
-import { RequestContext } from '../types';
+import Context, { ContextOptions } from '../context/Context';
 
 import MessengerEvent from './MessengerEvent';
-
-type Options = {
-  appId?: string;
-  client: MessengerClient;
-  event: MessengerEvent;
-  session?: Session;
-  initialState?: Record<string, any>;
-  requestContext?: RequestContext;
-  customAccessToken?: string;
-  batchQueue?: Record<string, any> | null;
-  emitter?: EventEmitter;
-};
 
 class MessengerContext extends Context<MessengerClient, MessengerEvent> {
   _appId: string | null;
@@ -47,7 +31,11 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
     customAccessToken,
     batchQueue,
     emitter,
-  }: Options) {
+  }: ContextOptions<MessengerClient, MessengerEvent> & {
+    appId?: string;
+    customAccessToken?: string;
+    batchQueue?: Record<string, any> | null;
+  }) {
     super({ client, event, session, initialState, requestContext, emitter });
     this._customAccessToken = customAccessToken || null;
     this._batchQueue = batchQueue || null;

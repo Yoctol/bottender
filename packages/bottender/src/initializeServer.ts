@@ -8,6 +8,7 @@ import Bot from './bot/Bot';
 import LineBot from './line/LineBot';
 import MessengerBot from './messenger/MessengerBot';
 import SlackBot from './slack/SlackBot';
+import SmsBot from './sms/SmsBot';
 import TelegramBot from './telegram/TelegramBot';
 import ViberBot from './viber/ViberBot';
 import WhatsappBot from './whatsapp/WhatsappBot';
@@ -22,6 +23,7 @@ const BOT_MAP = {
   telegram: TelegramBot,
   viber: ViberBot,
   whatsapp: WhatsappBot,
+  sms: SmsBot,
 };
 
 function initializeServer({

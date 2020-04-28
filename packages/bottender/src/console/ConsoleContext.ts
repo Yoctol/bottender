@@ -2,23 +2,10 @@ import { EventEmitter } from 'events';
 
 import sleep from 'delay';
 
-import Context from '../context/Context';
-import Session from '../session/Session';
-import { RequestContext } from '../types';
+import Context, { ContextOptions } from '../context/Context';
 
 import ConsoleEvent from './ConsoleEvent';
 import { ConsoleClient } from './ConsoleClient';
-
-type Options = {
-  client: ConsoleClient;
-  event: ConsoleEvent;
-  session: Session | null;
-  initialState?: Record<string, any> | null;
-  requestContext?: RequestContext;
-  fallbackMethods: boolean;
-  mockPlatform: string;
-  emitter: EventEmitter | null;
-};
 
 const methodBlackList = [
   'inspect', // console
@@ -43,7 +30,10 @@ export default class ConsoleContext extends Context<
     fallbackMethods,
     mockPlatform,
     emitter,
-  }: Options) {
+  }: ContextOptions<ConsoleClient, ConsoleEvent> & {
+    fallbackMethods: boolean;
+    mockPlatform: string;
+  }) {
     super({ client, event, session, initialState, requestContext, emitter });
     this._mockPlatform = mockPlatform;
     this._fallbackMethods = fallbackMethods;

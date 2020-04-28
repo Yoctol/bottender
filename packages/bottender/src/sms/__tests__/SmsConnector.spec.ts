@@ -1,13 +1,13 @@
-import TwilioClient from '../../sms/TwilioClient';
-import WhatsappConnector from '../WhatsappConnector';
-import WhatsappContext from '../WhatsappContext';
-import WhatsappEvent from '../WhatsappEvent';
+import SmsConnector from '../SmsConnector';
+import SmsContext from '../SmsContext';
+import SmsEvent from '../SmsEvent';
+import TwilioClient from '../TwilioClient';
 import {
   MessageDelivered,
   MessageRead,
   MessageSent,
   TextMessageReceived,
-} from '../WhatsappTypes';
+} from '../SmsTypes';
 
 const messageReceived: TextMessageReceived = {
   smsMessageSid: 'SM7cd85aed706d25735d1c8019234572df',
@@ -15,11 +15,11 @@ const messageReceived: TextMessageReceived = {
   smsSid: 'SM7cd85aed706d25735d1c8019234572df',
   smsStatus: 'received',
   body: 'hi',
-  to: 'whatsapp:+14155238886',
+  to: '+14155238886',
   numSegments: '1',
   messageSid: 'SM7cd85aed706d25735d1c8019234572df',
   accountSid: 'ACf19dfb164f82b2c9d6178c6ada3XXXXX',
-  from: 'whatsapp:+886123456789',
+  from: '+886123456789',
   apiVersion: '2010-04-01',
 };
 
@@ -28,12 +28,12 @@ const messageSent: MessageSent = {
   smsStatus: 'sent',
   messageStatus: 'sent',
   channelToAddress: '+886123456789',
-  to: 'whatsapp:+886123456789',
-  channelPrefix: 'whatsapp',
+  to: '+886123456789',
+  channelPrefix: 'sms',
   messageSid: 'SM338ac551ecd04d698821b50ea5dXXXXX',
   accountSid: 'ACf19dfb164f82b2c9d6178c6ada3XXXXX',
   structuredMessage: 'false',
-  from: 'whatsapp:+14155238886',
+  from: '+14155238886',
   apiVersion: '2010-04-01',
   channelInstallSid: 'XEcc20d939f803ee381f2442185d0XXXXX',
 };
@@ -44,11 +44,11 @@ const messageDelivered: MessageDelivered = {
   smsStatus: 'delivered',
   messageStatus: 'delivered',
   channelToAddress: '+886123456789',
-  to: 'whatsapp:+886123456789',
-  channelPrefix: 'whatsapp',
+  to: '+886123456789',
+  channelPrefix: 'sms',
   messageSid: 'SM338ac551ecd04d698821b50ea5dXXXXX',
   accountSid: 'ACf19dfb164f82b2c9d6178c6ada3XXXXX',
-  from: 'whatsapp:+14155238886',
+  from: '+14155238886',
   apiVersion: '2010-04-01',
   channelInstallSid: 'XE85c014c372541a32e1102eb1631XXXXX',
 };
@@ -59,17 +59,17 @@ const messageRead: MessageRead = {
   smsStatus: 'read',
   messageStatus: 'read',
   channelToAddress: '+886123456789',
-  to: 'whatsapp:+886123456789',
-  channelPrefix: 'whatsapp',
+  to: '+886123456789',
+  channelPrefix: 'sms',
   messageSid: 'SM338ac551ecd04d698821b50ea5dXXXXX',
   accountSid: 'ACf19dfb164f82b2c9d6178c6ada3XXXXX',
-  from: 'whatsapp:+14155238886',
+  from: '+14155238886',
   apiVersion: '2010-04-01',
   channelInstallSid: 'XE85c014c372541a32e1102eb1631XXXXX',
 };
 
 function setup() {
-  const connector = new WhatsappConnector({
+  const connector = new SmsConnector({
     accountSid: 'ACCOUNT_SID',
     authToken: 'AUTH_TOKEN',
   });
@@ -80,9 +80,9 @@ function setup() {
 }
 
 describe('#platform', () => {
-  it('should be whatsapp', () => {
+  it('should be sms', () => {
     const { connector } = setup();
-    expect(connector.platform).toBe('whatsapp');
+    expect(connector.platform).toBe('sms');
   });
 });
 
@@ -97,7 +97,7 @@ describe('#client', () => {
       accountSid: 'ACCOUNT_SID',
       authToken: 'AUTH_TOKEN',
     });
-    const connector = new WhatsappConnector({ client });
+    const connector = new SmsConnector({ client });
     expect(connector.client).toBe(client);
   });
 });
@@ -108,7 +108,7 @@ describe('#getUniqueSessionKey', () => {
 
     const sessionKey = connector.getUniqueSessionKey(messageReceived);
 
-    expect(sessionKey).toEqual('whatsapp:+886123456789');
+    expect(sessionKey).toEqual('+886123456789');
   });
 
   it('should work with the sent event', () => {
@@ -116,7 +116,7 @@ describe('#getUniqueSessionKey', () => {
 
     const sessionKey = connector.getUniqueSessionKey(messageSent);
 
-    expect(sessionKey).toEqual('whatsapp:+886123456789');
+    expect(sessionKey).toEqual('+886123456789');
   });
 
   it('should work with the delivered event', () => {
@@ -124,7 +124,7 @@ describe('#getUniqueSessionKey', () => {
 
     const sessionKey = connector.getUniqueSessionKey(messageDelivered);
 
-    expect(sessionKey).toEqual('whatsapp:+886123456789');
+    expect(sessionKey).toEqual('+886123456789');
   });
 
   it('should work with the read event', () => {
@@ -132,7 +132,7 @@ describe('#getUniqueSessionKey', () => {
 
     const sessionKey = connector.getUniqueSessionKey(messageRead);
 
-    expect(sessionKey).toEqual('whatsapp:+886123456789');
+    expect(sessionKey).toEqual('+886123456789');
   });
 });
 
@@ -146,7 +146,7 @@ describe('#updateSession', () => {
     expect(session).toEqual({
       user: {
         _updatedAt: expect.any(String),
-        id: 'whatsapp:+886123456789',
+        id: '+886123456789',
       },
     });
   });
@@ -160,7 +160,7 @@ describe('#updateSession', () => {
     expect(session).toEqual({
       user: {
         _updatedAt: expect.any(String),
-        id: 'whatsapp:+886123456789',
+        id: '+886123456789',
       },
     });
   });
@@ -174,7 +174,7 @@ describe('#updateSession', () => {
     expect(session).toEqual({
       user: {
         _updatedAt: expect.any(String),
-        id: 'whatsapp:+886123456789',
+        id: '+886123456789',
       },
     });
   });
@@ -188,26 +188,26 @@ describe('#updateSession', () => {
     expect(session).toEqual({
       user: {
         _updatedAt: expect.any(String),
-        id: 'whatsapp:+886123456789',
+        id: '+886123456789',
       },
     });
   });
 });
 
 describe('#mapRequestToEvents', () => {
-  it('should map request to WhatsappEvent', () => {
+  it('should map request to SmsEvent', () => {
     const { connector } = setup();
     const events = connector.mapRequestToEvents(messageReceived);
 
     expect(events).toHaveLength(1);
-    expect(events[0]).toBeInstanceOf(WhatsappEvent);
+    expect(events[0]).toBeInstanceOf(SmsEvent);
   });
 });
 
 describe('#createContext', () => {
-  it('should create WhatsappContext', async () => {
+  it('should create SmsContext', async () => {
     const { connector } = setup();
-    const event = new WhatsappEvent(messageReceived);
+    const event = new SmsEvent(messageReceived);
     const session = {};
 
     const context = await connector.createContext({
@@ -216,7 +216,7 @@ describe('#createContext', () => {
     });
 
     expect(context).toBeDefined();
-    expect(context).toBeInstanceOf(WhatsappContext);
+    expect(context).toBeInstanceOf(SmsContext);
   });
 });
 
@@ -227,7 +227,7 @@ describe('#preprocess', () => {
     expect(
       connector.preprocess({
         method: 'post',
-        url: 'http://xxxxxxxx.ngrok.io/webhooks/whatsapp',
+        url: 'http://xxxxxxxx.ngrok.io/webhooks/sms',
         headers: {
           'x-twilio-signature': 'Aw+rhj2Zc+2pBslFUXMhzqUnmaM=',
         },
@@ -246,7 +246,7 @@ describe('#preprocess', () => {
     expect(
       connector.preprocess({
         method: 'post',
-        url: 'http://xxxxxxxx.ngrok.io/webhooks/whatsapp',
+        url: 'http://xxxxxxxx.ngrok.io/webhooks/sms',
         headers: {
           'x-twilio-signature': 'hu/qdx0P1E0D7WJNUIRLKWDbvsI=',
         },
@@ -259,7 +259,7 @@ describe('#preprocess', () => {
       response: {
         body: {
           error: {
-            message: 'WhatsApp Signature Validation Failed!',
+            message: 'SMS Signature Validation Failed!',
             request: {
               headers: {
                 'x-twilio-signature': 'hu/qdx0P1E0D7WJNUIRLKWDbvsI=',

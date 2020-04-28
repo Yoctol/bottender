@@ -1,16 +1,16 @@
 import Bot from '../bot/Bot';
 import SessionStore from '../session/SessionStore';
-import TwilioClient from '../sms/TwilioClient';
 
-import WhatsappConnector, { WhatsappRequestBody } from './WhatsappConnector';
-import WhatsappContext from './WhatsappContext';
-import WhatsappEvent from './WhatsappEvent';
+import SmsConnector, { SmsRequestBody } from './SmsConnector';
+import SmsContext from './SmsContext';
+import SmsEvent from './SmsEvent';
+import TwilioClient from './TwilioClient';
 
-export default class WhatsappBot extends Bot<
-  WhatsappRequestBody,
+export default class SmsBot extends Bot<
+  SmsRequestBody,
   TwilioClient,
-  WhatsappEvent,
-  WhatsappContext
+  SmsEvent,
+  SmsContext
 > {
   constructor({
     accountSid,
@@ -19,6 +19,7 @@ export default class WhatsappBot extends Bot<
     sessionStore,
     sync,
     origin,
+    includeStatusCallback,
   }: {
     accountSid: string;
     authToken: string;
@@ -26,12 +27,14 @@ export default class WhatsappBot extends Bot<
     sessionStore?: SessionStore;
     sync?: boolean;
     origin?: string;
+    includeStatusCallback?: boolean;
   }) {
-    const connector = new WhatsappConnector({
+    const connector = new SmsConnector({
       accountSid,
       authToken,
       phoneNumber,
       origin,
+      includeStatusCallback,
     });
     super({ connector, sessionStore, sync });
   }
