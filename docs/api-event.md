@@ -19,14 +19,14 @@ async function MyAction(context) {
 
 For platform specific events, please check out following links:
 
-| Platform                                | Doc                                                |
-| --------------------------------------- | -------------------------------------------------- |
-| Console                                 | [APIReference-ConsoleEvent](api-console-event)     |
-| [Messenger](https://www.messenger.com/) | [APIReference-MessengerEvent](api-messenger-event) |
-| [LINE](https://line.me/)                | [APIReference-LineEvent](api-line-event)           |
-| [Slack](https://slack.com/)             | [APIReference-SlackEvent](api-slack-event)         |
-| [Telegram](https://telegram.org/)       | [APIReference-TelegramEvent](api-telegram-event)   |
-| [Viber](https://www.viber.com/)         | [APIReference-ViberEvent](api-viber-event)         |
+| Platform                                | Doc                                                   |
+| --------------------------------------- | ----------------------------------------------------- |
+| Console                                 | [APIReference-ConsoleEvent](api-console-event.md)     |
+| [Messenger](https://www.messenger.com/) | [APIReference-MessengerEvent](api-messenger-event.md) |
+| [LINE](https://line.me/)                | [APIReference-LineEvent](api-line-event.md)           |
+| [Slack](https://slack.com/)             | [APIReference-SlackEvent](api-slack-event.md)         |
+| [Telegram](https://telegram.org/)       | [APIReference-TelegramEvent](api-telegram-event.md)   |
+| [Viber](https://www.viber.com/)         | [APIReference-ViberEvent](api-viber-event.md)         |
 
 #### `rawEvent`
 
