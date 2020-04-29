@@ -1,5 +1,3 @@
-# 1.4.2 / 2020-04-24
-
 # 1.4.3 / 2020-04-29
 
 - [type] use string instead enum to compare.
