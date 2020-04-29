@@ -848,6 +848,100 @@ describe('#answerInlineQuery', () => {
   });
 });
 
+describe('#answerCallbackQuery', () => {
+  const callbackQuery = {
+    updateId: 869424,
+    callbackQuery: {
+      id: '705303069014561',
+      from: {
+        id: 164230,
+        isBot: false,
+        firstName: 'user_first',
+        username: 'username',
+        languageCode: 'zh-hans',
+      },
+      message: {
+        messageId: 1474,
+        from: {
+          id: 902548,
+          isBot: true,
+          firstName: 'bot_first',
+          username: 'botname',
+        },
+        chat: {
+          id: -371089,
+          title: 'group name',
+          type: 'group',
+          allMembersAreAdministrators: true,
+        },
+        date: 1588145587,
+        game: {
+          title: 'game title',
+          description: 'game description',
+          photo: [
+            {
+              fileId:
+                'AgACAgUAAxUAAV6pNvEYJWk8Nn7D-P9i8KxCkeBJAAL5qjEbZ5BIVdV5MmS2G44AAfN1w2p0AAMBAAMCAANtAANXSw',
+              fileUniqueId: 'AQAD83XDanQAA1',
+              fileSize: 8889,
+              width: 320,
+              height: 180,
+            },
+            {
+              fileId:
+                'AgACAgUAAxUAAV6pNvEYJWk8Nn7D-P9i8KxCkeBJAAL5qjEbZ5BIVdV5MmS2G44AAfN1w2p0AAMBAAMCAAN4AANYSw',
+              fileUniqueId: 'AQAD83XDanQAA1',
+              fileSize: 20067,
+              width: 640,
+              height: 360,
+            },
+          ],
+        },
+        replyMarkup: {
+          inlineKeyboard: [
+            [
+              {
+                text: 'Play gamename',
+                callbackGame: {},
+              },
+            ],
+          ],
+        },
+      },
+      chatInstance: '-811839530613755',
+      gameShortName: 'gamename',
+    },
+  };
+  it('should to call client.answerCallbackQuery', async () => {
+    const { context, client } = setup({ rawEvent: callbackQuery });
+
+    const response = {
+      ok: true,
+    };
+
+    client.answerCallbackQuery.mockResolvedValue(response);
+
+    const result = await context.answerCallbackQuery({
+      url: 'https://example.com/',
+    });
+
+    expect(client.answerCallbackQuery).toBeCalledWith('705303069014561', {
+      url: 'https://example.com/',
+    });
+    expect(result).toEqual(response);
+  });
+
+  it('should not call answerCallbackQuery method if event type is not CallbackQuery', async () => {
+    const { context, client } = setup();
+
+    await context.answerCallbackQuery({
+      url: 'https://example.com/',
+    });
+
+    expect(client.answerCallbackQuery).not.toBeCalled();
+  });
+});
+
 describe('#getUserProfilePhotos', () => {
   it('should to call client.getUserProfilePhotos', async () => {
     const { context, client } = setup();
