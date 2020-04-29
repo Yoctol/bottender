@@ -15,7 +15,7 @@ Install dependencies:
 npm install
 ```
 
-You must fill `APP_ID`, `APP_SECRET`, `PAGE_ID`, `ACCESS_TOKEN` and `VERIFY_TOKEN` in your `.env` file.
+You must fill `MESSENGER_APP_ID`, `MESSENGER_APP_SECRET`, `MESSENGER_PAGE_ID`, `MESSENGER_ACCESS_TOKEN`, and `MESSENGER_VERIFY_TOKEN` in your `.env` file.
 
 > **Note:** Pages interested in using [Messenger One-Time Notification](https://developers.facebook.com/docs/messenger-platform/send-messages/one-time-notification/) API need to apply for the "One-Time Notification" permission within the "Advanced Messaging" section of Page Settings. For more info, see [Permissions](https://developers.facebook.com/docs/messenger-platform/send-messages/one-time-notification#permissions).
 
@@ -29,7 +29,7 @@ npm run dev
 
 This command starts a server listening at `http://localhost:5000` for bot development.
 
-If you successfully start the server, you get a webhook URL in the format of `https://xxxxxxxx.ngrok.io/webhooks/line` from your terminal.
+If you successfully start the server, you get a webhook URL in the format of `https://xxxxxxxx.ngrok.io/webhooks/messenger` from your terminal.
 
 ## Set Webhook
 
@@ -39,7 +39,7 @@ While the server is running, you can run the following command with `bottender` 
 npx bottender messenger webhook set
 ```
 
-> **Note:** You must fill `APP_ID`, `APP_SECRET` and `VERIFY_TOKEN` in your `.env` file before running this command.
+> **Note:** You must fill in your `.env` file before running this command.
 
 ## Idea of This Example
 

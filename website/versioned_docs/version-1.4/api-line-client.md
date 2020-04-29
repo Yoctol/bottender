@@ -56,7 +56,7 @@ async function MyAction(context) {
 
 ### Error Handling
 
-`LineClient` uses [axios](https://github.com/axios/axios) as HTTP client. We use [axios-error](https://github.com/Yoctol/messaging-apis/tree/master/packages/axios-error) package to wrap API error instances for better formatting error messages. Directly `console.log` on the error instance will return the formatted message. If you'd like to get the axios `request`, `response`, or `config`, you can still get them via those keys on the error instance.
+`LineClient` uses [axios](https://github.com/axios/axios) as HTTP client. We use [axios-error](https://github.com/Yoctol/messaging-apis/tree/master/packages/axios-error) package to wrap API error instances for better formatting error messages. Calling `console.log` with the error instance returns the formatted message.. If you'd like to get the axios `request`, `response`, or `config`, you can still get them via those keys on the error instance.
 
 ```js
 client.replyText(token, text).catch(error => {
@@ -629,14 +629,14 @@ Responds flex message using specified reply token.
 
 <img src="https://developers.line.biz/assets/img/bubbleSamples-Update1.96cf1f73.png" />
 
-| Param                    | Type     | Description                                                                                             |
-| ------------------------ | -------- | ------------------------------------------------------------------------------------------------------- |
-| token                    | `String` | `replyToken` received via webhook.                                                                      |
-| altText                  | `String` | Alternative text.                                                                                       |
+| Param                    | Type     | Description                                                                                        |
+| ------------------------ | -------- | -------------------------------------------------------------------------------------------------- |
+| token                    | `String` | `replyToken` received via webhook.                                                                 |
+| altText                  | `String` | Alternative text.                                                                                  |
 | contents                 | `Object` | Flex Message [container](https://developers.line.me/en/mreference/essaging-api/#container) object. |
-| options                  | `Object` | Optional options.                                                                                       |
-| options.quickReply       | `Object` | Quick reply object to attach to the message.                                                            |
-| options.quickReply.items | `Array`  | Quick reply items.                                                                                      |
+| options                  | `Object` | Optional options.                                                                                  |
+| options.quickReply       | `Object` | Quick reply object to attach to the message.                                                       |
+| options.quickReply.items | `Array`  | Quick reply items.                                                                                 |
 
 Example:
 
@@ -1207,14 +1207,14 @@ Sends flex message using ID of the receiver.
 
 <img src="https://developers.line.me/media/messaging-api/using-flex-messages/bubbleSample-77d825e6.png" />
 
-| Param                    | Type     | Description                                                                                             |
-| ------------------------ | -------- | ------------------------------------------------------------------------------------------------------- |
-| userId                   | `String` | ID of the receiver.                                                                                     |
-| altText                  | `String` | Alternative text.                                                                                       |
+| Param                    | Type     | Description                                                                                        |
+| ------------------------ | -------- | -------------------------------------------------------------------------------------------------- |
+| userId                   | `String` | ID of the receiver.                                                                                |
+| altText                  | `String` | Alternative text.                                                                                  |
 | contents                 | `Object` | Flex Message [container](https://developers.line.me/en/mreference/essaging-api/#container) object. |
-| options                  | `Object` | Optional options.                                                                                       |
-| options.quickReply       | `Object` | Quick reply object to attach to the message.                                                            |
-| options.quickReply.items | `Array`  | Quick reply items.                                                                                      |
+| options                  | `Object` | Optional options.                                                                                  |
+| options.quickReply       | `Object` | Quick reply object to attach to the message.                                                       |
+| options.quickReply.items | `Array`  | Quick reply items.                                                                                 |
 
 Example:
 
@@ -1791,14 +1791,14 @@ Sends flex message to multiple users.
 
 <img src="https://developers.line.me/media/messaging-api/using-flex-messages/bubbleSample-77d825e6.png" />
 
-| Param                    | Type            | Description                                                                                             |
-| ------------------------ | --------------- | ------------------------------------------------------------------------------------------------------- |
-| userIds                  | `Array<String>` | IDs of the receivers.                                                                                   |
-| altText                  | `String`        | Alternative text.                                                                                       |
+| Param                    | Type            | Description                                                                                        |
+| ------------------------ | --------------- | -------------------------------------------------------------------------------------------------- |
+| userIds                  | `Array<String>` | IDs of the receivers.                                                                              |
+| altText                  | `String`        | Alternative text.                                                                                  |
 | contents                 | `Object`        | Flex Message [container](https://developers.line.me/en/mreference/essaging-api/#container) object. |
-| options                  | `Object`        | Optional options.                                                                                       |
-| options.quickReply       | `Object`        | Quick reply object to attach to the message.                                                            |
-| options.quickReply.items | `Array`         | Quick reply items.                                                                                      |
+| options                  | `Object`        | Optional options.                                                                                  |
+| options.quickReply       | `Object`        | Quick reply object to attach to the message.                                                       |
+| options.quickReply.items | `Array`         | Quick reply items.                                                                                 |
 
 Example:
 
@@ -2238,8 +2238,8 @@ client.getRichMenu(RICH_MENU_ID).then(richMenu => {
 
 Creates a rich menu.
 
-| Param    | Type       | Description                                                                                         |
-| -------- | ---------- | --------------------------------------------------------------------------------------------------- |
+| Param    | Type       | Description                                                                                    |
+| -------- | ---------- | ---------------------------------------------------------------------------------------------- |
 | richMenu | `RichMenu` | A [rich menu object](https://developers.line.me/en/reference/messaging-api/#rich-menu-object). |
 
 Example:
@@ -2578,7 +2578,10 @@ module.exports = {
       path: '/webhooks/line',
       accessToken: process.env.LINE_ACCESS_TOKEN,
       channelSecret: process.env.LINE_CHANNEL_SECRET,
-      origin: process.env.NODE_ENV === 'test' ? 'https://mydummytestserver.com' : undefined,
+      origin:
+        process.env.NODE_ENV === 'test'
+          ? 'https://mydummytestserver.com'
+          : undefined,
     },
   },
 };

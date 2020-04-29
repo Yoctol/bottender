@@ -15,7 +15,7 @@ Install dependencies:
 npm install
 ```
 
-You must put `accessToken` and `verificationToken` into `bottender.config.js`.
+You must fill `SLACK_ACCESS_TOKEN` and `SLACK_SIGNING_SECRET` in your `.env` file.
 
 If you are not familiar with Slack Bot, you may refer to Bottender's doc, [Slack Setup](https://bottender.js.org/docs/channel-slack-setup), to find detailed instructions.
 

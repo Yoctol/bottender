@@ -13,13 +13,9 @@ npm run dev --console
 
 ## Idea of This Example
 
-Building a todo app is the best way to understand new tools. This example shows
-what a To-Do console bot looks like. We suggest that you read our
-[session guide](https://bottender.js.org/docs/next/the-basics-session) first. That will
-help you come to a better understanding.
+Building a todo app is the best way to understand new tools. This example shows what a To-Do console bot looks like. We suggest that you read our [session guide](https://bottender.js.org/docs/next/the-basics-session) first. That will help you come to a better understanding.
 
-To begin with, the bot sets a initial state in `bottender.config.js`. Noticed that
-state must be an **Object**.
+To begin with, the bot sets an initial state in `bottender.config.js`. Noticed that state must be an **Object**.
 
 ```js
 module.exports = {
@@ -29,11 +25,9 @@ module.exports = {
 };
 ```
 
-There are three features in this example: **Add todo**, **list all todos** and
-**clear all todos**.
+There are three features in this example: **Add todo**, **list all todos**, and **clear all todos**.
 
-First of all, just talk anything to the bot, and it will call `context.setState`
-to store your todo in session. This shows how to add a todo.
+First of all, just talk anything to the bot, and it will call `context.setState` to store your todo in session. This shows how to add a todo.
 
 ```js
 async function AddTodo(context) {
@@ -45,9 +39,7 @@ async function AddTodo(context) {
 }
 ```
 
-To show all todos, enter **/list**, then the bot will check whether
-`context.session` is empty. If it has any todos, the bot will send all of them
-to you.
+To show all todos, enter **/list**, then the bot will check whether `context.session` is empty. If it has any todos, the bot will send all of them to you.
 
 ```js
 async function ShowTodos(context, { todos }) {
@@ -59,8 +51,7 @@ async function ShowTodos(context, { todos }) {
 }
 ```
 
-Finally, enter **/clear**, the bot will clear all todos by calling
-`context.resetState`. That is a very useful method to reset your state.
+Finally, enter **/clear**, the bot will clear all todos by calling `context.resetState`. That is a very useful method to reset your state.
 
 ```js
 async function ClearTodos(context) {
@@ -69,8 +60,7 @@ async function ClearTodos(context) {
 }
 ```
 
-For more information about Bottender, please visit our
-[Docs Website](https://bottender.js.org/).
+For more information about Bottender, please visit our [Docs Website](https://bottender.js.org/).
 
 ## Related Examples
 

@@ -13,9 +13,7 @@ npm run dev -- --console
 
 ## Idea of This Example
 
-This example shows how to use Session to store some information from users and
-store sessions in your local file. For more information, check our
-[session guide](https://bottender.js.org/docs/the-basics-session).
+This example shows how to use session to store some information from users in your local files. For more information, check our [session guide](https://bottender.js.org/docs/the-basics-session).
 
 ## Related Examples
 
