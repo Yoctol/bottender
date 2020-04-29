@@ -15,11 +15,11 @@ Install dependencies:
 npm install
 ```
 
-You must put `accessToken` and `channelSecret` into `bottender.config.js`.
+You must fill `LINE_ACCESS_TOKEN` and `LINE_CHANNEL_SECRET` in your `.env` file.
 
 If you are not familiar with LINE Bot, you may refer to Bottender's doc, [LINE Setup](https://bottender.js.org/docs/channel-line-setup) to find detailed instructions.
 
-After that, you should follow this [document](https://bottender.js.org/docs/channel-line-rich-menu) to set up the rich menu on LINE. You can use the file `rich_menu.jpg` as the rich menu image.
+After that, you should follow this [LINE Rich Menu](https://bottender.js.org/docs/channel-line-rich-menu) document to set up the rich menu on LINE. You can use the file `rich_menu.jpg` as the rich menu image.
 
 Next, you can run the bot with this npm script:
 
@@ -42,4 +42,4 @@ For more information, check our [LINE API Document](https://developers.line.biz/
 
 ## Related Examples
 
-- [line-hello-world](../line-hello-world)
+- [line-rich-menu-submenu](../line-rich-menu-submenu)

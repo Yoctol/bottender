@@ -15,7 +15,7 @@ Install dependencies:
 npm install
 ```
 
-You must fill `APP_ID`, `APP_SECRET`, `PAGE_ID`, `ACCESS_TOKEN` and `VERIFY_TOKEN` in your `.env` file.
+You must fill `MESSENGER_APP_ID`, `MESSENGER_APP_SECRET`, `MESSENGER_PAGE_ID`, `MESSENGER_ACCESS_TOKEN`, and `MESSENGER_VERIFY_TOKEN` in your `.env` file.
 
 If you are not familiar with Messenger Bot, you may refer to Bottender's doc, [Messenger Setup](https://bottender.js.org/docs/channel-messenger-setup), to find detailed instructions.
 
@@ -41,12 +41,12 @@ While the server is running, you can run the following command with `bottender` 
 npx bottender messenger webhook set
 ```
 
-> Note: You must put `appId`, `appSecret`, `pageId`, `accessToken` and `verifyToken` into `bottender.config.js` before running this command.
+> **Note:** You must fill in your `.env` file before running this command.
 
 ## Idea of This Example
 
 This example shows how to use [Messenger Handover Protocol](https://developers.facebook.com/docs/messenger-platform/handover-protocol) in Bottender bots.
-For more information, check our [Messenger guides](https://bottender.js.org/docs/channel-messenger-setup).
+For more information, check our [Messenger Handover Protocol](https://bottender.js.org/docs/en/channel-messenger-handover-protocol) guides.
 
 ## Related Examples
 

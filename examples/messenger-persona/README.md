@@ -15,7 +15,17 @@ Install dependencies:
 npm install
 ```
 
-You must fill `APP_ID`, `APP_SECRET`, `PAGE_ID`, `ACCESS_TOKEN` and `VERIFY_TOKEN` in your `.env` file.
+You must fill the following variables in your `.env` file:
+
+- `MESSENGER_PAGE_ID`
+- `MESSENGER_ACCESS_TOKEN`
+- `MESSENGER_APP_ID`
+- `MESSENGER_APP_SECRET`
+- `MESSENGER_VERIFY_TOKEN`
+- `PERSONA_1`
+- `PERSONA_2`
+
+> **Note:** You can get create personas using `npx bottender messenger persona create --name <name> --pic <url>` after you have correct access token setup.
 
 If you are not familiar with Messenger Bot, you may refer to Bottender's doc, [Messenger Setup](https://bottender.js.org/docs/channel-messenger-setup), to find detailed instructions.
 
@@ -27,9 +37,7 @@ npm run dev
 
 This command starts a server listening at `http://localhost:5000` for bot development.
 
-If you successfully start the server, you get a webhook URL in the format of `https://xxxxxxxx.ngrok.io/webhooks/line` from your terminal.
-
-> Note: You must set `PERSONA_1` and `PERSONA_2` env variables pairs before running this command. You can create them using `npx bottender messenger persona create --name <name> --pic <url>`.
+If you successfully start the server, you get a webhook URL in the format of `https://xxxxxxxx.ngrok.io/webhooks/messenger` from your terminal.
 
 ## Set Webhook
 
@@ -39,7 +47,7 @@ While the server is running, you can run the following command with `bottender` 
 npx bottender messenger webhook set
 ```
 
-> **Note:** You must fill `APP_ID`, `APP_SECRET` and `VERIFY_TOKEN` in your `.env` file before running this command.
+> **Note:** You must fill in your `.env` file before running this command.
 
 ## Idea of This Example
 
@@ -55,8 +63,8 @@ await context.sendText('hi');
 Or you can specify different persona for each actions:
 
 ```js
-await context.sendText('hi', { persona_id: '<PERSONA_ID_1>' });
-await context.sendText('hi', { persona_id: '<PERSONA_ID_2>' });
+await context.sendText('hi', { personaId: '<PERSONA_ID_1>' });
+await context.sendText('hi', { personaId: '<PERSONA_ID_2>' });
 ```
 
 For more information, check our [Messenger guides](https://bottender.js.org/docs/channel-messenger-setup).

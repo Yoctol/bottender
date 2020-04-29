@@ -15,7 +15,7 @@ Install dependencies:
 npm install
 ```
 
-You must fill `APP_ID`, `APP_SECRET`, `PAGE_ID`, `ACCESS_TOKEN` and `VERIFY_TOKEN` in your `.env` file.
+You must fill `MESSENGER_APP_ID`, `MESSENGER_APP_SECRET`, `MESSENGER_PAGE_ID`, `MESSENGER_ACCESS_TOKEN`, and `MESSENGER_VERIFY_TOKEN` in your `.env` file.
 
 If you are not familiar with Messenger Bot, you may refer to Bottender's doc, [Messenger Setup](https://bottender.js.org/docs/channel-messenger-setup), to find detailed instructions.
 
@@ -27,7 +27,7 @@ npm run dev
 
 This command starts a server listening at `http://localhost:5000` for bot development.
 
-If you successfully start the server, you get a webhook URL in the format of `https://xxxxxxxx.ngrok.io/webhooks/line` from your terminal.
+If you successfully start the server, you get a webhook URL in the format of `https://xxxxxxxx.ngrok.io/webhooks/messenger` from your terminal.
 
 ## Set Webhook
 
@@ -37,12 +37,11 @@ While the server is running, you can run the following command with `bottender` 
 npx bottender messenger webhook set
 ```
 
-> **Note:** You must fill `APP_ID`, `APP_SECRET` and `VERIFY_TOKEN` in your `.env` file before running this command.
+> **Note:** You must fill in your `.env` file before running this command.
 
 ## Idea of This Example
 
 This example is a bot running on [Messenger](https://www.messenger.com/).
-For more information, check our [Messenger guides](https://bottender.js.org/docs/channel-messenger-setup).
 
 ## Related Examples
 

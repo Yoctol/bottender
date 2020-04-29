@@ -15,7 +15,7 @@ Install dependencies:
 npm install
 ```
 
-You have to put `accessToken` into `bottender.config.js`.
+You must fill `TELEGRAM_ACCESS_TOKEN` in your `.env` file.
 
 If you are not familiar with Telegram Bot, you may refer to Bottender's doc, [Telegram Setup](https://bottender.js.org/docs/channel-telegram-setup), to find detailed instructions.
 
@@ -25,9 +25,9 @@ After that, you can run the bot with this npm script:
 npm run dev
 ```
 
-This command will start server for bot developing at `http://localhost:5000`.
+This command starts a server listening at `http://localhost:5000` for bot development.
 
-If you successfully start the server, you will get a webhook URL like `https://xxxxxxxx.ngrok.io/webhooks/telegram` from command line.
+If you successfully start the server, you get a webhook URL in the format of `https://xxxxxxxx.ngrok.io/webhooks/telegram` from your terminal.
 
 ## Set Webhook
 
@@ -37,7 +37,7 @@ While the server running, you can run following command with `bottender` to set 
 npx bottender telegram webhook set -w <YOUR_WEBHOOK_URL>
 ```
 
-> Note: You must put `accessToken` into `bottender.config.js` before running this command.
+> **Note:** You must fill in your `.env` file before running this command.
 
 ## Idea of This Example
 

@@ -22,7 +22,7 @@ Install dependencies:
 npm install
 ```
 
-This is an example that runs on Facebook Messenger Platform. Therefore, you must put `appId`, `appSecret`, `pageId`, `accessToken` and `verifyToken` into the `.env` file.
+This is an example that runs on Facebook Messenger Platform. Therefore, you must fill `MESSENGER_APP_ID`, `MESSENGER_APP_SECRET`, `MESSENGER_PAGE_ID`, `MESSENGER_ACCESS_TOKEN`, and `MESSENGER_VERIFY_TOKEN` in your `.env` file.
 
 If you are not familiar with Messenger Bot, you may refer to Bottender's doc, [Messenger Setup](https://bottender.js.org/docs/channel-messenger-setup), to find detailed instructions.
 

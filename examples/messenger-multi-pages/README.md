@@ -15,7 +15,16 @@ Install dependencies:
 npm install
 ```
 
-You must fill `APP_ID`, `APP_SECRET`, `PAGE_ID`, `ACCESS_TOKEN` and `VERIFY_TOKEN` in your `.env` file.
+You must fill the following variables in your `.env` file:
+
+- `MESSENGER_ACCESS_TOKEN`
+- `MESSENGER_APP_ID`
+- `MESSENGER_APP_SECRET`
+- `MESSENGER_VERIFY_TOKEN`
+- `PAGE_1_PAGE_ID`
+- `PAGE_1_ACCESS_TOKEN`
+- `PAGE_2_PAGE_ID`
+- `PAGE_2_ACCESS_TOKEN`
 
 If you are not familiar with Messenger Bot, you may refer to Bottender's doc, [Messenger Setup](https://bottender.js.org/docs/channel-messenger-setup), to find detailed instructions.
 

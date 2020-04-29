@@ -35,7 +35,7 @@ async function MyAction(context) {
 
 ### Error Handling
 
-`SlackOAuthClient` uses [axios](https://github.com/axios/axios) as HTTP client. We use [axios-error](https://github.com/Yoctol/messaging-apis/tree/master/packages/axios-error) package to wrap API error instances for better formatting error messages. Directly `console.log` on the error instance will return the formatted message. If you'd like to get the axios `request`, `response`, or `config`, you can still get them via those keys on the error instance.
+`SlackOAuthClient` uses [axios](https://github.com/axios/axios) as HTTP client. We use [axios-error](https://github.com/Yoctol/messaging-apis/tree/master/packages/axios-error) package to wrap API error instances for better formatting error messages. Calling `console.log` with the error instance returns the formatted message.. If you'd like to get the axios `request`, `response`, or `config`, you can still get them via those keys on the error instance.
 
 ```js
 client.callMethod(method, body).catch(error => {
@@ -442,7 +442,10 @@ module.exports = {
       path: '/webhooks/slack',
       accessToken: process.env.SLACK_ACCESS_TOKEN,
       signingSecret: process.env.SLACK_SIGNING_SECRET,
-      origin: process.env.NODE_ENV === 'test' ? 'https://mydummytestserver.com' : undefined,
+      origin:
+        process.env.NODE_ENV === 'test'
+          ? 'https://mydummytestserver.com'
+          : undefined,
     },
   },
 };

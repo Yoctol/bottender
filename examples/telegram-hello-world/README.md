@@ -15,7 +15,7 @@ Install dependencies:
 npm install
 ```
 
-You must put `accessToken` into `bottender.config.js`.
+You must fill `TELEGRAM_ACCESS_TOKEN` in your `.env` file.
 
 If you are not familiar with Telegram Bot, you may refer to Bottender's doc, [Telegram Setup](https://bottender.js.org/docs/channel-telegram-setup), to find detailed instructions.
 
@@ -37,7 +37,7 @@ While the server is running, you can run the following command with `bottender` 
 npx bottender telegram webhook set -w <YOUR_WEBHOOK_URL>
 ```
 
-> Note: You must put `accessToken` into `bottender.config.js` before running this command.
+> **Note:** You must fill in your `.env` file before running this command.
 
 ## Idea of This Example
 

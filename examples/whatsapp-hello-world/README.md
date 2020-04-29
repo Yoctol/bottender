@@ -15,7 +15,7 @@ Install dependencies:
 npm install
 ```
 
-You must put `ACCOUNT_SID`, `AUTH_TOKEN` and `PHONE_NUMBER` into `.env`.
+You must fill `WHATSAPP_ACCOUNT_SID`, `WHATSAPP_AUTH_TOKEN`, and `WHATSAPP_PHONE_NUMBER` in your `.env` file.
 
 After that, you can run the bot with this npm script:
 

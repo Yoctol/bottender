@@ -15,7 +15,7 @@ Install dependencies:
 npm install
 ```
 
-You must put `accessToken` into `bottender.config.js`.
+You must fill `VIBER_ACCESS_TOKEN` in your `.env` file.
 
 After that, you can run the bot with this npm script:
 
@@ -35,7 +35,7 @@ While the server is running, you can run the following command with `bottender` 
 npx bottender viber webhook set -w <YOUR_WEBHOOK_URL>
 ```
 
-> Note: You must put `accessToken` into `bottender.config.js` before running this command.
+> **Note:** You must fill in your `.env` file before running this command.
 
 ## Idea of This Example
 
