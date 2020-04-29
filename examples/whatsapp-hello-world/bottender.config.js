@@ -3,9 +3,9 @@ module.exports = {
     whatsapp: {
       enabled: true,
       path: '/webhooks/whatsapp',
-      accountSid: process.env.ACCOUNT_SID,
-      authToken: process.env.AUTH_TOKEN,
-      phoneNumber: process.env.PHONE_NUMBER,
+      accountSid: process.env.WHATSAPP_ACCOUNT_SID,
+      authToken: process.env.WHATSAPP_AUTH_TOKEN,
+      phoneNumber: process.env.WHATSAPP_PHONE_NUMBER,
     },
   },
 };
