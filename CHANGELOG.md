@@ -1,5 +1,11 @@
 # 1.4.2 / 2020-04-24
 
+# 1.4.3 / 2020-04-29
+
+- [type] use string instead enum to compare.
+
+# 1.4.2 / 2020-04-24
+
 - [type] improve TS types of the `getClient` function (#744)
 
 # 1.4.1 / 2020-04-17
