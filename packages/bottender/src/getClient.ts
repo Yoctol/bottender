@@ -26,17 +26,17 @@ const BOT_MAP = {
 
 function getClient<C extends string>(
   channel: C
-): C extends Channel.Messenger
+): C extends 'messenger'
   ? MessengerClient
-  : C extends Channel.Line
+  : C extends 'line'
   ? LineClient
-  : C extends Channel.Slack
+  : C extends 'slack'
   ? SlackOAuthClient
-  : C extends Channel.Telegram
+  : C extends 'telegram'
   ? TelegramClient
-  : C extends Channel.Viber
+  : C extends 'viber'
   ? ViberClient
-  : C extends Channel.Whatsapp
+  : C extends 'whatsapp'
   ? TwilioClient
   : any {
   const { channels = {} } = getBottenderConfig();
