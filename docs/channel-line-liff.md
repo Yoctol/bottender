@@ -26,7 +26,7 @@ LIFF v2 introduces some new features to developers, e.g., scanning QR codes, all
 
 For catching up quickly, this is a minimal implementation - [Bottender example with LIFF v2](https://github.com/Yoctol/bottender/tree/master/examples/line-liff-v2).
 
-The following sections are step by step tutorials about how to send messages with LIFF in a Bottender project created by [Create Bottender App](https://bottender.js.org/docs/getting-started#create-a-new-bottender-app).
+The following sections are step by step tutorials about how to send messages with LIFF in a Bottender project created by [Create Bottender App](getting-started.md#create-a-new-bottender-app).
 
 > **Note:** LIFF v1 is not recommended anymore. If you're using it, you should migrate to LIFF v2. However, you could still find an example for [LIFF v1 here](https://github.com/Yoctol/bottender/tree/master/examples/line-liff-v1).
 
@@ -73,9 +73,9 @@ For more details about LIFF ID, please checkout [Registering LIFF App (in step 4
 
 ### Adding Custom Routes to HTTP Server for LIFF Pages
 
-To serve LIFF webpages, we need to add additional routes to the server. Fortunately, [custom server](advanced-guides-custom-server#the-concept) come to the rescue!
+To serve LIFF webpages, we need to add additional routes to the server. Fortunately, [custom server](advanced-guides-custom-server.md#the-concept) come to the rescue!
 
-You could use express, koa, restify, or whatever you like, but we are going to use express in this guide. Before going down, make sure that you set up correctly according to [this guide](advanced-guides-custom-server#express).
+You could use express, koa, restify, or whatever you like, but we are going to use express in this guide. Before going down, make sure that you set up correctly according to [this guide](advanced-guides-custom-server.md#express).
 
 After having a custom server, you could add the following two routes into `server.js` to handle requests from LIFF.
 

@@ -14,7 +14,7 @@ While developing with Official Slack API, developers have to manage token, chann
 > **Note:**
 >
 > - The idea of `Bot` connects to Slack's `APP.` It is important when you are cross-referencing Bottender doc with Slack's official doc.
-> - Since Slack is one of the sophisticated chat channels, in this doc, we only cover the most frequent use of methods. To access the full list of Slack API support of Bottender, you may refer to [Bottender's API](https://bottender.js.org/docs/api-slack-context).
+> - Since Slack is one of the sophisticated chat channels, in this doc, we only cover the most frequent use of methods. To access the full list of Slack API support of Bottender, you may refer to [Bottender's API](api-slack-context.md).
 >   If you are interested in Slack's complete methods, you may refer to Slack's official document, "[API Methods.](https://api.slack.com/methods)". Don't miss the `Test` tab next to each method; it offers a handy way to try native Slack API better.
 
 ## Sending Text Messages

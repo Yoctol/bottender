@@ -11,7 +11,7 @@ Here comes the Messenger handover protocol, which aims to make a smooth transiti
 
 > **Note:**
 >
-> - If you are curious how to change the profile image between Messenger Bot and human agents, please check Bottender's doc, [Using Persona](https://bottender.js.org/docs/channel-messenger-persona).
+> - If you are curious how to change the profile image between Messenger Bot and human agents, please check Bottender's doc, [Using Persona](channel-messenger-persona.md).
 > - For more information about handover protocol, please check Facebook's official doc, [Handover Protocol](https://developers.facebook.com/docs/messenger-platform/handover-protocol/)
 
 ### `Thread Control`: Who is Answering the Customer

@@ -3,7 +3,7 @@ id: advanced-guides-multi-channel
 title: Multi-Channel Support
 ---
 
-Bottender intends to meet enterprise project needs. So, Bottender supports multiple chat channels in the very early stage. For example, you can put the environment variables of each chat channel in one config file; you can use [platform specific routes](the-basics-routing#platform-specific-routes) to organize user events from various platforms.
+Bottender intends to meet enterprise project needs. So, Bottender supports multiple chat channels in the very early stage. For example, you can put the environment variables of each chat channel in one config file; you can use [platform specific routes](the-basics-routing.md#platform-specific-routes) to organize user events from various platforms.
 
 Plus, Bottender aims to support the full features of each chat channel, e.g., Block Kit of Slack, rich menu of LINE, Handover Protocol of Messenger. And you don't have to learn extra generic chat UIs and worry about if these still apply to the latest chat UI of each chat channel.
 
@@ -43,12 +43,12 @@ VIBER_ACCESS_TOKEN=
 
 > **Note:** If you are not familiar with setting up chat channels, you may refer to the following Bottender docs:
 >
-> - [Messenger Setup](https://bottender.js.org/docs/channel-messenger-setup)
-> - [WhatsApp Setup](https://bottender.js.org/docs/channel-whatsapp-setup)
-> - [LINE Setup](https://bottender.js.org/docs/channel-line-setup)
-> - [Slack Setup](https://bottender.js.org/docs/channel-slack-setup)
-> - [Telegram Setup](https://bottender.js.org/docs/channel-telegram-setup)
-> - [Viber Setup](https://bottender.js.org/docs/channel-viber-setup)
+> - [Messenger Setup](channel-messenger-setup.md)
+> - [WhatsApp Setup](channel-whatsapp-setup.md)
+> - [LINE Setup](channel-line-setup.md)
+> - [Slack Setup](channel-slack-setup.md)
+> - [Telegram Setup](channel-telegram-setup.md)
+> - [Viber Setup](channel-viber-setup.md)
 
 ## Enable Each Chat Channel
 
@@ -114,7 +114,7 @@ A right bot action relates to the current user status with the incoming event. I
 
 ### Using `context.platform` to Manage Cross-Platform Events
 
-You can use [`context.platform`](https://bottender.js.org/docs/api-context#platform) to check that each message belongs to which platform.
+You can use [`context.platform`](api-context.md#platform) to check that each message belongs to which platform.
 
 In the following code, you can see a simple action that replies to the users with the platform they are using.
 
