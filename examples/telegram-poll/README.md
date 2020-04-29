@@ -1,12 +1,12 @@
-# Telegram Hello World
+# Telegram Poll
 
 ## Install and Run
 
 Download this example or clone [bottender](https://github.com/Yoctol/bottender).
 
 ```sh
-curl https://codeload.github.com/Yoctol/bottender/tar.gz/master | tar -xz --strip=2 bottender-master/examples/telegram-hello-world
-cd telegram-hello-world
+curl https://codeload.github.com/Yoctol/bottender/tar.gz/master | tar -xz --strip=2 bottender-master/examples/telegram-poll
+cd telegram-poll
 ```
 
 Install dependencies:
@@ -15,7 +15,7 @@ Install dependencies:
 npm install
 ```
 
-You must put `accessToken` into `bottender.config.js`.
+You have to put `accessToken` into `bottender.config.js`.
 
 If you are not familiar with Telegram Bot, you may refer to Bottender's doc, [Telegram Setup](https://bottender.js.org/docs/channel-telegram-setup), to find detailed instructions.
 
@@ -25,13 +25,13 @@ After that, you can run the bot with this npm script:
 npm run dev
 ```
 
-This command starts a server listening at `http://localhost:5000` for bot development.
+This command will start server for bot developing at `http://localhost:5000`.
 
-If you successfully start the server, you get a webhook URL in the format of `https://xxxxxxxx.ngrok.io/webhooks/telegram` from your terminal.
+If you successfully start the server, you will get a webhook URL like `https://xxxxxxxx.ngrok.io/webhooks/telegram` from command line.
 
 ## Set Webhook
 
-While the server is running, you can run the following command with `bottender` to set up the webhook with the webhook URL you got from running `npm run dev`:
+While the server running, you can run following command with `bottender` to set up the webhook with the webhook URL you get from running `npm run dev`:
 
 ```sh
 npx bottender telegram webhook set -w <YOUR_WEBHOOK_URL>
@@ -41,5 +41,9 @@ npx bottender telegram webhook set -w <YOUR_WEBHOOK_URL>
 
 ## Idea of This Example
 
-This example is a bot running on [Telegram](https://telegram.org/).
+This example is a simple bot running on [Telegram](https://telegram.org/).
 For more information, check our [Telegram guides](https://bottender.js.org/docs/channel-telegram-setup).
+
+## Related Examples
+
+- [telegram-hello-world](../telegram-hello-world)
