@@ -74,7 +74,7 @@
         </script></nav></div><div class="container mainContainer docsContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://crowdin.com/project/bottender/zh-TW" target="_blank" rel="noreferrer noopener">Translate</a><h1 id="__docusaurus" class="postHeaderTitle">Messenger Multi-Page Support</h1></header><article><div><span><p><img src="https://user-images.githubusercontent.com/662387/71957687-66533b00-3229-11ea-9914-7e5919dd9d61.png" alt=""></p>
 <p>本文件說明如何建立單一 Bottender 應用程式來服務多個 Facebook 粉絲專頁。 例如，你可以建立一個預約看牙的 Bottender 應用程式給許多診所。</p>
 <p>在我們的案例中，我們使用 Bottender 來建立我們的聊天機器人平台，<a href="https://yoctol.ai/creator/">Creator</a>。 任何用戶都可以使用 <a href="https://yoctol.ai/creator/">Creator</a> 來建立他的機器人。 技術上來說，Creator 上任何用戶的產出是<code>機器人設定檔</code>和一個預定義的結構。 最終，我們使用單一個 Bottender 應用程式搭配不同的<code>機器人設定檔</code>來提供多變的 Messenger 機器人給每個 Facebook 粉絲專頁。</p>
-<p>讓 Bottender 應用程式能服務多個 Facebook 粉絲專頁的核心觀念是 <code>context</code>。 這覆蓋的不只是用戶訊息，粉絲專頁ID，也包含機器人回覆訊息時需要的粉絲專頁 token。 更多資訊，你可以參閱 Bottender 的文件 <a href="https://bottender.js.org/docs/channel-messenger-handling-events">Handling Messenger Events</a>。</p>
+<p>讓 Bottender 應用程式能服務多個 Facebook 粉絲專頁的核心觀念是 <code>context</code>。 這覆蓋的不只是用戶訊息，粉絲專頁ID，也包含機器人回覆訊息時需要的粉絲專頁 token。 更多資訊，你可以參閱 Bottender 的文件 <a href="./channel-messenger-multi-page">Handling Messenger Events</a>。</p>
 <p>在下面的章節，你會看到三個基本步驟：</p>
 <ul>
 <li>啟用 Bottender 中的 <code>mapPageToAccessToken</code> 功能</li>
