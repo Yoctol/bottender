@@ -1,7 +1,7 @@
 const { router, telegram, text } = require('bottender/router');
 
 async function DefaultAction(context) {
-  await context.sendText('Please type "show keyboard" to show keyboard.');
+  await context.sendText('Please type "show keyboard" to show the keyboard.');
 }
 
 async function ShowKeyboard(context) {
