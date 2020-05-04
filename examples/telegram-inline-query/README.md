@@ -41,12 +41,12 @@ npx bottender telegram webhook set -w <YOUR_WEBHOOK_URL>
 
 ## Idea of This Example
 
-This example is a game bot running on [Telegram](https://telegram.org/).
+This example is a bot about inline query running on [Telegram](https://telegram.org/).
 
 This example contains the following topics:
 
 - receive the inline query from the user
 - answer the inline query with results
-- collect the result the user chosen
+- collect the result chosen by the user
 
 You must enable `inline` and `inlinefeedback` by following [Telegram Inline Bot](https://core.telegram.org/bots/inline) and [Telegram Inline Bot#Collecting Feedback](https://core.telegram.org/bots/inline#collecting-feedback)

@@ -4,20 +4,19 @@ const inlineQueryResultArticle = {
   type: 'article',
   id: 'article1',
   title: 'article',
-  input_message_content: {
-    message_text: 'article_content',
+  inputMessageContent: {
+    messageText: 'article content',
   },
 };
 
 const inlineQueryResultPhoto = {
   type: 'photo',
   id: 'photo1',
-  photo_url: 'https://picsum.photos/200',
-  thumb_url: 'https://picsum.photos/200',
+  photoUrl: 'https://picsum.photos/200',
+  thumbUrl: 'https://picsum.photos/200',
 };
 
 async function DefaultAction(context) {
-  console.log(context.event.rawEvent);
   await context.sendText('Please mention me to send inline query to me.');
 }
 
