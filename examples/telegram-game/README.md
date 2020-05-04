@@ -49,10 +49,11 @@ npx bottender telegram webhook set -w <YOUR_WEBHOOK_URL>
 
 This example is a game bot running on [Telegram](https://telegram.org/).
 
-In this example, contain the following topics:
-- send game to user
-- set game score
-- share game to different chat
+This example contains the following topics:
+
+- send the game to the user
+- set game score of the user
+- share the game to a different chat
 
 You must create a new Telegram game by following [Telegram Bot API#Games](https://core.telegram.org/bots/api#games).
 

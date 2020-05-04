@@ -2,12 +2,11 @@ const path = require('path');
 
 const bodyParser = require('body-parser');
 const express = require('express');
-const { bottender } = require('bottender');
-const TelegramClient = require('messaging-api-telegram').TelegramClient;
+const { bottender, getClient } = require('bottender');
 
 const { getSession } = require('./gameSession');
 
-const client = new TelegramClient(process.env.TELEGRAM_ACCESS_TOKEN);
+const client = getClient('telegram');
 
 const app = bottender({
   dev: process.env.NODE_ENV !== 'production',
