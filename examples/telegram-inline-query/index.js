@@ -31,6 +31,7 @@ async function AnswerInlineQuery(context) {
     }
   );
 }
+
 async function CollectFeedback(context) {
   const { query, resultId } = context.event.chosenInlineResult;
   await context.sendText(
