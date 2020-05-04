@@ -37,7 +37,7 @@ export type Comment = {
   parentId: string;
   createdTime: number;
   message: string;
-  canReplyPrivately?: boolean
+  canReplyPrivately?: boolean;
 };
 
 type Like = {
