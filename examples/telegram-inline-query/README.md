@@ -49,4 +49,4 @@ This example contains the following topics:
 - answer the inline query with results
 - collect the result the user chosen
 
-You must enable `inline` and `inlinefeedback` by following [Telegram Inline Bot](https://core.telegram.org/bots/inline#collecting-feedback) and [Telegram Inline Bot#Collecting Feedback](https://core.telegram.org/bots/inline#collecting-feedback)
+You must enable `inline` and `inlinefeedback` by following [Telegram Inline Bot](https://core.telegram.org/bots/inline) and [Telegram Inline Bot#Collecting Feedback](https://core.telegram.org/bots/inline#collecting-feedback)
