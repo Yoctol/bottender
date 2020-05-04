@@ -1,4 +1,4 @@
-# Messenger batch
+# Messenger Batch
 
 ## Install and Run
 
@@ -15,7 +15,9 @@ Install dependencies:
 npm install
 ```
 
-You must put `accessToken`, `appSecret` and `verifyToken` into `bottender.config.js`.
+You must fill `MESSENGER_APP_ID`, `MESSENGER_APP_SECRET`, `MESSENGER_PAGE_ID`, `MESSENGER_ACCESS_TOKEN`, and `MESSENGER_VERIFY_TOKEN` in your `.env` file.
+
+If you are not familiar with Messenger Bot, you may refer to Bottender's doc, [Messenger Setup](https://bottender.js.org/docs/channel-messenger-setup), to find detailed instructions.
 
 After that, you can run the bot with this npm script:
 
@@ -23,21 +25,21 @@ After that, you can run the bot with this npm script:
 npm run dev
 ```
 
-This command will start server for bot developing at `http://localhost:5000`.
+This command starts a server listening at `http://localhost:5000` for bot development.
 
-If you successfully start the server, you will get a webhook url like `https://xxxxxxxx.ngrok.io/webhooks/messenger` from command line.
+If you successfully start the server, you get a webhook URL in the format of `https://xxxxxxxx.ngrok.io/webhooks/messenger` from your terminal.
 
-## Set webhook
+## Set Webhook
 
-While the server running, you can run following command with `bottender` to set up the webhook with the webhook url you get from running `npm run dev`:
+While the server is running, you can run the following command with `bottender` to set up the webhook with the webhook URL you got from running `npm run dev`:
 
 ```sh
-npx bottender messenger webhook set -w <YOUR_WEBHOOK_URL>
+npx bottender messenger webhook set
 ```
 
-> Note: You must put `appId`, `appSecret` and `verifyToken` into `bottender.config.js` before running this command.
+> **Note:** You must fill in your `.env` file before running this command.
 
-## Idea of this example
+## Idea of This Example
 
 This example is a bot which sents multiple requsets (up to 50) in batches using `batchConfig` in bottender.config.js:
 
@@ -66,7 +68,7 @@ module.exports = {
 
 [messenger batch](https://github.com/Yoctol/messenger-batch) implemented the approach described in [Making Batch Requests](https://developers.facebook.com/docs/graph-api/making-multiple-requests/).
 
-## Related examples
+## Related Examples
 
 - [messenger-hello-world](../messenger-hello-world)
 - [messenger-batch-multi-pages](../messenger-batch-multi-pages)

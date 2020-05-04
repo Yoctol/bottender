@@ -51,10 +51,10 @@ export async function setWebhook(ctx: CliContext): Promise<void> {
     );
 
     if (!webhook) {
-      warn('We can not find the webhook callback url you provided.');
+      warn('We can not find the webhook callback URL you provided.');
 
       const prompt = new Confirm(
-        `Are you using ngrok (get url from ngrok server on http://127.0.0.1:${ngrokPort})?`
+        `Are you using ngrok (get URL from ngrok server on http://127.0.0.1:${ngrokPort})?`
       );
 
       const result = await prompt.run();
@@ -66,7 +66,7 @@ export async function setWebhook(ctx: CliContext): Promise<void> {
 
     invariant(
       webhook,
-      '`webhook` is required but not found. Use -w <webhook> to setup or make sure you are running ngrok server.'
+      '`webhook` is required but not found. Use -w <webhook> to set up or make sure you are running ngrok server.'
     );
 
     await client.setWebhook(webhook as string, config.Events);

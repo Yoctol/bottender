@@ -1,6 +1,7 @@
-import EventEmitter from 'events';
 import crypto from 'crypto';
+import { EventEmitter } from 'events';
 
+import invariant from 'invariant';
 import pProps from 'p-props';
 import warning from 'warning';
 import { SlackOAuthClient } from 'messaging-api-slack';
@@ -12,12 +13,13 @@ import { RequestContext } from '../types';
 import SlackContext from './SlackContext';
 import SlackEvent, {
   BlockActionEvent,
-  EventAPITypes,
+  CommandEvent,
+  EventTypes,
   InteractiveMessageEvent,
   Message,
   SlackRawEvent,
+  UIEvent,
 } from './SlackEvent';
-
 // FIXME
 export type SlackUser = {
   id: string;
@@ -27,7 +29,7 @@ type EventsAPIBody = {
   token: string;
   teamId: string;
   apiAppId: string;
-  type: EventAPITypes;
+  type: EventTypes;
   event: Message;
   authedUsers: string[];
   eventId: string;
@@ -37,8 +39,10 @@ type EventsAPIBody = {
 export type SlackRequestBody = EventsAPIBody | { payload: string };
 
 type CommonConstructorOptions = {
-  skipLegacyProfile?: boolean | null;
+  skipLegacyProfile?: boolean;
   verificationToken?: string;
+  signingSecret?: string;
+  includeBotMessages?: boolean;
 };
 
 type ConstructorOptionsWithoutClient = {
@@ -60,31 +64,56 @@ export default class SlackConnector
 
   _verificationToken: string;
 
+  _signingSecret: string;
+
   _skipLegacyProfile: boolean;
 
+  _includeBotMessages: boolean;
+
   constructor(options: ConstructorOptions) {
-    const { verificationToken, skipLegacyProfile } = options;
+    const {
+      verificationToken,
+      skipLegacyProfile,
+      includeBotMessages,
+      signingSecret,
+    } = options;
     if ('client' in options) {
       this._client = options.client;
     } else {
       const { accessToken, origin } = options;
+
+      invariant(
+        accessToken,
+        'Slack access token is required. Please make sure you have filled it correctly in `bottender.config.js` or `.env` file.'
+      );
+
       this._client = SlackOAuthClient.connect({
         accessToken,
         origin,
       });
     }
 
+    this._signingSecret = signingSecret || '';
     this._verificationToken = verificationToken || '';
+
+    if (!this._signingSecret) {
+      if (!this._verificationToken) {
+        warning(
+          false,
+          'Both `signingSecret` and `verificationToken` is not set. Will bypass Slack event verification.\nPass in `signingSecret` to perform Slack event verification.'
+        );
+      } else {
+        warning(
+          false,
+          "It's deprecated to use `verificationToken` here, use `signingSecret` instead."
+        );
+      }
+    }
 
     this._skipLegacyProfile =
       typeof skipLegacyProfile === 'boolean' ? skipLegacyProfile : true;
 
-    if (!this._verificationToken) {
-      warning(
-        false,
-        '`verificationToken` is not set. Will bypass Slack event verification.\nPass in `verificationToken` to perform Slack event verification.'
-      );
-    }
+    this._includeBotMessages = includeBotMessages || false;
   }
 
   _getRawEventFromRequest(body: SlackRequestBody): SlackRawEvent {
@@ -99,15 +128,14 @@ export default class SlackConnector
       }
       return payload as BlockActionEvent;
     }
-
-    // for RTM WebSocket messages
+    // for RTM WebSocket messages and Slash Command messages
     return (body as any) as Message;
   }
 
   _isBotEventRequest(body: SlackRequestBody): boolean {
     const rawEvent = this._getRawEventFromRequest(body);
     return !!(
-      rawEvent.botId ||
+      (rawEvent as Message).botId ||
       ('subtype' in rawEvent && rawEvent.subtype === 'bot_message')
     );
   }
@@ -138,6 +166,11 @@ export default class SlackConnector
       return rawEvent.channelId;
     }
 
+    // For slack modal
+    if (rawEvent.view && rawEvent.view.privateMetadata) {
+      return JSON.parse(rawEvent.view.privateMetadata).channelId;
+    }
+
     // For reaction_added format
     if (
       rawEvent.item &&
@@ -147,7 +180,9 @@ export default class SlackConnector
       return rawEvent.item.channel;
     }
 
-    return (rawEvent as Message).channel;
+    return (
+      (rawEvent as Message).channel || (rawEvent as CommandEvent).channelId
+    );
   }
 
   async updateSession(session: Session, body: SlackRequestBody): Promise<void> {
@@ -159,11 +194,14 @@ export default class SlackConnector
     let userFromBody;
     if (
       rawEvent.type === 'interactive_message' ||
-      rawEvent.type === 'block_actions'
+      rawEvent.type === 'block_actions' ||
+      rawEvent.type === 'view_submission' ||
+      rawEvent.type === 'view_closed'
     ) {
-      userFromBody = rawEvent.user.id;
+      userFromBody = (rawEvent as UIEvent).user.id;
     } else {
-      userFromBody = (rawEvent as Message).user;
+      userFromBody =
+        (rawEvent as Message).user || (rawEvent as CommandEvent).userId;
     }
 
     if (
@@ -290,8 +328,8 @@ export default class SlackConnector
   mapRequestToEvents(body: SlackRequestBody): SlackEvent[] {
     const rawEvent = this._getRawEventFromRequest(body);
 
-    if (this._isBotEventRequest(body)) {
-      return []; // FIXME
+    if (!this._includeBotMessages && this._isBotEventRequest(body)) {
+      return [];
     }
 
     return [new SlackEvent(rawEvent)];
@@ -323,9 +361,45 @@ export default class SlackConnector
     return crypto.timingSafeEqual(bufferFromBot, bufferFromBody);
   }
 
+  verifySignatureBySigningSecret({
+    rawBody,
+    signature,
+    timestamp,
+  }: {
+    rawBody: string;
+    signature: string;
+    timestamp: number;
+  }): boolean {
+    // ignore this request if the timestamp is 5 more minutes away from now
+    const FIVE_MINUTES_IN_MILLISECONDS = 5 * 1000 * 60;
+
+    if (
+      Math.abs(Date.now() - timestamp * 1000) > FIVE_MINUTES_IN_MILLISECONDS
+    ) {
+      return false;
+    }
+
+    const SIGNATURE_VERSION = 'v0'; // currently it's always 'v0'
+    const signatureBaseString = `${SIGNATURE_VERSION}:${timestamp}:${rawBody}`;
+
+    const digest = crypto
+      .createHmac('sha256', this._signingSecret)
+      .update(signatureBaseString, 'utf8')
+      .digest('hex');
+
+    const calculatedSignature = `${SIGNATURE_VERSION}=${digest}`;
+
+    return crypto.timingSafeEqual(
+      Buffer.from(signature, 'utf8'),
+      Buffer.from(calculatedSignature, 'utf8')
+    );
+  }
+
   preprocess({
     method,
+    headers,
     body,
+    rawBody,
   }: {
     method: string;
     headers: Record<string, any>;
@@ -339,12 +413,39 @@ export default class SlackConnector
       };
     }
 
+    const timestamp = headers['x-slack-request-timestamp'];
+    const signature = headers['x-slack-signature'];
+
+    if (
+      this._signingSecret &&
+      !this.verifySignatureBySigningSecret({
+        rawBody,
+        timestamp,
+        signature,
+      })
+    ) {
+      const error = {
+        message: 'Slack Signing Secret Validation Failed!',
+        request: {
+          body,
+        },
+      };
+
+      return {
+        shouldNext: false,
+        response: {
+          status: 400,
+          body: { error },
+        },
+      };
+    }
+
     const token =
       !body.token && body.payload && typeof body.payload === 'string'
         ? JSON.parse(body.payload).token
         : body.token;
 
-    if (!this.verifySignature(token)) {
+    if (this._verificationToken && !this.verifySignature(token)) {
       const error = {
         message: 'Slack Verification Token Validation Failed!',
         request: {

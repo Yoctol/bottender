@@ -1,0 +1,37 @@
+{
+  "name": "@bottender/dialogflow",
+  "description": "Dialogflow integration for Bottender.",
+  "license": "MIT",
+  "homepage": "https://bottender.js.org/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Yoctol/bottender.git"
+  },
+  "version": "1.4.3",
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "types": "dist/index.d.ts",
+  "dependencies": {
+    "@types/dialogflow": "^4.0.4",
+    "dialogflow": "^1.2.0",
+    "invariant": "^2.2.4"
+  },
+  "peerDependencies": {
+    "bottender": ">= 1.2.0-0"
+  },
+  "devDependencies": {
+    "bottender": "^1.4.3"
+  },
+  "keywords": [
+    "bot",
+    "bottender",
+    "chatbot",
+    "dialogflow",
+    "language",
+    "messaging",
+    "nlu",
+    "understanding"
+  ]
+}

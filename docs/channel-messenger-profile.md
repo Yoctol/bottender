@@ -42,7 +42,7 @@ After setting environment variables correctly (if not, please check [this](chann
 npx bottender messenger profile set
 ```
 
-> **Note:** Calls to the Messenger Profile API are limited to **10 API calls per 10 minute** interval. This rate limit is enforced per Page. You can retry it a few minutes later if rate limit exceeded.
+> **Note:** Calls to the Messenger Profile API are limited to **10 API calls per 10 minute** interval. This rate limit is enforced per Page. You could retry it a few minutes later if the rate limit exceeded.
 
 To view all set messenger profile, you may use the `messenger profile get` command:
 
@@ -122,7 +122,7 @@ module.exports = {
 };
 ```
 
-> **Note:** If you use any `web_url` buttons with `messengerExtensions` to `true`, you must set the domain of the url as a [whitelisted domain](channel-messenger-profile.md#setting-domain-whitelist).
+> **Note:** If you use any `web_url` buttons with `messengerExtensions` to `true`, you must set the domain of the URL as a [whitelisted domain](channel-messenger-profile.md#setting-domain-whitelist).
 
 ### Disabling User Input
 
@@ -142,7 +142,7 @@ This means your bot can only be interacted with via the persistent menu, postbac
 
 ## Setting Greeting Text
 
-The [greeting](https://developers.facebook.com/docs/messenger-platform/reference/messenger-profile-api/greeting) of your bot's Messenger profile allows you to specify the greeting message people will see on the welcome screen of your bot. The welcome screen is displayed for people interacting with your bot for the first time.
+The [greeting](https://developers.facebook.com/docs/messenger-platform/reference/messenger-profile-api/greeting) of your bot's Messenger profile lets you specify the greeting message people will see on the welcome screen of your bot. The welcome screen is displayed for people interacting with your bot for the first time.
 
 ![](https://user-images.githubusercontent.com/3382565/68740031-273bab80-0625-11ea-806b-b22cfa464d5d.png)
 
@@ -219,7 +219,7 @@ module.exports = {
 
 `question` will be posted on the thread as the user asking the question and `payload` will be returned as a postback webhook event.
 
-> **Note:** Some of the profile elements like Ice Breakers and Get Started button are incompatible with each other. So when both are set one will take precedence over the other. Here is the priority from highest to lowest:
+> **Note:** Some of the profile elements like Ice Breakers and Get Started button are incompatible with each other. So when both are set, one will take precedence over the other. Here is the priority from highest to lowest:
 >
 > - API Ice Breakers
 > - Get Started button

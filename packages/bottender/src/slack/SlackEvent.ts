@@ -1,8 +1,8 @@
-import pascalCase from 'pascal-case';
+import { pascalCase } from 'pascal-case';
 
 import { Event } from '../context/Event';
 
-export type EventAPITypes =
+export type EventTypes =
   | 'message'
   | 'app_uninstalled'
   | 'channel_archive'
@@ -58,7 +58,7 @@ export type EventAPITypes =
   | 'user_change';
 
 export type Message = {
-  type: EventAPITypes;
+  type: EventTypes;
   subtype?: string;
   channel: string;
   user: string;
@@ -102,10 +102,31 @@ export type BlockActionEvent = UIEvent & {
   type: 'block_actions';
 };
 
+export type ViewEvent = UIEvent & {
+  type: 'view_submission' | 'view_closed';
+};
+
+export type CommandEvent = {
+  type: string | null;
+  token: string;
+  teamId: string;
+  teamDomain: string;
+  channelId: string;
+  channelName: string;
+  userId: string;
+  userName: string;
+  command: string;
+  text: string;
+  responseUrl: string;
+  triggerId: string;
+};
+
 export type SlackRawEvent =
   | Message
   | InteractiveMessageEvent
-  | BlockActionEvent;
+  | BlockActionEvent
+  | ViewEvent
+  | CommandEvent;
 
 export default class SlackEvent implements Event<SlackRawEvent> {
   _rawEvent: SlackRawEvent;
@@ -204,8 +225,12 @@ export default class SlackEvent implements Event<SlackRawEvent> {
    */
   get text(): string | null {
     if (this.isText) {
-      return ((this.message as any) as Message).text;
+      return (this._rawEvent as Message).text;
     }
+    if (this.isCommand) {
+      return (this._rawEvent as CommandEvent).text;
+    }
+
     return null;
   }
 
@@ -226,14 +251,27 @@ export default class SlackEvent implements Event<SlackRawEvent> {
   }
 
   /**
+   * Determine if the event is a view submission event.
+   *
+   */
+  get isViewSubmission(): boolean {
+    return this._rawEvent.type === 'view_submission';
+  }
+
+  /**
+   * Determine if the event is a view closed event.
+   *
+   */
+  get isViewClosed(): boolean {
+    return this._rawEvent.type === 'view_closed';
+  }
+
+  /**
    * Determine if the event is an UI Event (block actions or interactive message)
    *
    */
   get isBlockActionOrInteractiveMessage(): boolean {
-    return (
-      this._rawEvent.type === 'interactive_message' ||
-      this._rawEvent.type === 'block_actions'
-    );
+    return this.isBlockAction || this.isInteractiveMessage;
   }
 
   /**
@@ -256,6 +294,30 @@ export default class SlackEvent implements Event<SlackRawEvent> {
       return (this._rawEvent as InteractiveMessageEvent).actions[0];
     }
     return null;
+  }
+
+  /**
+   * Determine if the event is a bot message event.
+   *
+   */
+  get isBotMessage(): boolean {
+    return (this._rawEvent as any).subtype === 'bot_message';
+  }
+
+  /**
+   * Determine if the event is a slash command event.
+   *
+   */
+  get isCommand(): boolean {
+    return !!(this._rawEvent as CommandEvent).command;
+  }
+
+  /**
+   * The slash command name.
+   *
+   */
+  get command(): string | null {
+    return (this._rawEvent as CommandEvent).command || null;
   }
 }
 

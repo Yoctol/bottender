@@ -7,14 +7,14 @@ Bottender context encapsulates many helpful methods and exports session, client,
 
 For platform specific methods, please check out following links:
 
-| Platform                                | Doc                                                    |
-| --------------------------------------- | ------------------------------------------------------ |
-| Console                                 | [APIReference-ConsoleContext](api-console-context)     |
-| [Messenger](https://www.messenger.com/) | [APIReference-MessengerContext](api-messenger-context) |
-| [LINE](https://line.me/)                | [APIReference-LineContext](api-line-context)           |
-| [Slack](https://slack.com/)             | [APIReference-SlackContext](api-slack-context)         |
-| [Telegram](https://telegram.org/)       | [APIReference-TelegramContext](api-telegram-context)   |
-| [Viber](https://www.viber.com/)         | [APIReference-ViberContext](api-viber-context)         |
+| Platform                                | Doc                                                       |
+| --------------------------------------- | --------------------------------------------------------- |
+| [Messenger](https://www.messenger.com/) | [APIReference-MessengerContext](api-messenger-context.md) |
+| [LINE](https://line.me/)                | [APIReference-LineContext](api-line-context.md)           |
+| [Slack](https://slack.com/)             | [APIReference-SlackContext](api-slack-context.md)         |
+| [Telegram](https://telegram.org/)       | [APIReference-TelegramContext](api-telegram-context.md)   |
+| [Viber](https://www.viber.com/)         | [APIReference-ViberContext](api-viber-context.md)         |
+| Console                                 | [APIReference-ConsoleContext](api-console-context.md)     |
 
 #### `platform`
 
@@ -28,7 +28,7 @@ context.platform; // 'console', 'messenger', 'line', 'slack', 'telegram', 'viber
 
 The client instance. Client type depends on your platform.
 
-See [Messaging APIs](https://github.com/Yoctol/messaging-apis) for more information.
+For more information, see [Messaging APIs](https://github.com/Yoctol/messaging-apis).
 
 Example:
 

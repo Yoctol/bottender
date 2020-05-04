@@ -84,7 +84,7 @@ const slackSchema = Joi.object().keys({
   verificationToken: Joi.string(),
 });
 
-const viberSchmea = Joi.object().keys({
+const viberSchema = Joi.object().keys({
   enabled: Joi.boolean(),
   path: Joi.string(),
   accessToken: Joi.string().required(),
@@ -94,12 +94,20 @@ const viberSchmea = Joi.object().keys({
   }),
 });
 
+const whatsappSchema = Joi.object().keys({
+  enabled: Joi.boolean(),
+  path: Joi.string(),
+  accountSid: Joi.string().required(),
+  authToken: Joi.string().required(),
+});
+
 export default function getChannelSchema(channel: Channel): Schema {
   return {
     messenger: messengerSchema,
     line: lineSchema,
     telegram: telegramSchema,
     slack: slackSchema,
-    viber: viberSchmea,
+    viber: viberSchema,
+    whatsapp: whatsappSchema,
   }[channel];
 }

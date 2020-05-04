@@ -1,7 +1,8 @@
-import EventEmitter from 'events';
 import crypto from 'crypto';
+import { EventEmitter } from 'events';
 import { URL } from 'url';
 
+import invariant from 'invariant';
 import isAfter from 'date-fns/isAfter';
 import isValid from 'date-fns/isValid';
 import shortid from 'shortid';
@@ -132,6 +133,16 @@ export default class MessengerConnector
       this._client = options.client;
     } else {
       const { accessToken, origin, skipAppSecretProof } = options;
+
+      invariant(
+        accessToken || mapPageToAccessToken,
+        'Messenger access token is required. Please make sure you have filled it correctly in `bottender.config.js` or `.env` file.'
+      );
+      invariant(
+        appSecret,
+        'Messenger app secret is required. Please make sure you have filled it correctly in `bottender.config.js` or `.env` file.'
+      );
+
       this._client = MessengerClient.connect({
         accessToken: accessToken || '',
         appSecret,
@@ -205,7 +216,7 @@ export default class MessengerConnector
 
   _profilePicExpired(user: { profilePic: string }): boolean {
     try {
-      // Facebook CDN returns expiration time in the key `ext` in url params like:
+      // Facebook CDN returns expiration time in the key `ext` in URL params like:
       // https://platform-lookaside.fbsbx.com/platform/profilepic/?psid=11111111111111&width=1024&ext=1543379908&hash=xxxxxxxxxxxx
       const ext = new URL(user.profilePic).searchParams.get('ext');
 
@@ -231,8 +242,13 @@ export default class MessengerConnector
     return this._verifyToken;
   }
 
-  getUniqueSessionKey(body: MessengerRequestBody): string | null {
-    const rawEvent = this._getRawEventsFromRequest(body)[0];
+  getUniqueSessionKey(
+    bodyOrEvent: MessengerRequestBody | MessengerEvent
+  ): string | null {
+    const rawEvent =
+      bodyOrEvent instanceof MessengerEvent
+        ? bodyOrEvent.rawEvent
+        : this._getRawEventsFromRequest(bodyOrEvent)[0];
     if (
       rawEvent &&
       rawEvent.message &&
@@ -249,12 +265,17 @@ export default class MessengerConnector
 
   async updateSession(
     session: Session,
-    body: MessengerRequestBody
+    bodyOrEvent: MessengerRequestBody | MessengerEvent
   ): Promise<void> {
     if (!session.user || this._profilePicExpired(session.user)) {
-      const senderId = this.getUniqueSessionKey(body);
+      const senderId = this.getUniqueSessionKey(bodyOrEvent);
 
-      const rawEvent = this._getRawEventsFromRequest(body)[0];
+      const rawEvent =
+        bodyOrEvent instanceof MessengerEvent
+          ? bodyOrEvent.rawEvent
+          : this._getRawEventsFromRequest(bodyOrEvent)[0];
+
+      // TODO: use this info from event
       const pageId = this._getPageIdFromRawEvent(rawEvent);
       let customAccessToken;
 

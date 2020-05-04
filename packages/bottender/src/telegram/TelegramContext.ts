@@ -3,17 +3,15 @@ import warning from 'warning';
 import { TelegramClient, TelegramTypes as Type } from 'messaging-api-telegram';
 
 import Context from '../context/Context';
-import { PlatformContext } from '../context/PlatformContext';
 
 import TelegramEvent from './TelegramEvent';
 
-class TelegramContext extends Context<TelegramClient, TelegramEvent>
-  implements PlatformContext {
+class TelegramContext extends Context<TelegramClient, TelegramEvent> {
   /**
    * The name of the platform.
    *
    */
-  get platform(): string {
+  get platform(): 'telegram' {
     return 'telegram';
   }
 
@@ -42,8 +40,6 @@ class TelegramContext extends Context<TelegramClient, TelegramEvent>
       );
       return null;
     }
-
-    this._isHandled = true;
 
     const chatId = this._getChatId();
 
@@ -118,8 +114,6 @@ class TelegramContext extends Context<TelegramClient, TelegramEvent>
       return null;
     }
 
-    this._isHandled = true;
-
     const shippingQueryId = (this._event.shippingQuery as any).id;
 
     return this._client.answerShippingQuery(shippingQueryId, ok, options);
@@ -137,8 +131,6 @@ class TelegramContext extends Context<TelegramClient, TelegramEvent>
       return null;
     }
 
-    this._isHandled = true;
-
     const preCheckoutQueryId = (this._event.preCheckoutQuery as any).id;
 
     return this._client.answerPreCheckoutQuery(preCheckoutQueryId, ok, options);
@@ -155,8 +147,6 @@ class TelegramContext extends Context<TelegramClient, TelegramEvent>
       );
       return null;
     }
-
-    this._isHandled = true;
 
     const inlineQueryId = (this._event.inlineQuery as any).id;
 
@@ -302,8 +292,6 @@ class TelegramContext extends Context<TelegramClient, TelegramEvent>
       return null;
     }
 
-    this._isHandled = true;
-
     const chatId = this._getChatId();
 
     if (chatId === null) {
@@ -333,8 +321,6 @@ class TelegramContext extends Context<TelegramClient, TelegramEvent>
       );
       return null;
     }
-
-    this._isHandled = true;
 
     const chatId = this._getChatId();
 
@@ -366,8 +352,6 @@ class TelegramContext extends Context<TelegramClient, TelegramEvent>
       return null;
     }
 
-    this._isHandled = true;
-
     const chatId = this._getChatId();
 
     if (chatId === null) {
@@ -398,8 +382,6 @@ class TelegramContext extends Context<TelegramClient, TelegramEvent>
       return null;
     }
 
-    this._isHandled = true;
-
     const chatId = this._getChatId();
 
     if (chatId === null) {
@@ -426,8 +408,6 @@ class TelegramContext extends Context<TelegramClient, TelegramEvent>
       return null;
     }
 
-    this._isHandled = true;
-
     const chatId = this._getChatId();
 
     if (chatId === null) {
@@ -453,8 +433,6 @@ class TelegramContext extends Context<TelegramClient, TelegramEvent>
       );
       return null;
     }
-
-    this._isHandled = true;
 
     const chatId = this._getChatId();
 
@@ -484,8 +462,6 @@ class TelegramContext extends Context<TelegramClient, TelegramEvent>
       );
       return null;
     }
-
-    this._isHandled = true;
 
     const chatId = this._getChatId();
 
@@ -517,8 +493,6 @@ class TelegramContext extends Context<TelegramClient, TelegramEvent>
       return null;
     }
 
-    this._isHandled = true;
-
     const chatId = this._getChatId();
 
     if (chatId === null) {
@@ -544,8 +518,6 @@ class TelegramContext extends Context<TelegramClient, TelegramEvent>
       );
       return null;
     }
-
-    this._isHandled = true;
 
     const chatId = this._getChatId();
 
@@ -573,8 +545,6 @@ class TelegramContext extends Context<TelegramClient, TelegramEvent>
       return null;
     }
 
-    this._isHandled = true;
-
     const chatId = this._getChatId();
 
     if (chatId === null) {
@@ -599,8 +569,6 @@ class TelegramContext extends Context<TelegramClient, TelegramEvent>
       );
       return null;
     }
-
-    this._isHandled = true;
 
     const chatId = this._getChatId();
 
@@ -627,8 +595,6 @@ class TelegramContext extends Context<TelegramClient, TelegramEvent>
       return null;
     }
 
-    this._isHandled = true;
-
     const chatId = this._getChatId();
 
     if (chatId === null) {
@@ -653,8 +619,6 @@ class TelegramContext extends Context<TelegramClient, TelegramEvent>
       );
       return null;
     }
-
-    this._isHandled = true;
 
     const chatId = this._getChatId();
 
@@ -681,8 +645,6 @@ class TelegramContext extends Context<TelegramClient, TelegramEvent>
       return null;
     }
 
-    this._isHandled = true;
-
     const chatId = this._getChatId();
 
     if (chatId === null) {
@@ -707,8 +669,6 @@ class TelegramContext extends Context<TelegramClient, TelegramEvent>
       );
       return null;
     }
-
-    this._isHandled = true;
 
     const chatId = this._getChatId();
 
@@ -735,8 +695,6 @@ class TelegramContext extends Context<TelegramClient, TelegramEvent>
       return null;
     }
 
-    this._isHandled = true;
-
     const chatId = this._getChatId();
 
     if (chatId === null) {
@@ -761,8 +719,6 @@ class TelegramContext extends Context<TelegramClient, TelegramEvent>
       );
       return null;
     }
-
-    this._isHandled = true;
 
     const chatId = this._getChatId();
 
@@ -789,8 +745,6 @@ class TelegramContext extends Context<TelegramClient, TelegramEvent>
       return null;
     }
 
-    this._isHandled = true;
-
     const chatId = this._getChatId();
 
     if (chatId === null) {
@@ -815,8 +769,6 @@ class TelegramContext extends Context<TelegramClient, TelegramEvent>
       );
       return null;
     }
-
-    this._isHandled = true;
 
     const chatId = this._getChatId();
 
@@ -843,8 +795,6 @@ class TelegramContext extends Context<TelegramClient, TelegramEvent>
       return null;
     }
 
-    this._isHandled = true;
-
     const chatId = this._getChatId();
 
     if (chatId === null) {
@@ -869,8 +819,6 @@ class TelegramContext extends Context<TelegramClient, TelegramEvent>
       );
       return null;
     }
-
-    this._isHandled = true;
 
     const chatId = this._getChatId();
 
@@ -898,8 +846,6 @@ class TelegramContext extends Context<TelegramClient, TelegramEvent>
       return null;
     }
 
-    this._isHandled = true;
-
     const chatId = this._getChatId();
 
     if (chatId === null) {
@@ -921,8 +867,6 @@ class TelegramContext extends Context<TelegramClient, TelegramEvent>
       );
       return null;
     }
-
-    this._isHandled = true;
 
     const chatId = this._getChatId();
 
@@ -950,8 +894,6 @@ class TelegramContext extends Context<TelegramClient, TelegramEvent>
       return null;
     }
 
-    this._isHandled = true;
-
     const chatId = this._getChatId();
 
     if (chatId === null) {
@@ -973,8 +915,6 @@ class TelegramContext extends Context<TelegramClient, TelegramEvent>
       );
       return null;
     }
-
-    this._isHandled = true;
 
     const chatId = this._getChatId();
 
@@ -1001,8 +941,6 @@ class TelegramContext extends Context<TelegramClient, TelegramEvent>
       );
       return null;
     }
-
-    this._isHandled = true;
 
     const chatId = this._getChatId();
 
@@ -1034,8 +972,6 @@ class TelegramContext extends Context<TelegramClient, TelegramEvent>
       return null;
     }
 
-    this._isHandled = true;
-
     const chatId = this._getChatId();
 
     if (chatId === null) {
@@ -1057,8 +993,6 @@ class TelegramContext extends Context<TelegramClient, TelegramEvent>
       );
       return null;
     }
-
-    this._isHandled = true;
 
     const chatId = this._getChatId();
 
@@ -1084,8 +1018,6 @@ class TelegramContext extends Context<TelegramClient, TelegramEvent>
       return null;
     }
 
-    this._isHandled = true;
-
     const chatId = this._getChatId();
 
     if (chatId === null) {
@@ -1107,8 +1039,6 @@ class TelegramContext extends Context<TelegramClient, TelegramEvent>
       );
       return null;
     }
-
-    this._isHandled = true;
 
     const chatId = this._getChatId();
 
@@ -1132,8 +1062,6 @@ class TelegramContext extends Context<TelegramClient, TelegramEvent>
       return null;
     }
 
-    this._isHandled = true;
-
     const chatId = this._getChatId();
 
     if (chatId === null) {
@@ -1156,8 +1084,6 @@ class TelegramContext extends Context<TelegramClient, TelegramEvent>
       return null;
     }
 
-    this._isHandled = true;
-
     const chatId = this._getChatId();
 
     if (chatId === null) {
@@ -1179,8 +1105,6 @@ class TelegramContext extends Context<TelegramClient, TelegramEvent>
       );
       return null;
     }
-
-    this._isHandled = true;
 
     const chatId = this._getChatId();
 
@@ -1207,8 +1131,6 @@ class TelegramContext extends Context<TelegramClient, TelegramEvent>
       return null;
     }
 
-    this._isHandled = true;
-
     const chatId = this._getChatId();
 
     if (chatId === null) {
@@ -1231,8 +1153,6 @@ class TelegramContext extends Context<TelegramClient, TelegramEvent>
       return null;
     }
 
-    this._isHandled = true;
-
     const chatId = this._getChatId();
 
     if (chatId === null) {
@@ -1254,8 +1174,6 @@ class TelegramContext extends Context<TelegramClient, TelegramEvent>
       );
       return null;
     }
-
-    this._isHandled = true;
 
     const chatId = this._getChatId();
 
@@ -1283,8 +1201,6 @@ class TelegramContext extends Context<TelegramClient, TelegramEvent>
       return null;
     }
 
-    this._isHandled = true;
-
     const chatId = this._getChatId();
 
     if (chatId === null) {
@@ -1311,8 +1227,6 @@ class TelegramContext extends Context<TelegramClient, TelegramEvent>
       return null;
     }
 
-    this._isHandled = true;
-
     const chatId = this._getChatId();
 
     if (chatId === null) {
@@ -1338,8 +1252,6 @@ class TelegramContext extends Context<TelegramClient, TelegramEvent>
       );
       return null;
     }
-
-    this._isHandled = true;
 
     return this._client.setGameScore(userId, score, options);
   }

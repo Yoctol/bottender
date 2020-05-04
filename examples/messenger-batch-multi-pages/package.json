@@ -4,7 +4,7 @@
     "start": "bottender start"
   },
   "dependencies": {
-    "bottender": "next",
+    "bottender": "latest",
     "messenger-batch": "^0.3.1"
   }
 }

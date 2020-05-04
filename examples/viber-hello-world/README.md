@@ -1,4 +1,4 @@
-# Viber hello world
+# Viber Hello World
 
 ## Install and Run
 
@@ -15,7 +15,7 @@ Install dependencies:
 npm install
 ```
 
-You must put `accessToken` into `bottender.config.js`.
+You must fill `VIBER_ACCESS_TOKEN` in your `.env` file.
 
 After that, you can run the bot with this npm script:
 
@@ -23,28 +23,21 @@ After that, you can run the bot with this npm script:
 npm run dev
 ```
 
-This command will start server for bot developing at `http://localhost:5000`.
+This command starts a server listening at `http://localhost:5000` for bot development.
 
-If you successfully start the server, you will get a webhook url like `https://xxxxxxxx.ngrok.io/webhooks/viber` from command line.
+If you successfully start the server, you get a webhook URL in the format of `https://xxxxxxxx.ngrok.io/webhooks/viber` from your terminal.
 
-## Set webhook
+## Set Webhook
 
-While the server running, you can run following command with `bottender` to set up the webhook with the webhook url you get from running `npm run dev`:
+While the server is running, you can run the following command with `bottender` to set up the webhook with the webhook URL you got from running `npm run dev`:
 
 ```sh
 npx bottender viber webhook set -w <YOUR_WEBHOOK_URL>
 ```
 
-> Note: You must put `accessToken` into `bottender.config.js` before running this command.
+> **Note:** You must fill in your `.env` file before running this command.
 
-## Idea of this example
+## Idea of This Example
 
-This example is a simple bot running on [Viber](https://www.viber.com/).
+This example is a bot running on [Viber](https://www.viber.com/).
 For more information, check our [Viber guides](https://bottender.js.org/docs/channel-viber-setup).
-
-## Related examples
-
-- [messenger-hello-world](../messenger-hello-world)
-- [line-hello-world](../line-hello-world)
-- [slack-hello-world](../slack-hello-world)
-- [telegram-hello-world](../telegram-hello-world)

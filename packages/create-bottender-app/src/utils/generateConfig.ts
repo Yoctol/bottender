@@ -1,9 +1,10 @@
+import prettier from 'prettier';
+
 import { Platform, Session } from '../types';
 
-const generateConfig = (
-  session: Session,
-  platforms: Platform[]
-): string => `module.exports = {
+const generateConfig = (session: Session, platforms: Platform[]): string =>
+  prettier.format(
+    `module.exports = {
   session: {
     driver: '${session}',
     stores: {
@@ -36,6 +37,13 @@ const generateConfig = (
       appSecret: process.env.MESSENGER_APP_SECRET,
       verifyToken: process.env.MESSENGER_VERIFY_TOKEN,
     },
+    whatsapp: {
+      enabled: ${platforms.includes('whatsapp')},
+      path: '/webhooks/whatsapp',
+      accountSid: process.env.WHATSAPP_ACCOUNT_SID,
+      authToken: process.env.WHATSAPP_AUTH_TOKEN,
+      phoneNumber: process.env.WHATSAPP_PHONE_NUMBER,
+    },
     line: {
       enabled: ${platforms.includes('line')},
       path: '/webhooks/line',
@@ -51,7 +59,7 @@ const generateConfig = (
       enabled: ${platforms.includes('slack')},
       path: '/webhooks/slack',
       accessToken: process.env.SLACK_ACCESS_TOKEN,
-      verificationToken: process.env.SLACK_VERIFICATION_TOKEN,
+      signingSecret: process.env.SLACK_SIGNING_SECRET,
     },
     viber: {
       enabled: ${platforms.includes('viber')},
@@ -63,6 +71,12 @@ const generateConfig = (
     },
   },
 };
-`;
+`,
+    {
+      trailingComma: 'es5',
+      singleQuote: true,
+      parser: 'babel',
+    }
+  );
 
 export default generateConfig;

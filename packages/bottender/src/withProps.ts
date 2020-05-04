@@ -1,11 +1,11 @@
 import partial from 'lodash/partial';
 
-import { Action, Client, Event, Props } from './types';
+import { Action, AnyContext } from './types';
 
-function withProps<C extends Client = any, E extends Event = any>(
-  action: Action<C, E>,
-  props: Props<C, E>
-): Action<C, E> {
+function withProps<C extends AnyContext, P extends Record<string, any>>(
+  action: Action<C, P>,
+  props: P
+): Action<C, any> {
   // TODO: we may only apply this on dev env
   Object.freeze(props);
 

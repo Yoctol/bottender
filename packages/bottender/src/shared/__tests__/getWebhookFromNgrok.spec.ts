@@ -81,7 +81,7 @@ it('be defined', () => {
   expect(getWebhookFromNgrok).toBeDefined();
 });
 
-it('create axios with 4040 port and return the correct url', async () => {
+it('create axios with 4040 port and return the correct URL', async () => {
   const axiosInstance = {
     get: jest.fn().mockResolvedValue(res),
   };
@@ -97,7 +97,7 @@ it('create axios with 4040 port and return the correct url', async () => {
   });
 });
 
-it('create axios with specified port and return correct url', async () => {
+it('create axios with specified port and return correct URL', async () => {
   const axiosInstance = {
     get: jest.fn().mockResolvedValue(res),
   };

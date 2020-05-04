@@ -8,10 +8,13 @@ import ConsoleConnector from './ConsoleConnector';
 import ConsoleEvent, { ConsoleRawEvent } from './ConsoleEvent';
 import { ConsoleClient } from './ConsoleClient';
 
+import { ConsoleContext } from '..';
+
 export default class ConsoleBot extends Bot<
   ConsoleRawEvent,
   ConsoleClient,
-  ConsoleEvent
+  ConsoleEvent,
+  ConsoleContext
 > {
   constructor({
     sessionStore,

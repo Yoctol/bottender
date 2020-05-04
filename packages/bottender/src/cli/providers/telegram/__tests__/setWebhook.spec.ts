@@ -64,7 +64,7 @@ describe('resolve', () => {
     expect(log.print.mock.calls[0][0]).toMatch(/Successfully/);
   });
 
-  it('get ngrok webhook to setup', async () => {
+  it('get ngrok webhook to set up', async () => {
     const ctx = setup();
 
     await setWebhook(ctx);

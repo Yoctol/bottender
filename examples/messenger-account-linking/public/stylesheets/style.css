@@ -1,0 +1,150 @@
+.column {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  flex-basis: auto;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+}
+
+.row {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+}
+
+.main {
+  height: 100%;
+  height: 100vh;
+}
+
+.header, .subtitle, .form, .submitButton {
+  flex-basis: auto;
+}
+
+body {
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-family: 'Roboto', sans-serif;
+  text-align: center;
+  background: #FAFAFA;
+}
+
+a {
+  color: #317FFF;
+  text-decoration: none;
+}
+
+p {
+  font-weight: 300;
+  color: #AAAAAA;
+}
+
+h2 {
+  margin: 0;
+  font-weight: 400;
+}
+
+fieldset {
+  padding: 1em 0;
+  font-weight:300;
+  background: white;
+  border-color: #E5E5E5;
+  border-style: solid;
+  border-width: 1px 0 0 0;
+}
+
+fieldset:last-of-type {
+  border-width: 1px 0 1px 0;
+}
+
+input {
+  width: 41vw;
+  max-width: 15em;
+  font-size: 14px;
+  font-weight: 100;
+  border: none;
+}
+
+button:focus, input:focus {
+  outline: none;
+}
+
+label {
+  display: inline-block;
+  width: 6em;
+  max-width: 30vw;
+  margin-left: 6vw;
+  text-align: left;
+}
+
+ Plaecholder color change
+input::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+  color: #D8D8D8;
+}
+input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+  color: #D8D8D8;
+}
+input::-moz-placeholder { /* Mozilla Firefox 19+ */
+  color: #D8D8D8;
+}
+input:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: #D8D8D8;
+}
+
+.input {
+  float: left;
+}
+
+.subtitle {
+  width: 75%;
+  padding: 1em 0;
+}
+
+.formFields {
+  width: 100vw;
+  max-width: 750px;
+}
+
+.submitButton {
+  /* Clear OS styles*/
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  width: 90%;
+  padding: 1em 0;
+  margin: 1.1em 0;
+  font-size: 15px;
+  color: white;
+  background: #0084FF;
+  border: none;
+  border-radius: 5px;
+}
+
+.submitButton:disabled {
+  opacity: 0.4;
+}
+
+#error > p {
+  padding: 1em 1em 0 1em;
+  color: #EE4034;
+}
+
+.icon {
+  height: 25px;
+}
+
+.statusIcon {
+  float: right;
+  height: 14px;
+  margin-top: 4px;
+  margin-right: 6vw;
+}
+
+#spinner {
+  margin-right: 15px;
+}

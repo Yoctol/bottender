@@ -655,7 +655,7 @@ event.isUrlVerification; // true
 
 #### `isUserChange`
 
-Determine if the event is an user_change event.
+Determine if the event is a user_change event.
 
 Example:
 

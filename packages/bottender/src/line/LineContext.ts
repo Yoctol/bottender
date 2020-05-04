@@ -1,4 +1,4 @@
-import EventEmitter from 'events';
+import { EventEmitter } from 'events';
 
 import chunk from 'lodash/chunk';
 import invariant from 'invariant';
@@ -8,7 +8,6 @@ import { Line, LineClient, LineTypes } from 'messaging-api-line';
 
 import Context from '../context/Context';
 import Session from '../session/Session';
-import { PlatformContext } from '../context/PlatformContext';
 import { RequestContext } from '../types';
 
 import LineEvent from './LineEvent';
@@ -25,8 +24,7 @@ type Options = {
   emitter?: EventEmitter | null;
 };
 
-class LineContext extends Context<LineClient, LineEvent>
-  implements PlatformContext {
+class LineContext extends Context<LineClient, LineEvent> {
   _customAccessToken: string | null;
 
   _isReplied = false;
@@ -60,7 +58,7 @@ class LineContext extends Context<LineClient, LineEvent>
    * The name of the platform.
    *
    */
-  get platform(): string {
+  get platform(): 'line' {
     return 'line';
   }
 
@@ -181,14 +179,12 @@ class LineContext extends Context<LineClient, LineEvent>
 
     switch (this._session.type) {
       case 'room':
-        this._isHandled = true;
         return this._client.leaveRoom(this._session.room.id, {
           ...(this._customAccessToken
             ? { accessToken: this._customAccessToken }
             : undefined),
         } as any);
       case 'group':
-        this._isHandled = true;
         return this._client.leaveGroup(this._session.group.id, {
           ...(this._customAccessToken
             ? { accessToken: this._customAccessToken }
@@ -448,8 +444,6 @@ class LineContext extends Context<LineClient, LineEvent>
   reply(messages: LineTypes.Message[], options: LineTypes.MessageOptions = {}) {
     invariant(!this._isReplied, 'Can not reply event multiple times');
 
-    this._isHandled = true;
-
     if (this._shouldBatch) {
       this._replyMessages.push(...messages);
 
@@ -467,7 +461,10 @@ class LineContext extends Context<LineClient, LineEvent>
     });
   }
 
-  replyText(text: string, options?: LineTypes.MessageOptions) {
+  replyText(
+    text: string,
+    options?: LineTypes.MessageOptions & { emojis?: LineTypes.Emoji[] }
+  ) {
     return this.reply([Line.createText(text, options)], options);
   }
 
@@ -616,8 +613,6 @@ class LineContext extends Context<LineClient, LineEvent>
       return;
     }
 
-    this._isHandled = true;
-
     if (this._shouldBatch) {
       this._pushMessages.push(...messages);
       return;
@@ -632,7 +627,10 @@ class LineContext extends Context<LineClient, LineEvent>
     });
   }
 
-  pushText(text: string, options?: LineTypes.MessageOptions) {
+  pushText(
+    text: string,
+    options?: LineTypes.MessageOptions & { emojis?: LineTypes.Emoji[] }
+  ) {
     return this.push([Line.createText(text, options)], options);
   }
 
@@ -782,7 +780,10 @@ class LineContext extends Context<LineClient, LineEvent>
     return this.reply(messages, options);
   }
 
-  sendText(text: string, options?: LineTypes.MessageOptions) {
+  sendText(
+    text: string,
+    options?: LineTypes.MessageOptions & { emojis?: LineTypes.Emoji[] }
+  ) {
     return this.send([Line.createText(text, options)], options);
   }
 

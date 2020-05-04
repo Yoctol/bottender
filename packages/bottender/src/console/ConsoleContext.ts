@@ -1,10 +1,9 @@
-import EventEmitter from 'events';
+import { EventEmitter } from 'events';
 
 import sleep from 'delay';
 
 import Context from '../context/Context';
 import Session from '../session/Session';
-import { PlatformContext } from '../context/PlatformContext';
 import { RequestContext } from '../types';
 
 import ConsoleEvent from './ConsoleEvent';
@@ -27,8 +26,10 @@ const methodBlackList = [
   'handlerDidEnd', // context lifecycle
 ];
 
-export default class ConsoleContext extends Context<ConsoleClient, ConsoleEvent>
-  implements PlatformContext {
+export default class ConsoleContext extends Context<
+  ConsoleClient,
+  ConsoleEvent
+> {
   _fallbackMethods = false;
 
   _mockPlatform = 'console';
@@ -90,7 +91,6 @@ export default class ConsoleContext extends Context<ConsoleClient, ConsoleEvent>
    *
    */
   async sendText(text: string, ...args: any[]): Promise<void> {
-    this._isHandled = true;
     if (args.length > 0 && this._fallbackMethods) {
       this._client.sendText(
         `${text}\nwith other args:\n${JSON.stringify(args, null, 2)}`
@@ -101,7 +101,6 @@ export default class ConsoleContext extends Context<ConsoleClient, ConsoleEvent>
   }
 
   async _methodMissing(method: string, args: any[]): Promise<void> {
-    this._isHandled = true;
     this._client.sendText(
       `${method} with args:\n${JSON.stringify(args, null, 2)}`
     );

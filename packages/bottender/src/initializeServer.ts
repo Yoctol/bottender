@@ -10,7 +10,9 @@ import MessengerBot from './messenger/MessengerBot';
 import SlackBot from './slack/SlackBot';
 import TelegramBot from './telegram/TelegramBot';
 import ViberBot from './viber/ViberBot';
+import WhatsappBot from './whatsapp/WhatsappBot';
 import getBottenderConfig from './shared/getBottenderConfig';
+import getSessionStore from './getSessionStore';
 import { Action, BottenderConfig, Channel, Plugin } from './types';
 
 const BOT_MAP = {
@@ -19,6 +21,7 @@ const BOT_MAP = {
   slack: SlackBot,
   telegram: TelegramBot,
   viber: ViberBot,
+  whatsapp: WhatsappBot,
 };
 
 function initializeServer({
@@ -30,35 +33,9 @@ function initializeServer({
 } = {}): express.Application | void {
   const bottenderConfig = getBottenderConfig();
 
-  const { initialState, plugins, session, channels } = merge(
-    bottenderConfig,
-    config
-  );
+  const { initialState, plugins, channels } = merge(bottenderConfig, config);
 
-  // session
-  const sessionDriver = (session && session.driver) || 'memory';
-  let SessionStore;
-  switch (sessionDriver) {
-    case 'file':
-      SessionStore = require('./session/FileSessionStore').default;
-      break;
-    case 'mongo':
-      SessionStore = require('./session/MongoSessionStore').default;
-      break;
-    case 'redis':
-      SessionStore = require('./session/RedisSessionStore').default;
-      break;
-    default:
-      SessionStore = require('./session/MemorySessionStore').default;
-  }
-
-  const sessionDriverConfig =
-    ((session && session.stores) || {})[sessionDriver] || {};
-
-  const sessionStore = new SessionStore(
-    sessionDriverConfig,
-    session && session.expiresIn
-  );
+  const sessionStore = getSessionStore();
 
   // TODO: refine handler entry, improve error message and hint
   // eslint-disable-next-line import/no-dynamic-require, @typescript-eslint/no-var-requires
@@ -69,13 +46,13 @@ function initializeServer({
     ErrorEntry = require(path.resolve('_error.js'));
   } catch (err) {} // eslint-disable-line no-empty
 
-  function initializeBot(bot: Bot<any, any, any>): void {
+  function initializeBot(bot: Bot<any, any, any, any>): void {
     if (initialState) {
       bot.setInitialState(initialState);
     }
 
     if (plugins) {
-      plugins.forEach((plugin: Plugin<any, any>) => {
+      plugins.forEach((plugin: Plugin<any>) => {
         bot.use(plugin);
       });
     }

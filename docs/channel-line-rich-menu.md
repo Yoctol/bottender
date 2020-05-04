@@ -1,6 +1,6 @@
 ---
 id: channel-line-rich-menu
-title: Rich Menu
+title: LINE Rich Menu
 ---
 
 ## What is Rich Menu
@@ -126,7 +126,7 @@ curl -v -X POST https://api.line.me/v2/bot/richmenu \
   }'
 ```
 
-If you successfully create a rich menu, you will get a response with a rich menu ID.
+If you successfully create a rich menu, you get a response with a rich menu ID.
 
 ## Upload the Rich Menu Image
 
@@ -164,7 +164,7 @@ To link a rich menu to an individual user, you can do it using Bottender when ha
 await context.linkRichMenu('rich-menu-id');
 ```
 
-And to unlink a rich Menu from a user, you can use:
+And to unlink a rich menu from a user, you can use:
 
 ```js
 await context.unlinkRichMenu();
@@ -208,11 +208,11 @@ You can check out the full example [Here](https://github.com/Yoctol/bottender/tr
 
 ## Set Up Submenu
 
-In addition to using only one image as our rich menu, we can use multiple images to create a rich menu with several submenus. We can implement this by creating multiple rich menu objects and link them to the user dynamically with Bottender. Here, we will have an example that defines two submenus under a main rich menu.
+In addition to using only one image as our rich menu, we can use multiple images to create a rich menu with several submenus. We can implement this by creating multiple rich menu objects and link them to the user dynamically with Bottender. Here, we have an example that defines two submenus under a main rich menu.
 
 ### Prepare Rich Menu Images
 
-Here are the three rich menu images we will use to create a rich menu with two submenus. The logic is pretty simple: when we click the option on the main menu, we will get to the corresponding submenu. And when we click the back option on the submenu, we will go back to the main menu.
+Here are the three rich menu images we use to create a rich menu with two submenus. The logic is pretty simple: when we click the option on the main menu, we will get to the corresponding submenu. And when we click the back option on the submenu, we will go back to the main menu.
 
 `Main Menu`
 ![main menu](https://user-images.githubusercontent.com/32091985/70420536-ebb8c380-1aa2-11ea-9ad5-48c2c9599f84.jpg)
@@ -229,7 +229,7 @@ Next, we have to create three rich menu objects using the images we have above.
 
 Here are the example requests for creating the main menu and its submenus:
 
-`Main Menu`
+Main Menu:
 
 ```sh
 curl --request POST \
@@ -274,7 +274,7 @@ curl --request POST \
   }'
 ```
 
-`Submenu A`
+Submenu A:
 
 ```sh
 curl --request POST \
@@ -331,7 +331,7 @@ curl --request POST \
   }'
 ```
 
-`Submenu B`
+Submenu B:
 
 ```sh
 curl --request POST \
@@ -429,4 +429,4 @@ module.exports = async function App(context) {
 
 By doing so, we successfully create a rich menu with multiple submenus. You can set up a more complicated submenu using the same method.
 
-The full submenu example can be checked out [Here](https://github.com/Yoctol/bottender/tree/master/examples/line-rich-menu-submenu).
+For the full submenu example, checked out [LINE Rich Menu Submenu Example](https://github.com/Yoctol/bottender/tree/master/examples/line-rich-menu-submenu).

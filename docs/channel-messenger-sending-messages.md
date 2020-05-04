@@ -3,21 +3,6 @@ id: channel-messenger-sending-messages
 title: Sending Messenger Messages
 ---
 
-Messenger has become one of the most popular channels between businesses and customers. Most of the messenger bots are designed for 1:1 communication.
-
-Although the document is about "sending messages," in most of the cases, Messenger bots send messages after it receives a user event.
-
-> **Note:**
->
-> - If you want to know better about when your bots can send message proactively, please refer to Messenger's guide link about [Messenger Platform Policy Overview](https://developers.facebook.com/docs/messenger-platform/policy/policy-overview#standard_messaging)
-> - We have a separate document to introduce user event handling, please refer to [Handling Messenger Events](./channel-messenger-handling-events.md)
-
-If you are not familiar with Messenger messages, we would like to recommend a short happy path.
-
-To begin with, please try the basis of communication, [`Text Messages`](#sending-text-messages). Secondly, try [`Generic Template Messages`](#sending-template-messages) to help you display a collection of items (e.g., recommended restaurants, songs, or books). Finally, - [`Quick Replies`](#sending-with-quick-reply), which continuously guide your users for the next possible actions.
-
-If you have experienced with Messenger messages, don't miss [`Rich Media Messages`](#sending-rich-media-messages) to show the personality of your bots. [`Rich Media Messages`](#sending-rich-media-messages) and [`Media Template Messages`](#media-template) are necessary if you are building a media-driven, storytelling bot. Take a look at [`Persona`](#sending-with-persona), if you offer bot auto-reply and human agent customer support at the same time. Finally, if you are making a chatbot for campaign purposes, please dive into [`Rate Limits`](#rate-limits) to ensure your bot is ready for high traffic.
-
 ## Sending Text Messages
 
 ![39993793_311437072745802_2909561891720265728_n](https://user-images.githubusercontent.com/662387/69112041-4e2d2e00-0aba-11ea-8e44-02aaaf804b5d.png)
@@ -57,9 +42,9 @@ await context.sendFile('https://example.com/receipt.pdf');
 
 If you want to benefit from Facebook's cache, i.e., a much pleasant loading speed, you should try this a bit complicated approach.
 
-Firstly, you need to get a page-scoped `Attachment Id` by [Attachment Upload API](https://developers.facebook.com/docs/messenger-platform/send-messages/saving-assets#attachment_upload_api).
+First, you need to get a page-scoped `Attachment Id` by [Attachment Upload API](https://developers.facebook.com/docs/messenger-platform/send-messages/saving-assets#attachment_upload_api).
 
-Once you have get your `Attachment Id`, you can send rich media messages with the following code.
+Once you get your `Attachment Id`, you can send rich media messages with the following code.
 
 ```js
 await context.sendImage({ attachmentId: '<ATTACHMENT_ID>' });
@@ -106,9 +91,7 @@ In short, `Template message` is an interactive gallery composed of image, video,
 
 `Template message` is the key to offer rich media interaction. It usually used in the scenario of display multiple choices and next actions to the user, e.g., applying coupon, booking a room, making a reservation.
 
-> **Note:**
->
-> - If you are familiar with LINE and Messenger, you can find the difference Chat UI approach. While LINE creates an HTML-like, super flexible chat UI, [`Flex Messages`](./channel-line-flex.md), Messenger tends to focus on common chat UI patterns to offer a consistent user experience.
+> **Note:** If you are familiar with LINE and Messenger, you can find the difference Chat UI approach. While LINE creates an HTML-like, super flexible chat UI, [`Flex Messages`](./channel-line-flex.md), Messenger tends to focus on common chat UI patterns to offer a consistent user experience.
 
 ### Generic Template
 
@@ -116,8 +99,7 @@ In short, `Template message` is an interactive gallery composed of image, video,
 
 In a `Generic Template`, you can create up to 10 items in a row. Each item is composed of a title, subtitle, image, and up to 3 buttons.
 
-> **Note:**
-> Please refer to Messenger's official guide of [`Generic Template`](https://developers.facebook.com/docs/messenger-platform/send-messages/template/generic) to find out the latest specification.
+> **Note:** Please refer to Messenger's official guide of [`Generic Template`](https://developers.facebook.com/docs/messenger-platform/send-messages/template/generic) to find out the latest specification.
 
 ```js
 await context.sendGenericTemplate([
@@ -149,8 +131,7 @@ await context.sendGenericTemplate([
 
 `Button Template` is similar to `Generic Template`; the only difference is the removal of the item image.
 
-> **Note:**
-> Please refer to Messenger's official guide of [`Button Template`](https://developers.facebook.com/docs/messenger-platform/send-messages/template/button) to find out the latest specification.
+> **Note:** Please refer to Messenger's official guide of [`Button Template`](https://developers.facebook.com/docs/messenger-platform/send-messages/template/button) to find out the latest specification.
 
 ```js
 await context.sendButtonTemplate('What do you want to do next?', [
@@ -173,8 +154,7 @@ await context.sendButtonTemplate('What do you want to do next?', [
 
 `Receipt Template` is a template designed for order confirmation.
 
-> **Note:**
-> Please refer to Messenger's official guide of [`Receipt Template`](https://developers.facebook.com/docs/messenger-platform/send-messages/template/receipt) to find out the latest specification.
+> **Note:** Please refer to Messenger's official guide of [`Receipt Template`](https://developers.facebook.com/docs/messenger-platform/send-messages/template/receipt) to find out the latest specification.
 
 ```js
 await context.sendReceiptTemplate({
@@ -236,8 +216,7 @@ await context.sendReceiptTemplate({
 
 You can find the simplicity and elegance of `Media Template`. Try it if you agree with "A picture is worth a thousand words." The difference between it and `Generic Template` is the removal of title and subtitle.
 
-> **Note:**
-> Please refer to Messenger's official guide of [`Media Template`](https://developers.facebook.com/docs/messenger-platform/send-messages/template/media) to find out the latest specification.
+> **Note:** Please refer to Messenger's official guide of [`Media Template`](https://developers.facebook.com/docs/messenger-platform/send-messages/template/media) to find out the latest specification.
 
 ```js
 await context.sendMediaTemplate([
@@ -319,7 +298,7 @@ The `User Email Quick Reply` can be treated as an agree button to collect the us
 Messenger automatically pre-fill the displayed quick reply with the Email from the user's profile information. Since many CRM (Customer Relationship Management) use the Email as a unique id, it is handy for future user mapping.
 
 > **Note:**
-> If the user's profile does not have a Email, the quick reply doesn't show up. Also, the bot only receives the Email until the user clicks the quick reply.
+> If the user's profile does not have an Email, the quick reply doesn't show up. Also, the bot only receives the Email until the user clicks the quick reply.
 
 ```js
 await context.sendText('Hi!', {
@@ -343,17 +322,16 @@ await context.sendText('Hi!', {
 
 ## Rate Limits
 
-If you are making a bot with a sudden high traffic, e.g., a campaign bot for Black Friday, you should deal with `Rate Limits` before you receive [error code 613](https://developers.facebook.com/docs/messenger-platform/reference/send-api/error-codes).
+If you are making a bot with sudden high traffic, e.g., a campaign bot for Black Friday, you should deal with `Rate Limits` before you receive [error code 613](https://developers.facebook.com/docs/messenger-platform/reference/send-api/error-codes).
 
 Page Rate limits are in place to prevent malicious behavior and poor user experiences. For Pages with large audiences, Messenger recommends a send rate of 250 requests per second.
 
 `Rate Limits` is various from the size of your Page audience.
 
-```sh
+```
 Calls within 24 hours = 200 * Total Messenger Audience
 ```
 
 To prevent from hit `Rate Limits`, Messenger also advises us to architect our system to distribute any sudden high amounts of load over time.
 
-> **Note:**
-> Refer to Messenger's official doc, [Rate Limiting](https://developers.facebook.com/docs/messenger-platform/send-messages#limits) for the latest Messenger policy.
+> **Note:** Refer to Messenger's official doc, [Rate Limiting](https://developers.facebook.com/docs/messenger-platform/send-messages#limits) for the latest Messenger policy.

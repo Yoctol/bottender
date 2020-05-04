@@ -88,6 +88,7 @@ const siteConfig = {
 
   // Google Analytics tracking ID to track page views.
   gaTrackingId: 'UA-70309045-11',
+  gaGtag: true,
 
   // On page navigation for the current documentation page.
   onPageNav: 'separate',
@@ -130,6 +131,8 @@ const siteConfig = {
       facetFilters: ['language:LANGUAGE', 'version:VERSION'],
     },
   },
+
+  translationRecruitingLink: 'https://crowdin.com/project/bottender',
 };
 
 module.exports = siteConfig;

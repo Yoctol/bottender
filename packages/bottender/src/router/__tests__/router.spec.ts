@@ -1,6 +1,16 @@
 import { run } from '../../bot/Bot';
 
-import router, { payload, platform, route, text } from '..';
+import router, {
+  line,
+  messenger,
+  payload,
+  platform,
+  route,
+  telegram,
+  text,
+  viber,
+  whatsapp,
+} from '..';
 
 function textContext(message = '') {
   return {
@@ -32,7 +42,7 @@ function platformContext(name = '') {
 }
 
 function sendText(message) {
-  return async function(context) {
+  return async function SendText(context) {
     await context.sendText(message);
   };
 }
@@ -340,4 +350,24 @@ describe('#platform', () => {
     await expectPlatformConversation(app, 'telegram', 'hello');
     await expectPlatformConversation(app, 'slack', 'hello');
   });
+});
+
+it('#line should be exported', () => {
+  expect(line).toBeDefined();
+});
+
+it('#messenger should be exported', () => {
+  expect(messenger).toBeDefined();
+});
+
+it('#telegram should be exported', () => {
+  expect(telegram).toBeDefined();
+});
+
+it('#viber should be exported', () => {
+  expect(viber).toBeDefined();
+});
+
+it('#whatsapp should be exported', () => {
+  expect(whatsapp).toBeDefined();
 });

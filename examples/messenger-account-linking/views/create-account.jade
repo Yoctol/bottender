@@ -1,0 +1,49 @@
+//-
+  Copyright 2017-present, Facebook, Inc. All rights reserved.
+
+  This source code is licensed under the license found in the
+  LICENSE file in the root directory of fbsamples/messenger-bot-samples.
+
+extends layout
+block head
+   - var title = 'Create Account'
+block content
+  div(class='main row')
+    div(class='column')
+      div(class='header')
+        h2 Create Account
+      div(class='subtitle')
+        p To access your order history and shopping list, you’ll need to create an account.
+      form(action='/users/create', method='post', class='column')
+        div(class='formFields')
+          fieldset(id='usernameField')
+            div(class='input')
+              label(for='username') Username
+              input(class='required',id='username',type='text',value=username,placeholder='Choose a username',name='username')
+            div(class='inputStatus')
+              if errorInput === 'username'
+                img(class='statusIcon warning' src='/images/warning.svg')
+          fieldset(id='passwordField')
+            div(class='input')
+              label(for='password') Password
+              input(class='required',id='password',type='password',value=password,placeholder='Choose a password',name='password')
+            div(class='inputStatus')
+              if errorInput === 'password'
+                img(class='statusIcon warning' src='/images/warning.svg')
+          fieldset(id='password2Field')
+            div(class='input')
+              label(for='passwordVerification') Confirm
+              input(class='required', id='passwordVerification',type='password',value=password2,placeholder='Confirm your password',name='password2')
+            div(class='inputStatus')
+              if errorInput === 'password2'
+                img(class='statusIcon warning' src='/images/warning.svg')
+          input(type='hidden' name='accountLinkingToken' value='#{accountLinkingToken}')
+          input(type='hidden' name='redirectURI' value='#{redirectURI}')
+        div(id='error')
+          if locals.errorMessage
+            p #{errorMessage}
+        button(class='submitButton' id='submit',type='submit')
+          div(class='row' id='submitInternal')
+            img(class='icon' id='spinner' src='/images/loading.svg' style='display:none')
+            span(class='buttonText') Create Account
+      p(class='subtitle') Already have an account? #[a(href=`/users/login?account_linking_token=${accountLinkingToken}&redirect_uri=${redirectURI}`) Log In]

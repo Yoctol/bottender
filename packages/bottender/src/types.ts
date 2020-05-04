@@ -8,15 +8,19 @@ import ConsoleEvent, { ConsoleRawEvent } from './console/ConsoleEvent';
 import Context from './context/Context';
 import LineEvent from './line/LineEvent';
 import MessengerEvent from './messenger/MessengerEvent';
+import SessionStore from './session/SessionStore';
 import SlackEvent from './slack/SlackEvent';
 import TelegramEvent from './telegram/TelegramEvent';
+import TwilioClient from './whatsapp/TwilioClient';
 import ViberEvent from './viber/ViberEvent';
+import WhatsappEvent from './whatsapp/WhatsappEvent';
 import { ConsoleClient } from './console/ConsoleClient';
 import { LineRequestBody } from './line/LineConnector';
 import { MessengerRequestBody } from './messenger/MessengerConnector';
 import { SlackRequestBody } from './slack/SlackConnector';
 import { TelegramRequestBody } from './telegram/TelegramConnector';
 import { ViberRequestBody } from './viber/ViberConnector';
+import { WhatsappRequestBody } from './whatsapp/WhatsappConnector';
 
 export type Client =
   | ConsoleClient
@@ -24,7 +28,8 @@ export type Client =
   | LineClient
   | SlackOAuthClient
   | TelegramClient
-  | ViberClient;
+  | ViberClient
+  | TwilioClient;
 
 export type Event =
   | ConsoleEvent
@@ -32,7 +37,8 @@ export type Event =
   | LineEvent
   | SlackEvent
   | TelegramEvent
-  | ViberEvent;
+  | ViberEvent
+  | WhatsappEvent;
 
 export type Body =
   | ConsoleRawEvent
@@ -40,22 +46,26 @@ export type Body =
   | LineRequestBody
   | SlackRequestBody
   | TelegramRequestBody
-  | ViberRequestBody;
+  | ViberRequestBody
+  | WhatsappRequestBody;
 
-export type Action<C extends Client, E extends Event> = (
-  context: Context<C, E>,
-  props?: Props<C, E>
-) => void | Action<C, E> | Promise<Action<C, E> | void>;
+export type AnyContext = Context<any, any>;
 
-export type Props<C extends Client, E extends Event> = {
-  next?: Action<C, E>;
+export type Action<
+  C extends AnyContext,
+  P extends Record<string, any> = {},
+  RAP extends Record<string, any> = {}
+> = (
+  context: C,
+  props: Props<C> & P
+) => void | Action<C, RAP> | Promise<Action<C, RAP> | void>;
+
+export type Props<C extends AnyContext> = {
+  next?: Action<C, any>;
   error?: Error;
-  [key: string]: any;
 };
 
-export type Plugin<C extends Client, E extends Event> = (
-  context: Context<C, E>
-) => void;
+export type Plugin<C extends AnyContext> = (context: C) => void;
 
 export enum Channel {
   Messenger = 'messenger',
@@ -63,6 +73,7 @@ export enum Channel {
   Slack = 'slack',
   Telegram = 'telegram',
   Viber = 'viber',
+  Whatsapp = 'whatsapp',
 }
 
 export enum SessionDriver {
@@ -73,30 +84,34 @@ export enum SessionDriver {
 }
 
 export type SessionConfig = {
-  driver: SessionDriver;
+  driver: string;
   expiresIn?: number;
-  stores: {
-    memory?: {
-      maxSize?: number;
-    };
-    file?: {
-      dirname?: string;
-    };
-    redis?: {
-      port?: number;
-      host?: string;
-      password?: string;
-      db: number;
-    };
-    mongo?: {
-      url: string;
-      collectionName?: string;
-    };
-  };
+  stores:
+    | {
+        memory?: {
+          maxSize?: number;
+        };
+        file?: {
+          dirname?: string;
+        };
+        redis?: {
+          port?: number;
+          host?: string;
+          password?: string;
+          db?: number;
+        };
+        mongo?: {
+          url?: string;
+          collectionName?: string;
+        };
+      }
+    | {
+        [P in Exclude<string, SessionDriver>]: SessionStore;
+      };
 };
 
 export type BottenderConfig = {
-  plugins?: any[];
+  plugins?: Plugin<any>[];
   session?: SessionConfig;
   initialState?: Record<string, any>;
   channels?: {
@@ -123,7 +138,8 @@ export type BottenderConfig = {
       enabled: boolean;
       path: string;
       accessToken: string;
-      verificationToken: string;
+      verificationToken?: string;
+      signingSecret?: string;
     };
     [Channel.Viber]: {
       enabled: boolean;
@@ -132,6 +148,12 @@ export type BottenderConfig = {
       sender: {
         name: string;
       };
+    };
+    [Channel.Whatsapp]: {
+      enabled: boolean;
+      path: string;
+      accountSid: string;
+      authToken: string;
     };
   };
 };

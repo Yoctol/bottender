@@ -1,3 +1,564 @@
+# 1.4.3 / 2020-04-29
+
+- [type] use string instead enum to compare.
+
+# 1.4.2 / 2020-04-24
+
+- [type] improve TS types of the `getClient` function (#744)
+
+# 1.4.1 / 2020-04-17
+
+## line
+
+- [fix] bump messaging-api-line to beta.20 and fix types in text methods (#742)
+
+# 1.4.0 / 2020-04-15
+
+- [new] route: provides `namespace.any` for better readability (#719):
+
+```js
+function App() {
+  return router([
+    messenger.any(HandleMessenger),
+    line.any(HandleLine),
+    slack.any(HandleSlack),
+    telegram.any(HandleTelegram),
+    viber.any(HandleViber),
+    whatsapp.any(HandleWhatsapp),
+  ]);
+}
+```
+
+- [new] support custom session store (#732):
+
+```js
+// bottender.config.js
+
+const { MemorySessionStore } = require('bottender');
+
+module.exports = {
+  session: {
+    driver: 'memory2',
+    stores: {
+      memory2: new MemorySessionStore();
+    },
+  },
+};
+```
+
+- [fix] context: let getters return literal instead of string type (#724)
+- [type] improve types of withProps (#731)
+
+## messenger
+
+- [new] messenger: use v6.0 graph api as default (messaging-apis#556)
+- [new] support reaction event and routing (#718):
+
+Support `event.isReaction` & `event.react`:
+
+```js
+function App(context) {
+  if (context.event.isReaction) {
+    console.log(context.event.reaction);
+    // {
+    //   reaction: 'smile',
+    //   emoji: '\u{2764}\u{FE0F}',
+    //   action: 'react',
+    //   mid: 'mid.$cAAE1UUyiiwthh0NPrVbVf4HFNDGl',
+    //  }
+  }
+}
+```
+
+Support detect events in routers:
+
+```js
+const { router, messenger } = require('bottender/router');
+
+function App() {
+  return router([
+    messenger.reaction.react(HandleReactionReact),
+    messenger.reaction.unreact(HandleReactionUnreact),
+    messenger.reaction(HandleReaction),
+  ]);
+}
+
+async function HandleReactionReact(context) {}
+async function HandleReactionUnreact(context) {}
+async function HandleReaction(context) {}
+```
+
+- [new] add `context.sendOneTimeNotifReqTemplate` (#722):
+
+```js
+context.sendOneTimeNotifReqTemplate({
+  title: '<TITLE_TEXT>',
+  payload: '<USER_DEFINED_PAYLOAD>',
+});
+```
+
+- [type] improve types of MessengerContext send methods (#729)
+
+## line
+
+- [new] export `LineNotify` (#721):
+
+```js
+const { LineNotify } = require('bottender');
+```
+
+- [type] add `language` to `User` (messaging-apis#563)
+- [type] add `sticon` to `TextMessage` (messaging-apis#564)
+- [type] export LINE flex types (messaging-apis#558)
+
+## bottender-dialogflow
+
+- [new] support text responses filled on Dialogflow.
+
+## create-bottender-app
+
+- [new] add `lib` es2018-es2020 by default.
+- [fix] let `App` action accept Action as return value (#734)
+
+# 1.3.5 / 2020-04-04
+
+- [fix] put `router.d.ts` into package files whitelist
+
+# 1.3.4 / 2020-04-04
+
+- [fix] fix `bottender/router` import statement in TypeScript (#715)
+
+# 1.3.3 / 2020-04-01
+
+## line
+
+- [deps] update `messaging-api-line` for [domain name change for certain endpoints](https://developers.line.biz/en/news/2019/11/08/domain-name-change/).
+
+# 1.3.2 / 2020-03-20
+
+- [fix] improve the error message of missing entry action (#705).
+- [fix] fix responding with application/json when using custom server (#700).
+
+## line
+
+- [deps] update `messaging-api-line`.
+
+## create-bottender-app
+
+- [fix] rewrite generated README (#708).
+- [fix] install `eslint-plugin-import` for `--typescript`.
+- [fix] add `dist` to `.gitignore` for TypeScript (#697).
+
+# 1.3.1 / 2020-03-16
+
+- [deps] some packages bump from dependabot.
+
+## line
+
+- [deps] update `messaging-api-line` to fix an issue about narrowcast.
+
+## create-bottender-app
+
+- [fix] hint users to edit the `.env` file (#678)
+
+# 1.3.0 / 2020-03-06
+
+- [type] export types from messaging-apis (#661):
+
+```ts
+import {
+  MessengerTypes,
+  WhatsappTypes,
+  LineTypes,
+  TelegramTypes,
+  SlackTypes,
+  ViberTypes,
+} from 'bottender';
+```
+
+- [deps] update dependencies.
+
+## whatsapp
+
+- [new] add new channel `whatsapp` built on top of [Twilio API for WhatsApp](https://www.twilio.com/whatsapp) (#664):
+
+```js
+// bottender.config.js
+
+module.exports = {
+  channels: {
+    whatsapp: {
+      enabled: true,
+      path: '/webhooks/whatsapp',
+      accountSid: process.env.WHATSAPP_ACCOUNT_SID,
+      authToken: process.env.WHATSAPP_AUTH_TOKEN,
+      phoneNumber: process.env.WHATSAPP_PHONE_NUMBER,
+    },
+  },
+};
+```
+
+## slack
+
+- [new] support Slack signing secret:
+
+```js
+// bottender.config.js
+
+module.exports = {
+  channels: {
+    slack: {
+      enabled: true,
+      path: '/webhooks/slack',
+      accessToken: process.env.SLACK_ACCESS_TOKEN,
+      signingSecret: process.env.SLACK_SIGNING_SECRET,
+      // verificationToken: process.env.SLACK_VERIFICATION_TOKEN, // deprecated, use signingSecret
+    },
+  },
+};
+```
+
+- [new] add support for Slack slash commands (#166):
+
+```js
+async function App(context) {
+  if (context.event.isCommand) {
+    await context.sendText(
+      `I received slash command '${context.event.command}' with arguments: '${context.event.text}'`
+    );
+  }
+}
+```
+
+## line
+
+- [deps] update `messaging-api-line` to support narrowcast.
+
+## create-bottender-app
+
+- [new] use signing secret in create-bottender-app (#659).
+- [new] add TypeScript support to `bottender dev` (#654).
+
+## cli
+
+- [new] support `bottender dev --inspect=HOST:PORT` (#656).
+
+# 1.2.3 / 2020-03-04
+
+## slack
+
+- [fix] fix a typo in Slack error message #671
+
+# 1.2.2 / 2020-02-24
+
+## create-bottender-app
+
+- [fix] Fixed wrong npm scripts in the instruction.
+
+# 1.2.1 / 2020-02-13
+
+- [fix] install @types packages in package dependencies instead of workspace.
+
+# 1.2.0 / 2020-01-22
+
+- [new] Added four NLU packages:
+
+  - [@bottender/dialogflow](https://github.com/Yoctol/bottender/tree/master/packages/bottender-dialogflow)
+  - [@bottender/luis](https://github.com/Yoctol/bottender/tree/master/packages/bottender-luis)
+  - [@bottender/qna-maker](https://github.com/Yoctol/bottender/tree/master/packages/bottender-qna-maker)
+  - [@bottender/rasa](https://github.com/Yoctol/bottender/tree/master/packages/bottender-rasa)
+
+- [new] Added `context.setIntent()` for intent tracking purpose (#617):
+
+```js
+context.intent; // null
+
+context.setIntent('greeting');
+
+context.intent; // 'greeting'
+```
+
+- [new] Added `context.setAsHandled()` and `context.setAsNotHandled()` for tracking handling status (#624):
+
+```js
+context.setAsHandled();
+
+context.isHandled; // true
+
+context.setAsNotHandled();
+
+context.isHandled; // false
+```
+
+- [new] Added `getSessionStore` helper function to get the session store that configured by `bottender.config.js` (#633):
+
+```js
+const { getSessionStore } = require('bottender');
+
+const sessionStore = getSessionStore();
+```
+
+- [new] Added `getClient` helper function to access underlying messaging client configured by `bottender.config.js` (#634):
+
+```js
+const { getClient } = require('bottender');
+
+const messenger = getClient('messenger');
+
+messenger.sendText(USER_ID, 'Hello!', { tag: 'CONFIRMED_EVENT_UPDATE' });
+
+const line = getClient('line');
+
+line.pushText(USER_ID, 'Hello!');
+```
+
+- [new] Added async plugin support.
+- [docs] Updated [Natural Language Understanding Guide](https://bottender.js.org/docs/advanced-guides-nlu) to use NLU packages.
+- [example] Using NLU packages in NLU examples.
+
+### slack
+
+- [new] add `includeBotMessages` option for interacting with `bot_message` (#635):
+
+```js
+// bottender.config.js
+
+module.exports = {
+  // ...
+  slack: {
+    enabled: true,
+    path: '/webhooks/slack',
+    accessToken: process.env.SLACK_ACCESS_TOKEN,
+    verificationToken: process.env.SLACK_VERIFICATION_TOKEN,
+    includeBotMessages: true, // add this line
+  },
+};
+```
+
+Then you can use `context.event.isBotMessage` to determine if the event is a bot message event:
+
+```js
+module.exports = function App(context) {
+  if (context.event.isBotMessage) {
+    console.log(context.event.rawEvent.botId);
+  }
+};
+```
+
+# 1.1.3 / 2020-01-08
+
+- [fix] fix(Bot, LineConnector, MessengerConnector): when receiving multiple events, construct session with event instead of request #621
+
+# 1.1.2 / 2020-01-03
+
+- [fix] fix(DevServer): call `super.prepare()` in `prepare` method to avoid overwriting parent method
+
+# 1.1.1 / 2020-01-02
+
+- [fix] improve error message when there are errors in bottender.config.js (#611)
+
+# 1.1.0 / 2019-12-27
+
+- [new] improve error messages for bots configuration:
+
+```
+LINE channel secret is required. Please make sure you have filled it correctly in `bottender.config.js` or `.env` file.
+```
+
+Instead of:
+
+```
+TypeError [ERR_INVALID_ARG_TYPE]: The "key" argument must be one of type Buffer, TypedArray, DataView, string, or KeyObject. Received type undefined
+```
+
+### messenger
+
+- [new] Added Messenger routes:
+
+```js
+const { router, messenger } = require('bottender/router');
+
+function Action() {
+  // ...
+}
+
+function App() {
+  return router([
+    messenger.message(Action),
+    messenger.accountLinking.linked(Action),
+    messenger.accountLinking.unlinked(Action),
+    messenger.accountLinking(Action),
+    messenger.checkoutUpdate(Action),
+    messenger.delivery(Action),
+    messenger.echo(Action),
+    messenger.gamePlay(Action),
+    messenger.passThreadControl(Action),
+    messenger.takeThreadControl(Action),
+    messenger.requestThreadControl(Action),
+    messenger.appRoles(Action),
+    messenger.optin(Action),
+    messenger.payment(Action),
+    messenger.policyEnforcement(Action),
+    messenger.postback(Action),
+    messenger.preCheckout(Action),
+    messenger.read(Action),
+    messenger.referral(Action),
+    messenger.standby(Action),
+    messenger(Action),
+  ]);
+}
+```
+
+### line
+
+- [new] Added LINE routes:
+
+```js
+const { router, line } = require('bottender/router');
+
+function Action() {
+  // ...
+}
+
+function App() {
+  return router([
+    line.message(Action),
+    line.follow(Action),
+    line.unfollow(Action),
+    line.join(Action),
+    line.leave(Action),
+    line.memberJoined(Action),
+    line.memberLeft(Action),
+    line.postback(Action),
+    line.beacon.enter(Action),
+    line.beacon.banner(Action),
+    line.beacon.stay(Action),
+    line.beacon(Action),
+    line.accountLink(Action),
+    line.things.link(Action),
+    line.things.unlink(Action),
+    line.things.scenarioResult(Action),
+    line.things(Action),
+    line(Action),
+  ]);
+}
+```
+
+### slack
+
+- [new] Implemented native Slack chat APIs, see Slack API Doc for further information.
+  e.g.
+
+```js
+context.chat.postMessage(...);
+context.chat.postEphemeral(...);
+context.chat.update(...);
+context.chat.delete(...);
+context.chat.meMessage(...);
+context.chat.getPermalink(...);
+context.chat.scheduleMessage(...);
+context.chat.deleteScheduledMessage(...);
+context.chat.scheduledMessages.list(...);
+```
+
+`context.postMessage`and`context.postEphemeral`is now deprecated, use`context.chat.postMessage`and`context.chat.postEphemeral` instead.
+
+- [new] Implemented native Slack views APIs, see [Slack API Doc](https://api.slack.com/methods) for further information.
+  e.g.
+
+```js
+context.views.open(...);
+context.views.publish(...);
+context.views.push(...);
+context.views.update(...);
+```
+
+For views, we keep `channelId` in `privateMetadata` to get session key for upcoming view events. ([ref](https://github.com/Yoctol/bottender/pull/545))
+
+- [new] Added Slack routes:
+
+```js
+const { router, slack } = require('bottender/router');
+
+function Action() {
+  // ...
+}
+
+function App() {
+  return router([
+    slack.message(Action),
+    slack.event('pin_added', Action),
+    slack.event('star_added', Action),
+    slack(Action),
+  ]);
+}
+```
+
+### telegram
+
+- [new] Added Telegram routes:
+
+```js
+const { router, telegram } = require('bottender/router');
+
+function Action() {
+  // ...
+}
+
+function App() {
+  return router([
+    telegram.message(Action),
+    telegram.editedMessage(Action),
+    telegram.channelPost(Action),
+    telegram.editedChannelPost(Action),
+    telegram.inlineQuery(Action),
+    telegram.chosenInlineResult(Action),
+    telegram.callbackQuery(Action),
+    telegram.shippingQuery(Action),
+    telegram.preCheckoutQuery(Action),
+    telegram.poll(Action),
+    telegram(Action),
+  ]);
+}
+```
+
+### viber
+
+- [new] Added Viber routes:
+
+```js
+const { router, viber } = require('bottender/router');
+
+function Action() {
+  // ...
+}
+
+function App() {
+  return router([
+    viber.message(Action),
+    viber.subscribed(Action),
+    viber.unsubscribed(Action),
+    viber.conversationStarted(Action),
+    viber.delivered(Action),
+    viber.seen(Action),
+    viber.failed(Action),
+    viber(Action),
+  ]);
+}
+```
+
+# 1.0.8 / 2020-01-08
+
+- [fix] fix(Bot, LineConnector, MessengerConnector): when receiving multiple events, construct session with event instead of request #621
+
+# 1.0.7 / 2020-01-03
+
+- [fix] fix(DevServer): call `super.prepare()` in `prepare` method to avoid overwriting parent method
+
+# 1.0.6 / 2019-12-24
+
+- [fix] session should never expire by default #595
+
 # 1.0.5 / 2019-12-19
 
 - [fix] move init session and bots into server prepare step #589
@@ -1688,7 +2249,7 @@ See [official docs](https://api.slack.com/methods/chat.postMessage) for more ava
 
 ### line
 
-- [new] Implement richmenu api methods on context [#23](https://github.com/Yoctol/bottender/pull/23)
+- [new] Implement rich menu api methods on context [#23](https://github.com/Yoctol/bottender/pull/23)
 
   - `context.getLinkedRichMenu()`
   - `context.linkRichMenu(richMenuId)`

@@ -46,7 +46,7 @@ describe('#constructor', () => {
     });
   });
 
-  it('can call with url', () => {
+  it('can call with URL', () => {
     const store = new RedisCacheStore('redis://:authpassword@127.0.0.1:6380/4'); // eslint-disable-line no-unused-vars
 
     expect(Redis).toBeCalledWith('redis://:authpassword@127.0.0.1:6380/4');
@@ -112,6 +112,15 @@ describe('#put', () => {
     await store.put('123', 'xyz', 5);
 
     expect(redis.setex).toBeCalledWith('123', 300, '"xyz"');
+  });
+
+  it('should store cache item', async () => {
+    const store = new RedisCacheStore();
+    const redis = store.getRedis();
+
+    await store.put('123', 'xyz', 0);
+
+    expect(redis.set).toBeCalledWith('123', '"xyz"');
   });
 
   it('can store mixed data types', async () => {

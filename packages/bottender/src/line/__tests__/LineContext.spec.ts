@@ -189,7 +189,6 @@ describe('#leave', () => {
     expect(client.leaveGroup).not.toBeCalled();
     expect(client.leaveRoom).not.toBeCalled();
     expect(warning).toBeCalled();
-    expect(context.isHandled).toBe(false);
   });
 
   it('leave group', async () => {
@@ -198,7 +197,6 @@ describe('#leave', () => {
     await context.leave();
 
     expect(client.leaveGroup).toBeCalledWith('fakeGroupId', {});
-    expect(context.isHandled).toBe(true);
   });
 
   it('leave room', async () => {
@@ -207,7 +205,6 @@ describe('#leave', () => {
     await context.leave();
 
     expect(client.leaveRoom).toBeCalledWith('fakeRoomId', {});
-    expect(context.isHandled).toBe(true);
   });
 
   it('not leave user', async () => {
@@ -218,7 +215,6 @@ describe('#leave', () => {
     expect(client.leaveGroup).not.toBeCalled();
     expect(client.leaveRoom).not.toBeCalled();
     expect(warning).toBeCalled();
-    expect(context.isHandled).toBe(false);
   });
 });
 
@@ -319,14 +315,6 @@ describe('#replyText', () => {
 
     expect(error).toBeDefined();
     expect(error.message).toEqual('Can not reply event multiple times');
-  });
-
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    await context.replyText('hello');
-
-    expect(context.isHandled).toBe(true);
   });
 
   it('should support custom token', async () => {
@@ -457,14 +445,6 @@ describe('#pushText', () => {
     );
   });
 
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    await context.pushText('hello');
-
-    expect(context.isHandled).toBe(true);
-  });
-
   it('should call warning and not to send if dont have session', async () => {
     const { context, client } = setup({ session: false });
 
@@ -512,14 +492,6 @@ describe('send APIs', () => {
         ],
         {}
       );
-    });
-
-    it('should mark context as handled', async () => {
-      const { context } = setup();
-
-      await context.send([Line.createText('2'), Line.createText('3')]);
-
-      expect(context.isHandled).toBe(true);
     });
   });
 
@@ -1329,7 +1301,6 @@ describe('profile APIs', () => {
       expect(client.getGroupMemberProfile).not.toBeCalled();
       expect(client.getRoomMemberProfile).not.toBeCalled();
       expect(warning).toBeCalled();
-      expect(context.isHandled).toBe(false);
     });
 
     it('not get profile without user in session', async () => {
@@ -1349,7 +1320,6 @@ describe('profile APIs', () => {
       expect(client.getGroupMemberProfile).not.toBeCalled();
       expect(client.getRoomMemberProfile).not.toBeCalled();
       expect(warning).toBeCalled();
-      expect(context.isHandled).toBe(false);
     });
 
     it('get user profile in group', async () => {
@@ -1394,7 +1364,6 @@ describe('profile APIs', () => {
       expect(client.getGroupMemberProfile).not.toBeCalled();
       expect(client.getRoomMemberProfile).not.toBeCalled();
       expect(warning).toBeCalled();
-      expect(context.isHandled).toBe(false);
     });
 
     it('get member profile in group', async () => {
@@ -1429,7 +1398,6 @@ describe('profile APIs', () => {
       expect(client.getGroupMemberProfile).not.toBeCalled();
       expect(client.getRoomMemberProfile).not.toBeCalled();
       expect(warning).toBeCalled();
-      expect(context.isHandled).toBe(false);
     });
   });
 });
@@ -1444,7 +1412,6 @@ describe('member IDs APIs', () => {
       expect(client.getRoomMemberIds).not.toBeCalled();
       expect(client.getGroupMemberIds).not.toBeCalled();
       expect(warning).toBeCalled();
-      expect(context.isHandled).toBe(false);
     });
 
     it('get memeber ids in group', async () => {
@@ -1479,7 +1446,6 @@ describe('member IDs APIs', () => {
       expect(client.getRoomMemberIds).not.toBeCalled();
       expect(client.getGroupMemberIds).not.toBeCalled();
       expect(warning).toBeCalled();
-      expect(context.isHandled).toBe(false);
     });
   });
 
@@ -1492,7 +1458,6 @@ describe('member IDs APIs', () => {
       expect(client.getAllRoomMemberIds).not.toBeCalled();
       expect(client.getAllGroupMemberIds).not.toBeCalled();
       expect(warning).toBeCalled();
-      expect(context.isHandled).toBe(false);
     });
 
     it('get memeber ids in group', async () => {
@@ -1519,7 +1484,6 @@ describe('member IDs APIs', () => {
       expect(client.getAllRoomMemberIds).not.toBeCalled();
       expect(client.getAllGroupMemberIds).not.toBeCalled();
       expect(warning).toBeCalled();
-      expect(context.isHandled).toBe(false);
     });
   });
 });

@@ -11,13 +11,11 @@ npm install
 npm run dev -- --console
 ```
 
-## Idea of this example
+## Idea of This Example
 
-This example shows how to use Session to store some information from users. For
-more information, check our
-[session guide](https://bottender.js.org/docs/the-basics-session).
+This example shows how to use session to store some information from users in memory. For more information, check our [session guide](https://bottender.js.org/docs/the-basics-session).
 
-## Related examples
+## Related Examples
 
 - [session-file](../session-file)
 - [session-mongo](../session-mongo)

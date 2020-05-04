@@ -1,4 +1,4 @@
-# LINE rich menu
+# LINE Rich Menu
 
 ## Install and Run
 
@@ -15,9 +15,11 @@ Install dependencies:
 npm install
 ```
 
-You must put `accessToken` and `channelSecret` into `index.js`.
+You must fill `LINE_ACCESS_TOKEN` and `LINE_CHANNEL_SECRET` in your `.env` file.
 
-After that, you should follow this [document](https://bottender.js.org/docs/channel-line-rich-menu) to set up the rich menu on LINE. You can use the file `rich_menu.jpg` as the rich menu image.
+If you are not familiar with LINE Bot, you may refer to Bottender's doc, [LINE Setup](https://bottender.js.org/docs/channel-line-setup) to find detailed instructions.
+
+After that, you should follow this [LINE Rich Menu](https://bottender.js.org/docs/channel-line-rich-menu) document to set up the rich menu on LINE. You can use the file `rich_menu.jpg` as the rich menu image.
 
 Next, you can run the bot with this npm script:
 
@@ -25,19 +27,19 @@ Next, you can run the bot with this npm script:
 npm run dev
 ```
 
-This command will start server for bot developing at `http://localhost:5000`.
+This command starts a server listening at `http://localhost:5000` for bot development.
 
-If you successfully start the server, you will get a webhook url like `https://xxxxxxxx.ngrok.io/webhooks/line` from command line.
+If you successfully start the server, you get a webhook URL in the format of `https://xxxxxxxx.ngrok.io/webhooks/line` from your terminal.
 
-## Set webhook
+## Set Webhook
 
-To set the webhook, go to [LINE developers console](https://developers.line.me/console/) and use the webhook url you get from running `npm run dev` to edit webhook information for your channel.
+To set the webhook, go to [LINE developers console](https://developers.line.me/console/) and use the webhook URL you got from running `npm run dev` to edit webhook information for your channel.
 
-## Idea of this example
+## Idea of This Example
 
-This example is a simple bot running on [LINE](https://line.me/) to demonstrate how to use rich menu.
+This example is a bot running on [LINE](https://line.me/) to demonstrate how to use rich menu.
 For more information, check our [LINE API Document](https://developers.line.biz/en/reference/messaging-api/#rich-menu).
 
-## Related examples
+## Related Examples
 
-- [line-hello-world](../line-hello-world)
+- [line-rich-menu-submenu](../line-rich-menu-submenu)

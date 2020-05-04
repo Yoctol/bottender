@@ -1,9 +1,10 @@
-import EventEmitter from 'events';
+import { EventEmitter } from 'events';
 
 import cloneDeep from 'lodash/cloneDeep';
 import debug from 'debug';
 import warning from 'warning';
 
+import Session from '../session/Session';
 import { Client, Event, RequestContext } from '../types';
 
 const debugContext = debug('bottender:context');
@@ -11,7 +12,7 @@ const debugContext = debug('bottender:context');
 type Options<C extends Client, E extends Event> = {
   client: C;
   event: E;
-  session: any;
+  session?: Session | null;
   initialState?: Record<string, any> | null;
   requestContext?: RequestContext;
   emitter?: EventEmitter | null;
@@ -23,8 +24,17 @@ type Response = {
   body: any;
 };
 
-export default class Context<C extends Client, E extends Event> {
-  _isHandled = false;
+export default abstract class Context<C extends Client, E extends Event> {
+  /**
+   * The name of the platform.
+   *
+   */
+  abstract get platform(): string;
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  abstract sendText(text: string, options?: Record<string, any>): any;
+
+  _isHandled: boolean | null = null;
 
   _isSessionWritten = false;
 
@@ -32,13 +42,15 @@ export default class Context<C extends Client, E extends Event> {
 
   _event: E;
 
-  _session: Record<string, any> | null;
+  _session: Session | null;
 
   _initialState?: Record<string, any> | null;
 
   _requestContext: RequestContext | null;
 
   _emitter: EventEmitter | null;
+
+  _intent: string | null;
 
   response: Response;
 
@@ -52,10 +64,11 @@ export default class Context<C extends Client, E extends Event> {
   }: Options<C, E>) {
     this._client = client;
     this._event = event;
-    this._session = session;
+    this._session = session || null;
     this._initialState = initialState || {};
     this._requestContext = requestContext || null;
     this._emitter = emitter || null;
+    this._intent = null;
 
     debugContext('Context created with rawEvent:');
     debugContext(JSON.stringify(this._event.rawEvent, null, 2));
@@ -76,7 +89,7 @@ export default class Context<C extends Client, E extends Event> {
    * The client instance.
    *
    */
-  get client(): Record<string, any> {
+  get client(): C {
     return this._client;
   }
 
@@ -89,10 +102,10 @@ export default class Context<C extends Client, E extends Event> {
   }
 
   /**
-   * The context of request.
+   * The context of the request.
    *
    */
-  get requestContext(): Record<string, any> | null {
+  get requestContext(): RequestContext | null {
     return this._requestContext;
   }
 
@@ -100,11 +113,11 @@ export default class Context<C extends Client, E extends Event> {
    * The session state of the context.
    *
    */
-  get session(): Record<string, any> | null {
+  get session(): Session | null {
     return this._session;
   }
 
-  get isHandled(): boolean {
+  get isHandled(): boolean | null {
     return this._isHandled;
   }
 
@@ -117,7 +130,7 @@ export default class Context<C extends Client, E extends Event> {
   }
 
   /**
-   * The state in the conversation context.
+   * The state of the conversation context.
    *
    */
   get state(): Record<string, any> {
@@ -176,9 +189,43 @@ export default class Context<C extends Client, E extends Event> {
     }
   }
 
+  /**
+   * The intent of the conversation context.
+   *
+   */
+  get intent(): string | null {
+    return this._intent;
+  }
+
+  /**
+   * Set intent to the conversation context.
+   *
+   */
+  setIntent(intent: string): void {
+    this._intent = intent;
+  }
+
+  /**
+   * Set the conversation context as handled or not handled by boolean.
+   *
+   */
+  setAsHandled(handled = true) {
+    this._isHandled = handled;
+  }
+
+  /**
+   * Set the conversation context as not handled.
+   *
+   */
+  setAsNotHandled() {
+    this.setAsHandled(false);
+  }
+
   emitError(err: Error): void {
     if (this._emitter) {
       this._emitter.emit('error', err, this);
     }
   }
+
+  handlerDidEnd(): any {}
 }

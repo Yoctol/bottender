@@ -37,4 +37,16 @@ module.exports = [
     infoLink: 'https://github.com/louis70109/Taiwan-ABL-games',
     pinned: true,
   },
+  {
+    caption: 'Todo Bot',
+    image: '/img/users/todoBot.jpg',
+    infoLink: 'https://github.com/HcwXd/messenger-todo-bot',
+    pinned: true,
+  },
+  {
+    caption: '正在直播 LINE BOT',
+    image: 'https://obs.line-scdn.net/0hDQKKdJiUG352MjMGKo1kKVdvEBxFUAV1VFRTHFE1QktbB1lGSQBRTFdgTEwLBQ98SldcGT0yTRtbClkhQhFVS1dhQ0cOCw/f256x256',
+    infoLink: 'https://www.notion.so/hilezi/d7ac6acf3ee94029a245be3df3c9f5fe',
+    pinned: true,
+  },
 ];

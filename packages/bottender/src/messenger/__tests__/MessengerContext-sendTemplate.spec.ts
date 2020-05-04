@@ -117,14 +117,16 @@ describe('#sendGenericTemplate', () => {
 
     const elements = {};
 
-    await context.sendGenericTemplate(elements, { tag: 'ISSUE_RESOLUTION' });
+    await context.sendGenericTemplate(elements, {
+      tag: 'CONFIRMED_EVENT_UPDATE',
+    });
 
     expect(client.sendGenericTemplate).toBeCalledWith(
       session.user.id,
       elements,
       {
         messagingType: 'MESSAGE_TAG',
-        tag: 'ISSUE_RESOLUTION',
+        tag: 'CONFIRMED_EVENT_UPDATE',
       }
     );
   });
@@ -143,17 +145,6 @@ describe('#sendGenericTemplate', () => {
         messagingType: 'UPDATE',
       }
     );
-  });
-
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    const elements = {};
-    const ratio = '';
-
-    await context.sendGenericTemplate(elements, { imageAspectRatio: ratio });
-
-    expect(context.isHandled).toBe(true);
   });
 
   it('should call warning and not to send if dont have session', async () => {
@@ -233,16 +224,6 @@ describe('#sendButtonTemplate', () => {
         messagingType: 'RESPONSE',
       }
     );
-  });
-
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    const buttons = [];
-
-    await context.sendButtonTemplate('yayaya', buttons);
-
-    expect(context.isHandled).toBe(true);
   });
 
   it('should call warning and not to send if dont have session', async () => {
@@ -339,16 +320,6 @@ describe('#sendMediaTemplate', () => {
     );
   });
 
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    const elements = [];
-
-    await context.sendMediaTemplate(elements);
-
-    expect(context.isHandled).toBe(true);
-  });
-
   it('should call warning and not to send if dont have session', async () => {
     const { context, client } = setup({ session: false });
 
@@ -421,16 +392,6 @@ describe('#sendReceiptTemplate', () => {
         messagingType: 'RESPONSE',
       }
     );
-  });
-
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    const receipt = {};
-
-    await context.sendReceiptTemplate(receipt);
-
-    expect(context.isHandled).toBe(true);
   });
 
   it('should call warning and not to send if dont have session', async () => {
@@ -507,16 +468,6 @@ describe('#sendAirlineBoardingPassTemplate', () => {
     );
   });
 
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    const boardingPass = {};
-
-    await context.sendAirlineBoardingPassTemplate(boardingPass);
-
-    expect(context.isHandled).toBe(true);
-  });
-
   it('should call warning and not to send if dont have session', async () => {
     const { context, client } = setup({ session: false });
 
@@ -589,16 +540,6 @@ describe('#sendAirlineCheckinTemplate', () => {
         messagingType: 'RESPONSE',
       }
     );
-  });
-
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    const checkin = {};
-
-    await context.sendAirlineCheckinTemplate(checkin);
-
-    expect(context.isHandled).toBe(true);
   });
 
   it('should call warning and not to send if dont have session', async () => {
@@ -675,16 +616,6 @@ describe('#sendAirlineItineraryTemplate', () => {
     );
   });
 
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    const itinerary = {};
-
-    await context.sendAirlineItineraryTemplate(itinerary);
-
-    expect(context.isHandled).toBe(true);
-  });
-
   it('should call warning and not to send if dont have session', async () => {
     const { context, client } = setup({ session: false });
 
@@ -759,16 +690,6 @@ describe('#sendAirlineUpdateTemplate', () => {
     );
   });
 
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    const flightUpdate = {};
-
-    await context.sendAirlineUpdateTemplate(flightUpdate);
-
-    expect(context.isHandled).toBe(true);
-  });
-
   it('should call warning and not to send if dont have session', async () => {
     const { context, client } = setup({ session: false });
 
@@ -821,6 +742,95 @@ describe('#sendAirlineUpdateTemplate', () => {
     expect(warning).toBeCalledWith(
       false,
       'sendAirlineUpdateTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
+    );
+    expect(client.sendImage).not.toBeCalled();
+  });
+});
+
+describe('#sendOneTimeNotifReqTemplate', () => {
+  it('should call client.sendOneTimeNotifReqTemplate', async () => {
+    const { context, client, session } = setup();
+
+    const attrs = {
+      title: '<TITLE_TEXT>',
+      payload: '<USER_DEFINED_PAYLOAD>',
+    };
+
+    await context.sendOneTimeNotifReqTemplate(attrs);
+
+    expect(client.sendOneTimeNotifReqTemplate).toBeCalledWith(
+      session.user.id,
+      attrs,
+      {
+        messagingType: 'RESPONSE',
+      }
+    );
+  });
+
+  it('should call warning and not to send if dont have session', async () => {
+    const { context, client } = setup({ session: false });
+
+    const attrs = {
+      title: '<TITLE_TEXT>',
+      payload: '<USER_DEFINED_PAYLOAD>',
+    };
+
+    await context.sendOneTimeNotifReqTemplate(attrs);
+
+    expect(warning).toBeCalledWith(
+      false,
+      'sendOneTimeNotifReqTemplate: should not be called in context without session'
+    );
+    expect(client.sendImage).not.toBeCalled();
+  });
+
+  it('should call warning and not to send if created with read event', async () => {
+    const { context, client } = setup({ rawEvent: read });
+
+    const attrs = {
+      title: '<TITLE_TEXT>',
+      payload: '<USER_DEFINED_PAYLOAD>',
+    };
+
+    await context.sendOneTimeNotifReqTemplate(attrs);
+
+    expect(warning).toBeCalledWith(
+      false,
+      'sendOneTimeNotifReqTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
+    );
+    expect(client.sendImage).not.toBeCalled();
+  });
+
+  it('should call warning and not to send if created with delivery event', async () => {
+    const { context, client } = setup({ rawEvent: delivery });
+
+    const attrs = {
+      title: '<TITLE_TEXT>',
+      payload: '<USER_DEFINED_PAYLOAD>',
+    };
+
+    await context.sendOneTimeNotifReqTemplate(attrs);
+
+    expect(warning).toBeCalledWith(
+      false,
+      'sendOneTimeNotifReqTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
+    );
+    expect(client.sendImage).not.toBeCalled();
+  });
+
+  it('should call warning and not to send if created with echo event', async () => {
+    const { context, client } = setup({ rawEvent: echo });
+
+    const attrs = {
+      title: '<TITLE_TEXT>',
+      payload: '<USER_DEFINED_PAYLOAD>',
+    };
+
+    await context.sendOneTimeNotifReqTemplate(attrs);
+
+    expect(warning).toBeCalledWith(
+      false,
+      'sendOneTimeNotifReqTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
     );
     expect(client.sendImage).not.toBeCalled();
   });

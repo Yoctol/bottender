@@ -9,6 +9,7 @@ import inquirer from 'inquirer';
 import spawn from 'cross-spawn';
 import validateProjectName from 'validate-npm-package-name';
 
+import generateAppEntry from './utils/generateAppEntry';
 import generateConfig from './utils/generateConfig';
 import { Answer, Platform, Session } from './types';
 import { bold, error, print } from './shared/log';
@@ -73,7 +74,7 @@ const getQuestions = (): Record<string, any>[] => [
     name: 'platforms',
     message: 'What platform of bot do you want to create?',
     type: 'checkbox',
-    choices: ['messenger', 'line', 'slack', 'telegram', 'viber'],
+    choices: ['messenger', 'whatsapp', 'line', 'slack', 'telegram', 'viber'],
   },
   {
     name: 'session',
@@ -245,6 +246,7 @@ const run = async (
               'typescript',
               '@typescript-eslint/parser',
               '@typescript-eslint/eslint-plugin',
+              'eslint-plugin-import',
             ]
           : []),
       ],
@@ -264,7 +266,11 @@ const run = async (
       ),
       root
     );
-
+    const appEntry = generateAppEntry(useTypescript, platforms);
+    fs.writeFileSync(
+      path.join(root, 'src', useTypescript ? 'index.ts' : 'index.js'),
+      appEntry
+    );
     fs.copySync(path.join(root, '.env.example'), path.join(root, '.env'));
     fs.copySync(path.join(root, 'gitignore'), path.join(root, '.gitignore'));
     fs.removeSync(path.join(root, 'gitignore'));
@@ -280,10 +286,12 @@ const run = async (
     print('');
 
     const knownGeneratedFiles = [
+      'bottender.config.js',
       'package.json',
       'npm-debug.log',
       'yarn-error.log',
       'yarn-debug.log',
+      'yarn.lock',
       'node_modules',
     ];
     const currentFiles = fs.readdirSync(path.join(root));
@@ -333,14 +341,9 @@ const createBot = async (
     private: true,
     scripts: {
       dev: 'bottender dev',
-      lint: 'eslint .',
-      start: 'bottender start',
+      lint: `eslint . ${useTypescript ? '--ext=js,ts' : ''}`,
+      start: `${useTypescript ? 'tsc && ' : ''}bottender start`,
       test: 'jest',
-      ...(useTypescript
-        ? {
-            build: 'tsc',
-          }
-        : {}),
     },
   };
 
@@ -382,12 +385,12 @@ const init = async (): Promise<void> => {
       answer.session
     );
 
-    const command = useYarn ? 'yarn' : 'npm';
+    const command = useYarn ? 'yarn' : 'npm run';
 
     print('Success!');
     print(`Created ${name} at ${root}`);
     print(
-      `Please make sure you have edited ${chalk.green(
+      `Please make sure you have edited ${chalk.green('.env')} or ${chalk.green(
         'bottender.config.js'
       )} before running the bot.`
     );

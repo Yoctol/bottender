@@ -45,24 +45,32 @@ type Tag = {
   source: string;
 };
 
+type ReplyTo = {
+  mid: string;
+};
+
 export type Message = {
+  mid: string;
   isEcho?: boolean;
   text?: string;
   stickerId?: number;
   quickReply?: QuickReply;
   attachments?: Attachment[];
   tags?: Tag[];
+  replyTo?: ReplyTo;
+  appId?: number;
+  metadata?: string;
 };
 
 export type Delivery = {
   mids: string[];
   watermark: number;
-  seq: number;
+  seq?: number;
 };
 
 export type Read = {
   watermark: number;
-  seq: number;
+  seq?: number;
 };
 
 export type Referral = {
@@ -73,7 +81,8 @@ export type Referral = {
 };
 
 export type Postback = {
-  payload: string;
+  title: string;
+  payload?: string;
   referral?: Referral;
 };
 
@@ -86,9 +95,16 @@ export type GamePlay = {
   payload: string;
 };
 
-export type Optin = {
-  ref: string;
-};
+export type Optin =
+  | {
+      ref: string;
+      userRef?: string;
+    }
+  | {
+      type: 'one_time_notif_req';
+      payload: string;
+      oneTimeNotifToken: string;
+    };
 
 export type Payment = {
   payload: string;
@@ -161,6 +177,25 @@ export type BrandedCamera = {
   event: string;
 };
 
+export type AccountLinking =
+  | { status: 'linked'; authorizationCode: string }
+  | { status: 'unlinked' };
+
+export type Reaction = {
+  reaction:
+    | 'smile'
+    | 'angry'
+    | 'sad'
+    | 'wow'
+    | 'love'
+    | 'like'
+    | 'dislike'
+    | 'other';
+  emoji: string;
+  action: 'react' | 'unreact';
+  mid: string;
+};
+
 export type MessengerRawEvent = {
   sender?: Sender;
   recipient?: Recipient;
@@ -181,6 +216,8 @@ export type MessengerRawEvent = {
   requestThreadControl?: RequestThreadControl;
   referral?: Referral;
   brandedCamera?: BrandedCamera;
+  accountLinking?: AccountLinking;
+  reaction?: Reaction;
 };
 
 type MessengerEventOptions = {
@@ -615,10 +652,10 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    */
   get payload(): string | null {
     if (!!this.postback && this.isPayload) {
-      return this.postback.payload;
+      return this.postback.payload || null;
     }
     if (!!this.quickReply && this.isPayload) {
-      return this.quickReply.payload;
+      return this.quickReply.payload || null;
     }
     return null;
   }
@@ -826,5 +863,48 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
       return null;
     }
     return (this._rawEvent as any).brandedCamera;
+  }
+
+  /**
+   * Determine if the event is a account_linking event.
+   *
+   */
+  get isAccountLinking(): boolean {
+    return (
+      !!this._rawEvent.accountLinking &&
+      typeof this._rawEvent.accountLinking === 'object'
+    );
+  }
+
+  /**
+   * The accountLinking object from Messenger event.
+   *
+   */
+  get accountLinking(): AccountLinking | null {
+    if (!this.isAccountLinking) {
+      return null;
+    }
+    return (this._rawEvent as any).accountLinking;
+  }
+
+  /**
+   * Determine if the event is a reaction event.
+   *
+   */
+  get isReaction(): boolean {
+    return (
+      !!this._rawEvent.reaction && typeof this._rawEvent.reaction === 'object'
+    );
+  }
+
+  /**
+   * The reaction object from Messenger event.
+   *
+   */
+  get reaction(): Reaction | null {
+    if (!this.isReaction) {
+      return null;
+    }
+    return (this._rawEvent as any).reaction;
   }
 }

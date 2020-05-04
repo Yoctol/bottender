@@ -111,14 +111,6 @@ describe('#sendText', () => {
     });
   });
 
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    await context.sendText('hello');
-
-    expect(context.isHandled).toBe(true);
-  });
-
   it('should call warning and not to send if dont have session', async () => {
     const { context, client } = setup({ session: false });
 
@@ -189,19 +181,6 @@ describe('#sendAttachment', () => {
     expect(client.sendAttachment).toBeCalledWith(session.user.id, attachment, {
       messagingType: 'RESPONSE',
     });
-  });
-
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    await context.sendAttachment({
-      type: 'image',
-      payload: {
-        url: 'https://example.com/pic.png',
-      },
-    });
-
-    expect(context.isHandled).toBe(true);
   });
 
   it('should call warning and not to send if dont have session', async () => {
@@ -284,14 +263,6 @@ describe('#sendImage', () => {
     });
   });
 
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    await context.sendImage('hello');
-
-    expect(context.isHandled).toBe(true);
-  });
-
   it('should call warning and not to send if dont have session', async () => {
     const { context, client } = setup({ session: false });
 
@@ -350,14 +321,6 @@ describe('#sendAudio', () => {
     expect(client.sendAudio).toBeCalledWith(session.user.id, 'hello', {
       messagingType: 'RESPONSE',
     });
-  });
-
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    await context.sendAudio('hello');
-
-    expect(context.isHandled).toBe(true);
   });
 
   it('should call warning and not to send if dont have session', async () => {
@@ -420,14 +383,6 @@ describe('#sendVideo', () => {
     });
   });
 
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    await context.sendVideo('hello');
-
-    expect(context.isHandled).toBe(true);
-  });
-
   it('should call warning and not to send if dont have session', async () => {
     const { context, client } = setup({ session: false });
 
@@ -486,14 +441,6 @@ describe('#sendFile', () => {
     expect(client.sendFile).toBeCalledWith(session.user.id, 'hello', {
       messagingType: 'RESPONSE',
     });
-  });
-
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    await context.sendFile('hello');
-
-    expect(context.isHandled).toBe(true);
   });
 
   it('should call warning and not to send if dont have session', async () => {
@@ -555,7 +502,7 @@ describe('#sendSenderAction', () => {
       session.user.id,
       'typing_on',
       {
-        accessYoken: undefined,
+        accessToken: undefined,
       }
     );
   });
@@ -575,14 +522,6 @@ describe('#sendSenderAction', () => {
         accessToken: 'anyToken',
       }
     );
-  });
-
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    await context.sendSenderAction('typing_on');
-
-    expect(context.isHandled).toBe(true);
   });
 
   it('should call warning and not to send if dont have session', async () => {
@@ -605,7 +544,7 @@ describe('#typingOn', () => {
     await context.typingOn();
 
     expect(client.typingOn).toBeCalledWith(session.user.id, {
-      accessYoken: undefined,
+      accessToken: undefined,
     });
   });
 
@@ -620,14 +559,6 @@ describe('#typingOn', () => {
     expect(client.typingOn).toBeCalledWith(session.user.id, {
       accessToken: 'anyToken',
     });
-  });
-
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    await context.typingOn();
-
-    expect(context.isHandled).toBe(true);
   });
 
   it('should call warning and not to send if dont have session', async () => {
@@ -650,7 +581,7 @@ describe('#typingOff', () => {
     await context.typingOff();
 
     expect(client.typingOff).toBeCalledWith(session.user.id, {
-      accessYoken: undefined,
+      accessToken: undefined,
     });
   });
 
@@ -665,14 +596,6 @@ describe('#typingOff', () => {
     expect(client.typingOff).toBeCalledWith(session.user.id, {
       accessToken: 'anyToken',
     });
-  });
-
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    await context.typingOff();
-
-    expect(context.isHandled).toBe(true);
   });
 
   it('should call warning and not to send if dont have session', async () => {
@@ -695,7 +618,7 @@ describe('#markSeen', () => {
     await context.markSeen();
 
     expect(client.markSeen).toBeCalledWith(session.user.id, {
-      accessYoken: undefined,
+      accessToken: undefined,
     });
   });
 
@@ -710,14 +633,6 @@ describe('#markSeen', () => {
     expect(client.markSeen).toBeCalledWith(session.user.id, {
       accessToken: 'anyToken',
     });
-  });
-
-  it('should mark context as handled', async () => {
-    const { context } = setup();
-
-    await context.markSeen();
-
-    expect(context.isHandled).toBe(true);
   });
 
   it('should call warning and not to send if dont have session', async () => {

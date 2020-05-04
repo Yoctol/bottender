@@ -8,49 +8,16 @@ import { pascalcase } from 'messaging-api-common';
 
 import Bot from '../bot/Bot';
 import getBottenderConfig from '../shared/getBottenderConfig';
-import {
-  Action,
-  BottenderConfig,
-  Plugin,
-  SessionConfig,
-  SessionDriver,
-} from '../types';
+import getSessionStore from '../getSessionStore';
+import { Action, BottenderConfig, Plugin } from '../types';
 
 export type ServerOptions = {
   useConsole?: boolean;
   dev?: boolean;
 };
 
-function createSessionStore(
-  sessionConfig: SessionConfig = { driver: SessionDriver.Memory, stores: {} }
-) {
-  const sessionDriver = (sessionConfig && sessionConfig.driver) || 'memory';
-  let SessionStore;
-  switch (sessionDriver) {
-    case 'file':
-      SessionStore = require('../session/FileSessionStore').default;
-      break;
-    case 'mongo':
-      SessionStore = require('../session/MongoSessionStore').default;
-      break;
-    case 'redis':
-      SessionStore = require('../session/RedisSessionStore').default;
-      break;
-    default:
-      SessionStore = require('../session/MemorySessionStore').default;
-  }
-
-  const sessionDriverConfig =
-    ((sessionConfig && sessionConfig.stores) || {})[sessionDriver] || {};
-
-  return new SessionStore(
-    sessionDriverConfig,
-    sessionConfig && sessionConfig.expiresIn
-  );
-}
-
 class Server {
-  _channelBots: { webhookPath: string; bot: Bot<any, any, any> }[] = [];
+  _channelBots: { webhookPath: string; bot: Bot<any, any, any, any> }[] = [];
 
   useConsole: boolean;
 
@@ -73,11 +40,11 @@ class Server {
   public async prepare(): Promise<void> {
     const bottenderConfig = getBottenderConfig();
 
-    const { initialState, plugins, session, channels } = merge(
+    const { initialState, plugins, channels } = merge(
       bottenderConfig /* , config */
     ) as BottenderConfig;
 
-    const sessionStore = createSessionStore(session);
+    const sessionStore = getSessionStore();
 
     // TODO: refine handler entry, improve error message and hint
     // eslint-disable-next-line import/no-dynamic-require, @typescript-eslint/no-var-requires
@@ -88,13 +55,13 @@ class Server {
       ErrorEntry = require(path.resolve('_error.js'));
     } catch (err) {} // eslint-disable-line no-empty
 
-    function initializeBot(bot: Bot<any, any, any>): void {
+    function initializeBot(bot: Bot<any, any, any, any>): void {
       if (initialState) {
         bot.setInitialState(initialState);
       }
 
       if (plugins) {
-        plugins.forEach((plugin: Plugin<any, any>) => {
+        plugins.forEach((plugin: Plugin<any>) => {
           bot.use(plugin);
         });
       }
@@ -129,7 +96,7 @@ class Server {
         const channelBot = new ChannelBot({
           ...channelConfig,
           sessionStore,
-        }) as Bot<any, any, any>;
+        }) as Bot<any, any, any, any>;
 
         initializeBot(channelBot);
 
@@ -155,7 +122,7 @@ class Server {
     }
 
     const { pathname, searchParams } = new url.URL(
-      `http://${req.headers.host}${req.url}`
+      `https://${req.headers.host}${req.url}`
     );
 
     const query = fromEntries(searchParams.entries());
@@ -166,6 +133,7 @@ class Server {
       if (pathname === webhookPath) {
         const result = (bot.connector as any).preprocess({
           method: req.method,
+          url: `https://${req.headers.host}${req.url}`,
           headers: req.headers,
           query,
           rawBody: (req as any).rawBody,
@@ -181,7 +149,16 @@ class Server {
               res.setHeader(key, value as string);
             });
             res.statusCode = response.status || 200;
-            res.end(response.body || '');
+            if (
+              response.body &&
+              typeof response.body === 'object' &&
+              !Buffer.isBuffer(response.body)
+            ) {
+              res.setHeader('Content-Type', 'application/json; charset=utf-8');
+              res.end(JSON.stringify(response.body));
+            } else {
+              res.end(response.body || '');
+            }
           } else {
             res.statusCode = 200;
             res.end('');
@@ -210,7 +187,12 @@ class Server {
             res.setHeader(key, value as string);
           });
           res.statusCode = response.status || 200;
-          res.end(response.body || '');
+          if (response.body && typeof response.body === 'object') {
+            res.setHeader('Content-Type', 'application/json');
+            res.end(JSON.stringify(response.body));
+          } else {
+            res.end(response.body || '');
+          }
         } else {
           res.statusCode = 200;
           res.end('');

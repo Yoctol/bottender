@@ -4,12 +4,14 @@ import Bot from '../bot/Bot';
 import SessionStore from '../session/SessionStore';
 
 import MessengerConnector, { MessengerRequestBody } from './MessengerConnector';
+import MessengerContext from './MessengerContext';
 import MessengerEvent from './MessengerEvent';
 
 export default class MessengerBot extends Bot<
   MessengerRequestBody,
   MessengerClient,
-  MessengerEvent
+  MessengerEvent,
+  MessengerContext
 > {
   constructor({
     accessToken,
@@ -27,7 +29,7 @@ export default class MessengerBot extends Bot<
     accessToken: string;
     appId: string;
     appSecret: string;
-    sessionStore: SessionStore;
+    sessionStore?: SessionStore;
     sync?: boolean;
     mapPageToAccessToken?: (pageId: string) => Promise<string>;
     verifyToken?: string;

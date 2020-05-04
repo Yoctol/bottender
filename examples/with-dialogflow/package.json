@@ -4,7 +4,8 @@
     "start": "bottender start"
   },
   "dependencies": {
-    "bottender": "next",
+    "@bottender/dialogflow": "latest",
+    "bottender": "latest",
     "dialogflow": "^0.14.1"
   }
 }

@@ -1,4 +1,4 @@
-import EventEmitter from 'events';
+import { EventEmitter } from 'events';
 
 import debug from 'debug';
 import invariant from 'invariant';
@@ -12,6 +12,7 @@ import Session from '../session/Session';
 import SessionStore from '../session/SessionStore';
 import {
   Action,
+  AnyContext,
   Body,
   Client,
   Event,
@@ -22,8 +23,8 @@ import {
 
 import { Connector } from './Connector';
 
-type Builder<C extends Client, E extends Event> = {
-  build: () => Action<C, E>;
+type Builder<C extends AnyContext> = {
+  build: () => Action<C, any>;
 };
 
 const debugRequest = debug('bottender:request');
@@ -39,26 +40,28 @@ function createMemorySessionStore(): SessionStore {
   return new CacheBasedSessionStore(cache, MINUTES_IN_ONE_YEAR);
 }
 
-export function run<C extends Client, E extends Event>(
-  action: Action<C, E>
-): Action<C, E> {
-  return async function Run(
-    context: Context<C, E>,
-    props: Props<C, E> = {}
-  ): Promise<void> {
-    let nextDialog: Action<C, E> | void = action;
+export function run<C extends AnyContext>(
+  action: Action<C, any>
+): Action<C, any> {
+  return async function Run(context: C, props: Props<C> = {}): Promise<void> {
+    let nextDialog: Action<C, any> | void = action;
+
+    /* eslint-disable no-await-in-loop */
+    invariant(
+      typeof nextDialog === 'function',
+      'Invalid entry action. You may have forgotten to export your entry action in your `index.js` or `src/index.js`.'
+    );
 
     // TODO: refactor this with withProps or whatever
     debugAction(`Current Action: ${nextDialog.name || 'Anonymous'}`);
-    // eslint-disable-next-line no-await-in-loop
     nextDialog = await nextDialog(context, props);
 
     while (typeof nextDialog === 'function') {
       // TODO: improve this debug helper
       debugAction(`Current Action: ${nextDialog.name || 'Anonymous'}`);
-      // eslint-disable-next-line no-await-in-loop
       nextDialog = await nextDialog(context, {});
     }
+    /* eslint-enable no-await-in-loop */
 
     return nextDialog;
   };
@@ -69,16 +72,21 @@ type RequestHandler<B> = (
   requestContext?: RequestContext
 ) => void | Promise<void>;
 
-export default class Bot<B extends Body, C extends Client, E extends Event> {
+export default class Bot<
+  B extends Body,
+  C extends Client,
+  E extends Event,
+  Ctx extends Context<C, E>
+> {
   _sessions: SessionStore;
 
   _initialized: boolean;
 
   _connector: Connector<B, C>;
 
-  _handler: Action<C, E> | null;
+  _handler: Action<Ctx, any> | null;
 
-  _errorHandler: Action<C, E> | null;
+  _errorHandler: Action<Ctx, any> | null;
 
   _initialState: Record<string, any> = {};
 
@@ -114,7 +122,7 @@ export default class Bot<B extends Body, C extends Client, E extends Event> {
     return this._sessions;
   }
 
-  get handler(): Action<C, E> | null {
+  get handler(): Action<Ctx, E> | null {
     return this._handler;
   }
 
@@ -122,7 +130,7 @@ export default class Bot<B extends Body, C extends Client, E extends Event> {
     return this._emitter;
   }
 
-  onEvent(handler: Action<C, E> | Builder<C, E>): Bot<B, C, E> {
+  onEvent(handler: Action<Ctx, any> | Builder<Ctx>): Bot<B, C, E, Ctx> {
     invariant(
       handler,
       'onEvent: Can not pass `undefined`, `null` or any falsy value as handler'
@@ -131,7 +139,7 @@ export default class Bot<B extends Body, C extends Client, E extends Event> {
     return this;
   }
 
-  onError(handler: Action<C, E> | Builder<C, E>): Bot<B, C, E> {
+  onError(handler: Action<Ctx, any> | Builder<Ctx>): Bot<B, C, E, Ctx> {
     invariant(
       handler,
       'onError: Can not pass `undefined`, `null` or any falsy value as error handler'
@@ -140,12 +148,12 @@ export default class Bot<B extends Body, C extends Client, E extends Event> {
     return this;
   }
 
-  setInitialState(initialState: Record<string, any>): Bot<B, C, E> {
+  setInitialState(initialState: Record<string, any>): Bot<B, C, E, Ctx> {
     this._initialState = initialState;
     return this;
   }
 
-  use(plugin: Plugin<C, E>): Bot<B, C, E> {
+  use(plugin: Plugin<Ctx>): Bot<B, C, E, Ctx> {
     this._plugins.push(plugin);
     return this;
   }
@@ -183,79 +191,87 @@ export default class Bot<B extends Body, C extends Client, E extends Event> {
 
       const body = camelcaseKeysDeep(inputBody) as B;
 
-      const { platform } = this._connector;
-      const sessionKey = this._connector.getUniqueSessionKey(
-        body,
-        requestContext
-      );
-
-      // Create or retrieve session if possible
-      let sessionId: string | undefined;
-      let session: Session | undefined;
-      if (sessionKey) {
-        sessionId = `${platform}:${sessionKey}`;
-
-        session =
-          (await this._sessions.read(sessionId)) ||
-          (Object.create(null) as Session);
-
-        debugSessionRead(`Read session: ${sessionId}`);
-        debugSessionRead(JSON.stringify(session, null, 2));
-
-        Object.defineProperty(session, 'id', {
-          configurable: false,
-          enumerable: true,
-          writable: false,
-          value: session.id || sessionId,
-        });
-
-        if (!session.platform) session.platform = platform;
-
-        Object.defineProperty(session, 'platform', {
-          configurable: false,
-          enumerable: true,
-          writable: false,
-          value: session.platform,
-        });
-
-        await this._connector.updateSession(session, body);
-      }
-
       const events = this._connector.mapRequestToEvents(body);
 
       const contexts = await pMap(
         events,
-        event =>
-          this._connector.createContext({
+        async event => {
+          const { platform } = this._connector;
+          const sessionKey = this._connector.getUniqueSessionKey(
+            // TODO: may deprecating passing request body in v2
+            events.length === 1 ? body : event,
+            requestContext
+          );
+
+          // Create or retrieve session if possible
+          let sessionId: string | undefined;
+          let session: Session | undefined;
+          if (sessionKey) {
+            sessionId = `${platform}:${sessionKey}`;
+
+            session =
+              (await this._sessions.read(sessionId)) ||
+              (Object.create(null) as Session);
+
+            debugSessionRead(`Read session: ${sessionId}`);
+            debugSessionRead(JSON.stringify(session, null, 2));
+
+            Object.defineProperty(session, 'id', {
+              configurable: false,
+              enumerable: true,
+              writable: false,
+              value: session.id || sessionId,
+            });
+
+            if (!session.platform) session.platform = platform;
+
+            Object.defineProperty(session, 'platform', {
+              configurable: false,
+              enumerable: true,
+              writable: false,
+              value: session.platform,
+            });
+
+            await this._connector.updateSession(
+              session,
+              // TODO: may deprecating passing request body in v2
+              events.length === 1 ? body : event
+            );
+          }
+
+          return this._connector.createContext({
             event,
             session,
             initialState: this._initialState,
             requestContext,
             emitter: this._emitter,
-          }),
+          });
+        },
         {
           concurrency: 5,
         }
       );
 
       // Call all of extension functions before passing to handler.
-      contexts.forEach(context => {
-        this._plugins.forEach(ext => {
-          ext(context);
-        });
-      });
+      await Promise.all(
+        contexts.map(async context =>
+          Promise.all(this._plugins.map(ext => ext(context)))
+        )
+      );
 
       if (this._handler == null) {
         throw new Error(
           'Bot: Missing event handler function. You should assign it using onEvent(...)'
         );
       }
-      const handler: Action<C, E> = this._handler;
-      const errorHandler: Action<C, E> | null = this._errorHandler;
+      const handler: Action<Ctx, any> = this._handler;
+      const errorHandler: Action<Ctx, any> | null = this._errorHandler;
+
+      // TODO: only run concurrently for different session id
       const promises = Promise.all(
-        contexts.map(context =>
+        contexts.map((context: Ctx) =>
           Promise.resolve()
-            .then(() => run(handler)(context))
+            .then(() => run(handler)(context, {}))
             .then(() => {
               if (context.handlerDidEnd) {
                 return context.handlerDidEnd();
@@ -277,17 +293,24 @@ export default class Bot<B extends Body, C extends Client, E extends Event> {
       if (this._sync) {
         try {
           await promises;
-          if (sessionId && session) {
-            session.lastActivity = Date.now();
-            contexts.forEach(context => {
+
+          await Promise.all(
+            contexts.map(async context => {
               context.isSessionWritten = true;
-            });
 
-            debugSessionWrite(`Write session: ${sessionId}`);
-            debugSessionWrite(JSON.stringify(session, null, 2));
+              const { session } = context;
 
-            await this._sessions.write(sessionId, session);
-          }
+              if (session) {
+                session.lastActivity = Date.now();
+
+                debugSessionWrite(`Write session: ${session.id}`);
+                debugSessionWrite(JSON.stringify(session, null, 2));
+
+                // eslint-disable-next-line no-await-in-loop
+                await this._sessions.write(session.id, session);
+              }
+            })
+          );
         } catch (err) {
           console.error(err);
         }
@@ -301,19 +324,27 @@ export default class Bot<B extends Body, C extends Client, E extends Event> {
         return response;
       }
       promises
-        .then((): Promise<any> | void => {
-          if (sessionId && session) {
-            session.lastActivity = Date.now();
-            contexts.forEach(context => {
-              context.isSessionWritten = true;
-            });
+        .then(
+          async (): Promise<any> => {
+            await Promise.all(
+              contexts.map(async context => {
+                context.isSessionWritten = true;
 
-            debugSessionWrite(`Write session: ${sessionId}`);
-            debugSessionWrite(JSON.stringify(session, null, 2));
+                const { session } = context;
 
-            return this._sessions.write(sessionId, session);
+                if (session) {
+                  session.lastActivity = Date.now();
+
+                  debugSessionWrite(`Write session: ${session.id}`);
+                  debugSessionWrite(JSON.stringify(session, null, 2));
+
+                  // eslint-disable-next-line no-await-in-loop
+                  await this._sessions.write(session.id, session);
+                }
+              })
+            );
           }
-        })
+        )
         .catch(console.error);
     };
   }

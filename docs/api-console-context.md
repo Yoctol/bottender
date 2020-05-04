@@ -3,7 +3,7 @@ id: api-console-context
 title: ConsoleContext
 ---
 
-Extends from [Context](api-context).
+Extends from [Context](api-context.md).
 
 #### `platform`
 

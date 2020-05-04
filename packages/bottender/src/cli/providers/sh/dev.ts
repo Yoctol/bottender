@@ -1,3 +1,6 @@
+import fs from 'fs';
+import path from 'path';
+
 import ngrok from 'ngrok';
 import nodemon from 'nodemon';
 
@@ -10,6 +13,7 @@ const dev = async (ctx: CliContext): Promise<void> => {
   const argv = getSubArgs(ctx.argv, {
     '--console': Boolean,
     '--port': Number,
+    '--inspect': String,
 
     // Aliases
     '-c': '--console',
@@ -18,14 +22,30 @@ const dev = async (ctx: CliContext): Promise<void> => {
 
   const isConsole = argv['--console'] || false;
   const port = argv['--port'] || process.env.PORT || 5000;
+  const inspectionUrl = argv['--inspect'];
 
   const config = getBottenderConfig();
 
   const { channels } = config;
 
+  let isTypescript = false;
+  try {
+    isTypescript = Boolean(fs.statSync(path.resolve('tsconfig.json')).isFile);
+  } catch {
+    // fs.statSync may throw an ENOENT error when file is not found, so keep isTypescript false
+  }
+
   // watch
   nodemon(
-    `--exec "bottender start ${isConsole ? '--console' : ''} --port ${port}"`
+    [
+      inspectionUrl ? `--inspect=${inspectionUrl} -- ` : '',
+      isTypescript ? '--ext js,mjs,json,ts --ignore dist/ ' : '',
+      '--exec "',
+      isTypescript ? 'tsc && ' : '',
+      'bottender start',
+      isConsole ? ' --console' : '',
+      ` --port ${port}"`,
+    ].join('')
   )
     // TODO: improve messages
     .on('start', () => {
@@ -47,7 +67,7 @@ const dev = async (ctx: CliContext): Promise<void> => {
       .forEach(([channel, { path: webhookPath }]) => {
         const routePath = webhookPath || `/webhooks/${channel}`;
 
-        console.log(`${channel} webhook url: ${url}${routePath}`);
+        console.log(`${channel} webhook URL: ${url}${routePath}`);
       });
   }
 };
