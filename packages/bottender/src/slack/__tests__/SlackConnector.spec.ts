@@ -453,7 +453,7 @@ describe('#mapRequestToEvents', () => {
     expect(events).toHaveLength(1);
     expect(events[0]).toBeInstanceOf(SlackEvent);
     expect(events[0].callbackId).toBe('wopr_game');
-  })
+  });
 });
 
 describe('#createContext', () => {
