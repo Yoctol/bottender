@@ -1,12 +1,12 @@
-# Telegram Reply Keyboard
+# Telegram Inline Keyboard
 
 ## Install and Run
 
 Download this example or clone [bottender](https://github.com/Yoctol/bottender).
 
 ```sh
-curl https://codeload.github.com/Yoctol/bottender/tar.gz/master | tar -xz --strip=2 bottender-master/examples/telegram-reply-keyboard
-cd telegram-reply-keyboard
+curl https://codeload.github.com/Yoctol/bottender/tar.gz/master | tar -xz --strip=2 bottender-master/examples/telegram-inline-keyboard
+cd telegram-inline-keyboard
 ```
 
 Install dependencies:
@@ -41,12 +41,12 @@ npx bottender telegram webhook set
 
 ## Idea of This Example
 
-This example is a bot about reply keyboard running on [Telegram](https://telegram.org/).
+This example is a bot about inline keyboard running on [Telegram](https://telegram.org/).
 
 This example contains the following topics:
 
-- show the custom keyboard to the user
-- remove the custom keyboard
+- show the inline keyboard to the user
+- build a multiple layer inline keyboard
 
-For more information, check [Telegram Bots#Keyboards](https://core.telegram.org/bots#keyboards)
+For more information, check [Telegram Bots#Inline Keyboards](https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating)
 
