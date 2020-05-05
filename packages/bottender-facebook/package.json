@@ -14,13 +14,14 @@
   "types": "dist/index.d.ts",
   "dependencies": {
     "axios-error": "^0.8.1",
+    "lodash": "^4.17.15",
     "warning": "^4.0.3"
   },
   "peerDependencies": {
-    "bottender": ">= 1",
-    "messaging-api-messenger": ">= 1.0.0-beta.10"
+    "bottender": ">= 1.4",
+    "messaging-api-messenger": ">= 1.0.0-beta.18"
   },
   "devDependencies": {
-    "messaging-api-messenger": "^1.0.0-beta.10"
+    "messaging-api-messenger": "^1.0.0-beta.18"
   }
 }

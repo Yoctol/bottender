@@ -23,27 +23,12 @@ function sendPrivateReply(
 
 function sendComment(
   objectId: string,
-  comment:
-    | string
-    | {
-        attachmentId?: string;
-        attachmentShareUrl?: string;
-        attachmentUrl?: string;
-        message?: string;
-      },
+  comment: string | Types.InputComment,
   options?: {
     accessToken?: string;
   }
 ) {
-  let body;
-
-  if (typeof comment === 'string') {
-    body = {
-      message: comment,
-    };
-  } else {
-    body = comment;
-  }
+  const body = typeof comment === 'string' ? { message: comment } : comment;
 
   return {
     method: 'POST',

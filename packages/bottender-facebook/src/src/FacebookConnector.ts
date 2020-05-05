@@ -1,3 +1,5 @@
+import { EventEmitter } from 'events';
+
 import warning from 'warning';
 import { MessengerConnector } from 'bottender';
 
@@ -81,7 +83,13 @@ export default class FacebookConnector extends MessengerConnector {
     );
   }
 
-  async createContext(params: Record<string, any>): FacebookContext {
+  async createContext(params: {
+    event: FacebookEvent;
+    session?: Session;
+    initialState?: Record<string, any>;
+    requestContext?: RequestContext;
+    emitter?: EventEmitter;
+  }): Promise<FacebookContext> {
     let customAccessToken;
 
     if (this._mapPageToAccessToken) {

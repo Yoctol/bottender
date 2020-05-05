@@ -1,11 +1,10 @@
 import warning from 'warning';
 import { MessengerContext } from 'bottender';
-
 import { Options } from 'bottender/dist/messenger/MessengerContext';
 
 import FacebookBatch from './FacebookBatch';
-
-import  FacebookEvent, { Comment } from './FacebookEvent';
+import FacebookEvent, { Comment } from './FacebookEvent';
+import { InputComment } from './FacebookTypes';
 
 export default class FacebookContext extends MessengerContext {
   _event: FacebookEvent;
@@ -37,9 +36,9 @@ export default class FacebookContext extends MessengerContext {
 
   _callFacebookClientMethod(method: string, args: any[]) {
     if (this._batchQueue) {
-      return this._batchQueue.push((FacebookBatch as any)[method] (...args));
+      return this._batchQueue.push((FacebookBatch as any)[method](...args));
     }
-    return (this._client as any)[method] (...args);
+    return (this._client as any)[method](...args);
   }
 
   // https://developers.facebook.com/docs/graph-api/reference/v3.1/object/private_replies
@@ -55,7 +54,7 @@ export default class FacebookContext extends MessengerContext {
       objectId,
       message,
       {
-        access_token: this._customAccessToken,
+        accessToken: this._customAccessToken,
       },
     ];
 
@@ -64,15 +63,8 @@ export default class FacebookContext extends MessengerContext {
 
   // https://developers.facebook.com/docs/graph-api/reference/v3.1/object/comments/
   async sendComment(
-    message:
-      | string
-      | {
-          attachment_id?: string;
-          attachment_share_url?: string;
-          attachment_url?: string;
-          message?: string;
-        }
-  ): Promise<{ id: string }> {
+    comment: string | InputComment
+  ): Promise<{ id: string } | undefined> {
     const objectId = this._event.isFirstLayerComment
       ? (this._event.rawEvent.value as Comment).commentId
       : (this._event.rawEvent.value as Comment).parentId; // FIXME: postId
@@ -84,9 +76,9 @@ export default class FacebookContext extends MessengerContext {
 
     const args = [
       objectId,
-      message,
+      comment,
       {
-        access_token: this._customAccessToken,
+        accessToken: this._customAccessToken,
       },
     ];
 
@@ -100,7 +92,7 @@ export default class FacebookContext extends MessengerContext {
     const args = [
       objectId,
       {
-        access_token: this._customAccessToken,
+        accessToken: this._customAccessToken,
       },
     ];
 
@@ -119,7 +111,7 @@ export default class FacebookContext extends MessengerContext {
     const args = [
       commentId,
       {
-        access_token: this._customAccessToken,
+        accessToken: this._customAccessToken,
         ...options,
       },
     ];
@@ -134,7 +126,7 @@ export default class FacebookContext extends MessengerContext {
     const args = [
       objectId,
       {
-        access_token: this._customAccessToken,
+        accessToken: this._customAccessToken,
         ...options,
       },
     ];

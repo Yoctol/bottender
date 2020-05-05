@@ -7396,7 +7396,7 @@ messaging-api-line@^1.0.0-beta.20:
     messaging-api-common "^1.0.0-beta.16"
     warning "^4.0.3"
 
-messaging-api-messenger@^1.0.0-beta.10, messaging-api-messenger@^1.0.0-beta.18:
+messaging-api-messenger@^1.0.0-beta.18:
   version "1.0.0-beta.18"
   resolved "https://registry.yarnpkg.com/messaging-api-messenger/-/messaging-api-messenger-1.0.0-beta.18.tgz#50ef461dc3743712d7bb459bf5c0d6e1893b342e"
   integrity sha512-2epVMxyGReG/mmKn0ugYEEZr6sHrdtz7Np4yRs855zqTOqzNzLYvfDwpEUwNbbGe0serDsyt8s4s2tbr5FJPbg==
