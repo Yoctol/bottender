@@ -5,6 +5,7 @@ import invariant from 'invariant';
 import pProps from 'p-props';
 import warning from 'warning';
 import { SlackOAuthClient } from 'messaging-api-slack';
+import { camelcaseKeysDeep } from 'messaging-api-common';
 
 import Session from '../session/Session';
 import { Connector } from '../bot/Connector';
@@ -122,7 +123,8 @@ export default class SlackConnector
     }
 
     if (body.payload && typeof body.payload === 'string') {
-      const payload = JSON.parse(body.payload);
+      const payload = camelcaseKeysDeep(JSON.parse(body.payload));
+
       if (payload.type === 'interactive_message') {
         return payload as InteractiveMessageEvent;
       }
