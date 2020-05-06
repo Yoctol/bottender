@@ -7,7 +7,7 @@
     "type": "git",
     "url": "https://github.com/Yoctol/bottender.git"
   },
-  "version": "1.4.3",
+  "version": "1.4.4",
   "main": "dist/index.js",
   "files": [
     "dist"
@@ -22,7 +22,7 @@
     "bottender": ">= 1.2.0-0"
   },
   "devDependencies": {
-    "bottender": "^1.4.3"
+    "bottender": "^1.4.4"
   },
   "keywords": [
     "bot",
