@@ -1,3 +1,9 @@
+# 1.4.4 / 2020-05-06
+
+## slack
+
+- [fix] convert slack interactive message event to camelcase (#755).
+
 # 1.4.3 / 2020-04-29
 
 - [type] use string instead enum to compare.
