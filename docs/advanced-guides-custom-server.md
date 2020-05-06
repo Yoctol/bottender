@@ -9,16 +9,10 @@ title: Running Bottender with Custom Servers
 
 Thus, You can find those lines in your generated `package.json`:
 
-```json
-{
-  ...
+```
   "scripts": {
     "dev": "bottender dev",
     "start": "bottender start",
-    ...
-  },
-  ...
-}
 ```
 
 When executing one of `bottender dev` or `bottender start` command, under the hood, it sets up a default express server for Bottender and load `index.js` from the project root directory as the root action of the chatbot.
@@ -27,7 +21,7 @@ To run Bottender with the custom HTTP server, you need to prepare an HTTP server
 
 ## Express
 
-### Creating A New Project with Custom Express Server
+### Creating a New Project with Custom Express Server
 
 If you want to have a clean project with the custom express, you could start from [this example](https://github.com/Yoctol/bottender/tree/master/examples/custom-server-express) to develop your project. There are four steps you could follow to create your project:
 
@@ -38,7 +32,7 @@ If you want to have a clean project with the custom express, you could start fro
 
 If you want to have the folder structure we recommend, you could start with [create-bottender-app](getting-started.md#create-a-new-bottender-app) command and migrate it to the custom express server by following the migration instructions below.
 
-### Migrating An Existing Project to Custom Express Server
+### Migrating an Existing Project to Custom Express Server
 
 Suppose that you already have a project built from [create-bottender-app](getting-started.md#create-a-new-bottender-app), and you want to develop some additional APIs using express server. In this case, you need to write a custom express server and delegate all chatbot's webhook requests to the Bottender app.
 
@@ -64,13 +58,11 @@ const handle = app.getRequestHandler();
 app.prepare().then(() => {
   const server = express();
 
-  server.use(
-    bodyParser.json({
-      verify: (req, _, buf) => {
-        req.rawBody = buf.toString();
-      },
-    })
-  );
+  const verify = (req, _, buf) => {
+    req.rawBody = buf.toString();
+  };
+  server.use(bodyParser.json({ verify }));
+  server.use(bodyParser.urlencoded({ extended: false, verify }));
 
   // your custom route
   server.get('/api', (req, res) => {
@@ -89,25 +81,19 @@ app.prepare().then(() => {
 });
 ```
 
-3. Modify scripts in the `package.json` to `nodemon server.js` and `node server.js` instead:
+3. Modify `scripts` in the `package.json` to `nodemon server.js` and `node server.js` instead:
 
-```json
-{
-  ...
+```
   "scripts": {
     "dev": "nodemon server.js",
     "start": "node server.js",
-    ...
-  },
-  ...
-}
 ```
 
 That's all you need to do, and you can have you bot hosting on the custom express server!
 
 ## Koa
 
-### Creating A New Project with Custom Koa Server
+### Creating a New Project with Custom Koa Server
 
 If you want to have a clean project with the custom koa, you could start from [this example](https://github.com/Yoctol/bottender/tree/master/examples/custom-server-koa) to develop your project. There are four steps you could follow to create your project:
 
@@ -118,7 +104,7 @@ If you want to have a clean project with the custom koa, you could start from [t
 
 If you want to have the folder structure we recommend, you could start with [create-bottender-app](getting-started.md#create-a-new-bottender-app) command and migrate it to the custom koa server by following the migration instructions below.
 
-### Migrating An Existing Project to Custom Koa Server
+### Migrating an Existing Project to Custom Koa Server
 
 Suppose that you already have a project built from [create-bottender-app](getting-started.md#create-a-new-bottender-app), and you want to develop some additional APIs using koa server. In this case, you need to write a custom koa server and delegate all chatbot's webhook requests to the Bottender app.
 
@@ -143,6 +129,14 @@ const handle = app.getRequestHandler();
 
 app.prepare().then(() => {
   const server = new Koa();
+
+  server.use(bodyParser());
+  server.use((ctx, next) => {
+    ctx.req.body = ctx.request.body;
+    ctx.req.rawBody = ctx.request.rawBody;
+    return next();
+  });
+
   const router = new Router();
 
   router.get('/api', ctx => {
@@ -154,12 +148,6 @@ app.prepare().then(() => {
     ctx.respond = false;
   });
 
-  server.use(bodyParser());
-  server.use((ctx, next) => {
-    ctx.req.body = ctx.request.body;
-    ctx.req.rawBody = ctx.request.rawBody;
-    return next();
-  });
   server.use(router.routes());
 
   server.listen(port, err => {
@@ -169,25 +157,19 @@ app.prepare().then(() => {
 });
 ```
 
-3. Modify scripts in the `package.json` to `nodemon server.js` and `node server.js` instead:
+3. Modify `scripts` in the `package.json` to `nodemon server.js` and `node server.js` instead:
 
-```json
-{
-  ...
+```
   "scripts": {
     "dev": "nodemon server.js",
     "start": "node server.js",
-    ...
-  },
-  ...
-}
 ```
 
 That's all you need to do, and you can have you bot hosting on the custom koa server!
 
 ## Restify
 
-### Creating A New Project with Custom Restify Server
+### Creating a New Project with Custom Restify Server
 
 If you want to have a clean project with the custom restify, you could start from [this example](https://github.com/Yoctol/bottender/tree/master/examples/custom-server-restify) to develop your project. There are four steps you could follow to create your project:
 
@@ -198,7 +180,7 @@ If you want to have a clean project with the custom restify, you could start fro
 
 If you want to have the folder structure we recommend, you could start with [create-bottender-app](getting-started.md#create-a-new-bottender-app) command and migrate it to the custom restify server by following the migration instructions below.
 
-### Migrating An Existing Project to Custom Restify Server
+### Migrating an Existing Project to Custom Restify Server
 
 Suppose that you already have a project built from [create-bottender-app](getting-started.md#create-a-new-bottender-app), and you want to develop some additional APIs using restify server. In this case, you need to write a custom restify server and delegate all chatbot's webhook requests to the Bottender app.
 
@@ -243,18 +225,12 @@ app.prepare().then(() => {
 });
 ```
 
-3. Modify scripts in the `package.json` to `nodemon server.js` and `node server.js` instead:
+3. Modify `scripts` in the `package.json` to `nodemon server.js` and `node server.js` instead:
 
-```json
-{
-  ...
+```
   "scripts": {
     "dev": "nodemon server.js",
     "start": "node server.js",
-    ...
-  },
-  ...
-}
 ```
 
 That's all you need to do, and you can have you bot hosting on the custom restify server!
