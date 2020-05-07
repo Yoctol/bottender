@@ -13,13 +13,11 @@ const handle = app.getRequestHandler();
 app.prepare().then(() => {
   const server = express();
 
-  server.use(
-    bodyParser.json({
-      verify: (req, _, buf) => {
-        req.rawBody = buf.toString();
-      },
-    })
-  );
+  const verify = (req, _, buf) => {
+    req.rawBody = buf.toString();
+  };
+  server.use(bodyParser.json({ verify }));
+  server.use(bodyParser.urlencoded({ extended: false, verify }));
 
   server.get('/api', (req, res) => {
     res.json({ ok: true });
