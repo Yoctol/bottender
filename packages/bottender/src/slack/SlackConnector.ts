@@ -142,7 +142,7 @@ export default class SlackConnector
     );
   }
 
-  get platform(): string {
+  get platform(): 'slack' {
     return 'slack';
   }
 

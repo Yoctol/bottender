@@ -59,7 +59,7 @@ export default class TelegramConnector
     return body;
   }
 
-  get platform(): string {
+  get platform(): 'telegram' {
     return 'telegram';
   }
 

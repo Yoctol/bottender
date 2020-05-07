@@ -115,7 +115,7 @@ export default class LineConnector
     );
   }
 
-  get platform(): string {
+  get platform(): 'line' {
     return 'line';
   }
 

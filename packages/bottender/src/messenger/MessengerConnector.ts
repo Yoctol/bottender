@@ -230,7 +230,7 @@ export default class MessengerConnector
     }
   }
 
-  get platform(): string {
+  get platform(): 'messenger' {
     return 'messenger';
   }
 
