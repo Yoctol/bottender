@@ -81,7 +81,7 @@
 <li>Fill the <code>.env</code> file with the correct values.</li>
 <li>Run <code>yarn dev</code> or <code>npm run dev</code> to start the dev server.</li>
 </ol>
-<p>If you want to have the folder structure we recommend, you could start with <a href="getting-started#create-a-new-bottender-app">create-bottender-app</a> command and migrate it by following the migration instructions below.</p>
+<p>If you want to have the folder structure we recommend, you could start with <a href="/docs/en/getting-started#create-a-new-bottender-app">create-bottender-app</a> command and migrate it by following the migration instructions below.</p>
 <h3><a class="anchor" aria-hidden="true" id="creating-a-line-notify-service"></a><a href="#creating-a-line-notify-service" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Creating a LINE Notify Service</h3>
 <p>To create a new LINE Notify service, open this <a href="https://notify-bot.line.me/my/services/new">link</a> and submit the form after you finish it.</p>
 <p><img src="https://user-images.githubusercontent.com/3382565/74317707-da4baa80-4db6-11ea-93b0-68b5e6f2c8a9.png" alt=""></p>
@@ -119,8 +119,8 @@ ROOT_PATH={the ngrok public link}
 });
 </code></pre>
 <h3><a class="anchor" aria-hidden="true" id="guiding-users-to-the-line-notify-authorization-page"></a><a href="#guiding-users-to-the-line-notify-authorization-page" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Guiding Users to the LINE Notify Authorization Page</h3>
-<p>To serve webpages, we need to add additional routes to the server. Fortunately, <a href="advanced-guides-custom-server#the-concept">custom server</a> come to the rescue!</p>
-<p>You could use express, koa, restify, or whatever you like, but we are going to use express in this guide. Before going down, make sure that you set up correctly according to <a href="advanced-guides-custom-server#express">this guide</a>.</p>
+<p>To serve webpages, we need to add additional routes to the server. Fortunately, <a href="/docs/en/advanced-guides-custom-server#the-concept">custom server</a> come to the rescue!</p>
+<p>You could use express, koa, restify, or whatever you like, but we are going to use express in this guide. Before going down, make sure that you set up correctly according to <a href="/docs/en/advanced-guides-custom-server#express">this guide</a>.</p>
 <p>Modify <code>src/index.js</code> to send the authorization link to your users:</p>
 <pre><code class="hljs css language-js"><span class="hljs-keyword">const</span> lineNotify = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../lineNotify'</span>);
 

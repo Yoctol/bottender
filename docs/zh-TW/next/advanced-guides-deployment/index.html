@@ -73,14 +73,14 @@
             });
         </script></nav></div><div class="container mainContainer docsContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://crowdin.com/project/bottender/zh-TW" target="_blank" rel="noreferrer noopener">Translate</a><h1 id="__docusaurus" class="postHeaderTitle">部署</h1></header><article><div><span><p>Once you finished your bot in development, the next step is to deploy your bot to a hosting service.</p>
 <h3><a class="anchor" aria-hidden="true" id="before-going-further"></a><a href="#before-going-further" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Before Going Further</h3>
-<p>We assumed that you already built at least one basic Bottender app in development. If you haven't, you may check <a href="https://bottender.js.org/docs/getting-started">Getting Started</a> to create your first Bottender app in a few minutes, then jump to the setup doc of your favorite chat channel:</p>
+<p>We assumed that you already built at least one basic Bottender app in development. If you haven't, you may check <a href="/docs/zh-TW/next/getting-started">Getting Started</a> to create your first Bottender app in a few minutes, then jump to the setup doc of your favorite chat channel:</p>
 <ul>
-<li><a href="https://bottender.js.org/docs/channel-messenger-setup">Messenger Setup</a></li>
-<li><a href="https://bottender.js.org/docs/channel-whatsapp-setup">WhatsApp Setup</a></li>
-<li><a href="https://bottender.js.org/docs/channel-line-setup">LINE Setup</a></li>
-<li><a href="https://bottender.js.org/docs/channel-slack-setup">Slack Setup</a></li>
-<li><a href="https://bottender.js.org/docs/channel-telegram-setup">Telegram Setup</a></li>
-<li><a href="https://bottender.js.org/docs/channel-viber-setup">Viber Setup</a></li>
+<li><a href="/docs/zh-TW/next/channel-messenger-setup">Messenger Setup</a></li>
+<li><a href="/docs/zh-TW/next/channel-whatsapp-setup">WhatsApp Setup</a></li>
+<li><a href="/docs/zh-TW/next/channel-line-setup">LINE Setup</a></li>
+<li><a href="/docs/zh-TW/next/channel-slack-setup">Slack Setup</a></li>
+<li><a href="/docs/zh-TW/next/channel-telegram-setup">Telegram Setup</a></li>
+<li><a href="/docs/zh-TW/next/channel-viber-setup">Viber Setup</a></li>
 </ul>
 <h2><a class="anchor" aria-hidden="true" id="heroku"></a><a href="#heroku" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Heroku</h2>
 <p><img width="300" src="https://user-images.githubusercontent.com/662387/72130857-a8a98300-33b5-11ea-9ec6-10c8aac37230.jpg"></p>
@@ -129,7 +129,7 @@ git push heroku master
 </code></pre>
 <p>Then fill in your webhook URL on the developer console of the chat channel.</p>
 <blockquote>
-<p><strong>Note:</strong> If you are not familiar with webhook setup, you may refer to Bottender docs, <a href="https://bottender.js.org/docs/channel-messenger-setup">Messenger Setup</a>, <a href="https://bottender.js.org/docs/channel-line-setup">LINE Setup</a>, and <a href="https://bottender.js.org/docs/channel-slack-setup">Slack Setup</a>.</p>
+<p><strong>Note:</strong> If you are not familiar with webhook setup, you may refer to Bottender docs, <a href="/docs/zh-TW/next/channel-messenger-setup">Messenger Setup</a>, <a href="/docs/zh-TW/next/channel-line-setup">LINE Setup</a>, and <a href="/docs/zh-TW/next/channel-slack-setup">Slack Setup</a>.</p>
 </blockquote>
 <blockquote>
 <p><strong>Note:</strong> If you haven't changed your webhook path in <code>bottender.config.js</code>, by default, your Messenger Bot webhook is <code>https://&lt;your-heroku-app-name&gt;.herokuapp.com/webhooks/messenger</code>; your LINE Bot webhook is <code>https://&lt;your-heroku-app-name&gt;.herokuapp.com/webhooks/line</code>, etc.</p>
@@ -320,7 +320,7 @@ app.prepare().then(<span class="hljs-function"><span class="hljs-params">()</spa
 <h4><a class="anchor" aria-hidden="true" id="step-8a-set-up-webhook-by-developer-console-ui"></a><a href="#step-8a-set-up-webhook-by-developer-console-ui" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Step 8a: Set Up Webhook by Developer Console UI</h4>
 <p>Fill in your webhook URL on the developer console of the chat channel.</p>
 <blockquote>
-<p><strong>Note:</strong> If you are not familiar with webhook setup, you may refer to Bottender docs, <a href="https://bottender.js.org/docs/channel-messenger-setup">Messenger Setup</a>, <a href="https://bottender.js.org/docs/channel-line-setup">LINE Setup</a>, <a href="https://bottender.js.org/docs/channel-slack-setup">Slack Setup</a>.</p>
+<p><strong>Note:</strong> If you are not familiar with webhook setup, you may refer to Bottender docs, <a href="/docs/zh-TW/next/channel-messenger-setup">Messenger Setup</a>, <a href="/docs/zh-TW/next/channel-line-setup">LINE Setup</a>, <a href="/docs/zh-TW/next/channel-slack-setup">Slack Setup</a>.</p>
 </blockquote>
 <h4><a class="anchor" aria-hidden="true" id="step-8b-set-up-webhook-by-cli"></a><a href="#step-8b-set-up-webhook-by-cli" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Step 8b: Set Up Webhook by CLI</h4>
 <p>Make sure you have the same environment variable settings in your local <code>.env</code> file and <code>now.js</code>. Then you can use the following command to set up the webhook.</p>

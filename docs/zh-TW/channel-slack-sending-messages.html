@@ -73,13 +73,13 @@
             });
         </script></nav></div><div class="container mainContainer docsContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://crowdin.com/project/bottender/zh-TW" target="_blank" rel="noreferrer noopener">Translate</a><h1 id="__docusaurus" class="postHeaderTitle">Sending Slack Messages</h1></header><article><div><span><p>由於 Slack 是專門設計給團隊溝通用的通訊平台，因此通常期待 Slack 機器人能在頻道內或一對一聊天工作。</p>
 <p>在頻道內聊天可以有效的收集個人偏好。 例如，我們有一個 Slack 機器人收集同事下午茶訂單。</p>
-<p>另外，Slack 機器人特別擅長通知的情境，例如，監控線上伺服器的健康狀態，或  <a href="https://github.com/Yoctol/bottender">Bottender GitHub repo</a> 的目前星星數(喜歡的話幫忙按個星星！)。 因為 Slack 應用程式可以免費發送訊息到頻道、群組或用戶。</p>
+<p>另外，Slack 機器人特別擅長通知的情境，例如，監控線上伺服器的健康狀態，或  <a href="https://github.com/Yoctol/bottender">Bottender GitHub repo</a> 的目前星星數（喜歡的話幫忙按個星星！）。 因為 Slack 應用程式可以免費發送訊息到頻道、群組或用戶。</p>
 <p>當使用官方 Slack API 開發時，開發者必須管理每個對話框的 token、頻道 ID、用戶 ID。 Bottender 協助開發者透過 <code>context</code> 管理這些參數。機器人開發者可以讓機器人在當下 context 作回覆，不論這個 context 是在 <code>Public Channels</code>、<code>Private Channels</code>、<code>Private Groups</code> 還是 <code>Direct Messaging</code>。</p>
 <blockquote>
 <p><strong>注意：</strong></p>
 <ul>
 <li>一個<code>機器人</code>對應一個 Slack 的<code>應用程式</code>這個概念，當你在對照閱讀 Bottender 以及 Slack 的官方文件時是很重要的。</li>
-<li>由於 Slack 是複雜的通訊平台之一，因此在這份文件中，我們只會提到最常用的方法。 想看 Bottender 支援的所有 Slack API 列表的話，你可以參考 <a href="https://bottender.js.org/docs/api-slack-context">Bottender's API</a>。 如果你對 Slack 的完整方法有興趣，你可以參考 Slack 的官方文件，&quot;<a href="https://api.slack.com/methods">API Methods</a>&quot;。 別錯過在每個方法旁邊的 <code>Test</code> 分頁；他提供了方便的方式來更好地測試原生 Slack API。</li>
+<li>由於 Slack 是複雜的通訊平台之一，因此在這份文件中，我們只會提到最常用的方法。 想看 Bottender 支援的所有 Slack API 列表的話，你可以參考 <a href="/docs/zh-TW/api-slack-context">Bottender's API</a>。 如果你對 Slack 的完整方法有興趣，你可以參考 Slack 的官方文件，&quot;<a href="https://api.slack.com/methods">API Methods</a>&quot;。 別錯過在每個方法旁邊的 <code>Test</code> 分頁；他提供了方便的方式來更好地測試原生 Slack API。</li>
 </ul>
 </blockquote>
 <h2><a class="anchor" aria-hidden="true" id="發送文字訊息"></a><a href="#發送文字訊息" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>發送文字訊息</h2>
