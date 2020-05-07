@@ -2,14 +2,12 @@ const { router, telegram, text } = require('bottender/router');
 
 function generateInlineKeyboard(table) {
   return {
-    inlineKeyboard: table.map(row => {
-      return row.map(cell => {
-        return {
-          text: cell,
-          callbackData: cell,
-        };
-      });
-    }),
+    inlineKeyboard: table.map(row =>
+      row.map(cell => ({
+        text: cell,
+        callbackData: cell,
+      }))
+    ),
   };
 }
 
@@ -79,9 +77,11 @@ async function AnswerKeyboard(context) {
   const data = callbackQuery.data;
   const menu = menuMapping[data];
   if (menu) {
-    context.editMessageText(messageId, menu.text, { replyMarkup: menu.menu });
+    await context.editMessageText(messageId, menu.text, {
+      replyMarkup: menu.menu,
+    });
   } else {
-    context.editMessageText(messageId, `Your final choice is ${data}.`);
+    await context.editMessageText(messageId, `Your final choice is ${data}.`);
   }
 }
 
