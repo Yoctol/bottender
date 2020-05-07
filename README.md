@@ -57,16 +57,23 @@ Here is the first one to get you started:
 
 ```js
 // index.js
-module.export = async function App(context) {
-  await context.sendText('Hello World');
+const { router, text } = require('bottender/router');
+
+async function SayHi(context) {
+  await context.sendText('Hi!');
+}
+
+async function Unknown(context) {
+  await context.sendText('Sorry, I don’t know what you say.');
+}
+
+module.export = function App(context) {
+  return router([
+    text('hi', SayHi),
+    text('*', Unknown),
+  ]);
 };
 ```
-
-```sh
-npx bottender start --console
-```
-
-It creates and runs a bot that always replies with "Hello World" in the console.
 
 ## Notable Features
 

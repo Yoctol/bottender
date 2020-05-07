@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Demo Game</title>
+</head>
+<body>
+  your score is <input type="text" id="text" />
+  <button id="sendScore">
+    Send Score
+  </button>
+  <button onclick="TelegramGameProxy.shareScore()">Share score</button>
+  <script src="https://telegram-js.azureedge.net/js/games.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    const text = document.getElementById("text");
+    const button = document.getElementById("sendScore");
+    button.addEventListener("click", () => {
+      const score = Number(text.value);
+      const key = location.search.split("=")[1];
+      axios.post('/setScore', {
+        score,
+        key
+      })
+      .then(function (response) {
+        alert(`Game over, your score is ${score}.`);
+      })
+      .catch(function (error) {
+        alert(error);
+      });
+    })
+  </script>
+</body>
+</html>

@@ -17,7 +17,7 @@ If you want to have a clean project with LINE Notify, you could start from [this
 3. Fill the `.env` file with the correct values.
 4. Run `yarn dev` or `npm run dev` to start the dev server.
 
-If you want to have the folder structure we recommend, you could start with [create-bottender-app](getting-started#create-a-new-bottender-app) command and migrate it by following the migration instructions below.
+If you want to have the folder structure we recommend, you could start with [create-bottender-app](getting-started.md#create-a-new-bottender-app) command and migrate it by following the migration instructions below.
 
 ### Creating a LINE Notify Service
 
@@ -71,9 +71,9 @@ export default new LineNotify({
 
 ### Guiding Users to the LINE Notify Authorization Page
 
-To serve webpages, we need to add additional routes to the server. Fortunately, [custom server](advanced-guides-custom-server#the-concept) come to the rescue!
+To serve webpages, we need to add additional routes to the server. Fortunately, [custom server](advanced-guides-custom-server.md#the-concept) come to the rescue!
 
-You could use express, koa, restify, or whatever you like, but we are going to use express in this guide. Before going down, make sure that you set up correctly according to [this guide](advanced-guides-custom-server#express).
+You could use express, koa, restify, or whatever you like, but we are going to use express in this guide. Before going down, make sure that you set up correctly according to [this guide](advanced-guides-custom-server.md#express).
 
 Modify `src/index.js` to send the authorization link to your users:
 

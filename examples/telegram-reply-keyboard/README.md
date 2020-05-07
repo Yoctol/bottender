@@ -1,12 +1,12 @@
-# Telegram Hello World
+# Telegram Reply Keyboard
 
 ## Install and Run
 
 Download this example or clone [bottender](https://github.com/Yoctol/bottender).
 
 ```sh
-curl https://codeload.github.com/Yoctol/bottender/tar.gz/master | tar -xz --strip=2 bottender-master/examples/telegram-hello-world
-cd telegram-hello-world
+curl https://codeload.github.com/Yoctol/bottender/tar.gz/master | tar -xz --strip=2 bottender-master/examples/telegram-reply-keyboard
+cd telegram-reply-keyboard
 ```
 
 Install dependencies:
@@ -41,5 +41,12 @@ npx bottender telegram webhook set
 
 ## Idea of This Example
 
-This example is a bot running on [Telegram](https://telegram.org/).
-For more information, check our [Telegram guides](https://bottender.js.org/docs/channel-telegram-setup).
+This example is a bot about reply keyboard running on [Telegram](https://telegram.org/).
+
+This example contains the following topics:
+
+- show the custom keyboard to the user
+- remove the custom keyboard
+
+For more information, check [Telegram Bots#Keyboards](https://core.telegram.org/bots#keyboards)
+

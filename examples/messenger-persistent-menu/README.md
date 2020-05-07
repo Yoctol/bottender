@@ -40,7 +40,7 @@ If you successfully start the server, you get a webhook URL in the format of `ht
 While the server is running, you can run following command with `bottender` to set up the webhook with the webhook url you get from running `npm run dev`:
 
 ```sh
-npx bottender messenger webhook set -w <YOUR_WEBHOOK_URL>
+npx bottender messenger webhook set
 ```
 
 > **Note:** You must fill `APP_ID`, `APP_SECRET` and `VERIFY_TOKEN` in your `.env` file before running this command.

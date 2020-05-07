@@ -692,11 +692,26 @@
       "version-1.3.1/version-1.3.1-the-basics-session": {
         "title": "Session"
       },
+      "version-1.4/version-1.4-advanced-guides-custom-server": {
+        "title": "Running Bottender with Custom Servers"
+      },
+      "version-1.4/version-1.4-advanced-guides-deployment": {
+        "title": "Deployment"
+      },
+      "version-1.4/version-1.4-advanced-guides-multi-channel": {
+        "title": "Multi-Channel Support"
+      },
       "version-1.4/version-1.4-advanced-guides-nlu": {
         "title": "Natural Language Understanding"
       },
+      "version-1.4/version-1.4-api-console-context": {
+        "title": "ConsoleContext"
+      },
       "version-1.4/version-1.4-api-context": {
         "title": "Context"
+      },
+      "version-1.4/version-1.4-api-event": {
+        "title": "Event"
       },
       "version-1.4/version-1.4-api-line-client": {
         "title": "LineClient"
@@ -716,6 +731,9 @@
       "version-1.4/version-1.4-channel-line-errors": {
         "title": "Error Handling in LINE"
       },
+      "version-1.4/version-1.4-channel-line-liff": {
+        "title": "LINE Front-end Framework (LIFF)"
+      },
       "version-1.4/version-1.4-channel-line-notify": {
         "title": "LINE Notify"
       },
@@ -725,6 +743,12 @@
       "version-1.4/version-1.4-channel-line-sending-messages": {
         "title": "Sending LINE Messages"
       },
+      "version-1.4/version-1.4-channel-messenger-handover-protocol": {
+        "title": "Messenger Handover Protocol"
+      },
+      "version-1.4/version-1.4-channel-messenger-multi-page": {
+        "title": "Messenger Multi-Page Support"
+      },
       "version-1.4/version-1.4-channel-messenger-routing": {
         "title": "Messenger Routing"
       },
@@ -733,6 +757,9 @@
       },
       "version-1.4/version-1.4-channel-slack-routing": {
         "title": "Slack Routing"
+      },
+      "version-1.4/version-1.4-channel-slack-sending-messages": {
+        "title": "Sending Slack Messages"
       },
       "version-1.4/version-1.4-channel-telegram-routing": {
         "title": "Telegram Routings"
