@@ -53,7 +53,9 @@ function event<C extends AnyContext>(
 ) {
   return route(
     (context: C) =>
-      context.platform === 'slack' && context.event.rawEvent.type === eventType,
+      context.platform === 'slack' &&
+      context.event.rawEvent.type &&
+      (eventType === '*' || context.event.rawEvent.type === eventType),
     action
   );
 }
@@ -68,7 +70,7 @@ function command<C extends AnyContext>(
     (context: C) =>
       context.platform === 'slack' &&
       context.event.command &&
-      context.event.command === commandText,
+      (commandText === '*' || context.event.command === commandText),
     action
   );
 }
