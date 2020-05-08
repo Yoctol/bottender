@@ -1,6 +1,6 @@
 import Context from '../context/Context';
+import TwilioClient from '../sms/TwilioClient';
 
-import TwilioClient from './TwilioClient';
 import WhatsappEvent from './WhatsappEvent';
 
 class WhatsappContext extends Context<TwilioClient, WhatsappEvent> {

@@ -1,5 +1,4 @@
 import crypto from 'crypto';
-import { EventEmitter } from 'events';
 import { URL } from 'url';
 
 import invariant from 'invariant';
@@ -12,7 +11,7 @@ import { MessengerClient } from 'messaging-api-messenger';
 
 import Session from '../session/Session';
 import { Connector } from '../bot/Connector';
-import { RequestContext } from '../types';
+import { ContextOptions } from '../context/Context';
 
 import MessengerContext from './MessengerContext';
 import MessengerEvent, {
@@ -351,13 +350,9 @@ export default class MessengerConnector
     );
   }
 
-  async createContext(params: {
-    event: MessengerEvent;
-    session?: Session;
-    initialState?: Record<string, any>;
-    requestContext?: RequestContext;
-    emitter?: EventEmitter;
-  }): Promise<MessengerContext> {
+  async createContext(
+    params: Omit<ContextOptions<MessengerClient, MessengerEvent>, 'client'>
+  ): Promise<MessengerContext> {
     let customAccessToken;
     if (this._mapPageToAccessToken) {
       const { rawEvent } = params.event;

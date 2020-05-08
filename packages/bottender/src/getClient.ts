@@ -7,8 +7,9 @@ import { ViberClient } from 'messaging-api-viber';
 import LineBot from './line/LineBot';
 import MessengerBot from './messenger/MessengerBot';
 import SlackBot from './slack/SlackBot';
+import SmsBot from './sms/SmsBot';
 import TelegramBot from './telegram/TelegramBot';
-import TwilioClient from './whatsapp/TwilioClient';
+import TwilioClient from './sms/TwilioClient';
 import ViberBot from './viber/ViberBot';
 import WhatsappBot from './whatsapp/WhatsappBot';
 import getBottenderConfig from './shared/getBottenderConfig';
@@ -22,6 +23,7 @@ const BOT_MAP = {
   telegram: TelegramBot,
   viber: ViberBot,
   whatsapp: WhatsappBot,
+  sms: SmsBot,
 };
 
 function getClient<C extends string>(
@@ -37,6 +39,8 @@ function getClient<C extends string>(
   : C extends 'viber'
   ? ViberClient
   : C extends 'whatsapp'
+  ? TwilioClient
+  : C extends 'sms'
   ? TwilioClient
   : any {
   const { channels = {} } = getBottenderConfig();

@@ -69,6 +69,9 @@ export default class TwilioClient {
     return this._authToken;
   }
 
+  /**
+   * https://www.twilio.com/docs/sms/api/message-resource#create-a-message-resource
+   */
   async createMessage(message: {
     from?: string;
     body: string;
@@ -80,6 +83,7 @@ export default class TwilioClient {
     smartEncoded?: boolean;
     persistentAction?: string[];
     mediaUrl?: string[];
+    statusCallback?: string;
   }) {
     try {
       const { data } = await this._axios.post<{

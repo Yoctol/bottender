@@ -1,5 +1,4 @@
 import crypto from 'crypto';
-import { EventEmitter } from 'events';
 
 import invariant from 'invariant';
 import warning from 'warning';
@@ -7,7 +6,7 @@ import { LineClient } from 'messaging-api-line';
 
 import Session from '../session/Session';
 import { Connector } from '../bot/Connector';
-import { RequestContext } from '../types';
+import { ContextOptions } from '../context/Context';
 
 import LineContext from './LineContext';
 import LineEvent, { LineRawEvent } from './LineEvent';
@@ -285,13 +284,9 @@ export default class LineConnector
       .map(event => new LineEvent(event, { destination }));
   }
 
-  async createContext(params: {
-    event: LineEvent;
-    session?: Session | null;
-    initialState?: Record<string, any> | null;
-    requestContext?: RequestContext;
-    emitter?: EventEmitter | null;
-  }): Promise<LineContext> {
+  async createContext(
+    params: Omit<ContextOptions<LineClient, LineEvent>, 'client'>
+  ): Promise<LineContext> {
     let customAccessToken;
     if (this._mapDestinationToAccessToken) {
       const { destination } = params.event;

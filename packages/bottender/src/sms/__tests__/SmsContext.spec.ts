@@ -1,8 +1,8 @@
-import TwilioClient from '../../sms/TwilioClient';
-import WhatsappContext from '../WhatsappContext';
-import WhatsappEvent from '../WhatsappEvent';
+import SmsContext from '../SmsContext';
+import SmsEvent from '../SmsEvent';
+import TwilioClient from '../TwilioClient';
 
-const event = new WhatsappEvent({
+const event = new SmsEvent({
   smsMessageSid: 'SM7cd85aed706d25735d1c8019234XXXXX',
   numMedia: '0',
   smsSid: 'SM7cd85aed706d25735d1c8019234XXXXX',
@@ -25,7 +25,7 @@ function setup() {
 
   client.createMessage = jest.fn();
 
-  const context = new WhatsappContext({
+  const context = new SmsContext({
     client,
     event,
   });

@@ -9,7 +9,7 @@ import { Client, Event, RequestContext } from '../types';
 
 const debugContext = debug('bottender:context');
 
-type Options<C extends Client, E extends Event> = {
+export type ContextOptions<C extends Client, E extends Event> = {
   client: C;
   event: E;
   session?: Session | null;
@@ -61,7 +61,7 @@ export default abstract class Context<C extends Client, E extends Event> {
     initialState,
     requestContext,
     emitter,
-  }: Options<C, E>) {
+  }: ContextOptions<C, E>) {
     this._client = client;
     this._event = event;
     this._session = session || null;

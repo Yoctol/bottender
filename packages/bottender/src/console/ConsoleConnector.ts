@@ -1,8 +1,6 @@
-import { EventEmitter } from 'events';
-
 import Session from '../session/Session';
 import { Connector } from '../bot/Connector';
-import { RequestContext } from '../types';
+import { ContextOptions } from '../context/Context';
 
 import ConsoleContext from './ConsoleContext';
 import ConsoleEvent, { ConsoleRawEvent } from './ConsoleEvent';
@@ -72,13 +70,9 @@ export default class ConsoleConnector
     return [new ConsoleEvent(body)];
   }
 
-  createContext(params: {
-    event: ConsoleEvent;
-    session: Session | null;
-    initialState?: Record<string, any> | null;
-    requestContext?: RequestContext;
-    emitter: EventEmitter | null;
-  }): ConsoleContext {
+  createContext(
+    params: Omit<ContextOptions<ConsoleClient, ConsoleEvent>, 'client'>
+  ): ConsoleContext {
     return new ConsoleContext({
       ...params,
       client: this._client,
