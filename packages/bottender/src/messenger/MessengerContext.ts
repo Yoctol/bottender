@@ -1,3 +1,4 @@
+import fs from 'fs';
 import { EventEmitter } from 'events';
 
 import invariant from 'invariant';
@@ -8,6 +9,7 @@ import {
   MessengerClient,
   MessengerTypes,
 } from 'messaging-api-messenger';
+import { MessengerBatchQueue } from 'messenger-batch';
 
 import Context from '../context/Context';
 import Session from '../session/Session';
@@ -23,7 +25,7 @@ type Options = {
   initialState?: Record<string, any>;
   requestContext?: RequestContext;
   customAccessToken?: string;
-  batchQueue?: Record<string, any> | null;
+  batchQueue?: MessengerBatchQueue | null;
   emitter?: EventEmitter;
 };
 
@@ -34,8 +36,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
 
   _personaId: string | null = null;
 
-  // FIXME: add typing for BatchQueue
-  _batchQueue: Record<string, any> | null;
+  _batchQueue: MessengerBatchQueue | null;
 
   constructor({
     appId,
@@ -64,16 +65,6 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
 
   get accessToken(): string | null {
     return this._customAccessToken || this._client.accessToken;
-  }
-
-  // TODO: Avoid this to improve typing
-  _callClientMethod(method: string, args: any[]) {
-    if (this._batchQueue) {
-      return (this._batchQueue as any).push(
-        (MessengerBatch as any)[method](...args)
-      );
-    }
-    return (this._client as any)[method](...args);
   }
 
   _getMethodOptions<O extends object>(
@@ -157,7 +148,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
   async sendText(
     text: string,
     options: MessengerTypes.SendOption = {}
-  ): Promise<any> {
+  ): Promise<MessengerTypes.SendMessageSuccessResponse | undefined> {
     if (!this._session) {
       warning(
         false,
@@ -174,11 +165,20 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       return;
     }
 
-    return this._callClientMethod('sendText', [
+    if (this._batchQueue) {
+      return this._batchQueue.push(
+        MessengerBatch.sendText(
+          this._session.user.id,
+          text,
+          this._getSendMethodOptions(options)
+        )
+      );
+    }
+    return this._client.sendText(
       this._session.user.id,
       text,
-      this._getSendMethodOptions(options),
-    ]);
+      this._getSendMethodOptions(options)
+    );
   }
 
   async getUserProfile(options: {
@@ -192,10 +192,18 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       return null;
     }
 
-    return this._callClientMethod('getUserProfile', [
+    if (this._batchQueue) {
+      return this._batchQueue.push(
+        MessengerBatch.getUserProfile(
+          this._session.user.id,
+          this._getMethodOptions(options)
+        )
+      );
+    }
+    return this._client.getUserProfile(
       this._session.user.id,
-      this._getMethodOptions(options),
-    ]);
+      this._getMethodOptions(options)
+    );
   }
 
   /**
@@ -219,11 +227,20 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       return;
     }
 
-    return this._callClientMethod('sendSenderAction', [
+    if (this._batchQueue) {
+      return this._batchQueue.push(
+        MessengerBatch.sendSenderAction(
+          this._session.user.id,
+          senderAction,
+          this._getSenderActionMethodOptions(options)
+        )
+      );
+    }
+    return this._client.sendSenderAction(
       this._session.user.id,
       senderAction,
-      this._getSenderActionMethodOptions(options),
-    ]);
+      this._getSenderActionMethodOptions(options)
+    );
   }
 
   /**
@@ -240,10 +257,18 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       return;
     }
 
-    return this._callClientMethod('typingOn', [
+    if (this._batchQueue) {
+      return this._batchQueue.push(
+        MessengerBatch.typingOn(
+          this._session.user.id,
+          this._getSenderActionMethodOptions(options)
+        )
+      );
+    }
+    return this._client.typingOn(
       this._session.user.id,
-      this._getSenderActionMethodOptions(options),
-    ]);
+      this._getSenderActionMethodOptions(options)
+    );
   }
 
   /**
@@ -260,10 +285,18 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       return;
     }
 
-    return this._callClientMethod('typingOff', [
+    if (this._batchQueue) {
+      return this._batchQueue.push(
+        MessengerBatch.typingOff(
+          this._session.user.id,
+          this._getSenderActionMethodOptions(options)
+        )
+      );
+    }
+    return this._client.typingOff(
       this._session.user.id,
-      this._getSenderActionMethodOptions(options),
-    ]);
+      this._getSenderActionMethodOptions(options)
+    );
   }
 
   /**
@@ -280,10 +313,18 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       return;
     }
 
-    return this._callClientMethod('markSeen', [
+    if (this._batchQueue) {
+      return this._batchQueue.push(
+        MessengerBatch.markSeen(
+          this._session.user.id,
+          this._getSenderActionMethodOptions(options)
+        )
+      );
+    }
+    return this._client.markSeen(
       this._session.user.id,
-      this._getSenderActionMethodOptions(options),
-    ]);
+      this._getSenderActionMethodOptions(options)
+    );
   }
 
   /**
@@ -298,7 +339,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
   async passThreadControl(
     targetAppId: number,
     metadata?: string
-  ): Promise<any> {
+  ): Promise<{ success: true } | undefined> {
     if (!this._session) {
       warning(
         false,
@@ -307,18 +348,30 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       return;
     }
 
-    return this._callClientMethod('passThreadControl', [
+    if (this._batchQueue) {
+      return this._batchQueue.push(
+        MessengerBatch.passThreadControl(
+          this._session.user.id,
+          targetAppId,
+          metadata,
+          this._getMethodOptions({})
+        )
+      );
+    }
+    return this._client.passThreadControl(
       this._session.user.id,
       targetAppId,
       metadata,
-      this._getMethodOptions({}),
-    ]);
+      this._getMethodOptions({})
+    );
   }
 
   /**
    * https://github.com/Yoctol/messaging-apis/tree/master/packages/messaging-api-messenger#passthreadcontroltopageinboxuserid-metadata---official-docs
    */
-  async passThreadControlToPageInbox(metadata?: string): Promise<any> {
+  async passThreadControlToPageInbox(
+    metadata?: string
+  ): Promise<{ success: true } | undefined> {
     if (!this._session) {
       warning(
         false,
@@ -327,17 +380,28 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       return;
     }
 
-    return this._callClientMethod('passThreadControlToPageInbox', [
+    if (this._batchQueue) {
+      return this._batchQueue.push(
+        MessengerBatch.passThreadControlToPageInbox(
+          this._session.user.id,
+          metadata,
+          this._getMethodOptions({})
+        )
+      );
+    }
+    return this._client.passThreadControlToPageInbox(
       this._session.user.id,
       metadata,
-      this._getMethodOptions({}),
-    ]);
+      this._getMethodOptions({})
+    );
   }
 
   /**
    * https://github.com/Yoctol/messaging-apis/tree/master/packages/messaging-api-messenger#takethreadcontroluserid-metadata---official-docs
    */
-  async takeThreadControl(metadata?: string): Promise<any> {
+  async takeThreadControl(
+    metadata?: string
+  ): Promise<{ success: true } | undefined> {
     if (!this._session) {
       warning(
         false,
@@ -346,17 +410,28 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       return;
     }
 
-    return this._callClientMethod('takeThreadControl', [
+    if (this._batchQueue) {
+      return this._batchQueue.push(
+        MessengerBatch.takeThreadControl(
+          this._session.user.id,
+          metadata,
+          this._getMethodOptions({})
+        )
+      );
+    }
+    return this._client.takeThreadControl(
       this._session.user.id,
       metadata,
-      this._getMethodOptions({}),
-    ]);
+      this._getMethodOptions({})
+    );
   }
 
   /**
    * https://github.com/Yoctol/messaging-apis/blob/master/packages/messaging-api-messenger/README.md#requestthreadcontroluserid-metadata---official-docs
    */
-  async requestThreadControl(metadata?: string): Promise<any> {
+  async requestThreadControl(
+    metadata?: string
+  ): Promise<{ success: true } | undefined> {
     if (!this._session) {
       warning(
         false,
@@ -365,17 +440,26 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       return;
     }
 
-    return this._callClientMethod('requestThreadControl', [
+    if (this._batchQueue) {
+      return this._batchQueue.push(
+        MessengerBatch.requestThreadControl(
+          this._session.user.id,
+          metadata,
+          this._getMethodOptions({})
+        )
+      );
+    }
+    return this._client.requestThreadControl(
       this._session.user.id,
       metadata,
-      this._getMethodOptions({}),
-    ]);
+      this._getMethodOptions({})
+    );
   }
 
   /**
    * https://github.com/Yoctol/messaging-apis/blob/master/packages/messaging-api-messenger/README.md#requestthreadcontroluserid-metadata---official-docs
    */
-  async getThreadOwner(): Promise<any> {
+  async getThreadOwner(): Promise<{ appId: string } | undefined> {
     if (!this._session) {
       warning(
         false,
@@ -384,10 +468,18 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       return;
     }
 
-    return this._callClientMethod('getThreadOwner', [
+    if (this._batchQueue) {
+      return this._batchQueue.push(
+        MessengerBatch.getThreadOwner(
+          this._session.user.id,
+          this._getMethodOptions({})
+        )
+      );
+    }
+    return this._client.getThreadOwner(
       this._session.user.id,
-      this._getMethodOptions({}),
-    ]);
+      this._getMethodOptions({})
+    );
   }
 
   async isThreadOwner(): Promise<boolean> {
@@ -395,7 +487,13 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       this._appId,
       'isThreadOwner: must provide appId to use this feature'
     );
-    const { appId } = await this.getThreadOwner();
+    const threadOwner = await this.getThreadOwner();
+
+    if (!threadOwner) {
+      return false;
+    }
+
+    const { appId } = threadOwner;
 
     return `${appId}` === `${this._appId}`;
   }
@@ -409,7 +507,9 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
   /**
    * https://github.com/Yoctol/messaging-apis/tree/master/packages/messaging-api-messenger#associatelabeluserid-labelid
    */
-  async associateLabel(labelId: number): Promise<any> {
+  async associateLabel(
+    labelId: number
+  ): Promise<{ success: true } | undefined> {
     if (!this._session) {
       warning(
         false,
@@ -418,17 +518,28 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       return;
     }
 
-    return this._callClientMethod('associateLabel', [
+    if (this._batchQueue) {
+      return this._batchQueue.push(
+        MessengerBatch.associateLabel(
+          this._session.user.id,
+          labelId,
+          this._getMethodOptions({})
+        )
+      );
+    }
+    return this._client.associateLabel(
       this._session.user.id,
       labelId,
-      this._getMethodOptions({}),
-    ]);
+      this._getMethodOptions({})
+    );
   }
 
   /**
    * https://github.com/Yoctol/messaging-apis/tree/master/packages/messaging-api-messenger#dissociatelabeluserid-labelid
    */
-  async dissociateLabel(labelId: number): Promise<any> {
+  async dissociateLabel(
+    labelId: number
+  ): Promise<{ success: true } | undefined> {
     if (!this._session) {
       warning(
         false,
@@ -437,17 +548,40 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       return;
     }
 
-    return this._callClientMethod('dissociateLabel', [
+    if (this._batchQueue) {
+      return this._batchQueue.push(
+        MessengerBatch.dissociateLabel(
+          this._session.user.id,
+          labelId,
+          this._getMethodOptions({})
+        )
+      );
+    }
+    return this._client.dissociateLabel(
       this._session.user.id,
       labelId,
-      this._getMethodOptions({}),
-    ]);
+      this._getMethodOptions({})
+    );
   }
 
   /**
    * https://github.com/Yoctol/messaging-apis/tree/master/packages/messaging-api-messenger#getassociatedlabelsuserid
    */
-  async getAssociatedLabels(): Promise<any> {
+  async getAssociatedLabels(): Promise<
+    | {
+        data: {
+          name: string;
+          id: string;
+        }[];
+        paging: {
+          cursors: {
+            before: string;
+            after: string;
+          };
+        };
+      }
+    | undefined
+  > {
     if (!this._session) {
       warning(
         false,
@@ -456,10 +590,18 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       return;
     }
 
-    return this._callClientMethod('getAssociatedLabels', [
+    if (this._batchQueue) {
+      return this._batchQueue.push(
+        MessengerBatch.getAssociatedLabels(
+          this._session.user.id,
+          this._getMethodOptions({})
+        )
+      );
+    }
+    return this._client.getAssociatedLabels(
       this._session.user.id,
-      this._getMethodOptions({}),
-    ]);
+      this._getMethodOptions({})
+    );
   }
 
   async sendMessage(
@@ -482,11 +624,20 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       return;
     }
 
-    return this._callClientMethod('sendMessage', [
+    if (this._batchQueue) {
+      return this._batchQueue.push(
+        MessengerBatch.sendMessage(
+          this._session.user.id,
+          message,
+          this._getSendMethodOptions(options)
+        )
+      );
+    }
+    return this._client.sendMessage(
       this._session.user.id,
       message,
-      this._getSendMethodOptions(options),
-    ]);
+      this._getSendMethodOptions(options)
+    );
   }
 
   async sendAttachment(
@@ -509,11 +660,20 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       return;
     }
 
-    return this._callClientMethod('sendAttachment', [
+    if (this._batchQueue) {
+      return this._batchQueue.push(
+        MessengerBatch.sendAttachment(
+          this._session.user.id,
+          attachment,
+          this._getSendMethodOptions(options)
+        )
+      );
+    }
+    return this._client.sendAttachment(
       this._session.user.id,
       attachment,
-      this._getSendMethodOptions(options),
-    ]);
+      this._getSendMethodOptions(options)
+    );
   }
 
   async sendImage(
@@ -539,11 +699,24 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       return;
     }
 
-    return this._callClientMethod('sendImage', [
+    if (
+      this._batchQueue &&
+      !Buffer.isBuffer(image) &&
+      !(image instanceof fs.ReadStream)
+    ) {
+      return this._batchQueue.push(
+        MessengerBatch.sendImage(
+          this._session.user.id,
+          image,
+          this._getSendMethodOptions(options)
+        )
+      );
+    }
+    return this._client.sendImage(
       this._session.user.id,
       image,
-      this._getSendMethodOptions(options),
-    ]);
+      this._getSendMethodOptions(options)
+    );
   }
 
   async sendAudio(
@@ -569,11 +742,24 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       return;
     }
 
-    return this._callClientMethod('sendAudio', [
+    if (
+      this._batchQueue &&
+      !Buffer.isBuffer(audio) &&
+      !(audio instanceof fs.ReadStream)
+    ) {
+      return this._batchQueue.push(
+        MessengerBatch.sendAudio(
+          this._session.user.id,
+          audio,
+          this._getSendMethodOptions(options)
+        )
+      );
+    }
+    return this._client.sendAudio(
       this._session.user.id,
       audio,
-      this._getSendMethodOptions(options),
-    ]);
+      this._getSendMethodOptions(options)
+    );
   }
 
   async sendVideo(
@@ -599,11 +785,24 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       return;
     }
 
-    return this._callClientMethod('sendVideo', [
+    if (
+      this._batchQueue &&
+      !Buffer.isBuffer(video) &&
+      !(video instanceof fs.ReadStream)
+    ) {
+      return this._batchQueue.push(
+        MessengerBatch.sendVideo(
+          this._session.user.id,
+          video,
+          this._getSendMethodOptions(options)
+        )
+      );
+    }
+    return this._client.sendVideo(
       this._session.user.id,
       video,
-      this._getSendMethodOptions(options),
-    ]);
+      this._getSendMethodOptions(options)
+    );
   }
 
   async sendFile(
@@ -629,11 +828,24 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       return;
     }
 
-    return this._callClientMethod('sendFile', [
+    if (
+      this._batchQueue &&
+      !Buffer.isBuffer(file) &&
+      !(file instanceof fs.ReadStream)
+    ) {
+      return this._batchQueue.push(
+        MessengerBatch.sendFile(
+          this._session.user.id,
+          file,
+          this._getSendMethodOptions(options)
+        )
+      );
+    }
+    return this._client.sendFile(
       this._session.user.id,
       file,
-      this._getSendMethodOptions(options),
-    ]);
+      this._getSendMethodOptions(options)
+    );
   }
 
   async sendTemplate(
@@ -656,11 +868,20 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       return;
     }
 
-    return this._callClientMethod('sendTemplate', [
+    if (this._batchQueue) {
+      return this._batchQueue.push(
+        MessengerBatch.sendTemplate(
+          this._session.user.id,
+          payload,
+          this._getSendMethodOptions(options)
+        )
+      );
+    }
+    return this._client.sendTemplate(
       this._session.user.id,
       payload,
-      this._getSendMethodOptions(options),
-    ]);
+      this._getSendMethodOptions(options)
+    );
   }
 
   async sendGenericTemplate(
@@ -685,11 +906,20 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       return;
     }
 
-    return this._callClientMethod('sendGenericTemplate', [
+    if (this._batchQueue) {
+      return this._batchQueue.push(
+        MessengerBatch.sendGenericTemplate(
+          this._session.user.id,
+          elements,
+          this._getSendMethodOptions(options)
+        )
+      );
+    }
+    return this._client.sendGenericTemplate(
       this._session.user.id,
       elements,
-      this._getSendMethodOptions(options),
-    ]);
+      this._getSendMethodOptions(options)
+    );
   }
 
   async sendButtonTemplate(
@@ -713,12 +943,22 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       return;
     }
 
-    return this._callClientMethod('sendButtonTemplate', [
+    if (this._batchQueue) {
+      return this._batchQueue.push(
+        MessengerBatch.sendButtonTemplate(
+          this._session.user.id,
+          text,
+          buttons,
+          this._getSendMethodOptions(options)
+        )
+      );
+    }
+    return this._client.sendButtonTemplate(
       this._session.user.id,
       text,
       buttons,
-      this._getSendMethodOptions(options),
-    ]);
+      this._getSendMethodOptions(options)
+    );
   }
 
   async sendMediaTemplate(
@@ -741,11 +981,20 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       return;
     }
 
-    return this._callClientMethod('sendMediaTemplate', [
+    if (this._batchQueue) {
+      return this._batchQueue.push(
+        MessengerBatch.sendMediaTemplate(
+          this._session.user.id,
+          elements,
+          this._getSendMethodOptions(options)
+        )
+      );
+    }
+    return this._client.sendMediaTemplate(
       this._session.user.id,
       elements,
-      this._getSendMethodOptions(options),
-    ]);
+      this._getSendMethodOptions(options)
+    );
   }
 
   async sendReceiptTemplate(
@@ -768,11 +1017,20 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       return;
     }
 
-    return this._callClientMethod('sendReceiptTemplate', [
+    if (this._batchQueue) {
+      return this._batchQueue.push(
+        MessengerBatch.sendReceiptTemplate(
+          this._session.user.id,
+          attrs,
+          this._getSendMethodOptions(options)
+        )
+      );
+    }
+    return this._client.sendReceiptTemplate(
       this._session.user.id,
       attrs,
-      this._getSendMethodOptions(options),
-    ]);
+      this._getSendMethodOptions(options)
+    );
   }
 
   async sendAirlineBoardingPassTemplate(
@@ -795,11 +1053,20 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       return;
     }
 
-    return this._callClientMethod('sendAirlineBoardingPassTemplate', [
+    if (this._batchQueue) {
+      return this._batchQueue.push(
+        MessengerBatch.sendAirlineBoardingPassTemplate(
+          this._session.user.id,
+          attrs,
+          this._getSendMethodOptions(options)
+        )
+      );
+    }
+    return this._client.sendAirlineBoardingPassTemplate(
       this._session.user.id,
       attrs,
-      this._getSendMethodOptions(options),
-    ]);
+      this._getSendMethodOptions(options)
+    );
   }
 
   async sendAirlineCheckinTemplate(
@@ -822,11 +1089,20 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       return;
     }
 
-    return this._callClientMethod('sendAirlineCheckinTemplate', [
+    if (this._batchQueue) {
+      return this._batchQueue.push(
+        MessengerBatch.sendAirlineCheckinTemplate(
+          this._session.user.id,
+          attrs,
+          this._getSendMethodOptions(options)
+        )
+      );
+    }
+    return this._client.sendAirlineCheckinTemplate(
       this._session.user.id,
       attrs,
-      this._getSendMethodOptions(options),
-    ]);
+      this._getSendMethodOptions(options)
+    );
   }
 
   async sendAirlineItineraryTemplate(
@@ -849,11 +1125,20 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       return;
     }
 
-    return this._callClientMethod('sendAirlineItineraryTemplate', [
+    if (this._batchQueue) {
+      return this._batchQueue.push(
+        MessengerBatch.sendAirlineItineraryTemplate(
+          this._session.user.id,
+          attrs,
+          this._getSendMethodOptions(options)
+        )
+      );
+    }
+    return this._client.sendAirlineItineraryTemplate(
       this._session.user.id,
       attrs,
-      this._getSendMethodOptions(options),
-    ]);
+      this._getSendMethodOptions(options)
+    );
   }
 
   async sendAirlineUpdateTemplate(
@@ -876,11 +1161,20 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       return;
     }
 
-    return this._callClientMethod('sendAirlineUpdateTemplate', [
+    if (this._batchQueue) {
+      return this._batchQueue.push(
+        MessengerBatch.sendAirlineUpdateTemplate(
+          this._session.user.id,
+          attrs,
+          this._getSendMethodOptions(options)
+        )
+      );
+    }
+    return this._client.sendAirlineUpdateTemplate(
       this._session.user.id,
       attrs,
-      this._getSendMethodOptions(options),
-    ]);
+      this._getSendMethodOptions(options)
+    );
   }
 
   async sendOneTimeNotifReqTemplate(
@@ -903,11 +1197,20 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       return;
     }
 
-    return this._callClientMethod('sendOneTimeNotifReqTemplate', [
+    if (this._batchQueue) {
+      return this._batchQueue.push(
+        MessengerBatch.sendOneTimeNotifReqTemplate(
+          this._session.user.id,
+          attrs,
+          this._getSendMethodOptions(options)
+        )
+      );
+    }
+    return this._client.sendOneTimeNotifReqTemplate(
       this._session.user.id,
       attrs,
-      this._getSendMethodOptions(options),
-    ]);
+      this._getSendMethodOptions(options)
+    );
   }
 }
 
