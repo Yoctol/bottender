@@ -61,7 +61,7 @@ export default class WhatsappConnector
     }
   }
 
-  get platform(): string {
+  get platform(): 'whatsapp' {
     return 'whatsapp';
   }
 

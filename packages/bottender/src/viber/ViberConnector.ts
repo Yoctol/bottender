@@ -69,7 +69,7 @@ export default class ViberConnector
     return body;
   }
 
-  get platform(): string {
+  get platform(): 'viber' {
     return 'viber';
   }
 
