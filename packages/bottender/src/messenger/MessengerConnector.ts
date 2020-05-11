@@ -112,6 +112,10 @@ export default class MessengerConnector
 
   _mapPageToAccessToken: ((pageId: string) => Promise<string>) | null = null;
 
+  _origin: string | undefined = undefined;
+
+  _skipAppSecretProof: boolean | undefined = undefined;
+
   _verifyToken: string | null = null;
 
   _batchConfig: BatchConfig | null = null;
@@ -149,6 +153,9 @@ export default class MessengerConnector
         origin,
         skipAppSecretProof,
       });
+
+      this._origin = origin;
+      this._skipAppSecretProof = skipAppSecretProof;
     }
 
     this._appId = appId;
@@ -359,26 +366,33 @@ export default class MessengerConnector
     emitter?: EventEmitter;
   }): Promise<MessengerContext> {
     let customAccessToken;
+    let client = this._client;
     if (this._mapPageToAccessToken) {
       const { rawEvent } = params.event;
 
-      let pageId = null;
-
-      if (rawEvent.message && rawEvent.message.isEcho && rawEvent.sender) {
-        pageId = rawEvent.sender.id;
-      } else if (rawEvent.recipient) {
-        pageId = rawEvent.recipient.id;
-      }
+      const pageId =
+        rawEvent.message && rawEvent.message.isEcho && rawEvent.sender
+          ? rawEvent.sender?.id
+          : rawEvent.recipient?.id;
 
       if (!pageId) {
         warning(false, 'Could not find pageId from request body.');
       } else {
         customAccessToken = await this._mapPageToAccessToken(pageId);
+
+        // FIXME: what if custom access token is not returned by _mapPageToAccessToken
+
+        client = MessengerClient.connect({
+          accessToken: customAccessToken,
+          appSecret: this._appSecret,
+          origin: this._origin,
+          skipAppSecretProof: this._skipAppSecretProof,
+        });
       }
     }
     return new MessengerContext({
       ...params,
-      client: this._client,
+      client,
       customAccessToken,
       batchQueue: this._batchQueue,
       appId: this._appId,
