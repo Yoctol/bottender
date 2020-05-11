@@ -87,20 +87,14 @@ const main = async (argvFrom2: string[]) => {
       provider.help();
     }
   } catch (err) {
-    console.error(
-      error(
-        `An unexpected error occurred in provider ${subcommand}: ${err.message}
-${err.stack}`
-      )
-    );
+    error(`An unexpected error occurred in provider ${subcommand}: ${err.message}
+${err.stack}`);
   }
 };
 
 const handleUnexpected = (err: Error): void => {
-  console.error(
-    error(`An unexpected error occurred: ${err.message}
-${err.stack}`)
-  );
+  error(`An unexpected error occurred: ${err.message}
+${err.stack}`);
   process.exit(1);
 };
 
@@ -109,10 +103,10 @@ const handleRejection = (reason: Error | any): void => {
     if (reason instanceof Error) {
       handleUnexpected(reason);
     } else {
-      console.error(error(`An unexpected rejection occurred: ${reason}`));
+      error(`An unexpected rejection occurred: ${reason}`);
     }
   } else {
-    console.error(error('An unexpected empty rejection occurred'));
+    error('An unexpected empty rejection occurred');
   }
   process.exit(1);
 };
