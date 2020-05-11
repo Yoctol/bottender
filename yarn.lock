@@ -7391,10 +7391,10 @@ messaging-api-line@^1.0.0-beta.20:
     messaging-api-common "^1.0.0-beta.16"
     warning "^4.0.3"
 
-messaging-api-messenger@^1.0.0-beta.18:
-  version "1.0.0-beta.18"
-  resolved "https://registry.yarnpkg.com/messaging-api-messenger/-/messaging-api-messenger-1.0.0-beta.18.tgz#50ef461dc3743712d7bb459bf5c0d6e1893b342e"
-  integrity sha512-2epVMxyGReG/mmKn0ugYEEZr6sHrdtz7Np4yRs855zqTOqzNzLYvfDwpEUwNbbGe0serDsyt8s4s2tbr5FJPbg==
+messaging-api-messenger@^1.0.0-beta.22:
+  version "1.0.0-beta.22"
+  resolved "https://registry.yarnpkg.com/messaging-api-messenger/-/messaging-api-messenger-1.0.0-beta.22.tgz#e9eb53f76a430416acac7e0c145490c1d9e1a993"
+  integrity sha512-Mx3pd8WB4LNEyyENBTRliYUd8yVE0kR+UXNxT/T2G0lSMog3R95lvuULcg+I9fvdWVzVWI8dakjdUfLwgu+QFg==
   dependencies:
     append-query "^2.1.0"
     axios "^0.19.2"

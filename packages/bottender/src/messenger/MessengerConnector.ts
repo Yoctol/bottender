@@ -7,7 +7,7 @@ import isAfter from 'date-fns/isAfter';
 import isValid from 'date-fns/isValid';
 import shortid from 'shortid';
 import warning from 'warning';
-import { MessengerBatchQueue } from 'messenger-batch';
+import { BatchConfig, MessengerBatchQueue } from 'messenger-batch';
 import { MessengerClient } from 'messaging-api-messenger';
 
 import Session from '../session/Session';
@@ -81,7 +81,7 @@ type CommonConstructorOptions = {
   appId: string;
   appSecret: string;
   verifyToken?: string;
-  batchConfig?: Record<string, any>;
+  batchConfig?: BatchConfig;
   skipLegacyProfile?: boolean;
   mapPageToAccessToken?: (pageId: string) => Promise<string>;
 };
@@ -114,9 +114,9 @@ export default class MessengerConnector
 
   _verifyToken: string | null = null;
 
-  _batchConfig: Record<string, any> | null = null;
+  _batchConfig: BatchConfig | null = null;
 
-  _batchQueue: Record<string, any> | null = null;
+  _batchQueue: MessengerBatchQueue | null = null;
 
   constructor(options: ConstructorOptions) {
     const {
