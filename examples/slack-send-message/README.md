@@ -43,7 +43,7 @@ This example contains the following topics:
 - send ephemeral message to the user
 - send scheduled message to the user
 
-For more information, check our [Slack guides](https://bottender.js.org/docs/en/channel-slack-sending-messages#posting-ephemeral-messages).
+For more information, check our [Slack guides](https://bottender.js.org/docs/en/channel-slack-sending-messages#sending-text-messages).
 
 ## Related Examples
 
