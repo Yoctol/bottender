@@ -165,7 +165,7 @@ describe('#getMessageContent', () => {
 
     const res = await context.getMessageContent();
 
-    expect(client.getMessageContent).toBeCalledWith('325708', {});
+    expect(client.getMessageContent).toBeCalledWith('325708');
     expect(res).toEqual(buf);
   });
 
@@ -196,7 +196,7 @@ describe('#leave', () => {
 
     await context.leave();
 
-    expect(client.leaveGroup).toBeCalledWith('fakeGroupId', {});
+    expect(client.leaveGroup).toBeCalledWith('fakeGroupId');
   });
 
   it('leave room', async () => {
@@ -204,7 +204,7 @@ describe('#leave', () => {
 
     await context.leave();
 
-    expect(client.leaveRoom).toBeCalledWith('fakeRoomId', {});
+    expect(client.leaveRoom).toBeCalledWith('fakeRoomId');
   });
 
   it('not leave user', async () => {
@@ -219,7 +219,7 @@ describe('#leave', () => {
 });
 
 describe('#reply', () => {
-  it('#reply to call client.reply', async () => {
+  it('to call client.reply', async () => {
     const { context, client } = setup();
 
     await context.reply([
@@ -229,16 +229,12 @@ describe('#reply', () => {
       },
     ]);
 
-    expect(client.reply).toBeCalledWith(
-      REPLY_TOKEN,
-      [
-        {
-          type: 'text',
-          text: 'hello',
-        },
-      ],
-      { accessToken: undefined }
-    );
+    expect(client.reply).toBeCalledWith(REPLY_TOKEN, [
+      {
+        type: 'text',
+        text: 'hello',
+      },
+    ]);
   });
 
   it('should work with quickReply', async () => {
@@ -252,17 +248,13 @@ describe('#reply', () => {
       },
     ]);
 
-    expect(client.reply).toBeCalledWith(
-      REPLY_TOKEN,
-      [
-        {
-          type: 'text',
-          text: 'hello',
-          quickReply,
-        },
-      ],
-      {}
-    );
+    expect(client.reply).toBeCalledWith(REPLY_TOKEN, [
+      {
+        type: 'text',
+        text: 'hello',
+        quickReply,
+      },
+    ]);
   });
 });
 
@@ -272,11 +264,9 @@ describe('#replyText', () => {
 
     await context.replyText('hello');
 
-    expect(client.reply).toBeCalledWith(
-      REPLY_TOKEN,
-      [{ text: 'hello', type: 'text' }],
-      {}
-    );
+    expect(client.reply).toBeCalledWith(REPLY_TOKEN, [
+      { text: 'hello', type: 'text' },
+    ]);
   });
 
   it('should work with quickReply', async () => {
@@ -286,19 +276,13 @@ describe('#replyText', () => {
       quickReply,
     });
 
-    expect(client.reply).toBeCalledWith(
-      REPLY_TOKEN,
-      [
-        {
-          type: 'text',
-          text: 'hello',
-          quickReply,
-        },
-      ],
+    expect(client.reply).toBeCalledWith(REPLY_TOKEN, [
       {
+        type: 'text',
+        text: 'hello',
         quickReply,
-      }
-    );
+      },
+    ]);
   });
 
   it('should throw when reply multiple times', async () => {
@@ -316,22 +300,6 @@ describe('#replyText', () => {
     expect(error).toBeDefined();
     expect(error.message).toEqual('Can not reply event multiple times');
   });
-
-  it('should support custom token', async () => {
-    const { context, client } = setup({
-      customAccessToken: 'anyToken',
-    });
-
-    await context.replyText('hello');
-
-    expect(client.reply).toBeCalledWith(
-      REPLY_TOKEN,
-      [{ text: 'hello', type: 'text' }],
-      {
-        accessToken: 'anyToken',
-      }
-    );
-  });
 });
 
 describe('#push', () => {
@@ -345,16 +313,12 @@ describe('#push', () => {
       },
     ]);
 
-    expect(client.push).toBeCalledWith(
-      session.user.id,
-      [
-        {
-          type: 'text',
-          text: 'hello',
-        },
-      ],
-      { accessToken: undefined }
-    );
+    expect(client.push).toBeCalledWith(session.user.id, [
+      {
+        type: 'text',
+        text: 'hello',
+      },
+    ]);
   });
 
   it('should work with quickReply', async () => {
@@ -368,17 +332,13 @@ describe('#push', () => {
       },
     ]);
 
-    expect(client.push).toBeCalledWith(
-      session.user.id,
-      [
-        {
-          type: 'text',
-          text: 'hello',
-          quickReply,
-        },
-      ],
-      {}
-    );
+    expect(client.push).toBeCalledWith(session.user.id, [
+      {
+        type: 'text',
+        text: 'hello',
+        quickReply,
+      },
+    ]);
   });
 });
 
@@ -388,11 +348,9 @@ describe('#pushText', () => {
 
     await context.pushText('hello');
 
-    expect(client.push).toBeCalledWith(
-      session.user.id,
-      [{ text: 'hello', type: 'text' }],
-      {}
-    );
+    expect(client.push).toBeCalledWith(session.user.id, [
+      { text: 'hello', type: 'text' },
+    ]);
   });
 
   it('should work with quickReply', async () => {
@@ -402,19 +360,13 @@ describe('#pushText', () => {
       quickReply,
     });
 
-    expect(client.push).toBeCalledWith(
-      session.user.id,
-      [
-        {
-          text: 'hello',
-          type: 'text',
-          quickReply,
-        },
-      ],
+    expect(client.push).toBeCalledWith(session.user.id, [
       {
+        text: 'hello',
+        type: 'text',
         quickReply,
-      }
-    );
+      },
+    ]);
   });
 
   it('should work with room session', async () => {
@@ -424,11 +376,9 @@ describe('#pushText', () => {
 
     await context.pushText('hello');
 
-    expect(client.push).toBeCalledWith(
-      session.room.id,
-      [{ text: 'hello', type: 'text' }],
-      {}
-    );
+    expect(client.push).toBeCalledWith(session.room.id, [
+      { text: 'hello', type: 'text' },
+    ]);
   });
 
   it('should work with group session', async () => {
@@ -438,11 +388,9 @@ describe('#pushText', () => {
 
     await context.pushText('hello');
 
-    expect(client.push).toBeCalledWith(
-      session.group.id,
-      [{ text: 'hello', type: 'text' }],
-      {}
-    );
+    expect(client.push).toBeCalledWith(session.group.id, [
+      { text: 'hello', type: 'text' },
+    ]);
   });
 
   it('should call warning and not to send if dont have session', async () => {
@@ -453,22 +401,6 @@ describe('#pushText', () => {
     expect(warning).toBeCalled();
     expect(client.push).not.toBeCalled();
   });
-
-  it('should support custom token', async () => {
-    const { context, client, session } = setup({
-      customAccessToken: 'anyToken',
-    });
-
-    await context.pushText('hello');
-
-    expect(client.push).toBeCalledWith(
-      session.user.id,
-      [{ text: 'hello', type: 'text' }],
-      {
-        accessToken: 'anyToken',
-      }
-    );
-  });
 });
 
 describe('send APIs', () => {
@@ -478,20 +410,16 @@ describe('send APIs', () => {
 
       await context.send([Line.createText('2'), Line.createText('3')]);
 
-      expect(client.reply).toBeCalledWith(
-        REPLY_TOKEN,
-        [
-          {
-            type: 'text',
-            text: '2',
-          },
-          {
-            type: 'text',
-            text: '3',
-          },
-        ],
-        {}
-      );
+      expect(client.reply).toBeCalledWith(REPLY_TOKEN, [
+        {
+          type: 'text',
+          text: '2',
+        },
+        {
+          type: 'text',
+          text: '3',
+        },
+      ]);
     });
   });
 
@@ -501,16 +429,12 @@ describe('send APIs', () => {
 
       await context.sendText('hello');
 
-      expect(client.reply).toBeCalledWith(
-        REPLY_TOKEN,
-        [
-          {
-            type: 'text',
-            text: 'hello',
-          },
-        ],
-        {}
-      );
+      expect(client.reply).toBeCalledWith(REPLY_TOKEN, [
+        {
+          type: 'text',
+          text: 'hello',
+        },
+      ]);
     });
 
     it('should work with quickReply', async () => {
@@ -520,19 +444,13 @@ describe('send APIs', () => {
         quickReply,
       });
 
-      expect(client.reply).toBeCalledWith(
-        REPLY_TOKEN,
-        [
-          {
-            type: 'text',
-            text: 'hello',
-            quickReply,
-          },
-        ],
+      expect(client.reply).toBeCalledWith(REPLY_TOKEN, [
         {
+          type: 'text',
+          text: 'hello',
           quickReply,
-        }
-      );
+        },
+      ]);
     });
   });
 
@@ -545,17 +463,13 @@ describe('send APIs', () => {
         previewImageUrl: 'yyy.jpg',
       });
 
-      expect(client.reply).toBeCalledWith(
-        REPLY_TOKEN,
-        [
-          {
-            type: 'image',
-            originalContentUrl: 'xxx.jpg',
-            previewImageUrl: 'yyy.jpg',
-          },
-        ],
-        { accessToken: undefined }
-      );
+      expect(client.reply).toBeCalledWith(REPLY_TOKEN, [
+        {
+          type: 'image',
+          originalContentUrl: 'xxx.jpg',
+          previewImageUrl: 'yyy.jpg',
+        },
+      ]);
     });
 
     it('should work with quickReply', async () => {
@@ -571,20 +485,14 @@ describe('send APIs', () => {
         }
       );
 
-      expect(client.reply).toBeCalledWith(
-        REPLY_TOKEN,
-        [
-          {
-            type: 'image',
-            originalContentUrl: 'xxx.jpg',
-            previewImageUrl: 'yyy.jpg',
-            quickReply,
-          },
-        ],
+      expect(client.reply).toBeCalledWith(REPLY_TOKEN, [
         {
+          type: 'image',
+          originalContentUrl: 'xxx.jpg',
+          previewImageUrl: 'yyy.jpg',
           quickReply,
-        }
-      );
+        },
+      ]);
     });
   });
 
@@ -597,17 +505,13 @@ describe('send APIs', () => {
         duration: 240000,
       });
 
-      expect(client.reply).toBeCalledWith(
-        REPLY_TOKEN,
-        [
-          {
-            type: 'audio',
-            originalContentUrl: 'xxx.m4a',
-            duration: 240000,
-          },
-        ],
-        { accessToken: undefined }
-      );
+      expect(client.reply).toBeCalledWith(REPLY_TOKEN, [
+        {
+          type: 'audio',
+          originalContentUrl: 'xxx.m4a',
+          duration: 240000,
+        },
+      ]);
     });
 
     it('should work with quickReply', async () => {
@@ -623,20 +527,14 @@ describe('send APIs', () => {
         }
       );
 
-      expect(client.reply).toBeCalledWith(
-        REPLY_TOKEN,
-        [
-          {
-            type: 'audio',
-            originalContentUrl: 'xxx.m4a',
-            duration: 240000,
-            quickReply,
-          },
-        ],
+      expect(client.reply).toBeCalledWith(REPLY_TOKEN, [
         {
+          type: 'audio',
+          originalContentUrl: 'xxx.m4a',
+          duration: 240000,
           quickReply,
-        }
-      );
+        },
+      ]);
     });
   });
 
@@ -649,17 +547,13 @@ describe('send APIs', () => {
         previewImageUrl: 'yyy.jpg',
       });
 
-      expect(client.reply).toBeCalledWith(
-        REPLY_TOKEN,
-        [
-          {
-            type: 'video',
-            originalContentUrl: 'xxx.mp4',
-            previewImageUrl: 'yyy.jpg',
-          },
-        ],
-        { accessToken: undefined }
-      );
+      expect(client.reply).toBeCalledWith(REPLY_TOKEN, [
+        {
+          type: 'video',
+          originalContentUrl: 'xxx.mp4',
+          previewImageUrl: 'yyy.jpg',
+        },
+      ]);
     });
 
     it('should work with quickReply', async () => {
@@ -675,20 +569,14 @@ describe('send APIs', () => {
         }
       );
 
-      expect(client.reply).toBeCalledWith(
-        REPLY_TOKEN,
-        [
-          {
-            type: 'video',
-            originalContentUrl: 'xxx.mp4',
-            previewImageUrl: 'yyy.jpg',
-            quickReply,
-          },
-        ],
+      expect(client.reply).toBeCalledWith(REPLY_TOKEN, [
         {
+          type: 'video',
+          originalContentUrl: 'xxx.mp4',
+          previewImageUrl: 'yyy.jpg',
           quickReply,
-        }
-      );
+        },
+      ]);
     });
   });
 
@@ -703,19 +591,15 @@ describe('send APIs', () => {
         longitude: 139.70372892916203,
       });
 
-      expect(client.reply).toBeCalledWith(
-        REPLY_TOKEN,
-        [
-          {
-            type: 'location',
-            title: 'my location',
-            address: '〒150-0002 東京都渋谷区渋谷２丁目２１−１',
-            latitude: 35.65910807942215,
-            longitude: 139.70372892916203,
-          },
-        ],
-        { accessToken: undefined }
-      );
+      expect(client.reply).toBeCalledWith(REPLY_TOKEN, [
+        {
+          type: 'location',
+          title: 'my location',
+          address: '〒150-0002 東京都渋谷区渋谷２丁目２１−１',
+          latitude: 35.65910807942215,
+          longitude: 139.70372892916203,
+        },
+      ]);
     });
 
     it('should work with quickReply', async () => {
@@ -733,22 +617,16 @@ describe('send APIs', () => {
         }
       );
 
-      expect(client.reply).toBeCalledWith(
-        REPLY_TOKEN,
-        [
-          {
-            type: 'location',
-            title: 'my location',
-            address: '〒150-0002 東京都渋谷区渋谷２丁目２１−１',
-            latitude: 35.65910807942215,
-            longitude: 139.70372892916203,
-            quickReply,
-          },
-        ],
+      expect(client.reply).toBeCalledWith(REPLY_TOKEN, [
         {
+          type: 'location',
+          title: 'my location',
+          address: '〒150-0002 東京都渋谷区渋谷２丁目２１−１',
+          latitude: 35.65910807942215,
+          longitude: 139.70372892916203,
           quickReply,
-        }
-      );
+        },
+      ]);
     });
   });
 
@@ -761,17 +639,13 @@ describe('send APIs', () => {
         stickerId: '1',
       });
 
-      expect(client.reply).toBeCalledWith(
-        REPLY_TOKEN,
-        [
-          {
-            type: 'sticker',
-            packageId: '1',
-            stickerId: '1',
-          },
-        ],
-        { accessToken: undefined }
-      );
+      expect(client.reply).toBeCalledWith(REPLY_TOKEN, [
+        {
+          type: 'sticker',
+          packageId: '1',
+          stickerId: '1',
+        },
+      ]);
     });
 
     it('should work with quickReply', async () => {
@@ -787,20 +661,14 @@ describe('send APIs', () => {
         }
       );
 
-      expect(client.reply).toBeCalledWith(
-        REPLY_TOKEN,
-        [
-          {
-            type: 'sticker',
-            packageId: '1',
-            stickerId: '1',
-            quickReply,
-          },
-        ],
+      expect(client.reply).toBeCalledWith(REPLY_TOKEN, [
         {
+          type: 'sticker',
+          packageId: '1',
+          stickerId: '1',
           quickReply,
-        }
-      );
+        },
+      ]);
     });
   });
 
@@ -840,17 +708,13 @@ describe('send APIs', () => {
 
       await context.sendImagemap('this is an imagemap', template);
 
-      expect(client.reply).toBeCalledWith(
-        REPLY_TOKEN,
-        [
-          {
-            type: 'imagemap',
-            altText: 'this is an imagemap',
-            ...template,
-          },
-        ],
-        {}
-      );
+      expect(client.reply).toBeCalledWith(REPLY_TOKEN, [
+        {
+          type: 'imagemap',
+          altText: 'this is an imagemap',
+          ...template,
+        },
+      ]);
     });
 
     it('should work with quickReply', async () => {
@@ -860,20 +724,14 @@ describe('send APIs', () => {
         quickReply,
       });
 
-      expect(client.reply).toBeCalledWith(
-        REPLY_TOKEN,
-        [
-          {
-            type: 'imagemap',
-            altText: 'this is an imagemap',
-            ...template,
-            quickReply,
-          },
-        ],
+      expect(client.reply).toBeCalledWith(REPLY_TOKEN, [
         {
+          type: 'imagemap',
+          altText: 'this is an imagemap',
+          ...template,
           quickReply,
-        }
-      );
+        },
+      ]);
     });
   });
 
@@ -924,17 +782,13 @@ describe('send APIs', () => {
 
       await context.sendFlex('this is a flex', contents);
 
-      expect(client.reply).toBeCalledWith(
-        REPLY_TOKEN,
-        [
-          {
-            type: 'flex',
-            altText: 'this is a flex',
-            contents,
-          },
-        ],
-        {}
-      );
+      expect(client.reply).toBeCalledWith(REPLY_TOKEN, [
+        {
+          type: 'flex',
+          altText: 'this is a flex',
+          contents,
+        },
+      ]);
     });
 
     it('should work with quickReply', async () => {
@@ -944,20 +798,14 @@ describe('send APIs', () => {
         quickReply,
       });
 
-      expect(client.reply).toBeCalledWith(
-        REPLY_TOKEN,
-        [
-          {
-            type: 'flex',
-            altText: 'this is a flex',
-            contents,
-            quickReply,
-          },
-        ],
+      expect(client.reply).toBeCalledWith(REPLY_TOKEN, [
         {
+          type: 'flex',
+          altText: 'this is a flex',
+          contents,
           quickReply,
-        }
-      );
+        },
+      ]);
     });
   });
 
@@ -991,17 +839,13 @@ describe('send APIs', () => {
 
       await context.sendTemplate('this is a template', template);
 
-      expect(client.reply).toBeCalledWith(
-        REPLY_TOKEN,
-        [
-          {
-            type: 'template',
-            altText: 'this is a template',
-            template,
-          },
-        ],
-        {}
-      );
+      expect(client.reply).toBeCalledWith(REPLY_TOKEN, [
+        {
+          type: 'template',
+          altText: 'this is a template',
+          template,
+        },
+      ]);
     });
 
     it('should work with quickReply', async () => {
@@ -1011,20 +855,14 @@ describe('send APIs', () => {
         quickReply,
       });
 
-      expect(client.reply).toBeCalledWith(
-        REPLY_TOKEN,
-        [
-          {
-            type: 'template',
-            altText: 'this is a template',
-            template,
-            quickReply,
-          },
-        ],
+      expect(client.reply).toBeCalledWith(REPLY_TOKEN, [
         {
+          type: 'template',
+          altText: 'this is a template',
+          template,
           quickReply,
-        }
-      );
+        },
+      ]);
     });
   });
 
@@ -1057,20 +895,16 @@ describe('send APIs', () => {
 
       await context.sendButtonTemplate('this is a button template', template);
 
-      expect(client.reply).toBeCalledWith(
-        REPLY_TOKEN,
-        [
-          {
-            type: 'template',
-            altText: 'this is a button template',
-            template: {
-              type: 'buttons',
-              ...template,
-            },
+      expect(client.reply).toBeCalledWith(REPLY_TOKEN, [
+        {
+          type: 'template',
+          altText: 'this is a button template',
+          template: {
+            type: 'buttons',
+            ...template,
           },
-        ],
-        { accessToken: undefined }
-      );
+        },
+      ]);
     });
 
     it('should work with quickReply', async () => {
@@ -1080,23 +914,17 @@ describe('send APIs', () => {
         quickReply,
       });
 
-      expect(client.reply).toBeCalledWith(
-        REPLY_TOKEN,
-        [
-          {
-            type: 'template',
-            altText: 'this is a button template',
-            template: {
-              type: 'buttons',
-              ...template,
-            },
-            quickReply,
-          },
-        ],
+      expect(client.reply).toBeCalledWith(REPLY_TOKEN, [
         {
+          type: 'template',
+          altText: 'this is a button template',
+          template: {
+            type: 'buttons',
+            ...template,
+          },
           quickReply,
-        }
-      );
+        },
+      ]);
     });
 
     it('should support sendButtonsTemplate alias', async () => {
@@ -1104,20 +932,16 @@ describe('send APIs', () => {
 
       await context.sendButtonsTemplate('this is a button template', template);
 
-      expect(client.reply).toBeCalledWith(
-        REPLY_TOKEN,
-        [
-          {
-            type: 'template',
-            altText: 'this is a button template',
-            template: {
-              type: 'buttons',
-              ...template,
-            },
+      expect(client.reply).toBeCalledWith(REPLY_TOKEN, [
+        {
+          type: 'template',
+          altText: 'this is a button template',
+          template: {
+            type: 'buttons',
+            ...template,
           },
-        ],
-        {}
-      );
+        },
+      ]);
     });
   });
 
@@ -1143,20 +967,16 @@ describe('send APIs', () => {
 
       await context.sendConfirmTemplate('this is a confirm template', template);
 
-      expect(client.reply).toBeCalledWith(
-        REPLY_TOKEN,
-        [
-          {
-            type: 'template',
-            altText: 'this is a confirm template',
-            template: {
-              type: 'confirm',
-              ...template,
-            },
+      expect(client.reply).toBeCalledWith(REPLY_TOKEN, [
+        {
+          type: 'template',
+          altText: 'this is a confirm template',
+          template: {
+            type: 'confirm',
+            ...template,
           },
-        ],
-        { accessToken: undefined }
-      );
+        },
+      ]);
     });
 
     it('should work with quickReply', async () => {
@@ -1168,21 +988,17 @@ describe('send APIs', () => {
         { quickReply }
       );
 
-      expect(client.reply).toBeCalledWith(
-        REPLY_TOKEN,
-        [
-          {
-            type: 'template',
-            altText: 'this is a confirm template',
-            template: {
-              type: 'confirm',
-              ...template,
-            },
-            quickReply,
+      expect(client.reply).toBeCalledWith(REPLY_TOKEN, [
+        {
+          type: 'template',
+          altText: 'this is a confirm template',
+          template: {
+            type: 'confirm',
+            ...template,
           },
-        ],
-        { quickReply }
-      );
+          quickReply,
+        },
+      ]);
     });
   });
 
@@ -1242,22 +1058,18 @@ describe('send APIs', () => {
         template
       );
 
-      expect(client.reply).toBeCalledWith(
-        REPLY_TOKEN,
-        [
-          {
-            type: 'template',
-            altText: 'this is a carousel template',
-            template: {
-              type: 'carousel',
-              imageAspectRatio: undefined,
-              imageSize: undefined,
-              columns: template,
-            },
+      expect(client.reply).toBeCalledWith(REPLY_TOKEN, [
+        {
+          type: 'template',
+          altText: 'this is a carousel template',
+          template: {
+            type: 'carousel',
+            imageAspectRatio: undefined,
+            imageSize: undefined,
+            columns: template,
           },
-        ],
-        { accessToken: undefined }
-      );
+        },
+      ]);
     });
 
     it('should work with quickReply', async () => {
@@ -1269,23 +1081,19 @@ describe('send APIs', () => {
         { quickReply }
       );
 
-      expect(client.reply).toBeCalledWith(
-        REPLY_TOKEN,
-        [
-          {
-            type: 'template',
-            altText: 'this is a carousel template',
-            template: {
-              type: 'carousel',
-              imageAspectRatio: undefined,
-              imageSize: undefined,
-              columns: template,
-            },
-            quickReply,
+      expect(client.reply).toBeCalledWith(REPLY_TOKEN, [
+        {
+          type: 'template',
+          altText: 'this is a carousel template',
+          template: {
+            type: 'carousel',
+            imageAspectRatio: undefined,
+            imageSize: undefined,
+            columns: template,
           },
-        ],
-        { quickReply }
-      );
+          quickReply,
+        },
+      ]);
     });
   });
 });
@@ -1329,8 +1137,7 @@ describe('profile APIs', () => {
 
       expect(client.getGroupMemberProfile).toBeCalledWith(
         'fakeGroupId',
-        'fakeUserId',
-        { accessToken: undefined }
+        'fakeUserId'
       );
     });
 
@@ -1341,8 +1148,7 @@ describe('profile APIs', () => {
 
       expect(client.getRoomMemberProfile).toBeCalledWith(
         'fakeRoomId',
-        'fakeUserId',
-        { accessToken: undefined }
+        'fakeUserId'
       );
     });
 
@@ -1351,7 +1157,7 @@ describe('profile APIs', () => {
 
       await context.getUserProfile();
 
-      expect(client.getUserProfile).toBeCalledWith('fakeUserId', {});
+      expect(client.getUserProfile).toBeCalledWith('fakeUserId');
     });
   });
 
@@ -1373,8 +1179,7 @@ describe('profile APIs', () => {
 
       expect(client.getGroupMemberProfile).toBeCalledWith(
         'fakeGroupId',
-        'anotherUser',
-        { accessToken: undefined }
+        'anotherUser'
       );
     });
 
@@ -1385,8 +1190,7 @@ describe('profile APIs', () => {
 
       expect(client.getRoomMemberProfile).toBeCalledWith(
         'fakeRoomId',
-        'anotherUser',
-        { accessToken: undefined }
+        'anotherUser'
       );
     });
 
@@ -1421,8 +1225,7 @@ describe('member IDs APIs', () => {
 
       expect(client.getGroupMemberIds).toBeCalledWith(
         'fakeGroupId',
-        'startToken',
-        { accessToken: undefined }
+        'startToken'
       );
     });
 
@@ -1433,8 +1236,7 @@ describe('member IDs APIs', () => {
 
       expect(client.getRoomMemberIds).toBeCalledWith(
         'fakeRoomId',
-        'startToken',
-        { accessToken: undefined }
+        'startToken'
       );
     });
 
@@ -1465,7 +1267,7 @@ describe('member IDs APIs', () => {
 
       await context.getAllMemberIds();
 
-      expect(client.getAllGroupMemberIds).toBeCalledWith('fakeGroupId', {});
+      expect(client.getAllGroupMemberIds).toBeCalledWith('fakeGroupId');
     });
 
     it('get memeber ids in room', async () => {
@@ -1473,7 +1275,7 @@ describe('member IDs APIs', () => {
 
       await context.getAllMemberIds();
 
-      expect(client.getAllRoomMemberIds).toBeCalledWith('fakeRoomId', {});
+      expect(client.getAllRoomMemberIds).toBeCalledWith('fakeRoomId');
     });
 
     it('not get user profile in user session', async () => {
@@ -1499,7 +1301,7 @@ describe('ruchmenu APIs', () => {
 
       const result = await context.getLinkedRichMenu();
 
-      expect(client.getLinkedRichMenu).toBeCalledWith(session.user.id, {});
+      expect(client.getLinkedRichMenu).toBeCalledWith(session.user.id);
       expect(result.richMenuId).toEqual('richMenuId');
     });
 
@@ -1518,11 +1320,7 @@ describe('ruchmenu APIs', () => {
 
       await context.linkRichMenu('richMenuId');
 
-      expect(client.linkRichMenu).toBeCalledWith(
-        session.user.id,
-        'richMenuId',
-        { accessToken: undefined }
-      );
+      expect(client.linkRichMenu).toBeCalledWith(session.user.id, 'richMenuId');
     });
 
     it('should warn without user', async () => {
@@ -1540,7 +1338,7 @@ describe('ruchmenu APIs', () => {
 
       await context.unlinkRichMenu();
 
-      expect(client.unlinkRichMenu).toBeCalledWith(session.user.id, {});
+      expect(client.unlinkRichMenu).toBeCalledWith(session.user.id);
     });
 
     it('should warn without user', async () => {
@@ -1563,7 +1361,7 @@ describe('account link APIs', () => {
 
       const result = await context.issueLinkToken();
 
-      expect(client.issueLinkToken).toBeCalledWith(session.user.id, {});
+      expect(client.issueLinkToken).toBeCalledWith(session.user.id);
       expect(result).toEqual({
         token: 'xxxxx',
       });
@@ -1608,36 +1406,24 @@ describe('batch', () => {
 
     await context.handlerDidEnd();
 
-    expect(client.reply).toBeCalledWith(
-      REPLY_TOKEN,
-      [
-        {
-          type: 'text',
-          text: '1',
-        },
-      ],
-      { accessToken: undefined }
-    );
-    expect(client.push).toBeCalledWith(
-      session.user.id,
-      [
-        {
-          type: 'text',
-          text: '2',
-        },
-      ],
-      { accessToken: undefined }
-    );
-    expect(client.push).toBeCalledWith(
-      session.user.id,
-      [
-        {
-          type: 'text',
-          text: '3',
-        },
-      ],
-      { accessToken: undefined }
-    );
+    expect(client.reply).toBeCalledWith(REPLY_TOKEN, [
+      {
+        type: 'text',
+        text: '1',
+      },
+    ]);
+    expect(client.push).toBeCalledWith(session.user.id, [
+      {
+        type: 'text',
+        text: '2',
+      },
+    ]);
+    expect(client.push).toBeCalledWith(session.user.id, [
+      {
+        type: 'text',
+        text: '3',
+      },
+    ]);
   });
 
   it('should batch reply', async () => {
@@ -1649,24 +1435,20 @@ describe('batch', () => {
 
     await context.handlerDidEnd();
 
-    expect(client.reply).toBeCalledWith(
-      REPLY_TOKEN,
-      [
-        {
-          type: 'text',
-          text: '1',
-        },
-        {
-          type: 'text',
-          text: '2',
-        },
-        {
-          type: 'text',
-          text: '3',
-        },
-      ],
-      { accessToken: undefined }
-    );
+    expect(client.reply).toBeCalledWith(REPLY_TOKEN, [
+      {
+        type: 'text',
+        text: '1',
+      },
+      {
+        type: 'text',
+        text: '2',
+      },
+      {
+        type: 'text',
+        text: '3',
+      },
+    ]);
   });
 
   it('should work with context.reply', async () => {
@@ -1677,24 +1459,20 @@ describe('batch', () => {
 
     await context.handlerDidEnd();
 
-    expect(client.reply).toBeCalledWith(
-      REPLY_TOKEN,
-      [
-        {
-          type: 'text',
-          text: '1',
-        },
-        {
-          type: 'text',
-          text: '2',
-        },
-        {
-          type: 'text',
-          text: '3',
-        },
-      ],
-      { accessToken: undefined }
-    );
+    expect(client.reply).toBeCalledWith(REPLY_TOKEN, [
+      {
+        type: 'text',
+        text: '1',
+      },
+      {
+        type: 'text',
+        text: '2',
+      },
+      {
+        type: 'text',
+        text: '3',
+      },
+    ]);
   });
 
   it('should warning when reply over 5 messages', async () => {
@@ -1711,32 +1489,28 @@ describe('batch', () => {
     await context.handlerDidEnd();
 
     expect(client.reply).toHaveBeenCalledTimes(1);
-    expect(client.reply).toBeCalledWith(
-      REPLY_TOKEN,
-      [
-        {
-          type: 'text',
-          text: '1',
-        },
-        {
-          type: 'text',
-          text: '2',
-        },
-        {
-          type: 'text',
-          text: '3',
-        },
-        {
-          type: 'text',
-          text: '4',
-        },
-        {
-          type: 'text',
-          text: '5',
-        },
-      ],
-      { accessToken: undefined }
-    );
+    expect(client.reply).toBeCalledWith(REPLY_TOKEN, [
+      {
+        type: 'text',
+        text: '1',
+      },
+      {
+        type: 'text',
+        text: '2',
+      },
+      {
+        type: 'text',
+        text: '3',
+      },
+      {
+        type: 'text',
+        text: '4',
+      },
+      {
+        type: 'text',
+        text: '5',
+      },
+    ]);
     expect(warning).toBeCalledWith(false, expect.any(String));
   });
 
@@ -1749,24 +1523,20 @@ describe('batch', () => {
 
     await context.handlerDidEnd();
 
-    expect(client.push).toBeCalledWith(
-      session.user.id,
-      [
-        {
-          type: 'text',
-          text: '1',
-        },
-        {
-          type: 'text',
-          text: '2',
-        },
-        {
-          type: 'text',
-          text: '3',
-        },
-      ],
-      { accessToken: undefined }
-    );
+    expect(client.push).toBeCalledWith(session.user.id, [
+      {
+        type: 'text',
+        text: '1',
+      },
+      {
+        type: 'text',
+        text: '2',
+      },
+      {
+        type: 'text',
+        text: '3',
+      },
+    ]);
   });
 
   it('should work with context.push', async () => {
@@ -1777,24 +1547,20 @@ describe('batch', () => {
 
     await context.handlerDidEnd();
 
-    expect(client.push).toBeCalledWith(
-      session.user.id,
-      [
-        {
-          type: 'text',
-          text: '1',
-        },
-        {
-          type: 'text',
-          text: '2',
-        },
-        {
-          type: 'text',
-          text: '3',
-        },
-      ],
-      { accessToken: undefined }
-    );
+    expect(client.push).toBeCalledWith(session.user.id, [
+      {
+        type: 'text',
+        text: '1',
+      },
+      {
+        type: 'text',
+        text: '2',
+      },
+      {
+        type: 'text',
+        text: '3',
+      },
+    ]);
   });
 
   it('should have more requests when push over 5 messages', async () => {
@@ -1811,42 +1577,34 @@ describe('batch', () => {
     await context.handlerDidEnd();
 
     expect(client.push).toHaveBeenCalledTimes(2);
-    expect(client.push).toBeCalledWith(
-      session.user.id,
-      [
-        {
-          type: 'text',
-          text: '1',
-        },
-        {
-          type: 'text',
-          text: '2',
-        },
-        {
-          type: 'text',
-          text: '3',
-        },
-        {
-          type: 'text',
-          text: '4',
-        },
-        {
-          type: 'text',
-          text: '5',
-        },
-      ],
-      { accessToken: undefined }
-    );
-    expect(client.push).toBeCalledWith(
-      session.user.id,
-      [
-        {
-          type: 'text',
-          text: '6',
-        },
-      ],
-      { accessToken: undefined }
-    );
+    expect(client.push).toBeCalledWith(session.user.id, [
+      {
+        type: 'text',
+        text: '1',
+      },
+      {
+        type: 'text',
+        text: '2',
+      },
+      {
+        type: 'text',
+        text: '3',
+      },
+      {
+        type: 'text',
+        text: '4',
+      },
+      {
+        type: 'text',
+        text: '5',
+      },
+    ]);
+    expect(client.push).toBeCalledWith(session.user.id, [
+      {
+        type: 'text',
+        text: '6',
+      },
+    ]);
     expect(warning).not.toBeCalled();
   });
 
@@ -1861,40 +1619,28 @@ describe('batch', () => {
 
     await context.pushText('4');
 
-    expect(client.reply).toBeCalledWith(
-      REPLY_TOKEN,
-      [
-        {
-          type: 'text',
-          text: '1',
-        },
-      ],
-      { accessToken: undefined }
-    );
-    expect(client.push).toBeCalledWith(
-      session.user.id,
-      [
-        {
-          type: 'text',
-          text: '2',
-        },
-        {
-          type: 'text',
-          text: '3',
-        },
-      ],
-      { accessToken: undefined }
-    );
-    expect(client.push).toBeCalledWith(
-      session.user.id,
-      [
-        {
-          type: 'text',
-          text: '4',
-        },
-      ],
-      { accessToken: undefined }
-    );
+    expect(client.reply).toBeCalledWith(REPLY_TOKEN, [
+      {
+        type: 'text',
+        text: '1',
+      },
+    ]);
+    expect(client.push).toBeCalledWith(session.user.id, [
+      {
+        type: 'text',
+        text: '2',
+      },
+      {
+        type: 'text',
+        text: '3',
+      },
+    ]);
+    expect(client.push).toBeCalledWith(session.user.id, [
+      {
+        type: 'text',
+        text: '4',
+      },
+    ]);
   });
 });
 
@@ -1904,11 +1650,9 @@ describe('sendMethod', () => {
 
     await context.sendText('hello');
 
-    expect(client.reply).toBeCalledWith(
-      REPLY_TOKEN,
-      [{ text: 'hello', type: 'text' }],
-      {}
-    );
+    expect(client.reply).toBeCalledWith(REPLY_TOKEN, [
+      { text: 'hello', type: 'text' },
+    ]);
     expect(client.push).not.toBeCalled();
   });
 
@@ -1919,11 +1663,9 @@ describe('sendMethod', () => {
 
     await context.sendText('hello');
 
-    expect(client.push).toBeCalledWith(
-      session.user.id,
-      [{ text: 'hello', type: 'text' }],
-      {}
-    );
+    expect(client.push).toBeCalledWith(session.user.id, [
+      { text: 'hello', type: 'text' },
+    ]);
     expect(client.reply).not.toBeCalled();
   });
 });
@@ -1934,14 +1676,6 @@ describe('#useAccessToken', () => {
 
     context.useAccessToken('anyToken');
 
-    await context.replyText('hello');
-
-    expect(client.reply).toBeCalledWith(
-      REPLY_TOKEN,
-      [{ text: 'hello', type: 'text' }],
-      {
-        accessToken: 'anyToken',
-      }
-    );
+    expect(client._accessToken).toEqual('anyToken');
   });
 });
