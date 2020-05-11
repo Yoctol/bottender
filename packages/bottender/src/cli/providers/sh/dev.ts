@@ -61,11 +61,11 @@ const dev = async (ctx: CliContext): Promise<void> => {
 
   if (!isConsole) {
     let url = '';
-    try{
+    try {
       url = await ngrok.connect(port);
-    }catch (err) {
+    } catch (err) {
       if (!(err instanceof Error) && err.msg) {
-        throw new Error(`ngrok - ${err.msg}`)
+        throw new Error(`ngrok - ${err.msg}`);
       }
       throw err;
     }
