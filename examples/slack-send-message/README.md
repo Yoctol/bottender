@@ -1,12 +1,12 @@
-# Slack Post Ephemeral
+# Slack Send Message
 
 ## Install and Run
 
 Download this example or clone [bottender](https://github.com/Yoctol/bottender).
 
 ```sh
-curl https://codeload.github.com/Yoctol/bottender/tar.gz/master | tar -xz --strip=2 bottender-master/examples/slack-post-ephemeral
-cd slack-post-ephemeral
+curl https://codeload.github.com/Yoctol/bottender/tar.gz/master | tar -xz --strip=2 bottender-master/examples/slack-send-message
+cd slack-send-message
 ```
 
 Install dependencies:
@@ -39,7 +39,9 @@ This example is a bot running on [Slack](https://slack.com/).
 
 This example contains the following topics:
 
+- send messages in many different ways
 - send ephemeral message to the user
+- send scheduled message to the user
 
 For more information, check our [Slack guides](https://bottender.js.org/docs/en/channel-slack-sending-messages#posting-ephemeral-messages).
 
