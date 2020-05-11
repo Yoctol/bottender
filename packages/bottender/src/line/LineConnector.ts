@@ -44,6 +44,8 @@ export default class LineConnector
 
   _channelSecret: string;
 
+  _origin: string | undefined = undefined;
+
   _skipLegacyProfile: boolean;
 
   _mapDestinationToAccessToken:
@@ -84,6 +86,7 @@ export default class LineConnector
       });
 
       this._channelSecret = channelSecret;
+      this._origin = origin;
     }
 
     this._mapDestinationToAccessToken = mapDestinationToAccessToken || null;
@@ -292,23 +295,28 @@ export default class LineConnector
     requestContext?: RequestContext;
     emitter?: EventEmitter | null;
   }): Promise<LineContext> {
-    let customAccessToken;
+    let client = this._client;
     if (this._mapDestinationToAccessToken) {
       const { destination } = params.event;
 
       if (!destination) {
         warning(false, 'Could not find destination from request body.');
       } else {
-        customAccessToken = await this._mapDestinationToAccessToken(
+        const customAccessToken = await this._mapDestinationToAccessToken(
           destination
         );
+
+        client = LineClient.connect({
+          accessToken: customAccessToken,
+          channelSecret: this._channelSecret,
+          origin: this._origin,
+        });
       }
     }
 
     return new LineContext({
       ...params,
-      client: this._client,
-      customAccessToken,
+      client,
       shouldBatch: this._shouldBatch,
       sendMethod: this._sendMethod,
     });
