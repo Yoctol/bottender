@@ -1,6 +1,8 @@
+const { router, slack, text } = require('bottender/router');
+
 async function HandleText(context) {
   // send a message with buttons and menu
-  await context.postMessage({
+  await context.chat.postMessage({
     attachments: [
       {
         text: 'Choose a game to play',
@@ -86,21 +88,14 @@ async function HandleText(context) {
 }
 
 async function HandleInteractiveMessage(context) {
-  // check the action from button or menu
-  console.log(context.event.action);
-  // check the callbackId
   await context.sendText(
     `I received your '${context.event.callbackId}' action`
   );
 }
 
 module.exports = async function App(context) {
-  if (context.event.isText) {
-    return HandleText;
-  }
-
-  // check if an event is from interacitve message
-  if (context.event.isInteractiveMessage) {
-    return HandleInteractiveMessage;
-  }
+  return router([
+    text('*', HandleText),
+    slack.event('interactive_message', HandleInteractiveMessage),
+  ]);
 };

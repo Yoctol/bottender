@@ -1,3 +1,7 @@
+# 1.4.5 / 2020-05-11
+
+- [fix] fix issue #618 ngrok undefined error message (#765)
+
 # 1.4.4 / 2020-05-06
 
 ## slack
