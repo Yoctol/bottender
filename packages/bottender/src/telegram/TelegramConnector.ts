@@ -12,20 +12,22 @@ import TelegramEvent, { TelegramRawEvent } from './TelegramEvent';
 
 export type TelegramRequestBody = TelegramRawEvent;
 
-type ConstructorOptionsWithoutClient = {
+type TelegramRequestContext = RequestContext<TelegramRequestBody>;
+
+type ConnectorOptionsWithoutClient = {
   accessToken: string;
   origin?: string;
   skipLegacyProfile?: boolean;
 };
 
-type ConstructorOptionsWithClient = {
+type ConnectorOptionsWithClient = {
   client: TelegramClient;
   skipLegacyProfile?: boolean;
 };
 
-type ConstructorOptions =
-  | ConstructorOptionsWithoutClient
-  | ConstructorOptionsWithClient;
+export type TelegramConnectorOptions =
+  | ConnectorOptionsWithoutClient
+  | ConnectorOptionsWithClient;
 
 export default class TelegramConnector
   implements Connector<TelegramRequestBody, TelegramClient> {
@@ -33,7 +35,7 @@ export default class TelegramConnector
 
   _skipLegacyProfile: boolean;
 
-  constructor(options: ConstructorOptions) {
+  constructor(options: TelegramConnectorOptions) {
     const { skipLegacyProfile } = options;
     if ('client' in options) {
       this._client = options.client;
@@ -205,7 +207,7 @@ export default class TelegramConnector
     event: TelegramEvent;
     session: Session | null;
     initialState?: Record<string, any> | null;
-    requestContext?: RequestContext;
+    requestContext?: TelegramRequestContext;
     emitter?: EventEmitter | null;
   }): TelegramContext {
     return new TelegramContext({

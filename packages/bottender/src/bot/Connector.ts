@@ -5,7 +5,7 @@ import { Event } from '../context/Event';
 import { RequestContext } from '../types';
 
 export interface Connector<B, C> {
-  client: C;
+  client?: C;
   platform: string;
   getUniqueSessionKey(
     bodyOrEvent: B | Event<any>,

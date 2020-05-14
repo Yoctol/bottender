@@ -58,16 +58,16 @@ export default class ConsoleBot extends Bot<
         process.exit();
       }
 
+      const client = this._connector.client as ConsoleClient;
+
       if (lowerCaseLine === '/session') {
         const session = await this.getSession();
 
-        this._connector.client.sendText(JSON.stringify(session, null, 2));
+        client.sendText(JSON.stringify(session, null, 2));
       } else if (lowerCaseLine === '/state') {
         const session = await this.getSession();
 
-        this._connector.client.sendText(
-          JSON.stringify(session._state || {}, null, 2)
-        );
+        client.sendText(JSON.stringify(session._state || {}, null, 2));
       } else {
         let rawEvent;
 

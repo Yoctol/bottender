@@ -11,26 +11,31 @@ import WhatsappEvent from './WhatsappEvent';
 
 export type WhatsappRequestBody = any;
 
-type ConstructorOptionsWithoutClient = {
+type WhatsappRequestContext = RequestContext<
+  WhatsappRequestBody,
+  { 'x-twilio-signature'?: string }
+>;
+
+type ConnectorOptionsWithoutClient = {
   accountSid: string;
   authToken: string;
   phoneNumber: string;
   origin?: string;
 };
 
-type ConstructorOptionsWithClient = {
+type ConnectorOptionsWithClient = {
   client: TwilioClient;
   origin?: string;
 };
 
-type ConstructorOptions =
-  | ConstructorOptionsWithoutClient
-  | ConstructorOptionsWithClient;
+export type WhatsappConnectorOptions =
+  | ConnectorOptionsWithoutClient
+  | ConnectorOptionsWithClient;
 
 function getExpectedTwilioSignature(
   authToken: string,
   url: string,
-  params: Record<string, any> = {}
+  params: Record<string, string> = {}
 ) {
   const data = Object.keys(params)
     .sort()
@@ -46,7 +51,7 @@ export default class WhatsappConnector
   implements Connector<WhatsappRequestBody, TwilioClient> {
   _client: TwilioClient;
 
-  constructor(options: ConstructorOptions) {
+  constructor(options: WhatsappConnectorOptions) {
     if ('client' in options) {
       this._client = options.client;
     } else {
@@ -115,10 +120,13 @@ export default class WhatsappConnector
     url,
     headers,
   }: {
-    headers: Record<string, any>;
+    headers: WhatsappRequestContext['headers'];
     url: string;
-    body: Record<string, any>;
+    body: WhatsappRequestBody;
   }): boolean {
+    if (!headers['x-twilio-signature']) {
+      return false;
+    }
     const authToken = this._client.authToken;
 
     const bufferFromActualSignature = Buffer.from(
@@ -143,19 +151,7 @@ export default class WhatsappConnector
     );
   }
 
-  preprocess({
-    url,
-    headers,
-    rawBody,
-    body,
-  }: {
-    method: string;
-    url: string;
-    headers: Record<string, any>;
-    query: Record<string, any>;
-    rawBody: string;
-    body: Record<string, any>;
-  }) {
+  preprocess({ url, headers, rawBody, body }: WhatsappRequestContext) {
     if (this.verifySignature({ body, url, headers })) {
       return {
         shouldNext: true,

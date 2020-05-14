@@ -14,21 +14,26 @@ import ViberEvent, { ViberRawEvent } from './ViberEvent';
 
 export type ViberRequestBody = ViberRawEvent;
 
-type ConstructorOptionsWithoutClient = {
+type ViberRequestContext = RequestContext<
+  ViberRequestBody,
+  { 'x-viber-content-signature'?: string }
+>;
+
+type ConnectorOptionsWithoutClient = {
   accessToken: string;
   sender: ViberTypes.Sender;
   origin?: string;
   skipLegacyProfile?: boolean;
 };
 
-type ConstructorOptionsWithClient = {
+type ConnectorOptionsWithClient = {
   client: ViberClient;
   skipLegacyProfile?: boolean;
 };
 
-type ConstructorOptions =
-  | ConstructorOptionsWithoutClient
-  | ConstructorOptionsWithClient;
+export type ViberConnectorOptions =
+  | ConnectorOptionsWithoutClient
+  | ConnectorOptionsWithClient;
 
 export default class ViberConnector
   implements Connector<ViberRequestBody, ViberClient> {
@@ -38,7 +43,7 @@ export default class ViberConnector
 
   _skipLegacyProfile: boolean;
 
-  constructor(options: ConstructorOptions) {
+  constructor(options: ViberConnectorOptions) {
     const { skipLegacyProfile } = options;
     if ('client' in options) {
       this._client = options.client;
@@ -150,7 +155,7 @@ export default class ViberConnector
     event: ViberEvent;
     session: Session | null;
     initialState?: Record<string, any> | null;
-    requestContext?: RequestContext;
+    requestContext?: ViberRequestContext;
     emitter?: EventEmitter | null;
   }): ViberContext {
     return new ViberContext({
@@ -176,20 +181,11 @@ export default class ViberConnector
     return crypto.timingSafeEqual(bufferFromSignature, hashBufferFromBody);
   }
 
-  preprocess({
-    method,
-    headers,
-    rawBody,
-  }: {
-    method: string;
-    headers: Record<string, any>;
-    query: Record<string, any>;
-    rawBody: string;
-    body: Record<string, any>;
-  }) {
+  preprocess({ method, headers, rawBody }: ViberRequestContext) {
     if (
       method.toLowerCase() !== 'post' ||
-      this.verifySignature(rawBody, headers['x-viber-content-signature'])
+      (headers['x-viber-content-signature'] &&
+        this.verifySignature(rawBody, headers['x-viber-content-signature']))
     ) {
       return {
         shouldNext: true,

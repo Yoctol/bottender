@@ -4,6 +4,7 @@ import { IncomingMessage, ServerResponse } from 'http';
 
 import fromEntries from 'fromentries';
 import merge from 'lodash/merge';
+import { match } from 'path-to-regexp';
 import { pascalcase } from 'messaging-api-common';
 
 import Bot from '../bot/Bot';
@@ -130,15 +131,22 @@ class Server {
     for (let i = 0; i < this._channelBots.length; i++) {
       const { webhookPath, bot } = this._channelBots[i];
 
-      if (pathname === webhookPath) {
-        const result = (bot.connector as any).preprocess({
-          method: req.method,
-          url: `https://${req.headers.host}${req.url}`,
-          headers: req.headers,
+      const matchPath = match<Record<string, string>>(webhookPath);
+      const matchResult = matchPath(pathname);
+
+      if (matchResult) {
+        const httpContext = {
+          method: req.method as string,
+          path: pathname,
           query,
+          headers: req.headers,
           rawBody: (req as any).rawBody,
           body: (req as any).body,
-        });
+          params: matchResult.params,
+          url: `https://${req.headers.host}${req.url}`,
+        };
+
+        const result = (bot.connector as any).preprocess(httpContext);
 
         const { shouldNext } = result;
         let { response } = result;
@@ -174,12 +182,7 @@ class Server {
             ...query,
             ...(req as any).body,
           },
-          {
-            method: req.method as string,
-            path: pathname,
-            query,
-            headers: req.headers as Record<string, string>,
-          }
+          httpContext
         );
 
         if (response) {

@@ -1,3 +1,6 @@
+import { IncomingHttpHeaders } from 'http';
+
+import { JsonObject } from 'type-fest';
 import { LineClient } from 'messaging-api-line';
 import { MessengerClient } from 'messaging-api-messenger';
 import { SlackOAuthClient } from 'messaging-api-slack';
@@ -15,12 +18,27 @@ import TwilioClient from './whatsapp/TwilioClient';
 import ViberEvent from './viber/ViberEvent';
 import WhatsappEvent from './whatsapp/WhatsappEvent';
 import { ConsoleClient } from './console/ConsoleClient';
-import { LineRequestBody } from './line/LineConnector';
-import { MessengerRequestBody } from './messenger/MessengerConnector';
-import { SlackRequestBody } from './slack/SlackConnector';
-import { TelegramRequestBody } from './telegram/TelegramConnector';
-import { ViberRequestBody } from './viber/ViberConnector';
-import { WhatsappRequestBody } from './whatsapp/WhatsappConnector';
+import { LineConnectorOptions, LineRequestBody } from './line/LineConnector';
+import {
+  MessengerConnectorOptions,
+  MessengerRequestBody,
+} from './messenger/MessengerConnector';
+import {
+  SlackConnectorOptions,
+  SlackRequestBody,
+} from './slack/SlackConnector';
+import {
+  TelegramConnectorOptions,
+  TelegramRequestBody,
+} from './telegram/TelegramConnector';
+import {
+  ViberConnectorOptions,
+  ViberRequestBody,
+} from './viber/ViberConnector';
+import {
+  WhatsappConnectorOptions,
+  WhatsappRequestBody,
+} from './whatsapp/WhatsappConnector';
 
 export type Client =
   | ConsoleClient
@@ -110,57 +128,36 @@ export type SessionConfig = {
       };
 };
 
+type ChannelCommonConfig = {
+  enabled: boolean;
+  path?: string;
+  sync?: boolean;
+};
+
 export type BottenderConfig = {
   plugins?: Plugin<any>[];
   session?: SessionConfig;
   initialState?: Record<string, any>;
   channels?: {
-    [Channel.Messenger]: {
-      enabled: boolean;
-      path: string;
-      accessToken: string;
-      verifyToken: string;
-      appId: string;
-      appSecret: string;
-    };
-    [Channel.Line]: {
-      enabled: boolean;
-      path: string;
-      accessToken: string;
-      channelSecret: string;
-    };
-    [Channel.Telegram]: {
-      enabled: boolean;
-      path: string;
-      accessToken: string;
-    };
-    [Channel.Slack]: {
-      enabled: boolean;
-      path: string;
-      accessToken: string;
-      verificationToken?: string;
-      signingSecret?: string;
-    };
-    [Channel.Viber]: {
-      enabled: boolean;
-      path: string;
-      accessToken: string;
-      sender: {
-        name: string;
-      };
-    };
-    [Channel.Whatsapp]: {
-      enabled: boolean;
-      path: string;
-      accountSid: string;
-      authToken: string;
-    };
+    [Channel.Messenger]: MessengerConnectorOptions & ChannelCommonConfig;
+    [Channel.Line]: LineConnectorOptions & ChannelCommonConfig;
+    [Channel.Telegram]: TelegramConnectorOptions & ChannelCommonConfig;
+    [Channel.Slack]: SlackConnectorOptions & ChannelCommonConfig;
+    [Channel.Viber]: ViberConnectorOptions & ChannelCommonConfig;
+    [Channel.Whatsapp]: WhatsappConnectorOptions & ChannelCommonConfig;
   };
 };
 
-export type RequestContext = {
+export type RequestContext<
+  B extends JsonObject = JsonObject,
+  H extends Record<string, string | string[] | undefined> = {}
+> = {
   method: string;
   path: string;
   query: Record<string, string>;
-  headers: Record<string, string>;
+  headers: IncomingHttpHeaders & H;
+  rawBody: string;
+  body: B;
+  params: Record<string, string>;
+  url: string;
 };
