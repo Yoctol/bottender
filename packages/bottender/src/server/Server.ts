@@ -146,7 +146,8 @@ class Server {
           url: `https://${req.headers.host}${req.url}`,
         };
 
-        const result = (bot.connector as any).preprocess(httpContext);
+        // eslint-disable-next-line no-await-in-loop
+        const result = await (bot.connector as any).preprocess(httpContext);
 
         const { shouldNext } = result;
         let { response } = result;
