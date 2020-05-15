@@ -39,25 +39,25 @@ type EventsAPIBody = {
 
 export type SlackRequestBody = EventsAPIBody | { payload: string };
 
-type CommonConstructorOptions = {
+type CommonConnectorOptions = {
   skipLegacyProfile?: boolean;
   verificationToken?: string;
   signingSecret?: string;
   includeBotMessages?: boolean;
 };
 
-type ConstructorOptionsWithoutClient = {
+type ConnectorOptionsWithoutClient = {
   accessToken: string;
   origin?: string;
-} & CommonConstructorOptions;
+} & CommonConnectorOptions;
 
-type ConstructorOptionsWithClient = {
+type ConnectorOptionsWithClient = {
   client: SlackOAuthClient;
-} & CommonConstructorOptions;
+} & CommonConnectorOptions;
 
-type ConstructorOptions =
-  | ConstructorOptionsWithoutClient
-  | ConstructorOptionsWithClient;
+export type SlackConnectorOptions =
+  | ConnectorOptionsWithoutClient
+  | ConnectorOptionsWithClient;
 
 export default class SlackConnector
   implements Connector<SlackRequestBody, SlackOAuthClient> {
@@ -71,7 +71,7 @@ export default class SlackConnector
 
   _includeBotMessages: boolean;
 
-  constructor(options: ConstructorOptions) {
+  constructor(options: SlackConnectorOptions) {
     const {
       verificationToken,
       skipLegacyProfile,
@@ -370,13 +370,14 @@ export default class SlackConnector
   }: {
     rawBody: string;
     signature: string;
-    timestamp: number;
+    timestamp: string;
   }): boolean {
     // ignore this request if the timestamp is 5 more minutes away from now
     const FIVE_MINUTES_IN_MILLISECONDS = 5 * 1000 * 60;
 
     if (
-      Math.abs(Date.now() - timestamp * 1000) > FIVE_MINUTES_IN_MILLISECONDS
+      Math.abs(Date.now() - Number(timestamp) * 1000) >
+      FIVE_MINUTES_IN_MILLISECONDS
     ) {
       return false;
     }
@@ -404,8 +405,8 @@ export default class SlackConnector
     rawBody,
   }: {
     method: string;
-    headers: Record<string, any>;
-    query: Record<string, any>;
+    headers: Record<string, string>;
+    query: Record<string, string>;
     rawBody: string;
     body: Record<string, any>;
   }) {

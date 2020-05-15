@@ -1,7 +1,8 @@
 import warning from 'warning';
 import { LineClient } from 'messaging-api-line';
+import { mocked } from 'ts-jest/utils';
 
-import LineConnector from '../LineConnector';
+import LineConnector, { LineRequestBody } from '../LineConnector';
 import LineContext from '../LineContext';
 import LineEvent from '../LineEvent';
 
@@ -11,178 +12,146 @@ jest.mock('warning');
 const ACCESS_TOKEN = 'FAKE_TOKEN';
 const CHANNEL_SECRET = 'FAKE_SECRET';
 
-const request = {
-  body: {
-    destination: 'Uea8667adaf43586706170ff25ff47ae6',
-    events: [
-      {
-        replyToken: 'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA',
-        type: 'message',
-        timestamp: 1462629479859,
-        source: {
-          type: 'user',
-          userId: 'U206d25c2ea6bd87c17655609a1c37cb8',
-        },
-        message: {
-          id: '325708',
-          type: 'text',
-          text: 'Hello, world',
-        },
+const requestBody: LineRequestBody = {
+  destination: 'Uea8667adaf43586706170ff25ff47ae6',
+  events: [
+    {
+      replyToken: 'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA',
+      type: 'message',
+      mode: 'active',
+      timestamp: 1462629479859,
+      source: {
+        type: 'user',
+        userId: 'U206d25c2ea6bd87c17655609a1c37cb8',
       },
-      {
-        replyToken: 'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA',
-        type: 'follow',
-        timestamp: 1462629479859,
-        source: {
-          type: 'user',
-          userId: 'U206d25c2ea6bd87c17655609a1c37cb8',
-        },
+      message: {
+        id: '325708',
+        type: 'text',
+        text: 'Hello, world',
       },
-    ],
-  },
-  rawBody: 'fake_raw_body',
-  header: {
-    'x-line-signature': 'fake_signature',
-  },
+    },
+    {
+      replyToken: 'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA',
+      type: 'follow',
+      mode: 'active',
+      timestamp: 1462629479859,
+      source: {
+        type: 'user',
+        userId: 'U206d25c2ea6bd87c17655609a1c37cb8',
+      },
+    },
+  ],
 };
 
-const webhookVerifyRequest = {
-  body: {
-    events: [
-      {
-        replyToken: '00000000000000000000000000000000',
-        type: 'message',
-        timestamp: 1513065174862,
-        source: {
-          type: 'user',
-          userId: 'Udeadbeefdeadbeefdeadbeefdeadbeef',
-        },
-        message: {
-          id: '100001',
-          type: 'text',
-          text: 'Hello, world',
-        },
+const webhookVerifyRequestBody: LineRequestBody = {
+  destination: 'Uea8667adaf43586706170ff25ff47ae6',
+  events: [
+    {
+      replyToken: '00000000000000000000000000000000',
+      type: 'message',
+      mode: 'active',
+      timestamp: 1513065174862,
+      source: {
+        type: 'user',
+        userId: 'Udeadbeefdeadbeefdeadbeefdeadbeef',
       },
-      {
-        replyToken: 'ffffffffffffffffffffffffffffffff',
-        type: 'message',
-        timestamp: 1513065174862,
-        source: {
-          type: 'user',
-          userId: 'Udeadbeefdeadbeefdeadbeefdeadbeef',
-        },
-        message: {
-          id: '100002',
-          type: 'sticker',
-          packageId: '1',
-          stickerId: '1',
-        },
+      message: {
+        id: '100001',
+        type: 'text',
+        text: 'Hello, world',
       },
-    ],
-  },
+    },
+    {
+      replyToken: 'ffffffffffffffffffffffffffffffff',
+      type: 'message',
+      mode: 'active',
+      timestamp: 1513065174862,
+      source: {
+        type: 'user',
+        userId: 'Udeadbeefdeadbeefdeadbeefdeadbeef',
+      },
+      message: {
+        id: '100002',
+        type: 'sticker',
+        packageId: '1',
+        stickerId: '1',
+      },
+    },
+  ],
 };
 
-function setup({ sendMethod, skipLegacyProfile } = {}) {
-  const mockLineAPIClient = {
-    getUserProfile: jest.fn(),
-    isValidSignature: jest.fn(),
-    getGroupMemberProfile: jest.fn(),
-    getAllGroupMemberIds: jest.fn(),
-    getRoomMemberProfile: jest.fn(),
-    getAllRoomMemberIds: jest.fn(),
-  };
-  LineClient.connect = jest.fn();
-  LineClient.connect.mockReturnValue(mockLineAPIClient);
+beforeEach(() => {
+  // Clear all instances and calls to constructor and all methods:
+  mocked(LineClient).mockClear();
+});
+
+function setup({
+  sendMethod,
+  skipLegacyProfile,
+}: {
+  sendMethod?: string;
+  skipLegacyProfile?: boolean;
+} = {}) {
+  const connector = new LineConnector({
+    accessToken: ACCESS_TOKEN,
+    channelSecret: CHANNEL_SECRET,
+    sendMethod,
+    skipLegacyProfile,
+  });
+
+  const client = mocked(LineClient).mock.instances[0];
+
   return {
-    mockLineAPIClient,
-    connector: new LineConnector({
-      accessToken: ACCESS_TOKEN,
-      channelSecret: CHANNEL_SECRET,
-      sendMethod,
-      skipLegacyProfile,
-    }),
+    client,
+    connector,
   };
 }
 
 describe('#platform', () => {
   it('should be line', () => {
     const { connector } = setup();
+
     expect(connector.platform).toBe('line');
   });
 });
 
 describe('#client', () => {
-  it('should be client', () => {
-    const { connector, mockLineAPIClient } = setup();
-    expect(connector.client).toBe(mockLineAPIClient);
+  it('should be the client', () => {
+    const { connector, client } = setup();
+
+    expect(connector.client).toBe(client);
   });
 
-  it('support custom client', () => {
-    const client = {};
-    const connector = new LineConnector({ client });
+  it('support using custom client', () => {
+    const client = new LineClient({
+      accessToken: ACCESS_TOKEN,
+      channelSecret: CHANNEL_SECRET,
+    });
+    const connector = new LineConnector({
+      client,
+      channelSecret: CHANNEL_SECRET,
+    });
+
     expect(connector.client).toBe(client);
   });
 });
 
 describe('#getUniqueSessionKey', () => {
+  it('extract userId from the HTTP body', () => {
+    const { connector } = setup();
+    const senderId = connector.getUniqueSessionKey(requestBody);
+
+    expect(senderId).toBe('U206d25c2ea6bd87c17655609a1c37cb8');
+  });
+
   it('extract userId from user source', () => {
     const { connector } = setup();
-    const senderId = connector.getUniqueSessionKey(request.body);
-    expect(senderId).toBe('U206d25c2ea6bd87c17655609a1c37cb8');
-  });
 
-  it('extract groupId from group source', () => {
-    const { connector } = setup();
-    const senderId = connector.getUniqueSessionKey({
-      events: [
-        {
-          replyToken: 'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA',
-          type: 'message',
-          timestamp: 1462629479859,
-          source: {
-            type: 'group',
-            groupId: 'U206d25c2ea6bd87c17655609a1c37cb8',
-          },
-          message: {
-            id: '325708',
-            type: 'text',
-            text: 'Hello, world',
-          },
-        },
-      ],
-    });
-    expect(senderId).toBe('U206d25c2ea6bd87c17655609a1c37cb8');
-  });
-
-  it('extract roomId from room source', () => {
-    const { connector } = setup();
-    const senderId = connector.getUniqueSessionKey({
-      events: [
-        {
-          replyToken: 'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA',
-          type: 'message',
-          timestamp: 1462629479859,
-          source: {
-            type: 'room',
-            roomId: 'U206d25c2ea6bd87c17655609a1c37cb8',
-          },
-          message: {
-            id: '325708',
-            type: 'text',
-            text: 'Hello, world',
-          },
-        },
-      ],
-    });
-    expect(senderId).toBe('U206d25c2ea6bd87c17655609a1c37cb8');
-  });
-
-  it('extract from line event', () => {
-    const { connector } = setup();
     const senderId = connector.getUniqueSessionKey(
       new LineEvent({
         replyToken: 'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA',
         type: 'message',
+        mode: 'active',
         timestamp: 1462629479859,
         source: {
           type: 'user',
@@ -195,44 +164,65 @@ describe('#getUniqueSessionKey', () => {
         },
       })
     );
+
     expect(senderId).toBe('U206d25c2ea6bd87c17655609a1c37cb8');
   });
 
-  it('should throw error if source.type is not user, group or room', () => {
+  it('extract groupId from the group source', () => {
     const { connector } = setup();
-    let error;
-    try {
-      connector.getUniqueSessionKey({
-        events: [
-          {
-            replyToken: 'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA',
-            type: 'message',
-            timestamp: 1462629479859,
-            source: {
-              type: 'other', // other type
-              roomId: 'U206d25c2ea6bd87c17655609a1c37cb8',
-            },
-            message: {
-              id: '325708',
-              type: 'text',
-              text: 'Hello, world',
-            },
-          },
-        ],
-      });
-    } catch (err) {
-      error = err;
-    }
 
-    expect(error).toEqual(expect.any(TypeError));
+    const senderId = connector.getUniqueSessionKey(
+      new LineEvent({
+        replyToken: 'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA',
+        type: 'message',
+        mode: 'active',
+        timestamp: 1462629479859,
+        source: {
+          type: 'group',
+          groupId: 'U206d25c2ea6bd87c17655609a1c37cb8',
+        },
+        message: {
+          id: '325708',
+          type: 'text',
+          text: 'Hello, world',
+        },
+      })
+    );
+
+    expect(senderId).toBe('U206d25c2ea6bd87c17655609a1c37cb8');
+  });
+
+  it('extract roomId from the room source', () => {
+    const { connector } = setup();
+
+    const senderId = connector.getUniqueSessionKey(
+      new LineEvent({
+        replyToken: 'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA',
+        type: 'message',
+        mode: 'active',
+        timestamp: 1462629479859,
+        source: {
+          type: 'room',
+          roomId: 'U206d25c2ea6bd87c17655609a1c37cb8',
+        },
+        message: {
+          id: '325708',
+          type: 'text',
+          text: 'Hello, world',
+        },
+      })
+    );
+
+    expect(senderId).toBe('U206d25c2ea6bd87c17655609a1c37cb8');
   });
 });
 
 describe('#updateSession', () => {
   it('update session with data needed', async () => {
-    const { connector, mockLineAPIClient } = setup({
+    const { connector, client } = setup({
       skipLegacyProfile: false,
     });
+
     const user = {
       id: 'U206d25c2ea6bd87c17655609a1c37cb8',
       displayName: 'LINE taro',
@@ -241,13 +231,14 @@ describe('#updateSession', () => {
       statusMessage: 'Hello, LINE!',
       _updatedAt: expect.any(String),
     };
-    mockLineAPIClient.getUserProfile.mockResolvedValue(user);
+    mocked(client).getUserProfile.mockResolvedValue(user);
 
-    const session = {};
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const session: any = {};
 
-    await connector.updateSession(session, request.body);
+    await connector.updateSession(session, requestBody);
 
-    expect(mockLineAPIClient.getUserProfile).toBeCalledWith(
+    expect(client.getUserProfile).toBeCalledWith(
       'U206d25c2ea6bd87c17655609a1c37cb8'
     );
 
@@ -265,7 +256,7 @@ describe('#updateSession', () => {
   });
 
   it('update session if session.user exists', async () => {
-    const { connector, mockLineAPIClient } = setup({
+    const { connector, client } = setup({
       skipLegacyProfile: false,
     });
     const user = {
@@ -279,9 +270,9 @@ describe('#updateSession', () => {
 
     const session = { type: 'user', user };
 
-    await connector.updateSession(session, request.body);
+    await connector.updateSession(session, requestBody);
 
-    expect(mockLineAPIClient.getUserProfile).not.toBeCalled();
+    expect(client.getUserProfile).not.toBeCalled();
     expect(session).toEqual({
       type: 'user',
       user,
@@ -296,14 +287,16 @@ describe('#updateSession', () => {
   });
 
   it('update session with group type message', async () => {
-    const { connector, mockLineAPIClient } = setup({
+    const { connector, client } = setup({
       skipLegacyProfile: false,
     });
-    const body = {
+    const body: LineRequestBody = {
+      destination: 'Uea8667adaf43586706170ff25ff47ae6',
       events: [
         {
           replyToken: 'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA',
           type: 'message',
+          mode: 'active',
           timestamp: 1462629479859,
           source: {
             type: 'group',
@@ -332,18 +325,19 @@ describe('#updateSession', () => {
       'Uxxxxxxxxxxxxxx...3',
     ];
 
-    mockLineAPIClient.getGroupMemberProfile.mockResolvedValue(user);
-    mockLineAPIClient.getAllGroupMemberIds.mockResolvedValue(memberIds);
+    mocked(client).getGroupMemberProfile.mockResolvedValue(user);
+    mocked(client).getAllGroupMemberIds.mockResolvedValue(memberIds);
 
-    const session = {};
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const session: any = {};
 
     await connector.updateSession(session, body);
 
-    expect(mockLineAPIClient.getGroupMemberProfile).toBeCalledWith(
+    expect(client.getGroupMemberProfile).toBeCalledWith(
       'Ca56f94637cc4347f90a25382909b24b9',
       'U206d25c2ea6bd87c17655609a1c37cb8'
     );
-    expect(mockLineAPIClient.getAllGroupMemberIds).toBeCalledWith(
+    expect(client.getAllGroupMemberIds).toBeCalledWith(
       'Ca56f94637cc4347f90a25382909b24b9'
     );
 
@@ -370,14 +364,16 @@ describe('#updateSession', () => {
   });
 
   it('update session with group type event without userId', async () => {
-    const { connector, mockLineAPIClient } = setup({
+    const { connector, client } = setup({
       skipLegacyProfile: false,
     });
-    const body = {
+    const body: LineRequestBody = {
+      destination: 'Uea8667adaf43586706170ff25ff47ae6',
       events: [
         {
           replyToken: 'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA',
           type: 'join',
+          mode: 'active',
           timestamp: 1462629479859,
           source: {
             type: 'group',
@@ -393,14 +389,15 @@ describe('#updateSession', () => {
       'Uxxxxxxxxxxxxxx...3',
     ];
 
-    mockLineAPIClient.getAllGroupMemberIds.mockResolvedValue(memberIds);
+    mocked(client).getAllGroupMemberIds.mockResolvedValue(memberIds);
 
-    const session = {};
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const session: any = {};
 
     await connector.updateSession(session, body);
 
-    expect(mockLineAPIClient.getGroupMemberProfile).not.toBeCalled();
-    expect(mockLineAPIClient.getAllGroupMemberIds).toBeCalledWith(
+    expect(client.getGroupMemberProfile).not.toBeCalled();
+    expect(client.getAllGroupMemberIds).toBeCalledWith(
       'Ca56f94637cc4347f90a25382909b24b9'
     );
 
@@ -427,14 +424,16 @@ describe('#updateSession', () => {
   });
 
   it('update session with room type message', async () => {
-    const { connector, mockLineAPIClient } = setup({
+    const { connector, client } = setup({
       skipLegacyProfile: false,
     });
-    const body = {
+    const body: LineRequestBody = {
+      destination: 'Uea8667adaf43586706170ff25ff47ae6',
       events: [
         {
           replyToken: 'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA',
           type: 'message',
+          mode: 'active',
           timestamp: 1462629479859,
           source: {
             type: 'room',
@@ -463,18 +462,19 @@ describe('#updateSession', () => {
       'Uxxxxxxxxxxxxxx...3',
     ];
 
-    mockLineAPIClient.getRoomMemberProfile.mockResolvedValue(user);
-    mockLineAPIClient.getAllRoomMemberIds.mockResolvedValue(memberIds);
+    mocked(client).getRoomMemberProfile.mockResolvedValue(user);
+    mocked(client).getAllRoomMemberIds.mockResolvedValue(memberIds);
 
-    const session = {};
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const session: any = {};
 
     await connector.updateSession(session, body);
 
-    expect(mockLineAPIClient.getRoomMemberProfile).toBeCalledWith(
+    expect(client.getRoomMemberProfile).toBeCalledWith(
       'Ra8dbf4673c4c812cd491258042226c99',
       'U206d25c2ea6bd87c17655609a1c37cb8'
     );
-    expect(mockLineAPIClient.getAllRoomMemberIds).toBeCalledWith(
+    expect(client.getAllRoomMemberIds).toBeCalledWith(
       'Ra8dbf4673c4c812cd491258042226c99'
     );
 
@@ -501,14 +501,16 @@ describe('#updateSession', () => {
   });
 
   it('update session with room type event without userId', async () => {
-    const { connector, mockLineAPIClient } = setup({
+    const { connector, client } = setup({
       skipLegacyProfile: false,
     });
-    const body = {
+    const body: LineRequestBody = {
+      destination: 'Uea8667adaf43586706170ff25ff47ae6',
       events: [
         {
           replyToken: 'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA',
           type: 'join',
+          mode: 'active',
           timestamp: 1462629479859,
           source: {
             type: 'room',
@@ -524,14 +526,15 @@ describe('#updateSession', () => {
       'Uxxxxxxxxxxxxxx...3',
     ];
 
-    mockLineAPIClient.getAllRoomMemberIds.mockResolvedValue(memberIds);
+    mocked(client).getAllRoomMemberIds.mockResolvedValue(memberIds);
 
-    const session = {};
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const session: any = {};
 
     await connector.updateSession(session, body);
 
-    expect(mockLineAPIClient.getRoomMemberProfile).not.toBeCalled();
-    expect(mockLineAPIClient.getAllRoomMemberIds).toBeCalledWith(
+    expect(client.getRoomMemberProfile).not.toBeCalled();
+    expect(client.getAllRoomMemberIds).toBeCalledWith(
       'Ra8dbf4673c4c812cd491258042226c99'
     );
 
@@ -557,50 +560,15 @@ describe('#updateSession', () => {
     });
   });
 
-  it('update session with other type message', async () => {
-    const { connector } = setup({
-      skipLegacyProfile: false,
-    });
-    const body = {
-      events: [
-        {
-          replyToken: 'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA',
-          type: 'message',
-          timestamp: 1462629479859,
-          source: {
-            type: 'other',
-          },
-          message: {
-            id: '325708',
-            type: 'text',
-            text: 'Hello, world',
-          },
-        },
-      ],
-    };
-
-    const session = {};
-
-    await connector.updateSession(session, body);
-
-    expect(session).toEqual({
-      type: 'other',
-    });
-    expect(Object.getOwnPropertyDescriptor(session, 'user')).toEqual({
-      configurable: false,
-      enumerable: true,
-      writable: false,
-      value: undefined,
-    });
-  });
-
   it('update userId without calling any api while skipLegacyProfile set to true', async () => {
-    const { connector, mockLineAPIClient } = setup();
-    const session = {};
+    const { connector, client } = setup();
 
-    await connector.updateSession(session, request.body);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const session: any = {};
 
-    expect(mockLineAPIClient.getUserProfile).not.toBeCalled();
+    await connector.updateSession(session, requestBody);
+
+    expect(client.getUserProfile).not.toBeCalled();
 
     expect(session).toEqual({
       type: 'user',
@@ -620,9 +588,9 @@ describe('#updateSession', () => {
 });
 
 describe('#mapRequestToEvents', () => {
-  it('should map request to LineEvents', () => {
+  it('should map the HTTP body to the LineEvents', () => {
     const { connector } = setup();
-    const events = connector.mapRequestToEvents(request.body);
+    const events = connector.mapRequestToEvents(requestBody);
 
     expect(events).toHaveLength(2);
     expect(events[0]).toBeInstanceOf(LineEvent);
@@ -633,9 +601,24 @@ describe('#mapRequestToEvents', () => {
 });
 
 describe('#createContext', () => {
-  it('should create LineContext', async () => {
+  it('should create a LineContext', async () => {
     const { connector } = setup();
-    const event = {};
+
+    const event = new LineEvent({
+      replyToken: 'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA',
+      type: 'message',
+      mode: 'active',
+      timestamp: 1462629479859,
+      source: {
+        type: 'user',
+        userId: 'U206d25c2ea6bd87c17655609a1c37cb8',
+      },
+      message: {
+        id: '325708',
+        type: 'text',
+        text: 'Hello, world',
+      },
+    });
     const session = {};
 
     const context = await connector.createContext({
@@ -646,15 +629,72 @@ describe('#createContext', () => {
     expect(context).toBeDefined();
     expect(context).toBeInstanceOf(LineContext);
   });
+
+  it('should create a LineContext using the config from getConfig', async () => {
+    const getConfig = jest.fn();
+
+    getConfig.mockResolvedValue({
+      accessToken: ACCESS_TOKEN,
+      channelSecret: CHANNEL_SECRET,
+    });
+
+    const connector = new LineConnector({
+      getConfig,
+    });
+
+    const event = new LineEvent({
+      replyToken: 'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA',
+      type: 'message',
+      mode: 'active',
+      timestamp: 1462629479859,
+      source: {
+        type: 'user',
+        userId: 'U206d25c2ea6bd87c17655609a1c37cb8',
+      },
+      message: {
+        id: '325708',
+        type: 'text',
+        text: 'Hello, world',
+      },
+    });
+    const session = {};
+
+    await connector.createContext({
+      event,
+      session,
+      requestContext: {
+        path: '/webhooks/line/11111111111',
+        params: {
+          channelId: '11111111111',
+        },
+        url: `https://www.example.com/webhooks/line/11111111111`,
+        method: 'post',
+        headers: {
+          'x-line-signature': '5+SUnXZ8+G1ErXUewxeZ0T9j4yD6cmwYn5XCO4tBFic',
+        },
+        query: {},
+        rawBody: JSON.stringify(requestBody),
+        body: requestBody,
+      },
+    });
+
+    expect(getConfig).toBeCalledWith({ params: { channelId: '11111111111' } });
+    expect(LineClient).toBeCalledWith({
+      accessToken: ACCESS_TOKEN,
+      channelSecret: CHANNEL_SECRET,
+      origin: undefined,
+    });
+  });
 });
 
 describe('#verifySignature', () => {
-  it('should return true if signature is equal app sercret after crypto', () => {
+  it('should return true if signature is equal app secret after crypto', () => {
     const { connector } = setup();
 
     const result = connector.verifySignature(
       'rawBody',
-      'XtFE4w+/e5cw8ys6BSALGj3ZCYgRtBdCBxyEfrkgLPc='
+      'XtFE4w+/e5cw8ys6BSALGj3ZCYgRtBdCBxyEfrkgLPc=',
+      { channelSecret: CHANNEL_SECRET }
     );
 
     expect(result).toBe(true);
@@ -668,73 +708,112 @@ it('should warning if sendMethod is not one of `reply`, `push`', () => {
 });
 
 describe('#isWebhookVerifyRequest', () => {
-  it('check if request is for webhook verification', async () => {
+  it('check if the HTTP body is for webhook verification', async () => {
     const { connector } = setup();
 
-    await connector.isWebhookVerifyRequest(webhookVerifyRequest.body);
-
-    expect(connector.isWebhookVerifyRequest(webhookVerifyRequest.body)).toEqual(
+    expect(connector.isWebhookVerifyRequest(webhookVerifyRequestBody)).toEqual(
       true
     );
-    expect(connector.isWebhookVerifyRequest({ events: [] })).toEqual(false);
+    expect(
+      connector.isWebhookVerifyRequest({
+        destination: 'Uea8667adaf43586706170ff25ff47ae6',
+        events: [],
+      })
+    ).toEqual(false);
   });
 });
 
 describe('#preprocess', () => {
-  it('should return shouldNext: true if request method is get', () => {
+  it('should return shouldNext: true if the method is get', async () => {
     const { connector } = setup();
 
     expect(
-      connector.preprocess({
+      await connector.preprocess({
+        path: '/webhooks/line',
+        params: {},
+        url: `https://www.example.com/webhooks/line`,
         method: 'get',
         headers: {
           'x-line-signature': 'abc',
         },
         query: {},
-        rawBody: '',
-        body: {},
+        rawBody: JSON.stringify(requestBody),
+        body: requestBody,
       })
     ).toEqual({
       shouldNext: true,
     });
   });
 
-  it('should return shouldNext: true if signature match', () => {
+  it('should return shouldNext: true if the signature match', async () => {
     const { connector } = setup();
 
     expect(
-      connector.preprocess({
+      await connector.preprocess({
+        path: '/webhooks/line',
+        params: {},
+        url: `https://www.example.com/webhooks/line`,
         method: 'post',
         headers: {
-          'x-line-signature': 'RI34eF3TZ0LkP6PK2d4uyozrY5HnnHQuM+UsZjfzLaw=',
+          'x-line-signature': '5+SUnXZ8+G1ErXUewxeZ0T9j4yD6cmwYn5XCO4tBFic',
         },
         query: {},
-        rawBody: '{}',
-        body: {},
+        rawBody: JSON.stringify(requestBody),
+        body: requestBody,
       })
     ).toEqual({
       shouldNext: true,
     });
   });
 
-  it('should return shouldNext: false and 200 OK if is webhook verify request', () => {
+  it('should return shouldNext: true if the signature match (using getConfig)', async () => {
+    const getConfig = jest.fn();
+
+    getConfig.mockResolvedValue({
+      accessToken: ACCESS_TOKEN,
+      channelSecret: CHANNEL_SECRET,
+    });
+
+    const connector = new LineConnector({
+      getConfig,
+    });
+
+    expect(
+      await connector.preprocess({
+        path: '/webhooks/line/11111111111',
+        params: {
+          channelId: '11111111111',
+        },
+        url: `https://www.example.com/webhooks/line/11111111111`,
+        method: 'post',
+        headers: {
+          'x-line-signature': '5+SUnXZ8+G1ErXUewxeZ0T9j4yD6cmwYn5XCO4tBFic',
+        },
+        query: {},
+        rawBody: JSON.stringify(requestBody),
+        body: requestBody,
+      })
+    ).toEqual({
+      shouldNext: true,
+    });
+    expect(getConfig).toBeCalledWith({ params: { channelId: '11111111111' } });
+  });
+
+  it('should return shouldNext: false and 200 OK if the HTTP body is for webhook verification', async () => {
     const { connector } = setup();
 
     expect(
-      connector.preprocess({
+      await connector.preprocess({
+        path: '/webhooks/line',
+        params: {},
+        url: `https://www.example.com/webhooks/line`,
         method: 'post',
         headers: {
-          'x-line-signature': '8nCfywRHp6BCJRiIALL7L3s/qaUK4TDDQ1h52j4hVLk=',
+          'x-line-signature': 'VYLhgSyybnkWRb9qqCreJSTQTkbS6KtXVuw55BcAS7o',
         },
         query: {},
-        rawBody:
-          '{"events":[{"replyToken":"00000000000000000000000000000000"},{"replyToken":"ffffffffffffffffffffffffffffffff"}]}',
-        body: {
-          events: [
-            { replyToken: '00000000000000000000000000000000' },
-            { replyToken: 'ffffffffffffffffffffffffffffffff' },
-          ],
-        },
+        rawBody: JSON.stringify(webhookVerifyRequestBody),
+        body: webhookVerifyRequestBody,
       })
     ).toEqual({
       shouldNext: false,
@@ -745,18 +824,21 @@ describe('#preprocess', () => {
     });
   });
 
-  it('should return shouldNext: false and error if signature does not match', () => {
+  it('should return shouldNext: false and the error if the signature does not match', async () => {
     const { connector } = setup();
 
     expect(
-      connector.preprocess({
+      await connector.preprocess({
+        path: '/webhooks/line',
+        params: {},
+        url: `https://www.example.com/webhooks/line`,
         method: 'post',
         headers: {
           'x-line-signature': 'XtFE4w+/e5cw8ys6BSALGj3ZCYgRtBdCBxyEfrkgLPc=',
         },
         query: {},
-        rawBody: '{}',
-        body: {},
+        rawBody: JSON.stringify(requestBody),
+        body: requestBody,
       })
     ).toEqual({
       shouldNext: false,
@@ -770,11 +852,59 @@ describe('#preprocess', () => {
                 'x-line-signature':
                   'XtFE4w+/e5cw8ys6BSALGj3ZCYgRtBdCBxyEfrkgLPc=',
               },
-              rawBody: '{}',
+              rawBody: JSON.stringify(requestBody),
             },
           },
         },
       },
     });
+  });
+
+  it('should return shouldNext: false and the error if the signature does not match (using getConfig)', async () => {
+    const getConfig = jest.fn();
+
+    getConfig.mockResolvedValue({
+      accessToken: ACCESS_TOKEN,
+      channelSecret: CHANNEL_SECRET,
+    });
+
+    const connector = new LineConnector({
+      getConfig,
+    });
+
+    expect(
+      await connector.preprocess({
+        path: '/webhooks/line/11111111111',
+        params: {
+          channelId: '11111111111',
+        },
+        url: `https://www.example.com/webhooks/line/11111111111`,
+        method: 'post',
+        headers: {
+          'x-line-signature': 'XtFE4w+/e5cw8ys6BSALGj3ZCYgRtBdCBxyEfrkgLPc=',
+        },
+        query: {},
+        rawBody: JSON.stringify(requestBody),
+        body: requestBody,
+      })
+    ).toEqual({
+      shouldNext: false,
+      response: {
+        status: 400,
+        body: {
+          error: {
+            message: 'LINE Signature Validation Failed!',
+            request: {
+              headers: {
+                'x-line-signature':
+                  'XtFE4w+/e5cw8ys6BSALGj3ZCYgRtBdCBxyEfrkgLPc=',
+              },
+              rawBody: JSON.stringify(requestBody),
+            },
+          },
+        },
+      },
+    });
+    expect(getConfig).toBeCalledWith({ params: { channelId: '11111111111' } });
   });
 });

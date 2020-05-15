@@ -1,9 +1,12 @@
-import { ViberClient, ViberTypes } from 'messaging-api-viber';
+import { ViberClient } from 'messaging-api-viber';
 
 import Bot from '../bot/Bot';
 import SessionStore from '../session/SessionStore';
 
-import ViberConnector, { ViberRequestBody } from './ViberConnector';
+import ViberConnector, {
+  ViberConnectorOptions,
+  ViberRequestBody,
+} from './ViberConnector';
 import ViberContext from './ViberContext';
 import ViberEvent from './ViberEvent';
 
@@ -14,19 +17,14 @@ export default class ViberBot extends Bot<
   ViberContext
 > {
   constructor({
-    accessToken,
-    sender,
     sessionStore,
     sync,
-    origin,
-  }: {
-    accessToken: string;
-    sender: ViberTypes.Sender;
+    ...connectorOptions
+  }: ViberConnectorOptions & {
     sessionStore?: SessionStore;
     sync?: boolean;
-    origin?: string;
   }) {
-    const connector = new ViberConnector({ accessToken, sender, origin });
+    const connector = new ViberConnector(connectorOptions);
     super({ connector, sessionStore, sync });
   }
 }
