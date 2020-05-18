@@ -14,7 +14,7 @@ Before going further, we assume that you already have:
 
 ### Slack App and Bot User
 
-Create a [Slack App](https://api.slack.com/apps?new_app=1) if you haven't.
+Create a [Slack App](https://api.slack.com/apps) if you haven't.
 
  <p><img width="800" src="https://user-images.githubusercontent.com/662387/71443858-64c54580-2748-11ea-9d64-7fb321a176b0.png"></p>
  <p><img width="800" src="https://user-images.githubusercontent.com/662387/71443859-655ddc00-2748-11ea-942d-22d4378b8a28.png"></p>
