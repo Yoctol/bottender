@@ -2,7 +2,10 @@ import warning from 'warning';
 import { LineClient } from 'messaging-api-line';
 import { mocked } from 'ts-jest/utils';
 
-import LineConnector, { LineRequestBody } from '../LineConnector';
+import LineConnector, {
+  GetSessionKeyPrefixFunction,
+  LineRequestBody,
+} from '../LineConnector';
 import LineContext from '../LineContext';
 import LineEvent from '../LineEvent';
 
@@ -88,15 +91,18 @@ beforeEach(() => {
 function setup({
   sendMethod,
   skipLegacyProfile,
+  getSessionKeyPrefix,
 }: {
   sendMethod?: string;
   skipLegacyProfile?: boolean;
+  getSessionKeyPrefix?: GetSessionKeyPrefixFunction;
 } = {}) {
   const connector = new LineConnector({
     accessToken: ACCESS_TOKEN,
     channelSecret: CHANNEL_SECRET,
     sendMethod,
     skipLegacyProfile,
+    getSessionKeyPrefix,
   });
 
   const client = mocked(LineClient).mock.instances[0];
@@ -214,6 +220,58 @@ describe('#getUniqueSessionKey', () => {
     );
 
     expect(senderId).toBe('U206d25c2ea6bd87c17655609a1c37cb8');
+  });
+
+  it('should add the prefix to the session key when getSessionKeyPrefix exists', () => {
+    const getSessionKeyPrefix: GetSessionKeyPrefixFunction = jest.fn(
+      (_, requestContext) => {
+        if (requestContext) {
+          return `${requestContext.params.channelId}:`;
+        }
+        throw new Error('no request context');
+      }
+    );
+    const { connector } = setup({
+      getSessionKeyPrefix,
+    });
+
+    const requestContext = {
+      method: 'post',
+      path: '/webhooks/line/CHANNEL_ID',
+      query: {},
+      headers: {},
+      rawBody: '{}',
+      body: {},
+      params: {
+        channelId: 'CHANNEL_ID',
+      },
+      url: 'https://www.example.com/webhooks/line/CHANNEL_ID',
+    };
+
+    const senderId = connector.getUniqueSessionKey(
+      new LineEvent({
+        replyToken: 'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA',
+        type: 'message',
+        mode: 'active',
+        timestamp: 1462629479859,
+        source: {
+          type: 'user',
+          userId: 'U206d25c2ea6bd87c17655609a1c37cb8',
+        },
+        message: {
+          id: '325708',
+          type: 'text',
+          text: 'Hello, world',
+        },
+      }),
+      requestContext
+    );
+
+    expect(senderId).toBe('CHANNEL_ID:U206d25c2ea6bd87c17655609a1c37cb8');
+    expect(getSessionKeyPrefix).toBeCalledWith(
+      expect.any(LineEvent),
+      requestContext
+    );
   });
 });
 
