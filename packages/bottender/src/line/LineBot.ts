@@ -1,6 +1,6 @@
 import { LineClient } from 'messaging-api-line';
 
-import Bot from '../bot/Bot';
+import Bot, { OnRequest } from '../bot/Bot';
 import SessionStore from '../session/SessionStore';
 
 import LineConnector, {
@@ -19,12 +19,14 @@ export default class LineBot extends Bot<
   constructor({
     sessionStore,
     sync,
+    onRequest,
     ...connectorOptions
   }: LineConnectorOptions & {
     sessionStore?: SessionStore;
     sync?: boolean;
+    onRequest?: OnRequest;
   }) {
     const connector = new LineConnector(connectorOptions);
-    super({ connector, sessionStore, sync });
+    super({ connector, sessionStore, sync, onRequest });
   }
 }

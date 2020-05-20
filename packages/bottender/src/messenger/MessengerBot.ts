@@ -1,6 +1,6 @@
 import { MessengerClient } from 'messaging-api-messenger';
 
-import Bot from '../bot/Bot';
+import Bot, { OnRequest } from '../bot/Bot';
 import SessionStore from '../session/SessionStore';
 
 import MessengerConnector, {
@@ -19,12 +19,14 @@ export default class MessengerBot extends Bot<
   constructor({
     sessionStore,
     sync,
+    onRequest,
     ...connectorOptions
   }: MessengerConnectorOptions & {
     sessionStore?: SessionStore;
     sync?: boolean;
+    onRequest?: OnRequest;
   }) {
     const connector = new MessengerConnector(connectorOptions);
-    super({ connector, sessionStore, sync });
+    super({ connector, sessionStore, sync, onRequest });
   }
 }

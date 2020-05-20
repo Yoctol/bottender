@@ -23,6 +23,7 @@ import {
   MessengerConnectorOptions,
   MessengerRequestBody,
 } from './messenger/MessengerConnector';
+import { OnRequest } from './bot/Bot';
 import {
   SlackConnectorOptions,
   SlackRequestBody,
@@ -132,6 +133,7 @@ type ChannelCommonConfig = {
   enabled: boolean;
   path?: string;
   sync?: boolean;
+  OnRequest?: OnRequest;
 };
 
 export type BottenderConfig = {
