@@ -154,6 +154,7 @@ export type RequestContext<
   B extends JsonObject = JsonObject,
   H extends Record<string, string | string[] | undefined> = {}
 > = {
+  id?: string;
   method: string;
   path: string;
   query: Record<string, string>;

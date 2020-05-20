@@ -10,7 +10,7 @@ import { pascalcase } from 'messaging-api-common';
 import Bot from '../bot/Bot';
 import getBottenderConfig from '../shared/getBottenderConfig';
 import getSessionStore from '../getSessionStore';
-import { Action, BottenderConfig, Plugin } from '../types';
+import { Action, BottenderConfig, Plugin, RequestContext } from '../types';
 
 export type ServerOptions = {
   useConsole?: boolean;
@@ -135,7 +135,8 @@ class Server {
       const matchResult = matchPath(pathname);
 
       if (matchResult) {
-        const httpContext = {
+        const httpContext: RequestContext = {
+          id: (req as any).id,
           method: req.method as string,
           path: pathname,
           query,
