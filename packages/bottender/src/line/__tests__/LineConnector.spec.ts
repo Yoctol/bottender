@@ -223,9 +223,30 @@ describe('#getUniqueSessionKey', () => {
   });
 
   it('should add the prefix to the session key when getSessionKeyPrefix exists', () => {
+    const getSessionKeyPrefix: GetSessionKeyPrefixFunction = jest.fn(
+      (_, requestContext) => {
+        if (requestContext) {
+          return `${requestContext.params.channelId}:`;
+        }
+        throw new Error('no request context');
+      }
+    );
     const { connector } = setup({
-      getSessionKeyPrefix: ({ params }) => `${params.channelId}:`,
+      getSessionKeyPrefix,
     });
+
+    const requestContext = {
+      method: 'post',
+      path: '/webhooks/line/CHANNEL_ID',
+      query: {},
+      headers: {},
+      rawBody: '{}',
+      body: {},
+      params: {
+        channelId: 'CHANNEL_ID',
+      },
+      url: 'https://www.example.com/webhooks/line/CHANNEL_ID',
+    };
 
     const senderId = connector.getUniqueSessionKey(
       new LineEvent({
@@ -243,21 +264,14 @@ describe('#getUniqueSessionKey', () => {
           text: 'Hello, world',
         },
       }),
-      {
-        method: 'post',
-        path: '/webhooks/line/CHANNEL_ID',
-        query: {},
-        headers: {},
-        rawBody: '{}',
-        body: {},
-        params: {
-          channelId: 'CHANNEL_ID',
-        },
-        url: 'https://www.example.com/webhooks/line/CHANNEL_ID',
-      }
+      requestContext
     );
 
     expect(senderId).toBe('CHANNEL_ID:U206d25c2ea6bd87c17655609a1c37cb8');
+    expect(getSessionKeyPrefix).toBeCalledWith(
+      expect.any(LineEvent),
+      requestContext
+    );
   });
 });
 

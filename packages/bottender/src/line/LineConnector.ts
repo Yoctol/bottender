@@ -38,11 +38,10 @@ type GetConfigFunction = ({
   params: Record<string, string>;
 }) => Credential | Promise<Credential>;
 
-export type GetSessionKeyPrefixFunction = ({
-  params,
-}: {
-  params: Record<string, string>;
-}) => string;
+export type GetSessionKeyPrefixFunction = (
+  event: LineEvent,
+  requestContext?: RequestContext
+) => string;
 
 type CredentialOptions =
   | Credential
@@ -174,14 +173,20 @@ export default class LineConnector
     bodyOrEvent: LineRequestBody | LineEvent,
     requestContext?: RequestContext
   ): string {
-    let prefix = '';
-    if (requestContext && this._getSessionKeyPrefix) {
-      prefix = this._getSessionKeyPrefix({ params: requestContext.params });
-    }
     const rawEvent =
       bodyOrEvent instanceof LineEvent
         ? bodyOrEvent.rawEvent
         : bodyOrEvent.events[0];
+
+    let prefix = '';
+    if (this._getSessionKeyPrefix) {
+      const event =
+        bodyOrEvent instanceof LineEvent
+          ? bodyOrEvent
+          : new LineEvent(rawEvent, { destination: bodyOrEvent.destination });
+
+      prefix = this._getSessionKeyPrefix(event, requestContext);
+    }
 
     const { source } = rawEvent;
 
