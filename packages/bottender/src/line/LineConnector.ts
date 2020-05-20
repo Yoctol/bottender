@@ -23,10 +23,8 @@ type LineRequestContext = RequestContext<
 >;
 
 type CommonConnectorOptions = {
-  getConfig?: () => Promise<{
-    accessToken: string;
-    channelSecret: string;
-  }>;
+  getConfig?: GetConfigFunction;
+  getSessionKeyPrefix?: GetSessionKeyPrefixFunction;
   shouldBatch?: boolean;
   sendMethod?: string;
   skipLegacyProfile?: boolean;
@@ -39,6 +37,12 @@ type GetConfigFunction = ({
 }: {
   params: Record<string, string>;
 }) => Credential | Promise<Credential>;
+
+export type GetSessionKeyPrefixFunction = ({
+  params,
+}: {
+  params: Record<string, string>;
+}) => string;
 
 type CredentialOptions =
   | Credential
@@ -71,6 +75,8 @@ export default class LineConnector
 
   _getConfig: GetConfigFunction | undefined;
 
+  _getSessionKeyPrefix: GetSessionKeyPrefixFunction | undefined;
+
   _shouldBatch: boolean;
 
   /**
@@ -79,7 +85,13 @@ export default class LineConnector
   _sendMethod: string;
 
   constructor(options: LineConnectorOptions) {
-    const { getConfig, shouldBatch, sendMethod, skipLegacyProfile } = options;
+    const {
+      getConfig,
+      shouldBatch,
+      sendMethod,
+      skipLegacyProfile,
+      getSessionKeyPrefix,
+    } = options;
     if ('client' in options) {
       this._client = options.client;
 
@@ -127,6 +139,8 @@ export default class LineConnector
       this._sendMethod = 'reply';
     }
 
+    this._getSessionKeyPrefix = getSessionKeyPrefix;
+
     this._skipLegacyProfile =
       typeof skipLegacyProfile === 'boolean' ? skipLegacyProfile : true;
   }
@@ -156,7 +170,14 @@ export default class LineConnector
     return this._client;
   }
 
-  getUniqueSessionKey(bodyOrEvent: LineRequestBody | LineEvent): string {
+  getUniqueSessionKey(
+    bodyOrEvent: LineRequestBody | LineEvent,
+    requestContext?: RequestContext
+  ): string {
+    let prefix = '';
+    if (requestContext && this._getSessionKeyPrefix) {
+      prefix = this._getSessionKeyPrefix({ params: requestContext.params });
+    }
     const rawEvent =
       bodyOrEvent instanceof LineEvent
         ? bodyOrEvent.rawEvent
@@ -165,13 +186,13 @@ export default class LineConnector
     const { source } = rawEvent;
 
     if (source.type === 'user') {
-      return source.userId;
+      return `${prefix}${source.userId}`;
     }
     if (source.type === 'group') {
-      return source.groupId;
+      return `${prefix}${source.groupId}`;
     }
     if (source.type === 'room') {
-      return source.roomId;
+      return `${prefix}${source.roomId}`;
     }
     throw new TypeError(
       'LineConnector: sender type should be one of user, group, room.'
