@@ -1,4 +1,4 @@
-import Bot from '../bot/Bot';
+import Bot, { OnRequest } from '../bot/Bot';
 import SessionStore from '../session/SessionStore';
 
 import TwilioClient from './TwilioClient';
@@ -18,12 +18,14 @@ export default class WhatsappBot extends Bot<
   constructor({
     sessionStore,
     sync,
+    onRequest,
     ...connectorOptions
   }: WhatsappConnectorOptions & {
     sessionStore?: SessionStore;
     sync?: boolean;
+    onRequest?: OnRequest;
   }) {
     const connector = new WhatsappConnector(connectorOptions);
-    super({ connector, sessionStore, sync });
+    super({ connector, sessionStore, sync, onRequest });
   }
 }

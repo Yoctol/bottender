@@ -3,6 +3,7 @@ import { EventEmitter } from 'events';
 import debug from 'debug';
 import invariant from 'invariant';
 import pMap from 'p-map';
+import { JsonObject } from 'type-fest';
 import { camelcaseKeysDeep } from 'messaging-api-common';
 
 import CacheBasedSessionStore from '../session/CacheBasedSessionStore';
@@ -72,6 +73,11 @@ type RequestHandler<B> = (
   requestContext?: RequestContext
 ) => void | Promise<void>;
 
+export type OnRequest = (
+  body: JsonObject,
+  requestContext?: RequestContext
+) => void;
+
 export default class Bot<
   B extends Body,
   C extends Client,
@@ -96,14 +102,18 @@ export default class Bot<
 
   _emitter: EventEmitter;
 
+  _onRequest: OnRequest | undefined;
+
   constructor({
     connector,
     sessionStore = createMemorySessionStore(),
     sync = false,
+    onRequest,
   }: {
     connector: Connector<B, C>;
     sessionStore?: SessionStore;
     sync?: boolean;
+    onRequest?: OnRequest;
   }) {
     this._sessions = sessionStore;
     this._initialized = false;
@@ -112,6 +122,7 @@ export default class Bot<
     this._errorHandler = null;
     this._sync = sync;
     this._emitter = new EventEmitter();
+    this._onRequest = onRequest;
   }
 
   get connector(): Connector<B, C> {
@@ -190,6 +201,10 @@ export default class Bot<
       await this.initSessionStore();
 
       const body = camelcaseKeysDeep(inputBody) as B;
+
+      if (this._onRequest) {
+        this._onRequest(body, requestContext);
+      }
 
       const events = this._connector.mapRequestToEvents(body);
 

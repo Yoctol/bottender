@@ -1,6 +1,6 @@
 import { ViberClient } from 'messaging-api-viber';
 
-import Bot from '../bot/Bot';
+import Bot, { OnRequest } from '../bot/Bot';
 import SessionStore from '../session/SessionStore';
 
 import ViberConnector, {
@@ -19,12 +19,14 @@ export default class ViberBot extends Bot<
   constructor({
     sessionStore,
     sync,
+    onRequest,
     ...connectorOptions
   }: ViberConnectorOptions & {
     sessionStore?: SessionStore;
     sync?: boolean;
+    onRequest?: OnRequest;
   }) {
     const connector = new ViberConnector(connectorOptions);
-    super({ connector, sessionStore, sync });
+    super({ connector, sessionStore, sync, onRequest });
   }
 }

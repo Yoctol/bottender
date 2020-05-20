@@ -1,6 +1,6 @@
 import { TelegramClient } from 'messaging-api-telegram';
 
-import Bot from '../bot/Bot';
+import Bot, { OnRequest } from '../bot/Bot';
 import SessionStore from '../session/SessionStore';
 
 import TelegramConnector, {
@@ -30,13 +30,15 @@ export default class TelegramBot extends Bot<
   constructor({
     sessionStore,
     sync,
+    onRequest,
     ...connectorOptions
   }: TelegramConnectorOptions & {
     sessionStore?: SessionStore;
     sync?: boolean;
+    onRequest?: OnRequest;
   }) {
     const connector = new TelegramConnector(connectorOptions);
-    super({ connector, sessionStore, sync });
+    super({ connector, sessionStore, sync, onRequest });
 
     this._offset = null;
     this._shouldGetUpdates = false;
