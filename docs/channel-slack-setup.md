@@ -14,7 +14,7 @@ Before going further, we assume that you already have:
 
 ### Create a Slack App
 
-Create a [Slack App](https://api.slack.com/apps) if you haven't.
+Create a [Slack App](https://api.slack.com/apps?new_app=1) if you haven't.
 
  <p><img width="800" src="https://user-images.githubusercontent.com/563929/82567644-3a20d100-9bb0-11ea-9c53-a04b62340db0.png"></p>
 
