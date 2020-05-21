@@ -12,25 +12,51 @@ Before going further, we assume that you already have:
 - a Slack Account
 - a [Slack Workspace](https://slack.com/create#email)
 
-### Slack App and Bot User
+### Create a Slack App
 
-Create a [Slack App](https://api.slack.com/apps?new_app=1) if you haven't.
+Create a [Slack App](https://api.slack.com/apps) if you haven't.
 
- <p><img width="800" src="https://user-images.githubusercontent.com/662387/71443858-64c54580-2748-11ea-9d64-7fb321a176b0.png"></p>
- <p><img width="800" src="https://user-images.githubusercontent.com/662387/71443859-655ddc00-2748-11ea-942d-22d4378b8a28.png"></p>
+ <p><img width="800" src="https://user-images.githubusercontent.com/563929/82567644-3a20d100-9bb0-11ea-9c53-a04b62340db0.png"></p>
 
-Create a bot user within your Slack App.
+Click the `Create New App` button.
 
-<p><img width="800" src="https://user-images.githubusercontent.com/662387/71443860-655ddc00-2748-11ea-98ce-d54f96b2ea9f.png"></p>
+ <p><img width="800" src="https://user-images.githubusercontent.com/563929/82567788-72c0aa80-9bb0-11ea-8233-48b604d3495e.png"></p>
 
-<p><img width="800" src="https://user-images.githubusercontent.com/662387/71443861-655ddc00-2748-11ea-805d-31326486c049.png"></p>
+Fill the `App Name` and `Development Slack Workspace` and then click the `Create App` button.
 
-Remember to install the Slack App in your workspace.
+We recommand creating a new workspace for experiment.
 
-<p><img width="800" src="https://user-images.githubusercontent.com/662387/71443862-65f67280-2748-11ea-83a8-ca04340d6217.png"></p>
-<p><img width="800" src="https://user-images.githubusercontent.com/662387/71443863-65f67280-2748-11ea-8de7-2be1f0419729.png"></p>
+### Install Slack App to Workspace
 
-> **Note:** If you are not familiar with how Slack bots work, you can find detailed instructions from Dialogflow's [Slack Integration Document](https://cloud.google.com/dialogflow/docs/integrations/slack)
+You can find the `install App to Workspace` button in [Slack Developer Console](https://api.slack.com/apps) → \${YourApp} → OAuth & Permissions
+
+ <p><img width="800" src="https://user-images.githubusercontent.com/563929/82569943-80c3fa80-9bb3-11ea-997c-346a685d1adf.png"></p>
+
+The `install App to Workspace` button is disabled, to enable the button, you need to setup at least one of the permissions the Slack app need.
+
+You can set permissions in [Slack Developer Console](https://api.slack.com/apps) → \${YourApp} → OAuth & Permissions → Scopes → Bot Token Scopes
+
+ <p><img width="800" src="https://user-images.githubusercontent.com/563929/82569279-9a187700-9bb2-11ea-9e9e-148c608202c4.png"></p>
+
+Click the `Add an OAuth Scope` button in the `Bot Token Scopes` section to create a `chat:write` OAuth Scope, which allows Slack app to send messages as a bot user.
+
+ <p><img width="800" src="https://user-images.githubusercontent.com/563929/82569788-4a867b00-9bb3-11ea-9ecd-d6c763d6860d.png"></p>
+
+The `install App to Workspace` button is enabled now.
+
+ <p><img width="800" src="https://user-images.githubusercontent.com/563929/82570855-ba493580-9bb4-11ea-93aa-832df61de427.png"></p>
+
+Click the `install App to Workspace` button.
+
+ <p><img width="800" src="https://user-images.githubusercontent.com/563929/82571054-fda3a400-9bb4-11ea-9907-aa80d53519a5.png"></p>
+
+This is the page for Slack workspace authorizes to Slack app.
+
+Click the `Allow` button.
+
+ <p><img width="800" src="https://user-images.githubusercontent.com/563929/82573621-94be2b00-9bb8-11ea-991c-f7ae5cfffc15.png"></p>
+
+Now, you installed the Slack app in your Slack workspace. This is also the place where you can get the access token Bottender need.
 
 ## Enabling Slack Channels
 
@@ -87,9 +113,9 @@ To make a Slack bot work, you must prepare the following environment variables, 
 
 ### Slack Access Token
 
-You can find Slack access token in [Slack Developer Console](https://api.slack.com/apps) → \${YourApp} → Install App → Bot User OAuth Access Token
+You can find Slack access token in [Slack Developer Console](https://api.slack.com/apps) → \${YourApp} → OAuth & Permissions → Bot User OAuth Access Token
 
-<p><img width="800" src="https://user-images.githubusercontent.com/662387/71455592-a7cafb80-27d0-11ea-8ac7-3633c2b4d429.png"></p>
+ <p><img width="800" src="https://user-images.githubusercontent.com/563929/82573621-94be2b00-9bb8-11ea-991c-f7ae5cfffc15.png"></p>
 
 After you get your **Slack Access Token**, paste the value into the `SLACK_ACCESS_TOKEN` field in your `.env` file:
 
@@ -101,9 +127,9 @@ SLACK_ACCESS_TOKEN=<YOUR SLACK ACCESS TOKEN>
 
 ### Slack Signing Secret
 
-You can find Slack signing secret in [Slack Developer Console](https://api.slack.com/apps) → \${YourApp} → Basic Information → Signing Secret.
+You can find Slack signing secret in [Slack Developer Console](https://api.slack.com/apps) → \${YourApp} → Basic Information → App Credentials → Signing Secret.
 
-<p><img width="800" src="https://user-images.githubusercontent.com/4010549/74005498-07155180-49b4-11ea-9f15-f2e0e869f677.png"></p>
+<p><img width="800" src="https://user-images.githubusercontent.com/563929/82585491-a7406080-9bc8-11ea-9fbc-e91b72cc6eb9.png"></p>
 
 After you get your **Slack Signing Secret**, paste the value into the `SLACK_SIGNING_SECRET` field in your `.env` file:
 
@@ -117,9 +143,9 @@ SLACK_SIGNING_SECRET=<YOUR SLACK SIGNING SECRET>
 
 We recommend using signing secret instead of verification token, but we also support verification token.
 
-You can find Slack verification token in [Slack Developer Console](https://api.slack.com/apps) → \${YourApp} → Basic Information → Verification Token.
+You can find Slack verification token in [Slack Developer Console](https://api.slack.com/apps) → \${YourApp} → Basic Information → App Credentials → Verification Token.
 
-<p><img width="800" src="https://user-images.githubusercontent.com/662387/71443865-668f0900-2748-11ea-9637-158575626c53.png"></p>
+<p><img width="800" src="https://user-images.githubusercontent.com/563929/82585491-a7406080-9bc8-11ea-9fbc-e91b72cc6eb9.png"></p>
 
 After you get your **Slack Verification Token**, paste the value into the `SLACK_VERIFICATION_TOKEN` field in your `.env` file:
 
@@ -151,12 +177,45 @@ server is running on 5000 port...
 
 Then, you have to copy your Slack webhook URL to [Slack Developer Console](https://api.slack.com/apps) → \${YourApp} → Event Subscriptions, where you can pick which bot events to subscribe.
 
-<p><img width="800" src="https://user-images.githubusercontent.com/662387/71443867-668f0900-2748-11ea-9d4c-be7574f770e2.png"></p>
+<p><img width="800" src="https://user-images.githubusercontent.com/563929/82586277-e58a4f80-9bc9-11ea-9d72-748685aed912.png"></p>
 
-<p><img width="800" src="https://user-images.githubusercontent.com/662387/71443868-668f0900-2748-11ea-883e-bdd38111c485.png"></p>
+Turn on the switch.
 
-<p><img width="800" src="https://user-images.githubusercontent.com/662387/71443869-67279f80-2748-11ea-82cb-16c0ac8668de.png"></p>
+<p><img width="800" src="https://user-images.githubusercontent.com/563929/82586465-2a15eb00-9bca-11ea-86ad-2a198e8f3ca1.png"></p>
+
+Fill the Request URL field with your Slack webhook URL.
+
+<p><img width="800" src="https://user-images.githubusercontent.com/563929/82586596-65b0b500-9bca-11ea-83eb-db2a032e5205.png"></p>
+
+You can see the word `Verified` after the webhook URL setting.
+
+Now, open the `Subscribe to bot events` block to subscribe some events.
+
+<p><img width="800" src="https://user-images.githubusercontent.com/563929/82587023-1454f580-9bcb-11ea-89ef-896f9c5fbac9.png"></p>
+
+Add the following events to receive the corresponding webhook requests:
+
+- message.im: A message was posted in a direct message channel.
+- message.groups: A message was posted to a private channel.
+- message.channels: A message was posted to a public channel.
+- message.mpim: A message was posted in a multiparty direct message channel.
 
 For more information about Slack Events, please refer to Slack's official doc, [API Event Types](https://api.slack.com/events)
+
+<p><img width="800" src="https://user-images.githubusercontent.com/563929/82587693-38650680-9bcc-11ea-8767-3ef0c7540ca9.png"></p>
+
+Click the `Save Changes` button.
+
+<p><img width="800" src="https://user-images.githubusercontent.com/563929/82587787-5df21000-9bcc-11ea-8718-d27bd3809053.png"></p>
+
+Reinstall your app.
+
+<p><img width="800" src="https://user-images.githubusercontent.com/563929/82587889-88dc6400-9bcc-11ea-86e2-ecf091f68f7a.png"></p>
+
+Now, you can see the slack app require more permissions.
+
+Click the `Allow` button. Now you can chat with the slack bot in direct message channel or in any channel the slack bot in.
+
+The next thing you can do is [teaching your bot to echo](https://bottender.js.org/docs/en/getting-started#teaching-your-bot-to-echo).
 
 > **Note:** If your bot doesn't respond after webhook settings, please take a closer look at bot events you subscribed to. Slack doesn't pick any bot events subscription by default. The first bot event you may subscribe to is `message.im`, which is the event whenever a user posts a direct message to your bot.
