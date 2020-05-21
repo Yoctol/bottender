@@ -3,6 +3,7 @@ import { pascalCase } from 'pascal-case';
 import { Event } from '../context/Event';
 
 export type EventTypes =
+  | '*'
   | 'message'
   | 'app_uninstalled'
   | 'channel_archive'

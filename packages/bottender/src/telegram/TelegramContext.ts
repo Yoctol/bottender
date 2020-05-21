@@ -153,6 +153,22 @@ class TelegramContext extends Context<TelegramClient, TelegramEvent> {
     return this._client.answerInlineQuery(inlineQueryId, results, options);
   }
 
+  async answerCallbackQuery(
+    options: Type.AnswerCallbackQueryOption
+  ): Promise<boolean | null> {
+    if (!this._event.isCallbackQuery) {
+      warning(
+        false,
+        'answerCallbackQuery: should only be called to answer CallbackQuery event'
+      );
+      return null;
+    }
+
+    const callbackQueryId = (this._event.callbackQuery as any).id;
+
+    return this._client.answerCallbackQuery(callbackQueryId, options);
+  }
+
   async getUserProfilePhotos(
     options?: Type.GetUserProfilePhotosOption
   ): Promise<Type.UserProfilePhotos | null> {

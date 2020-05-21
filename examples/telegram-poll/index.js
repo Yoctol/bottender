@@ -1,6 +1,6 @@
 const { router, telegram, text, route } = require('bottender/router');
 
-telegram.pollAnswer = function(action) {
+telegram.pollAnswer = function pollAnswer(action) {
   return route(
     context => context.event.rawEvent.pollAnswer !== undefined,
     action
@@ -41,12 +41,12 @@ async function DefaultAction(context) {
   await context.sendText('please type /poll to create a new demo poll.');
 }
 
-async function DoNothingWhenPollUpdate() {}
+async function DoNothing() {}
 
 module.exports = async function App(context) {
   return router([
     text(/\/poll/, NewPoll),
-    telegram.poll(DoNothingWhenPollUpdate),
+    telegram.poll(DoNothing),
     telegram.pollAnswer(RecordPollAnswer),
     telegram.any(DefaultAction),
   ]);

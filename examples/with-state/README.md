@@ -8,7 +8,7 @@ Download this example or clone [bottender](https://github.com/Yoctol/bottender).
 curl https://codeload.github.com/Yoctol/bottender/tar.gz/master | tar -xz --strip=2 bottender-master/examples/with-state
 cd with-state
 npm install
-npm run dev --console
+npm run dev -- --console
 ```
 
 ## Idea of This Example

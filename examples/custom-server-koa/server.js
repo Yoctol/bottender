@@ -13,6 +13,14 @@ const handle = app.getRequestHandler();
 
 app.prepare().then(() => {
   const server = new Koa();
+
+  server.use(bodyParser());
+  server.use((ctx, next) => {
+    ctx.req.body = ctx.request.body;
+    ctx.req.rawBody = ctx.request.rawBody;
+    return next();
+  });
+
   const router = new Router();
 
   router.get('/api', ctx => {
@@ -24,12 +32,6 @@ app.prepare().then(() => {
     ctx.respond = false;
   });
 
-  server.use(bodyParser());
-  server.use((ctx, next) => {
-    ctx.req.body = ctx.request.body;
-    ctx.req.rawBody = ctx.request.rawBody;
-    return next();
-  });
   server.use(router.routes());
 
   server.listen(port, err => {

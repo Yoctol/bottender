@@ -7,7 +7,7 @@ import isAfter from 'date-fns/isAfter';
 import isValid from 'date-fns/isValid';
 import shortid from 'shortid';
 import warning from 'warning';
-import { MessengerBatchQueue } from 'messenger-batch';
+import { BatchConfig, MessengerBatchQueue } from 'messenger-batch';
 import { MessengerClient } from 'messaging-api-messenger';
 
 import Session from '../session/Session';
@@ -26,6 +26,11 @@ import MessengerEvent, {
   Sender,
   TakeThreadControl,
 } from './MessengerEvent';
+
+type MessengerRequestContext = RequestContext<
+  MessengerRequestBody,
+  { 'x-hub-signature'?: string }
+>;
 
 type Entry = {
   [key in 'messaging' | 'standby' | 'changes']: {
@@ -77,28 +82,28 @@ export type MessengerRequestBody =
   | PassThreadControlRequestBody
   | TakeThreadControlRequestBody;
 
-type CommonConstructorOptions = {
+type CommonConnectorOptions = {
   appId: string;
   appSecret: string;
   verifyToken?: string;
-  batchConfig?: Record<string, any>;
+  batchConfig?: BatchConfig;
   skipLegacyProfile?: boolean;
   mapPageToAccessToken?: (pageId: string) => Promise<string>;
 };
 
-type ConstructorOptionsWithoutClient = {
+type ConnectorOptionsWithoutClient = {
   accessToken?: string;
   origin?: string;
   skipAppSecretProof?: boolean;
-} & CommonConstructorOptions;
+} & CommonConnectorOptions;
 
-type ConstructorOptionsWithClient = {
+type ConnectorOptionsWithClient = {
   client: MessengerClient;
-} & CommonConstructorOptions;
+} & CommonConnectorOptions;
 
-type ConstructorOptions =
-  | ConstructorOptionsWithoutClient
-  | ConstructorOptionsWithClient;
+export type MessengerConnectorOptions =
+  | ConnectorOptionsWithoutClient
+  | ConnectorOptionsWithClient;
 
 export default class MessengerConnector
   implements Connector<MessengerRequestBody, MessengerClient> {
@@ -114,11 +119,11 @@ export default class MessengerConnector
 
   _verifyToken: string | null = null;
 
-  _batchConfig: Record<string, any> | null = null;
+  _batchConfig: BatchConfig | null = null;
 
-  _batchQueue: Record<string, any> | null = null;
+  _batchQueue: MessengerBatchQueue | null = null;
 
-  constructor(options: ConstructorOptions) {
+  constructor(options: MessengerConnectorOptions) {
     const {
       appId,
       appSecret,
@@ -230,7 +235,7 @@ export default class MessengerConnector
     }
   }
 
-  get platform(): string {
+  get platform(): 'messenger' {
     return 'messenger';
   }
 
@@ -355,7 +360,7 @@ export default class MessengerConnector
     event: MessengerEvent;
     session?: Session;
     initialState?: Record<string, any>;
-    requestContext?: RequestContext;
+    requestContext?: MessengerRequestContext;
     emitter?: EventEmitter;
   }): Promise<MessengerContext> {
     let customAccessToken;
@@ -409,18 +414,7 @@ export default class MessengerConnector
     return crypto.timingSafeEqual(bufferFromSignature, hashBufferFromBody);
   }
 
-  preprocess({
-    method,
-    headers,
-    query,
-    rawBody,
-  }: {
-    method: string;
-    headers: Record<string, any>;
-    query: Record<string, any>;
-    rawBody: string;
-    body: Record<string, any>;
-  }) {
+  preprocess({ method, headers, query, rawBody }: MessengerRequestContext) {
     if (method.toLowerCase() === 'get') {
       if (
         query['hub.mode'] === 'subscribe' &&
@@ -450,7 +444,10 @@ export default class MessengerConnector
       };
     }
 
-    if (this.verifySignature(rawBody, headers['x-hub-signature'])) {
+    if (
+      headers['x-hub-signature'] &&
+      this.verifySignature(rawBody, headers['x-hub-signature'])
+    ) {
       return {
         shouldNext: true,
       };

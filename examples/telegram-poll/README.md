@@ -34,7 +34,7 @@ If you successfully start the server, you get a webhook URL in the format of `ht
 While the server running, you can run following command with `bottender` to set up the webhook with the webhook URL you get from running `npm run dev`:
 
 ```sh
-npx bottender telegram webhook set -w <YOUR_WEBHOOK_URL>
+npx bottender telegram webhook set
 ```
 
 > **Note:** You must fill in your `.env` file before running this command.

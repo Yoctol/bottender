@@ -1,6 +1,6 @@
 import readline from 'readline';
 
-import Bot from '../bot/Bot';
+import Bot, { OnRequest } from '../bot/Bot';
 import Session from '../session/Session';
 import SessionStore from '../session/SessionStore';
 
@@ -20,13 +20,15 @@ export default class ConsoleBot extends Bot<
     sessionStore,
     fallbackMethods,
     mockPlatform,
+    onRequest,
   }: {
     sessionStore?: SessionStore;
     fallbackMethods?: boolean;
     mockPlatform?: string;
+    onRequest?: OnRequest;
   } = {}) {
     const connector = new ConsoleConnector({ fallbackMethods, mockPlatform });
-    super({ connector, sessionStore, sync: true });
+    super({ connector, sessionStore, sync: true, onRequest });
   }
 
   async getSession(): Promise<Session> {
@@ -58,16 +60,16 @@ export default class ConsoleBot extends Bot<
         process.exit();
       }
 
+      const client = this._connector.client as ConsoleClient;
+
       if (lowerCaseLine === '/session') {
         const session = await this.getSession();
 
-        this._connector.client.sendText(JSON.stringify(session, null, 2));
+        client.sendText(JSON.stringify(session, null, 2));
       } else if (lowerCaseLine === '/state') {
         const session = await this.getSession();
 
-        this._connector.client.sendText(
-          JSON.stringify(session._state || {}, null, 2)
-        );
+        client.sendText(JSON.stringify(session._state || {}, null, 2));
       } else {
         let rawEvent;
 
