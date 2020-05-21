@@ -3,6 +3,7 @@ import url from 'url';
 import { IncomingMessage, ServerResponse } from 'http';
 
 import fromEntries from 'fromentries';
+import invariant from 'invariant';
 import merge from 'lodash/merge';
 import { match } from 'path-to-regexp';
 import { pascalcase } from 'messaging-api-common';
@@ -41,7 +42,7 @@ class Server {
   public async prepare(): Promise<void> {
     const bottenderConfig = getBottenderConfig();
 
-    const { initialState, plugins, channels } = merge(
+    const { initialState, plugins, channels = {} } = merge(
       bottenderConfig /* , config */
     ) as BottenderConfig;
 
@@ -88,24 +89,49 @@ class Server {
       return;
     }
 
-    const channelBots = Object.entries(channels || {})
+    const channelBots = (Object.entries(channels) as [string, any][])
       .filter(([, { enabled }]) => enabled)
-      .map(([channel, { path: webhookPath, ...channelConfig }]) => {
-        // eslint-disable-next-line import/no-dynamic-require
-        const ChannelBot = require(`../${channel}/${pascalcase(channel)}Bot`)
-          .default;
-        const channelBot = new ChannelBot({
-          ...channelConfig,
-          sessionStore,
-        }) as Bot<any, any, any, any>;
+      .map(
+        ([
+          channel,
+          { path: webhookPath, sync, onRequest, connector, ...connectorConfig },
+        ]) => {
+          let channelConnector;
+          if (
+            [
+              'messenger',
+              'line',
+              'telegram',
+              'slack',
+              'viber',
+              'whatsapp',
+            ].includes(channel)
+          ) {
+            // eslint-disable-next-line import/no-dynamic-require
+            const ChannelConnector = require(`../${channel}/${pascalcase(
+              channel
+            )}Connector`).default;
+            channelConnector = new ChannelConnector(connectorConfig);
+          } else {
+            invariant(connector, `The connector of ${channel} is missing.`);
+            channelConnector = connector;
+          }
 
-        initializeBot(channelBot);
+          const channelBot = new Bot({
+            sessionStore,
+            sync,
+            onRequest,
+            connector: channelConnector,
+          }) as Bot<any, any, any, any>;
 
-        return {
-          webhookPath: webhookPath || `/webhooks/${channel}`,
-          bot: channelBot,
-        };
-      });
+          initializeBot(channelBot);
+
+          return {
+            webhookPath: webhookPath || `/webhooks/${channel}`,
+            bot: channelBot,
+          };
+        }
+      );
 
     this._channelBots = channelBots;
   }
