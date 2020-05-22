@@ -273,6 +273,7 @@ client.replyLocation(REPLY_TOKEN, {
 #### `replySticker(token, sticker, options)` - [Official Docs](https://developers.line.me/en/mreference/essaging-api/#sticker-message)
 
 Responds sticker message using specified reply token.
+<br />
 For a list of stickers that can be sent with the Messaging API, see the [sticker list](https://developers.line.me/media/messaging-api/messages/sticker_list.pdf).
 
 <img src="https://user-images.githubusercontent.com/563929/82651371-a7833f00-9c4e-11ea-9041-46dcb962b0c7.png" width="250px" />
@@ -852,6 +853,7 @@ client.pushLocation(USER_ID, {
 #### `pushSticker(userId, sticker, options)` - [Official Docs](https://developers.line.me/en/mreference/essaging-api/#sticker-message)
 
 Sends sticker message using ID of the receiver.
+<br />
 For a list of stickers that can be sent with the Messaging API, see the [sticker list](https://developers.line.me/media/messaging-api/messages/sticker_list.pdf).
 
 <img src="https://user-images.githubusercontent.com/563929/82654187-ec10d980-9c52-11ea-9a81-dd8469d75e08.png" width="250px" />
@@ -1434,6 +1436,7 @@ client.multicastLocation([USER_ID], {
 #### `multicastSticker(userIds, sticker, options)` - [Official Docs](https://developers.line.me/en/mreference/essaging-api/#sticker-message)
 
 Sends sticker message to multiple users.
+<br />
 For a list of stickers that can be sent with the Messaging API, see the [sticker list](https://developers.line.me/media/messaging-api/messages/sticker_list.pdf).
 
 <img src="https://user-images.githubusercontent.com/563929/82651371-a7833f00-9c4e-11ea-9041-46dcb962b0c7.png" width="250px" />
@@ -2007,6 +2010,7 @@ client.getRoomMemberProfile(ROOM_ID, USER_ID).then(member => {
 #### `getGroupMemberIds(groupId, start)` - [Official Docs](https://developers.line.me/en/mreference/essaging-api/#get-group-member-user-ids)
 
 Gets the ID of the users of the members of a group that the bot is in. This includes the user IDs of users who have not added the bot as a friend or has blocked the bot.
+<br />
 This feature is only available for LINE@ Approved accounts or official accounts.
 
 | Param   | Type     | Description          |
@@ -2035,6 +2039,7 @@ client.getGroupMemberIds(GROUP_ID, CURSOR).then(res => {
 #### `getAllGroupMemberIds(groupId)`
 
 Recursively gets the ID of the users of the members of a group that the bot is in using cursors.
+<br />
 This feature is only available for LINE@ Approved accounts or official accounts.
 
 | Param   | Type     | Description      |
@@ -2062,6 +2067,7 @@ client.getAllGroupMemberIds(GROUP_ID).then(ids => {
 #### `getRoomMemberIds(roomId, start)` - [Official Docs](https://developers.line.me/en/mreference/essaging-api/#get-room-member-user-ids)
 
 Gets the ID of the users of the members of a room that the bot is in. This includes the user IDs of users who have not added the bot as a friend or has blocked the bot.
+<br />
 This feature is only available for LINE@ Approved accounts or official accounts.
 
 | Param  | Type     | Description          |
@@ -2090,6 +2096,7 @@ client.getRoomMemberIds(ROOM_ID, CURSOR).then(res => {
 #### `getAllRoomMemberIds(roomId)`
 
 Recursively gets the ID of the users of the members of a room that the bot is in using cursors.
+<br />
 This feature is only available for LINE@ Approved accounts or official accounts.
 
 | Param  | Type     | Description     |
