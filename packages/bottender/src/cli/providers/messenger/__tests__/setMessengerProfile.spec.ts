@@ -85,9 +85,6 @@ describe('resolve', () => {
         'greeting',
         'ice_breakers',
         'whitelisted_domains',
-        'payment_settings',
-        'target_audience',
-        'home_url',
       ]);
       expect(_client.setMessengerProfile).toBeCalledWith({
         getStarted: {
