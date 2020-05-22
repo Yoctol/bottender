@@ -1,3 +1,9 @@
+# 1.4.6 / 2020-05-22
+
+## messenger
+
+- [fix] cli: remove deprecated properties on messenger profiles (including `home_url`).
+
 # 1.4.5 / 2020-05-11
 
 - [fix] fix issue #618 ngrok undefined error message (#765)
