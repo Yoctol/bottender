@@ -1189,6 +1189,7 @@ context.getMemberProfile(USER_ID).then(member => {
 #### `getMemberIds(start)`
 
 Gets the ID of the users of the members of the group/room that the bot is in. This includes the user IDs of users who have not added the bot as a friend or has blocked the bot.
+<br />
 This feature is only available for LINE@ Approved accounts or official accounts.
 
 | Param | Type     | Description          |
