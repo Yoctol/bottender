@@ -19,9 +19,6 @@ const FIELDS = [
   'greeting',
   'ice_breakers',
   'whitelisted_domains',
-  'payment_settings',
-  'target_audience',
-  'home_url',
 ];
 
 export const help = (): void => {
