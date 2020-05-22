@@ -65,11 +65,11 @@ context.reply([
 
 Responds text message to the receiver using reply token.
 
-<img src="https://developers.line.me/media/messaging-api/messages/text-bf530b30.png" width="250px" />
+<img src="https://user-images.githubusercontent.com/563929/82649893-77d33780-9c4c-11ea-9075-f11848d92850.png" width="250px" />
 
 You can include LINE original emoji in text messages using character codes. For a list of LINE emoji that can be sent in LINE chats, see the [emoji list](https://developers.line.me/media/messaging-api/emoji-list.pdf).
 
-<img src="https://developers.line.me/media/messaging-api/messages/emoji-b3285d27.png" width="250px" />
+<img src="https://user-images.githubusercontent.com/563929/82650108-cbde1c00-9c4c-11ea-8510-b2909bc93d8d.png" width="250px" />
 
 | Param | Type     | Description                     |
 | ----- | -------- | ------------------------------- |
@@ -87,7 +87,8 @@ context.replyText('Hello!');
 
 Responds image message to the receiver using reply token.
 
-<img src="https://developers.line.me/media/messaging-api/messages/image-167efb33.png" width="250px" /><img src="https://developers.line.me/media/messaging-api/messages/image-full-04fbba55.png" width="250px" />
+<img src="https://user-images.githubusercontent.com/563929/82650545-64749c00-9c4d-11ea-8038-0ac0dd817a02.png" width="250px" />
+<img src="https://user-images.githubusercontent.com/563929/82650588-75251200-9c4d-11ea-955d-30ba9458ffd3.png" width="250px" />
 
 | Param           | Type     | Description        |
 | --------------- | -------- | ------------------ |
@@ -109,7 +110,7 @@ context.replyImage({
 
 Responds video message to the receiver using reply token.
 
-<img src="https://developers.line.me/media/messaging-api/messages/video-a1bc08a4.png" width="250px" />
+<img src="https://user-images.githubusercontent.com/563929/82650704-a69ddd80-9c4d-11ea-9e86-8e2c5294d97f.png" width="250px" />
 
 | Param           | Type     | Description           |
 | --------------- | -------- | --------------------- |
@@ -131,7 +132,7 @@ context.replyVideo({
 
 Responds audio message to the receiver using reply token.
 
-<img src="https://developers.line.me/media/messaging-api/messages/audio-6290d91b.png" width="250px" />
+<img src="https://user-images.githubusercontent.com/563929/82651012-26c44300-9c4e-11ea-8c25-aade44dbe4f8.png" width="250px" />
 
 | Param    | Type     | Description           |
 | -------- | -------- | --------------------- |
@@ -153,7 +154,7 @@ context.replyAudio({
 
 Responds location message to the receiver using reply token.
 
-<img src="https://developers.line.me/media/messaging-api/messages/location-8f9b6b79.png" width="250px" />
+<img src="https://user-images.githubusercontent.com/563929/82651104-478c9880-9c4e-11ea-8fdf-cb6d8a10bf9a.png" width="250px" />
 
 | Param              | Type     | Description                            |
 | ------------------ | -------- | -------------------------------------- |
@@ -178,10 +179,11 @@ context.replyLocation({
 
 #### `replySticker(packageId, stickerId)` - [Official Docs](https://developers.line.me/en/docs/messaging-api/reference/#sticker-message)
 
-Responds sticker message to the receiver using reply token.  
+Responds sticker message to the receiver using reply token.
+<br />
 For a list of stickers that can be sent with the Messaging API, see the [sticker list](https://developers.line.me/media/messaging-api/messages/sticker_list.pdf).
 
-<img src="https://developers.line.me/media/messaging-api/messages/sticker-cb1a6a3a.png" width="250px" />
+<img src="https://user-images.githubusercontent.com/563929/82651371-a7833f00-9c4e-11ea-9041-46dcb962b0c7.png" width="250px" />
 
 | Param     | Type     | Description |
 | --------- | -------- | ----------- |
@@ -202,7 +204,7 @@ context.replySticker({ packageId: '1', stickerId: '1' });
 
 Responds imagemap message to the receiver using reply token.
 
-<img src="https://developers.line.me/media/messaging-api/messages/imagemap-dd854fa7.png" width="250px" />
+<img src="https://user-images.githubusercontent.com/563929/82651489-cc77b200-9c4e-11ea-860a-2f7f1ecaa5b5.png" width="250px" />
 
 | Param                    | Type       | Description                            |
 | ------------------------ | ---------- | -------------------------------------- |
@@ -297,7 +299,7 @@ Alias: `replyButtonsTemplate`.
 
 Responds button template message to the receiver using reply token.
 
-<img src="https://developers.line.me/media/messaging-api/messages/buttons-86e14165.png" width="250px" />
+<img src="https://user-images.githubusercontent.com/563929/82651618-f6c96f80-9c4e-11ea-873c-90821a7f5510.png" width="250px" />
 
 | Param                               | Type       | Description                                                                                   |
 | ----------------------------------- | ---------- | --------------------------------------------------------------------------------------------- |
@@ -345,7 +347,7 @@ context.replyButtonTemplate('this is a template', {
 
 Responds confirm template message to the receiver using reply token.
 
-<img src="https://developers.line.me/media/messaging-api/messages/confirm-444aead5.png" width="250px" />
+<img src="https://user-images.githubusercontent.com/563929/82651801-398b4780-9c4f-11ea-986c-b8cadee4349b.png" width="250px" />
 
 | Param                   | Type       | Description                                   |
 | ----------------------- | ---------- | --------------------------------------------- |
@@ -380,7 +382,7 @@ context.replyConfirmTemplate('this is a confirm template', {
 
 Responds carousel template message to the receiver using reply token.
 
-<img src="https://developers.line.me/media/messaging-api/messages/carousel-c59baef6.png" width="250px" />
+<img src="https://user-images.githubusercontent.com/563929/82651957-735c4e00-9c4f-11ea-8147-2fae91afb62e.png" width="250px" />
 
 | Param                    | Type       | Description                                                                           |
 | ------------------------ | ---------- | ------------------------------------------------------------------------------------- |
@@ -447,7 +449,7 @@ context.replyCarouselTemplate('this is a carousel template', [
 
 Responds image carousel template message to the receiver using reply token.
 
-<img src="https://developers.line.me/media/messaging-api/messages/image-carousel-301701f6.png" width="250px" />
+<img src="https://user-images.githubusercontent.com/563929/82652055-971f9400-9c4f-11ea-878a-23dcabb430dc.png" width="250px" />
 
 | Param         | Type       | Description                                                |
 | ------------- | ---------- | ---------------------------------------------------------- |
@@ -493,7 +495,7 @@ context.replyImageCarouselTemplate('this is an image carousel template', [
 
 Responds flex message using specified reply token.
 
-<img src="https://developers.line.me/media/messaging-api/using-flex-messages/bubbleSample-77d825e6.png" />
+<img src="https://user-images.githubusercontent.com/563929/82652147-b6b6bc80-9c4f-11ea-96dc-3a1b5ca9d582.png" />
 
 | Param    | Type     | Description                                                                                             |
 | -------- | -------- | ------------------------------------------------------------------------------------------------------- |
@@ -580,11 +582,11 @@ Alias: `sendText`.
 
 Sends text message to the receiver using ID.
 
-<img src="https://developers.line.me/media/messaging-api/messages/text-bf530b30.png" width="250px" />
+<img src="https://user-images.githubusercontent.com/563929/82652318-01383900-9c50-11ea-8199-cb7c8f6362dc.png" width="250px" />
 
 You can include LINE original emoji in text messages using character codes. For a list of LINE emoji that can be sent in LINE chats, see the [emoji list](https://developers.line.me/media/messaging-api/emoji-list.pdf).
 
-<img src="https://developers.line.me/media/messaging-api/messages/emoji-b3285d27.png" width="250px" />
+<img src="https://user-images.githubusercontent.com/563929/82652521-52e0c380-9c50-11ea-829a-36cd706823e0.png" width="250px" />
 
 | Param | Type     | Description                     |
 | ----- | -------- | ------------------------------- |
@@ -604,7 +606,8 @@ Alias: `sendImage`.
 
 Sends image message to the receiver using ID.
 
-<img src="https://developers.line.me/media/messaging-api/messages/image-167efb33.png" width="250px" /><img src="https://developers.line.me/media/messaging-api/messages/image-full-04fbba55.png" width="250px" />
+<img src="https://user-images.githubusercontent.com/563929/82652911-021d9a80-9c51-11ea-9f6e-a6c18d0a87e5.png" width="250px" />
+<img src="https://user-images.githubusercontent.com/563929/82652981-1cf00f00-9c51-11ea-89ba-7da7e74e5def.png" width="250px" />
 
 | Param           | Type     | Description        |
 | --------------- | -------- | ------------------ |
@@ -626,9 +629,9 @@ context.pushImage({
 
 Alias: `sendVideo`.
 
-Sends video message to the receiver using ID.
+Sends video message using ID of the receiver.
 
-<img src="https://developers.line.me/media/messaging-api/messages/video-a1bc08a4.png" width="250px" />
+<img src="https://user-images.githubusercontent.com/563929/82653198-6c363f80-9c51-11ea-9acd-28677530a3b3.png" width="250px" />
 
 | Param           | Type     | Description           |
 | --------------- | -------- | --------------------- |
@@ -652,7 +655,7 @@ Alias: `sendAudio`.
 
 Sends audio message to the receiver using ID.
 
-<img src="https://developers.line.me/media/messaging-api/messages/audio-6290d91b.png" width="250px" />
+<img src="https://user-images.githubusercontent.com/563929/82653904-7dcc1700-9c52-11ea-9023-4ad89e76bb05.png" width="250px" />
 
 | Param    | Type     | Description           |
 | -------- | -------- | --------------------- |
@@ -676,7 +679,7 @@ Alias: `sendLocation`.
 
 Sends location message to the receiver using ID.
 
-<img src="https://developers.line.me/media/messaging-api/messages/location-8f9b6b79.png" width="250px" />
+<img src="https://user-images.githubusercontent.com/563929/82654102-c97ec080-9c52-11ea-94ef-5f26e52d78a1.png" width="250px" />
 
 | Param              | Type     | Description                            |
 | ------------------ | -------- | -------------------------------------- |
@@ -706,7 +709,7 @@ Alias: `sendSticker`.
 Sends sticker message to the receiver using ID.
 For a list of stickers that can be sent with the Messaging API, see the [sticker list](https://developers.line.me/media/messaging-api/messages/sticker_list.pdf).
 
-<img src="https://developers.line.me/media/messaging-api/messages/sticker-cb1a6a3a.png" width="250px" />
+<img src="https://user-images.githubusercontent.com/563929/82654187-ec10d980-9c52-11ea-9a81-dd8469d75e08.png" width="250px" />
 
 | Param     | Type     | Description |
 | --------- | -------- | ----------- |
@@ -727,9 +730,9 @@ context.pushSticker({ packageId: '1', stickerId: '1' });
 
 Alias: `sendImagemap`.
 
-Sends imagemap message to the receiver using ID.
+Sends imagemap message using ID of the receiver.
 
-<img src="https://developers.line.me/media/messaging-api/messages/imagemap-dd854fa7.png" width="250px" />
+<img src="https://user-images.githubusercontent.com/563929/82654362-309c7500-9c53-11ea-9252-c12dd84ae003.png" width="250px" />
 
 | Param                    | Type       | Description                            |
 | ------------------------ | ---------- | -------------------------------------- |
@@ -826,7 +829,7 @@ Alias: `pushButtonsTemplate`, `sendButtonTemplate`, `sendButtonsTemplate`.
 
 Sends button template message to the receiver using ID.
 
-<img src="https://developers.line.me/media/messaging-api/messages/buttons-86e14165.png" width="250px" />
+<img src="https://user-images.githubusercontent.com/563929/82654518-735e4d00-9c53-11ea-9299-34eb4e3fb853.png" width="250px" />
 
 | Param                               | Type       | Description                                                                                   |
 | ----------------------------------- | ---------- | --------------------------------------------------------------------------------------------- |
@@ -874,9 +877,9 @@ context.pushButtonTemplate('this is a template', {
 
 Alias: `sendConfirmTemplate`.
 
-Sends confirm template message to the receiver using ID.
+Sends confirm template message using ID of the receiver.
 
-<img src="https://developers.line.me/media/messaging-api/messages/confirm-444aead5.png" width="250px" />
+<img src="https://user-images.githubusercontent.com/563929/82654609-9426a280-9c53-11ea-916c-d8a7f76bf119.png" width="250px" />
 
 | Param                   | Type       | Description                                   |
 | ----------------------- | ---------- | --------------------------------------------- |
@@ -913,7 +916,7 @@ Alias: `sendCarouselTemplate`.
 
 Sends carousel template message to the receiver using ID.
 
-<img src="https://developers.line.me/media/messaging-api/messages/carousel-c59baef6.png" width="250px" />
+<img src="https://user-images.githubusercontent.com/563929/82654829-e071e280-9c53-11ea-9948-1142e34e73db.png" width="250px" />
 
 | Param                    | Type       | Description                                                                           |
 | ------------------------ | ---------- | ------------------------------------------------------------------------------------- |
@@ -982,7 +985,7 @@ Alias: `sendImageCarouselTemplate`.
 
 Sends image carousel template message to the receiver using ID.
 
-<img src="https://developers.line.me/media/messaging-api/messages/image-carousel-301701f6.png" width="250px" />
+<img src="https://user-images.githubusercontent.com/563929/82655190-62620b80-9c54-11ea-981d-cb0ae8e2da9a.png" width="250px" />
 
 | Param         | Type       | Description                                                |
 | ------------- | ---------- | ---------------------------------------------------------- |
@@ -1028,7 +1031,7 @@ context.pushImageCarouselTemplate('this is an image carousel template', [
 
 Sends flex message using ID of the receiver.
 
-<img src="https://developers.line.me/media/messaging-api/using-flex-messages/bubbleSample-77d825e6.png" />
+<img src="https://user-images.githubusercontent.com/563929/82655544-eae0ac00-9c54-11ea-8171-6f9526405dfa.png" />
 
 | Param    | Type     | Description                                                                                             |
 | -------- | -------- | ------------------------------------------------------------------------------------------------------- |
@@ -1088,7 +1091,7 @@ context.pushFlex('this is a flex', {
 
 Sends message with buttons appear at the bottom of the chat screen.
 
-<img src="https://developers.line.me/media/messaging-api/using-quick-reply/quickReplySample2-b0da8a03.png" width="250px" />
+<img src="https://user-images.githubusercontent.com/563929/82657377-d7831000-9c57-11ea-9b22-593944a4e670.png" width="250px" />
 
 ```js
 context.replyText(
@@ -1186,7 +1189,8 @@ context.getMemberProfile(USER_ID).then(member => {
 
 #### `getMemberIds(start)`
 
-Gets the ID of the users of the members of the group/room that the bot is in. This includes the user IDs of users who have not added the bot as a friend or has blocked the bot.  
+Gets the ID of the users of the members of the group/room that the bot is in. This includes the user IDs of users who have not added the bot as a friend or has blocked the bot.
+<br />
 This feature is only available for LINE@ Approved accounts or official accounts.
 
 | Param | Type     | Description          |
@@ -1213,7 +1217,8 @@ context.getMemberIds(CURSOR).then(res => {
 
 #### `getAllMemberIds()`
 
-Recursively gets the ID of the users of the members of the group/room that the bot is in using cursors.  
+Recursively gets the ID of the users of the members of the group/room that the bot is in using cursors.
+<br />
 This feature is only available for LINE@ Approved accounts or official accounts.
 
 Example:
