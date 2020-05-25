@@ -68,7 +68,10 @@ async function Unknown(context) {
 }
 
 module.export = function App(context) {
-  return router([text('hi', SayHi), text('*', Unknown)]);
+  return router([
+    text('hi', SayHi), 
+    text('*', Unknown),
+  ]);
 };
 ```
 
