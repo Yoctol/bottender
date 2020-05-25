@@ -1,7 +1,7 @@
 # Bottender
 
 [![npm](https://img.shields.io/npm/v/bottender.svg)](https://www.npmjs.com/package/bottender)
-[![CircleCI](https://circleci.com/gh/Yoctol/bottender.svg?style=shield)](https://circleci.com/gh/Yoctol/bottender)
+[![Build Status](https://github.com/Yoctol/bottender/workflows/Node.js%20CI/badge.svg)](https://github.com/Yoctol/bottender/actions?query=workflow%3ANode.js%20CI+branch%3Amaster)
 [![coverage](https://codecov.io/gh/Yoctol/bottender/branch/master/graph/badge.svg)](https://codecov.io/gh/Yoctol/bottender)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/Yoctol/bottender#contributing)
