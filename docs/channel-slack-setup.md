@@ -28,13 +28,13 @@ We recommand creating a new workspace for experiment.
 
 ### Install Slack App to Workspace
 
-You can find the `install App to Workspace` button in [Slack Developer Console](https://api.slack.com/apps) → \${YourApp} → OAuth & Permissions
+You can find the `Install App to Workspace` button in [Slack Developer Console](https://api.slack.com/apps) → \${YourApp} → OAuth & Permissions
 
  <p><img width="800" src="https://user-images.githubusercontent.com/563929/82569943-80c3fa80-9bb3-11ea-997c-346a685d1adf.png"></p>
 
-The `install App to Workspace` button is disabled, to enable the button, you need to setup at least one of the permissions the Slack app need.
+The `Install App to Workspace` button is disabled. To enable the button, you need to setup at least one of the permissions the Slack app need.
 
-You can set permissions in [Slack Developer Console](https://api.slack.com/apps) → \${YourApp} → OAuth & Permissions → Scopes → Bot Token Scopes
+You can set those permissions in [Slack Developer Console](https://api.slack.com/apps) → \${YourApp} → OAuth & Permissions → Scopes → Bot Token Scopes
 
  <p><img width="800" src="https://user-images.githubusercontent.com/563929/82569279-9a187700-9bb2-11ea-9e9e-148c608202c4.png"></p>
 
@@ -42,15 +42,15 @@ Click the `Add an OAuth Scope` button in the `Bot Token Scopes` section to creat
 
  <p><img width="800" src="https://user-images.githubusercontent.com/563929/82569788-4a867b00-9bb3-11ea-9ecd-d6c763d6860d.png"></p>
 
-The `install App to Workspace` button is enabled now.
+The `Install App to Workspace` button is enabled now.
 
  <p><img width="800" src="https://user-images.githubusercontent.com/563929/82570855-ba493580-9bb4-11ea-93aa-832df61de427.png"></p>
 
-Click the `install App to Workspace` button.
+Click the `Install App to Workspace` button.
 
  <p><img width="800" src="https://user-images.githubusercontent.com/563929/82571054-fda3a400-9bb4-11ea-9907-aa80d53519a5.png"></p>
 
-This is the page for Slack workspace authorizes to Slack app.
+This is the page for the Slack workspace authorizes to the Slack app.
 
 Click the `Allow` button.
 
@@ -187,7 +187,7 @@ Fill the Request URL field with your Slack webhook URL.
 
 <p><img width="800" src="https://user-images.githubusercontent.com/563929/82586596-65b0b500-9bca-11ea-83eb-db2a032e5205.png"></p>
 
-You can see the word `Verified` after the webhook URL setting.
+You can see the word `Verified` after setting the webhook URL.
 
 Now, open the `Subscribe to bot events` block to subscribe some events.
 
