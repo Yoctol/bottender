@@ -50,9 +50,6 @@ describe('resolved', () => {
       'greeting',
       'ice_breakers',
       'whitelisted_domains',
-      'payment_settings',
-      'target_audience',
-      'home_url',
     ]);
   });
 

@@ -1,6 +1,3 @@
-import { MessengerEvent } from 'bottender';
-import { MessengerRawEvent } from 'bottender/dist/messenger/MessengerEvent';
-
 type Status = {
   from: {
     id: string;
@@ -66,25 +63,47 @@ type Reaction = {
   createdTime: number;
 };
 
-export interface FacebookFeedRawEvent extends MessengerRawEvent {
-  field: string;
+export type FacebookRawEvent = {
+  field: 'feed';
   value: Status | Post | Comment | Like | Reaction;
-}
+};
 
-export default class FacebookEvent extends MessengerEvent {
-  _rawEvent: FacebookFeedRawEvent;
+export default class FacebookEvent {
+  _rawEvent: FacebookRawEvent;
 
-  constructor(
-    rawEvent: FacebookFeedRawEvent,
-    options: Record<string, any> = {}
-  ) {
-    super(rawEvent, options);
+  _pageId: string | undefined;
+
+  constructor(rawEvent: FacebookRawEvent, options: { pageId?: string }) {
     this._rawEvent = rawEvent;
     this._pageId = options.pageId;
   }
 
-  get rawEvent(): FacebookFeedRawEvent {
+  get pageId(): string | undefined {
+    return this._pageId;
+  }
+
+  /**
+   * Underlying raw event from Facebook.
+   *
+   */
+  get rawEvent(): FacebookRawEvent {
     return this._rawEvent;
+  }
+
+  /**
+   * Determine if the event is a message event which includes text.
+   *
+   */
+  get isText(): boolean {
+    return false;
+  }
+
+  /**
+   * The text string from Facebook raw event.
+   *
+   */
+  get text(): string | null {
+    return null;
   }
 
   get isConversation(): boolean {
@@ -258,12 +277,7 @@ export default class FacebookEvent extends MessengerEvent {
     return null;
   }
 
-  get pageId(): string | null {
-    return this._pageId || null;
-  }
-
   get isSentByPage(): boolean {
-    // TODO: should we treat Messenger echo events as `isSentByPage`?
     if (!this.isFeed) {
       return false;
     }

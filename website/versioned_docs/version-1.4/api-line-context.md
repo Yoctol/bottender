@@ -1,6 +1,7 @@
 ---
-id: api-line-context
+id: version-1.4-api-line-context
 title: LineContext
+original_id: api-line-context
 ---
 
 - [Reply API](#reply-api)

@@ -17,6 +17,7 @@ import TelegramEvent from './telegram/TelegramEvent';
 import TwilioClient from './whatsapp/TwilioClient';
 import ViberEvent from './viber/ViberEvent';
 import WhatsappEvent from './whatsapp/WhatsappEvent';
+import { Connector } from './bot/Connector';
 import { ConsoleClient } from './console/ConsoleClient';
 import { LineConnectorOptions, LineRequestBody } from './line/LineConnector';
 import {
@@ -125,7 +126,7 @@ export type SessionConfig = {
         };
       }
     | {
-        [P in Exclude<string, SessionDriver>]: SessionStore;
+        [P in Exclude<string, SessionDriver>]?: SessionStore;
       };
 };
 
@@ -133,21 +134,30 @@ type ChannelCommonConfig = {
   enabled: boolean;
   path?: string;
   sync?: boolean;
-  OnRequest?: OnRequest;
+  onRequest?: OnRequest;
 };
 
 export type BottenderConfig = {
   plugins?: Plugin<any>[];
   session?: SessionConfig;
   initialState?: Record<string, any>;
-  channels?: {
-    [Channel.Messenger]: MessengerConnectorOptions & ChannelCommonConfig;
-    [Channel.Line]: LineConnectorOptions & ChannelCommonConfig;
-    [Channel.Telegram]: TelegramConnectorOptions & ChannelCommonConfig;
-    [Channel.Slack]: SlackConnectorOptions & ChannelCommonConfig;
-    [Channel.Viber]: ViberConnectorOptions & ChannelCommonConfig;
-    [Channel.Whatsapp]: WhatsappConnectorOptions & ChannelCommonConfig;
-  };
+  channels?:
+    | {
+        messenger?: MessengerConnectorOptions & ChannelCommonConfig;
+        line?: LineConnectorOptions & ChannelCommonConfig;
+        telegram?: TelegramConnectorOptions & ChannelCommonConfig;
+        slack?: SlackConnectorOptions & ChannelCommonConfig;
+        viber?: ViberConnectorOptions & ChannelCommonConfig;
+        whatsapp?: WhatsappConnectorOptions & ChannelCommonConfig;
+      }
+    | {
+        [key in Exclude<
+          string,
+          'messenger' | 'line' | 'telegram' | 'slack' | 'viber' | 'whatsapp'
+        >]?: {
+          connector: Connector<any, any>;
+        } & ChannelCommonConfig;
+      };
 };
 
 export type RequestContext<

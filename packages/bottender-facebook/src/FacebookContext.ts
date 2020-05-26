@@ -1,12 +1,10 @@
 import warning from 'warning';
-import { MessengerContext } from 'bottender';
-import { Options } from 'bottender/dist/messenger/MessengerContext';
 
 import FacebookBatch from './FacebookBatch';
 import FacebookEvent, { Comment } from './FacebookEvent';
 import { InputComment } from './FacebookTypes';
 
-export default class FacebookContext extends MessengerContext {
+export default class FacebookContext {
   _event: FacebookEvent;
 
   constructor({
