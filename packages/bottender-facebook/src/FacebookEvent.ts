@@ -73,7 +73,7 @@ export default class FacebookEvent {
 
   _pageId: string | undefined;
 
-  constructor(rawEvent: FacebookRawEvent, options: { pageId?: string }) {
+  constructor(rawEvent: FacebookRawEvent, options: { pageId?: string } = {}) {
     this._rawEvent = rawEvent;
     this._pageId = options.pageId;
   }

@@ -1,6 +1,6 @@
-import FacebookEvent from '../FacebookEvent';
+import FacebookEvent, { FacebookRawEvent } from '../FacebookEvent';
 
-const statusAdd = {
+const statusAdd: FacebookRawEvent = {
   field: 'feed',
   value: {
     from: {
@@ -8,15 +8,15 @@ const statusAdd = {
       name: 'user',
     },
     item: 'status',
-    post_id: '137542570280222_139610053406744',
+    postId: '137542570280222_139610053406744',
     verb: 'add',
     published: 1,
-    created_time: 1511949030,
+    createdTime: 1511949030,
     message: 'test',
   },
 };
 
-const statusEdited = {
+const statusEdited: FacebookRawEvent = {
   field: 'feed',
   value: {
     from: {
@@ -24,29 +24,29 @@ const statusEdited = {
       name: 'user',
     },
     item: 'status',
-    post_id: '137542570280222_139560936744456',
+    postId: '137542570280222_139560936744456',
     verb: 'edited',
     published: 1,
-    created_time: 1511927135,
+    createdTime: 1511927135,
     message: '1234',
   },
 };
 
-const postRemove = {
+const postRemove: FacebookRawEvent = {
   field: 'feed',
   value: {
-    recipient_id: '137542570280222',
+    recipientId: '137542570280222',
     from: {
       id: '139560936744123',
     },
     item: 'post',
-    post_id: '137542570280222_139610053406744',
+    postId: '137542570280222_139610053406744',
     verb: 'remove',
-    created_time: 1511949068,
+    createdTime: 1511949068,
   },
 };
 
-const commentAdd = {
+const commentAdd: FacebookRawEvent = {
   field: 'feed',
   value: {
     from: {
@@ -54,16 +54,16 @@ const commentAdd = {
       name: 'user',
     },
     item: 'comment',
-    comment_id: '139560936744456_139620233405726',
-    post_id: '137542570280222_139560936744456',
+    commentId: '139560936744456_139620233405726',
+    postId: '137542570280222_139560936744456',
     verb: 'add',
-    parent_id: '139560936744456_139562213411528',
-    created_time: 1511951015,
+    parentId: '139560936744456_139562213411528',
+    createdTime: 1511951015,
     message: 'Good',
   },
 };
 
-const commentEdited = {
+const commentEdited: FacebookRawEvent = {
   field: 'feed',
   value: {
     from: {
@@ -71,47 +71,47 @@ const commentEdited = {
       name: 'user',
     },
     item: 'comment',
-    comment_id: '139560936744456_139597043408045',
-    post_id: '137542570280222_139560936744456',
+    commentId: '139560936744456_139597043408045',
+    postId: '137542570280222_139560936744456',
     verb: 'edited',
-    parent_id: '137542570280222_139560936744456',
-    created_time: 1511948891,
+    parentId: '137542570280222_139560936744456',
+    createdTime: 1511948891,
     message: 'Great',
   },
 };
 
-const commentRemove = {
+const commentRemove: FacebookRawEvent = {
   field: 'feed',
   value: {
     from: {
       id: '139560936744123',
     },
-    parent_id: '137542570280222_139560936744456',
-    comment_id: '139560936744456_139597043408045',
-    post_id: '137542570280222_139560936744456',
+    parentId: '137542570280222_139560936744456',
+    commentId: '139560936744456_139597043408045',
+    postId: '137542570280222_139560936744456',
     verb: 'remove',
     item: 'comment',
-    created_time: 1511948944,
+    createdTime: 1511948944,
   },
 };
 
-const likeAdd = {
+const likeAdd: FacebookRawEvent = {
   field: 'feed',
   value: {
     from: {
       id: '139560936744123',
       name: 'user',
     },
-    parent_id: '139560936744456_139597043408045',
-    comment_id: '139560936744456_139597090074707',
-    post_id: '137542570280222_139560936744456',
+    parentId: '139560936744456_139597043408045',
+    commentId: '139560936744456_139597090074707',
+    postId: '137542570280222_139560936744456',
     verb: 'add',
     item: 'like',
-    created_time: 1511948636,
+    createdTime: 1511948636,
   },
 };
 
-const pageLikeAdd = {
+const pageLikeAdd: FacebookRawEvent = {
   value: {
     item: 'like',
     verb: 'add',
@@ -119,77 +119,66 @@ const pageLikeAdd = {
   field: 'feed',
 };
 
-const likeRemove = {
+const likeRemove: FacebookRawEvent = {
   field: 'feed',
   value: {
     from: {
       id: '139560936744123',
     },
-    parent_id: '139560936744456_139597043408045',
-    comment_id: '139560936744456_139597090074707',
-    post_id: '137542570280222_139560936744456',
+    parentId: '139560936744456_139597043408045',
+    commentId: '139560936744456_139597090074707',
+    postId: '137542570280222_139560936744456',
     verb: 'remove',
     item: 'like',
-    created_time: 1511948666,
+    createdTime: 1511948666,
   },
 };
 
-const reactionAdd = {
+const reactionAdd: FacebookRawEvent = {
   field: 'feed',
   value: {
-    reaction_type: 'like',
+    reactionType: 'like',
     from: {
       id: '139560936744123',
     },
-    parent_id: '139560936744456_139597043408045',
-    comment_id: '139560936744456_139597090074707',
-    post_id: '137542570280222_139560936744456',
+    parentId: '139560936744456_139597043408045',
+    commentId: '139560936744456_139597090074707',
+    postId: '137542570280222_139560936744456',
     verb: 'add',
     item: 'reaction',
-    created_time: 1511948636,
+    createdTime: 1511948636,
   },
 };
 
-const reactionEdit = {
+const reactionEdit: FacebookRawEvent = {
   field: 'feed',
   value: {
-    reaction_type: 'sad',
+    reactionType: 'sad',
     from: {
       id: '139560936744123',
     },
-    parent_id: '139560936744456_139597043408045',
-    comment_id: '139560936744456_139597090074707',
-    post_id: '137542570280222_139560936744456',
+    parentId: '139560936744456_139597043408045',
+    commentId: '139560936744456_139597090074707',
+    postId: '137542570280222_139560936744456',
     verb: 'edit',
     item: 'reaction',
-    created_time: 1511948713,
+    createdTime: 1511948713,
   },
 };
 
-const reactionRemove = {
+const reactionRemove: FacebookRawEvent = {
   field: 'feed',
   value: {
-    reaction_type: 'like',
+    reactionType: 'like',
     from: {
       id: '139560936744123',
     },
-    parent_id: '139560936744456_139597043408045',
-    comment_id: '139560936744456_139597090074707',
-    post_id: '137542570280222_139560936744456',
+    parentId: '139560936744456_139597043408045',
+    commentId: '139560936744456_139597090074707',
+    postId: '137542570280222_139560936744456',
     verb: 'remove',
     item: 'reaction',
-    created_time: 1511948666,
-  },
-};
-
-const textMessage = {
-  sender: { id: '1423587017700273' },
-  recipient: { id: '404217156637689' },
-  timestamp: 1491796363181,
-  message: {
-    mid: 'mid.$cAAE1UUyiiwthh0NPrVbVf4HFNDGl',
-    seq: 348847,
-    text: 'Sharp tools make good work.',
+    createdTime: 1511948666,
   },
 };
 
@@ -203,11 +192,11 @@ const sentByPage = {
       name: 'Bottender',
     },
     item: 'comment',
-    comment_id: '139560936755999_140077616693321',
-    post_id: '137542570280111_139560936755999',
+    commentId: '139560936755999_140077616693321',
+    postId: '137542570280111_139560936755999',
     verb: 'add',
-    parent_id: '139560936755999_140077593359990',
-    created_time: 1512121727,
+    parentId: '139560936755999_140077593359990',
+    createdTime: 1512121727,
     message: 'Public reply!',
   },
 };
@@ -220,26 +209,25 @@ const videoCommentAdd = {
       name: 'Hsuan-Yih Shawn Chu',
     },
     item: 'comment',
-    comment_id: '139560936755999_140077616693321',
-    post_id: '137542570280222_139560936744456',
+    commentId: '139560936755999_140077616693321',
+    postId: '137542570280222_139560936744456',
     verb: 'add',
-    parent_id: '137542570280222_139560936744456',
-    created_time: 1545829217,
+    parentId: '137542570280222_139560936744456',
+    createdTime: 1545829217,
     post: {
       type: 'video',
-      updated_time: '2018-12-26T13:00:17+0000',
-      promotion_status: 'inactive',
-      permalink_url: 'https://www.facebook.com/xxx/posts/1111',
+      updatedTime: '2018-12-26T13:00:17+0000',
+      promotionStatus: 'inactive',
+      permalinkUrl: 'https://www.facebook.com/xxx/posts/1111',
       id: '137542570280222_139560936744456',
-      status_type: 'added_video',
-      is_published: true,
+      statusType: 'added_video',
+      isPublished: true,
     },
     message: '100',
   },
 };
 
 it('#isFeed', () => {
-  expect(new FacebookEvent(textMessage).isFeed).toEqual(false);
   expect(new FacebookEvent(statusAdd).isFeed).toEqual(true);
   expect(new FacebookEvent(statusEdited).isFeed).toEqual(true);
   expect(new FacebookEvent(postRemove).isFeed).toEqual(true);
@@ -257,7 +245,6 @@ it('#isFeed', () => {
 });
 
 it('#isStatus', () => {
-  expect(new FacebookEvent(textMessage).isStatus).toEqual(false);
   expect(new FacebookEvent(statusAdd).isStatus).toEqual(true);
   expect(new FacebookEvent(statusEdited).isStatus).toEqual(true);
   expect(new FacebookEvent(postRemove).isStatus).toEqual(false);
@@ -275,7 +262,6 @@ it('#isStatus', () => {
 });
 
 it('#isStatusAdd', () => {
-  expect(new FacebookEvent(textMessage).isStatusAdd).toEqual(false);
   expect(new FacebookEvent(statusAdd).isStatusAdd).toEqual(true);
   expect(new FacebookEvent(statusEdited).isStatusAdd).toEqual(false);
   expect(new FacebookEvent(postRemove).isStatusAdd).toEqual(false);
@@ -293,7 +279,6 @@ it('#isStatusAdd', () => {
 });
 
 it('#isStatusEdited', () => {
-  expect(new FacebookEvent(textMessage).isStatusEdited).toEqual(false);
   expect(new FacebookEvent(statusAdd).isStatusEdited).toEqual(false);
   expect(new FacebookEvent(statusEdited).isStatusEdited).toEqual(true);
   expect(new FacebookEvent(postRemove).isStatusEdited).toEqual(false);
@@ -311,17 +296,16 @@ it('#isStatusEdited', () => {
 });
 
 it('#status', () => {
-  expect(new FacebookEvent(textMessage).status).toEqual(null);
   expect(new FacebookEvent(statusAdd).status).toEqual({
     from: {
       id: '139560936744123',
       name: 'user',
     },
     item: 'status',
-    post_id: '137542570280222_139610053406744',
+    postId: '137542570280222_139610053406744',
     verb: 'add',
     published: 1,
-    created_time: 1511949030,
+    createdTime: 1511949030,
     message: 'test',
   });
   expect(new FacebookEvent(statusEdited).status).toEqual({
@@ -330,10 +314,10 @@ it('#status', () => {
       name: 'user',
     },
     item: 'status',
-    post_id: '137542570280222_139560936744456',
+    postId: '137542570280222_139560936744456',
     verb: 'edited',
     published: 1,
-    created_time: 1511927135,
+    createdTime: 1511927135,
     message: '1234',
   });
   expect(new FacebookEvent(postRemove).status).toEqual(null);
@@ -352,7 +336,6 @@ it('#status', () => {
 });
 
 it('#isPost', () => {
-  expect(new FacebookEvent(textMessage).isPost).toEqual(false);
   expect(new FacebookEvent(statusAdd).isPost).toEqual(false);
   expect(new FacebookEvent(statusEdited).isPost).toEqual(false);
   expect(new FacebookEvent(postRemove).isPost).toEqual(true);
@@ -370,7 +353,6 @@ it('#isPost', () => {
 });
 
 it('#isPostRemove', () => {
-  expect(new FacebookEvent(textMessage).isPostRemove).toEqual(false);
   expect(new FacebookEvent(statusAdd).isPostRemove).toEqual(false);
   expect(new FacebookEvent(statusEdited).isPostRemove).toEqual(false);
   expect(new FacebookEvent(postRemove).isPostRemove).toEqual(true);
@@ -388,18 +370,17 @@ it('#isPostRemove', () => {
 });
 
 it('#post', () => {
-  expect(new FacebookEvent(textMessage).post).toEqual(null);
   expect(new FacebookEvent(statusAdd).post).toEqual(null);
   expect(new FacebookEvent(statusEdited).post).toEqual(null);
   expect(new FacebookEvent(postRemove).post).toEqual({
-    recipient_id: '137542570280222',
+    recipientId: '137542570280222',
     from: {
       id: '139560936744123',
     },
     item: 'post',
-    post_id: '137542570280222_139610053406744',
+    postId: '137542570280222_139610053406744',
     verb: 'remove',
-    created_time: 1511949068,
+    createdTime: 1511949068,
   });
   expect(new FacebookEvent(commentAdd).post).toEqual(null);
   expect(new FacebookEvent(videoCommentAdd).post).toEqual(null);
@@ -415,7 +396,6 @@ it('#post', () => {
 });
 
 it('#isComment', () => {
-  expect(new FacebookEvent(textMessage).isComment).toEqual(false);
   expect(new FacebookEvent(statusAdd).isComment).toEqual(false);
   expect(new FacebookEvent(statusEdited).isComment).toEqual(false);
   expect(new FacebookEvent(postRemove).isComment).toEqual(false);
@@ -433,7 +413,6 @@ it('#isComment', () => {
 });
 
 it('#isCommentAdd', () => {
-  expect(new FacebookEvent(textMessage).isCommentAdd).toEqual(false);
   expect(new FacebookEvent(statusAdd).isCommentAdd).toEqual(false);
   expect(new FacebookEvent(statusEdited).isCommentAdd).toEqual(false);
   expect(new FacebookEvent(postRemove).isCommentAdd).toEqual(false);
@@ -451,7 +430,6 @@ it('#isCommentAdd', () => {
 });
 
 it('#isCommentEdited', () => {
-  expect(new FacebookEvent(textMessage).isCommentEdited).toEqual(false);
   expect(new FacebookEvent(statusAdd).isCommentEdited).toEqual(false);
   expect(new FacebookEvent(statusEdited).isCommentEdited).toEqual(false);
   expect(new FacebookEvent(postRemove).isCommentEdited).toEqual(false);
@@ -469,7 +447,6 @@ it('#isCommentEdited', () => {
 });
 
 it('#isCommentRemove', () => {
-  expect(new FacebookEvent(textMessage).isCommentRemove).toEqual(false);
   expect(new FacebookEvent(statusAdd).isCommentRemove).toEqual(false);
   expect(new FacebookEvent(statusEdited).isCommentRemove).toEqual(false);
   expect(new FacebookEvent(postRemove).isCommentRemove).toEqual(false);
@@ -487,7 +464,6 @@ it('#isCommentRemove', () => {
 });
 
 it('#isFirstLayerComment', () => {
-  expect(new FacebookEvent(textMessage).isFirstLayerComment).toEqual(false);
   expect(new FacebookEvent(statusAdd).isFirstLayerComment).toEqual(false);
   expect(new FacebookEvent(statusEdited).isFirstLayerComment).toEqual(false);
   expect(new FacebookEvent(postRemove).isFirstLayerComment).toEqual(false);
@@ -505,7 +481,6 @@ it('#isFirstLayerComment', () => {
 });
 
 it('#comment', () => {
-  expect(new FacebookEvent(textMessage).comment).toEqual(null);
   expect(new FacebookEvent(statusAdd).comment).toEqual(null);
   expect(new FacebookEvent(statusEdited).comment).toEqual(null);
   expect(new FacebookEvent(postRemove).comment).toEqual(null);
@@ -515,33 +490,33 @@ it('#comment', () => {
       name: 'user',
     },
     item: 'comment',
-    comment_id: '139560936744456_139620233405726',
-    post_id: '137542570280222_139560936744456',
+    commentId: '139560936744456_139620233405726',
+    postId: '137542570280222_139560936744456',
     verb: 'add',
-    parent_id: '139560936744456_139562213411528',
-    created_time: 1511951015,
+    parentId: '139560936744456_139562213411528',
+    createdTime: 1511951015,
     message: 'Good',
   });
   expect(new FacebookEvent(videoCommentAdd).comment).toEqual({
-    comment_id: '139560936755999_140077616693321',
-    created_time: 1545829217,
+    commentId: '139560936755999_140077616693321',
+    createdTime: 1545829217,
     from: {
       id: '1440971912666228',
       name: 'Hsuan-Yih Shawn Chu',
     },
     item: 'comment',
     message: '100',
-    parent_id: '137542570280222_139560936744456',
+    parentId: '137542570280222_139560936744456',
     post: {
       id: '137542570280222_139560936744456',
-      is_published: true,
-      permalink_url: 'https://www.facebook.com/xxx/posts/1111',
-      promotion_status: 'inactive',
-      status_type: 'added_video',
+      isPublished: true,
+      permalinkUrl: 'https://www.facebook.com/xxx/posts/1111',
+      promotionStatus: 'inactive',
+      statusType: 'added_video',
       type: 'video',
-      updated_time: '2018-12-26T13:00:17+0000',
+      updatedTime: '2018-12-26T13:00:17+0000',
     },
-    post_id: '137542570280222_139560936744456',
+    postId: '137542570280222_139560936744456',
     verb: 'add',
   });
   expect(new FacebookEvent(commentEdited).comment).toEqual({
@@ -550,23 +525,23 @@ it('#comment', () => {
       name: 'user',
     },
     item: 'comment',
-    comment_id: '139560936744456_139597043408045',
-    post_id: '137542570280222_139560936744456',
+    commentId: '139560936744456_139597043408045',
+    postId: '137542570280222_139560936744456',
     verb: 'edited',
-    parent_id: '137542570280222_139560936744456',
-    created_time: 1511948891,
+    parentId: '137542570280222_139560936744456',
+    createdTime: 1511948891,
     message: 'Great',
   });
   expect(new FacebookEvent(commentRemove).comment).toEqual({
     from: {
       id: '139560936744123',
     },
-    parent_id: '137542570280222_139560936744456',
-    comment_id: '139560936744456_139597043408045',
-    post_id: '137542570280222_139560936744456',
+    parentId: '137542570280222_139560936744456',
+    commentId: '139560936744456_139597043408045',
+    postId: '137542570280222_139560936744456',
     verb: 'remove',
     item: 'comment',
-    created_time: 1511948944,
+    createdTime: 1511948944,
   });
   expect(new FacebookEvent(likeAdd).comment).toEqual(null);
   expect(new FacebookEvent(pageLikeAdd).comment).toEqual(null);
@@ -580,17 +555,16 @@ it('#comment', () => {
       name: 'Bottender',
     },
     item: 'comment',
-    comment_id: '139560936755999_140077616693321',
-    post_id: '137542570280111_139560936755999',
+    commentId: '139560936755999_140077616693321',
+    postId: '137542570280111_139560936755999',
     verb: 'add',
-    parent_id: '139560936755999_140077593359990',
-    created_time: 1512121727,
+    parentId: '139560936755999_140077593359990',
+    createdTime: 1512121727,
     message: 'Public reply!',
   });
 });
 
 it('#isLike', () => {
-  expect(new FacebookEvent(textMessage).isLike).toEqual(false);
   expect(new FacebookEvent(statusAdd).isLike).toEqual(false);
   expect(new FacebookEvent(statusEdited).isLike).toEqual(false);
   expect(new FacebookEvent(postRemove).isLike).toEqual(false);
@@ -608,7 +582,6 @@ it('#isLike', () => {
 });
 
 it('#isLikeAdd', () => {
-  expect(new FacebookEvent(textMessage).isLikeAdd).toEqual(false);
   expect(new FacebookEvent(statusAdd).isLikeAdd).toEqual(false);
   expect(new FacebookEvent(statusEdited).isLikeAdd).toEqual(false);
   expect(new FacebookEvent(postRemove).isLikeAdd).toEqual(false);
@@ -626,7 +599,6 @@ it('#isLikeAdd', () => {
 });
 
 it('#isLikeRemove', () => {
-  expect(new FacebookEvent(textMessage).isLikeRemove).toEqual(false);
   expect(new FacebookEvent(statusAdd).isLikeRemove).toEqual(false);
   expect(new FacebookEvent(statusEdited).isLikeRemove).toEqual(false);
   expect(new FacebookEvent(postRemove).isLikeRemove).toEqual(false);
@@ -644,7 +616,6 @@ it('#isLikeRemove', () => {
 });
 
 it('#like', () => {
-  expect(new FacebookEvent(textMessage).like).toEqual(null);
   expect(new FacebookEvent(statusAdd).like).toEqual(null);
   expect(new FacebookEvent(statusEdited).like).toEqual(null);
   expect(new FacebookEvent(postRemove).like).toEqual(null);
@@ -657,12 +628,12 @@ it('#like', () => {
       id: '139560936744123',
       name: 'user',
     },
-    parent_id: '139560936744456_139597043408045',
-    comment_id: '139560936744456_139597090074707',
-    post_id: '137542570280222_139560936744456',
+    parentId: '139560936744456_139597043408045',
+    commentId: '139560936744456_139597090074707',
+    postId: '137542570280222_139560936744456',
     verb: 'add',
     item: 'like',
-    created_time: 1511948636,
+    createdTime: 1511948636,
   });
   expect(new FacebookEvent(pageLikeAdd).like).toEqual({
     item: 'like',
@@ -672,12 +643,12 @@ it('#like', () => {
     from: {
       id: '139560936744123',
     },
-    parent_id: '139560936744456_139597043408045',
-    comment_id: '139560936744456_139597090074707',
-    post_id: '137542570280222_139560936744456',
+    parentId: '139560936744456_139597043408045',
+    commentId: '139560936744456_139597090074707',
+    postId: '137542570280222_139560936744456',
     verb: 'remove',
     item: 'like',
-    created_time: 1511948666,
+    createdTime: 1511948666,
   });
   expect(new FacebookEvent(reactionAdd).like).toEqual(null);
   expect(new FacebookEvent(reactionEdit).like).toEqual(null);
@@ -686,7 +657,6 @@ it('#like', () => {
 });
 
 it('#isReaction', () => {
-  expect(new FacebookEvent(textMessage).isReaction).toEqual(false);
   expect(new FacebookEvent(statusAdd).isReaction).toEqual(false);
   expect(new FacebookEvent(statusEdited).isReaction).toEqual(false);
   expect(new FacebookEvent(postRemove).isReaction).toEqual(false);
@@ -704,7 +674,6 @@ it('#isReaction', () => {
 });
 
 it('#isReactionAdd', () => {
-  expect(new FacebookEvent(textMessage).isReactionAdd).toEqual(false);
   expect(new FacebookEvent(statusAdd).isReactionAdd).toEqual(false);
   expect(new FacebookEvent(statusEdited).isReactionAdd).toEqual(false);
   expect(new FacebookEvent(postRemove).isReactionAdd).toEqual(false);
@@ -722,7 +691,6 @@ it('#isReactionAdd', () => {
 });
 
 it('#isReactionEdit', () => {
-  expect(new FacebookEvent(textMessage).isReactionEdit).toEqual(false);
   expect(new FacebookEvent(statusAdd).isReactionEdit).toEqual(false);
   expect(new FacebookEvent(statusEdited).isReactionEdit).toEqual(false);
   expect(new FacebookEvent(postRemove).isReactionEdit).toEqual(false);
@@ -740,7 +708,6 @@ it('#isReactionEdit', () => {
 });
 
 it('#isReactionRemove', () => {
-  expect(new FacebookEvent(textMessage).isReactionRemove).toEqual(false);
   expect(new FacebookEvent(statusAdd).isReactionRemove).toEqual(false);
   expect(new FacebookEvent(statusEdited).isReactionRemove).toEqual(false);
   expect(new FacebookEvent(postRemove).isReactionRemove).toEqual(false);
@@ -758,7 +725,6 @@ it('#isReactionRemove', () => {
 });
 
 it('#reaction', () => {
-  expect(new FacebookEvent(textMessage).reaction).toEqual(null);
   expect(new FacebookEvent(statusAdd).reaction).toEqual(null);
   expect(new FacebookEvent(statusEdited).reaction).toEqual(null);
   expect(new FacebookEvent(postRemove).reaction).toEqual(null);
@@ -770,46 +736,45 @@ it('#reaction', () => {
   expect(new FacebookEvent(pageLikeAdd).reaction).toEqual(null);
   expect(new FacebookEvent(likeRemove).reaction).toEqual(null);
   expect(new FacebookEvent(reactionAdd).reaction).toEqual({
-    reaction_type: 'like',
+    reactionType: 'like',
     from: {
       id: '139560936744123',
     },
-    parent_id: '139560936744456_139597043408045',
-    comment_id: '139560936744456_139597090074707',
-    post_id: '137542570280222_139560936744456',
+    parentId: '139560936744456_139597043408045',
+    commentId: '139560936744456_139597090074707',
+    postId: '137542570280222_139560936744456',
     verb: 'add',
     item: 'reaction',
-    created_time: 1511948636,
+    createdTime: 1511948636,
   });
   expect(new FacebookEvent(reactionEdit).reaction).toEqual({
-    reaction_type: 'sad',
+    reactionType: 'sad',
     from: {
       id: '139560936744123',
     },
-    parent_id: '139560936744456_139597043408045',
-    comment_id: '139560936744456_139597090074707',
-    post_id: '137542570280222_139560936744456',
+    parentId: '139560936744456_139597043408045',
+    commentId: '139560936744456_139597090074707',
+    postId: '137542570280222_139560936744456',
     verb: 'edit',
     item: 'reaction',
-    created_time: 1511948713,
+    createdTime: 1511948713,
   });
   expect(new FacebookEvent(reactionRemove).reaction).toEqual({
-    reaction_type: 'like',
+    reactionType: 'like',
     from: {
       id: '139560936744123',
     },
-    parent_id: '139560936744456_139597043408045',
-    comment_id: '139560936744456_139597090074707',
-    post_id: '137542570280222_139560936744456',
+    parentId: '139560936744456_139597043408045',
+    commentId: '139560936744456_139597090074707',
+    postId: '137542570280222_139560936744456',
     verb: 'remove',
     item: 'reaction',
-    created_time: 1511948666,
+    createdTime: 1511948666,
   });
   expect(new FacebookEvent(sentByPage).reaction).toEqual(null);
 });
 
 it('#pageId', () => {
-  expect(new FacebookEvent(textMessage, { pageId }).pageId).toEqual(
     '137542570280111'
   );
   expect(new FacebookEvent(statusAdd, { pageId }).pageId).toEqual(
@@ -857,7 +822,6 @@ it('#pageId', () => {
 });
 
 it('#isSentByPage', () => {
-  expect(new FacebookEvent(textMessage, { pageId }).isSentByPage).toEqual(
     false
   );
   expect(new FacebookEvent(statusAdd, { pageId }).isSentByPage).toEqual(false);
@@ -893,7 +857,6 @@ it('#isSentByPage', () => {
 });
 
 it('#isPageLike', () => {
-  expect(new FacebookEvent(textMessage, { pageId }).isPageLike).toEqual(false);
   expect(new FacebookEvent(statusAdd, { pageId }).isPageLike).toEqual(false);
   expect(new FacebookEvent(statusEdited, { pageId }).isPageLike).toEqual(false);
   expect(new FacebookEvent(postRemove, { pageId }).isPageLike).toEqual(false);
