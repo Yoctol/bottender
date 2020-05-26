@@ -716,6 +716,9 @@
       "version-1.4/version-1.4-api-line-client": {
         "title": "LineClient"
       },
+      "version-1.4/version-1.4-api-line-context": {
+        "title": "LineContext"
+      },
       "version-1.4/version-1.4-api-messenger-client": {
         "title": "MessengerClient"
       },
@@ -760,6 +763,9 @@
       },
       "version-1.4/version-1.4-channel-slack-sending-messages": {
         "title": "Sending Slack Messages"
+      },
+      "version-1.4/version-1.4-channel-slack-setup": {
+        "title": "Slack Setup"
       },
       "version-1.4/version-1.4-channel-telegram-routing": {
         "title": "Telegram Routings"
