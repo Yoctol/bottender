@@ -1,6 +1,7 @@
 ---
-id: channel-slack-setup
+id: version-1.4-channel-slack-setup
 title: Slack Setup
+original_id: channel-slack-setup
 ---
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/7aISWF9_jO4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
