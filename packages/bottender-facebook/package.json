@@ -15,6 +15,7 @@
   "dependencies": {
     "axios-error": "^0.8.1",
     "lodash": "^4.17.15",
+    "messenger-batch": "^0.3.1",
     "warning": "^4.0.3"
   },
   "peerDependencies": {

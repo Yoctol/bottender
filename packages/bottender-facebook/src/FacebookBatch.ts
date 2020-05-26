@@ -4,6 +4,15 @@ import { MessengerTypes } from 'messaging-api-messenger';
 
 import * as Types from './FacebookTypes';
 
+/**
+ * Publish new comments to any object.
+ *
+ * @see https://developers.facebook.com/docs/graph-api/reference/v6.0/object/comments
+ *
+ * @param objectId ID of the object.
+ * @param comment A comment text or a comment object.
+ * @param options
+ */
 function sendComment(
   objectId: string,
   comment: string | Types.InputComment,
@@ -23,6 +32,14 @@ function sendComment(
   };
 }
 
+/**
+ * Add new likes to any object.
+ *
+ * @see https://developers.facebook.com/docs/graph-api/reference/v6.0/object/likes
+ *
+ * @param objectId ID of the object.
+ * @param options
+ */
 function sendLike(
   objectId: string,
   options?: {
@@ -38,12 +55,24 @@ function sendLike(
   };
 }
 
+/**
+ * Get the data of the comment.
+ *
+ * @see https://developers.facebook.com/docs/graph-api/reference/v6.0/comment
+ *
+ * @param commentId ID of the comment.
+ * @param options
+ */
 function getComment(
   commentId: string,
   {
+    summary,
+    filter,
     fields,
     accessToken,
   }: {
+    summary?: boolean;
+    filter?: 'toplevel' | 'stream';
     fields?: string | Types.CommentField[];
     accessToken?: string;
   } = {}
@@ -51,6 +80,8 @@ function getComment(
   const conjunctFields = Array.isArray(fields) ? fields.join(',') : fields;
 
   const query = {
+    ...(summary && { summary: 'true' }),
+    ...(filter && { filter }),
     ...(conjunctFields && { fields: conjunctFields }),
     ...(accessToken && { access_token: accessToken }),
   };
@@ -61,9 +92,23 @@ function getComment(
   };
 }
 
+/**
+ * Get the data of likes on the object.
+ *
+ * @see https://developers.facebook.com/docs/graph-api/reference/v6.0/object/likes
+ *
+ * @param objectId ID of the comment.
+ * @param options
+ */
 function getLikes(
   objectId: string,
-  { summary, accessToken }: { summary?: boolean; accessToken?: string } = {}
+  {
+    summary,
+    accessToken,
+  }: {
+    summary?: boolean;
+    accessToken?: string;
+  } = {}
 ): MessengerTypes.BatchItem {
   const query = {
     ...(summary && { summary: 'true' }),

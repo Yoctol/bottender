@@ -63,10 +63,15 @@ type Reaction = {
   createdTime: number;
 };
 
-export type FacebookRawEvent = {
-  field: 'feed';
-  value: Status | Post | Comment | Like | Reaction;
-};
+export type FacebookRawEvent =
+  | {
+      field: 'feed';
+      value: Status | Post | Comment | Like | Reaction;
+    }
+  | {
+      field: 'conversation';
+      value: any;
+    };
 
 export default class FacebookEvent {
   _rawEvent: FacebookRawEvent;

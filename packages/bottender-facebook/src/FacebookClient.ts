@@ -23,7 +23,8 @@ export default class FacebookClient extends MessengerClient {
 
   /**
    * Publish new comments to any object.
-   * Reference: https://developers.facebook.com/docs/graph-api/reference/v6.0/object/comments
+   *
+   * @see https://developers.facebook.com/docs/graph-api/reference/v6.0/object/comments
    *
    * @param objectId ID of the object.
    * @param comment A comment text or a comment object.
@@ -31,15 +32,14 @@ export default class FacebookClient extends MessengerClient {
    */
   sendComment(
     objectId: string,
-    comment: string | Types.InputComment,
-    { accessToken: customAccessToken }: { accessToken?: string } = {}
+    comment: string | Types.InputComment
   ): Promise<{ id: string }> {
     const body = typeof comment === 'string' ? { message: comment } : comment;
 
     return this._axios
       .post<{ id: string }>(`/${objectId}/comments`, body, {
         params: {
-          access_token: customAccessToken || this._accessToken,
+          access_token: this._accessToken,
         },
       })
       .then(res => res.data, handleError);
@@ -47,27 +47,26 @@ export default class FacebookClient extends MessengerClient {
 
   /**
    * Add new likes to any object.
-   * Reference: https://developers.facebook.com/docs/graph-api/reference/v6.0/object/likes
+   *
+   * @see https://developers.facebook.com/docs/graph-api/reference/v6.0/object/likes
    *
    * @param objectId ID of the object.
    * @param options
    */
-  sendLike(
-    objectId: string,
-    { accessToken: customAccessToken }: { accessToken?: string } = {}
-  ): Promise<{ success: true }> {
+  sendLike(objectId: string): Promise<{ success: true }> {
     return this._axios
       .post<{ success: true }>(`/${objectId}/likes`, undefined, {
         params: {
-          access_token: customAccessToken || this._accessToken,
+          access_token: this._accessToken,
         },
       })
       .then(res => res.data, handleError);
   }
 
   /**
+   * Get the data of the comment.
    *
-   * Reference: https://developers.facebook.com/docs/graph-api/reference/v6.0/comment
+   * @see https://developers.facebook.com/docs/graph-api/reference/v6.0/comment
    *
    * @param commentId ID of the comment.
    * @param options
@@ -75,11 +74,13 @@ export default class FacebookClient extends MessengerClient {
   getComment(
     commentId: string,
     {
+      summary,
+      filter,
       fields,
-      accessToken: customAccessToken,
     }: {
+      summary?: boolean;
+      filter?: 'toplevel' | 'stream';
       fields?: string | Types.CommentField[];
-      accessToken?: string;
     } = {}
   ): Promise<Types.Comment> {
     const conjunctFields = Array.isArray(fields) ? fields.join(',') : fields;
@@ -87,29 +88,26 @@ export default class FacebookClient extends MessengerClient {
     return this._axios
       .get<Types.Comment>(`/${commentId}`, {
         params: {
-          fields: conjunctFields || undefined,
-          access_token: customAccessToken || this._accessToken,
+          summary: summary ? 'true' : undefined,
+          filter,
+          fields: conjunctFields,
+          access_token: this._accessToken,
         },
       })
       .then(res => res.data, handleError);
   }
 
   /**
+   * Get the data of likes on the object.
    *
-   * Reference: https://developers.facebook.com/docs/graph-api/reference/v6.0/object/likes
+   * @see https://developers.facebook.com/docs/graph-api/reference/v6.0/object/likes
    *
    * @param objectId ID of the comment.
    * @param options
    */
   getLikes(
     objectId: string,
-    {
-      summary,
-      accessToken: customAccessToken,
-    }: {
-      summary?: boolean;
-      accessToken?: string;
-    } = {}
+    { summary }: { summary?: boolean } = {}
   ): Promise<Types.Likes> {
     return this._axios
       .get<{
@@ -118,7 +116,7 @@ export default class FacebookClient extends MessengerClient {
       }>(`/${objectId}/likes`, {
         params: {
           summary: summary ? 'true' : undefined,
-          access_token: customAccessToken || this._accessToken,
+          access_token: this._accessToken,
         },
       })
       .then(res => res.data.likes, handleError);
