@@ -1,25 +1,8 @@
 import querystring from 'querystring';
 
-import warning from 'warning';
+import { MessengerTypes } from 'messaging-api-messenger';
 
 import * as Types from './FacebookTypes';
-
-function sendPrivateReply(
-  objectId: string,
-  message: string,
-  options?: { accessToken?: string }
-) {
-  warning(false, '');
-
-  return {
-    method: 'POST',
-    relativeUrl: `${objectId}/private_replies`,
-    body: {
-      message,
-      ...options,
-    },
-  };
-}
 
 function sendComment(
   objectId: string,
@@ -27,7 +10,7 @@ function sendComment(
   options?: {
     accessToken?: string;
   }
-) {
+): MessengerTypes.BatchItem {
   const body = typeof comment === 'string' ? { message: comment } : comment;
 
   return {
@@ -45,7 +28,7 @@ function sendLike(
   options?: {
     accessToken?: string;
   }
-) {
+): MessengerTypes.BatchItem {
   return {
     method: 'POST',
     relativeUrl: `${objectId}/likes`,
@@ -60,19 +43,17 @@ function getComment(
   {
     fields,
     accessToken,
-  }: { fields?: string | Types.CommentField[]; accessToken?: string } = {}
-) {
+  }: {
+    fields?: string | Types.CommentField[];
+    accessToken?: string;
+  } = {}
+): MessengerTypes.BatchItem {
   const conjunctFields = Array.isArray(fields) ? fields.join(',') : fields;
 
-  const query = {} as Record<string, string>;
-
-  if (conjunctFields) {
-    query.fields = conjunctFields;
-  }
-
-  if (accessToken) {
-    query.access_token = accessToken;
-  }
+  const query = {
+    ...(conjunctFields && { fields: conjunctFields }),
+    ...(accessToken && { access_token: accessToken }),
+  };
 
   return {
     method: 'GET',
@@ -83,16 +64,11 @@ function getComment(
 function getLikes(
   objectId: string,
   { summary, accessToken }: { summary?: boolean; accessToken?: string } = {}
-) {
-  const query = {} as Record<string, string>;
-
-  if (summary) {
-    query.summary = String(summary);
-  }
-
-  if (accessToken) {
-    query.access_token = accessToken;
-  }
+): MessengerTypes.BatchItem {
+  const query = {
+    ...(summary && { summary: 'true' }),
+    ...(accessToken && { access_token: accessToken }),
+  };
 
   return {
     method: 'GET',
@@ -101,7 +77,6 @@ function getLikes(
 }
 
 const FacebookBatch = {
-  sendPrivateReply,
   sendComment,
   sendLike,
   getComment,
