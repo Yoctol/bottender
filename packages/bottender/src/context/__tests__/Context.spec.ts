@@ -1,6 +1,6 @@
 import Context from '../Context';
 
-class TestContext extends Context<any, any> {
+class TestContext extends Context {
   get platform() {
     return 'test';
   }

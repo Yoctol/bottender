@@ -116,7 +116,7 @@ class ContextSimulator {
     event: Record<string, any>;
     state?: Record<string, any>;
   }): Record<string, any> {
-    const context: any = new SimulatedContext<any, any>({
+    const context: any = new SimulatedContext({
       client: this.createClient(),
       event: this.createEvent(event),
       session: {

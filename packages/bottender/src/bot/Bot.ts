@@ -11,19 +11,12 @@ import Context from '../context/Context';
 import MemoryCacheStore from '../cache/MemoryCacheStore';
 import Session from '../session/Session';
 import SessionStore from '../session/SessionStore';
-import {
-  Action,
-  AnyContext,
-  Client,
-  Plugin,
-  Props,
-  RequestContext,
-} from '../types';
+import { Action, Client, Plugin, Props, RequestContext } from '../types';
 import { Event } from '../context/Event';
 
 import { Connector } from './Connector';
 
-type Builder<C extends AnyContext> = {
+type Builder<C extends Context> = {
   build: () => Action<C, any>;
 };
 
@@ -40,9 +33,7 @@ function createMemorySessionStore(): SessionStore {
   return new CacheBasedSessionStore(cache, MINUTES_IN_ONE_YEAR);
 }
 
-export function run<C extends AnyContext>(
-  action: Action<C, any>
-): Action<C, any> {
+export function run<C extends Context>(action: Action<C, any>): Action<C, any> {
   return async function Run(context: C, props: Props<C> = {}): Promise<void> {
     let nextDialog: Action<C, any> | void = action;
 

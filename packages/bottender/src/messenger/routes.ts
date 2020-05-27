@@ -1,9 +1,10 @@
-import { Action, AnyContext } from '../types';
+import Context from '../context/Context';
+import { Action } from '../types';
 import { RoutePredicate, route } from '../router';
 
 import MessengerContext from './MessengerContext';
 
-type Route = <C extends AnyContext>(
+type Route = <C extends Context>(
   action: Action<MessengerContext, any>
 ) => {
   predicate: RoutePredicate<C>;
@@ -39,7 +40,7 @@ type Messenger = Route & {
   };
 };
 
-const messenger: Messenger = <C extends AnyContext>(
+const messenger: Messenger = <C extends Context>(
   action: Action<MessengerContext, any>
 ) => {
   return route((context: C) => context.platform === 'messenger', action);
@@ -47,7 +48,7 @@ const messenger: Messenger = <C extends AnyContext>(
 
 messenger.any = messenger;
 
-function message<C extends AnyContext>(action: Action<MessengerContext, any>) {
+function message<C extends Context>(action: Action<MessengerContext, any>) {
   return route(
     (context: C) => context.platform === 'messenger' && context.event.isMessage,
     action
@@ -56,7 +57,7 @@ function message<C extends AnyContext>(action: Action<MessengerContext, any>) {
 
 messenger.message = message;
 
-function accountLinking<C extends AnyContext>(
+function accountLinking<C extends Context>(
   action: Action<MessengerContext, any>
 ) {
   return route(
@@ -68,7 +69,7 @@ function accountLinking<C extends AnyContext>(
 
 messenger.accountLinking = accountLinking;
 
-function accountLinkingLinked<C extends AnyContext>(
+function accountLinkingLinked<C extends Context>(
   action: Action<MessengerContext, any>
 ) {
   return route(
@@ -82,7 +83,7 @@ function accountLinkingLinked<C extends AnyContext>(
 
 accountLinking.linked = accountLinkingLinked;
 
-function accountLinkingUnlinked<C extends AnyContext>(
+function accountLinkingUnlinked<C extends Context>(
   action: Action<MessengerContext, any>
 ) {
   return route(
@@ -96,7 +97,7 @@ function accountLinkingUnlinked<C extends AnyContext>(
 
 accountLinking.unlinked = accountLinkingUnlinked;
 
-function checkoutUpdate<C extends AnyContext>(
+function checkoutUpdate<C extends Context>(
   action: Action<MessengerContext, any>
 ) {
   return route(
@@ -108,7 +109,7 @@ function checkoutUpdate<C extends AnyContext>(
 
 messenger.checkoutUpdate = checkoutUpdate;
 
-function delivery<C extends AnyContext>(action: Action<MessengerContext, any>) {
+function delivery<C extends Context>(action: Action<MessengerContext, any>) {
   return route(
     (context: C) =>
       context.platform === 'messenger' && context.event.isDelivery,
@@ -118,7 +119,7 @@ function delivery<C extends AnyContext>(action: Action<MessengerContext, any>) {
 
 messenger.delivery = delivery;
 
-function echo<C extends AnyContext>(action: Action<MessengerContext, any>) {
+function echo<C extends Context>(action: Action<MessengerContext, any>) {
   return route(
     (context: C) => context.platform === 'messenger' && context.event.isEcho,
     action
@@ -127,7 +128,7 @@ function echo<C extends AnyContext>(action: Action<MessengerContext, any>) {
 
 messenger.echo = echo;
 
-function gamePlay<C extends AnyContext>(action: Action<MessengerContext, any>) {
+function gamePlay<C extends Context>(action: Action<MessengerContext, any>) {
   return route(
     (context: C) =>
       context.platform === 'messenger' && context.event.isGamePlay,
@@ -137,7 +138,7 @@ function gamePlay<C extends AnyContext>(action: Action<MessengerContext, any>) {
 
 messenger.gamePlay = gamePlay;
 
-function passThreadControl<C extends AnyContext>(
+function passThreadControl<C extends Context>(
   action: Action<MessengerContext, any>
 ) {
   return route(
@@ -149,7 +150,7 @@ function passThreadControl<C extends AnyContext>(
 
 messenger.passThreadControl = passThreadControl;
 
-function takeThreadControl<C extends AnyContext>(
+function takeThreadControl<C extends Context>(
   action: Action<MessengerContext, any>
 ) {
   return route(
@@ -161,7 +162,7 @@ function takeThreadControl<C extends AnyContext>(
 
 messenger.takeThreadControl = takeThreadControl;
 
-function requestThreadControl<C extends AnyContext>(
+function requestThreadControl<C extends Context>(
   action: Action<MessengerContext, any>
 ) {
   return route(
@@ -173,7 +174,7 @@ function requestThreadControl<C extends AnyContext>(
 
 messenger.requestThreadControl = requestThreadControl;
 
-function appRoles<C extends AnyContext>(action: Action<MessengerContext, any>) {
+function appRoles<C extends Context>(action: Action<MessengerContext, any>) {
   return route(
     (context: C) =>
       context.platform === 'messenger' && context.event.isAppRoles,
@@ -183,7 +184,7 @@ function appRoles<C extends AnyContext>(action: Action<MessengerContext, any>) {
 
 messenger.appRoles = appRoles;
 
-function optin<C extends AnyContext>(action: Action<MessengerContext, any>) {
+function optin<C extends Context>(action: Action<MessengerContext, any>) {
   return route(
     (context: C) => context.platform === 'messenger' && context.event.isOptin,
     action
@@ -192,7 +193,7 @@ function optin<C extends AnyContext>(action: Action<MessengerContext, any>) {
 
 messenger.optin = optin;
 
-function payment<C extends AnyContext>(action: Action<MessengerContext, any>) {
+function payment<C extends Context>(action: Action<MessengerContext, any>) {
   return route(
     (context: C) => context.platform === 'messenger' && context.event.isPayment,
     action
@@ -201,7 +202,7 @@ function payment<C extends AnyContext>(action: Action<MessengerContext, any>) {
 
 messenger.payment = payment;
 
-function policyEnforcement<C extends AnyContext>(
+function policyEnforcement<C extends Context>(
   action: Action<MessengerContext, any>
 ) {
   return route(
@@ -213,7 +214,7 @@ function policyEnforcement<C extends AnyContext>(
 
 messenger.policyEnforcement = policyEnforcement;
 
-function postback<C extends AnyContext>(action: Action<MessengerContext, any>) {
+function postback<C extends Context>(action: Action<MessengerContext, any>) {
   return route(
     (context: C) =>
       context.platform === 'messenger' && context.event.isPostback,
@@ -223,9 +224,7 @@ function postback<C extends AnyContext>(action: Action<MessengerContext, any>) {
 
 messenger.postback = postback;
 
-function preCheckout<C extends AnyContext>(
-  action: Action<MessengerContext, any>
-) {
+function preCheckout<C extends Context>(action: Action<MessengerContext, any>) {
   return route(
     (context: C) =>
       context.platform === 'messenger' && context.event.isPreCheckout,
@@ -235,7 +234,7 @@ function preCheckout<C extends AnyContext>(
 
 messenger.preCheckout = preCheckout;
 
-function read<C extends AnyContext>(action: Action<MessengerContext, any>) {
+function read<C extends Context>(action: Action<MessengerContext, any>) {
   return route(
     (context: C) => context.platform === 'messenger' && context.event.isRead,
     action
@@ -244,7 +243,7 @@ function read<C extends AnyContext>(action: Action<MessengerContext, any>) {
 
 messenger.read = read;
 
-function referral<C extends AnyContext>(action: Action<MessengerContext, any>) {
+function referral<C extends Context>(action: Action<MessengerContext, any>) {
   return route(
     (context: C) =>
       context.platform === 'messenger' && context.event.isReferral,
@@ -254,7 +253,7 @@ function referral<C extends AnyContext>(action: Action<MessengerContext, any>) {
 
 messenger.referral = referral;
 
-function standby<C extends AnyContext>(action: Action<MessengerContext, any>) {
+function standby<C extends Context>(action: Action<MessengerContext, any>) {
   return route(
     (context: C) => context.platform === 'messenger' && context.event.isStandby,
     action
@@ -263,7 +262,7 @@ function standby<C extends AnyContext>(action: Action<MessengerContext, any>) {
 
 messenger.standby = standby;
 
-function reaction<C extends AnyContext>(action: Action<MessengerContext, any>) {
+function reaction<C extends Context>(action: Action<MessengerContext, any>) {
   return route(
     (context: C) =>
       context.platform === 'messenger' && context.event.isReaction,
@@ -273,7 +272,7 @@ function reaction<C extends AnyContext>(action: Action<MessengerContext, any>) {
 
 messenger.reaction = reaction;
 
-function reactionReact<C extends AnyContext>(
+function reactionReact<C extends Context>(
   action: Action<MessengerContext, any>
 ) {
   return route(
@@ -287,7 +286,7 @@ function reactionReact<C extends AnyContext>(
 
 reaction.react = reactionReact;
 
-function reactionUnreact<C extends AnyContext>(
+function reactionUnreact<C extends Context>(
   action: Action<MessengerContext, any>
 ) {
   return route(

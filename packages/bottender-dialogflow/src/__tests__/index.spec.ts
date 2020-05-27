@@ -10,7 +10,7 @@ const dialogflow = require('..'); // eslint-disable-line @typescript-eslint/no-v
 jest.mock('dialogflow');
 
 // FIXME: export public test-utils for testing
-class TestContext extends Context<any, any> {
+class TestContext extends Context {
   get platform() {
     return 'test';
   }

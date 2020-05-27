@@ -89,7 +89,7 @@ async function expectRouteNotMatchSlackEvent({ route, event }) {
   });
 }
 
-class TestContext extends Context<any, any> {
+class TestContext extends Context {
   get platform() {
     return 'test';
   }

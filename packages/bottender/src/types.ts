@@ -13,10 +13,8 @@ import { TelegramConnectorOptions } from './telegram/TelegramConnector';
 import { ViberConnectorOptions } from './viber/ViberConnector';
 import { WhatsappConnectorOptions } from './whatsapp/WhatsappConnector';
 
-export type AnyContext = Context<any, any>;
-
 export type Action<
-  C extends AnyContext,
+  C extends Context,
   P extends Record<string, any> = {},
   RAP extends Record<string, any> = {}
 > = (
@@ -24,12 +22,12 @@ export type Action<
   props: Props<C> & P
 ) => void | Action<C, RAP> | Promise<Action<C, RAP> | void>;
 
-export type Props<C extends AnyContext> = {
+export type Props<C extends Context> = {
   next?: Action<C, any>;
   error?: Error;
 };
 
-export type Plugin<C extends AnyContext> = (context: C) => void;
+export type Plugin<C extends Context> = (context: C) => void;
 
 export enum Channel {
   Messenger = 'messenger',

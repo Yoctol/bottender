@@ -38,7 +38,7 @@ module.exports = function luis({
   actions: Record<
     string,
     Action<
-      Context<any, any>,
+      Context,
       {
         topScoringIntent: IntentModel;
         entities: EntityModel[];
@@ -52,7 +52,7 @@ module.exports = function luis({
   staging?: boolean;
   bingSpellCheckSubscriptionKey?: string;
   log?: boolean;
-}): Action<Context<any, any>> {
+}): Action<Context> {
   invariant(
     typeof appId === 'string' && appId.length > 0,
     'luis: `appId` is a required parameter.'
@@ -69,9 +69,9 @@ module.exports = function luis({
   );
 
   return async function Luis(
-    context: Context<any, any>,
-    { next }: { next?: Action<Context<any, any>> }
-  ): Promise<Action<Context<any, any>> | void> {
+    context: Context,
+    { next }: { next?: Action<Context> }
+  ): Promise<Action<Context> | void> {
     if (!context.event.isText) {
       return next;
     }

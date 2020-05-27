@@ -1,8 +1,9 @@
 import partial from 'lodash/partial';
 
-import { Action, AnyContext } from './types';
+import Context from './context/Context';
+import { Action } from './types';
 
-function withProps<C extends AnyContext, P extends Record<string, any>>(
+function withProps<C extends Context, P extends Record<string, any>>(
   action: Action<C, P>,
   props: P
 ): Action<C, any> {
