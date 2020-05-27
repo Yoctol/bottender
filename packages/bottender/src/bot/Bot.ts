@@ -11,15 +11,8 @@ import Context from '../context/Context';
 import MemoryCacheStore from '../cache/MemoryCacheStore';
 import Session from '../session/Session';
 import SessionStore from '../session/SessionStore';
-import {
-  Action,
-  Body,
-  Client,
-  Event,
-  Plugin,
-  Props,
-  RequestContext,
-} from '../types';
+import { Action, Client, Plugin, Props, RequestContext } from '../types';
+import { Event } from '../context/Event';
 
 import { Connector } from './Connector';
 
@@ -76,7 +69,7 @@ export type OnRequest = (
 ) => void;
 
 export default class Bot<
-  B extends Body,
+  B extends JsonObject,
   C extends Client,
   E extends Event,
   Ctx extends Context<C, E>
