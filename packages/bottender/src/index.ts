@@ -33,6 +33,7 @@ export { default as ConsoleEvent } from './console/ConsoleEvent';
 
 /* Messenger */
 export { default as MessengerBot } from './messenger/MessengerBot';
+export { default as FacebookBaseConnector } from './messenger/FacebookBaseConnector';
 export { default as MessengerConnector } from './messenger/MessengerConnector';
 export { default as MessengerContext } from './messenger/MessengerContext';
 export { default as MessengerEvent } from './messenger/MessengerEvent';
@@ -72,6 +73,9 @@ export { default as ViberConnector } from './viber/ViberConnector';
 export { default as ViberContext } from './viber/ViberContext';
 export { default as ViberEvent } from './viber/ViberEvent';
 export { ViberTypes } from 'messaging-api-viber';
+
+/* Types */
+export * from './types';
 
 /**
  * Private Exports (unstable)
