@@ -1,6 +1,7 @@
+import { MessengerContext, MessengerEvent } from 'bottender';
+
 import FacebookClient from '../FacebookClient';
 import FacebookConnector from '../FacebookConnector';
-import FacebookContext from '../FacebookContext';
 import FacebookEvent from '../FacebookEvent';
 
 jest.mock('warning');
@@ -175,11 +176,11 @@ const commentAddRequest = {
                 name: 'user',
               },
               item: 'comment',
-              comment_id: '139560936744456_139620233405726',
-              post_id: '137542570280222_139560936744456',
+              commentId: '139560936744456_139620233405726',
+              postId: '137542570280222_139560936744456',
               verb: 'add',
-              parent_id: '139560936744456_139562213411528',
-              created_time: 1511951015,
+              parentId: '139560936744456_139562213411528',
+              createdTime: 1511951015,
               message: 'Good',
             },
           },
@@ -197,11 +198,11 @@ const commentAddRequest = {
                 name: 'user',
               },
               item: 'comment',
-              comment_id: '139560936744456_139620233405726',
-              post_id: '137542570280222_139560936744456',
+              commentId: '139560936744456_139620233405726',
+              postId: '137542570280222_139560936744456',
               verb: 'add',
-              parent_id: '139560936744456_139562213411528',
-              created_time: 1511951015,
+              parentId: '139560936744456_139562213411528',
+              createdTime: 1511951015,
               message: 'Good',
             },
           },
@@ -211,19 +212,24 @@ const commentAddRequest = {
   },
 };
 
-function setup(
-  { accessToken, appSecret, mapPageToAccessToken, verifyToken } = {
-    accessToken: ACCESS_TOKEN,
-    appSecret: APP_SECRET,
-    mapPageToAccessToken: jest.fn(),
-    verifyToken: VERIFY_TOKEN,
-  }
-) {
+function setup({
+  accessToken = ACCESS_TOKEN,
+  appSecret = APP_SECRET,
+  mapPageToAccessToken,
+  verifyToken = VERIFY_TOKEN,
+}: {
+  accessToken?: string;
+  appSecret?: string;
+  mapPageToAccessToken?: (pageId: string) => Promise<string>;
+  verifyToken?: string;
+} = {}) {
   const mockGraphAPIClient = {
     getUserProfile: jest.fn(),
   };
+
   FacebookClient.connect = jest.fn();
   FacebookClient.connect.mockReturnValue(mockGraphAPIClient);
+
   return {
     mockGraphAPIClient,
     connector: new FacebookConnector({
@@ -241,7 +247,7 @@ describe('#mapRequestToEvents', () => {
     const events = connector.mapRequestToEvents(request.body);
 
     expect(events).toHaveLength(1);
-    expect(events[0]).toBeInstanceOf(FacebookEvent);
+    expect(events[0]).toBeInstanceOf(MessengerEvent);
     expect(events[0].pageId).toBe('1895382890692545');
   });
 
@@ -250,9 +256,9 @@ describe('#mapRequestToEvents', () => {
     const events = connector.mapRequestToEvents(samePageBatchRequest.body);
 
     expect(events).toHaveLength(2);
-    expect(events[0]).toBeInstanceOf(FacebookEvent);
+    expect(events[0]).toBeInstanceOf(MessengerEvent);
     expect(events[0].pageId).toBe('1895382890692545');
-    expect(events[1]).toBeInstanceOf(FacebookEvent);
+    expect(events[1]).toBeInstanceOf(MessengerEvent);
     expect(events[1].pageId).toBe('1895382890692545');
   });
 
@@ -261,9 +267,9 @@ describe('#mapRequestToEvents', () => {
     const events = connector.mapRequestToEvents(differentPagebatchRequest.body);
 
     expect(events).toHaveLength(2);
-    expect(events[0]).toBeInstanceOf(FacebookEvent);
+    expect(events[0]).toBeInstanceOf(MessengerEvent);
     expect(events[0].pageId).toBe('1895382890692545');
-    expect(events[1]).toBeInstanceOf(FacebookEvent);
+    expect(events[1]).toBeInstanceOf(MessengerEvent);
     expect(events[1].pageId).toBe('189538289069256');
   });
 
@@ -272,7 +278,7 @@ describe('#mapRequestToEvents', () => {
     const events = connector.mapRequestToEvents(standbyRequest.body);
 
     expect(events).toHaveLength(1);
-    expect(events[0]).toBeInstanceOf(FacebookEvent);
+    expect(events[0]).toBeInstanceOf(MessengerEvent);
     expect(events[0].pageId).toBe('<PAGE_ID>');
     expect(events[0].isStandby).toBe(true);
   });
@@ -284,10 +290,8 @@ describe('#mapRequestToEvents', () => {
     expect(events).toHaveLength(2);
     expect(events[0]).toBeInstanceOf(FacebookEvent);
     expect(events[0].pageId).toBe('<PAGE_ID>');
-    expect(events[0].isStandby).toBe(false);
     expect(events[1]).toBeInstanceOf(FacebookEvent);
     expect(events[1].pageId).toBe('<OTHER_PAGE_ID>');
-    expect(events[1].isStandby).toBe(false);
   });
 
   it('should be filtered if body is not messaging or standby', () => {
@@ -336,11 +340,11 @@ describe('#mapRequestToEvents', () => {
                     name: 'user',
                   },
                   item: 'comment',
-                  comment_id: '139560936744456_139620233405726',
-                  post_id: '137542570280222_139560936744456',
+                  commentId: '139560936744456_139620233405726',
+                  postId: '137542570280222_139560936744456',
                   verb: 'add',
-                  parent_id: '139560936744456_139562213411528',
-                  created_time: 1511951015,
+                  parentId: '139560936744456_139562213411528',
+                  createdTime: 1511951015,
                   message: 'Good',
                 },
               },
@@ -373,7 +377,7 @@ describe('#createContext', () => {
     });
 
     expect(context).toBeDefined();
-    expect(context).toBeInstanceOf(FacebookContext);
+    expect(context).toBeInstanceOf(MessengerContext);
   });
 
   it('should create MessengerContext and has customAccessToken', async () => {

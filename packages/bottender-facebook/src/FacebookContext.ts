@@ -1,13 +1,16 @@
 import { EventEmitter } from 'events';
 
 import warning from 'warning';
-import { Context, RequestContext, Session } from 'bottender';
+import { Context, RequestContext } from 'bottender';
 import { MessengerBatchQueue } from 'messenger-batch';
 
 import FacebookBatch from './FacebookBatch';
 import FacebookClient from './FacebookClient';
 import FacebookEvent, { Comment } from './FacebookEvent';
-import { InputComment } from './FacebookTypes';
+import * as Types from './FacebookTypes';
+
+// TODO: use exported type
+type Session = Record<string, any>;
 
 type Options = {
   appId?: string;
@@ -56,13 +59,13 @@ export default class FacebookContext extends Context<
     return 'facebook';
   }
 
-  async sendText(text: string) {
+  async sendText(): Promise<void> {
     // TODO
   }
 
   // https://developers.facebook.com/docs/graph-api/reference/v3.1/object/comments/
   async sendComment(
-    comment: string | InputComment
+    comment: string | Types.InputComment
   ): Promise<{ id: string } | undefined> {
     const objectId = this._event.isFirstLayerComment
       ? (this._event.rawEvent.value as Comment).commentId
@@ -98,7 +101,9 @@ export default class FacebookContext extends Context<
   }
 
   // https://developers.facebook.com/docs/graph-api/reference/v3.1/comment
-  async getComment(options: Record<string, any>): Promise<Comment | null> {
+  async getComment(
+    options: Types.GetCommentOptions
+  ): Promise<Types.Comment | null> {
     const commentId = (this._event.rawEvent.value as Comment).commentId;
 
     if (!commentId) {
@@ -118,7 +123,7 @@ export default class FacebookContext extends Context<
   }
 
   // https://developers.facebook.com/docs/graph-api/reference/v2.12/object/likes
-  getLikes(options: Record<string, any>) {
+  getLikes(options: Types.GetLikesOptions) {
     const objectId = (this._event.rawEvent.value as Comment).commentId; // FIXME: postId
 
     if (this._batchQueue) {

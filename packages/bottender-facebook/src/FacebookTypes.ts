@@ -681,3 +681,13 @@ export type Like = {
   id: string;
   createdTime: string;
 };
+
+export type GetCommentOptions = {
+  summary?: boolean;
+  filter?: 'toplevel' | 'stream';
+  fields?: string | CommentField[];
+};
+
+export type GetLikesOptions = {
+  summary?: boolean;
+};

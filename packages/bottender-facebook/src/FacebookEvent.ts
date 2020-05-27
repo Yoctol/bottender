@@ -96,6 +96,14 @@ export default class FacebookEvent {
   }
 
   /**
+   * Determine if the event is a message event.
+   *
+   */
+  get isMessage(): boolean {
+    return false;
+  }
+
+  /**
    * Determine if the event is a message event which includes text.
    *
    */

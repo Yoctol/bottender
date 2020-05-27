@@ -1,7 +1,7 @@
 import FacebookBatch from '../FacebookBatch';
 
 const COMMENT_ID = '1234567890';
-const CUSTOM_ACCESS_TOKEN = 'custom-access-token';
+const ACCESS_TOKEN = 'custom-access-token';
 
 describe('sendComment', () => {
   it('should create send text comment request', () => {
@@ -31,14 +31,14 @@ describe('sendComment', () => {
   it('should support custom access token', () => {
     expect(
       FacebookBatch.sendComment(COMMENT_ID, 'ok', {
-        accessToken: CUSTOM_ACCESS_TOKEN,
+        accessToken: ACCESS_TOKEN,
       })
     ).toEqual({
       method: 'POST',
       relativeUrl: '1234567890/comments',
       body: {
         message: 'ok',
-        accessToken: CUSTOM_ACCESS_TOKEN,
+        accessToken: ACCESS_TOKEN,
       },
     });
   });
@@ -56,13 +56,13 @@ describe('sendLike', () => {
   it('should support custom access token', () => {
     expect(
       FacebookBatch.sendLike(COMMENT_ID, {
-        accessToken: CUSTOM_ACCESS_TOKEN,
+        accessToken: ACCESS_TOKEN,
       })
     ).toEqual({
       method: 'POST',
       relativeUrl: '1234567890/likes',
       body: {
-        accessToken: CUSTOM_ACCESS_TOKEN,
+        accessToken: ACCESS_TOKEN,
       },
     });
   });
@@ -86,18 +86,18 @@ describe('getComment', () => {
     ).toEqual({
       method: 'GET',
       relativeUrl:
-        '1234567890?summary=true&filter=toplevel&fields=canReplyPrivately',
+        '1234567890?summary=true&filter=toplevel&fields=can_reply_privately',
     });
   });
 
   it('should support custom access token', () => {
     expect(
       FacebookBatch.getComment(COMMENT_ID, {
-        accessToken: CUSTOM_ACCESS_TOKEN,
+        accessToken: ACCESS_TOKEN,
       })
     ).toEqual({
       method: 'GET',
-      relativeUrl: `1234567890?access_token=${CUSTOM_ACCESS_TOKEN}`,
+      relativeUrl: `1234567890?access_token=${ACCESS_TOKEN}`,
     });
   });
 });
@@ -120,11 +120,11 @@ describe('getLikes', () => {
   it('should support custom access token', () => {
     expect(
       FacebookBatch.getLikes(COMMENT_ID, {
-        accessToken: CUSTOM_ACCESS_TOKEN,
+        accessToken: ACCESS_TOKEN,
       })
     ).toEqual({
       method: 'GET',
-      relativeUrl: `1234567890/likes?access_token=${CUSTOM_ACCESS_TOKEN}`,
+      relativeUrl: `1234567890/likes?access_token=${ACCESS_TOKEN}`,
     });
   });
 });

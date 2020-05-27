@@ -775,8 +775,6 @@ it('#reaction', () => {
 });
 
 it('#pageId', () => {
-    '137542570280111'
-  );
   expect(new FacebookEvent(statusAdd, { pageId }).pageId).toEqual(
     '137542570280111'
   );
@@ -822,8 +820,6 @@ it('#pageId', () => {
 });
 
 it('#isSentByPage', () => {
-    false
-  );
   expect(new FacebookEvent(statusAdd, { pageId }).isSentByPage).toEqual(false);
   expect(new FacebookEvent(statusEdited, { pageId }).isSentByPage).toEqual(
     false

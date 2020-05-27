@@ -73,15 +73,7 @@ export default class FacebookClient extends MessengerClient {
    */
   getComment(
     commentId: string,
-    {
-      summary,
-      filter,
-      fields,
-    }: {
-      summary?: boolean;
-      filter?: 'toplevel' | 'stream';
-      fields?: string | Types.CommentField[];
-    } = {}
+    { summary, filter, fields }: Types.GetCommentOptions = {}
   ): Promise<Types.Comment> {
     const conjunctFields = Array.isArray(fields) ? fields.join(',') : fields;
 
@@ -107,7 +99,7 @@ export default class FacebookClient extends MessengerClient {
    */
   getLikes(
     objectId: string,
-    { summary }: { summary?: boolean } = {}
+    { summary }: Types.GetLikesOptions = {}
   ): Promise<Types.Likes> {
     return this._axios
       .get<{

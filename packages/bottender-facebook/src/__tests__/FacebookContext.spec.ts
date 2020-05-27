@@ -11,11 +11,11 @@ const userRawEvent = {
       name: 'user',
     },
     item: 'comment',
-    comment_id: '139560936744456_139620233405726',
-    post_id: '137542570280222_139560936744456',
+    commentId: '139560936744456_139620233405726',
+    postId: '137542570280222_139560936744456',
     verb: 'add',
-    parent_id: '139560936744456_139562213411528',
-    created_time: 1511951015,
+    parentId: '139560936744456_139562213411528',
+    createdTime: 1511951015,
     message: 'OK',
   },
 };
@@ -28,11 +28,11 @@ const sentByPageRawEvent = {
       name: 'page',
     },
     item: 'comment',
-    comment_id: '139560936744456_139620233405726',
-    post_id: '137542570280222_139560936744456',
+    commentId: '139560936744456_139620233405726',
+    postId: '137542570280222_139560936744456',
     verb: 'add',
-    parent_id: '139560936744456_139562213411528',
-    created_time: 1511951015,
+    parentId: '139560936744456_139562213411528',
+    createdTime: 1511951015,
     message: 'OK',
   },
 };
@@ -40,7 +40,6 @@ const sentByPageRawEvent = {
 const setup = ({ rawEvent, pageId } = { rawEvent: userRawEvent }) => {
   const client = {
     sendComment: jest.fn(),
-    sendPrivateReply: jest.fn(),
     sendLike: jest.fn(),
     getComment: jest.fn(),
     getLikes: jest.fn(),
@@ -67,11 +66,11 @@ describe('#sendComment', () => {
             name: 'user',
           },
           item: 'comment',
-          comment_id: '139560936744456_139620233405726',
-          post_id: '137542570280222_139560936744456',
+          commentId: '139560936744456_139620233405726',
+          postId: '137542570280222_139560936744456',
           verb: 'add',
-          parent_id: '137542570280222_139560936744456',
-          created_time: 1511951015,
+          parentId: '137542570280222_139560936744456',
+          createdTime: 1511951015,
           message: 'OK',
         },
       },
@@ -81,8 +80,7 @@ describe('#sendComment', () => {
 
     expect(client.sendComment).toBeCalledWith(
       '139560936744456_139620233405726',
-      'Public Reply!',
-      { access_token: undefined }
+      'Public Reply!'
     );
   });
 
@@ -93,8 +91,7 @@ describe('#sendComment', () => {
 
     expect(client.sendComment).toBeCalledWith(
       '139560936744456_139562213411528',
-      'Public Reply!',
-      { access_token: undefined }
+      'Public Reply!'
     );
   });
 
@@ -116,76 +113,45 @@ describe('#sendComment', () => {
 
     expect(client.sendComment).toBeCalledWith(
       '139560936744456_139562213411528',
-      { message: 'Public Reply!' },
-      { access_token: undefined }
+      { message: 'Public Reply!' }
     );
   });
 
-  it('should call client with attachment_id', async () => {
+  it('should call client with attachmentId', async () => {
     const { context, client } = setup();
 
-    await context.sendComment({ attachment_id: '<attachment_id>' });
+    await context.sendComment({ attachmentId: '<attachment_id>' });
 
     expect(client.sendComment).toBeCalledWith(
       '139560936744456_139562213411528',
-      { attachment_id: '<attachment_id>' },
-      { access_token: undefined }
+      { attachmentId: '<attachment_id>' }
     );
   });
 
-  it('should call client with attachment_share_url', async () => {
+  it('should call client with attachmentShareUrl', async () => {
     const { context, client } = setup();
 
     await context.sendComment({
-      attachment_share_url: 'https://example.com/img.gif',
+      attachmentShareUrl: 'https://example.com/img.gif',
     });
 
     expect(client.sendComment).toBeCalledWith(
       '139560936744456_139562213411528',
-      { attachment_share_url: 'https://example.com/img.gif' },
-      { access_token: undefined }
+      { attachmentShareUrl: 'https://example.com/img.gif' }
     );
   });
 
-  it('should call client with attachment_url', async () => {
+  it('should call client with attachmentUrl', async () => {
     const { context, client } = setup();
 
     await context.sendComment({
-      attachment_url: 'https://example.com/img.jpg',
+      attachmentUrl: 'https://example.com/img.jpg',
     });
 
     expect(client.sendComment).toBeCalledWith(
       '139560936744456_139562213411528',
-      { attachment_url: 'https://example.com/img.jpg' },
-      { access_token: undefined }
+      { attachmentUrl: 'https://example.com/img.jpg' }
     );
-  });
-});
-
-describe('#sendPrivateReply', () => {
-  it('should call client with comment id', async () => {
-    const { context, client } = setup();
-
-    await context.sendPrivateReply('OK!');
-
-    expect(client.sendPrivateReply).toBeCalledWith(
-      '139560936744456_139620233405726',
-      'OK!',
-      {
-        access_token: undefined,
-      }
-    );
-  });
-
-  it('should not reply to page itself', async () => {
-    const { context, client } = setup({
-      rawEvent: sentByPageRawEvent,
-      pageId: '137542570280222',
-    });
-
-    await context.sendPrivateReply('OK!');
-
-    expect(client.sendPrivateReply).not.toBeCalled();
   });
 });
 
@@ -195,9 +161,7 @@ describe('#sendLike', () => {
 
     await context.sendLike();
 
-    expect(client.sendLike).toBeCalledWith('139560936744456_139620233405726', {
-      access_token: undefined,
-    });
+    expect(client.sendLike).toBeCalledWith('139560936744456_139620233405726');
   });
 });
 
@@ -209,7 +173,7 @@ describe('#getComment', () => {
 
     expect(client.getComment).toBeCalledWith(
       '139560936744456_139620233405726',
-      { access_token: undefined }
+      undefined
     );
   });
 
@@ -220,7 +184,7 @@ describe('#getComment', () => {
 
     expect(client.getComment).toBeCalledWith(
       '139560936744456_139620233405726',
-      { fields: ['message_tags'], access_token: undefined }
+      { fields: ['message_tags'] }
     );
   });
 });
@@ -245,7 +209,7 @@ describe('#canReplyPrivately', () => {
     const { context, client } = setup();
 
     client.getComment.mockResolvedValue({
-      can_reply_privately: true,
+      canReplyPrivately: true,
     });
 
     expect(await context.canReplyPrivately()).toBe(true);
@@ -255,7 +219,7 @@ describe('#canReplyPrivately', () => {
     const { context, client } = setup();
 
     client.getComment.mockResolvedValue({
-      can_reply_privately: false,
+      canReplyPrivately: false,
     });
 
     expect(await context.canReplyPrivately()).toBe(false);
@@ -268,9 +232,10 @@ describe('#getLikes', () => {
 
     await context.getLikes();
 
-    expect(client.getLikes).toBeCalledWith('139560936744456_139620233405726', {
-      access_token: undefined,
-    });
+    expect(client.getLikes).toBeCalledWith(
+      '139560936744456_139620233405726',
+      undefined
+    );
   });
 
   it('should call client with summary: true', async () => {
@@ -280,7 +245,6 @@ describe('#getLikes', () => {
 
     expect(client.getLikes).toBeCalledWith('139560936744456_139620233405726', {
       summary: true,
-      access_token: undefined,
     });
   });
 });
