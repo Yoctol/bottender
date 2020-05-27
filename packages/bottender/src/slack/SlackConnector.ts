@@ -4,6 +4,7 @@ import { EventEmitter } from 'events';
 import invariant from 'invariant';
 import pProps from 'p-props';
 import warning from 'warning';
+import { JsonObject } from 'type-fest';
 import { SlackOAuthClient } from 'messaging-api-slack';
 import { camelcaseKeysDeep } from 'messaging-api-common';
 
@@ -340,7 +341,7 @@ export default class SlackConnector
   createContext(params: {
     event: SlackEvent;
     session: Session | null;
-    initialState?: Record<string, any> | null;
+    initialState?: JsonObject | null;
     requestContext?: RequestContext;
     emitter?: EventEmitter | null;
   }): SlackContext {

@@ -1,4 +1,6 @@
-export type CacheValue = number | Record<string, any>;
+import { JsonObject } from 'type-fest';
+
+export type CacheValue = number | JsonObject;
 
 type CacheStore = {
   get(key: string): Promise<CacheValue | null>;

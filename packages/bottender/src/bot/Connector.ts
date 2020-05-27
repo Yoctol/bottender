@@ -1,5 +1,7 @@
 import { EventEmitter } from 'events';
 
+import { JsonObject } from 'type-fest';
+
 import Session from '../session/Session';
 import { Event } from '../context/Event';
 import { RequestContext } from '../types';
@@ -16,7 +18,7 @@ export interface Connector<B, C> {
   createContext(params: {
     event: Event<any>;
     session?: Session | null;
-    initialState?: Record<string, any> | null;
+    initialState?: JsonObject | null;
     requestContext?: RequestContext;
     emitter?: EventEmitter | null;
   }): any;

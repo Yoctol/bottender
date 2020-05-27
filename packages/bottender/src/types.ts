@@ -15,8 +15,8 @@ import { WhatsappConnectorOptions } from './whatsapp/WhatsappConnector';
 
 export type Action<
   C extends Context,
-  P extends Record<string, any> = {},
-  RAP extends Record<string, any> = {}
+  P extends JsonObject = {},
+  RAP extends JsonObject = {}
 > = (
   context: C,
   props: Props<C> & P
@@ -82,7 +82,7 @@ type ChannelCommonConfig = {
 export type BottenderConfig = {
   plugins?: Plugin<any>[];
   session?: SessionConfig;
-  initialState?: Record<string, any>;
+  initialState?: JsonObject;
   channels?:
     | {
         messenger?: MessengerConnectorOptions & ChannelCommonConfig;

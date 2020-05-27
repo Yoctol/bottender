@@ -84,7 +84,7 @@ export default class Bot<
 
   _errorHandler: Action<Ctx, any> | null;
 
-  _initialState: Record<string, any> = {};
+  _initialState: JsonObject = {};
 
   _plugins: Function[] = [];
 
@@ -123,7 +123,7 @@ export default class Bot<
     return this._sessions;
   }
 
-  get handler(): Action<Ctx, E> | null {
+  get handler(): Action<Ctx, any> | null {
     return this._handler;
   }
 
@@ -149,7 +149,7 @@ export default class Bot<
     return this;
   }
 
-  setInitialState(initialState: Record<string, any>): Bot<B, C, E, Ctx> {
+  setInitialState(initialState: JsonObject): Bot<B, C, E, Ctx> {
     this._initialState = initialState;
     return this;
   }
