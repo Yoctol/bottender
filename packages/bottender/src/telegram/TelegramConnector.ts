@@ -1,6 +1,7 @@
 import { EventEmitter } from 'events';
 
 import invariant from 'invariant';
+import { JsonObject } from 'type-fest';
 import { TelegramClient } from 'messaging-api-telegram';
 
 import Session from '../session/Session';
@@ -206,7 +207,7 @@ export default class TelegramConnector
   createContext(params: {
     event: TelegramEvent;
     session: Session | null;
-    initialState?: Record<string, any> | null;
+    initialState?: JsonObject | null;
     requestContext?: TelegramRequestContext;
     emitter?: EventEmitter | null;
   }): TelegramContext {

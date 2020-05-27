@@ -3,6 +3,7 @@ import { EventEmitter } from 'events';
 
 import invariant from 'invariant';
 import warning from 'warning';
+import { JsonObject } from 'type-fest';
 import { LineClient } from 'messaging-api-line';
 
 import Session from '../session/Session';
@@ -354,7 +355,7 @@ export default class LineConnector
   async createContext(params: {
     event: LineEvent;
     session?: Session | null;
-    initialState?: Record<string, any> | null;
+    initialState?: JsonObject | null;
     requestContext?: LineRequestContext;
     emitter?: EventEmitter | null;
   }): Promise<LineContext> {

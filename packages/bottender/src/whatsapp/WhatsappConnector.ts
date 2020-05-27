@@ -1,6 +1,8 @@
 import crypto from 'crypto';
 import { EventEmitter } from 'events';
 
+import { JsonObject } from 'type-fest';
+
 import Session from '../session/Session';
 import { Connector } from '../bot/Connector';
 import { RequestContext } from '../types';
@@ -105,7 +107,7 @@ export default class WhatsappConnector
   createContext(params: {
     event: WhatsappEvent;
     session: Session | null;
-    initialState?: Record<string, any> | null;
+    initialState?: JsonObject | null;
     requestContext?: RequestContext;
     emitter?: EventEmitter | null;
   }): WhatsappContext {
