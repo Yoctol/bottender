@@ -1,6 +1,8 @@
-export interface Event<RE extends object> {
+import { JsonObject } from 'type-fest';
+
+export interface Event<RE extends object = JsonObject> {
   readonly rawEvent: RE;
   readonly isMessage: boolean;
   readonly isText: boolean;
-  readonly message?: Record<string, any> | null;
+  readonly message?: JsonObject | null;
 }

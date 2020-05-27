@@ -1,73 +1,17 @@
 import { IncomingHttpHeaders } from 'http';
 
 import { JsonObject } from 'type-fest';
-import { LineClient } from 'messaging-api-line';
-import { MessengerClient } from 'messaging-api-messenger';
-import { SlackOAuthClient } from 'messaging-api-slack';
-import { TelegramClient } from 'messaging-api-telegram';
-import { ViberClient } from 'messaging-api-viber';
 
-import ConsoleEvent, { ConsoleRawEvent } from './console/ConsoleEvent';
 import Context from './context/Context';
-import LineEvent from './line/LineEvent';
-import MessengerEvent from './messenger/MessengerEvent';
 import SessionStore from './session/SessionStore';
-import SlackEvent from './slack/SlackEvent';
-import TelegramEvent from './telegram/TelegramEvent';
-import TwilioClient from './whatsapp/TwilioClient';
-import ViberEvent from './viber/ViberEvent';
-import WhatsappEvent from './whatsapp/WhatsappEvent';
 import { Connector } from './bot/Connector';
-import { ConsoleClient } from './console/ConsoleClient';
-import { LineConnectorOptions, LineRequestBody } from './line/LineConnector';
-import {
-  MessengerConnectorOptions,
-  MessengerRequestBody,
-} from './messenger/MessengerConnector';
+import { LineConnectorOptions } from './line/LineConnector';
+import { MessengerConnectorOptions } from './messenger/MessengerConnector';
 import { OnRequest } from './bot/Bot';
-import {
-  SlackConnectorOptions,
-  SlackRequestBody,
-} from './slack/SlackConnector';
-import {
-  TelegramConnectorOptions,
-  TelegramRequestBody,
-} from './telegram/TelegramConnector';
-import {
-  ViberConnectorOptions,
-  ViberRequestBody,
-} from './viber/ViberConnector';
-import {
-  WhatsappConnectorOptions,
-  WhatsappRequestBody,
-} from './whatsapp/WhatsappConnector';
-
-export type Client =
-  | ConsoleClient
-  | MessengerClient
-  | LineClient
-  | SlackOAuthClient
-  | TelegramClient
-  | ViberClient
-  | TwilioClient;
-
-export type Event =
-  | ConsoleEvent
-  | MessengerEvent
-  | LineEvent
-  | SlackEvent
-  | TelegramEvent
-  | ViberEvent
-  | WhatsappEvent;
-
-export type Body =
-  | ConsoleRawEvent
-  | MessengerRequestBody
-  | LineRequestBody
-  | SlackRequestBody
-  | TelegramRequestBody
-  | ViberRequestBody
-  | WhatsappRequestBody;
+import { SlackConnectorOptions } from './slack/SlackConnector';
+import { TelegramConnectorOptions } from './telegram/TelegramConnector';
+import { ViberConnectorOptions } from './viber/ViberConnector';
+import { WhatsappConnectorOptions } from './whatsapp/WhatsappConnector';
 
 export type AnyContext = Context<any, any>;
 
@@ -174,3 +118,7 @@ export type RequestContext<
   params: Record<string, string>;
   url: string;
 };
+
+export type Client = object;
+
+export { Event } from './context/Event';
