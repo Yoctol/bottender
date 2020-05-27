@@ -14,6 +14,7 @@ describe('core', () => {
 
   it('export connectors', () => {
     expect(core.ConsoleConnector).toBeDefined();
+    expect(core.FacebookBaseConnector).toBeDefined();
     expect(core.MessengerConnector).toBeDefined();
     expect(core.WhatsappConnector).toBeDefined();
     expect(core.LineConnector).toBeDefined();
