@@ -1,19 +1,18 @@
-import crypto from 'crypto';
 import { EventEmitter } from 'events';
 import { URL } from 'url';
 
-import invariant from 'invariant';
 import isAfter from 'date-fns/isAfter';
 import isValid from 'date-fns/isValid';
-import shortid from 'shortid';
 import warning from 'warning';
-import { BatchConfig, MessengerBatchQueue } from 'messenger-batch';
 import { MessengerClient } from 'messaging-api-messenger';
 
 import Session from '../session/Session';
 import { Connector } from '../bot/Connector';
 import { RequestContext } from '../types';
 
+import FacebookBaseConnector, {
+  FacebookBaseConnectorOptions,
+} from './FacebookBaseConnector';
 import MessengerContext from './MessengerContext';
 import MessengerEvent, {
   AppRoles,
@@ -82,96 +81,32 @@ export type MessengerRequestBody =
   | PassThreadControlRequestBody
   | TakeThreadControlRequestBody;
 
-type CommonConnectorOptions = {
-  appId: string;
-  appSecret: string;
-  verifyToken?: string;
-  batchConfig?: BatchConfig;
+export type MessengerConnectorOptions = FacebookBaseConnectorOptions<
+  MessengerClient
+> & {
   skipLegacyProfile?: boolean;
   mapPageToAccessToken?: (pageId: string) => Promise<string>;
 };
 
-type ConnectorOptionsWithoutClient = {
-  accessToken?: string;
-  origin?: string;
-  skipAppSecretProof?: boolean;
-} & CommonConnectorOptions;
-
-type ConnectorOptionsWithClient = {
-  client: MessengerClient;
-} & CommonConnectorOptions;
-
-export type MessengerConnectorOptions =
-  | ConnectorOptionsWithoutClient
-  | ConnectorOptionsWithClient;
-
 export default class MessengerConnector
+  extends FacebookBaseConnector<MessengerRequestBody, MessengerClient>
   implements Connector<MessengerRequestBody, MessengerClient> {
-  _client: MessengerClient;
-
-  _appId: string;
-
-  _appSecret: string;
-
   _skipLegacyProfile: boolean;
 
   _mapPageToAccessToken: ((pageId: string) => Promise<string>) | null = null;
 
-  _verifyToken: string | null = null;
-
-  _batchConfig: BatchConfig | null = null;
-
-  _batchQueue: MessengerBatchQueue | null = null;
-
   constructor(options: MessengerConnectorOptions) {
-    const {
-      appId,
-      appSecret,
-      mapPageToAccessToken,
-      verifyToken,
-      batchConfig,
+    super({
+      ...options,
+      ClientClass: MessengerClient,
+    });
 
-      skipLegacyProfile,
-    } = options;
-
-    if ('client' in options) {
-      this._client = options.client;
-    } else {
-      const { accessToken, origin, skipAppSecretProof } = options;
-
-      invariant(
-        accessToken || mapPageToAccessToken,
-        'Messenger access token is required. Please make sure you have filled it correctly in `bottender.config.js` or `.env` file.'
-      );
-      invariant(
-        appSecret,
-        'Messenger app secret is required. Please make sure you have filled it correctly in `bottender.config.js` or `.env` file.'
-      );
-
-      this._client = MessengerClient.connect({
-        accessToken: accessToken || '',
-        appSecret,
-        origin,
-        skipAppSecretProof,
-      });
-    }
-
-    this._appId = appId;
-    this._appSecret = appSecret;
+    const { mapPageToAccessToken, skipLegacyProfile } = options;
 
     this._mapPageToAccessToken = mapPageToAccessToken || null;
-    this._verifyToken = verifyToken || shortid.generate();
 
     this._skipLegacyProfile =
       typeof skipLegacyProfile === 'boolean' ? skipLegacyProfile : true;
-
-    this._batchConfig = batchConfig || null;
-    if (this._batchConfig) {
-      this._batchQueue = new MessengerBatchQueue(
-        this._client,
-        this._batchConfig
-      );
-    }
   }
 
   _getRawEventsFromRequest(body: MessengerRequestBody): MessengerRawEvent[] {
@@ -237,14 +172,6 @@ export default class MessengerConnector
 
   get platform(): 'messenger' {
     return 'messenger';
-  }
-
-  get client(): MessengerClient {
-    return this._client;
-  }
-
-  get verifyToken(): string | null {
-    return this._verifyToken;
   }
 
   getUniqueSessionKey(
@@ -388,87 +315,5 @@ export default class MessengerConnector
       batchQueue: this._batchQueue,
       appId: this._appId,
     });
-  }
-
-  // https://developers.facebook.com/docs/messenger-platform/webhook#security
-  verifySignature(rawBody: string, signature: string): boolean {
-    if (typeof signature !== 'string') return false;
-
-    const sha1 = signature.split('sha1=')[1];
-
-    if (!sha1) return false;
-
-    const bufferFromSignature = Buffer.from(sha1, 'hex');
-
-    const hashBufferFromBody = crypto
-      .createHmac('sha1', this._appSecret)
-      .update(rawBody, 'utf8')
-      .digest();
-
-    // return early here if buffer lengths are not equal since timingSafeEqual
-    // will throw if buffer lengths are not equal
-    if (bufferFromSignature.length !== hashBufferFromBody.length) {
-      return false;
-    }
-
-    return crypto.timingSafeEqual(bufferFromSignature, hashBufferFromBody);
-  }
-
-  preprocess({ method, headers, query, rawBody }: MessengerRequestContext) {
-    if (method.toLowerCase() === 'get') {
-      if (
-        query['hub.mode'] === 'subscribe' &&
-        query['hub.verify_token'] === this.verifyToken
-      ) {
-        return {
-          shouldNext: false,
-          response: {
-            status: 200,
-            body: query['hub.challenge'],
-          },
-        };
-      }
-
-      return {
-        shouldNext: false,
-        response: {
-          status: 403,
-          body: 'Forbidden',
-        },
-      };
-    }
-
-    if (method.toLowerCase() !== 'post') {
-      return {
-        shouldNext: true,
-      };
-    }
-
-    if (
-      headers['x-hub-signature'] &&
-      this.verifySignature(rawBody, headers['x-hub-signature'])
-    ) {
-      return {
-        shouldNext: true,
-      };
-    }
-
-    const error = {
-      message: 'Messenger Signature Validation Failed!',
-      request: {
-        rawBody,
-        headers: {
-          'x-hub-signature': headers['x-hub-signature'],
-        },
-      },
-    };
-
-    return {
-      shouldNext: false,
-      response: {
-        status: 400,
-        body: { error },
-      },
-    };
   }
 }

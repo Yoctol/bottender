@@ -733,7 +733,7 @@ describe('#preprocess', () => {
         status: 400,
         body: {
           error: {
-            message: 'Messenger Signature Validation Failed!',
+            message: 'Facebook Signature Validation Failed!',
             request: {
               headers: {
                 'x-hub-signature':
