@@ -1,95 +1,94 @@
 import { EventEmitter } from 'events';
 
 import warning from 'warning';
-import { MessengerConnector } from 'bottender';
+import { BatchConfig } from 'messenger-batch';
+import {
+  FacebookBaseConnector,
+  MessengerContext,
+  MessengerEvent,
+  RequestContext,
+} from 'bottender';
 
 import FacebookClient from './FacebookClient';
 import FacebookContext from './FacebookContext';
 import FacebookEvent from './FacebookEvent';
 
+type FacebookRequestBody = Record<string, any>;
+
+// TODO: use exported type
+type Session = Record<string, any>;
+
 type ConstructorOptions = {
+  appId: string;
+  appSecret: string;
   accessToken?: string;
-  appSecret?: string;
   client?: FacebookClient;
   mapPageToAccessToken?: (pageId: string) => Promise<string>;
   verifyToken?: string;
-  batchConfig?: Record<string, any>;
+  batchConfig?: BatchConfig;
   origin?: string;
   skipAppSecretProof?: boolean;
   skipProfile?: boolean;
 };
 
-export default class FacebookConnector extends MessengerConnector {
-  _client: FacebookClient = this._client;
+export default class FacebookConnector extends FacebookBaseConnector<
+  FacebookRequestBody,
+  FacebookClient
+> {
+  _mapPageToAccessToken: ((pageId: string) => Promise<string>) | null = null;
 
-  _appSecret: string = this._appSecret;
-
-  constructor({
-    accessToken,
-    appSecret,
-    client,
-    mapPageToAccessToken,
-    verifyToken,
-    batchConfig,
-    origin,
-    skipAppSecretProof,
-    skipProfile,
-  }: ConstructorOptions) {
-    const _client =
-      client ||
-      FacebookClient.connect({
-        accessToken: accessToken || '',
-        appSecret,
-        origin,
-        skipAppSecretProof,
-      });
+  constructor(options: ConstructorOptions) {
     super({
-      accessToken,
-      appSecret,
-      client: _client,
-      mapPageToAccessToken,
-      verifyToken,
-      batchConfig,
-      origin,
-      skipAppSecretProof,
-      skipProfile,
+      ...options,
+      ClientClass: FacebookClient,
     });
+
+    const { mapPageToAccessToken } = options;
+
+    this._mapPageToAccessToken = mapPageToAccessToken ?? null;
   }
 
-  mapRequestToEvents(body: Record<string, any>) {
-    const rawEvents = this._getRawEventsFromRequest(body);
-    const isStandby = this._isStandby(body);
-    let pageIds = [];
-
-    if (body.object === 'page' && body.entry) {
-      pageIds = body.entry
-        .map(ent => {
-          if (ent.messaging || ent.standby || ent.changes) {
-            return ent.id;
-          }
-          return null;
-        })
-        .filter(event => event != null);
+  mapRequestToEvents(
+    body: FacebookRequestBody
+  ): (FacebookEvent | MessengerEvent)[] {
+    // TODO: handle instagram
+    if (body.object !== 'page') {
+      return [];
     }
 
-    return rawEvents.map(
-      (event, index) =>
-        new FacebookEvent(event, {
-          isStandby,
-          // pageId is from Facebook events (Page webhook),
-          // _getPageIdFromRawEvent() is from Messenger events
-          pageId: pageIds[index] || this._getPageIdFromRawEvent(event),
-        })
-    );
+    return body.entry
+      .map((rawEvent: any) => {
+        const pageId = rawEvent.id;
+        if (rawEvent.messaging) {
+          return new MessengerEvent(rawEvent.messaging[0], {
+            pageId,
+            isStandby: false,
+          });
+        }
+
+        if (rawEvent.standby) {
+          return new MessengerEvent(rawEvent.standby[0], {
+            pageId,
+            isStandby: true,
+          });
+        }
+
+        if (rawEvent.changes) {
+          return new FacebookEvent(rawEvent.changes[0], { pageId });
+        }
+
+        return null;
+      })
+      .filter((event: any) => event !== null);
   }
 
   async createContext(params: {
-    event: FacebookEvent;
+    event: FacebookEvent | MessengerEvent;
     session?: Session;
     initialState?: Record<string, any>;
     requestContext?: RequestContext;
     emitter?: EventEmitter;
-  }): Promise<FacebookContext> {
+  }): Promise<FacebookContext | MessengerContext> {
     let customAccessToken;
 
     if (this._mapPageToAccessToken) {
@@ -101,8 +100,20 @@ export default class FacebookConnector extends MessengerConnector {
         customAccessToken = await this._mapPageToAccessToken(pageId);
       }
     }
-    return new FacebookContext({
+
+    if (params.event instanceof FacebookEvent) {
+      return new FacebookContext({
+        ...params,
+        event: params.event,
+        client: this._client,
+        customAccessToken,
+        batchQueue: this._batchQueue,
+        appId: this._appId,
+      });
+    }
+    return new MessengerContext({
       ...params,
+      event: params.event,
       client: this._client,
       customAccessToken,
       batchQueue: this._batchQueue,

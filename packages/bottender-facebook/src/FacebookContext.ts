@@ -17,7 +17,7 @@ type Options = {
   initialState?: Record<string, any>;
   requestContext?: RequestContext;
   customAccessToken?: string;
-  batchQueue?: MessengerBatchQueue;
+  batchQueue?: MessengerBatchQueue | null;
   emitter?: EventEmitter;
 };
 
@@ -44,7 +44,7 @@ export default class FacebookContext extends Context<
   }: Options) {
     super({ client, event, session, initialState, requestContext, emitter });
     this._customAccessToken = customAccessToken;
-    this._batchQueue = batchQueue;
+    this._batchQueue = batchQueue || undefined;
     this._appId = appId;
   }
 

@@ -19,7 +19,7 @@
     "warning": "^4.0.3"
   },
   "peerDependencies": {
-    "bottender": ">= 1.4",
+    "bottender": ">= 1.5.0-alpha.7",
     "messaging-api-messenger": ">= 1.0.0-beta.18"
   },
   "devDependencies": {
