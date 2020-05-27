@@ -26,7 +26,7 @@ module.exports = function rasa({
   actions: Record<
     string,
     Action<
-      Context<any, any>,
+      Context,
       {
         intent: Intent;
         entities: Entity[];
@@ -36,11 +36,11 @@ module.exports = function rasa({
   confidenceThreshold: number;
   emulationMode?: 'WIT' | 'LUIS' | 'DIALOGFLOW';
   jwt?: string;
-}): Action<Context<any, any>> {
+}): Action<Context> {
   return async function Rasa(
-    context: Context<any, any>,
-    { next }: { next?: Action<Context<any, any>> }
-  ): Promise<Action<Context<any, any>> | void> {
+    context: Context,
+    { next }: { next?: Action<Context> }
+  ): Promise<Action<Context> | void> {
     if (!context.event.isText) {
       return next;
     }
