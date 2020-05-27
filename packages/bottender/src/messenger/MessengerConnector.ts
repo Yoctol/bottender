@@ -4,6 +4,7 @@ import { URL } from 'url';
 import isAfter from 'date-fns/isAfter';
 import isValid from 'date-fns/isValid';
 import warning from 'warning';
+import { JsonObject } from 'type-fest';
 import { MessengerClient } from 'messaging-api-messenger';
 
 import Session from '../session/Session';
@@ -286,7 +287,7 @@ export default class MessengerConnector
   async createContext(params: {
     event: MessengerEvent;
     session?: Session;
-    initialState?: Record<string, any>;
+    initialState?: JsonObject;
     requestContext?: MessengerRequestContext;
     emitter?: EventEmitter;
   }): Promise<MessengerContext> {

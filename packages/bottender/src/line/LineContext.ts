@@ -4,6 +4,7 @@ import chunk from 'lodash/chunk';
 import invariant from 'invariant';
 import sleep from 'delay';
 import warning from 'warning';
+import { JsonObject } from 'type-fest';
 import { Line, LineClient, LineTypes } from 'messaging-api-line';
 
 import Context from '../context/Context';
@@ -16,7 +17,7 @@ type Options = {
   client: LineClient;
   event: LineEvent;
   session?: Session | null;
-  initialState?: Record<string, any> | null;
+  initialState?: JsonObject | null;
   requestContext?: RequestContext;
   customAccessToken?: string;
   shouldBatch?: boolean;

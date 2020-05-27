@@ -1,6 +1,7 @@
 import { EventEmitter } from 'events';
 
 import sleep from 'delay';
+import { JsonObject } from 'type-fest';
 
 import Context from '../context/Context';
 import Session from '../session/Session';
@@ -13,7 +14,7 @@ type Options = {
   client: ConsoleClient;
   event: ConsoleEvent;
   session: Session | null;
-  initialState?: Record<string, any> | null;
+  initialState?: JsonObject | null;
   requestContext?: RequestContext;
   fallbackMethods: boolean;
   mockPlatform: string;

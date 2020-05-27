@@ -2,6 +2,7 @@ import crypto from 'crypto';
 import { EventEmitter } from 'events';
 
 import invariant from 'invariant';
+import { JsonObject } from 'type-fest';
 import { ViberClient, ViberTypes } from 'messaging-api-viber';
 import { addedDiff } from 'deep-object-diff';
 
@@ -154,7 +155,7 @@ export default class ViberConnector
   createContext(params: {
     event: ViberEvent;
     session: Session | null;
-    initialState?: Record<string, any> | null;
+    initialState?: JsonObject | null;
     requestContext?: ViberRequestContext;
     emitter?: EventEmitter | null;
   }): ViberContext {

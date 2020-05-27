@@ -1,3 +1,5 @@
+import { JsonObject } from 'type-fest';
+
 import Context from '../context/Context';
 import line from '../line/routes';
 import messenger from '../messenger/routes';
@@ -13,7 +15,7 @@ type RoutePattern<C extends Context> = '*' | RoutePredicate<C>;
 
 export type RoutePredicate<C extends Context> = (
   context: C
-) => boolean | Record<string, any> | Promise<boolean | Record<string, any>>;
+) => boolean | JsonObject | Promise<boolean | JsonObject>;
 
 type Route<C extends Context, AC extends Context = C> = {
   predicate: RoutePredicate<C>;

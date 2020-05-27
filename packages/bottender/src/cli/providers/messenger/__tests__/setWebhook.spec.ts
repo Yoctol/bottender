@@ -23,7 +23,10 @@ const WEBHOOK = 'http://example.com/webhook';
 function setup({
   config,
   success = true,
-}: { config?: Record<string, any>; success?: boolean } = {}) {
+}: {
+  config?: Record<string, any>;
+  success?: boolean;
+} = {}) {
   getWebhookFromNgrok.mockResolvedValue('https://fakeDomain.ngrok.io');
 
   getChannelConfig.mockReturnValue(

@@ -3,6 +3,7 @@ import { EventEmitter } from 'events';
 import cloneDeep from 'lodash/cloneDeep';
 import debug from 'debug';
 import warning from 'warning';
+import { JsonObject } from 'type-fest';
 
 import Session from '../session/Session';
 import { Client, Event, RequestContext } from '../types';
@@ -13,7 +14,7 @@ type Options<C extends Client, E extends Event> = {
   client: C;
   event: E;
   session?: Session | null;
-  initialState?: Record<string, any> | null;
+  initialState?: JsonObject | null;
   requestContext?: RequestContext;
   emitter?: EventEmitter | null;
 };
@@ -35,7 +36,7 @@ export default abstract class Context<
   abstract get platform(): string;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  abstract sendText(text: string, options?: Record<string, any>): any;
+  abstract sendText(text: string, options?: JsonObject): any;
 
   _isHandled: boolean | null = null;
 
@@ -47,7 +48,7 @@ export default abstract class Context<
 
   _session: Session | null;
 
-  _initialState?: Record<string, any> | null;
+  _initialState?: JsonObject | null;
 
   _requestContext: RequestContext | null;
 
@@ -136,7 +137,7 @@ export default abstract class Context<
    * The state of the conversation context.
    *
    */
-  get state(): Record<string, any> {
+  get state(): JsonObject {
     if (this._session) {
       return this._session._state;
     }
@@ -151,7 +152,7 @@ export default abstract class Context<
    * Shallow merge changes to the state.
    *
    */
-  setState(state: Record<string, any>): void {
+  setState(state: JsonObject): void {
     if (this._session) {
       const sess = this._session;
 

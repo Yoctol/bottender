@@ -4,6 +4,7 @@ import { EventEmitter } from 'events';
 import invariant from 'invariant';
 import sleep from 'delay';
 import warning from 'warning';
+import { JsonObject } from 'type-fest';
 import {
   MessengerBatch,
   MessengerClient,
@@ -22,7 +23,7 @@ type Options = {
   client: MessengerClient;
   event: MessengerEvent;
   session?: Session;
-  initialState?: Record<string, any>;
+  initialState?: JsonObject;
   requestContext?: RequestContext;
   customAccessToken?: string;
   batchQueue?: MessengerBatchQueue | null;

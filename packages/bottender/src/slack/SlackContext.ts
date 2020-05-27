@@ -2,6 +2,7 @@ import { EventEmitter } from 'events';
 
 import sleep from 'delay';
 import warning from 'warning';
+import { JsonObject } from 'type-fest';
 import { SlackOAuthClient, SlackTypes } from 'messaging-api-slack';
 
 import Context from '../context/Context';
@@ -14,7 +15,7 @@ type Options = {
   client: SlackOAuthClient;
   event: SlackEvent;
   session?: Session | null;
-  initialState?: Record<string, any> | null;
+  initialState?: JsonObject | null;
   requestContext?: RequestContext;
   emitter?: EventEmitter | null;
 };
