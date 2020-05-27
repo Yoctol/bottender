@@ -1,10 +1,11 @@
-import { Action, AnyContext } from '../types';
+import Context from '../context/Context';
+import { Action } from '../types';
 import { RoutePredicate, route } from '../router';
 
 import SlackContext from './SlackContext';
 import { EventTypes } from './SlackEvent';
 
-type Route = <C extends AnyContext>(
+type Route = <C extends Context>(
   action: Action<SlackContext, any>
 ) => {
   predicate: RoutePredicate<C>;
@@ -14,14 +15,14 @@ type Route = <C extends AnyContext>(
 type Slack = Route & {
   any: Route;
   message: Route;
-  event: <C extends AnyContext>(
+  event: <C extends Context>(
     eventType: EventTypes,
     action: Action<SlackContext, any>
   ) => {
     predicate: RoutePredicate<C>;
     action: Action<SlackContext, any>;
   };
-  command: <C extends AnyContext>(
+  command: <C extends Context>(
     commandText: string,
     action: Action<SlackContext, any>
   ) => {
@@ -30,15 +31,13 @@ type Slack = Route & {
   };
 };
 
-const slack: Slack = <C extends AnyContext>(
-  action: Action<SlackContext, any>
-) => {
+const slack: Slack = <C extends Context>(action: Action<SlackContext, any>) => {
   return route((context: C) => context.platform === 'slack', action);
 };
 
 slack.any = slack;
 
-function message<C extends AnyContext>(action: Action<SlackContext, any>) {
+function message<C extends Context>(action: Action<SlackContext, any>) {
   return route(
     (context: C) => context.platform === 'slack' && context.event.isMessage,
     action
@@ -47,7 +46,7 @@ function message<C extends AnyContext>(action: Action<SlackContext, any>) {
 
 slack.message = message;
 
-function event<C extends AnyContext>(
+function event<C extends Context>(
   eventType: EventTypes,
   action: Action<SlackContext, any>
 ) {
@@ -62,7 +61,7 @@ function event<C extends AnyContext>(
 
 slack.event = event;
 
-function command<C extends AnyContext>(
+function command<C extends Context>(
   commandText: string,
   action: Action<SlackContext, any>
 ) {

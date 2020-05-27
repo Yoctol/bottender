@@ -38,9 +38,9 @@ module.exports = function dialogflow({
 }: {
   projectId: string;
   languageCode: string;
-  actions: Record<string, Action<Context<any, any>, QueryResult>>;
+  actions: Record<string, Action<Context, QueryResult>>;
   timeZone?: string;
-}): Action<Context<any, any>> {
+}): Action<Context> {
   invariant(
     typeof projectId === 'string' && projectId.length > 0,
     'dialogflow: `projectId` is a required parameter.'
@@ -55,9 +55,9 @@ module.exports = function dialogflow({
   const sessionsClient = new dialogflowSdk.SessionsClient();
 
   return async function Dialogflow(
-    context: Context<any, any>,
-    { next }: { next?: Action<Context<any, any>> }
-  ): Promise<Action<Context<any, any>> | void> {
+    context: Context,
+    { next }: { next?: Action<Context> }
+  ): Promise<Action<Context> | void> {
     if (!context.event.isText || !context.session) {
       return next;
     }

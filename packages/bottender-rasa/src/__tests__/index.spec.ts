@@ -6,7 +6,7 @@ import { run } from 'bottender/dist/bot/Bot';
 const rasa = require('..'); // eslint-disable-line @typescript-eslint/no-var-requires
 
 // FIXME: export public test-utils for testing
-class TestContext extends Context<any, any> {
+class TestContext extends Context {
   get platform() {
     return 'test';
   }
