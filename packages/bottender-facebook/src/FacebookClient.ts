@@ -24,13 +24,13 @@ export default class FacebookClient extends MessengerClient {
   /**
    * Publish new comments to any object.
    *
-   * @see https://developers.facebook.com/docs/graph-api/reference/v6.0/object/comments
+   * @see https://developers.facebook.com/docs/graph-api/reference/object/comments
    *
    * @param objectId ID of the object.
    * @param comment A comment text or a comment object.
    * @param options
    */
-  sendComment(
+  public sendComment(
     objectId: string,
     comment: string | Types.InputComment
   ): Promise<{ id: string }> {
@@ -48,12 +48,11 @@ export default class FacebookClient extends MessengerClient {
   /**
    * Add new likes to any object.
    *
-   * @see https://developers.facebook.com/docs/graph-api/reference/v6.0/object/likes
+   * @see https://developers.facebook.com/docs/graph-api/reference/object/likes
    *
    * @param objectId ID of the object.
-   * @param options
    */
-  sendLike(objectId: string): Promise<{ success: true }> {
+  public sendLike(objectId: string): Promise<{ success: true }> {
     return this._axios
       .post<{ success: true }>(`/${objectId}/likes`, undefined, {
         params: {
@@ -66,12 +65,12 @@ export default class FacebookClient extends MessengerClient {
   /**
    * Get the data of the comment.
    *
-   * @see https://developers.facebook.com/docs/graph-api/reference/v6.0/comment
+   * @see https://developers.facebook.com/docs/graph-api/reference/comment
    *
    * @param commentId ID of the comment.
    * @param options
    */
-  getComment(
+  public getComment(
     commentId: string,
     { summary, filter, fields }: Types.GetCommentOptions = {}
   ): Promise<Types.Comment> {
@@ -92,12 +91,12 @@ export default class FacebookClient extends MessengerClient {
   /**
    * Get the data of likes on the object.
    *
-   * @see https://developers.facebook.com/docs/graph-api/reference/v6.0/object/likes
+   * @see https://developers.facebook.com/docs/graph-api/reference/object/likes
    *
    * @param objectId ID of the comment.
    * @param options
    */
-  getLikes(
+  public getLikes(
     objectId: string,
     { summary }: Types.GetLikesOptions = {}
   ): Promise<Types.Likes> {

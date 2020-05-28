@@ -37,7 +37,7 @@ export default class FacebookConnector extends FacebookBaseConnector<
 > {
   _mapPageToAccessToken: ((pageId: string) => Promise<string>) | null = null;
 
-  constructor(options: ConstructorOptions) {
+  public constructor(options: ConstructorOptions) {
     super({
       ...options,
       ClientClass: FacebookClient,
@@ -48,7 +48,7 @@ export default class FacebookConnector extends FacebookBaseConnector<
     this._mapPageToAccessToken = mapPageToAccessToken ?? null;
   }
 
-  mapRequestToEvents(
+  public mapRequestToEvents(
     body: FacebookRequestBody
   ): (FacebookEvent | MessengerEvent)[] {
     // TODO: returns InstagramEvent (object === 'instagram')
@@ -82,7 +82,7 @@ export default class FacebookConnector extends FacebookBaseConnector<
       .filter((event: any) => event !== null);
   }
 
-  async createContext(params: {
+  public async createContext(params: {
     event: FacebookEvent | MessengerEvent;
     session?: Session;
     initialState?: Record<string, any>;

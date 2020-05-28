@@ -35,7 +35,7 @@ export default class FacebookContext extends Context<
 
   _batchQueue: MessengerBatchQueue | undefined;
 
-  constructor({
+  public constructor({
     appId,
     client,
     event,
@@ -60,7 +60,14 @@ export default class FacebookContext extends Context<
     return 'facebook';
   }
 
-  async sendText(
+  /**
+   * Send a private reply to the post or comment.
+   *
+   * @see https://developers.facebook.com/docs/messenger-platform/discovery/private-replies/
+   *
+   * @param text The text to be sent in the reply.
+   */
+  public async sendText(
     text: string
   ): Promise<MessengerTypes.SendMessageSuccessResponse | undefined> {
     if (!['comment', 'post'].includes(this._event.rawEvent.value.item)) {
@@ -94,8 +101,16 @@ export default class FacebookContext extends Context<
     return this._client.sendText(recipient, text);
   }
 
-  // https://developers.facebook.com/docs/graph-api/reference/v3.1/object/comments/
-  async sendComment(
+  // TODO: implement other send methods
+
+  /**
+   * Publish new comments to any object.
+   *
+   * @see https://developers.facebook.com/docs/graph-api/reference/object/comments
+   *
+   * @param comment A comment text or a comment object.
+   */
+  public async sendComment(
     comment: string | Types.InputComment
   ): Promise<{ id: string } | undefined> {
     let objectId;
@@ -130,8 +145,12 @@ export default class FacebookContext extends Context<
     return this._client.sendComment(objectId, comment);
   }
 
-  // https://developers.facebook.com/docs/graph-api/reference/v3.1/object/likes
-  sendLike(): Promise<{ success: boolean }> {
+  /**
+   * Add new likes to any object.
+   *
+   * @see https://developers.facebook.com/docs/graph-api/reference/object/likes
+   */
+  public sendLike(): Promise<{ success: boolean }> {
     const objectId = (this._event.rawEvent.value as Comment).commentId; // FIXME: postId
 
     if (this._batchQueue) {
@@ -144,8 +163,12 @@ export default class FacebookContext extends Context<
     return this._client.sendLike(objectId);
   }
 
-  // https://developers.facebook.com/docs/graph-api/reference/v3.1/comment
-  async getComment(
+  /**
+   * Get the data of the comment.
+   *
+   * @see https://developers.facebook.com/docs/graph-api/reference/comment
+   */
+  public async getComment(
     options: Types.GetCommentOptions
   ): Promise<Types.Comment | null> {
     const commentId = (this._event.rawEvent.value as Comment).commentId;
@@ -166,8 +189,14 @@ export default class FacebookContext extends Context<
     return this._client.getComment(commentId, options);
   }
 
-  // https://developers.facebook.com/docs/graph-api/reference/v2.12/object/likes
-  getLikes(options: Types.GetLikesOptions) {
+  /**
+   * Get the data of likes on the object.
+   *
+   * @see https://developers.facebook.com/docs/graph-api/reference/object/likes
+   *
+   * @param options
+   */
+  public getLikes(options: Types.GetLikesOptions) {
     const objectId = (this._event.rawEvent.value as Comment).commentId; // FIXME: postId
 
     if (this._batchQueue) {
@@ -181,7 +210,7 @@ export default class FacebookContext extends Context<
     return this._client.getLikes(objectId, options);
   }
 
-  async canReplyPrivately(): Promise<boolean> {
+  public async canReplyPrivately(): Promise<boolean> {
     const comment = await this.getComment({ fields: ['can_reply_privately'] });
 
     if (!comment) return false;
