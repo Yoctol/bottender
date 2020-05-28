@@ -3,7 +3,9 @@ import { EventEmitter } from 'events';
 import warning from 'warning';
 import { BatchConfig } from 'messenger-batch';
 import {
+  Connector,
   FacebookBaseConnector,
+  MessengerConnector,
   MessengerContext,
   MessengerEvent,
   RequestContext,
@@ -31,11 +33,12 @@ type ConstructorOptions = {
   skipProfile?: boolean;
 };
 
-export default class FacebookConnector extends FacebookBaseConnector<
-  FacebookRequestBody,
-  FacebookClient
-> {
+export default class FacebookConnector
+  extends FacebookBaseConnector<FacebookRequestBody, FacebookClient>
+  implements Connector<FacebookRequestBody, FacebookClient> {
   _mapPageToAccessToken: ((pageId: string) => Promise<string>) | null = null;
+
+  _messengerConnector: MessengerConnector;
 
   public constructor(options: ConstructorOptions) {
     super({
@@ -46,6 +49,61 @@ export default class FacebookConnector extends FacebookBaseConnector<
     const { mapPageToAccessToken } = options;
 
     this._mapPageToAccessToken = mapPageToAccessToken ?? null;
+    this._messengerConnector = new MessengerConnector({
+      ...options,
+      ClientClass: FacebookClient,
+      mapPageToAccessToken,
+    });
+  }
+
+  /**
+   * The name of the platform.
+   *
+   */
+  get platform(): 'facebook' {
+    return 'facebook';
+  }
+
+  getUniqueSessionKey(event: FacebookEvent | MessengerEvent): string | null {
+    if (event instanceof MessengerEvent) {
+      return this._messengerConnector.getUniqueSessionKey(event);
+    }
+
+    // TODO: How to determine session key in facebook feed events
+    return null;
+  }
+
+  public async updateSession(
+    session: Session,
+    event: FacebookEvent | MessengerEvent
+  ): Promise<void> {
+    if (!session.user) {
+      session.page = {
+        id: event.pageId,
+        _updatedAt: new Date().toISOString(),
+      };
+
+      session.user = {
+        _updatedAt: new Date().toISOString(),
+        id: this.getUniqueSessionKey(event),
+      };
+    }
+
+    Object.freeze(session.user);
+    Object.defineProperty(session, 'user', {
+      configurable: false,
+      enumerable: true,
+      writable: false,
+      value: session.user,
+    });
+
+    Object.freeze(session.page);
+    Object.defineProperty(session, 'page', {
+      configurable: false,
+      enumerable: true,
+      writable: false,
+      value: session.page,
+    });
   }
 
   public mapRequestToEvents(
