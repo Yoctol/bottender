@@ -1,7 +1,8 @@
 import { EventEmitter } from 'events';
 
 import warning from 'warning';
-import { Context, RequestContext } from 'bottender';
+import { Context, MessengerTypes, RequestContext } from 'bottender';
+import { MessengerBatch } from 'messaging-api-messenger';
 import { MessengerBatchQueue } from 'messenger-batch';
 
 import FacebookBatch from './FacebookBatch';
@@ -59,8 +60,38 @@ export default class FacebookContext extends Context<
     return 'facebook';
   }
 
-  async sendText(): Promise<void> {
-    // TODO
+  async sendText(
+    text: string
+  ): Promise<MessengerTypes.SendMessageSuccessResponse | undefined> {
+    if (!['comment', 'post'].includes(this._event.rawEvent.value.item)) {
+      warning(false, 'sendText: can only work with comment and post events.');
+      return;
+    }
+
+    if (this._event.rawEvent.value.verb === 'remove') {
+      warning(false, "sendText: can't  work with remove verb");
+      return;
+    }
+
+    let recipient;
+    if (this._event.rawEvent.value.item === 'comment') {
+      recipient = {
+        commentId: this._event.rawEvent.value.commentId,
+      };
+    } else {
+      recipient = {
+        postId: this._event.rawEvent.value.postId,
+      };
+    }
+
+    if (this._batchQueue) {
+      return this._batchQueue.push(
+        MessengerBatch.sendText(recipient, text, {
+          accessToken: this._customAccessToken,
+        })
+      );
+    }
+    return this._client.sendText(recipient, text);
   }
 
   // https://developers.facebook.com/docs/graph-api/reference/v3.1/object/comments/

@@ -51,7 +51,7 @@ export default class FacebookConnector extends FacebookBaseConnector<
   mapRequestToEvents(
     body: FacebookRequestBody
   ): (FacebookEvent | MessengerEvent)[] {
-    // TODO: handle instagram
+    // TODO: returns InstagramEvent (object === 'instagram')
     if (body.object !== 'page') {
       return [];
     }

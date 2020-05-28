@@ -1,9 +1,9 @@
 import FacebookContext from '../FacebookContext';
-import FacebookEvent from '../FacebookEvent';
+import FacebookEvent, { FacebookRawEvent } from '../FacebookEvent';
 
 jest.mock('warning');
 
-const userRawEvent = {
+const userRawEvent: FacebookRawEvent = {
   field: 'feed',
   value: {
     from: {
@@ -20,7 +20,7 @@ const userRawEvent = {
   },
 };
 
-const sentByPageRawEvent = {
+const sentByPageRawEvent: FacebookRawEvent = {
   field: 'feed',
   value: {
     from: {
@@ -37,8 +37,48 @@ const sentByPageRawEvent = {
   },
 };
 
-const setup = ({ rawEvent, pageId } = { rawEvent: userRawEvent }) => {
+const postAdd: FacebookRawEvent = {
+  field: 'feed',
+  value: {
+    from: {
+      id: '156407155145863',
+      name: 'Cinderella Hoover',
+    },
+    item: 'post',
+    postId: '1353269864728879_1611108832278313',
+    verb: 'add',
+    createdTime: 1520544814,
+    isHidden: false,
+    message: "It's Thursday and I want to eat cake.",
+  },
+};
+
+const commentAdd: FacebookRawEvent = {
+  field: 'feed',
+  value: {
+    from: {
+      id: '139560936744123',
+      name: 'user',
+    },
+    item: 'comment',
+    commentId: '139560936744456_139620233405726',
+    postId: '137542570280222_139560936744456',
+    verb: 'add',
+    parentId: '139560936744456_139562213411528',
+    createdTime: 1511951015,
+    message: 'Good',
+  },
+};
+
+const setup = ({
+  rawEvent = userRawEvent,
+  pageId,
+}: {
+  rawEvent?: FacebookRawEvent;
+  pageId?: string;
+} = {}) => {
   const client = {
+    sendText: jest.fn(),
     sendComment: jest.fn(),
     sendLike: jest.fn(),
     getComment: jest.fn(),
@@ -54,6 +94,34 @@ const setup = ({ rawEvent, pageId } = { rawEvent: userRawEvent }) => {
     context,
   };
 };
+
+describe('#sendText', () => {
+  it('should work with posts', async () => {
+    const { context, client } = setup({
+      rawEvent: postAdd,
+    });
+
+    await context.sendText('Private Reply!');
+
+    expect(client.sendText).toBeCalledWith(
+      { postId: '1353269864728879_1611108832278313' },
+      'Private Reply!'
+    );
+  });
+
+  it('should work with comments', async () => {
+    const { context, client } = setup({
+      rawEvent: commentAdd,
+    });
+
+    await context.sendText('Private Reply!');
+
+    expect(client.sendText).toBeCalledWith(
+      { commentId: '139560936744456_139620233405726' },
+      'Private Reply!'
+    );
+  });
+});
 
 describe('#sendComment', () => {
   it('should call client with comment id, when incoming comment is a first layer comment', async () => {

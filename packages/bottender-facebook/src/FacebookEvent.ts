@@ -63,15 +63,39 @@ type Reaction = {
   createdTime: number;
 };
 
-export type FacebookRawEvent =
-  | {
-      field: 'feed';
-      value: Status | Post | Comment | Like | Reaction;
-    }
-  | {
-      field: 'conversation';
-      value: any;
-    };
+type Event = {
+  item: 'event';
+  [key: string]: any; // FIXME
+};
+
+type Photo = {
+  item: 'photo';
+  [key: string]: any; // FIXME
+};
+
+type Video = {
+  item: 'video';
+  [key: string]: any; // FIXME
+};
+
+type Share = {
+  item: 'share';
+  [key: string]: any; // FIXME
+};
+
+export type FacebookRawEvent = {
+  field: 'feed';
+  value:
+    | Status
+    | Post
+    | Comment
+    | Like
+    | Reaction
+    | Event
+    | Photo
+    | Video
+    | Share;
+};
 
 export default class FacebookEvent {
   _rawEvent: FacebookRawEvent;
@@ -117,10 +141,6 @@ export default class FacebookEvent {
    */
   get text(): string | null {
     return null;
-  }
-
-  get isConversation(): boolean {
-    return this.rawEvent.field === 'conversation';
   }
 
   get isFeed(): boolean {
