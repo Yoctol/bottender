@@ -51,7 +51,7 @@ type Like = {
 };
 
 type Reaction = {
-  reactionType: 'like' | 'love' | 'haha' | 'wow' | 'sad' | 'angry';
+  reactionType: 'like' | 'love' | 'haha' | 'wow' | 'sad' | 'angry' | 'care';
   from: {
     id: string;
   };

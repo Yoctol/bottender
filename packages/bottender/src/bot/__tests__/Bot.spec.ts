@@ -132,7 +132,7 @@ describe('#createRequestHandler', () => {
     expect(error).toBeInstanceOf(Error);
   });
 
-  it('should call updateSession with the session and the body', async () => {
+  it('should call updateSession with the session and the event', async () => {
     const { bot, connector, sessionStore } = setup();
 
     mocked(sessionStore).read.mockResolvedValue(null);
@@ -143,7 +143,7 @@ describe('#createRequestHandler', () => {
 
     await requestHandler(body);
 
-    expect(connector.updateSession).toBeCalledWith(expect.any(Object), body);
+    expect(connector.updateSession).toBeCalledWith(expect.any(Object), event);
   });
 
   it('should call the registered action with the context', async () => {
