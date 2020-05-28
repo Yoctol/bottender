@@ -118,9 +118,7 @@ export default class FacebookContext extends Context<
       objectId = this._event.isFirstLayerComment
         ? (this._event.rawEvent.value as Comment).commentId
         : (this._event.rawEvent.value as Comment).parentId;
-    }
-
-    if (this._event.isPost) {
+    } else if (this._event.isPost) {
       objectId = (this._event.rawEvent.value as Comment).postId;
     }
 
@@ -150,8 +148,19 @@ export default class FacebookContext extends Context<
    *
    * @see https://developers.facebook.com/docs/graph-api/reference/object/likes
    */
-  public sendLike(): Promise<{ success: boolean }> {
-    const objectId = (this._event.rawEvent.value as Comment).commentId; // FIXME: postId
+  public async sendLike(): Promise<{ success: boolean }> {
+    let objectId;
+    if (this._event.isComment) {
+      objectId = (this._event.rawEvent.value as Comment).commentId;
+    } else if (this._event.isPost) {
+      objectId = (this._event.rawEvent.value as Comment).postId;
+    }
+
+    // TODO: support more type: Album, Event, Life Event, Link, Live Video, Note, Photo, Thread, User, Video
+    if (!objectId) {
+      warning(false, 'sendLike: only support comment and post events now.');
+      return { success: false };
+    }
 
     if (this._batchQueue) {
       return this._batchQueue.push(

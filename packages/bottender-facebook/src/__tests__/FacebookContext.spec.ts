@@ -244,6 +244,16 @@ describe('#sendLike', () => {
 
     expect(client.sendLike).toBeCalledWith('139560936744456_139620233405726');
   });
+
+  it('should work with posts', async () => {
+    const { context, client } = setup({
+      rawEvent: postAdd,
+    });
+
+    await context.sendLike();
+
+    expect(client.sendLike).toBeCalledWith('1353269864728879_1611108832278313');
+  });
 });
 
 describe('#getComment', () => {
