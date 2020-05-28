@@ -37,19 +37,6 @@ export type Comment = {
   canReplyPrivately?: boolean;
 };
 
-type Like = {
-  from: {
-    id: string;
-    name?: string;
-  };
-  parentId: string;
-  commentId: string;
-  postId: string;
-  verb: 'add' | 'remove';
-  item: 'like';
-  createdTime: number;
-};
-
 type Reaction = {
   reactionType: 'like' | 'love' | 'haha' | 'wow' | 'sad' | 'angry' | 'care';
   from: {
@@ -85,16 +72,7 @@ type Share = {
 
 export type FacebookRawEvent = {
   field: 'feed';
-  value:
-    | Status
-    | Post
-    | Comment
-    | Like
-    | Reaction
-    | Event
-    | Photo
-    | Video
-    | Share;
+  value: Status | Post | Comment | Reaction | Event | Photo | Video | Share;
 };
 
 export default class FacebookEvent {
@@ -239,33 +217,6 @@ export default class FacebookEvent {
 
   get comment(): Comment | null {
     if (this.isComment) {
-      return this.rawEvent.value as any;
-    }
-    return null;
-  }
-
-  get isLike(): boolean {
-    return Boolean(
-      this.isFeed && this.rawEvent.value && this.rawEvent.value.item === 'like'
-    );
-  }
-
-  get isLikeAdd(): boolean {
-    return Boolean(
-      this.isLike && this.rawEvent.value && this.rawEvent.value.verb === 'add'
-    );
-  }
-
-  get isLikeRemove(): boolean {
-    return Boolean(
-      this.isLike &&
-        this.rawEvent.value &&
-        this.rawEvent.value.verb === 'remove'
-    );
-  }
-
-  get like(): Like | null {
-    if (this.isLike) {
       return this.rawEvent.value as any;
     }
     return null;
