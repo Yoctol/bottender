@@ -98,12 +98,25 @@ export default class FacebookContext extends Context<
   async sendComment(
     comment: string | Types.InputComment
   ): Promise<{ id: string } | undefined> {
-    const objectId = this._event.isFirstLayerComment
-      ? (this._event.rawEvent.value as Comment).commentId
-      : (this._event.rawEvent.value as Comment).parentId; // FIXME: postId
+    let objectId;
+    if (this._event.isComment) {
+      objectId = this._event.isFirstLayerComment
+        ? (this._event.rawEvent.value as Comment).commentId
+        : (this._event.rawEvent.value as Comment).parentId;
+    }
+
+    if (this._event.isPost) {
+      objectId = (this._event.rawEvent.value as Comment).postId;
+    }
+
+    // TODO: support more type: Album, Event, Life Event, Link, Live Video, Note, Photo, Thread, User, Video
+    if (!objectId) {
+      warning(false, 'sendComment: only support comment and post events now.');
+      return;
+    }
 
     if (this._event.isSentByPage) {
-      warning(false, 'Could not sendComment to page itself.');
+      warning(false, "sendComment: can't send to page itself.");
       return;
     }
 

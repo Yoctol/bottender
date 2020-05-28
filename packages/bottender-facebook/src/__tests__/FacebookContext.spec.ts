@@ -163,6 +163,19 @@ describe('#sendComment', () => {
     );
   });
 
+  it('should work with posts', async () => {
+    const { context, client } = setup({
+      rawEvent: postAdd,
+    });
+
+    await context.sendComment('Public Reply!');
+
+    expect(client.sendComment).toBeCalledWith(
+      '1353269864728879_1611108832278313',
+      'Public Reply!'
+    );
+  });
+
   it('should not reply to page itself', async () => {
     const { context, client } = setup({
       rawEvent: sentByPageRawEvent,
