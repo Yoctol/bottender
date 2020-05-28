@@ -1,6 +1,5 @@
 {
-  "name": "@bottender/qna-maker",
-  "description": "QnA Maker integration for Bottender.",
+  "name": "@bottender/facebook",
   "license": "MIT",
   "homepage": "https://bottender.js.org/",
   "repository": {
@@ -14,23 +13,17 @@
   ],
   "types": "dist/index.d.ts",
   "dependencies": {
-    "axios": "^0.19.2",
-    "invariant": "^2.2.4"
+    "axios-error": "^0.8.1",
+    "lodash": "^4.17.15",
+    "messenger-batch": "^0.3.1",
+    "warning": "^4.0.3"
   },
   "peerDependencies": {
-    "bottender": ">= 1.2.0-0"
+    "bottender": ">= 1.5.0-alpha.8",
+    "messaging-api-messenger": ">= 1.0.0-beta.18"
   },
   "devDependencies": {
-    "bottender": "^1.5.0-alpha.10"
-  },
-  "keywords": [
-    "bot",
-    "bottender",
-    "chatbot",
-    "language",
-    "messaging",
-    "nlu",
-    "qna-maker",
-    "understanding"
-  ]
+    "bottender": "^1.5.0-alpha.10",
+    "messaging-api-messenger": "^1.0.0-beta.18"
+  }
 }

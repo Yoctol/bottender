@@ -1,0 +1,10 @@
+{
+  "scripts": {
+    "dev": "bottender dev",
+    "start": "bottender start"
+  },
+  "dependencies": {
+    "@bottender/facebook": "next",
+    "bottender": "next"
+  }
+}

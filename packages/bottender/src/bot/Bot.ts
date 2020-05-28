@@ -203,8 +203,12 @@ export default class Bot<
         async event => {
           const { platform } = this._connector;
           const sessionKey = this._connector.getUniqueSessionKey(
-            // TODO: may deprecating passing request body in v2
-            events.length === 1 ? body : event,
+            // TODO: deprecating passing request body in those connectors
+            ['telegram', 'slack', 'viber', 'whatsapp'].includes(
+              this._connector.platform
+            )
+              ? body
+              : event,
             requestContext
           );
 
@@ -239,8 +243,12 @@ export default class Bot<
 
             await this._connector.updateSession(
               session,
-              // TODO: may deprecating passing request body in v2
-              events.length === 1 ? body : event
+              // TODO: deprecating passing request body in those connectors
+              ['telegram', 'slack', 'viber', 'whatsapp'].includes(
+                this._connector.platform
+              )
+                ? body
+                : event
             );
           }
 

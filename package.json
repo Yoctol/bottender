@@ -34,6 +34,7 @@
     "@types/prettier": "^1.19.0",
     "@typescript-eslint/eslint-plugin": "^2.21.0",
     "@typescript-eslint/parser": "^2.21.0",
+    "axios-mock-adapter": "^1.18.1",
     "chalk": "^3.0.0",
     "cross-env": "^7.0.0",
     "eslint": "^6.8.0",
