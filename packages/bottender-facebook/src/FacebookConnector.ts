@@ -14,6 +14,8 @@ import {
 import FacebookClient from './FacebookClient';
 import FacebookContext from './FacebookContext';
 import FacebookEvent from './FacebookEvent';
+import InstagramContext from './InstagramContext';
+import InstagramEvent from './InstagramEvent';
 
 type FacebookRequestBody = Record<string, any>;
 
@@ -64,12 +66,14 @@ export default class FacebookConnector
     return 'facebook';
   }
 
-  getUniqueSessionKey(event: FacebookEvent | MessengerEvent): string | null {
+  getUniqueSessionKey(
+    event: FacebookEvent | MessengerEvent | InstagramEvent
+  ): string | null {
     if (event instanceof MessengerEvent) {
       return this._messengerConnector.getUniqueSessionKey(event);
     }
 
-    // TODO: How to determine session key in facebook feed events
+    // TODO: How to determine session key in facebook feed events and instagram
     return null;
   }
 
@@ -108,45 +112,59 @@ export default class FacebookConnector
 
   public mapRequestToEvents(
     body: FacebookRequestBody
-  ): (FacebookEvent | MessengerEvent)[] {
-    // TODO: returns InstagramEvent (object === 'instagram')
-    if (body.object !== 'page') {
-      return [];
+  ): (FacebookEvent | MessengerEvent | InstagramEvent)[] {
+    if (body.object === 'instagram') {
+      return body.entry
+        .map((rawEvent: any) => {
+          const businessAccountId = rawEvent.id;
+          if (rawEvent.changes) {
+            return new InstagramEvent(rawEvent.changes[0], {
+              businessAccountId,
+            });
+          }
+
+          return null;
+        })
+        .filter((event: any) => event !== null);
     }
 
-    return body.entry
-      .map((rawEvent: any) => {
-        const pageId = rawEvent.id;
-        if (rawEvent.messaging) {
-          return new MessengerEvent(rawEvent.messaging[0], {
-            pageId,
-            isStandby: false,
-          });
-        }
+    if (body.object === 'page') {
+      return body.entry
+        .map((rawEvent: any) => {
+          const pageId = rawEvent.id;
+          if (rawEvent.messaging) {
+            return new MessengerEvent(rawEvent.messaging[0], {
+              pageId,
+              isStandby: false,
+            });
+          }
 
-        if (rawEvent.standby) {
-          return new MessengerEvent(rawEvent.standby[0], {
-            pageId,
-            isStandby: true,
-          });
-        }
+          if (rawEvent.standby) {
+            return new MessengerEvent(rawEvent.standby[0], {
+              pageId,
+              isStandby: true,
+            });
+          }
 
-        if (rawEvent.changes) {
-          return new FacebookEvent(rawEvent.changes[0], { pageId });
-        }
+          if (rawEvent.changes) {
+            return new FacebookEvent(rawEvent.changes[0], { pageId });
+          }
 
-        return null;
-      })
-      .filter((event: any) => event !== null);
+          return null;
+        })
+        .filter((event: any) => event !== null);
+    }
+
+    return [];
   }
 
   public async createContext(params: {
-    event: FacebookEvent | MessengerEvent;
+    event: FacebookEvent | MessengerEvent | InstagramEvent;
     session?: Session;
     initialState?: Record<string, any>;
     requestContext?: RequestContext;
     emitter?: EventEmitter;
-  }): Promise<FacebookContext | MessengerContext> {
+  }): Promise<FacebookContext | MessengerContext | InstagramContext> {
     let customAccessToken;
 
     if (this._mapPageToAccessToken) {
@@ -161,6 +179,16 @@ export default class FacebookConnector
 
     if (params.event instanceof FacebookEvent) {
       return new FacebookContext({
+        ...params,
+        event: params.event,
+        client: this._client,
+        customAccessToken,
+        batchQueue: this._batchQueue,
+        appId: this._appId,
+      });
+    }
+    if (params.event instanceof InstagramEvent) {
+      return new InstagramContext({
         ...params,
         event: params.event,
         client: this._client,
