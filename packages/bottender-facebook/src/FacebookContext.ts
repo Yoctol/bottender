@@ -61,7 +61,7 @@ export default class FacebookContext extends Context<
   }
 
   /**
-   * Send a private reply to the post or comment.
+   * Send a text private reply to the post or comment.
    *
    * @see https://developers.facebook.com/docs/messenger-platform/discovery/private-replies/
    *
@@ -99,6 +99,49 @@ export default class FacebookContext extends Context<
       );
     }
     return this._client.sendText(recipient, text);
+  }
+
+  /**
+   * Send a private reply to the post or comment.
+   *
+   * @see https://developers.facebook.com/docs/messenger-platform/discovery/private-replies/
+   *
+   * @param message The Messenger message object to be sent in the reply.
+   */
+  public async sendMessage(
+    message: MessengerTypes.Message
+  ): Promise<MessengerTypes.SendMessageSuccessResponse | undefined> {
+    if (!['comment', 'post'].includes(this._event.rawEvent.value.item)) {
+      warning(
+        false,
+        'sendMessage: can only work with comment and post events.'
+      );
+      return;
+    }
+
+    if (this._event.rawEvent.value.verb === 'remove') {
+      warning(false, "sendMessage: can't  work with remove verb");
+    }
+
+    let recipient;
+    if (this._event.rawEvent.value.item === 'comment') {
+      recipient = {
+        commentId: this._event.rawEvent.value.commentId,
+      };
+    } else {
+      recipient = {
+        postId: this._event.rawEvent.value.postId,
+      };
+    }
+
+    if (this._batchQueue) {
+      return this._batchQueue.push(
+        MessengerBatch.sendMessage(recipient, message, {
+          accessToken: this._customAccessToken,
+        })
+      );
+    }
+    return this._client.sendMessage(recipient, message);
   }
 
   // TODO: implement other send methods
