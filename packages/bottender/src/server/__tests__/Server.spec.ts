@@ -173,7 +173,7 @@ it('support custom connectors', async () => {
   expect(context.sendText).toBeCalledWith('Hello World');
 });
 
-describe('at least one channel should be enabled', ()=>{
+describe('at least one channel should be enabled', () => {
   it('reject when no channel is enabled', async () => {
     mocked(getBottenderConfig).mockReturnValue({
       channels: {
@@ -209,4 +209,4 @@ describe('at least one channel should be enabled', ()=>{
     const server = new Server();
     expect(server.prepare()).resolves.toBe(undefined);
   });
-})
+});
