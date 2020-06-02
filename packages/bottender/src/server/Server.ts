@@ -89,49 +89,60 @@ class Server {
       return;
     }
 
-    const channelBots = (Object.entries(channels) as [string, any][])
-      .filter(([, { enabled }]) => enabled)
-      .map(
-        ([
-          channel,
-          { path: webhookPath, sync, onRequest, connector, ...connectorConfig },
-        ]) => {
-          let channelConnector;
-          if (
-            [
-              'messenger',
-              'line',
-              'telegram',
-              'slack',
-              'viber',
-              'whatsapp',
-            ].includes(channel)
-          ) {
-            // eslint-disable-next-line import/no-dynamic-require
-            const ChannelConnector = require(`../${channel}/${pascalcase(
-              channel
-            )}Connector`).default;
-            channelConnector = new ChannelConnector(connectorConfig);
-          } else {
-            invariant(connector, `The connector of ${channel} is missing.`);
-            channelConnector = connector;
-          }
+    const enabledChannels = (Object.entries(channels) as [
+      string,
+      any
+    ][]).filter(([, { enabled }]) => enabled);
 
-          const channelBot = new Bot({
-            sessionStore,
-            sync,
-            onRequest,
-            connector: channelConnector,
-          }) as Bot<any, any, any, any>;
+    invariant(
+      enabledChannels.length > 0,
+      `Please enable at least one channel.
 
-          initializeBot(channelBot);
+      reference: https://bottender.js.org/docs/en/advanced-guides-multi-channel#enable-each-chat-channel
+`
+    );
 
-          return {
-            webhookPath: webhookPath || `/webhooks/${channel}`,
-            bot: channelBot,
-          };
+    const channelBots = enabledChannels.map(
+      ([
+        channel,
+        { path: webhookPath, sync, onRequest, connector, ...connectorConfig },
+      ]) => {
+        let channelConnector;
+        if (
+          [
+            'messenger',
+            'line',
+            'telegram',
+            'slack',
+            'viber',
+            'whatsapp',
+          ].includes(channel)
+        ) {
+          // eslint-disable-next-line import/no-dynamic-require
+          const ChannelConnector = require(`../${channel}/${pascalcase(
+            channel
+          )}Connector`).default;
+          channelConnector = new ChannelConnector(connectorConfig);
+        } else {
+          invariant(connector, `The connector of ${channel} is missing.`);
+          channelConnector = connector;
         }
-      );
+
+        const channelBot = new Bot({
+          sessionStore,
+          sync,
+          onRequest,
+          connector: channelConnector,
+        }) as Bot<any, any, any, any>;
+
+        initializeBot(channelBot);
+
+        return {
+          webhookPath: webhookPath || `/webhooks/${channel}`,
+          bot: channelBot,
+        };
+      }
+    );
 
     this._channelBots = channelBots;
   }

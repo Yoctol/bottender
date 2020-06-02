@@ -172,3 +172,41 @@ it('support custom connectors', async () => {
 
   expect(context.sendText).toBeCalledWith('Hello World');
 });
+
+describe('at least one channel should be enabled', ()=>{
+  it('reject when no channel is enabled', async () => {
+    mocked(getBottenderConfig).mockReturnValue({
+      channels: {
+        messenger: {
+          enabled: false,
+          path: '/webhooks/messenger',
+          sync: true,
+          accessToken: 'ACCESS_TOKEN',
+          appId: 'APP_ID',
+          appSecret: 'APP_SECRET',
+        },
+      },
+    });
+
+    const server = new Server();
+    expect(server.prepare()).rejects.toThrow();
+  });
+
+  it('resolve when at least one channel is enabled', async () => {
+    mocked(getBottenderConfig).mockReturnValue({
+      channels: {
+        messenger: {
+          enabled: true,
+          path: '/webhooks/messenger',
+          sync: true,
+          accessToken: 'ACCESS_TOKEN',
+          appId: 'APP_ID',
+          appSecret: 'APP_SECRET',
+        },
+      },
+    });
+
+    const server = new Server();
+    expect(server.prepare()).resolves.toBe(undefined);
+  });
+})
