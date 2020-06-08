@@ -48,7 +48,7 @@ type Emoji = {
    */
   productId: string;
   /**
-   * ID for a LINE emoji inside a set. See LINE Available Emoji List: https://d.line-scdn.net/r/devcenter/sendable_line_emoji_list.pdf.
+   * ID for a LINE emoji inside a set. See LINE Available Emoji List: https://d.line-scdn.net/r/devcenter/sendable_line_emoji_list.pdf .
    */
   emojiId: string;
 };
