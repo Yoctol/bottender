@@ -11,7 +11,15 @@ const textMessage = {
   message: {
     id: '325708',
     type: 'text',
-    text: 'Hello, world',
+    text: 'Hello, world! (love)',
+    emojis: [
+      {
+        index: 14,
+        length: 6,
+        productId: '5ac1bfd5040ab15980c9b435',
+        emojiId: '001',
+      },
+    ],
   },
 };
 
@@ -465,7 +473,15 @@ it('#message', () => {
   expect(new LineEvent(textMessage).message).toEqual({
     id: '325708',
     type: 'text',
-    text: 'Hello, world',
+    text: 'Hello, world! (love)',
+    emojis: [
+      {
+        index: 14,
+        length: 6,
+        productId: '5ac1bfd5040ab15980c9b435',
+        emojiId: '001',
+      },
+    ],
   });
   expect(new LineEvent(imageMessage).message).toEqual({
     id: '325708',
@@ -512,7 +528,7 @@ it('#isText', () => {
 });
 
 it('#text', () => {
-  expect(new LineEvent(textMessage).text).toEqual('Hello, world');
+  expect(new LineEvent(textMessage).text).toEqual('Hello, world! (love)');
   expect(new LineEvent(imageMessage).text).toEqual(null);
   expect(new LineEvent(videoMessage).text).toEqual(null);
   expect(new LineEvent(audioMessage).text).toEqual(null);
