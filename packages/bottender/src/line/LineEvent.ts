@@ -25,6 +25,32 @@ type TextMessage = {
   id: string;
   type: 'text';
   text: string;
+  /**
+   * One or more LINE emojis. Unicode-defined emojis and older versions of LINE emojis may not be retrieved correctly.
+   */
+  emojis?: Emoji[];
+};
+
+/**
+ * references: https://developers.line.biz/en/reference/messaging-api/#wh-text
+ */
+type Emoji = {
+  /**
+   * Index position for a character in text, with the first character being at position 0.
+   */
+  index: number;
+  /**
+   * The length of the LINE emoji string. For LINE emoji (hello), 7 is the length.
+   */
+  length: number;
+  /**
+   * Product ID for a set of LINE emoji. See LINE Available Emoji List: https://d.line-scdn.net/r/devcenter/sendable_line_emoji_list.pdf .
+   */
+  productId: string;
+  /**
+   * ID for a LINE emoji inside a set. See LINE Available Emoji List: https://d.line-scdn.net/r/devcenter/sendable_line_emoji_list.pdf .
+   */
+  emojiId: string;
 };
 
 type ContentProviderLine = {
