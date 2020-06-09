@@ -24,8 +24,8 @@
     "publish": "lerna publish",
     "prepublishOnly": "yarn clean && yarn && yarn test",
     "test": "yarn compile && yarn lint && yarn testonly",
-    "testonly": "jest --detectOpenHandles",
-    "testonly:cov": "jest --coverage --runInBand --detectOpenHandles",
+    "testonly": "jest",
+    "testonly:cov": "jest --coverage",
     "testonly:watch": "jest --watch",
     "version": "cp README.md packages/bottender"
   },
