@@ -5,6 +5,8 @@ import { get } from 'lodash';
 import { Entity, Intent, ParsedResult } from './types';
 
 /**
+ * @example
+ * ```
  * const Rasa = rasa({
  *   origin: 'http://localhost:5005',
  *   actions: {
@@ -14,6 +16,7 @@ import { Entity, Intent, ParsedResult } from './types';
  *   },
  *   confidenceThreshold: 0.7
  * });
+ * ```
  */
 module.exports = function rasa({
   origin = 'http://localhost:5005',

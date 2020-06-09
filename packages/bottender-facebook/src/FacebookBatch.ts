@@ -9,9 +9,9 @@ import * as Types from './FacebookTypes';
  *
  * @see https://developers.facebook.com/docs/graph-api/reference/v6.0/object/comments
  *
- * @param objectId ID of the object.
- * @param comment A comment text or a comment object.
- * @param options
+ * @param objectId - ID of the object.
+ * @param comment - A comment text or a comment object.
+ * @param options -
  */
 function sendComment(
   objectId: string,
@@ -37,8 +37,8 @@ function sendComment(
  *
  * @see https://developers.facebook.com/docs/graph-api/reference/v6.0/object/likes
  *
- * @param objectId ID of the object.
- * @param options
+ * @param objectId - ID of the object.
+ * @param options -
  */
 function sendLike(
   objectId: string,
@@ -60,8 +60,8 @@ function sendLike(
  *
  * @see https://developers.facebook.com/docs/graph-api/reference/v6.0/comment
  *
- * @param commentId ID of the comment.
- * @param options
+ * @param commentId - ID of the comment.
+ * @param options -
  */
 function getComment(
   commentId: string,
@@ -97,8 +97,8 @@ function getComment(
  *
  * @see https://developers.facebook.com/docs/graph-api/reference/v6.0/object/likes
  *
- * @param objectId ID of the comment.
- * @param options
+ * @param objectId - ID of the comment.
+ * @param options -
  */
 function getLikes(
   objectId: string,

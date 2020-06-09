@@ -21,6 +21,8 @@ function getFulfillments(fulfillmentMessages: Message[]): string[] {
 }
 
 /**
+ * @example
+ * ```
  * const Dialogflow = dialogflow({
  *   projectId: 'PROJECT_ID',
  *   actions: {
@@ -29,6 +31,7 @@ function getFulfillments(fulfillmentMessages: Message[]): string[] {
  *     },
  *   },
  * });
+ * ```
  */
 module.exports = function dialogflow({
   projectId,

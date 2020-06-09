@@ -5,6 +5,8 @@ import { Action, Context, withProps } from 'bottender';
 import { EntityModel, IntentModel, LuisResult, Sentiment } from './types';
 
 /**
+ * @example
+ * ```
  * const Luis = luis({
  *   appId: 'APP_ID',
  *   appKey: 'APP_KEY',
@@ -16,7 +18,7 @@ import { EntityModel, IntentModel, LuisResult, Sentiment } from './types';
  *     },
  *   },
  * });
- *
+ * ```
  */
 module.exports = function luis({
   appId,

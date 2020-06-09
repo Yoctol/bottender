@@ -12,7 +12,7 @@ module.exports = {
     jest: true,
     jasmine: true,
   },
-  plugins: ['@typescript-eslint'],
+  plugins: ['@typescript-eslint', 'eslint-plugin-tsdoc'],
   rules: {
     'class-methods-use-this': 'off',
     'consistent-return': 'off',
@@ -20,7 +20,9 @@ module.exports = {
     'no-param-reassign': 'off',
     'no-undef': 'off',
     'prefer-destructuring': 'off',
+
     'import/extensions': 'off',
+
     'prettier/prettier': [
       'error',
       {
@@ -28,6 +30,7 @@ module.exports = {
         singleQuote: true,
       },
     ],
+
     '@typescript-eslint/camelcase': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/no-empty-function': 'off',
@@ -41,11 +44,20 @@ module.exports = {
       rules: {
         '@typescript-eslint/no-var-requires': 'off',
       },
+      globals: {
+        MessengerExtensions: true,
+      },
     },
     {
       files: ['packages/**/__tests__/**/*.ts'],
       rules: {
         'import/no-extraneous-dependencies': 'off',
+      },
+    },
+    {
+      files: ['packages/**/*.ts'],
+      rules: {
+        'tsdoc/syntax': 'warn',
       },
     },
   ],
@@ -56,8 +68,5 @@ module.exports = {
       },
       typescript: {},
     },
-  },
-  globals: {
-    MessengerExtensions: true,
   },
 };

@@ -9,12 +9,15 @@ import { MetadataDTO, QnaSearchResultList } from './types';
 const RECOMMENDED_THRESHOLD = 50;
 
 /**
+ * @example
+ * ```
  * const QnaMaker = qnaMaker({
  *   resourceName: 'RESOURCE_NAME',
  *   knowledgeBaseId: 'KNOWLEDGE_BASE_ID',
  *   endpointKey: 'ENDPOINT_KEY',
  *   scoreThreshold: 70,
  * });
+ * ```
  */
 module.exports = function qnaMaker({
   resourceName,

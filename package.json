@@ -49,6 +49,7 @@
     "eslint-plugin-react": "^7.18.3",
     "eslint-plugin-react-hooks": "^2.5.0",
     "eslint-plugin-sort-imports-es6-autofix": "^0.5.0",
+    "eslint-plugin-tsdoc": "^0.2.5",
     "glob": "^7.1.6",
     "husky": "^4.2.3",
     "jest": "^25.1.0",

@@ -23,7 +23,7 @@ export type CommentField =
 export type InputComment =
   | {
       /**
-       * An optional ID of a unpublished photo (see no_story field in /{user-id}/photos) uploaded to Facebook to include as a photo comment.
+       * An optional ID of a unpublished photo (see no_story field in `/{user-id}/photos`) uploaded to Facebook to include as a photo comment.
        */
       attachmentId?: string;
     }
@@ -496,11 +496,11 @@ type PageAdminNote = any;
  */
 type AgeRange = {
   /**
-   * The upper bounds of the range for this person's age. enum{17, 20, or empty}.
+   * The upper bounds of the range for this person's age. `enum{17, 20, or empty}`.
    */
   max: number;
   /**
-   * The lower bounds of the range for this person's age. enum{13, 18, 21}
+   * The lower bounds of the range for this person's age. `enum{13, 18, 21}`
    */
   min: number;
 };
