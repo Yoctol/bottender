@@ -65,7 +65,7 @@ export default class FacebookContext extends Context<
    *
    * @see https://developers.facebook.com/docs/messenger-platform/discovery/private-replies/
    *
-   * @param text The text to be sent in the reply.
+   * @param text - The text to be sent in the reply.
    */
   public async sendText(
     text: string
@@ -106,7 +106,7 @@ export default class FacebookContext extends Context<
    *
    * @see https://developers.facebook.com/docs/messenger-platform/discovery/private-replies/
    *
-   * @param message The Messenger message object to be sent in the reply.
+   * @param message - The Messenger message object to be sent in the reply.
    */
   public async sendMessage(
     message: MessengerTypes.Message
@@ -151,7 +151,7 @@ export default class FacebookContext extends Context<
    *
    * @see https://developers.facebook.com/docs/graph-api/reference/object/comments
    *
-   * @param comment A comment text or a comment object.
+   * @param comment - A comment text or a comment object.
    */
   public async sendComment(
     comment: string | Types.InputComment
@@ -246,7 +246,7 @@ export default class FacebookContext extends Context<
    *
    * @see https://developers.facebook.com/docs/graph-api/reference/object/likes
    *
-   * @param options
+   * @param options -
    */
   public getLikes(options: Types.GetLikesOptions) {
     const objectId = (this._event.rawEvent.value as Comment).commentId; // FIXME: postId

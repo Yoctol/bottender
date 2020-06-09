@@ -26,9 +26,9 @@ export default class FacebookClient extends MessengerClient {
    *
    * @see https://developers.facebook.com/docs/graph-api/reference/object/comments
    *
-   * @param objectId ID of the object.
-   * @param comment A comment text or a comment object.
-   * @param options
+   * @param objectId - ID of the object.
+   * @param comment - A comment text or a comment object.
+   * @param options -
    */
   public sendComment(
     objectId: string,
@@ -50,7 +50,7 @@ export default class FacebookClient extends MessengerClient {
    *
    * @see https://developers.facebook.com/docs/graph-api/reference/object/likes
    *
-   * @param objectId ID of the object.
+   * @param objectId - ID of the object.
    */
   public sendLike(objectId: string): Promise<{ success: true }> {
     return this._axios
@@ -67,8 +67,8 @@ export default class FacebookClient extends MessengerClient {
    *
    * @see https://developers.facebook.com/docs/graph-api/reference/comment
    *
-   * @param commentId ID of the comment.
-   * @param options
+   * @param commentId - ID of the comment.
+   * @param options -
    */
   public getComment(
     commentId: string,
@@ -93,8 +93,8 @@ export default class FacebookClient extends MessengerClient {
    *
    * @see https://developers.facebook.com/docs/graph-api/reference/object/likes
    *
-   * @param objectId ID of the comment.
-   * @param options
+   * @param objectId - ID of the comment.
+   * @param options -
    */
   public getLikes(
     objectId: string,
