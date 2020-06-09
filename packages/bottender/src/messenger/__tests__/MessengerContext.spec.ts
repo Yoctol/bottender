@@ -188,6 +188,130 @@ describe('#getUserProfile', () => {
   });
 });
 
+describe('Persistent Menu', () => {
+  describe('#getPersistentMenu', () => {
+    it('should call client getUserPersistentMenu', async () => {
+      const { context, client, session } = setup();
+
+      const persistentMenu = [{
+        locale: 'default',
+        composer_input_disabled: false,
+        call_to_actions: [
+          {
+            type: 'postback',
+            title: 'Restart Conversation',
+            payload: 'RESTART',
+          },
+          {
+            type: 'web_url',
+            title: 'Powered by ALOHA.AI, Yoctol',
+            url: 'https://www.yoctol.com/',
+          },
+        ],
+      }];
+
+      client.getUserPersistentMenu.mockResolvedValue(persistentMenu);
+
+      const result = await context.getPersistentMenu();
+
+      expect(client.getUserPersistentMenu).toBeCalledWith(session.user.id, {
+        accessToken: undefined,
+      });
+      expect(result).toEqual(persistentMenu);
+    });
+
+    it('should call warning and not to send if dont have session', async () => {
+      const { context, client } = setup({ session: false });
+
+      await context.getPersistentMenu();
+
+      expect(warning).toBeCalledWith(
+        false,
+        'getPersistentMenu: should not be called in context without session'
+      );
+      expect(client.getPersistentMenu).not.toBeCalled();
+    });
+  })
+
+  describe('#setPersistentMenu', () => {
+    it('should call client setPersistentMenu', async () => {
+      const { context, client, session } = setup();
+
+      const reply = {
+        result: 'success',
+      };
+
+      const persistentMenu = [{
+        locale: 'default',
+        composer_input_disabled: false,
+        call_to_actions: [
+          {
+            type: 'postback',
+            title: 'Restart Conversation',
+            payload: 'RESTART',
+          },
+          {
+            type: 'web_url',
+            title: 'Powered by ALOHA.AI, Yoctol',
+            url: 'https://www.yoctol.com/',
+          },
+        ],
+      }];
+
+      const result = await context.setPersistentMenu(persistentMenu);
+
+      expect(client.setUserPersistentMenu).toBeCalledWith(session.user.id,
+        persistentMenu, {
+        accessToken: undefined,
+      });
+
+      expect(result).toEqual(reply);
+    });
+
+    it('should call warning and not to send if dont have session', async () => {
+      const { context, client } = setup({ session: false });
+
+      await context.setPersistentMenu();
+
+      expect(warning).toBeCalledWith(
+        false,
+        'setPersistentMenu: should not be called in context without session'
+      );
+      expect(client.setPersistentMenu).not.toBeCalled();
+    });
+  })
+ 
+  describe('#deletePersistentMenu', () => {
+    it('should call client deletePersistentMenu', async () => {
+      const { context, client, session } = setup();
+
+      const reply = {
+        result: 'success',
+      };
+
+      const result = await context.deletePersistentMenu();
+
+      expect(client.deleteUserPersistentMenu).toBeCalledWith(session.user.id, {
+        accessToken: undefined,
+      });
+
+      expect(result).toEqual(reply);
+    });
+
+    it('should call warning and not to send if dont have session', async () => {
+      const { context, client } = setup({ session: false });
+
+      await context.deletePersistentMenu();
+
+      expect(warning).toBeCalledWith(
+        false,
+        'deletePersistentMenu: should not be called in context without session'
+      );
+      expect(client.deletePersistentMenu).not.toBeCalled();
+    });
+  })
+})
+
 describe('#passThreadControl', () => {
   it('should call to pass user thread control to other app', async () => {
     const { context, client, session } = setup();
