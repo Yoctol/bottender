@@ -2,7 +2,6 @@ import { EventEmitter } from 'events';
 
 import chunk from 'lodash/chunk';
 import invariant from 'invariant';
-import sleep from 'delay';
 import warning from 'warning';
 import { JsonObject } from 'type-fest';
 import { Line, LineClient, LineTypes } from 'messaging-api-line';
@@ -128,16 +127,6 @@ class LineContext extends Context<LineClient, LineEvent> {
           );
         }
       }
-    }
-  }
-
-  /**
-   * Delay and show indicators for milliseconds.
-   *
-   */
-  async typing(milliseconds: number): Promise<void> {
-    if (milliseconds > 0) {
-      await sleep(milliseconds);
     }
   }
 

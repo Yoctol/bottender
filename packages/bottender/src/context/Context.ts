@@ -2,6 +2,7 @@ import { EventEmitter } from 'events';
 
 import cloneDeep from 'lodash/cloneDeep';
 import debug from 'debug';
+import delay from 'delay';
 import warning from 'warning';
 import { JsonObject } from 'type-fest';
 
@@ -190,6 +191,16 @@ export default abstract class Context<
         false,
         'resetState: should not be called in context without session'
       );
+    }
+  }
+
+  /**
+   * Delay and show indicators for milliseconds.
+   *
+   */
+  async typing(milliseconds: number): Promise<void> {
+    if (milliseconds > 0) {
+      await delay(milliseconds);
     }
   }
 

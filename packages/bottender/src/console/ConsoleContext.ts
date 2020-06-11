@@ -1,6 +1,5 @@
 import { EventEmitter } from 'events';
 
-import sleep from 'delay';
 import { JsonObject } from 'type-fest';
 
 import Context from '../context/Context';
@@ -75,16 +74,6 @@ export default class ConsoleContext extends Context<
    */
   get platform(): string {
     return this._mockPlatform || 'console';
-  }
-
-  /**
-   * Delay and show indicators for milliseconds.
-   *
-   */
-  async typing(milliseconds: number): Promise<void> {
-    if (milliseconds > 0) {
-      await sleep(milliseconds);
-    }
   }
 
   /**

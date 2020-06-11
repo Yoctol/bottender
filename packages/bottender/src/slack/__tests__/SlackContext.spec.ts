@@ -1,11 +1,9 @@
-jest.mock('delay');
 // jest.mock('messaging-api-slack');
 jest.mock('warning');
 
 let SlackClient;
 let SlackContext;
 let SlackEvent;
-let sleep;
 let warning;
 
 const VIEW_PAYLOAD = {
@@ -52,7 +50,6 @@ beforeEach(() => {
   SlackClient = require('messaging-api-slack').SlackOAuthClient;
   SlackContext = require('../SlackContext').default;
   SlackEvent = require('../SlackEvent').default;
-  sleep = require('delay');
   warning = require('warning');
   /* eslint-enable global-require */
 });
@@ -520,23 +517,5 @@ describe('#views.update', () => {
       externalId: 'bmarley_view2',
       view: VIEW_PAYLOAD,
     });
-  });
-});
-
-describe('#typing', () => {
-  it('avoid delay 0', async () => {
-    const { context } = setup();
-
-    await context.typing(0);
-
-    expect(sleep).not.toBeCalled();
-  });
-
-  it('should call sleep', async () => {
-    const { context } = setup();
-
-    await context.typing(10);
-
-    expect(sleep).toBeCalled();
   });
 });

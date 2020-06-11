@@ -1,11 +1,9 @@
-jest.mock('delay');
 jest.mock('messaging-api-telegram');
 jest.mock('warning');
 
 let TelegramClient;
 let TelegramContext;
 let TelegramEvent;
-let sleep;
 let warning;
 
 beforeEach(() => {
@@ -13,7 +11,6 @@ beforeEach(() => {
   TelegramClient = require('messaging-api-telegram').TelegramClient;
   TelegramContext = require('../TelegramContext').default;
   TelegramEvent = require('../TelegramEvent').default;
-  sleep = require('delay');
   warning = require('warning');
   /* eslint-enable global-require */
 });
@@ -1082,24 +1079,6 @@ describe('#getChatMember', () => {
 
     expect(client.getChatMember).toBeCalledWith(427770117, 313534466);
     expect(result).toEqual(member);
-  });
-});
-
-describe('#typing', () => {
-  it('avoid delay 0', async () => {
-    const { context } = setup();
-
-    await context.typing(0);
-
-    expect(sleep).not.toBeCalled();
-  });
-
-  it('should call sleep', async () => {
-    const { context } = setup();
-
-    await context.typing(10);
-
-    expect(sleep).toBeCalled();
   });
 });
 
