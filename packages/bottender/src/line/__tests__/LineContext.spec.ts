@@ -1,4 +1,3 @@
-jest.mock('delay');
 jest.mock('messaging-api-line');
 jest.mock('warning');
 
@@ -6,7 +5,6 @@ let Line;
 let LineClient;
 let LineContext;
 let LineEvent;
-let sleep;
 let warning;
 
 beforeEach(() => {
@@ -15,7 +13,6 @@ beforeEach(() => {
   LineClient = require('messaging-api-line').LineClient;
   LineContext = require('../LineContext').default;
   LineEvent = require('../LineEvent').default;
-  sleep = require('delay');
   warning = require('warning');
   /* eslint-enable global-require */
 });
@@ -1375,24 +1372,6 @@ describe('account link APIs', () => {
 
       expect(warning).toBeCalled();
     });
-  });
-});
-
-describe('#typing', () => {
-  it('avoid delay 0', async () => {
-    const { context } = setup();
-
-    await context.typing(0);
-
-    expect(sleep).not.toBeCalled();
-  });
-
-  it('should call sleep', async () => {
-    const { context } = setup();
-
-    await context.typing(10);
-
-    expect(sleep).toBeCalled();
   });
 });
 

@@ -1,11 +1,9 @@
-jest.mock('delay');
 jest.mock('messaging-api-viber');
 jest.mock('warning');
 
 let ViberClient;
 let ViberContext;
 let ViberEvent;
-let sleep;
 let warning;
 
 beforeEach(() => {
@@ -13,7 +11,6 @@ beforeEach(() => {
   ViberClient = require('messaging-api-viber').ViberClient;
   ViberContext = require('../ViberContext').default;
   ViberEvent = require('../ViberEvent').default;
-  sleep = require('delay');
   warning = require('warning');
   /* eslint-enable global-require */
 });
@@ -475,23 +472,5 @@ describe('#getOnlineStatus', () => {
     await context.getOnlineStatus();
 
     expect(client.getOnlineStatus).not.toBeCalled();
-  });
-});
-
-describe('#typing', () => {
-  it('avoid delay 0', async () => {
-    const { context } = setup();
-
-    await context.typing(0);
-
-    expect(sleep).not.toBeCalled();
-  });
-
-  it('should call sleep', async () => {
-    const { context } = setup();
-
-    await context.typing(10);
-
-    expect(sleep).toBeCalled();
   });
 });

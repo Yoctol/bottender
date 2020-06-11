@@ -1,4 +1,8 @@
+import delay from 'delay';
+
 import Context from '../Context';
+
+jest.mock('delay');
 
 class TestContext extends Context {
   get platform() {
@@ -62,5 +66,23 @@ describe('handled', () => {
     context.setAsNotHandled();
 
     expect(context.isHandled).toEqual(false);
+  });
+});
+
+describe('typing', () => {
+  it('should avoid calling delay with 0 ms', async () => {
+    const context = new TestContext({ client: {}, event: {} });
+
+    await context.typing(0);
+
+    expect(delay).not.toBeCalled();
+  });
+
+  it('should call delay if ms > 0', async () => {
+    const context = new TestContext({ client: {}, event: {} });
+
+    await context.typing(10);
+
+    expect(delay).toBeCalledWith(10);
   });
 });

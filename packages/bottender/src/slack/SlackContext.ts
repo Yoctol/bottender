@@ -1,6 +1,5 @@
 import { EventEmitter } from 'events';
 
-import sleep from 'delay';
 import warning from 'warning';
 import { JsonObject } from 'type-fest';
 import { SlackOAuthClient, SlackTypes } from 'messaging-api-slack';
@@ -97,16 +96,6 @@ export default class SlackContext extends Context<
    */
   get platform(): 'slack' {
     return 'slack';
-  }
-
-  /**
-   * Delay and show indicators for milliseconds.
-   *
-   */
-  async typing(milliseconds: number): Promise<void> {
-    if (milliseconds > 0) {
-      await sleep(milliseconds);
-    }
   }
 
   // FIXME: this is to fix type checking
