@@ -3,7 +3,7 @@ import TelegramConnector from '../TelegramConnector';
 
 jest.mock('messaging-api-telegram', () => {
   const createMockInstance = require('jest-create-mock-instance').default;
-  const { TelegramClient } = require.requireActual('messaging-api-telegram');
+  const { TelegramClient } = jest.requireActual('messaging-api-telegram');
   return {
     TelegramClient: {
       connect: () => createMockInstance(TelegramClient),

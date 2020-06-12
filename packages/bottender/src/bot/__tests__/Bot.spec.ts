@@ -122,8 +122,7 @@ describe('#createRequestHandler', () => {
     let error;
 
     try {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-      // @ts-ignore
+      // @ts-expect-error
       await requestHandler();
     } catch (err) {
       error = err;
