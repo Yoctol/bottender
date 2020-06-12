@@ -1,5 +1,3 @@
-import { run } from '../../bot/Bot';
-
 import router, {
   line,
   messenger,
@@ -11,6 +9,7 @@ import router, {
   viber,
   whatsapp,
 } from '..';
+import { run } from '../../bot/Bot';
 
 function textContext(message = '') {
   return {

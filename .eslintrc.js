@@ -21,6 +21,8 @@ module.exports = {
     'no-undef': 'off',
     'prefer-destructuring': 'off',
 
+    camelcase: 'warn',
+
     'import/extensions': 'off',
 
     'prettier/prettier': [
@@ -34,6 +36,9 @@ module.exports = {
     '@typescript-eslint/camelcase': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/no-empty-function': 'off',
+    '@typescript-eslint/ban-ts-comment': 'off',
+    '@typescript-eslint/no-var-requires': 'warn',
+    '@typescript-eslint/ban-types': 'warn',
   },
   overrides: [
     {

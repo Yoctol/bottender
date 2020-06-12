@@ -1,6 +1,6 @@
-import { Event } from '../context/Event';
+import warning from 'warning';
 
-import warning = require('warning');
+import { Event } from '../context/Event';
 
 type UserSource = {
   type: 'user';
