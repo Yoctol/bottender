@@ -3,7 +3,7 @@ import { Context, chain } from 'bottender';
 // FIXME: export public API for testing
 import { run } from 'bottender/dist/bot/Bot';
 
-const qnaMaker = require('..'); // eslint-disable-line @typescript-eslint/no-var-requires
+import qnaMaker from '..';
 
 // FIXME: export public test-utils for testing
 class TestContext extends Context {

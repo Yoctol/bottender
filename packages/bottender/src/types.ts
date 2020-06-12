@@ -15,8 +15,8 @@ import { WhatsappConnectorOptions } from './whatsapp/WhatsappConnector';
 
 export type Action<
   C extends Context,
-  P extends JsonObject = {},
-  RAP extends JsonObject = {}
+  P extends Record<string, any> = {},
+  RAP extends Record<string, any> = {}
 > = (
   context: C,
   props: Props<C> & P
