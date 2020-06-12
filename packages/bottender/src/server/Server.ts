@@ -2,7 +2,7 @@ import path from 'path';
 import url from 'url';
 import { IncomingMessage, ServerResponse } from 'http';
 
-import fromEntries from 'fromentries';
+import fromEntries from 'object.fromentries';
 import invariant from 'invariant';
 import merge from 'lodash/merge';
 import { match } from 'path-to-regexp';
