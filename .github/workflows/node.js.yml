@@ -45,6 +45,7 @@ jobs:
         run: npm run compile
 
       - name: Run lint rules
+        if: ${{ matrix.os == 'ubuntu-latest' && matrix.node-version == 12 }}
         run: npm run lint
 
       - name: Run tests
