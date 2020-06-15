@@ -18,7 +18,7 @@ import { Entity, Intent, ParsedResult } from './types';
  * });
  * ```
  */
-module.exports = function rasa({
+export = function rasa({
   origin = 'http://localhost:5005',
   actions,
   confidenceThreshold,

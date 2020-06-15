@@ -1,10 +1,9 @@
 import partial from 'lodash/partial';
-import { JsonObject } from 'type-fest';
 
 import Context from './context/Context';
 import { Action } from './types';
 
-function withProps<C extends Context, P extends JsonObject>(
+function withProps<C extends Context, P extends Record<string, any>>(
   action: Action<C, P>,
   props: P
 ): Action<C, any> {

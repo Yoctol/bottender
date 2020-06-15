@@ -20,7 +20,7 @@ import { EntityModel, IntentModel, LuisResult, Sentiment } from './types';
  * });
  * ```
  */
-module.exports = function luis({
+export = function luis({
   appId,
   appKey,
   endpoint,

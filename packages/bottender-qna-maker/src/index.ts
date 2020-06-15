@@ -19,7 +19,7 @@ const RECOMMENDED_THRESHOLD = 50;
  * });
  * ```
  */
-module.exports = function qnaMaker({
+export = function qnaMaker({
   resourceName,
   knowledgeBaseId,
   endpointKey,
