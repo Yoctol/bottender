@@ -138,6 +138,127 @@ const viewSubmissionRequest = {
   },
 };
 
+const appHomeOpenedOnMessagesTabRequest = {
+  type: 'app_home_opened',
+  user: 'U0HD00000',
+  channel: 'DQMT00000',
+  tab: 'messages',
+  eventTs: '1592278860.498134',
+};
+
+const appHomeOpenedOnHomeTabRequest = {
+  type: 'app_home_opened',
+  user: 'U0HD00000',
+  channel: 'DQMT00000',
+  tab: 'home',
+  view: {
+    id: 'V0151K00000',
+    teamId: 'T0HD00000',
+    type: 'home',
+    blocks: [
+      {
+        type: 'actions',
+        blockId: 'Rm7lr',
+        elements: [
+          {
+            type: 'button',
+            actionId: 'zrZ',
+            text: {
+              type: 'plain_text',
+              text: 'value',
+              emoji: true,
+            },
+            value: 'value',
+          },
+        ],
+      },
+    ],
+    privateMetadata: '',
+    callbackId: '',
+    state: { values: {} },
+    hash: '1592278862.48a704aa',
+    title: { type: 'plain_text', text: 'View Title', emoji: true },
+    clearOnClose: false,
+    notifyOnClose: false,
+    close: null,
+    submit: null,
+    previousViewId: null,
+    rootViewId: 'V0151K00000',
+    appId: 'AQ8600000',
+    externalId: '',
+    appInstalledTeamId: 'T0HD00000',
+    botId: 'BQMT00000',
+  },
+  eventTs: '1592278910.074390',
+};
+
+const blockActionsOnHomeTabRequest = {
+  type: 'block_actions',
+  user: {
+    id: 'U0HD00000',
+    username: 'username',
+    name: 'name',
+    teamId: 'T0HD00000',
+  },
+  apiAppId: 'AQ8600000',
+  token: 'xxxxxxxxxxxxxxxxxxxxxxxx',
+  container: { type: 'view', viewId: 'V0151K00000' },
+  triggerId: '1192207164308.17443231012.b30e1f98a3ac48b9171d3b859a0124a5',
+  team: { id: 'T0HD00000', domain: 'domain' },
+  view: {
+    id: 'V0151K00000',
+    teamId: 'T0HD00000',
+    type: 'home',
+    blocks: [
+      {
+        type: 'actions',
+        blockId: 'Rm7lr',
+        elements: [
+          {
+            type: 'button',
+            actionId: 'zrZ',
+            text: {
+              type: 'plain_text',
+              text: 'value',
+              emoji: true,
+            },
+            value: 'value',
+          },
+        ],
+      },
+    ],
+    privateMetadata: '',
+    callbackId: '',
+    state: { values: {} },
+    hash: '1592278912.3f2f9db2',
+    title: { type: 'plain_text', text: 'View Title', emoji: true },
+    clearOnClose: false,
+    notifyOnClose: false,
+    close: null,
+    submit: null,
+    previousViewId: null,
+    rootViewId: 'V0151K00000',
+    appId: 'AQ8600000',
+    externalId: '',
+    appInstalledTeamId: 'T0HD00000',
+    botId: 'BQMT00000',
+  },
+  actions: [
+    {
+      actionId: 'zrZ',
+      blockId: 'Rm7lr',
+      text: {
+        type: 'plain_text',
+        text: 'value',
+        emoji: true,
+      },
+      value: 'value',
+      type: 'button',
+      actionTs: '1592279552.931549',
+    },
+  ],
+};
+
 const RtmMessage = {
   type: 'message',
   channel: 'G7W5WAAAA',
@@ -210,54 +331,75 @@ describe('#client', () => {
 });
 
 describe('#getUniqueSessionKey', () => {
-  it('extract correct channel id', () => {
+  it('extract correct session key', () => {
     const { connector } = setup();
-    const channelId = connector.getUniqueSessionKey(request.body);
-    expect(channelId).toBe('C6A900000');
+    const sessionKey = connector.getUniqueSessionKey(request.body);
+    expect(sessionKey).toBe('C6A900000');
   });
 
-  it('extract correct channel id from interactive message request', () => {
+  it('extract correct session key from interactive message request', () => {
     const { connector } = setup();
-    const channelId = connector.getUniqueSessionKey(
+    const sessionKey = connector.getUniqueSessionKey(
       interactiveMessageRequest.body
     );
-    expect(channelId).toBe('D7WTL9ECE');
+    expect(sessionKey).toBe('D7WTL9ECE');
   });
 
-  it('extract correct channel id from RTM WebSocket message', () => {
+  it('extract correct session key from RTM WebSocket message', () => {
     const { connector } = setup();
-    const channelId = connector.getUniqueSessionKey(RtmMessage);
-    expect(channelId).toBe('G7W5WAAAA');
+    const sessionKey = connector.getUniqueSessionKey(RtmMessage);
+    expect(sessionKey).toBe('G7W5WAAAA');
   });
 
-  it('extract correct channel id from reaction_added event', () => {
+  it('extract correct session key from reaction_added event', () => {
     const { connector } = setup();
-    const channelId = connector.getUniqueSessionKey(ReactionAddedRequest.body);
-    expect(channelId).toBe('C0G9QF9GZ');
+    const sessionKey = connector.getUniqueSessionKey(ReactionAddedRequest.body);
+    expect(sessionKey).toBe('C0G9QF9GZ');
   });
 
-  it('extract correct channel id from pin_added event', () => {
+  it('extract correct session key from pin_added event', () => {
     const { connector } = setup();
-    const channelId = connector.getUniqueSessionKey(PinAddedRequest.body);
-    expect(channelId).toBe('C02ELGNBH');
+    const sessionKey = connector.getUniqueSessionKey(PinAddedRequest.body);
+    expect(sessionKey).toBe('C02ELGNBH');
   });
 
-  it('extract correct channel id from slash command', () => {
+  it('extract correct session key from slash command', () => {
     const { connector } = setup();
-    const channelId = connector.getUniqueSessionKey(slashCommandMessage);
-    expect(channelId).toBe('G7W5W0000');
+    const sessionKey = connector.getUniqueSessionKey(slashCommandMessage);
+    expect(sessionKey).toBe('G7W5W0000');
   });
 
-  it('extract correct channel id from slash command', () => {
+  it("extract correct session key from view event's private_metadata", () => {
     const { connector } = setup();
-    const channelId = connector.getUniqueSessionKey(slashCommandMessage);
-    expect(channelId).toBe('G7W5W0000');
+    const sessionKey = connector.getUniqueSessionKey(
+      viewSubmissionRequest.body
+    );
+    expect(sessionKey).toBe('C02ELGNBH');
   });
 
-  it("extract correct channel id from view event's private_metadata", () => {
+  // home tab
+  it('extract correct session key from appHomeOpenedOnMessagesTabRequest', () => {
     const { connector } = setup();
-    const channelId = connector.getUniqueSessionKey(viewSubmissionRequest.body);
-    expect(channelId).toBe('C02ELGNBH');
+    const sessionKey = connector.getUniqueSessionKey(
+      appHomeOpenedOnMessagesTabRequest
+    );
+    expect(sessionKey).toBe('DQMT00000');
+  });
+
+  it('extract correct session key from appHomeOpenedOnHomeTabRequest', () => {
+    const { connector } = setup();
+    const sessionKey = connector.getUniqueSessionKey(
+      appHomeOpenedOnHomeTabRequest
+    );
+    expect(sessionKey).toBe('DQMT00000');
+  });
+
+  it('extract correct session key from blockActionsOnHomeTabRequest', () => {
+    const { connector } = setup();
+    const sessionKey = connector.getUniqueSessionKey(
+      blockActionsOnHomeTabRequest
+    );
+    expect(sessionKey).toBe('U0HD00000');
   });
 });
 

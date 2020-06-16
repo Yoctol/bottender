@@ -151,10 +151,8 @@ export default class SlackConnector
     return this._client;
   }
 
-  getUniqueSessionKey(body: SlackRequestBody): string {
-    // FIXME: define types for every slack events
-    const rawEvent = this._getRawEventFromRequest(body) as any;
-
+  // FIXME: define types for every slack events
+  _getChannelId(rawEvent: any): string | null {
     // For interactive_message format
     if (
       rawEvent.channel &&
@@ -188,43 +186,52 @@ export default class SlackConnector
     );
   }
 
-  async updateSession(session: Session, body: SlackRequestBody): Promise<void> {
-    if (this._isBotEventRequest(body)) {
-      return;
-    }
-
-    const rawEvent = this._getRawEventFromRequest(body);
-    let userFromBody;
+  _getUserId(rawEvent: SlackRawEvent): string | null {
     if (
       rawEvent.type === 'interactive_message' ||
       rawEvent.type === 'block_actions' ||
       rawEvent.type === 'view_submission' ||
       rawEvent.type === 'view_closed'
     ) {
-      userFromBody = (rawEvent as UIEvent).user.id;
-    } else {
-      userFromBody =
-        (rawEvent as Message).user || (rawEvent as CommandEvent).userId;
+      return (rawEvent as UIEvent).user.id;
     }
+    return (
+      (rawEvent as Message).user ||
+      (rawEvent as CommandEvent).userId ||
+      (rawEvent as UIEvent).user?.id
+    );
+  }
+
+  getUniqueSessionKey(body: SlackRequestBody): string | null {
+    const rawEvent = this._getRawEventFromRequest(body);
+    return this._getChannelId(rawEvent) || this._getUserId(rawEvent);
+  }
+
+  async updateSession(session: Session, body: SlackRequestBody): Promise<void> {
+    if (this._isBotEventRequest(body)) {
+      return;
+    }
+
+    const rawEvent = this._getRawEventFromRequest(body);
+    const userId = this._getUserId(rawEvent);
+    const channelId = this._getChannelId(rawEvent);
 
     if (
       typeof session.user === 'object' &&
       session.user &&
       session.user.id &&
-      session.user.id === userFromBody
+      session.user.id === userId
     ) {
       return;
     }
-    const channelId = this.getUniqueSessionKey(body);
-    const senderId = userFromBody;
 
-    if (!senderId) {
+    if (!userId) {
       return;
     }
 
     if (this._skipLegacyProfile) {
       session.user = {
-        id: senderId,
+        id: userId,
         _updatedAt: new Date().toISOString(),
       };
 
@@ -253,7 +260,7 @@ export default class SlackConnector
     }
 
     const promises: Record<string, any> = {
-      sender: this._client.getUserInfo(senderId),
+      sender: this._client.getUserInfo(userId),
     };
 
     // TODO: check join or leave events?
@@ -261,12 +268,14 @@ export default class SlackConnector
       !session.channel ||
       (session.channel.members &&
         Array.isArray(session.channel.members) &&
-        session.channel.members.indexOf(senderId) < 0)
+        session.channel.members.indexOf(userId) < 0)
     ) {
-      promises.channel = this._client.getConversationInfo(channelId);
-      promises.channelMembers = this._client.getAllConversationMembers(
-        channelId
-      );
+      if (channelId) {
+        promises.channel = this._client.getConversationInfo(channelId);
+        promises.channelMembers = this._client.getAllConversationMembers(
+          channelId
+        );
+      }
     }
 
     // TODO: how to know if user leave team?
@@ -275,7 +284,7 @@ export default class SlackConnector
       !session.team ||
       (session.team.members &&
         Array.isArray(session.team.members) &&
-        session.team.members.indexOf(senderId) < 0)
+        session.team.members.indexOf(userId) < 0)
     ) {
       promises.allUsers = this._client.getAllUserList();
     }
@@ -284,7 +293,7 @@ export default class SlackConnector
 
     // FIXME: refine user
     session.user = {
-      id: senderId,
+      id: userId,
       _updatedAt: new Date().toISOString(),
       ...results.sender,
     };
