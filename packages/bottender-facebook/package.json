@@ -6,7 +6,7 @@
     "type": "git",
     "url": "https://github.com/Yoctol/bottender.git"
   },
-  "version": "1.5.0-alpha.12",
+  "version": "1.5.0-alpha.13",
   "main": "dist/index.js",
   "files": [
     "dist"
@@ -23,7 +23,7 @@
     "messaging-api-messenger": ">= 1.0.0-beta.18"
   },
   "devDependencies": {
-    "bottender": "^1.5.0-alpha.11",
+    "bottender": "^1.5.0-alpha.13",
     "messaging-api-messenger": "^1.0.0-beta.18"
   }
 }
