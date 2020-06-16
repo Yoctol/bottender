@@ -270,7 +270,7 @@ export default class SlackConnector
         Array.isArray(session.channel.members) &&
         session.channel.members.indexOf(userId) < 0)
     ) {
-      if (channelId != null) {
+      if (channelId) {
         promises.channel = this._client.getConversationInfo(channelId);
         promises.channelMembers = this._client.getAllConversationMembers(
           channelId
