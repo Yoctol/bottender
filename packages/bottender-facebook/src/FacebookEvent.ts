@@ -1,79 +1,10 @@
-type Status = {
-  from: {
-    id: string;
-    name: string;
-  };
-  item: 'status';
-  postId: string;
-  verb: 'add' | 'edited';
-  published: number;
-  createdTime: number;
-  message: string;
-};
-
-type Post = {
-  recipientId: string;
-  from: {
-    id: string;
-  };
-  item: 'post';
-  postId: string;
-  verb: 'remove';
-  createdTime: number;
-};
-
-export type Comment = {
-  from: {
-    id: string;
-    name?: string;
-  };
-  item: 'comment';
-  commentId: string;
-  postId: string;
-  verb: 'add' | 'edited' | 'remove';
-  parentId: string;
-  createdTime: number;
-  message: string;
-  canReplyPrivately?: boolean;
-};
-
-type Reaction = {
-  reactionType: 'like' | 'love' | 'haha' | 'wow' | 'sad' | 'angry' | 'care';
-  from: {
-    id: string;
-  };
-  parentId: string;
-  commentId: string;
-  postId: string;
-  verb: 'add' | 'edit' | 'remove';
-  item: 'reaction';
-  createdTime: number;
-};
-
-type Event = {
-  item: 'event';
-  [key: string]: any; // FIXME
-};
-
-type Photo = {
-  item: 'photo';
-  [key: string]: any; // FIXME
-};
-
-type Video = {
-  item: 'video';
-  [key: string]: any; // FIXME
-};
-
-type Share = {
-  item: 'share';
-  [key: string]: any; // FIXME
-};
-
-export type FacebookRawEvent = {
-  field: 'feed';
-  value: Status | Post | Comment | Reaction | Event | Photo | Video | Share;
-};
+import {
+  FacebookRawEvent,
+  FeedComment,
+  FeedPost,
+  FeedReaction,
+  FeedStatus,
+} from './FacebookTypes';
 
 export default class FacebookEvent {
   _rawEvent: FacebookRawEvent;
@@ -122,55 +53,67 @@ export default class FacebookEvent {
   }
 
   get isFeed(): boolean {
-    return this.rawEvent.field === 'feed';
+    return 'field' in this.rawEvent && this.rawEvent.field === 'feed';
   }
 
   get isStatus(): boolean {
     return Boolean(
       this.isFeed &&
-        this.rawEvent.value &&
+        'value' in this.rawEvent &&
         this.rawEvent.value.item === 'status'
     );
   }
 
   get isStatusAdd(): boolean {
     return Boolean(
-      this.isStatus && this.rawEvent.value && this.rawEvent.value.verb === 'add'
+      this.isStatus &&
+        'value' in this.rawEvent &&
+        this.rawEvent.value.verb === 'add'
     );
   }
 
   get isStatusEdited(): boolean {
     return Boolean(
       this.isStatus &&
-        this.rawEvent.value &&
+        'value' in this.rawEvent &&
         this.rawEvent.value.verb === 'edited'
     );
   }
 
-  get status(): Status | null {
-    if (this.isStatus) {
-      return this.rawEvent.value as any;
+  get status(): FeedStatus | null {
+    if (
+      this.isFeed &&
+      'value' in this.rawEvent &&
+      this.rawEvent.value.item === 'status'
+    ) {
+      return this.rawEvent.value;
     }
     return null;
   }
 
   get isPost(): boolean {
     return Boolean(
-      this.isFeed && this.rawEvent.value && this.rawEvent.value.item === 'post'
+      this.isFeed &&
+        'value' in this.rawEvent &&
+        this.rawEvent.value.item === 'post'
     );
   }
 
   get isPostRemove(): boolean {
     return Boolean(
       this.isPost &&
-        this.rawEvent.value &&
+        'value' in this.rawEvent &&
         this.rawEvent.value.verb === 'remove'
     );
   }
 
-  get post(): Post | null {
-    if (this.isPost) {
-      return this.rawEvent.value as any;
+  get post(): FeedPost | null {
+    if (
+      this.isFeed &&
+      'value' in this.rawEvent &&
+      this.rawEvent.value.item === 'post'
+    ) {
+      return this.rawEvent.value;
     }
     return null;
   }
@@ -178,7 +121,7 @@ export default class FacebookEvent {
   get isComment(): boolean {
     return Boolean(
       this.isFeed &&
-        this.rawEvent.value &&
+        'value' in this.rawEvent &&
         this.rawEvent.value.item === 'comment'
     );
   }
@@ -186,7 +129,7 @@ export default class FacebookEvent {
   get isCommentAdd(): boolean {
     return Boolean(
       this.isComment &&
-        this.rawEvent.value &&
+        'value' in this.rawEvent &&
         this.rawEvent.value.verb === 'add'
     );
   }
@@ -194,7 +137,7 @@ export default class FacebookEvent {
   get isCommentEdited(): boolean {
     return Boolean(
       this.isComment &&
-        this.rawEvent.value &&
+        'value' in this.rawEvent &&
         this.rawEvent.value.verb === 'edited'
     );
   }
@@ -202,7 +145,7 @@ export default class FacebookEvent {
   get isCommentRemove(): boolean {
     return Boolean(
       this.isComment &&
-        this.rawEvent.value &&
+        'value' in this.rawEvent &&
         this.rawEvent.value.verb === 'remove'
     );
   }
@@ -210,14 +153,18 @@ export default class FacebookEvent {
   get isFirstLayerComment(): boolean {
     if (!this.isComment) return false;
 
-    const comment = this.comment as Comment;
+    const comment = this.comment as FeedComment;
 
     return comment.parentId === comment.postId;
   }
 
-  get comment(): Comment | null {
-    if (this.isComment) {
-      return this.rawEvent.value as any;
+  get comment(): FeedComment | null {
+    if (
+      this.isFeed &&
+      'value' in this.rawEvent &&
+      this.rawEvent.value.item === 'comment'
+    ) {
+      return this.rawEvent.value;
     }
     return null;
   }
@@ -225,7 +172,7 @@ export default class FacebookEvent {
   get isReaction(): boolean {
     return Boolean(
       this.isFeed &&
-        this.rawEvent.value &&
+        'value' in this.rawEvent &&
         this.rawEvent.value.item === 'reaction'
     );
   }
@@ -233,7 +180,7 @@ export default class FacebookEvent {
   get isReactionAdd(): boolean {
     return Boolean(
       this.isReaction &&
-        this.rawEvent.value &&
+        'value' in this.rawEvent &&
         this.rawEvent.value.verb === 'add'
     );
   }
@@ -241,7 +188,7 @@ export default class FacebookEvent {
   get isReactionEdit(): boolean {
     return Boolean(
       this.isReaction &&
-        this.rawEvent.value &&
+        'value' in this.rawEvent &&
         this.rawEvent.value.verb === 'edit'
     );
   }
@@ -249,14 +196,18 @@ export default class FacebookEvent {
   get isReactionRemove(): boolean {
     return Boolean(
       this.isReaction &&
-        this.rawEvent.value &&
+        'value' in this.rawEvent &&
         this.rawEvent.value.verb === 'remove'
     );
   }
 
-  get reaction(): Reaction | null {
-    if (this.isReaction) {
-      return this.rawEvent.value as any;
+  get reaction(): FeedReaction | null {
+    if (
+      this.isFeed &&
+      'value' in this.rawEvent &&
+      this.rawEvent.value.item === 'reaction'
+    ) {
+      return this.rawEvent.value;
     }
     return null;
   }
@@ -267,7 +218,7 @@ export default class FacebookEvent {
     }
 
     if (
-      this.rawEvent.value &&
+      'value' in this.rawEvent &&
       this.rawEvent.value.from &&
       this.rawEvent.value.from.id === this.pageId
     ) {
@@ -284,7 +235,7 @@ export default class FacebookEvent {
       return false;
     }
 
-    if (!(this.rawEvent.value && this.rawEvent.value.from)) {
+    if (!('value' in this.rawEvent && this.rawEvent.value.from)) {
       return true;
     }
 

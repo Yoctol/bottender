@@ -3,12 +3,10 @@ import { LineClient } from 'messaging-api-line';
 import Bot, { OnRequest } from '../bot/Bot';
 import SessionStore from '../session/SessionStore';
 
-import LineConnector, {
-  LineConnectorOptions,
-  LineRequestBody,
-} from './LineConnector';
+import LineConnector, { LineConnectorOptions } from './LineConnector';
 import LineContext from './LineContext';
 import LineEvent from './LineEvent';
+import { LineRequestBody } from './LineTypes';
 
 export default class LineBot extends Bot<
   LineRequestBody,

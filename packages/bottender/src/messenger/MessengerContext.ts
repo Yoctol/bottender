@@ -5,11 +5,7 @@ import invariant from 'invariant';
 import sleep from 'delay';
 import warning from 'warning';
 import { JsonObject } from 'type-fest';
-import {
-  MessengerBatch,
-  MessengerClient,
-  MessengerTypes,
-} from 'messaging-api-messenger';
+import { MessengerBatch, MessengerClient } from 'messaging-api-messenger';
 import { MessengerBatchQueue } from 'messenger-batch';
 
 import Context from '../context/Context';
@@ -17,8 +13,9 @@ import Session from '../session/Session';
 import { RequestContext } from '../types';
 
 import MessengerEvent from './MessengerEvent';
+import * as MessengerTypes from './MessengerTypes';
 
-export type Options = {
+export type MessengerContextOptions = {
   appId?: string;
   client: MessengerClient;
   event: MessengerEvent;
@@ -49,7 +46,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
     customAccessToken,
     batchQueue,
     emitter,
-  }: Options) {
+  }: MessengerContextOptions) {
     super({ client, event, session, initialState, requestContext, emitter });
     this._customAccessToken = customAccessToken || null;
     this._batchQueue = batchQueue || null;
@@ -118,7 +115,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
    * Inject persona for the context.
    *
    */
-  usePersona(personaId: string) {
+  usePersona(personaId: string): void {
     this._personaId = personaId;
   }
 
@@ -126,7 +123,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
    * Inject access token for the context.
    *
    */
-  useAccessToken(accessToken: string) {
+  useAccessToken(accessToken: string): void {
     this._customAccessToken = accessToken;
   }
 

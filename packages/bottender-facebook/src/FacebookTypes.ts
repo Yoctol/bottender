@@ -1,3 +1,108 @@
+import { MessengerTypes } from 'bottender';
+
+export { FacebookConnectorOptions } from './FacebookConnector';
+export { FacebookContextOptions } from './FacebookContext';
+
+export type FeedStatus = {
+  from: {
+    id: string;
+    name: string;
+  };
+  item: 'status';
+  postId: string;
+  verb: 'add' | 'edited';
+  published: number;
+  createdTime: number;
+  message: string;
+};
+
+export type FeedPost = {
+  recipientId: string;
+  from: {
+    id: string;
+  };
+  item: 'post';
+  postId: string;
+  verb: 'remove';
+  createdTime: number;
+};
+
+export type FeedComment = {
+  from: {
+    id: string;
+    name?: string;
+  };
+  item: 'comment';
+  commentId: string;
+  postId: string;
+  verb: 'add' | 'edited' | 'remove';
+  parentId: string;
+  createdTime: number;
+  message: string;
+  canReplyPrivately?: boolean;
+};
+
+export type FeedReaction = {
+  reactionType: 'like' | 'love' | 'haha' | 'wow' | 'sad' | 'angry' | 'care';
+  from: {
+    id: string;
+  };
+  parentId: string;
+  commentId: string;
+  postId: string;
+  verb: 'add' | 'edit' | 'remove';
+  item: 'reaction';
+  createdTime: number;
+};
+
+export type FeedEvent = {
+  item: 'event';
+  [key: string]: any; // FIXME
+};
+
+export type FeedPhoto = {
+  item: 'photo';
+  [key: string]: any; // FIXME
+};
+
+export type FeedVideo = {
+  item: 'video';
+  [key: string]: any; // FIXME
+};
+
+export type FeedShare = {
+  item: 'share';
+  [key: string]: any; // FIXME
+};
+
+export type FacebookRawEvent = {
+  field: 'feed';
+  value:
+    | FeedStatus
+    | FeedPost
+    | FeedComment
+    | FeedReaction
+    | FeedEvent
+    | FeedPhoto
+    | FeedVideo
+    | FeedShare;
+};
+
+export type ChangesEntry = {
+  id: string;
+  time: number;
+  changes: FacebookRawEvent[];
+};
+
+type FacebookRequestBody = {
+  object: 'page';
+  entry: ChangesEntry[];
+};
+
+export type FacebookWebhookRequestBody =
+  | MessengerTypes.MessengerRequestBody
+  | FacebookRequestBody;
+
 /**
  * https://developers.facebook.com/docs/graph-api/reference/v6.0/comment
  */

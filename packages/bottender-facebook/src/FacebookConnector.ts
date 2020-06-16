@@ -8,19 +8,19 @@ import {
   MessengerConnector,
   MessengerContext,
   MessengerEvent,
+  MessengerTypes,
   RequestContext,
 } from 'bottender';
 
 import FacebookClient from './FacebookClient';
 import FacebookContext from './FacebookContext';
 import FacebookEvent from './FacebookEvent';
-
-type FacebookRequestBody = Record<string, any>;
+import { ChangesEntry, FacebookWebhookRequestBody } from './FacebookTypes';
 
 // TODO: use exported type
 type Session = Record<string, any>;
 
-type ConstructorOptions = {
+export type FacebookConnectorOptions = {
   appId: string;
   appSecret: string;
   accessToken?: string;
@@ -34,13 +34,13 @@ type ConstructorOptions = {
 };
 
 export default class FacebookConnector
-  extends FacebookBaseConnector<FacebookRequestBody, FacebookClient>
-  implements Connector<FacebookRequestBody, FacebookClient> {
+  extends FacebookBaseConnector<FacebookWebhookRequestBody, FacebookClient>
+  implements Connector<FacebookWebhookRequestBody, FacebookClient> {
   _mapPageToAccessToken: ((pageId: string) => Promise<string>) | null = null;
 
   _messengerConnector: MessengerConnector;
 
-  public constructor(options: ConstructorOptions) {
+  public constructor(options: FacebookConnectorOptions) {
     super({
       ...options,
       ClientClass: FacebookClient,
@@ -107,37 +107,42 @@ export default class FacebookConnector
   }
 
   public mapRequestToEvents(
-    body: FacebookRequestBody
+    body: FacebookWebhookRequestBody
   ): (FacebookEvent | MessengerEvent)[] {
     // TODO: returns InstagramEvent (object === 'instagram')
     if (body.object !== 'page') {
       return [];
     }
 
-    return body.entry
-      .map((rawEvent: any) => {
-        const pageId = rawEvent.id;
-        if (rawEvent.messaging) {
-          return new MessengerEvent(rawEvent.messaging[0], {
+    const bodyEntry: (MessengerTypes.MessagingEntry | ChangesEntry)[] =
+      body.entry;
+
+    return bodyEntry
+      .map<FacebookEvent | MessengerEvent | null>(entry => {
+        const pageId = entry.id;
+        if ('messaging' in entry) {
+          return new MessengerEvent(entry.messaging[0], {
             pageId,
             isStandby: false,
           });
         }
 
-        if (rawEvent.standby) {
-          return new MessengerEvent(rawEvent.standby[0], {
+        if ('standby' in entry) {
+          return new MessengerEvent(entry.standby[0], {
             pageId,
             isStandby: true,
           });
         }
 
-        if (rawEvent.changes) {
-          return new FacebookEvent(rawEvent.changes[0], { pageId });
+        if ('changes' in entry) {
+          return new FacebookEvent(entry.changes[0], { pageId });
         }
 
         return null;
       })
-      .filter((event: any) => event !== null);
+      .filter(
+        (event): event is FacebookEvent | MessengerEvent => event !== null
+      );
   }
 
   public async createContext(params: {

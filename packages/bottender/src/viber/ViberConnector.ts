@@ -3,26 +3,24 @@ import { EventEmitter } from 'events';
 
 import invariant from 'invariant';
 import { JsonObject } from 'type-fest';
-import { ViberClient, ViberTypes } from 'messaging-api-viber';
+import { ViberClient } from 'messaging-api-viber';
 import { addedDiff } from 'deep-object-diff';
 
 import Session from '../session/Session';
 import { Connector } from '../bot/Connector';
-import { RequestContext } from '../types';
 
 import ViberContext from './ViberContext';
-import ViberEvent, { ViberRawEvent } from './ViberEvent';
-
-export type ViberRequestBody = ViberRawEvent;
-
-type ViberRequestContext = RequestContext<
+import ViberEvent from './ViberEvent';
+import {
+  Sender,
+  ViberRawEvent,
   ViberRequestBody,
-  { 'x-viber-content-signature'?: string }
->;
+  ViberRequestContext,
+} from './ViberTypes';
 
 type ConnectorOptionsWithoutClient = {
   accessToken: string;
-  sender: ViberTypes.Sender;
+  sender: Sender;
   origin?: string;
   skipLegacyProfile?: boolean;
 };

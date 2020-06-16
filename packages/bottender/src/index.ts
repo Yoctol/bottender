@@ -1,4 +1,9 @@
 import bottender from './bottender';
+import * as LineTypes from './line/LineTypes';
+import * as MessengerTypes from './messenger/MessengerTypes';
+import * as SlackTypes from './slack/SlackTypes';
+import * as TelegramTypes from './telegram/TelegramTypes';
+import * as ViberTypes from './viber/ViberTypes';
 import * as WhatsappTypes from './whatsapp/WhatsappTypes';
 
 export { bottender };
@@ -38,7 +43,7 @@ export { default as FacebookBaseConnector } from './messenger/FacebookBaseConnec
 export { default as MessengerConnector } from './messenger/MessengerConnector';
 export { default as MessengerContext } from './messenger/MessengerContext';
 export { default as MessengerEvent } from './messenger/MessengerEvent';
-export { MessengerTypes } from 'messaging-api-messenger';
+export { MessengerTypes };
 
 /* WhatsApp */
 export { default as WhatsappBot } from './whatsapp/WhatsappBot';
@@ -52,28 +57,29 @@ export { default as LineBot } from './line/LineBot';
 export { default as LineConnector } from './line/LineConnector';
 export { default as LineContext } from './line/LineContext';
 export { default as LineEvent } from './line/LineEvent';
-export { LineTypes, LineNotify } from 'messaging-api-line';
+export { LineNotify } from 'messaging-api-line';
+export { LineTypes };
 
 /* Slack */
 export { default as SlackBot } from './slack/SlackBot';
 export { default as SlackConnector } from './slack/SlackConnector';
 export { default as SlackContext } from './slack/SlackContext';
 export { default as SlackEvent } from './slack/SlackEvent';
-export { SlackTypes } from 'messaging-api-slack';
+export { SlackTypes };
 
 /* Telegram */
 export { default as TelegramBot } from './telegram/TelegramBot';
 export { default as TelegramConnector } from './telegram/TelegramConnector';
 export { default as TelegramContext } from './telegram/TelegramContext';
 export { default as TelegramEvent } from './telegram/TelegramEvent';
-export { TelegramTypes } from 'messaging-api-telegram';
+export { TelegramTypes };
 
 /* Viber */
 export { default as ViberBot } from './viber/ViberBot';
 export { default as ViberConnector } from './viber/ViberConnector';
 export { default as ViberContext } from './viber/ViberContext';
 export { default as ViberEvent } from './viber/ViberEvent';
-export { ViberTypes } from 'messaging-api-viber';
+export { ViberTypes };
 
 /* Types */
 export * from './types';

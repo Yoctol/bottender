@@ -13,32 +13,16 @@ import { Connector } from '../bot/Connector';
 import { RequestContext } from '../types';
 
 import SlackContext from './SlackContext';
-import SlackEvent, {
+import SlackEvent from './SlackEvent';
+import {
   BlockActionEvent,
   CommandEvent,
-  EventTypes,
   InteractiveMessageEvent,
   Message,
   SlackRawEvent,
+  SlackRequestBody,
   UIEvent,
-} from './SlackEvent';
-// FIXME
-export type SlackUser = {
-  id: string;
-};
-
-type EventsAPIBody = {
-  token: string;
-  teamId: string;
-  apiAppId: string;
-  type: EventTypes;
-  event: Message;
-  authedUsers: string[];
-  eventId: string;
-  eventTime: number;
-};
-
-export type SlackRequestBody = EventsAPIBody | { payload: string };
+} from './SlackTypes';
 
 type CommonConnectorOptions = {
   skipLegacyProfile?: boolean;

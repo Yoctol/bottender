@@ -4,15 +4,16 @@ import chunk from 'lodash/chunk';
 import invariant from 'invariant';
 import warning from 'warning';
 import { JsonObject } from 'type-fest';
-import { Line, LineClient, LineTypes } from 'messaging-api-line';
+import { Line, LineClient } from 'messaging-api-line';
 
 import Context from '../context/Context';
 import Session from '../session/Session';
 import { RequestContext } from '../types';
 
 import LineEvent from './LineEvent';
+import * as LineTypes from './LineTypes';
 
-type Options = {
+export type LineContextOptions = {
   client: LineClient;
   event: LineEvent;
   session?: Session | null;
@@ -45,7 +46,7 @@ class LineContext extends Context<LineClient, LineEvent> {
     shouldBatch,
     sendMethod,
     emitter,
-  }: Options) {
+  }: LineContextOptions) {
     super({ client, event, session, initialState, requestContext, emitter });
     this._shouldBatch = shouldBatch || false;
     this._sendMethod = sendMethod || 'reply';

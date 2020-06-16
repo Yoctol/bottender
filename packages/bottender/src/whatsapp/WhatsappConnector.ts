@@ -10,13 +10,7 @@ import { RequestContext } from '../types';
 import TwilioClient from './TwilioClient';
 import WhatsappContext from './WhatsappContext';
 import WhatsappEvent from './WhatsappEvent';
-
-export type WhatsappRequestBody = any;
-
-type WhatsappRequestContext = RequestContext<
-  WhatsappRequestBody,
-  { 'x-twilio-signature'?: string }
->;
+import { WhatsappRequestBody, WhatsappRequestContext } from './WhatsappTypes';
 
 type ConnectorOptionsWithoutClient = {
   accountSid: string;
