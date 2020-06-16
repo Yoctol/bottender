@@ -7529,20 +7529,6 @@ merge2@^1.2.3:
   resolved "https://registry.yarnpkg.com/merge2/-/merge2-1.2.4.tgz#c9269589e6885a60cf80605d9522d4b67ca646e3"
   integrity sha512-FYE8xI+6pjFOhokZu0We3S5NKCirLbCzSh2Usf3qEyr4X8U+0jNg9P8RZ4qz+V2UoECLVwSyzU3LxXBaLGtD3A==
 
-messaging-api-common@^1.0.0-beta.23:
-  version "1.0.0-beta.23"
-  resolved "https://registry.yarnpkg.com/messaging-api-common/-/messaging-api-common-1.0.0-beta.23.tgz#7954dc55237c563e1518dbcaf87da217fa0df399"
-  integrity sha512-L5G04nnycxTCDo+H6McLHePgRcoKE3tozE+rRZeDzvWiS2+FP+6e6XsVNuPmqDOgsIEsVE5nEQdhVjt18b/INw==
-  dependencies:
-    axios "^0.19.2"
-    camel-case "^4.1.1"
-    debug "^4.1.1"
-    lodash "^4.17.15"
-    map-obj "^4.1.0"
-    pascal-case "^3.1.1"
-    snake-case "^3.0.3"
-    url-join "^4.0.1"
-
 messaging-api-common@^1.0.0-beta.26:
   version "1.0.0-beta.26"
   resolved "https://registry.yarnpkg.com/messaging-api-common/-/messaging-api-common-1.0.0-beta.26.tgz#71b6cf3346f11b709a791b8657f842b0a9930048"
@@ -7567,20 +7553,6 @@ messaging-api-line@^1.0.0-beta.26:
     image-type "^4.1.0"
     invariant "^2.2.4"
     messaging-api-common "^1.0.0-beta.26"
-    warning "^4.0.3"
-
-messaging-api-messenger@^1.0.0-beta.18:
-  version "1.0.0-beta.23"
-  resolved "https://registry.yarnpkg.com/messaging-api-messenger/-/messaging-api-messenger-1.0.0-beta.23.tgz#360109ec9a036459792a288bcd3b831343be5dd7"
-  integrity sha512-Yqj79/TuHNlObeTAdua9aIr/oDZiSj+uijzaW7DVRB8lnsvZUSXONGsle/zuS0bHFYb8ghvkg6eNUNGqJn2VNw==
-  dependencies:
-    append-query "^2.1.0"
-    axios "^0.19.2"
-    axios-error "^1.0.0-beta.16"
-    form-data "^3.0.0"
-    invariant "^2.2.4"
-    lodash "^4.17.15"
-    messaging-api-common "^1.0.0-beta.23"
     warning "^4.0.3"
 
 messaging-api-messenger@^1.0.0-beta.26:
