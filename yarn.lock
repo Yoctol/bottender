@@ -2769,6 +2769,13 @@ axios-error@^1.0.0-beta.16:
   dependencies:
     axios "^0.19.2"
 
+axios-error@^1.0.0-beta.26:
+  version "1.0.0-beta.26"
+  resolved "https://registry.yarnpkg.com/axios-error/-/axios-error-1.0.0-beta.26.tgz#dcd6e2dc56a879f2259798901127f29157cc5fd2"
+  integrity sha512-I0iI10hnlaTae3XK3qIBUSpqn3NjkDk8ezt9bzI9U9cSuxSP8+kWGyxFjyZV+aNUfdUmgUPqt5DnAmL++HktUw==
+  dependencies:
+    axios "^0.19.2"
+
 axios-mock-adapter@^1.18.1:
   version "1.18.1"
   resolved "https://registry.yarnpkg.com/axios-mock-adapter/-/axios-mock-adapter-1.18.1.tgz#a2ba2638ef513d954793f96bde3e26bd4a1b7940"
@@ -7536,19 +7543,33 @@ messaging-api-common@^1.0.0-beta.23:
     snake-case "^3.0.3"
     url-join "^4.0.1"
 
-messaging-api-line@^1.0.0-beta.23:
-  version "1.0.0-beta.23"
-  resolved "https://registry.yarnpkg.com/messaging-api-line/-/messaging-api-line-1.0.0-beta.23.tgz#26fb4ffff8bcbe7873de35fd65cc6416b6c0ac03"
-  integrity sha512-pTbFgVND8fzQ5mPYDStvDcEWIpnD0RE0q7L5gUbq0VTd3K47fcCT2wt5AleprSdDFN/zJsIYSUq6JiZsR/9U+Q==
+messaging-api-common@^1.0.0-beta.26:
+  version "1.0.0-beta.26"
+  resolved "https://registry.yarnpkg.com/messaging-api-common/-/messaging-api-common-1.0.0-beta.26.tgz#71b6cf3346f11b709a791b8657f842b0a9930048"
+  integrity sha512-6sdZFk3VHLDltyfRPFKPV56babkSMx1ZC4DRj0IF4hAgHNyO1Lt73mYJKmqnK5swA9yGFoS7IP1y78Uj8KRBuw==
   dependencies:
     axios "^0.19.2"
-    axios-error "^1.0.0-beta.16"
+    camel-case "^4.1.1"
+    debug "^4.1.1"
+    lodash "^4.17.15"
+    map-obj "^4.1.0"
+    pascal-case "^3.1.1"
+    snake-case "^3.0.3"
+    url-join "^4.0.1"
+
+messaging-api-line@^1.0.0-beta.26:
+  version "1.0.0-beta.26"
+  resolved "https://registry.yarnpkg.com/messaging-api-line/-/messaging-api-line-1.0.0-beta.26.tgz#1ea81582c556b02ecec70836370bcad52bb46f08"
+  integrity sha512-2EoRTrnuCschVWfT+K/DrnaI/2V5xUTTE/C55ABUnM/z6ACBZm3uUa0tfANVLFSZYe1+MjHg7DZcIf6TtMX05Q==
+  dependencies:
+    axios "^0.19.2"
+    axios-error "^1.0.0-beta.26"
     image-type "^4.1.0"
     invariant "^2.2.4"
-    messaging-api-common "^1.0.0-beta.23"
+    messaging-api-common "^1.0.0-beta.26"
     warning "^4.0.3"
 
-messaging-api-messenger@^1.0.0-beta.18, messaging-api-messenger@^1.0.0-beta.23:
+messaging-api-messenger@^1.0.0-beta.18:
   version "1.0.0-beta.23"
   resolved "https://registry.yarnpkg.com/messaging-api-messenger/-/messaging-api-messenger-1.0.0-beta.23.tgz#360109ec9a036459792a288bcd3b831343be5dd7"
   integrity sha512-Yqj79/TuHNlObeTAdua9aIr/oDZiSj+uijzaW7DVRB8lnsvZUSXONGsle/zuS0bHFYb8ghvkg6eNUNGqJn2VNw==
@@ -7562,35 +7583,51 @@ messaging-api-messenger@^1.0.0-beta.18, messaging-api-messenger@^1.0.0-beta.23:
     messaging-api-common "^1.0.0-beta.23"
     warning "^4.0.3"
 
-messaging-api-slack@^1.0.0-beta.23:
-  version "1.0.0-beta.23"
-  resolved "https://registry.yarnpkg.com/messaging-api-slack/-/messaging-api-slack-1.0.0-beta.23.tgz#e2ed9b9aa27bb7e9e5680a87d4011bc7080180a3"
-  integrity sha512-B9maNXTIXIoJNpXOd/HGl9goOXVbTsZ6+8k3JbAFF8cgdEhKZz4IMTlsD+upW7wJp9zfSesxKFTd3Jgj9UsXPQ==
+messaging-api-messenger@^1.0.0-beta.26:
+  version "1.0.0-beta.26"
+  resolved "https://registry.yarnpkg.com/messaging-api-messenger/-/messaging-api-messenger-1.0.0-beta.26.tgz#80d8195f685b6cf666ddeb39a54ded3339b3cdca"
+  integrity sha512-zS5jTbOW1MCHh3gkF6G2Vh+DWxn9I+u4zU84SDLa5+0phSoAw6TnpKg+I1cM2ngggTwG9C0bM7sBszilmqfEHQ==
   dependencies:
+    append-query "^2.1.0"
     axios "^0.19.2"
-    axios-error "^1.0.0-beta.16"
+    axios-error "^1.0.0-beta.26"
+    form-data "^3.0.0"
+    invariant "^2.2.4"
     lodash "^4.17.15"
-    messaging-api-common "^1.0.0-beta.23"
+    messaging-api-common "^1.0.0-beta.26"
+    warning "^4.0.3"
 
-messaging-api-telegram@^1.0.0-beta.23:
-  version "1.0.0-beta.23"
-  resolved "https://registry.yarnpkg.com/messaging-api-telegram/-/messaging-api-telegram-1.0.0-beta.23.tgz#f9c5b251ade4f2e748e98272a1d4c21d97f5afd3"
-  integrity sha512-DWp9kOIYIZQF99dmNYOM+Y1HxUpCcmkctQ16w6oi5s6fFHT9Yxj1k5h90NMS3Y+SlKAtoG51n1/MxRqXH4I8NA==
+messaging-api-slack@^1.0.0-beta.26:
+  version "1.0.0-beta.26"
+  resolved "https://registry.yarnpkg.com/messaging-api-slack/-/messaging-api-slack-1.0.0-beta.26.tgz#95f86073256e33ef17bc95b5f1aeb079b601efac"
+  integrity sha512-rB4oRJ5sb+SkNARC8bVcd62J+dBl3Jg+uzuCxecU/WBylcKZvqG2a/YK1SwhH8iJZ+cEVCPFP+FQHNqpq7J/xA==
   dependencies:
     axios "^0.19.2"
-    axios-error "^1.0.0-beta.16"
+    axios-error "^1.0.0-beta.26"
     lodash "^4.17.15"
-    messaging-api-common "^1.0.0-beta.23"
+    messaging-api-common "^1.0.0-beta.26"
 
-messaging-api-viber@^1.0.0-beta.23:
-  version "1.0.0-beta.23"
-  resolved "https://registry.yarnpkg.com/messaging-api-viber/-/messaging-api-viber-1.0.0-beta.23.tgz#e1d1d3c1764329c8297efcf3cacf32082435afd4"
-  integrity sha512-y2pB7xJpEjg2oi4DRLra1L6jGpWmiCwT2vFowKvho8Jqm/f0iFBJdlLXeV/Gg3eQtT7nO3AaLYOU8Slclj50XA==
+messaging-api-telegram@^1.0.0-beta.26:
+  version "1.0.0-beta.26"
+  resolved "https://registry.yarnpkg.com/messaging-api-telegram/-/messaging-api-telegram-1.0.0-beta.26.tgz#92e8eb04c788da61a0b8e5017edf645269f057c8"
+  integrity sha512-JT9jYk7+iIQy2ZOOYfLzzNaKv+vF2gD9/aIsk/HCsCjzK151nk+uubKYyTQVlFj3id0SP7fbWprqd3BjdVvr8w==
   dependencies:
     axios "^0.19.2"
-    axios-error "^1.0.0-beta.16"
+    axios-error "^1.0.0-beta.26"
     lodash "^4.17.15"
-    messaging-api-common "^1.0.0-beta.23"
+    messaging-api-common "^1.0.0-beta.26"
+    warning "^4.0.3"
+
+messaging-api-viber@^1.0.0-beta.26:
+  version "1.0.0-beta.26"
+  resolved "https://registry.yarnpkg.com/messaging-api-viber/-/messaging-api-viber-1.0.0-beta.26.tgz#7b09c31cfb8379c0d8ba0abb92e57da6135ff634"
+  integrity sha512-kGOJfL1JhzfomeHpRmy7VB3Mj/q4d2FfhPdVNzaGGI++LjC9arxkA/1WBzhHTkEy5yI+KjfsI3pukLdW/kixqg==
+  dependencies:
+    axios "^0.19.2"
+    axios-error "^1.0.0-beta.26"
+    lodash "^4.17.15"
+    messaging-api-common "^1.0.0-beta.26"
+    warning "^4.0.3"
 
 messenger-batch@^0.3.1:
   version "0.3.1"
