@@ -152,7 +152,7 @@ export default class SlackConnector
   }
 
   // FIXME: define types for every slack events
-  getChannelId(rawEvent: any): string | null {
+  _getChannelId(rawEvent: any): string | null {
     // For interactive_message format
     if (
       rawEvent.channel &&
@@ -186,7 +186,7 @@ export default class SlackConnector
     );
   }
 
-  getUserId(rawEvent: SlackRawEvent): string | null {
+  _getUserId(rawEvent: SlackRawEvent): string | null {
     if (
       rawEvent.type === 'interactive_message' ||
       rawEvent.type === 'block_actions' ||
@@ -198,13 +198,13 @@ export default class SlackConnector
     return (
       (rawEvent as Message).user ||
       (rawEvent as CommandEvent).userId ||
-      (rawEvent as UIEvent).user.id
+      (rawEvent as UIEvent).user?.id
     );
   }
 
   getUniqueSessionKey(body: SlackRequestBody): string | null {
     const rawEvent = this._getRawEventFromRequest(body);
-    return this.getChannelId(rawEvent) || this.getUserId(rawEvent);
+    return this._getChannelId(rawEvent) || this._getUserId(rawEvent);
   }
 
   async updateSession(session: Session, body: SlackRequestBody): Promise<void> {
@@ -213,8 +213,8 @@ export default class SlackConnector
     }
 
     const rawEvent = this._getRawEventFromRequest(body);
-    const userId = this.getUserId(rawEvent);
-    const channelId = this.getChannelId(rawEvent);
+    const userId = this._getUserId(rawEvent);
+    const channelId = this._getChannelId(rawEvent);
 
     if (
       typeof session.user === 'object' &&
