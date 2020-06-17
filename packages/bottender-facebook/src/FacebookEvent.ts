@@ -219,7 +219,7 @@ export default class FacebookEvent {
 
     if (
       'value' in this.rawEvent &&
-      this.rawEvent.value.from &&
+      'from' in this.rawEvent.value &&
       this.rawEvent.value.from.id === this.pageId
     ) {
       return true;
@@ -235,7 +235,11 @@ export default class FacebookEvent {
       return false;
     }
 
-    if (!('value' in this.rawEvent && this.rawEvent.value.from)) {
+    if (
+      'value' in this.rawEvent &&
+      this.rawEvent.value.item === 'like' &&
+      !('from' in this.rawEvent.value)
+    ) {
       return true;
     }
 

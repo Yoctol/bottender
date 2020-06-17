@@ -95,6 +95,14 @@ const commentRemove: FacebookRawEvent = {
   },
 };
 
+const pageLikeAdd: FacebookRawEvent = {
+  value: {
+    item: 'like',
+    verb: 'add',
+  },
+  field: 'feed',
+};
+
 const reactionAdd: FacebookRawEvent = {
   field: 'feed',
   value: {
@@ -670,4 +678,5 @@ it('#isPageLike', () => {
     false
   );
   expect(new FacebookEvent(sentByPage, { pageId }).isPageLike).toEqual(false);
+  expect(new FacebookEvent(pageLikeAdd, { pageId }).isPageLike).toEqual(true);
 });
