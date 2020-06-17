@@ -11,17 +11,8 @@ import { Connector } from '../bot/Connector';
 import { RequestContext } from '../types';
 
 import LineContext from './LineContext';
-import LineEvent, { LineRawEvent } from './LineEvent';
-
-export type LineRequestBody = {
-  destination: string;
-  events: LineRawEvent[];
-};
-
-type LineRequestContext = RequestContext<
-  LineRequestBody,
-  { 'x-line-signature'?: string }
->;
+import LineEvent from './LineEvent';
+import { LineRawEvent, LineRequestBody, LineRequestContext } from './LineTypes';
 
 type CommonConnectorOptions = {
   getConfig?: GetConfigFunction;

@@ -9,78 +9,17 @@ import { MessengerClient } from 'messaging-api-messenger';
 
 import Session from '../session/Session';
 import { Connector } from '../bot/Connector';
-import { RequestContext } from '../types';
 
 import FacebookBaseConnector, {
   FacebookBaseConnectorOptions,
 } from './FacebookBaseConnector';
 import MessengerContext from './MessengerContext';
-import MessengerEvent, {
-  AppRoles,
-  Message,
+import MessengerEvent from './MessengerEvent';
+import {
   MessengerRawEvent,
-  PassThreadControl,
-  PolicyEnforcement,
-  Postback,
-  Recipient,
-  Sender,
-  TakeThreadControl,
-} from './MessengerEvent';
-
-type MessengerRequestContext = RequestContext<
   MessengerRequestBody,
-  { 'x-hub-signature'?: string }
->;
-
-type Entry = {
-  [key in 'messaging' | 'standby' | 'changes']: {
-    sender: Sender;
-    recipient: Recipient;
-    timestamp: number;
-    postback?: Postback;
-    message?: Message;
-    field?: string;
-    value?: Record<string, any>;
-  }[];
-};
-
-type EntryRequestBody = {
-  type: string;
-  entry: Entry[];
-};
-
-type PolicyEnforcementRequestBody = {
-  recipient: Recipient;
-  timestamp: number;
-  'policy-enforcement': PolicyEnforcement;
-};
-
-type AppRolesRequestBody = {
-  recipient: Recipient;
-  timestamp: number;
-  appRoles: AppRoles;
-};
-
-type PassThreadControlRequestBody = {
-  sender: Sender;
-  recipient: Recipient;
-  timestamp: number;
-  passThreadControl: PassThreadControl;
-};
-
-type TakeThreadControlRequestBody = {
-  sender: Sender;
-  recipient: Recipient;
-  timestamp: number;
-  takeThreadControl: TakeThreadControl;
-};
-
-export type MessengerRequestBody =
-  | EntryRequestBody
-  | PolicyEnforcementRequestBody
-  | AppRolesRequestBody
-  | PassThreadControlRequestBody
-  | TakeThreadControlRequestBody;
+  MessengerRequestContext,
+} from './MessengerTypes';
 
 export type MessengerConnectorOptions = FacebookBaseConnectorOptions<
   MessengerClient
@@ -112,33 +51,27 @@ export default class MessengerConnector
 
   _getRawEventsFromRequest(body: MessengerRequestBody): MessengerRawEvent[] {
     if ('entry' in body) {
-      const { entry } = body as EntryRequestBody;
-
-      return entry
-        .map(ent => {
-          if (ent.messaging) {
-            return ent.messaging[0] as MessengerRawEvent;
+      return body.entry
+        .map(entry => {
+          if ('messaging' in entry) {
+            return entry.messaging[0] as MessengerRawEvent;
           }
 
-          if (ent.standby) {
-            return ent.standby[0] as MessengerRawEvent;
+          if ('standby' in entry) {
+            return entry.standby[0] as MessengerRawEvent;
           }
 
           // for Webhook Test button request and other page events
-          if (ent.changes) {
-            return ent.changes[0] as MessengerRawEvent;
-          }
-
           return null;
         })
-        .filter(event => event != null) as MessengerRawEvent[];
+        .filter((event): event is MessengerRawEvent => event != null);
     }
 
     return [body as MessengerRawEvent];
   }
 
   _getPageIdFromRawEvent(rawEvent: MessengerRawEvent): string | null {
-    if (rawEvent.message && rawEvent.message.isEcho && rawEvent.sender) {
+    if ('message' in rawEvent && rawEvent.message.isEcho && rawEvent.sender) {
       return rawEvent.sender.id;
     }
     if (rawEvent.recipient) {
@@ -150,9 +83,10 @@ export default class MessengerConnector
 
   _isStandby(body: MessengerRequestBody): boolean {
     if (!('entry' in body)) return false;
-    const entry = (body as EntryRequestBody).entry[0];
 
-    return !!entry.standby;
+    const entry = body.entry[0];
+
+    return 'standby' in entry;
   }
 
   _profilePicExpired(user: { profilePic: string }): boolean {
@@ -184,13 +118,13 @@ export default class MessengerConnector
         : this._getRawEventsFromRequest(bodyOrEvent)[0];
     if (
       rawEvent &&
-      rawEvent.message &&
+      'message' in rawEvent &&
       rawEvent.message.isEcho &&
       rawEvent.recipient
     ) {
       return rawEvent.recipient.id;
     }
-    if (rawEvent && rawEvent.sender) {
+    if (rawEvent && 'sender' in rawEvent) {
       return rawEvent.sender.id;
     }
     return null;
@@ -297,7 +231,7 @@ export default class MessengerConnector
 
       let pageId = null;
 
-      if (rawEvent.message && rawEvent.message.isEcho && rawEvent.sender) {
+      if ('message' in rawEvent && rawEvent.message.isEcho && rawEvent.sender) {
         pageId = rawEvent.sender.id;
       } else if (rawEvent.recipient) {
         pageId = rawEvent.recipient.id;

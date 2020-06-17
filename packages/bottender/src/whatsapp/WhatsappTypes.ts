@@ -1,3 +1,7 @@
+import { RequestContext } from '../types';
+
+export { WhatsappConnectorOptions } from './WhatsappConnector';
+
 export type MessageReceivedCommon = {
   /**
    * A 34 character unique identifier for the message. May be used to later retrieve this message from the REST API.
@@ -129,3 +133,10 @@ export type WhatsappRawEvent =
   | MessageSent
   | MessageDelivered
   | MessageRead;
+
+export type WhatsappRequestBody = any;
+
+export type WhatsappRequestContext = RequestContext<
+  WhatsappRequestBody,
+  { 'x-twilio-signature'?: string }
+>;

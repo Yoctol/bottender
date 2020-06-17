@@ -2,258 +2,25 @@ import warning from 'warning';
 
 import { Event } from '../context/Event';
 
-type UserSource = {
-  type: 'user';
-  userId: string;
-};
-
-type GroupSource = {
-  type: 'group';
-  groupId: string;
-  userId?: string;
-};
-
-type RoomSource = {
-  type: 'room';
-  roomId: string;
-  userId?: string;
-};
-
-type Source = UserSource | GroupSource | RoomSource;
-
-type TextMessage = {
-  id: string;
-  type: 'text';
-  text: string;
-  /**
-   * One or more LINE emojis. Unicode-defined emojis and older versions of LINE emojis may not be retrieved correctly.
-   */
-  emojis?: Emoji[];
-};
-
-/**
- * references: https://developers.line.biz/en/reference/messaging-api/#wh-text
- */
-type Emoji = {
-  /**
-   * Index position for a character in text, with the first character being at position 0.
-   */
-  index: number;
-  /**
-   * The length of the LINE emoji string. For LINE emoji (hello), 7 is the length.
-   */
-  length: number;
-  /**
-   * Product ID for a set of LINE emoji. See LINE Available Emoji List: https://d.line-scdn.net/r/devcenter/sendable_line_emoji_list.pdf .
-   */
-  productId: string;
-  /**
-   * ID for a LINE emoji inside a set. See LINE Available Emoji List: https://d.line-scdn.net/r/devcenter/sendable_line_emoji_list.pdf .
-   */
-  emojiId: string;
-};
-
-type ContentProviderLine = {
-  type: 'line';
-};
-
-type ContentProviderExternal = {
-  type: 'external';
-  originalContentUrl: string;
-  previewImageUrl?: string;
-};
-
-type ImageMessage = {
-  id: string;
-  type: 'image';
-  contentProvider: ContentProviderLine | ContentProviderExternal;
-};
-
-type VideoMessage = {
-  id: string;
-  type: 'video';
-  duration: number;
-  contentProvider: ContentProviderLine | ContentProviderExternal;
-};
-
-type AudioMessage = {
-  id: string;
-  type: 'audio';
-  duration: number;
-  contentProvider: ContentProviderLine | ContentProviderExternal;
-};
-
-type FileMessage = {
-  id: string;
-  type: 'file';
-  fileName: string;
-  fileSize: number;
-};
-
-type LocationMessage = {
-  id: string;
-  type: 'location';
-  title: string;
-  address: string;
-  latitude: number;
-  longitude: number;
-};
-
-type StickerMessage = {
-  id: string;
-  type: 'sticker';
-  packageId: string;
-  stickerId: string;
-};
-
-type Message =
-  | TextMessage
-  | ImageMessage
-  | VideoMessage
-  | AudioMessage
-  | FileMessage
-  | LocationMessage
-  | StickerMessage;
-
-type MessageEvent = {
-  replyToken: string;
-  type: 'message';
-  mode: 'active' | 'standby';
-  timestamp: number;
-  source: Source;
-  message: Message;
-};
-
-type FollowEvent = {
-  replyToken: string;
-  type: 'follow';
-  mode: 'active' | 'standby';
-  timestamp: number;
-  source: Source;
-};
-
-type UnfollowEvent = {
-  type: 'unfollow';
-  mode: 'active' | 'standby';
-  timestamp: number;
-  source: Source;
-};
-
-type JoinEvent = {
-  replyToken: string;
-  type: 'join';
-  mode: 'active' | 'standby';
-  timestamp: number;
-  source: GroupSource | RoomSource;
-};
-
-type LeaveEvent = {
-  type: 'leave';
-  mode: 'active' | 'standby';
-  timestamp: number;
-  source: GroupSource | RoomSource;
-};
-
-type MemberJoinedEvent = {
-  replyToken: string;
-  type: 'memberJoined';
-  mode: 'active' | 'standby';
-  timestamp: number;
-  source: GroupSource | RoomSource;
-  joined: {
-    members: UserSource[];
-  };
-};
-
-type MemberLeftEvent = {
-  type: 'memberLeft';
-  mode: 'active' | 'standby';
-  timestamp: number;
-  source: GroupSource | RoomSource;
-  left: {
-    members: UserSource[];
-  };
-};
-
-type PostbackEvent = {
-  replyToken: string;
-  type: 'postback';
-  mode: 'active' | 'standby';
-  timestamp: number;
-  source: Source;
-  postback: Postback;
-};
-
-type PostbackParams =
-  | { date: string }
-  | { time: string }
-  | { datetime: string };
-
-type Postback = {
-  data: string;
-  params?: PostbackParams;
-};
-
-type BeaconEvent = {
-  replyToken: string;
-  type: 'beacon';
-  mode: 'active' | 'standby';
-  timestamp: number;
-  source: Source;
-  beacon: Beacon;
-};
-
-type Beacon = {
-  hwid: string;
-  type: 'enter' | 'banner' | 'stay';
-  dm?: string;
-};
-
-type AccountLinkEvent = {
-  replyToken: string;
-  type: 'accountLink';
-  mode: 'active' | 'standby';
-  timestamp: number;
-  source: Source;
-  link: AccountLink;
-};
-
-type AccountLink = {
-  result: 'ok' | 'failed';
-  nonce: string;
-};
-
-type ThingsEvent = {
-  replyToken: string;
-  type: 'things';
-  mode: 'active' | 'standby';
-  timestamp: number;
-  source: Source;
-  things: Things;
-};
-
-type Things = {
-  deviceId: string;
-  type: 'link' | 'unlink' | 'scenarioResult';
-  result?: any;
-};
-
-type LineEventOptions = {
-  destination?: string;
-};
-
-export type LineRawEvent =
-  | MessageEvent
-  | FollowEvent
-  | UnfollowEvent
-  | JoinEvent
-  | LeaveEvent
-  | MemberJoinedEvent
-  | MemberLeftEvent
-  | PostbackEvent
-  | BeaconEvent
-  | AccountLinkEvent
-  | ThingsEvent;
+import {
+  AccountLink,
+  AccountLinkEvent,
+  Beacon,
+  BeaconEvent,
+  EventMessage,
+  LineEventOptions,
+  LineRawEvent,
+  MemberJoinedEvent,
+  MemberLeftEvent,
+  MessageEvent,
+  Postback,
+  PostbackEvent,
+  Source,
+  TextMessage,
+  Things,
+  ThingsEvent,
+  UserSource,
+} from './LineTypes';
 
 export default class LineEvent implements Event<LineRawEvent> {
   _rawEvent: LineRawEvent;
@@ -309,7 +76,7 @@ export default class LineEvent implements Event<LineRawEvent> {
    * The message object from LINE raw event.
    *
    */
-  get message(): Message | null {
+  get message(): EventMessage | null {
     return (this._rawEvent as MessageEvent).message || null;
   }
 
@@ -318,7 +85,7 @@ export default class LineEvent implements Event<LineRawEvent> {
    *
    */
   get isText(): boolean {
-    return this.isMessage && (this.message as Message).type === 'text';
+    return this.isMessage && (this.message as EventMessage).type === 'text';
   }
 
   /**
@@ -337,14 +104,14 @@ export default class LineEvent implements Event<LineRawEvent> {
    *
    */
   get isImage(): boolean {
-    return this.isMessage && (this.message as Message).type === 'image';
+    return this.isMessage && (this.message as EventMessage).type === 'image';
   }
 
   /**
    * The image object from LINE raw event.
    *
    */
-  get image(): Message | null {
+  get image(): EventMessage | null {
     if (this.isImage) {
       return this.message;
     }
@@ -356,14 +123,14 @@ export default class LineEvent implements Event<LineRawEvent> {
    *
    */
   get isVideo(): boolean {
-    return this.isMessage && (this.message as Message).type === 'video';
+    return this.isMessage && (this.message as EventMessage).type === 'video';
   }
 
   /**
    * The video object from LINE raw event.
    *
    */
-  get video(): Message | null {
+  get video(): EventMessage | null {
     if (this.isVideo) {
       return this.message;
     }
@@ -375,14 +142,14 @@ export default class LineEvent implements Event<LineRawEvent> {
    *
    */
   get isAudio(): boolean {
-    return this.isMessage && (this.message as Message).type === 'audio';
+    return this.isMessage && (this.message as EventMessage).type === 'audio';
   }
 
   /**
    * The audio object from LINE raw event.
    *
    */
-  get audio(): Message | null {
+  get audio(): EventMessage | null {
     if (this.isAudio) {
       return this.message;
     }
@@ -394,14 +161,14 @@ export default class LineEvent implements Event<LineRawEvent> {
    *
    */
   get isLocation(): boolean {
-    return this.isMessage && (this.message as Message).type === 'location';
+    return this.isMessage && (this.message as EventMessage).type === 'location';
   }
 
   /**
    * The location object from LINE raw event.
    *
    */
-  get location(): Message | null {
+  get location(): EventMessage | null {
     if (this.isLocation) {
       return this.message;
     }
@@ -413,14 +180,14 @@ export default class LineEvent implements Event<LineRawEvent> {
    *
    */
   get isSticker(): boolean {
-    return this.isMessage && (this.message as Message).type === 'sticker';
+    return this.isMessage && (this.message as EventMessage).type === 'sticker';
   }
 
   /**
    * The sticker object from LINE raw event.
    *
    */
-  get sticker(): Message | null {
+  get sticker(): EventMessage | null {
     if (this.isSticker) {
       return this.message;
     }

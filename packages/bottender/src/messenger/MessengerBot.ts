@@ -5,10 +5,10 @@ import SessionStore from '../session/SessionStore';
 
 import MessengerConnector, {
   MessengerConnectorOptions,
-  MessengerRequestBody,
 } from './MessengerConnector';
 import MessengerContext from './MessengerContext';
 import MessengerEvent from './MessengerEvent';
+import { MessengerRequestBody } from './MessengerTypes';
 
 export default class MessengerBot extends Bot<
   MessengerRequestBody,

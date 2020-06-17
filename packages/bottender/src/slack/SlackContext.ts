@@ -8,9 +8,10 @@ import Context from '../context/Context';
 import Session from '../session/Session';
 import { RequestContext } from '../types';
 
-import SlackEvent, { Message, UIEvent } from './SlackEvent';
+import SlackEvent from './SlackEvent';
+import { Message, UIEvent } from './SlackTypes';
 
-type Options = {
+export type SlackContextOptions = {
   client: SlackOAuthClient;
   event: SlackEvent;
   session?: Session | null;
@@ -65,7 +66,7 @@ export default class SlackContext extends Context<
     initialState,
     requestContext,
     emitter,
-  }: Options) {
+  }: SlackContextOptions) {
     super({ client, event, session, initialState, requestContext, emitter });
 
     this.chat = {

@@ -4,9 +4,10 @@ import { SlackOAuthClient } from 'messaging-api-slack';
 import Bot, { OnRequest } from '../bot/Bot';
 import SessionStore from '../session/SessionStore';
 
-import SlackConnector, { SlackRequestBody } from './SlackConnector';
+import SlackConnector from './SlackConnector';
 import SlackContext from './SlackContext';
 import SlackEvent from './SlackEvent';
+import { SlackRequestBody } from './SlackTypes';
 
 export default class SlackBot extends Bot<
   SlackRequestBody,

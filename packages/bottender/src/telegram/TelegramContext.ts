@@ -1,9 +1,10 @@
 import warning from 'warning';
-import { TelegramClient, TelegramTypes as Type } from 'messaging-api-telegram';
+import { TelegramClient } from 'messaging-api-telegram';
 
 import Context from '../context/Context';
 
 import TelegramEvent from './TelegramEvent';
+import * as Type from './TelegramTypes';
 
 class TelegramContext extends Context<TelegramClient, TelegramEvent> {
   /**

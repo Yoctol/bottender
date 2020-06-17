@@ -5,17 +5,10 @@ import SessionStore from '../session/SessionStore';
 
 import TelegramConnector, {
   TelegramConnectorOptions,
-  TelegramRequestBody,
 } from './TelegramConnector';
 import TelegramContext from './TelegramContext';
 import TelegramEvent from './TelegramEvent';
-
-type PollingOptions = {
-  offset?: number;
-  limit?: number;
-  timeout?: number;
-  allowedUpdates?: string[];
-};
+import { PollingOptions, TelegramRequestBody } from './TelegramTypes';
 
 export default class TelegramBot extends Bot<
   TelegramRequestBody,
@@ -83,7 +76,7 @@ export default class TelegramBot extends Bot<
     /* eslint-enable no-await-in-loop */
   }
 
-  stop() {
+  stop(): void {
     this._shouldGetUpdates = false;
   }
 }

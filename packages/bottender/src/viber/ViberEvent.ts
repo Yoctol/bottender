@@ -1,103 +1,16 @@
 import { Event } from '../context/Event';
 
-type ViberUser = {
-  id: string;
-  name: string;
-  avatar: string;
-  country: string;
-  language: string;
-  apiVersion: number;
-};
-
-type SubscribedEvent = {
-  event: 'subscribed';
-  timestamp: number;
-  user: ViberUser;
-  messageToken: number;
-};
-
-type UnsubscribedEvent = {
-  event: 'unsubscribed';
-  timestamp: number;
-  userId: string;
-  messageToken: number;
-};
-
-type ConversationStartedEvent = {
-  event: 'conversation_started';
-  timestamp: number;
-  messageToken: number;
-  type: 'open';
-  context: string;
-  user: ViberUser;
-  subscribed: false;
-};
-
-type DeliveredEvent = {
-  event: 'delivered';
-  timestamp: number;
-  messageToken: number;
-  userId: string;
-};
-
-type SeenEvent = {
-  event: 'seen';
-  timestamp: number;
-  messageToken: number;
-  userId: string;
-};
-
-type FailedEvent = {
-  event: 'failed';
-  timestamp: number;
-  messageToken: number;
-  userId: string;
-  desc: string;
-};
-
-type ViberMessage = {
-  type:
-    | 'text'
-    | 'picture'
-    | 'video'
-    | 'file'
-    | 'sticker'
-    | 'contact'
-    | 'url'
-    | 'location';
-  text?: string;
-  media?: string;
-  location?: {
-    lat: string;
-    lot: string;
-  };
-  contact?: {
-    name: string;
-    phoneNumber: string;
-  };
-  trackingData?: string;
-  fileName?: string;
-  fileSize?: number;
-  duration?: number;
-  stickerId?: number;
-};
-
-type MessageEvent = {
-  event: 'message';
-  timestamp: number;
-  messageToken: number;
-  sender: ViberUser;
-  message: ViberMessage;
-};
-
-export type ViberRawEvent =
-  | SubscribedEvent
-  | UnsubscribedEvent
-  | ConversationStartedEvent
-  | DeliveredEvent
-  | SeenEvent
-  | FailedEvent
-  | MessageEvent;
+import {
+  ConversationStartedEvent,
+  DeliveredEvent,
+  FailedEvent,
+  MessageEvent,
+  SeenEvent,
+  SubscribedEvent,
+  UnsubscribedEvent,
+  ViberMessage,
+  ViberRawEvent,
+} from './ViberTypes';
 
 export default class ViberEvent implements Event<ViberRawEvent> {
   _rawEvent: ViberRawEvent;

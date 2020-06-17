@@ -7,13 +7,13 @@ import { MessengerBatchQueue } from 'messenger-batch';
 
 import FacebookBatch from './FacebookBatch';
 import FacebookClient from './FacebookClient';
-import FacebookEvent, { Comment } from './FacebookEvent';
+import FacebookEvent from './FacebookEvent';
 import * as Types from './FacebookTypes';
 
 // TODO: use exported type
 type Session = Record<string, any>;
 
-type Options = {
+export type FacebookContextOptions = {
   appId?: string;
   client: FacebookClient;
   event: FacebookEvent;
@@ -45,7 +45,7 @@ export default class FacebookContext extends Context<
     customAccessToken,
     batchQueue,
     emitter,
-  }: Options) {
+  }: FacebookContextOptions) {
     super({ client, event, session, initialState, requestContext, emitter });
     this._customAccessToken = customAccessToken;
     this._batchQueue = batchQueue || undefined;
@@ -159,10 +159,10 @@ export default class FacebookContext extends Context<
     let objectId;
     if (this._event.isComment) {
       objectId = this._event.isFirstLayerComment
-        ? (this._event.rawEvent.value as Comment).commentId
-        : (this._event.rawEvent.value as Comment).parentId;
+        ? (this._event.rawEvent.value as Types.FeedComment).commentId
+        : (this._event.rawEvent.value as Types.FeedComment).parentId;
     } else if (this._event.isPost) {
-      objectId = (this._event.rawEvent.value as Comment).postId;
+      objectId = (this._event.rawEvent.value as Types.FeedComment).postId;
     }
 
     // TODO: support more type: Album, Event, Life Event, Link, Live Video, Note, Photo, Thread, User, Video
@@ -194,9 +194,9 @@ export default class FacebookContext extends Context<
   public async sendLike(): Promise<{ success: boolean }> {
     let objectId;
     if (this._event.isComment) {
-      objectId = (this._event.rawEvent.value as Comment).commentId;
+      objectId = (this._event.rawEvent.value as Types.FeedComment).commentId;
     } else if (this._event.isPost) {
-      objectId = (this._event.rawEvent.value as Comment).postId;
+      objectId = (this._event.rawEvent.value as Types.FeedComment).postId;
     }
 
     // TODO: support more type: Album, Event, Life Event, Link, Live Video, Note, Photo, Thread, User, Video
@@ -223,7 +223,8 @@ export default class FacebookContext extends Context<
   public async getComment(
     options: Types.GetCommentOptions
   ): Promise<Types.Comment | null> {
-    const commentId = (this._event.rawEvent.value as Comment).commentId;
+    const commentId = (this._event.rawEvent.value as Types.FeedComment)
+      .commentId;
 
     if (!commentId) {
       warning(false, 'Could not getComment if there is no comment.');
@@ -248,8 +249,9 @@ export default class FacebookContext extends Context<
    *
    * @param options -
    */
-  public getLikes(options: Types.GetLikesOptions) {
-    const objectId = (this._event.rawEvent.value as Comment).commentId; // FIXME: postId
+  public getLikes(options: Types.GetLikesOptions): Promise<Types.Likes> {
+    const objectId = (this._event.rawEvent.value as Types.FeedComment)
+      .commentId; // FIXME: postId
 
     if (this._batchQueue) {
       return this._batchQueue.push(

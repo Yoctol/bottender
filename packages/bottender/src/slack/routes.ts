@@ -3,7 +3,7 @@ import { Action } from '../types';
 import { RoutePredicate, route } from '../router';
 
 import SlackContext from './SlackContext';
-import { EventTypes } from './SlackEvent';
+import { EventTypes } from './SlackTypes';
 
 type Route = <C extends Context>(
   action: Action<SlackContext, any>

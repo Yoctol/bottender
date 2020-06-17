@@ -3,12 +3,10 @@ import { ViberClient } from 'messaging-api-viber';
 import Bot, { OnRequest } from '../bot/Bot';
 import SessionStore from '../session/SessionStore';
 
-import ViberConnector, {
-  ViberConnectorOptions,
-  ViberRequestBody,
-} from './ViberConnector';
+import ViberConnector, { ViberConnectorOptions } from './ViberConnector';
 import ViberContext from './ViberContext';
 import ViberEvent from './ViberEvent';
+import { ViberRequestBody } from './ViberTypes';
 
 export default class ViberBot extends Bot<
   ViberRequestBody,

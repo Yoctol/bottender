@@ -6,14 +6,14 @@ import { TelegramClient } from 'messaging-api-telegram';
 
 import Session from '../session/Session';
 import { Connector } from '../bot/Connector';
-import { RequestContext } from '../types';
 
 import TelegramContext from './TelegramContext';
-import TelegramEvent, { TelegramRawEvent } from './TelegramEvent';
-
-export type TelegramRequestBody = TelegramRawEvent;
-
-type TelegramRequestContext = RequestContext<TelegramRequestBody>;
+import TelegramEvent from './TelegramEvent';
+import {
+  TelegramRawEvent,
+  TelegramRequestBody,
+  TelegramRequestContext,
+} from './TelegramTypes';
 
 type ConnectorOptionsWithoutClient = {
   accessToken: string;
