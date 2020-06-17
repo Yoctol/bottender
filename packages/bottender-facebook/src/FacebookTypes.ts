@@ -114,22 +114,92 @@ export type FeedReaction = {
 
 export type FeedEvent = {
   item: 'event';
-  [key: string]: any; // FIXME
+  message?: string;
+  postId: string;
+  story?: string;
+  eventId: string;
+  verb: 'add';
+  createdTime: number;
 };
 
 export type FeedPhoto = {
   item: 'photo';
-  [key: string]: any; // FIXME
+  from: {
+    id: string;
+    name?: string;
+  };
+  link?: string;
+  message?: string;
+  postId: string;
+  createdTime: number;
+  photoId: string;
+  published: 0 | 1;
+  verb: 'add' | 'edited';
 };
 
-export type FeedVideo = {
-  item: 'video';
-  [key: string]: any; // FIXME
-};
+export type FeedVideo =
+  | {
+      item: 'video';
+      from: {
+        id: string;
+        name?: string;
+      };
+      link?: string;
+      message?: string;
+      postId: string;
+      createdTime: number;
+      published: 0 | 1;
+      verb: 'add' | 'edited';
+      videoId: string;
+    }
+  | {
+      item: 'video';
+      from: {
+        id: string;
+        name?: string;
+      };
+      postId: string;
+      createdTime: number;
+      verb: 'remove';
+      recipientId: string;
+    }
+  | {
+      item: 'video';
+      link: string;
+      message?: string;
+      videoFlagReason: 1;
+      verb: 'mute';
+      videoId: string;
+    }
+  | {
+      item: 'video';
+      message?: string;
+      videoFlagReason: 1;
+      verb: 'block';
+      videoId: string;
+    }
+  | {
+      item: 'video';
+      link: string;
+      message?: string;
+      videoFlagReason: 1;
+      verb: 'unblock';
+      videoId: string;
+    };
 
 export type FeedShare = {
   item: 'share';
-  [key: string]: any; // FIXME
+  from: {
+    id: string;
+    name?: string;
+  };
+  link?: string;
+  message?: string;
+  postId: string;
+  createdTime: number;
+  published: 0 | 1;
+  verb: 'add' | 'edited';
+  shareId: string;
 };
 
 export type FeedPageLike = {
