@@ -29,18 +29,75 @@ export type FeedPost = {
 
 export type FeedComment = {
   from: {
+    /**
+     * The ID of the sender
+     */
     id: string;
+    /**
+     * The name of the sender
+     */
     name?: string;
   };
   item: 'comment';
+  /**
+   * The comment ID
+   */
   commentId: string;
+  /**
+   * The post ID
+   */
   postId: string;
-  verb: 'add' | 'edited' | 'remove';
+  /**
+   * The parent ID
+   */
   parentId: string;
+  /**
+   * The timestamp of when the object was created
+   */
   createdTime: number;
-  message: string;
-  canReplyPrivately?: boolean;
-};
+  /**
+   * Provide additional content about a post
+   */
+  post?: {
+    /**
+     * The ID of the post
+     */
+    id: string;
+    /**
+     * The type of the post
+     */
+    type: 'photo' | 'video' | string;
+    /**
+     * Description of the type of a status update.
+     */
+    statusType: 'added_photos' | 'added_videos' | string;
+    /**
+     * The time the post was last updated, which occurs when a user comments on the post.
+     */
+    updatedTime: string;
+    /**
+     * Status of the promotion, if the post was promoted
+     */
+    promotionStatus: 'inactive' | 'extendable' | string;
+    /**
+     * The permanent static URL to the post on www.facebook.com.
+     */
+    permalinkUrl: string;
+    /**
+     * Indicates whether a scheduled post was published (applies to scheduled Page Post only, for users post and instanlty published posts this value is always true)
+     */
+    isPublished: boolean;
+  };
+} & (
+  | {
+      verb: 'add' | 'edited';
+      /**
+       * The message that is part of the content
+       */
+      message: string;
+    }
+  | { verb: 'remove' }
+);
 
 export type FeedReaction = {
   reactionType: 'like' | 'love' | 'haha' | 'wow' | 'sad' | 'angry' | 'care';
@@ -80,6 +137,9 @@ export type FeedPageLike = {
   verb: 'add';
 };
 
+/**
+ * item: album, address, comment, connection, coupon, event, experience, group, group_message, interest, like, link, mention, milestone, note, page, picture, platform-story, photo, photo-album, post, profile, question, rating, reaction, relationship-status, share, status, story, timeline cover, tag, video
+ */
 export type FacebookRawEvent = {
   field: 'feed';
   value:
