@@ -75,19 +75,23 @@ export default class FacebookContext extends Context<
       return;
     }
 
-    if (this._event.rawEvent.value.verb === 'remove') {
+    const value = this._event.rawEvent.value as
+      | Types.FeedPost
+      | Types.FeedComment;
+
+    if (value.verb === 'remove') {
       warning(false, "sendText: can't  work with remove verb");
       return;
     }
 
     let recipient;
-    if (this._event.rawEvent.value.item === 'comment') {
+    if (value.item === 'comment') {
       recipient = {
-        commentId: this._event.rawEvent.value.commentId,
+        commentId: value.commentId,
       };
     } else {
       recipient = {
-        postId: this._event.rawEvent.value.postId,
+        postId: value.postId,
       };
     }
 
@@ -119,18 +123,22 @@ export default class FacebookContext extends Context<
       return;
     }
 
-    if (this._event.rawEvent.value.verb === 'remove') {
+    const value = this._event.rawEvent.value as
+      | Types.FeedPost
+      | Types.FeedComment;
+
+    if (value.verb === 'remove') {
       warning(false, "sendMessage: can't  work with remove verb");
     }
 
     let recipient;
-    if (this._event.rawEvent.value.item === 'comment') {
+    if (value.item === 'comment') {
       recipient = {
-        commentId: this._event.rawEvent.value.commentId,
+        commentId: value.commentId,
       };
     } else {
       recipient = {
-        postId: this._event.rawEvent.value.postId,
+        postId: value.postId,
       };
     }
 

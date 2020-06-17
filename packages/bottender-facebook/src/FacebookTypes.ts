@@ -23,7 +23,7 @@ export type FeedPost = {
   };
   item: 'post';
   postId: string;
-  verb: 'remove';
+  verb: 'add' | 'edited' | 'remove';
   createdTime: number;
 };
 
@@ -75,6 +75,11 @@ export type FeedShare = {
   [key: string]: any; // FIXME
 };
 
+export type FeedPageLike = {
+  item: 'like';
+  verb: 'add';
+};
+
 export type FacebookRawEvent = {
   field: 'feed';
   value:
@@ -85,7 +90,8 @@ export type FacebookRawEvent = {
     | FeedEvent
     | FeedPhoto
     | FeedVideo
-    | FeedShare;
+    | FeedShare
+    | FeedPageLike;
 };
 
 export type ChangesEntry = {
