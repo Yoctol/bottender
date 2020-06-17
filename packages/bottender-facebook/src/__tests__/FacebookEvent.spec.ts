@@ -1,4 +1,5 @@
-import FacebookEvent, { FacebookRawEvent } from '../FacebookEvent';
+import FacebookEvent from '../FacebookEvent';
+import { FacebookRawEvent } from '../FacebookTypes';
 
 const statusAdd: FacebookRawEvent = {
   field: 'feed',
@@ -153,7 +154,7 @@ const reactionRemove: FacebookRawEvent = {
 
 const pageId = '137542570280111';
 
-const sentByPage = {
+const sentByPage: FacebookRawEvent = {
   field: 'feed',
   value: {
     from: {
@@ -170,7 +171,7 @@ const sentByPage = {
   },
 };
 
-const videoCommentAdd = {
+const videoCommentAdd: FacebookRawEvent = {
   field: 'feed',
   value: {
     from: {
