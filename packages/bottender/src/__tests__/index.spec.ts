@@ -23,6 +23,15 @@ describe('core', () => {
     expect(core.ViberConnector).toBeDefined();
   });
 
+  it('export clients', () => {
+    expect(core.MessengerClient).toBeDefined();
+    expect(core.TwilioClient).toBeDefined();
+    expect(core.LineClient).toBeDefined();
+    expect(core.SlackOAuthClient).toBeDefined();
+    expect(core.TelegramClient).toBeDefined();
+    expect(core.ViberClient).toBeDefined();
+  });
+
   it('export cache implements', () => {
     expect(core.MemoryCacheStore).toBeDefined();
     expect(core.RedisCacheStore).toBeDefined();
