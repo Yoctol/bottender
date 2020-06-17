@@ -259,6 +259,66 @@ const blockActionsOnHomeTabRequest = {
   ],
 };
 
+const viewClosedRequest = {
+  type: 'view_closed',
+  team: {
+    id: 'T0HD00000',
+    domain: 'etrexgroup',
+  },
+  user: {
+    id: 'U0HD00000',
+    username: 'etrexkuo',
+    name: 'etrexkuo',
+    teamId: 'T0HD00000',
+  },
+  apiAppId: 'AQ8600000',
+  token: 'zqJtOkYeD6jkqEpZSzv4KLY2',
+  view: {
+    id: 'V015K400000',
+    teamId: 'T0HD00000',
+    type: 'modal',
+    blocks: [
+      {
+        type: 'actions',
+        blockId: '4AGRy',
+        elements: [
+          {
+            type: 'button',
+            actionId: 'qq',
+            text: {
+              type: 'plain_text',
+              text: 'buton text',
+              emoji: true,
+            },
+          },
+        ],
+      },
+    ],
+    privateMetadata: '',
+    callbackId: '',
+    state: {
+      values: {},
+    },
+    hash: '1592381497.91f5a24e',
+    title: {
+      type: 'plain_text',
+      text: 'title',
+      emoji: true,
+    },
+    clearOnClose: false,
+    notifyOnClose: true,
+    close: null,
+    submit: null,
+    previousViewId: null,
+    rootViewId: 'V015K400000',
+    appId: 'AQ8600000',
+    externalId: '',
+    appInstalledTeamId: 'T0HD00000',
+    botId: 'BQMT00000',
+  },
+  isCleared: true,
+};
+
 const RtmMessage = {
   type: 'message',
   channel: 'G7W5WAAAA',
@@ -369,12 +429,12 @@ describe('#getUniqueSessionKey', () => {
     expect(sessionKey).toBe('G7W5W0000');
   });
 
-  it("extract correct session key from view event's private_metadata", () => {
+  it('extract correct session key from viewSubmissionRequest', () => {
     const { connector } = setup();
     const sessionKey = connector.getUniqueSessionKey(
       viewSubmissionRequest.body
     );
-    expect(sessionKey).toBe('C02ELGNBH');
+    expect(sessionKey).toBe('UCL2D708M');
   });
 
   // home tab
@@ -399,6 +459,12 @@ describe('#getUniqueSessionKey', () => {
     const sessionKey = connector.getUniqueSessionKey(
       blockActionsOnHomeTabRequest
     );
+    expect(sessionKey).toBe('U0HD00000');
+  });
+
+  it('extract correct session key from viewClosedRequest', () => {
+    const { connector } = setup();
+    const sessionKey = connector.getUniqueSessionKey(viewClosedRequest);
     expect(sessionKey).toBe('U0HD00000');
   });
 });

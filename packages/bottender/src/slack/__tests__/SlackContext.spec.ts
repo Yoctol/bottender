@@ -464,10 +464,7 @@ describe('#views.open', () => {
 
     expect(client.views.open).toBeCalledWith({
       triggerId: '12345.98765.abcd2358fdea',
-      view: {
-        ...VIEW_PAYLOAD,
-        privateMetadata: '{"original":"Shh it is a secret"}',
-      },
+      view: VIEW_PAYLOAD,
     });
   });
 });
