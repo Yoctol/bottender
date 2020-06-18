@@ -1,8 +1,12 @@
 import { EventEmitter } from 'events';
 
 import warning from 'warning';
-import { Context, MessengerTypes, RequestContext } from 'bottender';
-import { MessengerBatch } from 'messaging-api-messenger';
+import {
+  Context,
+  MessengerBatch,
+  MessengerTypes,
+  RequestContext,
+} from 'bottender';
 import { MessengerBatchQueue } from 'messenger-batch';
 
 import FacebookBatch from './FacebookBatch';

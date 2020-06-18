@@ -1,6 +1,6 @@
 import querystring from 'querystring';
 
-import { MessengerTypes } from 'messaging-api-messenger';
+import { MessengerTypes } from 'bottender';
 
 import * as Types from './FacebookTypes';
 

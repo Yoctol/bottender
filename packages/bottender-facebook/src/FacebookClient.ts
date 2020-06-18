@@ -1,6 +1,6 @@
 import AxiosError from 'axios-error';
 import get from 'lodash/get';
-import { MessengerClient, MessengerTypes } from 'messaging-api-messenger';
+import { MessengerClient, MessengerTypes } from 'bottender';
 
 import * as Types from './FacebookTypes';
 
