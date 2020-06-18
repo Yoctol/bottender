@@ -151,6 +151,14 @@ export default class SlackConnector
       return rawEvent.channelId;
     }
 
+    // For slack modal
+    if (rawEvent.view && rawEvent.view.privateMetadata) {
+      const channelId = JSON.parse(rawEvent.view.privateMetadata).channelId;
+      if (channelId) {
+        return channelId;
+      }
+    }
+
     // For reaction_added format
     if (
       rawEvent.item &&

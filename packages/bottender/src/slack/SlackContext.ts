@@ -9,7 +9,7 @@ import Session from '../session/Session';
 import { RequestContext } from '../types';
 
 import SlackEvent from './SlackEvent';
-import { Message } from './SlackTypes';
+import { Message, UIEvent } from './SlackTypes';
 
 export type SlackContextOptions = {
   client: SlackOAuthClient;
@@ -345,7 +345,16 @@ export default class SlackContext extends Context<
    * https://api.slack.com/methods/views.open
    */
   _openView(options: SlackTypes.OpenViewOptions): Promise<any> {
-    return this._client.views.open(options);
+    return this._client.views.open({
+      ...options,
+      view: {
+        ...options.view,
+        privateMetadata: JSON.stringify({
+          original: options.view.privateMetadata,
+          channelId: (this._event.rawEvent as UIEvent).channel?.id,
+        }),
+      },
+    });
   }
 
   /**
