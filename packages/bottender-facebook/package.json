@@ -19,11 +19,9 @@
     "warning": "^4.0.3"
   },
   "peerDependencies": {
-    "bottender": ">= 1.5.0-alpha.13",
-    "messaging-api-messenger": ">= 1.0.0-beta.26"
+    "bottender": ">= 1.5.1-alpha.1"
   },
   "devDependencies": {
-    "bottender": "^1.5.1-alpha.1",
-    "messaging-api-messenger": "^1.0.0-beta.26"
+    "bottender": "^1.5.1-alpha.1"
   }
 }
