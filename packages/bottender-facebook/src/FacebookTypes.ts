@@ -105,7 +105,7 @@ export type FeedReaction = {
     id: string;
   };
   parentId: string;
-  commentId: string;
+  commentId?: string;
   postId: string;
   verb: 'add' | 'edit' | 'remove';
   item: 'reaction';
