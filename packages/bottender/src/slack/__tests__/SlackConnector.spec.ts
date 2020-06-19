@@ -584,7 +584,7 @@ const blockActionsOnChannelModalRequest = {
         elements: [
           {
             type: 'plain_text',
-            text: '佳甯 郭 已經幫你打卡囉！ 2020/06/18 19:38 button text',
+            text: 'button text',
             emoji: true,
           },
         ],
@@ -758,7 +758,7 @@ const viewCloseOnChannelModalRequest = {
         elements: [
           {
             type: 'plain_text',
-            text: '佳甯 郭 已經幫你打卡囉！ 2020/06/18 19:41 button text',
+            text: 'button text',
             emoji: true,
           },
         ],
