@@ -219,14 +219,14 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       return this._batchQueue.push(
         MessengerBatch.getUserPersistentMenu(
           this._session.user.id,
-          this._getSendMethodOptions(options)
+          this._getMethodOptions(options)
         )
       );
     }
 
     return this._client.getUserPersistentMenu(
       this._session.user.id,
-      this._getSendMethodOptions(options)
+      this._getMethodOptions(options)
     );
   }
 
@@ -247,7 +247,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
         MessengerBatch.setUserPersistentMenu(
           this._session.user.id,
           attrs,
-          this._getSendMethodOptions(options)
+          this._getMethodOptions(options)
         )
       );
     }
@@ -255,7 +255,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
     return this._client.setUserPersistentMenu(
       this._session.user.id,
       attrs,
-      this._getSendMethodOptions(options)
+      this._getMethodOptions(options)
     );
   }
 
@@ -274,14 +274,14 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       return this._batchQueue.push(
         MessengerBatch.deleteUserPersistentMenu(
           this._session.user.id,
-          this._getSendMethodOptions(options)
+          this._getMethodOptions(options)
         )
       );
     }
 
     return this._client.deleteUserPersistentMenu(
       this._session.user.id,
-      this._getSendMethodOptions(options),
+      this._getMethodOptions(options),
     );
   }
 
