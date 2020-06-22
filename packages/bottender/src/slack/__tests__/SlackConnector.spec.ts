@@ -97,47 +97,11 @@ const PinAddedRequest = {
 const interactiveMessageRequest = {
   body: {
     payload:
-      '{"type":"interactive_message","actions":[{"name":"game","type":"button","value":"chess"}],"callback_id":"wopr_game","team":{"id":"T056K3CM5","domain":"ricebug"},"channel":{"id":"D7WTL9ECE","name":"directmessage"},"user":{"id":"U056K3CN1","name":"tw0517tw"},"action_ts":"1511153911.446899","message_ts":"1511153905.000093","attachment_id":"1","token":"n8uIomPoBtc7fSnbHbQcmwdy","is_app_unfurl":false,"original_message":{"type":"message","user":"U7W1PH7MY","text":"Would you like to play a game?","bot_id":"B7VUVQTK5","attachments":[{"callback_id":"wopr_game","fallback":"You are unable to choose a game","text":"Choose a game to play","id":1,"color":"3AA3E3","actions":[{"id":"1","name":"game","text":"Chess","type":"button","value":"chess","style":""},{"id":"2","name":"game","text":"Falken\'s Maze","type":"button","value":"maze","style":""},{"id":"3","name":"game","text":"Thermonuclear War","type":"button","value":"war","style":"danger","confirm":{"text":"Wouldn\'t you prefer a good game of chess?","title":"Are you sure?","ok_text":"Yes","dismiss_text":"No"}}]}],"ts":"1511153905.000093"},"response_url":"https:\\/\\/hooks.slack.com\\/actions\\/T056K3CM5\\/274366307953\\/73rSfbP0LcVPWfAYB3GicEdD","trigger_id":"274927463524.5223114719.95a5b9f6d3b30dc7e07dec6bfa4610e5"}',
+      '{"type":"interactive_message","actions":[{"name":"game","type":"button","value":"chess"}],"callback_id":"wopr_game","team":{"id":"T056K3CM5","domain":"ricebug"},"channel":{"id":"D7WTL9ECE","name":"directmessage"},"user":{"id":"U056K3CN1","name":"tw0517tw"},"action_ts":"1511153911.446899","message_ts":"1511153905.000093","attachment_id":"1","token":"xxxxxxxxxxxxxxxxxxxxxxxx","is_app_unfurl":false,"original_message":{"type":"message","user":"U7W1PH7MY","text":"Would you like to play a game?","bot_id":"B7VUVQTK5","attachments":[{"callback_id":"wopr_game","fallback":"You are unable to choose a game","text":"Choose a game to play","id":1,"color":"3AA3E3","actions":[{"id":"1","name":"game","text":"Chess","type":"button","value":"chess","style":""},{"id":"2","name":"game","text":"Falken\'s Maze","type":"button","value":"maze","style":""},{"id":"3","name":"game","text":"Thermonuclear War","type":"button","value":"war","style":"danger","confirm":{"text":"Wouldn\'t you prefer a good game of chess?","title":"Are you sure?","ok_text":"Yes","dismiss_text":"No"}}]}],"ts":"1511153905.000093"},"response_url":"https:\\/\\/hooks.slack.com\\/actions\\/T056K3CM5\\/274366307953\\/73rSfbP0LcVPWfAYB3GicEdD","trigger_id":"274927463524.5223114719.95a5b9f6d3b30dc7e07dec6bfa4610e5"}',
   },
 };
 
-const viewSubmissionRequest = {
-  body: {
-    type: 'view_submission',
-    team: { id: 'T02RUPSBS', domain: 'yoctolinfo' },
-    user: {
-      id: 'UCL2D708M',
-      username: 'darkbtf',
-      name: 'darkbtf',
-      teamId: 'T02RUPSBS',
-    },
-    apiAppId: 'A604E7GSJ',
-    token: 'zBoHd4fjrvVcVuN9yTmlHMKC',
-    triggerId: '873508362498.2878808400.763026ca2acb11b3dfbcb85836d1c3d8',
-    view: {
-      id: 'VRQQ7JA4T',
-      teamId: 'T02RUPSBS',
-      type: 'modal',
-      blocks: [[Object]],
-      privateMetadata: '{"channelId":"C02ELGNBH"}',
-      callbackId: '截止',
-      state: { values: {} },
-      hash: '1577340522.d58ea69f',
-      title: { type: 'plain_text', text: '確認截止？', emoji: true },
-      clearOnClose: false,
-      notifyOnClose: false,
-      close: { type: 'plain_text', text: '取消', emoji: true },
-      submit: { type: 'plain_text', text: '送出 :boom:', emoji: true },
-      previousViewId: null,
-      rootViewId: 'VRQQ7JA4T',
-      appId: 'A604E7GSJ',
-      externalId: '',
-      appInstalledTeamId: 'T02RUPSBS',
-      botId: 'B618CBATV',
-    },
-  },
-};
-
+// Home
 const appHomeOpenedOnMessagesTabRequest = {
   type: 'app_home_opened',
   user: 'U0HD00000',
@@ -227,7 +191,7 @@ const blockActionsOnHomeTabRequest = {
         ],
       },
     ],
-    privateMetadata: '',
+    privateMetadata: '{}',
     callbackId: '',
     state: { values: {} },
     hash: '1592278912.3f2f9db2',
@@ -257,6 +221,596 @@ const blockActionsOnHomeTabRequest = {
       actionTs: '1592279552.931549',
     },
   ],
+};
+
+// Home Modal
+const blockActionsOnHomeModalRequest = {
+  type: 'block_actions',
+  user: {
+    id: 'U0HD00000',
+    username: 'username',
+    name: 'name',
+    teamId: 'T0HD00000',
+  },
+  apiAppId: 'AQ8600000',
+  token: 'xxxxxxxxxxxxxxxxxxxxxxxx',
+  container: {
+    type: 'view',
+    viewId: 'V015LD00000',
+  },
+  triggerId: '1215686778640.17443231012.3a6962eea96e7dac6d2f1a907af6211e',
+  team: {
+    id: 'T0HD00000',
+    domain: 'domain',
+  },
+  view: {
+    id: 'V015LD00000',
+    teamId: 'T0HD00000',
+    type: 'modal',
+    blocks: [
+      {
+        type: 'context',
+        blockId: '2C4D9',
+        elements: [
+          {
+            type: 'plain_text',
+            text: 'text',
+            emoji: true,
+          },
+        ],
+      },
+      {
+        type: 'actions',
+        blockId: 'DyE',
+        elements: [
+          {
+            type: 'button',
+            actionId: 'xQkxX',
+            text: {
+              type: 'plain_text',
+              text: 'button text',
+              emoji: true,
+            },
+            value: 'button value',
+          },
+        ],
+      },
+    ],
+    privateMetadata: '{}',
+    callbackId: '',
+    state: {
+      values: {},
+    },
+    hash: '1592476707.898fb949',
+    title: {
+      type: 'plain_text',
+      text: 'title',
+      emoji: true,
+    },
+    clearOnClose: false,
+    notifyOnClose: false,
+    close: {
+      type: 'plain_text',
+      text: 'close',
+      emoji: true,
+    },
+    submit: {
+      type: 'plain_text',
+      text: 'submit',
+      emoji: true,
+    },
+    previousViewId: null,
+    rootViewId: 'V015LD00000',
+    appId: 'AQ8600000',
+    externalId: '',
+    appInstalledTeamId: 'T0HD00000',
+    botId: 'BQMT00000',
+  },
+  actions: [
+    {
+      actionId: 'xQkxX',
+      blockId: 'DyE',
+      text: {
+        type: 'plain_text',
+        text: 'button text',
+        emoji: true,
+      },
+      value: 'button value',
+      type: 'button',
+      actionTs: '1592476752.557160',
+    },
+  ],
+};
+
+const viewSubmissionOnHomeModalRequest = {
+  type: 'view_submission',
+  team: {
+    id: 'T0HD00000',
+    domain: 'domain',
+  },
+  user: {
+    id: 'U0HD00000',
+    username: 'username',
+    name: 'name',
+    teamId: 'T0HD00000',
+  },
+  apiAppId: 'AQ8600000',
+  token: 'xxxxxxxxxxxxxxxxxxxxxxxx',
+  triggerId: '1204566923633.17443231012.da8c753637a7f27e40991411664d77a2',
+  view: {
+    id: 'V015N200000',
+    teamId: 'T0HD00000',
+    type: 'modal',
+    blocks: [
+      {
+        type: 'context',
+        blockId: 'Umz',
+        elements: [
+          {
+            type: 'plain_text',
+            text: 'text',
+            emoji: true,
+          },
+        ],
+      },
+      {
+        type: 'actions',
+        blockId: 'Sk7k8',
+        elements: [
+          {
+            type: 'button',
+            actionId: '0L7ew',
+            text: {
+              type: 'plain_text',
+              text: 'button text',
+              emoji: true,
+            },
+            value: 'button value',
+          },
+        ],
+      },
+    ],
+    privateMetadata: '{}',
+    callbackId: '',
+    state: {
+      values: {},
+    },
+    hash: '1592477178.60ca56c9',
+    title: {
+      type: 'plain_text',
+      text: 'title',
+      emoji: true,
+    },
+    clearOnClose: false,
+    notifyOnClose: false,
+    close: {
+      type: 'plain_text',
+      text: 'close',
+      emoji: true,
+    },
+    submit: {
+      type: 'plain_text',
+      text: 'submit',
+      emoji: true,
+    },
+    previousViewId: null,
+    rootViewId: 'V015N200000',
+    appId: 'AQ8600000',
+    externalId: '',
+    appInstalledTeamId: 'T0HD00000',
+    botId: 'BQMT00000',
+  },
+  responseUrls: [],
+};
+
+const viewCloseOnHomeModalRequest = {
+  type: 'view_closed',
+  team: {
+    id: 'T0HD00000',
+    domain: 'domain',
+  },
+  user: {
+    id: 'U0HD00000',
+    username: 'username',
+    name: 'name',
+    teamId: 'T0HD00000',
+  },
+  apiAppId: 'AQ8600000',
+  token: 'xxxxxxxxxxxxxxxxxxxxxxxx',
+  view: {
+    id: 'V0157600000',
+    teamId: 'T0HD00000',
+    type: 'modal',
+    blocks: [
+      {
+        type: 'context',
+        blockId: 'WC8',
+        elements: [
+          {
+            type: 'plain_text',
+            text: 'text',
+            emoji: true,
+          },
+        ],
+      },
+      {
+        type: 'actions',
+        blockId: 'ZbPy',
+        elements: [
+          {
+            type: 'button',
+            actionId: 'muR',
+            text: {
+              type: 'plain_text',
+              text: 'button text',
+              emoji: true,
+            },
+            value: 'button value',
+          },
+        ],
+      },
+    ],
+    privateMetadata: '{}',
+    callbackId: '',
+    state: {
+      values: {},
+    },
+    hash: '1592480265.1283b0b7',
+    title: {
+      type: 'plain_text',
+      text: 'title',
+      emoji: true,
+    },
+    clearOnClose: false,
+    notifyOnClose: true,
+    close: {
+      type: 'plain_text',
+      text: 'close',
+      emoji: true,
+    },
+    submit: {
+      type: 'plain_text',
+      text: 'submit',
+      emoji: true,
+    },
+    previousViewId: null,
+    rootViewId: 'V0157600000',
+    appId: 'AQ8600000',
+    externalId: '',
+    appInstalledTeamId: 'T0HD00000',
+    botId: 'BQMT00000',
+  },
+  isCleared: true,
+};
+
+// Channel
+const blockActionsOnChannelRequest = {
+  type: 'block_actions',
+  user: {
+    id: 'U0HD00000',
+    username: 'username',
+    name: 'name',
+    teamId: 'T0HD00000',
+  },
+  apiAppId: 'AQ8600000',
+  token: 'xxxxxxxxxxxxxxxxxxxxxxxx',
+  container: {
+    type: 'message',
+    messageTs: '1592454263.013800',
+    channelId: 'DQMT00000',
+    isEphemeral: false,
+  },
+  triggerId: '1215785565232.17443231012.2e89dfa2540e010b618894ff8d2de08f',
+  team: {
+    id: 'T0HD00000',
+    domain: 'domain',
+  },
+  channel: {
+    id: 'DQMT00000',
+    name: 'directmessage',
+  },
+  message: {
+    botId: 'BQMT00000',
+    type: 'message',
+    text: "This content can't be displayed.",
+    user: 'UQKL00000',
+    ts: '1592454263.013800',
+    team: 'T0HD00000',
+    blocks: [
+      {
+        type: 'actions',
+        blockId: 'nxyEU',
+        elements: [
+          {
+            type: 'button',
+            actionId: 'bdj',
+            text: {
+              type: 'plain_text',
+              text: 'button text',
+              emoji: true,
+            },
+            value: 'button value',
+          },
+        ],
+      },
+    ],
+  },
+  responseUrl:
+    'https://hooks.slack.com/actions/T0HD00000/1190570555349/zCOfyY2sBayE3Amaj1GgXUtW',
+  actions: [
+    {
+      actionId: 'bdj',
+      blockId: 'nxyEU',
+      text: {
+        type: 'plain_text',
+        text: 'button text',
+        emoji: true,
+      },
+      value: 'button value',
+      type: 'button',
+      actionTs: '1592480315.455021',
+    },
+  ],
+};
+
+// Channel Modal
+const blockActionsOnChannelModalRequest = {
+  type: 'block_actions',
+  user: {
+    id: 'U0HD00000',
+    username: 'username',
+    name: 'name',
+    teamId: 'T0HD00000',
+  },
+  apiAppId: 'AQ8600000',
+  token: 'xxxxxxxxxxxxxxxxxxxxxxxx',
+  container: {
+    type: 'view',
+    viewId: 'V016BP00000',
+  },
+  triggerId: '1204575603665.17443231012.ccdd4f2d4b840eb48c451235f6b0a84c',
+  team: {
+    id: 'T0HD00000',
+    domain: 'domain',
+  },
+  view: {
+    id: 'V016BP00000',
+    teamId: 'T0HD00000',
+    type: 'modal',
+    blocks: [
+      {
+        type: 'context',
+        blockId: 'ikxi3',
+        elements: [
+          {
+            type: 'plain_text',
+            text: 'button text',
+            emoji: true,
+          },
+        ],
+      },
+      {
+        type: 'actions',
+        blockId: 'HWc',
+        elements: [
+          {
+            type: 'button',
+            actionId: 'c3pJ',
+            text: {
+              type: 'plain_text',
+              text: 'button text',
+              emoji: true,
+            },
+            value: 'button value',
+          },
+        ],
+      },
+    ],
+    privateMetadata: '{"channelId":"DQMT00000"}',
+    callbackId: '',
+    state: {
+      values: {},
+    },
+    hash: '1592480318.25f7311a',
+    title: {
+      type: 'plain_text',
+      text: 'title',
+      emoji: true,
+    },
+    clearOnClose: false,
+    notifyOnClose: true,
+    close: {
+      type: 'plain_text',
+      text: 'close',
+      emoji: true,
+    },
+    submit: {
+      type: 'plain_text',
+      text: 'submit',
+      emoji: true,
+    },
+    previousViewId: null,
+    rootViewId: 'V016BP00000',
+    appId: 'AQ8600000',
+    externalId: '',
+    appInstalledTeamId: 'T0HD00000',
+    botId: 'BQMT00000',
+  },
+  actions: [
+    {
+      actionId: 'c3pJ',
+      blockId: 'HWc',
+      text: {
+        type: 'plain_text',
+        text: 'button text',
+        emoji: true,
+      },
+      value: 'button value',
+      type: 'button',
+      actionTs: '1592480408.122391',
+    },
+  ],
+};
+
+const viewSubmissionOnChannelModalRequest = {
+  type: 'view_submission',
+  team: {
+    id: 'T0HD00000',
+    domain: 'domain',
+  },
+  user: {
+    id: 'U0HD00000',
+    username: 'username',
+    name: 'name',
+    teamId: 'T0HD00000',
+  },
+  apiAppId: 'AQ8600000',
+  token: 'xxxxxxxxxxxxxxxxxxxxxxxx',
+  triggerId: '1215789028880.17443231012.f9236c7807d6bdace1e7809e346b8e6c',
+  view: {
+    id: 'V016BP00000',
+    teamId: 'T0HD00000',
+    type: 'modal',
+    blocks: [
+      {
+        type: 'context',
+        blockId: 'ikxi3',
+        elements: [
+          {
+            type: 'plain_text',
+            text: 'text',
+            emoji: true,
+          },
+        ],
+      },
+      {
+        type: 'actions',
+        blockId: 'HWc',
+        elements: [
+          {
+            type: 'button',
+            actionId: 'c3pJ',
+            text: {
+              type: 'plain_text',
+              text: 'button text',
+              emoji: true,
+            },
+            value: 'button value',
+          },
+        ],
+      },
+    ],
+    privateMetadata: '{"channelId":"DQMT00000"}',
+    callbackId: '',
+    state: {
+      values: {},
+    },
+    hash: '1592480318.25f7311a',
+    title: {
+      type: 'plain_text',
+      text: 'title',
+      emoji: true,
+    },
+    clearOnClose: false,
+    notifyOnClose: true,
+    close: {
+      type: 'plain_text',
+      text: 'close',
+      emoji: true,
+    },
+    submit: {
+      type: 'plain_text',
+      text: 'submit',
+      emoji: true,
+    },
+    previousViewId: null,
+    rootViewId: 'V016BP00000',
+    appId: 'AQ8600000',
+    externalId: '',
+    appInstalledTeamId: 'T0HD00000',
+    botId: 'BQMT00000',
+  },
+  responseUrls: [],
+};
+
+const viewCloseOnChannelModalRequest = {
+  type: 'view_closed',
+  team: {
+    id: 'T0HD00000',
+    domain: 'domain',
+  },
+  user: {
+    id: 'U0HD00000',
+    username: 'username',
+    name: 'name',
+    teamId: 'T0HD00000',
+  },
+  apiAppId: 'AQ8600000',
+  token: 'xxxxxxxxxxxxxxxxxxxxxxxx',
+  view: {
+    id: 'V015LG00000',
+    teamId: 'T0HD00000',
+    type: 'modal',
+    blocks: [
+      {
+        type: 'context',
+        blockId: 'AQaXQ',
+        elements: [
+          {
+            type: 'plain_text',
+            text: 'button text',
+            emoji: true,
+          },
+        ],
+      },
+      {
+        type: 'actions',
+        blockId: 'QUo',
+        elements: [
+          {
+            type: 'button',
+            actionId: 'E2G9D',
+            text: {
+              type: 'plain_text',
+              text: 'button text',
+              emoji: true,
+            },
+            value: 'button value',
+          },
+        ],
+      },
+    ],
+    privateMetadata: '{"channelId":"DQMT00000"}',
+    callbackId: '',
+    state: {
+      values: {},
+    },
+    hash: '1592480467.1addf637',
+    title: {
+      type: 'plain_text',
+      text: 'title',
+      emoji: true,
+    },
+    clearOnClose: false,
+    notifyOnClose: true,
+    close: {
+      type: 'plain_text',
+      text: 'close',
+      emoji: true,
+    },
+    submit: {
+      type: 'plain_text',
+      text: 'submit',
+      emoji: true,
+    },
+    previousViewId: null,
+    rootViewId: 'V015LG00000',
+    appId: 'AQ8600000',
+    externalId: '',
+    appInstalledTeamId: 'T0HD00000',
+    botId: 'BQMT00000',
+  },
+  isCleared: false,
 };
 
 const RtmMessage = {
@@ -369,14 +923,6 @@ describe('#getUniqueSessionKey', () => {
     expect(sessionKey).toBe('G7W5W0000');
   });
 
-  it("extract correct session key from view event's private_metadata", () => {
-    const { connector } = setup();
-    const sessionKey = connector.getUniqueSessionKey(
-      viewSubmissionRequest.body
-    );
-    expect(sessionKey).toBe('C02ELGNBH');
-  });
-
   // home tab
   it('extract correct session key from appHomeOpenedOnMessagesTabRequest', () => {
     const { connector } = setup();
@@ -400,6 +946,65 @@ describe('#getUniqueSessionKey', () => {
       blockActionsOnHomeTabRequest
     );
     expect(sessionKey).toBe('U0HD00000');
+  });
+
+  // home modal
+  it('extract correct session key from blockActionsOnHomeModalRequest', () => {
+    const { connector } = setup();
+    const sessionKey = connector.getUniqueSessionKey(
+      blockActionsOnHomeModalRequest
+    );
+    expect(sessionKey).toBe('U0HD00000');
+  });
+
+  it('extract correct session key from viewSubmissionOnHomeModalRequest', () => {
+    const { connector } = setup();
+    const sessionKey = connector.getUniqueSessionKey(
+      viewSubmissionOnHomeModalRequest
+    );
+    expect(sessionKey).toBe('U0HD00000');
+  });
+
+  it('extract correct session key from viewCloseOnHomeModalRequest', () => {
+    const { connector } = setup();
+    const sessionKey = connector.getUniqueSessionKey(
+      viewCloseOnHomeModalRequest
+    );
+    expect(sessionKey).toBe('U0HD00000');
+  });
+
+  // channel
+  it('extract correct session key from blockActionsOnChannelRequest', () => {
+    const { connector } = setup();
+    const sessionKey = connector.getUniqueSessionKey(
+      blockActionsOnChannelRequest
+    );
+    expect(sessionKey).toBe('DQMT00000');
+  });
+
+  // channel modal
+  it('extract correct session key from blockActionsOnChannelModalRequest', () => {
+    const { connector } = setup();
+    const sessionKey = connector.getUniqueSessionKey(
+      blockActionsOnChannelModalRequest
+    );
+    expect(sessionKey).toBe('DQMT00000');
+  });
+
+  it('extract correct session key from viewSubmissionOnChannelModalRequest', () => {
+    const { connector } = setup();
+    const sessionKey = connector.getUniqueSessionKey(
+      viewSubmissionOnChannelModalRequest
+    );
+    expect(sessionKey).toBe('DQMT00000');
+  });
+
+  it('extract correct session key from viewCloseOnChannelModalRequest', () => {
+    const { connector } = setup();
+    const sessionKey = connector.getUniqueSessionKey(
+      viewCloseOnChannelModalRequest
+    );
+    expect(sessionKey).toBe('DQMT00000');
   });
 });
 

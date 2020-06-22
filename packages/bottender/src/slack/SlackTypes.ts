@@ -76,7 +76,7 @@ export type UIEvent = {
     id: string;
     domain: string;
   };
-  channel: {
+  channel?: {
     id: string;
     name: string;
   };

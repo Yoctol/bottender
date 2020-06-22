@@ -351,7 +351,7 @@ export default class SlackContext extends Context<
         ...options.view,
         privateMetadata: JSON.stringify({
           original: options.view.privateMetadata,
-          channelId: (this._event.rawEvent as UIEvent).channel.id,
+          channelId: (this._event.rawEvent as UIEvent).channel?.id,
         }),
       },
     });
