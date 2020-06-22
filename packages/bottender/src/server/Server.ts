@@ -121,9 +121,14 @@ class Server {
       return;
     }
 
-    const { pathname, searchParams } = new url.URL(
-      `https://${req.headers.host}${req.url}`
-    );
+    // TODO: add proxy support in Bottender to apply X-Forwarded-Host and X-Forwarded-Proto
+    // conditionally instead of replying on express.
+    const hostname = (req as any).hostname || req.headers.host;
+    const protocol = (req as any).protocol || 'https';
+
+    const requestUrl = `${protocol}://${hostname}${req.url}`;
+
+    const { pathname, searchParams } = new url.URL(requestUrl);
 
     const query = fromEntries(searchParams.entries());
 
@@ -133,7 +138,7 @@ class Server {
       if (pathname === webhookPath) {
         const result = (bot.connector as any).preprocess({
           method: req.method,
-          url: `https://${req.headers.host}${req.url}`,
+          url: requestUrl,
           headers: req.headers,
           query,
           rawBody: (req as any).rawBody,
