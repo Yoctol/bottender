@@ -206,7 +206,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
 
   async getPersistentMenu(
     options: MessengerTypes.SendOption = {}
-  ): Promise<MessengerTypes.PersistentMenu | undefined> {
+  ): Promise<MessengerTypes.PersistentMenu | null | undefined> {
     if (!this._session) {
       warning(
         false,
@@ -281,7 +281,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
 
     return this._client.deleteUserPersistentMenu(
       this._session.user.id,
-      this._getMethodOptions(options),
+      this._getMethodOptions(options)
     );
   }
 

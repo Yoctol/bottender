@@ -193,22 +193,24 @@ describe('Persistent Menu', () => {
     it('should call client getUserPersistentMenu', async () => {
       const { context, client, session } = setup();
 
-      const persistentMenu = [{
-        locale: 'default',
-        composer_input_disabled: false,
-        call_to_actions: [
-          {
-            type: 'postback',
-            title: 'Restart Conversation',
-            payload: 'RESTART',
-          },
-          {
-            type: 'web_url',
-            title: 'Powered by ALOHA.AI, Yoctol',
-            url: 'https://www.yoctol.com/',
-          },
-        ],
-      }];
+      const persistentMenu = [
+        {
+          locale: 'default',
+          composer_input_disabled: false,
+          call_to_actions: [
+            {
+              type: 'postback',
+              title: 'Restart Conversation',
+              payload: 'RESTART',
+            },
+            {
+              type: 'web_url',
+              title: 'Powered by ALOHA.AI, Yoctol',
+              url: 'https://www.yoctol.com/',
+            },
+          ],
+        },
+      ];
 
       client.getUserPersistentMenu.mockResolvedValue(persistentMenu);
 
@@ -231,41 +233,42 @@ describe('Persistent Menu', () => {
       );
       expect(client.getPersistentMenu).not.toBeCalled();
     });
-  })
+  });
 
   describe('#setPersistentMenu', () => {
     it('should call client setPersistentMenu', async () => {
       const { context, client, session } = setup();
 
-      const reply = {
-        result: 'success',
-      };
-
-      const persistentMenu = [{
-        locale: 'default',
-        composer_input_disabled: false,
-        call_to_actions: [
-          {
-            type: 'postback',
-            title: 'Restart Conversation',
-            payload: 'RESTART',
-          },
-          {
-            type: 'web_url',
-            title: 'Powered by ALOHA.AI, Yoctol',
-            url: 'https://www.yoctol.com/',
-          },
-        ],
-      }];
+      const persistentMenu = [
+        {
+          locale: 'default',
+          composer_input_disabled: false,
+          call_to_actions: [
+            {
+              type: 'postback',
+              title: 'Restart Conversation',
+              payload: 'RESTART',
+            },
+            {
+              type: 'web_url',
+              title: 'Powered by ALOHA.AI, Yoctol',
+              url: 'https://www.yoctol.com/',
+            },
+          ],
+        },
+      ];
 
       const result = await context.setPersistentMenu(persistentMenu);
 
-      expect(client.setUserPersistentMenu).toBeCalledWith(session.user.id,
-        persistentMenu, {
-        accessToken: undefined,
-      });
+      expect(client.setUserPersistentMenu).toBeCalledWith(
+        session.user.id,
+        persistentMenu,
+        {
+          accessToken: undefined,
+        }
+      );
 
-      expect(result).toEqual(reply);
+      expect(result).toBeUndefined();
     });
 
     it('should call warning and not to send if dont have session', async () => {
@@ -279,15 +282,11 @@ describe('Persistent Menu', () => {
       );
       expect(client.setPersistentMenu).not.toBeCalled();
     });
-  })
- 
+  });
+
   describe('#deletePersistentMenu', () => {
     it('should call client deletePersistentMenu', async () => {
       const { context, client, session } = setup();
-
-      const reply = {
-        result: 'success',
-      };
 
       const result = await context.deletePersistentMenu();
 
@@ -295,7 +294,7 @@ describe('Persistent Menu', () => {
         accessToken: undefined,
       });
 
-      expect(result).toEqual(reply);
+      expect(result).toBeUndefined();
     });
 
     it('should call warning and not to send if dont have session', async () => {
@@ -309,8 +308,8 @@ describe('Persistent Menu', () => {
       );
       expect(client.deletePersistentMenu).not.toBeCalled();
     });
-  })
-})
+  });
+});
 
 describe('#passThreadControl', () => {
   it('should call to pass user thread control to other app', async () => {
