@@ -148,9 +148,14 @@ class Server {
       return;
     }
 
-    const { pathname, searchParams } = new url.URL(
-      `https://${req.headers.host}${req.url}`
-    );
+    // TODO: add proxy support in Bottender to apply X-Forwarded-Host and X-Forwarded-Proto
+    // conditionally instead of replying on express.
+    const hostname = (req as any).hostname || req.headers.host;
+    const protocol = (req as any).protocol || 'https';
+
+    const requestUrl = `${protocol}://${hostname}${req.url}`;
+
+    const { pathname, searchParams } = new url.URL(requestUrl);
 
     const query = fromEntries(searchParams.entries());
 
@@ -170,7 +175,7 @@ class Server {
           rawBody: (req as any).rawBody,
           body: (req as any).body,
           params: matchResult.params,
-          url: `https://${req.headers.host}${req.url}`,
+          url: requestUrl,
         };
 
         // eslint-disable-next-line no-await-in-loop
