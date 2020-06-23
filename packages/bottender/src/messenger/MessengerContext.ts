@@ -204,15 +204,15 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
     );
   }
 
-  async getPersistentMenu(
+  async getUserPersistentMenu(
     options: MessengerTypes.SendOption = {}
-  ): Promise<MessengerTypes.PersistentMenu | null | undefined> {
+  ): Promise<MessengerTypes.PersistentMenu | null> {
     if (!this._session) {
       warning(
         false,
-        `getPersistentMenu: should not be called in context without session`
+        `getUserPersistentMenu: should not be called in context without session`
       );
-      return;
+      return null;
     }
 
     if (this._batchQueue) {
@@ -230,14 +230,14 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
     );
   }
 
-  async setPersistentMenu(
+  async setUserPersistentMenu(
     attrs: MessengerTypes.PersistentMenu,
     options: MessengerTypes.SendOption = {}
   ): Promise<MessengerTypes.MutationSuccessResponse | undefined> {
     if (!this._session) {
       warning(
         false,
-        `setPersistentMenu: should not be called in context without session`
+        `setUserPersistentMenu: should not be called in context without session`
       );
       return;
     }
@@ -259,13 +259,13 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
     );
   }
 
-  async deletePersistentMenu(
+  async deleteUserPersistentMenu(
     options: MessengerTypes.SendOption = {}
   ): Promise<MessengerTypes.MutationSuccessResponse | undefined> {
     if (!this._session) {
       warning(
         false,
-        `deletePersistentMenu: should not be called in context without session`
+        `deleteUserPersistentMenu: should not be called in context without session`
       );
       return;
     }

@@ -189,7 +189,7 @@ describe('#getUserProfile', () => {
 });
 
 describe('Persistent Menu', () => {
-  describe('#getPersistentMenu', () => {
+  describe('#getUserPersistentMenu', () => {
     it('should call client getUserPersistentMenu', async () => {
       const { context, client, session } = setup();
 
@@ -214,7 +214,7 @@ describe('Persistent Menu', () => {
 
       client.getUserPersistentMenu.mockResolvedValue(persistentMenu);
 
-      const result = await context.getPersistentMenu();
+      const result = await context.getUserPersistentMenu();
 
       expect(client.getUserPersistentMenu).toBeCalledWith(session.user.id, {
         accessToken: undefined,
@@ -225,18 +225,18 @@ describe('Persistent Menu', () => {
     it('should call warning and not to send if dont have session', async () => {
       const { context, client } = setup({ session: false });
 
-      await context.getPersistentMenu();
+      await context.getUserPersistentMenu();
 
       expect(warning).toBeCalledWith(
         false,
-        'getPersistentMenu: should not be called in context without session'
+        'getUserPersistentMenu: should not be called in context without session'
       );
-      expect(client.getPersistentMenu).not.toBeCalled();
+      expect(client.getUserPersistentMenu).not.toBeCalled();
     });
   });
 
-  describe('#setPersistentMenu', () => {
-    it('should call client setPersistentMenu', async () => {
+  describe('#setUserPersistentMenu', () => {
+    it('should call client setUserPersistentMenu', async () => {
       const { context, client, session } = setup();
 
       const persistentMenu = [
@@ -258,7 +258,7 @@ describe('Persistent Menu', () => {
         },
       ];
 
-      const result = await context.setPersistentMenu(persistentMenu);
+      const result = await context.setUserPersistentMenu(persistentMenu);
 
       expect(client.setUserPersistentMenu).toBeCalledWith(
         session.user.id,
@@ -274,21 +274,21 @@ describe('Persistent Menu', () => {
     it('should call warning and not to send if dont have session', async () => {
       const { context, client } = setup({ session: false });
 
-      await context.setPersistentMenu();
+      await context.setUserPersistentMenu();
 
       expect(warning).toBeCalledWith(
         false,
-        'setPersistentMenu: should not be called in context without session'
+        'setUserPersistentMenu: should not be called in context without session'
       );
       expect(client.setPersistentMenu).not.toBeCalled();
     });
   });
 
-  describe('#deletePersistentMenu', () => {
-    it('should call client deletePersistentMenu', async () => {
+  describe('#deleteUserPersistentMenu', () => {
+    it('should call client deleteUserPersistentMenu', async () => {
       const { context, client, session } = setup();
 
-      const result = await context.deletePersistentMenu();
+      const result = await context.deleteUserPersistentMenu();
 
       expect(client.deleteUserPersistentMenu).toBeCalledWith(session.user.id, {
         accessToken: undefined,
@@ -300,13 +300,13 @@ describe('Persistent Menu', () => {
     it('should call warning and not to send if dont have session', async () => {
       const { context, client } = setup({ session: false });
 
-      await context.deletePersistentMenu();
+      await context.deleteUserPersistentMenu();
 
       expect(warning).toBeCalledWith(
         false,
-        'deletePersistentMenu: should not be called in context without session'
+        'deleteUserPersistentMenu: should not be called in context without session'
       );
-      expect(client.deletePersistentMenu).not.toBeCalled();
+      expect(client.deleteUserPersistentMenu).not.toBeCalled();
     });
   });
 });
