@@ -1,3 +1,14 @@
+# 1.4.7 / 2020-06-23
+
+- [fix] add a workaround to support express behind trust proxies (for example: nginx) with:
+
+```js
+server.enable('trust proxy');
+
+// or
+server.set('trust proxy', true);
+```
+
 # 1.4.6 / 2020-05-22
 
 ## messenger
