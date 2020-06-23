@@ -21,6 +21,8 @@ export type RoomSource = {
   userId?: string;
 };
 
+export type MembersCount = Number;
+
 export type Source = UserSource | GroupSource | RoomSource;
 
 // conflict
