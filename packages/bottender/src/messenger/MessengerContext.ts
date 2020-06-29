@@ -204,6 +204,87 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
     );
   }
 
+  async getUserPersistentMenu(
+    options: MessengerTypes.SendOption = {}
+  ): Promise<MessengerTypes.PersistentMenu | null> {
+    if (!this._session) {
+      warning(
+        false,
+        `getUserPersistentMenu: should not be called in context without session`
+      );
+      return null;
+    }
+
+    if (this._batchQueue) {
+      return this._batchQueue.push(
+        MessengerBatch.getUserPersistentMenu(
+          this._session.user.id,
+          this._getMethodOptions(options)
+        )
+      );
+    }
+
+    return this._client.getUserPersistentMenu(
+      this._session.user.id,
+      this._getMethodOptions(options)
+    );
+  }
+
+  async setUserPersistentMenu(
+    attrs: MessengerTypes.PersistentMenu,
+    options: MessengerTypes.SendOption = {}
+  ): Promise<MessengerTypes.MutationSuccessResponse | undefined> {
+    if (!this._session) {
+      warning(
+        false,
+        `setUserPersistentMenu: should not be called in context without session`
+      );
+      return;
+    }
+
+    if (this._batchQueue) {
+      return this._batchQueue.push(
+        MessengerBatch.setUserPersistentMenu(
+          this._session.user.id,
+          attrs,
+          this._getMethodOptions(options)
+        )
+      );
+    }
+
+    return this._client.setUserPersistentMenu(
+      this._session.user.id,
+      attrs,
+      this._getMethodOptions(options)
+    );
+  }
+
+  async deleteUserPersistentMenu(
+    options: MessengerTypes.SendOption = {}
+  ): Promise<MessengerTypes.MutationSuccessResponse | undefined> {
+    if (!this._session) {
+      warning(
+        false,
+        `deleteUserPersistentMenu: should not be called in context without session`
+      );
+      return;
+    }
+
+    if (this._batchQueue) {
+      return this._batchQueue.push(
+        MessengerBatch.deleteUserPersistentMenu(
+          this._session.user.id,
+          this._getMethodOptions(options)
+        )
+      );
+    }
+
+    return this._client.deleteUserPersistentMenu(
+      this._session.user.id,
+      this._getMethodOptions(options)
+    );
+  }
+
   /**
    * Sender Actions
    *
