@@ -1655,6 +1655,6 @@ describe('#useAccessToken', () => {
 
     context.useAccessToken('anyToken');
 
-    expect(client._accessToken).toEqual('anyToken');
+    expect(client.accessToken).toEqual('anyToken');
   });
 });
