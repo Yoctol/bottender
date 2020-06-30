@@ -7529,7 +7529,7 @@ merge2@^1.2.3:
   resolved "https://registry.yarnpkg.com/merge2/-/merge2-1.2.4.tgz#c9269589e6885a60cf80605d9522d4b67ca646e3"
   integrity sha512-FYE8xI+6pjFOhokZu0We3S5NKCirLbCzSh2Usf3qEyr4X8U+0jNg9P8RZ4qz+V2UoECLVwSyzU3LxXBaLGtD3A==
 
-messaging-api-common@^1.0.0-beta.26:
+messaging-api-common@1.0.0-beta.26, messaging-api-common@^1.0.0-beta.26:
   version "1.0.0-beta.26"
   resolved "https://registry.yarnpkg.com/messaging-api-common/-/messaging-api-common-1.0.0-beta.26.tgz#71b6cf3346f11b709a791b8657f842b0a9930048"
   integrity sha512-6sdZFk3VHLDltyfRPFKPV56babkSMx1ZC4DRj0IF4hAgHNyO1Lt73mYJKmqnK5swA9yGFoS7IP1y78Uj8KRBuw==
@@ -7543,7 +7543,7 @@ messaging-api-common@^1.0.0-beta.26:
     snake-case "^3.0.3"
     url-join "^4.0.1"
 
-messaging-api-line@^1.0.0-beta.26:
+messaging-api-line@1.0.0-beta.26:
   version "1.0.0-beta.26"
   resolved "https://registry.yarnpkg.com/messaging-api-line/-/messaging-api-line-1.0.0-beta.26.tgz#1ea81582c556b02ecec70836370bcad52bb46f08"
   integrity sha512-2EoRTrnuCschVWfT+K/DrnaI/2V5xUTTE/C55ABUnM/z6ACBZm3uUa0tfANVLFSZYe1+MjHg7DZcIf6TtMX05Q==
@@ -7555,7 +7555,7 @@ messaging-api-line@^1.0.0-beta.26:
     messaging-api-common "^1.0.0-beta.26"
     warning "^4.0.3"
 
-messaging-api-messenger@^1.0.0-beta.26:
+messaging-api-messenger@1.0.0-beta.26:
   version "1.0.0-beta.26"
   resolved "https://registry.yarnpkg.com/messaging-api-messenger/-/messaging-api-messenger-1.0.0-beta.26.tgz#80d8195f685b6cf666ddeb39a54ded3339b3cdca"
   integrity sha512-zS5jTbOW1MCHh3gkF6G2Vh+DWxn9I+u4zU84SDLa5+0phSoAw6TnpKg+I1cM2ngggTwG9C0bM7sBszilmqfEHQ==
@@ -7569,7 +7569,7 @@ messaging-api-messenger@^1.0.0-beta.26:
     messaging-api-common "^1.0.0-beta.26"
     warning "^4.0.3"
 
-messaging-api-slack@^1.0.0-beta.26:
+messaging-api-slack@1.0.0-beta.26:
   version "1.0.0-beta.26"
   resolved "https://registry.yarnpkg.com/messaging-api-slack/-/messaging-api-slack-1.0.0-beta.26.tgz#95f86073256e33ef17bc95b5f1aeb079b601efac"
   integrity sha512-rB4oRJ5sb+SkNARC8bVcd62J+dBl3Jg+uzuCxecU/WBylcKZvqG2a/YK1SwhH8iJZ+cEVCPFP+FQHNqpq7J/xA==
@@ -7579,7 +7579,7 @@ messaging-api-slack@^1.0.0-beta.26:
     lodash "^4.17.15"
     messaging-api-common "^1.0.0-beta.26"
 
-messaging-api-telegram@^1.0.0-beta.26:
+messaging-api-telegram@1.0.0-beta.26:
   version "1.0.0-beta.26"
   resolved "https://registry.yarnpkg.com/messaging-api-telegram/-/messaging-api-telegram-1.0.0-beta.26.tgz#92e8eb04c788da61a0b8e5017edf645269f057c8"
   integrity sha512-JT9jYk7+iIQy2ZOOYfLzzNaKv+vF2gD9/aIsk/HCsCjzK151nk+uubKYyTQVlFj3id0SP7fbWprqd3BjdVvr8w==
@@ -7590,7 +7590,7 @@ messaging-api-telegram@^1.0.0-beta.26:
     messaging-api-common "^1.0.0-beta.26"
     warning "^4.0.3"
 
-messaging-api-viber@^1.0.0-beta.26:
+messaging-api-viber@1.0.0-beta.26:
   version "1.0.0-beta.26"
   resolved "https://registry.yarnpkg.com/messaging-api-viber/-/messaging-api-viber-1.0.0-beta.26.tgz#7b09c31cfb8379c0d8ba0abb92e57da6135ff634"
   integrity sha512-kGOJfL1JhzfomeHpRmy7VB3Mj/q4d2FfhPdVNzaGGI++LjC9arxkA/1WBzhHTkEy5yI+KjfsI3pukLdW/kixqg==

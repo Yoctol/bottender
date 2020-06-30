@@ -1,3 +1,7 @@
+# 1.4.8 / 2020-06-30
+
+- [fix] lock messaging-apis packages on specific version.
+
 # 1.4.7 / 2020-06-23
 
 - [fix] add a workaround to support express behind trust proxies (for example: nginx) with:
