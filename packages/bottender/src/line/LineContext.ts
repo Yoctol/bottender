@@ -77,9 +77,10 @@ class LineContext extends Context<LineClient, LineEvent> {
    * Inject access token for the context.
    *
    */
-  useAccessToken(accessToken: string) {
+  useAccessToken(accessToken: string): void {
     warning(false, '`useAccessToken` is deprecated.');
-    this._client._accessToken = accessToken;
+    // @ts-expect-error
+    this._client.accessToken = accessToken;
   }
 
   /**
@@ -93,7 +94,7 @@ class LineContext extends Context<LineClient, LineEvent> {
   /**
    * Context Lifecycle Hook
    */
-  async handlerDidEnd() {
+  async handlerDidEnd(): Promise<void> {
     if (this._shouldBatch) {
       // After starting this batch, every api should be called out of batch mode
       this._shouldBatch = false;
