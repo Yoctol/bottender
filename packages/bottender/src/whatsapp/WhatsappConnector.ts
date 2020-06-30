@@ -53,7 +53,7 @@ export default class WhatsappConnector
     } else {
       const { accountSid, authToken, phoneNumber, origin } = options;
 
-      this._client = TwilioClient.connect({
+      this._client = new TwilioClient({
         accountSid,
         authToken,
         phoneNumber,

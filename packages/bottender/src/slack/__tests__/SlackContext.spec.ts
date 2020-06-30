@@ -1,10 +1,11 @@
-// jest.mock('messaging-api-slack');
-jest.mock('warning');
+import warning from 'warning';
+import { SlackOAuthClient as SlackClient } from 'messaging-api-slack';
 
-let SlackClient;
-let SlackContext;
-let SlackEvent;
-let warning;
+import SlackContext from '../SlackContext';
+import SlackEvent from '../SlackEvent';
+
+jest.mock('messaging-api-slack');
+jest.mock('warning');
 
 const VIEW_PAYLOAD = {
   id: 'VMHU10V25',
@@ -45,15 +46,6 @@ const VIEW_PAYLOAD = {
   notifyOnClose: false,
 };
 
-beforeEach(() => {
-  /* eslint-disable global-require */
-  SlackClient = require('messaging-api-slack').SlackOAuthClient;
-  SlackContext = require('../SlackContext').default;
-  SlackEvent = require('../SlackEvent').default;
-  warning = require('warning');
-  /* eslint-enable global-require */
-});
-
 const messageRawEvent = {
   type: 'message',
   user: 'U13AGSN1X',
@@ -85,7 +77,7 @@ const userSession = {
 const setup = ({ session: _session, rawEvent: _rawEvent } = {}) => {
   const session = _session === undefined ? userSession : _session;
   const rawEvent = _rawEvent === undefined ? messageRawEvent : _rawEvent;
-  const client = SlackClient.connect();
+  const client = new SlackClient();
 
   client.chat = {
     postMessage: jest.fn(),
@@ -109,23 +101,18 @@ const setup = ({ session: _session, rawEvent: _rawEvent } = {}) => {
     update: jest.fn(),
   };
 
-  const args = {
+  const context = new SlackContext({
     client,
     event: new SlackEvent(rawEvent),
     session,
-  };
-  const context = new SlackContext(args);
+  });
+
   return {
     context,
     session,
     client,
   };
 };
-
-it('be defined', () => {
-  const { context } = setup();
-  expect(context).toBeDefined();
-});
 
 it('#platform to be `slack`', () => {
   const { context } = setup();

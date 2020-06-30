@@ -1,24 +1,16 @@
+import warning from 'warning';
+import { MessengerClient } from 'messaging-api-messenger';
+
+import MessengerContext from '../MessengerContext';
+import MessengerEvent from '../MessengerEvent';
+
 import { delivery, echoMessage as echo, read } from './MessengerEvent.spec';
 
-jest.mock('delay');
 jest.mock('messaging-api-messenger');
 jest.mock('warning');
+jest.mock('delay');
 
-let MessengerClient;
-let MessengerContext;
-let MessengerEvent;
-let warning;
-
-beforeEach(() => {
-  /* eslint-disable global-require */
-  MessengerClient = require('messaging-api-messenger').MessengerClient;
-  MessengerContext = require('../MessengerContext').default;
-  MessengerEvent = require('../MessengerEvent').default;
-  warning = require('warning');
-  /* eslint-enable global-require */
-});
-
-const _rawEvent = {
+const defaultRawEvent = {
   sender: { id: '1423587017700273' },
   recipient: { id: '404217156637689' },
   timestamp: 1491796363181,
@@ -35,21 +27,28 @@ const userSession = {
   },
 };
 
+const ACCESS_TOKEN = 'FAKE_TOKEN';
+const APP_SECRET = 'FAKE_SECRET';
+
 const setup = (
-  { session = userSession, customAccessToken, rawEvent = _rawEvent } = {
+  { session = userSession, customAccessToken, rawEvent = defaultRawEvent } = {
     session: userSession,
     customAccessToken: undefined,
-    _rawEvent,
+    defaultRawEvent,
   }
 ) => {
-  const client = MessengerClient.connect();
-  const args = {
+  const client = new MessengerClient({
+    accessToken: ACCESS_TOKEN,
+    appSecret: APP_SECRET,
+  });
+
+  const context = new MessengerContext({
     client,
     event: new MessengerEvent(rawEvent),
     session,
     customAccessToken,
-  };
-  const context = new MessengerContext(args);
+  });
+
   return {
     context,
     session,

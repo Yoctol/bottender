@@ -48,7 +48,7 @@ export default class TelegramConnector
         'Telegram access token is required. Please make sure you have filled it correctly in `bottender.config.js` or `.env` file.'
       );
 
-      this._client = TelegramClient.connect({
+      this._client = new TelegramClient({
         accessToken,
         origin,
       });

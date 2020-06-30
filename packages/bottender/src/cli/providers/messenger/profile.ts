@@ -73,7 +73,7 @@ export async function getMessengerProfile(_: CliContext): Promise<void> {
       '`accessToken` is not found in the `bottender.config.js` file'
     );
 
-    const client = MessengerClient.connect({
+    const client = new MessengerClient({
       accessToken,
     });
 
@@ -122,7 +122,7 @@ export async function setMessengerProfile(ctx: CliContext): Promise<void> {
 
     const { profile: _profile } = getChannelConfig(Channel.Messenger);
 
-    const client = MessengerClient.connect({
+    const client = new MessengerClient({
       accessToken,
     });
 
@@ -221,7 +221,7 @@ export async function deleteMessengerProfile(_: CliContext): Promise<void> {
 
     const accessToken = config.accessToken;
 
-    const client = MessengerClient.connect({
+    const client = new MessengerClient({
       accessToken,
     });
 

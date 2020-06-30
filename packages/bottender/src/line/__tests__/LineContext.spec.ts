@@ -1,25 +1,20 @@
+import warning from 'warning';
+import { Line, LineClient } from 'messaging-api-line';
+import { mocked } from 'ts-jest/utils';
+
+import LineContext from '../LineContext';
+import LineEvent from '../LineEvent';
+import { FlexContainer, LineRawEvent, QuickReply } from '../LineTypes';
+
 jest.mock('messaging-api-line');
 jest.mock('warning');
 
-let Line;
-let LineClient;
-let LineContext;
-let LineEvent;
-let warning;
-
-beforeEach(() => {
-  /* eslint-disable global-require */
-  Line = require('messaging-api-line').Line;
-  LineClient = require('messaging-api-line').LineClient;
-  LineContext = require('../LineContext').default;
-  LineEvent = require('../LineEvent').default;
-  warning = require('warning');
-  /* eslint-enable global-require */
-});
+const ACCESS_TOKEN = 'FAKE_TOKEN';
+const CHANNEL_SECRET = 'FAKE_SECRET';
 
 const REPLY_TOKEN = 'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA';
 
-const rawEventText = {
+const rawEventText: LineRawEvent = {
   replyToken: REPLY_TOKEN,
   type: 'message',
   timestamp: 1462629479859,
@@ -61,7 +56,7 @@ const groupSession = {
   },
 };
 
-const quickReply = {
+const quickReply: QuickReply = {
   items: [
     {
       type: 'action',
@@ -88,7 +83,11 @@ const setup = ({
   customAccessToken,
   rawEvent = rawEventText,
 } = {}) => {
-  const client = LineClient.connect();
+  const client = new LineClient({
+    accessToken: ACCESS_TOKEN,
+    channelSecret: CHANNEL_SECRET,
+  });
+
   const context = new LineContext({
     client,
     event: new LineEvent(rawEvent),
@@ -98,6 +97,7 @@ const setup = ({
     sendMethod,
     customAccessToken,
   });
+
   return {
     context,
     session,
@@ -105,33 +105,33 @@ const setup = ({
   };
 };
 
-it('be defined', () => {
-  const { context } = setup();
-  expect(context).toBeDefined();
-});
-
 it('#platform to be `line`', () => {
   const { context } = setup();
+
   expect(context.platform).toBe('line');
 });
 
 it('#isReplied default to be false', () => {
   const { context } = setup();
+
   expect(context.isReplied).toBe(false);
 });
 
 it('get #session works', () => {
   const { context, session } = setup();
+
   expect(context.session).toBe(session);
 });
 
 it('get #event works', () => {
   const { context } = setup();
+
   expect(context.event).toBeInstanceOf(LineEvent);
 });
 
 it('get #client works', () => {
   const { context, client } = setup();
+
   expect(context.client).toBe(client);
 });
 
@@ -158,7 +158,7 @@ describe('#getMessageContent', () => {
     });
 
     const buf = Buffer.from('');
-    client.getMessageContent.mockResolvedValue(buf);
+    mocked(client.getMessageContent).mockResolvedValue(buf);
 
     const res = await context.getMessageContent();
 
@@ -733,7 +733,7 @@ describe('send APIs', () => {
   });
 
   describe('#sendFlex', () => {
-    const contents = {
+    const contents: FlexContainer = {
       type: 'bubble',
       header: {
         type: 'box',
@@ -1352,7 +1352,7 @@ describe('account link APIs', () => {
   describe('#issueLinkToken', () => {
     it('should call client.issueLinkToken', async () => {
       const { context, client, session } = setup();
-      client.issueLinkToken.mockResolvedValue({
+      mocked(client.issueLinkToken).mockResolvedValue({
         token: 'xxxxx',
       });
 

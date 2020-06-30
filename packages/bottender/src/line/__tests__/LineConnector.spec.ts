@@ -2,12 +2,10 @@ import warning from 'warning';
 import { LineClient } from 'messaging-api-line';
 import { mocked } from 'ts-jest/utils';
 
-import LineConnector, {
-  GetSessionKeyPrefixFunction,
-  LineRequestBody,
-} from '../LineConnector';
+import LineConnector, { GetSessionKeyPrefixFunction } from '../LineConnector';
 import LineContext from '../LineContext';
 import LineEvent from '../LineEvent';
+import { LineRequestBody } from '../LineTypes';
 
 jest.mock('messaging-api-line');
 jest.mock('warning');
