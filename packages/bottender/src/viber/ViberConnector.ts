@@ -46,6 +46,7 @@ export default class ViberConnector
     const { skipLegacyProfile } = options;
     if ('client' in options) {
       this._client = options.client;
+      this._accessToken = this._client.accessToken;
     } else {
       const { accessToken, sender, origin } = options;
 
@@ -54,17 +55,14 @@ export default class ViberConnector
         'Viber access token is required. Please make sure you have filled it correctly in `bottender.config.js` or `.env` file.'
       );
 
-      this._client = ViberClient.connect(
-        {
-          accessToken,
-          sender,
-          origin,
-        },
-        sender
-      );
+      this._client = new ViberClient({
+        accessToken,
+        sender,
+        origin,
+      });
+      this._accessToken = accessToken;
     }
 
-    this._accessToken = this._client.accessToken;
     this._skipLegacyProfile =
       typeof skipLegacyProfile === 'boolean' ? skipLegacyProfile : true;
   }

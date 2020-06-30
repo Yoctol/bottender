@@ -6473,11 +6473,6 @@ jest-config@^26.0.1:
     micromatch "^4.0.2"
     pretty-format "^26.0.1"
 
-jest-create-mock-instance@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/jest-create-mock-instance/-/jest-create-mock-instance-1.1.0.tgz#b69e97a4dad34ccebf180424a178217513644d2f"
-  integrity sha1-tp6XpNrTTM6/GAQkoXghdRNkTS8=
-
 jest-diff@^25.2.1:
   version "25.5.0"
   resolved "https://registry.yarnpkg.com/jest-diff/-/jest-diff-25.5.0.tgz#1dd26ed64f96667c068cef026b677dfa01afcfa9"

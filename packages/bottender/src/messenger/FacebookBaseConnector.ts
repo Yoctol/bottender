@@ -72,7 +72,7 @@ export default class FacebookBaseConnector<
         'Facebook app secret is required. Please make sure you have filled it correctly in `bottender.config.js` or `.env` file.'
       );
 
-      this._client = ClientClass.connect({
+      this._client = new ClientClass({
         accessToken: accessToken || '',
         appSecret,
         origin,

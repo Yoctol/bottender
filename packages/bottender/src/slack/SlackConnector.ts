@@ -73,7 +73,7 @@ export default class SlackConnector
         'Slack access token is required. Please make sure you have filled it correctly in `bottender.config.js` or `.env` file.'
       );
 
-      this._client = SlackOAuthClient.connect({
+      this._client = new SlackOAuthClient({
         accessToken,
         origin,
       });

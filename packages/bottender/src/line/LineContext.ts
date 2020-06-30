@@ -737,7 +737,7 @@ class LineContext extends Context<LineClient, LineEvent> {
   sendConfirmTemplate(
     altText: string,
     confirmTemplate: Omit<LineTypes.ConfirmTemplate, 'type'>,
-    options: LineTypes.MessageOptions
+    options?: LineTypes.MessageOptions
   ) {
     return this.send([
       Line.createConfirmTemplate(altText, confirmTemplate, options),
@@ -747,7 +747,7 @@ class LineContext extends Context<LineClient, LineEvent> {
   sendCarouselTemplate(
     altText: string,
     columns: LineTypes.ColumnObject[],
-    options: {
+    options?: {
       imageAspectRatio?: 'rectangle' | 'square';
       imageSize?: 'cover' | 'contain';
     } & LineTypes.MessageOptions

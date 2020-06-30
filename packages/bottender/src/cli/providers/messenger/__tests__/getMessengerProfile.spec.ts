@@ -1,4 +1,5 @@
 import { MessengerClient } from 'messaging-api-messenger';
+import { mocked } from 'ts-jest/utils';
 
 import getChannelConfig from '../../../../shared/getChannelConfig';
 import { getMessengerProfile } from '../profile';
@@ -17,33 +18,30 @@ const MOCK_FILE_WITH_PLATFORM = {
   },
 };
 
-let _client;
-
 beforeEach(() => {
-  _client = {
-    getMessengerProfile: jest.fn(),
-  };
-  MessengerClient.connect = jest.fn(() => _client);
-  log.error = jest.fn();
-  log.print = jest.fn();
-  getChannelConfig.mockReturnValue(MOCK_FILE_WITH_PLATFORM.channels.messenger);
-});
+  process.exit = jest.fn();
 
-it('be defined', () => {
-  expect(getMessengerProfile).toBeDefined();
+  mocked(getChannelConfig).mockReturnValue(
+    MOCK_FILE_WITH_PLATFORM.channels.messenger
+  );
 });
 
 describe('resolved', () => {
   it('call getMessengerProfile', async () => {
     const ctx = {
-      argv: {},
+      config: null,
+      argv: {
+        _: [],
+      },
     };
 
-    _client.getMessengerProfile.mockResolvedValue({});
+    mocked(MessengerClient.prototype.getMessengerProfile).mockResolvedValue({});
 
     await getMessengerProfile(ctx);
 
-    expect(_client.getMessengerProfile).toBeCalledWith([
+    const client = mocked(MessengerClient).mock.instances[0];
+
+    expect(client.getMessengerProfile).toBeCalledWith([
       'account_linking_url',
       'persistent_menu',
       'get_started',
@@ -55,31 +53,41 @@ describe('resolved', () => {
 
   it('error when no config setting', async () => {
     const ctx = {
-      argv: {},
+      config: null,
+      argv: {
+        _: [],
+      },
     };
 
-    _client.getMessengerProfile.mockResolvedValue(null);
+    mocked(MessengerClient.prototype.getMessengerProfile).mockResolvedValue(
+      null
+    );
 
     await getMessengerProfile(ctx);
 
+    const client = mocked(MessengerClient).mock.instances[0];
+
     expect(log.error).toBeCalled();
-    expect(_client.getMessengerProfile).toBeCalled();
+    expect(client.getMessengerProfile).toBeCalled();
   });
 });
 
 describe('reject', () => {
   it('handle error thrown with only status', async () => {
     const ctx = {
-      argv: {},
+      config: null,
+      argv: {
+        _: [],
+      },
     };
     const error = {
       response: {
         status: 400,
       },
     };
-    _client.getMessengerProfile.mockRejectedValue(error);
-
-    process.exit = jest.fn();
+    mocked(MessengerClient.prototype.getMessengerProfile).mockRejectedValue(
+      error
+    );
 
     await getMessengerProfile(ctx);
 
@@ -89,7 +97,10 @@ describe('reject', () => {
 
   it('handle error thrown by messenger', async () => {
     const ctx = {
-      argv: {},
+      config: null,
+      argv: {
+        _: [],
+      },
     };
     const error = {
       response: {
@@ -105,27 +116,27 @@ describe('reject', () => {
         },
       },
     };
-    _client.getMessengerProfile.mockRejectedValue(error);
-
-    process.exit = jest.fn();
+    mocked(MessengerClient.prototype.getMessengerProfile).mockRejectedValue(
+      error
+    );
 
     await getMessengerProfile(ctx);
 
     expect(log.error).toBeCalled();
-    expect(log.error.mock.calls[2][0]).not.toMatch(/\[object Object\]/);
+    expect(mocked(log.error).mock.calls[2][0]).not.toMatch(/\[object Object\]/);
     expect(process.exit).toBeCalled();
   });
 
   it('handle error thrown by ourselves', async () => {
     const ctx = {
-      argv: {},
+      config: null,
+      argv: {
+        _: [],
+      },
     };
-    const error = {
-      message: 'something wrong happened',
-    };
-    _client.getMessengerProfile.mockRejectedValue(error);
-
-    process.exit = jest.fn();
+    mocked(MessengerClient.prototype.getMessengerProfile).mockRejectedValue(
+      new Error('something wrong happened')
+    );
 
     await getMessengerProfile(ctx);
 

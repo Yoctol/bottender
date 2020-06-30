@@ -179,9 +179,11 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
     );
   }
 
-  async getUserProfile(options: {
-    fields?: MessengerTypes.UserProfileField[];
-  }): Promise<MessengerTypes.User | null> {
+  async getUserProfile(
+    options: {
+      fields?: MessengerTypes.UserProfileField[];
+    } = {}
+  ): Promise<MessengerTypes.User | null> {
     if (!this._session) {
       warning(
         false,

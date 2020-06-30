@@ -48,7 +48,6 @@
     "glob": "^7.1.6",
     "husky": "^4.2.5",
     "jest": "^26.0.1",
-    "jest-create-mock-instance": "^1.1.0",
     "jest-junit": "^10.0.0",
     "lerna": "^3.22.1",
     "lint-staged": "^10.2.9",

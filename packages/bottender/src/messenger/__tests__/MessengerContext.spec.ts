@@ -1,25 +1,18 @@
-jest.mock('delay');
+import warning from 'warning';
+import { MessengerClient } from 'messaging-api-messenger';
+import { mocked } from 'ts-jest/utils';
+
+import MessengerContext from '../MessengerContext';
+import MessengerEvent from '../MessengerEvent';
+
 jest.mock('messaging-api-messenger');
 jest.mock('warning');
-
-let MessengerClient;
-let MessengerContext;
-let MessengerEvent;
-let warning;
-
-beforeEach(() => {
-  /* eslint-disable global-require */
-  MessengerClient = require('messaging-api-messenger').MessengerClient;
-  MessengerContext = require('../MessengerContext').default;
-  MessengerEvent = require('../MessengerEvent').default;
-  warning = require('warning');
-  /* eslint-enable global-require */
-});
+jest.mock('delay');
 
 const APP_ID = '1234567890';
 const PERSONA_ID = '987654321';
 
-const _rawEvent = {
+const defaultRawEvent = {
   sender: { id: '1423587017700273' },
   recipient: { id: '404217156637689' },
   timestamp: 1491796363181,
@@ -37,13 +30,13 @@ const userSession = {
 };
 
 const setup = (
-  { session = userSession, customAccessToken, rawEvent = _rawEvent } = {
+  { session = userSession, customAccessToken, rawEvent = defaultRawEvent } = {
     session: userSession,
     customAccessToken: undefined,
-    _rawEvent,
+    defaultRawEvent,
   }
 ) => {
-  const client = MessengerClient.connect();
+  const client = new MessengerClient();
   const args = {
     appId: APP_ID,
     client,
@@ -58,11 +51,6 @@ const setup = (
     client,
   };
 };
-
-it('be defined', () => {
-  const { context } = setup();
-  expect(context).toBeDefined();
-});
 
 it('#platform to be `messenger`', () => {
   const { context } = setup();
@@ -96,7 +84,7 @@ describe('#getUserProfile', () => {
       profilePic: 'https://example.com/pic.png',
     };
 
-    client.getUserProfile.mockResolvedValue(user);
+    mocked(client.getUserProfile).mockResolvedValue(user);
 
     const result = await context.getUserProfile();
 
@@ -120,7 +108,7 @@ describe('#getUserProfile', () => {
       gender: 'male',
     };
 
-    client.getUserProfile.mockResolvedValue(user);
+    mocked(client.getUserProfile).mockResolvedValue(user);
 
     const result = await context.getUserProfile({
       fields: [
@@ -165,7 +153,7 @@ describe('#getUserProfile', () => {
       profilePic: 'https://example.com/pic.png',
     };
 
-    client.getUserProfile.mockResolvedValue(user);
+    mocked(client.getUserProfile).mockResolvedValue(user);
 
     const result = await context.getUserProfile();
 
