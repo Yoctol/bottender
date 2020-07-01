@@ -1285,6 +1285,52 @@ describe('member IDs APIs', () => {
       expect(warning).toBeCalled();
     });
   });
+
+  describe('#getMembersCount', () => {
+    it('not get profile without session', async () => {
+      const { context, client } = setup({ session: null });
+
+      await context.getMembersCount();
+
+      expect(client.getGroupMembersCount).not.toBeCalled();
+      expect(client.getRoomMembersCount).not.toBeCalled();
+      expect(warning).toBeCalled();
+    });
+
+    it('get member count in group', async () => {
+      const { context, client } = setup({ session: groupSession });
+
+      await context.getMembersCount();
+
+      expect(client.getGroupMembersCount).toBeCalledWith(
+        'fakeGroupId',
+        'anotherUser'
+      );
+    });
+
+    it('get member count in room', async () => {
+      const { context, client } = setup({ session: roomSession });
+
+      await context.getMembersCount();
+
+      expect(client.getRoomMembersCount).toBeCalledWith(
+        'fakeRoomId',
+        'anotherUser'
+      );
+    });
+
+    it('get member count = 2 in private chat', async () => {
+      expect.assertions(4);
+
+      const { context, client } = setup({ session: userSession });
+
+      const res = await context.getMembersCount();
+
+      expect(client.getGroupMembersCount).not.toBeCalled();
+      expect(client.getRoomMembersCount).not.toBeCalled();
+      expect(res).toBe(1);
+    });
+  });
 });
 
 describe('ruchmenu APIs', () => {
