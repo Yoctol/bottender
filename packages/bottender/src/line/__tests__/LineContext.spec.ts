@@ -1302,10 +1302,7 @@ describe('member IDs APIs', () => {
 
       await context.getMembersCount();
 
-      expect(client.getGroupMembersCount).toBeCalledWith(
-        'fakeGroupId',
-        'anotherUser'
-      );
+      expect(client.getGroupMembersCount).toBeCalledWith('fakeGroupId');
     });
 
     it('get member count in room', async () => {
@@ -1313,15 +1310,10 @@ describe('member IDs APIs', () => {
 
       await context.getMembersCount();
 
-      expect(client.getRoomMembersCount).toBeCalledWith(
-        'fakeRoomId',
-        'anotherUser'
-      );
+      expect(client.getRoomMembersCount).toBeCalledWith('fakeRoomId');
     });
 
-    it('get member count = 2 in private chat', async () => {
-      expect.assertions(4);
-
+    it('get member count = 1 in private chat', async () => {
       const { context, client } = setup({ session: userSession });
 
       const res = await context.getMembersCount();
