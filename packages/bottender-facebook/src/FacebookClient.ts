@@ -1,6 +1,6 @@
 import AxiosError from 'axios-error';
 import get from 'lodash/get';
-import { MessengerClient, MessengerTypes } from 'bottender';
+import { MessengerClient } from 'bottender';
 
 import * as Types from './FacebookTypes';
 
@@ -14,13 +14,6 @@ function handleError(err: AxiosError): never {
 }
 
 export default class FacebookClient extends MessengerClient {
-  static connect(
-    accessTokenOrConfig: string | MessengerTypes.ClientConfig,
-    version = '6.0'
-  ): FacebookClient {
-    return new FacebookClient(accessTokenOrConfig, version);
-  }
-
   /**
    * Publish new comments to any object.
    *
@@ -36,10 +29,10 @@ export default class FacebookClient extends MessengerClient {
   ): Promise<{ id: string }> {
     const body = typeof comment === 'string' ? { message: comment } : comment;
 
-    return this._axios
+    return this.axios
       .post<{ id: string }>(`/${objectId}/comments`, body, {
         params: {
-          access_token: this._accessToken,
+          access_token: this.accessToken,
         },
       })
       .then(res => res.data, handleError);
@@ -53,10 +46,10 @@ export default class FacebookClient extends MessengerClient {
    * @param objectId - ID of the object.
    */
   public sendLike(objectId: string): Promise<{ success: true }> {
-    return this._axios
+    return this.axios
       .post<{ success: true }>(`/${objectId}/likes`, undefined, {
         params: {
-          access_token: this._accessToken,
+          access_token: this.accessToken,
         },
       })
       .then(res => res.data, handleError);
@@ -76,13 +69,13 @@ export default class FacebookClient extends MessengerClient {
   ): Promise<Types.Comment> {
     const conjunctFields = Array.isArray(fields) ? fields.join(',') : fields;
 
-    return this._axios
+    return this.axios
       .get<Types.Comment>(`/${commentId}`, {
         params: {
           summary: summary ? 'true' : undefined,
           filter,
           fields: conjunctFields,
-          access_token: this._accessToken,
+          access_token: this.accessToken,
         },
       })
       .then(res => res.data, handleError);
@@ -100,14 +93,14 @@ export default class FacebookClient extends MessengerClient {
     objectId: string,
     { summary }: Types.GetLikesOptions = {}
   ): Promise<Types.Likes> {
-    return this._axios
+    return this.axios
       .get<{
         id: string;
         likes: Types.Likes;
       }>(`/${objectId}/likes`, {
         params: {
           summary: summary ? 'true' : undefined,
-          access_token: this._accessToken,
+          access_token: this.accessToken,
         },
       })
       .then(res => res.data.likes, handleError);

@@ -1,7 +1,7 @@
 import { EventEmitter } from 'events';
 
 import warning from 'warning';
-import { BatchConfig } from 'messenger-batch';
+import { BatchConfig } from 'facebook-batch';
 import {
   Connector,
   FacebookBaseConnector,

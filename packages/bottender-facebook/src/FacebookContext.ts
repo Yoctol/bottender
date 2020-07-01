@@ -7,7 +7,7 @@ import {
   MessengerTypes,
   RequestContext,
 } from 'bottender';
-import { MessengerBatchQueue } from 'messenger-batch';
+import { FacebookBatchQueue } from 'facebook-batch';
 
 import FacebookBatch from './FacebookBatch';
 import FacebookClient from './FacebookClient';
@@ -25,7 +25,7 @@ export type FacebookContextOptions = {
   initialState?: Record<string, any>;
   requestContext?: RequestContext;
   customAccessToken?: string;
-  batchQueue?: MessengerBatchQueue | null;
+  batchQueue?: FacebookBatchQueue | null;
   emitter?: EventEmitter;
 };
 
@@ -37,7 +37,7 @@ export default class FacebookContext extends Context<
 
   _customAccessToken: string | undefined;
 
-  _batchQueue: MessengerBatchQueue | undefined;
+  _batchQueue: FacebookBatchQueue | undefined;
 
   public constructor({
     appId,
@@ -100,7 +100,7 @@ export default class FacebookContext extends Context<
     }
 
     if (this._batchQueue) {
-      return this._batchQueue.push(
+      return this._batchQueue.push<MessengerTypes.SendMessageSuccessResponse>(
         MessengerBatch.sendText(recipient, text, {
           accessToken: this._customAccessToken,
         })
@@ -147,7 +147,7 @@ export default class FacebookContext extends Context<
     }
 
     if (this._batchQueue) {
-      return this._batchQueue.push(
+      return this._batchQueue.push<MessengerTypes.SendMessageSuccessResponse>(
         MessengerBatch.sendMessage(recipient, message, {
           accessToken: this._customAccessToken,
         })
@@ -189,7 +189,7 @@ export default class FacebookContext extends Context<
     }
 
     if (this._batchQueue) {
-      return this._batchQueue.push(
+      return this._batchQueue.push<{ id: string }>(
         FacebookBatch.sendComment(objectId, comment, {
           accessToken: this._customAccessToken,
         })
@@ -218,7 +218,7 @@ export default class FacebookContext extends Context<
     }
 
     if (this._batchQueue) {
-      return this._batchQueue.push(
+      return this._batchQueue.push<{ success: boolean }>(
         FacebookBatch.sendLike(objectId, {
           accessToken: this._customAccessToken,
         })
@@ -244,7 +244,7 @@ export default class FacebookContext extends Context<
     }
 
     if (this._batchQueue) {
-      return this._batchQueue.push(
+      return this._batchQueue.push<Types.Comment>(
         FacebookBatch.getComment(commentId, {
           accessToken: this._customAccessToken,
           ...options,
@@ -266,7 +266,7 @@ export default class FacebookContext extends Context<
       .commentId; // FIXME: postId
 
     if (this._batchQueue) {
-      return this._batchQueue.push(
+      return this._batchQueue.push<Types.Likes>(
         FacebookBatch.getLikes(objectId, {
           accessToken: this._customAccessToken,
           ...options,

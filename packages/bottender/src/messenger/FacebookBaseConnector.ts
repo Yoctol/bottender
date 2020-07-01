@@ -2,7 +2,7 @@ import crypto from 'crypto';
 
 import invariant from 'invariant';
 import shortid from 'shortid';
-import { BatchConfig, MessengerBatchQueue } from 'messenger-batch';
+import { BatchConfig, FacebookBatchQueue } from 'facebook-batch';
 import { JsonObject } from 'type-fest';
 import { MessengerClient } from 'messaging-api-messenger';
 
@@ -47,21 +47,24 @@ export default class FacebookBaseConnector<
 
   _batchConfig: BatchConfig | null = null;
 
-  _batchQueue: MessengerBatchQueue | null = null;
+  _batchQueue: FacebookBatchQueue | null = null;
 
   constructor(options: FacebookBaseConnectorOptions<Client>) {
-    const {
-      appId,
-      appSecret,
-      mapPageToAccessToken,
-      verifyToken,
-      batchConfig,
-    } = options;
+    const { appId, appSecret, mapPageToAccessToken, verifyToken } = options;
 
     if ('client' in options) {
       this._client = options.client;
+
+      // In the future, batch would be handled by client itself internally.
+      this._batchConfig = null;
     } else {
-      const { ClientClass, accessToken, origin, skipAppSecretProof } = options;
+      const {
+        ClientClass,
+        accessToken,
+        origin,
+        skipAppSecretProof,
+        batchConfig,
+      } = options;
 
       invariant(
         accessToken || mapPageToAccessToken,
@@ -72,12 +75,22 @@ export default class FacebookBaseConnector<
         'Facebook app secret is required. Please make sure you have filled it correctly in `bottender.config.js` or `.env` file.'
       );
 
-      this._client = new ClientClass({
+      const clientConfig = {
         accessToken: accessToken || '',
         appSecret,
         origin,
         skipAppSecretProof,
-      }) as Client;
+      };
+
+      this._client = new ClientClass(clientConfig) as Client;
+
+      this._batchConfig = batchConfig || null;
+      if (this._batchConfig) {
+        this._batchQueue = new FacebookBatchQueue(
+          clientConfig,
+          this._batchConfig
+        );
+      }
     }
 
     this._appId = appId;
@@ -85,14 +98,6 @@ export default class FacebookBaseConnector<
 
     this._mapPageToAccessToken = mapPageToAccessToken || null;
     this._verifyToken = verifyToken || shortid.generate();
-
-    this._batchConfig = batchConfig || null;
-    if (this._batchConfig) {
-      this._batchQueue = new MessengerBatchQueue(
-        this._client,
-        this._batchConfig
-      );
-    }
   }
 
   get client(): Client {

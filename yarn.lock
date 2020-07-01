@@ -1615,6 +1615,11 @@
   dependencies:
     "@types/node" "*"
 
+"@types/append-query@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@types/append-query/-/append-query-2.0.0.tgz#ed93e5adb9d865a1896ccdff8a2a32f28ef313de"
+  integrity sha512-0YlmQr+wOjsHrt4cXEWY2Ef8pLPyz4jTQqv/mSiGzdf+q0ZymH7VoI7kvmXV6T31JLvlQwGo2b3B9FgR+qn19g==
+
 "@types/babel__core@^7.1.7":
   version "7.1.8"
   resolved "https://registry.yarnpkg.com/@types/babel__core/-/babel__core-7.1.8.tgz#057f725aca3641f49fc11c7a87a9de5ec588a5d7"
@@ -2771,20 +2776,6 @@ axios-error@^0.8.1:
   version "0.8.1"
   resolved "https://registry.yarnpkg.com/axios-error/-/axios-error-0.8.1.tgz#4d9c21370465c290d07192e7f3eacfff49c256ae"
   integrity sha512-4YIf0FK2aO8HHVAQXvVFK2oPQSsOh3P1WQjkwQwO3oFjq4vO3S3YSyiRzyebBIR4NmcHaMJ6W5m0iHuisG7lTA==
-
-axios-error@^1.0.0-beta.16:
-  version "1.0.0-beta.16"
-  resolved "https://registry.yarnpkg.com/axios-error/-/axios-error-1.0.0-beta.16.tgz#013d58d2590ea8d7461727cff1d344daa6fd5344"
-  integrity sha512-Ntn6ryoGA/XNR/o4EXa87Ek+xP5yEzCvLPjH+fwFogLcHF8el0zP8K7Up0m6Nf2kGk4xo1SrQ/Ss1SUNCcisAA==
-  dependencies:
-    axios "^0.19.2"
-
-axios-error@^1.0.0-beta.26:
-  version "1.0.0-beta.26"
-  resolved "https://registry.yarnpkg.com/axios-error/-/axios-error-1.0.0-beta.26.tgz#dcd6e2dc56a879f2259798901127f29157cc5fd2"
-  integrity sha512-I0iI10hnlaTae3XK3qIBUSpqn3NjkDk8ezt9bzI9U9cSuxSP8+kWGyxFjyZV+aNUfdUmgUPqt5DnAmL++HktUw==
-  dependencies:
-    axios "^0.19.2"
 
 axios-error@^1.0.0-beta.27:
   version "1.0.0-beta.27"
@@ -4842,6 +4833,14 @@ extsprintf@^1.2.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/extsprintf/-/extsprintf-1.4.0.tgz#e2689f8f356fad62cca65a3a91c5df5f9551692f"
   integrity sha1-4mifjzVvrWLMplo6kcXfX5VRaS8=
+
+facebook-batch@1.0.0-beta.32:
+  version "1.0.0-beta.32"
+  resolved "https://registry.yarnpkg.com/facebook-batch/-/facebook-batch-1.0.0-beta.32.tgz#e60316f81e31d3ea4d87d4cc56ebd43c8780a412"
+  integrity sha512-DI4Uezes+f8s/HDLdE7QGQrWoCEmdBXprcGzbQewQJKfQd1W8IofGeKHbfQxMEkzoS4Ob+t6nJtdip8cEOV7GQ==
+  dependencies:
+    messaging-api-messenger "^1.0.0-beta.31"
+    type-fest "^0.15.1"
 
 fast-deep-equal@^2.0.1:
   version "2.0.1"
@@ -7559,20 +7558,6 @@ messaging-api-common@1.0.0-beta.29, messaging-api-common@^1.0.0-beta.29:
     snake-case "^3.0.3"
     url-join "^4.0.1"
 
-messaging-api-common@^1.0.0-beta.26:
-  version "1.0.0-beta.26"
-  resolved "https://registry.yarnpkg.com/messaging-api-common/-/messaging-api-common-1.0.0-beta.26.tgz#71b6cf3346f11b709a791b8657f842b0a9930048"
-  integrity sha512-6sdZFk3VHLDltyfRPFKPV56babkSMx1ZC4DRj0IF4hAgHNyO1Lt73mYJKmqnK5swA9yGFoS7IP1y78Uj8KRBuw==
-  dependencies:
-    axios "^0.19.2"
-    camel-case "^4.1.1"
-    debug "^4.1.1"
-    lodash "^4.17.15"
-    map-obj "^4.1.0"
-    pascal-case "^3.1.1"
-    snake-case "^3.0.3"
-    url-join "^4.0.1"
-
 messaging-api-line@1.0.0-beta.30:
   version "1.0.0-beta.30"
   resolved "https://registry.yarnpkg.com/messaging-api-line/-/messaging-api-line-1.0.0-beta.30.tgz#4b64cbc55f2fab0eacaaec23edaf7be40094f439"
@@ -7587,18 +7572,21 @@ messaging-api-line@1.0.0-beta.30:
     type-fest "^0.15.1"
     warning "^4.0.3"
 
-messaging-api-messenger@1.0.0-beta.26:
-  version "1.0.0-beta.26"
-  resolved "https://registry.yarnpkg.com/messaging-api-messenger/-/messaging-api-messenger-1.0.0-beta.26.tgz#80d8195f685b6cf666ddeb39a54ded3339b3cdca"
-  integrity sha512-zS5jTbOW1MCHh3gkF6G2Vh+DWxn9I+u4zU84SDLa5+0phSoAw6TnpKg+I1cM2ngggTwG9C0bM7sBszilmqfEHQ==
+messaging-api-messenger@1.0.0-beta.31, messaging-api-messenger@^1.0.0-beta.31:
+  version "1.0.0-beta.31"
+  resolved "https://registry.yarnpkg.com/messaging-api-messenger/-/messaging-api-messenger-1.0.0-beta.31.tgz#1bb2db861df7c2310d70b93bdc853f35af481f4d"
+  integrity sha512-UWe9vjOKAO2w3MGW53ZJAmml4bS8UsnH20C10xVm35WJufAjWvoVu8/PkEhhn7c2X3P3OHNuBxgt+/EY0z4wFw==
   dependencies:
+    "@types/append-query" "^2.0.0"
+    "@types/lodash" "^4.14.156"
+    "@types/warning" "^3.0.0"
     append-query "^2.1.0"
     axios "^0.19.2"
-    axios-error "^1.0.0-beta.26"
+    axios-error "^1.0.0-beta.27"
     form-data "^3.0.0"
-    invariant "^2.2.4"
     lodash "^4.17.15"
-    messaging-api-common "^1.0.0-beta.26"
+    messaging-api-common "^1.0.0-beta.29"
+    ts-invariant "^0.4.4"
     warning "^4.0.3"
 
 messaging-api-slack@1.0.0-beta.29:
@@ -7636,13 +7624,6 @@ messaging-api-viber@1.0.0-beta.29:
     axios-error "^1.0.0-beta.27"
     messaging-api-common "^1.0.0-beta.29"
     warning "^4.0.3"
-
-messenger-batch@^0.3.1:
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/messenger-batch/-/messenger-batch-0.3.1.tgz#045bc5d9d02fe595c9f54d3e4314326a85d71084"
-  integrity sha512-mA0QDOOB0WASvJxu32A7medVGJpuY1+IKDzQd7ipbsJS5lwN5cvP3QJWOgpvm7Py1bQ8Woi8zcsYoPwyC4Rv3w==
-  dependencies:
-    invariant "^2.2.4"
 
 methods@^1.1.1, methods@^1.1.2, methods@~1.1.2:
   version "1.1.2"
