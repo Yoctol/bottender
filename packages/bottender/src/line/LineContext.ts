@@ -243,6 +243,29 @@ class LineContext extends Context<LineClient, LineEvent> {
   }
 
   /**
+   * Gets the member count in group/room.
+   *
+   */
+  async getMembersCount(): Promise<number | null> {
+    if (!this._session) {
+      warning(
+        false,
+        'getMembersCount: should not be called in context without session'
+      );
+      return null;
+    }
+
+    switch (this._session.type) {
+      case 'room':
+        return this._client.getRoomMembersCount(this._session.room.id);
+      case 'group':
+        return this._client.getGroupMembersCount(this._session.group.id);
+      default:
+        return 1;
+    }
+  }
+
+  /**
    * Gets the ID of the users of the members of the group/room that the bot is in.
    * This includes the user IDs of users who have not added the bot as a friend or has blocked the bot.
    *
