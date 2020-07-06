@@ -47,7 +47,7 @@ async function ShowModal(context) {
         text: 'Cancel',
         emoji: true,
       },
-      notify_on_close: true,
+      notifyOnClose: true,
       blocks: [
         {
           blockId: 'date',
@@ -55,7 +55,7 @@ async function ShowModal(context) {
           element: {
             actionId: 'element',
             type: 'datepicker',
-            initial_date: '2020-07-01',
+            initialDate: '2020-07-01',
             placeholder: {
               type: 'plain_text',
               text: 'Date',
@@ -74,7 +74,7 @@ async function ShowModal(context) {
           element: {
             actionId: 'element',
             type: 'plain_text_input',
-            initial_value: '10:00',
+            initialValue: '10:00',
           },
           label: {
             type: 'plain_text',
