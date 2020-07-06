@@ -35,8 +35,8 @@ function getModalView() {
       type: 'plain_text',
       text: `Modal ${counter}`,
     },
-    clear_on_close: true,
-    notify_on_close: true,
+    clearOnClose: true,
+    notifyOnClose: true,
     blocks: getBlocks(`in modal ${counter}`, 'push modal'),
   };
 }
