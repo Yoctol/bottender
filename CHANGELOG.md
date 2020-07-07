@@ -1,3 +1,7 @@
+# 1.4.9 / 2020-07-07
+
+- [fix] MongoSessionStore: enable `useUnifiedTopology` to avoid warning (#831)
+
 # 1.4.8 / 2020-06-30
 
 - [fix] lock messaging-apis packages on specific version.
