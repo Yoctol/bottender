@@ -34,7 +34,9 @@ export default class MongoSessionStore implements SessionStore {
   }
 
   async init(): Promise<MongoSessionStore> {
-    this._connection = (await MongoClient.connect(this._url)).db();
+    this._connection = (
+      await MongoClient.connect(this._url, { useUnifiedTopology: true })
+    ).db();
 
     return this;
   }
