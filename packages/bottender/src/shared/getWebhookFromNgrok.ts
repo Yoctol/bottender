@@ -50,7 +50,7 @@ export default async function getWebhookFromNgrok(
     throw new Error('Failed to get tunnels from ngrok');
   }
 
-  const httpsTunnel = data.tunnels.find(tunnel => tunnel.proto === 'https');
+  const httpsTunnel = data.tunnels.find((tunnel) => tunnel.proto === 'https');
 
   if (!httpsTunnel) {
     throw new Error('Can not find a https tunnel');

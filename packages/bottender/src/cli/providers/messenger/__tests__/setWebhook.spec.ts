@@ -30,7 +30,7 @@ function setup({
 } = {}) {
   process.exit = jest.fn();
 
-  log.bold = jest.fn(s => s);
+  log.bold = jest.fn((s) => s);
 
   mocked(getWebhookFromNgrok).mockResolvedValue('https://fakeDomain.ngrok.io');
 

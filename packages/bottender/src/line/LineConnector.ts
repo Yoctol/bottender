@@ -247,7 +247,7 @@ export default class LineConnector
 
       session.group = {
         id: source.groupId,
-        members: memberIds.map(id => ({ id })),
+        members: memberIds.map((id) => ({ id })),
         _updatedAt: new Date().toISOString(),
       };
     } else if (source.type === 'room') {
@@ -286,7 +286,7 @@ export default class LineConnector
 
       session.room = {
         id: source.roomId,
-        members: memberIds.map(id => ({ id })),
+        members: memberIds.map((id) => ({ id })),
         _updatedAt: new Date().toISOString(),
       };
     } else if (source.type === 'user') {
@@ -339,8 +339,8 @@ export default class LineConnector
     const { destination } = body;
 
     return body.events
-      .filter(event => !this._isWebhookVerifyEvent(event))
-      .map(event => new LineEvent(event, { destination }));
+      .filter((event) => !this._isWebhookVerifyEvent(event))
+      .map((event) => new LineEvent(event, { destination }));
   }
 
   async createContext(params: {

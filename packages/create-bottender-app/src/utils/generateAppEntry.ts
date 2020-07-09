@@ -22,7 +22,8 @@ module.exports = async function App(context) {
   }
 
   const contexts = platforms.map(
-    platform => `${platform.charAt(0).toUpperCase()}${platform.slice(1)}Context`
+    (platform) =>
+      `${platform.charAt(0).toUpperCase()}${platform.slice(1)}Context`
   );
 
   return prettier.format(

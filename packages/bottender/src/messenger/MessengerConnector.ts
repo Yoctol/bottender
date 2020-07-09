@@ -52,7 +52,7 @@ export default class MessengerConnector
   _getRawEventsFromRequest(body: MessengerRequestBody): MessengerRawEvent[] {
     if ('entry' in body) {
       return body.entry
-        .map(entry => {
+        .map((entry) => {
           if ('messaging' in entry) {
             return entry.messaging[0] as MessengerRawEvent;
           }
@@ -210,7 +210,7 @@ export default class MessengerConnector
     const isStandby = this._isStandby(body);
 
     return rawEvents.map(
-      rawEvent =>
+      (rawEvent) =>
         new MessengerEvent(rawEvent, {
           isStandby,
           pageId: this._getPageIdFromRawEvent(rawEvent),

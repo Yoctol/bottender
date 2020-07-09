@@ -16,7 +16,7 @@ export default class TelegramHandler extends Handler {
   ) {
     if (args.length < 2) {
       const [handler] = args as [FunctionalHandler | Builder];
-      this.on(context => context.event.isCallbackQuery, handler);
+      this.on((context) => context.event.isCallbackQuery, handler);
     } else {
       const [predicate, handler] = args as [
         Predicate,
@@ -29,7 +29,7 @@ export default class TelegramHandler extends Handler {
       );
 
       this.on(
-        context =>
+        (context) =>
           context.event.isCallbackQuery &&
           predicate(context.event.callbackQuery, context),
         handler
@@ -47,7 +47,7 @@ export default class TelegramHandler extends Handler {
     if (args.length < 2) {
       const [handler] = args as [FunctionalHandler | Builder];
 
-      this.on(context => context.event.isPayload, handler);
+      this.on((context) => context.event.isPayload, handler);
     } else {
       // eslint-disable-next-line prefer-const
       let [pattern, handler]: [
@@ -69,7 +69,7 @@ export default class TelegramHandler extends Handler {
       if (typeof pattern === 'function') {
         const predicate: Predicate = pattern;
         this.on(
-          context =>
+          (context) =>
             context.event.isPayload &&
             predicate(context.event.payload, context),
           handler
@@ -79,7 +79,7 @@ export default class TelegramHandler extends Handler {
           const patternRegExp: RegExp = pattern;
 
           const _handler = handler;
-          handler = context => {
+          handler = (context) => {
             const match = patternRegExp.exec(context.event.payload);
 
             if (!match) return _handler(context);
@@ -109,7 +109,7 @@ export default class TelegramHandler extends Handler {
   ) {
     if (args.length < 2) {
       const [handler] = args as [FunctionalHandler | Builder];
-      this.on(context => context.event.isPhoto, handler);
+      this.on((context) => context.event.isPhoto, handler);
     } else {
       const [predicate, handler] = args as [
         Predicate,
@@ -122,7 +122,7 @@ export default class TelegramHandler extends Handler {
       );
 
       this.on(
-        context =>
+        (context) =>
           context.event.isPhoto && predicate(context.event.photo, context),
         handler
       );
@@ -138,7 +138,7 @@ export default class TelegramHandler extends Handler {
   ) {
     if (args.length < 2) {
       const [handler] = args as [FunctionalHandler | Builder];
-      this.on(context => context.event.isDocument, handler);
+      this.on((context) => context.event.isDocument, handler);
     } else {
       const [predicate, handler] = args as [
         Predicate,
@@ -151,7 +151,7 @@ export default class TelegramHandler extends Handler {
       );
 
       this.on(
-        context =>
+        (context) =>
           context.event.isDocument &&
           predicate(context.event.document, context),
         handler
@@ -168,7 +168,7 @@ export default class TelegramHandler extends Handler {
   ) {
     if (args.length < 2) {
       const [handler] = args as [FunctionalHandler | Builder];
-      this.on(context => context.event.isAudio, handler);
+      this.on((context) => context.event.isAudio, handler);
     } else {
       const [predicate, handler] = args as [
         Predicate,
@@ -181,7 +181,7 @@ export default class TelegramHandler extends Handler {
       );
 
       this.on(
-        context =>
+        (context) =>
           context.event.isAudio && predicate(context.event.audio, context),
         handler
       );
@@ -197,7 +197,7 @@ export default class TelegramHandler extends Handler {
   ) {
     if (args.length < 2) {
       const [handler] = args as [FunctionalHandler | Builder];
-      this.on(context => context.event.isGame, handler);
+      this.on((context) => context.event.isGame, handler);
     } else {
       const [predicate, handler] = args as [
         Predicate,
@@ -210,7 +210,7 @@ export default class TelegramHandler extends Handler {
       );
 
       this.on(
-        context =>
+        (context) =>
           context.event.isGame && predicate(context.event.game, context),
         handler
       );
@@ -226,7 +226,7 @@ export default class TelegramHandler extends Handler {
   ) {
     if (args.length < 2) {
       const [handler] = args as [FunctionalHandler | Builder];
-      this.on(context => context.event.isSticker, handler);
+      this.on((context) => context.event.isSticker, handler);
     } else {
       const [predicate, handler] = args as [
         Predicate,
@@ -239,7 +239,7 @@ export default class TelegramHandler extends Handler {
       );
 
       this.on(
-        context =>
+        (context) =>
           context.event.isSticker && predicate(context.event.sticker, context),
         handler
       );
@@ -255,7 +255,7 @@ export default class TelegramHandler extends Handler {
   ) {
     if (args.length < 2) {
       const [handler] = args as [FunctionalHandler | Builder];
-      this.on(context => context.event.isVideo, handler);
+      this.on((context) => context.event.isVideo, handler);
     } else {
       const [predicate, handler] = args as [
         Predicate,
@@ -268,7 +268,7 @@ export default class TelegramHandler extends Handler {
       );
 
       this.on(
-        context =>
+        (context) =>
           context.event.isVideo && predicate(context.event.video, context),
         handler
       );
@@ -284,7 +284,7 @@ export default class TelegramHandler extends Handler {
   ) {
     if (args.length < 2) {
       const [handler] = args as [FunctionalHandler | Builder];
-      this.on(context => context.event.isVoice, handler);
+      this.on((context) => context.event.isVoice, handler);
     } else {
       const [predicate, handler] = args as [
         Predicate,
@@ -297,7 +297,7 @@ export default class TelegramHandler extends Handler {
       );
 
       this.on(
-        context =>
+        (context) =>
           context.event.isVoice && predicate(context.event.voice, context),
         handler
       );
@@ -313,7 +313,7 @@ export default class TelegramHandler extends Handler {
   ) {
     if (args.length < 2) {
       const [handler] = args as [FunctionalHandler | Builder];
-      this.on(context => context.event.isVideoNote, handler);
+      this.on((context) => context.event.isVideoNote, handler);
     } else {
       const [predicate, handler] = args as [
         Predicate,
@@ -326,7 +326,7 @@ export default class TelegramHandler extends Handler {
       );
 
       this.on(
-        context =>
+        (context) =>
           context.event.isVideoNote &&
           predicate(context.event.videoNote, context),
         handler
@@ -343,7 +343,7 @@ export default class TelegramHandler extends Handler {
   ) {
     if (args.length < 2) {
       const [handler] = args as [FunctionalHandler | Builder];
-      this.on(context => context.event.isContact, handler);
+      this.on((context) => context.event.isContact, handler);
     } else {
       const [predicate, handler] = args as [
         Predicate,
@@ -356,7 +356,7 @@ export default class TelegramHandler extends Handler {
       );
 
       this.on(
-        context =>
+        (context) =>
           context.event.isContact && predicate(context.event.contact, context),
         handler
       );
@@ -372,7 +372,7 @@ export default class TelegramHandler extends Handler {
   ) {
     if (args.length < 2) {
       const [handler] = args as [FunctionalHandler | Builder];
-      this.on(context => context.event.isLocation, handler);
+      this.on((context) => context.event.isLocation, handler);
     } else {
       const [predicate, handler] = args as [
         Predicate,
@@ -385,7 +385,7 @@ export default class TelegramHandler extends Handler {
       );
 
       this.on(
-        context =>
+        (context) =>
           context.event.isLocation &&
           predicate(context.event.location, context),
         handler
@@ -402,7 +402,7 @@ export default class TelegramHandler extends Handler {
   ) {
     if (args.length < 2) {
       const [handler] = args as [FunctionalHandler | Builder];
-      this.on(context => context.event.isVenue, handler);
+      this.on((context) => context.event.isVenue, handler);
     } else {
       const [predicate, handler] = args as [
         Predicate,
@@ -415,7 +415,7 @@ export default class TelegramHandler extends Handler {
       );
 
       this.on(
-        context =>
+        (context) =>
           context.event.isVenue && predicate(context.event.venue, context),
         handler
       );

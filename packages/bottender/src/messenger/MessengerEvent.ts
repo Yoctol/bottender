@@ -679,7 +679,7 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
       this.isMessage &&
       'tags' in this.message! &&
       this.message!.tags!.length !== 0 &&
-      this.message!.tags!.some(tag => tag.source === 'customer_chat_plugin')
+      this.message!.tags!.some((tag) => tag.source === 'customer_chat_plugin')
     );
 
     const isReferralFromCustomerChatPlugin = !!(

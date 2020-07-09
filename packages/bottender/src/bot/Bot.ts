@@ -200,7 +200,7 @@ export default class Bot<
 
       const contexts = await pMap(
         events,
-        async event => {
+        async (event) => {
           const { platform } = this._connector;
           const sessionKey = this._connector.getUniqueSessionKey(
             // TODO: deprecating passing request body in those connectors
@@ -267,8 +267,8 @@ export default class Bot<
 
       // Call all of extension functions before passing to handler.
       await Promise.all(
-        contexts.map(async context =>
-          Promise.all(this._plugins.map(ext => ext(context)))
+        contexts.map(async (context) =>
+          Promise.all(this._plugins.map((ext) => ext(context)))
         )
       );
 
@@ -290,13 +290,13 @@ export default class Bot<
                 return context.handlerDidEnd();
               }
             })
-            .catch(err => {
+            .catch((err) => {
               if (errorHandler) {
                 return run(errorHandler)(context, { error: err });
               }
               throw err;
             })
-            .catch(err => {
+            .catch((err) => {
               context.emitError(err);
               throw err;
             })
@@ -308,7 +308,7 @@ export default class Bot<
           await promises;
 
           await Promise.all(
-            contexts.map(async context => {
+            contexts.map(async (context) => {
               context.isSessionWritten = true;
 
               const { session } = context;
@@ -340,7 +340,7 @@ export default class Bot<
         .then(
           async (): Promise<any> => {
             await Promise.all(
-              contexts.map(async context => {
+              contexts.map(async (context) => {
                 context.isSessionWritten = true;
 
                 const { session } = context;

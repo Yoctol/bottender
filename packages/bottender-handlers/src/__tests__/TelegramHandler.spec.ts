@@ -206,7 +206,7 @@ describe('#onPayload', () => {
       const { builder } = setup();
       const handler = jest.fn();
 
-      builder.onPayload(payload => payload === 'data', handler);
+      builder.onPayload((payload) => payload === 'data', handler);
       await builder.build()(contextWithCallbackQuery);
       expect(handler).toBeCalledWith(contextWithCallbackQuery);
     });
@@ -215,7 +215,7 @@ describe('#onPayload', () => {
       const { builder } = setup();
       const handler = jest.fn();
 
-      builder.onPayload(payload => payload === 'awful', handler);
+      builder.onPayload((payload) => payload === 'awful', handler);
       await builder.build()(contextWithCallbackQuery);
       expect(handler).not.toBeCalled();
     });

@@ -258,7 +258,7 @@ const Events = [
   'user_change',
 ];
 
-Events.forEach(event => {
+Events.forEach((event) => {
   Object.defineProperty(SlackEvent.prototype, `is${pascalCase(event)}`, {
     enumerable: false,
     configurable: true,

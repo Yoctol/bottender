@@ -30,7 +30,7 @@ it('should export createLongPollingRuntime method', () => {
 });
 
 describe('#createLongPollingRuntime', () => {
-  it('should call updates without params', done => {
+  it('should call updates without params', (done) => {
     const bot = new TelegramBot({
       accessToken: 'FAKE_TOKEN',
     });
@@ -75,7 +75,7 @@ describe('#createLongPollingRuntime', () => {
     bot.createLongPollingRuntime();
   });
 
-  it('should call updates with params', done => {
+  it('should call updates with params', (done) => {
     const bot = new TelegramBot({
       accessToken: 'FAKE_TOKEN',
     });

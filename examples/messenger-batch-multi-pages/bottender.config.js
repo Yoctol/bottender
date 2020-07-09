@@ -12,7 +12,7 @@ const {
  * but you can dynamically load tokens from SQL database, mongodb, redis, REST API ...
  * or whatever you want.
  */
-const mapPageToAccessToken = pageId => {
+const mapPageToAccessToken = (pageId) => {
   switch (pageId) {
     case PAGE_1_PAGE_ID:
       return PAGE_1_ACCESS_TOKEN;

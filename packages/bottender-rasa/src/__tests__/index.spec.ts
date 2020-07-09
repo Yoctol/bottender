@@ -166,7 +166,7 @@ it('should support JWT', async () => {
   let requestHeaders;
   nock('http://localhost:5005')
     .post('/model/parse')
-    .reply(200, function() {
+    .reply(200, function () {
       requestHeaders = this.req.headers;
       return {
         entities: [
@@ -219,7 +219,7 @@ it('should support parameters of rasa', async () => {
   let requestQuery;
   nock('http://localhost:5005')
     .post('/model/parse')
-    .query(query => {
+    .query((query) => {
       requestQuery = query;
       return true;
     })
