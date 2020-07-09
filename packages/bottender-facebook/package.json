@@ -16,6 +16,7 @@
     "axios-error": "^0.8.1",
     "facebook-batch": "1.0.0-beta.32",
     "lodash": "^4.17.15",
+    "type-fest": "^0.16.0",
     "warning": "^4.0.3"
   },
   "peerDependencies": {

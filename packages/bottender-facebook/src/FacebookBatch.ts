@@ -1,8 +1,18 @@
 import querystring from 'querystring';
 
+import isNil from 'lodash/isNil';
+import omitBy from 'lodash/omitBy';
+import { MergeExclusive } from 'type-fest';
 import { MessengerTypes } from 'bottender';
 
 import * as Types from './FacebookTypes';
+
+function formatDate(date: Date | string | undefined) {
+  if (date instanceof Date) {
+    return date.toISOString();
+  }
+  return date;
+}
 
 /**
  * Publish new comments to any object.
@@ -121,11 +131,104 @@ function getLikes(
   };
 }
 
+/**
+ * Get metrics for pages.
+ *
+ * @see https://developers.facebook.com/docs/graph-api/reference/v7.0/insights
+ *
+ * @param options -
+ */
+function getPageInsights<P extends 'day' | 'week' | 'days_28'>(
+  options: {
+    accessToken?: string;
+    metric: P extends 'day'
+      ? Types.PageInsightsMetricDay[]
+      : P extends 'week'
+      ? Types.PageInsightsMetricWeek[]
+      : P extends 'days_28'
+      ? Types.PageInsightsMetricDays28[]
+      : never;
+    period: P;
+  } & MergeExclusive<
+    { datePreset?: Types.DatePreset },
+    {
+      since?: string | Date;
+      until?: string | Date;
+    }
+  >
+): MessengerTypes.BatchItem {
+  const query = omitBy(
+    {
+      access_token: options.accessToken,
+      period: options.period,
+      metric: options.metric.join(','),
+      date_preset: 'datePreset' in options ? options.datePreset : undefined,
+      since: 'since' in options ? formatDate(options.since) : undefined,
+      until: 'until' in options ? formatDate(options.until) : undefined,
+    },
+    isNil
+  );
+
+  return {
+    method: 'GET',
+    relativeUrl: `/me/insights?${querystring.stringify(query)}`,
+  };
+}
+
+/**
+ * Get metrics for page posts.
+ *
+ * @see https://developers.facebook.com/docs/graph-api/reference/v7.0/insights
+ *
+ * @param postId - ID of the post.
+ * @param options -
+ */
+function getPostInsights<P extends 'day' | 'lifetime'>(
+  postId: string,
+  options: {
+    accessToken?: string;
+    metric: P extends 'day'
+      ? Types.PostInsightsMetricDay[]
+      : P extends 'lifetime'
+      ? Types.PostInsightsMetricLifetime[]
+      : never;
+    period?: P;
+  } & MergeExclusive<
+    {
+      datePreset?: Types.DatePreset;
+    },
+    {
+      since?: string | Date;
+      until?: string | Date;
+    }
+  >
+): MessengerTypes.BatchItem {
+  const query = omitBy(
+    {
+      access_token: options.accessToken,
+      period: options.period,
+      metric: options.metric.join(','),
+      date_preset: 'datePreset' in options ? options.datePreset : undefined,
+      since: 'since' in options ? formatDate(options.since) : undefined,
+      until: 'until' in options ? formatDate(options.until) : undefined,
+    },
+    isNil
+  );
+
+  return {
+    method: 'GET',
+    relativeUrl: `/${postId}/insights?${querystring.stringify(query)}`,
+  };
+}
+
 const FacebookBatch = {
   sendComment,
   sendLike,
   getComment,
   getLikes,
+
+  getPageInsights,
+  getPostInsights,
 };
 
 export default FacebookBatch;

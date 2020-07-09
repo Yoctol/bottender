@@ -2,9 +2,6 @@ import MockAdapter from 'axios-mock-adapter';
 
 import FacebookClient from '../FacebookClient';
 
-// TODO: remove auto mock from the project
-jest.unmock('messaging-api-messenger');
-
 const OBJECT_ID = '123456';
 const COMMENT_ID = '123456';
 const ACCESS_TOKEN = '1234567890';
