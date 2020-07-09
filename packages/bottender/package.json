@@ -7,7 +7,7 @@
     "type": "git",
     "url": "https://github.com/Yoctol/bottender.git"
   },
-  "version": "1.5.1-alpha.4",
+  "version": "1.5.1-alpha.5",
   "main": "dist/index.js",
   "browser": "dist/browser.js",
   "bin": {
@@ -23,7 +23,7 @@
   ],
   "types": "dist/index.d.ts",
   "dependencies": {
-    "@bottender/express": "^1.5.1-alpha.0",
+    "@bottender/express": "^1.5.1-alpha.5",
     "@hapi/joi": "^15.1.1",
     "@slack/rtm-api": "^5.0.3",
     "@types/debug": "^4.1.5",
