@@ -118,7 +118,7 @@ export default class FacebookConnector
       body.entry;
 
     return bodyEntry
-      .map<FacebookEvent | MessengerEvent | null>(entry => {
+      .map<FacebookEvent | MessengerEvent | null>((entry) => {
         const pageId = entry.id;
         if ('messaging' in entry) {
           return new MessengerEvent(entry.messaging[0], {

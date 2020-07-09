@@ -192,7 +192,7 @@ describe('#onPayload', () => {
       },
     };
 
-    builder.onPayload(payload => payload === 'cool', handler);
+    builder.onPayload((payload) => payload === 'cool', handler);
     await builder.build()(context);
     expect(handler).toBeCalledWith(context);
   });

@@ -109,7 +109,7 @@ export default (options: Options) => (context: any) => {
     if (context[method]) {
       const _method = context[method];
       /* eslint-disable func-names */
-      context[method] = async function(...args: any[]) {
+      context[method] = async function (...args: any[]) {
         const methodOptions = args[len - 1];
 
         const delay =

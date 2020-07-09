@@ -46,7 +46,7 @@ function setup({
     getUniqueSessionKey: jest.fn(() => '__id__'),
     updateSession: jest.fn(),
     mapRequestToEvents: jest.fn(() => [event]),
-    createContext: jest.fn(params => ({ ...params, session })),
+    createContext: jest.fn((params) => ({ ...params, session })),
   },
   sessionStore = new MemorySessionStore(),
 }: {
@@ -367,7 +367,7 @@ describe('#createRequestHandler', () => {
       .getUniqueSessionKey.mockReturnValueOnce('1')
       .mockReturnValueOnce('2');
     mocked(connector).mapRequestToEvents.mockReturnValue([event1, event2]);
-    mocked(connector).createContext.mockImplementation(params => ({
+    mocked(connector).createContext.mockImplementation((params) => ({
       event: params.event,
       session: params.session,
     }));
@@ -458,7 +458,7 @@ describe('#onError', () => {
     let receivedError;
     let receivedContext;
 
-    const promise = new Promise(resolve => {
+    const promise = new Promise((resolve) => {
       bot
         .onEvent(() => {
           throw new Error('boom');

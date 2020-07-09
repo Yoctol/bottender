@@ -1,9 +1,7 @@
 const session = {};
 
 function createSession(data) {
-  const key = Math.random()
-    .toString(36)
-    .substr(2, 10);
+  const key = Math.random().toString(36).substr(2, 10);
   session[key] = data;
   return key;
 }

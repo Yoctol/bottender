@@ -126,7 +126,7 @@ describe('createRuntime', () => {
     const bot = new ConsoleBot();
 
     let context;
-    bot.onEvent(ctx => {
+    bot.onEvent((ctx) => {
       context = ctx;
     });
 
@@ -147,7 +147,7 @@ describe('createRuntime', () => {
     const bot = new ConsoleBot();
 
     let context;
-    bot.onEvent(ctx => {
+    bot.onEvent((ctx) => {
       context = ctx;
     });
 

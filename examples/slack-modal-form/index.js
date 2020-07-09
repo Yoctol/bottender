@@ -170,7 +170,7 @@ function getFormValues(view) {
   return {
     date: v.date && v.date.element.selectedDate,
     time: v.time && v.time.element.value,
-    checked: v.checked && v.checked.element.selectedOptions.map(o => o.value),
+    checked: v.checked && v.checked.element.selectedOptions.map((o) => o.value),
     radio: v.radio && v.radio.element.selectedOption.value,
   };
 }

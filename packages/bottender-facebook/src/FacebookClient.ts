@@ -38,7 +38,7 @@ export default class FacebookClient extends MessengerClient {
           access_token: this.accessToken,
         },
       })
-      .then(res => res.data, handleError);
+      .then((res) => res.data, handleError);
   }
 
   /**
@@ -55,7 +55,7 @@ export default class FacebookClient extends MessengerClient {
           access_token: this.accessToken,
         },
       })
-      .then(res => res.data, handleError);
+      .then((res) => res.data, handleError);
   }
 
   /**
@@ -81,7 +81,7 @@ export default class FacebookClient extends MessengerClient {
           access_token: this.accessToken,
         },
       })
-      .then(res => res.data, handleError);
+      .then((res) => res.data, handleError);
   }
 
   /**
@@ -106,7 +106,7 @@ export default class FacebookClient extends MessengerClient {
           access_token: this.accessToken,
         },
       })
-      .then(res => res.data.likes, handleError);
+      .then((res) => res.data.likes, handleError);
   }
 
   /**
@@ -299,7 +299,7 @@ export default class FacebookClient extends MessengerClient {
           until: 'until' in options ? options.until : undefined,
         },
       })
-      .then(res => res.data.data, handleError);
+      .then((res) => res.data.data, handleError);
   }
 
   /**
@@ -369,6 +369,6 @@ export default class FacebookClient extends MessengerClient {
           until: 'until' in options ? options.until : undefined,
         },
       })
-      .then(res => res.data.data, handleError);
+      .then((res) => res.data.data, handleError);
   }
 }

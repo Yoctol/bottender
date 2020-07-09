@@ -20,7 +20,7 @@ const WEBHOOK = 'http://example.com/webhook';
 function setup({ config }: { config?: Record<string, any> } = {}) {
   process.exit = jest.fn();
 
-  log.bold = jest.fn(s => s);
+  log.bold = jest.fn((s) => s);
 
   mocked(getWebhookFromNgrok).mockResolvedValue('https://fakeDomain.ngrok.io');
 

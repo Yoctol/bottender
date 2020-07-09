@@ -35,7 +35,7 @@ describe('send api', () => {
       let url;
       let params;
       let data;
-      mock.onPost().reply(config => {
+      mock.onPost().reply((config) => {
         url = config.url;
         params = config.params;
         data = config.data;
@@ -62,7 +62,7 @@ describe('send api', () => {
       let url;
       let params;
       let data;
-      mock.onPost().reply(config => {
+      mock.onPost().reply((config) => {
         url = config.url;
         params = config.params;
         data = config.data;
@@ -89,7 +89,7 @@ describe('send api', () => {
       let url;
       let params;
       let data;
-      mock.onPost().reply(config => {
+      mock.onPost().reply((config) => {
         url = config.url;
         params = config.params;
         data = config.data;
@@ -118,7 +118,7 @@ describe('send api', () => {
       let url;
       let params;
       let data;
-      mock.onPost().reply(config => {
+      mock.onPost().reply((config) => {
         url = config.url;
         params = config.params;
         data = config.data;
@@ -147,7 +147,7 @@ describe('send api', () => {
       let url;
       let params;
       let data;
-      mock.onPost().reply(config => {
+      mock.onPost().reply((config) => {
         url = config.url;
         params = config.params;
         data = config.data;
@@ -175,7 +175,7 @@ describe('send api', () => {
 
       let url;
       let params;
-      mock.onPost().reply(config => {
+      mock.onPost().reply((config) => {
         url = config.url;
         params = config.params;
         return [200, reply];
@@ -199,7 +199,7 @@ describe('send api', () => {
 
       let url;
       let params;
-      mock.onGet().reply(config => {
+      mock.onGet().reply((config) => {
         url = config.url;
         params = config.params;
         return [200, reply];
@@ -222,7 +222,7 @@ describe('send api', () => {
 
       let url;
       let params;
-      mock.onGet().reply(config => {
+      mock.onGet().reply((config) => {
         url = config.url;
         params = config.params;
         return [200, reply];
@@ -282,7 +282,7 @@ describe('send api', () => {
 
       let url;
       let params;
-      mock.onGet().reply(config => {
+      mock.onGet().reply((config) => {
         url = config.url;
         params = config.params;
         return [200, reply];
@@ -360,7 +360,7 @@ describe('send api', () => {
 
       let url;
       let params;
-      mock.onGet().reply(config => {
+      mock.onGet().reply((config) => {
         url = config.url;
         params = config.params;
         return [200, reply];

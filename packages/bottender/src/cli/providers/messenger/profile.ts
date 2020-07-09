@@ -162,7 +162,7 @@ export async function setMessengerProfile(ctx: CliContext): Promise<void> {
 
         if (shouldDeleteFields.length > 0) {
           await client.deleteMessengerProfile(
-            shouldDeleteFields.map(field => snakecase(field))
+            shouldDeleteFields.map((field) => snakecase(field))
           );
           const deleteFileds = shouldDeleteFields.join(', ');
           print(`Successfully delete ${bold(deleteFileds)} settings`);

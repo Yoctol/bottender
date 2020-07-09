@@ -32,7 +32,7 @@ class Server {
     res: ServerResponse
   ): Promise<void> {
     res.statusCode = 200;
-    return this.run(req, res).catch(err => {
+    return this.run(req, res).catch((err) => {
       console.error(err);
       res.statusCode = 500;
       res.end('Internal Server Error');

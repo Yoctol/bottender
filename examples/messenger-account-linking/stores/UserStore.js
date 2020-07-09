@@ -51,7 +51,7 @@ class UserStore extends Store {
    */
   getByMessengerId(messengerId) {
     let currentUser = {};
-    this.data.forEach(userData => {
+    this.data.forEach((userData) => {
       if (userData.messengerId === messengerId) {
         currentUser = userData;
       }

@@ -2,7 +2,7 @@ const { router, telegram, text, route } = require('bottender/router');
 
 telegram.pollAnswer = function pollAnswer(action) {
   return route(
-    context => context.event.rawEvent.pollAnswer !== undefined,
+    (context) => context.event.rawEvent.pollAnswer !== undefined,
     action
   );
 };
@@ -26,7 +26,7 @@ async function NewPoll(context) {
 async function RecordPollAnswer(context) {
   const { pollId, user, optionIds } = context.event.rawEvent.pollAnswer;
   const username = user.username || `${user.firstName} ${user.lastName}`;
-  const voteOptions = optionIds.map(id => pollOptions[id]).join(', ');
+  const voteOptions = optionIds.map((id) => pollOptions[id]).join(', ');
 
   const replyText =
     voteOptions.length === 0

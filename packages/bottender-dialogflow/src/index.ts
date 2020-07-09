@@ -10,15 +10,15 @@ function getFulfillments(
   }
 
   return messages
-    .filter(message => message.platform === 'PLATFORM_UNSPECIFIED')
-    .map(message => message.text)
+    .filter((message) => message.platform === 'PLATFORM_UNSPECIFIED')
+    .map((message) => message.text)
     .filter(
       (text): text is protos.google.cloud.dialogflow.v2.Intent.Message.IText =>
         Boolean(text)
     )
-    .map(text => text.text)
+    .map((text) => text.text)
     .filter((text): text is string[] => Boolean(text))
-    .map(texts => {
+    .map((texts) => {
       const index = Math.floor(Math.random() * texts.length);
       return texts[index];
     });
@@ -137,7 +137,7 @@ export = function dialogflow({
     const fulfillments = getFulfillments(fulfillmentMessages);
     if (fulfillments.length > 0) {
       await Promise.all(
-        fulfillments.map(fulfillment => context.sendText(fulfillment))
+        fulfillments.map((fulfillment) => context.sendText(fulfillment))
       );
       return;
     }

@@ -74,7 +74,7 @@ app.prepare().then(() => {
     return handle(req, res);
   });
 
-  server.listen(port, err => {
+  server.listen(port, (err) => {
     if (err) throw err;
     console.log(`> Ready on http://localhost:${port}`);
   });
@@ -139,18 +139,18 @@ app.prepare().then(() => {
 
   const router = new Router();
 
-  router.get('/api', ctx => {
+  router.get('/api', (ctx) => {
     ctx.response.body = { ok: true };
   });
 
-  router.all('*', async ctx => {
+  router.all('*', async (ctx) => {
     await handle(ctx.req, ctx.res);
     ctx.respond = false;
   });
 
   server.use(router.routes());
 
-  server.listen(port, err => {
+  server.listen(port, (err) => {
     if (err) throw err;
     console.log(`> Ready on http://localhost:${port}`);
   });
@@ -218,7 +218,7 @@ app.prepare().then(() => {
     return handle(req, res);
   });
 
-  server.listen(port, err => {
+  server.listen(port, (err) => {
     if (err) throw err;
     console.log(`> Ready on http://localhost:${port}`);
   });

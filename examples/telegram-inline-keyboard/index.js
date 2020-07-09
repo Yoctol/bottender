@@ -2,8 +2,8 @@ const { router, telegram, text } = require('bottender/router');
 
 function generateInlineKeyboard(table) {
   return {
-    inlineKeyboard: table.map(row =>
-      row.map(cell => ({
+    inlineKeyboard: table.map((row) =>
+      row.map((cell) => ({
         text: cell,
         callbackData: cell,
       }))

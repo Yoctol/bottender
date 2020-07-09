@@ -20,7 +20,7 @@ describe('#getPageInsights', () => {
     let receviedQuery;
     nock('https://graph.facebook.com/v6.0')
       .get('/me/insights')
-      .query(query => {
+      .query((query) => {
         receviedQuery = query;
         return true;
       })
@@ -117,7 +117,7 @@ describe('#getPageInsights', () => {
     let receviedQuery;
     nock('https://graph.facebook.com/v6.0')
       .get('/me/insights')
-      .query(query => {
+      .query((query) => {
         receviedQuery = query;
         return true;
       })
@@ -797,7 +797,7 @@ describe('#getPageInsights', () => {
     let receviedQuery;
     nock('https://graph.facebook.com/v6.0')
       .get('/me/insights')
-      .query(query => {
+      .query((query) => {
         receviedQuery = query;
         return true;
       })
@@ -894,7 +894,7 @@ describe('#getPageInsights', () => {
     let receviedQuery;
     nock('https://graph.facebook.com/v6.0')
       .get('/me/insights')
-      .query(query => {
+      .query((query) => {
         receviedQuery = query;
         return true;
       })
@@ -989,7 +989,7 @@ describe('#getPageInsights', () => {
     let receviedQuery;
     nock('https://graph.facebook.com/v6.0')
       .get('/me/insights')
-      .query(query => {
+      .query((query) => {
         receviedQuery = query;
         return true;
       })
@@ -1017,7 +1017,7 @@ describe('#getPageInsights', () => {
     let receviedQuery;
     nock('https://graph.facebook.com/v6.0')
       .get('/me/insights')
-      .query(query => {
+      .query((query) => {
         receviedQuery = query;
         return true;
       })
@@ -1051,7 +1051,7 @@ describe('#getPostInsights', () => {
     let receviedQuery;
     nock('https://graph.facebook.com/v6.0')
       .get(`/${POST_ID}/insights`)
-      .query(query => {
+      .query((query) => {
         receviedQuery = query;
         return true;
       })
@@ -1160,7 +1160,7 @@ describe('#getPostInsights', () => {
     let receviedQuery;
     nock('https://graph.facebook.com/v6.0')
       .get(`/${POST_ID}/insights`)
-      .query(query => {
+      .query((query) => {
         receviedQuery = query;
         return true;
       })
@@ -1241,7 +1241,7 @@ describe('#getPostInsights', () => {
     let receviedQuery;
     nock('https://graph.facebook.com/v6.0')
       .get(`/${POST_ID}/insights`)
-      .query(query => {
+      .query((query) => {
         receviedQuery = query;
         return true;
       })
@@ -1271,7 +1271,7 @@ describe('#getPostInsights', () => {
     let receviedQuery;
     nock('https://graph.facebook.com/v6.0')
       .get(`/${POST_ID}/insights`)
-      .query(query => {
+      .query((query) => {
         receviedQuery = query;
         return true;
       })

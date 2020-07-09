@@ -154,7 +154,7 @@ describe('#route', () => {
   it('should work with predicate', async () => {
     const Router = router([
       route(
-        context => context.event.isText && context.event.text.startsWith('h'),
+        (context) => context.event.isText && context.event.text.startsWith('h'),
         sendText('hello')
       ),
     ]);
