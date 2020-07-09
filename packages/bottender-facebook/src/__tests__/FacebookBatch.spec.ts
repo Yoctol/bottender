@@ -128,3 +128,117 @@ describe('getLikes', () => {
     });
   });
 });
+
+describe('getPageInsights', () => {
+  it('should create get page insights request', () => {
+    expect(
+      FacebookBatch.getPageInsights({
+        metric: ['page_total_actions', 'page_engaged_users'],
+        period: 'day',
+      })
+    ).toEqual({
+      method: 'GET',
+      relativeUrl:
+        '/me/insights?period=day&metric=page_total_actions%2Cpage_engaged_users',
+    });
+  });
+
+  it('should support datePreset', () => {
+    expect(
+      FacebookBatch.getPageInsights({
+        metric: ['page_total_actions', 'page_engaged_users'],
+        period: 'day',
+        datePreset: 'today',
+      })
+    ).toEqual({
+      method: 'GET',
+      relativeUrl:
+        '/me/insights?period=day&metric=page_total_actions%2Cpage_engaged_users&date_preset=today',
+    });
+  });
+
+  it('should support since and until', () => {
+    expect(
+      FacebookBatch.getPageInsights({
+        metric: ['page_total_actions', 'page_engaged_users'],
+        period: 'day',
+        since: new Date('2020-07-06T03:24:00Z'),
+        until: new Date('2020-07-07T03:24:00Z'),
+      })
+    ).toEqual({
+      method: 'GET',
+      relativeUrl:
+        '/me/insights?period=day&metric=page_total_actions%2Cpage_engaged_users&since=2020-07-06T03%3A24%3A00.000Z&until=2020-07-07T03%3A24%3A00.000Z',
+    });
+  });
+
+  it('should support custom access token', () => {
+    expect(
+      FacebookBatch.getPageInsights({
+        metric: ['page_total_actions', 'page_engaged_users'],
+        period: 'day',
+        accessToken: ACCESS_TOKEN,
+      })
+    ).toEqual({
+      method: 'GET',
+      relativeUrl: `/me/insights?access_token=${ACCESS_TOKEN}&period=day&metric=page_total_actions%2Cpage_engaged_users`,
+    });
+  });
+});
+
+describe('getPostInsights', () => {
+  it('should create get post insights request', () => {
+    expect(
+      FacebookBatch.getPostInsights('POST_ID', {
+        metric: ['post_video_views_organic', 'post_video_views_paid'],
+        period: 'day',
+      })
+    ).toEqual({
+      method: 'GET',
+      relativeUrl:
+        '/POST_ID/insights?period=day&metric=post_video_views_organic%2Cpost_video_views_paid',
+    });
+  });
+
+  it('should support datePreset', () => {
+    expect(
+      FacebookBatch.getPostInsights('POST_ID', {
+        metric: ['post_video_views_organic', 'post_video_views_paid'],
+        period: 'day',
+        datePreset: 'today',
+      })
+    ).toEqual({
+      method: 'GET',
+      relativeUrl:
+        '/POST_ID/insights?period=day&metric=post_video_views_organic%2Cpost_video_views_paid&date_preset=today',
+    });
+  });
+
+  it('should support since and until', () => {
+    expect(
+      FacebookBatch.getPostInsights('POST_ID', {
+        metric: ['post_video_views_organic', 'post_video_views_paid'],
+        period: 'day',
+        since: new Date('2020-07-06T03:24:00Z'),
+        until: new Date('2020-07-07T03:24:00Z'),
+      })
+    ).toEqual({
+      method: 'GET',
+      relativeUrl:
+        '/POST_ID/insights?period=day&metric=post_video_views_organic%2Cpost_video_views_paid&since=2020-07-06T03%3A24%3A00.000Z&until=2020-07-07T03%3A24%3A00.000Z',
+    });
+  });
+
+  it('should support custom access token', () => {
+    expect(
+      FacebookBatch.getPostInsights('POST_ID', {
+        metric: ['post_video_views_organic', 'post_video_views_paid'],
+        period: 'day',
+        accessToken: ACCESS_TOKEN,
+      })
+    ).toEqual({
+      method: 'GET',
+      relativeUrl: `/POST_ID/insights?access_token=${ACCESS_TOKEN}&period=day&metric=post_video_views_organic%2Cpost_video_views_paid`,
+    });
+  });
+});
