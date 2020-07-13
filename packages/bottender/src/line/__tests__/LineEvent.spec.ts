@@ -453,6 +453,22 @@ it('#source', () => {
   expect(new LineEvent(noSourceMessage).source).toEqual(null);
 });
 
+it('#timestamp', () => {
+  expect(new LineEvent(textMessage).timestamp).toEqual(1462629479859);
+  expect(new LineEvent(follow).timestamp).toEqual(1462629479859);
+  expect(new LineEvent(unfollow).timestamp).toEqual(1462629479859);
+  expect(new LineEvent(join).timestamp).toEqual(1462629479859);
+  expect(new LineEvent(leave).timestamp).toEqual(1462629479859);
+  expect(new LineEvent(postback).timestamp).toEqual(1462629479859);
+  expect(new LineEvent(beacon).timestamp).toEqual(1462629479859);
+  expect(new LineEvent(accountLink).timestamp).toEqual(1513669370317);
+  expect(new LineEvent(memberJoined).timestamp).toEqual(1462629479859);
+  expect(new LineEvent(memberLeft).timestamp).toEqual(1462629479960);
+  expect(new LineEvent(thingsLink).timestamp).toEqual(1462629479859);
+  expect(new LineEvent(thingsUnlink).timestamp).toEqual(1462629479859);
+  expect(new LineEvent(thingsScenarioResult).timestamp).toEqual(1547817848122);
+});
+
 it('#isMessage', () => {
   expect(new LineEvent(textMessage).isMessage).toEqual(true);
   expect(new LineEvent(follow).isMessage).toEqual(false);

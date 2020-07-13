@@ -226,6 +226,10 @@ it('#rawEvent', () => {
   expect(new ViberEvent(textMessage).rawEvent).toEqual(textMessage);
 });
 
+it('#timestamp', () => {
+  expect(new ViberEvent(textMessage).timestamp).toEqual(1457764197627);
+});
+
 it('#isMessage', () => {
   expect(new ViberEvent(subscribed).isMessage).toEqual(false);
   expect(new ViberEvent(unsubscribed).isMessage).toEqual(false);

@@ -662,6 +662,26 @@ it('#rawEvent', () => {
   );
 });
 
+it('#timestamp', () => {
+  expect(new MessengerEvent(textMessage).timestamp).toEqual(1491796363181);
+  expect(new MessengerEvent(imageMessage).timestamp).toEqual(1491797604411);
+  expect(new MessengerEvent(likeStickerMessage).timestamp).toEqual(
+    1491797086506
+  );
+  expect(new MessengerEvent(quickReplyMessage).timestamp).toEqual(
+    1491798262319
+  );
+  expect(new MessengerEvent(echoMessage).timestamp).toEqual(1491798024994);
+  expect(new MessengerEvent(postback).timestamp).toEqual(1491798782090);
+  expect(new MessengerEvent(payment).timestamp).toEqual(1473208792799);
+  expect(new MessengerEvent(accountLinkingLinked).timestamp).toEqual(
+    1469111400000
+  );
+  expect(new MessengerEvent(accountLinkingUnlinked).timestamp).toEqual(
+    1469111400000
+  );
+});
+
 it('#isMessage', () => {
   expect(new MessengerEvent(textMessage).isMessage).toEqual(true);
   expect(new MessengerEvent(imageMessage).isMessage).toEqual(true);

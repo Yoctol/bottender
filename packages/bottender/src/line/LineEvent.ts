@@ -41,6 +41,14 @@ export default class LineEvent implements Event<LineRawEvent> {
   }
 
   /**
+   * The timestamp when the event was sent.
+   *
+   */
+  get timestamp(): number {
+    return this._rawEvent.timestamp;
+  }
+
+  /**
    * The destination is the id of the bot which this event is sent to.
    *
    */
