@@ -29,6 +29,9 @@
     "testonly:watch": "jest --watch",
     "version": "cp README.md packages/bottender"
   },
+  "dependencies": {
+    "mockdate": "^3.0.2"
+  },
   "devDependencies": {
     "@types/jest": "^26.0.4",
     "@types/prettier": "^2.0.2",

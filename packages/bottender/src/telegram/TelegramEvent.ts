@@ -26,7 +26,7 @@ export default class TelegramEvent implements Event<TelegramRawEvent> {
   get timestamp(): number | undefined {
     return 'message' in this.rawEvent
       ? this.rawEvent.message?.date
-      : Date.now();
+      : Date.now() / 1000;
   }
 
   /**
