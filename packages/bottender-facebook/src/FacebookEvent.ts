@@ -11,9 +11,15 @@ export default class FacebookEvent {
 
   _pageId: string | undefined;
 
-  constructor(rawEvent: FacebookRawEvent, options: { pageId?: string } = {}) {
+  _timestamp: number | undefined;
+
+  constructor(
+    rawEvent: FacebookRawEvent,
+    options: { pageId?: string; timestamp?: number } = {}
+  ) {
     this._rawEvent = rawEvent;
     this._pageId = options.pageId;
+    this._timestamp = options.timestamp;
   }
 
   get pageId(): string | undefined {
@@ -26,6 +32,16 @@ export default class FacebookEvent {
    */
   get rawEvent(): FacebookRawEvent {
     return this._rawEvent;
+  }
+
+  /**
+   * The timestamp when the event was sent.
+   *
+   */
+  get timestamp(): number | undefined {
+    return 'createdTime' in this.rawEvent.value
+      ? this.rawEvent.value.createdTime
+      : this._timestamp;
   }
 
   /**

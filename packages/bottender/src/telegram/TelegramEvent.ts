@@ -20,6 +20,16 @@ export default class TelegramEvent implements Event<TelegramRawEvent> {
   }
 
   /**
+   * The timestamp when the event was sent
+   *
+   */
+  get timestamp(): number | undefined {
+    return 'message' in this.rawEvent
+      ? this.rawEvent.message?.date
+      : Date.now();
+  }
+
+  /**
    * Determine if the event is a message event.
    *
    */

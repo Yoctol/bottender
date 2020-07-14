@@ -621,6 +621,21 @@ it('#rawEvent', () => {
   );
 });
 
+it('#timestamp', () => {
+  expect(new TelegramEvent(textMessage).timestamp).toEqual(1499402829);
+  expect(new TelegramEvent(groupMessage).timestamp).toEqual(1515758146);
+  expect(new TelegramEvent(editedMessage).timestamp).toEqual(Date.now());
+  expect(new TelegramEvent(channelPost).timestamp).toEqual(Date.now());
+  expect(new TelegramEvent(editedChannelPost).timestamp).toEqual(Date.now());
+  expect(new TelegramEvent(inlineQuery).timestamp).toEqual(Date.now());
+  expect(new TelegramEvent(chosenInlineResult).timestamp).toEqual(Date.now());
+  expect(new TelegramEvent(callbackQuery).timestamp).toEqual(Date.now());
+  expect(new TelegramEvent(shippingQuery).timestamp).toEqual(Date.now());
+  expect(new TelegramEvent(preCheckoutQuery).timestamp).toEqual(Date.now());
+  expect(new TelegramEvent(poll).timestamp).toEqual(Date.now());
+  expect(new TelegramEvent(replyToTextMessage).timestamp).toEqual(1499402829);
+});
+
 it('#isMessage', () => {
   expect(new TelegramEvent(textMessage).isMessage).toEqual(true);
   expect(new TelegramEvent(groupMessage).isMessage).toEqual(true);
