@@ -30,7 +30,7 @@ function getFulfillments(fulfillmentMessages: Message[]): string[] {
  *   },
  * });
  */
-module.exports = function dialogflow({
+export default function dialogflow({
   projectId,
   languageCode = 'en',
   actions = {},
