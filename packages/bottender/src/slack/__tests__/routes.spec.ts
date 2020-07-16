@@ -32,16 +32,16 @@ const slackEventInteractiveMessage = new SlackEvent({
   ],
   callbackId: 'wopr_game',
   team: {
-    id: 'T056K3CM5',
-    domain: 'ricebug',
+    id: 'T00000001',
+    domain: 'team_domain',
   },
   channel: {
-    id: 'D7WTL9ECE',
+    id: 'C00000001',
     name: 'directmessage',
   },
   user: {
-    id: 'U056K3CN1',
-    name: 'tw0517tw',
+    id: 'U00000001',
+    name: 'user_name',
   },
   actionTs: '1511153911.446899',
   messageTs: '1511153905.000093',
@@ -52,7 +52,7 @@ const slackEventInteractiveMessage = new SlackEvent({
     type: 'message',
     user: 'U7W1PH7MY',
     text: 'Would you like to play a game?',
-    botId: 'B7VUVQTK5',
+    botId: 'B00000001',
     attachments: [
       {
         callbackId: 'wopr_game',
