@@ -66,17 +66,98 @@ export default class FacebookClient extends MessengerClient {
    * @param commentId - ID of the comment.
    * @param options -
    */
-  public getComment(
+  public getComment<
+    T extends Types.CommentField = 'id' | 'message' | 'created_time'
+  >(
     commentId: string,
-    { summary, filter, fields }: Types.GetCommentOptions = {}
-  ): Promise<Types.Comment> {
+    {
+      fields = ['id' as T, 'message' as T, 'created_time' as T],
+    }: { fields?: T[] } = {}
+  ): Promise<
+    Pick<
+      Types.Comment,
+      Types.CamelCaseUnion<Types.CommentKeyMap, typeof fields[number]>
+    >
+  > {
     const conjunctFields = Array.isArray(fields) ? fields.join(',') : fields;
 
     return this.axios
-      .get<Types.Comment>(`/${commentId}`, {
+      .get<
+        Pick<
+          Types.Comment,
+          Types.CamelCaseUnion<Types.CommentKeyMap, typeof fields[number]>
+        >
+      >(`/${commentId}`, {
         params: {
+          fields: conjunctFields,
+          access_token: this.accessToken,
+        },
+      })
+      .then((res) => res.data, handleError);
+  }
+
+  /**
+   * Get comments of the object.
+   *
+   * @see https://developers.facebook.com/docs/graph-api/reference/v7.0/object/comments
+   *
+   * @param objectId - ID of the object.
+   * @param options -
+   */
+  public getComments<
+    T extends Types.CommentField = 'id' | 'message' | 'created_time',
+    U extends boolean = false
+  >(
+    objectId: string,
+    {
+      limit,
+      summary,
+      filter,
+      order,
+      fields = ['id' as T, 'message' as T, 'created_time' as T],
+    }: Types.GetCommentsOptions<T, U> = {}
+  ): Promise<
+    Types.PagingData<
+      Pick<
+        Types.Comment,
+        Types.CamelCaseUnion<Types.CommentKeyMap, typeof fields[number]>
+      >[]
+    > &
+      (U extends true
+        ? {
+            summary: {
+              order: 'ranked' | 'chronological' | 'reverse_chronological';
+              totalCount: number;
+              canComment: boolean;
+            };
+          }
+        : any)
+  > {
+    const conjunctFields = Array.isArray(fields) ? fields.join(',') : fields;
+
+    return this.axios
+      .get<
+        Types.PagingData<
+          Pick<
+            Types.Comment,
+            Types.CamelCaseUnion<Types.CommentKeyMap, typeof fields[number]>
+          >[]
+        > &
+          (U extends true
+            ? {
+                summary: {
+                  order: 'ranked' | 'chronological' | 'reverse_chronological';
+                  totalCount: number;
+                  canComment: boolean;
+                };
+              }
+            : any)
+      >(`/${objectId}/comments`, {
+        params: {
+          limit,
           summary: summary ? 'true' : undefined,
           filter,
+          order,
           fields: conjunctFields,
           access_token: this.accessToken,
         },

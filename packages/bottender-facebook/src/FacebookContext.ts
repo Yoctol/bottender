@@ -232,9 +232,14 @@ export default class FacebookContext extends Context<
    *
    * @see https://developers.facebook.com/docs/graph-api/reference/comment
    */
-  public async getComment(
-    options: Types.GetCommentOptions
-  ): Promise<Types.Comment | null> {
+  public async getComment<
+    T extends Types.CommentField = 'id' | 'message' | 'created_time'
+  >({
+    fields = ['id' as T, 'message' as T, 'created_time' as T],
+  }: Types.GetCommentOptions<T> = {}): Promise<Pick<
+    Types.Comment,
+    Types.CamelCaseUnion<Types.CommentKeyMap, typeof fields[number]>
+  > | null> {
     const commentId = (this._event.rawEvent.value as Types.FeedComment)
       .commentId;
 
@@ -244,14 +249,19 @@ export default class FacebookContext extends Context<
     }
 
     if (this._batchQueue) {
-      return this._batchQueue.push<Types.Comment>(
+      return this._batchQueue.push<
+        Pick<
+          Types.Comment,
+          Types.CamelCaseUnion<Types.CommentKeyMap, typeof fields[number]>
+        >
+      >(
         FacebookBatch.getComment(commentId, {
           accessToken: this._customAccessToken,
-          ...options,
+          fields,
         })
       );
     }
-    return this._client.getComment(commentId, options);
+    return this._client.getComment(commentId, { fields });
   }
 
   /**

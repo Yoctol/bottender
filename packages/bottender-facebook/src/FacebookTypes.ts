@@ -3,6 +3,10 @@ import { MessengerTypes } from 'bottender';
 export { FacebookConnectorOptions } from './FacebookConnector';
 export { FacebookContextOptions } from './FacebookContext';
 
+export type CamelCaseUnion<KM, U extends keyof KM> = U extends string
+  ? KM[U]
+  : never;
+
 export type FeedStatus = {
   from: {
     id: string;
@@ -261,6 +265,26 @@ export type CommentField =
   | 'private_reply_conversation'
   | 'user_likes';
 
+export type CommentKeyMap = {
+  id: 'id';
+  attachment: 'attachment';
+  can_comment: 'canComment';
+  can_remove: 'canRemove';
+  can_hide: 'canHide';
+  can_like: 'canLike';
+  can_reply_privately: 'canReplyPrivately';
+  comment_count: 'commentCount';
+  created_time: 'createdTime';
+  from: 'from';
+  like_count: 'likeCount';
+  message: 'message';
+  message_tags: 'messageTags';
+  object: 'object';
+  parent: 'parent';
+  private_reply_conversation: 'privateReplyConversation';
+  user_likes: 'userLikes';
+};
+
 export type InputComment =
   | {
       /**
@@ -295,67 +319,67 @@ export type Comment = {
   /**
    * Link, video, sticker, or photo attached to the comment
    */
-  attachment?: StoryAttachment;
+  attachment: StoryAttachment;
   /**
    * Whether the viewer can reply to this comment
    */
-  canComment?: boolean;
+  canComment: boolean;
   /**
    * Whether the viewer can remove this comment
    */
-  canRemove?: boolean;
+  canRemove: boolean;
   /**
    * Whether the viewer can hide this comment. Only visible to a page admin
    */
-  canHide?: boolean;
+  canHide: boolean;
   /**
    * Whether the viewer can like this comment
    */
-  canLike?: boolean;
+  canLike: boolean;
   /**
    * Whether the viewer can send a private reply to this comment (Page viewers only)
    */
-  canReplyPrivately?: boolean;
+  canReplyPrivately: boolean;
   /**
    * Number of replies to this comment
    */
-  commentCount?: number;
+  commentCount: number;
   /**
    * The time this comment was made
    */
-  createdTime?: string;
+  createdTime: string;
   /**
    * The person that made this comment
    */
-  from?: User;
+  from: User;
   /**
    * Number of times this comment was liked
    */
-  likeCount?: number;
+  likeCount: number;
   /**
    * The comment text
    */
-  message?: string;
+  message: string;
   /**
    * An array of Profiles tagged in message.
    */
-  messageTags?: MessageTag[];
+  messageTags: MessageTag[];
   /**
    * For comments on a photo or video, this is that object. Otherwise, this is empty.
    */
-  object?: any;
+  object: any;
   /**
    * For comment replies, this the comment that this is a reply to.
    */
-  parent?: Comment;
+  parent: Comment;
   /**
    * For comments with private replies, gets conversation between the Page and author of the comment (Page viewers only)
    */
-  privateReplyConversation?: Conversation;
+  privateReplyConversation: Conversation;
   /**
    * Whether the viewer has liked this comment.
    */
-  userLikes?: boolean;
+  userLikes: boolean;
 };
 
 /**
@@ -923,10 +947,49 @@ export type Like = {
   createdTime: string;
 };
 
-export type GetCommentOptions = {
-  summary?: boolean;
+export type CommonPaginationOptions = {
+  limit?: number;
+};
+
+export type CursorBasedPaginationOptions = CommonPaginationOptions & {
+  before?: string;
+  after?: string;
+};
+
+export type TimeBasedPaginationOptions = CommonPaginationOptions & {
+  until?: string;
+  since?: string;
+};
+
+export type OffsetBasedPaginationOptions = CommonPaginationOptions & {
+  offset?: number;
+};
+
+export type PaginationOptions =
+  | CursorBasedPaginationOptions
+  | TimeBasedPaginationOptions
+  | OffsetBasedPaginationOptions;
+
+export type PagingData<T extends object> = {
+  data: T;
+  paging: {
+    previous?: string;
+    next?: string;
+  };
+};
+
+export type GetCommentOptions<T extends CommentField> = {
+  fields?: T[];
+};
+
+export type GetCommentsOptions<
+  T extends CommentField,
+  U extends boolean
+> = PaginationOptions & {
+  summary?: U;
   filter?: 'toplevel' | 'stream';
-  fields?: string | CommentField[];
+  order?: 'chronological' | 'reverse_chronological';
+  fields?: T[];
 };
 
 export type GetLikesOptions = {

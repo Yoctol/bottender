@@ -208,7 +208,10 @@ describe('send api', () => {
       const res = await client.getComment(COMMENT_ID);
 
       expect(url).toEqual(`/${COMMENT_ID}`);
-      expect(params).toEqual({ access_token: ACCESS_TOKEN });
+      expect(params).toEqual({
+        access_token: ACCESS_TOKEN,
+        fields: 'id,message,created_time',
+      });
       expect(res).toEqual(reply);
     });
 
@@ -229,19 +232,153 @@ describe('send api', () => {
       });
 
       const res = await client.getComment(COMMENT_ID, {
-        summary: true,
-        filter: 'toplevel',
         fields: ['can_reply_privately'],
       });
 
       expect(url).toEqual(`/${COMMENT_ID}`);
       expect(params).toEqual({
+        access_token: ACCESS_TOKEN,
+        fields: 'can_reply_privately',
+      });
+      expect(res).toEqual(reply);
+    });
+  });
+
+  describe('#getComments', () => {
+    it('should call comments api', async () => {
+      const { client, mock } = createMock();
+
+      const reply = {
+        data: [
+          {
+            created_time: '2020-07-02T15:10:26+0000',
+            message: 'hello world!',
+            id: '128744825536666_128747222206666',
+          },
+        ],
+        paging: {
+          cursors: {
+            before: 'MQZDZD',
+            after: 'MQZDZD',
+          },
+        },
+        summary: {
+          order: 'ranked',
+          total_count: 1,
+          can_comment: true,
+        },
+      };
+
+      let url;
+      let params;
+      mock.onGet().reply((config) => {
+        url = config.url;
+        params = config.params;
+        return [200, reply];
+      });
+
+      const res = await client.getComments(OBJECT_ID);
+
+      expect(url).toEqual(`/${OBJECT_ID}/comments`);
+      expect(params).toEqual({
+        access_token: ACCESS_TOKEN,
+        fields: 'id,message,created_time',
+        filter: undefined,
+        limit: undefined,
+        order: undefined,
+        summary: undefined,
+      });
+      expect(res).toEqual({
+        data: [
+          {
+            createdTime: '2020-07-02T15:10:26+0000',
+            message: 'hello world!',
+            id: '128744825536666_128747222206666',
+          },
+        ],
+        paging: {
+          cursors: {
+            before: 'MQZDZD',
+            after: 'MQZDZD',
+          },
+        },
+        summary: {
+          order: 'ranked',
+          totalCount: 1,
+          canComment: true,
+        },
+      });
+    });
+
+    it('should support other options', async () => {
+      const { client, mock } = createMock();
+
+      const reply = {
+        data: [
+          {
+            created_time: '2020-07-02T15:10:26+0000',
+            message: 'hello world!',
+            id: '128744825536666_128747222206666',
+            can_reply_privately: true,
+          },
+        ],
+        paging: {
+          cursors: {
+            before: 'MQZDZD',
+            after: 'MQZDZD',
+          },
+        },
+        summary: {
+          order: 'reverse_chronological',
+          total_count: 1,
+          can_comment: true,
+        },
+      };
+
+      let url;
+      let params;
+      mock.onGet().reply((config) => {
+        url = config.url;
+        params = config.params;
+        return [200, reply];
+      });
+
+      const res = await client.getComments(OBJECT_ID, {
+        summary: true,
+        filter: 'toplevel',
+        order: 'reverse_chronological',
+        fields: ['can_reply_privately'],
+      });
+
+      expect(url).toEqual(`/${OBJECT_ID}/comments`);
+      expect(params).toEqual({
         summary: 'true',
         filter: 'toplevel',
+        order: 'reverse_chronological',
         fields: 'can_reply_privately',
         access_token: ACCESS_TOKEN,
       });
-      expect(res).toEqual(reply);
+      expect(res).toEqual({
+        data: [
+          {
+            createdTime: '2020-07-02T15:10:26+0000',
+            message: 'hello world!',
+            id: '128744825536666_128747222206666',
+            canReplyPrivately: true,
+          },
+        ],
+        paging: {
+          cursors: {
+            before: 'MQZDZD',
+            after: 'MQZDZD',
+          },
+        },
+        summary: {
+          order: 'reverse_chronological',
+          totalCount: 1,
+          canComment: true,
+        },
+      });
     });
   });
 
