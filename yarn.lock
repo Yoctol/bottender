@@ -7562,10 +7562,10 @@ messaging-api-common@1.0.0-beta.29, messaging-api-common@^1.0.0-beta.29:
     snake-case "^3.0.3"
     url-join "^4.0.1"
 
-messaging-api-line@1.0.0-beta.30:
-  version "1.0.0-beta.30"
-  resolved "https://registry.yarnpkg.com/messaging-api-line/-/messaging-api-line-1.0.0-beta.30.tgz#4b64cbc55f2fab0eacaaec23edaf7be40094f439"
-  integrity sha512-4b3Xj/riH4wxNgfmkYusWlwnr4wPkvh8t4EntcUsogZc0zi4BHNtN3DZ1Id3wIU7kY1JK5FPFQTvLTOi13kq2g==
+messaging-api-line@1.0.0-beta.33:
+  version "1.0.0-beta.33"
+  resolved "https://registry.yarnpkg.com/messaging-api-line/-/messaging-api-line-1.0.0-beta.33.tgz#dab867e25f74d24d61b71a11841a49499ac5032d"
+  integrity sha512-gvCmv1T9ExMIjMlr9CecREUrgUscDI+tmEJP6NlZx5Ly7fCKUrpToNT/N8eFKxjoQ85YTSnXupazXSklpclExA==
   dependencies:
     "@types/warning" "^3.0.0"
     axios "^0.19.2"
@@ -7576,7 +7576,24 @@ messaging-api-line@1.0.0-beta.30:
     type-fest "^0.15.1"
     warning "^4.0.3"
 
-messaging-api-messenger@1.0.0-beta.31, messaging-api-messenger@^1.0.0-beta.31:
+messaging-api-messenger@1.0.0-beta.33:
+  version "1.0.0-beta.33"
+  resolved "https://registry.yarnpkg.com/messaging-api-messenger/-/messaging-api-messenger-1.0.0-beta.33.tgz#8856d174a400fa1401afb9f7aef8aba53a216189"
+  integrity sha512-iGIUzaqRaddt+Wt7mz5hyo/5dQaq0WHkEDoSRctVmYnEyIgZtyvIVsxOp9RKWPY4U5KDjkMwLjgt7y8/TD8ttQ==
+  dependencies:
+    "@types/append-query" "^2.0.0"
+    "@types/lodash" "^4.14.156"
+    "@types/warning" "^3.0.0"
+    append-query "^2.1.0"
+    axios "^0.19.2"
+    axios-error "^1.0.0-beta.27"
+    form-data "^3.0.0"
+    lodash "^4.17.15"
+    messaging-api-common "^1.0.0-beta.29"
+    ts-invariant "^0.4.4"
+    warning "^4.0.3"
+
+messaging-api-messenger@^1.0.0-beta.31:
   version "1.0.0-beta.31"
   resolved "https://registry.yarnpkg.com/messaging-api-messenger/-/messaging-api-messenger-1.0.0-beta.31.tgz#1bb2db861df7c2310d70b93bdc853f35af481f4d"
   integrity sha512-UWe9vjOKAO2w3MGW53ZJAmml4bS8UsnH20C10xVm35WJufAjWvoVu8/PkEhhn7c2X3P3OHNuBxgt+/EY0z4wFw==
@@ -7593,10 +7610,10 @@ messaging-api-messenger@1.0.0-beta.31, messaging-api-messenger@^1.0.0-beta.31:
     ts-invariant "^0.4.4"
     warning "^4.0.3"
 
-messaging-api-slack@1.0.0-beta.29:
-  version "1.0.0-beta.29"
-  resolved "https://registry.yarnpkg.com/messaging-api-slack/-/messaging-api-slack-1.0.0-beta.29.tgz#e56de603fef7373f1e69be6507c7e9d979069641"
-  integrity sha512-rX/s9ZWJB8kANLJgzPGX7AZUBbBwPLGVkyPiGAn7cDS4BuOAGVDTuQE1U6GyzXxcmC/LtzZqveOTUwp4agSpDg==
+messaging-api-slack@1.0.0-beta.33:
+  version "1.0.0-beta.33"
+  resolved "https://registry.yarnpkg.com/messaging-api-slack/-/messaging-api-slack-1.0.0-beta.33.tgz#b03e9672f6db866deebaab535692da6fa2c40bc6"
+  integrity sha512-oKPbsK87EDfMWsUVNZvFEdfpBxfu2b0PQ/HyAFTBFmcYgp2h/tEYLS7ocAiZ5LSXCR/3Y0W7KgCA9BlPnh+gEA==
   dependencies:
     "@types/lodash" "^4.14.156"
     "@types/warning" "^3.0.0"
@@ -7604,11 +7621,12 @@ messaging-api-slack@1.0.0-beta.29:
     axios-error "^1.0.0-beta.27"
     lodash "^4.17.15"
     messaging-api-common "^1.0.0-beta.29"
+    ts-invariant "^0.4.4"
 
-messaging-api-telegram@1.0.0-beta.29:
-  version "1.0.0-beta.29"
-  resolved "https://registry.yarnpkg.com/messaging-api-telegram/-/messaging-api-telegram-1.0.0-beta.29.tgz#edf3453a48a81e6d7c2fd6be69724d66a036926c"
-  integrity sha512-vIpZxS/X1r5Jk3H2X5zI1mY5ujuJbB2+8bfv5dev7sQdKcFPtUOUAQxvZME0eRd4QC9igpJZEek7Qd2BDIy0UQ==
+messaging-api-telegram@1.0.0-beta.33:
+  version "1.0.0-beta.33"
+  resolved "https://registry.yarnpkg.com/messaging-api-telegram/-/messaging-api-telegram-1.0.0-beta.33.tgz#dbf67e7e34cae9c5ea126f363214e2a66d6d13bd"
+  integrity sha512-naE0DgYYdZOfkDMxDdEnDfUomzNB0TkOKS09YkpTVKjUCeB3JJenXfEtVqqk8digfxuDo9C9KdFLiPCZ1jW4uQ==
   dependencies:
     "@types/lodash" "^4.14.156"
     "@types/warning" "^3.0.0"
@@ -7616,17 +7634,19 @@ messaging-api-telegram@1.0.0-beta.29:
     axios-error "^1.0.0-beta.27"
     lodash "^4.17.15"
     messaging-api-common "^1.0.0-beta.29"
+    ts-invariant "^0.4.4"
     warning "^4.0.3"
 
-messaging-api-viber@1.0.0-beta.29:
-  version "1.0.0-beta.29"
-  resolved "https://registry.yarnpkg.com/messaging-api-viber/-/messaging-api-viber-1.0.0-beta.29.tgz#9cbf886a68330a521f59f678ec4317f5c47b04e7"
-  integrity sha512-YMk0gskhEuxBcnemSQFerSs7n0p7aY7yI4MMdk7y2nb9TxkKpiw4+3wOMz1KtZ5/4cYNvJRgfOINfH8HdNp3cA==
+messaging-api-viber@1.0.0-beta.33:
+  version "1.0.0-beta.33"
+  resolved "https://registry.yarnpkg.com/messaging-api-viber/-/messaging-api-viber-1.0.0-beta.33.tgz#7a9f1cfffe99f32b23f60a4f24daf5121bc7228a"
+  integrity sha512-cGxVaHjyXsHDtiHzgzuqYT4IvoTZ7JvlNzQK+7h1J6k3niyb1UQwjd8uC1dcpB86nO9/P98c7OarkY+TbAk0QA==
   dependencies:
     "@types/warning" "^3.0.0"
     axios "^0.19.2"
     axios-error "^1.0.0-beta.27"
     messaging-api-common "^1.0.0-beta.29"
+    ts-invariant "^0.4.4"
     warning "^4.0.3"
 
 methods@^1.1.1, methods@^1.1.2, methods@~1.1.2:

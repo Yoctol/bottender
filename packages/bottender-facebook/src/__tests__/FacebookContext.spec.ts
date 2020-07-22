@@ -1,5 +1,6 @@
 import FacebookContext from '../FacebookContext';
-import FacebookEvent, { FacebookRawEvent } from '../FacebookEvent';
+import FacebookEvent from '../FacebookEvent';
+import { FacebookRawEvent } from '../FacebookTypes';
 
 jest.mock('warning');
 

@@ -7,14 +7,18 @@ const COMMENT_ID = '123456';
 const ACCESS_TOKEN = '1234567890';
 
 const createMock = () => {
-  const client = new FacebookClient(ACCESS_TOKEN);
+  const client = new FacebookClient({
+    accessToken: ACCESS_TOKEN,
+  });
   const mock = new MockAdapter(client.axios);
   return { client, mock };
 };
 
 describe('#axios', () => {
   it('should return underlying http client', () => {
-    const client = new FacebookClient(ACCESS_TOKEN);
+    const client = new FacebookClient({
+      accessToken: ACCESS_TOKEN,
+    });
 
     expect(client.axios.get).toBeDefined();
     expect(client.axios.post).toBeDefined();
