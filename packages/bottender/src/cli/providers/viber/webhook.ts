@@ -100,13 +100,10 @@ export async function deleteWebhook(_: CliContext): Promise<void> {
       '`sender` is not found in the `bottender.config.js` file'
     );
 
-    const client = new ViberClient(
-      {
-        accessToken,
-        sender,
-      },
-      sender
-    );
+    const client = new ViberClient({
+      accessToken,
+      sender,
+    });
 
     await client.removeWebhook();
 
