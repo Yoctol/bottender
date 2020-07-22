@@ -301,7 +301,7 @@ describe('#getComment', () => {
 
     expect(client.getComment).toBeCalledWith(
       '139560936744456_139620233405726',
-      undefined
+      { fields: ['id', 'message', 'created_time'] }
     );
   });
 
