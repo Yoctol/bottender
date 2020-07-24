@@ -1,3 +1,7 @@
+# 1.4.10 / 2020-07-24
+
+- [fix] add Interaction type for route `slack.event` (#842)
+
 # 1.4.9 / 2020-07-07
 
 - [fix] MongoSessionStore: enable `useUnifiedTopology` to avoid warning (#831)
@@ -1226,7 +1230,7 @@ const bot = new ConsoleBot({
 });
 
 bot.connector.platform; // 'messenger'
-bot.onEvent(context => {
+bot.onEvent((context) => {
   context.platform; // 'messenger'
 });
 ```
@@ -1509,7 +1513,7 @@ Aliases:
 * [`context.getUserProfilePhotos`](https://bottender.js.org/docs/APIReference-TelegramContext#code-classlanguage-textgetuserprofilephotosoptionscode---official-docs)
 
 ```js
-context.getUserProfilePhotos({ limit: 1 }).then(result => {
+context.getUserProfilePhotos({ limit: 1 }).then((result) => {
   console.log(result);
   // {
   //   total_count: 3,
@@ -1542,7 +1546,7 @@ context.getUserProfilePhotos({ limit: 1 }).then(result => {
 - [`context.getChat`](https://bottender.js.org/docs/APIReference-TelegramContext#code-classlanguage-textgetchatcode---official-docs)
 
 ```js
-context.getChat().then(result => {
+context.getChat().then((result) => {
   console.log(result);
   // {
   //   id: 313534466,
@@ -1557,7 +1561,7 @@ context.getChat().then(result => {
 - [`context.getChatAdministrators`](https://bottender.js.org/docs/APIReference-TelegramContext#code-classlanguage-textgetchatadministratorscode---official-docs)
 
 ```js
-context.getChatAdministrators().then(result => {
+context.getChatAdministrators().then((result) => {
   console.log(result);
   // [
   //   {
@@ -1577,7 +1581,7 @@ context.getChatAdministrators().then(result => {
 - [`context.getChatMembersCount`](https://bottender.js.org/docs/APIReference-TelegramContext#code-classlanguage-textgetchatmemberscountcode---official-docs)
 
 ```js
-context.getChatMembersCount().then(result => {
+context.getChatMembersCount().then((result) => {
   console.log(result);
   // '6'
 });
@@ -1586,7 +1590,7 @@ context.getChatMembersCount().then(result => {
 - [`context.getChatMember`](https://bottender.js.org/docs/APIReference-TelegramContext#code-classlanguage-textgetchatmemberuseridcode---official-docs)
 
 ```js
-context.getChatMember().then(result => {
+context.getChatMember().then((result) => {
   console.log(result);
   // {
   //   user: {
@@ -1636,7 +1640,7 @@ context.getChatMember().then(result => {
 * [`context.getUserProfile`](https://bottender.js.org/docs/APIReference-LineContext#getuserprofile):
 
 ```js
-context.getUserProfile().then(profile => {
+context.getUserProfile().then((profile) => {
   console.log(profile);
   // {
   //   displayName: 'LINE taro',
@@ -1650,7 +1654,7 @@ context.getUserProfile().then(profile => {
 - [`context.getMemberProfile`](https://bottender.js.org/docs/APIReference-LineContext#getmemberprofileuserid):
 
 ```js
-context.getMemberProfile(USER_ID).then(member => {
+context.getMemberProfile(USER_ID).then((member) => {
   console.log(member);
   // {
   //   "displayName":"LINE taro",
@@ -1663,7 +1667,7 @@ context.getMemberProfile(USER_ID).then(member => {
 - [`context.getMemberIds`](https://bottender.js.org/docs/APIReference-LineContext#getmemberidsstart):
 
 ```js
-context.getMemberIds(CURSOR).then(res => {
+context.getMemberIds(CURSOR).then((res) => {
   console.log(res);
   // {
   //   memberIds: [
@@ -1679,7 +1683,7 @@ context.getMemberIds(CURSOR).then(res => {
 - [`context.getAllMemberIds`](https://bottender.js.org/docs/APIReference-LineContext#getallmemberids):
 
 ```js
-context.getAllMemberIds().then(ids => {
+context.getAllMemberIds().then((ids) => {
   console.log(ids);
   // [
   //   'Uxxxxxxxxxxxxxx..1',
@@ -1848,7 +1852,7 @@ context.event.payload; // PAYLOAD
 ```js
 const bot = new ConsoleBot({ fallbackMethods: true });
 
-bot.onEvent(async context => {
+bot.onEvent(async (context) => {
   await context.sendText('Hello World');
   await context.sendImage('https://example.com/vr.jpg');
   await context.sendButtonTemplate('What do you want to do next?', [
@@ -1942,7 +1946,7 @@ const bot = new SlackBot({
   accessToken: '__FILL_YOUR_TOKEN_HERE__',
 });
 
-bot.onEvent(async context => {
+bot.onEvent(async (context) => {
   await context.sendText('Hello World');
 });
 
@@ -2034,7 +2038,7 @@ const bot = new TelegramBot({
   accessToken: '__FILL_YOUR_TOKEN_HERE__',
 });
 
-bot.onEvent(async context => {
+bot.onEvent(async (context) => {
   await context.sendText('Hello World');
 });
 
@@ -2097,7 +2101,7 @@ Game API:
 ```js
 context.sendGame('Mario Bros.');
 context.setGameScore(999);
-context.getGameHighScores().then(result => {
+context.getGameHighScores().then((result) => {
   console.log(result);
   /*
   {
@@ -2132,7 +2136,7 @@ const bot = new ViberBot({
   accessToken: '__FILL_YOUR_TOKEN_HERE__',
 });
 
-bot.onEvent(async context => {
+bot.onEvent(async (context) => {
   if (context.event.isMessage) {
     await context.sendText('Hello World');
   }
@@ -2202,7 +2206,7 @@ event.ref; // 'my_ref'
 ```js
 new MessengerBot({
   appSecret: '__FILL_YOUR_SECRET_HERE__',
-  mapPageToAccessToken: pageId => accessToken,
+  mapPageToAccessToken: (pageId) => accessToken,
 });
 ```
 
