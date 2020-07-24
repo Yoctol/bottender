@@ -2,6 +2,7 @@ export * from 'messaging-api-slack/dist/SlackTypes';
 export { SlackConnectorOptions } from './SlackConnector';
 export { SlackContextOptions } from './SlackContext';
 
+// https://api.slack.com/events
 export type EventTypes =
   | '*'
   | 'message'
@@ -57,6 +58,16 @@ export type EventTypes =
   | 'tokens_revoked'
   | 'url_verification'
   | 'user_change';
+
+// https://api.slack.com/reference/interaction-payloads
+// https://api.slack.com/reference/interaction-payloads/shortcuts
+export type InteractionTypes =
+  | 'interactive_message'
+  | 'block_actions'
+  | 'message_actions'
+  | 'view_closed'
+  | 'view_submission'
+  | 'shortcut';
 
 export type Message = {
   type: EventTypes;
