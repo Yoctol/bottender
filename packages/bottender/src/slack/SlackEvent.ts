@@ -2,6 +2,7 @@ import { pascalCase } from 'pascal-case';
 
 import { Event } from '../context/Event';
 
+// https://api.slack.com/events
 export type EventTypes =
   | 'message'
   | 'app_uninstalled'
@@ -56,6 +57,16 @@ export type EventTypes =
   | 'tokens_revoked'
   | 'url_verification'
   | 'user_change';
+
+// https://api.slack.com/reference/interaction-payloads
+// https://api.slack.com/reference/interaction-payloads/shortcuts
+export type InteractionTypes =
+  | 'interactive_message'
+  | 'block_actions'
+  | 'message_actions'
+  | 'view_closed'
+  | 'view_submission'
+  | 'shortcut';
 
 export type Message = {
   type: EventTypes;

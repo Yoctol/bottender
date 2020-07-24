@@ -2,7 +2,7 @@ import { Action, AnyContext } from '../types';
 import { RoutePredicate, route } from '../router';
 
 import SlackContext from './SlackContext';
-import { EventTypes } from './SlackEvent';
+import { EventTypes, InteractionTypes } from './SlackEvent';
 
 type Route = <C extends AnyContext>(
   action: Action<SlackContext, any>
@@ -15,7 +15,7 @@ type Slack = Route & {
   any: Route;
   message: Route;
   event: <C extends AnyContext>(
-    eventType: EventTypes,
+    eventType: EventTypes | InteractionTypes,
     action: Action<SlackContext, any>
   ) => {
     predicate: RoutePredicate<C>;
@@ -48,7 +48,7 @@ function message<C extends AnyContext>(action: Action<SlackContext, any>) {
 slack.message = message;
 
 function event<C extends AnyContext>(
-  eventType: EventTypes,
+  eventType: EventTypes | InteractionTypes,
   action: Action<SlackContext, any>
 ) {
   return route(
