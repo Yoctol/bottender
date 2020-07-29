@@ -74,27 +74,26 @@ class Worker {
     console.log("worker.start()")
 
     await this.prepare();
-    this.messageQueue.startWorking(this.doWork);
-  }
-
-  private async doWork(message: string): Promise<boolean> {
-    console.log(message);
-    const {body, httpContext} = JSON.parse(message);
-    for (let i = 0; i < this.channelBots.length; i++) {
-      const { webhookPath, bot } = this.channelBots[i];
-      if (httpContext.path === webhookPath) {
-        const requestHandler = bot.createRequestHandler();
-        const response = await requestHandler(
-          body,
-          httpContext
-        );
-        console.log(response);
+    const self = this;
+    this.messageQueue.startWorking(
+      async (message: string) => {
+        console.log(message);
+        const {body, httpContext} = JSON.parse(message);
+        for (let i = 0; i < self.channelBots.length; i++) {
+          const { webhookPath, bot } = self.channelBots[i];
+          if (httpContext.path === webhookPath) {
+            const requestHandler = bot.createRequestHandler();
+            const response = await requestHandler(
+              body,
+              httpContext
+            );
+            console.log(response);
+          }
+        }
+        return true;
       }
-    }
-
-    return true;
+    );
   }
-
 }
 
 export default Worker;
