@@ -12,6 +12,7 @@ import Bot from '../bot/Bot';
 import getBottenderConfig from '../shared/getBottenderConfig';
 import getSessionStore from '../getSessionStore';
 import { Action, BottenderConfig, Plugin, RequestContext } from '../types';
+import MessageQueue from '../message-queue/MessageQueue';
 
 export type ServerOptions = {
   useConsole?: boolean;
@@ -20,11 +21,12 @@ export type ServerOptions = {
 
 class Server {
   _channelBots: { webhookPath: string; bot: Bot<any, any, any, any> }[] = [];
-
+  messageQueue: MessageQueue;
   useConsole: boolean;
 
-  constructor({ useConsole = false } = {}) {
+  constructor({ useConsole = false, messageQueue = new MessageQueue() } = {}) {
     this.useConsole = useConsole;
+    this.messageQueue = messageQueue;
   }
 
   private handleRequest(
@@ -40,6 +42,7 @@ class Server {
   }
 
   public async prepare(): Promise<void> {
+    await this.messageQueue.connect();
     const bottenderConfig = getBottenderConfig();
 
     const { initialState, plugins, channels = {} } = merge(
@@ -148,6 +151,7 @@ class Server {
       return;
     }
 
+    console.log("server.run 123")
     // TODO: add proxy support in Bottender to apply X-Forwarded-Host and X-Forwarded-Proto
     // conditionally instead of replying on express.
     const hostname = (req as any).hostname || req.headers.host;
@@ -207,16 +211,16 @@ class Server {
           return;
         }
 
-        const requestHandler = bot.createRequestHandler();
-
-        // eslint-disable-next-line no-await-in-loop
-        response = await requestHandler(
-          {
-            ...query,
-            ...(req as any).body,
-          },
-          httpContext
-        );
+        console.log("send message to queue")
+        this.messageQueue.sendMessage({
+          message: JSON.stringify({
+            body: {
+              ...query,
+              ...(req as any).body,
+            },
+            httpContext
+          })
+        })
 
         if (response) {
           Object.entries(response.headers || {}).forEach(([key, value]) => {

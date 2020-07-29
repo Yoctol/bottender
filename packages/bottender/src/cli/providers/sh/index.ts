@@ -1,6 +1,6 @@
 export default {
   title: 'Bottender',
-  subcommands: new Set(['help', 'init', 'start', 'dev']),
+  subcommands: new Set(['help', 'init', 'start', 'dev', 'worker']),
   get init() {
     return require('./init').default;
   },
@@ -12,5 +12,8 @@ export default {
   },
   get help() {
     return require('./help').default;
+  },
+  get worker() {
+    return require('./worker').default;
   },
 };
