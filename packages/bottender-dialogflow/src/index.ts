@@ -98,9 +98,10 @@ module.exports = function dialogflow({
       // fulfillment by Dialogflow
       const fulfillments = getFulfillments(fulfillmentMessages);
       if (fulfillments.length > 0) {
-        await Promise.all(
-          fulfillments.map(fulfillment => context.sendText(fulfillment))
-        );
+        for (const fulfillment of fulfillments) {
+          // eslint-disable-next-line no-await-in-loop
+          await context.sendText(fulfillment);
+        }
         return;
       }
     } else {
