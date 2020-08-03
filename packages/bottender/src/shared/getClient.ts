@@ -4,16 +4,17 @@ import { SlackOAuthClient } from 'messaging-api-slack';
 import { TelegramClient } from 'messaging-api-telegram';
 import { ViberClient } from 'messaging-api-viber';
 
-import LineBot from './line/LineBot';
-import MessengerBot from './messenger/MessengerBot';
-import SlackBot from './slack/SlackBot';
-import TelegramBot from './telegram/TelegramBot';
-import TwilioClient from './whatsapp/TwilioClient';
-import ViberBot from './viber/ViberBot';
-import WhatsappBot from './whatsapp/WhatsappBot';
-import getBottenderConfig from './shared/getBottenderConfig';
-import getSessionStore from './getSessionStore';
-import { Channel } from './types';
+import LineBot from '../line/LineBot';
+import MessengerBot from '../messenger/MessengerBot';
+import SlackBot from '../slack/SlackBot';
+import TelegramBot from '../telegram/TelegramBot';
+import TwilioClient from '../whatsapp/TwilioClient';
+import ViberBot from '../viber/ViberBot';
+import WhatsappBot from '../whatsapp/WhatsappBot';
+import getSessionStore from '../getSessionStore';
+import { Channel } from '../types';
+
+import getBottenderConfig from './getBottenderConfig';
 
 const BOT_MAP = {
   messenger: MessengerBot,
