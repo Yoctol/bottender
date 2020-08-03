@@ -13,7 +13,7 @@ export { default as Bot } from './bot/Bot';
 export { Connector } from './bot/Connector';
 export { default as Context } from './context/Context';
 export { default as getSessionStore } from './getSessionStore';
-export { default as getClient } from './getClient';
+export { default as getClient } from './shared/getClient';
 
 /* Action */
 export { default as chain } from './chain';
