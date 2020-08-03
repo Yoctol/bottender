@@ -9,10 +9,10 @@ import { match } from 'path-to-regexp';
 import { pascalcase } from 'messaging-api-common';
 
 import Bot from '../bot/Bot';
+import MessageQueue from '../message-queue/MessageQueue';
 import getBottenderConfig from '../shared/getBottenderConfig';
 import getSessionStore from '../getSessionStore';
 import { Action, BottenderConfig, Plugin, RequestContext } from '../types';
-import MessageQueue from '../message-queue/MessageQueue';
 
 export type ServerOptions = {
   useConsole?: boolean;
@@ -21,7 +21,9 @@ export type ServerOptions = {
 
 class Server {
   _channelBots: { webhookPath: string; bot: Bot<any, any, any, any> }[] = [];
+
   messageQueue: MessageQueue;
+
   useConsole: boolean;
 
   constructor({ useConsole = false, messageQueue = new MessageQueue() } = {}) {
@@ -151,7 +153,6 @@ class Server {
       return;
     }
 
-    console.log("server.run 123")
     // TODO: add proxy support in Bottender to apply X-Forwarded-Host and X-Forwarded-Proto
     // conditionally instead of replying on express.
     const hostname = (req as any).hostname || req.headers.host;
@@ -186,7 +187,7 @@ class Server {
         const result = await (bot.connector as any).preprocess(httpContext);
 
         const { shouldNext } = result;
-        let { response } = result;
+        const { response } = result;
 
         if (!shouldNext) {
           if (response) {
@@ -211,16 +212,16 @@ class Server {
           return;
         }
 
-        console.log("send message to queue")
+        console.log('send message to queue');
         this.messageQueue.sendMessage({
           message: JSON.stringify({
             body: {
               ...query,
               ...(req as any).body,
             },
-            httpContext
-          })
-        })
+            httpContext,
+          }),
+        });
 
         if (response) {
           Object.entries(response.headers || {}).forEach(([key, value]) => {

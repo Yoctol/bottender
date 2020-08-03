@@ -1,10 +1,10 @@
-import { CliContext } from '../..';
 import Worker from '../../../message-queue/Worker';
+import { CliContext } from '../..';
 
 const worker = async (ctx: CliContext): Promise<void> => {
   console.log(ctx);
-  const worker = new Worker();
-  await worker.start();
+  const w = new Worker();
+  await w.start();
 };
 
 export default worker;

@@ -1,5 +1,5 @@
-import MessageQueue from "./MessageQueue";
 import path from 'path';
+
 import merge from 'lodash/merge';
 import { pascalcase } from 'messaging-api-common';
 
@@ -8,15 +8,18 @@ import getBottenderConfig from '../shared/getBottenderConfig';
 import getSessionStore from '../getSessionStore';
 import { Action, BottenderConfig, Plugin } from '../types';
 
+import MessageQueue from './MessageQueue';
+
 class Worker {
   channelBots: { webhookPath: string; bot: Bot<any, any, any, any> }[] = [];
-  messageQueue: MessageQueue
+
+  messageQueue: MessageQueue;
 
   constructor(messageQueue = new MessageQueue()) {
     this.messageQueue = messageQueue;
   }
 
-  public async prepare(){
+  public async prepare() {
     await this.messageQueue.connect();
     const bottenderConfig = getBottenderConfig();
 
@@ -32,67 +35,65 @@ class Worker {
     let ErrorEntry: Action<any, any>;
 
     const channelBots = Object.entries(channels || {})
-    .filter(([, { enabled }]) => enabled)
-    .map(([channel, { path: webhookPath, ...channelConfig }]) => {
-      // eslint-disable-next-line import/no-dynamic-require
-      const ChannelBot = require(`../${channel}/${pascalcase(channel)}Bot`)
-        .default;
-      const channelBot = new ChannelBot({
-        ...channelConfig,
-        sessionStore,
-      }) as Bot<any, any, any, any>;
+      .filter(([, { enabled }]) => enabled)
+      .map(([channel, { path: webhookPath, ...channelConfig }]) => {
+        // eslint-disable-next-line import/no-dynamic-require
+        const ChannelBot = require(`../${channel}/${pascalcase(channel)}Bot`)
+          .default;
+        const channelBot = new ChannelBot({
+          ...channelConfig,
+          sessionStore,
+        }) as Bot<any, any, any, any>;
 
-      function initializeBot(bot: Bot<any, any, any, any>): void {
-        if (initialState) {
-          bot.setInitialState(initialState);
+        function initializeBot(bot: Bot<any, any, any, any>): void {
+          if (initialState) {
+            bot.setInitialState(initialState);
+          }
+
+          if (plugins) {
+            plugins.forEach((plugin: Plugin<any>) => {
+              bot.use(plugin);
+            });
+          }
+
+          bot.onEvent(Entry);
+          if (ErrorEntry) {
+            bot.onError(ErrorEntry);
+          }
         }
 
-        if (plugins) {
-          plugins.forEach((plugin: Plugin<any>) => {
-            bot.use(plugin);
-          });
-        }
+        initializeBot(channelBot);
 
-        bot.onEvent(Entry);
-        if (ErrorEntry) {
-          bot.onError(ErrorEntry);
-        }
-      }
-
-      initializeBot(channelBot);
-
-      return {
-        webhookPath: webhookPath || `/webhooks/${channel}`,
-        bot: channelBot,
-      };
-    });
+        return {
+          webhookPath: webhookPath || `/webhooks/${channel}`,
+          bot: channelBot,
+        };
+      });
 
     this.channelBots = channelBots;
   }
 
-  public async start(){
-    console.log("worker.start()")
+  public async start() {
+    console.log('worker.start()');
 
     await this.prepare();
-    const self = this;
-    this.messageQueue.startWorking(
-      async (message: string) => {
-        console.log(message);
-        const {body, httpContext} = JSON.parse(message);
-        for (let i = 0; i < self.channelBots.length; i++) {
-          const { webhookPath, bot } = self.channelBots[i];
-          if (httpContext.path === webhookPath) {
-            const requestHandler = bot.createRequestHandler();
-            const response = await requestHandler(
-              body,
-              httpContext
-            );
-            console.log(response);
-          }
-        }
-        return true;
+    this.messageQueue.startWorking(this.work.bind(this));
+  }
+
+  public async work(message: string) {
+    console.log('doWork');
+    console.log(message);
+    const { body, httpContext } = JSON.parse(message);
+    for (let i = 0; i < this.channelBots.length; i++) {
+      const { webhookPath, bot } = this.channelBots[i];
+      if (httpContext.path === webhookPath) {
+        const requestHandler = bot.createRequestHandler();
+        // eslint-disable-next-line no-await-in-loop
+        const response = await requestHandler(body, httpContext);
+        console.log(response);
       }
-    );
+    }
+    return true;
   }
 }
 
