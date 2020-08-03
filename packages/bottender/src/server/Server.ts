@@ -10,7 +10,7 @@ import { pascalcase } from 'messaging-api-common';
 
 import Bot from '../bot/Bot';
 import getBottenderConfig from '../shared/getBottenderConfig';
-import getSessionStore from '../getSessionStore';
+import getSessionStore from '../shared/getSessionStore';
 import { Action, BottenderConfig, Plugin, RequestContext } from '../types';
 
 export type ServerOptions = {

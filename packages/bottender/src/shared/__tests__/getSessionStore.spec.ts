@@ -1,9 +1,9 @@
-import MemorySessionStore from '../session/MemorySessionStore';
-import getBottenderConfig from '../shared/getBottenderConfig';
+import MemorySessionStore from '../../session/MemorySessionStore';
+import getBottenderConfig from '../getBottenderConfig';
 import getSessionStore from '../getSessionStore';
-import { SessionDriver } from '../types';
+import { SessionDriver } from '../../types';
 
-jest.mock('../shared/getBottenderConfig');
+jest.mock('../getBottenderConfig');
 
 const getBottenderConfigMocked = getBottenderConfig as jest.MockedFunction<
   typeof getBottenderConfig

@@ -11,10 +11,10 @@ import TelegramBot from '../telegram/TelegramBot';
 import TwilioClient from '../whatsapp/TwilioClient';
 import ViberBot from '../viber/ViberBot';
 import WhatsappBot from '../whatsapp/WhatsappBot';
-import getSessionStore from '../getSessionStore';
 import { Channel } from '../types';
 
 import getBottenderConfig from './getBottenderConfig';
+import getSessionStore from './getSessionStore';
 
 const BOT_MAP = {
   messenger: MessengerBot,
