@@ -4,14 +4,18 @@ import invariant from 'invariant';
 import { merge } from 'lodash';
 import { pascalcase } from 'messaging-api-common';
 
-import { Action, Bot, BottenderConfig, Plugin, getSessionStore } from '..';
+import {
+  Action,
+  Bot,
+  BottenderConfig,
+  ChannelBot,
+  Plugin,
+  getSessionStore,
+} from '..';
 
 import getBottenderConfig from './getBottenderConfig';
 
-function getChannelBots(): {
-  webhookPath: string;
-  bot: Bot<any, any, any, any>;
-}[] {
+function getChannelBots(): ChannelBot[] {
   const bottenderConfig = getBottenderConfig();
 
   const { initialState, plugins, channels = {} } = merge(
