@@ -31,7 +31,7 @@ class Server {
     });
   }
 
-  private setResponse(res: ServerResponse, response: any): void {
+  private sendResponse(res: ServerResponse, response: any): void {
     if (response) {
       Object.entries(response.headers || {}).forEach(([key, value]) => {
         res.setHeader(key, value as string);
@@ -89,7 +89,7 @@ class Server {
     let { response } = result;
 
     if (!shouldNext) {
-      this.setResponse(res, response);
+      this.sendResponse(res, response);
       return;
     }
 
@@ -104,7 +104,7 @@ class Server {
       requestContext
     );
 
-    this.setResponse(res, response);
+    this.sendResponse(res, response);
   }
 }
 
