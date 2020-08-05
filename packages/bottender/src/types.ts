@@ -2,12 +2,12 @@ import { IncomingHttpHeaders } from 'http';
 
 import { JsonObject } from 'type-fest';
 
+import Bot, { OnRequest } from './bot/Bot';
 import Context from './context/Context';
 import SessionStore from './session/SessionStore';
 import { Connector } from './bot/Connector';
 import { LineConnectorOptions } from './line/LineConnector';
 import { MessengerConnectorOptions } from './messenger/MessengerConnector';
-import { OnRequest } from './bot/Bot';
 import { SlackConnectorOptions } from './slack/SlackConnector';
 import { TelegramConnectorOptions } from './telegram/TelegramConnector';
 import { ViberConnectorOptions } from './viber/ViberConnector';
@@ -120,3 +120,8 @@ export type RequestContext<
 export type Client = object;
 
 export { Event } from './context/Event';
+
+export type ChannelBot = {
+  webhookPath: string;
+  bot: Bot<any, any, any, any>;
+};
