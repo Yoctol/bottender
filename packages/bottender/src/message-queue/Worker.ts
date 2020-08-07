@@ -27,13 +27,17 @@ class Worker {
   public async work(message: string) {
     console.log('doWork');
     console.log(message);
-    const { body, httpContext } = JSON.parse(message);
+    const { requestContext } = JSON.parse(message);
+    const body = {
+      ...requestContext.query,
+      ...requestContext.body,
+    };
     for (let i = 0; i < this.channelBots.length; i++) {
       const { webhookPath, bot } = this.channelBots[i];
-      if (httpContext.path === webhookPath) {
+      if (requestContext.path === webhookPath) {
         const requestHandler = bot.createRequestHandler();
         // eslint-disable-next-line no-await-in-loop
-        const response = await requestHandler(body, httpContext);
+        const response = await requestHandler(body, requestContext);
         console.log(response);
         return true;
       }
