@@ -31,6 +31,28 @@ class Server {
     });
   }
 
+  private sendResponse(res: ServerResponse, response: any): void {
+    if (response) {
+      Object.entries(response.headers || {}).forEach(([key, value]) => {
+        res.setHeader(key, value as string);
+      });
+      res.statusCode = response.status || 200;
+      if (
+        response.body &&
+        typeof response.body === 'object' &&
+        !Buffer.isBuffer(response.body)
+      ) {
+        res.setHeader('Content-Type', 'application/json; charset=utf-8');
+        res.end(JSON.stringify(response.body));
+      } else {
+        res.end(response.body || '');
+      }
+    } else {
+      res.statusCode = 200;
+      res.end('');
+    }
+  }
+
   public async prepare(): Promise<void> {
     if (this.useConsole) {
       const bot = getConsoleBot();
@@ -67,25 +89,7 @@ class Server {
     let { response } = result;
 
     if (!shouldNext) {
-      if (response) {
-        Object.entries(response.headers || {}).forEach(([key, value]) => {
-          res.setHeader(key, value as string);
-        });
-        res.statusCode = response.status || 200;
-        if (
-          response.body &&
-          typeof response.body === 'object' &&
-          !Buffer.isBuffer(response.body)
-        ) {
-          res.setHeader('Content-Type', 'application/json; charset=utf-8');
-          res.end(JSON.stringify(response.body));
-        } else {
-          res.end(response.body || '');
-        }
-      } else {
-        res.statusCode = 200;
-        res.end('');
-      }
+      this.sendResponse(res, response);
       return;
     }
 
@@ -100,21 +104,7 @@ class Server {
       requestContext
     );
 
-    if (response) {
-      Object.entries(response.headers || {}).forEach(([key, value]) => {
-        res.setHeader(key, value as string);
-      });
-      res.statusCode = response.status || 200;
-      if (response.body && typeof response.body === 'object') {
-        res.setHeader('Content-Type', 'application/json');
-        res.end(JSON.stringify(response.body));
-      } else {
-        res.end(response.body || '');
-      }
-    } else {
-      res.statusCode = 200;
-      res.end('');
-    }
+    this.sendResponse(res, response);
   }
 }
 
