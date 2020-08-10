@@ -15,7 +15,17 @@ import {
 
 import getBottenderConfig from './getBottenderConfig';
 
+let channelBots: ChannelBot[] = [];
+
+export function cleanChannelBots(): void {
+  channelBots = [];
+}
+
 function getChannelBots(): ChannelBot[] {
+  if (channelBots.length > 0) {
+    return channelBots;
+  }
+
   const bottenderConfig = getBottenderConfig();
 
   const { initialState, plugins, channels = {} } = merge(
@@ -50,7 +60,7 @@ function getChannelBots(): ChannelBot[] {
     }
   }
 
-  const channelBots = (Object.entries(channels) as [string, any][])
+  channelBots = (Object.entries(channels) as [string, any][])
     .filter(([, { enabled }]) => enabled)
     .map(
       ([
