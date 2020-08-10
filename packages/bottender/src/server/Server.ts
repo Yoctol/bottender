@@ -1,8 +1,6 @@
 import { IncomingMessage, ServerResponse } from 'http';
 
-import Bot from '../bot/Bot';
 import getChannelBotAndRequestContext from '../shared/getChannelBotAndRequestContext';
-import getChannelBots from '../shared/getChannelBots';
 import getConsoleBot from '../shared/getConsoleBot';
 
 export type ServerOptions = {
@@ -11,8 +9,6 @@ export type ServerOptions = {
 };
 
 class Server {
-  _channelBots: { webhookPath: string; bot: Bot<any, any, any, any> }[] = [];
-
   useConsole: boolean;
 
   constructor({ useConsole = false } = {}) {
@@ -57,10 +53,7 @@ class Server {
     if (this.useConsole) {
       const bot = getConsoleBot();
       bot.createRuntime();
-      return;
     }
-
-    this._channelBots = getChannelBots();
   }
 
   public getRequestHandler() {

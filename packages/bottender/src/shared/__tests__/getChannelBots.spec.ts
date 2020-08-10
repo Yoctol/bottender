@@ -3,7 +3,7 @@ import path from 'path';
 import { mocked } from 'ts-jest/utils';
 
 import getBottenderConfig from '../getBottenderConfig';
-import getChannelBots from '../getChannelBots';
+import getChannelBots, { cleanChannelBots } from '../getChannelBots';
 
 jest.mock('../../shared/getBottenderConfig');
 jest.mock(
@@ -23,6 +23,7 @@ beforeEach(() => {
     return pathResolve(...args);
   });
   path.resolve = customPathResolve;
+  cleanChannelBots();
 });
 
 afterEach(() => {

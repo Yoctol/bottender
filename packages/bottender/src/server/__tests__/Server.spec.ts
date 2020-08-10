@@ -7,6 +7,7 @@ import { mocked } from 'ts-jest/utils';
 
 import Server from '../Server';
 import getBottenderConfig from '../../shared/getBottenderConfig';
+import { cleanChannelBots } from '../../shared/getChannelBots';
 
 let receivedContext;
 
@@ -30,6 +31,7 @@ beforeEach(() => {
     return pathResolve(...args);
   });
   path.resolve = customPathResolve;
+  cleanChannelBots();
 });
 
 afterEach(() => {
