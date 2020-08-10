@@ -1,11 +1,8 @@
-import Bot from '../bot/Bot';
 import getChannelBots from '../shared/getChannelBots';
 
 import MessageQueue from './MessageQueue';
 
 class Worker {
-  channelBots: { webhookPath: string; bot: Bot<any, any, any, any> }[] = [];
-
   messageQueue: MessageQueue;
 
   constructor(messageQueue = new MessageQueue()) {
@@ -14,7 +11,6 @@ class Worker {
 
   public async prepare() {
     await this.messageQueue.connect();
-    this.channelBots = getChannelBots();
   }
 
   public async start() {
@@ -25,15 +21,15 @@ class Worker {
   }
 
   public async work(message: string) {
+    const channelBots = getChannelBots();
     console.log('doWork');
-    console.log(message);
     const { requestContext } = JSON.parse(message);
     const body = {
       ...requestContext.query,
       ...requestContext.body,
     };
-    for (let i = 0; i < this.channelBots.length; i++) {
-      const { webhookPath, bot } = this.channelBots[i];
+    for (let i = 0; i < channelBots.length; i++) {
+      const { webhookPath, bot } = channelBots[i];
       if (requestContext.path === webhookPath) {
         const requestHandler = bot.createRequestHandler();
         // eslint-disable-next-line no-await-in-loop
