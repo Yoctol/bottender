@@ -5,7 +5,9 @@ import path from 'path';
 import { JsonArray, JsonObject } from 'type-fest';
 import { mocked } from 'ts-jest/utils';
 
+import RabbitMessageQueue from '../../message-queue/RabbitMessageQueue';
 import Server from '../Server';
+import TestMessageQueue from '../../message-queue/TestMessageQueue';
 import getBottenderConfig from '../../shared/getBottenderConfig';
 import { cleanChannelBots } from '../../shared/getChannelBots';
 
@@ -52,7 +54,8 @@ it('support built-in connectors', async () => {
     },
   });
 
-  const server = new Server();
+  const messageQueue = new TestMessageQueue();
+  const server = new Server({ messageQueue });
 
   await server.prepare();
 
@@ -150,7 +153,8 @@ it('support custom connectors', async () => {
     },
   });
 
-  const server = new Server();
+  const messageQueue = new TestMessageQueue();
+  const server = new Server({ messageQueue });
 
   await server.prepare();
 

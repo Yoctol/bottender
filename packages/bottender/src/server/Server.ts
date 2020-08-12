@@ -1,5 +1,7 @@
 import { IncomingMessage, ServerResponse } from 'http';
 
+import MessageQueue from '../message-queue/MessageQueue';
+import RabbitMessageQueue from '../message-queue/RabbitMessageQueue';
 import getChannelBotAndRequestContext from '../shared/getChannelBotAndRequestContext';
 import getConsoleBot from '../shared/getConsoleBot';
 
@@ -11,8 +13,17 @@ export type ServerOptions = {
 class Server {
   useConsole: boolean;
 
-  constructor({ useConsole = false } = {}) {
+  messageQueue: MessageQueue;
+
+  constructor({
+    useConsole = false,
+    messageQueue = new RabbitMessageQueue(),
+  }: {
+    useConsole?: boolean;
+    messageQueue?: MessageQueue;
+  } = {}) {
     this.useConsole = useConsole;
+    this.messageQueue = messageQueue;
   }
 
   private handleRequest(
@@ -54,6 +65,8 @@ class Server {
       const bot = getConsoleBot();
       bot.createRuntime();
     }
+
+    await this.messageQueue.connect();
   }
 
   public getRequestHandler() {
@@ -86,17 +99,21 @@ class Server {
       return;
     }
 
-    const requestHandler = bot.createRequestHandler();
+    const enableMessageQueue = false;
+    if (enableMessageQueue) {
+      this.messageQueue.sendMessage(JSON.stringify({ requestContext }));
+    } else {
+      const requestHandler = bot.createRequestHandler();
 
-    // eslint-disable-next-line no-await-in-loop
-    response = await requestHandler(
-      {
-        ...requestContext.query,
-        ...requestContext.body,
-      },
-      requestContext
-    );
-
+      // eslint-disable-next-line no-await-in-loop
+      response = await requestHandler(
+        {
+          ...requestContext.query,
+          ...requestContext.body,
+        },
+        requestContext
+      );
+    }
     this.sendResponse(res, response);
   }
 }

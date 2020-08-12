@@ -1,11 +1,12 @@
 import getChannelBots from '../shared/getChannelBots';
 
 import MessageQueue from './MessageQueue';
+import RabbitMessageQueue from './RabbitMessageQueue';
 
 class Worker {
   messageQueue: MessageQueue;
 
-  constructor(messageQueue = new MessageQueue()) {
+  constructor(messageQueue = new RabbitMessageQueue()) {
     this.messageQueue = messageQueue;
   }
 
@@ -17,7 +18,7 @@ class Worker {
     console.log('worker.start()');
 
     await this.prepare();
-    this.messageQueue.startWorking(this.work.bind(this));
+    await this.messageQueue.consumeMessage(this.work.bind(this));
   }
 
   public async work(message: string) {
