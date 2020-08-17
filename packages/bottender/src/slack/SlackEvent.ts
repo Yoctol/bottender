@@ -25,6 +25,22 @@ export default class SlackEvent implements Event<SlackRawEvent> {
   }
 
   /**
+   * The timestamp when the event was sent
+   *
+   */
+  get timestamp(): number | undefined {
+    let timestamp: number | undefined;
+    if ('eventTs' in this._rawEvent && this._rawEvent.eventTs !== undefined) {
+      timestamp = parseFloat(this._rawEvent.eventTs);
+    } else if ('ts' in this._rawEvent) {
+      timestamp = parseFloat(this._rawEvent.ts);
+    } else {
+      timestamp = Date.now() / 1000;
+    }
+    return timestamp;
+  }
+
+  /**
    * Determine if the event is a message event.
    *
    */

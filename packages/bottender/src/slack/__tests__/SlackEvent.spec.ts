@@ -1,3 +1,5 @@
+import MockDate from 'mockdate';
+
 import SlackEvent from '../SlackEvent';
 
 const appUninstalled = {
@@ -583,6 +585,17 @@ const slashCommandMessageEventWithoutArguments = {
 
 it('#rawEvent', () => {
   expect(new SlackEvent(message).rawEvent).toEqual(message);
+});
+
+it('#timestamp', () => {
+  MockDate.set('2020-08-17'); // 1597622400
+  expect(new SlackEvent(message).timestamp).toEqual(1355517523.000005);
+  expect(new SlackEvent(groupOpen).timestamp).toEqual(1597622400);
+  expect(new SlackEvent(pinAdded).timestamp).toEqual(1360782804.083113);
+  expect(new SlackEvent(channelHistoryChanged).timestamp).toEqual(
+    1361482916.000004
+  );
+  MockDate.reset();
 });
 
 it('#isAppUninstalled', () => {
