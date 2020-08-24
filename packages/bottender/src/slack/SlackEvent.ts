@@ -12,8 +12,11 @@ import {
 export default class SlackEvent implements Event<SlackRawEvent> {
   _rawEvent: SlackRawEvent;
 
+  _timestamp: number;
+
   constructor(rawEvent: SlackRawEvent) {
     this._rawEvent = rawEvent;
+    this._timestamp = Date.now();
   }
 
   /**
@@ -33,9 +36,9 @@ export default class SlackEvent implements Event<SlackRawEvent> {
     if ('eventTs' in this._rawEvent && this._rawEvent.eventTs !== undefined) {
       timestamp = parseFloat(this._rawEvent.eventTs);
     } else if ('ts' in this._rawEvent) {
-      timestamp = parseFloat(this._rawEvent.ts);
+      timestamp = parseFloat(this._rawEvent.ts) * 1000;
     } else {
-      timestamp = Date.now() / 1000;
+      timestamp = this._timestamp;
     }
     return timestamp;
   }
