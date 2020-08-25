@@ -32,7 +32,7 @@ import { Action, ${contexts.join(', ')} } from 'bottender';
 
 export default async function App(context: ${contexts.join(
       ' | '
-    )}): Promise<Action<${contexts.join(', ')}> |void> {
+    )}): Promise<Action<${contexts.join(' | ')}> | void> {
   await context.sendText('Welcome to Bottender');
 };
 `,
