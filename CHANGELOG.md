@@ -1,3 +1,9 @@
+# 1.4.12 / 2020-08-25
+
+## create-bottender-app
+
+- [fix] fix context concat and env name #859
+
 # 1.4.11 / 2020-07-29
 
 ## dialogflow
