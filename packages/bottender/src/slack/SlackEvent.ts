@@ -34,11 +34,11 @@ export default class SlackEvent implements Event<SlackRawEvent> {
   get timestamp(): number | undefined {
     let timestamp: number | undefined;
     if ('eventTs' in this._rawEvent && this._rawEvent.eventTs !== undefined) {
-      timestamp = parseFloat(this._rawEvent.eventTs) * 1000;
+      timestamp = Math.round(parseFloat(this._rawEvent.eventTs) * 1000);
     } else if ('ts' in this._rawEvent) {
-      timestamp = parseFloat(this._rawEvent.ts) * 1000;
+      timestamp = Math.round(parseFloat(this._rawEvent.ts) * 1000);
     } else {
-      timestamp = this._timestamp;
+      timestamp = Math.round(this._timestamp);
     }
     return timestamp;
   }
