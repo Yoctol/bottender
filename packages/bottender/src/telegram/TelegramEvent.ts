@@ -7,8 +7,11 @@ import { TelegramRawEvent } from './TelegramTypes';
 export default class TelegramEvent implements Event<TelegramRawEvent> {
   _rawEvent: TelegramRawEvent;
 
+  _timestamp: number;
+
   constructor(rawEvent: TelegramRawEvent) {
     this._rawEvent = rawEvent;
+    this._timestamp = Date.now();
   }
 
   /**
@@ -24,9 +27,9 @@ export default class TelegramEvent implements Event<TelegramRawEvent> {
    *
    */
   get timestamp(): number | undefined {
-    return 'message' in this.rawEvent
-      ? this.rawEvent.message?.date
-      : Date.now() / 1000;
+    return 'message' in this.rawEvent && this.rawEvent.message
+      ? this.rawEvent.message.date * 1000
+      : this._timestamp;
   }
 
   /**
