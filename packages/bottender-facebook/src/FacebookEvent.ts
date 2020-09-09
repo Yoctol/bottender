@@ -201,6 +201,12 @@ export default class FacebookEvent {
     );
   }
 
+  get isPostReaction(): boolean {
+    return Boolean(
+      this.isReaction && 'value' in this.rawEvent && !this.reaction?.commentId
+    );
+  }
+
   get reaction(): FeedReaction | null {
     if (
       this.isFeed &&
