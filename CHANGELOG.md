@@ -234,7 +234,7 @@ function App() {
 
 ## dialogflow
 
-- [deps] use `@google-cloud/dialogflow` v2 (#797)
+- [deps] use `@google-cloud/dialogflow` v3
 
 ## create-bottender-app
 
