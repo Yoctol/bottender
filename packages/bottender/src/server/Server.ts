@@ -1,7 +1,8 @@
 import { IncomingMessage, ServerResponse } from 'http';
 
 import MessageQueue from '../message-queue/MessageQueue';
-import RabbitMessageQueue from '../message-queue/RabbitMessageQueue';
+// import RabbitMessageQueue from '../message-queue/RabbitMessageQueue';
+import KafkaMessageQueue from '../message-queue/KafkaMessageQueue';
 import getChannelBotAndRequestContext from '../shared/getChannelBotAndRequestContext';
 import getConsoleBot from '../shared/getConsoleBot';
 
@@ -17,7 +18,7 @@ class Server {
 
   constructor({
     useConsole = false,
-    messageQueue = new RabbitMessageQueue(),
+    messageQueue = new KafkaMessageQueue(),
   }: {
     useConsole?: boolean;
     messageQueue?: MessageQueue;
@@ -99,7 +100,7 @@ class Server {
       return;
     }
 
-    const enableMessageQueue = false;
+    const enableMessageQueue = true;
     if (enableMessageQueue) {
       this.messageQueue.sendMessage(JSON.stringify({ requestContext }));
     } else {

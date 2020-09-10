@@ -67,6 +67,7 @@
     "ioredis": "^4.16.0",
     "jfs": "^0.3.0",
     "jsonfile": "^6.0.0",
+    "kafkajs": "^1.12.0",
     "lodash": "^4.17.15",
     "lru-cache": "^5.1.1",
     "messaging-api-common": "1.0.0-beta.29",

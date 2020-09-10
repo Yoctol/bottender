@@ -1,12 +1,13 @@
 import getChannelBots from '../shared/getChannelBots';
 
 import MessageQueue from './MessageQueue';
-import RabbitMessageQueue from './RabbitMessageQueue';
+// import RabbitMessageQueue from './RabbitMessageQueue';
+import KafkaMessageQueue from './KafkaMessageQueue';
 
 class Worker {
   messageQueue: MessageQueue;
 
-  constructor(messageQueue = new RabbitMessageQueue()) {
+  constructor(messageQueue = new KafkaMessageQueue()) {
     this.messageQueue = messageQueue;
   }
 
