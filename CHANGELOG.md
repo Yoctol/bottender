@@ -1,3 +1,275 @@
+# 1.5.1 / 2020-09-xx
+
+- [new] Server: support experimental custom connectors (#781):
+
+```js
+// bottender.config.js
+
+module.exports = {
+  channels: {
+    mychannel: {
+      enabled: true,
+      path: '/webhooks/mychannel',
+      connector: new MyConnector(/* ... */),
+    },
+  },
+};
+```
+
+- [new]: export clients, factories from `messaging-apis` (#806):
+
+```js
+const {
+  // clients
+  MessengerClient,
+  LineClient,
+  TelegramClient,
+  SlackOAuthClient,
+  ViberClient,
+  TwilioClient,
+
+  // factories
+  Messenger,
+  Line,
+} = require('bottender');
+```
+
+- [new] Bot: implement the `onRequest` option (#773):
+
+```js
+// bottender.config.js
+
+function onRequest(body, requestContext) {
+  console.log({
+    body,
+    requestContext,
+  });
+}
+
+module.exports = {
+  channels: {
+    messenger: {
+      // ...
+      onRequest,
+    },
+    whatsapp: {
+      // ...
+      onRequest,
+    },
+    line: {
+      // ...
+      onRequest,
+    },
+    telegram: {
+      // ...
+      onRequest,
+    },
+    slack: {
+      // ...
+      onRequest,
+    },
+    viber: {
+      // ...
+      onRequest,
+    },
+  },
+};
+```
+
+- [new] RequestContext: add `id` to `RequestContext` (#774)
+- [fix] Server: should await for `connector.preprocess` (#771)
+- [deps] upgrade `messaging-apis` to v1.0.0
+
+## messenger
+
+- [new] get/set/delete user level persistent menu for context user (#790):
+
+```js
+await context.getUserPersistentMenu();
+// [
+//   {
+//     locale: 'default',
+//     composerInputDisabled: false,
+//     callToActions: [
+//       {
+//         type: 'postback',
+//         title: 'Restart Conversation',
+//         payload: 'RESTART',
+//       },
+//       {
+//         type: 'web_url',
+//         title: 'Powered by ALOHA.AI, Yoctol',
+//         url: 'https://www.yoctol.com/',
+//       },
+//     ],
+//   },
+// ]
+
+await context.setUserPersistentMenu([
+  {
+    locale: 'default',
+    composerInputDisabled: false,
+    callToActions: [
+      {
+        type: 'postback',
+        title: 'Restart Conversation',
+        payload: 'RESTART',
+      },
+      {
+        type: 'web_url',
+        title: 'Powered by ALOHA.AI, Yoctol',
+        url: 'https://www.yoctol.com/',
+      },
+    ],
+  },
+]);
+
+await context.deleteUserPersistentMenu();
+```
+
+## line
+
+- [new] support line multi-channel using `getConfig` (#770):
+
+```js
+// bottender.config.js
+module.exports = {
+  channels: {
+    line: {
+      enabled: true,
+      path: '/webhooks/line/:channelId',
+      async getConfig({ params }) {
+        console.log(params.channelId);
+        // ...get the config from the API, database or wherever you like when every time receiving a new event
+        return {
+          accessToken,
+          channelSecret,
+        };
+      },
+    },
+  },
+};
+```
+
+- [new] add `emojis` on LINE text message event (#793):
+
+```js
+if (context.event.isMessage) {
+  context.event.message.emojis;
+  // [
+  //   {
+  //     index: 14,
+  //     length: 6,
+  //     productId: '5ac1bfd5040ab15980c9b435',
+  //     emojiId: '001',
+  //   },
+  // ]
+}
+```
+
+- [new] add `LineContext.getMembersCount` method (#824):
+
+```js
+await context.getMembersCount();
+// 10
+```
+
+## telegram
+
+- [new] add `TelegramEvent.isPollAnswer` and `TelegramEvent.pollAnswer` (#745):
+
+```js
+if (context.event.isPollAnswer) {
+  console.log(context.event.pollAnswer);
+}
+```
+
+- [new] add `pollAnswer` to telegram routes:
+
+```js
+const { router, telegram } = require('bottender/router');
+
+async function HandlePollAnswer(context) {
+  // ...
+}
+
+function App() {
+  return router([telegram.pollAnswer(HandlePollAnswer)]);
+}
+```
+
+- [new] add `TelegramContext.answerCallbackQuery` (#750):
+
+```js
+await context.answerCallbackQuery({
+  url: 'https://example.com/',
+});
+```
+
+## slack
+
+- [new] slack route accept any requests by passing `*` (#758):
+
+```js
+const { router, slack } = require('bottender/router');
+
+async function HandleAllEvent(context) {
+  // ...
+}
+
+function App() {
+  return router([slack.event('*', HandleAllEvent)]);
+}
+```
+
+- [fix] fix `context.views.open` in slack home tab (#809)
+- [fix] fix route slack event (#841)
+- [fix] fix slack session when channel id is null (#802)
+- [docs] update slack routes improvement (#759)
+- [example] example: slack update and delete (#769)
+- [example] slack home tab (#829)
+- [example] slack modal on home (#827)
+- [example] slack modal update (#825)
+- [example] slack modal form (#828)
+
+## dialogflow
+
+- [deps] use `@google-cloud/dialogflow` v2 (#797)
+
+## create-bottender-app
+
+- [fix] fix context concat and env name (#859)
+
+## bottender-facebook
+
+- [new] add new connector - `FacebookConnector` to experiment using same connector for Messenger and Facebook.
+
+```js
+// bottender.config.js
+const { FacebookConnector } = require('@bottender/facebook');
+
+module.exports = {
+  channels: {
+    facebook: {
+      enabled: true,
+      path: '/webhooks/facebook',
+      connector: new FacebookConnector({
+        // The top level access token should be provided for the batch requests.
+        accessToken: process.env.FACEBOOK_ACCESS_TOKEN,
+        appSecret: process.env.FACEBOOK_APP_SECRET,
+        verifyToken: process.env.FACEBOOK_VERIFY_TOKEN,
+        origin: process.env.FACEBOOK_ORIGIN,
+        async mapPageToAccessToken(pageId) {
+          console.log(pageId);
+          return accessToken;
+        },
+      }),
+      onRequest: onFacebookRequest,
+    },
+  },
+};
+```
+
 # 1.4.12 / 2020-08-25
 
 ## create-bottender-app
