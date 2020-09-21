@@ -55,6 +55,14 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
   }
 
   /**
+   * The timestamp when the event was sent.
+   *
+   */
+  get timestamp(): number {
+    return this._rawEvent.timestamp;
+  }
+
+  /**
    * Determine if the event is a message event.
    *
    */

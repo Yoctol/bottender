@@ -29,6 +29,7 @@
     "testonly:watch": "jest --watch",
     "version": "cp README.md packages/bottender"
   },
+  "dependencies": {},
   "devDependencies": {
     "@types/jest": "^26.0.4",
     "@types/prettier": "^2.0.2",
@@ -53,6 +54,7 @@
     "lint-staged": "^10.2.11",
     "micromatch": "^4.0.2",
     "mkdirp": "^1.0.4",
+    "mockdate": "^3.0.2",
     "nock": "^13.0.2",
     "once": "^1.4.0",
     "prettier": "^2.0.5",

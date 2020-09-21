@@ -1,5 +1,5 @@
 import FacebookEvent from '../FacebookEvent';
-import { FacebookRawEvent } from '../FacebookTypes';
+import { ChangesEntry, FacebookRawEvent } from '../FacebookTypes';
 
 const statusAdd: FacebookRawEvent = {
   field: 'feed',
@@ -103,6 +103,8 @@ const pageLikeAdd: FacebookRawEvent = {
   },
   field: 'feed',
 };
+
+const timestamp = 1511948944;
 
 const reactionAdd: FacebookRawEvent = {
   field: 'feed',
@@ -746,4 +748,21 @@ it('#isPageLike', () => {
   expect(new FacebookEvent(postReaction, { pageId }).isPageLike).toEqual(false);
   expect(new FacebookEvent(sentByPage, { pageId }).isPageLike).toEqual(false);
   expect(new FacebookEvent(pageLikeAdd, { pageId }).isPageLike).toEqual(true);
+});
+
+it('#timestamp', () => {
+  expect(new FacebookEvent(statusAdd).timestamp).toEqual(1511949030);
+  expect(new FacebookEvent(statusEdited).timestamp).toEqual(1511927135);
+  expect(new FacebookEvent(postRemove).timestamp).toEqual(1511949068);
+  expect(new FacebookEvent(commentAdd).timestamp).toEqual(1511951015);
+  expect(new FacebookEvent(videoCommentAdd).timestamp).toEqual(1545829217);
+  expect(new FacebookEvent(commentEdited).timestamp).toEqual(1511948891);
+  expect(new FacebookEvent(commentRemove).timestamp).toEqual(1511948944);
+  expect(new FacebookEvent(reactionAdd).timestamp).toEqual(1511948636);
+  expect(new FacebookEvent(reactionEdit).timestamp).toEqual(1511948713);
+  expect(new FacebookEvent(reactionRemove).timestamp).toEqual(1511948666);
+  expect(new FacebookEvent(sentByPage).timestamp).toEqual(1512121727);
+  expect(new FacebookEvent(pageLikeAdd, { timestamp }).timestamp).toEqual(
+    1511948944
+  );
 });

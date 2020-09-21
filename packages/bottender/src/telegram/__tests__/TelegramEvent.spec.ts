@@ -1,3 +1,5 @@
+import MockDate from 'mockdate';
+
 import TelegramEvent from '../TelegramEvent';
 
 const textMessage = {
@@ -619,6 +621,27 @@ it('#rawEvent', () => {
   expect(new TelegramEvent(replyToTextMessage).rawEvent).toEqual(
     replyToTextMessage
   );
+});
+
+it('#timestamp', () => {
+  MockDate.set('2020-07-14'); // 15946848000
+  expect(new TelegramEvent(textMessage).timestamp).toEqual(1499402829000);
+  expect(new TelegramEvent(groupMessage).timestamp).toEqual(1515758146000);
+  expect(new TelegramEvent(editedMessage).timestamp).toEqual(1594684800000);
+  expect(new TelegramEvent(channelPost).timestamp).toEqual(1594684800000);
+  expect(new TelegramEvent(editedChannelPost).timestamp).toEqual(1594684800000);
+  expect(new TelegramEvent(inlineQuery).timestamp).toEqual(1594684800000);
+  expect(new TelegramEvent(chosenInlineResult).timestamp).toEqual(
+    1594684800000
+  );
+  expect(new TelegramEvent(callbackQuery).timestamp).toEqual(1594684800000);
+  expect(new TelegramEvent(shippingQuery).timestamp).toEqual(1594684800000);
+  expect(new TelegramEvent(preCheckoutQuery).timestamp).toEqual(1594684800000);
+  expect(new TelegramEvent(poll).timestamp).toEqual(1594684800000);
+  expect(new TelegramEvent(replyToTextMessage).timestamp).toEqual(
+    1499402829000
+  );
+  MockDate.reset();
 });
 
 it('#isMessage', () => {

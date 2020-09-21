@@ -76,6 +76,7 @@ export type Message = {
   user: string;
   text: string;
   ts: string;
+  eventTs?: string;
   threadTs?: string;
   botId?: string;
 };

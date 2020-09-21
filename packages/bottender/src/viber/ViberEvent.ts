@@ -28,6 +28,14 @@ export default class ViberEvent implements Event<ViberRawEvent> {
   }
 
   /**
+   * The timestamp when the event was sent.
+   *
+   */
+  get timestamp(): number {
+    return this._rawEvent.timestamp;
+  }
+
+  /**
    * Determine if the event is a message event.
    *
    */

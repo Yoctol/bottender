@@ -120,6 +120,7 @@ export default class FacebookConnector
     return bodyEntry
       .map<FacebookEvent | MessengerEvent | null>((entry) => {
         const pageId = entry.id;
+        const timestamp = entry.time;
         if ('messaging' in entry) {
           return new MessengerEvent(entry.messaging[0], {
             pageId,
@@ -135,7 +136,7 @@ export default class FacebookConnector
         }
 
         if ('changes' in entry) {
-          return new FacebookEvent(entry.changes[0], { pageId });
+          return new FacebookEvent(entry.changes[0], { pageId, timestamp });
         }
 
         return null;
