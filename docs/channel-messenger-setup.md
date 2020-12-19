@@ -142,7 +142,7 @@ If you deployed your bot on `https://example.com/`, your Messenger Bot webhook i
 You can set your webhook by the command below.
 
 ```sh
-npx bottender messemger webhook set -w https://example.com/webhooks/messenger
+npx bottender messeger webhook set -w https://example.com/webhooks/messenger
 ```
 
 ### Set Up Webhook and Enable Subscriptions on Facebook App Page
