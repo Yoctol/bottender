@@ -6,7 +6,7 @@
     "type": "git",
     "url": "https://github.com/Yoctol/bottender.git"
   },
-  "version": "1.5.1-alpha.7",
+  "version": "1.5.1-alpha.8",
   "main": "dist/index.js",
   "files": [
     "dist"
@@ -23,6 +23,6 @@
     "bottender": ">= 1.5.1-alpha.4"
   },
   "devDependencies": {
-    "bottender": "^1.5.1-alpha.7"
+    "bottender": "^1.5.1-alpha.8"
   }
 }
