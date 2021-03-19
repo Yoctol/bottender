@@ -75,7 +75,7 @@
     "messaging-api-viber": "1.0.0-beta.33",
     "minimist": "^1.2.0",
     "mongodb": "^3.5.4",
-    "ngrok": "^3.2.5",
+    "ngrok": "^3.4.1",
     "nodemon": "^2.0.2",
     "object.fromentries": "^2.0.2",
     "p-map": "^3.0.0",
