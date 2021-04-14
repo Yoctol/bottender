@@ -12,6 +12,7 @@ import { SlackConnectorOptions } from './slack/SlackConnector';
 import { TelegramConnectorOptions } from './telegram/TelegramConnector';
 import { ViberConnectorOptions } from './viber/ViberConnector';
 import { WhatsappConnectorOptions } from './whatsapp/WhatsappConnector';
+import { KafkaConfig, ProducerConfig, ConsumerConfig } from 'kafkajs';
 
 export type Action<
   C extends Context,
@@ -72,6 +73,25 @@ export type SessionConfig = {
       };
 };
 
+type RabbitMessageQueueConfig = {
+  queueName?: string,
+  aqmpPath?: string
+}
+
+export type KafkaMessageQueueConfig = {
+  kafka?: KafkaConfig,
+  consumer?: ConsumerConfig,
+  producer?: ProducerConfig
+}
+
+type MessageQueueConfig = {
+  driver: 'kafka' | 'rabbitMessageQueue' | 'test' | 'none',
+  kafka?: KafkaMessageQueueConfig,
+  rabbitMessageQueue?: RabbitMessageQueueConfig,
+  test?: {},
+  none?: {}
+}
+
 type ChannelCommonConfig = {
   enabled: boolean;
   path?: string;
@@ -83,6 +103,7 @@ export type BottenderConfig = {
   plugins?: Plugin<any>[];
   session?: SessionConfig;
   initialState?: JsonObject;
+  messageQueue?: MessageQueueConfig;
   channels?:
     | {
         messenger?: MessengerConnectorOptions & ChannelCommonConfig;

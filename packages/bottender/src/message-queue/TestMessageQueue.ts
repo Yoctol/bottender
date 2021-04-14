@@ -1,6 +1,10 @@
 import MessageQueue from './MessageQueue';
 
 class TestMessageQueue implements MessageQueue {
+  constructor(_:{}){
+
+  }
+
   public async connect() {}
 
   public async disconnect() {}

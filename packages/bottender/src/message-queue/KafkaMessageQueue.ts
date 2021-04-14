@@ -1,20 +1,14 @@
 import {
   Consumer,
-  ConsumerConfig,
   Kafka,
-  KafkaConfig,
   Producer,
-  ProducerConfig,
 } from 'kafkajs';
 
 import MessageQueue from './MessageQueue';
+import { KafkaMessageQueueConfig } from '..';
 
 class KafkaMessageQueue implements MessageQueue {
-  kafkaConfig: KafkaConfig;
-
-  consumerConfig: ConsumerConfig;
-
-  producerConfig: ProducerConfig;
+  config: KafkaMessageQueueConfig;
 
   kafka: Kafka;
 
@@ -22,21 +16,19 @@ class KafkaMessageQueue implements MessageQueue {
 
   producer: Producer;
 
-  constructor(
-    kafkaConfig: KafkaConfig = { brokers: ['localhost:9092'] },
-    consumerConfig: ConsumerConfig = { groupId: 'bottender' },
-    producerConfig: ProducerConfig = {}
-  ) {
+  constructor(config: KafkaMessageQueueConfig = {
+    kafka: { brokers: ['localhost:9092'] },
+    consumer: { groupId: 'bottender' },
+    producer: {}
+  }){
     console.log('new KafkaMessageQueue()');
-    this.kafkaConfig = kafkaConfig;
-    this.kafkaConfig.clientId = this.kafkaConfig.clientId ?? 'bottender-app';
-    this.kafkaConfig.brokers = this.kafkaConfig.brokers ?? ['localhost:9092'];
-    this.producerConfig = producerConfig;
-    this.consumerConfig = consumerConfig;
+    this.config = config ?? {};
+    this.config.kafka.clientId = this.config.kafka.clientId ?? 'bottender-app';
+    this.config.kafka.brokers = this.config.kafka.brokers ?? ['localhost:9092'];
 
-    this.kafka = new Kafka(this.kafkaConfig);
-    this.producer = this.kafka.producer(this.producerConfig);
-    this.consumer = this.kafka.consumer(this.consumerConfig);
+    this.kafka = new Kafka(this.config.kafka);
+    this.producer = this.kafka.producer(this.config.producer);
+    this.consumer = this.kafka.consumer(this.config.consumer);
   }
 
   public async connect() {

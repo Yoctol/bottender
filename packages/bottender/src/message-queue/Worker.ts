@@ -1,4 +1,4 @@
-import getChannelBots from '../shared/getChannelBots';
+  import getChannelBots from '../shared/getChannelBots';
 
 import MessageQueue from './MessageQueue';
 // import RabbitMessageQueue from './RabbitMessageQueue';
