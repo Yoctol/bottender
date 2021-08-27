@@ -91,8 +91,9 @@ class Server {
       .filter(([, { enabled }]) => enabled)
       .map(([channel, { path: webhookPath, ...channelConfig }]) => {
         // eslint-disable-next-line import/no-dynamic-require
-        const ChannelBot = require(`../${channel}/${pascalcase(channel)}Bot`)
-          .default;
+        const ChannelBot = require(`../${channel.split('_')[0]}/${pascalcase(
+          channel.split('_')[0]
+        )}Bot`).default;
         const channelBot = new ChannelBot({
           ...channelConfig,
           sessionStore,

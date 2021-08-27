@@ -50,7 +50,7 @@ function getClient<C extends string>(
     );
   }
 
-  const ChannelBot = BOT_MAP[channel as Channel];
+  const ChannelBot = BOT_MAP[channel.split('_')[0] as Channel];
 
   const channelBot = new ChannelBot({
     ...channelConfig,
