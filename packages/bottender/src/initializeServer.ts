@@ -80,7 +80,7 @@ function initializeServer({
     Object.entries(channels || {})
       .filter(([, { enabled }]) => enabled)
       .map(([channel, { path: webhookPath, ...channelConfig }]) => {
-        const ChannelBot = BOT_MAP[channel as Channel];
+        const ChannelBot = BOT_MAP[channel.split('_')[0] as Channel];
         const channelBot = new ChannelBot({
           ...channelConfig,
           sessionStore,
