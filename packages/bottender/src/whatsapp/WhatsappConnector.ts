@@ -1,5 +1,6 @@
-import crypto from 'crypto';
 import { EventEmitter } from 'events';
+
+import { validateRequest, validateRequestWithBody } from 'twilio';
 
 import Session from '../session/Session';
 import { Connector } from '../bot/Connector';
@@ -26,21 +27,6 @@ type ConstructorOptionsWithClient = {
 type ConstructorOptions =
   | ConstructorOptionsWithoutClient
   | ConstructorOptionsWithClient;
-
-function getExpectedTwilioSignature(
-  authToken: string,
-  url: string,
-  params: Record<string, any> = {}
-) {
-  const data = Object.keys(params)
-    .sort()
-    .reduce((acc, key) => acc + key + params[key], url);
-
-  return crypto
-    .createHmac('sha1', authToken)
-    .update(Buffer.from(data, 'utf-8'))
-    .digest('base64');
-}
 
 export default class WhatsappConnector
   implements Connector<WhatsappRequestBody, TwilioClient> {
@@ -121,25 +107,20 @@ export default class WhatsappConnector
   }): boolean {
     const authToken = this._client.authToken;
 
-    const bufferFromActualSignature = Buffer.from(
-      headers['x-twilio-signature']
-    );
-
-    const bufferFromExpectedSignature = Buffer.from(
-      getExpectedTwilioSignature(authToken, url, body)
-    );
-
-    // return early here if buffer lengths are not equal since timingSafeEqual
-    // will throw if buffer lengths are not equal
-    if (
-      bufferFromActualSignature.length !== bufferFromExpectedSignature.length
-    ) {
-      return false;
+    if (url.indexOf('bodySHA256') > 0) {
+      return validateRequestWithBody(
+        authToken,
+        headers['x-twilio-signature'],
+        url,
+        body || {}
+      );
     }
 
-    return crypto.timingSafeEqual(
-      bufferFromActualSignature,
-      bufferFromExpectedSignature
+    return validateRequest(
+      authToken,
+      headers['x-twilio-signature'],
+      url,
+      body || {}
     );
   }
 
