@@ -1,11 +1,4 @@
-const { router, telegram, text, route } = require('bottender/router');
-
-telegram.pollAnswer = function pollAnswer(action) {
-  return route(
-    (context) => context.event.rawEvent.pollAnswer !== undefined,
-    action
-  );
-};
+const { router, telegram, text } = require('bottender/router');
 
 const pollOptions = ['🍔', '🍕', '🌮', '🍱'];
 
