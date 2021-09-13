@@ -1,6 +1,6 @@
 {
   "name": "bottender",
-  "version": "1.5.1-alpha.9",
+  "version": "1.5.1",
   "description": "A framework for building conversational user interfaces.",
   "license": "MIT",
   "homepage": "https://bottender.js.org/",
@@ -23,7 +23,7 @@
   ],
   "types": "dist/index.d.ts",
   "dependencies": {
-    "@bottender/express": "^1.5.1-alpha.5",
+    "@bottender/express": "^1.5.1",
     "@hapi/joi": "^15.1.1",
     "@slack/rtm-api": "^5.0.3",
     "@types/debug": "^4.1.5",
