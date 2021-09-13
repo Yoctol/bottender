@@ -78,7 +78,7 @@ async function AnswerKeyboard(context) {
   const menu = menuMapping[data];
   if (menu) {
     await context.editMessageText(messageId, menu.text, {
-      replyMarkup: menu.menu,
+      replyMarkup: menu.replyMarkup,
     });
   } else {
     await context.editMessageText(messageId, `Your final choice is ${data}.`);
