@@ -37,7 +37,7 @@ const setup = (
   }
 ) => {
   const client = new MessengerClient({
-    accessToken: ACCESS_TOKEN,
+    accessToken: customAccessToken ?? ACCESS_TOKEN,
     appSecret: APP_SECRET,
   });
   const args = {
@@ -496,26 +496,7 @@ describe('#sendSenderAction', () => {
     expect(client.sendSenderAction).toBeCalledWith(
       session.user.id,
       'typing_on',
-      {
-        accessToken: undefined,
-      }
-    );
-  });
-
-  it('should use custom access token', async () => {
-    const { context, client, session } = setup({
-      session: userSession,
-      customAccessToken: 'anyToken',
-    });
-
-    await context.sendSenderAction('typing_on');
-
-    expect(client.sendSenderAction).toBeCalledWith(
-      session.user.id,
-      'typing_on',
-      {
-        accessToken: 'anyToken',
-      }
+      {}
     );
   });
 
@@ -538,22 +519,7 @@ describe('#typingOn', () => {
 
     await context.typingOn();
 
-    expect(client.typingOn).toBeCalledWith(session.user.id, {
-      accessToken: undefined,
-    });
-  });
-
-  it('should use custom access token', async () => {
-    const { context, client, session } = setup({
-      session: userSession,
-      customAccessToken: 'anyToken',
-    });
-
-    await context.typingOn();
-
-    expect(client.typingOn).toBeCalledWith(session.user.id, {
-      accessToken: 'anyToken',
-    });
+    expect(client.typingOn).toBeCalledWith(session.user.id, {});
   });
 
   it('should call warning and not to send if dont have session', async () => {
@@ -575,22 +541,7 @@ describe('#typingOff', () => {
 
     await context.typingOff();
 
-    expect(client.typingOff).toBeCalledWith(session.user.id, {
-      accessToken: undefined,
-    });
-  });
-
-  it('should use custom access token', async () => {
-    const { context, client, session } = setup({
-      session: userSession,
-      customAccessToken: 'anyToken',
-    });
-
-    await context.typingOff();
-
-    expect(client.typingOff).toBeCalledWith(session.user.id, {
-      accessToken: 'anyToken',
-    });
+    expect(client.typingOff).toBeCalledWith(session.user.id, {});
   });
 
   it('should call warning and not to send if dont have session', async () => {
@@ -612,22 +563,7 @@ describe('#markSeen', () => {
 
     await context.markSeen();
 
-    expect(client.markSeen).toBeCalledWith(session.user.id, {
-      accessToken: undefined,
-    });
-  });
-
-  it('should use custom access token', async () => {
-    const { context, client, session } = setup({
-      session: userSession,
-      customAccessToken: 'anyToken',
-    });
-
-    await context.markSeen();
-
-    expect(client.markSeen).toBeCalledWith(session.user.id, {
-      accessToken: 'anyToken',
-    });
+    expect(client.markSeen).toBeCalledWith(session.user.id);
   });
 
   it('should call warning and not to send if dont have session', async () => {

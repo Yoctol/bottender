@@ -300,9 +300,7 @@ describe('#updateSession', () => {
     const session = {};
     await connector.updateSession(session, request);
 
-    expect(client.getUserProfile).toBeCalledWith('1412611362105802', {
-      accessToken: undefined,
-    });
+    expect(client.getUserProfile).toBeCalledWith('1412611362105802');
     expect(session).toEqual({
       page: {
         _updatedAt: expect.any(String),
@@ -337,9 +335,7 @@ describe('#updateSession', () => {
     };
     await connector.updateSession(session, request);
 
-    expect(client.getUserProfile).toBeCalledWith('1412611362105802', {
-      accessToken: undefined,
-    });
+    expect(client.getUserProfile).toBeCalledWith('1412611362105802');
     expect(session).toEqual({
       page: {
         _updatedAt: expect.any(String),
@@ -374,9 +370,7 @@ describe('#updateSession', () => {
     };
     await connector.updateSession(session, request);
 
-    expect(client.getUserProfile).toBeCalledWith('1412611362105802', {
-      accessToken: undefined,
-    });
+    expect(client.getUserProfile).toBeCalledWith('1412611362105802');
     expect(session).toEqual({
       page: {
         _updatedAt: expect.any(String),
@@ -411,9 +405,7 @@ describe('#updateSession', () => {
     };
     await connector.updateSession(session, request);
 
-    expect(client.getUserProfile).toBeCalledWith('1412611362105802', {
-      accessToken: undefined,
-    });
+    expect(client.getUserProfile).toBeCalledWith('1412611362105802');
     expect(session).toEqual({
       page: {
         _updatedAt: expect.any(String),
@@ -437,9 +429,7 @@ describe('#updateSession', () => {
     const session = {};
     await connector.updateSession(session, request);
 
-    expect(client.getUserProfile).toBeCalledWith('1412611362105802', {
-      accessToken: undefined,
-    });
+    expect(client.getUserProfile).toBeCalledWith('1412611362105802');
     expect(session).toEqual({
       page: {
         _updatedAt: expect.any(String),

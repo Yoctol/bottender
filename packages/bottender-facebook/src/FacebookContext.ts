@@ -101,9 +101,10 @@ export default class FacebookContext extends Context<
 
     if (this._batchQueue) {
       return this._batchQueue.push<MessengerTypes.SendMessageSuccessResponse>(
+        // FIXME: this type should be fixed in MessengerBatch
         MessengerBatch.sendText(recipient, text, {
           accessToken: this._customAccessToken,
-        })
+        } as any)
       );
     }
     return this._client.sendText(recipient, text);
@@ -148,9 +149,10 @@ export default class FacebookContext extends Context<
 
     if (this._batchQueue) {
       return this._batchQueue.push<MessengerTypes.SendMessageSuccessResponse>(
+        // FIXME: this type should be fixed in MessengerBatch
         MessengerBatch.sendMessage(recipient, message, {
           accessToken: this._customAccessToken,
-        })
+        } as any)
       );
     }
     return this._client.sendMessage(recipient, message);
