@@ -166,11 +166,23 @@ export default class FacebookConnector
       }
     }
 
+    let client;
+    if (customAccessToken) {
+      client = new FacebookClient({
+        accessToken: customAccessToken,
+        appSecret: this._appSecret,
+        origin: this._origin,
+        skipAppSecretProof: this._skipAppSecretProof,
+      });
+    } else {
+      client = this._client;
+    }
+
     if (params.event instanceof FacebookEvent) {
       return new FacebookContext({
         ...params,
         event: params.event,
-        client: this._client,
+        client,
         customAccessToken,
         batchQueue: this._batchQueue,
         appId: this._appId,
@@ -179,7 +191,7 @@ export default class FacebookConnector
     return new MessengerContext({
       ...params,
       event: params.event,
-      client: this._client,
+      client,
       customAccessToken,
       batchQueue: this._batchQueue,
       appId: this._appId,

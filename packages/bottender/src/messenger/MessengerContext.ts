@@ -200,15 +200,10 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
         )
       );
     }
-    return this._client.getUserProfile(
-      this._session.user.id,
-      this._getMethodOptions(options)
-    );
+    return this._client.getUserProfile(this._session.user.id, options);
   }
 
-  async getUserPersistentMenu(
-    options: MessengerTypes.SendOption = {}
-  ): Promise<MessengerTypes.PersistentMenu | null> {
+  async getUserPersistentMenu(): Promise<MessengerTypes.PersistentMenu | null> {
     if (!this._session) {
       warning(
         false,
@@ -221,20 +216,19 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       return this._batchQueue.push<MessengerTypes.PersistentMenu>(
         MessengerBatch.getUserPersistentMenu(
           this._session.user.id,
-          this._getMethodOptions(options)
+          this._getMethodOptions({})
         )
       );
     }
 
-    return this._client.getUserPersistentMenu(
-      this._session.user.id,
-      this._getMethodOptions(options)
-    );
+    return this._client.getUserPersistentMenu(this._session.user.id);
   }
 
   async setUserPersistentMenu(
     attrs: MessengerTypes.PersistentMenu,
-    options: MessengerTypes.SendOption = {}
+    options: {
+      composerInputDisabled?: boolean;
+    } = {}
   ): Promise<MessengerTypes.MutationSuccessResponse | undefined> {
     if (!this._session) {
       warning(
@@ -257,13 +251,13 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
     return this._client.setUserPersistentMenu(
       this._session.user.id,
       attrs,
-      this._getMethodOptions(options)
+      options
     );
   }
 
-  async deleteUserPersistentMenu(
-    options: MessengerTypes.SendOption = {}
-  ): Promise<MessengerTypes.MutationSuccessResponse | undefined> {
+  async deleteUserPersistentMenu(): Promise<
+    MessengerTypes.MutationSuccessResponse | undefined
+  > {
     if (!this._session) {
       warning(
         false,
@@ -276,15 +270,12 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       return this._batchQueue.push<MessengerTypes.MutationSuccessResponse>(
         MessengerBatch.deleteUserPersistentMenu(
           this._session.user.id,
-          this._getMethodOptions(options)
+          this._getMethodOptions({})
         )
       );
     }
 
-    return this._client.deleteUserPersistentMenu(
-      this._session.user.id,
-      this._getMethodOptions(options)
-    );
+    return this._client.deleteUserPersistentMenu(this._session.user.id);
   }
 
   /**
@@ -383,9 +374,9 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
   /**
    * https://github.com/Yoctol/messaging-apis/tree/master/packages/messaging-api-messenger#markseenuserid
    */
-  async markSeen(
-    options: MessengerTypes.SendOption = {}
-  ): Promise<MessengerTypes.SendSenderActionResponse | undefined> {
+  async markSeen(): Promise<
+    MessengerTypes.SendSenderActionResponse | undefined
+  > {
     if (!this._session) {
       warning(
         false,
@@ -398,14 +389,12 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       return this._batchQueue.push<MessengerTypes.SendSenderActionResponse>(
         MessengerBatch.markSeen(
           this._session.user.id,
-          this._getSenderActionMethodOptions(options)
+          // FIXME: this type should be fixed in MessengerBatch
+          this._getMethodOptions({}) as any
         )
       );
     }
-    return this._client.markSeen(
-      this._session.user.id,
-      this._getSenderActionMethodOptions(options)
-    );
+    return this._client.markSeen(this._session.user.id);
   }
 
   /**
@@ -442,8 +431,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
     return this._client.passThreadControl(
       this._session.user.id,
       targetAppId,
-      metadata,
-      this._getMethodOptions({})
+      metadata
     );
   }
 
@@ -472,8 +460,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
     }
     return this._client.passThreadControlToPageInbox(
       this._session.user.id,
-      metadata,
-      this._getMethodOptions({})
+      metadata
     );
   }
 
@@ -500,11 +487,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
         )
       );
     }
-    return this._client.takeThreadControl(
-      this._session.user.id,
-      metadata,
-      this._getMethodOptions({})
-    );
+    return this._client.takeThreadControl(this._session.user.id, metadata);
   }
 
   /**
@@ -530,11 +513,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
         )
       );
     }
-    return this._client.requestThreadControl(
-      this._session.user.id,
-      metadata,
-      this._getMethodOptions({})
-    );
+    return this._client.requestThreadControl(this._session.user.id, metadata);
   }
 
   /**
@@ -557,10 +536,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
         )
       );
     }
-    return this._client.getThreadOwner(
-      this._session.user.id,
-      this._getMethodOptions({})
-    );
+    return this._client.getThreadOwner(this._session.user.id);
   }
 
   async isThreadOwner(): Promise<boolean> {
@@ -608,11 +584,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
         )
       );
     }
-    return this._client.associateLabel(
-      this._session.user.id,
-      labelId,
-      this._getMethodOptions({})
-    );
+    return this._client.associateLabel(this._session.user.id, labelId);
   }
 
   /**
@@ -638,11 +610,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
         )
       );
     }
-    return this._client.dissociateLabel(
-      this._session.user.id,
-      labelId,
-      this._getMethodOptions({})
-    );
+    return this._client.dissociateLabel(this._session.user.id, labelId);
   }
 
   /**
@@ -690,10 +658,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
         )
       );
     }
-    return this._client.getAssociatedLabels(
-      this._session.user.id,
-      this._getMethodOptions({})
-    );
+    return this._client.getAssociatedLabels(this._session.user.id);
   }
 
   async sendMessage(

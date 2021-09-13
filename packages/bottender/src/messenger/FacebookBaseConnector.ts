@@ -41,6 +41,10 @@ export default class FacebookBaseConnector<
 
   _appSecret: string;
 
+  _origin: string | undefined = undefined;
+
+  _skipAppSecretProof: boolean | undefined = undefined;
+
   _mapPageToAccessToken: ((pageId: string) => Promise<string>) | null = null;
 
   _verifyToken: string | null = null;
@@ -91,6 +95,9 @@ export default class FacebookBaseConnector<
           this._batchConfig
         );
       }
+
+      this._origin = origin;
+      this._skipAppSecretProof = skipAppSecretProof;
     }
 
     this._appId = appId;

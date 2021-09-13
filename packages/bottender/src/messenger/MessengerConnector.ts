@@ -169,9 +169,17 @@ export default class MessengerConnector
       } else {
         let user = {};
         try {
-          user = await this._client.getUserProfile(senderId as any, {
-            accessToken: customAccessToken,
-          });
+          if (customAccessToken) {
+            const client = new MessengerClient({
+              accessToken: customAccessToken,
+              appSecret: this._appSecret,
+              origin: this._origin,
+              skipAppSecretProof: this._skipAppSecretProof,
+            });
+            user = await client.getUserProfile(senderId as any);
+          } else {
+            user = await this._client.getUserProfile(senderId as any);
+          }
         } catch (err) {
           warning(
             false,
@@ -243,9 +251,22 @@ export default class MessengerConnector
         customAccessToken = await this._mapPageToAccessToken(pageId);
       }
     }
+
+    let client;
+    if (customAccessToken) {
+      client = new MessengerClient({
+        accessToken: customAccessToken,
+        appSecret: this._appSecret,
+        origin: this._origin,
+        skipAppSecretProof: this._skipAppSecretProof,
+      });
+    } else {
+      client = this._client;
+    }
+
     return new MessengerContext({
       ...params,
-      client: this._client,
+      client,
       customAccessToken,
       batchQueue: this._batchQueue,
       appId: this._appId,

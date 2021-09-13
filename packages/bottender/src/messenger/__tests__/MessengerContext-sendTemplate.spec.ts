@@ -38,7 +38,7 @@ const setup = (
   }
 ) => {
   const client = new MessengerClient({
-    accessToken: ACCESS_TOKEN,
+    accessToken: customAccessToken ?? ACCESS_TOKEN,
     appSecret: APP_SECRET,
   });
 
