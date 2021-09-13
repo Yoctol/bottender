@@ -1,4 +1,4 @@
-# 1.5.1 / 2020-09-xx
+# 1.5.1 / 2021-09-14
 
 - [new] Server: support experimental custom connectors (#781):
 
