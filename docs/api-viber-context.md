@@ -370,7 +370,7 @@ It will fetch the details of the user.
 Example:
 
 ```js
-context.getUserDetails().then(user => {
+context.getUserDetails().then((user) => {
   console.log(user);
   // {
   //   id: '01234567890A=',
@@ -401,7 +401,7 @@ It will fetch the online status of the user.
 Example:
 
 ```js
-context.getOnlineStatus().then(status => {
+context.getOnlineStatus().then((status) => {
   console.log(status);
   // {
   //   id: '01234567891=',

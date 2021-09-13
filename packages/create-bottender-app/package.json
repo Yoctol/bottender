@@ -1,6 +1,6 @@
 {
   "name": "create-bottender-app",
-  "version": "1.4.0",
+  "version": "1.5.1",
   "bin": {
     "create-bottender-app": "bin/cli.js"
   },

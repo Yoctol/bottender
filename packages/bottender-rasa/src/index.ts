@@ -5,6 +5,8 @@ import { get } from 'lodash';
 import { Entity, Intent, ParsedResult } from './types';
 
 /**
+ * @example
+ * ```
  * const Rasa = rasa({
  *   origin: 'http://localhost:5005',
  *   actions: {
@@ -14,8 +16,9 @@ import { Entity, Intent, ParsedResult } from './types';
  *   },
  *   confidenceThreshold: 0.7
  * });
+ * ```
  */
-module.exports = function rasa({
+export = function rasa({
   origin = 'http://localhost:5005',
   actions,
   confidenceThreshold,
@@ -26,7 +29,7 @@ module.exports = function rasa({
   actions: Record<
     string,
     Action<
-      Context<any, any>,
+      Context,
       {
         intent: Intent;
         entities: Entity[];
@@ -36,11 +39,11 @@ module.exports = function rasa({
   confidenceThreshold: number;
   emulationMode?: 'WIT' | 'LUIS' | 'DIALOGFLOW';
   jwt?: string;
-}): Action<Context<any, any>> {
+}): Action<Context> {
   return async function Rasa(
-    context: Context<any, any>,
-    { next }: { next?: Action<Context<any, any>> }
-  ): Promise<Action<Context<any, any>> | void> {
+    context: Context,
+    { next }: { next?: Action<Context> }
+  ): Promise<Action<Context> | void> {
     if (!context.event.isText) {
       return next;
     }

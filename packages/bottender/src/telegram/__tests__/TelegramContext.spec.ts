@@ -1,24 +1,15 @@
-jest.mock('delay');
+import warning from 'warning';
+import { TelegramClient } from 'messaging-api-telegram';
+import { mocked } from 'ts-jest/utils';
+
+import TelegramContext from '../TelegramContext';
+import TelegramEvent from '../TelegramEvent';
+import { TelegramRawEvent } from '../TelegramTypes';
+
 jest.mock('messaging-api-telegram');
 jest.mock('warning');
 
-let TelegramClient;
-let TelegramContext;
-let TelegramEvent;
-let sleep;
-let warning;
-
-beforeEach(() => {
-  /* eslint-disable global-require */
-  TelegramClient = require('messaging-api-telegram').TelegramClient;
-  TelegramContext = require('../TelegramContext').default;
-  TelegramEvent = require('../TelegramEvent').default;
-  sleep = require('delay');
-  warning = require('warning');
-  /* eslint-enable global-require */
-});
-
-const _rawEvent = {
+const defaultRawEvent: TelegramRawEvent = {
   message: {
     messageId: 666,
     from: {
@@ -41,15 +32,20 @@ const _rawEvent = {
 
 const setup = ({
   session = { user: { id: 313534466 } },
-  rawEvent = _rawEvent,
-} = {}) => {
-  const client = TelegramClient.connect();
-  const args = {
+  rawEvent = defaultRawEvent,
+} = {}): {
+  context: TelegramContext;
+  session: any;
+  client: TelegramClient;
+} => {
+  const client = new TelegramClient({});
+
+  const context = new TelegramContext({
     client,
     event: new TelegramEvent(rawEvent),
     session,
-  };
-  const context = new TelegramContext(args);
+  });
+
   return {
     context,
     session,
@@ -57,28 +53,27 @@ const setup = ({
   };
 };
 
-it('be defined', () => {
-  const { context } = setup();
-  expect(context).toBeDefined();
-});
-
 it('#platform to be `telegram`', () => {
   const { context } = setup();
+
   expect(context.platform).toBe('telegram');
 });
 
 it('get #session works', () => {
   const { context, session } = setup();
+
   expect(context.session).toBe(session);
 });
 
 it('get #event works', () => {
   const { context } = setup();
+
   expect(context.event).toBeInstanceOf(TelegramEvent);
 });
 
 it('get #client works', () => {
   const { context, client } = setup();
+
   expect(context.client).toBe(client);
 });
 
@@ -92,7 +87,7 @@ describe('#sendText', () => {
   });
 
   it('should call warning and not to send if dont have session', async () => {
-    const { context, client } = setup({ session: false });
+    const { context, client } = setup({ session: null });
 
     await context.sendText('hello');
 
@@ -449,10 +444,11 @@ describe('#stopMessageLiveLocation', () => {
   it('should to call client.stopMessageLiveLocation', async () => {
     const { context, client } = setup();
 
-    await context.stopMessageLiveLocation();
+    await context.stopMessageLiveLocation(313534466);
 
     expect(client.stopMessageLiveLocation).toBeCalledWith({
       chatId: 427770117,
+      messageId: 313534466,
     });
   });
 });
@@ -689,7 +685,7 @@ describe('#answerShippingQuery', () => {
       result: true,
     };
 
-    client.answerShippingQuery.mockResolvedValue(response);
+    mocked(client.answerShippingQuery).mockResolvedValue(response);
 
     const result = await context.answerShippingQuery(true);
 
@@ -731,7 +727,7 @@ describe('#answerPreCheckoutQuery', () => {
       result: true,
     };
 
-    client.answerPreCheckoutQuery.mockResolvedValue(response);
+    mocked(client.answerPreCheckoutQuery).mockResolvedValue(response);
 
     const result = await context.answerPreCheckoutQuery(true);
 
@@ -776,7 +772,7 @@ describe('#answerInlineQuery', () => {
       ok: true,
     };
 
-    client.answerInlineQuery.mockResolvedValue(response);
+    mocked(client.answerInlineQuery).mockResolvedValue(response);
 
     const result = await context.answerInlineQuery(
       [
@@ -919,7 +915,7 @@ describe('#answerCallbackQuery', () => {
       ok: true,
     };
 
-    client.answerCallbackQuery.mockResolvedValue(response);
+    mocked(client.answerCallbackQuery).mockResolvedValue(response);
 
     const result = await context.answerCallbackQuery({
       url: 'https://example.com/',
@@ -992,7 +988,7 @@ describe('#getUserProfilePhotos', () => {
       ],
     };
 
-    client.getUserProfilePhotos.mockResolvedValue(profile);
+    mocked(client.getUserProfilePhotos).mockResolvedValue(profile);
 
     const result = await context.getUserProfilePhotos({ limit: 2 });
 
@@ -1013,7 +1009,7 @@ describe('#getChat', () => {
       type: 'private',
     };
 
-    client.getChat.mockResolvedValue(chat);
+    mocked(client.getChat).mockResolvedValue(chat);
 
     const result = await context.getChat();
 
@@ -1039,7 +1035,7 @@ describe('#getChatAdministrators', () => {
       },
     ];
 
-    client.getChatAdministrators.mockResolvedValue(administrators);
+    mocked(client.getChatAdministrators).mockResolvedValue(administrators);
 
     const result = await context.getChatAdministrators();
 
@@ -1052,7 +1048,7 @@ describe('#getChatMembersCount', () => {
   it('should to call client.getChatMembersCount', async () => {
     const { context, client } = setup();
 
-    client.getChatMembersCount.mockResolvedValue('6');
+    mocked(client.getChatMembersCount).mockResolvedValue('6');
 
     const result = await context.getChatMembersCount();
 
@@ -1076,30 +1072,12 @@ describe('#getChatMember', () => {
       status: 'creator',
     };
 
-    client.getChatMember.mockResolvedValue(member);
+    mocked(client.getChatMember).mockResolvedValue(member);
 
     const result = await context.getChatMember(313534466);
 
     expect(client.getChatMember).toBeCalledWith(427770117, 313534466);
     expect(result).toEqual(member);
-  });
-});
-
-describe('#typing', () => {
-  it('avoid delay 0', async () => {
-    const { context } = setup();
-
-    await context.typing(0);
-
-    expect(sleep).not.toBeCalled();
-  });
-
-  it('should call sleep', async () => {
-    const { context } = setup();
-
-    await context.typing(10);
-
-    expect(sleep).toBeCalled();
   });
 });
 

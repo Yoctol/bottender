@@ -9,14 +9,17 @@ import { MetadataDTO, QnaSearchResultList } from './types';
 const RECOMMENDED_THRESHOLD = 50;
 
 /**
+ * @example
+ * ```
  * const QnaMaker = qnaMaker({
  *   resourceName: 'RESOURCE_NAME',
  *   knowledgeBaseId: 'KNOWLEDGE_BASE_ID',
  *   endpointKey: 'ENDPOINT_KEY',
  *   scoreThreshold: 70,
  * });
+ * ```
  */
-module.exports = function qnaMaker({
+export = function qnaMaker({
   resourceName,
   knowledgeBaseId,
   endpointKey,
@@ -32,7 +35,7 @@ module.exports = function qnaMaker({
   qnaId?: string;
   scoreThreshold?: number;
   strictFilters?: MetadataDTO[];
-}): Action<Context<any, any>> {
+}): Action<Context> {
   invariant(
     typeof resourceName === 'string' && resourceName.length > 0,
     'qna-maker: `resourceName` is a required parameter.'
@@ -49,9 +52,9 @@ module.exports = function qnaMaker({
   );
 
   return async function QnaMaker(
-    context: Context<any, any>,
-    { next }: { next?: Action<Context<any, any>> }
-  ): Promise<Action<Context<any, any>> | void> {
+    context: Context,
+    { next }: { next?: Action<Context> }
+  ): Promise<Action<Context> | void> {
     if (!context.event.isText || !context.session) {
       return next;
     }

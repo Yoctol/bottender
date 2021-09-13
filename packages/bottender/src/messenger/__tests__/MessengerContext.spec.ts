@@ -1,25 +1,18 @@
-jest.mock('delay');
+import warning from 'warning';
+import { MessengerClient } from 'messaging-api-messenger';
+import { mocked } from 'ts-jest/utils';
+
+import MessengerContext from '../MessengerContext';
+import MessengerEvent from '../MessengerEvent';
+
 jest.mock('messaging-api-messenger');
 jest.mock('warning');
-
-let MessengerClient;
-let MessengerContext;
-let MessengerEvent;
-let warning;
-
-beforeEach(() => {
-  /* eslint-disable global-require */
-  MessengerClient = require('messaging-api-messenger').MessengerClient;
-  MessengerContext = require('../MessengerContext').default;
-  MessengerEvent = require('../MessengerEvent').default;
-  warning = require('warning');
-  /* eslint-enable global-require */
-});
+jest.mock('delay');
 
 const APP_ID = '1234567890';
 const PERSONA_ID = '987654321';
 
-const _rawEvent = {
+const defaultRawEvent = {
   sender: { id: '1423587017700273' },
   recipient: { id: '404217156637689' },
   timestamp: 1491796363181,
@@ -37,13 +30,15 @@ const userSession = {
 };
 
 const setup = (
-  { session = userSession, customAccessToken, rawEvent = _rawEvent } = {
+  { session = userSession, customAccessToken, rawEvent = defaultRawEvent } = {
     session: userSession,
     customAccessToken: undefined,
-    _rawEvent,
+    defaultRawEvent,
   }
 ) => {
-  const client = MessengerClient.connect();
+  const client = new MessengerClient({
+    accessToken: customAccessToken ?? '',
+  });
   const args = {
     appId: APP_ID,
     client,
@@ -58,11 +53,6 @@ const setup = (
     client,
   };
 };
-
-it('be defined', () => {
-  const { context } = setup();
-  expect(context).toBeDefined();
-});
 
 it('#platform to be `messenger`', () => {
   const { context } = setup();
@@ -85,7 +75,7 @@ it('get #client works', () => {
 });
 
 describe('#getUserProfile', () => {
-  it('should call client sendSenderAction', async () => {
+  it('should call client getUserProfile', async () => {
     const { context, client, session } = setup();
 
     const user = {
@@ -96,13 +86,11 @@ describe('#getUserProfile', () => {
       profilePic: 'https://example.com/pic.png',
     };
 
-    client.getUserProfile.mockResolvedValue(user);
+    mocked(client.getUserProfile).mockResolvedValue(user);
 
     const result = await context.getUserProfile();
 
-    expect(client.getUserProfile).toBeCalledWith(session.user.id, {
-      accessToken: undefined,
-    });
+    expect(client.getUserProfile).toBeCalledWith(session.user.id, {});
     expect(result).toEqual(user);
   });
 
@@ -120,7 +108,7 @@ describe('#getUserProfile', () => {
       gender: 'male',
     };
 
-    client.getUserProfile.mockResolvedValue(user);
+    mocked(client.getUserProfile).mockResolvedValue(user);
 
     const result = await context.getUserProfile({
       fields: [
@@ -146,31 +134,6 @@ describe('#getUserProfile', () => {
         'timezone',
         'gender',
       ],
-      accessToken: undefined,
-    });
-    expect(result).toEqual(user);
-  });
-
-  it('should use custom access token', async () => {
-    const { context, client, session } = setup({
-      session: userSession,
-      customAccessToken: 'anyToken',
-    });
-
-    const user = {
-      id: session.user.id,
-      name: 'Kevin Durant',
-      firstName: 'Kevin',
-      lastName: 'Durant',
-      profilePic: 'https://example.com/pic.png',
-    };
-
-    client.getUserProfile.mockResolvedValue(user);
-
-    const result = await context.getUserProfile();
-
-    expect(client.getUserProfile).toBeCalledWith(session.user.id, {
-      accessToken: 'anyToken',
     });
     expect(result).toEqual(user);
   });
@@ -188,6 +151,123 @@ describe('#getUserProfile', () => {
   });
 });
 
+describe('Persistent Menu', () => {
+  describe('#getUserPersistentMenu', () => {
+    it('should call client getUserPersistentMenu', async () => {
+      const { context, client, session } = setup();
+
+      const persistentMenu = [
+        {
+          locale: 'default',
+          composer_input_disabled: false,
+          call_to_actions: [
+            {
+              type: 'postback',
+              title: 'Restart Conversation',
+              payload: 'RESTART',
+            },
+            {
+              type: 'web_url',
+              title: 'Powered by ALOHA.AI, Yoctol',
+              url: 'https://www.yoctol.com/',
+            },
+          ],
+        },
+      ];
+
+      client.getUserPersistentMenu.mockResolvedValue(persistentMenu);
+
+      const result = await context.getUserPersistentMenu();
+
+      expect(client.getUserPersistentMenu).toBeCalledWith(session.user.id);
+      expect(result).toEqual(persistentMenu);
+    });
+
+    it('should call warning and not to send if dont have session', async () => {
+      const { context, client } = setup({ session: false });
+
+      await context.getUserPersistentMenu();
+
+      expect(warning).toBeCalledWith(
+        false,
+        'getUserPersistentMenu: should not be called in context without session'
+      );
+      expect(client.getUserPersistentMenu).not.toBeCalled();
+    });
+  });
+
+  describe('#setUserPersistentMenu', () => {
+    it('should call client setUserPersistentMenu', async () => {
+      const { context, client, session } = setup();
+
+      const persistentMenu = [
+        {
+          locale: 'default',
+          composer_input_disabled: false,
+          call_to_actions: [
+            {
+              type: 'postback',
+              title: 'Restart Conversation',
+              payload: 'RESTART',
+            },
+            {
+              type: 'web_url',
+              title: 'Powered by ALOHA.AI, Yoctol',
+              url: 'https://www.yoctol.com/',
+            },
+          ],
+        },
+      ];
+
+      const result = await context.setUserPersistentMenu(persistentMenu);
+
+      expect(client.setUserPersistentMenu).toBeCalledWith(
+        session.user.id,
+        persistentMenu,
+        {}
+      );
+
+      expect(result).toBeUndefined();
+    });
+
+    it('should call warning and not to send if dont have session', async () => {
+      const { context, client } = setup({ session: false });
+
+      await context.setUserPersistentMenu();
+
+      expect(warning).toBeCalledWith(
+        false,
+        'setUserPersistentMenu: should not be called in context without session'
+      );
+      expect(client.setPersistentMenu).not.toBeCalled();
+    });
+  });
+
+  describe('#deleteUserPersistentMenu', () => {
+    it('should call client deleteUserPersistentMenu', async () => {
+      const { context, client, session } = setup();
+
+      const result = await context.deleteUserPersistentMenu();
+
+      expect(client.deleteUserPersistentMenu).toBeCalledWith(session.user.id);
+
+      expect(result).toBeUndefined();
+    });
+
+    it('should call warning and not to send if dont have session', async () => {
+      const { context, client } = setup({ session: false });
+
+      await context.deleteUserPersistentMenu();
+
+      expect(warning).toBeCalledWith(
+        false,
+        'deleteUserPersistentMenu: should not be called in context without session'
+      );
+      expect(client.deleteUserPersistentMenu).not.toBeCalled();
+    });
+  });
+});
+
 describe('#passThreadControl', () => {
   it('should call to pass user thread control to other app', async () => {
     const { context, client, session } = setup();
@@ -197,28 +277,7 @@ describe('#passThreadControl', () => {
     expect(client.passThreadControl).toBeCalledWith(
       session.user.id,
       263902037430900,
-      'metadata',
-      {
-        accessToken: undefined,
-      }
-    );
-  });
-
-  it('should use custom access token', async () => {
-    const { context, client, session } = setup({
-      session: userSession,
-      customAccessToken: 'anyToken',
-    });
-
-    await context.passThreadControl(263902037430900, 'metadata');
-
-    expect(client.passThreadControl).toBeCalledWith(
-      session.user.id,
-      263902037430900,
-      'metadata',
-      {
-        accessToken: 'anyToken',
-      }
+      'metadata'
     );
   });
 
@@ -243,27 +302,7 @@ describe('#passThreadControlToPageInbox', () => {
 
     expect(client.passThreadControlToPageInbox).toBeCalledWith(
       session.user.id,
-      'metadata',
-      {
-        accessToken: undefined,
-      }
-    );
-  });
-
-  it('should use custom access token', async () => {
-    const { context, client, session } = setup({
-      session: userSession,
-      customAccessToken: 'anyToken',
-    });
-
-    await context.passThreadControlToPageInbox();
-
-    expect(client.passThreadControlToPageInbox).toBeCalledWith(
-      session.user.id,
-      undefined,
-      {
-        accessToken: 'anyToken',
-      }
+      'metadata'
     );
   });
 
@@ -288,27 +327,7 @@ describe('#takeThreadControl', () => {
 
     expect(client.takeThreadControl).toBeCalledWith(
       session.user.id,
-      'metadata',
-      {
-        accessToken: undefined,
-      }
-    );
-  });
-
-  it('should use custom access token', async () => {
-    const { context, client, session } = setup({
-      session: userSession,
-      customAccessToken: 'anyToken',
-    });
-
-    await context.takeThreadControl('metadata');
-
-    expect(client.takeThreadControl).toBeCalledWith(
-      session.user.id,
-      'metadata',
-      {
-        accessToken: 'anyToken',
-      }
+      'metadata'
     );
   });
 
@@ -333,27 +352,7 @@ describe('#requestThreadControl', () => {
 
     expect(client.requestThreadControl).toBeCalledWith(
       session.user.id,
-      'metadata',
-      {
-        accessToken: undefined,
-      }
-    );
-  });
-
-  it('should use custom access token', async () => {
-    const { context, client, session } = setup({
-      session: userSession,
-      customAccessToken: 'anyToken',
-    });
-
-    await context.requestThreadControl('metadata');
-
-    expect(client.requestThreadControl).toBeCalledWith(
-      session.user.id,
-      'metadata',
-      {
-        accessToken: 'anyToken',
-      }
+      'metadata'
     );
   });
 
@@ -376,22 +375,7 @@ describe('#getThreadOwner', () => {
 
     await context.getThreadOwner();
 
-    expect(client.getThreadOwner).toBeCalledWith(session.user.id, {
-      accessToken: undefined,
-    });
-  });
-
-  it('should use custom access token', async () => {
-    const { context, client, session } = setup({
-      session: userSession,
-      customAccessToken: 'anyToken',
-    });
-
-    await context.getThreadOwner();
-
-    expect(client.getThreadOwner).toBeCalledWith(session.user.id, {
-      accessToken: 'anyToken',
-    });
+    expect(client.getThreadOwner).toBeCalledWith(session.user.id);
   });
 
   it('should call warning if dont have session', async () => {
@@ -433,23 +417,7 @@ describe('#associateLabel', () => {
 
     expect(client.associateLabel).toBeCalledWith(
       session.user.id,
-      1712444532121303,
-      { accessToken: undefined }
-    );
-  });
-
-  it('should use custom access token', async () => {
-    const { context, client, session } = setup({
-      session: userSession,
-      customAccessToken: 'anyToken',
-    });
-
-    await context.associateLabel(1712444532121303);
-
-    expect(client.associateLabel).toBeCalledWith(
-      session.user.id,
-      1712444532121303,
-      { accessToken: 'anyToken' }
+      1712444532121303
     );
   });
 
@@ -474,23 +442,7 @@ describe('#dissociateLabel', () => {
 
     expect(client.dissociateLabel).toBeCalledWith(
       session.user.id,
-      1712444532121303,
-      { accessToken: undefined }
-    );
-  });
-
-  it('should use custom access token', async () => {
-    const { context, client, session } = setup({
-      session: userSession,
-      customAccessToken: 'anyToken',
-    });
-
-    await context.dissociateLabel(1712444532121303);
-
-    expect(client.dissociateLabel).toBeCalledWith(
-      session.user.id,
-      1712444532121303,
-      { accessToken: 'anyToken' }
+      1712444532121303
     );
   });
 
@@ -534,43 +486,7 @@ describe('#getAssociatedLabels', () => {
 
     await context.getAssociatedLabels();
 
-    expect(client.getAssociatedLabels).toBeCalledWith(session.user.id, {
-      accessToken: undefined,
-    });
-  });
-
-  it('should use custom access token', async () => {
-    const { context, client, session } = setup({
-      session: userSession,
-      customAccessToken: 'anyToken',
-    });
-
-    client.getAssociatedLabels.mockReturnValue({
-      data: [
-        {
-          name: 'myLabel',
-          id: '1001200005003',
-        },
-        {
-          name: 'myOtherLabel',
-          id: '1001200005002',
-        },
-      ],
-      paging: {
-        cursors: {
-          before:
-            'QVFIUmx1WTBpMGpJWXprYzVYaVhabW55dVpycko4U2xURGE5ODNtNFZAPal94a1hTUnNVMUtoMVVoTzlzSDktUkMtQkUzWEFLSXlMS3ZALYUw3TURLelZAPOGVR',
-          after:
-            'QVFIUmItNkpTbjVzakxFWGRydzdaVUFNNnNPaUl0SmwzVHN5ZAWZAEQ3lZANDAzTXFIM0NHbHdYSkQ5OG1GaEozdjkzRmxpUFhxTDl4ZAlBibnE4LWt1eGlTa3Bn',
-        },
-      },
-    });
-
-    await context.getAssociatedLabels();
-
-    expect(client.getAssociatedLabels).toBeCalledWith(session.user.id, {
-      accessToken: 'anyToken',
-    });
+    expect(client.getAssociatedLabels).toBeCalledWith(session.user.id);
   });
 
   it('should call warning if dont have session', async () => {
@@ -592,17 +508,10 @@ describe('persona', () => {
       const { context, client, session } = setup();
 
       context.usePersona(PERSONA_ID);
-      await context.markSeen();
       await context.typingOn();
       await context.typingOff();
       await context.sendText('hi');
 
-      expect(client.markSeen).toBeCalledWith(
-        session.user.id,
-        expect.objectContaining({
-          personaId: PERSONA_ID,
-        })
-      );
       expect(client.typingOn).toBeCalledWith(
         session.user.id,
         expect.objectContaining({
@@ -629,17 +538,10 @@ describe('persona', () => {
     it('should call API with personaId', async () => {
       const { context, client, session } = setup();
 
-      await context.markSeen({ personaId: PERSONA_ID });
       await context.typingOn({ personaId: PERSONA_ID });
       await context.typingOff({ personaId: PERSONA_ID });
       await context.sendText('hi', { personaId: PERSONA_ID });
 
-      expect(client.markSeen).toBeCalledWith(
-        session.user.id,
-        expect.objectContaining({
-          personaId: PERSONA_ID,
-        })
-      );
       expect(client.typingOn).toBeCalledWith(
         session.user.id,
         expect.objectContaining({

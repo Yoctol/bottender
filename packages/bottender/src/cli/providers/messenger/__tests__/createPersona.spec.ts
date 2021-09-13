@@ -1,4 +1,5 @@
 import { MessengerClient } from 'messaging-api-messenger';
+import { mocked } from 'ts-jest/utils';
 
 import getChannelConfig from '../../../../shared/getChannelConfig';
 import { createPersona } from '../persona';
@@ -17,41 +18,37 @@ const MOCK_FILE_WITH_PLATFORM = {
   },
 };
 
-let _client;
-
 beforeEach(() => {
-  _client = {
-    createPersona: jest.fn(),
-  };
-  MessengerClient.connect = jest.fn(() => _client);
-  log.error = jest.fn();
-  log.print = jest.fn();
-  getChannelConfig.mockReturnValue(MOCK_FILE_WITH_PLATFORM.channels.messenger);
-});
+  process.exit = jest.fn();
 
-it('be defined', () => {
-  expect(createPersona).toBeDefined();
+  mocked(getChannelConfig).mockReturnValue(
+    MOCK_FILE_WITH_PLATFORM.channels.messenger
+  );
 });
 
 describe('resolved', () => {
   it('call createPersona', async () => {
     const ctx = {
+      config: null,
       argv: {
+        _: [],
         '--name': 'kpman',
         '--pic': 'https://i.imgur.com/zV6uy4T.jpg',
       },
     };
 
-    process.exit = jest.fn();
-
-    _client.createPersona.mockResolvedValue({});
+    mocked(MessengerClient.prototype.createPersona).mockResolvedValue({
+      id: 'PERSONA_ID',
+    });
 
     await createPersona(ctx);
 
-    expect(MessengerClient.connect).toBeCalledWith({
+    const client = mocked(MessengerClient).mock.instances[0];
+
+    expect(MessengerClient).toBeCalledWith({
       accessToken: '__FAKE_TOKEN__',
     });
-    expect(_client.createPersona).toBeCalledWith({
+    expect(client.createPersona).toBeCalledWith({
       name: 'kpman',
       profilePictureUrl: 'https://i.imgur.com/zV6uy4T.jpg',
     });
@@ -59,15 +56,15 @@ describe('resolved', () => {
 
   it('error when no config setting', async () => {
     const ctx = {
+      config: null,
       argv: {
+        _: [],
         '--name': 'kpman',
         '--pic': 'https://i.imgur.com/zV6uy4T.jpg',
       },
     };
 
-    process.exit = jest.fn();
-
-    _client.createPersona.mockResolvedValue(null);
+    mocked(MessengerClient.prototype.createPersona).mockResolvedValue(null);
 
     await createPersona(ctx);
 
@@ -76,12 +73,13 @@ describe('resolved', () => {
 
   it('error when no persona name and pic', async () => {
     const ctx = {
-      argv: {},
+      config: null,
+      argv: {
+        _: [],
+      },
     };
 
-    process.exit = jest.fn();
-
-    _client.createPersona.mockResolvedValue(null);
+    mocked(MessengerClient.prototype.createPersona).mockResolvedValue(null);
 
     await createPersona(ctx);
 
@@ -92,7 +90,9 @@ describe('resolved', () => {
 describe('reject', () => {
   it('handle error thrown with only status', async () => {
     const ctx = {
+      config: null,
       argv: {
+        _: [],
         '--name': 'kpman',
         '--pic': 'https://i.imgur.com/zV6uy4T.jpg',
       },
@@ -102,9 +102,7 @@ describe('reject', () => {
         status: 400,
       },
     };
-    _client.createPersona.mockRejectedValue(error);
-
-    process.exit = jest.fn();
+    mocked(MessengerClient.prototype.createPersona).mockRejectedValue(error);
 
     await createPersona(ctx);
 
@@ -114,7 +112,9 @@ describe('reject', () => {
 
   it('handle error thrown by messenger', async () => {
     const ctx = {
+      config: null,
       argv: {
+        _: [],
         '--name': 'kpman',
         '--pic': 'https://i.imgur.com/zV6uy4T.jpg',
       },
@@ -133,30 +133,28 @@ describe('reject', () => {
         },
       },
     };
-    _client.createPersona.mockRejectedValue(error);
-
-    process.exit = jest.fn();
+    mocked(MessengerClient.prototype.createPersona).mockRejectedValue(error);
 
     await createPersona(ctx);
 
     expect(log.error).toBeCalled();
-    expect(log.error.mock.calls[2][0]).not.toMatch(/\[object Object\]/);
+    expect(mocked(log.error).mock.calls[2][0]).not.toMatch(/\[object Object\]/);
     expect(process.exit).toBeCalled();
   });
 
   it('handle error thrown by ourselves', async () => {
     const ctx = {
+      config: null,
       argv: {
+        _: [],
         '--name': 'kpman',
         '--pic': 'https://i.imgur.com/zV6uy4T.jpg',
       },
     };
-    const error = {
-      message: 'something wrong happened',
-    };
-    _client.createPersona.mockRejectedValue(error);
 
-    process.exit = jest.fn();
+    mocked(MessengerClient.prototype.createPersona).mockRejectedValue(
+      new Error('something wrong happened')
+    );
 
     await createPersona(ctx);
 

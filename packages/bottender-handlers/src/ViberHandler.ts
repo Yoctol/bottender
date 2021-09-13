@@ -10,7 +10,7 @@ export default class ViberHandler extends Handler {
   ) {
     if (args.length < 2) {
       const [handler] = args as [FunctionalHandler | Builder];
-      this.on(context => context.event.isSubscribed, handler);
+      this.on((context) => context.event.isSubscribed, handler);
     } else {
       const [predicate, handler] = args as [
         Predicate,
@@ -23,7 +23,7 @@ export default class ViberHandler extends Handler {
       );
 
       this.on(
-        context =>
+        (context) =>
           context.event.isSubscribed &&
           predicate(context.event.subscribed, context),
         handler
@@ -40,7 +40,7 @@ export default class ViberHandler extends Handler {
   ) {
     if (args.length < 2) {
       const [handler] = args as [FunctionalHandler | Builder];
-      this.on(context => context.event.isUnsubscribed, handler);
+      this.on((context) => context.event.isUnsubscribed, handler);
     } else {
       const [predicate, handler] = args as [
         Predicate,
@@ -53,7 +53,7 @@ export default class ViberHandler extends Handler {
       );
 
       this.on(
-        context =>
+        (context) =>
           context.event.isUnsubscribed &&
           predicate(context.event.unsubscribed, context),
         handler
@@ -70,7 +70,7 @@ export default class ViberHandler extends Handler {
   ) {
     if (args.length < 2) {
       const [handler] = args as [FunctionalHandler | Builder];
-      this.on(context => context.event.isConversationStarted, handler);
+      this.on((context) => context.event.isConversationStarted, handler);
     } else {
       const [predicate, handler] = args as [
         Predicate,
@@ -83,7 +83,7 @@ export default class ViberHandler extends Handler {
       );
 
       this.on(
-        context =>
+        (context) =>
           context.event.isConversationStarted &&
           predicate(context.event.conversationStarted, context),
         handler
@@ -100,7 +100,7 @@ export default class ViberHandler extends Handler {
   ) {
     if (args.length < 2) {
       const [handler] = args as [FunctionalHandler | Builder];
-      this.on(context => context.event.isDelivered, handler);
+      this.on((context) => context.event.isDelivered, handler);
     } else {
       const [predicate, handler] = args as [
         Predicate,
@@ -113,7 +113,7 @@ export default class ViberHandler extends Handler {
       );
 
       this.on(
-        context =>
+        (context) =>
           context.event.isDelivered &&
           predicate(context.event.delivered, context),
         handler
@@ -130,7 +130,7 @@ export default class ViberHandler extends Handler {
   ) {
     if (args.length < 2) {
       const [handler] = args as [FunctionalHandler | Builder];
-      this.on(context => context.event.isSeen, handler);
+      this.on((context) => context.event.isSeen, handler);
     } else {
       const [predicate, handler] = args as [
         Predicate,
@@ -143,7 +143,7 @@ export default class ViberHandler extends Handler {
       );
 
       this.on(
-        context =>
+        (context) =>
           context.event.isSeen && predicate(context.event.seen, context),
         handler
       );
@@ -159,7 +159,7 @@ export default class ViberHandler extends Handler {
   ) {
     if (args.length < 2) {
       const [handler] = args as [FunctionalHandler | Builder];
-      this.on(context => context.event.isFailed, handler);
+      this.on((context) => context.event.isFailed, handler);
     } else {
       const [predicate, handler] = args as [
         Predicate,
@@ -172,7 +172,7 @@ export default class ViberHandler extends Handler {
       );
 
       this.on(
-        context =>
+        (context) =>
           context.event.isFailed && predicate(context.event.failed, context),
         handler
       );

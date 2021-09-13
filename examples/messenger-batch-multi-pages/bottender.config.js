@@ -12,7 +12,7 @@ const {
  * but you can dynamically load tokens from SQL database, mongodb, redis, REST API ...
  * or whatever you want.
  */
-const mapPageToAccessToken = pageId => {
+const mapPageToAccessToken = (pageId) => {
   switch (pageId) {
     case PAGE_1_PAGE_ID:
       return PAGE_1_ACCESS_TOKEN;
@@ -27,7 +27,6 @@ module.exports = {
     messenger: {
       enabled: true,
       path: '/webhooks/messenger',
-      pageId: process.env.MESSENGER_PAGE_ID,
       accessToken: process.env.MESSENGER_ACCESS_TOKEN,
       appId: process.env.MESSENGER_APP_ID,
       appSecret: process.env.MESSENGER_APP_SECRET,

@@ -1,5 +1,6 @@
 {
   "name": "@bottender/luis",
+  "version": "1.5.1",
   "description": "LUIS integration for Bottender.",
   "license": "MIT",
   "homepage": "https://bottender.js.org/",
@@ -7,21 +8,20 @@
     "type": "git",
     "url": "https://github.com/Yoctol/bottender.git"
   },
-  "version": "1.4.4",
   "main": "dist/index.js",
   "files": [
     "dist"
   ],
   "types": "dist/index.d.ts",
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.4",
     "invariant": "^2.2.4"
   },
   "peerDependencies": {
     "bottender": ">= 1.2.0-0"
   },
   "devDependencies": {
-    "bottender": "^1.4.4"
+    "bottender": "^1.5.1"
   },
   "keywords": [
     "bot",

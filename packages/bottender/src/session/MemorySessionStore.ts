@@ -22,8 +22,10 @@ function getMaxSize(arg?: MemoryOption): number | undefined {
   return;
 }
 
-export default class MemorySessionStore extends CacheBasedSessionStore
-  implements SessionStore {
+export default class MemorySessionStore
+  extends CacheBasedSessionStore
+  implements SessionStore
+{
   constructor(arg?: MemoryOption, expiresIn?: number) {
     const maxSize = getMaxSize(arg);
 

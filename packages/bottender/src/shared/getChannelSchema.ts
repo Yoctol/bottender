@@ -41,10 +41,7 @@ const messengerSchema = Joi.object().keys({
           .max(3)
           .when('composerInputDisabled', {
             is: true,
-            then: Joi.array()
-              .items(menuItemSchema)
-              .max(3)
-              .required(),
+            then: Joi.array().items(menuItemSchema).max(3).required(),
           }),
       })
     ),

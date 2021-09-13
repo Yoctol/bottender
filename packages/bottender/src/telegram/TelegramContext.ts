@@ -1,10 +1,10 @@
-import sleep from 'delay';
 import warning from 'warning';
-import { TelegramClient, TelegramTypes as Type } from 'messaging-api-telegram';
+import { TelegramClient } from 'messaging-api-telegram';
 
 import Context from '../context/Context';
 
 import TelegramEvent from './TelegramEvent';
+import * as Type from './TelegramTypes';
 
 class TelegramContext extends Context<TelegramClient, TelegramEvent> {
   /**
@@ -13,16 +13,6 @@ class TelegramContext extends Context<TelegramClient, TelegramEvent> {
    */
   get platform(): 'telegram' {
     return 'telegram';
-  }
-
-  /**
-   * Delay and show indicators for milliseconds.
-   *
-   */
-  async typing(milliseconds: number): Promise<void> {
-    if (milliseconds > 0) {
-      await sleep(milliseconds);
-    }
   }
 
   /**

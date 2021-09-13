@@ -14,12 +14,22 @@ describe('core', () => {
 
   it('export connectors', () => {
     expect(core.ConsoleConnector).toBeDefined();
+    expect(core.FacebookBaseConnector).toBeDefined();
     expect(core.MessengerConnector).toBeDefined();
     expect(core.WhatsappConnector).toBeDefined();
     expect(core.LineConnector).toBeDefined();
     expect(core.SlackConnector).toBeDefined();
     expect(core.TelegramConnector).toBeDefined();
     expect(core.ViberConnector).toBeDefined();
+  });
+
+  it('export clients', () => {
+    expect(core.MessengerClient).toBeDefined();
+    expect(core.TwilioClient).toBeDefined();
+    expect(core.LineClient).toBeDefined();
+    expect(core.SlackOAuthClient).toBeDefined();
+    expect(core.TelegramClient).toBeDefined();
+    expect(core.ViberClient).toBeDefined();
   });
 
   it('export cache implements', () => {

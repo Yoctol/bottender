@@ -1,8 +1,10 @@
 import { SlackOAuthClient } from 'messaging-api-slack';
+import { mocked } from 'ts-jest/utils';
 
 import SlackConnector from '../SlackConnector';
 import SlackContext from '../SlackContext';
 import SlackEvent from '../SlackEvent';
+import { SlackRequestBody } from '../SlackTypes';
 
 jest.mock('messaging-api-slack');
 jest.mock('warning');
@@ -10,135 +12,800 @@ jest.mock('warning');
 const accessToken = 'SLACK_accessTOKEN';
 const SLACK_SIGNING_SECRET = '8f742231b10e8888abcd99yyyzzz85a5';
 
-const request = {
-  body: {
-    token: 'xxxxxxxxxxxxxxxxxxxxxxxxxxx',
-    teamId: 'T02R00000',
-    apiAppId: 'A6A00000',
-    event: {
-      type: 'message',
-      user: 'U13A00000',
-      text: 'hello',
-      ts: '1500435914.425136',
-      channel: 'C6A900000',
-      eventTs: '1500435914.425136',
-    },
-    type: 'event_callback',
-    authedUsers: ['U6AK00000'],
-    eventId: 'Ev6BEYTAK0',
-    eventTime: 1500435914,
+const request: SlackRequestBody = {
+  token: 'xxxxxxxxxxxxxxxxxxxxxxxxxxx',
+  teamId: 'T02R00000',
+  apiAppId: 'A6A00000',
+  event: {
+    type: 'message',
+    user: 'U13A00000',
+    text: 'hello',
+    ts: '1500435914.425136',
+    channel: 'C6A900000',
+    eventTs: '1500435914.425136',
   },
+  type: 'event_callback',
+  authedUsers: ['U6AK00000'],
+  eventId: 'Ev6BEYTAK0',
+  eventTime: 1500435914,
 };
 
-const botRequest = {
-  body: {
-    token: 'xxxxxxxxxxxxxxxxxxxxxxxxxxx',
-    teamId: 'T02R00000',
-    apiAppId: 'A6A00000',
-    event: {
-      type: 'message',
-      user: 'U13A00000',
-      text: 'hello',
-      botId: 'B6AK00000',
-      ts: '1500435914.425136',
-      channel: 'C6A900000',
-      eventTs: '1500435914.425136',
-    },
-    type: 'event_callback',
-    authedUsers: ['U6AK00000'],
-    eventId: 'Ev6BEYTAK0',
-    eventTime: 1500435914,
+const botRequest: SlackRequestBody = {
+  token: 'xxxxxxxxxxxxxxxxxxxxxxxxxxx',
+  teamId: 'T02R00000',
+  apiAppId: 'A6A00000',
+  event: {
+    type: 'message',
+    user: 'U13A00000',
+    text: 'hello',
+    botId: 'B6AK00000',
+    ts: '1500435914.425136',
+    channel: 'C6A900000',
+    eventTs: '1500435914.425136',
   },
+  type: 'event_callback',
+  authedUsers: ['U6AK00000'],
+  eventId: 'Ev6BEYTAK0',
+  eventTime: 1500435914,
 };
 
-const ReactionAddedRequest = {
-  body: {
-    token: 'xxxxxxxxxxxxxxxxxxxxxxxxxxx',
-    teamId: 'T02R00000',
-    apiAppId: 'A6A00000',
-    event: {
-      type: 'reaction_added',
-      user: 'U024BE7LH',
-      reaction: 'thumbsup',
-      itemUser: 'U0G9QF9C6',
-      item: {
-        type: 'message',
-        channel: 'C0G9QF9GZ',
-        ts: '1360782400.498405',
+const ReactionAddedRequest: SlackRequestBody = {
+  token: 'xxxxxxxxxxxxxxxxxxxxxxxxxxx',
+  teamId: 'T02R00000',
+  apiAppId: 'A6A00000',
+  event: {
+    type: 'reaction_added',
+    user: 'U024BE7LH',
+    reaction: 'thumbsup',
+    itemUser: 'U0G9QF9C6',
+    item: {
+      type: 'message',
+      channel: 'C0G9QF9GZ',
+      ts: '1360782400.498405',
+    },
+    eventTs: '1360782804.083113',
+  },
+  type: 'event_callback',
+  authedUsers: ['U6AK00000'],
+  eventId: 'Ev6BEYTAK0',
+  eventTime: 1500435914,
+};
+
+const PinAddedRequest: SlackRequestBody = {
+  token: 'xxxxxxxxxxxxxxxxxxxxxxxxxxx',
+  teamId: 'T02R00000',
+  apiAppId: 'A6A00000',
+  event: {
+    type: 'pin_added',
+    user: 'U024BE7LH',
+    channelId: 'C02ELGNBH',
+    item: {},
+    eventTs: '1360782804.083113',
+  },
+  type: 'event_callback',
+  authedUsers: ['U6AK00000'],
+  eventId: 'Ev6BEYTAK0',
+  eventTime: 1500435914,
+};
+
+const interactiveMessageRequest: SlackRequestBody = {
+  payload:
+    '{"type":"interactive_message","actions":[{"name":"game","type":"button","value":"chess"}],"callback_id":"wopr_game","team":{"id":"T056K3CM5","domain":"ricebug"},"channel":{"id":"D7WTL9ECE","name":"directmessage"},"user":{"id":"U056K3CN1","name":"tw0517tw"},"action_ts":"1511153911.446899","message_ts":"1511153905.000093","attachment_id":"1","token":"xxxxxxxxxxxxxxxxxxxxxxxx","is_app_unfurl":false,"original_message":{"type":"message","user":"U7W1PH7MY","text":"Would you like to play a game?","bot_id":"B7VUVQTK5","attachments":[{"callback_id":"wopr_game","fallback":"You are unable to choose a game","text":"Choose a game to play","id":1,"color":"3AA3E3","actions":[{"id":"1","name":"game","text":"Chess","type":"button","value":"chess","style":""},{"id":"2","name":"game","text":"Falken\'s Maze","type":"button","value":"maze","style":""},{"id":"3","name":"game","text":"Thermonuclear War","type":"button","value":"war","style":"danger","confirm":{"text":"Wouldn\'t you prefer a good game of chess?","title":"Are you sure?","ok_text":"Yes","dismiss_text":"No"}}]}],"ts":"1511153905.000093"},"response_url":"https:\\/\\/hooks.slack.com\\/actions\\/T056K3CM5\\/274366307953\\/73rSfbP0LcVPWfAYB3GicEdD","trigger_id":"274927463524.5223114719.95a5b9f6d3b30dc7e07dec6bfa4610e5"}',
+};
+
+// Home
+const appHomeOpenedOnMessagesTabRequest: SlackRequestBody = {
+  type: 'app_home_opened',
+  user: 'U0HD00000',
+  channel: 'DQMT00000',
+  tab: 'messages',
+  eventTs: '1592278860.498134',
+};
+
+const appHomeOpenedOnHomeTabRequest: SlackRequestBody = {
+  type: 'app_home_opened',
+  user: 'U0HD00000',
+  channel: 'DQMT00000',
+  tab: 'home',
+  view: {
+    id: 'V0151K00000',
+    teamId: 'T0HD00000',
+    type: 'home',
+    blocks: [
+      {
+        type: 'actions',
+        blockId: 'Rm7lr',
+        elements: [
+          {
+            type: 'button',
+            actionId: 'zrZ',
+            text: {
+              type: 'plain_text',
+              text: 'value',
+              emoji: true,
+            },
+            value: 'value',
+          },
+        ],
       },
-      eventTs: '1360782804.083113',
-    },
-    type: 'event_callback',
-    authedUsers: ['U6AK00000'],
-    eventId: 'Ev6BEYTAK0',
-    eventTime: 1500435914,
+    ],
+    privateMetadata: '',
+    callbackId: '',
+    state: { values: {} },
+    hash: '1592278862.48a704aa',
+    title: { type: 'plain_text', text: 'View Title', emoji: true },
+    clearOnClose: false,
+    notifyOnClose: false,
+    close: null,
+    submit: null,
+    previousViewId: null,
+    rootViewId: 'V0151K00000',
+    appId: 'AQ8600000',
+    externalId: '',
+    appInstalledTeamId: 'T0HD00000',
+    botId: 'BQMT00000',
   },
+  eventTs: '1592278910.074390',
 };
 
-const PinAddedRequest = {
-  body: {
-    token: 'xxxxxxxxxxxxxxxxxxxxxxxxxxx',
-    teamId: 'T02R00000',
-    apiAppId: 'A6A00000',
-    event: {
-      type: 'pin_added',
-      user: 'U024BE7LH',
-      channelId: 'C02ELGNBH',
-      item: {},
-      eventTs: '1360782804.083113',
-    },
-    type: 'event_callback',
-    authedUsers: ['U6AK00000'],
-    eventId: 'Ev6BEYTAK0',
-    eventTime: 1500435914,
+const blockActionsOnHomeTabRequest: SlackRequestBody = {
+  type: 'block_actions',
+  user: {
+    id: 'U0HD00000',
+    username: 'username',
+    name: 'name',
+    teamId: 'T0HD00000',
   },
+  apiAppId: 'AQ8600000',
+  token: 'xxxxxxxxxxxxxxxxxxxxxxxx',
+  container: { type: 'view', viewId: 'V0151K00000' },
+  triggerId: '1192207164308.17443231012.b30e1f98a3ac48b9171d3b859a0124a5',
+  team: { id: 'T0HD00000', domain: 'domain' },
+  view: {
+    id: 'V0151K00000',
+    teamId: 'T0HD00000',
+    type: 'home',
+    blocks: [
+      {
+        type: 'actions',
+        blockId: 'Rm7lr',
+        elements: [
+          {
+            type: 'button',
+            actionId: 'zrZ',
+            text: {
+              type: 'plain_text',
+              text: 'value',
+              emoji: true,
+            },
+            value: 'value',
+          },
+        ],
+      },
+    ],
+    privateMetadata: '{}',
+    callbackId: '',
+    state: { values: {} },
+    hash: '1592278912.3f2f9db2',
+    title: { type: 'plain_text', text: 'View Title', emoji: true },
+    clearOnClose: false,
+    notifyOnClose: false,
+    close: null,
+    submit: null,
+    previousViewId: null,
+    rootViewId: 'V0151K00000',
+    appId: 'AQ8600000',
+    externalId: '',
+    appInstalledTeamId: 'T0HD00000',
+    botId: 'BQMT00000',
+  },
+  actions: [
+    {
+      actionId: 'zrZ',
+      blockId: 'Rm7lr',
+      text: {
+        type: 'plain_text',
+        text: 'value',
+        emoji: true,
+      },
+      value: 'value',
+      type: 'button',
+      actionTs: '1592279552.931549',
+    },
+  ],
 };
 
-const interactiveMessageRequest = {
-  body: {
-    payload:
-      '{"type":"interactive_message","actions":[{"name":"game","type":"button","value":"chess"}],"callback_id":"wopr_game","team":{"id":"T056K3CM5","domain":"ricebug"},"channel":{"id":"D7WTL9ECE","name":"directmessage"},"user":{"id":"U056K3CN1","name":"tw0517tw"},"action_ts":"1511153911.446899","message_ts":"1511153905.000093","attachment_id":"1","token":"n8uIomPoBtc7fSnbHbQcmwdy","is_app_unfurl":false,"original_message":{"type":"message","user":"U7W1PH7MY","text":"Would you like to play a game?","bot_id":"B7VUVQTK5","attachments":[{"callback_id":"wopr_game","fallback":"You are unable to choose a game","text":"Choose a game to play","id":1,"color":"3AA3E3","actions":[{"id":"1","name":"game","text":"Chess","type":"button","value":"chess","style":""},{"id":"2","name":"game","text":"Falken\'s Maze","type":"button","value":"maze","style":""},{"id":"3","name":"game","text":"Thermonuclear War","type":"button","value":"war","style":"danger","confirm":{"text":"Wouldn\'t you prefer a good game of chess?","title":"Are you sure?","ok_text":"Yes","dismiss_text":"No"}}]}],"ts":"1511153905.000093"},"response_url":"https:\\/\\/hooks.slack.com\\/actions\\/T056K3CM5\\/274366307953\\/73rSfbP0LcVPWfAYB3GicEdD","trigger_id":"274927463524.5223114719.95a5b9f6d3b30dc7e07dec6bfa4610e5"}',
+// Home Modal
+const blockActionsOnHomeModalRequest: SlackRequestBody = {
+  type: 'block_actions',
+  user: {
+    id: 'U0HD00000',
+    username: 'username',
+    name: 'name',
+    teamId: 'T0HD00000',
   },
+  apiAppId: 'AQ8600000',
+  token: 'xxxxxxxxxxxxxxxxxxxxxxxx',
+  container: {
+    type: 'view',
+    viewId: 'V015LD00000',
+  },
+  triggerId: '1215686778640.17443231012.3a6962eea96e7dac6d2f1a907af6211e',
+  team: {
+    id: 'T0HD00000',
+    domain: 'domain',
+  },
+  view: {
+    id: 'V015LD00000',
+    teamId: 'T0HD00000',
+    type: 'modal',
+    blocks: [
+      {
+        type: 'context',
+        blockId: '2C4D9',
+        elements: [
+          {
+            type: 'plain_text',
+            text: 'text',
+            emoji: true,
+          },
+        ],
+      },
+      {
+        type: 'actions',
+        blockId: 'DyE',
+        elements: [
+          {
+            type: 'button',
+            actionId: 'xQkxX',
+            text: {
+              type: 'plain_text',
+              text: 'button text',
+              emoji: true,
+            },
+            value: 'button value',
+          },
+        ],
+      },
+    ],
+    privateMetadata: '{}',
+    callbackId: '',
+    state: {
+      values: {},
+    },
+    hash: '1592476707.898fb949',
+    title: {
+      type: 'plain_text',
+      text: 'title',
+      emoji: true,
+    },
+    clearOnClose: false,
+    notifyOnClose: false,
+    close: {
+      type: 'plain_text',
+      text: 'close',
+      emoji: true,
+    },
+    submit: {
+      type: 'plain_text',
+      text: 'submit',
+      emoji: true,
+    },
+    previousViewId: null,
+    rootViewId: 'V015LD00000',
+    appId: 'AQ8600000',
+    externalId: '',
+    appInstalledTeamId: 'T0HD00000',
+    botId: 'BQMT00000',
+  },
+  actions: [
+    {
+      actionId: 'xQkxX',
+      blockId: 'DyE',
+      text: {
+        type: 'plain_text',
+        text: 'button text',
+        emoji: true,
+      },
+      value: 'button value',
+      type: 'button',
+      actionTs: '1592476752.557160',
+    },
+  ],
 };
 
-const viewSubmissionRequest = {
-  body: {
-    type: 'view_submission',
-    team: { id: 'T02RUPSBS', domain: 'yoctolinfo' },
-    user: {
-      id: 'UCL2D708M',
-      username: 'darkbtf',
-      name: 'darkbtf',
-      teamId: 'T02RUPSBS',
-    },
-    apiAppId: 'A604E7GSJ',
-    token: 'zBoHd4fjrvVcVuN9yTmlHMKC',
-    triggerId: '873508362498.2878808400.763026ca2acb11b3dfbcb85836d1c3d8',
-    view: {
-      id: 'VRQQ7JA4T',
-      teamId: 'T02RUPSBS',
-      type: 'modal',
-      blocks: [[Object]],
-      privateMetadata: '{"channelId":"C02ELGNBH"}',
-      callbackId: '截止',
-      state: { values: {} },
-      hash: '1577340522.d58ea69f',
-      title: { type: 'plain_text', text: '確認截止？', emoji: true },
-      clearOnClose: false,
-      notifyOnClose: false,
-      close: { type: 'plain_text', text: '取消', emoji: true },
-      submit: { type: 'plain_text', text: '送出 :boom:', emoji: true },
-      previousViewId: null,
-      rootViewId: 'VRQQ7JA4T',
-      appId: 'A604E7GSJ',
-      externalId: '',
-      appInstalledTeamId: 'T02RUPSBS',
-      botId: 'B618CBATV',
-    },
+const viewSubmissionOnHomeModalRequest = {
+  type: 'view_submission',
+  team: {
+    id: 'T0HD00000',
+    domain: 'domain',
   },
+  user: {
+    id: 'U0HD00000',
+    username: 'username',
+    name: 'name',
+    teamId: 'T0HD00000',
+  },
+  apiAppId: 'AQ8600000',
+  token: 'xxxxxxxxxxxxxxxxxxxxxxxx',
+  triggerId: '1204566923633.17443231012.da8c753637a7f27e40991411664d77a2',
+  view: {
+    id: 'V015N200000',
+    teamId: 'T0HD00000',
+    type: 'modal',
+    blocks: [
+      {
+        type: 'context',
+        blockId: 'Umz',
+        elements: [
+          {
+            type: 'plain_text',
+            text: 'text',
+            emoji: true,
+          },
+        ],
+      },
+      {
+        type: 'actions',
+        blockId: 'Sk7k8',
+        elements: [
+          {
+            type: 'button',
+            actionId: '0L7ew',
+            text: {
+              type: 'plain_text',
+              text: 'button text',
+              emoji: true,
+            },
+            value: 'button value',
+          },
+        ],
+      },
+    ],
+    privateMetadata: '{}',
+    callbackId: '',
+    state: {
+      values: {},
+    },
+    hash: '1592477178.60ca56c9',
+    title: {
+      type: 'plain_text',
+      text: 'title',
+      emoji: true,
+    },
+    clearOnClose: false,
+    notifyOnClose: false,
+    close: {
+      type: 'plain_text',
+      text: 'close',
+      emoji: true,
+    },
+    submit: {
+      type: 'plain_text',
+      text: 'submit',
+      emoji: true,
+    },
+    previousViewId: null,
+    rootViewId: 'V015N200000',
+    appId: 'AQ8600000',
+    externalId: '',
+    appInstalledTeamId: 'T0HD00000',
+    botId: 'BQMT00000',
+  },
+  responseUrls: [],
 };
 
-const RtmMessage = {
+const viewCloseOnHomeModalRequest = {
+  type: 'view_closed',
+  team: {
+    id: 'T0HD00000',
+    domain: 'domain',
+  },
+  user: {
+    id: 'U0HD00000',
+    username: 'username',
+    name: 'name',
+    teamId: 'T0HD00000',
+  },
+  apiAppId: 'AQ8600000',
+  token: 'xxxxxxxxxxxxxxxxxxxxxxxx',
+  view: {
+    id: 'V0157600000',
+    teamId: 'T0HD00000',
+    type: 'modal',
+    blocks: [
+      {
+        type: 'context',
+        blockId: 'WC8',
+        elements: [
+          {
+            type: 'plain_text',
+            text: 'text',
+            emoji: true,
+          },
+        ],
+      },
+      {
+        type: 'actions',
+        blockId: 'ZbPy',
+        elements: [
+          {
+            type: 'button',
+            actionId: 'muR',
+            text: {
+              type: 'plain_text',
+              text: 'button text',
+              emoji: true,
+            },
+            value: 'button value',
+          },
+        ],
+      },
+    ],
+    privateMetadata: '{}',
+    callbackId: '',
+    state: {
+      values: {},
+    },
+    hash: '1592480265.1283b0b7',
+    title: {
+      type: 'plain_text',
+      text: 'title',
+      emoji: true,
+    },
+    clearOnClose: false,
+    notifyOnClose: true,
+    close: {
+      type: 'plain_text',
+      text: 'close',
+      emoji: true,
+    },
+    submit: {
+      type: 'plain_text',
+      text: 'submit',
+      emoji: true,
+    },
+    previousViewId: null,
+    rootViewId: 'V0157600000',
+    appId: 'AQ8600000',
+    externalId: '',
+    appInstalledTeamId: 'T0HD00000',
+    botId: 'BQMT00000',
+  },
+  isCleared: true,
+};
+
+// Channel
+const blockActionsOnChannelRequest: SlackRequestBody = {
+  type: 'block_actions',
+  user: {
+    id: 'U0HD00000',
+    username: 'username',
+    name: 'name',
+    teamId: 'T0HD00000',
+  },
+  apiAppId: 'AQ8600000',
+  token: 'xxxxxxxxxxxxxxxxxxxxxxxx',
+  container: {
+    type: 'message',
+    messageTs: '1592454263.013800',
+    channelId: 'DQMT00000',
+    isEphemeral: false,
+  },
+  triggerId: '1215785565232.17443231012.2e89dfa2540e010b618894ff8d2de08f',
+  team: {
+    id: 'T0HD00000',
+    domain: 'domain',
+  },
+  channel: {
+    id: 'DQMT00000',
+    name: 'directmessage',
+  },
+  message: {
+    botId: 'BQMT00000',
+    type: 'message',
+    text: "This content can't be displayed.",
+    user: 'UQKL00000',
+    ts: '1592454263.013800',
+    team: 'T0HD00000',
+    blocks: [
+      {
+        type: 'actions',
+        blockId: 'nxyEU',
+        elements: [
+          {
+            type: 'button',
+            actionId: 'bdj',
+            text: {
+              type: 'plain_text',
+              text: 'button text',
+              emoji: true,
+            },
+            value: 'button value',
+          },
+        ],
+      },
+    ],
+  },
+  responseUrl:
+    'https://hooks.slack.com/actions/T0HD00000/1190570555349/zCOfyY2sBayE3Amaj1GgXUtW',
+  actions: [
+    {
+      actionId: 'bdj',
+      blockId: 'nxyEU',
+      text: {
+        type: 'plain_text',
+        text: 'button text',
+        emoji: true,
+      },
+      value: 'button value',
+      type: 'button',
+      actionTs: '1592480315.455021',
+    },
+  ],
+};
+
+// Channel Modal
+const blockActionsOnChannelModalRequest: SlackRequestBody = {
+  type: 'block_actions',
+  user: {
+    id: 'U0HD00000',
+    username: 'username',
+    name: 'name',
+    teamId: 'T0HD00000',
+  },
+  apiAppId: 'AQ8600000',
+  token: 'xxxxxxxxxxxxxxxxxxxxxxxx',
+  container: {
+    type: 'view',
+    viewId: 'V016BP00000',
+  },
+  triggerId: '1204575603665.17443231012.ccdd4f2d4b840eb48c451235f6b0a84c',
+  team: {
+    id: 'T0HD00000',
+    domain: 'domain',
+  },
+  view: {
+    id: 'V016BP00000',
+    teamId: 'T0HD00000',
+    type: 'modal',
+    blocks: [
+      {
+        type: 'context',
+        blockId: 'ikxi3',
+        elements: [
+          {
+            type: 'plain_text',
+            text: 'button text',
+            emoji: true,
+          },
+        ],
+      },
+      {
+        type: 'actions',
+        blockId: 'HWc',
+        elements: [
+          {
+            type: 'button',
+            actionId: 'c3pJ',
+            text: {
+              type: 'plain_text',
+              text: 'button text',
+              emoji: true,
+            },
+            value: 'button value',
+          },
+        ],
+      },
+    ],
+    privateMetadata: '{"channelId":"DQMT00000"}',
+    callbackId: '',
+    state: {
+      values: {},
+    },
+    hash: '1592480318.25f7311a',
+    title: {
+      type: 'plain_text',
+      text: 'title',
+      emoji: true,
+    },
+    clearOnClose: false,
+    notifyOnClose: true,
+    close: {
+      type: 'plain_text',
+      text: 'close',
+      emoji: true,
+    },
+    submit: {
+      type: 'plain_text',
+      text: 'submit',
+      emoji: true,
+    },
+    previousViewId: null,
+    rootViewId: 'V016BP00000',
+    appId: 'AQ8600000',
+    externalId: '',
+    appInstalledTeamId: 'T0HD00000',
+    botId: 'BQMT00000',
+  },
+  actions: [
+    {
+      actionId: 'c3pJ',
+      blockId: 'HWc',
+      text: {
+        type: 'plain_text',
+        text: 'button text',
+        emoji: true,
+      },
+      value: 'button value',
+      type: 'button',
+      actionTs: '1592480408.122391',
+    },
+  ],
+};
+
+const viewSubmissionOnChannelModalRequest: SlackRequestBody = {
+  type: 'view_submission',
+  team: {
+    id: 'T0HD00000',
+    domain: 'domain',
+  },
+  user: {
+    id: 'U0HD00000',
+    username: 'username',
+    name: 'name',
+    teamId: 'T0HD00000',
+  },
+  apiAppId: 'AQ8600000',
+  token: 'xxxxxxxxxxxxxxxxxxxxxxxx',
+  triggerId: '1215789028880.17443231012.f9236c7807d6bdace1e7809e346b8e6c',
+  view: {
+    id: 'V016BP00000',
+    teamId: 'T0HD00000',
+    type: 'modal',
+    blocks: [
+      {
+        type: 'context',
+        blockId: 'ikxi3',
+        elements: [
+          {
+            type: 'plain_text',
+            text: 'text',
+            emoji: true,
+          },
+        ],
+      },
+      {
+        type: 'actions',
+        blockId: 'HWc',
+        elements: [
+          {
+            type: 'button',
+            actionId: 'c3pJ',
+            text: {
+              type: 'plain_text',
+              text: 'button text',
+              emoji: true,
+            },
+            value: 'button value',
+          },
+        ],
+      },
+    ],
+    privateMetadata: '{"channelId":"DQMT00000"}',
+    callbackId: '',
+    state: {
+      values: {},
+    },
+    hash: '1592480318.25f7311a',
+    title: {
+      type: 'plain_text',
+      text: 'title',
+      emoji: true,
+    },
+    clearOnClose: false,
+    notifyOnClose: true,
+    close: {
+      type: 'plain_text',
+      text: 'close',
+      emoji: true,
+    },
+    submit: {
+      type: 'plain_text',
+      text: 'submit',
+      emoji: true,
+    },
+    previousViewId: null,
+    rootViewId: 'V016BP00000',
+    appId: 'AQ8600000',
+    externalId: '',
+    appInstalledTeamId: 'T0HD00000',
+    botId: 'BQMT00000',
+  },
+  responseUrls: [],
+};
+
+const viewCloseOnChannelModalRequest: SlackRequestBody = {
+  type: 'view_closed',
+  team: {
+    id: 'T0HD00000',
+    domain: 'domain',
+  },
+  user: {
+    id: 'U0HD00000',
+    username: 'username',
+    name: 'name',
+    teamId: 'T0HD00000',
+  },
+  apiAppId: 'AQ8600000',
+  token: 'xxxxxxxxxxxxxxxxxxxxxxxx',
+  view: {
+    id: 'V015LG00000',
+    teamId: 'T0HD00000',
+    type: 'modal',
+    blocks: [
+      {
+        type: 'context',
+        blockId: 'AQaXQ',
+        elements: [
+          {
+            type: 'plain_text',
+            text: 'button text',
+            emoji: true,
+          },
+        ],
+      },
+      {
+        type: 'actions',
+        blockId: 'QUo',
+        elements: [
+          {
+            type: 'button',
+            actionId: 'E2G9D',
+            text: {
+              type: 'plain_text',
+              text: 'button text',
+              emoji: true,
+            },
+            value: 'button value',
+          },
+        ],
+      },
+    ],
+    privateMetadata: '{"channelId":"DQMT00000"}',
+    callbackId: '',
+    state: {
+      values: {},
+    },
+    hash: '1592480467.1addf637',
+    title: {
+      type: 'plain_text',
+      text: 'title',
+      emoji: true,
+    },
+    clearOnClose: false,
+    notifyOnClose: true,
+    close: {
+      type: 'plain_text',
+      text: 'close',
+      emoji: true,
+    },
+    submit: {
+      type: 'plain_text',
+      text: 'submit',
+      emoji: true,
+    },
+    previousViewId: null,
+    rootViewId: 'V015LG00000',
+    appId: 'AQ8600000',
+    externalId: '',
+    appInstalledTeamId: 'T0HD00000',
+    botId: 'BQMT00000',
+  },
+  isCleared: false,
+};
+
+const RtmMessage: SlackRequestBody = {
   type: 'message',
   channel: 'G7W5WAAAA',
   user: 'U056KAAAA',
@@ -148,7 +815,7 @@ const RtmMessage = {
   team: 'T056KAAAA',
 };
 
-const slashCommandMessage = {
+const slashCommandMessage: SlackRequestBody = {
   token: 'xxxxxxxxxxxxxxxxxxxxxxxx',
   teamId: 'T056K0000',
   teamDomain: 'domain',
@@ -169,23 +836,19 @@ function setup({
   skipLegacyProfile,
   includeBotMessages,
 } = {}) {
-  const mockSlackOAuthClient = {
-    getUserInfo: jest.fn(),
-    getConversationInfo: jest.fn(),
-    getAllConversationMembers: jest.fn(),
-    getAllUserList: jest.fn(),
-  };
-  SlackOAuthClient.connect = jest.fn();
-  SlackOAuthClient.connect.mockReturnValue(mockSlackOAuthClient);
+  const connector = new SlackConnector({
+    accessToken,
+    signingSecret,
+    verificationToken,
+    skipLegacyProfile,
+    includeBotMessages,
+  });
+
+  const client = mocked(SlackOAuthClient).mock.instances[0];
+
   return {
-    connector: new SlackConnector({
-      accessToken,
-      signingSecret,
-      verificationToken,
-      skipLegacyProfile,
-      includeBotMessages,
-    }),
-    mockSlackOAuthClient,
+    connector,
+    client,
   };
 }
 
@@ -198,72 +861,178 @@ describe('#platform', () => {
 
 describe('#client', () => {
   it('should be client', () => {
-    const { connector, mockSlackOAuthClient } = setup();
-    expect(connector.client).toBe(mockSlackOAuthClient);
+    const { connector, client } = setup();
+    expect(connector.client).toBe(client);
   });
 
   it('support custom client', () => {
-    const client = {};
+    const client = new SlackOAuthClient({
+      accessToken,
+    });
+
     const connector = new SlackConnector({ client });
+
     expect(connector.client).toBe(client);
   });
 });
 
 describe('#getUniqueSessionKey', () => {
-  it('extract correct channel id', () => {
+  it('extract correct session key', () => {
     const { connector } = setup();
-    const channelId = connector.getUniqueSessionKey(request.body);
-    expect(channelId).toBe('C6A900000');
+
+    const sessionKey = connector.getUniqueSessionKey(request);
+
+    expect(sessionKey).toBe('C6A900000');
   });
 
-  it('extract correct channel id from interactive message request', () => {
+  it('extract correct session key from interactive message request', () => {
     const { connector } = setup();
-    const channelId = connector.getUniqueSessionKey(
-      interactiveMessageRequest.body
+
+    const sessionKey = connector.getUniqueSessionKey(interactiveMessageRequest);
+
+    expect(sessionKey).toBe('D7WTL9ECE');
+  });
+
+  it('extract correct session key from RTM WebSocket message', () => {
+    const { connector } = setup();
+
+    const sessionKey = connector.getUniqueSessionKey(RtmMessage);
+
+    expect(sessionKey).toBe('G7W5WAAAA');
+  });
+
+  it('extract correct session key from reaction_added event', () => {
+    const { connector } = setup();
+
+    const sessionKey = connector.getUniqueSessionKey(ReactionAddedRequest);
+
+    expect(sessionKey).toBe('C0G9QF9GZ');
+  });
+
+  it('extract correct session key from pin_added event', () => {
+    const { connector } = setup();
+
+    const sessionKey = connector.getUniqueSessionKey(PinAddedRequest);
+
+    expect(sessionKey).toBe('C02ELGNBH');
+  });
+
+  it('extract correct session key from slash command', () => {
+    const { connector } = setup();
+
+    const sessionKey = connector.getUniqueSessionKey(slashCommandMessage);
+
+    expect(sessionKey).toBe('G7W5W0000');
+  });
+
+  // home tab
+  it('extract correct session key from appHomeOpenedOnMessagesTabRequest', () => {
+    const { connector } = setup();
+
+    const sessionKey = connector.getUniqueSessionKey(
+      appHomeOpenedOnMessagesTabRequest
     );
-    expect(channelId).toBe('D7WTL9ECE');
+
+    expect(sessionKey).toBe('DQMT00000');
   });
 
-  it('extract correct channel id from RTM WebSocket message', () => {
+  it('extract correct session key from appHomeOpenedOnHomeTabRequest', () => {
     const { connector } = setup();
-    const channelId = connector.getUniqueSessionKey(RtmMessage);
-    expect(channelId).toBe('G7W5WAAAA');
+
+    const sessionKey = connector.getUniqueSessionKey(
+      appHomeOpenedOnHomeTabRequest
+    );
+
+    expect(sessionKey).toBe('DQMT00000');
   });
 
-  it('extract correct channel id from reaction_added event', () => {
+  it('extract correct session key from blockActionsOnHomeTabRequest', () => {
     const { connector } = setup();
-    const channelId = connector.getUniqueSessionKey(ReactionAddedRequest.body);
-    expect(channelId).toBe('C0G9QF9GZ');
+
+    const sessionKey = connector.getUniqueSessionKey(
+      blockActionsOnHomeTabRequest
+    );
+
+    expect(sessionKey).toBe('U0HD00000');
   });
 
-  it('extract correct channel id from pin_added event', () => {
+  // home modal
+  it('extract correct session key from blockActionsOnHomeModalRequest', () => {
     const { connector } = setup();
-    const channelId = connector.getUniqueSessionKey(PinAddedRequest.body);
-    expect(channelId).toBe('C02ELGNBH');
+
+    const sessionKey = connector.getUniqueSessionKey(
+      blockActionsOnHomeModalRequest
+    );
+
+    expect(sessionKey).toBe('U0HD00000');
   });
 
-  it('extract correct channel id from slash command', () => {
+  it('extract correct session key from viewSubmissionOnHomeModalRequest', () => {
     const { connector } = setup();
-    const channelId = connector.getUniqueSessionKey(slashCommandMessage);
-    expect(channelId).toBe('G7W5W0000');
+
+    const sessionKey = connector.getUniqueSessionKey(
+      viewSubmissionOnHomeModalRequest
+    );
+
+    expect(sessionKey).toBe('U0HD00000');
   });
 
-  it('extract correct channel id from slash command', () => {
+  it('extract correct session key from viewCloseOnHomeModalRequest', () => {
     const { connector } = setup();
-    const channelId = connector.getUniqueSessionKey(slashCommandMessage);
-    expect(channelId).toBe('G7W5W0000');
+
+    const sessionKey = connector.getUniqueSessionKey(
+      viewCloseOnHomeModalRequest
+    );
+
+    expect(sessionKey).toBe('U0HD00000');
   });
 
-  it("extract correct channel id from view event's private_metadata", () => {
+  // channel
+  it('extract correct session key from blockActionsOnChannelRequest', () => {
     const { connector } = setup();
-    const channelId = connector.getUniqueSessionKey(viewSubmissionRequest.body);
-    expect(channelId).toBe('C02ELGNBH');
+
+    const sessionKey = connector.getUniqueSessionKey(
+      blockActionsOnChannelRequest
+    );
+
+    expect(sessionKey).toBe('DQMT00000');
+  });
+
+  // channel modal
+  it('extract correct session key from blockActionsOnChannelModalRequest', () => {
+    const { connector } = setup();
+
+    const sessionKey = connector.getUniqueSessionKey(
+      blockActionsOnChannelModalRequest
+    );
+
+    expect(sessionKey).toBe('DQMT00000');
+  });
+
+  it('extract correct session key from viewSubmissionOnChannelModalRequest', () => {
+    const { connector } = setup();
+
+    const sessionKey = connector.getUniqueSessionKey(
+      viewSubmissionOnChannelModalRequest
+    );
+
+    expect(sessionKey).toBe('DQMT00000');
+  });
+
+  it('extract correct session key from viewCloseOnChannelModalRequest', () => {
+    const { connector } = setup();
+
+    const sessionKey = connector.getUniqueSessionKey(
+      viewCloseOnChannelModalRequest
+    );
+
+    expect(sessionKey).toBe('DQMT00000');
   });
 });
 
 describe('#updateSession', () => {
   it('update session with data needed', async () => {
-    const { connector, mockSlackOAuthClient } = setup({
+    const { connector, client } = setup({
       skipLegacyProfile: false,
     });
 
@@ -276,21 +1045,17 @@ describe('#updateSession', () => {
     const members = [user];
     const session = {};
 
-    mockSlackOAuthClient.getUserInfo.mockResolvedValue(user);
-    mockSlackOAuthClient.getConversationInfo.mockResolvedValue(channel);
-    mockSlackOAuthClient.getAllConversationMembers.mockResolvedValue(members);
-    mockSlackOAuthClient.getAllUserList.mockResolvedValue(members);
+    mocked(client.getUserInfo).mockResolvedValue(user);
+    mocked(client.getConversationInfo).mockResolvedValue(channel);
+    mocked(client.getAllConversationMembers).mockResolvedValue(members);
+    mocked(client.getAllUserList).mockResolvedValue(members);
 
-    await connector.updateSession(session, request.body);
+    await connector.updateSession(session, request);
 
-    expect(mockSlackOAuthClient.getUserInfo).toBeCalledWith('U13A00000');
-    expect(mockSlackOAuthClient.getConversationInfo).toBeCalledWith(
-      'C6A900000'
-    );
-    expect(mockSlackOAuthClient.getAllConversationMembers).toBeCalledWith(
-      'C6A900000'
-    );
-    expect(mockSlackOAuthClient.getAllUserList).toBeCalled();
+    expect(client.getUserInfo).toBeCalledWith('U13A00000');
+    expect(client.getConversationInfo).toBeCalledWith('C6A900000');
+    expect(client.getAllConversationMembers).toBeCalledWith('C6A900000');
+    expect(client.getAllUserList).toBeCalled();
     expect(session).toEqual({
       user: {
         _updatedAt: expect.any(String),
@@ -306,23 +1071,23 @@ describe('#updateSession', () => {
   });
 
   it('not update session if it is bot event request', async () => {
-    const { connector, mockSlackOAuthClient } = setup({
+    const { connector, client } = setup({
       skipLegacyProfile: false,
     });
 
     const session = {};
 
-    await connector.updateSession(session, botRequest.body);
+    await connector.updateSession(session, botRequest);
 
-    expect(mockSlackOAuthClient.getUserInfo).not.toBeCalled();
-    expect(mockSlackOAuthClient.getConversationInfo).not.toBeCalled();
-    expect(mockSlackOAuthClient.getAllConversationMembers).not.toBeCalled();
-    expect(mockSlackOAuthClient.getAllUserList).not.toBeCalled();
+    expect(client.getUserInfo).not.toBeCalled();
+    expect(client.getConversationInfo).not.toBeCalled();
+    expect(client.getAllConversationMembers).not.toBeCalled();
+    expect(client.getAllUserList).not.toBeCalled();
     expect(session).toEqual({});
   });
 
   it('not update session if no senderId in body', async () => {
-    const { connector, mockSlackOAuthClient } = setup({
+    const { connector, client } = setup({
       skipLegacyProfile: false,
     });
 
@@ -347,14 +1112,14 @@ describe('#updateSession', () => {
 
     await connector.updateSession(session, body);
 
-    expect(mockSlackOAuthClient.getUserInfo).not.toBeCalled();
-    expect(mockSlackOAuthClient.getConversationInfo).not.toBeCalled();
-    expect(mockSlackOAuthClient.getAllConversationMembers).not.toBeCalled();
-    expect(mockSlackOAuthClient.getAllUserList).not.toBeCalled();
+    expect(client.getUserInfo).not.toBeCalled();
+    expect(client.getConversationInfo).not.toBeCalled();
+    expect(client.getAllConversationMembers).not.toBeCalled();
+    expect(client.getAllUserList).not.toBeCalled();
   });
 
   it('update session with data needed when receiving interactive message request', async () => {
-    const { connector, mockSlackOAuthClient } = setup({
+    const { connector, client } = setup({
       skipLegacyProfile: false,
     });
 
@@ -367,21 +1132,17 @@ describe('#updateSession', () => {
     const members = [user];
     const session = {};
 
-    mockSlackOAuthClient.getUserInfo.mockResolvedValue(user);
-    mockSlackOAuthClient.getConversationInfo.mockResolvedValue(channel);
-    mockSlackOAuthClient.getAllConversationMembers.mockResolvedValue(members);
-    mockSlackOAuthClient.getAllUserList.mockResolvedValue(members);
+    mocked(client.getUserInfo).mockResolvedValue(user);
+    mocked(client.getConversationInfo).mockResolvedValue(channel);
+    mocked(client.getAllConversationMembers).mockResolvedValue(members);
+    mocked(client.getAllUserList).mockResolvedValue(members);
 
-    await connector.updateSession(session, interactiveMessageRequest.body);
+    await connector.updateSession(session, interactiveMessageRequest);
 
-    expect(mockSlackOAuthClient.getUserInfo).toBeCalledWith('U056K3CN1');
-    expect(mockSlackOAuthClient.getConversationInfo).toBeCalledWith(
-      'D7WTL9ECE'
-    );
-    expect(mockSlackOAuthClient.getAllConversationMembers).toBeCalledWith(
-      'D7WTL9ECE'
-    );
-    expect(mockSlackOAuthClient.getAllUserList).toBeCalled();
+    expect(client.getUserInfo).toBeCalledWith('U056K3CN1');
+    expect(client.getConversationInfo).toBeCalledWith('D7WTL9ECE');
+    expect(client.getAllConversationMembers).toBeCalledWith('D7WTL9ECE');
+    expect(client.getAllUserList).toBeCalled();
     expect(session).toEqual({
       user: {
         _updatedAt: expect.any(String),
@@ -397,16 +1158,16 @@ describe('#updateSession', () => {
   });
 
   it('update session without calling apis while skipLegacyProfile set true', async () => {
-    const { connector, mockSlackOAuthClient } = setup();
+    const { connector, client } = setup();
 
     const session = {};
 
-    await connector.updateSession(session, request.body);
+    await connector.updateSession(session, request);
 
-    expect(mockSlackOAuthClient.getUserInfo).not.toBeCalled();
-    expect(mockSlackOAuthClient.getConversationInfo).not.toBeCalled();
-    expect(mockSlackOAuthClient.getAllConversationMembers).not.toBeCalled();
-    expect(mockSlackOAuthClient.getAllUserList).not.toBeCalled();
+    expect(client.getUserInfo).not.toBeCalled();
+    expect(client.getConversationInfo).not.toBeCalled();
+    expect(client.getAllConversationMembers).not.toBeCalled();
+    expect(client.getAllUserList).not.toBeCalled();
     expect(session).toEqual({
       user: {
         _updatedAt: expect.any(String),
@@ -423,7 +1184,7 @@ describe('#updateSession', () => {
 describe('#mapRequestToEvents', () => {
   it('should map request to SlackEvents', () => {
     const { connector } = setup();
-    const events = connector.mapRequestToEvents(request.body);
+    const events = connector.mapRequestToEvents(request);
 
     expect(events).toHaveLength(1);
     expect(events[0]).toBeInstanceOf(SlackEvent);
@@ -431,7 +1192,7 @@ describe('#mapRequestToEvents', () => {
 
   it('should not include bot message by default', () => {
     const { connector } = setup();
-    const events = connector.mapRequestToEvents(botRequest.body);
+    const events = connector.mapRequestToEvents(botRequest);
 
     expect(events).toHaveLength(0);
   });
@@ -440,7 +1201,7 @@ describe('#mapRequestToEvents', () => {
     const { connector } = setup({
       includeBotMessages: true,
     });
-    const events = connector.mapRequestToEvents(botRequest.body);
+    const events = connector.mapRequestToEvents(botRequest);
 
     expect(events).toHaveLength(1);
     expect(events[0]).toBeInstanceOf(SlackEvent);
@@ -448,7 +1209,7 @@ describe('#mapRequestToEvents', () => {
 
   it('should include callbackId when request is a interactiveMessageRequest', () => {
     const { connector } = setup();
-    const events = connector.mapRequestToEvents(interactiveMessageRequest.body);
+    const events = connector.mapRequestToEvents(interactiveMessageRequest);
 
     expect(events).toHaveLength(1);
     expect(events[0]).toBeInstanceOf(SlackEvent);

@@ -2,228 +2,33 @@ import { camelcaseKeysDeep } from 'messaging-api-common';
 
 import { Event } from '../context/Event';
 
-export type Sender = {
-  id: string;
-};
-
-export type Recipient = {
-  id: string;
-};
-
-type QuickReply = {
-  payload: string;
-};
-
-type MediaAttachmentPayload = {
-  url: string;
-};
-
-type LocationAttachmentPayload = {
-  coordinates: {
-    lat: number;
-    long: number;
-  };
-};
-
-type AttachmentPayload = MediaAttachmentPayload | LocationAttachmentPayload;
-
-type FallbackAttachment = {
-  type: 'fallback';
-  payload: null;
-  title: string;
-  URL: string;
-};
-
-type MediaAttachment = {
-  type: string;
-  payload: AttachmentPayload;
-};
-
-type Attachment = MediaAttachment | FallbackAttachment;
-
-type Tag = {
-  source: string;
-};
-
-type ReplyTo = {
-  mid: string;
-};
-
-export type Message = {
-  mid: string;
-  isEcho?: boolean;
-  text?: string;
-  stickerId?: number;
-  quickReply?: QuickReply;
-  attachments?: Attachment[];
-  tags?: Tag[];
-  replyTo?: ReplyTo;
-  appId?: number;
-  metadata?: string;
-};
-
-export type Delivery = {
-  mids: string[];
-  watermark: number;
-  seq?: number;
-};
-
-export type Read = {
-  watermark: number;
-  seq?: number;
-};
-
-export type Referral = {
-  ref: string;
-  source: string;
-  type: string;
-  originDomain?: string;
-};
-
-export type Postback = {
-  title: string;
-  payload?: string;
-  referral?: Referral;
-};
-
-export type GamePlay = {
-  gameId: string;
-  playerId: string;
-  contextType: 'SOLO' | 'THREAD' | 'GROUP';
-  contextId: string;
-  score: number;
-  payload: string;
-};
-
-export type Optin =
-  | {
-      ref: string;
-      userRef?: string;
-    }
-  | {
-      type: 'one_time_notif_req';
-      payload: string;
-      oneTimeNotifToken: string;
-    };
-
-export type Payment = {
-  payload: string;
-  requestedUserInfo: Record<string, any>;
-  paymentCredential: Record<string, any>;
-  amount: {
-    currency: string;
-    amount: string;
-  };
-  shippingOptionId: string;
-};
-
-export type CheckoutUpdate = {
-  payload: string;
-  shippingAddress: {
-    id: number;
-    street1: string;
-    street2: string;
-    city: string;
-    state: string;
-    country: string;
-    postalCode: string;
-  };
-};
-
-export type PreCheckout = {
-  payload: string;
-  requestedUserInfo: {
-    shippingAddress: {
-      name: string;
-      street1: string;
-      street2: string;
-      city: string;
-      state: string;
-      country: string;
-      postalCode: string;
-    };
-    contactName: string;
-  };
-  amount: {
-    currency: string;
-    amount: string;
-  };
-};
-
-export type PolicyEnforcement = {
-  action: string;
-  reason: string;
-};
-
-export type AppRoles = Record<string, string[]>;
-
-export type PassThreadControl = {
-  newOwnerAppId: string;
-  metadata: string;
-};
-
-export type TakeThreadControl = {
-  previousOwnerAppId: string;
-  metadata: string;
-};
-
-export type RequestThreadControl = {
-  requestedOwnerAppId: number;
-  metadata: string;
-};
-
-export type BrandedCamera = {
-  contentIds: string[];
-  event: string;
-};
-
-export type AccountLinking =
-  | { status: 'linked'; authorizationCode: string }
-  | { status: 'unlinked' };
-
-export type Reaction = {
-  reaction:
-    | 'smile'
-    | 'angry'
-    | 'sad'
-    | 'wow'
-    | 'love'
-    | 'like'
-    | 'dislike'
-    | 'other';
-  emoji: string;
-  action: 'react' | 'unreact';
-  mid: string;
-};
-
-export type MessengerRawEvent = {
-  sender?: Sender;
-  recipient?: Recipient;
-  timestamp?: number;
-  message?: Message;
-  read?: Read;
-  delivery?: Delivery;
-  postback?: Postback;
-  gamePlay?: GamePlay;
-  optin?: Optin;
-  payment?: Payment;
-  checkoutUpdate?: CheckoutUpdate;
-  preCheckout?: PreCheckout;
-  'policy-enforcement'?: PolicyEnforcement;
-  appRoles?: AppRoles;
-  passThreadControl?: PassThreadControl;
-  takeThreadControl?: TakeThreadControl;
-  requestThreadControl?: RequestThreadControl;
-  referral?: Referral;
-  brandedCamera?: BrandedCamera;
-  accountLinking?: AccountLinking;
-  reaction?: Reaction;
-};
-
-type MessengerEventOptions = {
-  isStandby?: boolean;
-  pageId?: string | null;
-};
+import {
+  EventAccountLinking,
+  EventAppRoles,
+  EventBrandedCamera,
+  EventCheckoutUpdate,
+  EventDelivery,
+  EventGamePlay,
+  EventMessage,
+  EventMessageAttachment,
+  EventMessageQuickReply,
+  EventOptin,
+  EventPassThreadControl,
+  EventPayment,
+  EventPolicyEnforcement,
+  EventPostback,
+  EventPreCheckout,
+  EventReaction,
+  EventRead,
+  EventReferral,
+  EventRequestThreadControl,
+  EventTakeThreadControl,
+  FallbackAttachment,
+  LocationAttachmentPayload,
+  MediaAttachmentPayload,
+  MessengerEventOptions,
+  MessengerRawEvent,
+} from './MessengerTypes';
 
 export default class MessengerEvent implements Event<MessengerRawEvent> {
   _rawEvent: MessengerRawEvent;
@@ -250,12 +55,20 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
   }
 
   /**
+   * The timestamp when the event was sent.
+   *
+   */
+  get timestamp(): number {
+    return this._rawEvent.timestamp;
+  }
+
+  /**
    * Determine if the event is a message event.
    *
    */
   get isMessage(): boolean {
     return (
-      !!this._rawEvent.message && typeof this._rawEvent.message === 'object'
+      'message' in this._rawEvent && typeof this._rawEvent.message === 'object'
     );
   }
 
@@ -263,8 +76,11 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    * The message object from Messenger raw event.
    *
    */
-  get message(): Message | null {
-    return this._rawEvent.message || null;
+  get message(): EventMessage | null {
+    if ('message' in this._rawEvent) {
+      return this._rawEvent.message;
+    }
+    return null;
   }
 
   /**
@@ -272,7 +88,7 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    *
    */
   get isText(): boolean {
-    return this.isMessage && typeof (this.message as any).text === 'string';
+    return this.isMessage && typeof this.message!.text === 'string';
   }
 
   /**
@@ -281,7 +97,7 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    */
   get text(): string | null {
     if (this.isText) {
-      return (this.message as any).text;
+      return this.message!.text || null;
     }
     return null;
   }
@@ -293,8 +109,8 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
   get hasAttachment(): boolean {
     return (
       this.isMessage &&
-      !!(this.message as any).attachments &&
-      (this.message as any).attachments.length > 0
+      !!this.message!.attachments &&
+      this.message!.attachments.length > 0
     );
   }
 
@@ -302,7 +118,7 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    * The attachments array from Messenger raw event.
    *
    */
-  get attachments(): Attachment[] | null {
+  get attachments(): EventMessageAttachment[] | null {
     if (this.message && this.message.attachments) {
       return this.message.attachments;
     }
@@ -314,7 +130,7 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    *
    */
   get isImage(): boolean {
-    return this.hasAttachment && (this.attachments as any)[0].type === 'image';
+    return this.hasAttachment && this.attachments![0].type === 'image';
   }
 
   /**
@@ -322,7 +138,15 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    *
    */
   get image(): MediaAttachmentPayload | null {
-    return this.isImage ? (this.attachments as any)[0].payload : null;
+    if (!this.hasAttachment) {
+      return null;
+    }
+    const attachment = this.attachments![0];
+
+    if (attachment.type === 'image') {
+      return attachment.payload;
+    }
+    return null;
   }
 
   /**
@@ -330,7 +154,7 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    *
    */
   get isAudio(): boolean {
-    return this.hasAttachment && (this.attachments as any)[0].type === 'audio';
+    return this.hasAttachment && this.attachments![0].type === 'audio';
   }
 
   /**
@@ -338,7 +162,15 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    *
    */
   get audio(): MediaAttachmentPayload | null {
-    return this.isAudio ? (this.attachments as any)[0].payload : null;
+    if (!this.hasAttachment) {
+      return null;
+    }
+    const attachment = this.attachments![0];
+
+    if (attachment.type === 'audio') {
+      return attachment.payload;
+    }
+    return null;
   }
 
   /**
@@ -346,7 +178,7 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    *
    */
   get isVideo(): boolean {
-    return this.hasAttachment && (this.attachments as any)[0].type === 'video';
+    return this.hasAttachment && this.attachments![0].type === 'video';
   }
 
   /**
@@ -354,7 +186,15 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    *
    */
   get video(): MediaAttachmentPayload | null {
-    return this.isVideo ? (this.attachments as any)[0].payload : null;
+    if (!this.hasAttachment) {
+      return null;
+    }
+    const attachment = this.attachments![0];
+
+    if (attachment.type === 'video') {
+      return attachment.payload;
+    }
+    return null;
   }
 
   /**
@@ -362,9 +202,7 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    *
    */
   get isLocation(): boolean {
-    return (
-      this.hasAttachment && (this.attachments as any)[0].type === 'location'
-    );
+    return this.hasAttachment && this.attachments![0].type === 'location';
   }
 
   /**
@@ -372,7 +210,15 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    *
    */
   get location(): LocationAttachmentPayload | null {
-    return this.isLocation ? (this.attachments as any)[0].payload : null;
+    if (!this.hasAttachment) {
+      return null;
+    }
+    const attachment = this.attachments![0];
+
+    if (attachment.type === 'location') {
+      return attachment.payload;
+    }
+    return null;
   }
 
   /**
@@ -380,7 +226,7 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    *
    */
   get isFile(): boolean {
-    return this.hasAttachment && (this.attachments as any)[0].type === 'file';
+    return this.hasAttachment && this.attachments![0].type === 'file';
   }
 
   /**
@@ -388,7 +234,15 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    *
    */
   get file(): MediaAttachmentPayload | null {
-    return this.isFile ? (this.attachments as any)[0].payload : null;
+    if (!this.hasAttachment) {
+      return null;
+    }
+    const attachment = this.attachments![0];
+
+    if (attachment.type === 'file') {
+      return attachment.payload;
+    }
+    return null;
   }
 
   /**
@@ -396,9 +250,7 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    *
    */
   get isFallback(): boolean {
-    return (
-      this.hasAttachment && (this.attachments as any)[0].type === 'fallback'
-    );
+    return this.hasAttachment && this.attachments![0].type === 'fallback';
   }
 
   /**
@@ -406,7 +258,15 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    *
    */
   get fallback(): FallbackAttachment | null {
-    return this.isFallback ? (this.attachments as any)[0] : null;
+    if (!this.hasAttachment) {
+      return null;
+    }
+    const attachment = this.attachments![0];
+
+    if (attachment.type === 'fallback') {
+      return attachment;
+    }
+    return null;
   }
 
   /**
@@ -414,17 +274,18 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    *
    */
   get isSticker(): boolean {
-    return (
-      this.isMessage && typeof (this.message as any).stickerId === 'number'
-    );
+    return this.isMessage && typeof this.message!.stickerId === 'number';
   }
 
   /**
    * The stickerId from Messenger raw event.
    *
    */
-  get sticker(): string | null {
-    return this.isSticker ? (this.message as any).stickerId : null;
+  get sticker(): number | null {
+    if (this.isSticker) {
+      return this.message!.stickerId || null;
+    }
+    return null;
   }
 
   /**
@@ -436,9 +297,9 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
   get isLikeSticker(): boolean {
     return (
       this.isSticker &&
-      ((this.message as any).stickerId === 369239263222822 ||
-        (this.message as any).stickerId === 369239343222814 ||
-        (this.message as any).stickerId === 369239383222810)
+      (this.message!.stickerId === 369239263222822 ||
+        this.message!.stickerId === 369239343222814 ||
+        this.message!.stickerId === 369239383222810)
     );
   }
 
@@ -449,8 +310,8 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
   get isQuickReply(): boolean {
     return (
       this.isMessage &&
-      !!(this.message as any).quickReply &&
-      typeof (this.message as any).quickReply === 'object'
+      !!this.message!.quickReply &&
+      typeof this.message!.quickReply === 'object'
     );
   }
 
@@ -458,7 +319,7 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    * The quick reply object from Messenger raw event.
    *
    */
-  get quickReply(): QuickReply | null {
+  get quickReply(): EventMessageQuickReply | null {
     if (this.message && this.message.quickReply) {
       return this.message.quickReply;
     }
@@ -470,7 +331,7 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    *
    */
   get isEcho(): boolean {
-    return this.isMessage && !!(this.message as any).isEcho;
+    return this.isMessage && !!this.message!.isEcho;
   }
 
   /**
@@ -479,7 +340,8 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    */
   get isPostback(): boolean {
     return (
-      !!this._rawEvent.postback && typeof this._rawEvent.postback === 'object'
+      'postback' in this._rawEvent &&
+      typeof this._rawEvent.postback === 'object'
     );
   }
 
@@ -487,8 +349,11 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    * The postback object from Messenger raw event.
    *
    */
-  get postback(): Postback | null {
-    return this._rawEvent.postback || null;
+  get postback(): EventPostback | null {
+    if ('postback' in this._rawEvent) {
+      return this._rawEvent.postback;
+    }
+    return null;
   }
 
   /**
@@ -497,7 +362,8 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    */
   get isGamePlay(): boolean {
     return (
-      !!this._rawEvent.gamePlay && typeof this._rawEvent.gamePlay === 'object'
+      'gamePlay' in this._rawEvent &&
+      typeof this._rawEvent.gamePlay === 'object'
     );
   }
 
@@ -505,12 +371,12 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    * The gamePlay object from Messenger raw event.
    *
    */
-  get gamePlay(): GamePlay | null {
-    if (!this.isGamePlay) {
+  get gamePlay(): EventGamePlay | null {
+    if (!('gamePlay' in this._rawEvent)) {
       return null;
     }
 
-    const rawGamePlay = (this._rawEvent as any).gamePlay;
+    const rawGamePlay = this._rawEvent.gamePlay;
 
     let payload;
     try {
@@ -519,7 +385,7 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
         parsed && typeof parsed === 'object'
           ? camelcaseKeysDeep(parsed)
           : parsed;
-    } catch (e) {
+    } catch (err) {
       payload = rawGamePlay.payload;
     }
 
@@ -534,15 +400,20 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    *
    */
   get isOptin(): boolean {
-    return !!this._rawEvent.optin && typeof this._rawEvent.optin === 'object';
+    return (
+      'optin' in this._rawEvent && typeof this._rawEvent.optin === 'object'
+    );
   }
 
   /**
    * The optin object from Messenger raw event.
    *
    */
-  get optin(): Optin | null {
-    return this._rawEvent.optin || null;
+  get optin(): EventOptin | null {
+    if ('optin' in this._rawEvent) {
+      return this._rawEvent.optin;
+    }
+    return null;
   }
 
   /**
@@ -551,7 +422,7 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    */
   get isPayment(): boolean {
     return (
-      !!this._rawEvent.payment && typeof this._rawEvent.payment === 'object'
+      'payment' in this._rawEvent && typeof this._rawEvent.payment === 'object'
     );
   }
 
@@ -559,8 +430,11 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    * The payment object from Messenger raw event.
    *
    */
-  get payment(): Payment | null {
-    return this._rawEvent.payment || null;
+  get payment(): EventPayment | null {
+    if ('payment' in this._rawEvent) {
+      return this._rawEvent.payment;
+    }
+    return null;
   }
 
   /**
@@ -569,7 +443,7 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    */
   get isCheckoutUpdate(): boolean {
     return (
-      !!this._rawEvent.checkoutUpdate &&
+      'checkoutUpdate' in this._rawEvent &&
       typeof this._rawEvent.checkoutUpdate === 'object'
     );
   }
@@ -578,8 +452,11 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    * The checkoutUpdate object from Messenger raw event.
    *
    */
-  get checkoutUpdate(): CheckoutUpdate | null {
-    return this._rawEvent.checkoutUpdate || null;
+  get checkoutUpdate(): EventCheckoutUpdate | null {
+    if ('checkoutUpdate' in this._rawEvent) {
+      return this._rawEvent.checkoutUpdate;
+    }
+    return null;
   }
 
   /**
@@ -588,7 +465,7 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    */
   get isPreCheckout(): boolean {
     return (
-      !!this._rawEvent.preCheckout &&
+      'preCheckout' in this._rawEvent &&
       typeof this._rawEvent.preCheckout === 'object'
     );
   }
@@ -597,8 +474,11 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    * The preCheckout object from Messenger raw event.
    *
    */
-  get preCheckout(): PreCheckout | null {
-    return this._rawEvent.preCheckout || null;
+  get preCheckout(): EventPreCheckout | null {
+    if ('preCheckout' in this._rawEvent) {
+      return this._rawEvent.preCheckout;
+    }
+    return null;
   }
 
   /**
@@ -606,15 +486,18 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    *
    */
   get isRead(): boolean {
-    return !!this._rawEvent.read && typeof this._rawEvent.read === 'object';
+    return 'read' in this._rawEvent && typeof this._rawEvent.read === 'object';
   }
 
   /**
    * The read object from Messenger raw event.
    *
    */
-  get read(): Read | null {
-    return this.isRead ? (this._rawEvent as any).read : null;
+  get read(): EventRead | null {
+    if ('read' in this._rawEvent) {
+      return this._rawEvent.read;
+    }
+    return null;
   }
 
   /**
@@ -623,7 +506,8 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    */
   get isDelivery(): boolean {
     return (
-      !!this._rawEvent.delivery && typeof this._rawEvent.delivery === 'object'
+      'delivery' in this._rawEvent &&
+      typeof this._rawEvent.delivery === 'object'
     );
   }
 
@@ -631,8 +515,11 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    * The delivery object from Messenger raw event.
    *
    */
-  get delivery(): Delivery | null {
-    return this.isDelivery ? (this._rawEvent as any).delivery : null;
+  get delivery(): EventDelivery | null {
+    if ('delivery' in this._rawEvent) {
+      return this._rawEvent.delivery;
+    }
+    return null;
   }
 
   /**
@@ -666,7 +553,7 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    */
   get isPolicyEnforcement(): boolean {
     return (
-      !!this._rawEvent['policy-enforcement'] &&
+      'policy-enforcement' in this._rawEvent &&
       typeof this._rawEvent['policy-enforcement'] === 'object'
     );
   }
@@ -675,8 +562,11 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    * The policy enforcement object from Messenger raw event.
    *
    */
-  get policyEnforcement(): PolicyEnforcement | null {
-    return this._rawEvent['policy-enforcement'] || null;
+  get policyEnforcement(): EventPolicyEnforcement | null {
+    if ('policy-enforcement' in this._rawEvent) {
+      return this._rawEvent['policy-enforcement'];
+    }
+    return null;
   }
 
   /**
@@ -685,7 +575,8 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    */
   get isAppRoles(): boolean {
     return (
-      !!this._rawEvent.appRoles && typeof this._rawEvent.appRoles === 'object'
+      'appRoles' in this._rawEvent &&
+      typeof this._rawEvent.appRoles === 'object'
     );
   }
 
@@ -693,8 +584,11 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    * The app roles object from Messenger raw event.
    *
    */
-  get appRoles(): AppRoles | null {
-    return this._rawEvent.appRoles || null;
+  get appRoles(): EventAppRoles | null {
+    if ('appRoles' in this._rawEvent) {
+      return this._rawEvent.appRoles;
+    }
+    return null;
   }
 
   /**
@@ -711,7 +605,7 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    */
   get isPassThreadControl(): boolean {
     return (
-      !!this._rawEvent.passThreadControl &&
+      'passThreadControl' in this._rawEvent &&
       typeof this._rawEvent.passThreadControl === 'object'
     );
   }
@@ -720,8 +614,11 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    * The pass thread control object from Messenger raw event.
    *
    */
-  get passThreadControl(): PassThreadControl | null {
-    return this._rawEvent.passThreadControl || null;
+  get passThreadControl(): EventPassThreadControl | null {
+    if ('passThreadControl' in this._rawEvent) {
+      return this._rawEvent.passThreadControl;
+    }
+    return null;
   }
 
   /**
@@ -730,7 +627,7 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    */
   get isTakeThreadControl(): boolean {
     return (
-      !!this._rawEvent.takeThreadControl &&
+      'takeThreadControl' in this._rawEvent &&
       typeof this._rawEvent.takeThreadControl === 'object'
     );
   }
@@ -739,8 +636,11 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    * The take thread control object from Messenger raw event.
    *
    */
-  get takeThreadControl(): TakeThreadControl | null {
-    return this._rawEvent.takeThreadControl || null;
+  get takeThreadControl(): EventTakeThreadControl | null {
+    if ('takeThreadControl' in this._rawEvent) {
+      return this._rawEvent.takeThreadControl;
+    }
+    return null;
   }
 
   /**
@@ -749,7 +649,7 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    */
   get isRequestThreadControl(): boolean {
     return (
-      !!this._rawEvent.requestThreadControl &&
+      'requestThreadControl' in this._rawEvent &&
       typeof this._rawEvent.requestThreadControl === 'object'
     );
   }
@@ -760,7 +660,7 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    */
   get isRequestThreadControlFromPageInbox(): boolean {
     return (
-      !!this._rawEvent.requestThreadControl &&
+      'requestThreadControl' in this._rawEvent &&
       typeof this._rawEvent.requestThreadControl === 'object' &&
       this._rawEvent.requestThreadControl.requestedOwnerAppId ===
         263902037430900
@@ -771,8 +671,11 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    * The take thread control object from Messenger raw event.
    *
    */
-  get requestThreadControl(): RequestThreadControl | null {
-    return this._rawEvent.requestThreadControl || null;
+  get requestThreadControl(): EventRequestThreadControl | null {
+    if ('requestThreadControl' in this._rawEvent) {
+      return this._rawEvent.requestThreadControl;
+    }
+    return null;
   }
 
   /**
@@ -782,11 +685,9 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
   get isFromCustomerChatPlugin(): boolean {
     const isMessageFromCustomerChatPlugin = !!(
       this.isMessage &&
-      !!(this.message as any).tags &&
-      (this.message as any).tags.length !== 0 &&
-      (this.message as any).tags.some(
-        (tag: any) => tag.source === 'customer_chat_plugin'
-      )
+      'tags' in this.message! &&
+      this.message!.tags!.length !== 0 &&
+      this.message!.tags!.some((tag) => tag.source === 'customer_chat_plugin')
     );
 
     const isReferralFromCustomerChatPlugin = !!(
@@ -804,8 +705,8 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    */
   get isReferral(): boolean {
     return !!(
-      this._rawEvent.referral ||
-      (this._rawEvent.postback && this._rawEvent.postback.referral)
+      'referral' in this._rawEvent ||
+      ('postback' in this._rawEvent && this._rawEvent.postback.referral)
     );
   }
 
@@ -813,15 +714,17 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    * The referral object from Messenger event.
    *
    */
-  get referral(): Referral | null {
+  get referral(): EventReferral | null {
     if (!this.isReferral) {
       return null;
     }
-    return (
-      this._rawEvent.referral ||
-      (this._rawEvent.postback && this._rawEvent.postback.referral) ||
-      null
-    );
+    if ('referral' in this._rawEvent) {
+      return this._rawEvent.referral;
+    }
+    if ('postback' in this._rawEvent && 'referral' in this._rawEvent.postback) {
+      return this._rawEvent.postback.referral || null;
+    }
+    return null;
   }
 
   /**
@@ -849,7 +752,7 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    */
   get isBrandedCamera(): boolean {
     return (
-      !!this._rawEvent.brandedCamera &&
+      'brandedCamera' in this._rawEvent &&
       typeof this._rawEvent.brandedCamera === 'object'
     );
   }
@@ -858,11 +761,11 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    * The brandedCamera object from Messenger event.
    *
    */
-  get brandedCamera(): BrandedCamera | null {
-    if (!this.isBrandedCamera) {
-      return null;
+  get brandedCamera(): EventBrandedCamera | null {
+    if ('brandedCamera' in this._rawEvent) {
+      return this._rawEvent.brandedCamera;
     }
-    return (this._rawEvent as any).brandedCamera;
+    return null;
   }
 
   /**
@@ -871,7 +774,7 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    */
   get isAccountLinking(): boolean {
     return (
-      !!this._rawEvent.accountLinking &&
+      'accountLinking' in this._rawEvent &&
       typeof this._rawEvent.accountLinking === 'object'
     );
   }
@@ -880,11 +783,11 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    * The accountLinking object from Messenger event.
    *
    */
-  get accountLinking(): AccountLinking | null {
-    if (!this.isAccountLinking) {
-      return null;
+  get accountLinking(): EventAccountLinking | null {
+    if ('accountLinking' in this._rawEvent) {
+      return this._rawEvent.accountLinking;
     }
-    return (this._rawEvent as any).accountLinking;
+    return null;
   }
 
   /**
@@ -893,7 +796,8 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    */
   get isReaction(): boolean {
     return (
-      !!this._rawEvent.reaction && typeof this._rawEvent.reaction === 'object'
+      'reaction' in this._rawEvent &&
+      typeof this._rawEvent.reaction === 'object'
     );
   }
 
@@ -901,10 +805,10 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
    * The reaction object from Messenger event.
    *
    */
-  get reaction(): Reaction | null {
-    if (!this.isReaction) {
-      return null;
+  get reaction(): EventReaction | null {
+    if ('reaction' in this._rawEvent) {
+      return this._rawEvent.reaction;
     }
-    return (this._rawEvent as any).reaction;
+    return null;
   }
 }

@@ -1,3 +1,320 @@
+# 1.5.1 / 2020-09-xx
+
+- [new] Server: support experimental custom connectors (#781):
+
+```js
+// bottender.config.js
+
+module.exports = {
+  channels: {
+    mychannel: {
+      enabled: true,
+      path: '/webhooks/mychannel',
+      connector: new MyConnector(/* ... */),
+    },
+  },
+};
+```
+
+- [new]: export clients, factories from `messaging-apis` (#806):
+
+```js
+const {
+  // clients
+  MessengerClient,
+  LineClient,
+  TelegramClient,
+  SlackOAuthClient,
+  ViberClient,
+  TwilioClient,
+
+  // factories
+  Messenger,
+  Line,
+} = require('bottender');
+```
+
+- [new] Bot: implement the `onRequest` option (#773):
+
+```js
+// bottender.config.js
+
+function onRequest(body, requestContext) {
+  console.log({
+    body,
+    requestContext,
+  });
+}
+
+module.exports = {
+  channels: {
+    messenger: {
+      // ...
+      onRequest,
+    },
+    whatsapp: {
+      // ...
+      onRequest,
+    },
+    line: {
+      // ...
+      onRequest,
+    },
+    telegram: {
+      // ...
+      onRequest,
+    },
+    slack: {
+      // ...
+      onRequest,
+    },
+    viber: {
+      // ...
+      onRequest,
+    },
+  },
+};
+```
+
+- [new] RequestContext: add `id` to `RequestContext` (#774)
+- [fix] Server: should await for `connector.preprocess` (#771)
+- [deps] upgrade `messaging-apis` to v1.0.0
+
+## messenger
+
+- [new] get/set/delete user level persistent menu for context user (#790):
+
+```js
+await context.getUserPersistentMenu();
+// [
+//   {
+//     locale: 'default',
+//     composerInputDisabled: false,
+//     callToActions: [
+//       {
+//         type: 'postback',
+//         title: 'Restart Conversation',
+//         payload: 'RESTART',
+//       },
+//       {
+//         type: 'web_url',
+//         title: 'Powered by ALOHA.AI, Yoctol',
+//         url: 'https://www.yoctol.com/',
+//       },
+//     ],
+//   },
+// ]
+
+await context.setUserPersistentMenu([
+  {
+    locale: 'default',
+    composerInputDisabled: false,
+    callToActions: [
+      {
+        type: 'postback',
+        title: 'Restart Conversation',
+        payload: 'RESTART',
+      },
+      {
+        type: 'web_url',
+        title: 'Powered by ALOHA.AI, Yoctol',
+        url: 'https://www.yoctol.com/',
+      },
+    ],
+  },
+]);
+
+await context.deleteUserPersistentMenu();
+```
+
+## line
+
+- [new] support line multi-channel using `getConfig` (#770):
+
+```js
+// bottender.config.js
+module.exports = {
+  channels: {
+    line: {
+      enabled: true,
+      path: '/webhooks/line/:channelId',
+      async getConfig({ params }) {
+        console.log(params.channelId);
+        // ...get the config from the API, database or wherever you like when every time receiving a new event
+        return {
+          accessToken,
+          channelSecret,
+        };
+      },
+    },
+  },
+};
+```
+
+- [new] add `emojis` on LINE text message event (#793):
+
+```js
+if (context.event.isMessage) {
+  context.event.message.emojis;
+  // [
+  //   {
+  //     index: 14,
+  //     length: 6,
+  //     productId: '5ac1bfd5040ab15980c9b435',
+  //     emojiId: '001',
+  //   },
+  // ]
+}
+```
+
+- [new] add `LineContext.getMembersCount` method (#824):
+
+```js
+await context.getMembersCount();
+// 10
+```
+
+## telegram
+
+- [new] add `TelegramEvent.isPollAnswer` and `TelegramEvent.pollAnswer` (#745):
+
+```js
+if (context.event.isPollAnswer) {
+  console.log(context.event.pollAnswer);
+}
+```
+
+- [new] add `pollAnswer` to telegram routes:
+
+```js
+const { router, telegram } = require('bottender/router');
+
+async function HandlePollAnswer(context) {
+  // ...
+}
+
+function App() {
+  return router([telegram.pollAnswer(HandlePollAnswer)]);
+}
+```
+
+- [new] add `TelegramContext.answerCallbackQuery` (#750):
+
+```js
+await context.answerCallbackQuery({
+  url: 'https://example.com/',
+});
+```
+
+## slack
+
+- [new] slack route accept any requests by passing `*` (#758):
+
+```js
+const { router, slack } = require('bottender/router');
+
+async function HandleAllEvent(context) {
+  // ...
+}
+
+function App() {
+  return router([slack.event('*', HandleAllEvent)]);
+}
+```
+
+- [fix] fix `context.views.open` in slack home tab (#809)
+- [fix] fix route slack event (#841)
+- [fix] fix slack session when channel id is null (#802)
+- [docs] update slack routes improvement (#759)
+- [example] example: slack update and delete (#769)
+- [example] slack home tab (#829)
+- [example] slack modal on home (#827)
+- [example] slack modal update (#825)
+- [example] slack modal form (#828)
+
+## dialogflow
+
+- [deps] use `@google-cloud/dialogflow` v4
+
+## create-bottender-app
+
+- [fix] fix context concat and env name (#859)
+
+## bottender-facebook
+
+- [new] add new connector - `FacebookConnector` to experiment using same connector for Messenger and Facebook.
+
+```js
+// bottender.config.js
+const { FacebookConnector } = require('@bottender/facebook');
+
+module.exports = {
+  channels: {
+    facebook: {
+      enabled: true,
+      path: '/webhooks/facebook',
+      connector: new FacebookConnector({
+        // The top level access token should be provided for the batch requests.
+        accessToken: process.env.FACEBOOK_ACCESS_TOKEN,
+        appSecret: process.env.FACEBOOK_APP_SECRET,
+        verifyToken: process.env.FACEBOOK_VERIFY_TOKEN,
+        origin: process.env.FACEBOOK_ORIGIN,
+        async mapPageToAccessToken(pageId) {
+          console.log(pageId);
+          return accessToken;
+        },
+      }),
+      onRequest: onFacebookRequest,
+    },
+  },
+};
+```
+
+# 1.4.12 / 2020-08-25
+
+## create-bottender-app
+
+- [fix] fix context concat and env name #859
+
+# 1.4.11 / 2020-07-29
+
+## dialogflow
+
+- [fix] use for await instead of `promise.all` #851
+
+# 1.4.10 / 2020-07-24
+
+- [fix] add Interaction type for route `slack.event` (#842)
+
+# 1.4.9 / 2020-07-07
+
+- [fix] MongoSessionStore: enable `useUnifiedTopology` to avoid warning (#831)
+
+# 1.4.8 / 2020-06-30
+
+- [fix] lock messaging-apis packages on specific version.
+
+# 1.4.7 / 2020-06-23
+
+- [fix] add a workaround to support express behind trust proxies (for example: nginx) with:
+
+```js
+server.enable('trust proxy');
+
+// or
+server.set('trust proxy', true);
+```
+
+# 1.4.6 / 2020-05-22
+
+## messenger
+
+- [fix] cli: remove deprecated properties on messenger profiles (including `home_url`).
+
+# 1.4.5 / 2020-05-11
+
+- [fix] fix issue #618 ngrok undefined error message (#765)
+
 # 1.4.4 / 2020-05-06
 
 ## slack
@@ -1197,7 +1514,7 @@ const bot = new ConsoleBot({
 });
 
 bot.connector.platform; // 'messenger'
-bot.onEvent(context => {
+bot.onEvent((context) => {
   context.platform; // 'messenger'
 });
 ```
@@ -1480,7 +1797,7 @@ Aliases:
 * [`context.getUserProfilePhotos`](https://bottender.js.org/docs/APIReference-TelegramContext#code-classlanguage-textgetuserprofilephotosoptionscode---official-docs)
 
 ```js
-context.getUserProfilePhotos({ limit: 1 }).then(result => {
+context.getUserProfilePhotos({ limit: 1 }).then((result) => {
   console.log(result);
   // {
   //   total_count: 3,
@@ -1513,7 +1830,7 @@ context.getUserProfilePhotos({ limit: 1 }).then(result => {
 - [`context.getChat`](https://bottender.js.org/docs/APIReference-TelegramContext#code-classlanguage-textgetchatcode---official-docs)
 
 ```js
-context.getChat().then(result => {
+context.getChat().then((result) => {
   console.log(result);
   // {
   //   id: 313534466,
@@ -1528,7 +1845,7 @@ context.getChat().then(result => {
 - [`context.getChatAdministrators`](https://bottender.js.org/docs/APIReference-TelegramContext#code-classlanguage-textgetchatadministratorscode---official-docs)
 
 ```js
-context.getChatAdministrators().then(result => {
+context.getChatAdministrators().then((result) => {
   console.log(result);
   // [
   //   {
@@ -1548,7 +1865,7 @@ context.getChatAdministrators().then(result => {
 - [`context.getChatMembersCount`](https://bottender.js.org/docs/APIReference-TelegramContext#code-classlanguage-textgetchatmemberscountcode---official-docs)
 
 ```js
-context.getChatMembersCount().then(result => {
+context.getChatMembersCount().then((result) => {
   console.log(result);
   // '6'
 });
@@ -1557,7 +1874,7 @@ context.getChatMembersCount().then(result => {
 - [`context.getChatMember`](https://bottender.js.org/docs/APIReference-TelegramContext#code-classlanguage-textgetchatmemberuseridcode---official-docs)
 
 ```js
-context.getChatMember().then(result => {
+context.getChatMember().then((result) => {
   console.log(result);
   // {
   //   user: {
@@ -1607,7 +1924,7 @@ context.getChatMember().then(result => {
 * [`context.getUserProfile`](https://bottender.js.org/docs/APIReference-LineContext#getuserprofile):
 
 ```js
-context.getUserProfile().then(profile => {
+context.getUserProfile().then((profile) => {
   console.log(profile);
   // {
   //   displayName: 'LINE taro',
@@ -1621,7 +1938,7 @@ context.getUserProfile().then(profile => {
 - [`context.getMemberProfile`](https://bottender.js.org/docs/APIReference-LineContext#getmemberprofileuserid):
 
 ```js
-context.getMemberProfile(USER_ID).then(member => {
+context.getMemberProfile(USER_ID).then((member) => {
   console.log(member);
   // {
   //   "displayName":"LINE taro",
@@ -1634,7 +1951,7 @@ context.getMemberProfile(USER_ID).then(member => {
 - [`context.getMemberIds`](https://bottender.js.org/docs/APIReference-LineContext#getmemberidsstart):
 
 ```js
-context.getMemberIds(CURSOR).then(res => {
+context.getMemberIds(CURSOR).then((res) => {
   console.log(res);
   // {
   //   memberIds: [
@@ -1650,7 +1967,7 @@ context.getMemberIds(CURSOR).then(res => {
 - [`context.getAllMemberIds`](https://bottender.js.org/docs/APIReference-LineContext#getallmemberids):
 
 ```js
-context.getAllMemberIds().then(ids => {
+context.getAllMemberIds().then((ids) => {
   console.log(ids);
   // [
   //   'Uxxxxxxxxxxxxxx..1',
@@ -1819,7 +2136,7 @@ context.event.payload; // PAYLOAD
 ```js
 const bot = new ConsoleBot({ fallbackMethods: true });
 
-bot.onEvent(async context => {
+bot.onEvent(async (context) => {
   await context.sendText('Hello World');
   await context.sendImage('https://example.com/vr.jpg');
   await context.sendButtonTemplate('What do you want to do next?', [
@@ -1913,7 +2230,7 @@ const bot = new SlackBot({
   accessToken: '__FILL_YOUR_TOKEN_HERE__',
 });
 
-bot.onEvent(async context => {
+bot.onEvent(async (context) => {
   await context.sendText('Hello World');
 });
 
@@ -2005,7 +2322,7 @@ const bot = new TelegramBot({
   accessToken: '__FILL_YOUR_TOKEN_HERE__',
 });
 
-bot.onEvent(async context => {
+bot.onEvent(async (context) => {
   await context.sendText('Hello World');
 });
 
@@ -2068,7 +2385,7 @@ Game API:
 ```js
 context.sendGame('Mario Bros.');
 context.setGameScore(999);
-context.getGameHighScores().then(result => {
+context.getGameHighScores().then((result) => {
   console.log(result);
   /*
   {
@@ -2103,7 +2420,7 @@ const bot = new ViberBot({
   accessToken: '__FILL_YOUR_TOKEN_HERE__',
 });
 
-bot.onEvent(async context => {
+bot.onEvent(async (context) => {
   if (context.event.isMessage) {
     await context.sendText('Hello World');
   }
@@ -2173,7 +2490,7 @@ event.ref; // 'my_ref'
 ```js
 new MessengerBot({
   appSecret: '__FILL_YOUR_SECRET_HERE__',
-  mapPageToAccessToken: pageId => accessToken,
+  mapPageToAccessToken: (pageId) => accessToken,
 });
 ```
 

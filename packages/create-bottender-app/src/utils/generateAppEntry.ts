@@ -22,7 +22,8 @@ module.exports = async function App(context) {
   }
 
   const contexts = platforms.map(
-    platform => `${platform.charAt(0).toUpperCase()}${platform.slice(1)}Context`
+    (platform) =>
+      `${platform.charAt(0).toUpperCase()}${platform.slice(1)}Context`
   );
 
   return prettier.format(
@@ -31,7 +32,7 @@ import { Action, ${contexts.join(', ')} } from 'bottender';
 
 export default async function App(context: ${contexts.join(
       ' | '
-    )}): Promise<Action<${contexts.join(', ')}> |void> {
+    )}): Promise<Action<${contexts.join(' | ')}> | void> {
   await context.sendText('Welcome to Bottender');
 };
 `,

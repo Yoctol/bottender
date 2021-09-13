@@ -147,7 +147,7 @@ If you prefer to use your route predicate, you may use the `route` function to c
 const { router, route } = require('bottender/router');
 
 function sayHiTo(name, Action) {
-  return route(context => context.event.text === `Hi ${name}`, Action);
+  return route((context) => context.event.text === `Hi ${name}`, Action);
 }
 
 async function App(context) {

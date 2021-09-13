@@ -13,6 +13,10 @@ const handle = app.getRequestHandler();
 app.prepare().then(() => {
   const server = express();
 
+  // If your express server is behind a proxy, you need to call `enable('trust proxy')`
+  // See: http://expressjs.com/en/guide/behind-proxies.html#express-behind-proxies
+  // server.enable('trust proxy');
+
   const verify = (req, _, buf) => {
     req.rawBody = buf.toString();
   };
@@ -27,7 +31,7 @@ app.prepare().then(() => {
     return handle(req, res);
   });
 
-  server.listen(port, err => {
+  server.listen(port, (err) => {
     if (err) throw err;
     console.log(`> Ready on http://localhost:${port}`);
   });

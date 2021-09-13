@@ -32,7 +32,7 @@ const program = new commander.Command(pkg.name)
   .version(pkg.version)
   .arguments('<project-directory>')
   .usage(`${chalk.green('<project-directory>')} [options]`)
-  .action(name => {
+  .action((name) => {
     projectName = name;
   })
   .option('--info', 'print environment debug info')
@@ -75,6 +75,13 @@ const getQuestions = (): Record<string, any>[] => [
     message: 'What platform of bot do you want to create?',
     type: 'checkbox',
     choices: ['messenger', 'whatsapp', 'line', 'slack', 'telegram', 'viber'],
+    validate: (value: string[]) => {
+      if (value.length < 1) {
+        return 'Should select at least one platform';
+      }
+
+      return true;
+    },
   },
   {
     name: 'session',
@@ -116,12 +123,13 @@ const isSafeToCreateProjectIn = (root: string, name: string): boolean => {
 
   const conflicts = fs
     .readdirSync(root)
-    .filter(file => !validFiles.includes(file))
+    .filter((file) => !validFiles.includes(file))
     // IntelliJ IDEA creates module files before CRA is launched
-    .filter(file => !/\.iml$/.test(file))
+    .filter((file) => !/\.iml$/.test(file))
     // Don't treat log files from previous installation as conflicts
     .filter(
-      file => !errorLogFilePatterns.some(pattern => file.indexOf(pattern) === 0)
+      (file) =>
+        !errorLogFilePatterns.some((pattern) => file.indexOf(pattern) === 0)
     );
 
   if (conflicts.length > 0) {
@@ -142,8 +150,8 @@ const isSafeToCreateProjectIn = (root: string, name: string): boolean => {
 
   // Remove any remnant files from a previous installation
   const currentFiles = fs.readdirSync(path.join(root));
-  currentFiles.forEach(file => {
-    errorLogFilePatterns.forEach(errorLogFilePattern => {
+  currentFiles.forEach((file) => {
+    errorLogFilePatterns.forEach((errorLogFilePattern) => {
       // This will catch `(npm-debug|yarn-error|yarn-debug).log*` files
       if (file.indexOf(errorLogFilePattern) === 0) {
         fs.removeSync(path.join(root, file));
@@ -155,7 +163,7 @@ const isSafeToCreateProjectIn = (root: string, name: string): boolean => {
 
 const printValidationResults = (results: string[]): void => {
   if (typeof results !== 'undefined') {
-    results.forEach(Error => {
+    results.forEach((Error) => {
       error(`  *  ${Error}`);
     });
   }
@@ -211,7 +219,7 @@ const install = (
     }
 
     const child = spawn(command, args, { stdio: 'inherit' });
-    child.on('close', code => {
+    child.on('close', (code) => {
       if (code !== 0) {
         const err = new Error('install failed');
         (err as any).command = `${command} ${args.join(' ')}`;
@@ -295,8 +303,8 @@ const run = async (
       'node_modules',
     ];
     const currentFiles = fs.readdirSync(path.join(root));
-    currentFiles.forEach(file => {
-      knownGeneratedFiles.forEach(fileToMatch => {
+    currentFiles.forEach((file) => {
+      knownGeneratedFiles.forEach((fileToMatch) => {
         if (
           (fileToMatch.match(/.log/g) && file.indexOf(fileToMatch) === 0) ||
           file === fileToMatch

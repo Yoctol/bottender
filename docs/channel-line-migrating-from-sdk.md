@@ -26,7 +26,7 @@ const config = {
 
 const app = express();
 app.post('/webhooks/line', line.middleware(config), (req, res) => {
-  Promise.all(req.body.events.map(handleEvent)).then(result =>
+  Promise.all(req.body.events.map(handleEvent)).then((result) =>
     res.json(result)
   );
 });

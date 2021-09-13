@@ -16,7 +16,7 @@ export default class MessengerHandler extends Handler {
   ) {
     if (args.length < 2) {
       const [handler] = args as [FunctionalHandler | Builder];
-      this.on(context => context.event.isPostback, handler);
+      this.on((context) => context.event.isPostback, handler);
     } else {
       const [predicate, handler] = args as [
         Predicate,
@@ -29,7 +29,7 @@ export default class MessengerHandler extends Handler {
       );
 
       this.on(
-        context =>
+        (context) =>
           context.event.isPostback &&
           predicate(context.event.postback, context),
         handler
@@ -70,7 +70,7 @@ export default class MessengerHandler extends Handler {
       if (typeof pattern === 'function') {
         const predicate: Predicate = pattern;
         this.on(
-          context =>
+          (context) =>
             context.event.isPayload &&
             predicate(context.event.payload, context),
           handler
@@ -80,7 +80,7 @@ export default class MessengerHandler extends Handler {
           const patternRegExp: RegExp = pattern;
 
           const _handler = handler;
-          handler = context => {
+          handler = (context) => {
             let message;
             if (context.event.isPostback) {
               message = context.event.postback.payload;
@@ -115,7 +115,7 @@ export default class MessengerHandler extends Handler {
   ) {
     if (args.length < 2) {
       const [handler] = args as [FunctionalHandler | Builder];
-      this.on(context => context.event.isPayment, handler);
+      this.on((context) => context.event.isPayment, handler);
     } else {
       const [predicate, handler] = args as [
         Predicate,
@@ -128,7 +128,7 @@ export default class MessengerHandler extends Handler {
       );
 
       this.on(
-        context =>
+        (context) =>
           context.event.isPayment && predicate(context.event.payment, context),
         handler
       );
@@ -144,7 +144,7 @@ export default class MessengerHandler extends Handler {
   ) {
     if (args.length < 2) {
       const [handler] = args as [FunctionalHandler | Builder];
-      this.on(context => context.event.isOptin, handler);
+      this.on((context) => context.event.isOptin, handler);
     } else {
       const [predicate, handler] = args as [
         Predicate,
@@ -157,7 +157,7 @@ export default class MessengerHandler extends Handler {
       );
 
       this.on(
-        context =>
+        (context) =>
           context.event.isOptin && predicate(context.event.optin, context),
         handler
       );
@@ -173,7 +173,7 @@ export default class MessengerHandler extends Handler {
   ) {
     if (args.length < 2) {
       const [handler] = args as [FunctionalHandler | Builder];
-      this.on(context => context.event.isCheckoutUpdate, handler);
+      this.on((context) => context.event.isCheckoutUpdate, handler);
     } else {
       const [predicate, handler] = args as [
         Predicate,
@@ -186,7 +186,7 @@ export default class MessengerHandler extends Handler {
       );
 
       this.on(
-        context =>
+        (context) =>
           context.event.isCheckoutUpdate &&
           predicate(context.event.checkoutUpdate, context),
         handler
@@ -203,7 +203,7 @@ export default class MessengerHandler extends Handler {
   ) {
     if (args.length < 2) {
       const [handler] = args as [FunctionalHandler | Builder];
-      this.on(context => context.event.isPreCheckout, handler);
+      this.on((context) => context.event.isPreCheckout, handler);
     } else {
       const [predicate, handler] = args as [
         Predicate,
@@ -216,7 +216,7 @@ export default class MessengerHandler extends Handler {
       );
 
       this.on(
-        context =>
+        (context) =>
           context.event.isPreCheckout &&
           predicate(context.event.preCheckout, context),
         handler
@@ -233,7 +233,7 @@ export default class MessengerHandler extends Handler {
   ) {
     if (args.length < 2) {
       const [handler] = args as [FunctionalHandler | Builder];
-      this.on(context => context.event.isQuickReply, handler);
+      this.on((context) => context.event.isQuickReply, handler);
     } else {
       const [predicate, handler] = args as [
         Predicate,
@@ -246,7 +246,7 @@ export default class MessengerHandler extends Handler {
       );
 
       this.on(
-        context =>
+        (context) =>
           context.event.isQuickReply &&
           predicate(context.event.quickReply, context),
         handler
@@ -263,14 +263,14 @@ export default class MessengerHandler extends Handler {
   ) {
     if (args.length < 2) {
       const [handler] = args as [FunctionalHandler | Builder];
-      this.on(context => context.event.isEcho, handler);
+      this.on((context) => context.event.isEcho, handler);
     } else {
       const [predicate, handler] = args as [
         Predicate,
         FunctionalHandler | Builder
       ];
       this.on(
-        context =>
+        (context) =>
           context.event.isEcho && predicate(context.event.message, context),
         handler
       );
@@ -286,7 +286,7 @@ export default class MessengerHandler extends Handler {
   ) {
     if (args.length < 2) {
       const [handler] = args as [FunctionalHandler | Builder];
-      this.on(context => context.event.isRead, handler);
+      this.on((context) => context.event.isRead, handler);
     } else {
       const [predicate, handler] = args as [
         Predicate,
@@ -299,7 +299,7 @@ export default class MessengerHandler extends Handler {
       );
 
       this.on(
-        context =>
+        (context) =>
           context.event.isRead && predicate(context.event.read, context),
         handler
       );
@@ -315,7 +315,7 @@ export default class MessengerHandler extends Handler {
   ) {
     if (args.length < 2) {
       const [handler] = args as [FunctionalHandler | Builder];
-      this.on(context => context.event.isDelivery, handler);
+      this.on((context) => context.event.isDelivery, handler);
     } else {
       const [predicate, handler] = args as [
         Predicate,
@@ -328,7 +328,7 @@ export default class MessengerHandler extends Handler {
       );
 
       this.on(
-        context =>
+        (context) =>
           context.event.isDelivery &&
           predicate(context.event.delivery, context),
         handler
@@ -345,7 +345,7 @@ export default class MessengerHandler extends Handler {
   ) {
     if (args.length < 2) {
       const [handler] = args as [FunctionalHandler | Builder];
-      this.on(context => context.event.isLocation, handler);
+      this.on((context) => context.event.isLocation, handler);
     } else {
       const [predicate, handler] = args as [
         Predicate,
@@ -358,7 +358,7 @@ export default class MessengerHandler extends Handler {
       );
 
       this.on(
-        context =>
+        (context) =>
           context.event.isLocation &&
           predicate(context.event.location, context),
         handler
@@ -375,7 +375,7 @@ export default class MessengerHandler extends Handler {
   ) {
     if (args.length < 2) {
       const [handler] = args as [FunctionalHandler | Builder];
-      this.on(context => context.event.isImage, handler);
+      this.on((context) => context.event.isImage, handler);
     } else {
       const [predicate, handler] = args as [
         Predicate,
@@ -388,7 +388,7 @@ export default class MessengerHandler extends Handler {
       );
 
       this.on(
-        context =>
+        (context) =>
           context.event.isImage && predicate(context.event.image, context),
         handler
       );
@@ -404,7 +404,7 @@ export default class MessengerHandler extends Handler {
   ) {
     if (args.length < 2) {
       const [handler] = args as [FunctionalHandler | Builder];
-      this.on(context => context.event.isAudio, handler);
+      this.on((context) => context.event.isAudio, handler);
     } else {
       const [predicate, handler] = args as [
         Predicate,
@@ -417,7 +417,7 @@ export default class MessengerHandler extends Handler {
       );
 
       this.on(
-        context =>
+        (context) =>
           context.event.isAudio && predicate(context.event.audio, context),
         handler
       );
@@ -433,7 +433,7 @@ export default class MessengerHandler extends Handler {
   ) {
     if (args.length < 2) {
       const [handler] = args as [FunctionalHandler | Builder];
-      this.on(context => context.event.isVideo, handler);
+      this.on((context) => context.event.isVideo, handler);
     } else {
       const [predicate, handler] = args as [
         Predicate,
@@ -446,7 +446,7 @@ export default class MessengerHandler extends Handler {
       );
 
       this.on(
-        context =>
+        (context) =>
           context.event.isVideo && predicate(context.event.video, context),
         handler
       );
@@ -462,7 +462,7 @@ export default class MessengerHandler extends Handler {
   ) {
     if (args.length < 2) {
       const [handler] = args as [FunctionalHandler | Builder];
-      this.on(context => context.event.isFile, handler);
+      this.on((context) => context.event.isFile, handler);
     } else {
       const [predicate, handler] = args as [
         Predicate,
@@ -475,7 +475,7 @@ export default class MessengerHandler extends Handler {
       );
 
       this.on(
-        context =>
+        (context) =>
           context.event.isFile && predicate(context.event.file, context),
         handler
       );
@@ -491,7 +491,7 @@ export default class MessengerHandler extends Handler {
   ) {
     if (args.length < 2) {
       const [handler] = args as [FunctionalHandler | Builder];
-      this.on(context => context.event.isFallback, handler);
+      this.on((context) => context.event.isFallback, handler);
     } else {
       const [predicate, handler] = args as [
         Predicate,
@@ -504,7 +504,7 @@ export default class MessengerHandler extends Handler {
       );
 
       this.on(
-        context =>
+        (context) =>
           context.event.isFallback &&
           predicate(context.event.fallback, context),
         handler

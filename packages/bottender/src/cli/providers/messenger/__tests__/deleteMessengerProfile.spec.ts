@@ -1,4 +1,5 @@
 import { MessengerClient } from 'messaging-api-messenger';
+import { mocked } from 'ts-jest/utils';
 
 import getChannelConfig from '../../../../shared/getChannelConfig';
 import { deleteMessengerProfile } from '../profile';
@@ -17,43 +18,38 @@ const MOCK_FILE_WITH_PLATFORM = {
   },
 };
 
-let _client;
-
 beforeEach(() => {
   process.exit = jest.fn();
-  _client = {
-    deleteMessengerProfile: jest.fn(),
-  };
-  MessengerClient.connect = jest.fn(() => _client);
-  log.error = jest.fn();
-  log.print = jest.fn();
-  getChannelConfig.mockReturnValue(MOCK_FILE_WITH_PLATFORM.channels.messenger);
-});
 
-it('be defined', () => {
-  expect(deleteMessengerProfile).toBeDefined();
+  mocked(getChannelConfig).mockReturnValue(
+    MOCK_FILE_WITH_PLATFORM.channels.messenger
+  );
 });
 
 describe('resolved', () => {
   it('call deleteMessengerProfile', async () => {
     const ctx = {
-      argv: {},
+      config: null,
+      argv: {
+        _: [],
+      },
     };
 
-    _client.deleteMessengerProfile.mockResolvedValue();
+    mocked(MessengerClient.prototype.deleteMessengerProfile).mockResolvedValue(
+      {}
+    );
 
     await deleteMessengerProfile(ctx);
 
-    expect(_client.deleteMessengerProfile).toBeCalledWith([
+    const client = mocked(MessengerClient).mock.instances[0];
+
+    expect(client.deleteMessengerProfile).toBeCalledWith([
       'account_linking_url',
       'persistent_menu',
       'get_started',
       'greeting',
       'ice_breakers',
       'whitelisted_domains',
-      'payment_settings',
-      'target_audience',
-      'home_url',
     ]);
   });
 });
@@ -61,14 +57,19 @@ describe('resolved', () => {
 describe('reject', () => {
   it('handle error thrown with only status', async () => {
     const ctx = {
-      argv: {},
+      config: null,
+      argv: {
+        _: [],
+      },
     };
     const error = {
       response: {
         status: 400,
       },
     };
-    _client.deleteMessengerProfile.mockRejectedValue(error);
+    mocked(MessengerClient.prototype.deleteMessengerProfile).mockRejectedValue(
+      error
+    );
 
     await deleteMessengerProfile(ctx);
 
@@ -78,7 +79,10 @@ describe('reject', () => {
 
   it('handle error thrown by messenger', async () => {
     const ctx = {
-      argv: {},
+      config: null,
+      argv: {
+        _: [],
+      },
     };
     const error = {
       response: {
@@ -94,23 +98,27 @@ describe('reject', () => {
         },
       },
     };
-    _client.deleteMessengerProfile.mockRejectedValue(error);
+    mocked(MessengerClient.prototype.deleteMessengerProfile).mockRejectedValue(
+      error
+    );
 
     await deleteMessengerProfile(ctx);
 
     expect(log.error).toBeCalled();
-    expect(log.error.mock.calls[2][0]).not.toMatch(/\[object Object\]/);
+    expect(mocked(log.error).mock.calls[2][0]).not.toMatch(/\[object Object\]/);
     expect(process.exit).toBeCalled();
   });
 
   it('handle error thrown by ourselves', async () => {
     const ctx = {
-      argv: {},
+      config: null,
+      argv: {
+        _: [],
+      },
     };
-    const error = {
-      message: 'something wrong happened',
-    };
-    _client.deleteMessengerProfile.mockRejectedValue(error);
+    mocked(MessengerClient.prototype.deleteMessengerProfile).mockRejectedValue(
+      new Error('something wrong happened')
+    );
 
     await deleteMessengerProfile(ctx);
 

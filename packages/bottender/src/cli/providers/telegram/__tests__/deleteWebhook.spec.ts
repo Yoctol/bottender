@@ -1,4 +1,5 @@
 import { TelegramClient } from 'messaging-api-telegram';
+import { mocked } from 'ts-jest/utils';
 
 import getChannelConfig from '../../../../shared/getChannelConfig';
 import { deleteWebhook } from '../webhook';
@@ -19,48 +20,53 @@ const MOCK_FILE_WITH_PLATFORM = {
 
 beforeEach(() => {
   process.exit = jest.fn();
-  getChannelConfig.mockReturnValue(MOCK_FILE_WITH_PLATFORM.channels.telegram);
 
-  TelegramClient.connect.mockReturnValue({
-    deleteWebhook: jest.fn().mockResolvedValue(true),
-  });
-});
-
-it('be defined', () => {
-  expect(deleteWebhook).toBeDefined();
+  mocked(getChannelConfig).mockReturnValue(
+    MOCK_FILE_WITH_PLATFORM.channels.telegram
+  );
 });
 
 describe('resolve', () => {
   it('successfully delete webhook', async () => {
     const ctx = {
-      argv: {},
+      config: null,
+      argv: {
+        _: [],
+      },
     };
+
+    mocked(TelegramClient.prototype.deleteWebhook).mockResolvedValue(true);
 
     await deleteWebhook(ctx);
 
     expect(log.print).toHaveBeenCalledTimes(1);
-    expect(log.print.mock.calls[0][0]).toMatch(/Successfully/);
+    expect(mocked(log.print).mock.calls[0][0]).toMatch(/Successfully/);
   });
 });
 
 describe('reject', () => {
   it('reject when Telegram return not success', () => {
     const ctx = {
-      argv: {},
+      config: null,
+      argv: {
+        _: [],
+      },
     };
 
-    TelegramClient.connect().deleteWebhook.mockResolvedValueOnce({
-      ok: false,
-    });
+    mocked(TelegramClient.prototype.deleteWebhook).mockResolvedValue(false);
 
     expect(deleteWebhook(ctx).then).toThrow();
   });
 
   it('reject when `accessToken` is not found in the `bottender.config.js` file', () => {
     const ctx = {
-      argv: {},
+      config: null,
+      argv: {
+        _: [],
+      },
     };
-    getChannelConfig.mockReturnValueOnce({});
+
+    mocked(getChannelConfig).mockReturnValueOnce({});
 
     expect(deleteWebhook(ctx).then).toThrow();
   });

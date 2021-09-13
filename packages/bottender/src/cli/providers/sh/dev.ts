@@ -60,7 +60,15 @@ const dev = async (ctx: CliContext): Promise<void> => {
     });
 
   if (!isConsole) {
-    const url = await ngrok.connect(port);
+    let url = '';
+    try {
+      url = await ngrok.connect(port);
+    } catch (err) {
+      if (!(err instanceof Error) && err.msg) {
+        throw new Error(`ngrok - ${err.msg}`);
+      }
+      throw err;
+    }
 
     Object.entries(channels || {})
       .filter(([, { enabled }]) => enabled)

@@ -2,26 +2,16 @@ import { TelegramTypes } from 'messaging-api-telegram';
 
 import { Event } from '../context/Event';
 
-export type TelegramRawEvent = {
-  updateId: number;
-  message?: TelegramTypes.Message;
-  editedMessage?: TelegramTypes.Message;
-  channelPost?: TelegramTypes.Message;
-  editedChannelPost?: TelegramTypes.Message;
-  inlineQuery?: TelegramTypes.InlineQuery;
-  chosenInlineResult?: TelegramTypes.ChosenInlineResult;
-  callbackQuery?: TelegramTypes.CallbackQuery;
-  shippingQuery?: TelegramTypes.ShippingQuery;
-  preCheckoutQuery?: TelegramTypes.PreCheckoutQuery;
-  poll?: TelegramTypes.Poll;
-  pollAnswer?: TelegramTypes.PollAnswer;
-};
+import { TelegramRawEvent } from './TelegramTypes';
 
 export default class TelegramEvent implements Event<TelegramRawEvent> {
   _rawEvent: TelegramRawEvent;
 
+  _timestamp: number;
+
   constructor(rawEvent: TelegramRawEvent) {
     this._rawEvent = rawEvent;
+    this._timestamp = Date.now();
   }
 
   /**
@@ -30,6 +20,16 @@ export default class TelegramEvent implements Event<TelegramRawEvent> {
    */
   get rawEvent(): TelegramRawEvent {
     return this._rawEvent;
+  }
+
+  /**
+   * The timestamp when the event was sent
+   *
+   */
+  get timestamp(): number | undefined {
+    return 'message' in this.rawEvent && this.rawEvent.message
+      ? this.rawEvent.message.date * 1000
+      : this._timestamp;
   }
 
   /**

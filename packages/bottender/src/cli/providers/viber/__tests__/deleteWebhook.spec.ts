@@ -1,4 +1,5 @@
 import { ViberClient } from 'messaging-api-viber';
+import { mocked } from 'ts-jest/utils';
 
 import getChannelConfig from '../../../../shared/getChannelConfig';
 import { deleteWebhook } from '../webhook';
@@ -11,7 +12,9 @@ jest.mock('../../../../shared/getChannelConfig');
 const ACCESS_TOKEN = '__ACCESS_TOKEN__';
 
 function setup({ config }: { config?: Record<string, any> } = {}) {
-  getChannelConfig.mockReturnValue(
+  process.exit = jest.fn();
+
+  mocked(getChannelConfig).mockReturnValue(
     config || {
       accessToken: ACCESS_TOKEN,
       sender: {
@@ -19,28 +22,23 @@ function setup({ config }: { config?: Record<string, any> } = {}) {
       },
     }
   );
-
-  process.exit = jest.fn();
-
-  ViberClient.connect.mockReturnValue({
-    removeWebhook: jest.fn(() => ({
-      status: 0,
-      status_message: 'ok',
-    })),
-  });
 }
-
-it('be defined', () => {
-  expect(deleteWebhook).toBeDefined();
-});
 
 describe('resolve', () => {
   it('successfully delete webhook', async () => {
     setup();
 
     const ctx = {
-      argv: {},
+      config: null,
+      argv: {
+        _: [],
+      },
     };
+
+    mocked(ViberClient.prototype.removeWebhook).mockResolvedValue({
+      status: 0,
+      statusMessage: 'ok',
+    });
 
     await deleteWebhook(ctx);
 
@@ -53,10 +51,13 @@ describe('reject', () => {
     setup();
 
     const ctx = {
-      argv: {},
+      config: null,
+      argv: {
+        _: [],
+      },
     };
 
-    ViberClient.connect().removeWebhook.mockRejectedValueOnce(
+    mocked(ViberClient.prototype.removeWebhook).mockRejectedValueOnce(
       new Error('removeWebhook failed')
     );
 
@@ -66,10 +67,13 @@ describe('reject', () => {
   it('reject when `accessToken` is not found in the `bottender.config.js` file', () => {
     setup();
 
-    getChannelConfig.mockReturnValueOnce(null);
+    mocked(getChannelConfig).mockReturnValueOnce(null);
 
     const ctx = {
-      argv: {},
+      config: null,
+      argv: {
+        _: [],
+      },
     };
 
     expect(deleteWebhook(ctx).then).toThrow();

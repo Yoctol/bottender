@@ -2,21 +2,22 @@ import { EventEmitter } from 'events';
 
 import chunk from 'lodash/chunk';
 import invariant from 'invariant';
-import sleep from 'delay';
 import warning from 'warning';
-import { Line, LineClient, LineTypes } from 'messaging-api-line';
+import { JsonObject } from 'type-fest';
+import { Line, LineClient } from 'messaging-api-line';
 
 import Context from '../context/Context';
 import Session from '../session/Session';
 import { RequestContext } from '../types';
 
 import LineEvent from './LineEvent';
+import * as LineTypes from './LineTypes';
 
-type Options = {
+export type LineContextOptions = {
   client: LineClient;
   event: LineEvent;
   session?: Session | null;
-  initialState?: Record<string, any> | null;
+  initialState?: JsonObject | null;
   requestContext?: RequestContext;
   customAccessToken?: string;
   shouldBatch?: boolean;
@@ -25,8 +26,6 @@ type Options = {
 };
 
 class LineContext extends Context<LineClient, LineEvent> {
-  _customAccessToken: string | null;
-
   _isReplied = false;
 
   _shouldBatch: boolean;
@@ -47,11 +46,15 @@ class LineContext extends Context<LineClient, LineEvent> {
     shouldBatch,
     sendMethod,
     emitter,
-  }: Options) {
+  }: LineContextOptions) {
     super({ client, event, session, initialState, requestContext, emitter });
-    this._customAccessToken = customAccessToken || null;
     this._shouldBatch = shouldBatch || false;
     this._sendMethod = sendMethod || 'reply';
+
+    // TODO: remove this in v2
+    if (customAccessToken) {
+      this.useAccessToken(customAccessToken);
+    }
   }
 
   /**
@@ -67,15 +70,17 @@ class LineContext extends Context<LineClient, LineEvent> {
    *
    */
   get accessToken(): string {
-    return this._customAccessToken || this._client.accessToken;
+    return this._client.accessToken;
   }
 
   /**
    * Inject access token for the context.
    *
    */
-  useAccessToken(accessToken: string) {
-    this._customAccessToken = accessToken;
+  useAccessToken(accessToken: string): void {
+    warning(false, '`useAccessToken` is deprecated.');
+    // @ts-expect-error
+    this._client.accessToken = accessToken;
   }
 
   /**
@@ -89,7 +94,7 @@ class LineContext extends Context<LineClient, LineEvent> {
   /**
    * Context Lifecycle Hook
    */
-  async handlerDidEnd() {
+  async handlerDidEnd(): Promise<void> {
     if (this._shouldBatch) {
       // After starting this batch, every api should be called out of batch mode
       this._shouldBatch = false;
@@ -101,11 +106,7 @@ class LineContext extends Context<LineClient, LineEvent> {
           'one replyToken can only be used to reply 5 messages'
         );
         if (this._event.replyToken) {
-          await this._client.reply(this._event.replyToken, messageChunks[0], {
-            ...(this._customAccessToken
-              ? { accessToken: this._customAccessToken }
-              : undefined),
-          });
+          await this._client.reply(this._event.replyToken, messageChunks[0]);
         }
       }
 
@@ -119,11 +120,7 @@ class LineContext extends Context<LineClient, LineEvent> {
             const messages = messageChunks[i];
 
             // eslint-disable-next-line no-await-in-loop
-            await this._client.push(sessionTypeId, messages, {
-              ...(this._customAccessToken
-                ? { accessToken: this._customAccessToken }
-                : undefined),
-            });
+            await this._client.push(sessionTypeId, messages);
           }
         } else {
           warning(
@@ -132,16 +129,6 @@ class LineContext extends Context<LineClient, LineEvent> {
           );
         }
       }
-    }
-  }
-
-  /**
-   * Delay and show indicators for milliseconds.
-   *
-   */
-  async typing(milliseconds: number): Promise<void> {
-    if (milliseconds > 0) {
-      await sleep(milliseconds);
     }
   }
 
@@ -160,11 +147,7 @@ class LineContext extends Context<LineClient, LineEvent> {
 
     const messageId = (this._event.message as any).id;
 
-    return this._client.getMessageContent(messageId, {
-      ...(this._customAccessToken
-        ? { accessToken: this._customAccessToken }
-        : undefined),
-    });
+    return this._client.getMessageContent(messageId);
   }
 
   /**
@@ -179,17 +162,9 @@ class LineContext extends Context<LineClient, LineEvent> {
 
     switch (this._session.type) {
       case 'room':
-        return this._client.leaveRoom(this._session.room.id, {
-          ...(this._customAccessToken
-            ? { accessToken: this._customAccessToken }
-            : undefined),
-        } as any);
+        return this._client.leaveRoom(this._session.room.id);
       case 'group':
-        return this._client.leaveGroup(this._session.group.id, {
-          ...(this._customAccessToken
-            ? { accessToken: this._customAccessToken }
-            : undefined),
-        } as any);
+        return this._client.leaveGroup(this._session.group.id);
       default:
         warning(
           false,
@@ -223,30 +198,16 @@ class LineContext extends Context<LineClient, LineEvent> {
       case 'room':
         return this._client.getRoomMemberProfile(
           this._session.room.id,
-          this._session.user.id,
-          {
-            ...(this._customAccessToken
-              ? { accessToken: this._customAccessToken }
-              : undefined),
-          } as any
+          this._session.user.id
         );
       case 'group':
         return this._client.getGroupMemberProfile(
           this._session.group.id,
-          this._session.user.id,
-          {
-            ...(this._customAccessToken
-              ? { accessToken: this._customAccessToken }
-              : undefined),
-          } as any
+          this._session.user.id
         );
       case 'user':
       default:
-        return this._client.getUserProfile(this._session.user.id, {
-          ...(this._customAccessToken
-            ? { accessToken: this._customAccessToken }
-            : undefined),
-        } as any);
+        return this._client.getUserProfile(this._session.user.id);
     }
   }
 
@@ -266,24 +227,11 @@ class LineContext extends Context<LineClient, LineEvent> {
 
     switch (this._session.type) {
       case 'room':
-        return this._client.getRoomMemberProfile(
-          this._session.room.id,
-          userId,
-          {
-            ...(this._customAccessToken
-              ? { accessToken: this._customAccessToken }
-              : undefined),
-          } as any
-        );
+        return this._client.getRoomMemberProfile(this._session.room.id, userId);
       case 'group':
         return this._client.getGroupMemberProfile(
           this._session.group.id,
-          userId,
-          {
-            ...(this._customAccessToken
-              ? { accessToken: this._customAccessToken }
-              : undefined),
-          } as any
+          userId
         );
       default:
         warning(
@@ -291,6 +239,29 @@ class LineContext extends Context<LineClient, LineEvent> {
           'getMemberProfile: should not be called in context which is not room or group session'
         );
         return null;
+    }
+  }
+
+  /**
+   * Gets the member count in group/room.
+   *
+   */
+  async getMembersCount(): Promise<number | null> {
+    if (!this._session) {
+      warning(
+        false,
+        'getMembersCount: should not be called in context without session'
+      );
+      return null;
+    }
+
+    switch (this._session.type) {
+      case 'room':
+        return this._client.getRoomMembersCount(this._session.room.id);
+      case 'group':
+        return this._client.getGroupMembersCount(this._session.group.id);
+      default:
+        return 1;
     }
   }
 
@@ -312,17 +283,9 @@ class LineContext extends Context<LineClient, LineEvent> {
 
     switch (this._session.type) {
       case 'room':
-        return this._client.getRoomMemberIds(this._session.room.id, start, {
-          ...(this._customAccessToken
-            ? { accessToken: this._customAccessToken }
-            : undefined),
-        } as any);
+        return this._client.getRoomMemberIds(this._session.room.id, start);
       case 'group':
-        return this._client.getGroupMemberIds(this._session.group.id, start, {
-          ...(this._customAccessToken
-            ? { accessToken: this._customAccessToken }
-            : undefined),
-        } as any);
+        return this._client.getGroupMemberIds(this._session.group.id, start);
       default:
         warning(
           false,
@@ -349,17 +312,9 @@ class LineContext extends Context<LineClient, LineEvent> {
 
     switch (this._session.type) {
       case 'room':
-        return this._client.getAllRoomMemberIds(this._session.room.id, {
-          ...(this._customAccessToken
-            ? { accessToken: this._customAccessToken }
-            : undefined),
-        });
+        return this._client.getAllRoomMemberIds(this._session.room.id);
       case 'group':
-        return this._client.getAllGroupMemberIds(this._session.group.id, {
-          ...(this._customAccessToken
-            ? { accessToken: this._customAccessToken }
-            : undefined),
-        });
+        return this._client.getAllGroupMemberIds(this._session.group.id);
       default:
         warning(
           false,
@@ -375,11 +330,7 @@ class LineContext extends Context<LineClient, LineEvent> {
    */
   async getLinkedRichMenu(): Promise<any> {
     if (this._session && this._session.user) {
-      return this._client.getLinkedRichMenu(this._session.user.id, {
-        ...(this._customAccessToken
-          ? { accessToken: this._customAccessToken }
-          : undefined),
-      } as any);
+      return this._client.getLinkedRichMenu(this._session.user.id);
     }
     warning(
       false,
@@ -393,11 +344,7 @@ class LineContext extends Context<LineClient, LineEvent> {
    */
   async linkRichMenu(richMenuId: string): Promise<any> {
     if (this._session && this._session.user) {
-      return this._client.linkRichMenu(this._session.user.id, richMenuId, {
-        ...(this._customAccessToken
-          ? { accessToken: this._customAccessToken }
-          : undefined),
-      } as any);
+      return this._client.linkRichMenu(this._session.user.id, richMenuId);
     }
     warning(
       false,
@@ -411,11 +358,7 @@ class LineContext extends Context<LineClient, LineEvent> {
    */
   async unlinkRichMenu(): Promise<any> {
     if (this._session && this._session.user) {
-      return this._client.unlinkRichMenu(this._session.user.id, {
-        ...(this._customAccessToken
-          ? { accessToken: this._customAccessToken }
-          : undefined),
-      } as any);
+      return this._client.unlinkRichMenu(this._session.user.id);
     }
     warning(
       false,
@@ -429,11 +372,7 @@ class LineContext extends Context<LineClient, LineEvent> {
    */
   async issueLinkToken(): Promise<any> {
     if (this._session && this._session.user) {
-      return this._client.issueLinkToken(this._session.user.id, {
-        ...(this._customAccessToken
-          ? { accessToken: this._customAccessToken }
-          : undefined),
-      } as any);
+      return this._client.issueLinkToken(this._session.user.id);
     }
     warning(
       false,
@@ -441,7 +380,7 @@ class LineContext extends Context<LineClient, LineEvent> {
     );
   }
 
-  reply(messages: LineTypes.Message[], options: LineTypes.MessageOptions = {}) {
+  reply(messages: LineTypes.Message[]) {
     invariant(!this._isReplied, 'Can not reply event multiple times');
 
     if (this._shouldBatch) {
@@ -453,19 +392,14 @@ class LineContext extends Context<LineClient, LineEvent> {
     this._isReplied = true;
 
     // FIXME: throw or warn for no replyToken
-    return this._client.reply(this._event.replyToken as string, messages, {
-      ...(this._customAccessToken
-        ? { accessToken: this._customAccessToken }
-        : undefined),
-      ...options,
-    });
+    return this._client.reply(this._event.replyToken as string, messages);
   }
 
   replyText(
     text: string,
     options?: LineTypes.MessageOptions & { emojis?: LineTypes.Emoji[] }
   ) {
-    return this.reply([Line.createText(text, options)], options);
+    return this.reply([Line.createText(text, options)]);
   }
 
   replyImage(
@@ -475,7 +409,7 @@ class LineContext extends Context<LineClient, LineEvent> {
     },
     options?: LineTypes.MessageOptions
   ) {
-    return this.reply([Line.createImage(image, options)], options);
+    return this.reply([Line.createImage(image, options)]);
   }
 
   replyVideo(
@@ -485,7 +419,7 @@ class LineContext extends Context<LineClient, LineEvent> {
     },
     options?: LineTypes.MessageOptions
   ) {
-    return this.reply([Line.createVideo(video, options)], options);
+    return this.reply([Line.createVideo(video, options)]);
   }
 
   replyAudio(
@@ -495,21 +429,21 @@ class LineContext extends Context<LineClient, LineEvent> {
     },
     options?: LineTypes.MessageOptions
   ) {
-    return this.reply([Line.createAudio(audio, options)], options);
+    return this.reply([Line.createAudio(audio, options)]);
   }
 
   replyLocation(
     location: LineTypes.Location,
     options?: LineTypes.MessageOptions
   ) {
-    return this.reply([Line.createLocation(location, options)], options);
+    return this.reply([Line.createLocation(location, options)]);
   }
 
   replySticker(
     sticker: Omit<LineTypes.StickerMessage, 'type'>,
     options?: LineTypes.MessageOptions
   ) {
-    return this.reply([Line.createSticker(sticker, options)], options);
+    return this.reply([Line.createSticker(sticker, options)]);
   }
 
   replyImagemap(
@@ -517,10 +451,7 @@ class LineContext extends Context<LineClient, LineEvent> {
     imagemap: Omit<LineTypes.ImagemapMessage, 'type' | 'altText'>,
     options?: LineTypes.MessageOptions
   ) {
-    return this.reply(
-      [Line.createImagemap(altText, imagemap, options)],
-      options
-    );
+    return this.reply([Line.createImagemap(altText, imagemap, options)]);
   }
 
   replyFlex(
@@ -528,7 +459,7 @@ class LineContext extends Context<LineClient, LineEvent> {
     flex: LineTypes.FlexContainer,
     options?: LineTypes.MessageOptions
   ) {
-    return this.reply([Line.createFlex(altText, flex, options)], options);
+    return this.reply([Line.createFlex(altText, flex, options)]);
   }
 
   replyTemplate(
@@ -536,10 +467,7 @@ class LineContext extends Context<LineClient, LineEvent> {
     template: LineTypes.Template,
     options?: LineTypes.MessageOptions
   ) {
-    return this.reply(
-      [Line.createTemplate(altText, template, options)],
-      options
-    );
+    return this.reply([Line.createTemplate(altText, template, options)]);
   }
 
   replyButtonTemplate(
@@ -547,10 +475,9 @@ class LineContext extends Context<LineClient, LineEvent> {
     buttonTemplate: Omit<LineTypes.ButtonsTemplate, 'type'>,
     options?: LineTypes.MessageOptions
   ) {
-    return this.reply(
-      [Line.createButtonTemplate(altText, buttonTemplate, options)],
-      options
-    );
+    return this.reply([
+      Line.createButtonTemplate(altText, buttonTemplate, options),
+    ]);
   }
 
   replyButtonsTemplate(
@@ -566,34 +493,20 @@ class LineContext extends Context<LineClient, LineEvent> {
     confirmTemplate: Omit<LineTypes.ConfirmTemplate, 'type'>,
     options: LineTypes.MessageOptions
   ) {
-    return this.reply(
-      [Line.createConfirmTemplate(altText, confirmTemplate, options)],
-      options
-    );
+    return this.reply([
+      Line.createConfirmTemplate(altText, confirmTemplate, options),
+    ]);
   }
 
   replyCarouselTemplate(
     altText: string,
     columns: LineTypes.ColumnObject[],
-    {
-      imageAspectRatio,
-      imageSize,
-      ...options
-    }: {
+    options: {
       imageAspectRatio?: 'rectangle' | 'square';
       imageSize?: 'cover' | 'contain';
-    } & LineTypes.MessageOptions = {}
+    } & LineTypes.MessageOptions
   ) {
-    return this.reply(
-      [
-        Line.createCarouselTemplate(altText, columns, {
-          imageAspectRatio,
-          imageSize,
-          ...options,
-        }),
-      ],
-      options
-    );
+    return this.reply([Line.createCarouselTemplate(altText, columns, options)]);
   }
 
   replyImageCarouselTemplate(
@@ -601,13 +514,12 @@ class LineContext extends Context<LineClient, LineEvent> {
     columns: LineTypes.ImageCarouselColumnObject[],
     options: LineTypes.MessageOptions
   ) {
-    return this.reply(
-      [Line.createImageCarouselTemplate(altText, columns, options)],
-      options
-    );
+    return this.reply([
+      Line.createImageCarouselTemplate(altText, columns, options),
+    ]);
   }
 
-  push(messages: LineTypes.Message[], options: LineTypes.MessageOptions = {}) {
+  push(messages: LineTypes.Message[]) {
     if (!this._session) {
       warning(false, `push: should not be called in context without session`);
       return;
@@ -619,19 +531,14 @@ class LineContext extends Context<LineClient, LineEvent> {
     }
 
     const sessionType = this._session.type;
-    return this._client.push(this._session[sessionType].id, messages, {
-      ...(this._customAccessToken
-        ? { accessToken: this._customAccessToken }
-        : undefined),
-      ...options,
-    });
+    return this._client.push(this._session[sessionType].id, messages);
   }
 
   pushText(
     text: string,
     options?: LineTypes.MessageOptions & { emojis?: LineTypes.Emoji[] }
   ) {
-    return this.push([Line.createText(text, options)], options);
+    return this.push([Line.createText(text, options)]);
   }
 
   pushImage(
@@ -641,7 +548,7 @@ class LineContext extends Context<LineClient, LineEvent> {
     },
     options?: LineTypes.MessageOptions
   ) {
-    return this.push([Line.createImage(image, options)], options);
+    return this.push([Line.createImage(image, options)]);
   }
 
   pushVideo(
@@ -651,7 +558,7 @@ class LineContext extends Context<LineClient, LineEvent> {
     },
     options?: LineTypes.MessageOptions
   ) {
-    return this.push([Line.createVideo(video, options)], options);
+    return this.push([Line.createVideo(video, options)]);
   }
 
   pushAudio(
@@ -661,21 +568,21 @@ class LineContext extends Context<LineClient, LineEvent> {
     },
     options?: LineTypes.MessageOptions
   ) {
-    return this.push([Line.createAudio(audio, options)], options);
+    return this.push([Line.createAudio(audio, options)]);
   }
 
   pushLocation(
     location: LineTypes.Location,
     options?: LineTypes.MessageOptions
   ) {
-    return this.push([Line.createLocation(location, options)], options);
+    return this.push([Line.createLocation(location, options)]);
   }
 
   pushSticker(
     sticker: Omit<LineTypes.StickerMessage, 'type'>,
     options?: LineTypes.MessageOptions
   ) {
-    return this.push([Line.createSticker(sticker, options)], options);
+    return this.push([Line.createSticker(sticker, options)]);
   }
 
   pushImagemap(
@@ -683,10 +590,7 @@ class LineContext extends Context<LineClient, LineEvent> {
     imagemap: Omit<LineTypes.ImagemapMessage, 'type' | 'altText'>,
     options?: LineTypes.MessageOptions
   ) {
-    return this.push(
-      [Line.createImagemap(altText, imagemap, options)],
-      options
-    );
+    return this.push([Line.createImagemap(altText, imagemap, options)]);
   }
 
   pushFlex(
@@ -694,7 +598,7 @@ class LineContext extends Context<LineClient, LineEvent> {
     flex: LineTypes.FlexContainer,
     options?: LineTypes.MessageOptions
   ) {
-    return this.push([Line.createFlex(altText, flex, options)], options);
+    return this.push([Line.createFlex(altText, flex, options)]);
   }
 
   pushTemplate(
@@ -702,10 +606,7 @@ class LineContext extends Context<LineClient, LineEvent> {
     template: LineTypes.Template,
     options?: LineTypes.MessageOptions
   ) {
-    return this.push(
-      [Line.createTemplate(altText, template, options)],
-      options
-    );
+    return this.push([Line.createTemplate(altText, template, options)]);
   }
 
   pushButtonTemplate(
@@ -713,10 +614,9 @@ class LineContext extends Context<LineClient, LineEvent> {
     buttonTemplate: Omit<LineTypes.ButtonsTemplate, 'type'>,
     options?: LineTypes.MessageOptions
   ) {
-    return this.push(
-      [Line.createButtonTemplate(altText, buttonTemplate, options)],
-      options
-    );
+    return this.push([
+      Line.createButtonTemplate(altText, buttonTemplate, options),
+    ]);
   }
 
   pushButtonsTemplate(
@@ -732,34 +632,20 @@ class LineContext extends Context<LineClient, LineEvent> {
     confirmTemplate: Omit<LineTypes.ConfirmTemplate, 'type'>,
     options: LineTypes.MessageOptions
   ) {
-    return this.push(
-      [Line.createConfirmTemplate(altText, confirmTemplate, options)],
-      options
-    );
+    return this.push([
+      Line.createConfirmTemplate(altText, confirmTemplate, options),
+    ]);
   }
 
   pushCarouselTemplate(
     altText: string,
     columns: LineTypes.ColumnObject[],
-    {
-      imageAspectRatio,
-      imageSize,
-      ...options
-    }: {
+    options: {
       imageAspectRatio?: 'rectangle' | 'square';
       imageSize?: 'cover' | 'contain';
-    } & LineTypes.MessageOptions = {}
+    } & LineTypes.MessageOptions
   ) {
-    return this.push(
-      [
-        Line.createCarouselTemplate(altText, columns, {
-          imageAspectRatio,
-          imageSize,
-          ...options,
-        }),
-      ],
-      options
-    );
+    return this.push([Line.createCarouselTemplate(altText, columns, options)]);
   }
 
   pushImageCarouselTemplate(
@@ -767,24 +653,23 @@ class LineContext extends Context<LineClient, LineEvent> {
     columns: LineTypes.ImageCarouselColumnObject[],
     options: LineTypes.MessageOptions
   ) {
-    return this.push(
-      [Line.createImageCarouselTemplate(altText, columns, options)],
-      options
-    );
+    return this.push([
+      Line.createImageCarouselTemplate(altText, columns, options),
+    ]);
   }
 
-  send(messages: LineTypes.Message[], options: LineTypes.MessageOptions = {}) {
+  send(messages: LineTypes.Message[]) {
     if (this._sendMethod === 'push') {
-      return this.push(messages, options);
+      return this.push(messages);
     }
-    return this.reply(messages, options);
+    return this.reply(messages);
   }
 
   sendText(
     text: string,
     options?: LineTypes.MessageOptions & { emojis?: LineTypes.Emoji[] }
   ) {
-    return this.send([Line.createText(text, options)], options);
+    return this.send([Line.createText(text, options)]);
   }
 
   sendImage(
@@ -794,7 +679,7 @@ class LineContext extends Context<LineClient, LineEvent> {
     },
     options?: LineTypes.MessageOptions
   ) {
-    return this.send([Line.createImage(image, options)], options);
+    return this.send([Line.createImage(image, options)]);
   }
 
   sendVideo(
@@ -804,7 +689,7 @@ class LineContext extends Context<LineClient, LineEvent> {
     },
     options?: LineTypes.MessageOptions
   ) {
-    return this.send([Line.createVideo(video, options)], options);
+    return this.send([Line.createVideo(video, options)]);
   }
 
   sendAudio(
@@ -814,21 +699,21 @@ class LineContext extends Context<LineClient, LineEvent> {
     },
     options?: LineTypes.MessageOptions
   ) {
-    return this.send([Line.createAudio(audio, options)], options);
+    return this.send([Line.createAudio(audio, options)]);
   }
 
   sendLocation(
     location: LineTypes.Location,
     options?: LineTypes.MessageOptions
   ) {
-    return this.send([Line.createLocation(location, options)], options);
+    return this.send([Line.createLocation(location, options)]);
   }
 
   sendSticker(
     sticker: Omit<LineTypes.StickerMessage, 'type'>,
     options?: LineTypes.MessageOptions
   ) {
-    return this.send([Line.createSticker(sticker, options)], options);
+    return this.send([Line.createSticker(sticker, options)]);
   }
 
   sendImagemap(
@@ -836,10 +721,7 @@ class LineContext extends Context<LineClient, LineEvent> {
     imagemap: Omit<LineTypes.ImagemapMessage, 'type' | 'altText'>,
     options?: LineTypes.MessageOptions
   ) {
-    return this.send(
-      [Line.createImagemap(altText, imagemap, options)],
-      options
-    );
+    return this.send([Line.createImagemap(altText, imagemap, options)]);
   }
 
   sendFlex(
@@ -847,7 +729,7 @@ class LineContext extends Context<LineClient, LineEvent> {
     flex: LineTypes.FlexContainer,
     options?: LineTypes.MessageOptions
   ) {
-    return this.send([Line.createFlex(altText, flex, options)], options);
+    return this.send([Line.createFlex(altText, flex, options)]);
   }
 
   sendTemplate(
@@ -855,10 +737,7 @@ class LineContext extends Context<LineClient, LineEvent> {
     template: LineTypes.Template,
     options?: LineTypes.MessageOptions
   ) {
-    return this.send(
-      [Line.createTemplate(altText, template, options)],
-      options
-    );
+    return this.send([Line.createTemplate(altText, template, options)]);
   }
 
   sendButtonTemplate(
@@ -866,10 +745,9 @@ class LineContext extends Context<LineClient, LineEvent> {
     buttonTemplate: Omit<LineTypes.ButtonsTemplate, 'type'>,
     options?: LineTypes.MessageOptions
   ) {
-    return this.send(
-      [Line.createButtonTemplate(altText, buttonTemplate, options)],
-      options
-    );
+    return this.send([
+      Line.createButtonTemplate(altText, buttonTemplate, options),
+    ]);
   }
 
   sendButtonsTemplate(
@@ -883,36 +761,22 @@ class LineContext extends Context<LineClient, LineEvent> {
   sendConfirmTemplate(
     altText: string,
     confirmTemplate: Omit<LineTypes.ConfirmTemplate, 'type'>,
-    options: LineTypes.MessageOptions
+    options?: LineTypes.MessageOptions
   ) {
-    return this.send(
-      [Line.createConfirmTemplate(altText, confirmTemplate, options)],
-      options
-    );
+    return this.send([
+      Line.createConfirmTemplate(altText, confirmTemplate, options),
+    ]);
   }
 
   sendCarouselTemplate(
     altText: string,
     columns: LineTypes.ColumnObject[],
-    {
-      imageAspectRatio,
-      imageSize,
-      ...options
-    }: {
+    options?: {
       imageAspectRatio?: 'rectangle' | 'square';
       imageSize?: 'cover' | 'contain';
-    } & LineTypes.MessageOptions = {}
+    } & LineTypes.MessageOptions
   ) {
-    return this.send(
-      [
-        Line.createCarouselTemplate(altText, columns, {
-          imageAspectRatio,
-          imageSize,
-          ...options,
-        }),
-      ],
-      options
-    );
+    return this.send([Line.createCarouselTemplate(altText, columns, options)]);
   }
 
   sendImageCarouselTemplate(
@@ -920,10 +784,9 @@ class LineContext extends Context<LineClient, LineEvent> {
     columns: LineTypes.ImageCarouselColumnObject[],
     options: LineTypes.MessageOptions
   ) {
-    return this.send(
-      [Line.createImageCarouselTemplate(altText, columns, options)],
-      options
-    );
+    return this.send([
+      Line.createImageCarouselTemplate(altText, columns, options),
+    ]);
   }
 }
 

@@ -2,46 +2,52 @@ import crypto from 'crypto';
 import { EventEmitter } from 'events';
 
 import invariant from 'invariant';
-import { ViberClient, ViberTypes } from 'messaging-api-viber';
+import { JsonObject } from 'type-fest';
+import { ViberClient } from 'messaging-api-viber';
 import { addedDiff } from 'deep-object-diff';
 
 import Session from '../session/Session';
 import { Connector } from '../bot/Connector';
-import { RequestContext } from '../types';
 
 import ViberContext from './ViberContext';
-import ViberEvent, { ViberRawEvent } from './ViberEvent';
+import ViberEvent from './ViberEvent';
+import {
+  Sender,
+  ViberRawEvent,
+  ViberRequestBody,
+  ViberRequestContext,
+} from './ViberTypes';
 
-export type ViberRequestBody = ViberRawEvent;
-
-type ConstructorOptionsWithoutClient = {
+type ConnectorOptionsWithoutClient = {
   accessToken: string;
-  sender: ViberTypes.Sender;
+  sender: Sender;
   origin?: string;
   skipLegacyProfile?: boolean;
 };
 
-type ConstructorOptionsWithClient = {
+type ConnectorOptionsWithClient = {
   client: ViberClient;
   skipLegacyProfile?: boolean;
 };
 
-type ConstructorOptions =
-  | ConstructorOptionsWithoutClient
-  | ConstructorOptionsWithClient;
+export type ViberConnectorOptions =
+  | ConnectorOptionsWithoutClient
+  | ConnectorOptionsWithClient;
 
 export default class ViberConnector
-  implements Connector<ViberRequestBody, ViberClient> {
+  implements Connector<ViberRequestBody, ViberClient>
+{
   _accessToken: string;
 
   _client: ViberClient;
 
   _skipLegacyProfile: boolean;
 
-  constructor(options: ConstructorOptions) {
+  constructor(options: ViberConnectorOptions) {
     const { skipLegacyProfile } = options;
     if ('client' in options) {
       this._client = options.client;
+      this._accessToken = this._client.accessToken;
     } else {
       const { accessToken, sender, origin } = options;
 
@@ -50,17 +56,14 @@ export default class ViberConnector
         'Viber access token is required. Please make sure you have filled it correctly in `bottender.config.js` or `.env` file.'
       );
 
-      this._client = ViberClient.connect(
-        {
-          accessToken,
-          sender,
-          origin,
-        },
-        sender
-      );
+      this._client = new ViberClient({
+        accessToken,
+        sender,
+        origin,
+      });
+      this._accessToken = accessToken;
     }
 
-    this._accessToken = this._client.accessToken;
     this._skipLegacyProfile =
       typeof skipLegacyProfile === 'boolean' ? skipLegacyProfile : true;
   }
@@ -69,7 +72,7 @@ export default class ViberConnector
     return body;
   }
 
-  get platform(): string {
+  get platform(): 'viber' {
     return 'viber';
   }
 
@@ -149,8 +152,8 @@ export default class ViberConnector
   createContext(params: {
     event: ViberEvent;
     session: Session | null;
-    initialState?: Record<string, any> | null;
-    requestContext?: RequestContext;
+    initialState?: JsonObject | null;
+    requestContext?: ViberRequestContext;
     emitter?: EventEmitter | null;
   }): ViberContext {
     return new ViberContext({
@@ -176,20 +179,11 @@ export default class ViberConnector
     return crypto.timingSafeEqual(bufferFromSignature, hashBufferFromBody);
   }
 
-  preprocess({
-    method,
-    headers,
-    rawBody,
-  }: {
-    method: string;
-    headers: Record<string, any>;
-    query: Record<string, any>;
-    rawBody: string;
-    body: Record<string, any>;
-  }) {
+  preprocess({ method, headers, rawBody }: ViberRequestContext) {
     if (
       method.toLowerCase() !== 'post' ||
-      this.verifySignature(rawBody, headers['x-viber-content-signature'])
+      (headers['x-viber-content-signature'] &&
+        this.verifySignature(rawBody, headers['x-viber-content-signature']))
     ) {
       return {
         shouldNext: true,

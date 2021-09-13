@@ -145,8 +145,7 @@ it('#media', () => {
   expect(new WhatsappEvent(textMessageReceived).media).toEqual(null);
   expect(new WhatsappEvent(imageMessageReceived).media).toEqual({
     contentType: 'image/jpeg',
-    url:
-      'https://api.twilio.com/2010-04-01/Accounts/ACf19dfb164f82b2c9d6178c6ada3XXXXX/Messages/MMad0463f6e2a946b3fc91d9a04a2XXXXX/Media/MEfaf3decca478ebeb4924fe523ff7fdb2',
+    url: 'https://api.twilio.com/2010-04-01/Accounts/ACf19dfb164f82b2c9d6178c6ada3XXXXX/Messages/MMad0463f6e2a946b3fc91d9a04a2XXXXX/Media/MEfaf3decca478ebeb4924fe523ff7fdb2',
   });
   expect(new WhatsappEvent(messageSent).media).toEqual(null);
   expect(new WhatsappEvent(messageDelivered).media).toEqual(null);
