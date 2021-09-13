@@ -117,7 +117,7 @@ export default class ViberEvent implements Event<ViberRawEvent> {
    */
   get isFile(): boolean {
     return (
-      this.isMessage && ((this.message as any) as ViberMessage).type === 'file'
+      this.isMessage && (this.message as any as ViberMessage).type === 'file'
     );
   }
 

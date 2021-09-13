@@ -21,16 +21,16 @@ import {
   MessengerRequestContext,
 } from './MessengerTypes';
 
-export type MessengerConnectorOptions = FacebookBaseConnectorOptions<
-  MessengerClient
-> & {
-  skipLegacyProfile?: boolean;
-  mapPageToAccessToken?: (pageId: string) => Promise<string>;
-};
+export type MessengerConnectorOptions =
+  FacebookBaseConnectorOptions<MessengerClient> & {
+    skipLegacyProfile?: boolean;
+    mapPageToAccessToken?: (pageId: string) => Promise<string>;
+  };
 
 export default class MessengerConnector
   extends FacebookBaseConnector<MessengerRequestBody, MessengerClient>
-  implements Connector<MessengerRequestBody, MessengerClient> {
+  implements Connector<MessengerRequestBody, MessengerClient>
+{
   _skipLegacyProfile: boolean;
 
   _mapPageToAccessToken: ((pageId: string) => Promise<string>) | null = null;

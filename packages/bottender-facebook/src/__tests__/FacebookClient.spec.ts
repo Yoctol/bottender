@@ -415,8 +415,7 @@ describe('send api', () => {
               before: 'Nzc0Njg0MTQ3OAZDZD',
               after: 'NTcxODc1ODk2NgZDZD',
             },
-            next:
-              'https://graph.facebook.com/vX.X/me/likes?access_token=user-access-token&pretty=0&summary=true&limit=25&after=NTcxODc1ODk2NgZDZD',
+            next: 'https://graph.facebook.com/vX.X/me/likes?access_token=user-access-token&pretty=0&summary=true&limit=25&after=NTcxODc1ODk2NgZDZD',
           },
         },
       };
@@ -456,8 +455,7 @@ describe('send api', () => {
             before: 'Nzc0Njg0MTQ3OAZDZD',
             after: 'NTcxODc1ODk2NgZDZD',
           },
-          next:
-            'https://graph.facebook.com/vX.X/me/likes?access_token=user-access-token&pretty=0&summary=true&limit=25&after=NTcxODc1ODk2NgZDZD',
+          next: 'https://graph.facebook.com/vX.X/me/likes?access_token=user-access-token&pretty=0&summary=true&limit=25&after=NTcxODc1ODk2NgZDZD',
         },
       });
     });
@@ -490,8 +488,7 @@ describe('send api', () => {
               before: 'Nzc0Njg0MTQ3OAZDZD',
               after: 'NTcxODc1ODk2NgZDZD',
             },
-            next:
-              'https://graph.facebook.com/vX.X/me/likes?access_token=user-access-token&pretty=0&summary=true&limit=25&after=NTcxODc1ODk2NgZDZD',
+            next: 'https://graph.facebook.com/vX.X/me/likes?access_token=user-access-token&pretty=0&summary=true&limit=25&after=NTcxODc1ODk2NgZDZD',
           },
           summary: {
             total_count: 136,
@@ -537,8 +534,7 @@ describe('send api', () => {
             before: 'Nzc0Njg0MTQ3OAZDZD',
             after: 'NTcxODc1ODk2NgZDZD',
           },
-          next:
-            'https://graph.facebook.com/vX.X/me/likes?access_token=user-access-token&pretty=0&summary=true&limit=25&after=NTcxODc1ODk2NgZDZD',
+          next: 'https://graph.facebook.com/vX.X/me/likes?access_token=user-access-token&pretty=0&summary=true&limit=25&after=NTcxODc1ODk2NgZDZD',
         },
         summary: {
           totalCount: 136,

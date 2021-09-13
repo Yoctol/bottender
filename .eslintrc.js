@@ -1,11 +1,6 @@
 module.exports = {
   parser: '@typescript-eslint/parser',
-  extends: [
-    'yoctol-base',
-    'plugin:@typescript-eslint/recommended',
-    'prettier',
-    'prettier/@typescript-eslint',
-  ],
+  extends: ['yoctol-base', 'plugin:@typescript-eslint/recommended', 'prettier'],
   env: {
     browser: true,
     node: true,
@@ -40,6 +35,11 @@ module.exports = {
     '@typescript-eslint/no-var-requires': 'warn',
     '@typescript-eslint/ban-types': 'warn',
     '@typescript-eslint/no-non-null-assertion': 'off',
+
+    'no-use-before-define': 'off',
+    '@typescript-eslint/no-use-before-define': 'error',
+    'no-shadow': 'off',
+    '@typescript-eslint/no-shadow': 'error',
   },
   overrides: [
     {

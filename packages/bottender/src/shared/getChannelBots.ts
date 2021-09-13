@@ -28,9 +28,11 @@ function getChannelBots(): ChannelBot[] {
 
   const bottenderConfig = getBottenderConfig();
 
-  const { initialState, plugins, channels = {} } = merge(
-    bottenderConfig /* , config */
-  ) as BottenderConfig;
+  const {
+    initialState,
+    plugins,
+    channels = {},
+  } = merge(bottenderConfig /* , config */) as BottenderConfig;
 
   const sessionStore = getSessionStore();
 

@@ -50,10 +50,8 @@ export default class TelegramHandler extends Handler {
       this.on((context) => context.event.isPayload, handler);
     } else {
       // eslint-disable-next-line prefer-const
-      let [pattern, handler]: [
-        Pattern,
-        FunctionalHandler | Builder
-      ] = args as any;
+      let [pattern, handler]: [Pattern, FunctionalHandler | Builder] =
+        args as any;
 
       if ('build' in handler) {
         handler = handler.build();

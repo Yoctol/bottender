@@ -35,7 +35,8 @@ export type FacebookConnectorOptions = {
 
 export default class FacebookConnector
   extends FacebookBaseConnector<FacebookWebhookRequestBody, FacebookClient>
-  implements Connector<FacebookWebhookRequestBody, FacebookClient> {
+  implements Connector<FacebookWebhookRequestBody, FacebookClient>
+{
   _mapPageToAccessToken: ((pageId: string) => Promise<string>) | null = null;
 
   _messengerConnector: MessengerConnector;

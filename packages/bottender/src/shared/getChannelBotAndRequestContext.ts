@@ -8,9 +8,7 @@ import { ChannelBot, RequestContext } from '..';
 
 import getChannelBots from './getChannelBots';
 
-function getChannelBotAndRequestContext(
-  req: IncomingMessage
-):
+function getChannelBotAndRequestContext(req: IncomingMessage):
   | {
       requestContext: RequestContext;
       channelBot: ChannelBot;

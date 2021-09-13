@@ -19,7 +19,8 @@ type ConstructorOptions = {
 };
 
 export default class ConsoleConnector
-  implements Connector<ConsoleRequestBody, ConsoleClient> {
+  implements Connector<ConsoleRequestBody, ConsoleClient>
+{
   _client: ConsoleClient;
 
   _fallbackMethods: boolean;

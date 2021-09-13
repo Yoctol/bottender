@@ -45,7 +45,8 @@ export type SlackConnectorOptions =
   | ConnectorOptionsWithClient;
 
 export default class SlackConnector
-  implements Connector<SlackRequestBody, SlackOAuthClient> {
+  implements Connector<SlackRequestBody, SlackOAuthClient>
+{
   _client: SlackOAuthClient;
 
   _verificationToken: string;
@@ -116,7 +117,7 @@ export default class SlackConnector
       return payload as BlockActionEvent;
     }
     // for RTM WebSocket messages and Slash Command messages
-    return (body as any) as Message;
+    return body as any as Message;
   }
 
   _isBotEventRequest(body: SlackRequestBody): boolean {
@@ -259,9 +260,8 @@ export default class SlackConnector
     ) {
       if (channelId) {
         promises.channel = this._client.getConversationInfo(channelId);
-        promises.channelMembers = this._client.getAllConversationMembers(
-          channelId
-        );
+        promises.channelMembers =
+          this._client.getAllConversationMembers(channelId);
       }
     }
 

@@ -13,8 +13,8 @@ function getSessionStore(): SessionStore {
 
   switch (sessionDriver) {
     case 'memory': {
-      const MemorySessionStore = require('../session/MemorySessionStore')
-        .default;
+      const MemorySessionStore =
+        require('../session/MemorySessionStore').default;
 
       return new MemorySessionStore(
         storesConfig.memory || {},
@@ -47,9 +47,9 @@ function getSessionStore(): SessionStore {
     }
     default: {
       // Support custom session stores by returning the session store instance
-      const customSessionStore:
-        | SessionStore
-        | undefined = (storesConfig as any)[sessionDriver];
+      const customSessionStore: SessionStore | undefined = (
+        storesConfig as any
+      )[sessionDriver];
       if (customSessionStore) {
         return customSessionStore;
       }
@@ -58,8 +58,8 @@ function getSessionStore(): SessionStore {
         false,
         `Received unknown driver: ${sessionDriver}, so fallback it to \`memory\` driver.`
       );
-      const MemorySessionStore = require('../session/MemorySessionStore')
-        .default;
+      const MemorySessionStore =
+        require('../session/MemorySessionStore').default;
 
       return new MemorySessionStore(
         storesConfig.memory || {},

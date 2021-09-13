@@ -8,9 +8,6 @@
     "type": "git",
     "url": "https://github.com/Yoctol/bottender.git"
   },
-  "workspaces": [
-    "packages/*"
-  ],
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "clean": "git clean -dfqX -- ./node_modules **/{dist,node_modules}/ ./packages/*/tsconfig*tsbuildinfo",
@@ -27,49 +24,48 @@
     "testonly": "jest",
     "testonly:cov": "jest --coverage",
     "testonly:watch": "jest --watch",
-    "version": "cp README.md packages/bottender"
+    "version": "cp README.md packages/bottender",
+    "prepare": "husky install"
   },
+  "workspaces": [
+    "packages/*"
+  ],
   "dependencies": {},
   "devDependencies": {
     "@types/jest": "^26.0.4",
-    "@types/prettier": "^2.0.2",
-    "@typescript-eslint/eslint-plugin": "^3.6.0",
-    "@typescript-eslint/parser": "^3.6.0",
-    "axios-mock-adapter": "^1.18.1",
-    "chalk": "^4.1.0",
-    "cross-env": "^7.0.2",
-    "eslint": "^7.4.0",
-    "eslint-config-prettier": "^6.11.0",
-    "eslint-config-yoctol-base": "^0.23.1",
-    "eslint-import-resolver-typescript": "^2.0.0",
-    "eslint-plugin-import": "2.22.0",
-    "eslint-plugin-prettier": "^3.1.4",
-    "eslint-plugin-sort-imports-es6-autofix": "^0.5.0",
-    "eslint-plugin-tsdoc": "^0.2.5",
-    "glob": "^7.1.6",
-    "husky": "^4.2.5",
+    "@types/prettier": "^2.3.2",
+    "@typescript-eslint/eslint-plugin": "^4.31.0",
+    "@typescript-eslint/parser": "^4.31.0",
+    "axios-mock-adapter": "^1.20.0",
+    "chalk": "^4.1.2",
+    "cross-env": "^7.0.3",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-config-yoctol-base": "^0.24.1",
+    "eslint-import-resolver-typescript": "^2.5.0",
+    "eslint-plugin-import": "2.24.2",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-sort-imports-es6-autofix": "^0.6.0",
+    "eslint-plugin-tsdoc": "^0.2.14",
+    "glob": "^7.1.7",
+    "husky": "^7.0.0",
     "jest": "^26.1.0",
-    "jest-junit": "^11.0.1",
+    "jest-junit": "^12.2.0",
     "lerna": "^3.22.1",
-    "lint-staged": "^10.2.11",
-    "micromatch": "^4.0.2",
+    "lint-staged": "^11.1.2",
+    "micromatch": "^4.0.4",
     "mkdirp": "^1.0.4",
-    "mockdate": "^3.0.2",
-    "nock": "^13.0.2",
+    "mockdate": "^3.0.5",
+    "nock": "^13.1.3",
     "once": "^1.4.0",
-    "prettier": "^2.0.5",
-    "prettier-package-json": "^2.1.3",
+    "prettier": "^2.4.0",
+    "prettier-package-json": "^2.6.0",
     "rimraf": "^3.0.2",
-    "supertest": "^4.0.2",
+    "supertest": "^6.1.6",
     "ts-jest": "^26.1.1",
     "typescript": "^3.9.6"
   },
   "engines": {
     "node": ">=8"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
   }
 }

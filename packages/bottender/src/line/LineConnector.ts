@@ -55,7 +55,8 @@ export type LineConnectorOptions =
   | ConnectorOptionsWithClient;
 
 export default class LineConnector
-  implements Connector<LineRequestBody, LineClient> {
+  implements Connector<LineRequestBody, LineClient>
+{
   _client: LineClient | undefined;
 
   _channelSecret: string | undefined;

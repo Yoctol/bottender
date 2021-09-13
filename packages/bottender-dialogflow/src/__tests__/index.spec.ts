@@ -171,8 +171,7 @@ it('should resolve corresponding action if intent match id', async () => {
         ],
         outputContexts: [
           {
-            name:
-              'projects/PROJECT_ID/agent/sessions/console:1/contexts/__system_counters__',
+            name: 'projects/PROJECT_ID/agent/sessions/console:1/contexts/__system_counters__',
             lifespanCount: 1,
             parameters: {
               fields: {
@@ -267,8 +266,7 @@ it('should resolve by fulfillmentMessages if intent match name without actions',
         ],
         outputContexts: [
           {
-            name:
-              'projects/PROJECT_ID/agent/sessions/console:1/contexts/__system_counters__',
+            name: 'projects/PROJECT_ID/agent/sessions/console:1/contexts/__system_counters__',
             lifespanCount: 1,
             parameters: {
               fields: {
@@ -352,8 +350,7 @@ it('should go next if intent does not match any name', async () => {
         fulfillmentMessages: [],
         outputContexts: [
           {
-            name:
-              'projects/PROJECT_ID/agent/sessions/console:1/contexts/__system_counters__',
+            name: 'projects/PROJECT_ID/agent/sessions/console:1/contexts/__system_counters__',
             lifespanCount: 1,
             parameters: {
               fields: {
@@ -448,8 +445,7 @@ it('should go next if no intent', async () => {
         ],
         outputContexts: [
           {
-            name:
-              'projects/PROJECT_ID/agent/sessions/console:1/contexts/__system_counters__',
+            name: 'projects/PROJECT_ID/agent/sessions/console:1/contexts/__system_counters__',
             lifespanCount: 1,
             parameters: {
               fields: {
@@ -525,8 +521,7 @@ it('should support parameters of dialogflow', async () => {
         ],
         outputContexts: [
           {
-            name:
-              'projects/PROJECT_ID/agent/sessions/console:1/contexts/__system_counters__',
+            name: 'projects/PROJECT_ID/agent/sessions/console:1/contexts/__system_counters__',
             lifespanCount: 1,
             parameters: {
               fields: {

@@ -337,27 +337,25 @@ export default class Bot<
         return response;
       }
       promises
-        .then(
-          async (): Promise<any> => {
-            await Promise.all(
-              contexts.map(async (context) => {
-                context.isSessionWritten = true;
+        .then(async (): Promise<any> => {
+          await Promise.all(
+            contexts.map(async (context) => {
+              context.isSessionWritten = true;
 
-                const { session } = context;
+              const { session } = context;
 
-                if (session) {
-                  session.lastActivity = Date.now();
+              if (session) {
+                session.lastActivity = Date.now();
 
-                  debugSessionWrite(`Write session: ${session.id}`);
-                  debugSessionWrite(JSON.stringify(session, null, 2));
+                debugSessionWrite(`Write session: ${session.id}`);
+                debugSessionWrite(JSON.stringify(session, null, 2));
 
-                  // eslint-disable-next-line no-await-in-loop
-                  await this._sessions.write(session.id, session);
-                }
-              })
-            );
-          }
-        )
+                // eslint-disable-next-line no-await-in-loop
+                await this._sessions.write(session.id, session);
+              }
+            })
+          );
+        })
         .catch(console.error);
     };
   }
