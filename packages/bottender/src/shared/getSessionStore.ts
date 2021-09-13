@@ -1,7 +1,8 @@
 import warning from 'warning';
 
-import SessionStore from './session/SessionStore';
-import getBottenderConfig from './shared/getBottenderConfig';
+import SessionStore from '../session/SessionStore';
+
+import getBottenderConfig from './getBottenderConfig';
 
 function getSessionStore(): SessionStore {
   const { session } = getBottenderConfig();
@@ -12,8 +13,8 @@ function getSessionStore(): SessionStore {
 
   switch (sessionDriver) {
     case 'memory': {
-      const MemorySessionStore = require('./session/MemorySessionStore')
-        .default;
+      const MemorySessionStore =
+        require('../session/MemorySessionStore').default;
 
       return new MemorySessionStore(
         storesConfig.memory || {},
@@ -21,7 +22,7 @@ function getSessionStore(): SessionStore {
       );
     }
     case 'file': {
-      const FileSessionStore = require('./session/FileSessionStore').default;
+      const FileSessionStore = require('../session/FileSessionStore').default;
 
       return new FileSessionStore(
         storesConfig.file || {},
@@ -29,7 +30,7 @@ function getSessionStore(): SessionStore {
       );
     }
     case 'mongo': {
-      const MongoSessionStore = require('./session/MongoSessionStore').default;
+      const MongoSessionStore = require('../session/MongoSessionStore').default;
 
       return new MongoSessionStore(
         storesConfig.mongo || {},
@@ -37,7 +38,7 @@ function getSessionStore(): SessionStore {
       );
     }
     case 'redis': {
-      const RedisSessionStore = require('./session/RedisSessionStore').default;
+      const RedisSessionStore = require('../session/RedisSessionStore').default;
 
       return new RedisSessionStore(
         storesConfig.redis || {},
@@ -46,9 +47,9 @@ function getSessionStore(): SessionStore {
     }
     default: {
       // Support custom session stores by returning the session store instance
-      const customSessionStore:
-        | SessionStore
-        | undefined = (storesConfig as any)[sessionDriver];
+      const customSessionStore: SessionStore | undefined = (
+        storesConfig as any
+      )[sessionDriver];
       if (customSessionStore) {
         return customSessionStore;
       }
@@ -57,8 +58,8 @@ function getSessionStore(): SessionStore {
         false,
         `Received unknown driver: ${sessionDriver}, so fallback it to \`memory\` driver.`
       );
-      const MemorySessionStore = require('./session/MemorySessionStore')
-        .default;
+      const MemorySessionStore =
+        require('../session/MemorySessionStore').default;
 
       return new MemorySessionStore(
         storesConfig.memory || {},

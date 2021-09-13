@@ -22,7 +22,7 @@ export async function getWebhook(_: CliContext): Promise<void> {
       '`accessToken` is not found in the `bottender.config.js` file'
     );
 
-    const client = TelegramClient.connect({
+    const client = new TelegramClient({
       accessToken,
     });
 
@@ -65,7 +65,7 @@ export async function setWebhook(ctx: CliContext): Promise<void> {
       '`accessToken` is not found in the `bottender.config.js` file'
     );
 
-    const client = TelegramClient.connect({
+    const client = new TelegramClient({
       accessToken,
     });
 
@@ -115,7 +115,7 @@ export async function deleteWebhook(_: CliContext): Promise<void> {
       '`accessToken` is not found in the `bottender.config.js` file'
     );
 
-    const client = TelegramClient.connect({
+    const client = new TelegramClient({
       accessToken,
     });
 

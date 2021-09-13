@@ -1,4 +1,5 @@
 import { TelegramClient } from 'messaging-api-telegram';
+import { mocked } from 'ts-jest/utils';
 
 import getChannelConfig from '../../../../shared/getChannelConfig';
 import { getWebhook } from '../webhook';
@@ -19,26 +20,26 @@ const MOCK_FILE_WITH_PLATFORM = {
 
 beforeEach(() => {
   process.exit = jest.fn();
-  getChannelConfig.mockReturnValue(MOCK_FILE_WITH_PLATFORM.channels.telegram);
 
-  TelegramClient.connect.mockReturnValue({
-    getWebhookInfo: jest.fn().mockResolvedValue({
-      url: 'https://4a16faff.ngrok.io/',
-      has_custom_certificate: false,
-      pending_update_count: 0,
-      max_connections: 40,
-    }),
+  mocked(getChannelConfig).mockReturnValue(
+    MOCK_FILE_WITH_PLATFORM.channels.telegram
+  );
+
+  mocked(TelegramClient.prototype.getWebhookInfo).mockResolvedValue({
+    url: 'https://4a16faff.ngrok.io/',
+    hasCustomCertificate: false,
+    pendingUpdateCount: 0,
+    maxConnections: 40,
   });
-});
-
-it('be defined', () => {
-  expect(getWebhook).toBeDefined();
 });
 
 describe('resolve', () => {
   it('successfully get webhook', async () => {
     const ctx = {
-      argv: {},
+      config: null,
+      argv: {
+        _: [],
+      },
     };
 
     await getWebhook(ctx);
@@ -50,9 +51,12 @@ describe('resolve', () => {
 describe('reject', () => {
   it('reject when Telegram return not success', () => {
     const ctx = {
-      argv: {},
+      config: null,
+      argv: {
+        _: [],
+      },
     };
-    TelegramClient.connect().getWebhookInfo.mockResolvedValueOnce({
+    mocked(TelegramClient.prototype.getWebhookInfo).mockResolvedValueOnce({
       ok: false,
     });
 
@@ -61,10 +65,13 @@ describe('reject', () => {
 
   it('reject when `accessToken` is not found in the `bottender.config.js` file', () => {
     const ctx = {
-      argv: {},
+      config: null,
+      argv: {
+        _: [],
+      },
     };
 
-    getChannelConfig.mockReturnValueOnce({});
+    mocked(getChannelConfig).mockReturnValueOnce({});
 
     expect(getWebhook(ctx).then).toThrow();
   });

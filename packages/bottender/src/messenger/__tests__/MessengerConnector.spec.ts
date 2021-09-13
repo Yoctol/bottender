@@ -1,149 +1,140 @@
 import warning from 'warning';
 import { MessengerClient } from 'messaging-api-messenger';
+import { mocked } from 'ts-jest/utils';
 
 import MessengerConnector from '../MessengerConnector';
 import MessengerContext from '../MessengerContext';
 import MessengerEvent from '../MessengerEvent';
+import { MessengerRequestBody } from '../MessengerTypes';
 
 jest.mock('messaging-api-messenger');
 jest.mock('warning');
 
 const ACCESS_TOKEN = 'FAKE_TOKEN';
 const APP_SECRET = 'FAKE_SECRET';
+const APP_ID = 'FAKE_ID';
 
-const request = {
-  body: {
-    object: 'page',
-    entry: [
-      {
-        id: '1895382890692545',
-        time: 1486464322257,
-        messaging: [
-          {
-            sender: {
-              id: '1412611362105802',
-            },
-            recipient: {
-              id: '1895382890692545',
-            },
-            timestamp: 1486464322190,
-            message: {
-              mid: 'mid.1486464322190:cb04e5a654',
-              seq: 339979,
-              text: 'text',
-            },
+const request: MessengerRequestBody = {
+  object: 'page',
+  entry: [
+    {
+      id: '1895382890692545',
+      time: 1486464322257,
+      messaging: [
+        {
+          sender: {
+            id: '1412611362105802',
           },
-        ],
-      },
-    ],
-  },
+          recipient: {
+            id: '1895382890692545',
+          },
+          timestamp: 1486464322190,
+          message: {
+            mid: 'mid.1486464322190:cb04e5a654',
+            text: 'text',
+          },
+        },
+      ],
+    },
+  ],
 };
 
-const echoRequest = {
-  body: {
-    object: 'page',
-    entry: [
-      {
-        id: '1134713619900975', // page id
-        time: 1492414608999.0,
-        messaging: [
-          {
-            sender: {
-              id: '1134713619900975',
-            },
-            recipient: {
-              id: '1244813222196986', // user id
-            },
-            timestamp: 1492414608982.0,
-            message: {
-              isEcho: true,
-              appId: 1821152484774199,
-              mid: 'mid.$cAARS90328R5hrBz-Vlbete17ftIb',
-              seq: 661428,
-              text: 'text',
-            },
+const echoRequest: MessengerRequestBody = {
+  object: 'page',
+  entry: [
+    {
+      id: '1134713619900975', // page id
+      time: 1492414608999.0,
+      messaging: [
+        {
+          sender: {
+            id: '1134713619900975',
           },
-        ],
-      },
-    ],
-  },
+          recipient: {
+            id: '1244813222196986', // user id
+          },
+          timestamp: 1492414608982.0,
+          message: {
+            isEcho: true,
+            appId: 1821152484774199,
+            mid: 'mid.$cAARS90328R5hrBz-Vlbete17ftIb',
+            text: 'text',
+          },
+        },
+      ],
+    },
+  ],
 };
 
-const batchRequest = {
-  body: {
-    object: 'page',
-    entry: [
-      {
-        id: '1895382890692545',
-        time: 1486464322257,
-        messaging: [
-          {
-            sender: {
-              id: '1412611362105802',
-            },
-            recipient: {
-              id: '1895382890692545',
-            },
-            timestamp: 1486464322190,
-            message: {
-              mid: 'mid.1486464322190:cb04e5a654',
-              seq: 339979,
-              text: 'test 1',
-            },
+const batchRequest: MessengerRequestBody = {
+  object: 'page',
+  entry: [
+    {
+      id: '1895382890692545',
+      time: 1486464322257,
+      messaging: [
+        {
+          sender: {
+            id: '1412611362105802',
           },
-        ],
-      },
-      {
-        id: '189538289069256',
-        time: 1486464322257,
-        messaging: [
-          {
-            sender: {
-              id: '1412611362105802',
-            },
-            recipient: {
-              id: '1895382890692545',
-            },
-            timestamp: 1486464322190,
-            message: {
-              mid: 'mid.1486464322190:cb04e5a656',
-              seq: 339979,
-              text: 'test 2',
-            },
+          recipient: {
+            id: '1895382890692545',
           },
-        ],
-      },
-    ],
-  },
+          timestamp: 1486464322190,
+          message: {
+            mid: 'mid.1486464322190:cb04e5a654',
+            text: 'test 1',
+          },
+        },
+      ],
+    },
+    {
+      id: '189538289069256',
+      time: 1486464322257,
+      messaging: [
+        {
+          sender: {
+            id: '1412611362105802',
+          },
+          recipient: {
+            id: '1895382890692545',
+          },
+          timestamp: 1486464322190,
+          message: {
+            mid: 'mid.1486464322190:cb04e5a656',
+            text: 'test 2',
+          },
+        },
+      ],
+    },
+  ],
 };
 
-const standbyRequest = {
-  body: {
-    object: 'page',
-    entry: [
-      {
-        id: '<PAGE_ID>',
-        time: 1458692752478,
-        standby: [
-          {
-            sender: {
-              id: '<USER_ID>',
-            },
-            recipient: {
-              id: '<PAGE_ID>',
-            },
-
-            // FIXME: standby is still beta
-            // https://developers.facebook.com/docs/messenger-platform/reference/webhook-events/standby
-            /* ... */
+const standbyRequest: MessengerRequestBody = {
+  object: 'page',
+  entry: [
+    {
+      id: '<PAGE_ID>',
+      time: 1458692752478,
+      standby: [
+        {
+          sender: {
+            id: '<USER_ID>',
           },
-        ],
-      },
-    ],
-  },
+          recipient: {
+            id: '<PAGE_ID>',
+          },
+
+          // FIXME: standby is still beta
+          // https://developers.facebook.com/docs/messenger-platform/reference/webhook-events/standby
+          /* ... */
+        },
+      ],
+    },
+  ],
 };
 
-const webhookTestRequest = {
+const webhookTestRequest: MessengerRequestBody = {
   body: {
     entry: [
       {
@@ -170,20 +161,19 @@ function setup({
   verifyToken = '1qaz2wsx',
   skipLegacyProfile = true,
 } = {}) {
-  const mockGraphAPIClient = {
-    getUserProfile: jest.fn(),
-  };
-  MessengerClient.connect = jest.fn();
-  MessengerClient.connect.mockReturnValue(mockGraphAPIClient);
+  const connector = new MessengerConnector({
+    accessToken,
+    appSecret,
+    mapPageToAccessToken,
+    verifyToken,
+    skipLegacyProfile,
+  });
+
+  const client = mocked(MessengerClient).mock.instances[0];
+
   return {
-    mockGraphAPIClient,
-    connector: new MessengerConnector({
-      accessToken,
-      appSecret,
-      mapPageToAccessToken,
-      verifyToken,
-      skipLegacyProfile,
-    }),
+    client,
+    connector,
   };
 }
 
@@ -197,7 +187,7 @@ it('should use accessToken and appSecret (for appsecret_proof) to create default
     appSecret: APP_SECRET,
   });
 
-  expect(MessengerClient.connect).toBeCalledWith({
+  expect(MessengerClient).toBeCalledWith({
     accessToken: ACCESS_TOKEN,
     appSecret: APP_SECRET,
   });
@@ -219,13 +209,22 @@ describe('#verifyToken', () => {
 
 describe('#client', () => {
   it('should be client', () => {
-    const { connector, mockGraphAPIClient } = setup();
-    expect(connector.client).toBe(mockGraphAPIClient);
+    const { connector, client } = setup();
+    expect(connector.client).toBe(client);
   });
 
   it('support custom client', () => {
-    const client = {};
-    const connector = new MessengerConnector({ client });
+    const client = new MessengerClient({
+      accessToken: ACCESS_TOKEN,
+      appSecret: APP_SECRET,
+    });
+
+    const connector = new MessengerConnector({
+      appId: APP_ID,
+      appSecret: APP_SECRET,
+      client,
+    });
+
     expect(connector.client).toBe(client);
   });
 });
@@ -233,19 +232,19 @@ describe('#client', () => {
 describe('#getUniqueSessionKey', () => {
   it('extract correct sender id', () => {
     const { connector } = setup();
-    const senderId = connector.getUniqueSessionKey(request.body);
+    const senderId = connector.getUniqueSessionKey(request);
     expect(senderId).toBe('1412611362105802');
   });
 
   it('return recipient id when request is an echo event', () => {
     const { connector } = setup();
-    const senderId = connector.getUniqueSessionKey(echoRequest.body);
+    const senderId = connector.getUniqueSessionKey(echoRequest);
     expect(senderId).toBe('1244813222196986');
   });
 
   it('extract sender id from first event', () => {
     const { connector } = setup();
-    const senderId = connector.getUniqueSessionKey(batchRequest.body);
+    const senderId = connector.getUniqueSessionKey(batchRequest);
     expect(senderId).toBe('1412611362105802');
   });
 
@@ -257,7 +256,7 @@ describe('#getUniqueSessionKey', () => {
 
   it('return null if is webhook test event or other null rawEvent requests', () => {
     const { connector } = setup();
-    const senderId = connector.getUniqueSessionKey(webhookTestRequest.body);
+    const senderId = connector.getUniqueSessionKey(webhookTestRequest);
     expect(senderId).toBe(null);
   });
 
@@ -274,7 +273,6 @@ describe('#getUniqueSessionKey', () => {
         timestamp: 1486464322190,
         message: {
           mid: 'mid.1486464322190:cb04e5a654',
-          seq: 339979,
           text: 'text',
         },
       })
@@ -285,7 +283,7 @@ describe('#getUniqueSessionKey', () => {
 
 describe('#updateSession', () => {
   it('update session with data needed', async () => {
-    const { connector, mockGraphAPIClient } = setup({
+    const { connector, client } = setup({
       skipLegacyProfile: false,
     });
     const user = {
@@ -297,15 +295,12 @@ describe('#updateSession', () => {
       timezone: 8,
       gender: 'male',
     };
-    mockGraphAPIClient.getUserProfile.mockResolvedValue(user);
+    mocked(client.getUserProfile).mockResolvedValue(user);
 
     const session = {};
-    await connector.updateSession(session, request.body);
+    await connector.updateSession(session, request);
 
-    expect(mockGraphAPIClient.getUserProfile).toBeCalledWith(
-      '1412611362105802',
-      { accessToken: undefined }
-    );
+    expect(client.getUserProfile).toBeCalledWith('1412611362105802');
     expect(session).toEqual({
       page: {
         _updatedAt: expect.any(String),
@@ -319,7 +314,7 @@ describe('#updateSession', () => {
   });
 
   it('update session when profilePic expired', async () => {
-    const { connector, mockGraphAPIClient } = setup({
+    const { connector, client } = setup({
       skipLegacyProfile: false,
     });
     const user = {
@@ -331,19 +326,16 @@ describe('#updateSession', () => {
       timezone: 8,
       gender: 'male',
     };
-    mockGraphAPIClient.getUserProfile.mockResolvedValue(user);
+    mocked(client.getUserProfile).mockResolvedValue(user);
 
     const session = {
       user: {
         profilePic: 'https://example.com/pic.png?oe=386D4380', // expired at 2000-01-01T00:00:00.000Z
       },
     };
-    await connector.updateSession(session, request.body);
+    await connector.updateSession(session, request);
 
-    expect(mockGraphAPIClient.getUserProfile).toBeCalledWith(
-      '1412611362105802',
-      { accessToken: undefined }
-    );
+    expect(client.getUserProfile).toBeCalledWith('1412611362105802');
     expect(session).toEqual({
       page: {
         _updatedAt: expect.any(String),
@@ -357,7 +349,7 @@ describe('#updateSession', () => {
   });
 
   it('update session when expired date is invalid', async () => {
-    const { connector, mockGraphAPIClient } = setup({
+    const { connector, client } = setup({
       skipLegacyProfile: false,
     });
     const user = {
@@ -369,19 +361,16 @@ describe('#updateSession', () => {
       timezone: 8,
       gender: 'male',
     };
-    mockGraphAPIClient.getUserProfile.mockResolvedValue(user);
+    mocked(client.getUserProfile).mockResolvedValue(user);
 
     const session = {
       user: {
         profilePic: 'https://example.com/pic.png?oe=abc666666666', // wrong timestamp
       },
     };
-    await connector.updateSession(session, request.body);
+    await connector.updateSession(session, request);
 
-    expect(mockGraphAPIClient.getUserProfile).toBeCalledWith(
-      '1412611362105802',
-      { accessToken: undefined }
-    );
+    expect(client.getUserProfile).toBeCalledWith('1412611362105802');
     expect(session).toEqual({
       page: {
         _updatedAt: expect.any(String),
@@ -395,7 +384,7 @@ describe('#updateSession', () => {
   });
 
   it('update session when something wrong', async () => {
-    const { connector, mockGraphAPIClient } = setup({
+    const { connector, client } = setup({
       skipLegacyProfile: false,
     });
     const user = {
@@ -407,19 +396,16 @@ describe('#updateSession', () => {
       timezone: 8,
       gender: 'male',
     };
-    mockGraphAPIClient.getUserProfile.mockResolvedValue(user);
+    mocked(client.getUserProfile).mockResolvedValue(user);
 
     const session = {
       user: {
         profilePic123: 'https://example.com/pic.png?oe=386D4380', // wrong name
       },
     };
-    await connector.updateSession(session, request.body);
+    await connector.updateSession(session, request);
 
-    expect(mockGraphAPIClient.getUserProfile).toBeCalledWith(
-      '1412611362105802',
-      { accessToken: undefined }
-    );
+    expect(client.getUserProfile).toBeCalledWith('1412611362105802');
     expect(session).toEqual({
       page: {
         _updatedAt: expect.any(String),
@@ -433,20 +419,17 @@ describe('#updateSession', () => {
   });
 
   it('update session when getUserProfile() failed', async () => {
-    const { connector, mockGraphAPIClient } = setup({
+    const { connector, client } = setup({
       skipLegacyProfile: false,
     });
     const error = new Error('fail');
 
-    mockGraphAPIClient.getUserProfile.mockRejectedValue(error);
+    mocked(client.getUserProfile).mockRejectedValue(error);
 
     const session = {};
-    await connector.updateSession(session, request.body);
+    await connector.updateSession(session, request);
 
-    expect(mockGraphAPIClient.getUserProfile).toBeCalledWith(
-      '1412611362105802',
-      { accessToken: undefined }
-    );
+    expect(client.getUserProfile).toBeCalledWith('1412611362105802');
     expect(session).toEqual({
       page: {
         _updatedAt: expect.any(String),
@@ -465,14 +448,14 @@ describe('#updateSession', () => {
   });
 
   it(`update session without getting user's profile when skipLegacyProfile set to true`, async () => {
-    const { connector, mockGraphAPIClient } = setup({
+    const { connector, client } = setup({
       skipLegacyProfile: true,
     });
 
     const session = {};
-    await connector.updateSession(session, request.body);
+    await connector.updateSession(session, request);
 
-    expect(mockGraphAPIClient.getUserProfile).not.toBeCalled();
+    expect(client.getUserProfile).not.toBeCalled();
     expect(session).toEqual({
       page: {
         _updatedAt: expect.any(String),
@@ -489,7 +472,7 @@ describe('#updateSession', () => {
 describe('#mapRequestToEvents', () => {
   it('should map request to MessengerEvents', () => {
     const { connector } = setup();
-    const events = connector.mapRequestToEvents(request.body);
+    const events = connector.mapRequestToEvents(request);
 
     expect(events).toHaveLength(1);
     expect(events[0]).toBeInstanceOf(MessengerEvent);
@@ -498,7 +481,7 @@ describe('#mapRequestToEvents', () => {
 
   it('should work with batch entry', () => {
     const { connector } = setup();
-    const events = connector.mapRequestToEvents(batchRequest.body);
+    const events = connector.mapRequestToEvents(batchRequest);
 
     expect(events).toHaveLength(2);
     expect(events[0]).toBeInstanceOf(MessengerEvent);
@@ -510,7 +493,7 @@ describe('#mapRequestToEvents', () => {
 
   it('should map request to standby MessengerEvents', () => {
     const { connector } = setup();
-    const events = connector.mapRequestToEvents(standbyRequest.body);
+    const events = connector.mapRequestToEvents(standbyRequest);
 
     expect(events).toHaveLength(1);
     expect(events[0]).toBeInstanceOf(MessengerEvent);
@@ -520,7 +503,7 @@ describe('#mapRequestToEvents', () => {
 
   it('should map request to echo MessengerEvents', () => {
     const { connector } = setup();
-    const events = connector.mapRequestToEvents(echoRequest.body);
+    const events = connector.mapRequestToEvents(echoRequest);
 
     expect(events).toHaveLength(1);
     expect(events[0]).toBeInstanceOf(MessengerEvent);
@@ -528,29 +511,27 @@ describe('#mapRequestToEvents', () => {
   });
 
   it('should be filtered if body is not messaging or standby', () => {
-    const otherRequest = {
-      body: {
-        object: 'page',
-        entry: [
-          {
-            id: '<PAGE_ID>',
-            time: 1458692752478,
-            other: [
-              {
-                sender: {
-                  id: '<USER_ID>',
-                },
-                recipient: {
-                  id: '<PAGE_ID>',
-                },
+    const otherRequest: MessengerRequestBody = {
+      object: 'page',
+      entry: [
+        {
+          id: '<PAGE_ID>',
+          time: 1458692752478,
+          other: [
+            {
+              sender: {
+                id: '<USER_ID>',
               },
-            ],
-          },
-        ],
-      },
+              recipient: {
+                id: '<PAGE_ID>',
+              },
+            },
+          ],
+        },
+      ],
     };
     const { connector } = setup();
-    const events = connector.mapRequestToEvents(otherRequest.body);
+    const events = connector.mapRequestToEvents(otherRequest);
 
     expect(events).toHaveLength(0);
   });
@@ -733,7 +714,7 @@ describe('#preprocess', () => {
         status: 400,
         body: {
           error: {
-            message: 'Messenger Signature Validation Failed!',
+            message: 'Facebook Signature Validation Failed!',
             request: {
               headers: {
                 'x-hub-signature':

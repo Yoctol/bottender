@@ -3,10 +3,10 @@ import { Context, chain } from 'bottender';
 // FIXME: export public API for testing
 import { run } from 'bottender/dist/bot/Bot';
 
-const rasa = require('..'); // eslint-disable-line @typescript-eslint/no-var-requires
+import rasa from '..';
 
 // FIXME: export public test-utils for testing
-class TestContext extends Context<any, any> {
+class TestContext extends Context {
   get platform() {
     return 'test';
   }
@@ -166,7 +166,7 @@ it('should support JWT', async () => {
   let requestHeaders;
   nock('http://localhost:5005')
     .post('/model/parse')
-    .reply(200, function() {
+    .reply(200, function () {
       requestHeaders = this.req.headers;
       return {
         entities: [
@@ -219,7 +219,7 @@ it('should support parameters of rasa', async () => {
   let requestQuery;
   nock('http://localhost:5005')
     .post('/model/parse')
-    .query(query => {
+    .query((query) => {
       requestQuery = query;
       return true;
     })

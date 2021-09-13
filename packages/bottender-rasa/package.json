@@ -1,5 +1,6 @@
 {
   "name": "@bottender/rasa",
+  "version": "1.5.1-alpha.9",
   "description": "Rasa NLU integration for Bottender.",
   "license": "MIT",
   "homepage": "https://bottender.js.org/",
@@ -7,7 +8,6 @@
     "type": "git",
     "url": "https://github.com/Yoctol/bottender.git"
   },
-  "version": "1.4.10",
   "main": "dist/index.js",
   "files": [
     "dist"
@@ -15,14 +15,14 @@
   "types": "dist/index.d.ts",
   "dependencies": {
     "@types/lodash": "^4.14.149",
-    "axios": "^0.19.2",
+    "axios": "^0.21.4",
     "lodash": "^4.17.15"
   },
   "peerDependencies": {
     "bottender": ">= 1.2.0-0"
   },
   "devDependencies": {
-    "bottender": "^1.4.10"
+    "bottender": "^1.5.1-alpha.9"
   },
   "keywords": [
     "bot",

@@ -72,7 +72,7 @@ export async function setWebhook(ctx: CliContext): Promise<void> {
       '`verifyToken` is not found in the `bottender.config.js` file'
     );
 
-    const client = MessengerClient.connect({
+    const client = new MessengerClient({
       accessToken,
       appId,
       appSecret,

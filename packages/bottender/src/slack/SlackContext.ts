@@ -1,20 +1,21 @@
 import { EventEmitter } from 'events';
 
-import sleep from 'delay';
 import warning from 'warning';
+import { JsonObject } from 'type-fest';
 import { SlackOAuthClient, SlackTypes } from 'messaging-api-slack';
 
 import Context from '../context/Context';
 import Session from '../session/Session';
 import { RequestContext } from '../types';
 
-import SlackEvent, { Message, UIEvent } from './SlackEvent';
+import SlackEvent from './SlackEvent';
+import { Message, UIEvent } from './SlackTypes';
 
-type Options = {
+export type SlackContextOptions = {
   client: SlackOAuthClient;
   event: SlackEvent;
   session?: Session | null;
-  initialState?: Record<string, any> | null;
+  initialState?: JsonObject | null;
   requestContext?: RequestContext;
   emitter?: EventEmitter | null;
 };
@@ -65,7 +66,7 @@ export default class SlackContext extends Context<
     initialState,
     requestContext,
     emitter,
-  }: Options) {
+  }: SlackContextOptions) {
     super({ client, event, session, initialState, requestContext, emitter });
 
     this.chat = {
@@ -96,16 +97,6 @@ export default class SlackContext extends Context<
    */
   get platform(): 'slack' {
     return 'slack';
-  }
-
-  /**
-   * Delay and show indicators for milliseconds.
-   *
-   */
-  async typing(milliseconds: number): Promise<void> {
-    if (milliseconds > 0) {
-      await sleep(milliseconds);
-    }
   }
 
   // FIXME: this is to fix type checking
@@ -360,7 +351,7 @@ export default class SlackContext extends Context<
         ...options.view,
         privateMetadata: JSON.stringify({
           original: options.view.privateMetadata,
-          channelId: (this._event.rawEvent as UIEvent).channel.id,
+          channelId: (this._event.rawEvent as UIEvent).channel?.id,
         }),
       },
     });

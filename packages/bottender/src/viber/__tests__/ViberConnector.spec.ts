@@ -1,140 +1,131 @@
 import { ViberClient } from 'messaging-api-viber';
+import { mocked } from 'ts-jest/utils';
 
 import ViberConnector from '../ViberConnector';
 import ViberContext from '../ViberContext';
 import ViberEvent from '../ViberEvent';
+import { ViberRequestBody } from '../ViberTypes';
 
-jest.unmock('messaging-api-viber');
+jest.mock('messaging-api-viber');
 
 const ACCESS_TOKEN = 'ACCESS_TOKEN';
 
-const subscribedRequest = {
-  body: {
-    event: 'subscribed',
-    timestamp: 1457764197627,
-    user: {
-      id: '01234567890A=',
-      name: 'John McClane',
-      avatar: 'http://avatar.example.com',
-      country: 'UK',
-      language: 'en',
-      apiVersion: 1,
-    },
-    messageToken: 4912661846655238145,
+const subscribedRequest: ViberRequestBody = {
+  event: 'subscribed',
+  timestamp: 1457764197627,
+  user: {
+    id: '01234567890A=',
+    name: 'John McClane',
+    avatar: 'http://avatar.example.com',
+    country: 'UK',
+    language: 'en',
+    apiVersion: 1,
   },
+  messageToken: 4912661846655238145,
 };
 
-const unsubscribedRequest = {
-  body: {
-    event: 'unsubscribed',
-    timestamp: 1457764197627,
-    userId: '01234567890A=',
-    messageToken: 4912661846655238145,
-  },
+const unsubscribedRequest: ViberRequestBody = {
+  event: 'unsubscribed',
+  timestamp: 1457764197627,
+  userId: '01234567890A=',
+  messageToken: 4912661846655238145,
 };
 
-const conversationStartedRequest = {
-  body: {
-    event: 'conversation_started',
-    timestamp: 1457764197627,
-    messageToken: 4912661846655238145,
-    type: 'open',
-    context: 'context information',
-    user: {
-      id: '01234567890A=',
-      name: 'John McClane',
-      avatar: 'http://avatar.example.com',
-      country: 'UK',
-      language: 'en',
-      apiVersion: 1,
-    },
-    subscribed: false,
+const conversationStartedRequest: ViberRequestBody = {
+  event: 'conversation_started',
+  timestamp: 1457764197627,
+  messageToken: 4912661846655238145,
+  type: 'open',
+  context: 'context information',
+  user: {
+    id: '01234567890A=',
+    name: 'John McClane',
+    avatar: 'http://avatar.example.com',
+    country: 'UK',
+    language: 'en',
+    apiVersion: 1,
   },
+  subscribed: false,
 };
 
-const deliveredRequest = {
-  body: {
-    event: 'delivered',
-    timestamp: 1457764197627,
-    messageToken: 4912661846655238145,
-    userId: '01234567890A=',
-  },
+const deliveredRequest: ViberRequestBody = {
+  event: 'delivered',
+  timestamp: 1457764197627,
+  messageToken: 4912661846655238145,
+  userId: '01234567890A=',
 };
 
-const seenRequest = {
-  body: {
-    event: 'seen',
-    timestamp: 1457764197627,
-    messageToken: 4912661846655238145,
-    userId: '01234567890A=',
-  },
+const seenRequest: ViberRequestBody = {
+  event: 'seen',
+  timestamp: 1457764197627,
+  messageToken: 4912661846655238145,
+  userId: '01234567890A=',
 };
 
-const failedRequest = {
-  body: {
-    event: 'failed',
-    timestamp: 1457764197627,
-    messageToken: 4912661846655238145,
-    userId: '01234567890A=',
-    desc: 'failure description',
-  },
+const failedRequest: ViberRequestBody = {
+  event: 'failed',
+  timestamp: 1457764197627,
+  messageToken: 4912661846655238145,
+  userId: '01234567890A=',
+  desc: 'failure description',
 };
 
-const messageRequest = {
-  body: {
-    event: 'message',
-    timestamp: 1457764197627,
-    messageToken: 4912661846655238145,
-    sender: {
-      id: '01234567890A=',
-      name: 'John McClane',
-      avatar: 'http://avatar.example.com',
-      country: 'UK',
-      language: 'en',
-      apiVersion: 1,
-    },
-    message: {
-      type: 'text',
-      text: 'a message to the service',
-      trackingData: 'tracking data',
-    },
+const messageRequest: ViberRequestBody = {
+  event: 'message',
+  timestamp: 1457764197627,
+  messageToken: 4912661846655238145,
+  sender: {
+    id: '01234567890A=',
+    name: 'John McClane',
+    avatar: 'http://avatar.example.com',
+    country: 'UK',
+    language: 'en',
+    apiVersion: 1,
+  },
+  message: {
+    type: 'text',
+    text: 'a message to the service',
+    trackingData: 'tracking data',
   },
 };
 
 function setup() {
-  const mockViberClient = new ViberClient({
+  const connector = new ViberConnector({
     accessToken: ACCESS_TOKEN,
     sender: { name: 'sender' },
+    skipLegacyProfile: false,
   });
-  ViberClient.connect = jest.fn();
-  ViberClient.connect.mockReturnValue(mockViberClient);
+
+  const client = mocked(ViberClient).mock.instances[0];
 
   return {
-    mockViberClient,
-    connector: new ViberConnector({
-      accessToken: ACCESS_TOKEN,
-      sender: { name: 'sender' },
-      skipLegacyProfile: false,
-    }),
+    connector,
+    client,
   };
 }
 
 describe('#platform', () => {
   it('should be viber', () => {
     const { connector } = setup();
+
     expect(connector.platform).toBe('viber');
   });
 });
 
 describe('#client', () => {
   it('should be client', () => {
-    const { connector, mockViberClient } = setup();
-    expect(connector.client).toBe(mockViberClient);
+    const { connector, client } = setup();
+
+    expect(connector.client).toBe(client);
   });
 
   it('support custom client', () => {
-    const client = {};
+    const client = new ViberClient({
+      accessToken: ACCESS_TOKEN,
+      sender: { name: 'sender' },
+    });
     const connector = new ViberConnector({ client });
+
     expect(connector.client).toBe(client);
   });
 });
@@ -142,45 +133,57 @@ describe('#client', () => {
 describe('#getUniqueSessionKey', () => {
   it('extract correct user id from subscribedRequest', () => {
     const { connector } = setup();
-    const senderId = connector.getUniqueSessionKey(subscribedRequest.body);
+
+    const senderId = connector.getUniqueSessionKey(subscribedRequest);
+
     expect(senderId).toBe('01234567890A=');
   });
 
   it('extract correct user id from unsubscribedRequest', () => {
     const { connector } = setup();
-    const senderId = connector.getUniqueSessionKey(unsubscribedRequest.body);
+
+    const senderId = connector.getUniqueSessionKey(unsubscribedRequest);
+
     expect(senderId).toBe('01234567890A=');
   });
 
   it('extract correct user id from conversationStartedRequest', () => {
     const { connector } = setup();
-    const senderId = connector.getUniqueSessionKey(
-      conversationStartedRequest.body
-    );
+
+    const senderId = connector.getUniqueSessionKey(conversationStartedRequest);
+
     expect(senderId).toBe('01234567890A=');
   });
 
   it('extract correct user id from deliveredRequest', () => {
     const { connector } = setup();
-    const senderId = connector.getUniqueSessionKey(deliveredRequest.body);
+
+    const senderId = connector.getUniqueSessionKey(deliveredRequest);
+
     expect(senderId).toBe('01234567890A=');
   });
 
   it('extract correct user id from seenRequest', () => {
     const { connector } = setup();
-    const senderId = connector.getUniqueSessionKey(seenRequest.body);
+
+    const senderId = connector.getUniqueSessionKey(seenRequest);
+
     expect(senderId).toBe('01234567890A=');
   });
 
   it('extract correct user id from failedRequest', () => {
     const { connector } = setup();
-    const senderId = connector.getUniqueSessionKey(failedRequest.body);
+
+    const senderId = connector.getUniqueSessionKey(failedRequest);
+
     expect(senderId).toBe('01234567890A=');
   });
 
   it('extract correct user id from messageRequest', () => {
     const { connector } = setup();
-    const senderId = connector.getUniqueSessionKey(messageRequest.body);
+
+    const senderId = connector.getUniqueSessionKey(messageRequest);
+
     expect(senderId).toBe('01234567890A=');
   });
 });
@@ -188,6 +191,7 @@ describe('#getUniqueSessionKey', () => {
 describe('#updateSession', () => {
   it('update session with data needed from subscribedRequest', async () => {
     const { connector } = setup();
+
     const user = {
       id: '01234567890A=',
       name: 'John McClane',
@@ -199,7 +203,7 @@ describe('#updateSession', () => {
 
     const session = {};
 
-    await connector.updateSession(session, subscribedRequest.body);
+    await connector.updateSession(session, subscribedRequest);
 
     expect(session).toEqual({
       user: {
@@ -211,13 +215,14 @@ describe('#updateSession', () => {
 
   it('update session with data needed from unsubscribedRequest', async () => {
     const { connector } = setup();
+
     const user = {
       id: '01234567890A=',
     };
 
     const session = {};
 
-    await connector.updateSession(session, unsubscribedRequest.body);
+    await connector.updateSession(session, unsubscribedRequest);
 
     expect(session).toEqual({
       user: {
@@ -229,6 +234,7 @@ describe('#updateSession', () => {
 
   it('update session with data needed from conversationStartedRequest', async () => {
     const { connector } = setup();
+
     const user = {
       id: '01234567890A=',
       name: 'John McClane',
@@ -240,7 +246,7 @@ describe('#updateSession', () => {
 
     const session = {};
 
-    await connector.updateSession(session, conversationStartedRequest.body);
+    await connector.updateSession(session, conversationStartedRequest);
 
     expect(session).toEqual({
       user: {
@@ -252,13 +258,14 @@ describe('#updateSession', () => {
 
   it('update session with data needed from deliveredRequest', async () => {
     const { connector } = setup();
+
     const user = {
       id: '01234567890A=',
     };
 
     const session = {};
 
-    await connector.updateSession(session, deliveredRequest.body);
+    await connector.updateSession(session, deliveredRequest);
 
     expect(session).toEqual({
       user: {
@@ -270,13 +277,14 @@ describe('#updateSession', () => {
 
   it('update session with data needed from seenRequest', async () => {
     const { connector } = setup();
+
     const user = {
       id: '01234567890A=',
     };
 
     const session = {};
 
-    await connector.updateSession(session, seenRequest.body);
+    await connector.updateSession(session, seenRequest);
 
     expect(session).toEqual({
       user: {
@@ -288,13 +296,14 @@ describe('#updateSession', () => {
 
   it('update session with data needed from failedRequest', async () => {
     const { connector } = setup();
+
     const user = {
       id: '01234567890A=',
     };
 
     const session = {};
 
-    await connector.updateSession(session, failedRequest.body);
+    await connector.updateSession(session, failedRequest);
 
     expect(session).toEqual({
       user: {
@@ -306,6 +315,7 @@ describe('#updateSession', () => {
 
   it('update session with data needed from messageRequest', async () => {
     const { connector } = setup();
+
     const user = {
       id: '01234567890A=',
       name: 'John McClane',
@@ -317,7 +327,7 @@ describe('#updateSession', () => {
 
     const session = {};
 
-    await connector.updateSession(session, messageRequest.body);
+    await connector.updateSession(session, messageRequest);
 
     expect(session).toEqual({
       user: {
@@ -329,6 +339,7 @@ describe('#updateSession', () => {
 
   it('update session from id-only user', async () => {
     const { connector } = setup();
+
     const user = {
       id: '01234567890A=',
       name: 'John McClane',
@@ -345,7 +356,7 @@ describe('#updateSession', () => {
       },
     };
 
-    await connector.updateSession(session, messageRequest.body);
+    await connector.updateSession(session, messageRequest);
 
     expect(session).toEqual({
       user: {
@@ -359,7 +370,8 @@ describe('#updateSession', () => {
 describe('#mapRequestToEvents', () => {
   it('should map request to ViberEvents', () => {
     const { connector } = setup();
-    const events = connector.mapRequestToEvents(messageRequest.body);
+
+    const events = connector.mapRequestToEvents(messageRequest);
 
     expect(events).toHaveLength(1);
     expect(events[0]).toBeInstanceOf(ViberEvent);
@@ -369,7 +381,8 @@ describe('#mapRequestToEvents', () => {
 describe('#createContext', () => {
   it('should create ViberContext', () => {
     const { connector } = setup();
-    const event = {};
+
+    const event = new ViberEvent(deliveredRequest);
     const session = {};
 
     const context = connector.createContext({
@@ -406,8 +419,11 @@ describe('#preprocess', () => {
           'x-viber-content-signature': 'abc',
         },
         query: {},
-        rawBody: '',
-        body: {},
+        rawBody: JSON.stringify(subscribedRequest),
+        body: subscribedRequest,
+        path: '/webhooks/viber',
+        params: {},
+        url: 'https://www.example.com/webhooks/viber',
       })
     ).toEqual({
       shouldNext: true,
@@ -422,11 +438,14 @@ describe('#preprocess', () => {
         method: 'post',
         headers: {
           'x-viber-content-signature':
-            'e8b50346f80483e1a6050475af997f4e245a62879cb39732e6daf0f42ed1290c',
+            'a4b6913412505d2c6031e7ec75e75c51bdc2fe30dc367301528a28b2008300a4',
         },
         query: {},
-        rawBody: '{}',
-        body: {},
+        rawBody: JSON.stringify(subscribedRequest),
+        body: subscribedRequest,
+        path: '/webhooks/viber',
+        params: {},
+        url: 'https://www.example.com/webhooks/viber',
       })
     ).toEqual({
       shouldNext: true,
@@ -444,8 +463,11 @@ describe('#preprocess', () => {
             '250a5136d2f241195d4cb981a7293958434ec3ba9e50ed20788e9b030a1dd878',
         },
         query: {},
-        rawBody: '{}',
-        body: {},
+        rawBody: JSON.stringify(subscribedRequest),
+        body: subscribedRequest,
+        path: '/webhooks/viber',
+        params: {},
+        url: 'https://www.example.com/webhooks/viber',
       })
     ).toEqual({
       shouldNext: false,
@@ -459,7 +481,7 @@ describe('#preprocess', () => {
                 'x-viber-content-signature':
                   '250a5136d2f241195d4cb981a7293958434ec3ba9e50ed20788e9b030a1dd878',
               },
-              rawBody: '{}',
+              rawBody: JSON.stringify(subscribedRequest),
             },
           },
         },

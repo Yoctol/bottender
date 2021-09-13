@@ -73,7 +73,7 @@ export async function createPersona(ctx: CliContext): Promise<void> {
       '`pic` is required but not found. Use --pic <URL> to specify persona profile picture URL'
     );
 
-    const client = MessengerClient.connect({
+    const client = new MessengerClient({
       accessToken,
     });
 
@@ -112,7 +112,7 @@ export async function listPersona(_: CliContext): Promise<void> {
       '`accessToken` is not found in the `bottender.config.js` file'
     );
 
-    const client = MessengerClient.connect({
+    const client = new MessengerClient({
       accessToken,
     });
 
@@ -124,7 +124,7 @@ export async function listPersona(_: CliContext): Promise<void> {
         head: ['id', 'name', 'image URL'],
         colWidths: [30, 30, 30],
       });
-      personas.forEach(item => {
+      personas.forEach((item) => {
         table.push([item.id, item.name, item.profilePictureUrl] as any);
       });
       console.log(table.toString()); // eslint-disable-line no-console
@@ -166,7 +166,7 @@ export async function getPersona(ctx: CliContext): Promise<void> {
       '`id` is required but not found. Use --id <id> to specify persona id'
     );
 
-    const client = MessengerClient.connect({
+    const client = new MessengerClient({
       accessToken,
     });
 
@@ -218,7 +218,7 @@ export async function deletePersona(ctx: CliContext): Promise<void> {
       '`id` is required but not found. Use --id <id> to specify persona id'
     );
 
-    const client = MessengerClient.connect({
+    const client = new MessengerClient({
       accessToken,
     });
 

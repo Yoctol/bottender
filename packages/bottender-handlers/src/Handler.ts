@@ -74,7 +74,7 @@ export default class Handler {
   ) {
     if (args.length < 2) {
       const [handler] = args as [FunctionalHandler | Builder];
-      this.on(context => context.event.isMessage, handler);
+      this.on((context) => context.event.isMessage, handler);
     } else {
       const [predicate, handler] = args as [
         Predicate,
@@ -87,7 +87,7 @@ export default class Handler {
       );
 
       this.on(
-        context =>
+        (context) =>
           context.event.isMessage && predicate(context.event.message, context),
         handler
       );
@@ -104,7 +104,7 @@ export default class Handler {
     if (args.length < 2) {
       const [handler] = args as [FunctionalHandler | Builder];
 
-      this.on(context => context.event.isText, handler);
+      this.on((context) => context.event.isText, handler);
     } else {
       // eslint-disable-next-line prefer-const
       let [pattern, handler] = args as [Pattern, FunctionalHandler | Builder];
@@ -123,7 +123,7 @@ export default class Handler {
       if (typeof pattern === 'function') {
         const predicate: Predicate = pattern;
         this.on(
-          context =>
+          (context) =>
             context.event.isText && predicate(context.event.text, context),
           handler
         );
@@ -132,7 +132,7 @@ export default class Handler {
           const patternRegExp: RegExp = pattern;
 
           const _handler = handler;
-          handler = context => {
+          handler = (context) => {
             const match = patternRegExp.exec(context.event.text);
 
             if (!match) return _handler(context);
@@ -145,7 +145,7 @@ export default class Handler {
         }
 
         this.on(
-          context =>
+          (context) =>
             context.event.isText && matchPattern(pattern, context.event.text),
           handler
         );

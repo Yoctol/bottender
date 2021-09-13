@@ -1,4 +1,5 @@
 import { MessengerClient } from 'messaging-api-messenger';
+import { mocked } from 'ts-jest/utils';
 
 import getChannelConfig from '../../../../shared/getChannelConfig';
 import { listPersona } from '../persona';
@@ -17,49 +18,46 @@ const MOCK_FILE_WITH_PLATFORM = {
   },
 };
 
-let _client;
-
 beforeEach(() => {
-  _client = {
-    getAllPersonas: jest.fn(),
-  };
-  MessengerClient.connect = jest.fn(() => _client);
-  log.error = jest.fn();
-  log.print = jest.fn();
+  process.exit = jest.fn();
   console.log = jest.fn();
-  getChannelConfig.mockReturnValue(MOCK_FILE_WITH_PLATFORM.channels.messenger);
-});
 
-it('be defined', () => {
-  expect(listPersona).toBeDefined();
+  mocked(getChannelConfig).mockReturnValue(
+    MOCK_FILE_WITH_PLATFORM.channels.messenger
+  );
 });
 
 describe('resolved', () => {
   it('call listPersona', async () => {
     const ctx = {
-      argv: {},
+      config: null,
+      argv: {
+        _: [],
+      },
     };
 
-    process.exit = jest.fn();
-
-    _client.getAllPersonas.mockResolvedValue({});
+    mocked(MessengerClient.prototype.getAllPersonas).mockResolvedValue({});
 
     await listPersona(ctx);
 
-    expect(MessengerClient.connect).toBeCalledWith({
+    const client = mocked(MessengerClient).mock.instances[0];
+
+    expect(MessengerClient).toBeCalledWith({
       accessToken: '__FAKE_TOKEN__',
     });
-    expect(_client.getAllPersonas).toBeCalled();
+    expect(client.getAllPersonas).toBeCalled();
   });
 
   it('error when no config setting', async () => {
     const ctx = {
-      argv: { '--id': '54321' },
+      config: null,
+      argv: {
+        _: [],
+        '--id': '54321',
+      },
     };
 
-    process.exit = jest.fn();
-
-    _client.getAllPersonas.mockResolvedValue(null);
+    mocked(MessengerClient.prototype.getAllPersonas).mockResolvedValue(null);
 
     await listPersona(ctx);
 
@@ -70,16 +68,18 @@ describe('resolved', () => {
 describe('reject', () => {
   it('handle error thrown with only status', async () => {
     const ctx = {
-      argv: { '--id': '54321' },
+      config: null,
+      argv: {
+        _: [],
+        '--id': '54321',
+      },
     };
     const error = {
       response: {
         status: 400,
       },
     };
-    _client.getAllPersonas.mockRejectedValue(error);
-
-    process.exit = jest.fn();
+    mocked(MessengerClient.prototype.getAllPersonas).mockRejectedValue(error);
 
     await listPersona(ctx);
 
@@ -89,7 +89,11 @@ describe('reject', () => {
 
   it('handle error thrown by messenger', async () => {
     const ctx = {
-      argv: { '--id': '54321' },
+      config: null,
+      argv: {
+        _: [],
+        '--id': '54321',
+      },
     };
     const error = {
       response: {
@@ -105,27 +109,26 @@ describe('reject', () => {
         },
       },
     };
-    _client.getAllPersonas.mockRejectedValue(error);
-
-    process.exit = jest.fn();
+    mocked(MessengerClient.prototype.getAllPersonas).mockRejectedValue(error);
 
     await listPersona(ctx);
 
     expect(log.error).toBeCalled();
-    expect(log.error.mock.calls[2][0]).not.toMatch(/\[object Object\]/);
+    expect(mocked(log.error).mock.calls[2][0]).not.toMatch(/\[object Object\]/);
     expect(process.exit).toBeCalled();
   });
 
   it('handle error thrown by ourselves', async () => {
     const ctx = {
-      argv: { '--id': '54321' },
+      config: null,
+      argv: {
+        _: [],
+        '--id': '54321',
+      },
     };
-    const error = {
-      message: 'something wrong happened',
-    };
-    _client.getAllPersonas.mockRejectedValue(error);
-
-    process.exit = jest.fn();
+    mocked(MessengerClient.prototype.getAllPersonas).mockRejectedValue(
+      new Error('something wrong happened')
+    );
 
     await listPersona(ctx);
 

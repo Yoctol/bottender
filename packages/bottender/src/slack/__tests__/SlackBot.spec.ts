@@ -1,4 +1,5 @@
 import { RTMClient } from '@slack/rtm-api';
+import { mocked } from 'ts-jest/utils';
 
 import SlackBot from '../SlackBot';
 import SlackConnector from '../SlackConnector';
@@ -13,6 +14,7 @@ it('should construct bot with SlackConnector', () => {
   const bot = new SlackBot({
     accessToken: 'zzzzzZZZZZ',
   });
+
   expect(bot).toBeDefined();
   expect(bot.onEvent).toBeDefined();
   expect(bot.createRequestHandler).toBeDefined();
@@ -29,7 +31,7 @@ describe('createRtmRuntime', () => {
     const on = jest.fn();
     const handler = jest.fn();
 
-    RTMClient.mockImplementation(() => ({
+    mocked(RTMClient).mockImplementation(() => ({
       on,
       start,
     }));

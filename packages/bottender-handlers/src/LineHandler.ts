@@ -16,7 +16,7 @@ export default class LineHandler extends Handler {
   ) {
     if (args.length < 2) {
       const [handler] = args as [FunctionalHandler | Builder];
-      this.on(context => context.event.isPostback, handler);
+      this.on((context) => context.event.isPostback, handler);
     } else {
       const [predicate, handler] = args as [
         Predicate,
@@ -29,7 +29,7 @@ export default class LineHandler extends Handler {
       );
 
       this.on(
-        context =>
+        (context) =>
           context.event.isPostback &&
           predicate(context.event.postback, context),
         handler
@@ -47,7 +47,7 @@ export default class LineHandler extends Handler {
     if (args.length < 2) {
       const [handler] = args as [FunctionalHandler | Builder];
 
-      this.on(context => context.event.isPayload, handler);
+      this.on((context) => context.event.isPayload, handler);
     } else {
       // eslint-disable-next-line prefer-const
       let [pattern, handler] = args as [Pattern, FunctionalHandler | Builder];
@@ -66,7 +66,7 @@ export default class LineHandler extends Handler {
       if (typeof pattern === 'function') {
         const predicate: Predicate = pattern;
         this.on(
-          context =>
+          (context) =>
             context.event.isPayload &&
             predicate(context.event.payload, context),
           handler
@@ -76,7 +76,7 @@ export default class LineHandler extends Handler {
           const patternRegExp: RegExp = pattern;
 
           const _handler = handler;
-          handler = context => {
+          handler = (context) => {
             const match = patternRegExp.exec(context.event.payload);
 
             if (!match) return _handler(context);
@@ -89,7 +89,7 @@ export default class LineHandler extends Handler {
         }
 
         this.on(
-          context =>
+          (context) =>
             context.event.isPayload &&
             matchPattern(pattern, context.event.payload),
           handler
@@ -108,7 +108,7 @@ export default class LineHandler extends Handler {
   ) {
     if (args.length < 2) {
       const [handler] = args as [FunctionalHandler | Builder];
-      this.on(context => context.event.isFollow, handler);
+      this.on((context) => context.event.isFollow, handler);
     } else {
       const [predicate, handler] = args as [
         Predicate,
@@ -121,7 +121,7 @@ export default class LineHandler extends Handler {
       );
 
       this.on(
-        context =>
+        (context) =>
           context.event.isFollow && predicate(context.event.follow, context),
         handler
       );
@@ -137,7 +137,7 @@ export default class LineHandler extends Handler {
   ) {
     if (args.length < 2) {
       const [handler] = args as [FunctionalHandler | Builder];
-      this.on(context => context.event.isUnfollow, handler);
+      this.on((context) => context.event.isUnfollow, handler);
     } else {
       const [predicate, handler] = args as [
         Predicate,
@@ -150,7 +150,7 @@ export default class LineHandler extends Handler {
       );
 
       this.on(
-        context =>
+        (context) =>
           context.event.isUnfollow &&
           predicate(context.event.unfollow, context),
         handler
@@ -168,7 +168,7 @@ export default class LineHandler extends Handler {
   ) {
     if (args.length < 2) {
       const [handler] = args as [FunctionalHandler | Builder];
-      this.on(context => context.event.isJoin, handler);
+      this.on((context) => context.event.isJoin, handler);
     } else {
       const [predicate, handler] = args as [
         Predicate,
@@ -181,7 +181,7 @@ export default class LineHandler extends Handler {
       );
 
       this.on(
-        context =>
+        (context) =>
           context.event.isJoin && predicate(context.event.join, context),
         handler
       );
@@ -198,7 +198,7 @@ export default class LineHandler extends Handler {
   ) {
     if (args.length < 2) {
       const [handler] = args as [FunctionalHandler | Builder];
-      this.on(context => context.event.isLeave, handler);
+      this.on((context) => context.event.isLeave, handler);
     } else {
       const [predicate, handler] = args as [
         Predicate,
@@ -211,7 +211,7 @@ export default class LineHandler extends Handler {
       );
 
       this.on(
-        context =>
+        (context) =>
           context.event.isLeave && predicate(context.event.leave, context),
         handler
       );
@@ -227,7 +227,7 @@ export default class LineHandler extends Handler {
   ) {
     if (args.length < 2) {
       const [handler] = args as [FunctionalHandler | Builder];
-      this.on(context => context.event.isBeacon, handler);
+      this.on((context) => context.event.isBeacon, handler);
     } else {
       const [predicate, handler] = args as [
         Predicate,
@@ -240,7 +240,7 @@ export default class LineHandler extends Handler {
       );
 
       this.on(
-        context =>
+        (context) =>
           context.event.isBeacon && predicate(context.event.beacon, context),
         handler
       );

@@ -11,7 +11,15 @@ const textMessage = {
   message: {
     id: '325708',
     type: 'text',
-    text: 'Hello, world',
+    text: 'Hello, world! (love)',
+    emojis: [
+      {
+        index: 14,
+        length: 6,
+        productId: '5ac1bfd5040ab15980c9b435',
+        emojiId: '001',
+      },
+    ],
   },
 };
 
@@ -445,6 +453,22 @@ it('#source', () => {
   expect(new LineEvent(noSourceMessage).source).toEqual(null);
 });
 
+it('#timestamp', () => {
+  expect(new LineEvent(textMessage).timestamp).toEqual(1462629479859);
+  expect(new LineEvent(follow).timestamp).toEqual(1462629479859);
+  expect(new LineEvent(unfollow).timestamp).toEqual(1462629479859);
+  expect(new LineEvent(join).timestamp).toEqual(1462629479859);
+  expect(new LineEvent(leave).timestamp).toEqual(1462629479859);
+  expect(new LineEvent(postback).timestamp).toEqual(1462629479859);
+  expect(new LineEvent(beacon).timestamp).toEqual(1462629479859);
+  expect(new LineEvent(accountLink).timestamp).toEqual(1513669370317);
+  expect(new LineEvent(memberJoined).timestamp).toEqual(1462629479859);
+  expect(new LineEvent(memberLeft).timestamp).toEqual(1462629479960);
+  expect(new LineEvent(thingsLink).timestamp).toEqual(1462629479859);
+  expect(new LineEvent(thingsUnlink).timestamp).toEqual(1462629479859);
+  expect(new LineEvent(thingsScenarioResult).timestamp).toEqual(1547817848122);
+});
+
 it('#isMessage', () => {
   expect(new LineEvent(textMessage).isMessage).toEqual(true);
   expect(new LineEvent(follow).isMessage).toEqual(false);
@@ -465,7 +489,15 @@ it('#message', () => {
   expect(new LineEvent(textMessage).message).toEqual({
     id: '325708',
     type: 'text',
-    text: 'Hello, world',
+    text: 'Hello, world! (love)',
+    emojis: [
+      {
+        index: 14,
+        length: 6,
+        productId: '5ac1bfd5040ab15980c9b435',
+        emojiId: '001',
+      },
+    ],
   });
   expect(new LineEvent(imageMessage).message).toEqual({
     id: '325708',
@@ -512,7 +544,7 @@ it('#isText', () => {
 });
 
 it('#text', () => {
-  expect(new LineEvent(textMessage).text).toEqual('Hello, world');
+  expect(new LineEvent(textMessage).text).toEqual('Hello, world! (love)');
   expect(new LineEvent(imageMessage).text).toEqual(null);
   expect(new LineEvent(videoMessage).text).toEqual(null);
   expect(new LineEvent(audioMessage).text).toEqual(null);

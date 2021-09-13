@@ -410,7 +410,7 @@ describe('#onText', () => {
           text: 'awesome',
         },
       };
-      builder.onText(text => text === 'awesome', handler);
+      builder.onText((text) => text === 'awesome', handler);
       await builder.build()(context);
       expect(handler).toBeCalledWith(context);
     });
@@ -428,7 +428,7 @@ describe('#onText', () => {
           text: 'awesome',
         },
       };
-      builder.onText(text => text !== 'awesome', handler);
+      builder.onText((text) => text !== 'awesome', handler);
       await builder.build()(context);
       expect(handler).not.toBeCalled();
     });
@@ -525,7 +525,7 @@ describe('#onError', () => {
       .onEvent(() => {
         throw new Error('Boom!');
       })
-      .onError(ctx => {
+      .onError((ctx) => {
         ctx.sendText('Boom!');
       });
     await builder.build()(context);
@@ -542,7 +542,7 @@ describe('#onError', () => {
       throw new Error('Boom!');
     });
 
-    builder.onEvent(builder2.build()).onError(ctx => {
+    builder.onEvent(builder2.build()).onError((ctx) => {
       ctx.sendText('Boom!');
     });
     await builder.build()(context);

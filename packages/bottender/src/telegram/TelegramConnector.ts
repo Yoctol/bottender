@@ -1,39 +1,43 @@
 import { EventEmitter } from 'events';
 
 import invariant from 'invariant';
+import { JsonObject } from 'type-fest';
 import { TelegramClient } from 'messaging-api-telegram';
 
 import Session from '../session/Session';
 import { Connector } from '../bot/Connector';
-import { RequestContext } from '../types';
 
 import TelegramContext from './TelegramContext';
-import TelegramEvent, { TelegramRawEvent } from './TelegramEvent';
+import TelegramEvent from './TelegramEvent';
+import {
+  TelegramRawEvent,
+  TelegramRequestBody,
+  TelegramRequestContext,
+} from './TelegramTypes';
 
-export type TelegramRequestBody = TelegramRawEvent;
-
-type ConstructorOptionsWithoutClient = {
+type ConnectorOptionsWithoutClient = {
   accessToken: string;
   origin?: string;
   skipLegacyProfile?: boolean;
 };
 
-type ConstructorOptionsWithClient = {
+type ConnectorOptionsWithClient = {
   client: TelegramClient;
   skipLegacyProfile?: boolean;
 };
 
-type ConstructorOptions =
-  | ConstructorOptionsWithoutClient
-  | ConstructorOptionsWithClient;
+export type TelegramConnectorOptions =
+  | ConnectorOptionsWithoutClient
+  | ConnectorOptionsWithClient;
 
 export default class TelegramConnector
-  implements Connector<TelegramRequestBody, TelegramClient> {
+  implements Connector<TelegramRequestBody, TelegramClient>
+{
   _client: TelegramClient;
 
   _skipLegacyProfile: boolean;
 
-  constructor(options: ConstructorOptions) {
+  constructor(options: TelegramConnectorOptions) {
     const { skipLegacyProfile } = options;
     if ('client' in options) {
       this._client = options.client;
@@ -45,7 +49,7 @@ export default class TelegramConnector
         'Telegram access token is required. Please make sure you have filled it correctly in `bottender.config.js` or `.env` file.'
       );
 
-      this._client = TelegramClient.connect({
+      this._client = new TelegramClient({
         accessToken,
         origin,
       });
@@ -59,7 +63,7 @@ export default class TelegramConnector
     return body;
   }
 
-  get platform(): string {
+  get platform(): 'telegram' {
     return 'telegram';
   }
 
@@ -204,8 +208,8 @@ export default class TelegramConnector
   createContext(params: {
     event: TelegramEvent;
     session: Session | null;
-    initialState?: Record<string, any> | null;
-    requestContext?: RequestContext;
+    initialState?: JsonObject | null;
+    requestContext?: TelegramRequestContext;
     emitter?: EventEmitter | null;
   }): TelegramContext {
     return new TelegramContext({

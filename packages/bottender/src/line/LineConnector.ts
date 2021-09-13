@@ -3,6 +3,7 @@ import { EventEmitter } from 'events';
 
 import invariant from 'invariant';
 import warning from 'warning';
+import { JsonObject } from 'type-fest';
 import { LineClient } from 'messaging-api-line';
 
 import Session from '../session/Session';
@@ -10,90 +11,127 @@ import { Connector } from '../bot/Connector';
 import { RequestContext } from '../types';
 
 import LineContext from './LineContext';
-import LineEvent, { LineRawEvent } from './LineEvent';
+import LineEvent from './LineEvent';
+import { LineRawEvent, LineRequestBody, LineRequestContext } from './LineTypes';
 
-export type LineRequestBody = {
-  destination: string;
-  events: LineRawEvent[];
-};
-
-type CommonConstructorOptions = {
-  mapDestinationToAccessToken?: (destination: string) => Promise<string>;
+type CommonConnectorOptions = {
+  getConfig?: GetConfigFunction;
+  getSessionKeyPrefix?: GetSessionKeyPrefixFunction;
   shouldBatch?: boolean;
   sendMethod?: string;
   skipLegacyProfile?: boolean;
 };
 
-type ConstructorOptionsWithoutClient = {
-  accessToken: string;
-  channelSecret: string;
+type Credential = { accessToken: string; channelSecret: string };
+
+type GetConfigFunction = ({
+  params,
+}: {
+  params: Record<string, string>;
+}) => Credential | Promise<Credential>;
+
+export type GetSessionKeyPrefixFunction = (
+  event: LineEvent,
+  requestContext?: RequestContext
+) => string;
+
+type CredentialOptions =
+  | Credential
+  | {
+      getConfig: GetConfigFunction;
+    };
+
+type ConnectorOptionsWithoutClient = CredentialOptions & {
   origin?: string;
-} & CommonConstructorOptions;
+} & CommonConnectorOptions;
 
-type ConstructorOptionsWithClient = {
+type ConnectorOptionsWithClient = {
   client: LineClient;
-} & CommonConstructorOptions;
+  channelSecret: string;
+} & CommonConnectorOptions;
 
-type ConstructorOptions =
-  | ConstructorOptionsWithoutClient
-  | ConstructorOptionsWithClient;
+export type LineConnectorOptions =
+  | ConnectorOptionsWithoutClient
+  | ConnectorOptionsWithClient;
 
 export default class LineConnector
-  implements Connector<LineRequestBody, LineClient> {
-  _client: LineClient;
+  implements Connector<LineRequestBody, LineClient>
+{
+  _client: LineClient | undefined;
 
-  _channelSecret: string;
+  _channelSecret: string | undefined;
+
+  _origin: string | undefined;
 
   _skipLegacyProfile: boolean;
 
-  _mapDestinationToAccessToken:
-    | ((destination: string) => Promise<string>)
-    | null;
+  _getConfig: GetConfigFunction | undefined;
+
+  _getSessionKeyPrefix: GetSessionKeyPrefixFunction | undefined;
 
   _shouldBatch: boolean;
 
+  /**
+   * @deprecated
+   */
   _sendMethod: string;
 
-  constructor(options: ConstructorOptions) {
+  constructor(options: LineConnectorOptions) {
     const {
-      mapDestinationToAccessToken,
+      getConfig,
       shouldBatch,
       sendMethod,
       skipLegacyProfile,
+      getSessionKeyPrefix,
     } = options;
     if ('client' in options) {
       this._client = options.client;
 
-      this._channelSecret = '';
+      this._channelSecret = options.channelSecret;
     } else {
-      const { accessToken, channelSecret, origin } = options;
+      const { origin } = options;
+      if ('getConfig' in options) {
+        this._getConfig = getConfig;
+      } else {
+        const { accessToken, channelSecret } = options;
+        invariant(
+          accessToken,
+          'LINE access token is required. Please make sure you have filled it correctly in your `bottender.config.js` or `.env` file.'
+        );
+        invariant(
+          channelSecret,
+          'LINE channel secret is required. Please make sure you have filled it correctly in your `bottender.config.js` or the `.env` file.'
+        );
 
-      invariant(
-        options.accessToken,
-        'LINE access token is required. Please make sure you have filled it correctly in `bottender.config.js` or `.env` file.'
-      );
-      invariant(
-        options.channelSecret,
-        'LINE channel secret is required. Please make sure you have filled it correctly in `bottender.config.js` or `.env` file.'
-      );
+        this._client = new LineClient({
+          accessToken,
+          channelSecret,
+          origin,
+        });
 
-      this._client = LineClient.connect({
-        accessToken,
-        channelSecret,
-        origin,
-      });
+        this._channelSecret = channelSecret;
+      }
 
-      this._channelSecret = channelSecret;
+      this._origin = origin;
     }
-
-    this._mapDestinationToAccessToken = mapDestinationToAccessToken || null;
 
     this._shouldBatch = typeof shouldBatch === 'boolean' ? shouldBatch : true;
     warning(
       !sendMethod || sendMethod === 'reply' || sendMethod === 'push',
       'sendMethod should be one of `reply` or `push`'
     );
-    this._sendMethod = sendMethod || 'reply';
+
+    if (sendMethod) {
+      warning(
+        false,
+        '`sendMethod` is deprecated. The value will always be `reply` in v2.'
+      );
+      this._sendMethod = sendMethod;
+    } else {
+      this._sendMethod = 'reply';
+    }
+
+    this._getSessionKeyPrefix = getSessionKeyPrefix;
 
     this._skipLegacyProfile =
       typeof skipLegacyProfile === 'boolean' ? skipLegacyProfile : true;
@@ -101,8 +139,9 @@ export default class LineConnector
 
   _isWebhookVerifyEvent(event: LineRawEvent): boolean {
     return (
-      (event as any).replyToken === '00000000000000000000000000000000' ||
-      (event as any).replyToken === 'ffffffffffffffffffffffffffffffff'
+      'replyToken' in event &&
+      (event.replyToken === '00000000000000000000000000000000' ||
+        event.replyToken === 'ffffffffffffffffffffffffffffffff')
     );
   }
 
@@ -115,30 +154,43 @@ export default class LineConnector
     );
   }
 
-  get platform(): string {
+  get platform(): 'line' {
     return 'line';
   }
 
-  get client(): LineClient {
+  get client(): LineClient | undefined {
     return this._client;
   }
 
-  getUniqueSessionKey(bodyOrEvent: LineRequestBody | LineEvent): string {
+  getUniqueSessionKey(
+    bodyOrEvent: LineRequestBody | LineEvent,
+    requestContext?: RequestContext
+  ): string {
     const rawEvent =
       bodyOrEvent instanceof LineEvent
         ? bodyOrEvent.rawEvent
         : bodyOrEvent.events[0];
 
+    let prefix = '';
+    if (this._getSessionKeyPrefix) {
+      const event =
+        bodyOrEvent instanceof LineEvent
+          ? bodyOrEvent
+          : new LineEvent(rawEvent, { destination: bodyOrEvent.destination });
+
+      prefix = this._getSessionKeyPrefix(event, requestContext);
+    }
+
     const { source } = rawEvent;
 
     if (source.type === 'user') {
-      return source.userId;
+      return `${prefix}${source.userId}`;
     }
     if (source.type === 'group') {
-      return source.groupId;
+      return `${prefix}${source.groupId}`;
     }
     if (source.type === 'room') {
-      return source.roomId;
+      return `${prefix}${source.roomId}`;
     }
     throw new TypeError(
       'LineConnector: sender type should be one of user, group, room.'
@@ -164,19 +216,20 @@ export default class LineConnector
       let user = null;
 
       if (source.userId) {
-        user = this._skipLegacyProfile
-          ? {
-              id: source.userId,
-              _updatedAt: new Date().toISOString(),
-            }
-          : {
-              id: source.userId,
-              _updatedAt: new Date().toISOString(),
-              ...(await this._client.getGroupMemberProfile(
-                source.groupId,
-                source.userId
-              )),
-            };
+        user =
+          this._skipLegacyProfile || !this._client
+            ? {
+                id: source.userId,
+                _updatedAt: new Date().toISOString(),
+              }
+            : {
+                id: source.userId,
+                _updatedAt: new Date().toISOString(),
+                ...(await this._client.getGroupMemberProfile(
+                  source.groupId,
+                  source.userId
+                )),
+              };
       }
 
       session.user = user;
@@ -184,8 +237,10 @@ export default class LineConnector
       let memberIds: string[] = [];
 
       try {
-        memberIds = await this._client.getAllGroupMemberIds(source.groupId);
-      } catch (e) {
+        if (this._client) {
+          memberIds = await this._client.getAllGroupMemberIds(source.groupId);
+        }
+      } catch (err) {
         // FIXME: handle no memberIds
         // only LINE@ Approved accounts or official accounts can use this API
         // https://developers.line.me/en/docs/messaging-api/reference/#get-group-member-user-ids
@@ -193,26 +248,27 @@ export default class LineConnector
 
       session.group = {
         id: source.groupId,
-        members: memberIds.map(id => ({ id })),
+        members: memberIds.map((id) => ({ id })),
         _updatedAt: new Date().toISOString(),
       };
     } else if (source.type === 'room') {
       let user = null;
 
       if (source.userId) {
-        user = this._skipLegacyProfile
-          ? {
-              id: source.userId,
-              _updatedAt: new Date().toISOString(),
-            }
-          : {
-              id: source.userId,
-              _updatedAt: new Date().toISOString(),
-              ...(await this._client.getRoomMemberProfile(
-                source.roomId,
-                source.userId
-              )),
-            };
+        user =
+          this._skipLegacyProfile || !this._client
+            ? {
+                id: source.userId,
+                _updatedAt: new Date().toISOString(),
+              }
+            : {
+                id: source.userId,
+                _updatedAt: new Date().toISOString(),
+                ...(await this._client.getRoomMemberProfile(
+                  source.roomId,
+                  source.userId
+                )),
+              };
       }
 
       session.user = user;
@@ -220,8 +276,10 @@ export default class LineConnector
       let memberIds: string[] = [];
 
       try {
-        memberIds = await this._client.getAllRoomMemberIds(source.roomId);
-      } catch (e) {
+        if (this._client) {
+          memberIds = await this._client.getAllRoomMemberIds(source.roomId);
+        }
+      } catch (err) {
         // FIXME: handle no memberIds
         // only LINE@ Approved accounts or official accounts can use this API
         // https://developers.line.me/en/docs/messaging-api/reference/#get-room-member-user-ids
@@ -229,14 +287,15 @@ export default class LineConnector
 
       session.room = {
         id: source.roomId,
-        members: memberIds.map(id => ({ id })),
+        members: memberIds.map((id) => ({ id })),
         _updatedAt: new Date().toISOString(),
       };
     } else if (source.type === 'user') {
       if (!session.user) {
-        const user = this._skipLegacyProfile
-          ? {}
-          : await this._client.getUserProfile(source.userId);
+        const user =
+          this._skipLegacyProfile || !this._client
+            ? {}
+            : await this._client.getUserProfile(source.userId);
 
         session.user = {
           id: source.userId,
@@ -281,42 +340,64 @@ export default class LineConnector
     const { destination } = body;
 
     return body.events
-      .filter(event => !this._isWebhookVerifyEvent(event))
-      .map(event => new LineEvent(event, { destination }));
+      .filter((event) => !this._isWebhookVerifyEvent(event))
+      .map((event) => new LineEvent(event, { destination }));
   }
 
   async createContext(params: {
     event: LineEvent;
     session?: Session | null;
-    initialState?: Record<string, any> | null;
-    requestContext?: RequestContext;
+    initialState?: JsonObject | null;
+    requestContext?: LineRequestContext;
     emitter?: EventEmitter | null;
   }): Promise<LineContext> {
-    let customAccessToken;
-    if (this._mapDestinationToAccessToken) {
-      const { destination } = params.event;
+    const { requestContext } = params;
 
-      if (!destination) {
-        warning(false, 'Could not find destination from request body.');
-      } else {
-        customAccessToken = await this._mapDestinationToAccessToken(
-          destination
-        );
-      }
+    let client: LineClient;
+    if (this._getConfig) {
+      invariant(
+        requestContext,
+        'getConfig: `requestContext` is required to execute the function.'
+      );
+
+      const config = await this._getConfig({
+        params: requestContext.params,
+      });
+
+      invariant(
+        config.accessToken,
+        'getConfig: `accessToken` is missing in the resolved value.'
+      );
+
+      invariant(
+        config.channelSecret,
+        'getConfig: `accessToken` is missing in the resolved value.'
+      );
+
+      client = new LineClient({
+        accessToken: config.accessToken,
+        channelSecret: config.channelSecret,
+        origin: this._origin,
+      });
+    } else {
+      client = this._client as LineClient;
     }
 
     return new LineContext({
       ...params,
-      client: this._client,
-      customAccessToken,
+      client,
       shouldBatch: this._shouldBatch,
       sendMethod: this._sendMethod,
     });
   }
 
-  verifySignature(rawBody: string, signature: string): boolean {
+  verifySignature(
+    rawBody: string,
+    signature: string,
+    { channelSecret }: { channelSecret: string }
+  ): boolean {
     const hashBufferFromBody = crypto
-      .createHmac('sha256', this._channelSecret)
+      .createHmac('sha256', channelSecret)
       .update(rawBody, 'utf8')
       .digest();
 
@@ -331,25 +412,39 @@ export default class LineConnector
     return crypto.timingSafeEqual(bufferFromSignature, hashBufferFromBody);
   }
 
-  preprocess({
+  async preprocess({
     method,
     headers,
     rawBody,
     body,
-  }: {
-    method: string;
-    headers: Record<string, any>;
-    query: Record<string, any>;
-    rawBody: string;
-    body: Record<string, any>;
-  }) {
+    params,
+  }: LineRequestContext) {
     if (method.toLowerCase() !== 'post') {
       return {
         shouldNext: true,
       };
     }
 
-    if (!this.verifySignature(rawBody, headers['x-line-signature'])) {
+    let channelSecret: string;
+    if (this._getConfig) {
+      const config = await this._getConfig({ params });
+
+      invariant(
+        config.channelSecret,
+        'getConfig: `accessToken` is missing in the resolved value.'
+      );
+
+      channelSecret = config.channelSecret;
+    } else {
+      channelSecret = this._channelSecret as string;
+    }
+
+    if (
+      !headers['x-line-signature'] ||
+      !this.verifySignature(rawBody, headers['x-line-signature'], {
+        channelSecret,
+      })
+    ) {
       const error = {
         message: 'LINE Signature Validation Failed!',
         request: {
@@ -369,7 +464,7 @@ export default class LineConnector
       };
     }
 
-    if (this.isWebhookVerifyRequest(body as any)) {
+    if (this.isWebhookVerifyRequest(body)) {
       return {
         shouldNext: false,
         response: {

@@ -93,7 +93,7 @@ describe('#client', () => {
   });
 
   it('support custom client', () => {
-    const client = TwilioClient.connect({
+    const client = new TwilioClient({
       accountSid: 'ACCOUNT_SID',
       authToken: 'AUTH_TOKEN',
     });

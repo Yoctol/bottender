@@ -40,7 +40,7 @@ const linkAccountToMessenger = (res, username, redirectURI) => {
 /**
  * GET Create user account view
  */
-router.get('/create', function(req, res) {
+router.get('/create', function (req, res) {
   const accountLinkingToken = req.query.account_linking_token;
   const redirectURI = req.query.redirect_uri;
 
@@ -50,7 +50,7 @@ router.get('/create', function(req, res) {
 /**
  * Create user account and link to messenger
  */
-router.post('/create', function(req, res) {
+router.post('/create', function (req, res) {
   const { username, password, password2, redirectURI } = req.body;
   if (UserStore.has(username)) {
     res.render('create-account', {
@@ -77,7 +77,7 @@ router.post('/create', function(req, res) {
  * (sendAccountLinking) is pointed to this URL.
  *
  */
-router.get('/login', function(req, res) {
+router.get('/login', function (req, res) {
   /*
     Account Linking Token is never used in this demo, however it is
     useful to know about this token in the context of account linking.
@@ -96,7 +96,7 @@ router.get('/login', function(req, res) {
 /**
  * User login route is used to authorize account_link actions
  */
-router.post('/login', function(req, res) {
+router.post('/login', function (req, res) {
   const { username, password, redirectURI } = req.body;
   const userLogin = UserStore.get(username);
   if (!userLogin || userLogin.password !== password) {

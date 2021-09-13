@@ -14,8 +14,10 @@ type RedisOption =
       db?: number;
     };
 
-export default class RedisSessionStore extends CacheBasedSessionStore
-  implements SessionStore {
+export default class RedisSessionStore
+  extends CacheBasedSessionStore
+  implements SessionStore
+{
   constructor(arg: RedisOption, expiresIn?: number) {
     const cache = new RedisCacheStore(arg);
     super(cache, expiresIn);
