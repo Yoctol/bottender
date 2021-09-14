@@ -781,6 +781,63 @@
       },
       "version-1.4/version-1.4-migrating-v1": {
         "title": "Migrating from v0.x to v1"
+      },
+      "version-1.5/version-1.5-advanced-guides-custom-server": {
+        "title": "Running Bottender with Custom Servers"
+      },
+      "version-1.5/version-1.5-advanced-guides-deployment": {
+        "title": "Deployment"
+      },
+      "version-1.5/version-1.5-api-line-client": {
+        "title": "LineClient"
+      },
+      "version-1.5/version-1.5-api-line-context": {
+        "title": "LineContext"
+      },
+      "version-1.5/version-1.5-api-messenger-client": {
+        "title": "MessengerClient"
+      },
+      "version-1.5/version-1.5-api-messenger-context": {
+        "title": "MessengerContext"
+      },
+      "version-1.5/version-1.5-api-slack-client": {
+        "title": "SlackClient"
+      },
+      "version-1.5/version-1.5-api-telegram-client": {
+        "title": "TelegramClient"
+      },
+      "version-1.5/version-1.5-api-telegram-context": {
+        "title": "TelegramContext"
+      },
+      "version-1.5/version-1.5-api-viber-client": {
+        "title": "ViberClient"
+      },
+      "version-1.5/version-1.5-api-viber-context": {
+        "title": "ViberContext"
+      },
+      "version-1.5/version-1.5-channel-line-liff": {
+        "title": "LINE Front-end Framework (LIFF)"
+      },
+      "version-1.5/version-1.5-channel-line-migrating-from-sdk": {
+        "title": "Migrating from LINE SDK for Node.js"
+      },
+      "version-1.5/version-1.5-channel-line-notify": {
+        "title": "LINE Notify"
+      },
+      "version-1.5/version-1.5-channel-messenger-multi-page": {
+        "title": "Messenger Multi-Page Support"
+      },
+      "version-1.5/version-1.5-channel-messenger-setup": {
+        "title": "Messenger Setup"
+      },
+      "version-1.5/version-1.5-channel-slack-routing": {
+        "title": "Slack Routing"
+      },
+      "version-1.5/version-1.5-migrating-v1": {
+        "title": "Migrating from v0.x to v1"
+      },
+      "version-1.5/version-1.5-the-basics-routing": {
+        "title": "Routing"
       }
     },
     "links": {
