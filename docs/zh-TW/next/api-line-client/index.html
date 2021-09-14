@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="zh-TW"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>LineClient · Bottender</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="- [Usage](#usage)"/><meta name="docsearch:version" content="next"/><meta name="docsearch:language" content="zh-TW"/><meta property="og:title" content="LineClient · Bottender"/><meta property="og:type" content="website"/><meta property="og:url" content="https://bottender.js.org/"/><meta property="og:description" content="- [Usage](#usage)"/><meta property="og:image" content="https://bottender.js.org/img/og-image.png"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://bottender.js.org/img/og-image.png"/><link rel="shortcut icon" href="/img/favicon-192x192.png"/><link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-dark.min.css"/><link rel="alternate" type="application/atom+xml" href="https://bottender.js.org/blog/atom.xml" title="Bottender Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://bottender.js.org/blog/feed.xml" title="Bottender Blog RSS Feed"/><script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-70309045-11"></script><script>
+<!DOCTYPE html><html lang="zh-TW"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>LineClient · Bottender</title><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="generator" content="Docusaurus"/><meta name="description" content="- [Usage](#usage)"/><meta name="docsearch:version" content="next"/><meta name="docsearch:language" content="zh-TW"/><meta property="og:title" content="LineClient · Bottender"/><meta property="og:type" content="website"/><meta property="og:url" content="https://bottender.js.org/"/><meta property="og:description" content="- [Usage](#usage)"/><meta property="og:image" content="https://bottender.js.org/img/og-image.png"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://bottender.js.org/img/og-image.png"/><link rel="shortcut icon" href="/img/favicon-192x192.png"/><link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-dark.min.css"/><link rel="alternate" type="application/atom+xml" href="https://bottender.js.org/blog/atom.xml" title="Bottender Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://bottender.js.org/blog/feed.xml" title="Bottender Blog RSS Feed"/><script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-70309045-11"></script><script>
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments); }
               gtag('js', new Date());
@@ -125,7 +125,7 @@
 </code></pre>
 <h3><a class="anchor" aria-hidden="true" id="error-handling"></a><a href="#error-handling" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Error Handling</h3>
 <p><code>LineClient</code> uses <a href="https://github.com/axios/axios">axios</a> as HTTP client. We use <a href="https://github.com/Yoctol/messaging-apis/tree/master/packages/axios-error">axios-error</a> package to wrap API error instances for better formatting error messages. Calling <code>console.log</code> with the error instance returns the formatted message. If you'd like to get the axios <code>request</code>, <code>response</code>, or <code>config</code>, you can still get them via those keys on the error instance.</p>
-<pre><code class="hljs css language-js">client.replyText(token, text).catch(<span class="hljs-function"><span class="hljs-params">error</span> =&gt;</span> {
+<pre><code class="hljs css language-js">client.replyText(token, text).catch(<span class="hljs-function">(<span class="hljs-params">error</span>) =&gt;</span> {
   <span class="hljs-built_in">console</span>.log(error); <span class="hljs-comment">// the formatted error message</span>
   <span class="hljs-built_in">console</span>.log(error.stack); <span class="hljs-comment">// stack trace of the error</span>
   <span class="hljs-built_in">console</span>.log(error.config); <span class="hljs-comment">// axios request config</span>
@@ -150,7 +150,7 @@ Reply API - <a href="https://developers.line.me/en/reference/messaging-api/#send
 <p spaces-before="0">
   Responds messages using specified reply token.
 </p>
-<table spaces-before="0" line-breaks-before="2">
+<table spaces-before="0">
   <tr>
     <th>
       Param
@@ -276,7 +276,7 @@ Line.createText('End'),
 <p spaces-before="0">
   <img src="https://user-images.githubusercontent.com/563929/82650108-cbde1c00-9c4c-11ea-8510-b2909bc93d8d.png" width="250px" />
 </p>
-<table spaces-before="0" line-breaks-before="2">
+<table spaces-before="0">
   <tr>
     <th>
       Param
@@ -376,7 +376,7 @@ Line.createText('End'),
 <p spaces-before="0">
   <img src="https://user-images.githubusercontent.com/563929/82650588-75251200-9c4d-11ea-955d-30ba9458ffd3.png" width="250px" />
 </p>
-<table spaces-before="0" line-breaks-before="2">
+<table spaces-before="0">
   <tr>
     <th>
       Param
@@ -489,7 +489,7 @@ Line.createText('End'),
 <p spaces-before="0">
   <img src="https://user-images.githubusercontent.com/563929/82650704-a69ddd80-9c4d-11ea-9e86-8e2c5294d97f.png" width="250px" />
 </p>
-<table spaces-before="0" line-breaks-before="2">
+<table spaces-before="0">
   <tr>
     <th>
       Param
@@ -602,7 +602,7 @@ Line.createText('End'),
 <p spaces-before="0">
   <img src="https://user-images.githubusercontent.com/563929/82651012-26c44300-9c4e-11ea-8c25-aade44dbe4f8.png" width="250px" />
 </p>
-<table spaces-before="0" line-breaks-before="2">
+<table spaces-before="0">
   <tr>
     <th>
       Param
@@ -715,7 +715,7 @@ Line.createText('End'),
 <p spaces-before="0">
   <img src="https://user-images.githubusercontent.com/563929/82651104-478c9880-9c4e-11ea-8fdf-cb6d8a10bf9a.png" width="250px" />
 </p>
-<table spaces-before="0" line-breaks-before="2">
+<table spaces-before="0">
   <tr>
     <th>
       Param
@@ -875,7 +875,7 @@ Line.createText('End'),
 <p spaces-before="0">
   <img src="https://user-images.githubusercontent.com/563929/82651371-a7833f00-9c4e-11ea-9041-46dcb962b0c7.png" width="250px" />
 </p>
-<table spaces-before="0" line-breaks-before="2">
+<table spaces-before="0">
   <tr>
     <th>
       Param
@@ -988,7 +988,7 @@ Reply Imagemap Messages
 <p spaces-before="0">
   <img src="https://user-images.githubusercontent.com/563929/82651489-cc77b200-9c4e-11ea-860a-2f7f1ecaa5b5.png" width="250px" />
 </p>
-<table spaces-before="0" line-breaks-before="2">
+<table spaces-before="0">
   <tr>
     <th>
       Param
@@ -1308,7 +1308,7 @@ Reply Template Messages
 <p spaces-before="0">
   Responds template message using specified reply token.
 </p>
-<table spaces-before="0" line-breaks-before="2">
+<table spaces-before="0">
   <tr>
     <th>
       Param
@@ -1443,7 +1443,7 @@ Reply Template Messages
 <p spaces-before="0">
   <img src="https://user-images.githubusercontent.com/563929/82651618-f6c96f80-9c4e-11ea-873c-90821a7f5510.png" width="250px" />
 </p>
-<table spaces-before="0" line-breaks-before="2">
+<table spaces-before="0">
   <tr>
     <th>
       Param
@@ -1678,7 +1678,7 @@ Reply Template Messages
 <p spaces-before="0">
   <img src="https://user-images.githubusercontent.com/563929/82651801-398b4780-9c4f-11ea-986c-b8cadee4349b.png" width="250px" />
 </p>
-<table spaces-before="0" line-breaks-before="2">
+<table spaces-before="0">
   <tr>
     <th>
       Param
@@ -1828,7 +1828,7 @@ Reply Template Messages
 <p spaces-before="0">
   <img src="https://user-images.githubusercontent.com/563929/82651957-735c4e00-9c4f-11ea-8147-2fae91afb62e.png" width="250px" />
 </p>
-<table spaces-before="0" line-breaks-before="2">
+<table spaces-before="0">
   <tr>
     <th>
       Param
@@ -2009,7 +2009,7 @@ Reply Template Messages
 <p spaces-before="0">
   <img src="https://user-images.githubusercontent.com/563929/82652055-971f9400-9c4f-11ea-878a-23dcabb430dc.png" width="250px" />
 </p>
-<table spaces-before="0" line-breaks-before="2">
+<table spaces-before="0">
   <tr>
     <th>
       Param
@@ -2151,7 +2151,7 @@ Reply Flex Messages
 <p spaces-before="0">
   <img src="https://user-images.githubusercontent.com/563929/82652147-b6b6bc80-9c4f-11ea-96dc-3a1b5ca9d582.png" />
 </p>
-<table spaces-before="0" line-breaks-before="2">
+<table spaces-before="0">
   <tr>
     <th>
       Param
@@ -2305,7 +2305,7 @@ Push API - <a href="https://developers.line.me/en/reference/messaging-api/#send-
 <p spaces-before="0">
   Sends messages using ID of the receiver.
 </p>
-<table spaces-before="0" line-breaks-before="2">
+<table spaces-before="0">
   <tr>
     <th>
       Param
@@ -2374,7 +2374,7 @@ Push API - <a href="https://developers.line.me/en/reference/messaging-api/#send-
 <p spaces-before="0">
   <img src="https://user-images.githubusercontent.com/563929/82652521-52e0c380-9c50-11ea-829a-36cd706823e0.png" width="250px" />
 </p>
-<table spaces-before="0" line-breaks-before="2">
+<table spaces-before="0">
   <tr>
     <th>
       Param
@@ -2474,7 +2474,7 @@ Push API - <a href="https://developers.line.me/en/reference/messaging-api/#send-
 <p spaces-before="0">
   <img src="https://user-images.githubusercontent.com/563929/82652981-1cf00f00-9c51-11ea-89ba-7da7e74e5def.png" width="250px" />
 </p>
-<table spaces-before="0" line-breaks-before="2">
+<table spaces-before="0">
   <tr>
     <th>
       Param
@@ -2587,7 +2587,7 @@ Push API - <a href="https://developers.line.me/en/reference/messaging-api/#send-
 <p spaces-before="0">
   <img src="https://user-images.githubusercontent.com/563929/82653198-6c363f80-9c51-11ea-9acd-28677530a3b3.png" width="250px" />
 </p>
-<table spaces-before="0" line-breaks-before="2">
+<table spaces-before="0">
   <tr>
     <th>
       Param
@@ -2700,7 +2700,7 @@ Push API - <a href="https://developers.line.me/en/reference/messaging-api/#send-
 <p spaces-before="0">
   <img src="https://user-images.githubusercontent.com/563929/82653904-7dcc1700-9c52-11ea-9023-4ad89e76bb05.png" width="250px" />
 </p>
-<table spaces-before="0" line-breaks-before="2">
+<table spaces-before="0">
   <tr>
     <th>
       Param
@@ -2813,7 +2813,7 @@ Push API - <a href="https://developers.line.me/en/reference/messaging-api/#send-
 <p spaces-before="0">
   <img src="https://user-images.githubusercontent.com/563929/82654102-c97ec080-9c52-11ea-94ef-5f26e52d78a1.png" width="250px" />
 </p>
-<table spaces-before="0" line-breaks-before="2">
+<table spaces-before="0">
   <tr>
     <th>
       Param
@@ -2973,7 +2973,7 @@ Push API - <a href="https://developers.line.me/en/reference/messaging-api/#send-
 <p spaces-before="0">
   <img src="https://user-images.githubusercontent.com/563929/82654187-ec10d980-9c52-11ea-9a81-dd8469d75e08.png" width="250px" />
 </p>
-<table spaces-before="0" line-breaks-before="2">
+<table spaces-before="0">
   <tr>
     <th>
       Param
@@ -3086,7 +3086,7 @@ Push Imagemap Messages
 <p spaces-before="0">
   <img src="https://user-images.githubusercontent.com/563929/82654362-309c7500-9c53-11ea-9252-c12dd84ae003.png" width="250px" />
 </p>
-<table spaces-before="0" line-breaks-before="2">
+<table spaces-before="0">
   <tr>
     <th>
       Param
@@ -3406,7 +3406,7 @@ Push Template Messages
 <p spaces-before="0">
   Sends template message using ID of the receiver.
 </p>
-<table spaces-before="0" line-breaks-before="2">
+<table spaces-before="0">
   <tr>
     <th>
       Param
@@ -3541,7 +3541,7 @@ Push Template Messages
 <p spaces-before="0">
   <img src="https://user-images.githubusercontent.com/563929/82654518-735e4d00-9c53-11ea-9299-34eb4e3fb853.png" width="250px" />
 </p>
-<table spaces-before="0" line-breaks-before="2">
+<table spaces-before="0">
   <tr>
     <th>
       Param
@@ -3776,7 +3776,7 @@ Push Template Messages
 <p spaces-before="0">
   <img src="https://user-images.githubusercontent.com/563929/82654609-9426a280-9c53-11ea-916c-d8a7f76bf119.png" width="250px" />
 </p>
-<table spaces-before="0" line-breaks-before="2">
+<table spaces-before="0">
   <tr>
     <th>
       Param
@@ -3926,7 +3926,7 @@ Push Template Messages
 <p spaces-before="0">
   <img src="https://user-images.githubusercontent.com/563929/82654829-e071e280-9c53-11ea-9948-1142e34e73db.png" width="250px" />
 </p>
-<table spaces-before="0" line-breaks-before="2">
+<table spaces-before="0">
   <tr>
     <th>
       Param
@@ -4107,7 +4107,7 @@ Push Template Messages
 <p spaces-before="0">
   <img src="https://user-images.githubusercontent.com/563929/82655190-62620b80-9c54-11ea-981d-cb0ae8e2da9a.png" width="250px" />
 </p>
-<table spaces-before="0" line-breaks-before="2">
+<table spaces-before="0">
   <tr>
     <th>
       Param
@@ -4249,7 +4249,7 @@ Push Flex Messages
 <p spaces-before="0">
   <img src="https://user-images.githubusercontent.com/563929/82655544-eae0ac00-9c54-11ea-8171-6f9526405dfa.png" />
 </p>
-<table spaces-before="0" line-breaks-before="2">
+<table spaces-before="0">
   <tr>
     <th>
       Param
@@ -4403,7 +4403,7 @@ Multicast API - <a href="https://developers.line.me/en/reference/messaging-api/#
 <p spaces-before="0">
   Sends messages to multiple users.
 </p>
-<table spaces-before="0" line-breaks-before="2">
+<table spaces-before="0">
   <tr>
     <th>
       Param
@@ -4475,7 +4475,7 @@ Multicast API - <a href="https://developers.line.me/en/reference/messaging-api/#
 <p spaces-before="0">
   <img src="https://user-images.githubusercontent.com/563929/82650108-cbde1c00-9c4c-11ea-8510-b2909bc93d8d.png" width="250px" />
 </p>
-<table spaces-before="0" line-breaks-before="2">
+<table spaces-before="0">
   <tr>
     <th>
       Param
@@ -4575,7 +4575,7 @@ Multicast API - <a href="https://developers.line.me/en/reference/messaging-api/#
 <p spaces-before="0">
   <img src="https://user-images.githubusercontent.com/563929/82650588-75251200-9c4d-11ea-955d-30ba9458ffd3.png" width="250px" />
 </p>
-<table spaces-before="0" line-breaks-before="2">
+<table spaces-before="0">
   <tr>
     <th>
       Param
@@ -4688,7 +4688,7 @@ Multicast API - <a href="https://developers.line.me/en/reference/messaging-api/#
 <p spaces-before="0">
   <img src="https://user-images.githubusercontent.com/563929/82650704-a69ddd80-9c4d-11ea-9e86-8e2c5294d97f.png" width="250px" />
 </p>
-<table spaces-before="0" line-breaks-before="2">
+<table spaces-before="0">
   <tr>
     <th>
       Param
@@ -4801,7 +4801,7 @@ Multicast API - <a href="https://developers.line.me/en/reference/messaging-api/#
 <p spaces-before="0">
   <img src="https://user-images.githubusercontent.com/563929/82651012-26c44300-9c4e-11ea-8c25-aade44dbe4f8.png" width="250px" />
 </p>
-<table spaces-before="0" line-breaks-before="2">
+<table spaces-before="0">
   <tr>
     <th>
       Param
@@ -4914,7 +4914,7 @@ Multicast API - <a href="https://developers.line.me/en/reference/messaging-api/#
 <p spaces-before="0">
   <img src="https://user-images.githubusercontent.com/563929/82651104-478c9880-9c4e-11ea-8fdf-cb6d8a10bf9a.png" width="250px" />
 </p>
-<table spaces-before="0" line-breaks-before="2">
+<table spaces-before="0">
   <tr>
     <th>
       Param
@@ -5074,7 +5074,7 @@ Multicast API - <a href="https://developers.line.me/en/reference/messaging-api/#
 <p spaces-before="0">
   <img src="https://user-images.githubusercontent.com/563929/82651371-a7833f00-9c4e-11ea-9041-46dcb962b0c7.png" width="250px" />
 </p>
-<table spaces-before="0" line-breaks-before="2">
+<table spaces-before="0">
   <tr>
     <th>
       Param
@@ -5190,7 +5190,7 @@ Multicast Imagemap Messages
 <p spaces-before="0">
   <img src="https://user-images.githubusercontent.com/563929/82651489-cc77b200-9c4e-11ea-860a-2f7f1ecaa5b5.png" width="250px" />
 </p>
-<table spaces-before="0" line-breaks-before="2">
+<table spaces-before="0">
   <tr>
     <th>
       Param
@@ -5510,7 +5510,7 @@ Multicast Template Messages
 <p spaces-before="0">
   Sends template message to multiple users.
 </p>
-<table spaces-before="0" line-breaks-before="2">
+<table spaces-before="0">
   <tr>
     <th>
       Param
@@ -5645,7 +5645,7 @@ Multicast Template Messages
 <p spaces-before="0">
   <img src="https://user-images.githubusercontent.com/563929/82651618-f6c96f80-9c4e-11ea-873c-90821a7f5510.png" width="250px" />
 </p>
-<table spaces-before="0" line-breaks-before="2">
+<table spaces-before="0">
   <tr>
     <th>
       Param
@@ -5880,7 +5880,7 @@ Multicast Template Messages
 <p spaces-before="0">
   <img src="https://user-images.githubusercontent.com/563929/82651801-398b4780-9c4f-11ea-986c-b8cadee4349b.png" width="250px" />
 </p>
-<table spaces-before="0" line-breaks-before="2">
+<table spaces-before="0">
   <tr>
     <th>
       Param
@@ -6030,7 +6030,7 @@ Multicast Template Messages
 <p spaces-before="0">
   <img src="https://user-images.githubusercontent.com/563929/82651957-735c4e00-9c4f-11ea-8147-2fae91afb62e.png" width="250px" />
 </p>
-<table spaces-before="0" line-breaks-before="2">
+<table spaces-before="0">
   <tr>
     <th>
       Param
@@ -6211,7 +6211,7 @@ Multicast Template Messages
 <p spaces-before="0">
   <img src="https://user-images.githubusercontent.com/563929/82652055-971f9400-9c4f-11ea-878a-23dcabb430dc.png" width="250px" />
 </p>
-<table spaces-before="0" line-breaks-before="2">
+<table spaces-before="0">
   <tr>
     <th>
       Param
@@ -6353,7 +6353,7 @@ Multicast Flex Messages
 <p spaces-before="0">
   <img src="https://user-images.githubusercontent.com/563929/82652147-b6b6bc80-9c4f-11ea-96dc-3a1b5ca9d582.png" />
 </p>
-<table spaces-before="0" line-breaks-before="2">
+<table spaces-before="0">
   <tr>
     <th>
       Param
@@ -6554,7 +6554,7 @@ Content API - <a href="https://developers.line.me/en/reference/messaging-api/#ge
 <p spaces-before="0">
   Retrieves image, video, and audio data sent in specified message.
 </p>
-<table spaces-before="0" line-breaks-before="2">
+<table spaces-before="0">
   <tr>
     <th>
       Param
@@ -6585,7 +6585,7 @@ Content API - <a href="https://developers.line.me/en/reference/messaging-api/#ge
 <p spaces-before="0">
   Example:
 </p>
-<pre><code class="js">client.getMessageContent(MESSAGE_ID).then(buffer =&gt; {
+<pre><code class="js">client.getMessageContent(MESSAGE_ID).then((buffer) =&gt; {
   console.log(buffer);
   // &lt;Buffer 61 61 73 64 ...&gt;
 });
@@ -6604,7 +6604,7 @@ Profile API - <a href="https://developers.line.me/en/reference/messaging-api/#ge
 <p spaces-before="0">
   Gets user profile information.
 </p>
-<table spaces-before="0" line-breaks-before="2">
+<table spaces-before="0">
   <tr>
     <th>
       Param
@@ -6635,7 +6635,7 @@ Profile API - <a href="https://developers.line.me/en/reference/messaging-api/#ge
 <p spaces-before="0">
   Example:
 </p>
-<pre><code class="js">client.getUserProfile(USER_ID).then(profile =&gt; {
+<pre><code class="js">client.getUserProfile(USER_ID).then((profile) =&gt; {
   console.log(profile);
   // {
   //   displayName: 'LINE taro',
@@ -6659,7 +6659,7 @@ Group/Room Member Profile API - <a href="https://developers.line.me/en/messaging
 <p spaces-before="0">
   Gets the user profile of a member of a group that the bot is in. This includes the user IDs of users who has not added the bot as a friend or has blocked the bot.
 </p>
-<table spaces-before="0" line-breaks-before="2">
+<table spaces-before="0">
   <tr>
     <th>
       Param
@@ -6703,7 +6703,7 @@ Group/Room Member Profile API - <a href="https://developers.line.me/en/messaging
 <p spaces-before="0">
   Example:
 </p>
-<pre><code class="js">client.getGroupMemberProfile(GROUP_ID, USER_ID).then(member =&gt; {
+<pre><code class="js">client.getGroupMemberProfile(GROUP_ID, USER_ID).then((member) =&gt; {
   console.log(member);
   // {
   //   "displayName":"LINE taro",
@@ -6721,7 +6721,7 @@ Group/Room Member Profile API - <a href="https://developers.line.me/en/messaging
 <p spaces-before="0">
   Gets the user profile of a member of a room that the bot is in. This includes the user IDs of users who has not added the bot as a friend or has blocked the bot.
 </p>
-<table spaces-before="0" line-breaks-before="2">
+<table spaces-before="0">
   <tr>
     <th>
       Param
@@ -6765,7 +6765,7 @@ Group/Room Member Profile API - <a href="https://developers.line.me/en/messaging
 <p spaces-before="0">
   Example:
 </p>
-<pre><code class="js">client.getRoomMemberProfile(ROOM_ID, USER_ID).then(member =&gt; {
+<pre><code class="js">client.getRoomMemberProfile(ROOM_ID, USER_ID).then((member) =&gt; {
   console.log(member);
   // {
   //   "displayName":"LINE taro",
@@ -6794,7 +6794,7 @@ Group/Room Member IDs API - <a href="https://developers.line.me/en/messaging-api
 <p spaces-before="0">
   This feature is only available for LINE@ Approved accounts or official accounts.
 </p>
-<table spaces-before="0" line-breaks-before="2">
+<table spaces-before="0">
   <tr>
     <th>
       Param
@@ -6838,7 +6838,7 @@ Group/Room Member IDs API - <a href="https://developers.line.me/en/messaging-api
 <p spaces-before="0">
   Example:
 </p>
-<pre><code class="js">client.getGroupMemberIds(GROUP_ID, CURSOR).then(res =&gt; {
+<pre><code class="js">client.getGroupMemberIds(GROUP_ID, CURSOR).then((res) =&gt; {
   console.log(res);
   // {
   //   memberIds: [
@@ -6865,7 +6865,7 @@ Group/Room Member IDs API - <a href="https://developers.line.me/en/messaging-api
 <p spaces-before="0">
   This feature is only available for LINE@ Approved accounts or official accounts.
 </p>
-<table spaces-before="0" line-breaks-before="2">
+<table spaces-before="0">
   <tr>
     <th>
       Param
@@ -6896,7 +6896,7 @@ Group/Room Member IDs API - <a href="https://developers.line.me/en/messaging-api
 <p spaces-before="0">
   Example:
 </p>
-<pre><code class="js">client.getAllGroupMemberIds(GROUP_ID).then(ids =&gt; {
+<pre><code class="js">client.getAllGroupMemberIds(GROUP_ID).then((ids) =&gt; {
   console.log(ids);
   // [
   //   'Uxxxxxxxxxxxxxx..1',
@@ -6923,7 +6923,7 @@ Group/Room Member IDs API - <a href="https://developers.line.me/en/messaging-api
 <p spaces-before="0">
   This feature is only available for LINE@ Approved accounts or official accounts.
 </p>
-<table spaces-before="0" line-breaks-before="2">
+<table spaces-before="0">
   <tr>
     <th>
       Param
@@ -6967,7 +6967,7 @@ Group/Room Member IDs API - <a href="https://developers.line.me/en/messaging-api
 <p spaces-before="0">
   Example:
 </p>
-<pre><code class="js">client.getRoomMemberIds(ROOM_ID, CURSOR).then(res =&gt; {
+<pre><code class="js">client.getRoomMemberIds(ROOM_ID, CURSOR).then((res) =&gt; {
   console.log(res);
   // {
   //   memberIds: [
@@ -6994,7 +6994,7 @@ Group/Room Member IDs API - <a href="https://developers.line.me/en/messaging-api
 <p spaces-before="0">
   This feature is only available for LINE@ Approved accounts or official accounts.
 </p>
-<table spaces-before="0" line-breaks-before="2">
+<table spaces-before="0">
   <tr>
     <th>
       Param
@@ -7025,7 +7025,7 @@ Group/Room Member IDs API - <a href="https://developers.line.me/en/messaging-api
 <p spaces-before="0">
   Example:
 </p>
-<pre><code class="js">client.getAllRoomMemberIds(ROOM_ID).then(ids =&gt; {
+<pre><code class="js">client.getAllRoomMemberIds(ROOM_ID).then((ids) =&gt; {
   console.log(ids);
   // [
   //   'Uxxxxxxxxxxxxxx..1',
@@ -7051,7 +7051,7 @@ Leave API - <a href="https://developers.line.me/en/messaging-api/group-chats/#le
 <p spaces-before="0">
   Leave a group.
 </p>
-<table spaces-before="0" line-breaks-before="2">
+<table spaces-before="0">
   <tr>
     <th>
       Param
@@ -7093,7 +7093,7 @@ Leave API - <a href="https://developers.line.me/en/messaging-api/group-chats/#le
 <p spaces-before="0">
   Leave a room.
 </p>
-<table spaces-before="0" line-breaks-before="2">
+<table spaces-before="0">
   <tr>
     <th>
       Param
@@ -7143,7 +7143,7 @@ Rich Menu API - <a href="https://developers.line.me/en/reference/messaging-api/#
 <p spaces-before="0">
   Example:
 </p>
-<pre><code class="js">client.getRichMenuList().then(richMenus =&gt; {
+<pre><code class="js">client.getRichMenuList().then((richMenus) =&gt; {
   console.log(richMenus);
   // [
   //   {
@@ -7182,7 +7182,7 @@ Rich Menu API - <a href="https://developers.line.me/en/reference/messaging-api/#
 <p spaces-before="0">
   Gets a rich menu via a rich menu ID.
 </p>
-<table spaces-before="0" line-breaks-before="2">
+<table spaces-before="0">
   <tr>
     <th>
       Param
@@ -7213,7 +7213,7 @@ Rich Menu API - <a href="https://developers.line.me/en/reference/messaging-api/#
 <p spaces-before="0">
   Example:
 </p>
-<pre><code class="js">client.getRichMenu(RICH_MENU_ID).then(richMenu =&gt; {
+<pre><code class="js">client.getRichMenu(RICH_MENU_ID).then((richMenu) =&gt; {
   console.log(richMenu);
   // {
   //   richMenuId: 'RICH_MENU_ID',
@@ -7250,7 +7250,7 @@ Rich Menu API - <a href="https://developers.line.me/en/reference/messaging-api/#
 <p spaces-before="0">
   Creates a rich menu.
 </p>
-<table spaces-before="0" line-breaks-before="2">
+<table spaces-before="0">
   <tr>
     <th>
       Param
@@ -7305,7 +7305,7 @@ Rich Menu API - <a href="https://developers.line.me/en/reference/messaging-api/#
       },
     ],
   })
-  .then(richMenu =&gt; {
+  .then((richMenu) =&gt; {
     console.log(richMenu);
     // {
     //   richMenuId: "{richMenuId}"
@@ -7321,7 +7321,7 @@ Rich Menu API - <a href="https://developers.line.me/en/reference/messaging-api/#
 <p spaces-before="0">
   Deletes a rich menu.
 </p>
-<table spaces-before="0" line-breaks-before="2">
+<table spaces-before="0">
   <tr>
     <th>
       Param
@@ -7363,7 +7363,7 @@ Rich Menu API - <a href="https://developers.line.me/en/reference/messaging-api/#
 <p spaces-before="0">
   Gets the ID of the rich menu linked to a user.
 </p>
-<table spaces-before="0" line-breaks-before="2">
+<table spaces-before="0">
   <tr>
     <th>
       Param
@@ -7394,7 +7394,7 @@ Rich Menu API - <a href="https://developers.line.me/en/reference/messaging-api/#
 <p spaces-before="0">
   Example:
 </p>
-<pre><code class="js">client.getLinkedRichMenu(USER_ID).then(richMenu =&gt; {
+<pre><code class="js">client.getLinkedRichMenu(USER_ID).then((richMenu) =&gt; {
   console.log(richMenu);
   // {
   //   richMenuId: "{richMenuId}"
@@ -7410,7 +7410,7 @@ Rich Menu API - <a href="https://developers.line.me/en/reference/messaging-api/#
 <p spaces-before="0">
   Links a rich menu to a user.
 </p>
-<table spaces-before="0" line-breaks-before="2">
+<table spaces-before="0">
   <tr>
     <th>
       Param
@@ -7465,7 +7465,7 @@ Rich Menu API - <a href="https://developers.line.me/en/reference/messaging-api/#
 <p spaces-before="0">
   Unlinks a rich menu from a user.
 </p>
-<table spaces-before="0" line-breaks-before="2">
+<table spaces-before="0">
   <tr>
     <th>
       Param
@@ -7507,7 +7507,7 @@ Rich Menu API - <a href="https://developers.line.me/en/reference/messaging-api/#
 <p spaces-before="0">
   Downloads an image associated with a rich menu.
 </p>
-<table spaces-before="0" line-breaks-before="2">
+<table spaces-before="0">
   <tr>
     <th>
       Param
@@ -7538,7 +7538,7 @@ Rich Menu API - <a href="https://developers.line.me/en/reference/messaging-api/#
 <p spaces-before="0">
   Example:
 </p>
-<pre><code class="js">client.downloadRichMenuImage(RICH_MENU_ID).then(imageBuffer =&gt; {
+<pre><code class="js">client.downloadRichMenuImage(RICH_MENU_ID).then((imageBuffer) =&gt; {
   console.log(imageBuffer);
   // &lt;Buffer 61 61 73 64 ...&gt;
 });
@@ -7552,7 +7552,7 @@ Rich Menu API - <a href="https://developers.line.me/en/reference/messaging-api/#
 <p spaces-before="0">
   Uploads and attaches an image to a rich menu.
 </p>
-<table spaces-before="0" line-breaks-before="2">
+<table spaces-before="0">
   <tr>
     <th>
       Param
@@ -7611,7 +7611,7 @@ Rich Menu API - <a href="https://developers.line.me/en/reference/messaging-api/#
 <p spaces-before="0">
   Example:
 </p>
-<pre><code class="js">client.getDefaultRichMenu().then(richMenu =&gt; {
+<pre><code class="js">client.getDefaultRichMenu().then((richMenu) =&gt; {
   console.log(richMenu);
   // {
   //   "richMenuId": "{richMenuId}"
@@ -7627,7 +7627,7 @@ Rich Menu API - <a href="https://developers.line.me/en/reference/messaging-api/#
 <p spaces-before="0">
   Sets the default rich menu. The default rich menu is displayed to all users who have added your bot as a friend and are not linked to any per-user rich menu.
 </p>
-<table spaces-before="0" line-breaks-before="2">
+<table spaces-before="0">
   <tr>
     <th>
       Param
@@ -7693,7 +7693,7 @@ Account Link API - <a href="https://developers.line.me/en/reference/messaging-ap
 <p spaces-before="0">
   Issues a link token used for the <a href="https://developers.line.me/en/messaging-api/linking-accounts/">account link</a> feature.
 </p>
-<table spaces-before="0" line-breaks-before="2">
+<table spaces-before="0">
   <tr>
     <th>
       Param
@@ -7724,7 +7724,7 @@ Account Link API - <a href="https://developers.line.me/en/reference/messaging-ap
 <p spaces-before="0">
   Example:
 </p>
-<pre><code class="js">client.issueLinkToken(USER_ID).then(result =&gt; {
+<pre><code class="js">client.issueLinkToken(USER_ID).then((result) =&gt; {
   console.log(result);
   // {
   //   linkToken: 'NMZTNuVrPTqlr2IF8Bnymkb7rXfYv5EY',
@@ -7742,7 +7742,7 @@ LINE Front-end Framework API - <a href="https://developers.line.me/en/liff/refer
 <p spaces-before="0">
   Adds an app to LIFF. You can add up to 10 LIFF apps on one channel.
 </p>
-<table spaces-before="0" line-breaks-before="2">
+<table spaces-before="0">
   <tr>
     <th>
       Param
@@ -7814,7 +7814,7 @@ LINE Front-end Framework API - <a href="https://developers.line.me/en/liff/refer
 <p spaces-before="0">
   Updates LIFF app settings.
 </p>
-<table spaces-before="0" line-breaks-before="2">
+<table spaces-before="0">
   <tr>
     <th>
       Param
@@ -7888,7 +7888,7 @@ LINE Front-end Framework API - <a href="https://developers.line.me/en/liff/refer
 <p spaces-before="0">
   Example:
 </p>
-<pre><code class="js">client.getLiffApps().then(apps =&gt; {
+<pre><code class="js">client.getLiffApps().then((apps) =&gt; {
   console.log(apps);
   // [
   //   {
@@ -7917,7 +7917,7 @@ LINE Front-end Framework API - <a href="https://developers.line.me/en/liff/refer
 <p spaces-before="0">
   Deletes a LIFF app.
 </p>
-<table spaces-before="0" line-breaks-before="2">
+<table spaces-before="0">
   <tr>
     <th>
       Param

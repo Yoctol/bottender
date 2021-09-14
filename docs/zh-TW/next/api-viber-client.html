@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="zh-TW"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>ViberClient · Bottender</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="- [Usage](#usage)"/><meta name="docsearch:version" content="next"/><meta name="docsearch:language" content="zh-TW"/><meta property="og:title" content="ViberClient · Bottender"/><meta property="og:type" content="website"/><meta property="og:url" content="https://bottender.js.org/"/><meta property="og:description" content="- [Usage](#usage)"/><meta property="og:image" content="https://bottender.js.org/img/og-image.png"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://bottender.js.org/img/og-image.png"/><link rel="shortcut icon" href="/img/favicon-192x192.png"/><link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-dark.min.css"/><link rel="alternate" type="application/atom+xml" href="https://bottender.js.org/blog/atom.xml" title="Bottender Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://bottender.js.org/blog/feed.xml" title="Bottender Blog RSS Feed"/><script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-70309045-11"></script><script>
+<!DOCTYPE html><html lang="zh-TW"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>ViberClient · Bottender</title><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="generator" content="Docusaurus"/><meta name="description" content="- [Usage](#usage)"/><meta name="docsearch:version" content="next"/><meta name="docsearch:language" content="zh-TW"/><meta property="og:title" content="ViberClient · Bottender"/><meta property="og:type" content="website"/><meta property="og:url" content="https://bottender.js.org/"/><meta property="og:description" content="- [Usage](#usage)"/><meta property="og:image" content="https://bottender.js.org/img/og-image.png"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://bottender.js.org/img/og-image.png"/><link rel="shortcut icon" href="/img/favicon-192x192.png"/><link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-dark.min.css"/><link rel="alternate" type="application/atom+xml" href="https://bottender.js.org/blog/atom.xml" title="Bottender Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://bottender.js.org/blog/feed.xml" title="Bottender Blog RSS Feed"/><script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-70309045-11"></script><script>
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments); }
               gtag('js', new Date());
@@ -105,7 +105,7 @@
 </code></pre>
 <h3><a class="anchor" aria-hidden="true" id="error-handling"></a><a href="#error-handling" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Error Handling</h3>
 <p><code>ViberClient</code> uses <a href="https://github.com/axios/axios">axios</a> as HTTP client. We use <a href="https://github.com/Yoctol/messaging-apis/tree/master/packages/axios-error">axios-error</a> package to wrap API error instances for better formatting error messages. Calling <code>console.log</code> with the error instance returns the formatted message. If you'd like to get the axios <code>request</code>, <code>response</code>, or <code>config</code>, you can still get them via those keys on the error instance.</p>
-<pre><code class="hljs css language-js">client.setWebhook(url).catch(<span class="hljs-function"><span class="hljs-params">error</span> =&gt;</span> {
+<pre><code class="hljs css language-js">client.setWebhook(url).catch(<span class="hljs-function">(<span class="hljs-params">error</span>) =&gt;</span> {
   <span class="hljs-built_in">console</span>.log(error); <span class="hljs-comment">// the formatted error message</span>
   <span class="hljs-built_in">console</span>.log(error.stack); <span class="hljs-comment">// stack trace of the error</span>
   <span class="hljs-built_in">console</span>.log(error.config); <span class="hljs-comment">// axios request config</span>
@@ -522,7 +522,7 @@ Broadcast API - <a href="https://developers.viber.com/docs/api/rest-bot-api/#bro
     <code>broadcastCarouselContent(broadcastList, richMedia [, options])</code>
   </li>
 </ul>
-<table spaces-before="0" line-breaks-before="2">
+<table spaces-before="0">
   <tr>
     <th>
       Param
@@ -563,7 +563,7 @@ Broadcast API - <a href="https://developers.viber.com/docs/api/rest-bot-api/#bro
     ],
     'a broadcast to everybody'
   )
-  .then(result =&gt; {
+  .then((result) =&gt; {
     console.log(result);
     // {
     //   messageToken: 40808912438712,
@@ -599,7 +599,7 @@ Get Account Info
 <p spaces-before="0">
   Example:
 </p>
-<pre><code class="js">client.getAccountInfo().then(info =&gt; {
+<pre><code class="js">client.getAccountInfo().then((info) =&gt; {
   console.log(info);
   // {
   //   status: 0,
@@ -642,7 +642,7 @@ Get User Details
 <p spaces-before="0">
   It will fetch the details of a specific Viber user based on his unique user ID.
 </p>
-<table spaces-before="0" line-breaks-before="2">
+<table spaces-before="0">
   <tr>
     <th>
       Param
@@ -673,7 +673,7 @@ Get User Details
 <p spaces-before="0">
   Example:
 </p>
-<pre><code class="js">client.getUserDetails('01234567890A=').then(user =&gt; {
+<pre><code class="js">client.getUserDetails('01234567890A=').then((user) =&gt; {
   console.log(user);
   // {
   //   id: '01234567890A=',
@@ -702,7 +702,7 @@ Get Online
 <p spaces-before="0">
   It will fetch the online status of a given subscribed account members.
 </p>
-<table spaces-before="0" line-breaks-before="2">
+<table spaces-before="0">
   <tr>
     <th>
       Param
@@ -735,7 +735,7 @@ Get Online
 </p>
 <pre><code class="js">client
   .getOnlineStatus(['01234567890=', '01234567891=', '01234567893='])
-  .then(status =&gt; {
+  .then((status) =&gt; {
     console.log(status);
     // [
     //   {
