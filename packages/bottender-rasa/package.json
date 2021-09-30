@@ -1,6 +1,6 @@
 {
   "name": "@bottender/rasa",
-  "version": "1.5.1",
+  "version": "1.5.2",
   "description": "Rasa NLU integration for Bottender.",
   "license": "MIT",
   "homepage": "https://bottender.js.org/",
@@ -22,7 +22,7 @@
     "bottender": ">= 1.2.0-0"
   },
   "devDependencies": {
-    "bottender": "^1.5.1"
+    "bottender": "^1.5.2"
   },
   "keywords": [
     "bot",
