@@ -1,3 +1,7 @@
+# 1.5.2 / 2021-09-30
+
+- [deps] update dependencies.
+
 # 1.5.1 / 2021-09-14
 
 - [new] Server: support experimental custom connectors (#781):
