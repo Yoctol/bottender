@@ -11,11 +11,11 @@ module.exports = {
   coverageDirectory: './coverage/',
   transformIgnorePatterns: ['/node_modules/'],
   testMatch: ['**/__tests__/*.ts'],
-  timers: 'fake',
+  timers: 'legacy', // TODO: use modern timers
   resetMocks: true,
   globals: {
     'ts-jest': {
-      tsConfig: '<rootDir>/tsconfig.test.json',
+      tsconfig: '<rootDir>/tsconfig.test.json',
       diagnostics: false,
     },
   },

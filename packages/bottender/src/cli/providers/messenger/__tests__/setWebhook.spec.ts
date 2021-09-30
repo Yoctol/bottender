@@ -1,4 +1,4 @@
-import Confirm from 'prompt-confirm';
+import { Confirm } from 'enquirer';
 import { MessengerClient } from 'messaging-api-messenger';
 import { mocked } from 'ts-jest/utils';
 
@@ -8,7 +8,9 @@ import { setWebhook } from '../webhook';
 import * as log from '../../../../shared/log';
 
 jest.mock('messaging-api-messenger');
-jest.mock('prompt-confirm');
+jest.mock('enquirer', () => ({
+  Confirm: jest.fn(),
+}));
 
 jest.mock('../../../../shared/getWebhookFromNgrok');
 jest.mock('../../../../shared/log');

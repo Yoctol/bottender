@@ -50,7 +50,7 @@ describe('#client', () => {
 
       connector.client.sendText('hello');
 
-      jest.runTimersToTime(0);
+      jest.advanceTimersByTime(0);
 
       expect(process.stdout.write).toHaveBeenCalledWith('Bot > hello\n');
     });
