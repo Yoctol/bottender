@@ -1,4 +1,3 @@
-import Joi from '@hapi/joi';
 import get from 'lodash/get';
 import invariant from 'invariant';
 
@@ -20,7 +19,7 @@ const getChannelConfig = (channel: Channel): any | never => {
 
   const schema = getChannelSchema(channel);
 
-  const validateResult = Joi.validate(channelConfig, schema, {
+  const validateResult = schema.validate(channelConfig, {
     allowUnknown: true,
   });
 

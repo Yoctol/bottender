@@ -58,12 +58,10 @@ const setup = () => {
 };
 
 let getBottenderConfig;
-let Joi;
 let getChannelConfig;
 
 beforeEach(() => {
   getBottenderConfig = require('../getBottenderConfig').default; // eslint-disable-line global-require
-  Joi = require('@hapi/joi'); // eslint-disable-line global-require
   getChannelConfig = require('../getChannelConfig').default; // eslint-disable-line global-require
 });
 
@@ -123,13 +121,9 @@ describe('Joi validate', () => {
 
     const platform = 'messenger';
 
-    const spy = jest.spyOn(Joi, 'validate');
-    getChannelConfig(platform);
-
-    expect(spy).toBeCalled();
-
-    spy.mockReset();
-    spy.mockRestore();
+    expect(() => {
+      getChannelConfig(platform);
+    }).not.toThrow();
   });
 
   it('should throw error if validate failed', () => {
@@ -140,14 +134,8 @@ describe('Joi validate', () => {
 
     getBottenderConfig.mockReturnValue(MOCK_FILE_WITH_PLATFORM);
 
-    const spy = jest.spyOn(Joi, 'validate');
-
     expect(() => {
       getChannelConfig('messenger');
     }).toThrow();
-    expect(spy).toHaveBeenCalled();
-
-    spy.mockReset();
-    spy.mockRestore();
   });
 });
