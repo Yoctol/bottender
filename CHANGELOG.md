@@ -1,3 +1,7 @@
+# 1.5.3 / 2021-10-05
+
+- [deps] remove `prompt-confirm`.
+
 # 1.5.2 / 2021-09-30
 
 - [deps] update dependencies.
