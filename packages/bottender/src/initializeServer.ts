@@ -12,7 +12,7 @@ import TelegramBot from './telegram/TelegramBot';
 import ViberBot from './viber/ViberBot';
 import WhatsappBot from './whatsapp/WhatsappBot';
 import getBottenderConfig from './shared/getBottenderConfig';
-import getSessionStore from './getSessionStore';
+import getSessionStore from './shared/getSessionStore';
 import { Action, BottenderConfig, Channel, Plugin } from './types';
 
 const BOT_MAP = {

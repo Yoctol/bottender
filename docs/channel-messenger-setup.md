@@ -55,7 +55,7 @@ module.exports = {
 
 Make sure to set the `channels.messenger.enabled` field to `true`.
 
-By default, the Bottender server listens to the Messenger requests on the `/webhooks/messenger` path. However, you can overwrite the path by assigning the preferred webhook path in the `hannels.messenger.path` field.
+By default, the Bottender server listens to the Messenger requests on the `/webhooks/messenger` path. However, you can overwrite the path by assigning the preferred webhook path in the `channels.messenger.path` field.
 
 We highly recommend setting your sensitive config using `process.env`, so you could avoid any credentials get exposed.
 
@@ -142,7 +142,7 @@ If you deployed your bot on `https://example.com/`, your Messenger Bot webhook i
 You can set your webhook by the command below.
 
 ```sh
-npx bottender telegram webhook set -w https://example.com/webhooks/messenger
+npx bottender messenger webhook set -w https://example.com/webhooks/messenger
 ```
 
 ### Set Up Webhook and Enable Subscriptions on Facebook App Page

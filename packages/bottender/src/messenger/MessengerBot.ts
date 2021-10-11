@@ -1,11 +1,14 @@
 import { MessengerClient } from 'messaging-api-messenger';
 
-import Bot from '../bot/Bot';
+import Bot, { OnRequest } from '../bot/Bot';
 import SessionStore from '../session/SessionStore';
 
-import MessengerConnector, { MessengerRequestBody } from './MessengerConnector';
+import MessengerConnector, {
+  MessengerConnectorOptions,
+} from './MessengerConnector';
 import MessengerContext from './MessengerContext';
 import MessengerEvent from './MessengerEvent';
+import { MessengerRequestBody } from './MessengerTypes';
 
 export default class MessengerBot extends Bot<
   MessengerRequestBody,
@@ -14,41 +17,16 @@ export default class MessengerBot extends Bot<
   MessengerContext
 > {
   constructor({
-    accessToken,
-    appId,
-    appSecret,
     sessionStore,
     sync,
-    mapPageToAccessToken,
-    verifyToken,
-    batchConfig,
-    origin,
-    skipAppSecretProof,
-    skipLegacyProfile,
-  }: {
-    accessToken: string;
-    appId: string;
-    appSecret: string;
+    onRequest,
+    ...connectorOptions
+  }: MessengerConnectorOptions & {
     sessionStore?: SessionStore;
     sync?: boolean;
-    mapPageToAccessToken?: (pageId: string) => Promise<string>;
-    verifyToken?: string;
-    batchConfig?: Record<string, any>;
-    origin?: string;
-    skipAppSecretProof?: boolean;
-    skipLegacyProfile?: boolean;
+    onRequest?: OnRequest;
   }) {
-    const connector = new MessengerConnector({
-      accessToken,
-      appId,
-      appSecret,
-      mapPageToAccessToken,
-      verifyToken,
-      batchConfig,
-      origin,
-      skipAppSecretProof,
-      skipLegacyProfile,
-    });
-    super({ connector, sessionStore, sync });
+    const connector = new MessengerConnector(connectorOptions);
+    super({ connector, sessionStore, sync, onRequest });
   }
 }

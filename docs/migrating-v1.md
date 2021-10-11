@@ -48,7 +48,7 @@ const bot = new MessengerBot({
   sessionStore: new MemorySessionStore(maxSize),
 });
 
-bot.onEvent(async context => {
+bot.onEvent(async (context) => {
   await context.sendText('Hello World');
 });
 

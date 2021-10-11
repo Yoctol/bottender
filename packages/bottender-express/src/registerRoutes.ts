@@ -10,7 +10,7 @@ function registerRoutes(
 ) {
   const path = config.path || '/';
 
-  server.use((req, res, next) => {
+  server.use(async (req, res, next) => {
     const { rawBody } = req as express.Request & { rawBody: string };
     if (req.path !== path) {
       next();
@@ -19,7 +19,7 @@ function registerRoutes(
 
     const url = `https://${req.get('host')}${req.originalUrl}`;
 
-    const { shouldNext, response } = bot.connector.preprocess({
+    const { shouldNext, response } = await bot.connector.preprocess({
       method: req.method,
       url,
       headers: req.headers,

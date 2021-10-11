@@ -37,7 +37,7 @@ async function MyAction(context) {
 `SlackOAuthClient` uses [axios](https://github.com/axios/axios) as HTTP client. We use [axios-error](https://github.com/Yoctol/messaging-apis/tree/master/packages/axios-error) package to wrap API error instances for better formatting error messages. Calling `console.log` with the error instance returns the formatted message. If you'd like to get the axios `request`, `response`, or `config`, you can still get them via those keys on the error instance.
 
 ```js
-client.callMethod(method, body).catch(error => {
+client.callMethod(method, body).catch((error) => {
   console.log(error); // the formatted error message
   console.log(error.stack); // stack trace of the error
   console.log(error.config); // axios request config
@@ -166,7 +166,7 @@ Lists all users in a Slack team.
 Example:
 
 ```js
-client.getUserList({ cursor }).then(res => {
+client.getUserList({ cursor }).then((res) => {
   console.log(res);
   // {
   //   members: [
@@ -192,7 +192,7 @@ Recursively lists all users in a Slack team using cursor.
 Example:
 
 ```js
-client.getAllUserList().then(res => {
+client.getAllUserList().then((res) => {
   console.log(res);
   // [
   //   { ... },
@@ -216,7 +216,7 @@ Gets information about an user.
 Example:
 
 ```js
-client.getUserInfo(userId).then(res => {
+client.getUserInfo(userId).then((res) => {
   console.log(res);
   // {
   //   id: 'U123456',
@@ -242,7 +242,7 @@ Lists all channels in a Slack team.
 Example:
 
 ```js
-client.getChannelList().then(res => {
+client.getChannelList().then((res) => {
   console.log(res);
   // [
   //   { ... },
@@ -266,7 +266,7 @@ Gets information about a channel.
 Example:
 
 ```js
-client.getChannelInfo(channelId).then(res => {
+client.getChannelInfo(channelId).then((res) => {
   console.log(res);
   // {
   //   id: 'C8763',
@@ -293,7 +293,7 @@ Retrieve information about a conversation.
 Example:
 
 ```js
-client.getConversationInfo(channelId).then(res => {
+client.getConversationInfo(channelId).then((res) => {
   console.log(res);
   // {
   //   id: 'C8763',
@@ -319,7 +319,7 @@ Example:
 
 ```js
 client.getConversationMembers(channelId, { cursor: 'xxx' });
-client.getConversationMembers(channelId).then(res => {
+client.getConversationMembers(channelId).then((res) => {
   console.log(res);
   // {
   //   members: ['U061F7AUR', 'U0C0NS9HN'],
@@ -343,7 +343,7 @@ Recursively retrieve members of a conversation using cursor.
 Example:
 
 ```js
-client.getAllConversationMembers(channelId).then(res => {
+client.getAllConversationMembers(channelId).then((res) => {
   console.log(res);
   // ['U061F7AUR', 'U0C0NS9HN', ...]
 });
@@ -364,7 +364,7 @@ Example:
 
 ```js
 client.getConversationList({ cursor: 'xxx' });
-client.getConversationList().then(res => {
+client.getConversationList().then((res) => {
   console.log(res);
   // {
   //   channels: [
@@ -398,7 +398,7 @@ Recursively lists all channels in a Slack team using cursor.
 Example:
 
 ```js
-client.getAllConversationList().then(res => {
+client.getAllConversationList().then((res) => {
   console.log(res);
   // [
   //   {

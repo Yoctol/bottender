@@ -962,7 +962,7 @@ Retrieving Labels Associated with the user.
 Example:
 
 ```js
-context.getAssociatedLabels().then(result => {
+context.getAssociatedLabels().then((result) => {
   console.log(result);
   // {
   //   data: [
@@ -1000,7 +1000,7 @@ Retrieving profile of the user.
 Example:
 
 ```js
-context.getUserProfile().then(user => {
+context.getUserProfile().then((user) => {
   console.log(user);
   // {
   //   firstName: 'Johnathan',

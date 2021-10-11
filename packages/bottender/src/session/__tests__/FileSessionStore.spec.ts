@@ -83,7 +83,7 @@ describe('#all', () => {
     const { store, jfs } = setup();
     await store.init();
 
-    jfs.all.mockImplementation(cb => cb(null, [{ id: 1 }, { id: 2 }]));
+    jfs.all.mockImplementation((cb) => cb(null, [{ id: 1 }, { id: 2 }]));
 
     expect(await store.all()).toEqual([{ id: 1 }, { id: 2 }]);
     expect(jfs.all).toBeCalledWith(expect.any(Function));
@@ -93,7 +93,7 @@ describe('#all', () => {
     const { store, jfs } = setup();
     await store.init();
 
-    jfs.all.mockImplementation(cb => cb(null, []));
+    jfs.all.mockImplementation((cb) => cb(null, []));
 
     expect(await store.all()).toEqual([]);
     expect(jfs.all).toBeCalledWith(expect.any(Function));

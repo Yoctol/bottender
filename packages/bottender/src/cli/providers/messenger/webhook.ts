@@ -1,7 +1,7 @@
-import Confirm from 'prompt-confirm';
 import Table from 'cli-table3';
 import chalk from 'chalk';
 import invariant from 'invariant';
+import { Confirm } from 'enquirer';
 import { MessengerClient } from 'messaging-api-messenger';
 
 import getChannelConfig from '../../../shared/getChannelConfig';
@@ -72,7 +72,7 @@ export async function setWebhook(ctx: CliContext): Promise<void> {
       '`verifyToken` is not found in the `bottender.config.js` file'
     );
 
-    const client = MessengerClient.connect({
+    const client = new MessengerClient({
       accessToken,
       appId,
       appSecret,
@@ -80,9 +80,10 @@ export async function setWebhook(ctx: CliContext): Promise<void> {
 
     if (!webhook) {
       warn('We can not find the webhook callback URL you provided.');
-      const prompt = new Confirm(
-        `Are you using ngrok (get URL from ngrok server on http://127.0.0.1:${ngrokPort})?`
-      );
+      const prompt = new Confirm({
+        name: 'question',
+        message: `Are you using ngrok (get URL from ngrok server on http://127.0.0.1:${ngrokPort})?`,
+      });
       const result = await prompt.run();
       if (result) {
         webhook = `${await getWebhookFromNgrok(ngrokPort)}${path}`;

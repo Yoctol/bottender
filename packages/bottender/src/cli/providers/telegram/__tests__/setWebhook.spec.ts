@@ -1,5 +1,6 @@
-import Confirm from 'prompt-confirm';
+import { Confirm } from 'enquirer';
 import { TelegramClient } from 'messaging-api-telegram';
+import { mocked } from 'ts-jest/utils';
 
 import getChannelConfig from '../../../../shared/getChannelConfig';
 import getWebhookFromNgrok from '../../../../shared/getWebhookFromNgrok';
@@ -7,7 +8,9 @@ import { setWebhook } from '../webhook';
 import * as log from '../../../../shared/log';
 
 jest.mock('messaging-api-telegram');
-jest.mock('prompt-confirm');
+jest.mock('enquirer', () => ({
+  Confirm: jest.fn(),
+}));
 
 jest.mock('../../../../shared/getWebhookFromNgrok');
 jest.mock('../../../../shared/log');
@@ -23,13 +26,14 @@ const MOCK_FILE_WITH_PLATFORM = {
 };
 
 const setup = (
-  { webhook = undefined, ngrokPort = undefined, token = undefined } = {
+  { webhook = undefined, ngrokPort = undefined } = {
     webhook: undefined,
     ngrokPort: undefined,
-    token: undefined,
   }
 ) => ({
+  config: null,
   argv: {
+    _: [],
     '--webhook': webhook,
     '--ngrok-port': ngrokPort,
   },
@@ -37,21 +41,18 @@ const setup = (
 
 beforeEach(() => {
   process.exit = jest.fn();
-  getChannelConfig.mockReturnValue(MOCK_FILE_WITH_PLATFORM.channels.telegram);
 
-  getWebhookFromNgrok.mockResolvedValue('https://fakeDomain.ngrok.io');
+  mocked(getChannelConfig).mockReturnValue(
+    MOCK_FILE_WITH_PLATFORM.channels.telegram
+  );
+
+  mocked(getWebhookFromNgrok).mockResolvedValue('https://fakeDomain.ngrok.io');
 
   Confirm.mockImplementation(() => ({
     run: jest.fn().mockResolvedValue(true),
   }));
 
-  TelegramClient.connect.mockReturnValue({
-    setWebhook: jest.fn().mockResolvedValue(true),
-  });
-});
-
-it('be defined', () => {
-  expect(setWebhook).toBeDefined();
+  mocked(TelegramClient.prototype.setWebhook).mockResolvedValue(true);
 });
 
 describe('resolve', () => {
@@ -61,7 +62,7 @@ describe('resolve', () => {
     await setWebhook(ctx);
 
     expect(log.print).toHaveBeenCalledTimes(1);
-    expect(log.print.mock.calls[0][0]).toMatch(/Successfully/);
+    expect(mocked(log.print).mock.calls[0][0]).toMatch(/Successfully/);
   });
 
   it('get ngrok webhook to set up', async () => {
@@ -71,12 +72,11 @@ describe('resolve', () => {
 
     expect(getWebhookFromNgrok).toBeCalledWith('4040');
     expect(log.print).toHaveBeenCalledTimes(1);
-    expect(log.print.mock.calls[0][0]).toMatch(/Successfully/);
+    expect(mocked(log.print).mock.calls[0][0]).toMatch(/Successfully/);
   });
 
   it('set ngrok webhook port', async () => {
     const ctx = setup({ ngrokPort: '5555' });
-    ctx.argv['ngrok-port'] = ctx.argv.ngrokPort;
 
     await setWebhook(ctx);
 
@@ -88,7 +88,7 @@ describe('reject', () => {
   it('reject when accessToken not found in config file', async () => {
     const ctx = setup({ webhook: 'http://example.com/webhook' });
 
-    getChannelConfig.mockReturnValue({});
+    mocked(getChannelConfig).mockReturnValue({});
 
     await setWebhook(ctx);
 
@@ -101,9 +101,7 @@ describe('reject', () => {
   it('reject when telegram return not success', async () => {
     const ctx = setup({ webhook: 'http://example.com/webhook' });
 
-    TelegramClient.connect().setWebhook.mockImplementation(() => {
-      throw new Error();
-    });
+    mocked(TelegramClient.prototype.setWebhook).mockRejectedValue(new Error());
 
     await setWebhook(ctx);
 

@@ -4,6 +4,7 @@ import { EventEmitter } from 'events';
 import invariant from 'invariant';
 import pProps from 'p-props';
 import warning from 'warning';
+import { JsonObject } from 'type-fest';
 import { SlackOAuthClient } from 'messaging-api-slack';
 import { camelcaseKeysDeep } from 'messaging-api-common';
 
@@ -12,55 +13,40 @@ import { Connector } from '../bot/Connector';
 import { RequestContext } from '../types';
 
 import SlackContext from './SlackContext';
-import SlackEvent, {
+import SlackEvent from './SlackEvent';
+import {
   BlockActionEvent,
   CommandEvent,
-  EventTypes,
   InteractiveMessageEvent,
   Message,
   SlackRawEvent,
+  SlackRequestBody,
   UIEvent,
-} from './SlackEvent';
-// FIXME
-export type SlackUser = {
-  id: string;
-};
+} from './SlackTypes';
 
-type EventsAPIBody = {
-  token: string;
-  teamId: string;
-  apiAppId: string;
-  type: EventTypes;
-  event: Message;
-  authedUsers: string[];
-  eventId: string;
-  eventTime: number;
-};
-
-export type SlackRequestBody = EventsAPIBody | { payload: string };
-
-type CommonConstructorOptions = {
+type CommonConnectorOptions = {
   skipLegacyProfile?: boolean;
   verificationToken?: string;
   signingSecret?: string;
   includeBotMessages?: boolean;
 };
 
-type ConstructorOptionsWithoutClient = {
+type ConnectorOptionsWithoutClient = {
   accessToken: string;
   origin?: string;
-} & CommonConstructorOptions;
+} & CommonConnectorOptions;
 
-type ConstructorOptionsWithClient = {
+type ConnectorOptionsWithClient = {
   client: SlackOAuthClient;
-} & CommonConstructorOptions;
+} & CommonConnectorOptions;
 
-type ConstructorOptions =
-  | ConstructorOptionsWithoutClient
-  | ConstructorOptionsWithClient;
+export type SlackConnectorOptions =
+  | ConnectorOptionsWithoutClient
+  | ConnectorOptionsWithClient;
 
 export default class SlackConnector
-  implements Connector<SlackRequestBody, SlackOAuthClient> {
+  implements Connector<SlackRequestBody, SlackOAuthClient>
+{
   _client: SlackOAuthClient;
 
   _verificationToken: string;
@@ -71,7 +57,7 @@ export default class SlackConnector
 
   _includeBotMessages: boolean;
 
-  constructor(options: ConstructorOptions) {
+  constructor(options: SlackConnectorOptions) {
     const {
       verificationToken,
       skipLegacyProfile,
@@ -88,7 +74,7 @@ export default class SlackConnector
         'Slack access token is required. Please make sure you have filled it correctly in `bottender.config.js` or `.env` file.'
       );
 
-      this._client = SlackOAuthClient.connect({
+      this._client = new SlackOAuthClient({
         accessToken,
         origin,
       });
@@ -131,7 +117,7 @@ export default class SlackConnector
       return payload as BlockActionEvent;
     }
     // for RTM WebSocket messages and Slash Command messages
-    return (body as any) as Message;
+    return body as any as Message;
   }
 
   _isBotEventRequest(body: SlackRequestBody): boolean {
@@ -142,7 +128,7 @@ export default class SlackConnector
     );
   }
 
-  get platform(): string {
+  get platform(): 'slack' {
     return 'slack';
   }
 
@@ -150,10 +136,8 @@ export default class SlackConnector
     return this._client;
   }
 
-  getUniqueSessionKey(body: SlackRequestBody): string {
-    // FIXME: define types for every slack events
-    const rawEvent = this._getRawEventFromRequest(body) as any;
-
+  // FIXME: define types for every slack events
+  _getChannelId(rawEvent: any): string | null {
     // For interactive_message format
     if (
       rawEvent.channel &&
@@ -170,7 +154,10 @@ export default class SlackConnector
 
     // For slack modal
     if (rawEvent.view && rawEvent.view.privateMetadata) {
-      return JSON.parse(rawEvent.view.privateMetadata).channelId;
+      const channelId = JSON.parse(rawEvent.view.privateMetadata).channelId;
+      if (channelId) {
+        return channelId;
+      }
     }
 
     // For reaction_added format
@@ -187,43 +174,52 @@ export default class SlackConnector
     );
   }
 
-  async updateSession(session: Session, body: SlackRequestBody): Promise<void> {
-    if (this._isBotEventRequest(body)) {
-      return;
-    }
-
-    const rawEvent = this._getRawEventFromRequest(body);
-    let userFromBody;
+  _getUserId(rawEvent: SlackRawEvent): string | null {
     if (
       rawEvent.type === 'interactive_message' ||
       rawEvent.type === 'block_actions' ||
       rawEvent.type === 'view_submission' ||
       rawEvent.type === 'view_closed'
     ) {
-      userFromBody = (rawEvent as UIEvent).user.id;
-    } else {
-      userFromBody =
-        (rawEvent as Message).user || (rawEvent as CommandEvent).userId;
+      return (rawEvent as UIEvent).user.id;
     }
+    return (
+      (rawEvent as Message).user ||
+      (rawEvent as CommandEvent).userId ||
+      (rawEvent as UIEvent).user?.id
+    );
+  }
+
+  getUniqueSessionKey(body: SlackRequestBody): string | null {
+    const rawEvent = this._getRawEventFromRequest(body);
+    return this._getChannelId(rawEvent) || this._getUserId(rawEvent);
+  }
+
+  async updateSession(session: Session, body: SlackRequestBody): Promise<void> {
+    if (this._isBotEventRequest(body)) {
+      return;
+    }
+
+    const rawEvent = this._getRawEventFromRequest(body);
+    const userId = this._getUserId(rawEvent);
+    const channelId = this._getChannelId(rawEvent);
 
     if (
       typeof session.user === 'object' &&
       session.user &&
       session.user.id &&
-      session.user.id === userFromBody
+      session.user.id === userId
     ) {
       return;
     }
-    const channelId = this.getUniqueSessionKey(body);
-    const senderId = userFromBody;
 
-    if (!senderId) {
+    if (!userId) {
       return;
     }
 
     if (this._skipLegacyProfile) {
       session.user = {
-        id: senderId,
+        id: userId,
         _updatedAt: new Date().toISOString(),
       };
 
@@ -252,7 +248,7 @@ export default class SlackConnector
     }
 
     const promises: Record<string, any> = {
-      sender: this._client.getUserInfo(senderId),
+      sender: this._client.getUserInfo(userId),
     };
 
     // TODO: check join or leave events?
@@ -260,12 +256,13 @@ export default class SlackConnector
       !session.channel ||
       (session.channel.members &&
         Array.isArray(session.channel.members) &&
-        session.channel.members.indexOf(senderId) < 0)
+        session.channel.members.indexOf(userId) < 0)
     ) {
-      promises.channel = this._client.getConversationInfo(channelId);
-      promises.channelMembers = this._client.getAllConversationMembers(
-        channelId
-      );
+      if (channelId) {
+        promises.channel = this._client.getConversationInfo(channelId);
+        promises.channelMembers =
+          this._client.getAllConversationMembers(channelId);
+      }
     }
 
     // TODO: how to know if user leave team?
@@ -274,7 +271,7 @@ export default class SlackConnector
       !session.team ||
       (session.team.members &&
         Array.isArray(session.team.members) &&
-        session.team.members.indexOf(senderId) < 0)
+        session.team.members.indexOf(userId) < 0)
     ) {
       promises.allUsers = this._client.getAllUserList();
     }
@@ -283,7 +280,7 @@ export default class SlackConnector
 
     // FIXME: refine user
     session.user = {
-      id: senderId,
+      id: userId,
       _updatedAt: new Date().toISOString(),
       ...results.sender,
     };
@@ -340,7 +337,7 @@ export default class SlackConnector
   createContext(params: {
     event: SlackEvent;
     session: Session | null;
-    initialState?: Record<string, any> | null;
+    initialState?: JsonObject | null;
     requestContext?: RequestContext;
     emitter?: EventEmitter | null;
   }): SlackContext {
@@ -370,13 +367,14 @@ export default class SlackConnector
   }: {
     rawBody: string;
     signature: string;
-    timestamp: number;
+    timestamp: string;
   }): boolean {
     // ignore this request if the timestamp is 5 more minutes away from now
     const FIVE_MINUTES_IN_MILLISECONDS = 5 * 1000 * 60;
 
     if (
-      Math.abs(Date.now() - timestamp * 1000) > FIVE_MINUTES_IN_MILLISECONDS
+      Math.abs(Date.now() - Number(timestamp) * 1000) >
+      FIVE_MINUTES_IN_MILLISECONDS
     ) {
       return false;
     }
@@ -404,8 +402,8 @@ export default class SlackConnector
     rawBody,
   }: {
     method: string;
-    headers: Record<string, any>;
-    query: Record<string, any>;
+    headers: Record<string, string>;
+    query: Record<string, string>;
     rawBody: string;
     body: Record<string, any>;
   }) {

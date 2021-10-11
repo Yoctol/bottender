@@ -1,5 +1,5 @@
-import Confirm from 'prompt-confirm';
 import invariant from 'invariant';
+import { Confirm } from 'enquirer';
 import { ViberClient, ViberTypes } from 'messaging-api-viber';
 
 import getChannelConfig from '../../../shared/getChannelConfig';
@@ -42,20 +42,18 @@ export async function setWebhook(ctx: CliContext): Promise<void> {
       '`sender` is not found in the `bottender.config.js` file'
     );
 
-    const client = ViberClient.connect(
-      {
-        accessToken,
-        sender,
-      },
-      sender
-    );
+    const client = new ViberClient({
+      accessToken,
+      sender,
+    });
 
     if (!webhook) {
       warn('We can not find the webhook callback URL you provided.');
 
-      const prompt = new Confirm(
-        `Are you using ngrok (get URL from ngrok server on http://127.0.0.1:${ngrokPort})?`
-      );
+      const prompt = new Confirm({
+        name: 'question',
+        message: `Are you using ngrok (get URL from ngrok server on http://127.0.0.1:${ngrokPort})?`,
+      });
 
       const result = await prompt.run();
 
@@ -103,13 +101,10 @@ export async function deleteWebhook(_: CliContext): Promise<void> {
       '`sender` is not found in the `bottender.config.js` file'
     );
 
-    const client = ViberClient.connect(
-      {
-        accessToken,
-        sender,
-      },
-      sender
-    );
+    const client = new ViberClient({
+      accessToken,
+      sender,
+    });
 
     await client.removeWebhook();
 

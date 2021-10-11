@@ -60,7 +60,7 @@ async function MyAction(context) {
 `MessengerClient` uses [axios](https://github.com/axios/axios) as HTTP client. We use [axios-error](https://github.com/Yoctol/messaging-apis/tree/master/packages/axios-error) package to wrap API error instances for better formatting error messages. Calling `console.log` with the error instance returns the formatted message. If you'd like to get the axios `request`, `response`, or `config`, you can still get them via those keys on the error instance.
 
 ```js
-client.sendRawBody(body).catch(error => {
+client.sendRawBody(body).catch((error) => {
   console.log(error); // the formatted error message
   console.log(error.stack); // stack trace of the error
   console.log(error.config); // axios request config
@@ -1327,7 +1327,7 @@ Creating a Label.
 Example:
 
 ```js
-client.createLabel('awesome').then(label => {
+client.createLabel('awesome').then((label) => {
   console.log(label);
   // {
   //   id: 1712444532121303
@@ -1382,7 +1382,7 @@ Retrieving Labels Associated with a PSID.
 Example:
 
 ```js
-client.getAssociatedLabels(USER_ID).then(result => {
+client.getAssociatedLabels(USER_ID).then((result) => {
   console.log(result);
   // {
   //   data: [
@@ -1421,7 +1421,7 @@ Retrieving Label Details.
 Example:
 
 ```js
-client.getLabelDetails(LABEL_ID, { fields: ['name'] }).then(result => {
+client.getLabelDetails(LABEL_ID, { fields: ['name'] }).then((result) => {
   console.log(result);
   // {
   //   id: "1001200005002",
@@ -1439,7 +1439,7 @@ Retrieving a List of All Labels.
 Example:
 
 ```js
-client.getLabelList().then(result => {
+client.getLabelList().then((result) => {
   console.log(result);
   // {
   //   data: [
@@ -1498,7 +1498,7 @@ Retrieving a Person's Profile.
 Example:
 
 ```js
-client.getUserProfile(USER_ID).then(user => {
+client.getUserProfile(USER_ID).then((user) => {
   console.log(user);
   // {
   //   id: '5566'
@@ -1526,31 +1526,33 @@ Retrieves the current value of one or more Messenger Profile properties by name.
 Example:
 
 ```js
-client.getMessengerProfile(['get_started', 'persistent_menu']).then(profile => {
-  console.log(profile);
-  // [
-  //   {
-  //     getStarted: {
-  //       payload: 'GET_STARTED',
-  //     },
-  //   },
-  //   {
-  //     persistentMenu: [
-  //       {
-  //         locale: 'default',
-  //         composerInputDisabled: true,
-  //         callToActions: [
-  //           {
-  //             type: 'postback',
-  //             title: 'Restart Conversation',
-  //             payload: 'RESTART',
-  //           },
-  //         ],
-  //       },
-  //     ],
-  //   },
-  // ]
-});
+client
+  .getMessengerProfile(['get_started', 'persistent_menu'])
+  .then((profile) => {
+    console.log(profile);
+    // [
+    //   {
+    //     getStarted: {
+    //       payload: 'GET_STARTED',
+    //     },
+    //   },
+    //   {
+    //     persistentMenu: [
+    //       {
+    //         locale: 'default',
+    //         composerInputDisabled: true,
+    //         callToActions: [
+    //           {
+    //             type: 'postback',
+    //             title: 'Restart Conversation',
+    //             payload: 'RESTART',
+    //           },
+    //         ],
+    //       },
+    //     ],
+    //   },
+    // ]
+  });
 ```
 
 <br />
@@ -1617,7 +1619,7 @@ Retrieves the current value of persistent menu.
 Example:
 
 ```js
-client.getPersistentMenu().then(menu => {
+client.getPersistentMenu().then((menu) => {
   console.log(menu);
   // [
   //   {
@@ -1734,7 +1736,7 @@ Retrieves the current value of get started button.
 Example:
 
 ```js
-client.getGetStarted().then(getStarted => {
+client.getGetStarted().then((getStarted) => {
   console.log(getStarted);
   // {
   //   payload: 'GET_STARTED',
@@ -1783,7 +1785,7 @@ Retrieves the current value of greeting text.
 Example:
 
 ```js
-client.getGreeting().then(greeting => {
+client.getGreeting().then((greeting) => {
   console.log(greeting);
   // [
   //   {
@@ -1838,7 +1840,7 @@ Retrieves the current value of whitelisted domains.
 Example:
 
 ```js
-client.getWhitelistedDomains().then(domains => {
+client.getWhitelistedDomains().then((domains) => {
   console.log(domains);
   // ['http://www.example.com/']
 });
@@ -1883,7 +1885,7 @@ Retrieves the current value of account linking URL.
 Example:
 
 ```js
-client.getAccountLinkingURL().then(accountLinking => {
+client.getAccountLinkingURL().then((accountLinking) => {
   console.log(accountLinking);
   // {
   //   accountLinkingUrl:
@@ -1935,7 +1937,7 @@ Retrieves the current value of target audience.
 Example:
 
 ```js
-client.getTargetAudience().then(targetAudience => {
+client.getTargetAudience().then((targetAudience) => {
   console.log(targetAudience);
   // {
   //   audienceType: 'custom',
@@ -1989,7 +1991,7 @@ Retrieves the current value of chat extension home URL.
 Example:
 
 ```js
-client.getHomeURL().then(chatExtension => {
+client.getHomeURL().then((chatExtension) => {
   console.log(chatExtension);
   // {
   //   url: 'http://petershats.com/send-a-hat',
@@ -2118,7 +2120,7 @@ Get the current thread owner.
 Example:
 
 ```js
-client.getThreadOwner(USER_ID).then(threadOwner => {
+client.getThreadOwner(USER_ID).then((threadOwner) => {
   console.log(threadOwner);
   // {
   //   appId: '12345678910'
@@ -2135,7 +2137,7 @@ Retrieves the list of apps that are Secondary Receivers for a page.
 Example:
 
 ```js
-client.getSecondaryReceivers().then(receivers => {
+client.getSecondaryReceivers().then((receivers) => {
   console.log(receivers);
   // [
   //   {
@@ -2177,7 +2179,7 @@ Example:
 ```js
 client
   .getInsights(['page_messages_reported_conversations_unique'])
-  .then(counts => {
+  .then((counts) => {
     console.log(counts);
     // [
     //   {
@@ -2213,7 +2215,7 @@ Retrieves the number of conversations with the Page that have been blocked.
 Example:
 
 ```js
-client.getBlockedConversations().then(counts => {
+client.getBlockedConversations().then((counts) => {
   console.log(counts);
   //   {
   //     "name": "page_messages_blocked_conversations_unique",
@@ -2247,7 +2249,7 @@ Retrieves the number of conversations from your Page that have been reported by 
 Example:
 
 ```js
-client.getReportedConversations().then(counts => {
+client.getReportedConversations().then((counts) => {
   console.log(counts);
   //   {
   //     "name": "page_messages_reported_conversations_unique",
@@ -2286,7 +2288,7 @@ Retrieves the total number of open conversations between your Page and people in
 Example:
 
 ```js
-client.getOpenConversations().then(result => {
+client.getOpenConversations().then((result) => {
   console.log(result);
   // {
   //   name: 'page_messages_total_messaging_connections',
@@ -2319,7 +2321,7 @@ Retrieves the number of people who have sent a message to your business, not inc
 Example:
 
 ```js
-client.getTotalMessagingConnections().then(result => {
+client.getTotalMessagingConnections().then((result) => {
   console.log(result);
   // {
   //   name: 'page_messages_total_messaging_connections',
@@ -2352,7 +2354,7 @@ Retrieves the number of messaging conversations on Facebook Messenger that began
 Example:
 
 ```js
-client.getNewConversations().then(result => {
+client.getNewConversations().then((result) => {
   console.log(result);
   // {
   //   name: 'page_messages_new_conversations_unique',
@@ -2479,7 +2481,7 @@ client
     userId: USER_ID,
     appSecret: APP_SECRET,
   })
-  .then(result => {
+  .then((result) => {
     console.log(result);
     // {
     //   data: [
@@ -2533,7 +2535,7 @@ client
     userId: USER_ID,
     appSecret: APP_SECRET,
   })
-  .then(result => {
+  .then((result) => {
     console.log(result);
     // {
     //   data: [
@@ -2577,7 +2579,7 @@ Creates a persona.
 createPersona({
   name: 'John Mathew',
   profilePictureUrl: 'https://facebook.com/john_image.jpg',
-}).then(persona => {
+}).then((persona) => {
   console.log(persona);
   // {
   //  "id": "<PERSONA_ID>"
@@ -2596,7 +2598,7 @@ Retrieves the name and profile picture of a persona.
 | personaId | <code>String</code> | ID of the persona. |
 
 ```js
-getPersona(personaId).then(persona => {
+getPersona(personaId).then((persona) => {
   console.log(persona);
   // {
   //   "name": "John Mathew",
@@ -2617,7 +2619,7 @@ Retrieves personas associated with a Page using the cursor.
 | cursor | <code>String</code> | pagination cursor. |
 
 ```js
-getPersonas(cursor).then(personas => {
+getPersonas(cursor).then((personas) => {
   console.log(personas);
   // {
   //   "data": [
@@ -2649,7 +2651,7 @@ getPersonas(cursor).then(personas => {
 Retrieves all the personas associated with a Page.
 
 ```js
-getAllPersonas().then(personas => {
+getAllPersonas().then((personas) => {
   console.log(personas);
   //   [
   //     {
@@ -2691,7 +2693,7 @@ Gets token information.
 Example:
 
 ```js
-client.debugToken().then(pageInfo => {
+client.debugToken().then((pageInfo) => {
   console.log(pageInfo);
   // {
   //    appId: '000000000000000',
@@ -2806,7 +2808,7 @@ Get page name and page id using Graph API.
 Example:
 
 ```js
-client.getPageInfo().then(page => {
+client.getPageInfo().then((page) => {
   console.log(page);
   // {
   //   name: 'Bot Demo',
@@ -2822,7 +2824,7 @@ Programmatically check the feature submission status of Page-level Platform feat
 Example:
 
 ```js
-client.getMessagingFeatureReview().then(data => {
+client.getMessagingFeatureReview().then((data) => {
   console.log(data);
   // [
   //   {

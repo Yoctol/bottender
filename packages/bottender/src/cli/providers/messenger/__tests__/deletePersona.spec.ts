@@ -1,4 +1,5 @@
 import { MessengerClient } from 'messaging-api-messenger';
+import { mocked } from 'ts-jest/utils';
 
 import getChannelConfig from '../../../../shared/getChannelConfig';
 import { deletePersona } from '../persona';
@@ -17,48 +18,48 @@ const MOCK_FILE_WITH_PLATFORM = {
   },
 };
 
-let _client;
-
 beforeEach(() => {
-  _client = {
-    deletePersona: jest.fn(),
-  };
-  MessengerClient.connect = jest.fn(() => _client);
-  log.error = jest.fn();
-  log.print = jest.fn();
-  getChannelConfig.mockReturnValue(MOCK_FILE_WITH_PLATFORM.channels.messenger);
-});
+  process.exit = jest.fn();
 
-it('be defined', () => {
-  expect(deletePersona).toBeDefined();
+  mocked(getChannelConfig).mockReturnValue(
+    MOCK_FILE_WITH_PLATFORM.channels.messenger
+  );
 });
 
 describe('resolved', () => {
   it('call deletePersona', async () => {
     const ctx = {
-      argv: { '--id': '54321' },
+      config: null,
+      argv: {
+        _: [],
+        '--id': '54321',
+      },
     };
 
-    process.exit = jest.fn();
-
-    _client.deletePersona.mockResolvedValue({});
+    mocked(MessengerClient.prototype.deletePersona).mockResolvedValue({
+      success: true,
+    });
 
     await deletePersona(ctx);
 
-    expect(MessengerClient.connect).toBeCalledWith({
+    const client = mocked(MessengerClient).mock.instances[0];
+
+    expect(MessengerClient).toBeCalledWith({
       accessToken: '__FAKE_TOKEN__',
     });
-    expect(_client.deletePersona).toBeCalledWith('54321');
+    expect(client.deletePersona).toBeCalledWith('54321');
   });
 
   it('error when no config setting', async () => {
     const ctx = {
-      argv: { '--id': '54321' },
+      config: null,
+      argv: {
+        _: [],
+        '--id': '54321',
+      },
     };
 
-    process.exit = jest.fn();
-
-    _client.deletePersona.mockResolvedValue(null);
+    mocked(MessengerClient.prototype.deletePersona).mockResolvedValue(null);
 
     await deletePersona(ctx);
 
@@ -67,12 +68,13 @@ describe('resolved', () => {
 
   it('error when no persona id', async () => {
     const ctx = {
-      argv: {},
+      config: null,
+      argv: {
+        _: [],
+      },
     };
 
-    process.exit = jest.fn();
-
-    _client.deletePersona.mockResolvedValue(null);
+    mocked(MessengerClient.prototype.deletePersona).mockResolvedValue(null);
 
     await deletePersona(ctx);
 
@@ -83,16 +85,18 @@ describe('resolved', () => {
 describe('reject', () => {
   it('handle error thrown with only status', async () => {
     const ctx = {
-      argv: { '--id': '54321' },
+      config: null,
+      argv: {
+        _: [],
+        '--id': '54321',
+      },
     };
     const error = {
       response: {
         status: 400,
       },
     };
-    _client.deletePersona.mockRejectedValue(error);
-
-    process.exit = jest.fn();
+    mocked(MessengerClient.prototype.deletePersona).mockRejectedValue(error);
 
     await deletePersona(ctx);
 
@@ -102,7 +106,11 @@ describe('reject', () => {
 
   it('handle error thrown by messenger', async () => {
     const ctx = {
-      argv: { '--id': '54321' },
+      config: null,
+      argv: {
+        _: [],
+        '--id': '54321',
+      },
     };
     const error = {
       response: {
@@ -118,27 +126,26 @@ describe('reject', () => {
         },
       },
     };
-    _client.deletePersona.mockRejectedValue(error);
-
-    process.exit = jest.fn();
+    mocked(MessengerClient.prototype.deletePersona).mockRejectedValue(error);
 
     await deletePersona(ctx);
 
     expect(log.error).toBeCalled();
-    expect(log.error.mock.calls[2][0]).not.toMatch(/\[object Object\]/);
+    expect(mocked(log.error).mock.calls[2][0]).not.toMatch(/\[object Object\]/);
     expect(process.exit).toBeCalled();
   });
 
   it('handle error thrown by ourselves', async () => {
     const ctx = {
-      argv: { '--id': '54321' },
+      config: null,
+      argv: {
+        _: [],
+        '--id': '54321',
+      },
     };
-    const error = {
-      message: 'something wrong happened',
-    };
-    _client.deletePersona.mockRejectedValue(error);
-
-    process.exit = jest.fn();
+    mocked(MessengerClient.prototype.deletePersona).mockRejectedValue(
+      new Error('something wrong happened')
+    );
 
     await deletePersona(ctx);
 

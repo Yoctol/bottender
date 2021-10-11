@@ -26,7 +26,7 @@ server.all('*', (req, res) => {
   });
 });
 
-server.listen(port, err => {
+server.listen(port, (err) => {
   if (err) {
     console.log(err);
     throw err;

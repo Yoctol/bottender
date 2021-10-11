@@ -3,10 +3,10 @@ import { Context, chain } from 'bottender';
 // FIXME: export public API for testing
 import { run } from 'bottender/dist/bot/Bot';
 
-const luis = require('..'); // eslint-disable-line @typescript-eslint/no-var-requires
+import luis from '..';
 
 // FIXME: export public test-utils for testing
-class TestContext extends Context<any, any> {
+class TestContext extends Context {
   get platform() {
     return 'test';
   }
@@ -62,11 +62,11 @@ it('should resolve corresponding action if intent score > scoreThreshold', async
   let requestHeaders;
   nock('https://westus.api.cognitive.microsoft.com')
     .get('/luis/v2.0/apps/APP_ID')
-    .query(query => {
+    .query((query) => {
       requestQuery = query;
       return true;
     })
-    .reply(200, function() {
+    .reply(200, function () {
       requestHeaders = this.req.headers;
       return {
         query: 'forward to frank 30 dollars through HSBC',
@@ -229,7 +229,7 @@ it('should support parameters of luis', async () => {
   let requestQuery;
   nock('https://westus.api.cognitive.microsoft.com')
     .get('/luis/v2.0/apps/APP_ID')
-    .query(query => {
+    .query((query) => {
       requestQuery = query;
       return true;
     })

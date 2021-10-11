@@ -1,5 +1,3 @@
-import { run } from '../../bot/Bot';
-
 import router, {
   line,
   messenger,
@@ -11,6 +9,7 @@ import router, {
   viber,
   whatsapp,
 } from '..';
+import { run } from '../../bot/Bot';
 
 function textContext(message = '') {
   return {
@@ -155,7 +154,7 @@ describe('#route', () => {
   it('should work with predicate', async () => {
     const Router = router([
       route(
-        context => context.event.isText && context.event.text.startsWith('h'),
+        (context) => context.event.isText && context.event.text.startsWith('h'),
         sendText('hello')
       ),
     ]);

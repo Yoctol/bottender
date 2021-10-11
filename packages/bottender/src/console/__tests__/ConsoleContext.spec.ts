@@ -142,21 +142,3 @@ describe('method missing', () => {
     expect(context.isSessionWritten).toBe(false);
   });
 });
-
-describe('#typing', () => {
-  it('avoid delay 0', async () => {
-    const { context } = setup();
-
-    await context.typing(0);
-
-    expect(sleep).not.toBeCalled();
-  });
-
-  it('should call sleep', async () => {
-    const { context } = setup();
-
-    await context.typing(10);
-
-    expect(sleep).toBeCalled();
-  });
-});

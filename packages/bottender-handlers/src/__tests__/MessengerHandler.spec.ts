@@ -264,7 +264,7 @@ describe('#onPayload', () => {
         },
       };
 
-      builder.onPayload(payload => payload === 'cool', handler);
+      builder.onPayload((payload) => payload === 'cool', handler);
       await builder.build()(context);
       expect(handler).toBeCalledWith(context);
     });
@@ -290,7 +290,7 @@ describe('#onPayload', () => {
         },
       };
 
-      builder.onPayload(payload => payload === 'so quick!', handler);
+      builder.onPayload((payload) => payload === 'so quick!', handler);
       await builder.build()(context);
       expect(handler).toBeCalledWith(context);
     });

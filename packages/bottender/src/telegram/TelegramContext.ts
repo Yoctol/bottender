@@ -1,10 +1,10 @@
-import sleep from 'delay';
 import warning from 'warning';
-import { TelegramClient, TelegramTypes as Type } from 'messaging-api-telegram';
+import { TelegramClient } from 'messaging-api-telegram';
 
 import Context from '../context/Context';
 
 import TelegramEvent from './TelegramEvent';
+import * as Type from './TelegramTypes';
 
 class TelegramContext extends Context<TelegramClient, TelegramEvent> {
   /**
@@ -13,16 +13,6 @@ class TelegramContext extends Context<TelegramClient, TelegramEvent> {
    */
   get platform(): 'telegram' {
     return 'telegram';
-  }
-
-  /**
-   * Delay and show indicators for milliseconds.
-   *
-   */
-  async typing(milliseconds: number): Promise<void> {
-    if (milliseconds > 0) {
-      await sleep(milliseconds);
-    }
   }
 
   /**
@@ -151,6 +141,22 @@ class TelegramContext extends Context<TelegramClient, TelegramEvent> {
     const inlineQueryId = (this._event.inlineQuery as any).id;
 
     return this._client.answerInlineQuery(inlineQueryId, results, options);
+  }
+
+  async answerCallbackQuery(
+    options: Type.AnswerCallbackQueryOption
+  ): Promise<boolean | null> {
+    if (!this._event.isCallbackQuery) {
+      warning(
+        false,
+        'answerCallbackQuery: should only be called to answer CallbackQuery event'
+      );
+      return null;
+    }
+
+    const callbackQueryId = (this._event.callbackQuery as any).id;
+
+    return this._client.answerCallbackQuery(callbackQueryId, options);
   }
 
   async getUserProfilePhotos(

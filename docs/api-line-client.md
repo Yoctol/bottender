@@ -58,7 +58,7 @@ async function MyAction(context) {
 `LineClient` uses [axios](https://github.com/axios/axios) as HTTP client. We use [axios-error](https://github.com/Yoctol/messaging-apis/tree/master/packages/axios-error) package to wrap API error instances for better formatting error messages. Calling `console.log` with the error instance returns the formatted message. If you'd like to get the axios `request`, `response`, or `config`, you can still get them via those keys on the error instance.
 
 ```js
-client.replyText(token, text).catch(error => {
+client.replyText(token, text).catch((error) => {
   console.log(error); // the formatted error message
   console.log(error.stack); // stack trace of the error
   console.log(error.config); // axios request config
@@ -1915,7 +1915,7 @@ Retrieves image, video, and audio data sent in specified message.
 Example:
 
 ```js
-client.getMessageContent(MESSAGE_ID).then(buffer => {
+client.getMessageContent(MESSAGE_ID).then((buffer) => {
   console.log(buffer);
   // <Buffer 61 61 73 64 ...>
 });
@@ -1938,7 +1938,7 @@ Gets user profile information.
 Example:
 
 ```js
-client.getUserProfile(USER_ID).then(profile => {
+client.getUserProfile(USER_ID).then((profile) => {
   console.log(profile);
   // {
   //   displayName: 'LINE taro',
@@ -1967,7 +1967,7 @@ Gets the user profile of a member of a group that the bot is in. This includes t
 Example:
 
 ```js
-client.getGroupMemberProfile(GROUP_ID, USER_ID).then(member => {
+client.getGroupMemberProfile(GROUP_ID, USER_ID).then((member) => {
   console.log(member);
   // {
   //   "displayName":"LINE taro",
@@ -1991,7 +1991,7 @@ Gets the user profile of a member of a room that the bot is in. This includes th
 Example:
 
 ```js
-client.getRoomMemberProfile(ROOM_ID, USER_ID).then(member => {
+client.getRoomMemberProfile(ROOM_ID, USER_ID).then((member) => {
   console.log(member);
   // {
   //   "displayName":"LINE taro",
@@ -2021,7 +2021,7 @@ This feature is only available for LINE@ Approved accounts or official accounts.
 Example:
 
 ```js
-client.getGroupMemberIds(GROUP_ID, CURSOR).then(res => {
+client.getGroupMemberIds(GROUP_ID, CURSOR).then((res) => {
   console.log(res);
   // {
   //   memberIds: [
@@ -2049,7 +2049,7 @@ This feature is only available for LINE@ Approved accounts or official accounts.
 Example:
 
 ```js
-client.getAllGroupMemberIds(GROUP_ID).then(ids => {
+client.getAllGroupMemberIds(GROUP_ID).then((ids) => {
   console.log(ids);
   // [
   //   'Uxxxxxxxxxxxxxx..1',
@@ -2078,7 +2078,7 @@ This feature is only available for LINE@ Approved accounts or official accounts.
 Example:
 
 ```js
-client.getRoomMemberIds(ROOM_ID, CURSOR).then(res => {
+client.getRoomMemberIds(ROOM_ID, CURSOR).then((res) => {
   console.log(res);
   // {
   //   memberIds: [
@@ -2106,7 +2106,7 @@ This feature is only available for LINE@ Approved accounts or official accounts.
 Example:
 
 ```js
-client.getAllRoomMemberIds(ROOM_ID).then(ids => {
+client.getAllRoomMemberIds(ROOM_ID).then((ids) => {
   console.log(ids);
   // [
   //   'Uxxxxxxxxxxxxxx..1',
@@ -2168,7 +2168,7 @@ Gets a list of all uploaded rich menus.
 Example:
 
 ```js
-client.getRichMenuList().then(richMenus => {
+client.getRichMenuList().then((richMenus) => {
   console.log(richMenus);
   // [
   //   {
@@ -2212,7 +2212,7 @@ Gets a rich menu via a rich menu ID.
 Example:
 
 ```js
-client.getRichMenu(RICH_MENU_ID).then(richMenu => {
+client.getRichMenu(RICH_MENU_ID).then((richMenu) => {
   console.log(richMenu);
   // {
   //   richMenuId: 'RICH_MENU_ID',
@@ -2278,7 +2278,7 @@ client
       },
     ],
   })
-  .then(richMenu => {
+  .then((richMenu) => {
     console.log(richMenu);
     // {
     //   richMenuId: "{richMenuId}"
@@ -2315,7 +2315,7 @@ Gets the ID of the rich menu linked to a user.
 Example:
 
 ```js
-client.getLinkedRichMenu(USER_ID).then(richMenu => {
+client.getLinkedRichMenu(USER_ID).then((richMenu) => {
   console.log(richMenu);
   // {
   //   richMenuId: "{richMenuId}"
@@ -2369,7 +2369,7 @@ Downloads an image associated with a rich menu.
 Example:
 
 ```js
-client.downloadRichMenuImage(RICH_MENU_ID).then(imageBuffer => {
+client.downloadRichMenuImage(RICH_MENU_ID).then((imageBuffer) => {
   console.log(imageBuffer);
   // <Buffer 61 61 73 64 ...>
 });
@@ -2403,7 +2403,7 @@ Gets the ID of the default rich menu set with the Messaging API.
 Example:
 
 ```js
-client.getDefaultRichMenu().then(richMenu => {
+client.getDefaultRichMenu().then((richMenu) => {
   console.log(richMenu);
   // {
   //   "richMenuId": "{richMenuId}"
@@ -2458,7 +2458,7 @@ Issues a link token used for the [account link](https://developers.line.me/en/me
 Example:
 
 ```js
-client.issueLinkToken(USER_ID).then(result => {
+client.issueLinkToken(USER_ID).then((result) => {
   console.log(result);
   // {
   //   linkToken: 'NMZTNuVrPTqlr2IF8Bnymkb7rXfYv5EY',
@@ -2524,7 +2524,7 @@ Gets information on all the LIFF apps registered in the channel.
 Example:
 
 ```js
-client.getLiffApps().then(apps => {
+client.getLiffApps().then((apps) => {
   console.log(apps);
   // [
   //   {

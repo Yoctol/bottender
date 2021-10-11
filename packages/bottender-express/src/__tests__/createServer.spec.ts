@@ -30,13 +30,11 @@ it('should respond accordingly if shouldNext = false', async () => {
   });
 
   const server = createServer(bot);
-  const { status, text } = await request(server)
-    .get('/')
-    .query({
-      'hub.mode': 'subscribe',
-      'hub.verify_token': bot.connector.verifyToken,
-      'hub.challenge': 'chatbot is awesome',
-    });
+  const { status, text } = await request(server).get('/').query({
+    'hub.mode': 'subscribe',
+    'hub.verify_token': bot.connector.verifyToken,
+    'hub.challenge': 'chatbot is awesome',
+  });
 
   expect(status).toBe(200);
   expect(text).toBe('chatbot is awesome');
@@ -50,9 +48,7 @@ it('should handle bot request if shouldNext = true', async () => {
   requestHandler.mockResolvedValue();
 
   const server = createServer(bot);
-  const { status } = await request(server)
-    .post('/')
-    .send({});
+  const { status } = await request(server).post('/').send({});
 
   expect(status).toBe(200);
 });

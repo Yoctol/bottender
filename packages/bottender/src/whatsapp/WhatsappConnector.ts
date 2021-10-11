@@ -1,6 +1,8 @@
 import crypto from 'crypto';
 import { EventEmitter } from 'events';
 
+import { JsonObject } from 'type-fest';
+
 import Session from '../session/Session';
 import { Connector } from '../bot/Connector';
 import { RequestContext } from '../types';
@@ -8,29 +10,28 @@ import { RequestContext } from '../types';
 import TwilioClient from './TwilioClient';
 import WhatsappContext from './WhatsappContext';
 import WhatsappEvent from './WhatsappEvent';
+import { WhatsappRequestBody, WhatsappRequestContext } from './WhatsappTypes';
 
-export type WhatsappRequestBody = any;
-
-type ConstructorOptionsWithoutClient = {
+type ConnectorOptionsWithoutClient = {
   accountSid: string;
   authToken: string;
   phoneNumber: string;
   origin?: string;
 };
 
-type ConstructorOptionsWithClient = {
+type ConnectorOptionsWithClient = {
   client: TwilioClient;
   origin?: string;
 };
 
-type ConstructorOptions =
-  | ConstructorOptionsWithoutClient
-  | ConstructorOptionsWithClient;
+export type WhatsappConnectorOptions =
+  | ConnectorOptionsWithoutClient
+  | ConnectorOptionsWithClient;
 
 function getExpectedTwilioSignature(
   authToken: string,
   url: string,
-  params: Record<string, any> = {}
+  params: Record<string, string> = {}
 ) {
   const data = Object.keys(params)
     .sort()
@@ -43,16 +44,17 @@ function getExpectedTwilioSignature(
 }
 
 export default class WhatsappConnector
-  implements Connector<WhatsappRequestBody, TwilioClient> {
+  implements Connector<WhatsappRequestBody, TwilioClient>
+{
   _client: TwilioClient;
 
-  constructor(options: ConstructorOptions) {
+  constructor(options: WhatsappConnectorOptions) {
     if ('client' in options) {
       this._client = options.client;
     } else {
       const { accountSid, authToken, phoneNumber, origin } = options;
 
-      this._client = TwilioClient.connect({
+      this._client = new TwilioClient({
         accountSid,
         authToken,
         phoneNumber,
@@ -61,7 +63,7 @@ export default class WhatsappConnector
     }
   }
 
-  get platform(): string {
+  get platform(): 'whatsapp' {
     return 'whatsapp';
   }
 
@@ -100,7 +102,7 @@ export default class WhatsappConnector
   createContext(params: {
     event: WhatsappEvent;
     session: Session | null;
-    initialState?: Record<string, any> | null;
+    initialState?: JsonObject | null;
     requestContext?: RequestContext;
     emitter?: EventEmitter | null;
   }): WhatsappContext {
@@ -115,10 +117,13 @@ export default class WhatsappConnector
     url,
     headers,
   }: {
-    headers: Record<string, any>;
+    headers: WhatsappRequestContext['headers'];
     url: string;
-    body: Record<string, any>;
+    body: WhatsappRequestBody;
   }): boolean {
+    if (!headers['x-twilio-signature']) {
+      return false;
+    }
     const authToken = this._client.authToken;
 
     const bufferFromActualSignature = Buffer.from(
@@ -143,19 +148,7 @@ export default class WhatsappConnector
     );
   }
 
-  preprocess({
-    url,
-    headers,
-    rawBody,
-    body,
-  }: {
-    method: string;
-    url: string;
-    headers: Record<string, any>;
-    query: Record<string, any>;
-    rawBody: string;
-    body: Record<string, any>;
-  }) {
+  preprocess({ url, headers, rawBody, body }: WhatsappRequestContext) {
     if (this.verifySignature({ body, url, headers })) {
       return {
         shouldNext: true,

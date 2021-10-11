@@ -79,7 +79,7 @@ const passwordsMatch = () => {
  * @param {Object} field Fieldset item to apply check icon to
  * @returns {undefined}
  */
-const applyCheckToField = field => {
+const applyCheckToField = (field) => {
   const inputStatus = document.querySelector(
     `#${field.name}Field > div.inputStatus`
   );
@@ -98,7 +98,7 @@ const applyCheckToField = field => {
  * @param {Object} field Fieldset item to remove icon from
  * @returns {undefined}
  */
-const removeStatusFromField = field => {
+const removeStatusFromField = (field) => {
   const inputStatus = document.querySelector(
     `#${field.name}Field > div.inputStatus`
   );
@@ -117,7 +117,7 @@ const applyCheckToFilledFields = () => {
     null,
     document.getElementsByClassName('required')
   );
-  requiredFields.forEach(field => {
+  requiredFields.forEach((field) => {
     if (field.value) {
       applyCheckToField(field);
     } else {
@@ -137,7 +137,7 @@ const requiredFieldsFilled = () => {
     null,
     document.getElementsByClassName('required')
   );
-  const unfilledFields = requiredFields.filter(field => field.value === '');
+  const unfilledFields = requiredFields.filter((field) => field.value === '');
   return unfilledFields.length === 0;
 };
 

@@ -1143,7 +1143,7 @@ Gets user profile information.
 Example:
 
 ```js
-context.getUserProfile().then(profile => {
+context.getUserProfile().then((profile) => {
   console.log(profile);
   // {
   //   displayName: 'LINE taro',
@@ -1171,7 +1171,7 @@ Gets the user profile of a member of the group/room that the bot is in. This inc
 Example:
 
 ```js
-context.getMemberProfile(USER_ID).then(member => {
+context.getMemberProfile(USER_ID).then((member) => {
   console.log(member);
   // {
   //   "displayName":"LINE taro",
@@ -1200,7 +1200,7 @@ This feature is only available for LINE@ Approved accounts or official accounts.
 Example:
 
 ```js
-context.getMemberIds(CURSOR).then(res => {
+context.getMemberIds(CURSOR).then((res) => {
   console.log(res);
   // {
   //   memberIds: [
@@ -1224,7 +1224,7 @@ This feature is only available for LINE@ Approved accounts or official accounts.
 Example:
 
 ```js
-context.getAllMemberIds().then(ids => {
+context.getAllMemberIds().then((ids) => {
   console.log(ids);
   // [
   //   'Uxxxxxxxxxxxxxx..1',
@@ -1268,7 +1268,7 @@ Gets the ID of the rich menu linked to the user.
 Example:
 
 ```js
-context.getLinkedRichMenu().then(richMenu => {
+context.getLinkedRichMenu().then((richMenu) => {
   console.log(richMenu);
   // {
   //   richMenuId: "{richMenuId}"
@@ -1317,7 +1317,7 @@ Issues a link token used for the [account link](https://developers.line.me/en/do
 Example:
 
 ```js
-context.issueLinkToken().then(result => {
+context.issueLinkToken().then((result) => {
   console.log(result);
   // {
   //   linkToken: 'NMZTNuVrPTqlr2IF8Bnymkb7rXfYv5EY',

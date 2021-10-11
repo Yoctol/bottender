@@ -6,6 +6,7 @@ it('should construct bot with LineConnector', () => {
     accessToken: 'FAKE_TOKEN',
     channelSecret: 'FAKE_SECRET',
   });
+
   expect(bot).toBeDefined();
   expect(bot.onEvent).toBeDefined();
   expect(bot.createRequestHandler).toBeDefined();

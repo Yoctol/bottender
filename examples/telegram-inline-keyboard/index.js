@@ -2,8 +2,8 @@ const { router, telegram, text } = require('bottender/router');
 
 function generateInlineKeyboard(table) {
   return {
-    inlineKeyboard: table.map(row =>
-      row.map(cell => ({
+    inlineKeyboard: table.map((row) =>
+      row.map((cell) => ({
         text: cell,
         callbackData: cell,
       }))
@@ -78,7 +78,7 @@ async function AnswerKeyboard(context) {
   const menu = menuMapping[data];
   if (menu) {
     await context.editMessageText(messageId, menu.text, {
-      replyMarkup: menu.menu,
+      replyMarkup: menu.replyMarkup,
     });
   } else {
     await context.editMessageText(messageId, `Your final choice is ${data}.`);

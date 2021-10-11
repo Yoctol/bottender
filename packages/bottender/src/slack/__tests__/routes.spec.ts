@@ -169,7 +169,7 @@ async function expectRouteNotMatchSlackEvent({ route, event }) {
   });
 }
 
-class TestContext extends Context<any, any> {
+class TestContext extends Context {
   get platform() {
     return 'test';
   }
@@ -232,6 +232,24 @@ describe('#slack', () => {
   });
 
   describe('#slack.event', () => {
+    it('should call action when it receives any slack event event', async () => {
+      await expectRouteMatchSlackEvent({
+        route: slack.event('*', Action),
+        event: slackEventPinAdded,
+      });
+      await expectRouteMatchSlackEvent({
+        route: slack.event('*', Action),
+        event: slackEventTextMessage,
+      });
+    });
+
+    it('should not call action when it receives a non-event event', async () => {
+      await expectRouteNotMatchSlackEvent({
+        route: slack.event('*', Action),
+        event: slackEventSlashCommand,
+      });
+    });
+
     it('should call action when it receives a slack event event', async () => {
       await expectRouteMatchSlackEvent({
         route: slack.event('pin_added', Action),
@@ -252,13 +270,46 @@ describe('#slack', () => {
         event: slackEventTextMessage,
       });
     });
+
+    it('should not call action when it receives a command event', async () => {
+      await expectRouteNotMatchSlackEvent({
+        route: slack.event('pin_added', Action),
+        event: slackEventSlashCommand,
+      });
+    });
   });
 
   describe('#slack.command', () => {
+    it('should call action when it receives any slack slash command event', async () => {
+      await expectRouteMatchSlackEvent({
+        route: slack.command('*', Action),
+        event: slackEventSlashCommand,
+      });
+    });
+
+    it('should not call action when it receives a event event', async () => {
+      await expectRouteNotMatchSlackEvent({
+        route: slack.command('*', Action),
+        event: slackEventTextMessage,
+      });
+    });
+
     it('should call action when it receives a slack slash command event', async () => {
       await expectRouteMatchSlackEvent({
         route: slack.command('/weather', Action),
         event: slackEventSlashCommand,
+      });
+    });
+    it("should not call action when it receives a slack slash command event doesn't match the name", async () => {
+      await expectRouteNotMatchSlackEvent({
+        route: slack.command('/others', Action),
+        event: slackEventSlashCommand,
+      });
+    });
+    it('should not call action when it receives a event event', async () => {
+      await expectRouteNotMatchSlackEvent({
+        route: slack.command('/weather', Action),
+        event: slackEventTextMessage,
       });
     });
   });

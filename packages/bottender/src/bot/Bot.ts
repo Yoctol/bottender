@@ -3,6 +3,7 @@ import { EventEmitter } from 'events';
 import debug from 'debug';
 import invariant from 'invariant';
 import pMap from 'p-map';
+import { JsonObject } from 'type-fest';
 import { camelcaseKeysDeep } from 'messaging-api-common';
 
 import CacheBasedSessionStore from '../session/CacheBasedSessionStore';
@@ -10,20 +11,12 @@ import Context from '../context/Context';
 import MemoryCacheStore from '../cache/MemoryCacheStore';
 import Session from '../session/Session';
 import SessionStore from '../session/SessionStore';
-import {
-  Action,
-  AnyContext,
-  Body,
-  Client,
-  Event,
-  Plugin,
-  Props,
-  RequestContext,
-} from '../types';
+import { Action, Client, Plugin, Props, RequestContext } from '../types';
+import { Event } from '../context/Event';
 
 import { Connector } from './Connector';
 
-type Builder<C extends AnyContext> = {
+type Builder<C extends Context> = {
   build: () => Action<C, any>;
 };
 
@@ -40,9 +33,7 @@ function createMemorySessionStore(): SessionStore {
   return new CacheBasedSessionStore(cache, MINUTES_IN_ONE_YEAR);
 }
 
-export function run<C extends AnyContext>(
-  action: Action<C, any>
-): Action<C, any> {
+export function run<C extends Context>(action: Action<C, any>): Action<C, any> {
   return async function Run(context: C, props: Props<C> = {}): Promise<void> {
     let nextDialog: Action<C, any> | void = action;
 
@@ -72,8 +63,13 @@ type RequestHandler<B> = (
   requestContext?: RequestContext
 ) => void | Promise<void>;
 
+export type OnRequest = (
+  body: JsonObject,
+  requestContext?: RequestContext
+) => void;
+
 export default class Bot<
-  B extends Body,
+  B extends JsonObject,
   C extends Client,
   E extends Event,
   Ctx extends Context<C, E>
@@ -88,7 +84,7 @@ export default class Bot<
 
   _errorHandler: Action<Ctx, any> | null;
 
-  _initialState: Record<string, any> = {};
+  _initialState: JsonObject = {};
 
   _plugins: Function[] = [];
 
@@ -96,14 +92,18 @@ export default class Bot<
 
   _emitter: EventEmitter;
 
+  _onRequest: OnRequest | undefined;
+
   constructor({
     connector,
     sessionStore = createMemorySessionStore(),
     sync = false,
+    onRequest,
   }: {
     connector: Connector<B, C>;
     sessionStore?: SessionStore;
     sync?: boolean;
+    onRequest?: OnRequest;
   }) {
     this._sessions = sessionStore;
     this._initialized = false;
@@ -112,6 +112,7 @@ export default class Bot<
     this._errorHandler = null;
     this._sync = sync;
     this._emitter = new EventEmitter();
+    this._onRequest = onRequest;
   }
 
   get connector(): Connector<B, C> {
@@ -122,7 +123,7 @@ export default class Bot<
     return this._sessions;
   }
 
-  get handler(): Action<Ctx, E> | null {
+  get handler(): Action<Ctx, any> | null {
     return this._handler;
   }
 
@@ -148,7 +149,7 @@ export default class Bot<
     return this;
   }
 
-  setInitialState(initialState: Record<string, any>): Bot<B, C, E, Ctx> {
+  setInitialState(initialState: JsonObject): Bot<B, C, E, Ctx> {
     this._initialState = initialState;
     return this;
   }
@@ -191,15 +192,23 @@ export default class Bot<
 
       const body = camelcaseKeysDeep(inputBody) as B;
 
+      if (this._onRequest) {
+        this._onRequest(body, requestContext);
+      }
+
       const events = this._connector.mapRequestToEvents(body);
 
       const contexts = await pMap(
         events,
-        async event => {
+        async (event) => {
           const { platform } = this._connector;
           const sessionKey = this._connector.getUniqueSessionKey(
-            // TODO: may deprecating passing request body in v2
-            events.length === 1 ? body : event,
+            // TODO: deprecating passing request body in those connectors
+            ['telegram', 'slack', 'viber', 'whatsapp'].includes(
+              this._connector.platform
+            )
+              ? body
+              : event,
             requestContext
           );
 
@@ -234,8 +243,12 @@ export default class Bot<
 
             await this._connector.updateSession(
               session,
-              // TODO: may deprecating passing request body in v2
-              events.length === 1 ? body : event
+              // TODO: deprecating passing request body in those connectors
+              ['telegram', 'slack', 'viber', 'whatsapp'].includes(
+                this._connector.platform
+              )
+                ? body
+                : event
             );
           }
 
@@ -254,8 +267,8 @@ export default class Bot<
 
       // Call all of extension functions before passing to handler.
       await Promise.all(
-        contexts.map(async context =>
-          Promise.all(this._plugins.map(ext => ext(context)))
+        contexts.map(async (context) =>
+          Promise.all(this._plugins.map((ext) => ext(context)))
         )
       );
 
@@ -277,13 +290,13 @@ export default class Bot<
                 return context.handlerDidEnd();
               }
             })
-            .catch(err => {
+            .catch((err) => {
               if (errorHandler) {
                 return run(errorHandler)(context, { error: err });
               }
               throw err;
             })
-            .catch(err => {
+            .catch((err) => {
               context.emitError(err);
               throw err;
             })
@@ -295,7 +308,7 @@ export default class Bot<
           await promises;
 
           await Promise.all(
-            contexts.map(async context => {
+            contexts.map(async (context) => {
               context.isSessionWritten = true;
 
               const { session } = context;
@@ -324,27 +337,25 @@ export default class Bot<
         return response;
       }
       promises
-        .then(
-          async (): Promise<any> => {
-            await Promise.all(
-              contexts.map(async context => {
-                context.isSessionWritten = true;
+        .then(async (): Promise<any> => {
+          await Promise.all(
+            contexts.map(async (context) => {
+              context.isSessionWritten = true;
 
-                const { session } = context;
+              const { session } = context;
 
-                if (session) {
-                  session.lastActivity = Date.now();
+              if (session) {
+                session.lastActivity = Date.now();
 
-                  debugSessionWrite(`Write session: ${session.id}`);
-                  debugSessionWrite(JSON.stringify(session, null, 2));
+                debugSessionWrite(`Write session: ${session.id}`);
+                debugSessionWrite(JSON.stringify(session, null, 2));
 
-                  // eslint-disable-next-line no-await-in-loop
-                  await this._sessions.write(session.id, session);
-                }
-              })
-            );
-          }
-        )
+                // eslint-disable-next-line no-await-in-loop
+                await this._sessions.write(session.id, session);
+              }
+            })
+          );
+        })
         .catch(console.error);
     };
   }

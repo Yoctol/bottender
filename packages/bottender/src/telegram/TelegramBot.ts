@@ -1,18 +1,14 @@
 import { TelegramClient } from 'messaging-api-telegram';
 
-import Bot from '../bot/Bot';
+import Bot, { OnRequest } from '../bot/Bot';
 import SessionStore from '../session/SessionStore';
 
-import TelegramConnector, { TelegramRequestBody } from './TelegramConnector';
+import TelegramConnector, {
+  TelegramConnectorOptions,
+} from './TelegramConnector';
 import TelegramContext from './TelegramContext';
 import TelegramEvent from './TelegramEvent';
-
-type PollingOptions = {
-  offset?: number;
-  limit?: number;
-  timeout?: number;
-  allowed_updates?: string[];
-};
+import { PollingOptions, TelegramRequestBody } from './TelegramTypes';
 
 export default class TelegramBot extends Bot<
   TelegramRequestBody,
@@ -25,18 +21,17 @@ export default class TelegramBot extends Bot<
   _shouldGetUpdates: boolean;
 
   constructor({
-    accessToken,
     sessionStore,
     sync,
-    origin,
-  }: {
-    accessToken: string;
+    onRequest,
+    ...connectorOptions
+  }: TelegramConnectorOptions & {
     sessionStore?: SessionStore;
     sync?: boolean;
-    origin?: string;
+    onRequest?: OnRequest;
   }) {
-    const connector = new TelegramConnector({ accessToken, origin });
-    super({ connector, sessionStore, sync });
+    const connector = new TelegramConnector(connectorOptions);
+    super({ connector, sessionStore, sync, onRequest });
 
     this._offset = null;
     this._shouldGetUpdates = false;
@@ -84,7 +79,7 @@ export default class TelegramBot extends Bot<
     /* eslint-enable no-await-in-loop */
   }
 
-  stop() {
+  stop(): void {
     this._shouldGetUpdates = false;
   }
 }

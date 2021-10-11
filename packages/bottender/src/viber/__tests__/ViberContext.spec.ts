@@ -1,24 +1,17 @@
-jest.mock('delay');
+import warning from 'warning';
+import { ViberClient } from 'messaging-api-viber';
+import { mocked } from 'ts-jest/utils';
+
+import ViberContext from '../ViberContext';
+import ViberEvent from '../ViberEvent';
+import { RichMedia, UserOnlineStatus, ViberRawEvent } from '../ViberTypes';
+
 jest.mock('messaging-api-viber');
 jest.mock('warning');
 
-let ViberClient;
-let ViberContext;
-let ViberEvent;
-let sleep;
-let warning;
+const ACCESS_TOKEN = 'ACCESS_TOKEN';
 
-beforeEach(() => {
-  /* eslint-disable global-require */
-  ViberClient = require('messaging-api-viber').ViberClient;
-  ViberContext = require('../ViberContext').default;
-  ViberEvent = require('../ViberEvent').default;
-  sleep = require('delay');
-  warning = require('warning');
-  /* eslint-enable global-require */
-});
-
-const rawEvent = {
+const rawEvent: ViberRawEvent = {
   event: 'message',
   timestamp: 1457764197627,
   messageToken: 4912661846655238145,
@@ -37,14 +30,28 @@ const rawEvent = {
   },
 };
 
-const setup = ({ session } = { session: { user: { id: 'fakeUserId' } } }) => {
-  const client = ViberClient.connect();
-  const args = {
+const defaultSession = { user: { id: 'fakeUserId' } };
+
+const setup = (
+  { session }: { session: typeof defaultSession | null } = {
+    session: defaultSession,
+  }
+): {
+  context: ViberContext;
+  session: typeof defaultSession | null;
+  client: ViberClient;
+} => {
+  const client = new ViberClient({
+    accessToken: ACCESS_TOKEN,
+    sender: { name: 'sender' },
+  });
+
+  const context = new ViberContext({
     client,
     event: new ViberEvent(rawEvent),
     session,
-  };
-  const context = new ViberContext(args);
+  });
+
   return {
     context,
     session,
@@ -52,28 +59,27 @@ const setup = ({ session } = { session: { user: { id: 'fakeUserId' } } }) => {
   };
 };
 
-it('be defined', () => {
-  const { context } = setup();
-  expect(context).toBeDefined();
-});
-
 it('#platform to be `viber`', () => {
   const { context } = setup();
+
   expect(context.platform).toBe('viber');
 });
 
 it('get #session works', () => {
   const { context, session } = setup();
+
   expect(context.session).toBe(session);
 });
 
 it('get #event works', () => {
   const { context } = setup();
+
   expect(context.event).toBeInstanceOf(ViberEvent);
 });
 
 it('get #client works', () => {
   const { context, client } = setup();
+
   expect(context.client).toBe(client);
 });
 
@@ -87,7 +93,7 @@ describe('#sendText', () => {
   });
 
   it('should call warning and not to send if dont have session', async () => {
-    const { context, client } = setup({ session: false });
+    const { context, client } = setup({ session: null });
 
     await context.sendText('hello');
 
@@ -307,7 +313,7 @@ describe('#sendSticker', () => {
   });
 });
 
-const richMedia = {
+const richMedia: RichMedia = {
   type: 'rich_media',
   buttonsGroupColumns: 6,
   buttonsGroupRows: 7,
@@ -323,8 +329,7 @@ const richMedia = {
     {
       columns: 6,
       rows: 2,
-      text:
-        '<font color=#323232><b>Headphones with Microphone, On-ear Wired earphones</b></font><font color=#777777><br>Sound Intone </font><font color=#6fc133>$17.99</font>',
+      text: '<font color=#323232><b>Headphones with Microphone, On-ear Wired earphones</b></font><font color=#777777><br>Sound Intone </font><font color=#6fc133>$17.99</font>',
       actionType: 'open-url',
       actionBody: 'https://www.google.com',
       textSize: 'medium',
@@ -362,8 +367,7 @@ const richMedia = {
     {
       columns: 6,
       rows: 2,
-      text:
-        "<font color=#323232><b>Hanes Men's Humor Graphic T-Shirt</b></font><font color=#777777><br>Hanes</font><font color=#6fc133>$10.99</font>",
+      text: "<font color=#323232><b>Hanes Men's Humor Graphic T-Shirt</b></font><font color=#777777><br>Hanes</font><font color=#6fc133>$10.99</font>",
       actionType: 'open-url',
       actionBody: 'https://www.google.com',
       textSize: 'medium',
@@ -434,7 +438,7 @@ describe('#getUserDetails', () => {
       deviceType: 'iPhone9,4',
     };
 
-    client.getUserDetails.mockResolvedValue(user);
+    mocked(client.getUserDetails).mockResolvedValue(user);
 
     const result = await context.getUserDetails();
 
@@ -455,13 +459,13 @@ describe('#getOnlineStatus', () => {
   it('should call client.getOnlineStatus', async () => {
     const { context, client, session } = setup();
 
-    const user = {
+    const user: UserOnlineStatus = {
       id: '01234567890=',
       onlineStatus: 0,
       onlineStatusMessage: 'online',
     };
 
-    client.getOnlineStatus.mockResolvedValue([user]);
+    mocked(client.getOnlineStatus).mockResolvedValue([user]);
 
     const result = await context.getOnlineStatus();
 
@@ -475,23 +479,5 @@ describe('#getOnlineStatus', () => {
     await context.getOnlineStatus();
 
     expect(client.getOnlineStatus).not.toBeCalled();
-  });
-});
-
-describe('#typing', () => {
-  it('avoid delay 0', async () => {
-    const { context } = setup();
-
-    await context.typing(0);
-
-    expect(sleep).not.toBeCalled();
-  });
-
-  it('should call sleep', async () => {
-    const { context } = setup();
-
-    await context.typing(10);
-
-    expect(sleep).toBeCalled();
   });
 });
