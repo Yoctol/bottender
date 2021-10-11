@@ -24,7 +24,6 @@
   "types": "dist/index.d.ts",
   "dependencies": {
     "@bottender/express": "^1.5.1",
-    "@slack/rtm-api": "^5.0.3",
     "@types/debug": "^4.1.7",
     "@types/express": "4.17.2",
     "@types/fs-extra": "^8.1.0",

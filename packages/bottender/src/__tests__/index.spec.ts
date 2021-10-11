@@ -4,12 +4,6 @@ describe('core', () => {
   it('export bots', () => {
     expect(core.Bot).toBeDefined();
     expect(core.ConsoleBot).toBeDefined();
-    expect(core.MessengerBot).toBeDefined();
-    expect(core.WhatsappBot).toBeDefined();
-    expect(core.LineBot).toBeDefined();
-    expect(core.SlackBot).toBeDefined();
-    expect(core.TelegramBot).toBeDefined();
-    expect(core.ViberBot).toBeDefined();
   });
 
   it('export connectors', () => {
