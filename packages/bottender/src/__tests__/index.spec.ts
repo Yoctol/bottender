@@ -50,10 +50,6 @@ describe('core', () => {
     expect(core.ViberContext).toBeDefined();
   });
 
-  it('export extensions', () => {
-    expect(core.withTyping).toBeDefined();
-  });
-
   it('export createServer', () => {
     expect(core.createServer).toBeDefined();
   });

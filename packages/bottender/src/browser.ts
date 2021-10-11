@@ -12,10 +12,3 @@ export { default as MemoryCacheStore } from './cache/MemoryCacheStore';
 /* Session */
 export { default as CacheBasedSessionStore } from './session/CacheBasedSessionStore';
 export { default as MemorySessionStore } from './session/MemorySessionStore';
-
-/**
- * Private Exports (unstable)
- */
-
-/* Plugins */
-export { default as withTyping } from './plugins/withTyping';

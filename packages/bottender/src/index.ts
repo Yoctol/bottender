@@ -90,8 +90,4 @@ export * from './types';
 /**
  * Private Exports (unstable)
  */
-
-/* Plugins */
-export { default as withTyping } from './plugins/withTyping';
-
 export { createServer } from '@bottender/express';

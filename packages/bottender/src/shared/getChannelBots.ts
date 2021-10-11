@@ -4,14 +4,7 @@ import invariant from 'invariant';
 import { merge } from 'lodash';
 import { pascalcase } from 'messaging-api-common';
 
-import {
-  Action,
-  Bot,
-  BottenderConfig,
-  ChannelBot,
-  Plugin,
-  getSessionStore,
-} from '..';
+import { Action, Bot, BottenderConfig, ChannelBot, getSessionStore } from '..';
 
 import getBottenderConfig from './getBottenderConfig';
 
@@ -28,11 +21,9 @@ function getChannelBots(): ChannelBot[] {
 
   const bottenderConfig = getBottenderConfig();
 
-  const {
-    initialState,
-    plugins,
-    channels = {},
-  } = merge(bottenderConfig /* , config */) as BottenderConfig;
+  const { initialState, channels = {} } = merge(
+    bottenderConfig /* , config */
+  ) as BottenderConfig;
 
   const sessionStore = getSessionStore();
 
@@ -48,12 +39,6 @@ function getChannelBots(): ChannelBot[] {
   function initializeBot(bot: Bot<any, any, any, any>): void {
     if (initialState) {
       bot.setInitialState(initialState);
-    }
-
-    if (plugins) {
-      plugins.forEach((plugin: Plugin<any>) => {
-        bot.use(plugin);
-      });
     }
 
     bot.onEvent(Entry);

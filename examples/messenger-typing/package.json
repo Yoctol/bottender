@@ -1,9 +1,0 @@
-{
-  "scripts": {
-    "dev": "bottender dev",
-    "start": "bottender start"
-  },
-  "dependencies": {
-    "bottender": "latest"
-  }
-}

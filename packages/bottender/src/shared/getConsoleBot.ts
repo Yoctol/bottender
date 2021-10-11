@@ -3,14 +3,14 @@ import path from 'path';
 import { merge } from 'lodash';
 
 import ConsoleBot from '../console/ConsoleBot';
-import { Action, Bot, BottenderConfig, Plugin, getSessionStore } from '..';
+import { Action, Bot, BottenderConfig, getSessionStore } from '..';
 
 import getBottenderConfig from './getBottenderConfig';
 
 function getConsoleBot(): ConsoleBot {
   const bottenderConfig = getBottenderConfig();
 
-  const { initialState, plugins } = merge(
+  const { initialState } = merge(
     bottenderConfig /* , config */
   ) as BottenderConfig;
 
@@ -28,12 +28,6 @@ function getConsoleBot(): ConsoleBot {
   function initializeBot(bot: Bot<any, any, any, any>): void {
     if (initialState) {
       bot.setInitialState(initialState);
-    }
-
-    if (plugins) {
-      plugins.forEach((plugin: Plugin<any>) => {
-        bot.use(plugin);
-      });
     }
 
     bot.onEvent(Entry);
