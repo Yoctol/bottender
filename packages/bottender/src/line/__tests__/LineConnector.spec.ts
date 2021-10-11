@@ -87,18 +87,15 @@ beforeEach(() => {
 });
 
 function setup({
-  sendMethod,
   skipLegacyProfile,
   getSessionKeyPrefix,
 }: {
-  sendMethod?: string;
   skipLegacyProfile?: boolean;
   getSessionKeyPrefix?: GetSessionKeyPrefixFunction;
 } = {}) {
   const connector = new LineConnector({
     accessToken: ACCESS_TOKEN,
     channelSecret: CHANNEL_SECRET,
-    sendMethod,
     skipLegacyProfile,
     getSessionKeyPrefix,
   });
@@ -755,12 +752,6 @@ describe('#verifySignature', () => {
 
     expect(result).toBe(true);
   });
-});
-
-it('should warning if sendMethod is not one of `reply`, `push`', () => {
-  setup({ sendMethod: 'xxx' });
-
-  expect(warning).toBeCalledWith(false, expect.any(String));
 });
 
 describe('#isWebhookVerifyRequest', () => {

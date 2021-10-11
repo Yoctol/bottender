@@ -168,16 +168,6 @@ class ContextSimulator {
       case 'line':
         context.isReplied = false;
         context.sendText = this._mockFn();
-        context.sendImage = this._mockFn();
-        context.sendVideo = this._mockFn();
-        context.sendAudio = this._mockFn();
-        context.sendLocation = this._mockFn();
-        context.sendSticker = this._mockFn();
-        context.sendImagemap = this._mockFn();
-        context.sendButtonTemplate = this._mockFn();
-        context.sendConfirmTemplate = this._mockFn();
-        context.sendCarouselTemplate = this._mockFn();
-        context.sendImageCarouselTemplate = this._mockFn();
         context.reply = this._mockFn();
         context.replyText = this._mockFn();
         context.replyImage = this._mockFn();
@@ -190,18 +180,6 @@ class ContextSimulator {
         context.replyConfirmTemplate = this._mockFn();
         context.replyCarouselTemplate = this._mockFn();
         context.replyImageCarouselTemplate = this._mockFn();
-        context.push = this._mockFn();
-        context.pushText = this._mockFn();
-        context.pushImage = this._mockFn();
-        context.pushVideo = this._mockFn();
-        context.pushAudio = this._mockFn();
-        context.pushLocation = this._mockFn();
-        context.pushSticker = this._mockFn();
-        context.pushImagemap = this._mockFn();
-        context.pushButtonTemplate = this._mockFn();
-        context.pushConfirmTemplate = this._mockFn();
-        context.pushCarouselTemplate = this._mockFn();
-        context.pushImageCarouselTemplate = this._mockFn();
         context.leave = this._mockFn();
         context.getLinkedRichMenu = this._mockFn();
         context.linkRichMenu = this._mockFn();

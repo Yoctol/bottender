@@ -79,8 +79,6 @@ const setup = ({
   session = userSession,
   requestContext,
   shouldBatch = false,
-  sendMethod,
-  customAccessToken,
   rawEvent = rawEventText,
 } = {}) => {
   const client = new LineClient({
@@ -94,8 +92,6 @@ const setup = ({
     session,
     requestContext,
     shouldBatch,
-    sendMethod,
-    customAccessToken,
   });
 
   return {
@@ -255,11 +251,11 @@ describe('#reply', () => {
   });
 });
 
-describe('#replyText', () => {
-  it('should call client.replyText', async () => {
+describe('#sendText', () => {
+  it('should call client.sendText', async () => {
     const { context, client } = setup();
 
-    await context.replyText('hello');
+    await context.sendText('hello');
 
     expect(client.reply).toBeCalledWith(REPLY_TOKEN, [
       { text: 'hello', type: 'text' },
@@ -269,7 +265,7 @@ describe('#replyText', () => {
   it('should work with quickReply', async () => {
     const { context, client } = setup();
 
-    await context.replyText('hello', {
+    await context.sendText('hello', {
       quickReply,
     });
 
@@ -285,11 +281,11 @@ describe('#replyText', () => {
   it('should throw when reply multiple times', async () => {
     const { context } = setup();
 
-    await context.replyText('hello');
+    await context.sendText('hello');
 
     let error;
     try {
-      await context.replyText('hello');
+      await context.sendText('hello');
     } catch (err) {
       error = err;
     }
@@ -299,113 +295,12 @@ describe('#replyText', () => {
   });
 });
 
-describe('#push', () => {
-  it('should call client.push', async () => {
-    const { context, client, session } = setup();
-
-    await context.push([
-      {
-        type: 'text',
-        text: 'hello',
-      },
-    ]);
-
-    expect(client.push).toBeCalledWith(session.user.id, [
-      {
-        type: 'text',
-        text: 'hello',
-      },
-    ]);
-  });
-
-  it('should work with quickReply', async () => {
-    const { context, client, session } = setup();
-
-    await context.push([
-      {
-        type: 'text',
-        text: 'hello',
-        quickReply,
-      },
-    ]);
-
-    expect(client.push).toBeCalledWith(session.user.id, [
-      {
-        type: 'text',
-        text: 'hello',
-        quickReply,
-      },
-    ]);
-  });
-});
-
-describe('#pushText', () => {
-  it('should call client.pushText', async () => {
-    const { context, client, session } = setup();
-
-    await context.pushText('hello');
-
-    expect(client.push).toBeCalledWith(session.user.id, [
-      { text: 'hello', type: 'text' },
-    ]);
-  });
-
-  it('should work with quickReply', async () => {
-    const { context, client, session } = setup();
-
-    await context.pushText('hello', {
-      quickReply,
-    });
-
-    expect(client.push).toBeCalledWith(session.user.id, [
-      {
-        text: 'hello',
-        type: 'text',
-        quickReply,
-      },
-    ]);
-  });
-
-  it('should work with room session', async () => {
-    const { context, client, session } = setup({
-      session: roomSession,
-    });
-
-    await context.pushText('hello');
-
-    expect(client.push).toBeCalledWith(session.room.id, [
-      { text: 'hello', type: 'text' },
-    ]);
-  });
-
-  it('should work with group session', async () => {
-    const { context, client, session } = setup({
-      session: groupSession,
-    });
-
-    await context.pushText('hello');
-
-    expect(client.push).toBeCalledWith(session.group.id, [
-      { text: 'hello', type: 'text' },
-    ]);
-  });
-
-  it('should call warning and not to send if dont have session', async () => {
-    const { context, client } = setup({ session: false });
-
-    await context.pushText('hello');
-
-    expect(warning).toBeCalled();
-    expect(client.push).not.toBeCalled();
-  });
-});
-
-describe('send APIs', () => {
-  describe('#send', () => {
+describe('reply APIs', () => {
+  describe('#reply', () => {
     it('should call client.reply', async () => {
       const { context, client } = setup();
 
-      await context.send([Line.createText('2'), Line.createText('3')]);
+      await context.reply([Line.createText('2'), Line.createText('3')]);
 
       expect(client.reply).toBeCalledWith(REPLY_TOKEN, [
         {
@@ -420,11 +315,11 @@ describe('send APIs', () => {
     });
   });
 
-  describe('#sendText', () => {
+  describe('#replyText', () => {
     it('should call client.replyText', async () => {
       const { context, client } = setup();
 
-      await context.sendText('hello');
+      await context.replyText('hello');
 
       expect(client.reply).toBeCalledWith(REPLY_TOKEN, [
         {
@@ -437,7 +332,7 @@ describe('send APIs', () => {
     it('should work with quickReply', async () => {
       const { context, client } = setup();
 
-      await context.sendText('hello', {
+      await context.replyText('hello', {
         quickReply,
       });
 
@@ -451,11 +346,11 @@ describe('send APIs', () => {
     });
   });
 
-  describe('#sendImage', () => {
+  describe('#replyImage', () => {
     it('should call client.replyImage', async () => {
       const { context, client } = setup();
 
-      await context.sendImage({
+      await context.replyImage({
         originalContentUrl: 'xxx.jpg',
         previewImageUrl: 'yyy.jpg',
       });
@@ -472,7 +367,7 @@ describe('send APIs', () => {
     it('should work with quickReply', async () => {
       const { context, client } = setup();
 
-      await context.sendImage(
+      await context.replyImage(
         {
           originalContentUrl: 'xxx.jpg',
           previewImageUrl: 'yyy.jpg',
@@ -493,11 +388,11 @@ describe('send APIs', () => {
     });
   });
 
-  describe('#sendAudio', () => {
+  describe('#replyAudio', () => {
     it('should call client.replyAudio', async () => {
       const { context, client } = setup();
 
-      await context.sendAudio({
+      await context.replyAudio({
         originalContentUrl: 'xxx.m4a',
         duration: 240000,
       });
@@ -514,7 +409,7 @@ describe('send APIs', () => {
     it('should work with quickReply', async () => {
       const { context, client } = setup();
 
-      await context.sendAudio(
+      await context.replyAudio(
         {
           originalContentUrl: 'xxx.m4a',
           duration: 240000,
@@ -535,11 +430,11 @@ describe('send APIs', () => {
     });
   });
 
-  describe('#sendVideo', () => {
+  describe('#replyVideo', () => {
     it('should call client.replyVideo', async () => {
       const { context, client } = setup();
 
-      await context.sendVideo({
+      await context.replyVideo({
         originalContentUrl: 'xxx.mp4',
         previewImageUrl: 'yyy.jpg',
       });
@@ -556,7 +451,7 @@ describe('send APIs', () => {
     it('should work with quickReply', async () => {
       const { context, client } = setup();
 
-      await context.sendVideo(
+      await context.replyVideo(
         {
           originalContentUrl: 'xxx.mp4',
           previewImageUrl: 'yyy.jpg',
@@ -577,11 +472,11 @@ describe('send APIs', () => {
     });
   });
 
-  describe('#sendLocation', () => {
+  describe('#replyLocation', () => {
     it('should call client.replyLocation', async () => {
       const { context, client } = setup();
 
-      await context.sendLocation({
+      await context.replyLocation({
         title: 'my location',
         address: '〒150-0002 東京都渋谷区渋谷２丁目２１−１',
         latitude: 35.65910807942215,
@@ -602,7 +497,7 @@ describe('send APIs', () => {
     it('should work with quickReply', async () => {
       const { context, client } = setup();
 
-      await context.sendLocation(
+      await context.replyLocation(
         {
           title: 'my location',
           address: '〒150-0002 東京都渋谷区渋谷２丁目２１−１',
@@ -627,11 +522,11 @@ describe('send APIs', () => {
     });
   });
 
-  describe('#sendSticker', () => {
+  describe('#replySticker', () => {
     it('should call client.replySticker', async () => {
       const { context, client } = setup();
 
-      await context.sendSticker({
+      await context.replySticker({
         packageId: '1',
         stickerId: '1',
       });
@@ -648,7 +543,7 @@ describe('send APIs', () => {
     it('should work with quickReply', async () => {
       const { context, client } = setup();
 
-      await context.sendSticker(
+      await context.replySticker(
         {
           packageId: '1',
           stickerId: '1',
@@ -669,7 +564,7 @@ describe('send APIs', () => {
     });
   });
 
-  describe('#sendImagemap', () => {
+  describe('#replyImagemap', () => {
     const template = {
       baseUrl: 'https://example.com/bot/images/rm001',
       baseSize: {
@@ -703,7 +598,7 @@ describe('send APIs', () => {
     it('should call client.replyImagemap', async () => {
       const { context, client } = setup();
 
-      await context.sendImagemap('this is an imagemap', template);
+      await context.replyImagemap('this is an imagemap', template);
 
       expect(client.reply).toBeCalledWith(REPLY_TOKEN, [
         {
@@ -717,7 +612,7 @@ describe('send APIs', () => {
     it('should work with quickReply', async () => {
       const { context, client } = setup();
 
-      await context.sendImagemap('this is an imagemap', template, {
+      await context.replyImagemap('this is an imagemap', template, {
         quickReply,
       });
 
@@ -732,7 +627,7 @@ describe('send APIs', () => {
     });
   });
 
-  describe('#sendFlex', () => {
+  describe('#replyFlex', () => {
     const contents: FlexContainer = {
       type: 'bubble',
       header: {
@@ -777,7 +672,7 @@ describe('send APIs', () => {
     it('should call client.replyFlex', async () => {
       const { context, client } = setup();
 
-      await context.sendFlex('this is a flex', contents);
+      await context.replyFlex('this is a flex', contents);
 
       expect(client.reply).toBeCalledWith(REPLY_TOKEN, [
         {
@@ -791,7 +686,7 @@ describe('send APIs', () => {
     it('should work with quickReply', async () => {
       const { context, client } = setup();
 
-      await context.sendFlex('this is a flex', contents, {
+      await context.replyFlex('this is a flex', contents, {
         quickReply,
       });
 
@@ -806,7 +701,7 @@ describe('send APIs', () => {
     });
   });
 
-  describe('#sendTemplate', () => {
+  describe('#replyTemplate', () => {
     const template = {
       type: 'buttons',
       thumbnailImageUrl: 'https://example.com/bot/images/image.jpg',
@@ -834,7 +729,7 @@ describe('send APIs', () => {
     it('should call client.replyTemplate', async () => {
       const { context, client } = setup();
 
-      await context.sendTemplate('this is a template', template);
+      await context.replyTemplate('this is a template', template);
 
       expect(client.reply).toBeCalledWith(REPLY_TOKEN, [
         {
@@ -848,7 +743,7 @@ describe('send APIs', () => {
     it('should work with quickReply', async () => {
       const { context, client } = setup();
 
-      await context.sendTemplate('this is a template', template, {
+      await context.replyTemplate('this is a template', template, {
         quickReply,
       });
 
@@ -863,7 +758,7 @@ describe('send APIs', () => {
     });
   });
 
-  describe('#sendButtonTemplate', () => {
+  describe('#replyButtonTemplate', () => {
     const template = {
       thumbnailImageUrl: 'https://example.com/bot/images/image.jpg',
       title: 'Menu',
@@ -890,7 +785,7 @@ describe('send APIs', () => {
     it('should call client.replyButtonTemplate', async () => {
       const { context, client } = setup();
 
-      await context.sendButtonTemplate('this is a button template', template);
+      await context.replyButtonTemplate('this is a button template', template);
 
       expect(client.reply).toBeCalledWith(REPLY_TOKEN, [
         {
@@ -907,7 +802,7 @@ describe('send APIs', () => {
     it('should work with quickReply', async () => {
       const { context, client } = setup();
 
-      await context.sendButtonTemplate('this is a button template', template, {
+      await context.replyButtonTemplate('this is a button template', template, {
         quickReply,
       });
 
@@ -924,10 +819,10 @@ describe('send APIs', () => {
       ]);
     });
 
-    it('should support sendButtonsTemplate alias', async () => {
+    it('should support replyButtonsTemplate alias', async () => {
       const { context, client } = setup();
 
-      await context.sendButtonsTemplate('this is a button template', template);
+      await context.replyButtonsTemplate('this is a button template', template);
 
       expect(client.reply).toBeCalledWith(REPLY_TOKEN, [
         {
@@ -942,7 +837,7 @@ describe('send APIs', () => {
     });
   });
 
-  describe('#sendConfirmTemplate', () => {
+  describe('#replyConfirmTemplate', () => {
     const template = {
       text: 'Are you sure?',
       actions: [
@@ -962,7 +857,10 @@ describe('send APIs', () => {
     it('should call client.replyConfirmTemplate', async () => {
       const { context, client } = setup();
 
-      await context.sendConfirmTemplate('this is a confirm template', template);
+      await context.replyConfirmTemplate(
+        'this is a confirm template',
+        template
+      );
 
       expect(client.reply).toBeCalledWith(REPLY_TOKEN, [
         {
@@ -979,7 +877,7 @@ describe('send APIs', () => {
     it('should work with quickReply', async () => {
       const { context, client } = setup();
 
-      await context.sendConfirmTemplate(
+      await context.replyConfirmTemplate(
         'this is a confirm template',
         template,
         { quickReply }
@@ -999,7 +897,7 @@ describe('send APIs', () => {
     });
   });
 
-  describe('#sendCarouselTemplate', () => {
+  describe('#replyCarouselTemplate', () => {
     const template = [
       {
         thumbnailImageUrl: 'https://example.com/bot/images/item1.jpg',
@@ -1050,7 +948,7 @@ describe('send APIs', () => {
     it('should call client.replyCarouselTemplate', async () => {
       const { context, client } = setup();
 
-      await context.sendCarouselTemplate(
+      await context.replyCarouselTemplate(
         'this is a carousel template',
         template
       );
@@ -1072,7 +970,7 @@ describe('send APIs', () => {
     it('should work with quickReply', async () => {
       const { context, client } = setup();
 
-      await context.sendCarouselTemplate(
+      await context.replyCarouselTemplate(
         'this is a carousel template',
         template,
         { quickReply }
@@ -1415,11 +1313,10 @@ describe('account link APIs', () => {
 
 describe('batch', () => {
   it('should not batch when shouldBatch: false', async () => {
-    const { client, context, session } = setup({ shouldBatch: false });
+    const { client, context } = setup({ shouldBatch: false });
 
     await context.replyText('1');
-    await context.pushText('2');
-    await context.pushText('3');
+    expect(() => context.replyText('2')).toThrow();
 
     await context.handlerDidEnd();
 
@@ -1427,18 +1324,6 @@ describe('batch', () => {
       {
         type: 'text',
         text: '1',
-      },
-    ]);
-    expect(client.push).toBeCalledWith(session.user.id, [
-      {
-        type: 'text',
-        text: '2',
-      },
-    ]);
-    expect(client.push).toBeCalledWith(session.user.id, [
-      {
-        type: 'text',
-        text: '3',
       },
     ]);
   });
@@ -1448,7 +1333,6 @@ describe('batch', () => {
 
     await context.replyText('1');
     await context.replyText('2');
-    await context.replyText('3');
 
     await context.handlerDidEnd();
 
@@ -1460,10 +1344,6 @@ describe('batch', () => {
       {
         type: 'text',
         text: '2',
-      },
-      {
-        type: 'text',
-        text: '3',
       },
     ]);
   });
@@ -1531,109 +1411,14 @@ describe('batch', () => {
     expect(warning).toBeCalledWith(false, expect.any(String));
   });
 
-  it('should batch push', async () => {
-    const { client, context, session } = setup({ shouldBatch: true });
-
-    await context.pushText('1');
-    await context.pushText('2');
-    await context.pushText('3');
-
-    await context.handlerDidEnd();
-
-    expect(client.push).toBeCalledWith(session.user.id, [
-      {
-        type: 'text',
-        text: '1',
-      },
-      {
-        type: 'text',
-        text: '2',
-      },
-      {
-        type: 'text',
-        text: '3',
-      },
-    ]);
-  });
-
-  it('should work with context.push', async () => {
-    const { client, context, session } = setup({ shouldBatch: true });
-
-    await context.pushText('1');
-    await context.push([Line.createText('2'), Line.createText('3')]);
-
-    await context.handlerDidEnd();
-
-    expect(client.push).toBeCalledWith(session.user.id, [
-      {
-        type: 'text',
-        text: '1',
-      },
-      {
-        type: 'text',
-        text: '2',
-      },
-      {
-        type: 'text',
-        text: '3',
-      },
-    ]);
-  });
-
-  it('should have more requests when push over 5 messages', async () => {
-    const { client, context, session } = setup({ shouldBatch: true });
-
-    await context.pushText('1');
-    await context.pushText('2');
-    await context.pushText('3');
-    await context.pushText('4');
-    await context.pushText('5');
-
-    await context.pushText('6');
-
-    await context.handlerDidEnd();
-
-    expect(client.push).toHaveBeenCalledTimes(2);
-    expect(client.push).toBeCalledWith(session.user.id, [
-      {
-        type: 'text',
-        text: '1',
-      },
-      {
-        type: 'text',
-        text: '2',
-      },
-      {
-        type: 'text',
-        text: '3',
-      },
-      {
-        type: 'text',
-        text: '4',
-      },
-      {
-        type: 'text',
-        text: '5',
-      },
-    ]);
-    expect(client.push).toBeCalledWith(session.user.id, [
-      {
-        type: 'text',
-        text: '6',
-      },
-    ]);
-  });
-
   it('should not batch after handlerDidEnd has been called', async () => {
-    const { client, context, session } = setup({ shouldBatch: true });
+    const { client, context } = setup({ shouldBatch: true });
 
     await context.replyText('1');
-    await context.pushText('2');
-    await context.pushText('3');
 
     await context.handlerDidEnd();
 
-    await context.pushText('4');
+    await context.replyText('2');
 
     expect(client.reply).toBeCalledWith(REPLY_TOKEN, [
       {
@@ -1641,57 +1426,11 @@ describe('batch', () => {
         text: '1',
       },
     ]);
-    expect(client.push).toBeCalledWith(session.user.id, [
+    expect(client.reply).toBeCalledWith(REPLY_TOKEN, [
       {
         type: 'text',
         text: '2',
       },
-      {
-        type: 'text',
-        text: '3',
-      },
     ]);
-    expect(client.push).toBeCalledWith(session.user.id, [
-      {
-        type: 'text',
-        text: '4',
-      },
-    ]);
-  });
-});
-
-describe('sendMethod', () => {
-  it('should use reply in send as default', async () => {
-    const { context, client } = setup();
-
-    await context.sendText('hello');
-
-    expect(client.reply).toBeCalledWith(REPLY_TOKEN, [
-      { text: 'hello', type: 'text' },
-    ]);
-    expect(client.push).not.toBeCalled();
-  });
-
-  it('should use push in send when sendMethod: push', async () => {
-    const { context, client, session } = setup({
-      sendMethod: 'push',
-    });
-
-    await context.sendText('hello');
-
-    expect(client.push).toBeCalledWith(session.user.id, [
-      { text: 'hello', type: 'text' },
-    ]);
-    expect(client.reply).not.toBeCalled();
-  });
-});
-
-describe('#useAccessToken', () => {
-  it('should support inject custom token', async () => {
-    const { context, client } = setup();
-
-    context.useAccessToken('anyToken');
-
-    expect(client.accessToken).toEqual('anyToken');
   });
 });

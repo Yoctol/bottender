@@ -2,7 +2,6 @@ import crypto from 'crypto';
 import { EventEmitter } from 'events';
 
 import invariant from 'invariant';
-import warning from 'warning';
 import { JsonObject } from 'type-fest';
 import { LineClient } from 'messaging-api-line';
 
@@ -18,7 +17,6 @@ type CommonConnectorOptions = {
   getConfig?: GetConfigFunction;
   getSessionKeyPrefix?: GetSessionKeyPrefixFunction;
   shouldBatch?: boolean;
-  sendMethod?: string;
   skipLegacyProfile?: boolean;
 };
 
@@ -71,19 +69,9 @@ export default class LineConnector
 
   _shouldBatch: boolean;
 
-  /**
-   * @deprecated
-   */
-  _sendMethod: string;
-
   constructor(options: LineConnectorOptions) {
-    const {
-      getConfig,
-      shouldBatch,
-      sendMethod,
-      skipLegacyProfile,
-      getSessionKeyPrefix,
-    } = options;
+    const { getConfig, shouldBatch, skipLegacyProfile, getSessionKeyPrefix } =
+      options;
     if ('client' in options) {
       this._client = options.client;
 
@@ -116,20 +104,6 @@ export default class LineConnector
     }
 
     this._shouldBatch = typeof shouldBatch === 'boolean' ? shouldBatch : true;
-    warning(
-      !sendMethod || sendMethod === 'reply' || sendMethod === 'push',
-      'sendMethod should be one of `reply` or `push`'
-    );
-
-    if (sendMethod) {
-      warning(
-        false,
-        '`sendMethod` is deprecated. The value will always be `reply` in v2.'
-      );
-      this._sendMethod = sendMethod;
-    } else {
-      this._sendMethod = 'reply';
-    }
 
     this._getSessionKeyPrefix = getSessionKeyPrefix;
 
@@ -387,7 +361,6 @@ export default class LineConnector
       ...params,
       client,
       shouldBatch: this._shouldBatch,
-      sendMethod: this._sendMethod,
     });
   }
 

@@ -736,8 +736,6 @@ module.exports = {
   channels: {
     line: {
       enabled: true,
-      // sendMethod can be either "push" or "reply"
-      sendMethod: 'reply',
       accessToken: process.env.LINE_CHANNEL_ACCESS_TOKEN,
       channelSecret: process.env.LINE_CHANNEL_SECRET,
     },
