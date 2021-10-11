@@ -1,8 +1,5 @@
 import { EventEmitter } from 'events';
-import { URL } from 'url';
 
-import isAfter from 'date-fns/isAfter';
-import isValid from 'date-fns/isValid';
 import warning from 'warning';
 import { JsonObject } from 'type-fest';
 import { MessengerClient } from 'messaging-api-messenger';
@@ -23,7 +20,6 @@ import {
 
 export type MessengerConnectorOptions =
   FacebookBaseConnectorOptions<MessengerClient> & {
-    skipLegacyProfile?: boolean;
     mapPageToAccessToken?: (pageId: string) => Promise<string>;
   };
 
@@ -31,8 +27,6 @@ export default class MessengerConnector
   extends FacebookBaseConnector<MessengerRequestBody, MessengerClient>
   implements Connector<MessengerRequestBody, MessengerClient>
 {
-  _skipLegacyProfile: boolean;
-
   _mapPageToAccessToken: ((pageId: string) => Promise<string>) | null = null;
 
   constructor(options: MessengerConnectorOptions) {
@@ -41,12 +35,9 @@ export default class MessengerConnector
       ClientClass: MessengerClient,
     });
 
-    const { mapPageToAccessToken, skipLegacyProfile } = options;
+    const { mapPageToAccessToken } = options;
 
     this._mapPageToAccessToken = mapPageToAccessToken || null;
-
-    this._skipLegacyProfile =
-      typeof skipLegacyProfile === 'boolean' ? skipLegacyProfile : true;
   }
 
   _getRawEventsFromRequest(body: MessengerRequestBody): MessengerRawEvent[] {
@@ -89,22 +80,6 @@ export default class MessengerConnector
     return 'standby' in entry;
   }
 
-  _profilePicExpired(user: { profilePic: string }): boolean {
-    try {
-      // Facebook CDN returns expiration time in the key `ext` in URL params like:
-      // https://platform-lookaside.fbsbx.com/platform/profilepic/?psid=11111111111111&width=1024&ext=1543379908&hash=xxxxxxxxxxxx
-      const ext = new URL(user.profilePic).searchParams.get('ext');
-
-      if (!ext) return true;
-
-      const timestamp = +ext * 1000;
-      const expireTime = new Date(timestamp);
-      return !(isValid(expireTime) && isAfter(expireTime, new Date()));
-    } catch (e) {
-      return true;
-    }
-  }
-
   get platform(): 'messenger' {
     return 'messenger';
   }
@@ -134,7 +109,7 @@ export default class MessengerConnector
     session: Session,
     bodyOrEvent: MessengerRequestBody | MessengerEvent
   ): Promise<void> {
-    if (!session.user || this._profilePicExpired(session.user)) {
+    if (!session.user) {
       const senderId = this.getUniqueSessionKey(bodyOrEvent);
 
       const rawEvent =
@@ -144,7 +119,6 @@ export default class MessengerConnector
 
       // TODO: use this info from event
       const pageId = this._getPageIdFromRawEvent(rawEvent);
-      let customAccessToken;
 
       if (!pageId) {
         warning(false, 'Could not find pageId from request body.');
@@ -153,47 +127,12 @@ export default class MessengerConnector
           id: pageId,
           _updatedAt: new Date().toISOString(),
         };
-
-        if (this._mapPageToAccessToken != null) {
-          const mapPageToAccessToken = this._mapPageToAccessToken;
-          customAccessToken = await mapPageToAccessToken(pageId);
-        }
       }
 
-      // FIXME: refine user
-      if (this._skipLegacyProfile) {
-        session.user = {
-          _updatedAt: new Date().toISOString(),
-          id: senderId,
-        };
-      } else {
-        let user = {};
-        try {
-          if (customAccessToken) {
-            const client = new MessengerClient({
-              accessToken: customAccessToken,
-              appSecret: this._appSecret,
-              origin: this._origin,
-              skipAppSecretProof: this._skipAppSecretProof,
-            });
-            user = await client.getUserProfile(senderId as any);
-          } else {
-            user = await this._client.getUserProfile(senderId as any);
-          }
-        } catch (err) {
-          warning(
-            false,
-            'getUserProfile() failed, `session.user` will only have `id`'
-          );
-          console.error(err);
-        }
-
-        session.user = {
-          _updatedAt: new Date().toISOString(),
-          ...user,
-          id: senderId,
-        };
-      }
+      session.user = {
+        _updatedAt: new Date().toISOString(),
+        id: senderId,
+      };
     }
 
     Object.freeze(session.user);

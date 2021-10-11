@@ -24,7 +24,6 @@ export default class SlackBot extends Bot<
     verificationToken,
     signingSecret,
     origin,
-    skipLegacyProfile,
     includeBotMessages,
     onRequest,
   }: {
@@ -34,7 +33,6 @@ export default class SlackBot extends Bot<
     verificationToken?: string;
     signingSecret?: string;
     origin?: string;
-    skipLegacyProfile?: boolean;
     includeBotMessages?: boolean;
     onRequest?: OnRequest;
   }) {
@@ -43,7 +41,6 @@ export default class SlackBot extends Bot<
       verificationToken,
       signingSecret,
       origin,
-      skipLegacyProfile,
       includeBotMessages,
     });
     super({ connector, sessionStore, sync, onRequest });

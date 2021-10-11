@@ -1032,64 +1032,36 @@ describe('#getUniqueSessionKey', () => {
 
 describe('#updateSession', () => {
   it('update session with data needed', async () => {
-    const { connector, client } = setup({
-      skipLegacyProfile: false,
-    });
+    const { connector } = setup();
 
-    const user = {
-      id: 'U13A00000',
-    };
-    const channel = {
-      id: 'C6A900000',
-    };
-    const members = [user];
     const session = {};
-
-    mocked(client.getUserInfo).mockResolvedValue(user);
-    mocked(client.getConversationInfo).mockResolvedValue(channel);
-    mocked(client.getAllConversationMembers).mockResolvedValue(members);
-    mocked(client.getAllUserList).mockResolvedValue(members);
 
     await connector.updateSession(session, request);
 
-    expect(client.getUserInfo).toBeCalledWith('U13A00000');
-    expect(client.getConversationInfo).toBeCalledWith('C6A900000');
-    expect(client.getAllConversationMembers).toBeCalledWith('C6A900000');
-    expect(client.getAllUserList).toBeCalled();
     expect(session).toEqual({
       user: {
+        id: 'U13A00000',
         _updatedAt: expect.any(String),
-        ...user,
       },
       channel: {
+        id: 'C6A900000',
         _updatedAt: expect.any(String),
-        members,
-        ...channel,
       },
-      team: { members, _updatedAt: expect.any(String) },
     });
   });
 
   it('not update session if it is bot event request', async () => {
-    const { connector, client } = setup({
-      skipLegacyProfile: false,
-    });
+    const { connector } = setup();
 
     const session = {};
 
     await connector.updateSession(session, botRequest);
 
-    expect(client.getUserInfo).not.toBeCalled();
-    expect(client.getConversationInfo).not.toBeCalled();
-    expect(client.getAllConversationMembers).not.toBeCalled();
-    expect(client.getAllUserList).not.toBeCalled();
     expect(session).toEqual({});
   });
 
   it('not update session if no senderId in body', async () => {
-    const { connector, client } = setup({
-      skipLegacyProfile: false,
-    });
+    const { connector } = setup();
 
     const session = {};
     const body = {
@@ -1111,71 +1083,23 @@ describe('#updateSession', () => {
     };
 
     await connector.updateSession(session, body);
-
-    expect(client.getUserInfo).not.toBeCalled();
-    expect(client.getConversationInfo).not.toBeCalled();
-    expect(client.getAllConversationMembers).not.toBeCalled();
-    expect(client.getAllUserList).not.toBeCalled();
   });
 
   it('update session with data needed when receiving interactive message request', async () => {
-    const { connector, client } = setup({
-      skipLegacyProfile: false,
-    });
+    const { connector } = setup();
 
-    const user = {
-      id: 'U056K3CN1',
-    };
-    const channel = {
-      id: 'D7WTL9ECE',
-    };
-    const members = [user];
     const session = {};
-
-    mocked(client.getUserInfo).mockResolvedValue(user);
-    mocked(client.getConversationInfo).mockResolvedValue(channel);
-    mocked(client.getAllConversationMembers).mockResolvedValue(members);
-    mocked(client.getAllUserList).mockResolvedValue(members);
 
     await connector.updateSession(session, interactiveMessageRequest);
 
-    expect(client.getUserInfo).toBeCalledWith('U056K3CN1');
-    expect(client.getConversationInfo).toBeCalledWith('D7WTL9ECE');
-    expect(client.getAllConversationMembers).toBeCalledWith('D7WTL9ECE');
-    expect(client.getAllUserList).toBeCalled();
     expect(session).toEqual({
       user: {
+        id: 'U056K3CN1',
         _updatedAt: expect.any(String),
-        ...user,
       },
       channel: {
+        id: 'D7WTL9ECE',
         _updatedAt: expect.any(String),
-        members,
-        ...channel,
-      },
-      team: { members, _updatedAt: expect.any(String) },
-    });
-  });
-
-  it('update session without calling apis while skipLegacyProfile set true', async () => {
-    const { connector, client } = setup();
-
-    const session = {};
-
-    await connector.updateSession(session, request);
-
-    expect(client.getUserInfo).not.toBeCalled();
-    expect(client.getConversationInfo).not.toBeCalled();
-    expect(client.getAllConversationMembers).not.toBeCalled();
-    expect(client.getAllUserList).not.toBeCalled();
-    expect(session).toEqual({
-      user: {
-        _updatedAt: expect.any(String),
-        id: 'U13A00000',
-      },
-      channel: {
-        _updatedAt: expect.any(String),
-        id: 'C6A900000',
       },
     });
   });

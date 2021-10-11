@@ -17,7 +17,6 @@ type CommonConnectorOptions = {
   getConfig?: GetConfigFunction;
   getSessionKeyPrefix?: GetSessionKeyPrefixFunction;
   shouldBatch?: boolean;
-  skipLegacyProfile?: boolean;
 };
 
 type Credential = { accessToken: string; channelSecret: string };
@@ -61,8 +60,6 @@ export default class LineConnector
 
   _origin: string | undefined;
 
-  _skipLegacyProfile: boolean;
-
   _getConfig: GetConfigFunction | undefined;
 
   _getSessionKeyPrefix: GetSessionKeyPrefixFunction | undefined;
@@ -70,8 +67,7 @@ export default class LineConnector
   _shouldBatch: boolean;
 
   constructor(options: LineConnectorOptions) {
-    const { getConfig, shouldBatch, skipLegacyProfile, getSessionKeyPrefix } =
-      options;
+    const { getConfig, shouldBatch, getSessionKeyPrefix } = options;
     if ('client' in options) {
       this._client = options.client;
 
@@ -106,9 +102,6 @@ export default class LineConnector
     this._shouldBatch = typeof shouldBatch === 'boolean' ? shouldBatch : true;
 
     this._getSessionKeyPrefix = getSessionKeyPrefix;
-
-    this._skipLegacyProfile =
-      typeof skipLegacyProfile === 'boolean' ? skipLegacyProfile : true;
   }
 
   _isWebhookVerifyEvent(event: LineRawEvent): boolean {
@@ -187,94 +180,34 @@ export default class LineConnector
     }
 
     if (source.type === 'group') {
-      let user = null;
-
-      if (source.userId) {
-        user =
-          this._skipLegacyProfile || !this._client
-            ? {
-                id: source.userId,
-                _updatedAt: new Date().toISOString(),
-              }
-            : {
-                id: source.userId,
-                _updatedAt: new Date().toISOString(),
-                ...(await this._client.getGroupMemberProfile(
-                  source.groupId,
-                  source.userId
-                )),
-              };
-      }
-
-      session.user = user;
-
-      let memberIds: string[] = [];
-
-      try {
-        if (this._client) {
-          memberIds = await this._client.getAllGroupMemberIds(source.groupId);
-        }
-      } catch (err) {
-        // FIXME: handle no memberIds
-        // only LINE@ Approved accounts or official accounts can use this API
-        // https://developers.line.me/en/docs/messaging-api/reference/#get-group-member-user-ids
-      }
+      session.user = source.userId
+        ? {
+            id: source.userId,
+            _updatedAt: new Date().toISOString(),
+          }
+        : null;
 
       session.group = {
         id: source.groupId,
-        members: memberIds.map((id) => ({ id })),
         _updatedAt: new Date().toISOString(),
       };
     } else if (source.type === 'room') {
-      let user = null;
-
-      if (source.userId) {
-        user =
-          this._skipLegacyProfile || !this._client
-            ? {
-                id: source.userId,
-                _updatedAt: new Date().toISOString(),
-              }
-            : {
-                id: source.userId,
-                _updatedAt: new Date().toISOString(),
-                ...(await this._client.getRoomMemberProfile(
-                  source.roomId,
-                  source.userId
-                )),
-              };
-      }
-
-      session.user = user;
-
-      let memberIds: string[] = [];
-
-      try {
-        if (this._client) {
-          memberIds = await this._client.getAllRoomMemberIds(source.roomId);
-        }
-      } catch (err) {
-        // FIXME: handle no memberIds
-        // only LINE@ Approved accounts or official accounts can use this API
-        // https://developers.line.me/en/docs/messaging-api/reference/#get-room-member-user-ids
-      }
+      session.user = source.userId
+        ? {
+            id: source.userId,
+            _updatedAt: new Date().toISOString(),
+          }
+        : null;
 
       session.room = {
         id: source.roomId,
-        members: memberIds.map((id) => ({ id })),
         _updatedAt: new Date().toISOString(),
       };
     } else if (source.type === 'user') {
       if (!session.user) {
-        const user =
-          this._skipLegacyProfile || !this._client
-            ? {}
-            : await this._client.getUserProfile(source.userId);
-
         session.user = {
           id: source.userId,
           _updatedAt: new Date().toISOString(),
-          ...user,
         };
       }
     }

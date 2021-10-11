@@ -4,7 +4,6 @@ import { EventEmitter } from 'events';
 import invariant from 'invariant';
 import { JsonObject } from 'type-fest';
 import { ViberClient } from 'messaging-api-viber';
-import { addedDiff } from 'deep-object-diff';
 
 import Session from '../session/Session';
 import { Connector } from '../bot/Connector';
@@ -22,12 +21,10 @@ type ConnectorOptionsWithoutClient = {
   accessToken: string;
   sender: Sender;
   origin?: string;
-  skipLegacyProfile?: boolean;
 };
 
 type ConnectorOptionsWithClient = {
   client: ViberClient;
-  skipLegacyProfile?: boolean;
 };
 
 export type ViberConnectorOptions =
@@ -41,10 +38,7 @@ export default class ViberConnector
 
   _client: ViberClient;
 
-  _skipLegacyProfile: boolean;
-
   constructor(options: ViberConnectorOptions) {
-    const { skipLegacyProfile } = options;
     if ('client' in options) {
       this._client = options.client;
       this._accessToken = this._client.accessToken;
@@ -63,9 +57,6 @@ export default class ViberConnector
       });
       this._accessToken = accessToken;
     }
-
-    this._skipLegacyProfile =
-      typeof skipLegacyProfile === 'boolean' ? skipLegacyProfile : true;
   }
 
   _getRawEventFromRequest(body: ViberRequestBody): ViberRawEvent {
@@ -120,20 +111,10 @@ export default class ViberConnector
         break;
     }
 
-    if (this._skipLegacyProfile) {
-      session.user = {
-        _updatedAt: new Date().toISOString(),
-        id: (user || {}).id,
-      };
-    } else if (
-      Object.keys(addedDiff(session.user || {}, user as any)).length > 0
-    ) {
-      session.user = {
-        ...session.user,
-        ...user,
-      };
-      session.user._updatedAt = new Date().toISOString();
-    }
+    session.user = {
+      _updatedAt: new Date().toISOString(),
+      id: (user || {}).id,
+    };
 
     Object.freeze(session.user);
     Object.defineProperty(session, 'user', {
