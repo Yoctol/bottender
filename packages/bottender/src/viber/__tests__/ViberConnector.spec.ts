@@ -93,7 +93,6 @@ function setup() {
   const connector = new ViberConnector({
     accessToken: ACCESS_TOKEN,
     sender: { name: 'sender' },
-    skipLegacyProfile: false,
   });
 
   const client = mocked(ViberClient).mock.instances[0];
@@ -189,17 +188,8 @@ describe('#getUniqueSessionKey', () => {
 });
 
 describe('#updateSession', () => {
-  it('update session with data needed from subscribedRequest', async () => {
+  it('update session from subscribedRequest', async () => {
     const { connector } = setup();
-
-    const user = {
-      id: '01234567890A=',
-      name: 'John McClane',
-      avatar: 'http://avatar.example.com',
-      country: 'UK',
-      language: 'en',
-      apiVersion: 1,
-    };
 
     const session = {};
 
@@ -207,8 +197,8 @@ describe('#updateSession', () => {
 
     expect(session).toEqual({
       user: {
+        id: '01234567890A=',
         _updatedAt: expect.any(String),
-        ...user,
       },
     });
   });
@@ -216,18 +206,14 @@ describe('#updateSession', () => {
   it('update session with data needed from unsubscribedRequest', async () => {
     const { connector } = setup();
 
-    const user = {
-      id: '01234567890A=',
-    };
-
     const session = {};
 
     await connector.updateSession(session, unsubscribedRequest);
 
     expect(session).toEqual({
       user: {
+        id: '01234567890A=',
         _updatedAt: expect.any(String),
-        ...user,
       },
     });
   });
@@ -235,23 +221,14 @@ describe('#updateSession', () => {
   it('update session with data needed from conversationStartedRequest', async () => {
     const { connector } = setup();
 
-    const user = {
-      id: '01234567890A=',
-      name: 'John McClane',
-      avatar: 'http://avatar.example.com',
-      country: 'UK',
-      language: 'en',
-      apiVersion: 1,
-    };
-
     const session = {};
 
     await connector.updateSession(session, conversationStartedRequest);
 
     expect(session).toEqual({
       user: {
+        id: '01234567890A=',
         _updatedAt: expect.any(String),
-        ...user,
       },
     });
   });
@@ -259,18 +236,14 @@ describe('#updateSession', () => {
   it('update session with data needed from deliveredRequest', async () => {
     const { connector } = setup();
 
-    const user = {
-      id: '01234567890A=',
-    };
-
     const session = {};
 
     await connector.updateSession(session, deliveredRequest);
 
     expect(session).toEqual({
       user: {
+        id: '01234567890A=',
         _updatedAt: expect.any(String),
-        ...user,
       },
     });
   });
@@ -278,18 +251,14 @@ describe('#updateSession', () => {
   it('update session with data needed from seenRequest', async () => {
     const { connector } = setup();
 
-    const user = {
-      id: '01234567890A=',
-    };
-
     const session = {};
 
     await connector.updateSession(session, seenRequest);
 
     expect(session).toEqual({
       user: {
+        id: '01234567890A=',
         _updatedAt: expect.any(String),
-        ...user,
       },
     });
   });
@@ -316,52 +285,14 @@ describe('#updateSession', () => {
   it('update session with data needed from messageRequest', async () => {
     const { connector } = setup();
 
-    const user = {
-      id: '01234567890A=',
-      name: 'John McClane',
-      avatar: 'http://avatar.example.com',
-      country: 'UK',
-      language: 'en',
-      apiVersion: 1,
-    };
-
     const session = {};
 
     await connector.updateSession(session, messageRequest);
 
     expect(session).toEqual({
       user: {
-        _updatedAt: expect.any(String),
-        ...user,
-      },
-    });
-  });
-
-  it('update session from id-only user', async () => {
-    const { connector } = setup();
-
-    const user = {
-      id: '01234567890A=',
-      name: 'John McClane',
-      avatar: 'http://avatar.example.com',
-      country: 'UK',
-      language: 'en',
-      apiVersion: 1,
-    };
-
-    const session = {
-      user: {
         id: '01234567890A=',
-        _updatedAt: new Date().toISOString(),
-      },
-    };
-
-    await connector.updateSession(session, messageRequest);
-
-    expect(session).toEqual({
-      user: {
         _updatedAt: expect.any(String),
-        ...user,
       },
     });
   });

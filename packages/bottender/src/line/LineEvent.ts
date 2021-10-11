@@ -1,5 +1,3 @@
-import warning from 'warning';
-
 import { Event } from '../context/Event';
 
 import {

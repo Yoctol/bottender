@@ -423,10 +423,6 @@ describe('#updateSession', () => {
       group: undefined,
       user: {
         id: 427770117,
-        isBot: false,
-        firstName: 'user_first',
-        lastName: 'user_last',
-        languageCode: 'en',
         _updatedAt: expect.any(String),
       },
     });
@@ -443,17 +439,10 @@ describe('#updateSession', () => {
       channel: undefined,
       group: {
         id: -225456171,
-        title: 'Bottender',
-        type: 'group',
-        allMembersAreAdministrators: true,
         _updatedAt: expect.any(String),
       },
       user: {
         id: 427770117,
-        isBot: false,
-        firstName: 'user_first',
-        lastName: 'user_last',
-        languageCode: 'en',
         _updatedAt: expect.any(String),
       },
     });
@@ -471,10 +460,6 @@ describe('#updateSession', () => {
       group: undefined,
       user: {
         id: 427770117,
-        isBot: false,
-        firstName: 'user_first',
-        lastName: 'user_last',
-        languageCode: 'en',
         _updatedAt: expect.any(String),
       },
     });
@@ -491,17 +476,10 @@ describe('#updateSession', () => {
       channel: undefined,
       group: {
         id: -225456171,
-        title: 'Bottender',
-        type: 'group',
-        allMembersAreAdministrators: true,
         _updatedAt: expect.any(String),
       },
       user: {
         id: 427770117,
-        isBot: false,
-        firstName: 'user_first',
-        lastName: 'user_last',
-        languageCode: 'en',
         _updatedAt: expect.any(String),
       },
     });
@@ -519,8 +497,6 @@ describe('#updateSession', () => {
       user: undefined,
       channel: {
         id: -1001305240521,
-        title: 'channel_12345',
-        type: 'channel',
         _updatedAt: expect.any(String),
       },
     });
@@ -538,8 +514,6 @@ describe('#updateSession', () => {
       user: undefined,
       channel: {
         id: -1001305240521,
-        title: 'channel_12345',
-        type: 'channel',
         _updatedAt: expect.any(String),
       },
     });
@@ -556,10 +530,6 @@ describe('#updateSession', () => {
       group: undefined,
       user: {
         id: 427770117,
-        isBot: false,
-        firstName: 'user_first',
-        lastName: 'user_last',
-        languageCode: 'en',
         _updatedAt: expect.any(String),
       },
     });
@@ -576,10 +546,6 @@ describe('#updateSession', () => {
       group: undefined,
       user: {
         id: 427770117,
-        isBot: false,
-        firstName: 'user_first',
-        lastName: 'user_last',
-        languageCode: 'en',
         _updatedAt: expect.any(String),
       },
     });
@@ -596,10 +562,6 @@ describe('#updateSession', () => {
       group: undefined,
       user: {
         id: 427770117,
-        isBot: false,
-        firstName: 'user_first',
-        lastName: 'user_last',
-        languageCode: 'en',
         _updatedAt: expect.any(String),
       },
     });
@@ -615,17 +577,10 @@ describe('#updateSession', () => {
       channel: undefined,
       group: {
         id: -225456171,
-        title: 'Bottender',
-        type: 'group',
-        allMembersAreAdministrators: true,
         _updatedAt: expect.any(String),
       },
       user: {
         id: 427770117,
-        isBot: false,
-        firstName: 'user_first',
-        lastName: 'user_last',
-        languageCode: 'en',
         _updatedAt: expect.any(String),
       },
     });
@@ -642,9 +597,6 @@ describe('#updateSession', () => {
       group: undefined,
       user: {
         id: 427770117,
-        firstName: 'user_first',
-        lastName: 'user_last',
-        languageCode: 'en',
         _updatedAt: expect.any(String),
       },
     });
@@ -661,9 +613,6 @@ describe('#updateSession', () => {
       group: undefined,
       user: {
         id: 427770117,
-        firstName: 'user_first',
-        lastName: 'user_last',
-        languageCode: 'en',
         _updatedAt: expect.any(String),
       },
     });

@@ -2,7 +2,6 @@ import crypto from 'crypto';
 import { EventEmitter } from 'events';
 
 import invariant from 'invariant';
-import pProps from 'p-props';
 import warning from 'warning';
 import { JsonObject } from 'type-fest';
 import { SlackOAuthClient } from 'messaging-api-slack';
@@ -25,7 +24,6 @@ import {
 } from './SlackTypes';
 
 type CommonConnectorOptions = {
-  skipLegacyProfile?: boolean;
   verificationToken?: string;
   signingSecret?: string;
   includeBotMessages?: boolean;
@@ -53,17 +51,10 @@ export default class SlackConnector
 
   _signingSecret: string;
 
-  _skipLegacyProfile: boolean;
-
   _includeBotMessages: boolean;
 
   constructor(options: SlackConnectorOptions) {
-    const {
-      verificationToken,
-      skipLegacyProfile,
-      includeBotMessages,
-      signingSecret,
-    } = options;
+    const { verificationToken, includeBotMessages, signingSecret } = options;
     if ('client' in options) {
       this._client = options.client;
     } else {
@@ -96,9 +87,6 @@ export default class SlackConnector
         );
       }
     }
-
-    this._skipLegacyProfile =
-      typeof skipLegacyProfile === 'boolean' ? skipLegacyProfile : true;
 
     this._includeBotMessages = includeBotMessages || false;
   }
@@ -217,73 +205,16 @@ export default class SlackConnector
       return;
     }
 
-    if (this._skipLegacyProfile) {
-      session.user = {
-        id: userId,
-        _updatedAt: new Date().toISOString(),
-      };
-
-      session.channel = {
-        id: channelId,
-        _updatedAt: new Date().toISOString(),
-      };
-
-      Object.freeze(session.user);
-      Object.defineProperty(session, 'user', {
-        configurable: false,
-        enumerable: true,
-        writable: false,
-        value: session.user,
-      });
-
-      Object.freeze(session.channel);
-      Object.defineProperty(session, 'channel', {
-        configurable: false,
-        enumerable: true,
-        writable: false,
-        value: session.channel,
-      });
-
-      return;
-    }
-
-    const promises: Record<string, any> = {
-      sender: this._client.getUserInfo(userId),
-    };
-
-    // TODO: check join or leave events?
-    if (
-      !session.channel ||
-      (session.channel.members &&
-        Array.isArray(session.channel.members) &&
-        session.channel.members.indexOf(userId) < 0)
-    ) {
-      if (channelId) {
-        promises.channel = this._client.getConversationInfo(channelId);
-        promises.channelMembers =
-          this._client.getAllConversationMembers(channelId);
-      }
-    }
-
-    // TODO: how to know if user leave team?
-    // TODO: team info shared by all channels?
-    if (
-      !session.team ||
-      (session.team.members &&
-        Array.isArray(session.team.members) &&
-        session.team.members.indexOf(userId) < 0)
-    ) {
-      promises.allUsers = this._client.getAllUserList();
-    }
-
-    const results = await pProps(promises);
-
-    // FIXME: refine user
     session.user = {
       id: userId,
       _updatedAt: new Date().toISOString(),
-      ...results.sender,
     };
+
+    session.channel = {
+      id: channelId,
+      _updatedAt: new Date().toISOString(),
+    };
+
     Object.freeze(session.user);
     Object.defineProperty(session, 'user', {
       configurable: false,
@@ -292,36 +223,13 @@ export default class SlackConnector
       value: session.user,
     });
 
-    if (promises.channel) {
-      session.channel = {
-        ...results.channel,
-        members: results.channelMembers,
-        _updatedAt: new Date().toISOString(),
-      };
-
-      Object.freeze(session.channel);
-      Object.defineProperty(session, 'channel', {
-        configurable: false,
-        enumerable: true,
-        writable: false,
-        value: session.channel,
-      });
-    }
-
-    if (promises.allUsers) {
-      session.team = {
-        members: results.allUsers,
-        _updatedAt: new Date().toISOString(),
-      };
-
-      Object.freeze(session.team);
-      Object.defineProperty(session, 'team', {
-        configurable: false,
-        enumerable: true,
-        writable: false,
-        value: session.team,
-      });
-    }
+    Object.freeze(session.channel);
+    Object.defineProperty(session, 'channel', {
+      configurable: false,
+      enumerable: true,
+      writable: false,
+      value: session.channel,
+    });
   }
 
   mapRequestToEvents(body: SlackRequestBody): SlackEvent[] {

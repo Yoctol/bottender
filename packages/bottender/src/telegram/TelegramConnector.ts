@@ -18,12 +18,10 @@ import {
 type ConnectorOptionsWithoutClient = {
   accessToken: string;
   origin?: string;
-  skipLegacyProfile?: boolean;
 };
 
 type ConnectorOptionsWithClient = {
   client: TelegramClient;
-  skipLegacyProfile?: boolean;
 };
 
 export type TelegramConnectorOptions =
@@ -35,10 +33,7 @@ export default class TelegramConnector
 {
   _client: TelegramClient;
 
-  _skipLegacyProfile: boolean;
-
   constructor(options: TelegramConnectorOptions) {
-    const { skipLegacyProfile } = options;
     if ('client' in options) {
       this._client = options.client;
     } else {
@@ -54,9 +49,6 @@ export default class TelegramConnector
         origin,
       });
     }
-
-    this._skipLegacyProfile =
-      typeof skipLegacyProfile === 'boolean' ? skipLegacyProfile : true;
   }
 
   _getRawEventFromRequest(body: TelegramRequestBody): TelegramRawEvent {
@@ -117,13 +109,10 @@ export default class TelegramConnector
     }
 
     if (channel) {
-      if (this._skipLegacyProfile) {
-        session.channel = {
-          id: channel.id,
-        };
-      } else {
-        session.channel = channel;
-      }
+      session.channel = {
+        id: channel.id,
+      };
+
       session.channel._updatedAt = new Date().toISOString();
       Object.freeze(session.channel);
     }
@@ -147,13 +136,10 @@ export default class TelegramConnector
       group = body.callbackQuery.message.chat;
     }
     if (group) {
-      if (this._skipLegacyProfile) {
-        session.group = {
-          id: group.id,
-        };
-      } else {
-        session.group = group;
-      }
+      session.group = {
+        id: group.id,
+      };
+
       session.group._updatedAt = new Date().toISOString();
       Object.freeze(session.group);
     }
@@ -182,13 +168,10 @@ export default class TelegramConnector
     }
 
     if (user) {
-      if (this._skipLegacyProfile) {
-        session.user = {
-          id: user.id,
-        };
-      } else {
-        session.user = user;
-      }
+      session.user = {
+        id: user.id,
+      };
+
       session.user._updatedAt = new Date().toISOString();
       Object.freeze(session.user);
     }

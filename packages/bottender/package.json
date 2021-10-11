@@ -78,7 +78,6 @@
     "nodemon": "^2.0.13",
     "object.fromentries": "^2.0.4",
     "p-map": "^4.0.0",
-    "p-props": "^4.0.0",
     "pascal-case": "^3.1.2",
     "path-to-regexp": "^6.2.0",
     "pkg-dir": "^5.0.0",
