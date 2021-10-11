@@ -101,4 +101,3 @@ export * from './types';
 export { default as withTyping } from './plugins/withTyping';
 
 export { createServer } from '@bottender/express';
-export { default as initializeServer } from './initializeServer';
