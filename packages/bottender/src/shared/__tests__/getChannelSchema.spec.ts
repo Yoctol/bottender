@@ -1,5 +1,3 @@
-import Joi from 'joi';
-
 import getChannelSchema from '../getChannelSchema';
 import { Channel } from '../../types';
 
@@ -17,7 +15,7 @@ describe('messenger', () => {
       verifyToken: 'MESSENGER_VERIFY_TOKEN',
     };
 
-    const validateResult = Joi.validate(config, messengerSchema, {
+    const validateResult = messengerSchema.validate(config, {
       allowUnknown: true,
     });
 
@@ -88,7 +86,7 @@ describe('messenger', () => {
       },
     };
 
-    const validateResult = Joi.validate(config, messengerSchema, {
+    const validateResult = messengerSchema.validate(config, {
       allowUnknown: true,
     });
 
@@ -119,7 +117,7 @@ describe('line', () => {
       channelSecret: 'LINE_CHANNEL_SECRET',
     };
 
-    const validateResult = Joi.validate(config, lineSchema, {
+    const validateResult = lineSchema.validate(config, {
       allowUnknown: true,
     });
 
@@ -137,7 +135,7 @@ describe('telegram', () => {
       accessToken: 'TELEGRAM_ACCESS_TOKEN',
     };
 
-    const validateResult = Joi.validate(config, telegramSchema, {
+    const validateResult = telegramSchema.validate(config, {
       allowUnknown: true,
     });
 
@@ -155,7 +153,7 @@ describe('slack', () => {
       accessToken: 'SLACK_ACCESS_TOKEN',
     };
 
-    const validateResult = Joi.validate(config, slackSchema, {
+    const validateResult = slackSchema.validate(config, {
       allowUnknown: true,
     });
 
@@ -176,7 +174,7 @@ describe('viber', () => {
       },
     };
 
-    const validateResult = Joi.validate(config, viberSchema, {
+    const validateResult = viberSchema.validate(config, {
       allowUnknown: true,
     });
 
