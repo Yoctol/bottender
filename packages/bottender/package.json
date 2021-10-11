@@ -83,13 +83,15 @@
   "keywords": [
     "bot",
     "chatbot",
+    "facebook",
     "framework",
     "line",
     "messaging",
     "messenger",
     "slack",
     "telegram",
-    "viber"
+    "viber",
+    "whatsapp"
   ],
   "engines": {
     "node": ">=12"
