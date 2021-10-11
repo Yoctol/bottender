@@ -122,32 +122,6 @@ export default class SlackContext extends Context<
   }
 
   /**
-   * Sends a message to the channel of the session.
-   *
-   * https://api.slack.com/methods/chat.postMessage
-   */
-  postMessage(
-    message:
-      | {
-          text?: string;
-          attachments?: SlackTypes.Attachment[] | string;
-          blocks?: SlackTypes.MessageBlock[] | string;
-        }
-      | string,
-    options?: {}
-  ): Promise<any> {
-    warning(
-      false,
-      '`postMessage` is deprecated. Use `chat.postMessage` instead.'
-    );
-
-    return this.chat.postMessage({
-      ...(typeof message === 'string' ? { text: message } : message),
-      ...options,
-    });
-  }
-
-  /**
    * Sends a message to a channel.
    *
    * https://api.slack.com/methods/chat.postMessage
@@ -164,32 +138,6 @@ export default class SlackContext extends Context<
     return this._client.chat.postMessage({
       threadTs: (this._event.rawEvent as Message).threadTs,
       channel,
-      ...options,
-    });
-  }
-
-  /**
-   * Sends an ephemeral message to the session owner.
-   *
-   * https://api.slack.com/methods/chat.postMessage
-   */
-  postEphemeral(
-    message:
-      | {
-          text?: string;
-          attachments?: SlackTypes.Attachment[] | string;
-          blocks?: SlackTypes.MessageBlock[] | string;
-        }
-      | string,
-    options?: {}
-  ): Promise<any> {
-    warning(
-      false,
-      '`postEphemeral` is deprecated. Use `chat.postEphemeral` instead.'
-    );
-
-    return this.chat.postEphemeral({
-      ...(typeof message === 'string' ? { text: message } : message),
       ...options,
     });
   }
