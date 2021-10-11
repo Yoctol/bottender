@@ -56,7 +56,10 @@ export default class TelegramBot extends Bot<
               offset: this._offset,
             }
           : options;
-        const updates = await (this.connector as any).client.getUpdates(params);
+        // TODO: Remove casting after https://github.com/Yoctol/messaging-apis/issues/622
+        const updates = ((await this.connector.client.getUpdates(
+          params
+        )) as unknown) as TelegramRequestBody[];
 
         if (updates.length > 0) {
           for (let i = 0; i < updates.length; i++) {
@@ -64,7 +67,7 @@ export default class TelegramBot extends Bot<
           }
 
           const highestUpdateId = Math.max(
-            ...updates.map((update: any) => update.updateId)
+            ...updates.map(update => update.updateId)
           );
 
           this._offset = highestUpdateId + 1;
