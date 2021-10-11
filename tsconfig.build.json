@@ -9,7 +9,6 @@
     { "path": "./packages/bottender-dialogflow" },
     { "path": "./packages/bottender-express" },
     { "path": "./packages/bottender-facebook" },
-    { "path": "./packages/bottender-handlers" },
     { "path": "./packages/bottender-luis" },
     { "path": "./packages/bottender-qna-maker" },
     { "path": "./packages/bottender-rasa" },
