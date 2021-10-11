@@ -27,8 +27,6 @@ export type Props<C extends Context> = {
   error?: Error;
 };
 
-export type Plugin<C extends Context> = (context: C) => void;
-
 export enum Channel {
   Messenger = 'messenger',
   Line = 'line',
@@ -80,7 +78,6 @@ type ChannelCommonConfig = {
 };
 
 export type BottenderConfig = {
-  plugins?: Plugin<any>[];
   session?: SessionConfig;
   initialState?: JsonObject;
   channels?:

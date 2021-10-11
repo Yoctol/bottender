@@ -18,10 +18,6 @@ describe('browser', () => {
     expect(core.Context).toBeDefined();
   });
 
-  it('export extensions', () => {
-    expect(core.withTyping).toBeDefined();
-  });
-
   it('export chain', () => {
     expect(core.chain).toBeDefined();
   });

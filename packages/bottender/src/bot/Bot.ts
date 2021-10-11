@@ -11,7 +11,7 @@ import Context from '../context/Context';
 import MemoryCacheStore from '../cache/MemoryCacheStore';
 import Session from '../session/Session';
 import SessionStore from '../session/SessionStore';
-import { Action, Client, Plugin, Props, RequestContext } from '../types';
+import { Action, Client, Props, RequestContext } from '../types';
 import { Event } from '../context/Event';
 
 import { Connector } from './Connector';
@@ -86,8 +86,6 @@ export default class Bot<
 
   _initialState: JsonObject = {};
 
-  _plugins: Function[] = [];
-
   _sync: boolean;
 
   _emitter: EventEmitter;
@@ -151,11 +149,6 @@ export default class Bot<
 
   setInitialState(initialState: JsonObject): Bot<B, C, E, Ctx> {
     this._initialState = initialState;
-    return this;
-  }
-
-  use(plugin: Plugin<Ctx>): Bot<B, C, E, Ctx> {
-    this._plugins.push(plugin);
     return this;
   }
 
@@ -263,13 +256,6 @@ export default class Bot<
         {
           concurrency: 5,
         }
-      );
-
-      // Call all of extension functions before passing to handler.
-      await Promise.all(
-        contexts.map(async (context) =>
-          Promise.all(this._plugins.map((ext) => ext(context)))
-        )
       );
 
       if (this._handler == null) {

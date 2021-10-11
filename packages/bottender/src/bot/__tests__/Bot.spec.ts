@@ -415,34 +415,6 @@ describe('#createRequestHandler', () => {
   });
 });
 
-describe('#use', () => {
-  it('should return this', () => {
-    const { bot } = setup();
-
-    expect(bot.use(function plugin() {})).toBe(bot);
-  });
-
-  it('can extend function to context', async () => {
-    const { bot } = setup();
-
-    const monkeyPatchFn = jest.fn();
-
-    bot.use(function plugin(context) {
-      context.monkeyPatchFn = monkeyPatchFn;
-    });
-
-    bot.onEvent(function MyAction(context) {
-      context.monkeyPatchFn();
-    });
-
-    const requestHandler = bot.createRequestHandler();
-
-    await requestHandler(body);
-
-    expect(monkeyPatchFn).toBeCalled();
-  });
-});
-
 describe('#onEvent', () => {
   it('should return this', () => {
     const { bot } = setup();
