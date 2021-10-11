@@ -19,7 +19,7 @@ describe('messenger', () => {
       allowUnknown: true,
     });
 
-    expect(validateResult.error).toBeNull();
+    expect(validateResult.error).toBeUndefined();
   });
 
   it('should check too many menu items', () => {
@@ -90,18 +90,18 @@ describe('messenger', () => {
       allowUnknown: true,
     });
 
-    expect(validateResult.error).not.toBeNull();
+    expect(validateResult.error).not.toBeUndefined();
 
     const { message, type } = validateResult.error.details[0];
     const errorPath = validateResult.error.details[0].path.join('.');
 
     expect(message).toBe(
-      '"callToActions" must contain less than or equal to 3 items'
+      '"profile.persistentMenu[0].callToActions" must contain less than or equal to 3 items'
     );
     expect(type).toBe('array.max');
     expect(errorPath).toBe('profile.persistentMenu.0.callToActions');
     expect(validateResult.error.message).toBe(
-      'child "profile" fails because [child "persistentMenu" fails because ["persistentMenu" at position 0 fails because [child "callToActions" fails because ["callToActions" must contain less than or equal to 3 items]]]]'
+      '"profile.persistentMenu[0].callToActions" must contain less than or equal to 3 items'
     );
   });
 });
@@ -121,7 +121,7 @@ describe('line', () => {
       allowUnknown: true,
     });
 
-    expect(validateResult.error).toBeNull();
+    expect(validateResult.error).toBeUndefined();
   });
 });
 
@@ -139,7 +139,7 @@ describe('telegram', () => {
       allowUnknown: true,
     });
 
-    expect(validateResult.error).toBeNull();
+    expect(validateResult.error).toBeUndefined();
   });
 });
 
@@ -157,7 +157,7 @@ describe('slack', () => {
       allowUnknown: true,
     });
 
-    expect(validateResult.error).toBeNull();
+    expect(validateResult.error).toBeUndefined();
   });
 });
 
@@ -178,6 +178,6 @@ describe('viber', () => {
       allowUnknown: true,
     });
 
-    expect(validateResult.error).toBeNull();
+    expect(validateResult.error).toBeUndefined();
   });
 });
