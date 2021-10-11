@@ -1,3 +1,41 @@
+# 1.5.4 / 2021-10-11
+
+## line
+
+- [deprecated] add deprecated warning to the following methods:
+
+- `context.useAccessToken`
+- `context.replyButtonTemplate`
+- `context.push`
+- `context.pushText`
+- `context.pushImage`
+- `context.pushVideo`
+- `context.pushAudio`
+- `context.pushLocation`
+- `context.pushSticker`
+- `context.pushImagemap`
+- `context.pushFlex`
+- `context.pushTemplate`
+- `context.pushButtonTemplate`
+- `context.pushButtonsTemplate`
+- `context.pushConfirmTemplate`
+- `context.pushCarouselTemplate`
+- `context.pushImageCarouselTemplate`
+- `context.send`
+- `context.sendImage`
+- `context.sendVideo`
+- `context.sendAudio`
+- `context.sendLocation`
+- `context.sendSticker`
+- `context.sendImagemap`
+- `context.sendFlex`
+- `context.sendTemplate`
+- `context.sendButtonTemplate`
+- `context.sendButtonsTemplate`
+- `context.sendConfirmTemplate`
+- `context.sendCarouselTemplate`
+- `context.sendImageCarouselTemplate`
+
 # 1.5.3 / 2021-10-05
 
 - [deps] remove `prompt-confirm`.
