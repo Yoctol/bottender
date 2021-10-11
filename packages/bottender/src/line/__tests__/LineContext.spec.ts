@@ -1622,7 +1622,6 @@ describe('batch', () => {
         text: '6',
       },
     ]);
-    expect(warning).not.toBeCalled();
   });
 
   it('should not batch after handlerDidEnd has been called', async () => {
