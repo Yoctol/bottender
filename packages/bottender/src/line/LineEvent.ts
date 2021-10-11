@@ -471,32 +471,6 @@ export default class LineEvent implements Event<LineRawEvent> {
   }
 
   /**
-   * Determine if the event is a device link event.
-   *
-   */
-  get isDeviceLink(): boolean {
-    warning(
-      false,
-      '`event.isDeviceLink` is deprecated. Use `event.isThingsLink` instead.'
-    );
-
-    return this.isThingsLink;
-  }
-
-  /**
-   * Determine if the event is a device unlink event.
-   *
-   */
-  get isDeviceUnlink(): boolean {
-    warning(
-      false,
-      '`event.isDeviceUnlink` is deprecated. Use `event.isThingsUnlink` instead.'
-    );
-
-    return this.isThingsUnlink;
-  }
-
-  /**
    * The things object from LINE raw event.
    *
    */

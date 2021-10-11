@@ -1091,38 +1091,6 @@ it('#isThingsUnlink', () => {
   expect(new LineEvent(thingsScenarioResult).isThingsUnlink).toEqual(false);
 });
 
-it('#isDeviceLink', () => {
-  expect(new LineEvent(textMessage).isDeviceLink).toEqual(false);
-  expect(new LineEvent(follow).isDeviceLink).toEqual(false);
-  expect(new LineEvent(unfollow).isDeviceLink).toEqual(false);
-  expect(new LineEvent(join).isDeviceLink).toEqual(false);
-  expect(new LineEvent(leave).isDeviceLink).toEqual(false);
-  expect(new LineEvent(postback).isDeviceLink).toEqual(false);
-  expect(new LineEvent(beacon).isDeviceLink).toEqual(false);
-  expect(new LineEvent(accountLink).isDeviceLink).toEqual(false);
-  expect(new LineEvent(memberJoined).isDeviceLink).toEqual(false);
-  expect(new LineEvent(memberLeft).isDeviceLink).toEqual(false);
-  expect(new LineEvent(thingsLink).isDeviceLink).toEqual(true);
-  expect(new LineEvent(thingsUnlink).isDeviceLink).toEqual(false);
-  expect(new LineEvent(thingsScenarioResult).isDeviceLink).toEqual(false);
-});
-
-it('#isDeviceUnlink', () => {
-  expect(new LineEvent(textMessage).isDeviceUnlink).toEqual(false);
-  expect(new LineEvent(follow).isDeviceUnlink).toEqual(false);
-  expect(new LineEvent(unfollow).isDeviceUnlink).toEqual(false);
-  expect(new LineEvent(join).isDeviceUnlink).toEqual(false);
-  expect(new LineEvent(leave).isDeviceUnlink).toEqual(false);
-  expect(new LineEvent(postback).isDeviceUnlink).toEqual(false);
-  expect(new LineEvent(beacon).isDeviceUnlink).toEqual(false);
-  expect(new LineEvent(accountLink).isDeviceUnlink).toEqual(false);
-  expect(new LineEvent(memberJoined).isDeviceUnlink).toEqual(false);
-  expect(new LineEvent(memberLeft).isDeviceUnlink).toEqual(false);
-  expect(new LineEvent(thingsLink).isDeviceUnlink).toEqual(false);
-  expect(new LineEvent(thingsUnlink).isDeviceUnlink).toEqual(true);
-  expect(new LineEvent(thingsScenarioResult).isDeviceUnlink).toEqual(false);
-});
-
 it('#things', () => {
   expect(new LineEvent(textMessage).things).toEqual(null);
   expect(new LineEvent(follow).things).toEqual(null);
