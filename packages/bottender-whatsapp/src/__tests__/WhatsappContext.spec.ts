@@ -1,4 +1,5 @@
-import Context from '../../context/Context';
+import { Context } from '@bottender/core';
+
 import TwilioClient from '../TwilioClient';
 import WhatsappContext from '../WhatsappContext';
 import WhatsappEvent from '../WhatsappEvent';

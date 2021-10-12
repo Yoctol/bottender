@@ -5,9 +5,5 @@
     "rootDir": "./src"
   },
   "include": ["src/**/*"],
-  "exclude": ["**/__tests__"],
-  "references": [
-    { "path": "../bottender-express" },
-    { "path": "../bottender-whatsapp" }
-  ]
+  "exclude": ["**/__tests__"]
 }

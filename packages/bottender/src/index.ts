@@ -4,7 +4,6 @@ import * as MessengerTypes from './messenger/MessengerTypes';
 import * as SlackTypes from './slack/SlackTypes';
 import * as TelegramTypes from './telegram/TelegramTypes';
 import * as ViberTypes from './viber/ViberTypes';
-import * as WhatsappTypes from './whatsapp/WhatsappTypes';
 
 export { bottender };
 
@@ -50,11 +49,13 @@ export {
 export { MessengerTypes };
 
 /* WhatsApp */
-export { default as WhatsappConnector } from './whatsapp/WhatsappConnector';
-export { default as WhatsappContext } from './whatsapp/WhatsappContext';
-export { default as WhatsappEvent } from './whatsapp/WhatsappEvent';
-export { default as TwilioClient } from './whatsapp/TwilioClient';
-export { WhatsappTypes };
+export {
+  WhatsappConnector,
+  WhatsappContext,
+  WhatsappEvent,
+  TwilioClient,
+  WhatsappTypes,
+} from '@bottender/whatsapp';
 
 /* LINE */
 export { default as LineConnector } from './line/LineConnector';

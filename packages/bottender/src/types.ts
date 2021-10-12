@@ -1,6 +1,7 @@
 import { IncomingHttpHeaders } from 'http';
 
 import { JsonObject } from 'type-fest';
+import { WhatsappTypes } from '@bottender/whatsapp';
 
 import Bot, { OnRequest } from './bot/Bot';
 import Context from './context/Context';
@@ -11,7 +12,6 @@ import { MessengerConnectorOptions } from './messenger/MessengerConnector';
 import { SlackConnectorOptions } from './slack/SlackConnector';
 import { TelegramConnectorOptions } from './telegram/TelegramConnector';
 import { ViberConnectorOptions } from './viber/ViberConnector';
-import { WhatsappConnectorOptions } from './whatsapp/WhatsappConnector';
 
 export type Action<
   C extends Context,
@@ -87,7 +87,8 @@ export type BottenderConfig = {
         telegram?: TelegramConnectorOptions & ChannelCommonConfig;
         slack?: SlackConnectorOptions & ChannelCommonConfig;
         viber?: ViberConnectorOptions & ChannelCommonConfig;
-        whatsapp?: WhatsappConnectorOptions & ChannelCommonConfig;
+        // TODO: extend from @bottender/whatsapp
+        whatsapp?: WhatsappTypes.WhatsappConnectorOptions & ChannelCommonConfig;
       }
     | {
         [key in Exclude<

@@ -1,9 +1,8 @@
-import Context from '../../context/Context';
+import { Context, router, run } from '@bottender/core';
+
 import WhatsappContext from '../WhatsappContext';
 import WhatsappEvent from '../WhatsappEvent';
-import router from '../../router';
 import whatsapp from '../routes';
-import { run } from '../../bot/Bot';
 
 const whatsappEventTextMessageReceived = new WhatsappEvent({
   smsMessageSid: 'SM7cd85aed706d25735d1c8019234XXXXX',

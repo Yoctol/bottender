@@ -1,13 +1,7 @@
 import { JsonObject } from 'type-fest';
-import { routes as whatsapp } from '@bottender/whatsapp';
 
-import Context from '../context/Context';
-import line from '../line/routes';
-import messenger from '../messenger/routes';
-import slack from '../slack/routes';
-import telegram from '../telegram/routes';
-import viber from '../viber/routes';
-import { Action, Props } from '../types';
+import Context from './Context';
+import { Action, Props } from './types';
 
 type MatchPattern = string | Array<string> | RegExp;
 
@@ -190,16 +184,4 @@ function platform<C extends Context>(
 
 export default router;
 
-export {
-  router,
-  route,
-  text,
-  payload,
-  platform,
-  line,
-  messenger,
-  slack,
-  telegram,
-  viber,
-  whatsapp,
-};
+export { router, route, text, payload, platform };

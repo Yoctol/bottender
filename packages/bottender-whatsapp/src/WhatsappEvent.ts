@@ -1,4 +1,4 @@
-import { Event } from '../context/Event';
+import { Event } from '@bottender/core';
 
 import {
   MediaMessageReceived,
@@ -36,8 +36,8 @@ export default class WhatsappEvent implements Event<WhatsappRawEvent> {
    * The message object from Messenger raw event.
    *
    */
-  get message(): MessageReceived | null {
-    return this.isMessage ? (this._rawEvent as MessageReceived) : null;
+  get message(): MessageReceived | undefined {
+    return this.isMessage ? (this._rawEvent as MessageReceived) : undefined;
   }
 
   /**
@@ -54,8 +54,8 @@ export default class WhatsappEvent implements Event<WhatsappRawEvent> {
    * The text string from Messenger raw event.
    *
    */
-  get text(): string | null {
-    return (this._rawEvent as MessageReceived).body || null;
+  get text(): string | undefined {
+    return (this._rawEvent as MessageReceived).body ?? undefined;
   }
 
   /**
@@ -72,8 +72,8 @@ export default class WhatsappEvent implements Event<WhatsappRawEvent> {
    * The media object from Messenger raw event.
    *
    */
-  get media(): { contentType: string; url: string } | null {
-    if (!this.isMedia) return null;
+  get media(): { contentType: string; url: string } | undefined {
+    if (!this.isMedia) return;
 
     const rawEvent = this._rawEvent as MediaMessageReceived;
 
@@ -95,8 +95,8 @@ export default class WhatsappEvent implements Event<WhatsappRawEvent> {
    * The received object from WhatsApp raw event.
    *
    */
-  get received(): MessageReceived | null {
-    return this.isReceived ? (this._rawEvent as MessageReceived) : null;
+  get received(): MessageReceived | undefined {
+    return this.isReceived ? (this._rawEvent as MessageReceived) : undefined;
   }
 
   /**
@@ -111,8 +111,8 @@ export default class WhatsappEvent implements Event<WhatsappRawEvent> {
    * The sent object from WhatsApp raw event.
    *
    */
-  get sent(): MessageSent | null {
-    return this.isSent ? (this._rawEvent as MessageSent) : null;
+  get sent(): MessageSent | undefined {
+    return this.isSent ? (this._rawEvent as MessageSent) : undefined;
   }
 
   /**
@@ -127,8 +127,8 @@ export default class WhatsappEvent implements Event<WhatsappRawEvent> {
    * The delivered object from WhatsApp raw event.
    *
    */
-  get delivered(): MessageDelivered | null {
-    return this.isDelivered ? (this._rawEvent as MessageDelivered) : null;
+  get delivered(): MessageDelivered | undefined {
+    return this.isDelivered ? (this._rawEvent as MessageDelivered) : undefined;
   }
 
   /**
@@ -143,7 +143,7 @@ export default class WhatsappEvent implements Event<WhatsappRawEvent> {
    * The read object from WhatsApp raw event.
    *
    */
-  get read(): MessageRead | null {
-    return this.isRead ? (this._rawEvent as MessageRead) : null;
+  get read(): MessageRead | undefined {
+    return this.isRead ? (this._rawEvent as MessageRead) : undefined;
   }
 }
