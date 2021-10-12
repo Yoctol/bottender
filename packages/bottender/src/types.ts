@@ -1,6 +1,7 @@
 import { IncomingHttpHeaders } from 'http';
 
 import { JsonObject } from 'type-fest';
+import { ViberTypes } from '@bottender/viber';
 import { WhatsappTypes } from '@bottender/whatsapp';
 
 import Bot, { OnRequest } from './bot/Bot';
@@ -11,7 +12,6 @@ import { LineConnectorOptions } from './line/LineConnector';
 import { MessengerConnectorOptions } from './messenger/MessengerConnector';
 import { SlackConnectorOptions } from './slack/SlackConnector';
 import { TelegramConnectorOptions } from './telegram/TelegramConnector';
-import { ViberConnectorOptions } from './viber/ViberConnector';
 
 export type Action<
   C extends Context,
@@ -77,7 +77,7 @@ type ChannelCommonConfig = {
   onRequest?: OnRequest;
 };
 
-export type BottenderConfig = {
+export interface BottenderConfig {
   session?: SessionConfig;
   initialState?: JsonObject;
   channels?:
@@ -86,8 +86,8 @@ export type BottenderConfig = {
         line?: LineConnectorOptions & ChannelCommonConfig;
         telegram?: TelegramConnectorOptions & ChannelCommonConfig;
         slack?: SlackConnectorOptions & ChannelCommonConfig;
-        viber?: ViberConnectorOptions & ChannelCommonConfig;
-        // TODO: extend from @bottender/whatsapp
+        // TODO: extend from @bottender/*
+        viber?: ViberTypes.ViberConnectorOptions & ChannelCommonConfig;
         whatsapp?: WhatsappTypes.WhatsappConnectorOptions & ChannelCommonConfig;
       }
     | {
@@ -98,7 +98,7 @@ export type BottenderConfig = {
           connector: Connector<any, any>;
         } & ChannelCommonConfig;
       };
-};
+}
 
 export type RequestContext<
   B extends JsonObject = JsonObject,

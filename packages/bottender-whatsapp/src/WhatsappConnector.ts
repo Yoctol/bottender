@@ -7,23 +7,11 @@ import { JsonObject } from 'type-fest';
 import TwilioClient from './TwilioClient';
 import WhatsappContext from './WhatsappContext';
 import WhatsappEvent from './WhatsappEvent';
-import { WhatsappRequestBody, WhatsappRequestContext } from './WhatsappTypes';
-
-type ConnectorOptionsWithoutClient = {
-  accountSid: string;
-  authToken: string;
-  phoneNumber: string;
-  origin?: string;
-};
-
-type ConnectorOptionsWithClient = {
-  client: TwilioClient;
-  origin?: string;
-};
-
-export type WhatsappConnectorOptions =
-  | ConnectorOptionsWithoutClient
-  | ConnectorOptionsWithClient;
+import {
+  WhatsappConnectorOptions,
+  WhatsappRequestBody,
+  WhatsappRequestContext,
+} from './WhatsappTypes';
 
 function getExpectedTwilioSignature(
   authToken: string,
@@ -41,7 +29,7 @@ function getExpectedTwilioSignature(
 }
 
 export default class WhatsappConnector
-  implements Connector<WhatsappRequestBody, TwilioClient>
+  implements Connector<WhatsappRequestBody, TwilioClient, WhatsappEvent>
 {
   _client: TwilioClient;
 

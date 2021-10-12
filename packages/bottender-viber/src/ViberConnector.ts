@@ -2,11 +2,9 @@ import crypto from 'crypto';
 import { EventEmitter } from 'events';
 
 import invariant from 'invariant';
+import { Connector, Session } from '@bottender/core';
 import { JsonObject } from 'type-fest';
 import { ViberClient } from 'messaging-api-viber';
-
-import Session from '../session/Session';
-import { Connector } from '../bot/Connector';
 
 import ViberContext from './ViberContext';
 import ViberEvent from './ViberEvent';
@@ -32,7 +30,7 @@ export type ViberConnectorOptions =
   | ConnectorOptionsWithClient;
 
 export default class ViberConnector
-  implements Connector<ViberRequestBody, ViberClient>
+  implements Connector<ViberRequestBody, ViberClient, ViberEvent>
 {
   _accessToken: string;
 
@@ -132,10 +130,10 @@ export default class ViberConnector
 
   createContext(params: {
     event: ViberEvent;
-    session: Session | null;
-    initialState?: JsonObject | null;
+    session: Session | undefined;
+    initialState?: JsonObject | undefined;
     requestContext?: ViberRequestContext;
-    emitter?: EventEmitter | null;
+    emitter?: EventEmitter | undefined;
   }): ViberContext {
     return new ViberContext({
       ...params,

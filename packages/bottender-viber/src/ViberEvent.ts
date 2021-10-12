@@ -1,4 +1,4 @@
-import { Event } from '../context/Event';
+import { Event } from '@bottender/core';
 
 import {
   ConversationStartedEvent,
@@ -47,11 +47,11 @@ export default class ViberEvent implements Event<ViberRawEvent> {
    * The message object from Viber raw event.
    *
    */
-  get message(): ViberMessage | null {
-    if (this.isMessage) {
-      return (this._rawEvent as MessageEvent).message;
+  get message(): ViberMessage | undefined {
+    if (!this.isMessage) {
+      return;
     }
-    return null;
+    return (this._rawEvent as MessageEvent).message;
   }
 
   /**
@@ -66,11 +66,11 @@ export default class ViberEvent implements Event<ViberRawEvent> {
    * The text string from Viber raw event.
    *
    */
-  get text(): string | null {
-    if (this.isMessage) {
-      return (this.message as ViberMessage).text || null;
+  get text(): string | undefined {
+    if (!this.isMessage) {
+      return;
     }
-    return null;
+    return (this.message as ViberMessage).text;
   }
 
   /**
@@ -85,11 +85,11 @@ export default class ViberEvent implements Event<ViberRawEvent> {
    * The picture URL from Viber raw event.
    *
    */
-  get picture(): string | null {
-    if (this.isPicture) {
-      return (this.message as ViberMessage).media || null;
+  get picture(): string | undefined {
+    if (!this.isPicture) {
+      return;
     }
-    return null;
+    return (this.message as ViberMessage).media;
   }
 
   /**
@@ -104,11 +104,11 @@ export default class ViberEvent implements Event<ViberRawEvent> {
    * The video URL from Viber raw event.
    *
    */
-  get video(): string | null {
-    if (this.isVideo) {
-      return (this.message as ViberMessage).media || null;
+  get video(): string | undefined {
+    if (!this.isVideo) {
+      return;
     }
-    return null;
+    return (this.message as ViberMessage).media;
   }
 
   /**
@@ -116,20 +116,18 @@ export default class ViberEvent implements Event<ViberRawEvent> {
    *
    */
   get isFile(): boolean {
-    return (
-      this.isMessage && (this.message as any as ViberMessage).type === 'file'
-    );
+    return this.isMessage && (this.message as ViberMessage).type === 'file';
   }
 
   /**
    * The file URL from Viber raw event.
    *
    */
-  get file(): string | null {
-    if (this.isFile) {
-      return (this.message as ViberMessage).media || null;
+  get file(): string | undefined {
+    if (!this.isFile) {
+      return;
     }
-    return null;
+    return (this.message as ViberMessage).media;
   }
 
   /**
@@ -144,11 +142,11 @@ export default class ViberEvent implements Event<ViberRawEvent> {
    * The sticker id from Viber raw event.
    *
    */
-  get sticker(): number | null {
-    if (this.isSticker) {
-      return (this.message as ViberMessage).stickerId || null;
+  get sticker(): number | undefined {
+    if (!this.isSticker) {
+      return;
     }
-    return null;
+    return (this.message as ViberMessage).stickerId;
   }
 
   /**
@@ -163,11 +161,11 @@ export default class ViberEvent implements Event<ViberRawEvent> {
    * The contact object from Viber raw event.
    *
    */
-  get contact(): Record<string, any> | null {
-    if (this.isContact) {
-      return (this.message as ViberMessage).contact || null;
+  get contact(): ViberMessage['contact'] | undefined {
+    if (!this.isContact) {
+      return;
     }
-    return null;
+    return (this.message as ViberMessage).contact;
   }
 
   /**
@@ -182,11 +180,11 @@ export default class ViberEvent implements Event<ViberRawEvent> {
    * The URL from Viber raw event.
    *
    */
-  get url(): string | null {
-    if (this.isURL) {
-      return (this.message as ViberMessage).media || null;
+  get url(): string | undefined {
+    if (!this.isURL) {
+      return;
     }
-    return null;
+    return (this.message as ViberMessage).media;
   }
 
   /**
@@ -201,11 +199,11 @@ export default class ViberEvent implements Event<ViberRawEvent> {
    * The location object from Viber raw event.
    *
    */
-  get location(): Record<string, any> | null {
-    if (this.isLocation) {
-      return (this.message as ViberMessage).location || null;
+  get location(): ViberMessage['location'] | undefined {
+    if (!this.isLocation) {
+      return;
     }
-    return null;
+    return (this.message as ViberMessage).location;
   }
 
   /**
@@ -220,11 +218,11 @@ export default class ViberEvent implements Event<ViberRawEvent> {
    * The subscribed payload from Viber raw event.
    *
    */
-  get subscribed(): SubscribedEvent | null {
-    if (this.isSubscribed) {
-      return this._rawEvent as any;
+  get subscribed(): SubscribedEvent | undefined {
+    if (!this.isSubscribed) {
+      return;
     }
-    return null;
+    return this._rawEvent as SubscribedEvent;
   }
 
   /**
@@ -239,11 +237,11 @@ export default class ViberEvent implements Event<ViberRawEvent> {
    * The unsubscribed payload from Viber raw event.
    *
    */
-  get unsubscribed(): UnsubscribedEvent | null {
-    if (this.isUnsubscribed) {
-      return this._rawEvent as any;
+  get unsubscribed(): UnsubscribedEvent | undefined {
+    if (!this.isUnsubscribed) {
+      return;
     }
-    return null;
+    return this._rawEvent as UnsubscribedEvent;
   }
 
   /**
@@ -258,11 +256,11 @@ export default class ViberEvent implements Event<ViberRawEvent> {
    * The conversation started payload from Viber raw event.
    *
    */
-  get conversationStarted(): ConversationStartedEvent | null {
-    if (this.isConversationStarted) {
-      return this._rawEvent as any;
+  get conversationStarted(): ConversationStartedEvent | undefined {
+    if (!this.isConversationStarted) {
+      return;
     }
-    return null;
+    return this._rawEvent as ConversationStartedEvent;
   }
 
   /**
@@ -277,11 +275,11 @@ export default class ViberEvent implements Event<ViberRawEvent> {
    * The delivered payload from Viber raw event.
    *
    */
-  get delivered(): DeliveredEvent | null {
-    if (this.isDelivered) {
-      return this._rawEvent as any;
+  get delivered(): DeliveredEvent | undefined {
+    if (!this.isDelivered) {
+      return;
     }
-    return null;
+    return this._rawEvent as DeliveredEvent;
   }
 
   /**
@@ -296,11 +294,11 @@ export default class ViberEvent implements Event<ViberRawEvent> {
    * The seen payload from Viber raw event.
    *
    */
-  get seen(): SeenEvent | null {
-    if (this.isSeen) {
-      return this._rawEvent as any;
+  get seen(): SeenEvent | undefined {
+    if (!this.isSeen) {
+      return;
     }
-    return null;
+    return this._rawEvent as SeenEvent;
   }
 
   /**
@@ -315,10 +313,10 @@ export default class ViberEvent implements Event<ViberRawEvent> {
    * The failed payload from Viber raw event.
    *
    */
-  get failed(): FailedEvent | null {
-    if (this.isFailed) {
-      return this._rawEvent as any;
+  get failed(): FailedEvent | undefined {
+    if (!this.isFailed) {
+      return;
     }
-    return null;
+    return this._rawEvent as FailedEvent;
   }
 }
