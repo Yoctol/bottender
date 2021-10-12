@@ -1,4 +1,4 @@
-import CacheStore from '../cache/CacheStore';
+import { CacheStore } from '@bottender/core';
 
 import Session from './Session';
 import SessionStore from './SessionStore';

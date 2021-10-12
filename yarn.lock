@@ -619,10 +619,20 @@
     type-fest "^1.4.0"
     warning "^4.0.3"
 
+"@bottender/express@file:packages/bottender-express":
+  version "1.5.1"
+  dependencies:
+    "@types/body-parser" "^1.19.0"
+    "@types/express" "^4.17.2"
+    "@types/lodash" "^4.14.149"
+    body-parser "^1.19.0"
+    express "^4.17.1"
+    lodash "^4.17.15"
+
 "@bottender/whatsapp@file:packages/bottender-whatsapp":
   version "1.5.4"
   dependencies:
-    "@bottender/core" "file:../../../Library/Caches/Yarn/v6/npm-@bottender-whatsapp-1.5.4-ee47255f-8e65-46d9-a542-38c7ec0ca803-1634016779172/node_modules/@bottender/bottender-core"
+    "@bottender/core" "file:../../../Library/Caches/Yarn/v6/npm-@bottender-whatsapp-1.5.4-b2d861e3-691f-4d92-9fa7-3dfd6604c8a8-1634029755322/node_modules/@bottender/bottender-core"
     axios "^0.21.0"
     axios-error "^1.0.4"
     lodash "^4.17.21"

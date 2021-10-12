@@ -1,7 +1,6 @@
 import LRU from 'lru-cache';
 import cloneDeep from 'lodash/cloneDeep';
-
-import CacheStore, { CacheValue } from './CacheStore';
+import { CacheStore, CacheValue } from '@bottender/core';
 
 export default class MemoryCacheStore implements CacheStore {
   _lru: LRU<string, any>;

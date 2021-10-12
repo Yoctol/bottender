@@ -1,7 +1,6 @@
 import IORedis from 'ioredis';
 import isNumber from 'lodash/isNumber';
-
-import CacheStore, { CacheValue } from './CacheStore';
+import { CacheStore, CacheValue } from '@bottender/core';
 
 export default class RedisCacheStore implements CacheStore {
   _redis: IORedis.Redis;

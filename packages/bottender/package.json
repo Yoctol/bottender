@@ -23,7 +23,8 @@
   ],
   "types": "dist/index.d.ts",
   "dependencies": {
-    "@bottender/express": "^1.5.1",
+    "@bottender/core": "file:../bottender-core",
+    "@bottender/express": "file:../bottender-express",
     "@bottender/whatsapp": "file:../bottender-whatsapp",
     "@types/debug": "^4.1.7",
     "@types/express": "4.17.2",
