@@ -11,7 +11,7 @@ function setup(options = {}) {
   const sessions = {
     findOne: jest.fn(),
     updateOne: jest.fn(),
-    remove: jest.fn(),
+    deleteOne: jest.fn(),
   };
   const connection = {
     collection: jest.fn(() => sessions),
@@ -76,19 +76,19 @@ describe('#read', () => {
     });
   });
 
-  it('should return null when document not found', async () => {
+  it('should return undefined when document not found', async () => {
     const { store, sessions } = setup();
     sessions.findOne.mockResolvedValue(null);
 
     await store.init();
 
-    expect(await store.read('messenger:1')).toBeNull();
+    expect(await store.read('messenger:1')).toBeUndefined();
     expect(sessions.findOne).toBeCalledWith({
       id: 'messenger:1',
     });
   });
 
-  it('should return null when seesion expires', async () => {
+  it('should return undefined when seesion expires', async () => {
     const { store, sessions } = setup();
     const sess = {
       lastActivity: subMinutes(Date.now(), MINUTES_IN_ONE_YEAR + 1),
@@ -97,24 +97,21 @@ describe('#read', () => {
 
     await store.init();
 
-    expect(await store.read('messenger:1')).toBeNull();
+    expect(await store.read('messenger:1')).toBeUndefined();
     expect(sessions.findOne).toBeCalledWith({
       id: 'messenger:1',
     });
   });
 
-  it('should log Error when call read before init', async () => {
-    console.error = jest.fn();
+  it('should throw Error when calling read before init', async () => {
     const { store, sessions } = setup();
     const sess = {
       lastActivity: subMinutes(Date.now(), MINUTES_IN_ONE_YEAR + 1),
     };
     sessions.findOne.mockResolvedValue(sess);
 
-    await store.read('messenger:1');
-
-    expect(console.error).toBeCalledWith(
-      Error('MongoSessionStore: must call `init` before any operation.')
+    await expect(store.read('messenger:1')).rejects.toThrowError(
+      'MongoSessionStore: must call `init` before any operation.'
     );
   });
 });
@@ -154,42 +151,38 @@ describe('#write', () => {
     );
   });
 
-  it('should log Error when call write before init', async () => {
+  it('should throw Error when calling write before init', async () => {
     console.error = jest.fn();
     const { store, sessions } = setup();
     const sess = {};
     sessions.updateOne.mockResolvedValue();
 
-    await store.write('messenger:1', sess);
-
-    expect(console.error).toBeCalledWith(
-      Error('MongoSessionStore: must call `init` before any operation.')
+    await expect(store.write('messenger:1', sess)).rejects.toThrowError(
+      'MongoSessionStore: must call `init` before any operation.'
     );
   });
 });
 
 describe('#destroy', () => {
-  it('should call remove with platform and id', async () => {
+  it('should call deleteOne with platform and id', async () => {
     const { store, sessions } = setup();
-    sessions.remove.mockResolvedValue();
+    sessions.deleteOne.mockResolvedValue();
 
     await store.init();
     await store.destroy('messenger:1');
 
-    expect(sessions.remove).toBeCalledWith({
+    expect(sessions.deleteOne).toBeCalledWith({
       id: 'messenger:1',
     });
   });
 
-  it('should log Error when call destroy before init', async () => {
+  it('should throw Error when calling destroy before init', async () => {
     console.error = jest.fn();
     const { store, sessions } = setup();
-    sessions.remove.mockResolvedValue();
+    sessions.deleteOne.mockResolvedValue();
 
-    await store.destroy('messenger:1');
-
-    expect(console.error).toBeCalledWith(
-      Error('MongoSessionStore: must call `init` before any operation.')
+    await expect(store.destroy('messenger:1')).rejects.toThrowError(
+      'MongoSessionStore: must call `init` before any operation.'
     );
   });
 });

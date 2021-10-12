@@ -1,36 +1,66 @@
-import { CacheStore } from '@bottender/core';
-
-import Session from './Session';
-import SessionStore from './SessionStore';
+import { CacheStore, Session, SessionStore } from '@bottender/core';
 
 export default class CacheBasedSessionStore implements SessionStore {
-  _cache: CacheStore;
+  private cache: CacheStore<Session>;
 
   // The number of minutes to store the data in the session.
-  _expiresIn: number;
+  private expiresIn: number;
 
-  constructor(cache: CacheStore, expiresIn?: number) {
-    this._cache = cache;
-    this._expiresIn = expiresIn || 0;
+  /**
+   * Create a cache-based session store.
+   *
+   * @param cache - a cache store implementation
+   * @param expiresIn - the number of minutes to store the data in the session
+   */
+  constructor(cache: CacheStore<Session>, expiresIn?: number) {
+    this.cache = cache;
+    this.expiresIn = expiresIn ?? 0;
   }
 
-  async init(): Promise<CacheBasedSessionStore> {
+  /**
+   * Initialize the session store.
+   *
+   * @returns the session store
+   */
+  public async init(): Promise<CacheBasedSessionStore> {
     return this;
   }
 
-  async read(key: string): Promise<Session | null> {
-    return this._cache.get(key) as Promise<Session | null>;
+  /**
+   * Read the session data from the session storage, and returns the results.
+   *
+   * @param key - session key
+   * @returns the session data or undefined
+   */
+  public async read(key: string): Promise<Session | undefined> {
+    return this.cache.get(key);
   }
 
-  async all(): Promise<Session[]> {
-    return this._cache.all() as Promise<Session[]>;
+  /**
+   * Get all of the session data.
+   *
+   * @returns all of the session data
+   */
+  public async all(): Promise<Session[]> {
+    return this.cache.all();
   }
 
-  async write(key: string, sess: Session): Promise<void> {
-    return this._cache.put(key, sess, this._expiresIn);
+  /**
+   * Replace the given session attributes entirely.
+   *
+   * @param key - session key
+   * @param sess - the session attributes
+   */
+  public async write(key: string, sess: Session): Promise<void> {
+    return this.cache.put(key, sess, this.expiresIn);
   }
 
-  async destroy(key: string): Promise<void> {
-    return this._cache.forget(key);
+  /**
+   * Remove an item from the session storage.
+   *
+   * @param key - session key
+   */
+  public async destroy(key: string): Promise<void> {
+    return this.cache.forget(key);
   }
 }

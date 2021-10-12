@@ -2,10 +2,22 @@ import IORedis from 'ioredis';
 import isNumber from 'lodash/isNumber';
 import { CacheStore, CacheValue } from '@bottender/core';
 
-export default class RedisCacheStore implements CacheStore {
+export default class RedisCacheStore<T extends CacheValue = CacheValue>
+  implements CacheStore<T>
+{
   private redis: IORedis.Redis;
 
   private prefix = '';
+
+  /**
+   * Create a Redis cache store.
+   *
+   * @example
+   * ```js
+   * new RedisCacheStore()   // 127.0.0.1:6379
+   * ```
+   */
+  constructor();
 
   /**
    * Create a Redis cache store.
@@ -17,7 +29,7 @@ export default class RedisCacheStore implements CacheStore {
    * new RedisCacheStore(6379, '192.168.1.1')        // 192.168.1.1:6379
    * ```
    */
-  constructor(port?: number, host?: string, options?: IORedis.RedisOptions);
+  constructor(port: number, host?: string, options?: IORedis.RedisOptions);
 
   /**
    * Create a Redis cache store.
@@ -30,7 +42,7 @@ export default class RedisCacheStore implements CacheStore {
    * new RedisCacheStore('redis://:authpassword@127.0.0.1:6380/4')
    * ```
    */
-  constructor(host?: string, options?: IORedis.RedisOptions);
+  constructor(host: string, options?: IORedis.RedisOptions);
 
   /**
    * Create a Redis cache store.
@@ -47,7 +59,7 @@ export default class RedisCacheStore implements CacheStore {
    * })
    * ```
    */
-  constructor(options?: IORedis.RedisOptions);
+  constructor(options: IORedis.RedisOptions);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   constructor(...args: any[]) {
@@ -59,7 +71,7 @@ export default class RedisCacheStore implements CacheStore {
    *
    * @param key - cache key
    */
-  public async get(key: string): Promise<CacheValue | undefined> {
+  public async get(key: string): Promise<T | undefined> {
     const val = await this.redis.get(`${this.prefix}${key}`);
     if (!val) {
       return;
@@ -72,7 +84,7 @@ export default class RedisCacheStore implements CacheStore {
    *
    * @returns all of the cache data
    */
-  public async all(): Promise<CacheValue[]> {
+  public async all(): Promise<T[]> {
     let [cursor, keys] = await this.redis.scan(0);
 
     while (cursor !== '0') {
@@ -98,11 +110,7 @@ export default class RedisCacheStore implements CacheStore {
    * @param value - cache value
    * @param minutes - minutes to cache
    */
-  public async put(
-    key: string,
-    value: CacheValue,
-    minutes: number
-  ): Promise<void> {
+  public async put(key: string, value: T, minutes: number): Promise<void> {
     if (minutes) {
       await this.redis.setex(
         `${this.prefix}${key}`,
@@ -157,11 +165,11 @@ export default class RedisCacheStore implements CacheStore {
     this.prefix = prefix ? `${prefix}:` : '';
   }
 
-  private serialize(value: CacheValue): number | string {
+  private serialize(value: T): number | string {
     return isNumber(value) ? value : JSON.stringify(value);
   }
 
-  private unserialize(value: number | string): CacheValue {
+  private unserialize(value: number | string): T {
     return isNumber(value) ? value : JSON.parse(value);
   }
 }

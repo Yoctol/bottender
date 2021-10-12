@@ -3,9 +3,7 @@ import os from 'os';
 import JFSStore, { Instance } from 'jfs';
 import isBefore from 'date-fns/isBefore';
 import subMinutes from 'date-fns/subMinutes';
-
-import Session from './Session';
-import SessionStore from './SessionStore';
+import { Session, SessionStore } from '@bottender/core';
 
 type FileOption =
   | string
@@ -13,79 +11,105 @@ type FileOption =
       dirname?: string;
     };
 
-function getDirname(arg: FileOption): string | void {
+function getDirname(arg: FileOption): string | undefined {
   if (typeof arg === 'string') {
     return arg;
   }
 
-  if (arg && typeof arg === 'object') {
+  if (typeof arg === 'object') {
     return arg.dirname;
   }
 }
 
 export default class FileSessionStore implements SessionStore {
-  _jfs: Instance<Record<string, any>>;
+  private jfs: Instance<Record<string, Session>>;
 
   // The number of minutes to store the data in the session.
-  _expiresIn: number;
+  private expiresIn: number;
 
+  /**
+   * Create a file-based session store.
+   *
+   * @param arg - the file options
+   * @param expiresIn - the number of minutes to store the data in the session
+   */
   constructor(arg: FileOption, expiresIn?: number) {
-    this._expiresIn = expiresIn || 0;
+    this.expiresIn = expiresIn ?? 0;
 
-    const dirname = getDirname(arg) || '.sessions';
+    const dirname = getDirname(arg) ?? '.sessions';
 
-    const jfs = new JFSStore(dirname);
+    const jfs = new JFSStore<Record<string, Session>>(dirname);
 
-    this._jfs = jfs;
+    this.jfs = jfs;
   }
 
-  async init(): Promise<FileSessionStore> {
+  /**
+   * Initialize the session store.
+   *
+   * @returns the session store
+   */
+  public async init(): Promise<FileSessionStore> {
     return this;
   }
 
-  async read(key: string): Promise<Session | null> {
+  /**
+   * Read the session data from the session storage, and returns the results.
+   *
+   * @param key - session key
+   * @returns the session data or undefined
+   */
+  public async read(key: string): Promise<Session | undefined> {
     const safeKey = os.platform() === 'win32' ? key.replace(':', '@') : key;
 
-    try {
-      const session: Session | null = await new Promise((resolve, reject) => {
-        this._jfs.get(safeKey, (err, obj) => {
+    const session: Session | undefined = await new Promise(
+      (resolve, reject) => {
+        this.jfs.get(safeKey, (err, obj) => {
           if (err) {
             reject(err);
           } else {
             resolve(obj);
           }
         });
-      });
-
-      if (session && this._expired(session)) {
-        return null;
       }
+    );
 
-      return session;
-    } catch (err) {
-      return null;
+    if (session && this.expired(session)) {
+      return;
     }
+
+    return session;
   }
 
-  all(): Promise<Session[]> {
+  /**
+   * Get all of the session data.
+   *
+   * @returns all of the session data
+   */
+  public all(): Promise<Session[]> {
     return new Promise((resolve, reject) => {
-      this._jfs.all((err, objs) => {
+      this.jfs.all((err, objs) => {
         if (err) {
           reject(err);
         } else {
-          resolve(objs as Session[]);
+          resolve(objs ? Object.values(objs) : []);
         }
       });
     });
   }
 
-  async write(key: string, sess: Session): Promise<void> {
+  /**
+   * Replace the given session attributes entirely.
+   *
+   * @param key - session key
+   * @param sess - the session attributes
+   */
+  public async write(key: string, sess: Session): Promise<void> {
     const safeKey = os.platform() === 'win32' ? key.replace(':', '@') : key;
 
     sess.lastActivity = Date.now();
 
-    await new Promise((resolve, reject) => {
-      this._jfs.save(safeKey, sess, (err) => {
+    await new Promise<void>((resolve, reject) => {
+      this.jfs.save(safeKey, sess, (err) => {
         if (err) {
           reject(err);
         } else {
@@ -95,11 +119,16 @@ export default class FileSessionStore implements SessionStore {
     });
   }
 
-  async destroy(key: string): Promise<void> {
+  /**
+   * Remove an item from the session storage.
+   *
+   * @param key - session key
+   */
+  public async destroy(key: string): Promise<void> {
     const safeKey = os.platform() === 'win32' ? key.replace(':', '@') : key;
 
     return new Promise((resolve, reject) => {
-      this._jfs.delete(safeKey, (err) => {
+      this.jfs.delete(safeKey, (err) => {
         if (err) {
           reject(err);
         } else {
@@ -109,18 +138,18 @@ export default class FileSessionStore implements SessionStore {
     });
   }
 
-  getJFS(): Instance<Record<string, any>> {
-    return this._jfs;
+  public getJFS(): Instance<Record<string, Session>> {
+    return this.jfs;
   }
 
-  _expired(sess: Session): boolean {
-    if (!this._expiresIn) {
+  private expired(sess: Session): boolean {
+    if (!this.expiresIn) {
       return false;
     }
 
     return (
       sess.lastActivity !== undefined &&
-      isBefore(sess.lastActivity, subMinutes(Date.now(), this._expiresIn))
+      isBefore(sess.lastActivity, subMinutes(Date.now(), this.expiresIn))
     );
   }
 }

@@ -1,6 +1,7 @@
 import os from 'os';
 
 import subMinutes from 'date-fns/subMinutes';
+import { mocked } from 'ts-jest/utils';
 
 import FileSessionStore from '../FileSessionStore';
 
@@ -41,22 +42,9 @@ describe('#read', () => {
     const { store, jfs } = setup();
     await store.init();
 
-    jfs.get.mockImplementation((_, cb) => cb(null, { x: 1 }));
+    mocked(jfs).get.mockImplementation((_, cb) => cb(null, { x: 1 }));
 
     expect(await store.read('yoctol:1')).toEqual({ x: 1 });
-    expect(jfs.get).toBeCalledWith(
-      `yoctol${KEY_SEPARATOR}1`,
-      expect.any(Function)
-    );
-  });
-
-  it('should return null when jfs throw error', async () => {
-    const { store, jfs } = setup();
-    await store.init();
-
-    jfs.get.mockImplementation((_, cb) => cb(new Error()));
-
-    expect(await store.read('yoctol:1')).toBeNull();
     expect(jfs.get).toBeCalledWith(
       `yoctol${KEY_SEPARATOR}1`,
       expect.any(Function)
@@ -68,9 +56,9 @@ describe('#read', () => {
     await store.init();
 
     const sess = { lastActivity: subMinutes(Date.now(), expiresIn + 1) };
-    jfs.get.mockImplementation((_, cb) => cb(null, sess));
+    mocked(jfs).get.mockImplementation((_, cb) => cb(null, sess));
 
-    expect(await store.read('yoctol:1')).toBeNull();
+    expect(await store.read('yoctol:1')).toBeUndefined();
     expect(jfs.get).toBeCalledWith(
       `yoctol${KEY_SEPARATOR}1`,
       expect.any(Function)
@@ -83,7 +71,9 @@ describe('#all', () => {
     const { store, jfs } = setup();
     await store.init();
 
-    jfs.all.mockImplementation((cb) => cb(null, [{ id: 1 }, { id: 2 }]));
+    mocked(jfs).all.mockImplementation((cb) =>
+      cb(null, [{ id: 1 }, { id: 2 }])
+    );
 
     expect(await store.all()).toEqual([{ id: 1 }, { id: 2 }]);
     expect(jfs.all).toBeCalledWith(expect.any(Function));
@@ -93,7 +83,7 @@ describe('#all', () => {
     const { store, jfs } = setup();
     await store.init();
 
-    jfs.all.mockImplementation((cb) => cb(null, []));
+    mocked(jfs).all.mockImplementation((cb) => cb(null, []));
 
     expect(await store.all()).toEqual([]);
     expect(jfs.all).toBeCalledWith(expect.any(Function));
@@ -105,7 +95,7 @@ describe('#write', () => {
     const { store, jfs } = setup();
     await store.init();
 
-    jfs.save.mockImplementation((_, __, cb) => cb(null));
+    mocked(jfs).save.mockImplementation((_, __, cb) => cb(null));
 
     const sess = { x: 1 };
 
@@ -124,7 +114,7 @@ describe('#destroy', () => {
     const { store, jfs } = setup();
     await store.init();
 
-    jfs.delete.mockImplementation((_, cb) => cb(null));
+    mocked(jfs).delete.mockImplementation((_, cb) => cb(null));
 
     await store.destroy('yoctol:1');
 

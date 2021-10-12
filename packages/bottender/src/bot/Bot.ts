@@ -29,8 +29,8 @@ const debugAction = debug('bottender:action');
 const MINUTES_IN_ONE_YEAR = 365 * 24 * 60;
 
 function createMemorySessionStore(): SessionStore {
-  const cache = new MemoryCacheStore(500);
-  return new CacheBasedSessionStore(cache, MINUTES_IN_ONE_YEAR);
+  const cache = new MemoryCacheStore<any>(500);
+  return new CacheBasedSessionStore(cache, MINUTES_IN_ONE_YEAR) as any;
 }
 
 export function run<C extends Context>(action: Action<C, any>): Action<C, any> {
