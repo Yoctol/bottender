@@ -3,88 +3,165 @@ import isNumber from 'lodash/isNumber';
 import { CacheStore, CacheValue } from '@bottender/core';
 
 export default class RedisCacheStore implements CacheStore {
-  _redis: IORedis.Redis;
+  private redis: IORedis.Redis;
 
-  _prefix = '';
+  private prefix = '';
 
-  /*
-    Support all of args supported by `ioredis`:
-    - new Redis()       // Connect to 127.0.0.1:6379
-    - new Redis(6380)   // 127.0.0.1:6380
-    - new Redis(6379, '192.168.1.1')        // 192.168.1.1:6379
-    - new Redis('/tmp/redis.sock')
-    - new Redis({
-        port: 6379,          // Redis port
-        host: '127.0.0.1',   // Redis host
-        family: 4,           // 4 (IPv4) or 6 (IPv6)
-        password: 'auth',
-        db: 0
-      })
-    // Connect to 127.0.0.1:6380, db 4, using password "authpassword"
-    - new Redis('redis://:authpassword@127.0.0.1:6380/4')
-  */
-  constructor(...args: any) {
-    this._redis = new IORedis(...args);
+  /**
+   * Create a Redis cache store.
+   *
+   * @param options - the Redis options
+   * @example
+   * ```js
+   * new RedisCacheStore(6380)   // 127.0.0.1:6380
+   * new RedisCacheStore(6379, '192.168.1.1')        // 192.168.1.1:6379
+   * ```
+   */
+  constructor(port?: number, host?: string, options?: IORedis.RedisOptions);
+
+  /**
+   * Create a Redis cache store.
+   *
+   * @param options - the Redis options
+   * @example
+   * ```js
+   * new RedisCacheStore('/tmp/redis.sock')
+   * // Connect to 127.0.0.1:6380, db 4, using password "authpassword"
+   * new RedisCacheStore('redis://:authpassword@127.0.0.1:6380/4')
+   * ```
+   */
+  constructor(host?: string, options?: IORedis.RedisOptions);
+
+  /**
+   * Create a Redis cache store.
+   *
+   * @param options - the Redis options
+   * @example
+   * ```js
+   * new RedisCacheStore({
+   *   port: 6379,          // Redis port
+   *   host: '127.0.0.1',   // Redis host
+   *   family: 4,           // 4 (IPv4) or 6 (IPv6)
+   *   password: 'auth',
+   *   db: 0,
+   * })
+   * ```
+   */
+  constructor(options?: IORedis.RedisOptions);
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  constructor(...args: any[]) {
+    this.redis = new IORedis(...args);
   }
 
-  async get(key: string): Promise<CacheValue | null> {
-    const val = await this._redis.get(`${this._prefix}${key}`);
-    if (val) {
-      return this._unserialize(val);
+  /**
+   * Retrieve an item from the cache by key.
+   *
+   * @param key - cache key
+   */
+  public async get(key: string): Promise<CacheValue | undefined> {
+    const val = await this.redis.get(`${this.prefix}${key}`);
+    if (!val) {
+      return;
     }
-    return null;
+    return this.unserialize(val);
   }
 
-  async all(): Promise<CacheValue[]> {
-    let [cursor, keys] = await this._redis.scan(0);
+  /**
+   * Get all of the cache data.
+   *
+   * @returns all of the cache data
+   */
+  public async all(): Promise<CacheValue[]> {
+    let [cursor, keys] = await this.redis.scan(0);
 
     while (cursor !== '0') {
       /* eslint-disable no-await-in-loop */
-      const [nextCursor, newkeys] = await this._redis.scan(Number(cursor));
+      const [nextCursor, newkeys] = await this.redis.scan(Number(cursor));
       cursor = nextCursor;
       keys = keys.concat(newkeys);
     }
 
-    return this._redis.mget(...keys) as any;
+    const values = await this.redis.mget(...keys);
+
+    if (!values) return [];
+
+    return values
+      .filter((val): val is string => val !== null)
+      .map((val) => this.unserialize(val));
   }
 
-  async put(key: string, value: CacheValue, minutes: number): Promise<void> {
+  /**
+   * Store an item in the cache for a given number of seconds.
+   *
+   * @param key - cache key
+   * @param value - cache value
+   * @param minutes - minutes to cache
+   */
+  public async put(
+    key: string,
+    value: CacheValue,
+    minutes: number
+  ): Promise<void> {
     if (minutes) {
-      await this._redis.setex(
-        `${this._prefix}${key}`,
+      await this.redis.setex(
+        `${this.prefix}${key}`,
         minutes * 60,
-        this._serialize(value)
+        this.serialize(value)
       );
     } else {
-      await this._redis.set(`${this._prefix}${key}`, this._serialize(value));
+      await this.redis.set(`${this.prefix}${key}`, this.serialize(value));
     }
   }
 
-  async forget(key: string): Promise<void> {
-    await this._redis.del(`${this._prefix}${key}`);
+  /**
+   * Remove an item from the Redis.
+   *
+   * @param key - cache key
+   */
+  public async forget(key: string): Promise<void> {
+    await this.redis.del(`${this.prefix}${key}`);
   }
 
-  async flush(): Promise<void> {
-    await this._redis.flushdb();
+  /**
+   * Remove all items from the Redis.
+   */
+  public async flush(): Promise<void> {
+    await this.redis.flushdb();
   }
 
-  getRedis(): IORedis.Redis {
-    return this._redis;
+  /**
+   * Get the underlying Redis instance.
+   *
+   * @returns ioredis instance
+   */
+  public getRedis(): IORedis.Redis {
+    return this.redis;
   }
 
-  getPrefix(): string {
-    return this._prefix;
+  /**
+   * Get the cache key prefix.
+   *
+   * @returns the cache key prefix
+   */
+  public getPrefix(): string {
+    return this.prefix;
   }
 
-  setPrefix(prefix: string): void {
-    this._prefix = prefix ? `${prefix}:` : '';
+  /**
+   * Set the cache key prefix.
+   *
+   * @param prefix - the cache key prefix
+   */
+  public setPrefix(prefix: string): void {
+    this.prefix = prefix ? `${prefix}:` : '';
   }
 
-  _serialize(value: CacheValue): number | string {
+  private serialize(value: CacheValue): number | string {
     return isNumber(value) ? value : JSON.stringify(value);
   }
 
-  _unserialize(value: number | string): CacheValue {
+  private unserialize(value: number | string): CacheValue {
     return isNumber(value) ? value : JSON.parse(value);
   }
 }

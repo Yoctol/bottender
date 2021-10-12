@@ -1,4 +1,5 @@
 import Redis from 'ioredis';
+import { mocked } from 'ts-jest/utils';
 
 import RedisCacheStore from '../RedisCacheStore';
 
@@ -58,7 +59,7 @@ describe('#get', () => {
     const store = new RedisCacheStore();
     const redis = store.getRedis();
 
-    redis.get.mockResolvedValueOnce('{"aaa":456}');
+    mocked(redis).get.mockResolvedValueOnce('{"aaa":456}');
 
     expect(await store.get('123')).toEqual({ aaa: 456 });
     expect(redis.get).toBeCalledWith('123');
@@ -68,9 +69,9 @@ describe('#get', () => {
     const store = new RedisCacheStore();
     const redis = store.getRedis();
 
-    redis.get.mockResolvedValueOnce(null);
+    mocked(redis).get.mockResolvedValueOnce(null);
 
-    expect(await store.get('123')).toBeNull();
+    expect(await store.get('123')).toBeUndefined();
     expect(redis.get).toBeCalledWith('123');
   });
 });
@@ -80,8 +81,8 @@ describe('#all', () => {
     const store = new RedisCacheStore();
     const redis = store.getRedis();
 
-    redis.scan.mockResolvedValueOnce(['0', ['key1', 'key2']]);
-    redis.mget.mockResolvedValueOnce([{ id: 1 }, { id: 2 }]);
+    mocked(redis).scan.mockResolvedValueOnce(['0', ['key1', 'key2']]);
+    mocked(redis).mget.mockResolvedValueOnce(['{"id": 1 }', '{"id": 2 }']);
 
     const result = await store.all();
 
@@ -93,8 +94,8 @@ describe('#all', () => {
     const store = new RedisCacheStore();
     const redis = store.getRedis();
 
-    redis.scan
-      .mockResolvedValueOnce(['4', ['key1', 'key2', 'key3', 'key4']])
+    mocked(redis)
+      .scan.mockResolvedValueOnce(['4', ['key1', 'key2', 'key3', 'key4']])
       .mockResolvedValueOnce(['0', ['key5', 'key6', 'key7', 'key8']]);
 
     await store.all();

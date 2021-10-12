@@ -3,46 +3,97 @@ import cloneDeep from 'lodash/cloneDeep';
 import { CacheStore, CacheValue } from '@bottender/core';
 
 export default class MemoryCacheStore implements CacheStore {
-  _lru: LRU<string, any>;
+  private lru: LRU<string, CacheValue>;
 
-  constructor(max?: number) {
-    this._lru = new LRU({ max });
+  /**
+   * Create a memory cache store.
+   *
+   * @param max - the maximum size of the cache
+   */
+  constructor(max?: number);
+
+  /**
+   * Create a memory cache store.
+   *
+   * @param options - the LRU options
+   */
+  constructor(options?: LRU.Options<string, CacheValue>);
+
+  constructor(maxOrOptions?: number | LRU.Options<string, CacheValue>) {
+    this.lru =
+      typeof maxOrOptions === 'number'
+        ? new LRU({ max: maxOrOptions })
+        : new LRU(maxOrOptions);
   }
 
-  async get(key: string): Promise<CacheValue | null> {
-    const _value = this._lru.get(key);
+  /**
+   * Retrieve an item from the cache by key.
+   *
+   * @param key - cache key
+   */
+  public async get(key: string): Promise<CacheValue | undefined> {
+    const _value = this.lru.get(key);
 
     // cloneDeep: To make sure read as different object to prevent
     // reading same key multiple times, causing freezed by other events.
     const value = typeof _value === 'object' ? cloneDeep(_value) : _value;
 
-    return value || null;
+    return value;
   }
 
-  async all(): Promise<CacheValue[]> {
-    return this._lru.values();
+  /**
+   * Get all of the cache data.
+   *
+   * @returns all of the cache data
+   */
+  public async all(): Promise<CacheValue[]> {
+    return this.lru.values();
   }
 
-  async put(key: string, value: CacheValue, minutes: number): Promise<void> {
+  /**
+   * Store an item in the cache for a given number of seconds.
+   *
+   * @param key - cache key
+   * @param value - cache value
+   * @param minutes - minutes to cache
+   */
+  public async put(
+    key: string,
+    value: CacheValue,
+    minutes: number
+  ): Promise<void> {
     // cloneDeep: To make sure save as writable object
     const val = value && typeof value === 'object' ? cloneDeep(value) : value;
 
     if (minutes) {
-      this._lru.set(key, val, minutes * 60 * 1000);
+      this.lru.set(key, val, minutes * 60 * 1000);
     } else {
-      this._lru.set(key, val);
+      this.lru.set(key, val);
     }
   }
 
-  async forget(key: string): Promise<void> {
-    this._lru.del(key);
+  /**
+   * Remove an item from the cache storage.
+   *
+   * @param key - cache key
+   */
+  public async forget(key: string): Promise<void> {
+    this.lru.del(key);
   }
 
-  async flush(): Promise<void> {
-    this._lru.reset();
+  /**
+   * Remove all items from the cache storage.
+   */
+  public async flush(): Promise<void> {
+    this.lru.reset();
   }
 
-  getPrefix(): string {
+  /**
+   * Get the cache key prefix.
+   *
+   * @returns the cache key prefix
+   */
+  public getPrefix(): string {
     return '';
   }
 }
