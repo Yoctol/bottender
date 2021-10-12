@@ -1,6 +1,6 @@
 import { JsonObject } from 'type-fest';
 
-export type CacheValue = number | JsonObject;
+export type CacheValue = number | string | JsonObject;
 
 export default interface CacheStore<T extends CacheValue = CacheValue> {
   /**
@@ -12,6 +12,8 @@ export default interface CacheStore<T extends CacheValue = CacheValue> {
 
   /**
    * Get all of the cache data.
+   *
+   * @returns all of the cache data
    */
   all(): Promise<T[]>;
 

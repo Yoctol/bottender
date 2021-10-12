@@ -24,7 +24,7 @@ describe('#get', () => {
   it('should get null when value does not exist', async () => {
     const store = new MemoryCacheStore(5);
 
-    expect(await store.get('x')).toBeNull();
+    expect(await store.get('x')).toBeUndefined();
   });
 });
 
@@ -62,7 +62,7 @@ describe('#put', () => {
     const now = Date.now();
     Date.now = jest.fn(() => now + 6 * 60 * 1000);
 
-    expect(await store.get('x')).toBeNull();
+    expect(await store.get('x')).toBeUndefined();
     Date.now = _now;
   });
 
@@ -124,7 +124,7 @@ describe('#forget', () => {
     await store.put('y', 2, 5);
     await store.forget('x');
 
-    expect(await store.get('x')).toBeNull();
+    expect(await store.get('x')).toBeUndefined();
     expect(await store.get('y')).toBe(2);
   });
 });
@@ -137,8 +137,8 @@ describe('#flush', () => {
     await store.put('y', 2, 5);
     await store.flush();
 
-    expect(await store.get('x')).toBeNull();
-    expect(await store.get('y')).toBeNull();
+    expect(await store.get('x')).toBeUndefined();
+    expect(await store.get('y')).toBeUndefined();
   });
 });
 
