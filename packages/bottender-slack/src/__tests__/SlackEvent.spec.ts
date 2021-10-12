@@ -1,18 +1,19 @@
 import MockDate from 'mockdate';
 
 import SlackEvent from '../SlackEvent';
+import { SlackRawEvent } from '../SlackTypes';
 
-const appUninstalled = {
+const appUninstalled: SlackRawEvent = {
   type: 'app_uninstalled',
 };
 
-const channelArchive = {
+const channelArchive: SlackRawEvent = {
   type: 'channel_archive',
   channel: 'C024BE91L',
   user: 'U024BE7LH',
 };
 
-const channelCreated = {
+const channelCreated: SlackRawEvent = {
   type: 'channel_created',
   channel: {
     id: 'C024BE91L',
@@ -22,19 +23,19 @@ const channelCreated = {
   },
 };
 
-const channelDeleted = {
+const channelDeleted: SlackRawEvent = {
   type: 'channel_deleted',
   channel: 'C024BE91L',
 };
 
-const channelHistoryChanged = {
+const channelHistoryChanged: SlackRawEvent = {
   type: 'channel_history_changed',
   latest: '1358877455.000010',
   ts: '1361482916.000003',
   eventTs: '1361482916.000004',
 };
 
-const channelRename = {
+const channelRename: SlackRawEvent = {
   type: 'channel_rename',
   channel: {
     id: 'C02ELGNBH',
@@ -43,13 +44,13 @@ const channelRename = {
   },
 };
 
-const channelUnarchive = {
+const channelUnarchive: SlackRawEvent = {
   type: 'channel_unarchive',
   channel: 'C024BE91L',
   user: 'U024BE7LH',
 };
 
-const dndUpdated = {
+const dndUpdated: SlackRawEvent = {
   type: 'dnd_updated',
   user: 'U1234',
   dndStatus: {
@@ -61,7 +62,7 @@ const dndUpdated = {
   },
 };
 
-const dndUpdatedUser = {
+const dndUpdatedUser: SlackRawEvent = {
   type: 'dnd_updated_user',
   user: 'U1234',
   dndStatus: {
@@ -71,20 +72,20 @@ const dndUpdatedUser = {
   },
 };
 
-const emailDomainChanged = {
+const emailDomainChanged: SlackRawEvent = {
   type: 'email_domain_changed',
   emailDomain: 'example.com',
   eventTs: '1360782804.083113',
 };
 
-const emojiChanged = {
+const emojiChanged: SlackRawEvent = {
   type: 'emoji_changed',
   subtype: 'remove',
   names: ['picard_facepalm'],
   eventTs: '1361482916.000004',
 };
 
-const fileChange = {
+const fileChange: SlackRawEvent = {
   type: 'file_change',
   fileId: 'F2147483862',
   file: {
@@ -92,7 +93,7 @@ const fileChange = {
   },
 };
 
-const fileCommentAdded = {
+const fileCommentAdded: SlackRawEvent = {
   type: 'file_comment_added',
   comment: {},
   fileId: 'F2147483862',
@@ -101,7 +102,7 @@ const fileCommentAdded = {
   },
 };
 
-const fileCommentDeleted = {
+const fileCommentDeleted: SlackRawEvent = {
   type: 'file_comment_deleted',
   comment: 'Fc67890',
   fileId: 'F2147483862',
@@ -110,7 +111,7 @@ const fileCommentDeleted = {
   },
 };
 
-const fileCommentEdited = {
+const fileCommentEdited: SlackRawEvent = {
   type: 'file_comment_edited',
   comment: {},
   fileId: 'F2147483862',
@@ -119,7 +120,7 @@ const fileCommentEdited = {
   },
 };
 
-const fileCreated = {
+const fileCreated: SlackRawEvent = {
   type: 'file_created',
   fileId: 'F2147483862',
   file: {
@@ -127,13 +128,13 @@ const fileCreated = {
   },
 };
 
-const fileDeleted = {
+const fileDeleted: SlackRawEvent = {
   type: 'file_deleted',
   fileId: 'F2147483862',
   eventTs: '1361482916.000004',
 };
 
-const filePublic = {
+const filePublic: SlackRawEvent = {
   type: 'file_public',
   fileId: 'F2147483862',
   file: {
@@ -141,7 +142,7 @@ const filePublic = {
   },
 };
 
-const fileShared = {
+const fileShared: SlackRawEvent = {
   type: 'file_shared',
   fileId: 'F2147483862',
   file: {
@@ -149,7 +150,7 @@ const fileShared = {
   },
 };
 
-const fileUnshared = {
+const fileUnshared: SlackRawEvent = {
   type: 'file_unshared',
   fileId: 'F2147483862',
   file: {
@@ -157,41 +158,41 @@ const fileUnshared = {
   },
 };
 
-const gridMigrationFinished = {
+const gridMigrationFinished: SlackRawEvent = {
   type: 'grid_migration_finished',
   enterpriseId: 'EXXXXXXXX',
 };
 
-const gridMigrationStarted = {
+const gridMigrationStarted: SlackRawEvent = {
   type: 'grid_migration_started',
   enterpriseId: 'EXXXXXXXX',
 };
 
-const groupArchive = {
+const groupArchive: SlackRawEvent = {
   type: 'group_archive',
   channel: 'G024BE91L',
 };
 
-const groupClose = {
+const groupClose: SlackRawEvent = {
   type: 'group_close',
   user: 'U024BE7LH',
   channel: 'G024BE91L',
 };
 
-const groupHistoryChanged = {
+const groupHistoryChanged: SlackRawEvent = {
   type: 'group_history_changed',
   latest: '1358877455.000010',
   ts: '1361482916.000003',
   eventTs: '1361482916.000004',
 };
 
-const groupOpen = {
+const groupOpen: SlackRawEvent = {
   type: 'group_open',
   user: 'U024BE7LH',
   channel: 'G024BE91L',
 };
 
-const groupRename = {
+const groupRename: SlackRawEvent = {
   type: 'group_rename',
   channel: {
     id: 'G02ELGNBH',
@@ -200,37 +201,37 @@ const groupRename = {
   },
 };
 
-const groupUnarchive = {
+const groupUnarchive: SlackRawEvent = {
   type: 'group_unarchive',
   channel: 'G024BE91L',
 };
 
-const imClose = {
+const imClose: SlackRawEvent = {
   type: 'im_close',
   user: 'U024BE7LH',
   channel: 'D024BE91L',
 };
 
-const imCreated = {
+const imCreated: SlackRawEvent = {
   type: 'im_created',
   user: 'U024BE7LH',
   channel: {},
 };
 
-const imHistoryChanged = {
+const imHistoryChanged: SlackRawEvent = {
   type: 'im_history_changed',
   latest: '1358877455.000010',
   ts: '1361482916.000003',
   eventTs: '1361482916.000004',
 };
 
-const imOpen = {
+const imOpen: SlackRawEvent = {
   type: 'im_open',
   user: 'U024BE7LH',
   channel: 'D024BE91L',
 };
 
-const linkShared = {
+const linkShared: SlackRawEvent = {
   type: 'link_shared',
   channel: 'Cxxxxxx',
   user: 'Uxxxxxxx',
@@ -251,7 +252,7 @@ const linkShared = {
   ],
 };
 
-const memberJoinedChannel = {
+const memberJoinedChannel: SlackRawEvent = {
   type: 'member_joined_channel',
   user: 'W06GH7XHN',
   channel: 'C0698JE0H',
@@ -259,14 +260,14 @@ const memberJoinedChannel = {
   inviter: 'U123456789',
 };
 
-const memberLeftChannel = {
+const memberLeftChannel: SlackRawEvent = {
   type: 'member_left_channel',
   user: 'W06GH7XHN',
   channel: 'C0698JE0H',
   channelType: 'C',
 };
 
-const message = {
+const message: SlackRawEvent = {
   type: 'message',
   channel: 'C2147483705',
   user: 'U2147483697',
@@ -274,7 +275,7 @@ const message = {
   ts: '1355517523.000005',
 };
 
-const botMessage = {
+const botMessage: SlackRawEvent = {
   type: 'message',
   subtype: 'bot_message',
   ts: '1358877455.000010',
@@ -284,7 +285,7 @@ const botMessage = {
   icons: {},
 };
 
-const channelsMessage = {
+const channelsMessage: SlackRawEvent = {
   type: 'message',
   channel: 'C2147483705',
   user: 'U2147483697',
@@ -292,7 +293,7 @@ const channelsMessage = {
   ts: '1355517523.000005',
 };
 
-const groupsMessage = {
+const groupsMessage: SlackRawEvent = {
   type: 'message',
   channel: 'G024BE91L',
   user: 'U2147483697',
@@ -300,7 +301,7 @@ const groupsMessage = {
   ts: '1355517523.000005',
 };
 
-const imMessage = {
+const imMessage: SlackRawEvent = {
   type: 'message',
   channel: 'D024BE91L',
   user: 'U2147483697',
@@ -308,7 +309,7 @@ const imMessage = {
   ts: '1355517523.000005',
 };
 
-const mpimMessage = {
+const mpimMessage: SlackRawEvent = {
   type: 'message',
   channel: 'G024BE91L',
   user: 'U2147483697',
@@ -316,7 +317,7 @@ const mpimMessage = {
   ts: '1355517523.000005',
 };
 
-const pinAdded = {
+const pinAdded: SlackRawEvent = {
   type: 'pin_added',
   user: 'U024BE7LH',
   channelId: 'C02ELGNBH',
@@ -324,7 +325,7 @@ const pinAdded = {
   eventTs: '1360782804.083113',
 };
 
-const pinRemoved = {
+const pinRemoved: SlackRawEvent = {
   type: 'pin_removed',
   user: 'U024BE7LH',
   channelId: 'C02ELGNBH',
@@ -333,7 +334,7 @@ const pinRemoved = {
   eventTs: '1360782804.083113',
 };
 
-const reactionAdded = {
+const reactionAdded: SlackRawEvent = {
   type: 'reaction_added',
   user: 'U024BE7LH',
   reaction: 'thumbsup',
@@ -342,7 +343,7 @@ const reactionAdded = {
   eventTs: '1360782804.083113',
 };
 
-const reactionRemoved = {
+const reactionRemoved: SlackRawEvent = {
   type: 'reaction_removed',
   user: 'U024BE7LH',
   reaction: 'thumbsup',
@@ -351,21 +352,21 @@ const reactionRemoved = {
   eventTs: '1360782804.083113',
 };
 
-const starAdded = {
+const starAdded: SlackRawEvent = {
   type: 'star_added',
   user: 'U024BE7LH',
   item: {},
   eventTs: '1360782804.083113',
 };
 
-const starRemoved = {
+const starRemoved: SlackRawEvent = {
   type: 'star_removed',
   user: 'U024BE7LH',
   item: {},
   eventTs: '1360782804.083113',
 };
 
-const subteamCreated = {
+const subteamCreated: SlackRawEvent = {
   type: 'subteam_created',
   subteam: {
     id: 'S0615G0KT',
@@ -390,7 +391,7 @@ const subteamCreated = {
   },
 };
 
-const subteamMembersChanged = {
+const subteamMembersChanged: SlackRawEvent = {
   type: 'subteam_members_changed',
   subteamId: 'S0614TZR7',
   teamId: 'T060RNRCH',
@@ -402,17 +403,17 @@ const subteamMembersChanged = {
   removedUsersCount: '1',
 };
 
-const subteamSelfAdded = {
+const subteamSelfAdded: SlackRawEvent = {
   type: 'subteam_self_added',
   subteamId: 'S0615G0KT',
 };
 
-const subteamSelfRemoved = {
+const subteamSelfRemoved: SlackRawEvent = {
   type: 'subteam_self_removed',
   subteamId: 'S0615G0KT',
 };
 
-const subteamUpdated = {
+const subteamUpdated: SlackRawEvent = {
   type: 'subteam_updated',
   subteam: {
     id: 'S0614TZR7',
@@ -438,23 +439,23 @@ const subteamUpdated = {
   },
 };
 
-const teamDomainChange = {
+const teamDomainChange: SlackRawEvent = {
   type: 'team_domain_change',
   url: 'https://my.slack.com',
   domain: 'my',
 };
 
-const teamJoin = {
+const teamJoin: SlackRawEvent = {
   type: 'team_join',
   user: {},
 };
 
-const teamRename = {
+const teamRename: SlackRawEvent = {
   type: 'team_rename',
   name: 'New Team Name Inc.',
 };
 
-const tokensRevoked = {
+const tokensRevoked: SlackRawEvent = {
   type: 'tokens_revoked',
   tokens: {
     oauth: ['UXXXXXXXX'],
@@ -462,18 +463,18 @@ const tokensRevoked = {
   },
 };
 
-const urlVerification = {
+const urlVerification: SlackRawEvent = {
   token: 'Jhj5dZrVaK7ZwHHjRyZWjbDl',
   challenge: '3eZbrw1aBm2rZgRNFdxV2595E9CY3gmdALWMmHkvFXO7tYXAYM8P',
   type: 'url_verification',
 };
 
-const userChange = {
+const userChange: SlackRawEvent = {
   type: 'user_change',
   user: {},
 };
 
-const interactiveMessageEvent = {
+const interactiveMessageEvent: SlackRawEvent = {
   type: 'interactive_message',
   actions: [
     {
@@ -553,7 +554,7 @@ const interactiveMessageEvent = {
   triggerId: '274927463524.5223114719.95a5b9f6d3b30dc7e07dec6bfa4610e5',
 };
 
-const slashCommandMessageEvent = {
+const slashCommandMessageEvent: SlackRawEvent = {
   token: 'xxxxxxxxxxxxxxxxxxxxxxxx',
   teamId: 'T056K0000',
   teamDomain: 'domain',
@@ -568,7 +569,7 @@ const slashCommandMessageEvent = {
   triggerId: '300680200000.5223100000.e4f5ce4d607d59005675000000000000',
 };
 
-const slashCommandMessageEventWithoutArguments = {
+const slashCommandMessageEventWithoutArguments: SlackRawEvent = {
   token: 'xxxxxxxxxxxxxxxxxxxxxxxx',
   teamId: 'T056K0000',
   teamDomain: 'domain',
@@ -809,7 +810,7 @@ it('#isText', () => {
 
 it('#text', () => {
   expect(new SlackEvent(message).text).toEqual('Hello world');
-  expect(new SlackEvent(interactiveMessageEvent).text).toEqual(null);
+  expect(new SlackEvent(interactiveMessageEvent).text).toBeUndefined();
   expect(new SlackEvent(slashCommandMessageEvent).text).toEqual('arguments');
   expect(new SlackEvent(slashCommandMessageEventWithoutArguments).text).toEqual(
     ''
@@ -824,12 +825,12 @@ it('#message', () => {
     type: 'message',
     user: 'U2147483697',
   });
-  expect(new SlackEvent({ type: 'notMessage' }).message).toBeNull();
-  expect(new SlackEvent(interactiveMessageEvent).message).toBeNull();
-  expect(new SlackEvent(slashCommandMessageEvent).message).toBeNull();
+  expect(new SlackEvent({ type: 'notMessage' }).message).toBeUndefined();
+  expect(new SlackEvent(interactiveMessageEvent).message).toBeUndefined();
+  expect(new SlackEvent(slashCommandMessageEvent).message).toBeUndefined();
   expect(
     new SlackEvent(slashCommandMessageEventWithoutArguments).message
-  ).toBeNull();
+  ).toBeUndefined();
 });
 
 it('#isChannelsMessage', () => {
@@ -951,7 +952,7 @@ describe('interactive message event', () => {
     expect(new SlackEvent(interactiveMessageEvent).callbackId).toEqual(
       'wopr_game'
     );
-    expect(new SlackEvent(message).callbackId).toEqual(null);
+    expect(new SlackEvent(message).callbackId).toBeUndefined();
   });
 
   it('#action', () => {
@@ -960,7 +961,7 @@ describe('interactive message event', () => {
       type: 'button',
       value: 'chess',
     });
-    expect(new SlackEvent(message).action).toEqual(null);
+    expect(new SlackEvent(message).action).toBeUndefined();
   });
 });
 
@@ -985,6 +986,6 @@ describe('slash command event', () => {
     expect(
       new SlackEvent(slashCommandMessageEventWithoutArguments).command
     ).toEqual('/command');
-    expect(new SlackEvent(message).command).toEqual(null);
+    expect(new SlackEvent(message).command).toBeUndefined();
   });
 });

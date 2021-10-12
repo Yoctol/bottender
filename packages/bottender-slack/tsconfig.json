@@ -7,10 +7,6 @@
   "include": ["src/**/*"],
   "exclude": ["**/__tests__"],
   "references": [
-    { "path": "../bottender-core" },
-    { "path": "../bottender-express" },
-    { "path": "../bottender-slack" },
-    { "path": "../bottender-viber" },
-    { "path": "../bottender-whatsapp" }
+    { "path": "../bottender-core" }
   ]
 }

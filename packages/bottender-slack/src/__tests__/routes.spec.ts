@@ -1,9 +1,8 @@
-import Context from '../../context/Context';
+import { Context, router, run } from '@bottender/core';
+
 import SlackContext from '../SlackContext';
 import SlackEvent from '../SlackEvent';
-import router from '../../router';
 import slack from '../routes';
-import { run } from '../../bot/Bot';
 
 const slackEventTextMessage = new SlackEvent({
   type: 'message',

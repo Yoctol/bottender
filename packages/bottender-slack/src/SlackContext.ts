@@ -1,12 +1,9 @@
 import { EventEmitter } from 'events';
 
 import warning from 'warning';
+import { Context, RequestContext, Session } from '@bottender/core';
 import { JsonObject } from 'type-fest';
 import { SlackOAuthClient, SlackTypes } from 'messaging-api-slack';
-
-import Context from '../context/Context';
-import Session from '../session/Session';
-import { RequestContext } from '../types';
 
 import SlackEvent from './SlackEvent';
 import { Message, UIEvent } from './SlackTypes';
@@ -22,7 +19,12 @@ export type SlackContextOptions = {
 
 export default class SlackContext extends Context<
   SlackOAuthClient,
-  SlackEvent
+  SlackEvent,
+  {
+    channel?: {
+      id?: string;
+    };
+  }
 > {
   chat: {
     postMessage: (
@@ -102,13 +104,13 @@ export default class SlackContext extends Context<
   // FIXME: this is to fix type checking
   _getChannelIdFromSession(callerMethodName = ''): string | null {
     if (
-      this._session &&
-      typeof this._session.channel === 'object' &&
-      this._session.channel &&
-      this._session.channel.id &&
-      typeof this._session.channel.id === 'string'
+      this.session &&
+      typeof this.session.channel === 'object' &&
+      this.session.channel &&
+      this.session.channel.id &&
+      typeof this.session.channel.id === 'string'
     ) {
-      return this._session.channel.id;
+      return this.session.channel.id;
     }
 
     if (callerMethodName) {
@@ -135,8 +137,8 @@ export default class SlackContext extends Context<
       return Promise.resolve();
     }
 
-    return this._client.chat.postMessage({
-      threadTs: (this._event.rawEvent as Message).threadTs,
+    return this.client.chat.postMessage({
+      threadTs: (this.event.rawEvent as Message).threadTs,
       channel,
       ...options,
     });
@@ -156,9 +158,9 @@ export default class SlackContext extends Context<
       return Promise.resolve();
     }
 
-    return this._client.chat.postEphemeral({
+    return this.client.chat.postEphemeral({
       channel,
-      user: (this._session as any).user.id,
+      user: (this.session as any).user.id,
       ...options,
     });
   }
@@ -177,7 +179,7 @@ export default class SlackContext extends Context<
    * https://api.slack.com/methods/chat.update
    */
   _updateMessage(options: SlackTypes.UpdateMessageOptions): Promise<any> {
-    return this._client.chat.update(options);
+    return this.client.chat.update(options);
   }
 
   /**
@@ -194,7 +196,7 @@ export default class SlackContext extends Context<
       return Promise.resolve();
     }
 
-    return this._client.chat.delete({
+    return this.client.chat.delete({
       channel,
       ...options,
     });
@@ -214,7 +216,7 @@ export default class SlackContext extends Context<
       return Promise.resolve();
     }
 
-    return this._client.chat.meMessage({ channel, ...options });
+    return this.client.chat.meMessage({ channel, ...options });
   }
 
   /**
@@ -231,7 +233,7 @@ export default class SlackContext extends Context<
       return Promise.resolve();
     }
 
-    return this._client.chat.getPermalink({ channel, ...options });
+    return this.client.chat.getPermalink({ channel, ...options });
   }
 
   /**
@@ -248,7 +250,7 @@ export default class SlackContext extends Context<
       return Promise.resolve();
     }
 
-    return this._client.chat.scheduleMessage({
+    return this.client.chat.scheduleMessage({
       channel,
       ...options,
     });
@@ -270,7 +272,7 @@ export default class SlackContext extends Context<
       return Promise.resolve();
     }
 
-    return this._client.chat.deleteScheduledMessage({
+    return this.client.chat.deleteScheduledMessage({
       channel,
       ...options,
     });
@@ -284,7 +286,7 @@ export default class SlackContext extends Context<
   _getScheduledMessages(
     options: SlackTypes.GetScheduledMessagesOptions
   ): Promise<any> {
-    return this._client.chat.scheduledMessages.list(options);
+    return this.client.chat.scheduledMessages.list(options);
   }
 
   /**
@@ -293,13 +295,13 @@ export default class SlackContext extends Context<
    * https://api.slack.com/methods/views.open
    */
   _openView(options: SlackTypes.OpenViewOptions): Promise<any> {
-    return this._client.views.open({
+    return this.client.views.open({
       ...options,
       view: {
         ...options.view,
         privateMetadata: JSON.stringify({
           original: options.view.privateMetadata,
-          channelId: (this._event.rawEvent as UIEvent).channel?.id,
+          channelId: (this.event.rawEvent as UIEvent).channel?.id,
         }),
       },
     });
@@ -311,7 +313,7 @@ export default class SlackContext extends Context<
    * https://api.slack.com/methods/views.publish
    */
   _publishView(options: SlackTypes.PublishViewOptions): Promise<any> {
-    return this._client.views.publish(options);
+    return this.client.views.publish(options);
   }
 
   /**
@@ -320,7 +322,7 @@ export default class SlackContext extends Context<
    * https://api.slack.com/methods/views.update
    */
   _updateView(options: SlackTypes.UpdateViewOptions): Promise<any> {
-    return this._client.views.update(options);
+    return this.client.views.update(options);
   }
 
   /**
@@ -329,6 +331,6 @@ export default class SlackContext extends Context<
    * https://api.slack.com/methods/views.push
    */
   _pushView(options: SlackTypes.PushViewOptions): Promise<any> {
-    return this._client.views.push(options);
+    return this.client.views.push(options);
   }
 }

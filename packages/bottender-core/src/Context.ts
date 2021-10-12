@@ -12,10 +12,10 @@ import { Client, RequestContext } from './types';
 
 const debugContext = debug('bottender:context');
 
-type Options<C extends Client, E extends Event> = {
+type Options<C extends Client, E extends Event, S> = {
   client: C;
   event: E;
-  session?: Session | null;
+  session?: Session<S> | null;
   initialState?: JsonObject | null;
   requestContext?: RequestContext;
   emitter?: EventEmitter | null;
@@ -29,7 +29,8 @@ type Response<B = any> = {
 
 export default abstract class Context<
   C extends Client = any, // eslint-disable-line @typescript-eslint/no-explicit-any
-  E extends Event = any // eslint-disable-line @typescript-eslint/no-explicit-any
+  E extends Event = any, // eslint-disable-line @typescript-eslint/no-explicit-any,
+  S = unknown
 > {
   /**
    * The name of the platform.
@@ -49,9 +50,9 @@ export default abstract class Context<
 
   private _event: E;
 
-  private _session: Session | null;
+  private _session: Session<S> | null;
 
-  private initialState?: JsonObject | null;
+  private initialState?: JsonObject;
 
   private _requestContext: RequestContext | null;
 
@@ -66,13 +67,13 @@ export default abstract class Context<
     initialState,
     requestContext,
     emitter,
-  }: Options<C, E>) {
+  }: Options<C, E, S>) {
     this._client = client;
     this._event = event;
-    this._session = session || null;
-    this.initialState = initialState || {};
-    this._requestContext = requestContext || null;
-    this._emitter = emitter || null;
+    this._session = session ?? null;
+    this.initialState = initialState ?? {};
+    this._requestContext = requestContext ?? null;
+    this._emitter = emitter ?? null;
     this._intent = null;
 
     debugContext('Context created with rawEvent:');
@@ -116,7 +117,7 @@ export default abstract class Context<
    * The session state of the context.
    *
    */
-  get session(): Session | null {
+  get session(): Session<S> | null {
     return this._session;
   }
 
