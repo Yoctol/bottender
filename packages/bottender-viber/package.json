@@ -1,0 +1,22 @@
+{
+  "name": "@bottender/viber",
+  "version": "1.5.4",
+  "license": "MIT",
+  "homepage": "https://bottender.js.org/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Yoctol/bottender.git"
+  },
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "types": "dist/index.d.ts",
+  "dependencies": {
+    "@bottender/core": "file:../bottender-core",
+    "invariant": "^2.2.4",
+    "messaging-api-viber": "^1.1.0",
+    "type-fest": "^1.4.0",
+    "warning": "^4.0.3"
+  }
+}

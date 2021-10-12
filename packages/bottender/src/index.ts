@@ -3,7 +3,6 @@ import * as LineTypes from './line/LineTypes';
 import * as MessengerTypes from './messenger/MessengerTypes';
 import * as SlackTypes from './slack/SlackTypes';
 import * as TelegramTypes from './telegram/TelegramTypes';
-import * as ViberTypes from './viber/ViberTypes';
 
 export { bottender };
 
@@ -79,11 +78,13 @@ export { TelegramClient } from 'messaging-api-telegram';
 export { TelegramTypes };
 
 /* Viber */
-export { default as ViberConnector } from './viber/ViberConnector';
-export { default as ViberContext } from './viber/ViberContext';
-export { default as ViberEvent } from './viber/ViberEvent';
-export { ViberClient } from 'messaging-api-viber';
-export { ViberTypes };
+export {
+  ViberClient,
+  ViberConnector,
+  ViberContext,
+  ViberEvent,
+  ViberTypes,
+} from '@bottender/viber';
 
 /* Types */
 export * from './types';

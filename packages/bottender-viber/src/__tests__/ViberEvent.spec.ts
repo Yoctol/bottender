@@ -1,6 +1,7 @@
 import ViberEvent from '../ViberEvent';
+import * as ViberTypes from '../ViberTypes';
 
-const subscribed = {
+const subscribed: ViberTypes.ViberRawEvent = {
   event: 'subscribed',
   timestamp: 1457764197627,
   user: {
@@ -14,14 +15,14 @@ const subscribed = {
   messageToken: 4912661846655238145,
 };
 
-const unsubscribed = {
+const unsubscribed: ViberTypes.ViberRawEvent = {
   event: 'unsubscribed',
   timestamp: 1457764197627,
   userId: '01234567890A=',
   messageToken: 4912661846655238145,
 };
 
-const conversationStarted = {
+const conversationStarted: ViberTypes.ViberRawEvent = {
   event: 'conversation_started',
   timestamp: 1457764197627,
   messageToken: 4912661846655238145,
@@ -38,21 +39,21 @@ const conversationStarted = {
   subscribed: false,
 };
 
-const delivered = {
+const delivered: ViberTypes.ViberRawEvent = {
   event: 'delivered',
   timestamp: 1457764197627,
   messageToken: 4912661846655238145,
   userId: '01234567890A=',
 };
 
-const seen = {
+const seen: ViberTypes.ViberRawEvent = {
   event: 'seen',
   timestamp: 1457764197627,
   messageToken: 4912661846655238145,
   userId: '01234567890A=',
 };
 
-const failed = {
+const failed: ViberTypes.ViberRawEvent = {
   event: 'failed',
   timestamp: 1457764197627,
   messageToken: 4912661846655238145,
@@ -60,7 +61,7 @@ const failed = {
   desc: 'failure description',
 };
 
-const textMessage = {
+const textMessage: ViberTypes.ViberRawEvent = {
   event: 'message',
   timestamp: 1457764197627,
   messageToken: 4912661846655238145,
@@ -79,7 +80,7 @@ const textMessage = {
   },
 };
 
-const pictureMessage = {
+const pictureMessage: ViberTypes.ViberRawEvent = {
   event: 'message',
   timestamp: 1457764197627,
   messageToken: 4912661846655238145,
@@ -99,7 +100,7 @@ const pictureMessage = {
   },
 };
 
-const videoMessage = {
+const videoMessage: ViberTypes.ViberRawEvent = {
   event: 'message',
   timestamp: 1457764197627,
   messageToken: 4912661846655238145,
@@ -119,7 +120,7 @@ const videoMessage = {
   },
 };
 
-const fileMessage = {
+const fileMessage: ViberTypes.ViberRawEvent = {
   event: 'message',
   timestamp: 1457764197627,
   messageToken: 4912661846655238145,
@@ -140,7 +141,7 @@ const fileMessage = {
   },
 };
 
-const stickerMessage = {
+const stickerMessage: ViberTypes.ViberRawEvent = {
   event: 'message',
   timestamp: 1457764197627,
   messageToken: 4912661846655238145,
@@ -159,7 +160,7 @@ const stickerMessage = {
   },
 };
 
-const contactMessage = {
+const contactMessage: ViberTypes.ViberRawEvent = {
   event: 'message',
   timestamp: 1457764197627,
   messageToken: 4912661846655238145,
@@ -181,7 +182,7 @@ const contactMessage = {
   },
 };
 
-const urlMessage = {
+const urlMessage: ViberTypes.ViberRawEvent = {
   event: 'message',
   timestamp: 1457764197627,
   messageToken: 4912661846655238145,
@@ -200,7 +201,7 @@ const urlMessage = {
   },
 };
 
-const locationMessage = {
+const locationMessage: ViberTypes.ViberRawEvent = {
   event: 'message',
   timestamp: 1457764197627,
   messageToken: 4912661846655238145,
@@ -248,12 +249,12 @@ it('#isMessage', () => {
 });
 
 it('#message', () => {
-  expect(new ViberEvent(subscribed).message).toEqual(null);
-  expect(new ViberEvent(unsubscribed).message).toEqual(null);
-  expect(new ViberEvent(conversationStarted).message).toEqual(null);
-  expect(new ViberEvent(delivered).message).toEqual(null);
-  expect(new ViberEvent(seen).message).toEqual(null);
-  expect(new ViberEvent(failed).message).toEqual(null);
+  expect(new ViberEvent(subscribed).message).toBeUndefined();
+  expect(new ViberEvent(unsubscribed).message).toBeUndefined();
+  expect(new ViberEvent(conversationStarted).message).toBeUndefined();
+  expect(new ViberEvent(delivered).message).toBeUndefined();
+  expect(new ViberEvent(seen).message).toBeUndefined();
+  expect(new ViberEvent(failed).message).toBeUndefined();
   expect(new ViberEvent(textMessage).message).toEqual({
     type: 'text',
     text: 'a message to the service',
@@ -324,22 +325,22 @@ it('#isText', () => {
 });
 
 it('#text', () => {
-  expect(new ViberEvent(subscribed).text).toEqual(null);
-  expect(new ViberEvent(unsubscribed).text).toEqual(null);
-  expect(new ViberEvent(conversationStarted).text).toEqual(null);
-  expect(new ViberEvent(delivered).text).toEqual(null);
-  expect(new ViberEvent(seen).text).toEqual(null);
-  expect(new ViberEvent(failed).text).toEqual(null);
+  expect(new ViberEvent(subscribed).text).toBeUndefined();
+  expect(new ViberEvent(unsubscribed).text).toBeUndefined();
+  expect(new ViberEvent(conversationStarted).text).toBeUndefined();
+  expect(new ViberEvent(delivered).text).toBeUndefined();
+  expect(new ViberEvent(seen).text).toBeUndefined();
+  expect(new ViberEvent(failed).text).toBeUndefined();
   expect(new ViberEvent(textMessage).text).toEqual('a message to the service');
   expect(new ViberEvent(pictureMessage).text).toEqual(
     'a message to the service'
   );
-  expect(new ViberEvent(videoMessage).text).toEqual(null);
-  expect(new ViberEvent(fileMessage).text).toEqual(null);
-  expect(new ViberEvent(stickerMessage).text).toEqual(null);
-  expect(new ViberEvent(contactMessage).text).toEqual(null);
-  expect(new ViberEvent(urlMessage).text).toEqual(null);
-  expect(new ViberEvent(locationMessage).text).toEqual(null);
+  expect(new ViberEvent(videoMessage).text).toBeUndefined();
+  expect(new ViberEvent(fileMessage).text).toBeUndefined();
+  expect(new ViberEvent(stickerMessage).text).toBeUndefined();
+  expect(new ViberEvent(contactMessage).text).toBeUndefined();
+  expect(new ViberEvent(urlMessage).text).toBeUndefined();
+  expect(new ViberEvent(locationMessage).text).toBeUndefined();
 });
 
 it('#isPicture', () => {
@@ -360,22 +361,22 @@ it('#isPicture', () => {
 });
 
 it('#picture', () => {
-  expect(new ViberEvent(subscribed).picture).toEqual(null);
-  expect(new ViberEvent(unsubscribed).picture).toEqual(null);
-  expect(new ViberEvent(conversationStarted).picture).toEqual(null);
-  expect(new ViberEvent(delivered).picture).toEqual(null);
-  expect(new ViberEvent(seen).picture).toEqual(null);
-  expect(new ViberEvent(failed).picture).toEqual(null);
-  expect(new ViberEvent(textMessage).picture).toEqual(null);
+  expect(new ViberEvent(subscribed).picture).toBeUndefined();
+  expect(new ViberEvent(unsubscribed).picture).toBeUndefined();
+  expect(new ViberEvent(conversationStarted).picture).toBeUndefined();
+  expect(new ViberEvent(delivered).picture).toBeUndefined();
+  expect(new ViberEvent(seen).picture).toBeUndefined();
+  expect(new ViberEvent(failed).picture).toBeUndefined();
+  expect(new ViberEvent(textMessage).picture).toBeUndefined();
   expect(new ViberEvent(pictureMessage).picture).toEqual(
     'http://example.com/img.jpg'
   );
-  expect(new ViberEvent(videoMessage).picture).toEqual(null);
-  expect(new ViberEvent(fileMessage).picture).toEqual(null);
-  expect(new ViberEvent(stickerMessage).picture).toEqual(null);
-  expect(new ViberEvent(contactMessage).picture).toEqual(null);
-  expect(new ViberEvent(urlMessage).picture).toEqual(null);
-  expect(new ViberEvent(locationMessage).picture).toEqual(null);
+  expect(new ViberEvent(videoMessage).picture).toBeUndefined();
+  expect(new ViberEvent(fileMessage).picture).toBeUndefined();
+  expect(new ViberEvent(stickerMessage).picture).toBeUndefined();
+  expect(new ViberEvent(contactMessage).picture).toBeUndefined();
+  expect(new ViberEvent(urlMessage).picture).toBeUndefined();
+  expect(new ViberEvent(locationMessage).picture).toBeUndefined();
 });
 
 it('#isVideo', () => {
@@ -396,22 +397,22 @@ it('#isVideo', () => {
 });
 
 it('#video', () => {
-  expect(new ViberEvent(subscribed).video).toEqual(null);
-  expect(new ViberEvent(unsubscribed).video).toEqual(null);
-  expect(new ViberEvent(conversationStarted).video).toEqual(null);
-  expect(new ViberEvent(delivered).video).toEqual(null);
-  expect(new ViberEvent(seen).video).toEqual(null);
-  expect(new ViberEvent(failed).video).toEqual(null);
-  expect(new ViberEvent(textMessage).video).toEqual(null);
-  expect(new ViberEvent(pictureMessage).video).toEqual(null);
+  expect(new ViberEvent(subscribed).video).toBeUndefined();
+  expect(new ViberEvent(unsubscribed).video).toBeUndefined();
+  expect(new ViberEvent(conversationStarted).video).toBeUndefined();
+  expect(new ViberEvent(delivered).video).toBeUndefined();
+  expect(new ViberEvent(seen).video).toBeUndefined();
+  expect(new ViberEvent(failed).video).toBeUndefined();
+  expect(new ViberEvent(textMessage).video).toBeUndefined();
+  expect(new ViberEvent(pictureMessage).video).toBeUndefined();
   expect(new ViberEvent(videoMessage).video).toEqual(
     'http://example.com/video.mp4'
   );
-  expect(new ViberEvent(fileMessage).video).toEqual(null);
-  expect(new ViberEvent(stickerMessage).video).toEqual(null);
-  expect(new ViberEvent(contactMessage).video).toEqual(null);
-  expect(new ViberEvent(urlMessage).video).toEqual(null);
-  expect(new ViberEvent(locationMessage).video).toEqual(null);
+  expect(new ViberEvent(fileMessage).video).toBeUndefined();
+  expect(new ViberEvent(stickerMessage).video).toBeUndefined();
+  expect(new ViberEvent(contactMessage).video).toBeUndefined();
+  expect(new ViberEvent(urlMessage).video).toBeUndefined();
+  expect(new ViberEvent(locationMessage).video).toBeUndefined();
 });
 
 it('#isFile', () => {
@@ -432,22 +433,22 @@ it('#isFile', () => {
 });
 
 it('#file', () => {
-  expect(new ViberEvent(subscribed).file).toEqual(null);
-  expect(new ViberEvent(unsubscribed).file).toEqual(null);
-  expect(new ViberEvent(conversationStarted).file).toEqual(null);
-  expect(new ViberEvent(delivered).file).toEqual(null);
-  expect(new ViberEvent(seen).file).toEqual(null);
-  expect(new ViberEvent(failed).file).toEqual(null);
-  expect(new ViberEvent(textMessage).file).toEqual(null);
-  expect(new ViberEvent(pictureMessage).file).toEqual(null);
-  expect(new ViberEvent(videoMessage).file).toEqual(null);
+  expect(new ViberEvent(subscribed).file).toBeUndefined();
+  expect(new ViberEvent(unsubscribed).file).toBeUndefined();
+  expect(new ViberEvent(conversationStarted).file).toBeUndefined();
+  expect(new ViberEvent(delivered).file).toBeUndefined();
+  expect(new ViberEvent(seen).file).toBeUndefined();
+  expect(new ViberEvent(failed).file).toBeUndefined();
+  expect(new ViberEvent(textMessage).file).toBeUndefined();
+  expect(new ViberEvent(pictureMessage).file).toBeUndefined();
+  expect(new ViberEvent(videoMessage).file).toBeUndefined();
   expect(new ViberEvent(fileMessage).file).toEqual(
     'http://example.com/doc.pdf'
   );
-  expect(new ViberEvent(stickerMessage).file).toEqual(null);
-  expect(new ViberEvent(contactMessage).file).toEqual(null);
-  expect(new ViberEvent(urlMessage).file).toEqual(null);
-  expect(new ViberEvent(locationMessage).file).toEqual(null);
+  expect(new ViberEvent(stickerMessage).file).toBeUndefined();
+  expect(new ViberEvent(contactMessage).file).toBeUndefined();
+  expect(new ViberEvent(urlMessage).file).toBeUndefined();
+  expect(new ViberEvent(locationMessage).file).toBeUndefined();
 });
 
 it('#isSticker', () => {
@@ -468,20 +469,20 @@ it('#isSticker', () => {
 });
 
 it('#sticker', () => {
-  expect(new ViberEvent(subscribed).sticker).toEqual(null);
-  expect(new ViberEvent(unsubscribed).sticker).toEqual(null);
-  expect(new ViberEvent(conversationStarted).sticker).toEqual(null);
-  expect(new ViberEvent(delivered).sticker).toEqual(null);
-  expect(new ViberEvent(seen).sticker).toEqual(null);
-  expect(new ViberEvent(failed).sticker).toEqual(null);
-  expect(new ViberEvent(textMessage).sticker).toEqual(null);
-  expect(new ViberEvent(pictureMessage).sticker).toEqual(null);
-  expect(new ViberEvent(videoMessage).sticker).toEqual(null);
-  expect(new ViberEvent(fileMessage).sticker).toEqual(null);
+  expect(new ViberEvent(subscribed).sticker).toBeUndefined();
+  expect(new ViberEvent(unsubscribed).sticker).toBeUndefined();
+  expect(new ViberEvent(conversationStarted).sticker).toBeUndefined();
+  expect(new ViberEvent(delivered).sticker).toBeUndefined();
+  expect(new ViberEvent(seen).sticker).toBeUndefined();
+  expect(new ViberEvent(failed).sticker).toBeUndefined();
+  expect(new ViberEvent(textMessage).sticker).toBeUndefined();
+  expect(new ViberEvent(pictureMessage).sticker).toBeUndefined();
+  expect(new ViberEvent(videoMessage).sticker).toBeUndefined();
+  expect(new ViberEvent(fileMessage).sticker).toBeUndefined();
   expect(new ViberEvent(stickerMessage).sticker).toEqual(46105);
-  expect(new ViberEvent(contactMessage).sticker).toEqual(null);
-  expect(new ViberEvent(urlMessage).sticker).toEqual(null);
-  expect(new ViberEvent(locationMessage).sticker).toEqual(null);
+  expect(new ViberEvent(contactMessage).sticker).toBeUndefined();
+  expect(new ViberEvent(urlMessage).sticker).toBeUndefined();
+  expect(new ViberEvent(locationMessage).sticker).toBeUndefined();
 });
 
 it('#isContact', () => {
@@ -502,23 +503,23 @@ it('#isContact', () => {
 });
 
 it('#contact', () => {
-  expect(new ViberEvent(subscribed).contact).toEqual(null);
-  expect(new ViberEvent(unsubscribed).contact).toEqual(null);
-  expect(new ViberEvent(conversationStarted).contact).toEqual(null);
-  expect(new ViberEvent(delivered).contact).toEqual(null);
-  expect(new ViberEvent(seen).contact).toEqual(null);
-  expect(new ViberEvent(failed).contact).toEqual(null);
-  expect(new ViberEvent(textMessage).contact).toEqual(null);
-  expect(new ViberEvent(pictureMessage).contact).toEqual(null);
-  expect(new ViberEvent(videoMessage).contact).toEqual(null);
-  expect(new ViberEvent(fileMessage).contact).toEqual(null);
-  expect(new ViberEvent(stickerMessage).contact).toEqual(null);
+  expect(new ViberEvent(subscribed).contact).toBeUndefined();
+  expect(new ViberEvent(unsubscribed).contact).toBeUndefined();
+  expect(new ViberEvent(conversationStarted).contact).toBeUndefined();
+  expect(new ViberEvent(delivered).contact).toBeUndefined();
+  expect(new ViberEvent(seen).contact).toBeUndefined();
+  expect(new ViberEvent(failed).contact).toBeUndefined();
+  expect(new ViberEvent(textMessage).contact).toBeUndefined();
+  expect(new ViberEvent(pictureMessage).contact).toBeUndefined();
+  expect(new ViberEvent(videoMessage).contact).toBeUndefined();
+  expect(new ViberEvent(fileMessage).contact).toBeUndefined();
+  expect(new ViberEvent(stickerMessage).contact).toBeUndefined();
   expect(new ViberEvent(contactMessage).contact).toEqual({
     name: 'Itamar',
     phoneNumber: '+972511123123',
   });
-  expect(new ViberEvent(urlMessage).contact).toEqual(null);
-  expect(new ViberEvent(locationMessage).contact).toEqual(null);
+  expect(new ViberEvent(urlMessage).contact).toBeUndefined();
+  expect(new ViberEvent(locationMessage).contact).toBeUndefined();
 });
 
 it('#isURL', () => {
@@ -539,20 +540,20 @@ it('#isURL', () => {
 });
 
 it('#url', () => {
-  expect(new ViberEvent(subscribed).url).toEqual(null);
-  expect(new ViberEvent(unsubscribed).url).toEqual(null);
-  expect(new ViberEvent(conversationStarted).url).toEqual(null);
-  expect(new ViberEvent(delivered).url).toEqual(null);
-  expect(new ViberEvent(seen).url).toEqual(null);
-  expect(new ViberEvent(failed).url).toEqual(null);
-  expect(new ViberEvent(textMessage).url).toEqual(null);
-  expect(new ViberEvent(pictureMessage).url).toEqual(null);
-  expect(new ViberEvent(videoMessage).url).toEqual(null);
-  expect(new ViberEvent(fileMessage).url).toEqual(null);
-  expect(new ViberEvent(stickerMessage).url).toEqual(null);
-  expect(new ViberEvent(contactMessage).url).toEqual(null);
+  expect(new ViberEvent(subscribed).url).toBeUndefined();
+  expect(new ViberEvent(unsubscribed).url).toBeUndefined();
+  expect(new ViberEvent(conversationStarted).url).toBeUndefined();
+  expect(new ViberEvent(delivered).url).toBeUndefined();
+  expect(new ViberEvent(seen).url).toBeUndefined();
+  expect(new ViberEvent(failed).url).toBeUndefined();
+  expect(new ViberEvent(textMessage).url).toBeUndefined();
+  expect(new ViberEvent(pictureMessage).url).toBeUndefined();
+  expect(new ViberEvent(videoMessage).url).toBeUndefined();
+  expect(new ViberEvent(fileMessage).url).toBeUndefined();
+  expect(new ViberEvent(stickerMessage).url).toBeUndefined();
+  expect(new ViberEvent(contactMessage).url).toBeUndefined();
   expect(new ViberEvent(urlMessage).url).toEqual('http://example.com');
-  expect(new ViberEvent(locationMessage).url).toEqual(null);
+  expect(new ViberEvent(locationMessage).url).toBeUndefined();
 });
 
 it('#isLocation', () => {
@@ -573,19 +574,19 @@ it('#isLocation', () => {
 });
 
 it('#location', () => {
-  expect(new ViberEvent(subscribed).location).toEqual(null);
-  expect(new ViberEvent(unsubscribed).location).toEqual(null);
-  expect(new ViberEvent(conversationStarted).location).toEqual(null);
-  expect(new ViberEvent(delivered).location).toEqual(null);
-  expect(new ViberEvent(seen).location).toEqual(null);
-  expect(new ViberEvent(failed).location).toEqual(null);
-  expect(new ViberEvent(textMessage).location).toEqual(null);
-  expect(new ViberEvent(pictureMessage).location).toEqual(null);
-  expect(new ViberEvent(videoMessage).location).toEqual(null);
-  expect(new ViberEvent(fileMessage).location).toEqual(null);
-  expect(new ViberEvent(stickerMessage).location).toEqual(null);
-  expect(new ViberEvent(contactMessage).location).toEqual(null);
-  expect(new ViberEvent(urlMessage).location).toEqual(null);
+  expect(new ViberEvent(subscribed).location).toBeUndefined();
+  expect(new ViberEvent(unsubscribed).location).toBeUndefined();
+  expect(new ViberEvent(conversationStarted).location).toBeUndefined();
+  expect(new ViberEvent(delivered).location).toBeUndefined();
+  expect(new ViberEvent(seen).location).toBeUndefined();
+  expect(new ViberEvent(failed).location).toBeUndefined();
+  expect(new ViberEvent(textMessage).location).toBeUndefined();
+  expect(new ViberEvent(pictureMessage).location).toBeUndefined();
+  expect(new ViberEvent(videoMessage).location).toBeUndefined();
+  expect(new ViberEvent(fileMessage).location).toBeUndefined();
+  expect(new ViberEvent(stickerMessage).location).toBeUndefined();
+  expect(new ViberEvent(contactMessage).location).toBeUndefined();
+  expect(new ViberEvent(urlMessage).location).toBeUndefined();
   expect(new ViberEvent(locationMessage).location).toEqual({
     lat: 50.76891,
     lon: 6.11499,
@@ -616,12 +617,12 @@ it('#subscribed', () => {
     },
     messageToken: 4912661846655238145,
   });
-  expect(new ViberEvent(unsubscribed).subscribed).toEqual(null);
-  expect(new ViberEvent(conversationStarted).subscribed).toEqual(null);
-  expect(new ViberEvent(delivered).subscribed).toEqual(null);
-  expect(new ViberEvent(seen).subscribed).toEqual(null);
-  expect(new ViberEvent(failed).subscribed).toEqual(null);
-  expect(new ViberEvent(textMessage).subscribed).toEqual(null);
+  expect(new ViberEvent(unsubscribed).subscribed).toBeUndefined();
+  expect(new ViberEvent(conversationStarted).subscribed).toBeUndefined();
+  expect(new ViberEvent(delivered).subscribed).toBeUndefined();
+  expect(new ViberEvent(seen).subscribed).toBeUndefined();
+  expect(new ViberEvent(failed).subscribed).toBeUndefined();
+  expect(new ViberEvent(textMessage).subscribed).toBeUndefined();
 });
 
 it('#isUnsubscribed', () => {
@@ -635,18 +636,18 @@ it('#isUnsubscribed', () => {
 });
 
 it('#unsubscribed', () => {
-  expect(new ViberEvent(subscribed).unsubscribed).toEqual(null);
+  expect(new ViberEvent(subscribed).unsubscribed).toBeUndefined();
   expect(new ViberEvent(unsubscribed).unsubscribed).toEqual({
     event: 'unsubscribed',
     timestamp: 1457764197627,
     userId: '01234567890A=',
     messageToken: 4912661846655238145,
   });
-  expect(new ViberEvent(conversationStarted).unsubscribed).toEqual(null);
-  expect(new ViberEvent(delivered).unsubscribed).toEqual(null);
-  expect(new ViberEvent(seen).unsubscribed).toEqual(null);
-  expect(new ViberEvent(failed).unsubscribed).toEqual(null);
-  expect(new ViberEvent(textMessage).unsubscribed).toEqual(null);
+  expect(new ViberEvent(conversationStarted).unsubscribed).toBeUndefined();
+  expect(new ViberEvent(delivered).unsubscribed).toBeUndefined();
+  expect(new ViberEvent(seen).unsubscribed).toBeUndefined();
+  expect(new ViberEvent(failed).unsubscribed).toBeUndefined();
+  expect(new ViberEvent(textMessage).unsubscribed).toBeUndefined();
 });
 
 it('#isConversationStarted', () => {
@@ -662,8 +663,8 @@ it('#isConversationStarted', () => {
 });
 
 it('#conversationStarted', () => {
-  expect(new ViberEvent(subscribed).conversationStarted).toEqual(null);
-  expect(new ViberEvent(unsubscribed).conversationStarted).toEqual(null);
+  expect(new ViberEvent(subscribed).conversationStarted).toBeUndefined();
+  expect(new ViberEvent(unsubscribed).conversationStarted).toBeUndefined();
   expect(new ViberEvent(conversationStarted).conversationStarted).toEqual({
     event: 'conversation_started',
     timestamp: 1457764197627,
@@ -680,10 +681,10 @@ it('#conversationStarted', () => {
     },
     subscribed: false,
   });
-  expect(new ViberEvent(delivered).conversationStarted).toEqual(null);
-  expect(new ViberEvent(seen).conversationStarted).toEqual(null);
-  expect(new ViberEvent(failed).conversationStarted).toEqual(null);
-  expect(new ViberEvent(textMessage).conversationStarted).toEqual(null);
+  expect(new ViberEvent(delivered).conversationStarted).toBeUndefined();
+  expect(new ViberEvent(seen).conversationStarted).toBeUndefined();
+  expect(new ViberEvent(failed).conversationStarted).toBeUndefined();
+  expect(new ViberEvent(textMessage).conversationStarted).toBeUndefined();
 });
 
 it('#isDelivered', () => {
@@ -697,18 +698,18 @@ it('#isDelivered', () => {
 });
 
 it('#delivered', () => {
-  expect(new ViberEvent(subscribed).delivered).toEqual(null);
-  expect(new ViberEvent(unsubscribed).delivered).toEqual(null);
-  expect(new ViberEvent(conversationStarted).delivered).toEqual(null);
+  expect(new ViberEvent(subscribed).delivered).toBeUndefined();
+  expect(new ViberEvent(unsubscribed).delivered).toBeUndefined();
+  expect(new ViberEvent(conversationStarted).delivered).toBeUndefined();
   expect(new ViberEvent(delivered).delivered).toEqual({
     event: 'delivered',
     timestamp: 1457764197627,
     messageToken: 4912661846655238145,
     userId: '01234567890A=',
   });
-  expect(new ViberEvent(seen).delivered).toEqual(null);
-  expect(new ViberEvent(failed).delivered).toEqual(null);
-  expect(new ViberEvent(textMessage).delivered).toEqual(null);
+  expect(new ViberEvent(seen).delivered).toBeUndefined();
+  expect(new ViberEvent(failed).delivered).toBeUndefined();
+  expect(new ViberEvent(textMessage).delivered).toBeUndefined();
 });
 
 it('#isSeen', () => {
@@ -722,18 +723,18 @@ it('#isSeen', () => {
 });
 
 it('#seen', () => {
-  expect(new ViberEvent(subscribed).seen).toEqual(null);
-  expect(new ViberEvent(unsubscribed).seen).toEqual(null);
-  expect(new ViberEvent(conversationStarted).seen).toEqual(null);
-  expect(new ViberEvent(delivered).seen).toEqual(null);
+  expect(new ViberEvent(subscribed).seen).toBeUndefined();
+  expect(new ViberEvent(unsubscribed).seen).toBeUndefined();
+  expect(new ViberEvent(conversationStarted).seen).toBeUndefined();
+  expect(new ViberEvent(delivered).seen).toBeUndefined();
   expect(new ViberEvent(seen).seen).toEqual({
     event: 'seen',
     timestamp: 1457764197627,
     messageToken: 4912661846655238145,
     userId: '01234567890A=',
   });
-  expect(new ViberEvent(failed).seen).toEqual(null);
-  expect(new ViberEvent(textMessage).seen).toEqual(null);
+  expect(new ViberEvent(failed).seen).toBeUndefined();
+  expect(new ViberEvent(textMessage).seen).toBeUndefined();
 });
 
 it('#isFailed', () => {
@@ -747,11 +748,11 @@ it('#isFailed', () => {
 });
 
 it('#failed', () => {
-  expect(new ViberEvent(subscribed).failed).toEqual(null);
-  expect(new ViberEvent(unsubscribed).failed).toEqual(null);
-  expect(new ViberEvent(conversationStarted).failed).toEqual(null);
-  expect(new ViberEvent(delivered).failed).toEqual(null);
-  expect(new ViberEvent(seen).failed).toEqual(null);
+  expect(new ViberEvent(subscribed).failed).toBeUndefined();
+  expect(new ViberEvent(unsubscribed).failed).toBeUndefined();
+  expect(new ViberEvent(conversationStarted).failed).toBeUndefined();
+  expect(new ViberEvent(delivered).failed).toBeUndefined();
+  expect(new ViberEvent(seen).failed).toBeUndefined();
   expect(new ViberEvent(failed).failed).toEqual({
     event: 'failed',
     timestamp: 1457764197627,
@@ -759,5 +760,5 @@ it('#failed', () => {
     userId: '01234567890A=',
     desc: 'failure description',
   });
-  expect(new ViberEvent(textMessage).failed).toEqual(null);
+  expect(new ViberEvent(textMessage).failed).toBeUndefined();
 });

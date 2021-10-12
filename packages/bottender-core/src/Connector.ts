@@ -6,7 +6,7 @@ import Event from './Event';
 import Session from './Session';
 import { RequestContext } from './types';
 
-export default interface Connector<B, C> {
+export default interface Connector<B, C, E extends Event<any> = any> {
   /**
    * The client instance.
    */
@@ -22,7 +22,7 @@ export default interface Connector<B, C> {
    * @param requestContext - HTTP request context
    */
   getUniqueSessionKey(
-    bodyOrEvent: B | Event<any>,
+    bodyOrEvent: B | E,
     requestContext?: RequestContext
   ): string | null;
   // TODO: refine signature in v2
@@ -31,7 +31,7 @@ export default interface Connector<B, C> {
    * @param session -
    * @param bodyOrEvent -
    */
-  updateSession(session: Session, bodyOrEvent: B | Event<any>): Promise<void>;
+  updateSession(session: Session, bodyOrEvent: B | E): Promise<void>;
   // TODO: rename to initSession or createSession in v2
   /**
    * Retrieve events from the request.
@@ -39,12 +39,12 @@ export default interface Connector<B, C> {
    * @param body - body
    * @returns - event array
    */
-  mapRequestToEvents(body: B): Event<any>[];
+  mapRequestToEvents(body: B): E[];
   /**
    * @param params -
    */
   createContext(params: {
-    event: Event<any>;
+    event: E;
     session?: Session | null;
     initialState?: JsonObject | null;
     requestContext?: RequestContext;

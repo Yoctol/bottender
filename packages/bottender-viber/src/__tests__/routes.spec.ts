@@ -1,9 +1,8 @@
-import Context from '../../context/Context';
+import { Context, router, run } from '@bottender/core';
+
 import ViberContext from '../ViberContext';
 import ViberEvent from '../ViberEvent';
-import router from '../../router';
 import viber from '../routes';
-import { run } from '../../bot/Bot';
 
 const viberEventTextMessage = new ViberEvent({
   event: 'message',

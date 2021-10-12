@@ -6,10 +6,8 @@ import Context from './Context';
 
 export type RequestContext<
   B extends JsonObject = JsonObject,
-  H extends Record<string, string | string[] | undefined> = Record<
-    string,
-    never
-  >
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  H extends Record<string, string | string[] | undefined> = Record<string, any>
 > = {
   id?: string;
   method: string;
