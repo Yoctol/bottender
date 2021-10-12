@@ -1,4 +1,4 @@
-export { default as Bot, run } from './Bot';
+export { default as Bot, run, OnRequest } from './Bot';
 export { default as Context } from './Context';
 export { default as Connector } from './Connector';
 export { default as Event } from './Event';

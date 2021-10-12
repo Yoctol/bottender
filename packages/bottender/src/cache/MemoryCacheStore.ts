@@ -2,8 +2,10 @@ import LRU from 'lru-cache';
 import cloneDeep from 'lodash/cloneDeep';
 import { CacheStore, CacheValue } from '@bottender/core';
 
-export default class MemoryCacheStore implements CacheStore {
-  private lru: LRU<string, CacheValue>;
+export default class MemoryCacheStore<T extends CacheValue = CacheValue>
+  implements CacheStore<T>
+{
+  private lru: LRU<string, T>;
 
   /**
    * Create a memory cache store.
@@ -17,9 +19,9 @@ export default class MemoryCacheStore implements CacheStore {
    *
    * @param options - the LRU options
    */
-  constructor(options?: LRU.Options<string, CacheValue>);
+  constructor(options?: LRU.Options<string, T>);
 
-  constructor(maxOrOptions?: number | LRU.Options<string, CacheValue>) {
+  constructor(maxOrOptions?: number | LRU.Options<string, T>) {
     this.lru =
       typeof maxOrOptions === 'number'
         ? new LRU({ max: maxOrOptions })
@@ -31,7 +33,7 @@ export default class MemoryCacheStore implements CacheStore {
    *
    * @param key - cache key
    */
-  public async get(key: string): Promise<CacheValue | undefined> {
+  public async get(key: string): Promise<T | undefined> {
     const _value = this.lru.get(key);
 
     // cloneDeep: To make sure read as different object to prevent
@@ -46,7 +48,7 @@ export default class MemoryCacheStore implements CacheStore {
    *
    * @returns all of the cache data
    */
-  public async all(): Promise<CacheValue[]> {
+  public async all(): Promise<T[]> {
     return this.lru.values();
   }
 
@@ -57,11 +59,7 @@ export default class MemoryCacheStore implements CacheStore {
    * @param value - cache value
    * @param minutes - minutes to cache
    */
-  public async put(
-    key: string,
-    value: CacheValue,
-    minutes: number
-  ): Promise<void> {
+  public async put(key: string, value: T, minutes: number): Promise<void> {
     // cloneDeep: To make sure save as writable object
     const val = value && typeof value === 'object' ? cloneDeep(value) : value;
 
