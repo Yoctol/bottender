@@ -112,9 +112,9 @@ it('#message', () => {
   expect(new WhatsappEvent(imageMessageReceived).message).toEqual(
     imageMessageReceived
   );
-  expect(new WhatsappEvent(messageSent).message).toEqual(null);
-  expect(new WhatsappEvent(messageDelivered).message).toEqual(null);
-  expect(new WhatsappEvent(messageRead).message).toEqual(null);
+  expect(new WhatsappEvent(messageSent).message).toBeUndefined();
+  expect(new WhatsappEvent(messageDelivered).message).toBeUndefined();
+  expect(new WhatsappEvent(messageRead).message).toBeUndefined();
 });
 
 it('#isText', () => {
@@ -128,9 +128,9 @@ it('#isText', () => {
 it('#text', () => {
   expect(new WhatsappEvent(textMessageReceived).text).toEqual('hi');
   expect(new WhatsappEvent(imageMessageReceived).text).toEqual('xd');
-  expect(new WhatsappEvent(messageSent).text).toEqual(null);
-  expect(new WhatsappEvent(messageDelivered).text).toEqual(null);
-  expect(new WhatsappEvent(messageRead).text).toEqual(null);
+  expect(new WhatsappEvent(messageSent).text).toBeUndefined();
+  expect(new WhatsappEvent(messageDelivered).text).toBeUndefined();
+  expect(new WhatsappEvent(messageRead).text).toBeUndefined();
 });
 
 it('#isMedia', () => {
@@ -142,14 +142,14 @@ it('#isMedia', () => {
 });
 
 it('#media', () => {
-  expect(new WhatsappEvent(textMessageReceived).media).toEqual(null);
+  expect(new WhatsappEvent(textMessageReceived).media).toBeUndefined();
   expect(new WhatsappEvent(imageMessageReceived).media).toEqual({
     contentType: 'image/jpeg',
     url: 'https://api.twilio.com/2010-04-01/Accounts/ACf19dfb164f82b2c9d6178c6ada3XXXXX/Messages/MMad0463f6e2a946b3fc91d9a04a2XXXXX/Media/MEfaf3decca478ebeb4924fe523ff7fdb2',
   });
-  expect(new WhatsappEvent(messageSent).media).toEqual(null);
-  expect(new WhatsappEvent(messageDelivered).media).toEqual(null);
-  expect(new WhatsappEvent(messageRead).media).toEqual(null);
+  expect(new WhatsappEvent(messageSent).media).toBeUndefined();
+  expect(new WhatsappEvent(messageDelivered).media).toBeUndefined();
+  expect(new WhatsappEvent(messageRead).media).toBeUndefined();
 });
 
 it('#isReceived', () => {
@@ -167,9 +167,9 @@ it('#received', () => {
   expect(new WhatsappEvent(imageMessageReceived).received).toEqual(
     imageMessageReceived
   );
-  expect(new WhatsappEvent(messageSent).received).toEqual(null);
-  expect(new WhatsappEvent(messageDelivered).received).toEqual(null);
-  expect(new WhatsappEvent(messageRead).received).toEqual(null);
+  expect(new WhatsappEvent(messageSent).received).toBeUndefined();
+  expect(new WhatsappEvent(messageDelivered).received).toBeUndefined();
+  expect(new WhatsappEvent(messageRead).received).toBeUndefined();
 });
 
 it('#isSent', () => {
@@ -181,11 +181,11 @@ it('#isSent', () => {
 });
 
 it('#sent', () => {
-  expect(new WhatsappEvent(textMessageReceived).sent).toEqual(null);
-  expect(new WhatsappEvent(imageMessageReceived).sent).toEqual(null);
+  expect(new WhatsappEvent(textMessageReceived).sent).toBeUndefined();
+  expect(new WhatsappEvent(imageMessageReceived).sent).toBeUndefined();
   expect(new WhatsappEvent(messageSent).sent).toEqual(messageSent);
-  expect(new WhatsappEvent(messageDelivered).sent).toEqual(null);
-  expect(new WhatsappEvent(messageRead).sent).toEqual(null);
+  expect(new WhatsappEvent(messageDelivered).sent).toBeUndefined();
+  expect(new WhatsappEvent(messageRead).sent).toBeUndefined();
 });
 
 it('#isDelivered', () => {
@@ -197,13 +197,13 @@ it('#isDelivered', () => {
 });
 
 it('#delivered', () => {
-  expect(new WhatsappEvent(textMessageReceived).delivered).toEqual(null);
-  expect(new WhatsappEvent(imageMessageReceived).delivered).toEqual(null);
-  expect(new WhatsappEvent(messageSent).delivered).toEqual(null);
+  expect(new WhatsappEvent(textMessageReceived).delivered).toBeUndefined();
+  expect(new WhatsappEvent(imageMessageReceived).delivered).toBeUndefined();
+  expect(new WhatsappEvent(messageSent).delivered).toBeUndefined();
   expect(new WhatsappEvent(messageDelivered).delivered).toEqual(
     messageDelivered
   );
-  expect(new WhatsappEvent(messageRead).delivered).toEqual(null);
+  expect(new WhatsappEvent(messageRead).delivered).toBeUndefined();
 });
 
 it('#isRead', () => {
@@ -215,9 +215,9 @@ it('#isRead', () => {
 });
 
 it('#read', () => {
-  expect(new WhatsappEvent(textMessageReceived).read).toEqual(null);
-  expect(new WhatsappEvent(imageMessageReceived).read).toEqual(null);
-  expect(new WhatsappEvent(messageSent).read).toEqual(null);
-  expect(new WhatsappEvent(messageDelivered).read).toEqual(null);
+  expect(new WhatsappEvent(textMessageReceived).read).toBeUndefined();
+  expect(new WhatsappEvent(imageMessageReceived).read).toBeUndefined();
+  expect(new WhatsappEvent(messageSent).read).toBeUndefined();
+  expect(new WhatsappEvent(messageDelivered).read).toBeUndefined();
   expect(new WhatsappEvent(messageRead).read).toEqual(messageRead);
 });

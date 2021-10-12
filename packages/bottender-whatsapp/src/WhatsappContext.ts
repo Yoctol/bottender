@@ -1,4 +1,4 @@
-import Context from '../context/Context';
+import { Context } from '@bottender/core';
 
 import TwilioClient from './TwilioClient';
 import WhatsappEvent from './WhatsappEvent';
@@ -29,11 +29,11 @@ class WhatsappContext extends Context<TwilioClient, WhatsappEvent> {
     }
   ): Promise<any> {
     const to =
-      this._event.rawEvent.smsStatus === 'received'
-        ? this._event.rawEvent.from
-        : this._event.rawEvent.to;
+      this.event.rawEvent.smsStatus === 'received'
+        ? this.event.rawEvent.from
+        : this.event.rawEvent.to;
 
-    return this._client.createMessage({
+    return this.client.createMessage({
       to,
       body: text,
       ...options,

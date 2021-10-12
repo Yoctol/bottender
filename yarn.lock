@@ -607,6 +607,28 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
+"@bottender/core@file:packages/bottender-core":
+  version "1.5.4"
+  dependencies:
+    debug "^4.3.2"
+    delay "^5.0.0"
+    invariant "^2.2.4"
+    lodash "^4.17.21"
+    messaging-api-common "^1.0.4"
+    p-map "^4.0.0"
+    type-fest "^1.4.0"
+    warning "^4.0.3"
+
+"@bottender/whatsapp@file:packages/bottender-whatsapp":
+  version "1.5.4"
+  dependencies:
+    "@bottender/core" "file:../../../Library/Caches/Yarn/v6/npm-@bottender-whatsapp-1.5.4-ee47255f-8e65-46d9-a542-38c7ec0ca803-1634016779172/node_modules/@bottender/bottender-core"
+    axios "^0.21.0"
+    axios-error "^1.0.4"
+    lodash "^4.17.21"
+    messaging-api-common "^1.0.4"
+    type-fest "^1.4.0"
+
 "@eslint/eslintrc@^0.4.3":
   version "0.4.3"
   resolved "https://registry.yarnpkg.com/@eslint/eslintrc/-/eslintrc-0.4.3.tgz#9e42981ef035beb3dd49add17acb96e8ff6f394c"
@@ -2761,7 +2783,7 @@ axios-mock-adapter@^1.20.0:
     is-blob "^2.1.0"
     is-buffer "^2.0.5"
 
-axios@^0.21.1, axios@^0.21.4:
+axios@^0.21.0, axios@^0.21.1, axios@^0.21.4:
   version "0.21.4"
   resolved "https://registry.yarnpkg.com/axios/-/axios-0.21.4.tgz#c67b90dc0568e5c1cf2b0b858c43ba28e2eda575"
   integrity sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==

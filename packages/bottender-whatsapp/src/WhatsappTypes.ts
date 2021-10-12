@@ -1,6 +1,6 @@
-import { RequestContext } from '../types';
+import { RequestContext } from '@bottender/core';
 
-export { WhatsappConnectorOptions } from './WhatsappConnector';
+import TwilioClient from './TwilioClient';
 
 export type MessageReceivedCommon = {
   /**
@@ -140,3 +140,19 @@ export type WhatsappRequestContext = RequestContext<
   WhatsappRequestBody,
   { 'x-twilio-signature'?: string }
 >;
+
+type ConnectorOptionsWithoutClient = {
+  accountSid: string;
+  authToken: string;
+  phoneNumber: string;
+  origin?: string;
+};
+
+type ConnectorOptionsWithClient = {
+  client: TwilioClient;
+  origin?: string;
+};
+
+export type WhatsappConnectorOptions =
+  | ConnectorOptionsWithoutClient
+  | ConnectorOptionsWithClient;

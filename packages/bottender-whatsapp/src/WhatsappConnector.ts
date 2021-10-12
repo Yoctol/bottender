@@ -1,11 +1,8 @@
 import crypto from 'crypto';
 import { EventEmitter } from 'events';
 
+import { Connector, RequestContext, Session } from '@bottender/core';
 import { JsonObject } from 'type-fest';
-
-import Session from '../session/Session';
-import { Connector } from '../bot/Connector';
-import { RequestContext } from '../types';
 
 import TwilioClient from './TwilioClient';
 import WhatsappContext from './WhatsappContext';
