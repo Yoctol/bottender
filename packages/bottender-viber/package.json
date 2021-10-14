@@ -16,7 +16,7 @@
     "@bottender/core": "file:../bottender-core",
     "invariant": "^2.2.4",
     "messaging-api-viber": "^1.1.0",
-    "type-fest": "^1.4.0",
+    "type-fest": "^2.5.0",
     "warning": "^4.0.3"
   }
 }

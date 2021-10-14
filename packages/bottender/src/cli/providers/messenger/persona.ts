@@ -85,7 +85,7 @@ export async function createPersona(ctx: CliContext): Promise<void> {
     const personaID = await client.createPersona(persona);
 
     print(`Successfully create ${bold('persona')} ${bold(personaID.id)}`);
-  } catch (err) {
+  } catch (err: any) {
     error(`Failed to create ${bold('persona')}`);
 
     if (err.response) {
@@ -131,7 +131,7 @@ export async function listPersona(_: CliContext): Promise<void> {
     } else {
       print('No personas are found.');
     }
-  } catch (err) {
+  } catch (err: any) {
     error(`Failed to list ${bold('personas')}`);
     if (err.response) {
       error(`status: ${bold(err.response.status)}`);
@@ -179,7 +179,7 @@ export async function getPersona(ctx: CliContext): Promise<void> {
     } else {
       print(`Cannot get persona of ID ${bold(personaId as string)}`);
     }
-  } catch (err) {
+  } catch (err: any) {
     error(
       `Failed to get ${bold('persona')} of ID ${bold(personaId as string)}`
     );
@@ -229,7 +229,7 @@ export async function deletePersona(ctx: CliContext): Promise<void> {
     } else {
       print(`Cannot get persona of ID ${bold(personaId as string)}`);
     }
-  } catch (err) {
+  } catch (err: any) {
     error(
       `Failed to delete ${bold('persona')} of ID ${bold(personaId as string)}`
     );

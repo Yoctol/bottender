@@ -385,7 +385,7 @@ export default class MessengerEvent implements Event<MessengerRawEvent> {
         parsed && typeof parsed === 'object'
           ? camelcaseKeysDeep(parsed)
           : parsed;
-    } catch (err) {
+    } catch (err: any) {
       payload = rawGamePlay.payload;
     }
 

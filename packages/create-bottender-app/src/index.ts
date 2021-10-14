@@ -282,7 +282,7 @@ const run = async (
     fs.copySync(path.join(root, '.env.example'), path.join(root, '.env'));
     fs.copySync(path.join(root, 'gitignore'), path.join(root, '.gitignore'));
     fs.removeSync(path.join(root, 'gitignore'));
-  } catch (reason) {
+  } catch (reason: any) {
     print('');
     print('Aborting installation.');
     if (reason.command) {
@@ -420,7 +420,7 @@ const init = async (): Promise<void> => {
     print(`  ${command} dev`);
     print('');
     print('Happy hacking!');
-  } catch (err) {
+  } catch (err: any) {
     error('init error with');
     if (err.response) {
       error(`status: ${err.response.status}`);

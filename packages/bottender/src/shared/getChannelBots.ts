@@ -34,7 +34,7 @@ function getChannelBots(): ChannelBot[] {
   try {
     // eslint-disable-next-line import/no-dynamic-require
     ErrorEntry = require(path.resolve('_error.js'));
-  } catch (err) {} // eslint-disable-line no-empty
+  } catch (err: any) {} // eslint-disable-line no-empty
 
   function initializeBot(bot: Bot<any, any, any, any>): void {
     if (initialState) {

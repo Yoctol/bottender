@@ -181,7 +181,7 @@ export async function setWebhook(ctx: CliContext): Promise<void> {
     print(
       `Check selected events on: https://developers.facebook.com/apps/${appId}/messenger/`
     );
-  } catch (err) {
+  } catch (err: any) {
     error('Failed to set Messenger webhook');
 
     if (err.response) {

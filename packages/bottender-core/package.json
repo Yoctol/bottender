@@ -19,7 +19,7 @@
     "lodash": "^4.17.21",
     "messaging-api-common": "^1.0.4",
     "p-map": "^4.0.0",
-    "type-fest": "^1.4.0",
+    "type-fest": "^2.5.0",
     "warning": "^4.0.3"
   }
 }

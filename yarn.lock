@@ -616,7 +616,7 @@
     lodash "^4.17.21"
     messaging-api-common "^1.0.4"
     p-map "^4.0.0"
-    type-fest "^1.4.0"
+    type-fest "^2.5.0"
     warning "^4.0.3"
 
 "@bottender/express@file:packages/bottender-express":
@@ -629,24 +629,34 @@
     express "^4.17.1"
     lodash "^4.17.15"
 
+"@bottender/slack@file:packages/bottender-slack":
+  version "1.5.4"
+  dependencies:
+    "@bottender/core" "file:../../../Library/Caches/Yarn/v6/npm-@bottender-slack-1.5.4-2a56f1db-966a-4c5e-97d5-7f3f36cd2c9e-1634195293522/node_modules/@bottender/bottender-core"
+    invariant "^2.2.4"
+    messaging-api-common "^1.0.4"
+    messaging-api-slack "^1.1.0"
+    type-fest "^2.5.0"
+    warning "^4.0.3"
+
 "@bottender/viber@file:packages/bottender-viber":
   version "1.5.4"
   dependencies:
-    "@bottender/core" "file:../../../Library/Caches/Yarn/v6/npm-@bottender-viber-1.5.4-d942f4a3-4fe8-4994-b019-7304b7cefcc8-1634049607546/node_modules/@bottender/bottender-core"
+    "@bottender/core" "file:../../../Library/Caches/Yarn/v6/npm-@bottender-viber-1.5.4-0cab2613-dc02-4de6-84e7-c196a17c2bde-1634195293521/node_modules/@bottender/bottender-core"
     invariant "^2.2.4"
     messaging-api-viber "^1.1.0"
-    type-fest "^1.4.0"
+    type-fest "^2.5.0"
     warning "^4.0.3"
 
 "@bottender/whatsapp@file:packages/bottender-whatsapp":
   version "1.5.4"
   dependencies:
-    "@bottender/core" "file:../../../Library/Caches/Yarn/v6/npm-@bottender-whatsapp-1.5.4-63f1de1a-1a03-482a-b255-7e6bbdc16f67-1634049607546/node_modules/@bottender/bottender-core"
+    "@bottender/core" "file:../../../Library/Caches/Yarn/v6/npm-@bottender-whatsapp-1.5.4-f662d2af-4cbb-4d56-aefd-4ea6987ec5c8-1634195293523/node_modules/@bottender/bottender-core"
     axios "^0.21.0"
     axios-error "^1.0.4"
     lodash "^4.17.21"
     messaging-api-common "^1.0.4"
-    type-fest "^1.4.0"
+    type-fest "^2.5.0"
 
 "@eslint/eslintrc@^0.4.3":
   version "0.4.3"
@@ -7629,6 +7639,20 @@ messaging-api-slack@1.0.6:
     ts-invariant "^0.4.4"
     warning "^4.0.3"
 
+messaging-api-slack@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/messaging-api-slack/-/messaging-api-slack-1.1.0.tgz#fb517f2828f2fa8ffc1733fb0682efc6dc21dbf2"
+  integrity sha512-n6i3s4w04mr3X8o+UfkjpKPOR97F6H2w/jLrjerOGFmSwEZ+9UpWED7SyTn9rd/nTihY80tmyghx1gxC+alByA==
+  dependencies:
+    "@types/lodash" "^4.14.156"
+    "@types/warning" "^3.0.0"
+    axios "^0.21.1"
+    axios-error "^1.0.4"
+    lodash "^4.17.15"
+    messaging-api-common "^1.0.4"
+    ts-invariant "^0.4.4"
+    warning "^4.0.3"
+
 messaging-api-telegram@1.0.6:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/messaging-api-telegram/-/messaging-api-telegram-1.0.6.tgz#16aeb10ec60ee28b2f934787089cc4af4de911ae"
@@ -10653,10 +10677,10 @@ type-fest@^0.8.1:
   resolved "https://registry.yarnpkg.com/type-fest/-/type-fest-0.8.1.tgz#09e249ebde851d3b1e48d27c105444667f17b83d"
   integrity sha512-4dbzIzqvjtgiM5rw1k5rEHtBANKmdudhGyBEajN01fEyhaAIhsoKNy6y7+IN93IfpFtwY9iqi7kD+xwKhQsNJA==
 
-type-fest@^1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/type-fest/-/type-fest-1.4.0.tgz#e9fb813fe3bf1744ec359d55d1affefa76f14be1"
-  integrity sha512-yGSza74xk0UG8k+pLh5oeoYirvIiWo5t0/o3zHHAO2tRDiZcxWP7fywNlXhqb6/r6sWvwi+RsyQMWhVLe4BVuA==
+type-fest@^2.5.0:
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/type-fest/-/type-fest-2.5.0.tgz#e5d0ef818d565e8fc442414194a4ac3afc4c42a7"
+  integrity sha512-wB5vE+XXZ2g2mDRo18yZMae1joUhquomLTm+BkxeuRHnwmrNWzVPNrFah9z7pjsKNiVAaJL33+uQbgbPSARyqw==
 
 type-is@~1.6.17, type-is@~1.6.18:
   version "1.6.18"
@@ -10678,10 +10702,10 @@ typedarray@^0.0.6:
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
-typescript@^3.9.6:
-  version "3.9.6"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.9.6.tgz#8f3e0198a34c3ae17091b35571d3afd31999365a"
-  integrity sha512-Pspx3oKAPJtjNwE92YS05HQoY7z2SFyOpHo9MqJor3BXAGNaPUs83CuVp9VISFkSjyRfiTpmKuAYGJB7S7hOxw==
+typescript@^4.4.4:
+  version "4.4.4"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.4.4.tgz#2cd01a1a1f160704d3101fd5a58ff0f9fcb8030c"
+  integrity sha512-DqGhF5IKoBl8WNf8C1gu8q0xZSInh9j1kJJMqT3a94w1JzVaBU4EXOSMrz9yDqMT0xt3selp83fuFMQ0uzv6qA==
 
 uglify-js@^3.1.4:
   version "3.13.5"
