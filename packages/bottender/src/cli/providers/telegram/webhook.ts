@@ -1,6 +1,6 @@
 import invariant from 'invariant';
 import { Confirm } from 'enquirer';
-import { TelegramClient } from 'messaging-api-telegram';
+import { TelegramClient } from '@bottender/telegram';
 
 import getChannelConfig from '../../../shared/getChannelConfig';
 import getSubArgs from '../sh/utils/getSubArgs';

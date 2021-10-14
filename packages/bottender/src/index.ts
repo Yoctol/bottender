@@ -1,7 +1,6 @@
 import bottender from './bottender';
 import * as LineTypes from './line/LineTypes';
 import * as MessengerTypes from './messenger/MessengerTypes';
-import * as TelegramTypes from './telegram/TelegramTypes';
 
 export { bottender };
 
@@ -72,11 +71,13 @@ export {
 } from '@bottender/slack';
 
 /* Telegram */
-export { default as TelegramConnector } from './telegram/TelegramConnector';
-export { default as TelegramContext } from './telegram/TelegramContext';
-export { default as TelegramEvent } from './telegram/TelegramEvent';
-export { TelegramClient } from 'messaging-api-telegram';
-export { TelegramTypes };
+export {
+  TelegramConnector,
+  TelegramContext,
+  TelegramEvent,
+  TelegramClient,
+  TelegramTypes,
+} from '@bottender/telegram';
 
 /* Viber */
 export {

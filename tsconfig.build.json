@@ -14,6 +14,7 @@
     { "path": "./packages/bottender-qna-maker" },
     { "path": "./packages/bottender-rasa" },
     { "path": "./packages/bottender-slack" },
+    { "path": "./packages/bottender-telegram" },
     { "path": "./packages/bottender-viber" },
     { "path": "./packages/bottender-whatsapp" },
     { "path": "./packages/create-bottender-app" }

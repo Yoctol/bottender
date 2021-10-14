@@ -1,6 +1,5 @@
+import { RequestContext } from '@bottender/core';
 import { TelegramTypes as TelegramTypesInternal } from 'messaging-api-telegram';
-
-import { RequestContext } from '../types';
 
 export * from 'messaging-api-telegram/dist/TelegramTypes';
 export { TelegramConnectorOptions } from './TelegramConnector';

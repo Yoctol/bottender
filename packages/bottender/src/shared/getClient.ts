@@ -1,9 +1,9 @@
 import { LineClient } from 'messaging-api-line';
 import { MessengerClient } from 'messaging-api-messenger';
-import { SlackOAuthClient } from 'messaging-api-slack';
-import { TelegramClient } from 'messaging-api-telegram';
+import { SlackOAuthClient } from '@bottender/slack';
+import { TelegramClient } from '@bottender/telegram';
 import { TwilioClient } from '@bottender/whatsapp';
-import { ViberClient } from 'messaging-api-viber';
+import { ViberClient } from '@bottender/viber';
 
 import { Channel } from '../types';
 

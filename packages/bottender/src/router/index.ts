@@ -1,12 +1,12 @@
 import { JsonObject } from 'type-fest';
 import { routes as slack } from '@bottender/slack';
+import { routes as telegram } from '@bottender/telegram';
 import { routes as viber } from '@bottender/viber';
 import { routes as whatsapp } from '@bottender/whatsapp';
 
 import Context from '../context/Context';
 import line from '../line/routes';
 import messenger from '../messenger/routes';
-import telegram from '../telegram/routes';
 import { Action, Props } from '../types';
 
 type MatchPattern = string | Array<string> | RegExp;
