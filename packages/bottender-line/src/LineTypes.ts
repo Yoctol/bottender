@@ -1,4 +1,4 @@
-import { RequestContext } from '../types';
+import { RequestContext } from '@bottender/core';
 
 export * from 'messaging-api-line/dist/LineTypes';
 export { LineConnectorOptions } from './LineConnector';

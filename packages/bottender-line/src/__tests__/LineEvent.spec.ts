@@ -1,6 +1,7 @@
 import LineEvent from '../LineEvent';
+import { LineRawEvent } from '../LineTypes';
 
-const textMessage = {
+const textMessage: LineRawEvent = {
   replyToken: 'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA',
   type: 'message',
   timestamp: 1462629479859,
@@ -8,6 +9,7 @@ const textMessage = {
     type: 'user',
     userId: 'U206d25c2ea6bd87c17655609a1c37cb8',
   },
+  mode: 'active',
   message: {
     id: '325708',
     type: 'text',
@@ -23,7 +25,7 @@ const textMessage = {
   },
 };
 
-const imageMessage = {
+const imageMessage: LineRawEvent = {
   replyToken: 'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA',
   type: 'message',
   timestamp: 1462629479859,
@@ -31,13 +33,14 @@ const imageMessage = {
     type: 'user',
     userId: 'U206d25c2ea6bd87c17655609a1c37cb8',
   },
+  mode: 'active',
   message: {
     id: '325708',
     type: 'image',
   },
 };
 
-const videoMessage = {
+const videoMessage: LineRawEvent = {
   replyToken: 'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA',
   type: 'message',
   timestamp: 1462629479859,
@@ -45,13 +48,14 @@ const videoMessage = {
     type: 'user',
     userId: 'U206d25c2ea6bd87c17655609a1c37cb8',
   },
+  mode: 'active',
   message: {
     id: '325708',
     type: 'video',
   },
 };
 
-const audioMessage = {
+const audioMessage: LineRawEvent = {
   replyToken: 'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA',
   type: 'message',
   timestamp: 1462629479859,
@@ -59,13 +63,14 @@ const audioMessage = {
     type: 'user',
     userId: 'U206d25c2ea6bd87c17655609a1c37cb8',
   },
+  mode: 'active',
   message: {
     id: '325708',
     type: 'audio',
   },
 };
 
-const locationMessage = {
+const locationMessage: LineRawEvent = {
   replyToken: 'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA',
   type: 'message',
   timestamp: 1462629479859,
@@ -73,6 +78,7 @@ const locationMessage = {
     type: 'user',
     userId: 'U206d25c2ea6bd87c17655609a1c37cb8',
   },
+  mode: 'active',
   message: {
     id: '325708',
     type: 'location',
@@ -83,7 +89,7 @@ const locationMessage = {
   },
 };
 
-const stickerMessage = {
+const stickerMessage: LineRawEvent = {
   replyToken: 'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA',
   type: 'message',
   timestamp: 1462629479859,
@@ -91,6 +97,7 @@ const stickerMessage = {
     type: 'user',
     userId: 'U206d25c2ea6bd87c17655609a1c37cb8',
   },
+  mode: 'active',
   message: {
     id: '325708',
     type: 'sticker',
@@ -99,7 +106,7 @@ const stickerMessage = {
   },
 };
 
-const follow = {
+const follow: LineRawEvent = {
   replyToken: 'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA',
   type: 'follow',
   timestamp: 1462629479859,
@@ -107,18 +114,20 @@ const follow = {
     type: 'user',
     userId: 'U206d25c2ea6bd87c17655609a1c37cb8',
   },
+  mode: 'active',
 };
 
-const unfollow = {
+const unfollow: LineRawEvent = {
   type: 'unfollow',
   timestamp: 1462629479859,
   source: {
     type: 'user',
     userId: 'U206d25c2ea6bd87c17655609a1c37cb8',
   },
+  mode: 'active',
 };
 
-const join = {
+const join: LineRawEvent = {
   replyToken: 'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA',
   type: 'join',
   timestamp: 1462629479859,
@@ -126,18 +135,20 @@ const join = {
     type: 'group',
     groupId: 'cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
   },
+  mode: 'active',
 };
 
-const leave = {
+const leave: LineRawEvent = {
   type: 'leave',
   timestamp: 1462629479859,
   source: {
     type: 'group',
     groupId: 'cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
   },
+  mode: 'active',
 };
 
-const postback = {
+const postback: LineRawEvent = {
   replyToken: 'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA',
   type: 'postback',
   timestamp: 1462629479859,
@@ -145,12 +156,13 @@ const postback = {
     type: 'user',
     userId: 'U206d25c2ea6bd87c17655609a1c37cb8',
   },
+  mode: 'active',
   postback: {
     data: 'action=buyItem&itemId=123123&color=red',
   },
 };
 
-const datePostback = {
+const datePostback: LineRawEvent = {
   replyToken: 'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA',
   type: 'postback',
   timestamp: 1462629479859,
@@ -158,6 +170,7 @@ const datePostback = {
     type: 'user',
     userId: 'U206d25c2ea6bd87c17655609a1c37cb8',
   },
+  mode: 'active',
   postback: {
     data: 'action=buyItem&itemId=123123&color=red',
     params: {
@@ -166,7 +179,7 @@ const datePostback = {
   },
 };
 
-const timePostback = {
+const timePostback: LineRawEvent = {
   replyToken: 'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA',
   type: 'postback',
   timestamp: 1462629479859,
@@ -174,6 +187,7 @@ const timePostback = {
     type: 'user',
     userId: 'U206d25c2ea6bd87c17655609a1c37cb8',
   },
+  mode: 'active',
   postback: {
     data: 'action=buyItem&itemId=123123&color=red',
     params: {
@@ -182,7 +196,7 @@ const timePostback = {
   },
 };
 
-const datetimePostback = {
+const datetimePostback: LineRawEvent = {
   replyToken: 'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA',
   type: 'postback',
   timestamp: 1462629479859,
@@ -190,6 +204,7 @@ const datetimePostback = {
     type: 'user',
     userId: 'U206d25c2ea6bd87c17655609a1c37cb8',
   },
+  mode: 'active',
   postback: {
     data: 'action=buyItem&itemId=123123&color=red',
     params: {
@@ -198,7 +213,7 @@ const datetimePostback = {
   },
 };
 
-const beacon = {
+const beacon: LineRawEvent = {
   replyToken: 'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA',
   type: 'beacon',
   timestamp: 1462629479859,
@@ -206,19 +221,21 @@ const beacon = {
     type: 'user',
     userId: 'U206d25c2ea6bd87c17655609a1c37cb8',
   },
+  mode: 'active',
   beacon: {
     hwid: 'd41d8cd98f',
     type: 'enter',
   },
 };
 
-const accountLink = {
+const accountLink: LineRawEvent = {
   type: 'accountLink',
   replyToken: 'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA',
   source: {
     userId: 'U206d25c2ea6bd87c17655609a1c37cb8',
     type: 'user',
   },
+  mode: 'active',
   timestamp: 1513669370317,
   link: {
     result: 'ok',
@@ -226,7 +243,7 @@ const accountLink = {
   },
 };
 
-const memberJoined = {
+const memberJoined: LineRawEvent = {
   replyToken: 'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA',
   type: 'memberJoined',
   timestamp: 1462629479859,
@@ -234,6 +251,7 @@ const memberJoined = {
     type: 'group',
     groupId: 'cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
   },
+  mode: 'active',
   joined: {
     members: [
       {
@@ -248,13 +266,14 @@ const memberJoined = {
   },
 };
 
-const memberLeft = {
+const memberLeft: LineRawEvent = {
   type: 'memberLeft',
   timestamp: 1462629479960,
   source: {
     type: 'group',
     groupId: 'cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
   },
+  mode: 'active',
   left: {
     members: [
       {
@@ -269,7 +288,7 @@ const memberLeft = {
   },
 };
 
-const thingsLink = {
+const thingsLink: LineRawEvent = {
   type: 'things',
   replyToken: 'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA',
   timestamp: 1462629479859,
@@ -277,13 +296,14 @@ const thingsLink = {
     type: 'user',
     userId: 'U206d25c2ea6bd87c17655609a1c37cb8',
   },
+  mode: 'active',
   things: {
     deviceId: 't2c449c9d1...',
     type: 'link',
   },
 };
 
-const thingsUnlink = {
+const thingsUnlink: LineRawEvent = {
   type: 'things',
   replyToken: 'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA',
   timestamp: 1462629479859,
@@ -291,13 +311,14 @@ const thingsUnlink = {
     type: 'user',
     userId: 'U206d25c2ea6bd87c17655609a1c37cb8',
   },
+  mode: 'active',
   things: {
     deviceId: 't2c449c9d1...',
     type: 'unlink',
   },
 };
 
-const thingsScenarioResult = {
+const thingsScenarioResult: LineRawEvent = {
   type: 'things',
   replyToken: 'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA',
   source: {
@@ -357,7 +378,7 @@ it('#destination', () => {
     'Uea8667adaf43586706170ff25ff47ae6'
   );
 
-  expect(new LineEvent(textMessage).destination).toEqual(null);
+  expect(new LineEvent(textMessage).destination).toBeUndefined();
 });
 
 it('#replyToken', () => {
@@ -367,11 +388,11 @@ it('#replyToken', () => {
   expect(new LineEvent(follow).replyToken).toEqual(
     'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA'
   );
-  expect(new LineEvent(unfollow).replyToken).toEqual(null);
+  expect(new LineEvent(unfollow).replyToken).toBeUndefined();
   expect(new LineEvent(join).replyToken).toEqual(
     'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA'
   );
-  expect(new LineEvent(leave).replyToken).toEqual(null);
+  expect(new LineEvent(leave).replyToken).toBeUndefined();
   expect(new LineEvent(postback).replyToken).toEqual(
     'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA'
   );
@@ -384,7 +405,7 @@ it('#replyToken', () => {
   expect(new LineEvent(memberJoined).replyToken).toEqual(
     'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA'
   );
-  expect(new LineEvent(memberLeft).replyToken).toEqual(null);
+  expect(new LineEvent(memberLeft).replyToken).toBeUndefined();
 
   expect(new LineEvent(thingsLink).replyToken).toEqual(
     'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA'
@@ -450,7 +471,7 @@ it('#source', () => {
     type: 'user',
     userId: 'U206d25c2ea6bd87c17655609a1c37cb8',
   });
-  expect(new LineEvent(noSourceMessage).source).toEqual(null);
+  expect(new LineEvent(noSourceMessage).source).toBeUndefined();
 });
 
 it('#timestamp', () => {
@@ -525,13 +546,13 @@ it('#message', () => {
     packageId: '1',
     stickerId: '1',
   });
-  expect(new LineEvent(beacon).message).toEqual(null);
-  expect(new LineEvent(accountLink).message).toEqual(null);
-  expect(new LineEvent(memberJoined).message).toEqual(null);
-  expect(new LineEvent(memberLeft).message).toEqual(null);
-  expect(new LineEvent(thingsLink).message).toEqual(null);
-  expect(new LineEvent(thingsUnlink).message).toEqual(null);
-  expect(new LineEvent(thingsScenarioResult).message).toEqual(null);
+  expect(new LineEvent(beacon).message).toBeUndefined();
+  expect(new LineEvent(accountLink).message).toBeUndefined();
+  expect(new LineEvent(memberJoined).message).toBeUndefined();
+  expect(new LineEvent(memberLeft).message).toBeUndefined();
+  expect(new LineEvent(thingsLink).message).toBeUndefined();
+  expect(new LineEvent(thingsUnlink).message).toBeUndefined();
+  expect(new LineEvent(thingsScenarioResult).message).toBeUndefined();
 });
 
 it('#isText', () => {
@@ -545,11 +566,11 @@ it('#isText', () => {
 
 it('#text', () => {
   expect(new LineEvent(textMessage).text).toEqual('Hello, world! (love)');
-  expect(new LineEvent(imageMessage).text).toEqual(null);
-  expect(new LineEvent(videoMessage).text).toEqual(null);
-  expect(new LineEvent(audioMessage).text).toEqual(null);
-  expect(new LineEvent(locationMessage).text).toEqual(null);
-  expect(new LineEvent(stickerMessage).text).toEqual(null);
+  expect(new LineEvent(imageMessage).text).toBeUndefined();
+  expect(new LineEvent(videoMessage).text).toBeUndefined();
+  expect(new LineEvent(audioMessage).text).toBeUndefined();
+  expect(new LineEvent(locationMessage).text).toBeUndefined();
+  expect(new LineEvent(stickerMessage).text).toBeUndefined();
 });
 
 it('#isImage', () => {
@@ -562,15 +583,15 @@ it('#isImage', () => {
 });
 
 it('#image', () => {
-  expect(new LineEvent(textMessage).image).toEqual(null);
+  expect(new LineEvent(textMessage).image).toBeUndefined();
   expect(new LineEvent(imageMessage).image).toEqual({
     id: '325708',
     type: 'image',
   });
-  expect(new LineEvent(videoMessage).image).toEqual(null);
-  expect(new LineEvent(audioMessage).image).toEqual(null);
-  expect(new LineEvent(locationMessage).image).toEqual(null);
-  expect(new LineEvent(stickerMessage).image).toEqual(null);
+  expect(new LineEvent(videoMessage).image).toBeUndefined();
+  expect(new LineEvent(audioMessage).image).toBeUndefined();
+  expect(new LineEvent(locationMessage).image).toBeUndefined();
+  expect(new LineEvent(stickerMessage).image).toBeUndefined();
 });
 
 it('#isVideo', () => {
@@ -583,15 +604,15 @@ it('#isVideo', () => {
 });
 
 it('#video', () => {
-  expect(new LineEvent(textMessage).video).toEqual(null);
-  expect(new LineEvent(imageMessage).video).toEqual(null);
+  expect(new LineEvent(textMessage).video).toBeUndefined();
+  expect(new LineEvent(imageMessage).video).toBeUndefined();
   expect(new LineEvent(videoMessage).video).toEqual({
     id: '325708',
     type: 'video',
   });
-  expect(new LineEvent(audioMessage).video).toEqual(null);
-  expect(new LineEvent(locationMessage).video).toEqual(null);
-  expect(new LineEvent(stickerMessage).video).toEqual(null);
+  expect(new LineEvent(audioMessage).video).toBeUndefined();
+  expect(new LineEvent(locationMessage).video).toBeUndefined();
+  expect(new LineEvent(stickerMessage).video).toBeUndefined();
 });
 
 it('#isAudio', () => {
@@ -604,15 +625,15 @@ it('#isAudio', () => {
 });
 
 it('#audio', () => {
-  expect(new LineEvent(textMessage).audio).toEqual(null);
-  expect(new LineEvent(imageMessage).audio).toEqual(null);
-  expect(new LineEvent(videoMessage).audio).toEqual(null);
+  expect(new LineEvent(textMessage).audio).toBeUndefined();
+  expect(new LineEvent(imageMessage).audio).toBeUndefined();
+  expect(new LineEvent(videoMessage).audio).toBeUndefined();
   expect(new LineEvent(audioMessage).audio).toEqual({
     id: '325708',
     type: 'audio',
   });
-  expect(new LineEvent(locationMessage).audio).toEqual(null);
-  expect(new LineEvent(stickerMessage).audio).toEqual(null);
+  expect(new LineEvent(locationMessage).audio).toBeUndefined();
+  expect(new LineEvent(stickerMessage).audio).toBeUndefined();
 });
 
 it('#isLocation', () => {
@@ -625,10 +646,10 @@ it('#isLocation', () => {
 });
 
 it('#location', () => {
-  expect(new LineEvent(textMessage).location).toEqual(null);
-  expect(new LineEvent(imageMessage).location).toEqual(null);
-  expect(new LineEvent(videoMessage).location).toEqual(null);
-  expect(new LineEvent(audioMessage).location).toEqual(null);
+  expect(new LineEvent(textMessage).location).toBeUndefined();
+  expect(new LineEvent(imageMessage).location).toBeUndefined();
+  expect(new LineEvent(videoMessage).location).toBeUndefined();
+  expect(new LineEvent(audioMessage).location).toBeUndefined();
   expect(new LineEvent(locationMessage).location).toEqual({
     address: 'Golden Gate Bridge, San Francisco, CA, United States',
     id: '325708',
@@ -637,7 +658,7 @@ it('#location', () => {
     title: 'my location',
     type: 'location',
   });
-  expect(new LineEvent(stickerMessage).location).toEqual(null);
+  expect(new LineEvent(stickerMessage).location).toBeUndefined();
 });
 
 it('#isSticker', () => {
@@ -650,11 +671,11 @@ it('#isSticker', () => {
 });
 
 it('#sticker', () => {
-  expect(new LineEvent(textMessage).sticker).toEqual(null);
-  expect(new LineEvent(imageMessage).sticker).toEqual(null);
-  expect(new LineEvent(videoMessage).sticker).toEqual(null);
-  expect(new LineEvent(audioMessage).sticker).toEqual(null);
-  expect(new LineEvent(locationMessage).sticker).toEqual(null);
+  expect(new LineEvent(textMessage).sticker).toBeUndefined();
+  expect(new LineEvent(imageMessage).sticker).toBeUndefined();
+  expect(new LineEvent(videoMessage).sticker).toBeUndefined();
+  expect(new LineEvent(audioMessage).sticker).toBeUndefined();
+  expect(new LineEvent(locationMessage).sticker).toBeUndefined();
   expect(new LineEvent(stickerMessage).sticker).toEqual({
     id: '325708',
     packageId: '1',
@@ -680,21 +701,21 @@ it('#isFollow', () => {
 });
 
 it('#follow', () => {
-  expect(new LineEvent(textMessage).follow).toEqual(null);
+  expect(new LineEvent(textMessage).follow).toBeUndefined();
   expect(new LineEvent(follow).follow).toEqual({
     type: 'user',
     userId: 'U206d25c2ea6bd87c17655609a1c37cb8',
   });
-  expect(new LineEvent(unfollow).follow).toEqual(null);
-  expect(new LineEvent(join).follow).toEqual(null);
-  expect(new LineEvent(leave).follow).toEqual(null);
-  expect(new LineEvent(postback).follow).toEqual(null);
-  expect(new LineEvent(beacon).follow).toEqual(null);
-  expect(new LineEvent(memberJoined).follow).toEqual(null);
-  expect(new LineEvent(memberLeft).follow).toEqual(null);
-  expect(new LineEvent(thingsLink).follow).toEqual(null);
-  expect(new LineEvent(thingsUnlink).follow).toEqual(null);
-  expect(new LineEvent(thingsScenarioResult).follow).toEqual(null);
+  expect(new LineEvent(unfollow).follow).toBeUndefined();
+  expect(new LineEvent(join).follow).toBeUndefined();
+  expect(new LineEvent(leave).follow).toBeUndefined();
+  expect(new LineEvent(postback).follow).toBeUndefined();
+  expect(new LineEvent(beacon).follow).toBeUndefined();
+  expect(new LineEvent(memberJoined).follow).toBeUndefined();
+  expect(new LineEvent(memberLeft).follow).toBeUndefined();
+  expect(new LineEvent(thingsLink).follow).toBeUndefined();
+  expect(new LineEvent(thingsUnlink).follow).toBeUndefined();
+  expect(new LineEvent(thingsScenarioResult).follow).toBeUndefined();
 });
 
 it('#isUnfollow', () => {
@@ -714,22 +735,22 @@ it('#isUnfollow', () => {
 });
 
 it('#unfollow', () => {
-  expect(new LineEvent(textMessage).unfollow).toEqual(null);
-  expect(new LineEvent(follow).unfollow).toEqual(null);
+  expect(new LineEvent(textMessage).unfollow).toBeUndefined();
+  expect(new LineEvent(follow).unfollow).toBeUndefined();
   expect(new LineEvent(unfollow).unfollow).toEqual({
     type: 'user',
     userId: 'U206d25c2ea6bd87c17655609a1c37cb8',
   });
-  expect(new LineEvent(join).unfollow).toEqual(null);
-  expect(new LineEvent(leave).unfollow).toEqual(null);
-  expect(new LineEvent(postback).unfollow).toEqual(null);
-  expect(new LineEvent(beacon).unfollow).toEqual(null);
-  expect(new LineEvent(accountLink).unfollow).toEqual(null);
-  expect(new LineEvent(memberJoined).unfollow).toEqual(null);
-  expect(new LineEvent(memberLeft).unfollow).toEqual(null);
-  expect(new LineEvent(thingsLink).unfollow).toEqual(null);
-  expect(new LineEvent(thingsUnlink).unfollow).toEqual(null);
-  expect(new LineEvent(thingsScenarioResult).unfollow).toEqual(null);
+  expect(new LineEvent(join).unfollow).toBeUndefined();
+  expect(new LineEvent(leave).unfollow).toBeUndefined();
+  expect(new LineEvent(postback).unfollow).toBeUndefined();
+  expect(new LineEvent(beacon).unfollow).toBeUndefined();
+  expect(new LineEvent(accountLink).unfollow).toBeUndefined();
+  expect(new LineEvent(memberJoined).unfollow).toBeUndefined();
+  expect(new LineEvent(memberLeft).unfollow).toBeUndefined();
+  expect(new LineEvent(thingsLink).unfollow).toBeUndefined();
+  expect(new LineEvent(thingsUnlink).unfollow).toBeUndefined();
+  expect(new LineEvent(thingsScenarioResult).unfollow).toBeUndefined();
 });
 
 it('#isJoin', () => {
@@ -749,22 +770,22 @@ it('#isJoin', () => {
 });
 
 it('#join', () => {
-  expect(new LineEvent(textMessage).join).toEqual(null);
-  expect(new LineEvent(follow).join).toEqual(null);
-  expect(new LineEvent(unfollow).join).toEqual(null);
+  expect(new LineEvent(textMessage).join).toBeUndefined();
+  expect(new LineEvent(follow).join).toBeUndefined();
+  expect(new LineEvent(unfollow).join).toBeUndefined();
   expect(new LineEvent(join).join).toEqual({
     type: 'group',
     groupId: 'cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
   });
-  expect(new LineEvent(leave).join).toEqual(null);
-  expect(new LineEvent(postback).join).toEqual(null);
-  expect(new LineEvent(beacon).join).toEqual(null);
-  expect(new LineEvent(accountLink).join).toEqual(null);
-  expect(new LineEvent(memberJoined).join).toEqual(null);
-  expect(new LineEvent(memberLeft).join).toEqual(null);
-  expect(new LineEvent(thingsLink).join).toEqual(null);
-  expect(new LineEvent(thingsUnlink).join).toEqual(null);
-  expect(new LineEvent(thingsScenarioResult).join).toEqual(null);
+  expect(new LineEvent(leave).join).toBeUndefined();
+  expect(new LineEvent(postback).join).toBeUndefined();
+  expect(new LineEvent(beacon).join).toBeUndefined();
+  expect(new LineEvent(accountLink).join).toBeUndefined();
+  expect(new LineEvent(memberJoined).join).toBeUndefined();
+  expect(new LineEvent(memberLeft).join).toBeUndefined();
+  expect(new LineEvent(thingsLink).join).toBeUndefined();
+  expect(new LineEvent(thingsUnlink).join).toBeUndefined();
+  expect(new LineEvent(thingsScenarioResult).join).toBeUndefined();
 });
 
 it('#isLeave', () => {
@@ -784,22 +805,22 @@ it('#isLeave', () => {
 });
 
 it('#leave', () => {
-  expect(new LineEvent(textMessage).leave).toEqual(null);
-  expect(new LineEvent(follow).leave).toEqual(null);
-  expect(new LineEvent(unfollow).leave).toEqual(null);
-  expect(new LineEvent(join).leave).toEqual(null);
+  expect(new LineEvent(textMessage).leave).toBeUndefined();
+  expect(new LineEvent(follow).leave).toBeUndefined();
+  expect(new LineEvent(unfollow).leave).toBeUndefined();
+  expect(new LineEvent(join).leave).toBeUndefined();
   expect(new LineEvent(leave).leave).toEqual({
     type: 'group',
     groupId: 'cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
   });
-  expect(new LineEvent(postback).leave).toEqual(null);
-  expect(new LineEvent(beacon).leave).toEqual(null);
-  expect(new LineEvent(accountLink).leave).toEqual(null);
-  expect(new LineEvent(memberJoined).leave).toEqual(null);
-  expect(new LineEvent(memberLeft).leave).toEqual(null);
-  expect(new LineEvent(thingsLink).leave).toEqual(null);
-  expect(new LineEvent(thingsUnlink).leave).toEqual(null);
-  expect(new LineEvent(thingsScenarioResult).leave).toEqual(null);
+  expect(new LineEvent(postback).leave).toBeUndefined();
+  expect(new LineEvent(beacon).leave).toBeUndefined();
+  expect(new LineEvent(accountLink).leave).toBeUndefined();
+  expect(new LineEvent(memberJoined).leave).toBeUndefined();
+  expect(new LineEvent(memberLeft).leave).toBeUndefined();
+  expect(new LineEvent(thingsLink).leave).toBeUndefined();
+  expect(new LineEvent(thingsUnlink).leave).toBeUndefined();
+  expect(new LineEvent(thingsScenarioResult).leave).toBeUndefined();
 });
 
 it('#isPostback', () => {
@@ -822,7 +843,7 @@ it('#isPostback', () => {
 });
 
 it('#postback', () => {
-  expect(new LineEvent(textMessage).postback).toEqual(null);
+  expect(new LineEvent(textMessage).postback).toBeUndefined();
   expect(new LineEvent(postback).postback).toEqual({
     data: 'action=buyItem&itemId=123123&color=red',
   });
@@ -866,7 +887,7 @@ it('#isPayload', () => {
 });
 
 it('#payload', () => {
-  expect(new LineEvent(textMessage).payload).toEqual(null);
+  expect(new LineEvent(textMessage).payload).toBeUndefined();
   expect(new LineEvent(postback).payload).toEqual(
     'action=buyItem&itemId=123123&color=red'
   );
@@ -882,26 +903,26 @@ it('#payload', () => {
 });
 
 it('#date', () => {
-  expect(new LineEvent(textMessage).date).toEqual(null);
-  expect(new LineEvent(postback).date).toEqual(null);
+  expect(new LineEvent(textMessage).date).toBeUndefined();
+  expect(new LineEvent(postback).date).toBeUndefined();
   expect(new LineEvent(datePostback).date).toEqual('2017-09-06');
-  expect(new LineEvent(timePostback).date).toEqual(null);
-  expect(new LineEvent(datetimePostback).date).toEqual(null);
+  expect(new LineEvent(timePostback).date).toBeUndefined();
+  expect(new LineEvent(datetimePostback).date).toBeUndefined();
 });
 
 it('#time', () => {
-  expect(new LineEvent(textMessage).time).toEqual(null);
-  expect(new LineEvent(postback).time).toEqual(null);
-  expect(new LineEvent(datePostback).time).toEqual(null);
+  expect(new LineEvent(textMessage).time).toBeUndefined();
+  expect(new LineEvent(postback).time).toBeUndefined();
+  expect(new LineEvent(datePostback).time).toBeUndefined();
   expect(new LineEvent(timePostback).time).toEqual('12:30');
-  expect(new LineEvent(datetimePostback).time).toEqual(null);
+  expect(new LineEvent(datetimePostback).time).toBeUndefined();
 });
 
 it('#datetime', () => {
-  expect(new LineEvent(textMessage).datetime).toEqual(null);
-  expect(new LineEvent(postback).datetime).toEqual(null);
-  expect(new LineEvent(datePostback).datetime).toEqual(null);
-  expect(new LineEvent(timePostback).datetime).toEqual(null);
+  expect(new LineEvent(textMessage).datetime).toBeUndefined();
+  expect(new LineEvent(postback).datetime).toBeUndefined();
+  expect(new LineEvent(datePostback).datetime).toBeUndefined();
+  expect(new LineEvent(timePostback).datetime).toBeUndefined();
   expect(new LineEvent(datetimePostback).datetime).toEqual('2017-09-06T12:30');
 });
 
@@ -922,22 +943,22 @@ it('#isBeacon', () => {
 });
 
 it('#beacon', () => {
-  expect(new LineEvent(textMessage).beacon).toEqual(null);
-  expect(new LineEvent(follow).beacon).toEqual(null);
-  expect(new LineEvent(unfollow).beacon).toEqual(null);
-  expect(new LineEvent(join).beacon).toEqual(null);
-  expect(new LineEvent(leave).beacon).toEqual(null);
-  expect(new LineEvent(postback).beacon).toEqual(null);
+  expect(new LineEvent(textMessage).beacon).toBeUndefined();
+  expect(new LineEvent(follow).beacon).toBeUndefined();
+  expect(new LineEvent(unfollow).beacon).toBeUndefined();
+  expect(new LineEvent(join).beacon).toBeUndefined();
+  expect(new LineEvent(leave).beacon).toBeUndefined();
+  expect(new LineEvent(postback).beacon).toBeUndefined();
   expect(new LineEvent(beacon).beacon).toEqual({
     hwid: 'd41d8cd98f',
     type: 'enter',
   });
-  expect(new LineEvent(accountLink).beacon).toEqual(null);
-  expect(new LineEvent(memberJoined).beacon).toEqual(null);
-  expect(new LineEvent(memberLeft).beacon).toEqual(null);
-  expect(new LineEvent(thingsLink).beacon).toEqual(null);
-  expect(new LineEvent(thingsUnlink).beacon).toEqual(null);
-  expect(new LineEvent(thingsScenarioResult).beacon).toEqual(null);
+  expect(new LineEvent(accountLink).beacon).toBeUndefined();
+  expect(new LineEvent(memberJoined).beacon).toBeUndefined();
+  expect(new LineEvent(memberLeft).beacon).toBeUndefined();
+  expect(new LineEvent(thingsLink).beacon).toBeUndefined();
+  expect(new LineEvent(thingsUnlink).beacon).toBeUndefined();
+  expect(new LineEvent(thingsScenarioResult).beacon).toBeUndefined();
 });
 
 it('#isAccountLink', () => {
@@ -957,22 +978,22 @@ it('#isAccountLink', () => {
 });
 
 it('#accountLink', () => {
-  expect(new LineEvent(textMessage).accountLink).toEqual(null);
-  expect(new LineEvent(follow).accountLink).toEqual(null);
-  expect(new LineEvent(unfollow).accountLink).toEqual(null);
-  expect(new LineEvent(join).accountLink).toEqual(null);
-  expect(new LineEvent(leave).accountLink).toEqual(null);
-  expect(new LineEvent(postback).accountLink).toEqual(null);
-  expect(new LineEvent(beacon).accountLink).toEqual(null);
+  expect(new LineEvent(textMessage).accountLink).toBeUndefined();
+  expect(new LineEvent(follow).accountLink).toBeUndefined();
+  expect(new LineEvent(unfollow).accountLink).toBeUndefined();
+  expect(new LineEvent(join).accountLink).toBeUndefined();
+  expect(new LineEvent(leave).accountLink).toBeUndefined();
+  expect(new LineEvent(postback).accountLink).toBeUndefined();
+  expect(new LineEvent(beacon).accountLink).toBeUndefined();
   expect(new LineEvent(accountLink).accountLink).toEqual({
     result: 'ok',
     nonce: 'xxxxxxxxxxxxxxx',
   });
-  expect(new LineEvent(memberJoined).accountLink).toEqual(null);
-  expect(new LineEvent(memberLeft).accountLink).toEqual(null);
-  expect(new LineEvent(thingsLink).accountLink).toEqual(null);
-  expect(new LineEvent(thingsUnlink).accountLink).toEqual(null);
-  expect(new LineEvent(thingsScenarioResult).accountLink).toEqual(null);
+  expect(new LineEvent(memberJoined).accountLink).toBeUndefined();
+  expect(new LineEvent(memberLeft).accountLink).toBeUndefined();
+  expect(new LineEvent(thingsLink).accountLink).toBeUndefined();
+  expect(new LineEvent(thingsUnlink).accountLink).toBeUndefined();
+  expect(new LineEvent(thingsScenarioResult).accountLink).toBeUndefined();
 });
 
 it('#isMemberJoined', () => {
@@ -992,13 +1013,13 @@ it('#isMemberJoined', () => {
 });
 
 it('#memberJoined', () => {
-  expect(new LineEvent(textMessage).memberJoined).toEqual(null);
-  expect(new LineEvent(follow).memberJoined).toEqual(null);
-  expect(new LineEvent(unfollow).memberJoined).toEqual(null);
-  expect(new LineEvent(join).memberJoined).toEqual(null);
-  expect(new LineEvent(leave).memberJoined).toEqual(null);
-  expect(new LineEvent(postback).memberJoined).toEqual(null);
-  expect(new LineEvent(beacon).memberJoined).toEqual(null);
+  expect(new LineEvent(textMessage).memberJoined).toBeUndefined();
+  expect(new LineEvent(follow).memberJoined).toBeUndefined();
+  expect(new LineEvent(unfollow).memberJoined).toBeUndefined();
+  expect(new LineEvent(join).memberJoined).toBeUndefined();
+  expect(new LineEvent(leave).memberJoined).toBeUndefined();
+  expect(new LineEvent(postback).memberJoined).toBeUndefined();
+  expect(new LineEvent(beacon).memberJoined).toBeUndefined();
   expect(new LineEvent(memberJoined).memberJoined).toEqual({
     members: [
       {
@@ -1011,10 +1032,10 @@ it('#memberJoined', () => {
       },
     ],
   });
-  expect(new LineEvent(memberLeft).memberJoined).toEqual(null);
-  expect(new LineEvent(thingsLink).memberJoined).toEqual(null);
-  expect(new LineEvent(thingsUnlink).memberJoined).toEqual(null);
-  expect(new LineEvent(thingsScenarioResult).memberJoined).toEqual(null);
+  expect(new LineEvent(memberLeft).memberJoined).toBeUndefined();
+  expect(new LineEvent(thingsLink).memberJoined).toBeUndefined();
+  expect(new LineEvent(thingsUnlink).memberJoined).toBeUndefined();
+  expect(new LineEvent(thingsScenarioResult).memberJoined).toBeUndefined();
 });
 
 it('#isMemberLeft', () => {
@@ -1034,14 +1055,14 @@ it('#isMemberLeft', () => {
 });
 
 it('#memberLeft', () => {
-  expect(new LineEvent(textMessage).memberLeft).toEqual(null);
-  expect(new LineEvent(follow).memberLeft).toEqual(null);
-  expect(new LineEvent(unfollow).memberLeft).toEqual(null);
-  expect(new LineEvent(join).memberLeft).toEqual(null);
-  expect(new LineEvent(leave).memberLeft).toEqual(null);
-  expect(new LineEvent(postback).memberLeft).toEqual(null);
-  expect(new LineEvent(beacon).memberLeft).toEqual(null);
-  expect(new LineEvent(memberJoined).memberLeft).toEqual(null);
+  expect(new LineEvent(textMessage).memberLeft).toBeUndefined();
+  expect(new LineEvent(follow).memberLeft).toBeUndefined();
+  expect(new LineEvent(unfollow).memberLeft).toBeUndefined();
+  expect(new LineEvent(join).memberLeft).toBeUndefined();
+  expect(new LineEvent(leave).memberLeft).toBeUndefined();
+  expect(new LineEvent(postback).memberLeft).toBeUndefined();
+  expect(new LineEvent(beacon).memberLeft).toBeUndefined();
+  expect(new LineEvent(memberJoined).memberLeft).toBeUndefined();
   expect(new LineEvent(memberLeft).memberLeft).toEqual({
     members: [
       {
@@ -1054,9 +1075,9 @@ it('#memberLeft', () => {
       },
     ],
   });
-  expect(new LineEvent(thingsLink).memberLeft).toEqual(null);
-  expect(new LineEvent(thingsUnlink).memberLeft).toEqual(null);
-  expect(new LineEvent(thingsScenarioResult).memberLeft).toEqual(null);
+  expect(new LineEvent(thingsLink).memberLeft).toBeUndefined();
+  expect(new LineEvent(thingsUnlink).memberLeft).toBeUndefined();
+  expect(new LineEvent(thingsScenarioResult).memberLeft).toBeUndefined();
 });
 
 it('#isThingsLink', () => {
@@ -1092,15 +1113,15 @@ it('#isThingsUnlink', () => {
 });
 
 it('#things', () => {
-  expect(new LineEvent(textMessage).things).toEqual(null);
-  expect(new LineEvent(follow).things).toEqual(null);
-  expect(new LineEvent(unfollow).things).toEqual(null);
-  expect(new LineEvent(join).things).toEqual(null);
-  expect(new LineEvent(leave).things).toEqual(null);
-  expect(new LineEvent(postback).things).toEqual(null);
-  expect(new LineEvent(beacon).things).toEqual(null);
-  expect(new LineEvent(memberJoined).things).toEqual(null);
-  expect(new LineEvent(memberLeft).things).toEqual(null);
+  expect(new LineEvent(textMessage).things).toBeUndefined();
+  expect(new LineEvent(follow).things).toBeUndefined();
+  expect(new LineEvent(unfollow).things).toBeUndefined();
+  expect(new LineEvent(join).things).toBeUndefined();
+  expect(new LineEvent(leave).things).toBeUndefined();
+  expect(new LineEvent(postback).things).toBeUndefined();
+  expect(new LineEvent(beacon).things).toBeUndefined();
+  expect(new LineEvent(memberJoined).things).toBeUndefined();
+  expect(new LineEvent(memberLeft).things).toBeUndefined();
   expect(new LineEvent(thingsLink).things).toEqual({
     deviceId: 't2c449c9d1...',
     type: 'link',

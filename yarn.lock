@@ -629,10 +629,21 @@
     express "^4.17.1"
     lodash "^4.17.15"
 
+"@bottender/line@file:packages/bottender-line":
+  version "1.5.4"
+  dependencies:
+    "@bottender/core" "file:../../../Library/Caches/Yarn/v6/npm-@bottender-line-1.5.4-f84d85bb-d8b6-4c04-8c5c-d90f3affb2de-1634230934968/node_modules/@bottender/bottender-core"
+    "@types/lodash" "^4.14.175"
+    invariant "^2.2.4"
+    lodash "^4.17.21"
+    messaging-api-line "^1.1.0"
+    type-fest "^2.5.0"
+    warning "^4.0.3"
+
 "@bottender/slack@file:packages/bottender-slack":
   version "1.5.4"
   dependencies:
-    "@bottender/core" "file:../../../Library/Caches/Yarn/v6/npm-@bottender-slack-1.5.4-d87ac113-01b3-43cd-a71a-95b52d247aef-1634214160020/node_modules/@bottender/bottender-core"
+    "@bottender/core" "file:../../../Library/Caches/Yarn/v6/npm-@bottender-slack-1.5.4-67a99340-e0ff-497d-8435-bbc16db447f3-1634230934970/node_modules/@bottender/bottender-core"
     invariant "^2.2.4"
     messaging-api-common "^1.0.4"
     messaging-api-slack "^1.1.0"
@@ -642,7 +653,7 @@
 "@bottender/telegram@file:packages/bottender-telegram":
   version "1.5.4"
   dependencies:
-    "@bottender/core" "file:../../../Library/Caches/Yarn/v6/npm-@bottender-telegram-1.5.4-4f64750c-e3bc-44c5-9182-c972aae23d79-1634214160021/node_modules/@bottender/bottender-core"
+    "@bottender/core" "file:../../../Library/Caches/Yarn/v6/npm-@bottender-telegram-1.5.4-ccd7e0b6-e013-4c08-9e38-06950cdcb64a-1634230934971/node_modules/@bottender/bottender-core"
     invariant "^2.2.4"
     messaging-api-telegram "^1.1.0"
     type-fest "^2.5.0"
@@ -651,7 +662,7 @@
 "@bottender/viber@file:packages/bottender-viber":
   version "1.5.4"
   dependencies:
-    "@bottender/core" "file:../../../Library/Caches/Yarn/v6/npm-@bottender-viber-1.5.4-8a0edf83-0314-4caa-b743-1061301209fc-1634214160022/node_modules/@bottender/bottender-core"
+    "@bottender/core" "file:../../../Library/Caches/Yarn/v6/npm-@bottender-viber-1.5.4-3f64ebb9-6e4a-4f4e-b6c4-85b361b40e6e-1634230934971/node_modules/@bottender/bottender-core"
     invariant "^2.2.4"
     messaging-api-viber "^1.1.0"
     type-fest "^2.5.0"
@@ -660,7 +671,7 @@
 "@bottender/whatsapp@file:packages/bottender-whatsapp":
   version "1.5.4"
   dependencies:
-    "@bottender/core" "file:../../../Library/Caches/Yarn/v6/npm-@bottender-whatsapp-1.5.4-bb673374-ca2f-4936-81d4-b66aa136373a-1634214160024/node_modules/@bottender/bottender-core"
+    "@bottender/core" "file:../../../Library/Caches/Yarn/v6/npm-@bottender-whatsapp-1.5.4-7e309309-d020-43ce-8769-23f6dd747d20-1634230934972/node_modules/@bottender/bottender-core"
     axios "^0.21.0"
     axios-error "^1.0.4"
     lodash "^4.17.21"
@@ -7607,6 +7618,20 @@ messaging-api-line@1.0.6:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/messaging-api-line/-/messaging-api-line-1.0.6.tgz#e723e838726652ee513ee6caf400632575169f0c"
   integrity sha512-RlJTonApLF4X4zR//9l0+cjCfrxng9InqHGZPya5Afr6PhGmLttzjOFkGVLE5uOM/RpiivciylueAay2tBu9Gw==
+  dependencies:
+    "@types/warning" "^3.0.0"
+    axios "^0.21.1"
+    axios-error "^1.0.4"
+    image-type "^4.1.0"
+    messaging-api-common "^1.0.4"
+    ts-invariant "^0.4.4"
+    type-fest "^0.15.1"
+    warning "^4.0.3"
+
+messaging-api-line@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/messaging-api-line/-/messaging-api-line-1.1.0.tgz#96dbc77625a9e228d29dcad41bdf8c838344353e"
+  integrity sha512-0ZwrovcIk9r88V8B4o7xKK8KDxefpqcGq/QdGDJ4ImCekjT+x6tH4Z38VYrfPgzJ6FPXGPZSWAR6r91zYmQIPQ==
   dependencies:
     "@types/warning" "^3.0.0"
     axios "^0.21.1"

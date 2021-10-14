@@ -1,4 +1,4 @@
-import { Event } from '../context/Event';
+import { Event } from '@bottender/core';
 
 import {
   AccountLink,
@@ -50,16 +50,18 @@ export default class LineEvent implements Event<LineRawEvent> {
    * The destination is the id of the bot which this event is sent to.
    *
    */
-  get destination(): string | null {
-    return this._destination || null;
+  get destination(): string | undefined {
+    return this._destination;
   }
 
   /**
    * The reply token from LINE raw event. Only present on message, follow, join, postback, beacon events.
    *
    */
-  get replyToken(): string | null {
-    return 'replyToken' in this._rawEvent ? this._rawEvent.replyToken : null;
+  get replyToken(): string | undefined {
+    return 'replyToken' in this._rawEvent
+      ? this._rawEvent.replyToken
+      : undefined;
   }
 
   /**
@@ -67,7 +69,7 @@ export default class LineEvent implements Event<LineRawEvent> {
    *
    */
   get source(): Source {
-    return this._rawEvent.source || null;
+    return this._rawEvent.source;
   }
 
   /**
@@ -82,8 +84,8 @@ export default class LineEvent implements Event<LineRawEvent> {
    * The message object from LINE raw event.
    *
    */
-  get message(): EventMessage | null {
-    return (this._rawEvent as MessageEvent).message || null;
+  get message(): EventMessage | undefined {
+    return (this._rawEvent as MessageEvent).message;
   }
 
   /**
@@ -98,11 +100,10 @@ export default class LineEvent implements Event<LineRawEvent> {
    * The text string from LINE raw event.
    *
    */
-  get text(): string | null {
+  get text(): string | undefined {
     if (this.isText) {
       return (this.message as TextMessage).text;
     }
-    return null;
   }
 
   /**
@@ -117,11 +118,10 @@ export default class LineEvent implements Event<LineRawEvent> {
    * The image object from LINE raw event.
    *
    */
-  get image(): EventMessage | null {
+  get image(): EventMessage | undefined {
     if (this.isImage) {
       return this.message;
     }
-    return null;
   }
 
   /**
@@ -136,11 +136,10 @@ export default class LineEvent implements Event<LineRawEvent> {
    * The video object from LINE raw event.
    *
    */
-  get video(): EventMessage | null {
+  get video(): EventMessage | undefined {
     if (this.isVideo) {
       return this.message;
     }
-    return null;
   }
 
   /**
@@ -155,11 +154,10 @@ export default class LineEvent implements Event<LineRawEvent> {
    * The audio object from LINE raw event.
    *
    */
-  get audio(): EventMessage | null {
+  get audio(): EventMessage | undefined {
     if (this.isAudio) {
       return this.message;
     }
-    return null;
   }
 
   /**
@@ -174,11 +172,10 @@ export default class LineEvent implements Event<LineRawEvent> {
    * The location object from LINE raw event.
    *
    */
-  get location(): EventMessage | null {
+  get location(): EventMessage | undefined {
     if (this.isLocation) {
       return this.message;
     }
-    return null;
   }
 
   /**
@@ -193,11 +190,10 @@ export default class LineEvent implements Event<LineRawEvent> {
    * The sticker object from LINE raw event.
    *
    */
-  get sticker(): EventMessage | null {
+  get sticker(): EventMessage | undefined {
     if (this.isSticker) {
       return this.message;
     }
-    return null;
   }
 
   /**
@@ -212,11 +208,10 @@ export default class LineEvent implements Event<LineRawEvent> {
    * The source object from LINE raw event.
    *
    */
-  get follow(): Source | null {
+  get follow(): Source | undefined {
     if (this.isFollow) {
       return this.source;
     }
-    return null;
   }
 
   /**
@@ -231,11 +226,10 @@ export default class LineEvent implements Event<LineRawEvent> {
    * The source object from LINE raw event.
    *
    */
-  get unfollow(): Source | null {
+  get unfollow(): Source | undefined {
     if (this.isUnfollow) {
       return this.source;
     }
-    return null;
   }
 
   /**
@@ -250,11 +244,10 @@ export default class LineEvent implements Event<LineRawEvent> {
    * The source object from LINE raw event.
    *
    */
-  get join(): Source | null {
+  get join(): Source | undefined {
     if (this.isJoin) {
       return this.source;
     }
-    return null;
   }
 
   /**
@@ -269,11 +262,10 @@ export default class LineEvent implements Event<LineRawEvent> {
    * The source object from LINE raw event.
    *
    */
-  get leave(): Source | null {
+  get leave(): Source | undefined {
     if (this.isLeave) {
       return this.source;
     }
-    return null;
   }
 
   /**
@@ -288,8 +280,8 @@ export default class LineEvent implements Event<LineRawEvent> {
    * The postback object from LINE raw event.
    *
    */
-  get postback(): Postback | null {
-    return (this._rawEvent as PostbackEvent).postback || null;
+  get postback(): Postback | undefined {
+    return (this._rawEvent as PostbackEvent).postback;
   }
 
   /**
@@ -304,18 +296,17 @@ export default class LineEvent implements Event<LineRawEvent> {
    * The payload string from LINE raw event.
    *
    */
-  get payload(): string | null {
+  get payload(): string | undefined {
     if (this.isPayload) {
       return (this.postback as Postback).data;
     }
-    return null;
   }
 
   /**
    * The date string from LINE postback event.
    *
    */
-  get date(): string | null {
+  get date(): string | undefined {
     if (
       this.postback &&
       this.postback.params &&
@@ -323,14 +314,13 @@ export default class LineEvent implements Event<LineRawEvent> {
     ) {
       return this.postback.params.date;
     }
-    return null;
   }
 
   /**
    * The time string from LINE postback event.
    *
    */
-  get time(): string | null {
+  get time(): string | undefined {
     if (
       this.postback &&
       this.postback.params &&
@@ -338,14 +328,13 @@ export default class LineEvent implements Event<LineRawEvent> {
     ) {
       return this.postback.params.time;
     }
-    return null;
   }
 
   /**
    * The datetime string from LINE postback event.
    *
    */
-  get datetime(): string | null {
+  get datetime(): string | undefined {
     if (
       this.postback &&
       this.postback.params &&
@@ -353,7 +342,6 @@ export default class LineEvent implements Event<LineRawEvent> {
     ) {
       return this.postback.params.datetime;
     }
-    return null;
   }
 
   /**
@@ -368,8 +356,8 @@ export default class LineEvent implements Event<LineRawEvent> {
    * The beacon object from LINE raw event.
    *
    */
-  get beacon(): Beacon | null {
-    return (this._rawEvent as BeaconEvent).beacon || null;
+  get beacon(): Beacon | undefined {
+    return (this._rawEvent as BeaconEvent).beacon;
   }
 
   /**
@@ -384,8 +372,8 @@ export default class LineEvent implements Event<LineRawEvent> {
    * The link object from LINE raw event.
    *
    */
-  get accountLink(): AccountLink | null {
-    return (this._rawEvent as AccountLinkEvent).link || null;
+  get accountLink(): AccountLink | undefined {
+    return (this._rawEvent as AccountLinkEvent).link;
   }
 
   /**
@@ -400,10 +388,12 @@ export default class LineEvent implements Event<LineRawEvent> {
    * The joined object from LINE raw event.
    *
    */
-  get memberJoined(): {
-    members: UserSource[];
-  } | null {
-    return (this._rawEvent as MemberJoinedEvent).joined || null;
+  get memberJoined():
+    | {
+        members: UserSource[];
+      }
+    | undefined {
+    return (this._rawEvent as MemberJoinedEvent).joined;
   }
 
   /**
@@ -418,10 +408,12 @@ export default class LineEvent implements Event<LineRawEvent> {
    * The left object from LINE raw event.
    *
    */
-  get memberLeft(): {
-    members: UserSource[];
-  } | null {
-    return (this._rawEvent as MemberLeftEvent).left || null;
+  get memberLeft():
+    | {
+        members: UserSource[];
+      }
+    | undefined {
+    return (this._rawEvent as MemberLeftEvent).left;
   }
 
   /**
@@ -472,7 +464,7 @@ export default class LineEvent implements Event<LineRawEvent> {
    * The things object from LINE raw event.
    *
    */
-  get things(): Things | null {
-    return (this._rawEvent as ThingsEvent).things || null;
+  get things(): Things | undefined {
+    return (this._rawEvent as ThingsEvent).things;
   }
 }

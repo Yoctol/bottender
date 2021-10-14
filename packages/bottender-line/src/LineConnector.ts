@@ -2,12 +2,9 @@ import crypto from 'crypto';
 import { EventEmitter } from 'events';
 
 import invariant from 'invariant';
+import { Connector, RequestContext, Session } from '@bottender/core';
 import { JsonObject } from 'type-fest';
 import { LineClient } from 'messaging-api-line';
-
-import Session from '../session/Session';
-import { Connector } from '../bot/Connector';
-import { RequestContext } from '../types';
 
 import LineContext from './LineContext';
 import LineEvent from './LineEvent';
@@ -253,7 +250,22 @@ export default class LineConnector
 
   async createContext(params: {
     event: LineEvent;
-    session?: Session | null;
+    session?: Session<
+      | {
+          type: 'user';
+          user: { id: string };
+        }
+      | {
+          type: 'group';
+          user?: { id: string };
+          group: { id: string };
+        }
+      | {
+          type: 'room';
+          user?: { id: string };
+          room: { id: string };
+        }
+    > | null;
     initialState?: JsonObject | null;
     requestContext?: LineRequestContext;
     emitter?: EventEmitter | null;

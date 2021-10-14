@@ -1,5 +1,4 @@
 import bottender from './bottender';
-import * as LineTypes from './line/LineTypes';
 import * as MessengerTypes from './messenger/MessengerTypes';
 
 export { bottender };
@@ -55,11 +54,15 @@ export {
 } from '@bottender/whatsapp';
 
 /* LINE */
-export { default as LineConnector } from './line/LineConnector';
-export { default as LineContext } from './line/LineContext';
-export { default as LineEvent } from './line/LineEvent';
-export { Line, LineNotify, LineClient } from 'messaging-api-line';
-export { LineTypes };
+export {
+  LineConnector,
+  LineContext,
+  LineEvent,
+  Line,
+  LineNotify,
+  LineClient,
+  LineTypes,
+} from '@bottender/line';
 
 /* Slack */
 export {
