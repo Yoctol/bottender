@@ -86,7 +86,7 @@ export async function getMessengerProfile(_: CliContext): Promise<void> {
     } else {
       error(`Failed to find ${bold('messenger_profile')} setting`);
     }
-  } catch (err) {
+  } catch (err: any) {
     error(`Failed to get ${bold('messenger_profile')} settings`);
 
     if (err.response) {
@@ -194,7 +194,7 @@ export async function setMessengerProfile(ctx: CliContext): Promise<void> {
         'bottender messenger profile get'
       )} to see the full profile setting.`
     );
-  } catch (err) {
+  } catch (err: any) {
     error(`Failed to set ${bold('messenger_profile')} settings`);
 
     if (err.response) {
@@ -228,7 +228,7 @@ export async function deleteMessengerProfile(_: CliContext): Promise<void> {
     await client.deleteMessengerProfile(FIELDS);
 
     print(`Successfully delete ${bold('messenger_profile')} settings`);
-  } catch (err) {
+  } catch (err: any) {
     error(`Failed to delete ${bold('messenger_profile')} settings`);
 
     if (err.response) {

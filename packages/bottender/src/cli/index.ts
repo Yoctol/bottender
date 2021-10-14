@@ -86,7 +86,7 @@ const main = async (argvFrom2: string[]) => {
       error(`Please specify a valid subcommand: ${subcommands}`);
       provider.help();
     }
-  } catch (err) {
+  } catch (err: any) {
     error(`An unexpected error occurred in provider ${subcommand}: ${err.message}
 ${err.stack}`);
   }

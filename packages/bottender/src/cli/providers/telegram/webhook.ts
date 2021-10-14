@@ -29,7 +29,7 @@ export async function getWebhook(_: CliContext): Promise<void> {
     const result = await client.getWebhookInfo();
 
     Object.entries(result).forEach(([key, value]) => print(`${key}: ${value}`));
-  } catch (err) {
+  } catch (err: any) {
     error('Failed to get Telegram webhook');
 
     if (err.response) {
@@ -89,7 +89,7 @@ export async function setWebhook(ctx: CliContext): Promise<void> {
     await client.setWebhook(webhook as string);
 
     print('Successfully set Telegram webhook callback URL');
-  } catch (err) {
+  } catch (err: any) {
     error('Failed to set Telegram webhook');
 
     if (err.response) {
@@ -123,7 +123,7 @@ export async function deleteWebhook(_: CliContext): Promise<void> {
     await client.deleteWebhook();
 
     print('Successfully delete Telegram webhook');
-  } catch (err) {
+  } catch (err: any) {
     error('Failed to delete Telegram webhook');
 
     if (err.response) {

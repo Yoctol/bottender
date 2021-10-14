@@ -310,7 +310,7 @@ export default class Bot<
               }
             })
           );
-        } catch (err) {
+        } catch (err: any) {
           console.error(err);
         }
 

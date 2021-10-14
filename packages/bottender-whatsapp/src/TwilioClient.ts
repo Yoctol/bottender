@@ -115,7 +115,7 @@ export default class TwilioClient {
         )
       );
       return camelcaseKeys(data);
-    } catch (err) {
+    } catch (err: any) {
       handleError(err);
     }
   }

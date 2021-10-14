@@ -70,7 +70,7 @@ export async function setWebhook(ctx: CliContext): Promise<void> {
     await client.setWebhook(webhook as string, config.Events);
 
     print('Successfully set Viber webhook callback URL');
-  } catch (err) {
+  } catch (err: any) {
     error('Failed to set Viber webhook');
 
     if (err.response) {
@@ -109,7 +109,7 @@ export async function deleteWebhook(_: CliContext): Promise<void> {
     await client.removeWebhook();
 
     print('Successfully delete Viber webhook');
-  } catch (err) {
+  } catch (err: any) {
     error('Failed to delete Viber webhook');
     if (err.response) {
       error(`status: ${bold(err.response.status)}`);

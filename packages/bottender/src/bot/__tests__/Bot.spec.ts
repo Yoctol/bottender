@@ -124,7 +124,7 @@ describe('#createRequestHandler', () => {
     try {
       // @ts-expect-error
       await requestHandler();
-    } catch (err) {
+    } catch (err: any) {
       error = err;
     }
 
@@ -240,7 +240,7 @@ describe('#createRequestHandler', () => {
     let error;
     try {
       await requestHandler({});
-    } catch (err) {
+    } catch (err: any) {
       error = err;
     }
 
@@ -285,7 +285,7 @@ describe('#createRequestHandler', () => {
     let error;
     try {
       await requestHandler(body);
-    } catch (err) {
+    } catch (err: any) {
       error = err;
     }
 
@@ -305,7 +305,7 @@ describe('#createRequestHandler', () => {
     let error;
     try {
       await requestHandler(body);
-    } catch (err) {
+    } catch (err: any) {
       error = err;
     }
 

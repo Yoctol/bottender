@@ -13,7 +13,7 @@ const getBottenderConfig = (): BottenderConfig | never => {
   try {
     // eslint-disable-next-line import/no-dynamic-require, @typescript-eslint/no-var-requires
     return require(path.resolve('bottender.config.js'));
-  } catch (err) {
+  } catch (err: any) {
     // if config is not found, return empty config
     if (err.code && err.code === 'MODULE_NOT_FOUND') {
       return {};

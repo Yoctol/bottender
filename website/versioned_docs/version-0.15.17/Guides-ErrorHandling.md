@@ -22,7 +22,7 @@ bot.onEvent(async context => {
   try {
     await fetch('');
     await context.sendText('');
-  } catch (err) {
+  } catch (err: any) {
     // handle errors here...
   }
 });

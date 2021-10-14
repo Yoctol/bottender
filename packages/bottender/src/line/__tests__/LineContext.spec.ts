@@ -286,7 +286,7 @@ describe('#sendText', () => {
     let error;
     try {
       await context.sendText('hello');
-    } catch (err) {
+    } catch (err: any) {
       error = err;
     }
 

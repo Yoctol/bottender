@@ -58,7 +58,7 @@ export default class MessengerConnector
         .filter((event): event is MessengerRawEvent => event != null);
     }
 
-    return [body as MessengerRawEvent];
+    return [body as unknown as MessengerRawEvent];
   }
 
   _getPageIdFromRawEvent(rawEvent: MessengerRawEvent): string | null {
