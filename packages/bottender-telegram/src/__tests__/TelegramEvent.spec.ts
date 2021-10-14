@@ -1,8 +1,9 @@
 import MockDate from 'mockdate';
 
 import TelegramEvent from '../TelegramEvent';
+import { TelegramRawEvent } from '../TelegramTypes';
 
-const textMessage = {
+const textMessage: TelegramRawEvent = {
   message: {
     messageId: 666,
     from: {
@@ -23,7 +24,7 @@ const textMessage = {
   },
 };
 
-const stickerMessage = {
+const stickerMessage: TelegramRawEvent = {
   message: {
     messageId: 666,
     from: {
@@ -48,7 +49,7 @@ const stickerMessage = {
   },
 };
 
-const videoMessage = {
+const videoMessage: TelegramRawEvent = {
   message: {
     messageId: 666,
     from: {
@@ -74,7 +75,7 @@ const videoMessage = {
   },
 };
 
-const voiceMessage = {
+const voiceMessage: TelegramRawEvent = {
   message: {
     messageId: 666,
     from: {
@@ -98,7 +99,7 @@ const voiceMessage = {
   },
 };
 
-const videoNoteMessage = {
+const videoNoteMessage: TelegramRawEvent = {
   message: {
     messageId: 666,
     from: {
@@ -123,7 +124,7 @@ const videoNoteMessage = {
   },
 };
 
-const contactMessage = {
+const contactMessage: TelegramRawEvent = {
   message: {
     messageId: 666,
     from: {
@@ -147,7 +148,7 @@ const contactMessage = {
   },
 };
 
-const photoMessage = {
+const photoMessage: TelegramRawEvent = {
   message: {
     messageId: 666,
     from: {
@@ -179,7 +180,7 @@ const photoMessage = {
   },
 };
 
-const audioMessage = {
+const audioMessage: TelegramRawEvent = {
   message: {
     messageId: 666,
     from: {
@@ -204,7 +205,7 @@ const audioMessage = {
   },
 };
 
-const locationMessage = {
+const locationMessage: TelegramRawEvent = {
   message: {
     messageId: 666,
     from: {
@@ -228,7 +229,7 @@ const locationMessage = {
   },
 };
 
-const venueMessage = {
+const venueMessage: TelegramRawEvent = {
   message: {
     messageId: 666,
     from: {
@@ -256,7 +257,7 @@ const venueMessage = {
   },
 };
 
-const documentMessage = {
+const documentMessage: TelegramRawEvent = {
   message: {
     messageId: 666,
     from: {
@@ -280,7 +281,7 @@ const documentMessage = {
   },
 };
 
-const gameMessage = {
+const gameMessage: TelegramRawEvent = {
   message: {
     messageId: 666,
     from: {
@@ -316,7 +317,7 @@ const gameMessage = {
   },
 };
 
-const groupMessage = {
+const groupMessage: TelegramRawEvent = {
   updateId: 141921689,
   message: {
     messageId: 238,
@@ -338,7 +339,7 @@ const groupMessage = {
   },
 };
 
-const editedMessage = {
+const editedMessage: TelegramRawEvent = {
   updateId: 141921687,
   editedMessage: {
     messageId: 229,
@@ -361,7 +362,7 @@ const editedMessage = {
   },
 };
 
-const groupEditedMessage = {
+const groupEditedMessage: TelegramRawEvent = {
   updateId: 141921688,
   editedMessage: {
     messageId: 234,
@@ -384,7 +385,7 @@ const groupEditedMessage = {
   },
 };
 
-const channelPost = {
+const channelPost: TelegramRawEvent = {
   updateId: 141921710,
   channelPost: {
     messageId: 2,
@@ -398,7 +399,7 @@ const channelPost = {
   },
 };
 
-const editedChannelPost = {
+const editedChannelPost: TelegramRawEvent = {
   updateId: 141921711,
   editedChannelPost: {
     messageId: 2,
@@ -413,7 +414,7 @@ const editedChannelPost = {
   },
 };
 
-const inlineQuery = {
+const inlineQuery: TelegramRawEvent = {
   updateId: 141921700,
   inlineQuery: {
     id: '1837258670654537434',
@@ -429,7 +430,7 @@ const inlineQuery = {
   },
 };
 
-const chosenInlineResult = {
+const chosenInlineResult: TelegramRawEvent = {
   updateId: 141921701,
   chosenInlineResult: {
     resultId: '2837258670654537434',
@@ -445,7 +446,7 @@ const chosenInlineResult = {
   },
 };
 
-const callbackQuery = {
+const callbackQuery: TelegramRawEvent = {
   updateId: 141921690,
   callbackQuery: {
     id: '123',
@@ -478,7 +479,7 @@ const callbackQuery = {
   },
 };
 
-const groupCallbackQuery = {
+const groupCallbackQuery: TelegramRawEvent = {
   updateId: 141921690,
   callbackQuery: {
     id: '1837258667245133763',
@@ -511,7 +512,7 @@ const groupCallbackQuery = {
   },
 };
 
-const shippingQuery = {
+const shippingQuery: TelegramRawEvent = {
   updateId: 141921690,
   shippingQuery: {
     id: '123',
@@ -533,7 +534,7 @@ const shippingQuery = {
   },
 };
 
-const preCheckoutQuery = {
+const preCheckoutQuery: TelegramRawEvent = {
   updateId: 141921690,
   preCheckoutQuery: {
     id: '123',
@@ -549,7 +550,7 @@ const preCheckoutQuery = {
   },
 };
 
-const poll = {
+const poll: TelegramRawEvent = {
   updateId: 141921690,
   poll: {
     id: '123',
@@ -562,7 +563,7 @@ const poll = {
   },
 };
 
-const replyToTextMessage = {
+const replyToTextMessage: TelegramRawEvent = {
   message: {
     messageId: 666,
     from: {
@@ -696,15 +697,15 @@ it('#message', () => {
     date: 1515758146,
     text: 'hi',
   });
-  expect(new TelegramEvent(editedMessage).message).toEqual(null);
-  expect(new TelegramEvent(channelPost).message).toEqual(null);
-  expect(new TelegramEvent(editedChannelPost).message).toEqual(null);
-  expect(new TelegramEvent(inlineQuery).message).toEqual(null);
-  expect(new TelegramEvent(chosenInlineResult).message).toEqual(null);
-  expect(new TelegramEvent(callbackQuery).message).toEqual(null);
-  expect(new TelegramEvent(shippingQuery).message).toEqual(null);
-  expect(new TelegramEvent(preCheckoutQuery).message).toEqual(null);
-  expect(new TelegramEvent(poll).message).toEqual(null);
+  expect(new TelegramEvent(editedMessage).message).toBeUndefined();
+  expect(new TelegramEvent(channelPost).message).toBeUndefined();
+  expect(new TelegramEvent(editedChannelPost).message).toBeUndefined();
+  expect(new TelegramEvent(inlineQuery).message).toBeUndefined();
+  expect(new TelegramEvent(chosenInlineResult).message).toBeUndefined();
+  expect(new TelegramEvent(callbackQuery).message).toBeUndefined();
+  expect(new TelegramEvent(shippingQuery).message).toBeUndefined();
+  expect(new TelegramEvent(preCheckoutQuery).message).toBeUndefined();
+  expect(new TelegramEvent(poll).message).toBeUndefined();
   expect(new TelegramEvent(replyToTextMessage).message).toEqual({
     messageId: 666,
     from: {
@@ -751,9 +752,9 @@ it('#isText', () => {
 });
 
 it('#text', () => {
-  expect(new TelegramEvent(callbackQuery).text).toEqual(null);
+  expect(new TelegramEvent(callbackQuery).text).toBeUndefined();
   expect(new TelegramEvent(textMessage).text).toEqual('text');
-  expect(new TelegramEvent(stickerMessage).text).toEqual(null);
+  expect(new TelegramEvent(stickerMessage).text).toBeUndefined();
   expect(new TelegramEvent(replyToTextMessage).text).toEqual('replyText');
 });
 
@@ -773,16 +774,16 @@ it('#isReplyToMessage', () => {
 });
 
 it('#replyToMessage', () => {
-  expect(new TelegramEvent(textMessage).replyToMessage).toEqual(null);
-  expect(new TelegramEvent(editedMessage).replyToMessage).toEqual(null);
-  expect(new TelegramEvent(channelPost).replyToMessage).toEqual(null);
-  expect(new TelegramEvent(editedChannelPost).replyToMessage).toEqual(null);
-  expect(new TelegramEvent(inlineQuery).replyToMessage).toEqual(null);
-  expect(new TelegramEvent(chosenInlineResult).replyToMessage).toEqual(null);
-  expect(new TelegramEvent(callbackQuery).replyToMessage).toEqual(null);
-  expect(new TelegramEvent(shippingQuery).replyToMessage).toEqual(null);
-  expect(new TelegramEvent(preCheckoutQuery).replyToMessage).toEqual(null);
-  expect(new TelegramEvent(poll).replyToMessage).toEqual(null);
+  expect(new TelegramEvent(textMessage).replyToMessage).toBeUndefined();
+  expect(new TelegramEvent(editedMessage).replyToMessage).toBeUndefined();
+  expect(new TelegramEvent(channelPost).replyToMessage).toBeUndefined();
+  expect(new TelegramEvent(editedChannelPost).replyToMessage).toBeUndefined();
+  expect(new TelegramEvent(inlineQuery).replyToMessage).toBeUndefined();
+  expect(new TelegramEvent(chosenInlineResult).replyToMessage).toBeUndefined();
+  expect(new TelegramEvent(callbackQuery).replyToMessage).toBeUndefined();
+  expect(new TelegramEvent(shippingQuery).replyToMessage).toBeUndefined();
+  expect(new TelegramEvent(preCheckoutQuery).replyToMessage).toBeUndefined();
+  expect(new TelegramEvent(poll).replyToMessage).toBeUndefined();
   expect(new TelegramEvent(replyToTextMessage).replyToMessage).toEqual({
     messageId: 777,
     from: {
@@ -811,14 +812,14 @@ it('#isAudio', () => {
 });
 
 it('#audio', () => {
-  expect(new TelegramEvent(callbackQuery).audio).toEqual(null);
-  expect(new TelegramEvent(textMessage).audio).toEqual(null);
+  expect(new TelegramEvent(callbackQuery).audio).toBeUndefined();
+  expect(new TelegramEvent(textMessage).audio).toBeUndefined();
   expect(new TelegramEvent(audioMessage).audio).toEqual({
     fileId: '321',
     duration: 100,
     title: 'audioooooooo',
   });
-  expect(new TelegramEvent(replyToTextMessage).audio).toEqual(null);
+  expect(new TelegramEvent(replyToTextMessage).audio).toBeUndefined();
 });
 
 it('#isDocument', () => {
@@ -829,13 +830,13 @@ it('#isDocument', () => {
 });
 
 it('#document', () => {
-  expect(new TelegramEvent(callbackQuery).document).toEqual(null);
-  expect(new TelegramEvent(textMessage).document).toEqual(null);
+  expect(new TelegramEvent(callbackQuery).document).toBeUndefined();
+  expect(new TelegramEvent(textMessage).document).toBeUndefined();
   expect(new TelegramEvent(documentMessage).document).toEqual({
     fileId: '234',
     fileName: 'file',
   });
-  expect(new TelegramEvent(replyToTextMessage).document).toEqual(null);
+  expect(new TelegramEvent(replyToTextMessage).document).toBeUndefined();
 });
 
 it('#isGame', () => {
@@ -846,8 +847,8 @@ it('#isGame', () => {
 });
 
 it('#game', () => {
-  expect(new TelegramEvent(callbackQuery).game).toEqual(null);
-  expect(new TelegramEvent(textMessage).game).toEqual(null);
+  expect(new TelegramEvent(callbackQuery).game).toBeUndefined();
+  expect(new TelegramEvent(textMessage).game).toBeUndefined();
   expect(new TelegramEvent(gameMessage).game).toEqual({
     title: 'gammmmmmmme',
     description: 'Description of the game',
@@ -864,7 +865,7 @@ it('#game', () => {
       },
     ],
   });
-  expect(new TelegramEvent(replyToTextMessage).game).toEqual(null);
+  expect(new TelegramEvent(replyToTextMessage).game).toBeUndefined();
 });
 
 it('#isPhoto', () => {
@@ -875,8 +876,8 @@ it('#isPhoto', () => {
 });
 
 it('#photo', () => {
-  expect(new TelegramEvent(callbackQuery).photo).toEqual(null);
-  expect(new TelegramEvent(textMessage).photo).toEqual(null);
+  expect(new TelegramEvent(callbackQuery).photo).toBeUndefined();
+  expect(new TelegramEvent(textMessage).photo).toBeUndefined();
   expect(new TelegramEvent(photoMessage).photo).toEqual([
     {
       fileId: '112',
@@ -889,7 +890,7 @@ it('#photo', () => {
       height: 50,
     },
   ]);
-  expect(new TelegramEvent(replyToTextMessage).photo).toEqual(null);
+  expect(new TelegramEvent(replyToTextMessage).photo).toBeUndefined();
 });
 
 it('#isSticker', () => {
@@ -900,14 +901,14 @@ it('#isSticker', () => {
 });
 
 it('#sticker', () => {
-  expect(new TelegramEvent(callbackQuery).sticker).toEqual(null);
-  expect(new TelegramEvent(textMessage).sticker).toEqual(null);
+  expect(new TelegramEvent(callbackQuery).sticker).toBeUndefined();
+  expect(new TelegramEvent(textMessage).sticker).toBeUndefined();
   expect(new TelegramEvent(stickerMessage).sticker).toEqual({
     fileId: '123',
     width: 50,
     height: 50,
   });
-  expect(new TelegramEvent(replyToTextMessage).sticker).toEqual(null);
+  expect(new TelegramEvent(replyToTextMessage).sticker).toBeUndefined();
 });
 
 it('#isVideo', () => {
@@ -918,15 +919,15 @@ it('#isVideo', () => {
 });
 
 it('#video', () => {
-  expect(new TelegramEvent(callbackQuery).video).toEqual(null);
-  expect(new TelegramEvent(textMessage).video).toEqual(null);
+  expect(new TelegramEvent(callbackQuery).video).toBeUndefined();
+  expect(new TelegramEvent(textMessage).video).toBeUndefined();
   expect(new TelegramEvent(videoMessage).video).toEqual({
     fileId: '321',
     width: 100,
     height: 100,
     duration: 199,
   });
-  expect(new TelegramEvent(replyToTextMessage).video).toEqual(null);
+  expect(new TelegramEvent(replyToTextMessage).video).toBeUndefined();
 });
 
 it('#isVoice', () => {
@@ -937,13 +938,13 @@ it('#isVoice', () => {
 });
 
 it('#voice', () => {
-  expect(new TelegramEvent(callbackQuery).voice).toEqual(null);
-  expect(new TelegramEvent(textMessage).voice).toEqual(null);
+  expect(new TelegramEvent(callbackQuery).voice).toBeUndefined();
+  expect(new TelegramEvent(textMessage).voice).toBeUndefined();
   expect(new TelegramEvent(voiceMessage).voice).toEqual({
     fileId: '543',
     duration: 299,
   });
-  expect(new TelegramEvent(replyToTextMessage).voice).toEqual(null);
+  expect(new TelegramEvent(replyToTextMessage).voice).toBeUndefined();
 });
 
 it('#isVideoNote', () => {
@@ -954,14 +955,14 @@ it('#isVideoNote', () => {
 });
 
 it('#videoNote', () => {
-  expect(new TelegramEvent(callbackQuery).videoNote).toEqual(null);
-  expect(new TelegramEvent(textMessage).videoNote).toEqual(null);
+  expect(new TelegramEvent(callbackQuery).videoNote).toBeUndefined();
+  expect(new TelegramEvent(textMessage).videoNote).toBeUndefined();
   expect(new TelegramEvent(videoNoteMessage).videoNote).toEqual({
     fileId: '654',
     length: 100,
     duration: 399,
   });
-  expect(new TelegramEvent(replyToTextMessage).videoNote).toEqual(null);
+  expect(new TelegramEvent(replyToTextMessage).videoNote).toBeUndefined();
 });
 
 it('#isContact', () => {
@@ -972,13 +973,13 @@ it('#isContact', () => {
 });
 
 it('#contact', () => {
-  expect(new TelegramEvent(callbackQuery).contact).toEqual(null);
-  expect(new TelegramEvent(textMessage).contact).toEqual(null);
+  expect(new TelegramEvent(callbackQuery).contact).toBeUndefined();
+  expect(new TelegramEvent(textMessage).contact).toBeUndefined();
   expect(new TelegramEvent(contactMessage).contact).toEqual({
     phoneNumber: '123456789',
     firstName: 'first',
   });
-  expect(new TelegramEvent(replyToTextMessage).contact).toEqual(null);
+  expect(new TelegramEvent(replyToTextMessage).contact).toBeUndefined();
 });
 
 it('#isLocation', () => {
@@ -989,13 +990,13 @@ it('#isLocation', () => {
 });
 
 it('#location', () => {
-  expect(new TelegramEvent(callbackQuery).location).toEqual(null);
-  expect(new TelegramEvent(textMessage).location).toEqual(null);
+  expect(new TelegramEvent(callbackQuery).location).toBeUndefined();
+  expect(new TelegramEvent(textMessage).location).toBeUndefined();
   expect(new TelegramEvent(locationMessage).location).toEqual({
     longitude: '111.111',
     latitude: '99.99',
   });
-  expect(new TelegramEvent(replyToTextMessage).location).toEqual(null);
+  expect(new TelegramEvent(replyToTextMessage).location).toBeUndefined();
 });
 
 it('#isVenue', () => {
@@ -1006,8 +1007,8 @@ it('#isVenue', () => {
 });
 
 it('#venue', () => {
-  expect(new TelegramEvent(callbackQuery).venue).toEqual(null);
-  expect(new TelegramEvent(textMessage).venue).toEqual(null);
+  expect(new TelegramEvent(callbackQuery).venue).toBeUndefined();
+  expect(new TelegramEvent(textMessage).venue).toBeUndefined();
   expect(new TelegramEvent(venueMessage).venue).toEqual({
     location: {
       longitude: '111.111',
@@ -1016,7 +1017,7 @@ it('#venue', () => {
     title: 'title',
     address: 'addressssss',
   });
-  expect(new TelegramEvent(replyToTextMessage).venue).toEqual(null);
+  expect(new TelegramEvent(replyToTextMessage).venue).toBeUndefined();
 });
 
 it('#isEditedMessage', () => {
@@ -1035,7 +1036,7 @@ it('#isEditedMessage', () => {
 });
 
 it('#editedMessage', () => {
-  expect(new TelegramEvent(textMessage).editedMessage).toEqual(null);
+  expect(new TelegramEvent(textMessage).editedMessage).toBeUndefined();
   expect(new TelegramEvent(editedMessage).editedMessage).toEqual({
     messageId: 229,
     from: {
@@ -1074,15 +1075,15 @@ it('#editedMessage', () => {
     editDate: 1515758048,
     text: 'hiiiii',
   });
-  expect(new TelegramEvent(channelPost).editedMessage).toEqual(null);
-  expect(new TelegramEvent(editedChannelPost).editedMessage).toEqual(null);
-  expect(new TelegramEvent(inlineQuery).editedMessage).toEqual(null);
-  expect(new TelegramEvent(chosenInlineResult).editedMessage).toEqual(null);
-  expect(new TelegramEvent(callbackQuery).editedMessage).toEqual(null);
-  expect(new TelegramEvent(shippingQuery).editedMessage).toEqual(null);
-  expect(new TelegramEvent(preCheckoutQuery).editedMessage).toEqual(null);
-  expect(new TelegramEvent(poll).editedMessage).toEqual(null);
-  expect(new TelegramEvent(replyToTextMessage).editedMessage).toEqual(null);
+  expect(new TelegramEvent(channelPost).editedMessage).toBeUndefined();
+  expect(new TelegramEvent(editedChannelPost).editedMessage).toBeUndefined();
+  expect(new TelegramEvent(inlineQuery).editedMessage).toBeUndefined();
+  expect(new TelegramEvent(chosenInlineResult).editedMessage).toBeUndefined();
+  expect(new TelegramEvent(callbackQuery).editedMessage).toBeUndefined();
+  expect(new TelegramEvent(shippingQuery).editedMessage).toBeUndefined();
+  expect(new TelegramEvent(preCheckoutQuery).editedMessage).toBeUndefined();
+  expect(new TelegramEvent(poll).editedMessage).toBeUndefined();
+  expect(new TelegramEvent(replyToTextMessage).editedMessage).toBeUndefined();
 });
 
 it('#isChannelPost', () => {
@@ -1100,8 +1101,8 @@ it('#isChannelPost', () => {
 });
 
 it('#channelPost', () => {
-  expect(new TelegramEvent(textMessage).channelPost).toEqual(null);
-  expect(new TelegramEvent(editedMessage).channelPost).toEqual(null);
+  expect(new TelegramEvent(textMessage).channelPost).toBeUndefined();
+  expect(new TelegramEvent(editedMessage).channelPost).toBeUndefined();
   expect(new TelegramEvent(channelPost).channelPost).toEqual({
     messageId: 2,
     chat: {
@@ -1112,14 +1113,14 @@ it('#channelPost', () => {
     date: 1515760382,
     text: 'post~~~',
   });
-  expect(new TelegramEvent(editedChannelPost).channelPost).toEqual(null);
-  expect(new TelegramEvent(inlineQuery).channelPost).toEqual(null);
-  expect(new TelegramEvent(chosenInlineResult).channelPost).toEqual(null);
-  expect(new TelegramEvent(callbackQuery).channelPost).toEqual(null);
-  expect(new TelegramEvent(shippingQuery).channelPost).toEqual(null);
-  expect(new TelegramEvent(preCheckoutQuery).channelPost).toEqual(null);
-  expect(new TelegramEvent(poll).channelPost).toEqual(null);
-  expect(new TelegramEvent(replyToTextMessage).channelPost).toEqual(null);
+  expect(new TelegramEvent(editedChannelPost).channelPost).toBeUndefined();
+  expect(new TelegramEvent(inlineQuery).channelPost).toBeUndefined();
+  expect(new TelegramEvent(chosenInlineResult).channelPost).toBeUndefined();
+  expect(new TelegramEvent(callbackQuery).channelPost).toBeUndefined();
+  expect(new TelegramEvent(shippingQuery).channelPost).toBeUndefined();
+  expect(new TelegramEvent(preCheckoutQuery).channelPost).toBeUndefined();
+  expect(new TelegramEvent(poll).channelPost).toBeUndefined();
+  expect(new TelegramEvent(replyToTextMessage).channelPost).toBeUndefined();
 });
 
 it('#isEditedChannelPost', () => {
@@ -1145,9 +1146,9 @@ it('#isEditedChannelPost', () => {
 });
 
 it('#editedChannelPost', () => {
-  expect(new TelegramEvent(textMessage).editedChannelPost).toEqual(null);
-  expect(new TelegramEvent(editedMessage).editedChannelPost).toEqual(null);
-  expect(new TelegramEvent(channelPost).editedChannelPost).toEqual(null);
+  expect(new TelegramEvent(textMessage).editedChannelPost).toBeUndefined();
+  expect(new TelegramEvent(editedMessage).editedChannelPost).toBeUndefined();
+  expect(new TelegramEvent(channelPost).editedChannelPost).toBeUndefined();
   expect(new TelegramEvent(editedChannelPost).editedChannelPost).toEqual({
     messageId: 2,
     chat: {
@@ -1159,13 +1160,17 @@ it('#editedChannelPost', () => {
     editDate: 1515760478,
     text: 'post~~~edited',
   });
-  expect(new TelegramEvent(inlineQuery).editedChannelPost).toEqual(null);
-  expect(new TelegramEvent(chosenInlineResult).editedChannelPost).toEqual(null);
-  expect(new TelegramEvent(callbackQuery).editedChannelPost).toEqual(null);
-  expect(new TelegramEvent(shippingQuery).editedChannelPost).toEqual(null);
-  expect(new TelegramEvent(preCheckoutQuery).editedChannelPost).toEqual(null);
-  expect(new TelegramEvent(poll).editedChannelPost).toEqual(null);
-  expect(new TelegramEvent(replyToTextMessage).editedChannelPost).toEqual(null);
+  expect(new TelegramEvent(inlineQuery).editedChannelPost).toBeUndefined();
+  expect(
+    new TelegramEvent(chosenInlineResult).editedChannelPost
+  ).toBeUndefined();
+  expect(new TelegramEvent(callbackQuery).editedChannelPost).toBeUndefined();
+  expect(new TelegramEvent(shippingQuery).editedChannelPost).toBeUndefined();
+  expect(new TelegramEvent(preCheckoutQuery).editedChannelPost).toBeUndefined();
+  expect(new TelegramEvent(poll).editedChannelPost).toBeUndefined();
+  expect(
+    new TelegramEvent(replyToTextMessage).editedChannelPost
+  ).toBeUndefined();
 });
 
 it('#isInlineQuery', () => {
@@ -1183,10 +1188,10 @@ it('#isInlineQuery', () => {
 });
 
 it('#inlineQuery', () => {
-  expect(new TelegramEvent(textMessage).inlineQuery).toEqual(null);
-  expect(new TelegramEvent(editedMessage).inlineQuery).toEqual(null);
-  expect(new TelegramEvent(channelPost).inlineQuery).toEqual(null);
-  expect(new TelegramEvent(editedChannelPost).inlineQuery).toEqual(null);
+  expect(new TelegramEvent(textMessage).inlineQuery).toBeUndefined();
+  expect(new TelegramEvent(editedMessage).inlineQuery).toBeUndefined();
+  expect(new TelegramEvent(channelPost).inlineQuery).toBeUndefined();
+  expect(new TelegramEvent(editedChannelPost).inlineQuery).toBeUndefined();
   expect(new TelegramEvent(inlineQuery).inlineQuery).toEqual({
     id: '1837258670654537434',
     from: {
@@ -1199,12 +1204,12 @@ it('#inlineQuery', () => {
     query: '123',
     offset: '',
   });
-  expect(new TelegramEvent(chosenInlineResult).inlineQuery).toEqual(null);
-  expect(new TelegramEvent(callbackQuery).inlineQuery).toEqual(null);
-  expect(new TelegramEvent(shippingQuery).inlineQuery).toEqual(null);
-  expect(new TelegramEvent(preCheckoutQuery).inlineQuery).toEqual(null);
-  expect(new TelegramEvent(poll).inlineQuery).toEqual(null);
-  expect(new TelegramEvent(replyToTextMessage).inlineQuery).toEqual(null);
+  expect(new TelegramEvent(chosenInlineResult).inlineQuery).toBeUndefined();
+  expect(new TelegramEvent(callbackQuery).inlineQuery).toBeUndefined();
+  expect(new TelegramEvent(shippingQuery).inlineQuery).toBeUndefined();
+  expect(new TelegramEvent(preCheckoutQuery).inlineQuery).toBeUndefined();
+  expect(new TelegramEvent(poll).inlineQuery).toBeUndefined();
+  expect(new TelegramEvent(replyToTextMessage).inlineQuery).toBeUndefined();
 });
 
 it('#isChosenInlineResult', () => {
@@ -1230,11 +1235,13 @@ it('#isChosenInlineResult', () => {
 });
 
 it('#chosenInlineResult', () => {
-  expect(new TelegramEvent(textMessage).chosenInlineResult).toEqual(null);
-  expect(new TelegramEvent(editedMessage).chosenInlineResult).toEqual(null);
-  expect(new TelegramEvent(channelPost).chosenInlineResult).toEqual(null);
-  expect(new TelegramEvent(editedChannelPost).chosenInlineResult).toEqual(null);
-  expect(new TelegramEvent(inlineQuery).chosenInlineResult).toEqual(null);
+  expect(new TelegramEvent(textMessage).chosenInlineResult).toBeUndefined();
+  expect(new TelegramEvent(editedMessage).chosenInlineResult).toBeUndefined();
+  expect(new TelegramEvent(channelPost).chosenInlineResult).toBeUndefined();
+  expect(
+    new TelegramEvent(editedChannelPost).chosenInlineResult
+  ).toBeUndefined();
+  expect(new TelegramEvent(inlineQuery).chosenInlineResult).toBeUndefined();
   expect(new TelegramEvent(chosenInlineResult).chosenInlineResult).toEqual({
     resultId: '2837258670654537434',
     from: {
@@ -1247,13 +1254,15 @@ it('#chosenInlineResult', () => {
     inlineMessageId: '1837258670654537434',
     query: '123',
   });
-  expect(new TelegramEvent(callbackQuery).chosenInlineResult).toEqual(null);
-  expect(new TelegramEvent(shippingQuery).chosenInlineResult).toEqual(null);
-  expect(new TelegramEvent(preCheckoutQuery).chosenInlineResult).toEqual(null);
-  expect(new TelegramEvent(poll).chosenInlineResult).toEqual(null);
-  expect(new TelegramEvent(replyToTextMessage).chosenInlineResult).toEqual(
-    null
-  );
+  expect(new TelegramEvent(callbackQuery).chosenInlineResult).toBeUndefined();
+  expect(new TelegramEvent(shippingQuery).chosenInlineResult).toBeUndefined();
+  expect(
+    new TelegramEvent(preCheckoutQuery).chosenInlineResult
+  ).toBeUndefined();
+  expect(new TelegramEvent(poll).chosenInlineResult).toBeUndefined();
+  expect(
+    new TelegramEvent(replyToTextMessage).chosenInlineResult
+  ).toBeUndefined();
 });
 
 it('#isCallbackQuery', () => {
@@ -1272,12 +1281,12 @@ it('#isCallbackQuery', () => {
 });
 
 it('#callbackQuery', () => {
-  expect(new TelegramEvent(textMessage).callbackQuery).toEqual(null);
-  expect(new TelegramEvent(editedMessage).callbackQuery).toEqual(null);
-  expect(new TelegramEvent(channelPost).callbackQuery).toEqual(null);
-  expect(new TelegramEvent(editedChannelPost).callbackQuery).toEqual(null);
-  expect(new TelegramEvent(inlineQuery).callbackQuery).toEqual(null);
-  expect(new TelegramEvent(chosenInlineResult).callbackQuery).toEqual(null);
+  expect(new TelegramEvent(textMessage).callbackQuery).toBeUndefined();
+  expect(new TelegramEvent(editedMessage).callbackQuery).toBeUndefined();
+  expect(new TelegramEvent(channelPost).callbackQuery).toBeUndefined();
+  expect(new TelegramEvent(editedChannelPost).callbackQuery).toBeUndefined();
+  expect(new TelegramEvent(inlineQuery).callbackQuery).toBeUndefined();
+  expect(new TelegramEvent(chosenInlineResult).callbackQuery).toBeUndefined();
   expect(new TelegramEvent(callbackQuery).callbackQuery).toEqual({
     id: '123',
     from: {
@@ -1336,10 +1345,10 @@ it('#callbackQuery', () => {
     chatInstance: '-582211693826679000',
     data: '123',
   });
-  expect(new TelegramEvent(shippingQuery).callbackQuery).toEqual(null);
-  expect(new TelegramEvent(preCheckoutQuery).callbackQuery).toEqual(null);
-  expect(new TelegramEvent(poll).callbackQuery).toEqual(null);
-  expect(new TelegramEvent(replyToTextMessage).callbackQuery).toEqual(null);
+  expect(new TelegramEvent(shippingQuery).callbackQuery).toBeUndefined();
+  expect(new TelegramEvent(preCheckoutQuery).callbackQuery).toBeUndefined();
+  expect(new TelegramEvent(poll).callbackQuery).toBeUndefined();
+  expect(new TelegramEvent(replyToTextMessage).callbackQuery).toBeUndefined();
 });
 
 it('#isPayload', () => {
@@ -1358,16 +1367,16 @@ it('#isPayload', () => {
 });
 
 it('#payload', () => {
-  expect(new TelegramEvent(textMessage).payload).toEqual(null);
-  expect(new TelegramEvent(editedMessage).payload).toEqual(null);
-  expect(new TelegramEvent(channelPost).payload).toEqual(null);
-  expect(new TelegramEvent(editedChannelPost).payload).toEqual(null);
-  expect(new TelegramEvent(inlineQuery).payload).toEqual(null);
-  expect(new TelegramEvent(chosenInlineResult).payload).toEqual(null);
+  expect(new TelegramEvent(textMessage).payload).toBeUndefined();
+  expect(new TelegramEvent(editedMessage).payload).toBeUndefined();
+  expect(new TelegramEvent(channelPost).payload).toBeUndefined();
+  expect(new TelegramEvent(editedChannelPost).payload).toBeUndefined();
+  expect(new TelegramEvent(inlineQuery).payload).toBeUndefined();
+  expect(new TelegramEvent(chosenInlineResult).payload).toBeUndefined();
   expect(new TelegramEvent(callbackQuery).payload).toEqual('data');
   expect(new TelegramEvent(groupCallbackQuery).payload).toEqual('123');
-  expect(new TelegramEvent(shippingQuery).payload).toEqual(null);
-  expect(new TelegramEvent(preCheckoutQuery).payload).toEqual(null);
-  expect(new TelegramEvent(poll).payload).toEqual(null);
-  expect(new TelegramEvent(replyToTextMessage).payload).toEqual(null);
+  expect(new TelegramEvent(shippingQuery).payload).toBeUndefined();
+  expect(new TelegramEvent(preCheckoutQuery).payload).toBeUndefined();
+  expect(new TelegramEvent(poll).payload).toBeUndefined();
+  expect(new TelegramEvent(replyToTextMessage).payload).toBeUndefined();
 });

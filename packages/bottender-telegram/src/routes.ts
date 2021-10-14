@@ -1,6 +1,4 @@
-import Context from '../context/Context';
-import { Action } from '../types';
-import { RoutePredicate, route } from '../router';
+import { Action, Context, RoutePredicate, route } from '@bottender/core';
 
 import TelegramContext from './TelegramContext';
 

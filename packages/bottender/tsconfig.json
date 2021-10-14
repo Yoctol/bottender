@@ -10,6 +10,7 @@
     { "path": "../bottender-core" },
     { "path": "../bottender-express" },
     { "path": "../bottender-slack" },
+    { "path": "../bottender-telegram" },
     { "path": "../bottender-viber" },
     { "path": "../bottender-whatsapp" }
   ]

@@ -1,9 +1,8 @@
-import Context from '../../context/Context';
+import { Context, router, run } from '@bottender/core';
+
 import TelegramContext from '../TelegramContext';
 import TelegramEvent from '../TelegramEvent';
-import router from '../../router';
 import telegram from '../routes';
-import { run } from '../../bot/Bot';
 
 const telegramEventTextMessage = new TelegramEvent({
   message: {

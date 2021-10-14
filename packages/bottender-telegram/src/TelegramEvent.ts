@@ -1,6 +1,5 @@
+import { Event } from '@bottender/core';
 import { TelegramTypes } from 'messaging-api-telegram';
-
-import { Event } from '../context/Event';
 
 import { TelegramRawEvent } from './TelegramTypes';
 
@@ -44,8 +43,8 @@ export default class TelegramEvent implements Event<TelegramRawEvent> {
    * The message object from Telegram raw event.
    *
    */
-  get message(): TelegramTypes.Message | null {
-    return this._rawEvent.message || null;
+  get message(): TelegramTypes.Message | undefined {
+    return this._rawEvent.message;
   }
 
   /**
@@ -60,11 +59,10 @@ export default class TelegramEvent implements Event<TelegramRawEvent> {
    * The text string from Telegram raw event.
    *
    */
-  get text(): string | null {
+  get text(): string | undefined {
     if (this.isText) {
       return (this.message as any).text;
     }
-    return null;
   }
 
   /**
@@ -85,11 +83,10 @@ export default class TelegramEvent implements Event<TelegramRawEvent> {
    * The Message object from Telegram raw event which includes replyToMessage.
    *
    */
-  get replyToMessage(): TelegramTypes.Message | null {
+  get replyToMessage(): TelegramTypes.Message | undefined {
     if (this.isReplyToMessage) {
       return (this.message as any).replyToMessage;
     }
-    return null;
   }
 
   /**
@@ -108,11 +105,10 @@ export default class TelegramEvent implements Event<TelegramRawEvent> {
    * The audio object from Telegram raw event.
    *
    */
-  get audio(): TelegramTypes.Audio | null {
+  get audio(): TelegramTypes.Audio | undefined {
     if (this.isAudio) {
       return (this.message as any).audio;
     }
-    return null;
   }
 
   /**
@@ -131,11 +127,10 @@ export default class TelegramEvent implements Event<TelegramRawEvent> {
    * The document object from Telegram raw event.
    *
    */
-  get document(): TelegramTypes.Document | null {
+  get document(): TelegramTypes.Document | undefined {
     if (this.isDocument) {
       return (this.message as any).document;
     }
-    return null;
   }
 
   /**
@@ -154,11 +149,10 @@ export default class TelegramEvent implements Event<TelegramRawEvent> {
    * The game object from Telegram raw event.
    *
    */
-  get game(): TelegramTypes.Game | null {
+  get game(): TelegramTypes.Game | undefined {
     if (this.isGame) {
       return (this.message as any).game;
     }
-    return null;
   }
 
   /**
@@ -177,11 +171,10 @@ export default class TelegramEvent implements Event<TelegramRawEvent> {
    * The photo object from Telegram raw event.
    *
    */
-  get photo(): TelegramTypes.PhotoSize | null {
+  get photo(): TelegramTypes.PhotoSize | undefined {
     if (this.isPhoto) {
       return (this.message as any).photo;
     }
-    return null;
   }
 
   /**
@@ -200,11 +193,10 @@ export default class TelegramEvent implements Event<TelegramRawEvent> {
    * The sticker object from Telegram raw event.
    *
    */
-  get sticker(): TelegramTypes.Sticker | null {
+  get sticker(): TelegramTypes.Sticker | undefined {
     if (this.isSticker) {
       return (this.message as any).sticker;
     }
-    return null;
   }
 
   /**
@@ -222,11 +214,10 @@ export default class TelegramEvent implements Event<TelegramRawEvent> {
    * The video object from Telegram raw event.
    *
    */
-  get video(): TelegramTypes.Video | null {
+  get video(): TelegramTypes.Video | undefined {
     if (this.isVideo) {
       return (this.message as any).video;
     }
-    return null;
   }
 
   /**
@@ -245,11 +236,10 @@ export default class TelegramEvent implements Event<TelegramRawEvent> {
    * The voice object from Telegram raw event.
    *
    */
-  get voice(): TelegramTypes.Voice | null {
+  get voice(): TelegramTypes.Voice | undefined {
     if (this.isVoice) {
       return (this.message as any).voice;
     }
-    return null;
   }
 
   /**
@@ -268,11 +258,10 @@ export default class TelegramEvent implements Event<TelegramRawEvent> {
    * The video note object from Telegram raw event.
    *
    */
-  get videoNote(): TelegramTypes.VideoNote | null {
+  get videoNote(): TelegramTypes.VideoNote | undefined {
     if (this.isVideoNote) {
       return (this.message as any).videoNote;
     }
-    return null;
   }
 
   /**
@@ -291,11 +280,10 @@ export default class TelegramEvent implements Event<TelegramRawEvent> {
    * The contact object from Telegram raw event.
    *
    */
-  get contact(): TelegramTypes.Contact | null {
+  get contact(): TelegramTypes.Contact | undefined {
     if (this.isContact) {
       return (this.message as any).contact;
     }
-    return null;
   }
 
   /**
@@ -314,11 +302,10 @@ export default class TelegramEvent implements Event<TelegramRawEvent> {
    * The location object from Telegram raw event.
    *
    */
-  get location(): TelegramTypes.Location | null {
+  get location(): TelegramTypes.Location | undefined {
     if (this.isLocation) {
       return (this.message as any).location;
     }
-    return null;
   }
 
   /**
@@ -337,11 +324,10 @@ export default class TelegramEvent implements Event<TelegramRawEvent> {
    * The venue object from Telegram raw event.
    *
    */
-  get venue(): TelegramTypes.Venue | null {
+  get venue(): TelegramTypes.Venue | undefined {
     if (this.isVenue) {
       return (this.message as any).venue;
     }
-    return null;
   }
 
   /**
@@ -356,8 +342,8 @@ export default class TelegramEvent implements Event<TelegramRawEvent> {
    * The edited message from Telegram raw event.
    *
    */
-  get editedMessage(): TelegramTypes.Message | null {
-    return this._rawEvent.editedMessage || null;
+  get editedMessage(): TelegramTypes.Message | undefined {
+    return this._rawEvent.editedMessage;
   }
 
   /**
@@ -372,8 +358,8 @@ export default class TelegramEvent implements Event<TelegramRawEvent> {
    * The channel post from Telegram raw event.
    *
    */
-  get channelPost(): TelegramTypes.Message | null {
-    return this._rawEvent.channelPost || null;
+  get channelPost(): TelegramTypes.Message | undefined {
+    return this._rawEvent.channelPost;
   }
 
   /**
@@ -390,8 +376,8 @@ export default class TelegramEvent implements Event<TelegramRawEvent> {
    * The edited channel post from Telegram raw event.
    *
    */
-  get editedChannelPost(): TelegramTypes.Message | null {
-    return this._rawEvent.editedChannelPost || null;
+  get editedChannelPost(): TelegramTypes.Message | undefined {
+    return this._rawEvent.editedChannelPost;
   }
 
   /**
@@ -406,8 +392,8 @@ export default class TelegramEvent implements Event<TelegramRawEvent> {
    * The inline query from Telegram raw event.
    *
    */
-  get inlineQuery(): TelegramTypes.InlineQuery | null {
-    return this._rawEvent.inlineQuery || null;
+  get inlineQuery(): TelegramTypes.InlineQuery | undefined {
+    return this._rawEvent.inlineQuery;
   }
 
   /**
@@ -424,8 +410,8 @@ export default class TelegramEvent implements Event<TelegramRawEvent> {
    * The chosen inline result from Telegram raw event.
    *
    */
-  get chosenInlineResult(): TelegramTypes.ChosenInlineResult | null {
-    return this._rawEvent.chosenInlineResult || null;
+  get chosenInlineResult(): TelegramTypes.ChosenInlineResult | undefined {
+    return this._rawEvent.chosenInlineResult;
   }
 
   /**
@@ -440,8 +426,8 @@ export default class TelegramEvent implements Event<TelegramRawEvent> {
    * The callback query from Telegram raw event.
    *
    */
-  get callbackQuery(): TelegramTypes.CallbackQuery | null {
-    return this._rawEvent.callbackQuery || null;
+  get callbackQuery(): TelegramTypes.CallbackQuery | undefined {
+    return this._rawEvent.callbackQuery;
   }
 
   /**
@@ -456,11 +442,10 @@ export default class TelegramEvent implements Event<TelegramRawEvent> {
    * The payload string from Telegram raw event.
    *
    */
-  get payload(): string | null {
+  get payload(): string | undefined {
     if (this.isPayload) {
       return (this.callbackQuery as any).data;
     }
-    return null;
   }
 
   /**
@@ -475,8 +460,8 @@ export default class TelegramEvent implements Event<TelegramRawEvent> {
    * The shipping query from Telegram raw event.
    *
    */
-  get shippingQuery(): TelegramTypes.ShippingQuery | null {
-    return this._rawEvent.shippingQuery || null;
+  get shippingQuery(): TelegramTypes.ShippingQuery | undefined {
+    return this._rawEvent.shippingQuery;
   }
 
   /**
@@ -491,8 +476,8 @@ export default class TelegramEvent implements Event<TelegramRawEvent> {
    * The pre checkout query from Telegram raw event.
    *
    */
-  get preCheckoutQuery(): TelegramTypes.PreCheckoutQuery | null {
-    return this._rawEvent.preCheckoutQuery || null;
+  get preCheckoutQuery(): TelegramTypes.PreCheckoutQuery | undefined {
+    return this._rawEvent.preCheckoutQuery;
   }
 
   /**
@@ -507,8 +492,8 @@ export default class TelegramEvent implements Event<TelegramRawEvent> {
    * The poll from Telegram raw event.
    *
    */
-  get poll(): TelegramTypes.Poll | null {
-    return this._rawEvent.poll || null;
+  get poll(): TelegramTypes.Poll | undefined {
+    return this._rawEvent.poll;
   }
 
   /**
@@ -523,7 +508,7 @@ export default class TelegramEvent implements Event<TelegramRawEvent> {
    * The poll from Telegram raw event.
    *
    */
-  get pollAnswer(): TelegramTypes.PollAnswer | null {
-    return this._rawEvent.pollAnswer || null;
+  get pollAnswer(): TelegramTypes.PollAnswer | undefined {
+    return this._rawEvent.pollAnswer;
   }
 }

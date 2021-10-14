@@ -632,17 +632,26 @@
 "@bottender/slack@file:packages/bottender-slack":
   version "1.5.4"
   dependencies:
-    "@bottender/core" "file:../../../Library/Caches/Yarn/v6/npm-@bottender-slack-1.5.4-2a56f1db-966a-4c5e-97d5-7f3f36cd2c9e-1634195293522/node_modules/@bottender/bottender-core"
+    "@bottender/core" "file:../../../Library/Caches/Yarn/v6/npm-@bottender-slack-1.5.4-d87ac113-01b3-43cd-a71a-95b52d247aef-1634214160020/node_modules/@bottender/bottender-core"
     invariant "^2.2.4"
     messaging-api-common "^1.0.4"
     messaging-api-slack "^1.1.0"
     type-fest "^2.5.0"
     warning "^4.0.3"
 
+"@bottender/telegram@file:packages/bottender-telegram":
+  version "1.5.4"
+  dependencies:
+    "@bottender/core" "file:../../../Library/Caches/Yarn/v6/npm-@bottender-telegram-1.5.4-4f64750c-e3bc-44c5-9182-c972aae23d79-1634214160021/node_modules/@bottender/bottender-core"
+    invariant "^2.2.4"
+    messaging-api-telegram "^1.1.0"
+    type-fest "^2.5.0"
+    warning "^4.0.3"
+
 "@bottender/viber@file:packages/bottender-viber":
   version "1.5.4"
   dependencies:
-    "@bottender/core" "file:../../../Library/Caches/Yarn/v6/npm-@bottender-viber-1.5.4-0cab2613-dc02-4de6-84e7-c196a17c2bde-1634195293521/node_modules/@bottender/bottender-core"
+    "@bottender/core" "file:../../../Library/Caches/Yarn/v6/npm-@bottender-viber-1.5.4-8a0edf83-0314-4caa-b743-1061301209fc-1634214160022/node_modules/@bottender/bottender-core"
     invariant "^2.2.4"
     messaging-api-viber "^1.1.0"
     type-fest "^2.5.0"
@@ -651,7 +660,7 @@
 "@bottender/whatsapp@file:packages/bottender-whatsapp":
   version "1.5.4"
   dependencies:
-    "@bottender/core" "file:../../../Library/Caches/Yarn/v6/npm-@bottender-whatsapp-1.5.4-f662d2af-4cbb-4d56-aefd-4ea6987ec5c8-1634195293523/node_modules/@bottender/bottender-core"
+    "@bottender/core" "file:../../../Library/Caches/Yarn/v6/npm-@bottender-whatsapp-1.5.4-bb673374-ca2f-4936-81d4-b66aa136373a-1634214160024/node_modules/@bottender/bottender-core"
     axios "^0.21.0"
     axios-error "^1.0.4"
     lodash "^4.17.21"
@@ -7625,20 +7634,6 @@ messaging-api-messenger@1.0.6, messaging-api-messenger@^1.0.6:
     ts-invariant "^0.4.4"
     warning "^4.0.3"
 
-messaging-api-slack@1.0.6:
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/messaging-api-slack/-/messaging-api-slack-1.0.6.tgz#26328c03c70d53ac2ef483bba0029e4bb809e166"
-  integrity sha512-A49Z+64mHhj42m+MwZiHjFti5A2nZtCv+DCgxQdBSKcG4oXwb3hHcXr0LNCuZBCPVJz+1XszGvHKf+LZy3+K5Q==
-  dependencies:
-    "@types/lodash" "^4.14.156"
-    "@types/warning" "^3.0.0"
-    axios "^0.21.1"
-    axios-error "^1.0.4"
-    lodash "^4.17.15"
-    messaging-api-common "^1.0.4"
-    ts-invariant "^0.4.4"
-    warning "^4.0.3"
-
 messaging-api-slack@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/messaging-api-slack/-/messaging-api-slack-1.1.0.tgz#fb517f2828f2fa8ffc1733fb0682efc6dc21dbf2"
@@ -7653,28 +7648,16 @@ messaging-api-slack@^1.1.0:
     ts-invariant "^0.4.4"
     warning "^4.0.3"
 
-messaging-api-telegram@1.0.6:
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/messaging-api-telegram/-/messaging-api-telegram-1.0.6.tgz#16aeb10ec60ee28b2f934787089cc4af4de911ae"
-  integrity sha512-DX2R1DcnSx4fLvlGAJliSJjixhIaZdXigCtamuBSuNHPIW75WDoOgNtJekK2sJlNW6+Us3wppkkxlg/IukNn/Q==
+messaging-api-telegram@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/messaging-api-telegram/-/messaging-api-telegram-1.1.0.tgz#ad030067b115243845bfaa2d37ae430461471e8d"
+  integrity sha512-HipK6m4N7KDpT6EW2USMDYckXPSdyAYOETfmrBTCCSLQOeIy/J6z/z3fQ5JF4jKideMhkRpgyhH2roPqTDWE7A==
   dependencies:
     "@types/lodash" "^4.14.156"
     "@types/warning" "^3.0.0"
     axios "^0.21.1"
     axios-error "^1.0.4"
     lodash "^4.17.15"
-    messaging-api-common "^1.0.4"
-    ts-invariant "^0.4.4"
-    warning "^4.0.3"
-
-messaging-api-viber@1.0.6:
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/messaging-api-viber/-/messaging-api-viber-1.0.6.tgz#d796a5cc78750e6c9e86fb7d463013ea00664bee"
-  integrity sha512-e2U72f5L8bPcubRfX4V1mRbL0d/sdxBxpbptNv3gV70K1diSv2kPXWfiDziMojYQ/Ob66SMR4354iHlm8qWXaw==
-  dependencies:
-    "@types/warning" "^3.0.0"
-    axios "^0.21.1"
-    axios-error "^1.0.4"
     messaging-api-common "^1.0.4"
     ts-invariant "^0.4.4"
     warning "^4.0.3"

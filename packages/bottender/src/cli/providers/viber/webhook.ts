@@ -1,6 +1,6 @@
 import invariant from 'invariant';
 import { Confirm } from 'enquirer';
-import { ViberClient, ViberTypes } from 'messaging-api-viber';
+import { ViberClient, ViberTypes } from '@bottender/viber';
 
 import getChannelConfig from '../../../shared/getChannelConfig';
 import getSubArgs from '../sh/utils/getSubArgs';
