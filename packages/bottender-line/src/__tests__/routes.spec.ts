@@ -1,9 +1,8 @@
-import Context from '../../context/Context';
+import { Context, router, run } from '@bottender/core';
+
 import LineContext from '../LineContext';
 import LineEvent from '../LineEvent';
 import line from '../routes';
-import router from '../../router';
-import { run } from '../../bot/Bot';
 
 const lineEventTextMessage = new LineEvent({
   replyToken: 'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA',

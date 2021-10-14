@@ -24,6 +24,7 @@
   "dependencies": {
     "@bottender/core": "file:../bottender-core",
     "@bottender/express": "file:../bottender-express",
+    "@bottender/line": "file:../bottender-line",
     "@bottender/slack": "file:../bottender-slack",
     "@bottender/telegram": "file:../bottender-telegram",
     "@bottender/viber": "file:../bottender-viber",

@@ -3,12 +3,9 @@ import { EventEmitter } from 'events';
 import chunk from 'lodash/chunk';
 import invariant from 'invariant';
 import warning from 'warning';
+import { Context, RequestContext, Session } from '@bottender/core';
 import { JsonObject } from 'type-fest';
 import { Line, LineClient } from 'messaging-api-line';
-
-import Context from '../context/Context';
-import Session from '../session/Session';
-import { RequestContext } from '../types';
 
 import LineEvent from './LineEvent';
 import * as LineTypes from './LineTypes';
@@ -16,14 +13,46 @@ import * as LineTypes from './LineTypes';
 export type LineContextOptions = {
   client: LineClient;
   event: LineEvent;
-  session?: Session | null;
+  session?: Session<
+    | {
+        type: 'user';
+        user: { id: string };
+      }
+    | {
+        type: 'group';
+        user?: { id: string };
+        group: { id: string };
+      }
+    | {
+        type: 'room';
+        user?: { id: string };
+        room: { id: string };
+      }
+  > | null;
   initialState?: JsonObject | null;
   requestContext?: RequestContext;
   shouldBatch?: boolean;
   emitter?: EventEmitter | null;
 };
 
-class LineContext extends Context<LineClient, LineEvent> {
+class LineContext extends Context<
+  LineClient,
+  LineEvent,
+  | {
+      type: 'user';
+      user: { id: string };
+    }
+  | {
+      type: 'group';
+      user?: { id: string };
+      group: { id: string };
+    }
+  | {
+      type: 'room';
+      user?: { id: string };
+      room: { id: string };
+    }
+> {
   _isReplied = false;
 
   _shouldBatch: boolean;
@@ -40,7 +69,7 @@ class LineContext extends Context<LineClient, LineEvent> {
     emitter,
   }: LineContextOptions) {
     super({ client, event, session, initialState, requestContext, emitter });
-    this._shouldBatch = shouldBatch || false;
+    this._shouldBatch = shouldBatch ?? false;
   }
 
   /**
@@ -56,7 +85,7 @@ class LineContext extends Context<LineClient, LineEvent> {
    *
    */
   get accessToken(): string {
-    return this._client.accessToken;
+    return this.client.accessToken;
   }
 
   /**
@@ -81,8 +110,8 @@ class LineContext extends Context<LineClient, LineEvent> {
           messageChunks.length === 1,
           'one replyToken can only be used to reply 5 messages'
         );
-        if (this._event.replyToken) {
-          await this._client.reply(this._event.replyToken, messageChunks[0]);
+        if (this.event.replyToken) {
+          await this.client.reply(this.event.replyToken, messageChunks[0]);
         }
       }
     }
@@ -93,7 +122,7 @@ class LineContext extends Context<LineClient, LineEvent> {
    *
    */
   getMessageContent(): Promise<Buffer> | undefined {
-    if (!(this._event.isImage || this._event.isVideo || this._event.isAudio)) {
+    if (!(this.event.isImage || this.event.isVideo || this.event.isAudio)) {
       warning(
         false,
         'getMessageContent: should only be called with image, video or audio message'
@@ -101,9 +130,9 @@ class LineContext extends Context<LineClient, LineEvent> {
       return;
     }
 
-    const messageId = (this._event.message as any).id;
+    const messageId = (this.event.message as any).id;
 
-    return this._client.getMessageContent(messageId);
+    return this.client.getMessageContent(messageId);
   }
 
   /**
@@ -111,16 +140,16 @@ class LineContext extends Context<LineClient, LineEvent> {
    *
    */
   async leave(): Promise<any> {
-    if (!this._session) {
+    if (!this.session) {
       warning(false, 'leave: should not be called in context without session');
       return;
     }
 
-    switch (this._session.type) {
+    switch (this.session.type) {
       case 'room':
-        return this._client.leaveRoom(this._session.room.id);
+        return this.client.leaveRoom(this.session.room.id);
       case 'group':
-        return this._client.leaveGroup(this._session.group.id);
+        return this.client.leaveGroup(this.session.group.id);
       default:
         warning(
           false,
@@ -134,7 +163,7 @@ class LineContext extends Context<LineClient, LineEvent> {
    *
    */
   async getUserProfile(): Promise<Record<string, any> | null> {
-    if (!this._session) {
+    if (!this.session) {
       warning(
         false,
         'getUserProfile: should not be called in context without session'
@@ -142,7 +171,7 @@ class LineContext extends Context<LineClient, LineEvent> {
       return null;
     }
 
-    if (!this._session.user) {
+    if (!this.session.user) {
       warning(
         false,
         'getUserProfile: should not be called in context without user in session'
@@ -150,20 +179,20 @@ class LineContext extends Context<LineClient, LineEvent> {
       return null;
     }
 
-    switch (this._session.type) {
+    switch (this.session.type) {
       case 'room':
-        return this._client.getRoomMemberProfile(
-          this._session.room.id,
-          this._session.user.id
+        return this.client.getRoomMemberProfile(
+          this.session.room.id,
+          this.session.user.id
         );
       case 'group':
-        return this._client.getGroupMemberProfile(
-          this._session.group.id,
-          this._session.user.id
+        return this.client.getGroupMemberProfile(
+          this.session.group.id,
+          this.session.user.id
         );
       case 'user':
       default:
-        return this._client.getUserProfile(this._session.user.id);
+        return this.client.getUserProfile(this.session.user.id);
     }
   }
 
@@ -173,7 +202,7 @@ class LineContext extends Context<LineClient, LineEvent> {
    *
    */
   async getMemberProfile(userId: string): Promise<Record<string, any> | null> {
-    if (!this._session) {
+    if (!this.session) {
       warning(
         false,
         'getMemberProfile: should not be called in context without session'
@@ -181,14 +210,11 @@ class LineContext extends Context<LineClient, LineEvent> {
       return null;
     }
 
-    switch (this._session.type) {
+    switch (this.session.type) {
       case 'room':
-        return this._client.getRoomMemberProfile(this._session.room.id, userId);
+        return this.client.getRoomMemberProfile(this.session.room.id, userId);
       case 'group':
-        return this._client.getGroupMemberProfile(
-          this._session.group.id,
-          userId
-        );
+        return this.client.getGroupMemberProfile(this.session.group.id, userId);
       default:
         warning(
           false,
@@ -203,7 +229,7 @@ class LineContext extends Context<LineClient, LineEvent> {
    *
    */
   async getMembersCount(): Promise<number | null> {
-    if (!this._session) {
+    if (!this.session) {
       warning(
         false,
         'getMembersCount: should not be called in context without session'
@@ -211,11 +237,11 @@ class LineContext extends Context<LineClient, LineEvent> {
       return null;
     }
 
-    switch (this._session.type) {
+    switch (this.session.type) {
       case 'room':
-        return this._client.getRoomMembersCount(this._session.room.id);
+        return this.client.getRoomMembersCount(this.session.room.id);
       case 'group':
-        return this._client.getGroupMembersCount(this._session.group.id);
+        return this.client.getGroupMembersCount(this.session.group.id);
       default:
         return 1;
     }
@@ -229,7 +255,7 @@ class LineContext extends Context<LineClient, LineEvent> {
    *
    */
   async getMemberIds(start: string): Promise<Record<string, any> | null> {
-    if (!this._session) {
+    if (!this.session) {
       warning(
         false,
         'getMemberIds: should not be called in context without session'
@@ -237,11 +263,11 @@ class LineContext extends Context<LineClient, LineEvent> {
       return null;
     }
 
-    switch (this._session.type) {
+    switch (this.session.type) {
       case 'room':
-        return this._client.getRoomMemberIds(this._session.room.id, start);
+        return this.client.getRoomMemberIds(this.session.room.id, start);
       case 'group':
-        return this._client.getGroupMemberIds(this._session.group.id, start);
+        return this.client.getGroupMemberIds(this.session.group.id, start);
       default:
         warning(
           false,
@@ -258,7 +284,7 @@ class LineContext extends Context<LineClient, LineEvent> {
    *
    */
   async getAllMemberIds(): Promise<string[] | null> {
-    if (!this._session) {
+    if (!this.session) {
       warning(
         false,
         'getAllMemberIds: should not be called in context without session'
@@ -266,11 +292,11 @@ class LineContext extends Context<LineClient, LineEvent> {
       return null;
     }
 
-    switch (this._session.type) {
+    switch (this.session.type) {
       case 'room':
-        return this._client.getAllRoomMemberIds(this._session.room.id);
+        return this.client.getAllRoomMemberIds(this.session.room.id);
       case 'group':
-        return this._client.getAllGroupMemberIds(this._session.group.id);
+        return this.client.getAllGroupMemberIds(this.session.group.id);
       default:
         warning(
           false,
@@ -285,8 +311,8 @@ class LineContext extends Context<LineClient, LineEvent> {
    *
    */
   async getLinkedRichMenu(): Promise<any> {
-    if (this._session && this._session.user) {
-      return this._client.getLinkedRichMenu(this._session.user.id);
+    if (this.session && this.session.user) {
+      return this.client.getLinkedRichMenu(this.session.user.id);
     }
     warning(
       false,
@@ -299,8 +325,8 @@ class LineContext extends Context<LineClient, LineEvent> {
    *
    */
   async linkRichMenu(richMenuId: string): Promise<any> {
-    if (this._session && this._session.user) {
-      return this._client.linkRichMenu(this._session.user.id, richMenuId);
+    if (this.session && this.session.user) {
+      return this.client.linkRichMenu(this.session.user.id, richMenuId);
     }
     warning(
       false,
@@ -313,8 +339,8 @@ class LineContext extends Context<LineClient, LineEvent> {
    *
    */
   async unlinkRichMenu(): Promise<any> {
-    if (this._session && this._session.user) {
-      return this._client.unlinkRichMenu(this._session.user.id);
+    if (this.session && this.session.user) {
+      return this.client.unlinkRichMenu(this.session.user.id);
     }
     warning(
       false,
@@ -327,8 +353,8 @@ class LineContext extends Context<LineClient, LineEvent> {
    *
    */
   async issueLinkToken(): Promise<any> {
-    if (this._session && this._session.user) {
-      return this._client.issueLinkToken(this._session.user.id);
+    if (this.session && this.session.user) {
+      return this.client.issueLinkToken(this.session.user.id);
     }
     warning(
       false,
@@ -342,13 +368,13 @@ class LineContext extends Context<LineClient, LineEvent> {
     if (this._shouldBatch) {
       this._replyMessages.push(...messages);
 
-      return;
+      return Promise.resolve();
     }
 
     this._isReplied = true;
 
     // FIXME: throw or warn for no replyToken
-    return this._client.reply(this._event.replyToken as string, messages);
+    return this.client.reply(this.event.replyToken as string, messages);
   }
 
   replyText(
