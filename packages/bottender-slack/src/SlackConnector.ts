@@ -3,13 +3,10 @@ import { EventEmitter } from 'events';
 
 import invariant from 'invariant';
 import warning from 'warning';
+import { Connector, RequestContext, Session } from '@bottender/core';
 import { JsonObject } from 'type-fest';
 import { SlackOAuthClient } from 'messaging-api-slack';
 import { camelcaseKeysDeep } from 'messaging-api-common';
-
-import Session from '../session/Session';
-import { Connector } from '../bot/Connector';
-import { RequestContext } from '../types';
 
 import SlackContext from './SlackContext';
 import SlackEvent from './SlackEvent';
@@ -43,7 +40,7 @@ export type SlackConnectorOptions =
   | ConnectorOptionsWithClient;
 
 export default class SlackConnector
-  implements Connector<SlackRequestBody, SlackOAuthClient>
+  implements Connector<SlackRequestBody, SlackOAuthClient, SlackEvent>
 {
   _client: SlackOAuthClient;
 
@@ -183,7 +180,19 @@ export default class SlackConnector
     return this._getChannelId(rawEvent) || this._getUserId(rawEvent);
   }
 
-  async updateSession(session: Session, body: SlackRequestBody): Promise<void> {
+  async updateSession(
+    session: Session<{
+      user: {
+        id: string;
+        _updatedAt: string;
+      };
+      channel?: {
+        id: string;
+        _updatedAt: string;
+      };
+    }>,
+    body: SlackRequestBody
+  ): Promise<void> {
     if (this._isBotEventRequest(body)) {
       return;
     }
@@ -210,11 +219,6 @@ export default class SlackConnector
       _updatedAt: new Date().toISOString(),
     };
 
-    session.channel = {
-      id: channelId,
-      _updatedAt: new Date().toISOString(),
-    };
-
     Object.freeze(session.user);
     Object.defineProperty(session, 'user', {
       configurable: false,
@@ -223,13 +227,20 @@ export default class SlackConnector
       value: session.user,
     });
 
-    Object.freeze(session.channel);
-    Object.defineProperty(session, 'channel', {
-      configurable: false,
-      enumerable: true,
-      writable: false,
-      value: session.channel,
-    });
+    if (channelId) {
+      session.channel = {
+        id: channelId,
+        _updatedAt: new Date().toISOString(),
+      };
+
+      Object.freeze(session.channel);
+      Object.defineProperty(session, 'channel', {
+        configurable: false,
+        enumerable: true,
+        writable: false,
+        value: session.channel,
+      });
+    }
   }
 
   mapRequestToEvents(body: SlackRequestBody): SlackEvent[] {

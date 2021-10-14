@@ -1,6 +1,5 @@
-import { pascalCase } from 'pascal-case';
-
-import { Event } from '../context/Event';
+import { Event } from '@bottender/core';
+import { pascalcase } from 'messaging-api-common';
 
 import {
   CommandEvent,
@@ -103,8 +102,8 @@ export default class SlackEvent implements Event<SlackRawEvent> {
    * The message object from Slack raw event.
    *
    */
-  get message(): Message | null {
-    if (!this.isMessage) return null;
+  get message(): Message | undefined {
+    if (!this.isMessage) return;
 
     const message = this._rawEvent as Message;
 
@@ -123,15 +122,13 @@ export default class SlackEvent implements Event<SlackRawEvent> {
    * The text string from Slack raw event.
    *
    */
-  get text(): string | null {
+  get text(): string | undefined {
     if (this.isText) {
       return (this._rawEvent as Message).text;
     }
     if (this.isCommand) {
       return (this._rawEvent as CommandEvent).text;
     }
-
-    return null;
   }
 
   /**
@@ -178,22 +175,20 @@ export default class SlackEvent implements Event<SlackRawEvent> {
    * The callback_id from Slack interactive message.
    *
    */
-  get callbackId(): string | null {
+  get callbackId(): string | undefined {
     if (this.isBlockActionOrInteractiveMessage) {
       return (this._rawEvent as InteractiveMessageEvent).callbackId;
     }
-    return null;
   }
 
   /**
    * The action from Slack interactive message.
    *
    */
-  get action(): {} | null {
+  get action(): {} | undefined {
     if (this.isBlockActionOrInteractiveMessage) {
       return (this._rawEvent as InteractiveMessageEvent).actions[0];
     }
-    return null;
   }
 
   /**
@@ -216,8 +211,8 @@ export default class SlackEvent implements Event<SlackRawEvent> {
    * The slash command name.
    *
    */
-  get command(): string | null {
-    return (this._rawEvent as CommandEvent).command || null;
+  get command(): string | undefined {
+    return (this._rawEvent as CommandEvent).command ?? undefined;
   }
 }
 
@@ -278,7 +273,7 @@ const Events = [
 ];
 
 Events.forEach((event) => {
-  Object.defineProperty(SlackEvent.prototype, `is${pascalCase(event)}`, {
+  Object.defineProperty(SlackEvent.prototype, `is${pascalcase(event)}`, {
     enumerable: false,
     configurable: true,
     get() {

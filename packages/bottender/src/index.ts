@@ -1,7 +1,6 @@
 import bottender from './bottender';
 import * as LineTypes from './line/LineTypes';
 import * as MessengerTypes from './messenger/MessengerTypes';
-import * as SlackTypes from './slack/SlackTypes';
 import * as TelegramTypes from './telegram/TelegramTypes';
 
 export { bottender };
@@ -64,11 +63,13 @@ export { Line, LineNotify, LineClient } from 'messaging-api-line';
 export { LineTypes };
 
 /* Slack */
-export { default as SlackConnector } from './slack/SlackConnector';
-export { default as SlackContext } from './slack/SlackContext';
-export { default as SlackEvent } from './slack/SlackEvent';
-export { SlackOAuthClient } from 'messaging-api-slack';
-export { SlackTypes };
+export {
+  SlackConnector,
+  SlackContext,
+  SlackEvent,
+  SlackOAuthClient,
+  SlackTypes,
+} from '@bottender/slack';
 
 /* Telegram */
 export { default as TelegramConnector } from './telegram/TelegramConnector';
