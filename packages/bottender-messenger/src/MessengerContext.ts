@@ -4,13 +4,10 @@ import { EventEmitter } from 'events';
 import invariant from 'invariant';
 import sleep from 'delay';
 import warning from 'warning';
+import { Context, RequestContext, Session } from '@bottender/core';
 import { FacebookBatchQueue } from 'facebook-batch';
 import { JsonObject } from 'type-fest';
 import { MessengerBatch, MessengerClient } from 'messaging-api-messenger';
-
-import Context from '../context/Context';
-import Session from '../session/Session';
-import { RequestContext } from '../types';
 
 import MessengerEvent from './MessengerEvent';
 import * as MessengerTypes from './MessengerTypes';
@@ -19,7 +16,7 @@ export type MessengerContextOptions = {
   appId?: string;
   client: MessengerClient;
   event: MessengerEvent;
-  session?: Session;
+  session?: Session<{ user: { id: string; _updatedAt: string } }>;
   initialState?: JsonObject;
   requestContext?: RequestContext;
   customAccessToken?: string;
@@ -27,7 +24,11 @@ export type MessengerContextOptions = {
   emitter?: EventEmitter;
 };
 
-class MessengerContext extends Context<MessengerClient, MessengerEvent> {
+class MessengerContext extends Context<
+  MessengerClient,
+  MessengerEvent,
+  { user: { id: string; _updatedAt: string } }
+> {
   _appId: string | null;
 
   _customAccessToken: string | null;
@@ -62,7 +63,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
   }
 
   get accessToken(): string | null {
-    return this._customAccessToken || this._client.accessToken;
+    return this._customAccessToken ?? this.client.accessToken;
   }
 
   _getMethodOptions<O extends object>(
@@ -147,7 +148,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
     text: string,
     options: MessengerTypes.SendOption = {}
   ): Promise<MessengerTypes.SendMessageSuccessResponse | undefined> {
-    if (!this._session) {
+    if (!this.session) {
       warning(
         false,
         'sendText: should not be called in context without session'
@@ -155,7 +156,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       return;
     }
 
-    if (this._event.isEcho || this._event.isDelivery || this._event.isRead) {
+    if (this.event.isEcho || this.event.isDelivery || this.event.isRead) {
       warning(
         false,
         'sendText: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
@@ -166,14 +167,14 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
     if (this._batchQueue) {
       return this._batchQueue.push<MessengerTypes.SendMessageSuccessResponse>(
         MessengerBatch.sendText(
-          this._session.user.id,
+          this.session.user.id,
           text,
           this._getSendMethodOptions(options)
         )
       );
     }
-    return this._client.sendText(
-      this._session.user.id,
+    return this.client.sendText(
+      this.session.user.id,
       text,
       this._getSendMethodOptions(options)
     );
@@ -184,7 +185,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       fields?: MessengerTypes.UserProfileField[];
     } = {}
   ): Promise<MessengerTypes.User | null> {
-    if (!this._session) {
+    if (!this.session) {
       warning(
         false,
         'getUserProfile: should not be called in context without session'
@@ -195,16 +196,16 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
     if (this._batchQueue) {
       return this._batchQueue.push<MessengerTypes.User>(
         MessengerBatch.getUserProfile(
-          this._session.user.id,
+          this.session.user.id,
           this._getMethodOptions(options)
         )
       );
     }
-    return this._client.getUserProfile(this._session.user.id, options);
+    return this.client.getUserProfile(this.session.user.id, options);
   }
 
   async getUserPersistentMenu(): Promise<MessengerTypes.PersistentMenu | null> {
-    if (!this._session) {
+    if (!this.session) {
       warning(
         false,
         `getUserPersistentMenu: should not be called in context without session`
@@ -215,13 +216,13 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
     if (this._batchQueue) {
       return this._batchQueue.push<MessengerTypes.PersistentMenu>(
         MessengerBatch.getUserPersistentMenu(
-          this._session.user.id,
+          this.session.user.id,
           this._getMethodOptions({})
         )
       );
     }
 
-    return this._client.getUserPersistentMenu(this._session.user.id);
+    return this.client.getUserPersistentMenu(this.session.user.id);
   }
 
   async setUserPersistentMenu(
@@ -230,7 +231,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       composerInputDisabled?: boolean;
     } = {}
   ): Promise<MessengerTypes.MutationSuccessResponse | undefined> {
-    if (!this._session) {
+    if (!this.session) {
       warning(
         false,
         `setUserPersistentMenu: should not be called in context without session`
@@ -241,15 +242,15 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
     if (this._batchQueue) {
       return this._batchQueue.push<MessengerTypes.MutationSuccessResponse>(
         MessengerBatch.setUserPersistentMenu(
-          this._session.user.id,
+          this.session.user.id,
           attrs,
           this._getMethodOptions(options)
         )
       );
     }
 
-    return this._client.setUserPersistentMenu(
-      this._session.user.id,
+    return this.client.setUserPersistentMenu(
+      this.session.user.id,
       attrs,
       options
     );
@@ -258,7 +259,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
   async deleteUserPersistentMenu(): Promise<
     MessengerTypes.MutationSuccessResponse | undefined
   > {
-    if (!this._session) {
+    if (!this.session) {
       warning(
         false,
         `deleteUserPersistentMenu: should not be called in context without session`
@@ -269,13 +270,13 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
     if (this._batchQueue) {
       return this._batchQueue.push<MessengerTypes.MutationSuccessResponse>(
         MessengerBatch.deleteUserPersistentMenu(
-          this._session.user.id,
+          this.session.user.id,
           this._getMethodOptions({})
         )
       );
     }
 
-    return this._client.deleteUserPersistentMenu(this._session.user.id);
+    return this.client.deleteUserPersistentMenu(this.session.user.id);
   }
 
   /**
@@ -291,7 +292,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
     senderAction: MessengerTypes.SenderAction,
     options: MessengerTypes.SendOption = {}
   ): Promise<MessengerTypes.SendSenderActionResponse | undefined> {
-    if (!this._session) {
+    if (!this.session) {
       warning(
         false,
         'sendSenderAction: should not be called in context without session'
@@ -302,14 +303,14 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
     if (this._batchQueue) {
       return this._batchQueue.push<MessengerTypes.SendSenderActionResponse>(
         MessengerBatch.sendSenderAction(
-          this._session.user.id,
+          this.session.user.id,
           senderAction,
           this._getSenderActionMethodOptions(options)
         )
       );
     }
-    return this._client.sendSenderAction(
-      this._session.user.id,
+    return this.client.sendSenderAction(
+      this.session.user.id,
       senderAction,
       this._getSenderActionMethodOptions(options)
     );
@@ -321,7 +322,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
   async typingOn(
     options: MessengerTypes.SendOption = {}
   ): Promise<MessengerTypes.SendSenderActionResponse | undefined> {
-    if (!this._session) {
+    if (!this.session) {
       warning(
         false,
         'typingOn: should not be called in context without session'
@@ -332,13 +333,13 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
     if (this._batchQueue) {
       return this._batchQueue.push<MessengerTypes.SendSenderActionResponse>(
         MessengerBatch.typingOn(
-          this._session.user.id,
+          this.session.user.id,
           this._getSenderActionMethodOptions(options)
         )
       );
     }
-    return this._client.typingOn(
-      this._session.user.id,
+    return this.client.typingOn(
+      this.session.user.id,
       this._getSenderActionMethodOptions(options)
     );
   }
@@ -349,7 +350,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
   async typingOff(
     options: MessengerTypes.SendOption = {}
   ): Promise<MessengerTypes.SendSenderActionResponse | undefined> {
-    if (!this._session) {
+    if (!this.session) {
       warning(
         false,
         'typingOff: should not be called in context without session'
@@ -360,13 +361,13 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
     if (this._batchQueue) {
       return this._batchQueue.push<MessengerTypes.SendSenderActionResponse>(
         MessengerBatch.typingOff(
-          this._session.user.id,
+          this.session.user.id,
           this._getSenderActionMethodOptions(options)
         )
       );
     }
-    return this._client.typingOff(
-      this._session.user.id,
+    return this.client.typingOff(
+      this.session.user.id,
       this._getSenderActionMethodOptions(options)
     );
   }
@@ -377,7 +378,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
   async markSeen(): Promise<
     MessengerTypes.SendSenderActionResponse | undefined
   > {
-    if (!this._session) {
+    if (!this.session) {
       warning(
         false,
         'markSeen: should not be called in context without session'
@@ -388,13 +389,13 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
     if (this._batchQueue) {
       return this._batchQueue.push<MessengerTypes.SendSenderActionResponse>(
         MessengerBatch.markSeen(
-          this._session.user.id,
+          this.session.user.id,
           // FIXME: this type should be fixed in MessengerBatch
           this._getMethodOptions({}) as any
         )
       );
     }
-    return this._client.markSeen(this._session.user.id);
+    return this.client.markSeen(this.session.user.id);
   }
 
   /**
@@ -410,7 +411,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
     targetAppId: number,
     metadata?: string
   ): Promise<{ success: true } | undefined> {
-    if (!this._session) {
+    if (!this.session) {
       warning(
         false,
         'passThreadControl: should not be called in context without session'
@@ -421,15 +422,15 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
     if (this._batchQueue) {
       return this._batchQueue.push<{ success: true }>(
         MessengerBatch.passThreadControl(
-          this._session.user.id,
+          this.session.user.id,
           targetAppId,
           metadata,
           this._getMethodOptions({})
         )
       );
     }
-    return this._client.passThreadControl(
-      this._session.user.id,
+    return this.client.passThreadControl(
+      this.session.user.id,
       targetAppId,
       metadata
     );
@@ -441,7 +442,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
   async passThreadControlToPageInbox(
     metadata?: string
   ): Promise<{ success: true } | undefined> {
-    if (!this._session) {
+    if (!this.session) {
       warning(
         false,
         'passThreadControlToPageInbox: should not be called in context without session'
@@ -452,14 +453,14 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
     if (this._batchQueue) {
       return this._batchQueue.push<{ success: true }>(
         MessengerBatch.passThreadControlToPageInbox(
-          this._session.user.id,
+          this.session.user.id,
           metadata,
           this._getMethodOptions({})
         )
       );
     }
-    return this._client.passThreadControlToPageInbox(
-      this._session.user.id,
+    return this.client.passThreadControlToPageInbox(
+      this.session.user.id,
       metadata
     );
   }
@@ -470,7 +471,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
   async takeThreadControl(
     metadata?: string
   ): Promise<{ success: true } | undefined> {
-    if (!this._session) {
+    if (!this.session) {
       warning(
         false,
         'takeThreadControl: should not be called in context without session'
@@ -481,13 +482,13 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
     if (this._batchQueue) {
       return this._batchQueue.push<{ success: true }>(
         MessengerBatch.takeThreadControl(
-          this._session.user.id,
+          this.session.user.id,
           metadata,
           this._getMethodOptions({})
         )
       );
     }
-    return this._client.takeThreadControl(this._session.user.id, metadata);
+    return this.client.takeThreadControl(this.session.user.id, metadata);
   }
 
   /**
@@ -496,7 +497,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
   async requestThreadControl(
     metadata?: string
   ): Promise<{ success: true } | undefined> {
-    if (!this._session) {
+    if (!this.session) {
       warning(
         false,
         'requestThreadControl: should not be called in context without session'
@@ -507,20 +508,20 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
     if (this._batchQueue) {
       return this._batchQueue.push<{ success: true }>(
         MessengerBatch.requestThreadControl(
-          this._session.user.id,
+          this.session.user.id,
           metadata,
           this._getMethodOptions({})
         )
       );
     }
-    return this._client.requestThreadControl(this._session.user.id, metadata);
+    return this.client.requestThreadControl(this.session.user.id, metadata);
   }
 
   /**
    * https://github.com/Yoctol/messaging-apis/blob/master/packages/messaging-api-messenger/README.md#requestthreadcontroluserid-metadata---official-docs
    */
   async getThreadOwner(): Promise<{ appId: string } | undefined> {
-    if (!this._session) {
+    if (!this.session) {
       warning(
         false,
         'getThreadOwner: should not be called in context without session'
@@ -531,12 +532,12 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
     if (this._batchQueue) {
       return this._batchQueue.push<{ appId: string }>(
         MessengerBatch.getThreadOwner(
-          this._session.user.id,
+          this.session.user.id,
           this._getMethodOptions({})
         )
       );
     }
-    return this._client.getThreadOwner(this._session.user.id);
+    return this.client.getThreadOwner(this.session.user.id);
   }
 
   async isThreadOwner(): Promise<boolean> {
@@ -567,7 +568,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
   async associateLabel(
     labelId: number
   ): Promise<{ success: true } | undefined> {
-    if (!this._session) {
+    if (!this.session) {
       warning(
         false,
         'associateLabel: should not be called in context without session'
@@ -578,13 +579,13 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
     if (this._batchQueue) {
       return this._batchQueue.push<{ success: true }>(
         MessengerBatch.associateLabel(
-          this._session.user.id,
+          this.session.user.id,
           labelId,
           this._getMethodOptions({})
         )
       );
     }
-    return this._client.associateLabel(this._session.user.id, labelId);
+    return this.client.associateLabel(this.session.user.id, labelId);
   }
 
   /**
@@ -593,7 +594,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
   async dissociateLabel(
     labelId: number
   ): Promise<{ success: true } | undefined> {
-    if (!this._session) {
+    if (!this.session) {
       warning(
         false,
         'dissociateLabel: should not be called in context without session'
@@ -604,13 +605,13 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
     if (this._batchQueue) {
       return this._batchQueue.push<{ success: true }>(
         MessengerBatch.dissociateLabel(
-          this._session.user.id,
+          this.session.user.id,
           labelId,
           this._getMethodOptions({})
         )
       );
     }
-    return this._client.dissociateLabel(this._session.user.id, labelId);
+    return this.client.dissociateLabel(this.session.user.id, labelId);
   }
 
   /**
@@ -631,7 +632,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       }
     | undefined
   > {
-    if (!this._session) {
+    if (!this.session) {
       warning(
         false,
         'getAssociatedLabels: should not be called in context without session'
@@ -653,19 +654,19 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
         };
       }>(
         MessengerBatch.getAssociatedLabels(
-          this._session.user.id,
+          this.session.user.id,
           this._getMethodOptions({})
         )
       );
     }
-    return this._client.getAssociatedLabels(this._session.user.id);
+    return this.client.getAssociatedLabels(this.session.user.id);
   }
 
   async sendMessage(
     message: MessengerTypes.Message,
     options: MessengerTypes.SendOption = {}
   ): Promise<MessengerTypes.SendMessageSuccessResponse | undefined> {
-    if (!this._session) {
+    if (!this.session) {
       warning(
         false,
         'sendMessage: should not be called in context without session'
@@ -673,7 +674,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       return;
     }
 
-    if (this._event.isEcho || this._event.isDelivery || this._event.isRead) {
+    if (this.event.isEcho || this.event.isDelivery || this.event.isRead) {
       warning(
         false,
         `sendMessage: calling Send APIs in \`message_reads\`(event.isRead), \`message_deliveries\`(event.isDelivery) or \`message_echoes\`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.`
@@ -684,14 +685,14 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
     if (this._batchQueue) {
       return this._batchQueue.push<MessengerTypes.SendMessageSuccessResponse>(
         MessengerBatch.sendMessage(
-          this._session.user.id,
+          this.session.user.id,
           message,
           this._getSendMethodOptions(options)
         )
       );
     }
-    return this._client.sendMessage(
-      this._session.user.id,
+    return this.client.sendMessage(
+      this.session.user.id,
       message,
       this._getSendMethodOptions(options)
     );
@@ -701,7 +702,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
     attachment: MessengerTypes.Attachment,
     options: MessengerTypes.SendOption = {}
   ): Promise<MessengerTypes.SendMessageSuccessResponse | undefined> {
-    if (!this._session) {
+    if (!this.session) {
       warning(
         false,
         'sendAttachment: should not be called in context without session'
@@ -709,7 +710,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       return;
     }
 
-    if (this._event.isEcho || this._event.isDelivery || this._event.isRead) {
+    if (this.event.isEcho || this.event.isDelivery || this.event.isRead) {
       warning(
         false,
         'sendAttachment: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
@@ -720,14 +721,14 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
     if (this._batchQueue) {
       return this._batchQueue.push<MessengerTypes.SendMessageSuccessResponse>(
         MessengerBatch.sendAttachment(
-          this._session.user.id,
+          this.session.user.id,
           attachment,
           this._getSendMethodOptions(options)
         )
       );
     }
-    return this._client.sendAttachment(
-      this._session.user.id,
+    return this.client.sendAttachment(
+      this.session.user.id,
       attachment,
       this._getSendMethodOptions(options)
     );
@@ -740,7 +741,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       | MessengerTypes.MediaAttachmentPayload,
     options: MessengerTypes.SendOption = {}
   ): Promise<MessengerTypes.SendMessageSuccessResponse | undefined> {
-    if (!this._session) {
+    if (!this.session) {
       warning(
         false,
         'sendImage: should not be called in context without session'
@@ -748,7 +749,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       return;
     }
 
-    if (this._event.isEcho || this._event.isDelivery || this._event.isRead) {
+    if (this.event.isEcho || this.event.isDelivery || this.event.isRead) {
       warning(
         false,
         'sendImage: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
@@ -763,14 +764,14 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
     ) {
       return this._batchQueue.push<MessengerTypes.SendMessageSuccessResponse>(
         MessengerBatch.sendImage(
-          this._session.user.id,
+          this.session.user.id,
           image,
           this._getSendMethodOptions(options)
         )
       );
     }
-    return this._client.sendImage(
-      this._session.user.id,
+    return this.client.sendImage(
+      this.session.user.id,
       image,
       this._getSendMethodOptions(options)
     );
@@ -783,7 +784,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       | MessengerTypes.MediaAttachmentPayload,
     options: MessengerTypes.SendOption = {}
   ): Promise<MessengerTypes.SendMessageSuccessResponse | undefined> {
-    if (!this._session) {
+    if (!this.session) {
       warning(
         false,
         'sendAudio: should not be called in context without session'
@@ -791,7 +792,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       return;
     }
 
-    if (this._event.isEcho || this._event.isDelivery || this._event.isRead) {
+    if (this.event.isEcho || this.event.isDelivery || this.event.isRead) {
       warning(
         false,
         'sendAudio: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
@@ -806,14 +807,14 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
     ) {
       return this._batchQueue.push<MessengerTypes.SendMessageSuccessResponse>(
         MessengerBatch.sendAudio(
-          this._session.user.id,
+          this.session.user.id,
           audio,
           this._getSendMethodOptions(options)
         )
       );
     }
-    return this._client.sendAudio(
-      this._session.user.id,
+    return this.client.sendAudio(
+      this.session.user.id,
       audio,
       this._getSendMethodOptions(options)
     );
@@ -826,7 +827,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       | MessengerTypes.MediaAttachmentPayload,
     options: MessengerTypes.SendOption = {}
   ): Promise<MessengerTypes.SendMessageSuccessResponse | undefined> {
-    if (!this._session) {
+    if (!this.session) {
       warning(
         false,
         'sendVideo: should not be called in context without session'
@@ -834,7 +835,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       return;
     }
 
-    if (this._event.isEcho || this._event.isDelivery || this._event.isRead) {
+    if (this.event.isEcho || this.event.isDelivery || this.event.isRead) {
       warning(
         false,
         'sendVideo: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
@@ -849,14 +850,14 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
     ) {
       return this._batchQueue.push<MessengerTypes.SendMessageSuccessResponse>(
         MessengerBatch.sendVideo(
-          this._session.user.id,
+          this.session.user.id,
           video,
           this._getSendMethodOptions(options)
         )
       );
     }
-    return this._client.sendVideo(
-      this._session.user.id,
+    return this.client.sendVideo(
+      this.session.user.id,
       video,
       this._getSendMethodOptions(options)
     );
@@ -869,7 +870,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       | MessengerTypes.MediaAttachmentPayload,
     options: MessengerTypes.SendOption = {}
   ): Promise<MessengerTypes.SendMessageSuccessResponse | undefined> {
-    if (!this._session) {
+    if (!this.session) {
       warning(
         false,
         'sendFile: should not be called in context without session'
@@ -877,7 +878,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       return;
     }
 
-    if (this._event.isEcho || this._event.isDelivery || this._event.isRead) {
+    if (this.event.isEcho || this.event.isDelivery || this.event.isRead) {
       warning(
         false,
         'sendFile: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
@@ -892,14 +893,14 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
     ) {
       return this._batchQueue.push<MessengerTypes.SendMessageSuccessResponse>(
         MessengerBatch.sendFile(
-          this._session.user.id,
+          this.session.user.id,
           file,
           this._getSendMethodOptions(options)
         )
       );
     }
-    return this._client.sendFile(
-      this._session.user.id,
+    return this.client.sendFile(
+      this.session.user.id,
       file,
       this._getSendMethodOptions(options)
     );
@@ -909,7 +910,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
     payload: MessengerTypes.TemplateAttachmentPayload,
     options: MessengerTypes.SendOption = {}
   ): Promise<MessengerTypes.SendMessageSuccessResponse | undefined> {
-    if (!this._session) {
+    if (!this.session) {
       warning(
         false,
         'sendTemplate: should not be called in context without session'
@@ -917,7 +918,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       return;
     }
 
-    if (this._event.isEcho || this._event.isDelivery || this._event.isRead) {
+    if (this.event.isEcho || this.event.isDelivery || this.event.isRead) {
       warning(
         false,
         'sendTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
@@ -928,14 +929,14 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
     if (this._batchQueue) {
       return this._batchQueue.push<MessengerTypes.SendMessageSuccessResponse>(
         MessengerBatch.sendTemplate(
-          this._session.user.id,
+          this.session.user.id,
           payload,
           this._getSendMethodOptions(options)
         )
       );
     }
-    return this._client.sendTemplate(
-      this._session.user.id,
+    return this.client.sendTemplate(
+      this.session.user.id,
       payload,
       this._getSendMethodOptions(options)
     );
@@ -947,7 +948,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       imageAspectRatio?: 'horizontal' | 'square';
     } & MessengerTypes.SendOption
   ): Promise<MessengerTypes.SendMessageSuccessResponse | undefined> {
-    if (!this._session) {
+    if (!this.session) {
       warning(
         false,
         'sendGenericTemplate: should not be called in context without session'
@@ -955,7 +956,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       return;
     }
 
-    if (this._event.isEcho || this._event.isDelivery || this._event.isRead) {
+    if (this.event.isEcho || this.event.isDelivery || this.event.isRead) {
       warning(
         false,
         'sendGenericTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
@@ -966,14 +967,14 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
     if (this._batchQueue) {
       return this._batchQueue.push<MessengerTypes.SendMessageSuccessResponse>(
         MessengerBatch.sendGenericTemplate(
-          this._session.user.id,
+          this.session.user.id,
           elements,
           this._getSendMethodOptions(options)
         )
       );
     }
-    return this._client.sendGenericTemplate(
-      this._session.user.id,
+    return this.client.sendGenericTemplate(
+      this.session.user.id,
       elements,
       this._getSendMethodOptions(options)
     );
@@ -984,7 +985,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
     buttons: MessengerTypes.TemplateButton[],
     options: MessengerTypes.SendOption = {}
   ): Promise<MessengerTypes.SendMessageSuccessResponse | undefined> {
-    if (!this._session) {
+    if (!this.session) {
       warning(
         false,
         'sendButtonTemplate: should not be called in context without session'
@@ -992,7 +993,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       return;
     }
 
-    if (this._event.isEcho || this._event.isDelivery || this._event.isRead) {
+    if (this.event.isEcho || this.event.isDelivery || this.event.isRead) {
       warning(
         false,
         'sendButtonTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
@@ -1003,15 +1004,15 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
     if (this._batchQueue) {
       return this._batchQueue.push<MessengerTypes.SendMessageSuccessResponse>(
         MessengerBatch.sendButtonTemplate(
-          this._session.user.id,
+          this.session.user.id,
           text,
           buttons,
           this._getSendMethodOptions(options)
         )
       );
     }
-    return this._client.sendButtonTemplate(
-      this._session.user.id,
+    return this.client.sendButtonTemplate(
+      this.session.user.id,
       text,
       buttons,
       this._getSendMethodOptions(options)
@@ -1022,7 +1023,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
     elements: MessengerTypes.MediaElement[],
     options: MessengerTypes.SendOption = {}
   ): Promise<MessengerTypes.SendMessageSuccessResponse | undefined> {
-    if (!this._session) {
+    if (!this.session) {
       warning(
         false,
         'sendMediaTemplate: should not be called in context without session'
@@ -1030,7 +1031,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       return;
     }
 
-    if (this._event.isEcho || this._event.isDelivery || this._event.isRead) {
+    if (this.event.isEcho || this.event.isDelivery || this.event.isRead) {
       warning(
         false,
         'sendMediaTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
@@ -1041,14 +1042,14 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
     if (this._batchQueue) {
       return this._batchQueue.push<MessengerTypes.SendMessageSuccessResponse>(
         MessengerBatch.sendMediaTemplate(
-          this._session.user.id,
+          this.session.user.id,
           elements,
           this._getSendMethodOptions(options)
         )
       );
     }
-    return this._client.sendMediaTemplate(
-      this._session.user.id,
+    return this.client.sendMediaTemplate(
+      this.session.user.id,
       elements,
       this._getSendMethodOptions(options)
     );
@@ -1058,7 +1059,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
     attrs: MessengerTypes.ReceiptAttributes,
     options: MessengerTypes.SendOption = {}
   ): Promise<MessengerTypes.SendMessageSuccessResponse | undefined> {
-    if (!this._session) {
+    if (!this.session) {
       warning(
         false,
         'sendReceiptTemplate: should not be called in context without session'
@@ -1066,7 +1067,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       return;
     }
 
-    if (this._event.isEcho || this._event.isDelivery || this._event.isRead) {
+    if (this.event.isEcho || this.event.isDelivery || this.event.isRead) {
       warning(
         false,
         'sendReceiptTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
@@ -1077,14 +1078,14 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
     if (this._batchQueue) {
       return this._batchQueue.push<MessengerTypes.SendMessageSuccessResponse>(
         MessengerBatch.sendReceiptTemplate(
-          this._session.user.id,
+          this.session.user.id,
           attrs,
           this._getSendMethodOptions(options)
         )
       );
     }
-    return this._client.sendReceiptTemplate(
-      this._session.user.id,
+    return this.client.sendReceiptTemplate(
+      this.session.user.id,
       attrs,
       this._getSendMethodOptions(options)
     );
@@ -1094,7 +1095,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
     attrs: MessengerTypes.AirlineBoardingPassAttributes,
     options: MessengerTypes.SendOption = {}
   ): Promise<MessengerTypes.SendMessageSuccessResponse | undefined> {
-    if (!this._session) {
+    if (!this.session) {
       warning(
         false,
         'sendAirlineBoardingPassTemplate: should not be called in context without session'
@@ -1102,7 +1103,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       return;
     }
 
-    if (this._event.isEcho || this._event.isDelivery || this._event.isRead) {
+    if (this.event.isEcho || this.event.isDelivery || this.event.isRead) {
       warning(
         false,
         'sendAirlineBoardingPassTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
@@ -1113,14 +1114,14 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
     if (this._batchQueue) {
       return this._batchQueue.push<MessengerTypes.SendMessageSuccessResponse>(
         MessengerBatch.sendAirlineBoardingPassTemplate(
-          this._session.user.id,
+          this.session.user.id,
           attrs,
           this._getSendMethodOptions(options)
         )
       );
     }
-    return this._client.sendAirlineBoardingPassTemplate(
-      this._session.user.id,
+    return this.client.sendAirlineBoardingPassTemplate(
+      this.session.user.id,
       attrs,
       this._getSendMethodOptions(options)
     );
@@ -1130,7 +1131,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
     attrs: MessengerTypes.AirlineCheckinAttributes,
     options: MessengerTypes.SendOption = {}
   ): Promise<MessengerTypes.SendMessageSuccessResponse | undefined> {
-    if (!this._session) {
+    if (!this.session) {
       warning(
         false,
         'sendAirlineCheckinTemplate: should not be called in context without session'
@@ -1138,7 +1139,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       return;
     }
 
-    if (this._event.isEcho || this._event.isDelivery || this._event.isRead) {
+    if (this.event.isEcho || this.event.isDelivery || this.event.isRead) {
       warning(
         false,
         'sendAirlineCheckinTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
@@ -1149,14 +1150,14 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
     if (this._batchQueue) {
       return this._batchQueue.push<MessengerTypes.SendMessageSuccessResponse>(
         MessengerBatch.sendAirlineCheckinTemplate(
-          this._session.user.id,
+          this.session.user.id,
           attrs,
           this._getSendMethodOptions(options)
         )
       );
     }
-    return this._client.sendAirlineCheckinTemplate(
-      this._session.user.id,
+    return this.client.sendAirlineCheckinTemplate(
+      this.session.user.id,
       attrs,
       this._getSendMethodOptions(options)
     );
@@ -1166,7 +1167,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
     attrs: MessengerTypes.AirlineItineraryAttributes,
     options: MessengerTypes.SendOption = {}
   ): Promise<MessengerTypes.SendMessageSuccessResponse | undefined> {
-    if (!this._session) {
+    if (!this.session) {
       warning(
         false,
         'sendAirlineItineraryTemplate: should not be called in context without session'
@@ -1174,7 +1175,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       return;
     }
 
-    if (this._event.isEcho || this._event.isDelivery || this._event.isRead) {
+    if (this.event.isEcho || this.event.isDelivery || this.event.isRead) {
       warning(
         false,
         'sendAirlineItineraryTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
@@ -1185,14 +1186,14 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
     if (this._batchQueue) {
       return this._batchQueue.push<MessengerTypes.SendMessageSuccessResponse>(
         MessengerBatch.sendAirlineItineraryTemplate(
-          this._session.user.id,
+          this.session.user.id,
           attrs,
           this._getSendMethodOptions(options)
         )
       );
     }
-    return this._client.sendAirlineItineraryTemplate(
-      this._session.user.id,
+    return this.client.sendAirlineItineraryTemplate(
+      this.session.user.id,
       attrs,
       this._getSendMethodOptions(options)
     );
@@ -1202,7 +1203,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
     attrs: MessengerTypes.AirlineUpdateAttributes,
     options: MessengerTypes.SendOption = {}
   ): Promise<MessengerTypes.SendMessageSuccessResponse | undefined> {
-    if (!this._session) {
+    if (!this.session) {
       warning(
         false,
         'sendAirlineUpdateTemplate: should not be called in context without session'
@@ -1210,7 +1211,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       return;
     }
 
-    if (this._event.isEcho || this._event.isDelivery || this._event.isRead) {
+    if (this.event.isEcho || this.event.isDelivery || this.event.isRead) {
       warning(
         false,
         'sendAirlineUpdateTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
@@ -1221,14 +1222,14 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
     if (this._batchQueue) {
       return this._batchQueue.push<MessengerTypes.SendMessageSuccessResponse>(
         MessengerBatch.sendAirlineUpdateTemplate(
-          this._session.user.id,
+          this.session.user.id,
           attrs,
           this._getSendMethodOptions(options)
         )
       );
     }
-    return this._client.sendAirlineUpdateTemplate(
-      this._session.user.id,
+    return this.client.sendAirlineUpdateTemplate(
+      this.session.user.id,
       attrs,
       this._getSendMethodOptions(options)
     );
@@ -1238,7 +1239,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
     attrs: MessengerTypes.OneTimeNotifReqAttributes,
     options: MessengerTypes.SendOption = {}
   ): Promise<MessengerTypes.SendMessageSuccessResponse | undefined> {
-    if (!this._session) {
+    if (!this.session) {
       warning(
         false,
         'sendOneTimeNotifReqTemplate: should not be called in context without session'
@@ -1246,7 +1247,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
       return;
     }
 
-    if (this._event.isEcho || this._event.isDelivery || this._event.isRead) {
+    if (this.event.isEcho || this.event.isDelivery || this.event.isRead) {
       warning(
         false,
         'sendOneTimeNotifReqTemplate: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
@@ -1257,14 +1258,14 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
     if (this._batchQueue) {
       return this._batchQueue.push<MessengerTypes.SendMessageSuccessResponse>(
         MessengerBatch.sendOneTimeNotifReqTemplate(
-          this._session.user.id,
+          this.session.user.id,
           attrs,
           this._getSendMethodOptions(options)
         )
       );
     }
-    return this._client.sendOneTimeNotifReqTemplate(
-      this._session.user.id,
+    return this.client.sendOneTimeNotifReqTemplate(
+      this.session.user.id,
       attrs,
       this._getSendMethodOptions(options)
     );

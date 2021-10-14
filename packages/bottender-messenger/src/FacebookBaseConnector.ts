@@ -5,8 +5,7 @@ import shortid from 'shortid';
 import { BatchConfig, FacebookBatchQueue } from 'facebook-batch';
 import { JsonObject } from 'type-fest';
 import { MessengerClient } from 'messaging-api-messenger';
-
-import { RequestContext } from '../types';
+import { RequestContext } from '@bottender/core';
 
 type CommonConnectorOptions = {
   appId: string;

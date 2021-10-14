@@ -1,7 +1,7 @@
 /* eslint-disable consistent-return */
 import chalk from 'chalk';
 import invariant from 'invariant';
-import { MessengerClient, MessengerTypes } from 'messaging-api-messenger';
+import { MessengerClient, MessengerTypes } from '@bottender/messenger';
 import { addedDiff, deletedDiff, diff, updatedDiff } from 'deep-object-diff';
 import { omit, pick } from 'lodash';
 import { snakecase } from 'messaging-api-common';
