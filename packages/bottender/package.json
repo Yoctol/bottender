@@ -18,8 +18,7 @@
     "bin",
     "dist",
     "router.d.ts",
-    "router.js",
-    "test-utils.js"
+    "router.js"
   ],
   "types": "dist/index.d.ts",
   "dependencies": {
