@@ -8,7 +8,7 @@ function registerRoutes(
   bot: Bot,
   config: RouteConfig = {}
 ) {
-  const path = config.path || '/';
+  const path = config.path ?? '/';
 
   server.use(async (req, res, next) => {
     const { rawBody } = req as express.Request & { rawBody: string };

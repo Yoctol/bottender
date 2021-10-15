@@ -30,9 +30,9 @@ function createMiddleware(bot: Bot) {
       }
     );
     if (response) {
-      res.set(response.headers || {});
-      res.status(response.status || 200);
-      res.send(response.body || '');
+      res.set(response.headers ?? {});
+      res.status(response.status ?? 200);
+      res.send(response.body ?? '');
     } else {
       res.status(200);
       res.send('');
