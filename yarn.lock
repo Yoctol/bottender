@@ -607,6 +607,19 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
+"@bottender/console@file:packages/bottender-console":
+  version "1.5.4"
+  dependencies:
+    "@bottender/core" "file:../../../Library/Caches/Yarn/v6/npm-@bottender-console-1.5.4-ce7a9ab4-7b07-48d3-a8c7-9f2271bf598e-1634286780328/node_modules/@bottender/bottender-core"
+    delay "^5.0.0"
+    facebook-batch "^1.1.0"
+    messaging-api-common "^1.0.4"
+    messaging-api-messenger "^1.1.0"
+    shortid "^2.2.16"
+    ts-invariant "^0.9.3"
+    type-fest "^2.5.0"
+    warning "^4.0.3"
+
 "@bottender/core@file:packages/bottender-core":
   version "1.5.4"
   dependencies:
@@ -632,7 +645,7 @@
 "@bottender/line@file:packages/bottender-line":
   version "1.5.4"
   dependencies:
-    "@bottender/core" "file:../../../Library/Caches/Yarn/v6/npm-@bottender-line-1.5.4-997c337c-3aa5-41d6-80e8-4911ef407b3a-1634281535372/node_modules/@bottender/bottender-core"
+    "@bottender/core" "file:../../../Library/Caches/Yarn/v6/npm-@bottender-line-1.5.4-b2dd8b59-49a9-4056-ad54-eb56f386beb2-1634286780330/node_modules/@bottender/bottender-core"
     "@types/lodash" "^4.14.175"
     lodash "^4.17.21"
     messaging-api-line "^1.1.0"
@@ -643,7 +656,7 @@
 "@bottender/messenger@file:packages/bottender-messenger":
   version "1.5.4"
   dependencies:
-    "@bottender/core" "file:../../../Library/Caches/Yarn/v6/npm-@bottender-messenger-1.5.4-f8c567f3-4041-4e12-b3c8-57b0de6a6845-1634281535370/node_modules/@bottender/bottender-core"
+    "@bottender/core" "file:../../../Library/Caches/Yarn/v6/npm-@bottender-messenger-1.5.4-a8e3cc36-0987-41f3-ad79-b079a74c6a1e-1634286780326/node_modules/@bottender/bottender-core"
     delay "^5.0.0"
     facebook-batch "^1.1.0"
     messaging-api-common "^1.0.4"
@@ -656,7 +669,7 @@
 "@bottender/slack@file:packages/bottender-slack":
   version "1.5.4"
   dependencies:
-    "@bottender/core" "file:../../../Library/Caches/Yarn/v6/npm-@bottender-slack-1.5.4-a2bd79a2-5630-43c2-a288-867c43df5dfa-1634281535376/node_modules/@bottender/bottender-core"
+    "@bottender/core" "file:../../../Library/Caches/Yarn/v6/npm-@bottender-slack-1.5.4-99d25060-7993-4d90-81f5-3376301c46eb-1634286780330/node_modules/@bottender/bottender-core"
     messaging-api-common "^1.0.4"
     messaging-api-slack "^1.1.0"
     ts-invariant "^0.9.3"
@@ -666,7 +679,7 @@
 "@bottender/telegram@file:packages/bottender-telegram":
   version "1.5.4"
   dependencies:
-    "@bottender/core" "file:../../../Library/Caches/Yarn/v6/npm-@bottender-telegram-1.5.4-482b42b7-d4c2-47a0-ae59-77b1b93df5c2-1634281535377/node_modules/@bottender/bottender-core"
+    "@bottender/core" "file:../../../Library/Caches/Yarn/v6/npm-@bottender-telegram-1.5.4-e88ae6b8-5461-46de-8e6b-fa1c97d32b1c-1634286780331/node_modules/@bottender/bottender-core"
     messaging-api-telegram "^1.1.0"
     ts-invariant "^0.9.3"
     type-fest "^2.5.0"
@@ -675,7 +688,7 @@
 "@bottender/viber@file:packages/bottender-viber":
   version "1.5.4"
   dependencies:
-    "@bottender/core" "file:../../../Library/Caches/Yarn/v6/npm-@bottender-viber-1.5.4-070eaae8-2304-4ddd-ac5a-3dbdfca561d9-1634281535378/node_modules/@bottender/bottender-core"
+    "@bottender/core" "file:../../../Library/Caches/Yarn/v6/npm-@bottender-viber-1.5.4-b3deac32-132b-4773-9726-9c952764cf6a-1634286780332/node_modules/@bottender/bottender-core"
     messaging-api-viber "^1.1.0"
     ts-invariant "^0.9.3"
     type-fest "^2.5.0"
@@ -684,7 +697,7 @@
 "@bottender/whatsapp@file:packages/bottender-whatsapp":
   version "1.5.4"
   dependencies:
-    "@bottender/core" "file:../../../Library/Caches/Yarn/v6/npm-@bottender-whatsapp-1.5.4-c08930d9-251d-4170-8276-5e773b7c25ce-1634281535380/node_modules/@bottender/bottender-core"
+    "@bottender/core" "file:../../../Library/Caches/Yarn/v6/npm-@bottender-whatsapp-1.5.4-0e45e139-5408-411e-9659-81cdbfa86e84-1634286780332/node_modules/@bottender/bottender-core"
     axios "^0.21.0"
     axios-error "^1.0.4"
     lodash "^4.17.21"

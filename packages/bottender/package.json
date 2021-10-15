@@ -22,6 +22,7 @@
   ],
   "types": "dist/index.d.ts",
   "dependencies": {
+    "@bottender/console": "file:../bottender-console",
     "@bottender/core": "file:../bottender-core",
     "@bottender/express": "file:../bottender-express",
     "@bottender/line": "file:../bottender-line",

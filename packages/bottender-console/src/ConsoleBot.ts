@@ -2,9 +2,8 @@ import readline from 'readline';
 
 import { Bot, OnRequest, Session, SessionStore } from '@bottender/core';
 
-import { ConsoleContext } from '..';
-
 import ConsoleConnector from './ConsoleConnector';
+import ConsoleContext from './ConsoleContext';
 import ConsoleEvent, { ConsoleRawEvent } from './ConsoleEvent';
 import { ConsoleClient } from './ConsoleClient';
 
