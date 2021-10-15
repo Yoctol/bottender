@@ -56,9 +56,7 @@ describe('#init', () => {
     const { store } = setup();
 
     await store.init();
-    expect(MongoClient.connect).toBeCalledWith('mongodb://fakemongourl', {
-      useUnifiedTopology: true,
-    });
+    expect(MongoClient.connect).toBeCalledWith('mongodb://fakemongourl');
   });
 });
 
