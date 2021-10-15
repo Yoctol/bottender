@@ -1,6 +1,5 @@
 import warning from 'warning';
-
-import SessionStore from '../session/SessionStore';
+import { SessionStore } from '@bottender/core';
 
 import getBottenderConfig from './getBottenderConfig';
 

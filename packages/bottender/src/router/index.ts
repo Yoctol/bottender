@@ -1,3 +1,4 @@
+import { Action, Context, Props } from '@bottender/core';
 import { JsonObject } from 'type-fest';
 import { routes as line } from '@bottender/line';
 import { routes as messenger } from '@bottender/messenger';
@@ -5,9 +6,6 @@ import { routes as slack } from '@bottender/slack';
 import { routes as telegram } from '@bottender/telegram';
 import { routes as viber } from '@bottender/viber';
 import { routes as whatsapp } from '@bottender/whatsapp';
-
-import Context from '../context/Context';
-import { Action, Props } from '../types';
 
 type MatchPattern = string | Array<string> | RegExp;
 

@@ -1,5 +1,4 @@
-import { IncomingHttpHeaders } from 'http';
-
+import { Bot, Connector, OnRequest, SessionStore } from '@bottender/core';
 import { JsonObject } from 'type-fest';
 import { LineTypes } from '@bottender/line';
 import { MessengerTypes } from '@bottender/messenger';
@@ -7,25 +6,6 @@ import { SlackTypes } from '@bottender/slack';
 import { TelegramTypes } from '@bottender/telegram';
 import { ViberTypes } from '@bottender/viber';
 import { WhatsappTypes } from '@bottender/whatsapp';
-
-import Bot, { OnRequest } from './bot/Bot';
-import Context from './context/Context';
-import SessionStore from './session/SessionStore';
-import { Connector } from './bot/Connector';
-
-export type Action<
-  C extends Context,
-  P extends Record<string, any> = {},
-  RAP extends Record<string, any> = {}
-> = (
-  context: C,
-  props: Props<C> & P
-) => void | Action<C, RAP> | Promise<Action<C, RAP> | void>;
-
-export type Props<C extends Context> = {
-  next?: Action<C, any>;
-  error?: Error;
-};
 
 export enum Channel {
   Messenger = 'messenger',
@@ -101,24 +81,7 @@ export interface BottenderConfig {
       };
 }
 
-export type RequestContext<
-  B extends JsonObject = JsonObject,
-  H extends Record<string, string | string[] | undefined> = {}
-> = {
-  id?: string;
-  method: string;
-  path: string;
-  query: Record<string, string>;
-  headers: IncomingHttpHeaders & H;
-  rawBody: string;
-  body: B;
-  params: Record<string, string>;
-  url: string;
-};
-
-export type Client = object;
-
-export { Event } from './context/Event';
+export { Event, RequestContext, Action, Props, Client } from '@bottender/core';
 
 export type ChannelBot = {
   webhookPath: string;

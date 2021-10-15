@@ -24,7 +24,7 @@ it('#message', () => {
   expect(new ConsoleEvent(textMessage).message).toEqual({
     text: 'Hello, world',
   });
-  expect(new ConsoleEvent(payload).message).toEqual(null);
+  expect(new ConsoleEvent(payload).message).toBeUndefined();
 });
 
 it('#isText', () => {
@@ -34,7 +34,7 @@ it('#isText', () => {
 
 it('text', () => {
   expect(new ConsoleEvent(textMessage).text).toEqual('Hello, world');
-  expect(new ConsoleEvent(payload).text).toEqual(null);
+  expect(new ConsoleEvent(payload).text).toBeUndefined();
 });
 
 it('#isPayload', () => {
@@ -43,6 +43,6 @@ it('#isPayload', () => {
 });
 
 it('payload', () => {
-  expect(new ConsoleEvent(textMessage).payload).toEqual(null);
+  expect(new ConsoleEvent(textMessage).payload).toBeUndefined();
   expect(new ConsoleEvent(payload).payload).toEqual('A_PAYLOAD');
 });

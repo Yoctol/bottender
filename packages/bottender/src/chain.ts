@@ -1,5 +1,4 @@
-import Context from './context/Context';
-import { Action, Props } from './types';
+import { Action, Context, Props } from '@bottender/core';
 
 function chain<C extends Context>(actions: Action<C, any>[]) {
   if (!Array.isArray(actions))

@@ -1,6 +1,7 @@
+import { run } from '@bottender/core';
+
 import chain from '../chain';
 import withProps from '../withProps';
-import { run } from '../bot/Bot';
 
 function setup() {
   const context = {

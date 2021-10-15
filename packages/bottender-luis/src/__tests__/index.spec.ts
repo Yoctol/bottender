@@ -1,7 +1,5 @@
 import nock from 'nock';
-import { Context, chain } from 'bottender';
-// FIXME: export public API for testing
-import { run } from 'bottender/dist/bot/Bot';
+import { Context, chain, run } from 'bottender';
 
 import luis from '..';
 
