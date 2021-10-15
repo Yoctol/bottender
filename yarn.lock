@@ -612,10 +612,10 @@
   dependencies:
     debug "^4.3.2"
     delay "^5.0.0"
-    invariant "^2.2.4"
     lodash "^4.17.21"
     messaging-api-common "^1.0.4"
     p-map "^4.0.0"
+    ts-invariant "^0.9.3"
     type-fest "^2.5.0"
     warning "^4.0.3"
 
@@ -632,46 +632,59 @@
 "@bottender/line@file:packages/bottender-line":
   version "1.5.4"
   dependencies:
-    "@bottender/core" "file:../../../Library/Caches/Yarn/v6/npm-@bottender-line-1.5.4-f84d85bb-d8b6-4c04-8c5c-d90f3affb2de-1634230934968/node_modules/@bottender/bottender-core"
+    "@bottender/core" "file:../../../Library/Caches/Yarn/v6/npm-@bottender-line-1.5.4-997c337c-3aa5-41d6-80e8-4911ef407b3a-1634281535372/node_modules/@bottender/bottender-core"
     "@types/lodash" "^4.14.175"
-    invariant "^2.2.4"
     lodash "^4.17.21"
     messaging-api-line "^1.1.0"
+    ts-invariant "^0.9.3"
+    type-fest "^2.5.0"
+    warning "^4.0.3"
+
+"@bottender/messenger@file:packages/bottender-messenger":
+  version "1.5.4"
+  dependencies:
+    "@bottender/core" "file:../../../Library/Caches/Yarn/v6/npm-@bottender-messenger-1.5.4-f8c567f3-4041-4e12-b3c8-57b0de6a6845-1634281535370/node_modules/@bottender/bottender-core"
+    delay "^5.0.0"
+    facebook-batch "^1.1.0"
+    messaging-api-common "^1.0.4"
+    messaging-api-messenger "^1.1.0"
+    shortid "^2.2.16"
+    ts-invariant "^0.9.3"
     type-fest "^2.5.0"
     warning "^4.0.3"
 
 "@bottender/slack@file:packages/bottender-slack":
   version "1.5.4"
   dependencies:
-    "@bottender/core" "file:../../../Library/Caches/Yarn/v6/npm-@bottender-slack-1.5.4-67a99340-e0ff-497d-8435-bbc16db447f3-1634230934970/node_modules/@bottender/bottender-core"
-    invariant "^2.2.4"
+    "@bottender/core" "file:../../../Library/Caches/Yarn/v6/npm-@bottender-slack-1.5.4-a2bd79a2-5630-43c2-a288-867c43df5dfa-1634281535376/node_modules/@bottender/bottender-core"
     messaging-api-common "^1.0.4"
     messaging-api-slack "^1.1.0"
+    ts-invariant "^0.9.3"
     type-fest "^2.5.0"
     warning "^4.0.3"
 
 "@bottender/telegram@file:packages/bottender-telegram":
   version "1.5.4"
   dependencies:
-    "@bottender/core" "file:../../../Library/Caches/Yarn/v6/npm-@bottender-telegram-1.5.4-ccd7e0b6-e013-4c08-9e38-06950cdcb64a-1634230934971/node_modules/@bottender/bottender-core"
-    invariant "^2.2.4"
+    "@bottender/core" "file:../../../Library/Caches/Yarn/v6/npm-@bottender-telegram-1.5.4-482b42b7-d4c2-47a0-ae59-77b1b93df5c2-1634281535377/node_modules/@bottender/bottender-core"
     messaging-api-telegram "^1.1.0"
+    ts-invariant "^0.9.3"
     type-fest "^2.5.0"
     warning "^4.0.3"
 
 "@bottender/viber@file:packages/bottender-viber":
   version "1.5.4"
   dependencies:
-    "@bottender/core" "file:../../../Library/Caches/Yarn/v6/npm-@bottender-viber-1.5.4-3f64ebb9-6e4a-4f4e-b6c4-85b361b40e6e-1634230934971/node_modules/@bottender/bottender-core"
-    invariant "^2.2.4"
+    "@bottender/core" "file:../../../Library/Caches/Yarn/v6/npm-@bottender-viber-1.5.4-070eaae8-2304-4ddd-ac5a-3dbdfca561d9-1634281535378/node_modules/@bottender/bottender-core"
     messaging-api-viber "^1.1.0"
+    ts-invariant "^0.9.3"
     type-fest "^2.5.0"
     warning "^4.0.3"
 
 "@bottender/whatsapp@file:packages/bottender-whatsapp":
   version "1.5.4"
   dependencies:
-    "@bottender/core" "file:../../../Library/Caches/Yarn/v6/npm-@bottender-whatsapp-1.5.4-7e309309-d020-43ce-8769-23f6dd747d20-1634230934972/node_modules/@bottender/bottender-core"
+    "@bottender/core" "file:../../../Library/Caches/Yarn/v6/npm-@bottender-whatsapp-1.5.4-c08930d9-251d-4170-8276-5e773b7c25ce-1634281535380/node_modules/@bottender/bottender-core"
     axios "^0.21.0"
     axios-error "^1.0.4"
     lodash "^4.17.21"
@@ -2075,11 +2088,6 @@
   dependencies:
     "@types/through" "*"
     rxjs "^6.4.0"
-
-"@types/invariant@^2.2.35":
-  version "2.2.35"
-  resolved "https://registry.yarnpkg.com/@types/invariant/-/invariant-2.2.35.tgz#cd3ebf581a6557452735688d8daba6cf0bd5a3be"
-  integrity sha512-DxX1V9P8zdJPYQat1gHyY0xj3efl8gnMVjiM9iCY6y27lj+PoQWkgjt8jDqmovPqULkKVpKRg8J36iQiA+EtEg==
 
 "@types/ioredis@^4.27.5":
   version "4.27.5"
@@ -4831,12 +4839,12 @@ extsprintf@^1.2.0:
   resolved "https://registry.yarnpkg.com/extsprintf/-/extsprintf-1.4.0.tgz#e2689f8f356fad62cca65a3a91c5df5f9551692f"
   integrity sha1-4mifjzVvrWLMplo6kcXfX5VRaS8=
 
-facebook-batch@1.0.6:
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/facebook-batch/-/facebook-batch-1.0.6.tgz#38ad1a45a941787a8e73e2ebd78e625eab991ef6"
-  integrity sha512-s9X3JZpbcqlXGtPMl6pRAdZxxfGWzH4q+aU8arHF+gUbK7iThDQPhNn8SHnDIGu9oEs/BT3iCkWQf9+YRhfXkg==
+facebook-batch@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/facebook-batch/-/facebook-batch-1.1.0.tgz#d2beb9f308616b73d37fdb2402e03da058800e1f"
+  integrity sha512-TnV05P5H7VdvrXGh2gB/cYeHVjciQilFsPUnIEnrsQHz8fyJ308VGaVfaxds0hpZNdBdfb4TwQEZuxm82lME+A==
   dependencies:
-    messaging-api-messenger "^1.0.6"
+    messaging-api-messenger "^1.1.0"
     type-fest "^0.15.1"
 
 fast-deep-equal@^2.0.1:
@@ -5984,13 +5992,6 @@ internal-slot@^1.0.3:
     get-intrinsic "^1.1.0"
     has "^1.0.3"
     side-channel "^1.0.4"
-
-invariant@^2.2.4:
-  version "2.2.4"
-  resolved "https://registry.yarnpkg.com/invariant/-/invariant-2.2.4.tgz#610f3c92c9359ce1db616e538008d23ff35158e6"
-  integrity sha512-phJfQVBuaJM5raOpJjSfkiD6BpbCE4Ns//LaXl6wGYtUBY83nWS6Rf9tXm2e8VaK60JEjYldbPif/A2B1C2gNA==
-  dependencies:
-    loose-envify "^1.0.0"
 
 ioredis@^4.27.9:
   version "4.27.9"
@@ -7614,20 +7615,6 @@ messaging-api-common@1.0.4, messaging-api-common@^1.0.4:
     snake-case "^3.0.3"
     url-join "^4.0.1"
 
-messaging-api-line@1.0.6:
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/messaging-api-line/-/messaging-api-line-1.0.6.tgz#e723e838726652ee513ee6caf400632575169f0c"
-  integrity sha512-RlJTonApLF4X4zR//9l0+cjCfrxng9InqHGZPya5Afr6PhGmLttzjOFkGVLE5uOM/RpiivciylueAay2tBu9Gw==
-  dependencies:
-    "@types/warning" "^3.0.0"
-    axios "^0.21.1"
-    axios-error "^1.0.4"
-    image-type "^4.1.0"
-    messaging-api-common "^1.0.4"
-    ts-invariant "^0.4.4"
-    type-fest "^0.15.1"
-    warning "^4.0.3"
-
 messaging-api-line@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/messaging-api-line/-/messaging-api-line-1.1.0.tgz#96dbc77625a9e228d29dcad41bdf8c838344353e"
@@ -7642,10 +7629,10 @@ messaging-api-line@^1.1.0:
     type-fest "^0.15.1"
     warning "^4.0.3"
 
-messaging-api-messenger@1.0.6, messaging-api-messenger@^1.0.6:
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/messaging-api-messenger/-/messaging-api-messenger-1.0.6.tgz#606209b615dd539d82ec5b6e813b2a2dfea47585"
-  integrity sha512-yLrUGMF5v/PHMtEbfB62C70bqHsL9L9XGGA1v/GCJQeyjS4OWmSXOJTwDUm31chuppWaYx4br7WkxGM8UCDCfQ==
+messaging-api-messenger@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/messaging-api-messenger/-/messaging-api-messenger-1.1.0.tgz#3a2b068935a6b6754cdc42da6f825c9e2f6aa686"
+  integrity sha512-WfODwHvkkC/oJMrqr7ukm2yTf4DqWg8BvnwmGOU53fRMvuCQNGWYSKQPk8k/s0Evl56J32iDidooGIL9fAGOjQ==
   dependencies:
     "@types/append-query" "^2.0.0"
     "@types/lodash" "^4.14.156"
@@ -10558,6 +10545,13 @@ ts-invariant@^0.4.4:
   dependencies:
     tslib "^1.9.3"
 
+ts-invariant@^0.9.3:
+  version "0.9.3"
+  resolved "https://registry.yarnpkg.com/ts-invariant/-/ts-invariant-0.9.3.tgz#4b41e0a80c2530a56ce4b8fd4e14183aaac0efa8"
+  integrity sha512-HinBlTbFslQI0OHP07JLsSXPibSegec6r9ai5xxq/qHYCsIQbzpymLpDhAUsnXcSrDEcd0L62L8vsOEdzM0qlA==
+  dependencies:
+    tslib "^2.1.0"
+
 ts-jest@^27.0.5:
   version "27.0.5"
   resolved "https://registry.yarnpkg.com/ts-jest/-/ts-jest-27.0.5.tgz#0b0604e2271167ec43c12a69770f0bb65ad1b750"
@@ -10607,7 +10601,7 @@ tslib@^1.9.3:
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.13.0.tgz#c881e13cc7015894ed914862d276436fa9a47043"
   integrity sha512-i/6DQjL8Xf3be4K/E6Wgpekn5Qasl1usyw++dAA35Ue5orEn65VIxOA+YvNNl9HV3qv70T7CNwjODHZrLwvd1Q==
 
-tslib@^2.0.3:
+tslib@^2.0.3, tslib@^2.1.0:
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.3.1.tgz#e8a335add5ceae51aa261d32a490158ef042ef01"
   integrity sha512-77EbyPPpMz+FRFRuAFlWMtmgUWGe9UOG2Z25NqCwiIjRhOf5iKGuzSe5P2w1laq+FkRy4p+PCuVkJSGkzTEKVw==

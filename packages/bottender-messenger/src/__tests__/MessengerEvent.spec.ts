@@ -1,6 +1,7 @@
 import MessengerEvent from '../MessengerEvent';
+import { MessengerRawEvent } from '../MessengerTypes';
 
-const textMessage = {
+const textMessage: MessengerRawEvent = {
   sender: { id: '1423587017700273' },
   recipient: { id: '404217156637689' },
   timestamp: 1491796363181,
@@ -11,7 +12,7 @@ const textMessage = {
   },
 };
 
-const imageMessage = {
+const imageMessage: MessengerRawEvent = {
   sender: {
     id: '1423587017700273',
   },
@@ -33,7 +34,7 @@ const imageMessage = {
   },
 };
 
-const locationMessage = {
+const locationMessage: MessengerRawEvent = {
   sender: {
     id: '1423587017700273',
   },
@@ -58,7 +59,7 @@ const locationMessage = {
   },
 };
 
-const audioMessage = {
+const audioMessage: MessengerRawEvent = {
   sender: {
     id: '1423587017700273',
   },
@@ -80,7 +81,7 @@ const audioMessage = {
   },
 };
 
-const videoMessage = {
+const videoMessage: MessengerRawEvent = {
   sender: {
     id: '1423587017700273',
   },
@@ -102,7 +103,7 @@ const videoMessage = {
   },
 };
 
-const fileMessage = {
+const fileMessage: MessengerRawEvent = {
   sender: {
     id: '1423587017700273',
   },
@@ -124,7 +125,7 @@ const fileMessage = {
   },
 };
 
-const fallbackMessage = {
+const fallbackMessage: MessengerRawEvent = {
   sender: {
     id: '1423587017700273',
   },
@@ -146,7 +147,7 @@ const fallbackMessage = {
   },
 };
 
-const likeStickerMessage = {
+const likeStickerMessage: MessengerRawEvent = {
   sender: {
     id: '1423587017700273',
   },
@@ -170,7 +171,7 @@ const likeStickerMessage = {
   },
 };
 
-const largeLikeStickerMessage = {
+const largeLikeStickerMessage: MessengerRawEvent = {
   sender: {
     id: '1423587017700273',
   },
@@ -194,7 +195,7 @@ const largeLikeStickerMessage = {
   },
 };
 
-const hugeLikeStickerMessage = {
+const hugeLikeStickerMessage: MessengerRawEvent = {
   sender: {
     id: '1423587017700273',
   },
@@ -218,7 +219,7 @@ const hugeLikeStickerMessage = {
   },
 };
 
-const quickReplyMessage = {
+const quickReplyMessage: MessengerRawEvent = {
   sender: {
     id: '1423587017700273',
   },
@@ -236,7 +237,7 @@ const quickReplyMessage = {
   },
 };
 
-export const delivery = {
+export const delivery: MessengerRawEvent = {
   sender: {
     id: '404217156637689',
   },
@@ -250,7 +251,7 @@ export const delivery = {
   },
 };
 
-export const read = {
+export const read: MessengerRawEvent = {
   sender: {
     id: '404217156637689',
   },
@@ -264,7 +265,7 @@ export const read = {
   },
 };
 
-export const echoMessage = {
+export const echoMessage: MessengerRawEvent = {
   sender: {
     id: '404217156637689',
   },
@@ -281,7 +282,7 @@ export const echoMessage = {
   },
 };
 
-const postback = {
+const postback: MessengerRawEvent = {
   recipient: {
     id: '404217156637689',
   },
@@ -294,7 +295,7 @@ const postback = {
   },
 };
 
-const gamePlay = {
+const gamePlay: MessengerRawEvent = {
   sender: {
     id: 'USER_ID',
   },
@@ -312,7 +313,7 @@ const gamePlay = {
   },
 };
 
-const gamePlayWithNonValidPayload = {
+const gamePlayWithNonValidPayload: MessengerRawEvent = {
   sender: {
     id: 'USER_ID',
   },
@@ -330,7 +331,7 @@ const gamePlayWithNonValidPayload = {
   },
 };
 
-const optin = {
+const optin: MessengerRawEvent = {
   sender: {
     id: 'USER_ID',
   },
@@ -343,7 +344,7 @@ const optin = {
   },
 };
 
-const payment = {
+const payment: MessengerRawEvent = {
   recipient: {
     id: 'PAGE_ID',
   },
@@ -372,7 +373,7 @@ const payment = {
   },
 };
 
-const checkoutUpdate = {
+const checkoutUpdate: MessengerRawEvent = {
   recipient: {
     id: 'PAGE_ID',
   },
@@ -394,7 +395,7 @@ const checkoutUpdate = {
   },
 };
 
-const preCheckout = {
+const preCheckout: MessengerRawEvent = {
   recipient: {
     id: 'PAGE_ID',
   },
@@ -423,7 +424,7 @@ const preCheckout = {
   },
 };
 
-const policyEnforcement = {
+const policyEnforcement: MessengerRawEvent = {
   recipient: {
     id: '404217156637689',
   },
@@ -435,7 +436,7 @@ const policyEnforcement = {
   },
 };
 
-const appRoles = {
+const appRoles: MessengerRawEvent = {
   recipient: {
     id: '404217156637689',
   },
@@ -445,7 +446,7 @@ const appRoles = {
   },
 };
 
-const passThreadControl = {
+const passThreadControl: MessengerRawEvent = {
   sender: {
     id: '404217156637689',
   },
@@ -459,7 +460,7 @@ const passThreadControl = {
   },
 };
 
-const takeThreadControl = {
+const takeThreadControl: MessengerRawEvent = {
   sender: {
     id: '404217156637689',
   },
@@ -473,7 +474,7 @@ const takeThreadControl = {
   },
 };
 
-const requestThreadControl = {
+const requestThreadControl: MessengerRawEvent = {
   sender: {
     id: '404217156637689',
   },
@@ -487,7 +488,7 @@ const requestThreadControl = {
   },
 };
 
-const requestThreadControlFromInbox = {
+const requestThreadControlFromInbox: MessengerRawEvent = {
   sender: {
     id: '404217156637689',
   },
@@ -501,7 +502,7 @@ const requestThreadControlFromInbox = {
   },
 };
 
-const textMessageFromCustomerChatPlugin = {
+const textMessageFromCustomerChatPlugin: MessengerRawEvent = {
   sender: { id: '1423587017700273' },
   recipient: { id: '404217156637689' },
   timestamp: 1491796363181,
@@ -517,7 +518,7 @@ const textMessageFromCustomerChatPlugin = {
   },
 };
 
-const linkReferral = {
+const linkReferral: MessengerRawEvent = {
   recipient: {
     id: '701111199441168',
   },
@@ -532,7 +533,7 @@ const linkReferral = {
   },
 };
 
-const postbackReferral = {
+const postbackReferral: MessengerRawEvent = {
   recipient: {
     id: '707356222221168',
   },
@@ -551,7 +552,7 @@ const postbackReferral = {
   },
 };
 
-const customerChatPluginReferral = {
+const customerChatPluginReferral: MessengerRawEvent = {
   recipient: { id: '693344444818699' },
   timestamp: 1512552044444,
   sender: { id: '1242684444404904' },
@@ -565,7 +566,7 @@ const customerChatPluginReferral = {
 
 const pageId = '137542570280111';
 
-const brandedCamera = {
+const brandedCamera: MessengerRawEvent = {
   sender: {
     id: '1476077422222289',
   },
@@ -579,7 +580,7 @@ const brandedCamera = {
   },
 };
 
-const accountLinkingLinked = {
+const accountLinkingLinked: MessengerRawEvent = {
   sender: {
     id: '1476077422222289',
   },
@@ -593,7 +594,7 @@ const accountLinkingLinked = {
   },
 };
 
-const accountLinkingUnlinked = {
+const accountLinkingUnlinked: MessengerRawEvent = {
   sender: {
     id: '1476077422222289',
   },
@@ -606,7 +607,7 @@ const accountLinkingUnlinked = {
   },
 };
 
-const reactionReact = {
+const reactionReact: MessengerRawEvent = {
   sender: {
     id: '1476077422222289',
   },
@@ -622,7 +623,7 @@ const reactionReact = {
   },
 };
 
-const reactionUnreact = {
+const reactionUnreact: MessengerRawEvent = {
   sender: {
     id: '1476077422222289',
   },
@@ -737,8 +738,8 @@ it('#text', () => {
   expect(new MessengerEvent(textMessage).text).toEqual(
     'Sharp tools make good work.'
   );
-  expect(new MessengerEvent(imageMessage).text).toEqual(null);
-  expect(new MessengerEvent(likeStickerMessage).text).toEqual(null);
+  expect(new MessengerEvent(imageMessage).text).toBeUndefined();
+  expect(new MessengerEvent(likeStickerMessage).text).toBeUndefined();
 });
 
 it('#hasAttachment', () => {
@@ -765,7 +766,7 @@ it('#attachments', () => {
       },
     },
   ]);
-  expect(new MessengerEvent(postback).attachments).toEqual(null);
+  expect(new MessengerEvent(postback).attachments).toBeUndefined();
 });
 
 it('#isImage', () => {
@@ -780,12 +781,12 @@ it('#isImage', () => {
 });
 
 it('#image', () => {
-  expect(new MessengerEvent(textMessage).image).toEqual(null);
-  expect(new MessengerEvent(locationMessage).image).toEqual(null);
-  expect(new MessengerEvent(videoMessage).image).toEqual(null);
-  expect(new MessengerEvent(audioMessage).image).toEqual(null);
-  expect(new MessengerEvent(fileMessage).image).toEqual(null);
-  expect(new MessengerEvent(fallbackMessage).image).toEqual(null);
+  expect(new MessengerEvent(textMessage).image).toBeUndefined();
+  expect(new MessengerEvent(locationMessage).image).toBeUndefined();
+  expect(new MessengerEvent(videoMessage).image).toBeUndefined();
+  expect(new MessengerEvent(audioMessage).image).toBeUndefined();
+  expect(new MessengerEvent(fileMessage).image).toBeUndefined();
+  expect(new MessengerEvent(fallbackMessage).image).toBeUndefined();
   expect(new MessengerEvent(imageMessage).image).toEqual({
     url: 'https://scontent.xx.fbcdn.net/v/t35.0-12/17887258_1429713783754592_1626047672_o.jpg?_nc_ad=z-m&oh=e44af5a4c973541ef56333202f160720&oe=58ECF78B',
   });
@@ -807,16 +808,16 @@ it('#isAudio', () => {
 });
 
 it('#audio', () => {
-  expect(new MessengerEvent(textMessage).audio).toEqual(null);
-  expect(new MessengerEvent(locationMessage).audio).toEqual(null);
-  expect(new MessengerEvent(videoMessage).audio).toEqual(null);
+  expect(new MessengerEvent(textMessage).audio).toBeUndefined();
+  expect(new MessengerEvent(locationMessage).audio).toBeUndefined();
+  expect(new MessengerEvent(videoMessage).audio).toBeUndefined();
   expect(new MessengerEvent(audioMessage).audio).toEqual({
     url: 'https://example.com/bot/audios/audio.mp3',
   });
-  expect(new MessengerEvent(fileMessage).audio).toEqual(null);
-  expect(new MessengerEvent(fallbackMessage).audio).toEqual(null);
-  expect(new MessengerEvent(imageMessage).audio).toEqual(null);
-  expect(new MessengerEvent(likeStickerMessage).audio).toEqual(null);
+  expect(new MessengerEvent(fileMessage).audio).toBeUndefined();
+  expect(new MessengerEvent(fallbackMessage).audio).toBeUndefined();
+  expect(new MessengerEvent(imageMessage).audio).toBeUndefined();
+  expect(new MessengerEvent(likeStickerMessage).audio).toBeUndefined();
 });
 
 it('#isVideo', () => {
@@ -831,16 +832,16 @@ it('#isVideo', () => {
 });
 
 it('#video', () => {
-  expect(new MessengerEvent(textMessage).video).toEqual(null);
-  expect(new MessengerEvent(locationMessage).video).toEqual(null);
+  expect(new MessengerEvent(textMessage).video).toBeUndefined();
+  expect(new MessengerEvent(locationMessage).video).toBeUndefined();
   expect(new MessengerEvent(videoMessage).video).toEqual({
     url: 'https://example.com/bot/videos/video.mp4',
   });
-  expect(new MessengerEvent(audioMessage).video).toEqual(null);
-  expect(new MessengerEvent(fileMessage).video).toEqual(null);
-  expect(new MessengerEvent(fallbackMessage).video).toEqual(null);
-  expect(new MessengerEvent(imageMessage).video).toEqual(null);
-  expect(new MessengerEvent(likeStickerMessage).video).toEqual(null);
+  expect(new MessengerEvent(audioMessage).video).toBeUndefined();
+  expect(new MessengerEvent(fileMessage).video).toBeUndefined();
+  expect(new MessengerEvent(fallbackMessage).video).toBeUndefined();
+  expect(new MessengerEvent(imageMessage).video).toBeUndefined();
+  expect(new MessengerEvent(likeStickerMessage).video).toBeUndefined();
 });
 
 it('#isLocation', () => {
@@ -855,16 +856,16 @@ it('#isLocation', () => {
 });
 
 it('#location', () => {
-  expect(new MessengerEvent(textMessage).location).toEqual(null);
+  expect(new MessengerEvent(textMessage).location).toBeUndefined();
   expect(new MessengerEvent(locationMessage).location).toEqual({
     coordinates: { lat: 0, long: 0 },
   });
-  expect(new MessengerEvent(videoMessage).location).toEqual(null);
-  expect(new MessengerEvent(audioMessage).location).toEqual(null);
-  expect(new MessengerEvent(fileMessage).location).toEqual(null);
-  expect(new MessengerEvent(fallbackMessage).location).toEqual(null);
-  expect(new MessengerEvent(imageMessage).location).toEqual(null);
-  expect(new MessengerEvent(likeStickerMessage).location).toEqual(null);
+  expect(new MessengerEvent(videoMessage).location).toBeUndefined();
+  expect(new MessengerEvent(audioMessage).location).toBeUndefined();
+  expect(new MessengerEvent(fileMessage).location).toBeUndefined();
+  expect(new MessengerEvent(fallbackMessage).location).toBeUndefined();
+  expect(new MessengerEvent(imageMessage).location).toBeUndefined();
+  expect(new MessengerEvent(likeStickerMessage).location).toBeUndefined();
 });
 
 it('#isFile', () => {
@@ -879,16 +880,16 @@ it('#isFile', () => {
 });
 
 it('#file', () => {
-  expect(new MessengerEvent(textMessage).file).toEqual(null);
-  expect(new MessengerEvent(locationMessage).file).toEqual(null);
-  expect(new MessengerEvent(videoMessage).file).toEqual(null);
-  expect(new MessengerEvent(audioMessage).file).toEqual(null);
+  expect(new MessengerEvent(textMessage).file).toBeUndefined();
+  expect(new MessengerEvent(locationMessage).file).toBeUndefined();
+  expect(new MessengerEvent(videoMessage).file).toBeUndefined();
+  expect(new MessengerEvent(audioMessage).file).toBeUndefined();
   expect(new MessengerEvent(fileMessage).file).toEqual({
     url: 'https://example.com/bot/files/file.doc',
   });
-  expect(new MessengerEvent(fallbackMessage).file).toEqual(null);
-  expect(new MessengerEvent(imageMessage).file).toEqual(null);
-  expect(new MessengerEvent(likeStickerMessage).file).toEqual(null);
+  expect(new MessengerEvent(fallbackMessage).file).toBeUndefined();
+  expect(new MessengerEvent(imageMessage).file).toBeUndefined();
+  expect(new MessengerEvent(likeStickerMessage).file).toBeUndefined();
 });
 
 it('#isFallback', () => {
@@ -903,19 +904,19 @@ it('#isFallback', () => {
 });
 
 it('#fallback', () => {
-  expect(new MessengerEvent(textMessage).fallback).toEqual(null);
-  expect(new MessengerEvent(locationMessage).fallback).toEqual(null);
-  expect(new MessengerEvent(videoMessage).fallback).toEqual(null);
-  expect(new MessengerEvent(audioMessage).fallback).toEqual(null);
-  expect(new MessengerEvent(fileMessage).fallback).toEqual(null);
+  expect(new MessengerEvent(textMessage).fallback).toBeUndefined();
+  expect(new MessengerEvent(locationMessage).fallback).toBeUndefined();
+  expect(new MessengerEvent(videoMessage).fallback).toBeUndefined();
+  expect(new MessengerEvent(audioMessage).fallback).toBeUndefined();
+  expect(new MessengerEvent(fileMessage).fallback).toBeUndefined();
   expect(new MessengerEvent(fallbackMessage).fallback).toEqual({
     URL: 'URL_OF_THE_ATTACHMENT',
     payload: null,
     title: 'TITLE_OF_THE_URL_ATTACHMENT',
     type: 'fallback',
   });
-  expect(new MessengerEvent(imageMessage).fallback).toEqual(null);
-  expect(new MessengerEvent(likeStickerMessage).fallback).toEqual(null);
+  expect(new MessengerEvent(imageMessage).fallback).toBeUndefined();
+  expect(new MessengerEvent(likeStickerMessage).fallback).toBeUndefined();
 });
 
 it('#isSticker', () => {
@@ -927,8 +928,8 @@ it('#isSticker', () => {
 });
 
 it('#sticker', () => {
-  expect(new MessengerEvent(textMessage).sticker).toEqual(null);
-  expect(new MessengerEvent(imageMessage).sticker).toEqual(null);
+  expect(new MessengerEvent(textMessage).sticker).toBeUndefined();
+  expect(new MessengerEvent(imageMessage).sticker).toBeUndefined();
   expect(new MessengerEvent(likeStickerMessage).sticker).toEqual(
     369239263222822
   );
@@ -964,7 +965,7 @@ it('#quickReply', () => {
   expect(new MessengerEvent(quickReplyMessage).quickReply).toEqual({
     payload: 'DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_RED',
   });
-  expect(new MessengerEvent(postback).quickReply).toEqual(null);
+  expect(new MessengerEvent(postback).quickReply).toBeUndefined();
 });
 
 it('#isDelivery', () => {
@@ -979,18 +980,18 @@ it('#isDelivery', () => {
 });
 
 it('#delivery', () => {
-  expect(new MessengerEvent(textMessage).delivery).toEqual(null);
+  expect(new MessengerEvent(textMessage).delivery).toBeUndefined();
   expect(new MessengerEvent(delivery).delivery).toEqual({
     mids: ['mid.1458668856218:ed81099e15d3f4f233'],
     seq: 37,
     watermark: 1458668856253,
   });
-  expect(new MessengerEvent(read).delivery).toEqual(null);
-  expect(new MessengerEvent(echoMessage).delivery).toEqual(null);
-  expect(new MessengerEvent(postback).delivery).toEqual(null);
-  expect(new MessengerEvent(payment).delivery).toEqual(null);
-  expect(new MessengerEvent(accountLinkingLinked).delivery).toEqual(null);
-  expect(new MessengerEvent(accountLinkingUnlinked).delivery).toEqual(null);
+  expect(new MessengerEvent(read).delivery).toBeUndefined();
+  expect(new MessengerEvent(echoMessage).delivery).toBeUndefined();
+  expect(new MessengerEvent(postback).delivery).toBeUndefined();
+  expect(new MessengerEvent(payment).delivery).toBeUndefined();
+  expect(new MessengerEvent(accountLinkingLinked).delivery).toBeUndefined();
+  expect(new MessengerEvent(accountLinkingUnlinked).delivery).toBeUndefined();
 });
 
 it('#isRead', () => {
@@ -1005,17 +1006,17 @@ it('#isRead', () => {
 });
 
 it('#read', () => {
-  expect(new MessengerEvent(textMessage).read).toEqual(null);
-  expect(new MessengerEvent(delivery).read).toEqual(null);
+  expect(new MessengerEvent(textMessage).read).toBeUndefined();
+  expect(new MessengerEvent(delivery).read).toBeUndefined();
   expect(new MessengerEvent(read).read).toEqual({
     seq: 38,
     watermark: 1458668856253,
   });
-  expect(new MessengerEvent(echoMessage).read).toEqual(null);
-  expect(new MessengerEvent(postback).read).toEqual(null);
-  expect(new MessengerEvent(payment).read).toEqual(null);
-  expect(new MessengerEvent(accountLinkingLinked).read).toEqual(null);
-  expect(new MessengerEvent(accountLinkingUnlinked).read).toEqual(null);
+  expect(new MessengerEvent(echoMessage).read).toBeUndefined();
+  expect(new MessengerEvent(postback).read).toBeUndefined();
+  expect(new MessengerEvent(payment).read).toBeUndefined();
+  expect(new MessengerEvent(accountLinkingLinked).read).toBeUndefined();
+  expect(new MessengerEvent(accountLinkingUnlinked).read).toBeUndefined();
 });
 
 it('#isEcho', () => {
@@ -1060,7 +1061,7 @@ it('#postback', () => {
   expect(new MessengerEvent(quickReplyMessage).payload).toEqual(
     'DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_RED'
   );
-  expect(new MessengerEvent(textMessage).payload).toEqual(null);
+  expect(new MessengerEvent(textMessage).payload).toBeUndefined();
 });
 
 it('#isGamePlay', () => {
@@ -1079,12 +1080,12 @@ it('#isGamePlay', () => {
 });
 
 it('#gamePlay', () => {
-  expect(new MessengerEvent(textMessage).gamePlay).toEqual(null);
-  expect(new MessengerEvent(imageMessage).gamePlay).toEqual(null);
-  expect(new MessengerEvent(likeStickerMessage).gamePlay).toEqual(null);
-  expect(new MessengerEvent(echoMessage).gamePlay).toEqual(null);
-  expect(new MessengerEvent(quickReplyMessage).gamePlay).toEqual(null);
-  expect(new MessengerEvent(postback).gamePlay).toEqual(null);
+  expect(new MessengerEvent(textMessage).gamePlay).toBeUndefined();
+  expect(new MessengerEvent(imageMessage).gamePlay).toBeUndefined();
+  expect(new MessengerEvent(likeStickerMessage).gamePlay).toBeUndefined();
+  expect(new MessengerEvent(echoMessage).gamePlay).toBeUndefined();
+  expect(new MessengerEvent(quickReplyMessage).gamePlay).toBeUndefined();
+  expect(new MessengerEvent(postback).gamePlay).toBeUndefined();
   expect(new MessengerEvent(gamePlay).gamePlay).toEqual({
     gameId: 'GAME_ID',
     playerId: 'PLAYER_ID',
@@ -1103,8 +1104,8 @@ it('#gamePlay', () => {
     score: 99,
     payload: 'SOME_STRING',
   });
-  expect(new MessengerEvent(accountLinkingLinked).gamePlay).toEqual(null);
-  expect(new MessengerEvent(accountLinkingUnlinked).gamePlay).toEqual(null);
+  expect(new MessengerEvent(accountLinkingLinked).gamePlay).toBeUndefined();
+  expect(new MessengerEvent(accountLinkingUnlinked).gamePlay).toBeUndefined();
 });
 
 it('#isOptin', () => {
@@ -1120,17 +1121,17 @@ it('#isOptin', () => {
 });
 
 it('#optin', () => {
-  expect(new MessengerEvent(textMessage).optin).toEqual(null);
-  expect(new MessengerEvent(imageMessage).optin).toEqual(null);
-  expect(new MessengerEvent(likeStickerMessage).optin).toEqual(null);
-  expect(new MessengerEvent(echoMessage).optin).toEqual(null);
-  expect(new MessengerEvent(quickReplyMessage).optin).toEqual(null);
-  expect(new MessengerEvent(postback).optin).toEqual(null);
+  expect(new MessengerEvent(textMessage).optin).toBeUndefined();
+  expect(new MessengerEvent(imageMessage).optin).toBeUndefined();
+  expect(new MessengerEvent(likeStickerMessage).optin).toBeUndefined();
+  expect(new MessengerEvent(echoMessage).optin).toBeUndefined();
+  expect(new MessengerEvent(quickReplyMessage).optin).toBeUndefined();
+  expect(new MessengerEvent(postback).optin).toBeUndefined();
   expect(new MessengerEvent(optin).optin).toEqual({
     ref: 'PASS_THROUGH_PARAM',
   });
-  expect(new MessengerEvent(accountLinkingLinked).optin).toEqual(null);
-  expect(new MessengerEvent(accountLinkingUnlinked).optin).toEqual(null);
+  expect(new MessengerEvent(accountLinkingLinked).optin).toBeUndefined();
+  expect(new MessengerEvent(accountLinkingUnlinked).optin).toBeUndefined();
 });
 
 it('#isPayment', () => {
@@ -1146,7 +1147,7 @@ it('#isPayment', () => {
 });
 
 it('#payment', () => {
-  expect(new MessengerEvent(textMessage).payment).toEqual(null);
+  expect(new MessengerEvent(textMessage).payment).toBeUndefined();
   expect(new MessengerEvent(payment).payment).toEqual({
     payload: 'DEVELOPER_DEFINED_PAYLOAD',
     requestedUserInfo: {
@@ -1187,12 +1188,12 @@ it('#isCheckoutUpdate', () => {
 });
 
 it('#checkoutUpdate', () => {
-  expect(new MessengerEvent(textMessage).checkoutUpdate).toEqual(null);
-  expect(new MessengerEvent(imageMessage).checkoutUpdate).toEqual(null);
-  expect(new MessengerEvent(likeStickerMessage).checkoutUpdate).toEqual(null);
-  expect(new MessengerEvent(echoMessage).checkoutUpdate).toEqual(null);
-  expect(new MessengerEvent(quickReplyMessage).checkoutUpdate).toEqual(null);
-  expect(new MessengerEvent(postback).checkoutUpdate).toEqual(null);
+  expect(new MessengerEvent(textMessage).checkoutUpdate).toBeUndefined();
+  expect(new MessengerEvent(imageMessage).checkoutUpdate).toBeUndefined();
+  expect(new MessengerEvent(likeStickerMessage).checkoutUpdate).toBeUndefined();
+  expect(new MessengerEvent(echoMessage).checkoutUpdate).toBeUndefined();
+  expect(new MessengerEvent(quickReplyMessage).checkoutUpdate).toBeUndefined();
+  expect(new MessengerEvent(postback).checkoutUpdate).toBeUndefined();
   expect(new MessengerEvent(checkoutUpdate).checkoutUpdate).toEqual({
     payload: 'DEVELOPER_DEFINED_PAYLOAD',
     shippingAddress: {
@@ -1205,10 +1206,12 @@ it('#checkoutUpdate', () => {
       postalCode: '94025',
     },
   });
-  expect(new MessengerEvent(accountLinkingLinked).checkoutUpdate).toEqual(null);
-  expect(new MessengerEvent(accountLinkingUnlinked).checkoutUpdate).toEqual(
-    null
-  );
+  expect(
+    new MessengerEvent(accountLinkingLinked).checkoutUpdate
+  ).toBeUndefined();
+  expect(
+    new MessengerEvent(accountLinkingUnlinked).checkoutUpdate
+  ).toBeUndefined();
 });
 
 it('#isPreCheckout', () => {
@@ -1226,12 +1229,12 @@ it('#isPreCheckout', () => {
 });
 
 it('#preCheckout', () => {
-  expect(new MessengerEvent(textMessage).preCheckout).toEqual(null);
-  expect(new MessengerEvent(imageMessage).preCheckout).toEqual(null);
-  expect(new MessengerEvent(likeStickerMessage).preCheckout).toEqual(null);
-  expect(new MessengerEvent(echoMessage).preCheckout).toEqual(null);
-  expect(new MessengerEvent(quickReplyMessage).preCheckout).toEqual(null);
-  expect(new MessengerEvent(postback).preCheckout).toEqual(null);
+  expect(new MessengerEvent(textMessage).preCheckout).toBeUndefined();
+  expect(new MessengerEvent(imageMessage).preCheckout).toBeUndefined();
+  expect(new MessengerEvent(likeStickerMessage).preCheckout).toBeUndefined();
+  expect(new MessengerEvent(echoMessage).preCheckout).toBeUndefined();
+  expect(new MessengerEvent(quickReplyMessage).preCheckout).toBeUndefined();
+  expect(new MessengerEvent(postback).preCheckout).toBeUndefined();
   expect(new MessengerEvent(preCheckout).preCheckout).toEqual({
     payload: 'xyz',
     requestedUserInfo: {
@@ -1251,8 +1254,10 @@ it('#preCheckout', () => {
       amount: '2.70',
     },
   });
-  expect(new MessengerEvent(accountLinkingLinked).preCheckout).toEqual(null);
-  expect(new MessengerEvent(accountLinkingUnlinked).preCheckout).toEqual(null);
+  expect(new MessengerEvent(accountLinkingLinked).preCheckout).toBeUndefined();
+  expect(
+    new MessengerEvent(accountLinkingUnlinked).preCheckout
+  ).toBeUndefined();
 });
 
 it('#isPolicyEnforcement', () => {
@@ -1264,8 +1269,8 @@ it('#isPolicyEnforcement', () => {
 });
 
 it('#policyEnforcement', () => {
-  expect(new MessengerEvent(textMessage).policyEnforcement).toEqual(null);
-  expect(new MessengerEvent(postback).policyEnforcement).toEqual(null);
+  expect(new MessengerEvent(textMessage).policyEnforcement).toBeUndefined();
+  expect(new MessengerEvent(postback).policyEnforcement).toBeUndefined();
   expect(new MessengerEvent(policyEnforcement).policyEnforcement).toEqual({
     action: 'block',
     reason:
@@ -1280,8 +1285,8 @@ it('#isAppRoles', () => {
 });
 
 it('#appRoles', () => {
-  expect(new MessengerEvent(textMessage).appRoles).toEqual(null);
-  expect(new MessengerEvent(postback).appRoles).toEqual(null);
+  expect(new MessengerEvent(textMessage).appRoles).toBeUndefined();
+  expect(new MessengerEvent(postback).appRoles).toBeUndefined();
   expect(new MessengerEvent(appRoles).appRoles).toEqual({
     '123456789': ['automation'],
   });
@@ -1306,8 +1311,8 @@ it('#isPassThreadControl', () => {
 });
 
 it('#passThreadControl', () => {
-  expect(new MessengerEvent(textMessage).passThreadControl).toEqual(null);
-  expect(new MessengerEvent(postback).passThreadControl).toEqual(null);
+  expect(new MessengerEvent(textMessage).passThreadControl).toBeUndefined();
+  expect(new MessengerEvent(postback).passThreadControl).toBeUndefined();
   expect(new MessengerEvent(passThreadControl).passThreadControl).toEqual({
     metadata: 'additional content that the caller wants to set',
     newOwnerAppId: '123456789',
@@ -1323,8 +1328,8 @@ it('#isTakeThreadControl', () => {
 });
 
 it('#takeThreadControl', () => {
-  expect(new MessengerEvent(textMessage).takeThreadControl).toEqual(null);
-  expect(new MessengerEvent(postback).takeThreadControl).toEqual(null);
+  expect(new MessengerEvent(textMessage).takeThreadControl).toBeUndefined();
+  expect(new MessengerEvent(postback).takeThreadControl).toBeUndefined();
   expect(new MessengerEvent(takeThreadControl).takeThreadControl).toEqual({
     metadata: 'additional content that the caller wants to set',
     previousOwnerAppId: '123456789',
@@ -1364,8 +1369,8 @@ it('#isRequestThreadControlFromPageInbox', () => {
 });
 
 it('#requestThreadControl', () => {
-  expect(new MessengerEvent(textMessage).requestThreadControl).toEqual(null);
-  expect(new MessengerEvent(postback).requestThreadControl).toEqual(null);
+  expect(new MessengerEvent(textMessage).requestThreadControl).toBeUndefined();
+  expect(new MessengerEvent(postback).requestThreadControl).toBeUndefined();
   expect(new MessengerEvent(requestThreadControl).requestThreadControl).toEqual(
     {
       metadata: 'additional content that the caller wants to set',
@@ -1415,16 +1420,16 @@ it('#referral', () => {
     type: 'OPEN_THREAD',
     originDomain: 'https://test.domain.tw/',
   });
-  expect(new MessengerEvent(postback).referral).toEqual(null);
-  expect(new MessengerEvent(textMessage).referral).toEqual(null);
+  expect(new MessengerEvent(postback).referral).toBeUndefined();
+  expect(new MessengerEvent(textMessage).referral).toBeUndefined();
 });
 
 it('#ref', () => {
   expect(new MessengerEvent(linkReferral).ref).toEqual('aaaa');
   expect(new MessengerEvent(postbackReferral).ref).toEqual('aaaa');
   expect(new MessengerEvent(customerChatPluginReferral).ref).toEqual('bbbb');
-  expect(new MessengerEvent(postback).ref).toEqual(null);
-  expect(new MessengerEvent(textMessage).ref).toEqual(null);
+  expect(new MessengerEvent(postback).ref).toBeUndefined();
+  expect(new MessengerEvent(textMessage).ref).toBeUndefined();
 });
 
 it('#pageId', () => {
@@ -1443,7 +1448,7 @@ it('#pageId', () => {
   expect(new MessengerEvent(textMessage, { pageId }).pageId).toEqual(
     '137542570280111'
   );
-  expect(new MessengerEvent(textMessage).pageId).toEqual(null);
+  expect(new MessengerEvent(textMessage).pageId).toBeUndefined();
 });
 
 it('#isBrandedCamera', () => {
@@ -1456,11 +1461,11 @@ it('#isBrandedCamera', () => {
 });
 
 it('#brandedCamera', () => {
-  expect(new MessengerEvent(textMessage).brandedCamera).toEqual(null);
-  expect(new MessengerEvent(postback).brandedCamera).toEqual(null);
-  expect(new MessengerEvent(customerChatPluginReferral).brandedCamera).toEqual(
-    null
-  );
+  expect(new MessengerEvent(textMessage).brandedCamera).toBeUndefined();
+  expect(new MessengerEvent(postback).brandedCamera).toBeUndefined();
+  expect(
+    new MessengerEvent(customerChatPluginReferral).brandedCamera
+  ).toBeUndefined();
   expect(new MessengerEvent(brandedCamera).brandedCamera).toEqual({
     contentIds: ['<CAMERA-EFFECT-ID>', '<CAMERA-EFFECT-ID>'],
     event: 'dismiss',
@@ -1483,12 +1488,12 @@ it('#isAccountLinking', () => {
 });
 
 it('#accountLinking', () => {
-  expect(new MessengerEvent(textMessage).accountLinking).toEqual(null);
-  expect(new MessengerEvent(delivery).accountLinking).toEqual(null);
-  expect(new MessengerEvent(read).accountLinking).toEqual(null);
-  expect(new MessengerEvent(echoMessage).accountLinking).toEqual(null);
-  expect(new MessengerEvent(postback).accountLinking).toEqual(null);
-  expect(new MessengerEvent(payment).accountLinking).toEqual(null);
+  expect(new MessengerEvent(textMessage).accountLinking).toBeUndefined();
+  expect(new MessengerEvent(delivery).accountLinking).toBeUndefined();
+  expect(new MessengerEvent(read).accountLinking).toBeUndefined();
+  expect(new MessengerEvent(echoMessage).accountLinking).toBeUndefined();
+  expect(new MessengerEvent(postback).accountLinking).toBeUndefined();
+  expect(new MessengerEvent(payment).accountLinking).toBeUndefined();
   expect(new MessengerEvent(accountLinkingLinked).accountLinking).toEqual({
     authorizationCode: 'PASS_THROUGH_AUTHORIZATION_CODE',
     status: 'linked',
@@ -1506,8 +1511,8 @@ it('#isReaction', () => {
 });
 
 it('#reaction', () => {
-  expect(new MessengerEvent(textMessage).reaction).toEqual(null);
-  expect(new MessengerEvent(postback).reaction).toEqual(null);
+  expect(new MessengerEvent(textMessage).reaction).toBeUndefined();
+  expect(new MessengerEvent(postback).reaction).toBeUndefined();
   expect(new MessengerEvent(reactionReact).reaction).toEqual({
     reaction: 'smile',
     emoji: '\u{2764}\u{FE0F}',

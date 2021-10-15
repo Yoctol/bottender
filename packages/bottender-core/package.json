@@ -15,10 +15,10 @@
   "dependencies": {
     "debug": "^4.3.2",
     "delay": "^5.0.0",
-    "invariant": "^2.2.4",
     "lodash": "^4.17.21",
     "messaging-api-common": "^1.0.4",
     "p-map": "^4.0.0",
+    "ts-invariant": "^0.9.3",
     "type-fest": "^2.5.0",
     "warning": "^4.0.3"
   }

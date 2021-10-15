@@ -1,8 +1,8 @@
 /* eslint-disable consistent-return */
 import Table from 'cli-table3';
 import chalk from 'chalk';
-import invariant from 'invariant';
-import { MessengerClient } from 'messaging-api-messenger';
+import invariant from 'ts-invariant';
+import { MessengerClient } from '@bottender/messenger';
 
 import getChannelConfig from '../../../shared/getChannelConfig';
 import getSubArgs from '../sh/utils/getSubArgs';

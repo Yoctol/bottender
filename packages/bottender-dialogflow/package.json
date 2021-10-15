@@ -15,7 +15,7 @@
   "types": "dist/index.d.ts",
   "dependencies": {
     "@google-cloud/dialogflow": "^4.4.0",
-    "invariant": "^2.2.4"
+    "ts-invariant": "^0.9.3"
   },
   "peerDependencies": {
     "bottender": ">= 1.2.0-0"

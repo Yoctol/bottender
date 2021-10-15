@@ -1,5 +1,4 @@
 import bottender from './bottender';
-import * as MessengerTypes from './messenger/MessengerTypes';
 
 export { bottender };
 
@@ -33,16 +32,16 @@ export { default as ConsoleContext } from './console/ConsoleContext';
 export { default as ConsoleEvent } from './console/ConsoleEvent';
 
 /* Messenger */
-export { default as FacebookBaseConnector } from './messenger/FacebookBaseConnector';
-export { default as MessengerConnector } from './messenger/MessengerConnector';
-export { default as MessengerContext } from './messenger/MessengerContext';
-export { default as MessengerEvent } from './messenger/MessengerEvent';
 export {
   Messenger,
   MessengerClient,
   MessengerBatch,
-} from 'messaging-api-messenger';
-export { MessengerTypes };
+  FacebookBaseConnector,
+  MessengerConnector,
+  MessengerContext,
+  MessengerEvent,
+  MessengerTypes,
+} from '@bottender/messenger';
 
 /* WhatsApp */
 export {

@@ -15,7 +15,7 @@
   "types": "dist/index.d.ts",
   "dependencies": {
     "axios": "^0.21.4",
-    "invariant": "^2.2.4"
+    "ts-invariant": "^0.9.3"
   },
   "peerDependencies": {
     "bottender": ">= 1.2.0-0"

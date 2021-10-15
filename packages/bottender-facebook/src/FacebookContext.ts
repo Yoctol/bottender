@@ -1,21 +1,14 @@
 import { EventEmitter } from 'events';
 
 import warning from 'warning';
-import {
-  Context,
-  MessengerBatch,
-  MessengerTypes,
-  RequestContext,
-} from 'bottender';
+import { Context, RequestContext, Session } from '@bottender/core';
 import { FacebookBatchQueue } from 'facebook-batch';
+import { MessengerBatch, MessengerTypes } from '@bottender/messenger';
 
 import FacebookBatch from './FacebookBatch';
 import FacebookClient from './FacebookClient';
 import FacebookEvent from './FacebookEvent';
 import * as Types from './FacebookTypes';
-
-// TODO: use exported type
-type Session = Record<string, any>;
 
 export type FacebookContextOptions = {
   appId?: string;
@@ -25,7 +18,7 @@ export type FacebookContextOptions = {
   initialState?: Record<string, any>;
   requestContext?: RequestContext;
   customAccessToken?: string;
-  batchQueue?: FacebookBatchQueue | null;
+  batchQueue?: FacebookBatchQueue;
   emitter?: EventEmitter;
 };
 
@@ -52,7 +45,7 @@ export default class FacebookContext extends Context<
   }: FacebookContextOptions) {
     super({ client, event, session, initialState, requestContext, emitter });
     this._customAccessToken = customAccessToken;
-    this._batchQueue = batchQueue || undefined;
+    this._batchQueue = batchQueue;
     this._appId = appId;
   }
 
@@ -74,12 +67,12 @@ export default class FacebookContext extends Context<
   public async sendText(
     text: string
   ): Promise<MessengerTypes.SendMessageSuccessResponse | undefined> {
-    if (!['comment', 'post'].includes(this._event.rawEvent.value.item)) {
+    if (!['comment', 'post'].includes(this.event.rawEvent.value.item)) {
       warning(false, 'sendText: can only work with comment and post events.');
       return;
     }
 
-    const value = this._event.rawEvent.value as
+    const value = this.event.rawEvent.value as
       | Types.FeedPost
       | Types.FeedComment;
 
@@ -107,7 +100,7 @@ export default class FacebookContext extends Context<
         } as any)
       );
     }
-    return this._client.sendText(recipient, text);
+    return this.client.sendText(recipient, text);
   }
 
   /**
@@ -120,7 +113,7 @@ export default class FacebookContext extends Context<
   public async sendMessage(
     message: MessengerTypes.Message
   ): Promise<MessengerTypes.SendMessageSuccessResponse | undefined> {
-    if (!['comment', 'post'].includes(this._event.rawEvent.value.item)) {
+    if (!['comment', 'post'].includes(this.event.rawEvent.value.item)) {
       warning(
         false,
         'sendMessage: can only work with comment and post events.'
@@ -128,7 +121,7 @@ export default class FacebookContext extends Context<
       return;
     }
 
-    const value = this._event.rawEvent.value as
+    const value = this.event.rawEvent.value as
       | Types.FeedPost
       | Types.FeedComment;
 
@@ -155,7 +148,7 @@ export default class FacebookContext extends Context<
         } as any)
       );
     }
-    return this._client.sendMessage(recipient, message);
+    return this.client.sendMessage(recipient, message);
   }
 
   // TODO: implement other send methods
@@ -171,12 +164,12 @@ export default class FacebookContext extends Context<
     comment: string | Types.InputComment
   ): Promise<{ id: string } | undefined> {
     let objectId;
-    if (this._event.isComment) {
-      objectId = this._event.isFirstLayerComment
-        ? (this._event.rawEvent.value as Types.FeedComment).commentId
-        : (this._event.rawEvent.value as Types.FeedComment).parentId;
-    } else if (this._event.isPost) {
-      objectId = (this._event.rawEvent.value as Types.FeedComment).postId;
+    if (this.event.isComment) {
+      objectId = this.event.isFirstLayerComment
+        ? (this.event.rawEvent.value as Types.FeedComment).commentId
+        : (this.event.rawEvent.value as Types.FeedComment).parentId;
+    } else if (this.event.isPost) {
+      objectId = (this.event.rawEvent.value as Types.FeedComment).postId;
     }
 
     // TODO: support more type: Album, Event, Life Event, Link, Live Video, Note, Photo, Thread, User, Video
@@ -185,7 +178,7 @@ export default class FacebookContext extends Context<
       return;
     }
 
-    if (this._event.isSentByPage) {
+    if (this.event.isSentByPage) {
       warning(false, "sendComment: can't send to page itself.");
       return;
     }
@@ -197,7 +190,7 @@ export default class FacebookContext extends Context<
         })
       );
     }
-    return this._client.sendComment(objectId, comment);
+    return this.client.sendComment(objectId, comment);
   }
 
   /**
@@ -207,10 +200,10 @@ export default class FacebookContext extends Context<
    */
   public async sendLike(): Promise<{ success: boolean }> {
     let objectId;
-    if (this._event.isComment) {
-      objectId = (this._event.rawEvent.value as Types.FeedComment).commentId;
-    } else if (this._event.isPost) {
-      objectId = (this._event.rawEvent.value as Types.FeedComment).postId;
+    if (this.event.isComment) {
+      objectId = (this.event.rawEvent.value as Types.FeedComment).commentId;
+    } else if (this.event.isPost) {
+      objectId = (this.event.rawEvent.value as Types.FeedComment).postId;
     }
 
     // TODO: support more type: Album, Event, Life Event, Link, Live Video, Note, Photo, Thread, User, Video
@@ -226,7 +219,7 @@ export default class FacebookContext extends Context<
         })
       );
     }
-    return this._client.sendLike(objectId);
+    return this.client.sendLike(objectId);
   }
 
   /**
@@ -242,7 +235,7 @@ export default class FacebookContext extends Context<
     Types.Comment,
     Types.CamelCaseUnion<Types.CommentKeyMap, typeof fields[number]>
   > | null> {
-    const commentId = (this._event.rawEvent.value as Types.FeedComment)
+    const commentId = (this.event.rawEvent.value as Types.FeedComment)
       .commentId;
 
     if (!commentId) {
@@ -263,7 +256,7 @@ export default class FacebookContext extends Context<
         })
       );
     }
-    return this._client.getComment(commentId, { fields });
+    return this.client.getComment(commentId, { fields });
   }
 
   /**
@@ -274,8 +267,7 @@ export default class FacebookContext extends Context<
    * @param options -
    */
   public getLikes(options: Types.GetLikesOptions): Promise<Types.Likes> {
-    const objectId = (this._event.rawEvent.value as Types.FeedComment)
-      .commentId; // FIXME: postId
+    const objectId = (this.event.rawEvent.value as Types.FeedComment).commentId; // FIXME: postId
 
     if (this._batchQueue) {
       return this._batchQueue.push<Types.Likes>(
@@ -285,7 +277,7 @@ export default class FacebookContext extends Context<
         })
       );
     }
-    return this._client.getLikes(objectId, options);
+    return this.client.getLikes(objectId, options);
   }
 
   public async canReplyPrivately(): Promise<boolean> {

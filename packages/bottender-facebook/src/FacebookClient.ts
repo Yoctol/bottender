@@ -1,7 +1,7 @@
 import AxiosError from 'axios-error';
 import get from 'lodash/get';
 import { MergeExclusive } from 'type-fest';
-import { MessengerClient } from 'bottender';
+import { MessengerClient } from '@bottender/messenger';
 
 import * as Types from './FacebookTypes';
 

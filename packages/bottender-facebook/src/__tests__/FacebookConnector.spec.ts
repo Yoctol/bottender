@@ -1,4 +1,4 @@
-import { MessengerContext, MessengerEvent } from 'bottender';
+import { MessengerContext, MessengerEvent } from '@bottender/messenger';
 
 import FacebookClient from '../FacebookClient';
 import FacebookConnector from '../FacebookConnector';
