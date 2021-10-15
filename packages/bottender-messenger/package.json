@@ -16,10 +16,10 @@
     "@bottender/core": "file:../bottender-core",
     "delay": "^5.0.0",
     "facebook-batch": "^1.1.0",
-    "invariant": "^2.2.4",
     "messaging-api-common": "^1.0.4",
     "messaging-api-messenger": "^1.1.0",
     "shortid": "^2.2.16",
+    "ts-invariant": "^0.9.3",
     "type-fest": "^2.5.0",
     "warning": "^4.0.3"
   }

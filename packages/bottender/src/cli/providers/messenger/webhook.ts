@@ -1,6 +1,6 @@
 import Table from 'cli-table3';
 import chalk from 'chalk';
-import invariant from 'invariant';
+import invariant from 'ts-invariant';
 import { Confirm } from 'enquirer';
 import { MessengerClient } from '@bottender/messenger';
 

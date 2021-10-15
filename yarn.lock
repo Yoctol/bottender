@@ -612,10 +612,10 @@
   dependencies:
     debug "^4.3.2"
     delay "^5.0.0"
-    invariant "^2.2.4"
     lodash "^4.17.21"
     messaging-api-common "^1.0.4"
     p-map "^4.0.0"
+    ts-invariant "^0.9.3"
     type-fest "^2.5.0"
     warning "^4.0.3"
 
@@ -632,59 +632,59 @@
 "@bottender/line@file:packages/bottender-line":
   version "1.5.4"
   dependencies:
-    "@bottender/core" "file:../../../Library/Caches/Yarn/v6/npm-@bottender-line-1.5.4-9eac07f3-60ce-41b1-ba67-8fa77efaa488-1634277158519/node_modules/@bottender/bottender-core"
+    "@bottender/core" "file:../../../Library/Caches/Yarn/v6/npm-@bottender-line-1.5.4-997c337c-3aa5-41d6-80e8-4911ef407b3a-1634281535372/node_modules/@bottender/bottender-core"
     "@types/lodash" "^4.14.175"
-    invariant "^2.2.4"
     lodash "^4.17.21"
     messaging-api-line "^1.1.0"
+    ts-invariant "^0.9.3"
     type-fest "^2.5.0"
     warning "^4.0.3"
 
 "@bottender/messenger@file:packages/bottender-messenger":
   version "1.5.4"
   dependencies:
-    "@bottender/core" "file:../../../Library/Caches/Yarn/v6/npm-@bottender-messenger-1.5.4-7031f29f-6508-47c5-beff-c267b1dc1ee6-1634277158517/node_modules/@bottender/bottender-core"
+    "@bottender/core" "file:../../../Library/Caches/Yarn/v6/npm-@bottender-messenger-1.5.4-f8c567f3-4041-4e12-b3c8-57b0de6a6845-1634281535370/node_modules/@bottender/bottender-core"
     delay "^5.0.0"
     facebook-batch "^1.1.0"
-    invariant "^2.2.4"
     messaging-api-common "^1.0.4"
     messaging-api-messenger "^1.1.0"
     shortid "^2.2.16"
+    ts-invariant "^0.9.3"
     type-fest "^2.5.0"
     warning "^4.0.3"
 
 "@bottender/slack@file:packages/bottender-slack":
   version "1.5.4"
   dependencies:
-    "@bottender/core" "file:../../../Library/Caches/Yarn/v6/npm-@bottender-slack-1.5.4-2e58ba45-9e38-4e74-b3e2-8e2c54faaa1b-1634277158519/node_modules/@bottender/bottender-core"
-    invariant "^2.2.4"
+    "@bottender/core" "file:../../../Library/Caches/Yarn/v6/npm-@bottender-slack-1.5.4-a2bd79a2-5630-43c2-a288-867c43df5dfa-1634281535376/node_modules/@bottender/bottender-core"
     messaging-api-common "^1.0.4"
     messaging-api-slack "^1.1.0"
+    ts-invariant "^0.9.3"
     type-fest "^2.5.0"
     warning "^4.0.3"
 
 "@bottender/telegram@file:packages/bottender-telegram":
   version "1.5.4"
   dependencies:
-    "@bottender/core" "file:../../../Library/Caches/Yarn/v6/npm-@bottender-telegram-1.5.4-b03f4541-4b9a-4dc0-87eb-07ca08e96210-1634277158521/node_modules/@bottender/bottender-core"
-    invariant "^2.2.4"
+    "@bottender/core" "file:../../../Library/Caches/Yarn/v6/npm-@bottender-telegram-1.5.4-482b42b7-d4c2-47a0-ae59-77b1b93df5c2-1634281535377/node_modules/@bottender/bottender-core"
     messaging-api-telegram "^1.1.0"
+    ts-invariant "^0.9.3"
     type-fest "^2.5.0"
     warning "^4.0.3"
 
 "@bottender/viber@file:packages/bottender-viber":
   version "1.5.4"
   dependencies:
-    "@bottender/core" "file:../../../Library/Caches/Yarn/v6/npm-@bottender-viber-1.5.4-6db9f90a-3262-4d9e-9fc5-1888955624b0-1634277158520/node_modules/@bottender/bottender-core"
-    invariant "^2.2.4"
+    "@bottender/core" "file:../../../Library/Caches/Yarn/v6/npm-@bottender-viber-1.5.4-070eaae8-2304-4ddd-ac5a-3dbdfca561d9-1634281535378/node_modules/@bottender/bottender-core"
     messaging-api-viber "^1.1.0"
+    ts-invariant "^0.9.3"
     type-fest "^2.5.0"
     warning "^4.0.3"
 
 "@bottender/whatsapp@file:packages/bottender-whatsapp":
   version "1.5.4"
   dependencies:
-    "@bottender/core" "file:../../../Library/Caches/Yarn/v6/npm-@bottender-whatsapp-1.5.4-c9f71828-6866-4870-8142-ddbc512cf203-1634277158522/node_modules/@bottender/bottender-core"
+    "@bottender/core" "file:../../../Library/Caches/Yarn/v6/npm-@bottender-whatsapp-1.5.4-c08930d9-251d-4170-8276-5e773b7c25ce-1634281535380/node_modules/@bottender/bottender-core"
     axios "^0.21.0"
     axios-error "^1.0.4"
     lodash "^4.17.21"
@@ -2088,11 +2088,6 @@
   dependencies:
     "@types/through" "*"
     rxjs "^6.4.0"
-
-"@types/invariant@^2.2.35":
-  version "2.2.35"
-  resolved "https://registry.yarnpkg.com/@types/invariant/-/invariant-2.2.35.tgz#cd3ebf581a6557452735688d8daba6cf0bd5a3be"
-  integrity sha512-DxX1V9P8zdJPYQat1gHyY0xj3efl8gnMVjiM9iCY6y27lj+PoQWkgjt8jDqmovPqULkKVpKRg8J36iQiA+EtEg==
 
 "@types/ioredis@^4.27.5":
   version "4.27.5"
@@ -5997,13 +5992,6 @@ internal-slot@^1.0.3:
     get-intrinsic "^1.1.0"
     has "^1.0.3"
     side-channel "^1.0.4"
-
-invariant@^2.2.4:
-  version "2.2.4"
-  resolved "https://registry.yarnpkg.com/invariant/-/invariant-2.2.4.tgz#610f3c92c9359ce1db616e538008d23ff35158e6"
-  integrity sha512-phJfQVBuaJM5raOpJjSfkiD6BpbCE4Ns//LaXl6wGYtUBY83nWS6Rf9tXm2e8VaK60JEjYldbPif/A2B1C2gNA==
-  dependencies:
-    loose-envify "^1.0.0"
 
 ioredis@^4.27.9:
   version "4.27.9"
@@ -10557,6 +10545,13 @@ ts-invariant@^0.4.4:
   dependencies:
     tslib "^1.9.3"
 
+ts-invariant@^0.9.3:
+  version "0.9.3"
+  resolved "https://registry.yarnpkg.com/ts-invariant/-/ts-invariant-0.9.3.tgz#4b41e0a80c2530a56ce4b8fd4e14183aaac0efa8"
+  integrity sha512-HinBlTbFslQI0OHP07JLsSXPibSegec6r9ai5xxq/qHYCsIQbzpymLpDhAUsnXcSrDEcd0L62L8vsOEdzM0qlA==
+  dependencies:
+    tslib "^2.1.0"
+
 ts-jest@^27.0.5:
   version "27.0.5"
   resolved "https://registry.yarnpkg.com/ts-jest/-/ts-jest-27.0.5.tgz#0b0604e2271167ec43c12a69770f0bb65ad1b750"
@@ -10606,7 +10601,7 @@ tslib@^1.9.3:
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.13.0.tgz#c881e13cc7015894ed914862d276436fa9a47043"
   integrity sha512-i/6DQjL8Xf3be4K/E6Wgpekn5Qasl1usyw++dAA35Ue5orEn65VIxOA+YvNNl9HV3qv70T7CNwjODHZrLwvd1Q==
 
-tslib@^2.0.3:
+tslib@^2.0.3, tslib@^2.1.0:
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.3.1.tgz#e8a335add5ceae51aa261d32a490158ef042ef01"
   integrity sha512-77EbyPPpMz+FRFRuAFlWMtmgUWGe9UOG2Z25NqCwiIjRhOf5iKGuzSe5P2w1laq+FkRy4p+PCuVkJSGkzTEKVw==

@@ -1,6 +1,6 @@
 import crypto from 'crypto';
 
-import invariant from 'invariant';
+import invariant from 'ts-invariant';
 import shortid from 'shortid';
 import { BatchConfig, FacebookBatchQueue } from 'facebook-batch';
 import { JsonObject } from 'type-fest';
@@ -79,7 +79,7 @@ export default class FacebookBaseConnector<
       );
 
       const clientConfig = {
-        accessToken: accessToken || '',
+        accessToken: accessToken ?? '',
         appSecret,
         origin,
         skipAppSecretProof,
@@ -102,8 +102,8 @@ export default class FacebookBaseConnector<
     this._appId = appId;
     this._appSecret = appSecret;
 
-    this._mapPageToAccessToken = mapPageToAccessToken || null;
-    this._verifyToken = verifyToken || shortid.generate();
+    this._mapPageToAccessToken = mapPageToAccessToken ?? null;
+    this._verifyToken = verifyToken ?? shortid.generate();
   }
 
   get client(): Client {

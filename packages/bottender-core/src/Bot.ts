@@ -1,7 +1,7 @@
 import { EventEmitter } from 'events';
 
 import debug from 'debug';
-import invariant from 'invariant';
+import invariant from 'ts-invariant';
 import pMap from 'p-map';
 import { JsonObject } from 'type-fest';
 import { camelcaseKeysDeep } from 'messaging-api-common';

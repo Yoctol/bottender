@@ -1,5 +1,5 @@
 import get from 'lodash/get';
-import invariant from 'invariant';
+import invariant from 'ts-invariant';
 
 import { Channel } from '../types';
 

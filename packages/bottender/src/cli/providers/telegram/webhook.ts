@@ -1,4 +1,4 @@
-import invariant from 'invariant';
+import invariant from 'ts-invariant';
 import { Confirm } from 'enquirer';
 import { TelegramClient } from '@bottender/telegram';
 

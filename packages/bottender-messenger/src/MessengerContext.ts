@@ -1,7 +1,7 @@
 import fs from 'fs';
 import { EventEmitter } from 'events';
 
-import invariant from 'invariant';
+import invariant from 'ts-invariant';
 import sleep from 'delay';
 import warning from 'warning';
 import { Context, RequestContext, Session } from '@bottender/core';

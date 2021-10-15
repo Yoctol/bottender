@@ -14,8 +14,8 @@
   "types": "dist/index.d.ts",
   "dependencies": {
     "@bottender/core": "file:../bottender-core",
-    "invariant": "^2.2.4",
     "messaging-api-viber": "^1.1.0",
+    "ts-invariant": "^0.9.3",
     "type-fest": "^2.5.0",
     "warning": "^4.0.3"
   }

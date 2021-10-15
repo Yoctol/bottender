@@ -1,7 +1,7 @@
 import { EventEmitter } from 'events';
 
 import chunk from 'lodash/chunk';
-import invariant from 'invariant';
+import invariant from 'ts-invariant';
 import warning from 'warning';
 import { Context, RequestContext, Session } from '@bottender/core';
 import { JsonObject } from 'type-fest';

@@ -1,7 +1,7 @@
 import crypto from 'crypto';
 import { EventEmitter } from 'events';
 
-import invariant from 'invariant';
+import invariant from 'ts-invariant';
 import { Connector, Session } from '@bottender/core';
 import { JsonObject } from 'type-fest';
 import { ViberClient } from 'messaging-api-viber';

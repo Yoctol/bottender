@@ -15,9 +15,9 @@
   "dependencies": {
     "@bottender/core": "file:../bottender-core",
     "@types/lodash": "^4.14.175",
-    "invariant": "^2.2.4",
     "lodash": "^4.17.21",
     "messaging-api-line": "^1.1.0",
+    "ts-invariant": "^0.9.3",
     "type-fest": "^2.5.0",
     "warning": "^4.0.3"
   }

@@ -1,4 +1,4 @@
-import invariant from 'invariant';
+import invariant from 'ts-invariant';
 import { Confirm } from 'enquirer';
 import { ViberClient, ViberTypes } from '@bottender/viber';
 

@@ -1,5 +1,5 @@
 import dialogflowSdk, { protos } from '@google-cloud/dialogflow';
-import invariant from 'invariant';
+import invariant from 'ts-invariant';
 import { Action, Context, withProps } from 'bottender';
 
 function getFulfillments(

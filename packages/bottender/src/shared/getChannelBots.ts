@@ -1,6 +1,6 @@
 import path from 'path';
 
-import invariant from 'invariant';
+import invariant from 'ts-invariant';
 import { merge } from 'lodash';
 import { pascalcase } from 'messaging-api-common';
 

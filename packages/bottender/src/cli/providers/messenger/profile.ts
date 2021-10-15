@@ -1,6 +1,6 @@
 /* eslint-disable consistent-return */
 import chalk from 'chalk';
-import invariant from 'invariant';
+import invariant from 'ts-invariant';
 import { MessengerClient, MessengerTypes } from '@bottender/messenger';
 import { addedDiff, deletedDiff, diff, updatedDiff } from 'deep-object-diff';
 import { omit, pick } from 'lodash';

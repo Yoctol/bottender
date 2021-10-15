@@ -1,5 +1,5 @@
 import axios from 'axios';
-import invariant from 'invariant';
+import invariant from 'ts-invariant';
 import { Action, Context } from 'bottender';
 
 import { MetadataDTO, QnaSearchResultList } from './types';
