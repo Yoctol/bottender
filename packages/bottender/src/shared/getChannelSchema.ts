@@ -78,7 +78,7 @@ const slackSchema = Joi.object().keys({
   enabled: Joi.boolean(),
   path: Joi.string(),
   accessToken: Joi.string().required(),
-  verificationToken: Joi.string(),
+  signingSecret: Joi.string(),
 });
 
 const viberSchema = Joi.object().keys({

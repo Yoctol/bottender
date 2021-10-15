@@ -831,15 +831,13 @@ const slashCommandMessage: SlackRequestBody = {
 };
 
 function setup({
-  signingSecret = null,
-  verificationToken = 'xxxxxxxxxxxxxxxxxxxxxxxxxxx',
+  signingSecret = SLACK_SIGNING_SECRET,
   skipLegacyProfile,
   includeBotMessages,
 } = {}) {
   const connector = new SlackConnector({
     accessToken,
     signingSecret,
-    verificationToken,
     skipLegacyProfile,
     includeBotMessages,
   });
@@ -1158,7 +1156,7 @@ describe('#createContext', () => {
 });
 
 describe('#verifySignatureBySigningSecret', () => {
-  it('should return true if signature is equal to verification token', () => {
+  it('should return true if signature is equal to signing secret', () => {
     const _now = Date.now;
     Date.now = jest.fn(() => 1531420618050);
 
@@ -1196,16 +1194,6 @@ describe('#verifySignatureBySigningSecret', () => {
 
     expect(result).toBe(false);
     Date.now = _now;
-  });
-});
-
-describe('#verifySignature', () => {
-  it('should return true if signature is equal to verification token', () => {
-    const { connector } = setup({ verificationToken: 'mytoken' });
-
-    const result = connector.verifySignature('mytoken');
-
-    expect(result).toBe(true);
   });
 });
 
@@ -1302,7 +1290,7 @@ describe('#preprocess', () => {
         status: 400,
         body: {
           error: {
-            message: 'Slack Verification Token Validation Failed!',
+            message: 'Slack Signing Secret Validation Failed!',
             request: {
               body: {
                 token: 'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy',
