@@ -13,16 +13,12 @@
   ],
   "types": "dist/index.d.ts",
   "dependencies": {
+    "@bottender/core": "file:../bottender-core",
+    "@bottender/messenger": "file:../bottender-messenger",
     "axios-error": "^1.0.4",
-    "facebook-batch": "1.0.6",
+    "facebook-batch": "^1.1.0",
     "lodash": "^4.17.21",
     "type-fest": "^2.5.0",
     "warning": "^4.0.3"
-  },
-  "peerDependencies": {
-    "bottender": ">= 1.5.1-alpha.4"
-  },
-  "devDependencies": {
-    "bottender": "^1.5.4"
   }
 }

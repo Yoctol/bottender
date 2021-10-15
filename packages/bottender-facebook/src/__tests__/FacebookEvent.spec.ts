@@ -1,5 +1,5 @@
 import FacebookEvent from '../FacebookEvent';
-import { ChangesEntry, FacebookRawEvent } from '../FacebookTypes';
+import { FacebookRawEvent } from '../FacebookTypes';
 
 const statusAdd: FacebookRawEvent = {
   field: 'feed',

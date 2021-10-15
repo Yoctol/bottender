@@ -42,15 +42,15 @@ export default class FacebookBaseConnector<
 
   _origin: string | undefined = undefined;
 
-  _skipAppSecretProof: boolean | undefined = undefined;
+  _skipAppSecretProof: boolean | undefined;
 
   _mapPageToAccessToken: ((pageId: string) => Promise<string>) | null = null;
 
   _verifyToken: string | null = null;
 
-  _batchConfig: BatchConfig | null = null;
+  _batchConfig: BatchConfig | undefined;
 
-  _batchQueue: FacebookBatchQueue | null = null;
+  _batchQueue: FacebookBatchQueue | undefined;
 
   constructor(options: FacebookBaseConnectorOptions<Client>) {
     const { appId, appSecret, mapPageToAccessToken, verifyToken } = options;
@@ -59,7 +59,7 @@ export default class FacebookBaseConnector<
       this._client = options.client;
 
       // In the future, batch would be handled by client itself internally.
-      this._batchConfig = null;
+      this._batchConfig = undefined;
     } else {
       const {
         ClientClass,
@@ -87,7 +87,7 @@ export default class FacebookBaseConnector<
 
       this._client = new ClientClass(clientConfig) as Client;
 
-      this._batchConfig = batchConfig || null;
+      this._batchConfig = batchConfig;
       if (this._batchConfig) {
         this._batchQueue = new FacebookBatchQueue(
           clientConfig,

@@ -49,9 +49,9 @@ class MessengerContext extends Context<
     emitter,
   }: MessengerContextOptions) {
     super({ client, event, session, initialState, requestContext, emitter });
-    this._customAccessToken = customAccessToken || null;
-    this._batchQueue = batchQueue || null;
-    this._appId = appId || null;
+    this._customAccessToken = customAccessToken ?? null;
+    this._batchQueue = batchQueue ?? null;
+    this._appId = appId ?? null;
   }
 
   /**

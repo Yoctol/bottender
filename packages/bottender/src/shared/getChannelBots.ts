@@ -66,9 +66,9 @@ function getChannelBots(): ChannelBot[] {
           ].includes(channel)
         ) {
           // eslint-disable-next-line import/no-dynamic-require
-          const ChannelConnector = require(`../${channel}/${pascalcase(
-            channel
-          )}Connector`).default;
+          const ChannelConnector = require(`@bottender/${channel}`)[
+            `${pascalcase(channel)}Connector`
+          ];
           channelConnector = new ChannelConnector(connectorConfig);
         } else {
           invariant(connector, `The connector of ${channel} is missing.`);

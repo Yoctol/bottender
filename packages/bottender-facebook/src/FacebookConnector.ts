@@ -2,23 +2,19 @@ import { EventEmitter } from 'events';
 
 import warning from 'warning';
 import { BatchConfig } from 'facebook-batch';
+import { Connector, RequestContext, Session } from '@bottender/core';
 import {
-  Connector,
   FacebookBaseConnector,
   MessengerConnector,
   MessengerContext,
   MessengerEvent,
   MessengerTypes,
-  RequestContext,
-} from 'bottender';
+} from '@bottender/messenger';
 
 import FacebookClient from './FacebookClient';
 import FacebookContext from './FacebookContext';
 import FacebookEvent from './FacebookEvent';
 import { ChangesEntry, FacebookWebhookRequestBody } from './FacebookTypes';
-
-// TODO: use exported type
-type Session = Record<string, any>;
 
 export type FacebookConnectorOptions = {
   appId: string;
@@ -147,13 +143,22 @@ export default class FacebookConnector
       );
   }
 
-  public async createContext(params: {
-    event: FacebookEvent | MessengerEvent;
-    session?: Session;
-    initialState?: Record<string, any>;
-    requestContext?: RequestContext;
-    emitter?: EventEmitter;
-  }): Promise<FacebookContext | MessengerContext> {
+  public async createContext(
+    params: (
+      | {
+          event: FacebookEvent;
+          session?: Session;
+        }
+      | {
+          event: MessengerEvent;
+          session?: Session<{ user: { id: string; _updatedAt: string } }>;
+        }
+    ) & {
+      initialState?: Record<string, any>;
+      requestContext?: RequestContext;
+      emitter?: EventEmitter;
+    }
+  ): Promise<FacebookContext | MessengerContext> {
     let customAccessToken;
 
     if (this._mapPageToAccessToken) {
@@ -189,7 +194,7 @@ export default class FacebookConnector
       });
     }
     return new MessengerContext({
-      ...params,
+      ...(params as any), // FIXME
       event: params.event,
       client,
       customAccessToken,

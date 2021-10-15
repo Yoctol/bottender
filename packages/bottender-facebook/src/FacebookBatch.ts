@@ -3,7 +3,7 @@ import querystring from 'querystring';
 import isNil from 'lodash/isNil';
 import omitBy from 'lodash/omitBy';
 import { MergeExclusive } from 'type-fest';
-import { MessengerTypes } from 'bottender';
+import { MessengerTypes } from '@bottender/messenger';
 
 import * as Types from './FacebookTypes';
 
