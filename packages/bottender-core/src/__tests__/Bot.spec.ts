@@ -41,7 +41,7 @@ const requestContext = {
 function App() {}
 
 class TestSessionStore implements SessionStore {
-  sessions: Record<string, Session | undefined> = {};
+  sessions: Record<string, Session> = {};
 
   async init(): Promise<this> {
     return this;

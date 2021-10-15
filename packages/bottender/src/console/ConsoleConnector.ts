@@ -1,10 +1,7 @@
 import { EventEmitter } from 'events';
 
+import { Connector, RequestContext, Session } from '@bottender/core';
 import { JsonObject } from 'type-fest';
-
-import Session from '../session/Session';
-import { Connector } from '../bot/Connector';
-import { RequestContext } from '../types';
 
 import ConsoleContext from './ConsoleContext';
 import ConsoleEvent, { ConsoleRawEvent } from './ConsoleEvent';
@@ -37,8 +34,8 @@ export default class ConsoleConnector
         process.stdout.write(`Bot > ${text}\n`);
       },
     };
-    this._fallbackMethods = fallbackMethods || false;
-    this._platform = mockPlatform || 'console';
+    this._fallbackMethods = fallbackMethods ?? false;
+    this._platform = mockPlatform ?? 'console';
   }
 
   get platform(): string {

@@ -69,6 +69,7 @@ export = function qnaMaker({
         scoreThreshold,
         strictFilters,
         top: 1,
+        // @ts-ignore FIXME
         userId: context.session.user ? context.session.user.id : undefined,
       },
       {

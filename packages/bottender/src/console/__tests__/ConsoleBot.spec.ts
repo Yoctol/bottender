@@ -1,11 +1,36 @@
 import readline from 'readline';
 
 import once from 'once';
+import { Session, SessionStore } from '@bottender/core';
 
 import ConsoleBot from '../ConsoleBot';
 import ConsoleConnector from '../ConsoleConnector';
 
 jest.mock('readline');
+
+class TestSessionStore implements SessionStore {
+  sessions: Record<string, Session> = {};
+
+  async init(): Promise<this> {
+    return this;
+  }
+
+  async read(key: string): Promise<Session | undefined> {
+    return this.sessions[key];
+  }
+
+  async all(): Promise<Session[]> {
+    return Object.values(this.sessions);
+  }
+
+  async write(key: string, sess: Session): Promise<void> {
+    this.sessions[key] = sess;
+  }
+
+  async destroy(key: string): Promise<void> {
+    delete this.sessions[key];
+  }
+}
 
 afterEach(() => {
   // use fake stdin to avoid unclosed stream
@@ -13,7 +38,9 @@ afterEach(() => {
 });
 
 it('should construct bot with ConsoleConnector', () => {
-  const bot = new ConsoleBot();
+  const bot = new ConsoleBot({
+    sessionStore: new TestSessionStore(),
+  });
   expect(bot).toBeDefined();
   expect(bot.onEvent).toBeDefined();
   expect(bot.createRequestHandler).toBeDefined();
@@ -22,7 +49,9 @@ it('should construct bot with ConsoleConnector', () => {
 });
 
 it('should export createRuntime method', () => {
-  const bot = new ConsoleBot();
+  const bot = new ConsoleBot({
+    sessionStore: new TestSessionStore(),
+  });
   expect(bot.createRuntime).toBeDefined();
 });
 
@@ -33,7 +62,9 @@ describe('createRuntime', () => {
   });
 
   it('should work', () => {
-    const bot = new ConsoleBot();
+    const bot = new ConsoleBot({
+      sessionStore: new TestSessionStore(),
+    });
     const handler = jest.fn();
 
     bot.onEvent(handler);
@@ -53,7 +84,9 @@ describe('createRuntime', () => {
   });
 
   it('should exit when entering /quit', () => {
-    const bot = new ConsoleBot();
+    const bot = new ConsoleBot({
+      sessionStore: new TestSessionStore(),
+    });
     const handler = jest.fn();
 
     bot.onEvent(handler);
@@ -69,7 +102,9 @@ describe('createRuntime', () => {
   });
 
   it('should exit when entering /exit', () => {
-    const bot = new ConsoleBot();
+    const bot = new ConsoleBot({
+      sessionStore: new TestSessionStore(),
+    });
     const handler = jest.fn();
 
     bot.onEvent(handler);
@@ -85,7 +120,9 @@ describe('createRuntime', () => {
   });
 
   it('should print session when entering /session', async () => {
-    const bot = new ConsoleBot();
+    const bot = new ConsoleBot({
+      sessionStore: new TestSessionStore(),
+    });
     const handler = jest.fn();
 
     bot.onEvent(handler);
@@ -104,7 +141,9 @@ describe('createRuntime', () => {
   });
 
   it('should print state when entering /state', async () => {
-    const bot = new ConsoleBot();
+    const bot = new ConsoleBot({
+      sessionStore: new TestSessionStore(),
+    });
     const handler = jest.fn();
 
     bot.onEvent(handler);
@@ -123,7 +162,9 @@ describe('createRuntime', () => {
   });
 
   it('should call handler with text event when receive random text', async () => {
-    const bot = new ConsoleBot();
+    const bot = new ConsoleBot({
+      sessionStore: new TestSessionStore(),
+    });
 
     let context;
     bot.onEvent((ctx) => {
@@ -144,7 +185,9 @@ describe('createRuntime', () => {
   });
 
   it('should call handler with payload event when receive /payload <payload>', async () => {
-    const bot = new ConsoleBot();
+    const bot = new ConsoleBot({
+      sessionStore: new TestSessionStore(),
+    });
 
     let context;
     bot.onEvent((ctx) => {

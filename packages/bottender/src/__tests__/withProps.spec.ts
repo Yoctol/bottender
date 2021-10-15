@@ -1,7 +1,6 @@
-import Context from '../context/Context';
+import { Context, Props, run } from '@bottender/core';
+
 import withProps from '../withProps';
-import { Props } from '../types';
-import { run } from '../bot/Bot';
 
 function setup() {
   const context = {

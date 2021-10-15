@@ -1,10 +1,11 @@
 import path from 'path';
 
 import invariant from 'ts-invariant';
+import { Action, Bot } from '@bottender/core';
 import { merge } from 'lodash';
 import { pascalcase } from 'messaging-api-common';
 
-import { Action, Bot, BottenderConfig, ChannelBot, getSessionStore } from '..';
+import { BottenderConfig, ChannelBot, getSessionStore } from '..';
 
 import getBottenderConfig from './getBottenderConfig';
 

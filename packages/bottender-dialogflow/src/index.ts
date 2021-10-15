@@ -90,7 +90,7 @@ export = function dialogflow({
 
     const sessionPath = sessionsClient.projectAgentSessionPath(
       projectId,
-      context.session.id
+      context.session.id as string // FIXME: type
     );
 
     const request = {

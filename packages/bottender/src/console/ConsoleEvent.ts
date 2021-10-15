@@ -1,4 +1,4 @@
-import { Event } from '../context/Event';
+import { Event } from '@bottender/core';
 
 type Message = {
   text: string;
@@ -41,8 +41,10 @@ export default class ConsoleEvent implements Event<ConsoleRawEvent> {
    * The message object from Console raw event.
    *
    */
-  get message(): Message | null {
-    return this.isMessage ? (this._rawEvent as MessageEvent).message : null;
+  get message(): Message | undefined {
+    if (this.isMessage) {
+      return (this._rawEvent as MessageEvent).message;
+    }
   }
 
   /**
@@ -57,11 +59,10 @@ export default class ConsoleEvent implements Event<ConsoleRawEvent> {
    * The text string from Console raw event.
    *
    */
-  get text(): string | null {
+  get text(): string | undefined {
     if (this.message) {
       return this.message.text;
     }
-    return null;
   }
 
   /**
@@ -76,10 +77,9 @@ export default class ConsoleEvent implements Event<ConsoleRawEvent> {
    * The payload string from Console raw event.
    *
    */
-  get payload(): string | null {
+  get payload(): string | undefined {
     if (this.isPayload) {
       return (this._rawEvent as PayloadEvent).payload;
     }
-    return null;
   }
 }

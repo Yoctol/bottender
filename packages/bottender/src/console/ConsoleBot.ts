@@ -1,8 +1,7 @@
 import readline from 'readline';
 
-import Bot, { OnRequest } from '../bot/Bot';
-import Session from '../session/Session';
-import SessionStore from '../session/SessionStore';
+import { Bot, OnRequest, Session, SessionStore } from '@bottender/core';
+
 import { ConsoleContext } from '..';
 
 import ConsoleConnector from './ConsoleConnector';
@@ -21,11 +20,11 @@ export default class ConsoleBot extends Bot<
     mockPlatform,
     onRequest,
   }: {
-    sessionStore?: SessionStore;
+    sessionStore: SessionStore;
     fallbackMethods?: boolean;
     mockPlatform?: string;
     onRequest?: OnRequest;
-  } = {}) {
+  }) {
     const connector = new ConsoleConnector({ fallbackMethods, mockPlatform });
     super({ connector, sessionStore, sync: true, onRequest });
   }

@@ -1,10 +1,7 @@
 import { EventEmitter } from 'events';
 
+import { Context, RequestContext, Session } from '@bottender/core';
 import { JsonObject } from 'type-fest';
-
-import Context from '../context/Context';
-import Session from '../session/Session';
-import { RequestContext } from '../types';
 
 import ConsoleEvent from './ConsoleEvent';
 import { ConsoleClient } from './ConsoleClient';
@@ -82,16 +79,16 @@ export default class ConsoleContext extends Context<
    */
   async sendText(text: string, ...args: any[]): Promise<void> {
     if (args.length > 0 && this._fallbackMethods) {
-      this._client.sendText(
+      this.client.sendText(
         `${text}\nwith other args:\n${JSON.stringify(args, null, 2)}`
       );
     } else {
-      this._client.sendText(text);
+      this.client.sendText(text);
     }
   }
 
   async _methodMissing(method: string, args: any[]): Promise<void> {
-    this._client.sendText(
+    this.client.sendText(
       `${method} with args:\n${JSON.stringify(args, null, 2)}`
     );
   }

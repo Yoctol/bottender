@@ -1,7 +1,5 @@
 import partial from 'lodash/partial';
-
-import Context from './context/Context';
-import { Action } from './types';
+import { Action, Context } from '@bottender/core';
 
 function withProps<C extends Context, P extends Record<string, any>>(
   action: Action<C, P>,

@@ -1,6 +1,5 @@
 /* Core */
-export { default as Bot } from './bot/Bot';
-export { default as Context } from './context/Context';
+export { Bot, Context } from '@bottender/core';
 
 /* Action */
 export { default as chain } from './chain';
