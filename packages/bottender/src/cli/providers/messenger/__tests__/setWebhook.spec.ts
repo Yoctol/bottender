@@ -37,7 +37,7 @@ function setup({
   mocked(getWebhookFromNgrok).mockResolvedValue('https://fakeDomain.ngrok.io');
 
   mocked(getChannelConfig).mockReturnValue(
-    config || {
+    config ?? {
       accessToken: ACCESS_TOKEN,
       appId: APP_ID,
       appSecret: APP_SECRET,

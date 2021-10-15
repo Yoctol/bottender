@@ -85,7 +85,7 @@ function getChannelBots(): ChannelBot[] {
         initializeBot(channelBot);
 
         return {
-          webhookPath: webhookPath || `/webhooks/${channel}`,
+          webhookPath: webhookPath ?? `/webhooks/${channel}`,
           bot: channelBot,
         };
       }

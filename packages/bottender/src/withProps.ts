@@ -13,7 +13,7 @@ function withProps<C extends Context, P extends Record<string, any>>(
   const actionWithProps = partial(action, partial.placeholder, props);
 
   Object.defineProperty(actionWithProps, 'name', {
-    value: action.name || 'Anonymous',
+    value: action.name ?? 'Anonymous',
   });
 
   return actionWithProps;

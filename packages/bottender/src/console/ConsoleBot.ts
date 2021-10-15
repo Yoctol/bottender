@@ -39,7 +39,7 @@ export default class ConsoleBot extends Bot<
     // Create or retrieve session if possible
     const sessionId = `${platform}:${sessionKey}`;
     const session =
-      (await this._sessions.read(sessionId)) ||
+      (await this._sessions.read(sessionId)) ??
       (Object.create(null) as Session);
 
     return session;
@@ -68,7 +68,7 @@ export default class ConsoleBot extends Bot<
       } else if (lowerCaseLine === '/state') {
         const session = await this.getSession();
 
-        client.sendText(JSON.stringify(session._state || {}, null, 2));
+        client.sendText(JSON.stringify(session._state ?? {}, null, 2));
       } else {
         let rawEvent;
 

@@ -369,7 +369,7 @@ const init = async (): Promise<void> => {
   try {
     const answer = (await inquirer.prompt(getQuestions())) as Answer;
 
-    const name = projectName || answer.name;
+    const name = projectName ?? answer.name;
 
     if (typeof name === 'undefined' || name === '') {
       print('');

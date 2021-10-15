@@ -111,7 +111,7 @@ export default class ViberConnector
 
     session.user = {
       _updatedAt: new Date().toISOString(),
-      id: (user || {}).id,
+      id: (user ?? {}).id,
     };
 
     Object.freeze(session.user);
@@ -143,7 +143,7 @@ export default class ViberConnector
 
   verifySignature(rawBody: string, signature: string): boolean {
     const hashBufferFromBody = crypto
-      .createHmac('sha256', this._accessToken || '')
+      .createHmac('sha256', this._accessToken ?? '')
       .update(rawBody)
       .digest();
 

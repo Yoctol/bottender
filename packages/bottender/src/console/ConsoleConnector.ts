@@ -32,7 +32,7 @@ export default class ConsoleConnector
     fallbackMethods,
     mockPlatform,
   }: ConstructorOptions = {}) {
-    this._client = client || {
+    this._client = client ?? {
       sendText: (text): void => {
         process.stdout.write(`Bot > ${text}\n`);
       },

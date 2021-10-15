@@ -46,7 +46,7 @@ export default class TwilioClient {
     this._phoneNumber = config.phoneNumber;
 
     this._axios = axios.create({
-      baseURL: `${config.origin || twilioOrigin}/2010-04-01/Accounts/${
+      baseURL: `${config.origin ?? twilioOrigin}/2010-04-01/Accounts/${
         config.accountSid
       }/`,
       headers: {

@@ -16,8 +16,8 @@ function getChannelBotAndRequestContext(req: IncomingMessage):
   | undefined {
   // TODO: add proxy support in Bottender to apply X-Forwarded-Host and X-Forwarded-Proto
   // conditionally instead of replying on express.
-  const hostname = (req as any).hostname || req.headers.host;
-  const protocol = (req as any).protocol || 'https';
+  const hostname = (req as any).hostname ?? req.headers.host;
+  const protocol = (req as any).protocol ?? 'https';
 
   const requestUrl = `${protocol}://${hostname}${req.url}`;
 

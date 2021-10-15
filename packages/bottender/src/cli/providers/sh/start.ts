@@ -18,8 +18,8 @@ const start = async (ctx: CliContext): Promise<void> => {
     '-p': '--port',
   });
 
-  const useConsole = argv['--console'] || false;
-  const port = argv['--port'] || process.env.PORT || 5000;
+  const useConsole = argv['--console'] ?? false;
+  const port = argv['--port'] ?? process.env.PORT ?? 5000;
 
   const app = bottender({
     dev: process.env.NODE_ENV !== 'production',
