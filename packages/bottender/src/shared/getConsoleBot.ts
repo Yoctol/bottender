@@ -1,11 +1,13 @@
 import path from 'path';
 
+import { Action, Bot } from '@bottender/core';
+import { ConsoleBot } from '@bottender/console';
 import { merge } from 'lodash';
 
-import ConsoleBot from '../console/ConsoleBot';
-import { Action, Bot, BottenderConfig, getSessionStore } from '..';
+import { BottenderConfig } from '../types';
 
 import getBottenderConfig from './getBottenderConfig';
+import getSessionStore from './getSessionStore';
 
 function getConsoleBot(): ConsoleBot {
   const bottenderConfig = getBottenderConfig();

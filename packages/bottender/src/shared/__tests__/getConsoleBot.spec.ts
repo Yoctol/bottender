@@ -1,8 +1,8 @@
 import path from 'path';
 
+import { ConsoleBot, ConsoleContext } from '@bottender/console';
 import { mocked } from 'ts-jest/utils';
 
-import ConsoleBot from '../../console/ConsoleBot';
 import getBottenderConfig from '../getBottenderConfig';
 import getConsoleBot from '../getConsoleBot';
 
@@ -10,7 +10,7 @@ jest.mock('../../shared/getBottenderConfig');
 jest.mock(
   '/Users/username/bot/index.js',
   () =>
-    async function App(context) {
+    async function App(context: ConsoleContext) {
       await context.sendText('Hello World');
     },
   { virtual: true }

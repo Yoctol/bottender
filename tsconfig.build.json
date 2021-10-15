@@ -6,6 +6,7 @@
   "include": [],
   "references": [
     { "path": "./packages/bottender" },
+    { "path": "./packages/bottender-console" },
     { "path": "./packages/bottender-core" },
     { "path": "./packages/bottender-dialogflow" },
     { "path": "./packages/bottender-express" },

@@ -23,10 +23,12 @@ export { default as FileSessionStore } from './session/FileSessionStore';
 export { default as MongoSessionStore } from './session/MongoSessionStore';
 
 /* Console */
-export { default as ConsoleBot } from './console/ConsoleBot';
-export { default as ConsoleConnector } from './console/ConsoleConnector';
-export { default as ConsoleContext } from './console/ConsoleContext';
-export { default as ConsoleEvent } from './console/ConsoleEvent';
+export {
+  ConsoleBot,
+  ConsoleConnector,
+  ConsoleContext,
+  ConsoleEvent,
+} from '@bottender/console';
 
 /* Messenger */
 export {

@@ -7,6 +7,7 @@
   "include": ["src/**/*"],
   "exclude": ["**/__tests__"],
   "references": [
+    { "path": "../bottender-console" },
     { "path": "../bottender-core" },
     { "path": "../bottender-express" },
     { "path": "../bottender-line" },
