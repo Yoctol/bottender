@@ -1,5 +1,5 @@
-import { LineClient } from 'messaging-api-line';
-import { MessengerClient } from 'messaging-api-messenger';
+import { LineClient } from '@bottender/line';
+import { MessengerClient } from '@bottender/messenger';
 import { SlackOAuthClient } from '@bottender/slack';
 import { TelegramClient } from '@bottender/telegram';
 import { TwilioClient } from '@bottender/whatsapp';

@@ -2,6 +2,7 @@ import { IncomingHttpHeaders } from 'http';
 
 import { JsonObject } from 'type-fest';
 import { LineTypes } from '@bottender/line';
+import { MessengerTypes } from '@bottender/messenger';
 import { SlackTypes } from '@bottender/slack';
 import { TelegramTypes } from '@bottender/telegram';
 import { ViberTypes } from '@bottender/viber';
@@ -11,7 +12,6 @@ import Bot, { OnRequest } from './bot/Bot';
 import Context from './context/Context';
 import SessionStore from './session/SessionStore';
 import { Connector } from './bot/Connector';
-import { MessengerConnectorOptions } from './messenger/MessengerConnector';
 
 export type Action<
   C extends Context,
@@ -83,7 +83,8 @@ export interface BottenderConfig {
   channels?:
     | {
         // TODO: extend from @bottender/*
-        messenger?: MessengerConnectorOptions & ChannelCommonConfig;
+        messenger?: MessengerTypes.MessengerConnectorOptions &
+          ChannelCommonConfig;
         line?: LineTypes.LineConnectorOptions & ChannelCommonConfig;
         telegram?: TelegramTypes.TelegramConnectorOptions & ChannelCommonConfig;
         slack?: SlackTypes.SlackConnectorOptions & ChannelCommonConfig;

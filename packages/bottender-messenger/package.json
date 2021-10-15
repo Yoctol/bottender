@@ -1,5 +1,5 @@
 {
-  "name": "@bottender/facebook",
+  "name": "@bottender/messenger",
   "version": "1.5.4",
   "license": "MIT",
   "homepage": "https://bottender.js.org/",
@@ -14,10 +14,12 @@
   "types": "dist/index.d.ts",
   "dependencies": {
     "@bottender/core": "file:../bottender-core",
-    "@bottender/messenger": "file:../bottender-messenger",
-    "axios-error": "^1.0.4",
+    "delay": "^5.0.0",
     "facebook-batch": "^1.1.0",
-    "lodash": "^4.17.21",
+    "invariant": "^2.2.4",
+    "messaging-api-common": "^1.0.4",
+    "messaging-api-messenger": "^1.1.0",
+    "shortid": "^2.2.16",
     "type-fest": "^2.5.0",
     "warning": "^4.0.3"
   }

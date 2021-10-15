@@ -2,7 +2,7 @@
 import Table from 'cli-table3';
 import chalk from 'chalk';
 import invariant from 'invariant';
-import { MessengerClient } from 'messaging-api-messenger';
+import { MessengerClient } from '@bottender/messenger';
 
 import getChannelConfig from '../../../shared/getChannelConfig';
 import getSubArgs from '../sh/utils/getSubArgs';

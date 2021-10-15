@@ -1,11 +1,9 @@
 import { EventEmitter } from 'events';
 
 import warning from 'warning';
+import { Connector, Session } from '@bottender/core';
 import { JsonObject } from 'type-fest';
 import { MessengerClient } from 'messaging-api-messenger';
-
-import Session from '../session/Session';
-import { Connector } from '../bot/Connector';
 
 import FacebookBaseConnector, {
   FacebookBaseConnectorOptions,
@@ -37,7 +35,7 @@ export default class MessengerConnector
 
     const { mapPageToAccessToken } = options;
 
-    this._mapPageToAccessToken = mapPageToAccessToken || null;
+    this._mapPageToAccessToken = mapPageToAccessToken ?? null;
   }
 
   _getRawEventsFromRequest(body: MessengerRequestBody): MessengerRawEvent[] {
@@ -58,6 +56,7 @@ export default class MessengerConnector
         .filter((event): event is MessengerRawEvent => event != null);
     }
 
+    // FIXME
     return [body as unknown as MessengerRawEvent];
   }
 
@@ -106,7 +105,7 @@ export default class MessengerConnector
   }
 
   async updateSession(
-    session: Session,
+    session: Session<{ user: { id: string; _updatedAt: string } }>,
     bodyOrEvent: MessengerRequestBody | MessengerEvent
   ): Promise<void> {
     if (!session.user) {
@@ -131,7 +130,7 @@ export default class MessengerConnector
 
       session.user = {
         _updatedAt: new Date().toISOString(),
-        id: senderId,
+        id: senderId as string, // FIXME
       };
     }
 
@@ -167,7 +166,7 @@ export default class MessengerConnector
 
   async createContext(params: {
     event: MessengerEvent;
-    session?: Session;
+    session?: Session<{ user: { id: string; _updatedAt: string } }>;
     initialState?: JsonObject;
     requestContext?: MessengerRequestContext;
     emitter?: EventEmitter;

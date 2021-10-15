@@ -1,4 +1,4 @@
-import { MessengerTypes } from 'bottender';
+import { MessengerTypes } from '@bottender/messenger';
 
 export { FacebookConnectorOptions } from './FacebookConnector';
 export { FacebookContextOptions } from './FacebookContext';

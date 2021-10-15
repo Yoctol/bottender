@@ -1,9 +1,8 @@
-import Context from '../../context/Context';
+import { Context, router, run } from '@bottender/core';
+
 import MessengerContext from '../MessengerContext';
 import MessengerEvent from '../MessengerEvent';
 import messenger from '../routes';
-import router from '../../router';
-import { run } from '../../bot/Bot';
 
 const messengerEventTextMessage = new MessengerEvent({
   sender: {
