@@ -21,7 +21,6 @@ import {
 } from './SlackTypes';
 
 type CommonConnectorOptions = {
-  verificationToken?: string;
   signingSecret?: string;
   includeBotMessages?: boolean;
 };
@@ -44,14 +43,12 @@ export default class SlackConnector
 {
   _client: SlackOAuthClient;
 
-  _verificationToken: string;
-
   _signingSecret: string;
 
   _includeBotMessages: boolean;
 
   constructor(options: SlackConnectorOptions) {
-    const { verificationToken, includeBotMessages, signingSecret } = options;
+    const { includeBotMessages, signingSecret } = options;
     if ('client' in options) {
       this._client = options.client;
     } else {
@@ -69,20 +66,12 @@ export default class SlackConnector
     }
 
     this._signingSecret = signingSecret ?? '';
-    this._verificationToken = verificationToken ?? '';
 
     if (!this._signingSecret) {
-      if (!this._verificationToken) {
-        warning(
-          false,
-          'Both `signingSecret` and `verificationToken` is not set. Will bypass Slack event verification.\nPass in `signingSecret` to perform Slack event verification.'
-        );
-      } else {
-        warning(
-          false,
-          "It's deprecated to use `verificationToken` here, use `signingSecret` instead."
-        );
-      }
+      warning(
+        false,
+        '`signingSecret` is not set. Will bypass Slack event verification.\nPass in `signingSecret` to perform Slack event verification.'
+      );
     }
 
     this._includeBotMessages = includeBotMessages ?? false;
@@ -266,19 +255,6 @@ export default class SlackConnector
     });
   }
 
-  verifySignature(tokenFromBody: string): boolean {
-    const bufferFromBot = Buffer.from(this._verificationToken);
-    const bufferFromBody = Buffer.from(tokenFromBody);
-
-    // return early here if buffer lengths are not equal since timingSafeEqual
-    // will throw if buffer lengths are not equal
-    if (bufferFromBot.length !== bufferFromBody.length) {
-      return false;
-    }
-
-    return crypto.timingSafeEqual(bufferFromBot, bufferFromBody);
-  }
-
   verifySignatureBySigningSecret({
     rawBody,
     signature,
@@ -345,28 +321,6 @@ export default class SlackConnector
     ) {
       const error = {
         message: 'Slack Signing Secret Validation Failed!',
-        request: {
-          body,
-        },
-      };
-
-      return {
-        shouldNext: false,
-        response: {
-          status: 400,
-          body: { error },
-        },
-      };
-    }
-
-    const token =
-      !body.token && body.payload && typeof body.payload === 'string'
-        ? JSON.parse(body.payload).token
-        : body.token;
-
-    if (this._verificationToken && !this.verifySignature(token)) {
-      const error = {
-        message: 'Slack Verification Token Validation Failed!',
         request: {
           body,
         },

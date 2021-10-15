@@ -90,7 +90,6 @@ module.exports = {
       path: '/webhooks/slack',
       accessToken: process.env.SLACK_ACCESS_TOKEN,
       signingSecret: process.env.SLACK_SIGNING_SECRET,
-      // verificationToken: process.env.SLACK_VERIFICATION_TOKEN, // deprecated, use signingSecret
     },
   },
 };
@@ -109,7 +108,7 @@ Bottender utilizes the [dotenv](https://www.npmjs.com/package/dotenv) package to
 To make a Slack bot work, you must prepare the following environment variables, which you may put into your `.env` file later:
 
 - Slack Access Token
-- Slack Signing Secret (or Slack Verification Token)
+- Slack Signing Secret
 
 ### Slack Access Token
 
@@ -137,22 +136,6 @@ After you get your **Slack Signing Secret**, paste the value into the `SLACK_SIG
 # .env
 
 SLACK_SIGNING_SECRET=<YOUR SLACK SIGNING SECRET>
-```
-
-### Slack Verification Token (Deprecated)
-
-We recommend using signing secret instead of verification token, but we also support verification token.
-
-You can find Slack verification token in [Slack Developer Console](https://api.slack.com/apps) → \${YourApp} → Basic Information → App Credentials → Verification Token.
-
-<p><img width="800" src="https://user-images.githubusercontent.com/563929/82585491-a7406080-9bc8-11ea-9fbc-e91b72cc6eb9.png"></p>
-
-After you get your **Slack Verification Token**, paste the value into the `SLACK_VERIFICATION_TOKEN` field in your `.env` file:
-
-```
-# .env
-
-# SLACK_VERIFICATION_TOKEN=<YOUR SLACK VERIFICATION TOKEN> # deprecated, use `SLACK_SIGNING_SECRET` instead
 ```
 
 ## Webhook
