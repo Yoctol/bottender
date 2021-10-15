@@ -44,7 +44,7 @@ export async function setWebhook(ctx: CliContext): Promise<void> {
   });
 
   let webhook = argv['--webhook'];
-  const ngrokPort = argv['--ngrok-port'] || '4040';
+  const ngrokPort = argv['--ngrok-port'] ?? '4040';
 
   try {
     const config = getChannelConfig(Channel.Messenger);
@@ -115,7 +115,7 @@ export async function setWebhook(ctx: CliContext): Promise<void> {
       );
     }
 
-    const fields = config.fields || defaultFields;
+    const fields = config.fields ?? defaultFields;
 
     const tokenInfo = await client.debugToken();
 

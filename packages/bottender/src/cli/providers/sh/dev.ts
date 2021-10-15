@@ -20,8 +20,8 @@ const dev = async (ctx: CliContext): Promise<void> => {
     '-p': '--port',
   });
 
-  const isConsole = argv['--console'] || false;
-  const port = argv['--port'] || process.env.PORT || 5000;
+  const isConsole = argv['--console'] ?? false;
+  const port = argv['--port'] ?? process.env.PORT ?? 5000;
   const inspectionUrl = argv['--inspect'];
 
   const config = getBottenderConfig();
@@ -70,10 +70,10 @@ const dev = async (ctx: CliContext): Promise<void> => {
       throw err;
     }
 
-    Object.entries(channels || {})
+    Object.entries(channels ?? {})
       .filter(([, { enabled }]) => enabled)
       .forEach(([channel, { path: webhookPath }]) => {
-        const routePath = webhookPath || `/webhooks/${channel}`;
+        const routePath = webhookPath ?? `/webhooks/${channel}`;
 
         console.log(`${channel} webhook URL: ${url}${routePath}`);
       });

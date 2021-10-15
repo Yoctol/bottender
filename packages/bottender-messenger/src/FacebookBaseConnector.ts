@@ -79,7 +79,7 @@ export default class FacebookBaseConnector<
       );
 
       const clientConfig = {
-        accessToken: accessToken || '',
+        accessToken: accessToken ?? '',
         appSecret,
         origin,
         skipAppSecretProof,

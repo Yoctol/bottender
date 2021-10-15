@@ -68,8 +68,8 @@ export default class SlackConnector
       });
     }
 
-    this._signingSecret = signingSecret || '';
-    this._verificationToken = verificationToken || '';
+    this._signingSecret = signingSecret ?? '';
+    this._verificationToken = verificationToken ?? '';
 
     if (!this._signingSecret) {
       if (!this._verificationToken) {
@@ -85,7 +85,7 @@ export default class SlackConnector
       }
     }
 
-    this._includeBotMessages = includeBotMessages || false;
+    this._includeBotMessages = includeBotMessages ?? false;
   }
 
   _getRawEventFromRequest(body: SlackRequestBody): SlackRawEvent {
@@ -155,7 +155,7 @@ export default class SlackConnector
     }
 
     return (
-      (rawEvent as Message).channel || (rawEvent as CommandEvent).channelId
+      (rawEvent as Message).channel ?? (rawEvent as CommandEvent).channelId
     );
   }
 
@@ -177,7 +177,7 @@ export default class SlackConnector
 
   getUniqueSessionKey(body: SlackRequestBody): string | null {
     const rawEvent = this._getRawEventFromRequest(body);
-    return this._getChannelId(rawEvent) || this._getUserId(rawEvent);
+    return this._getChannelId(rawEvent) ?? this._getUserId(rawEvent);
   }
 
   async updateSession(

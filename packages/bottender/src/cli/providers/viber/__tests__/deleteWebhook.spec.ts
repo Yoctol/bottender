@@ -15,7 +15,7 @@ function setup({ config }: { config?: Record<string, any> } = {}) {
   process.exit = jest.fn();
 
   mocked(getChannelConfig).mockReturnValue(
-    config || {
+    config ?? {
       accessToken: ACCESS_TOKEN,
       sender: {
         name: 'sender',

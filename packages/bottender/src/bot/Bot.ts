@@ -44,12 +44,12 @@ export function run<C extends Context>(action: Action<C, any>): Action<C, any> {
     );
 
     // TODO: refactor this with withProps or whatever
-    debugAction(`Current Action: ${nextDialog.name || 'Anonymous'}`);
+    debugAction(`Current Action: ${nextDialog.name ?? 'Anonymous'}`);
     nextDialog = await nextDialog(context, props);
 
     while (typeof nextDialog === 'function') {
       // TODO: improve this debug helper
-      debugAction(`Current Action: ${nextDialog.name || 'Anonymous'}`);
+      debugAction(`Current Action: ${nextDialog.name ?? 'Anonymous'}`);
       nextDialog = await nextDialog(context, {});
     }
     /* eslint-enable no-await-in-loop */
@@ -212,7 +212,7 @@ export default class Bot<
             sessionId = `${platform}:${sessionKey}`;
 
             session =
-              (await this._sessions.read(sessionId)) ||
+              (await this._sessions.read(sessionId)) ??
               (Object.create(null) as Session);
 
             debugSessionRead(`Read session: ${sessionId}`);
@@ -222,7 +222,7 @@ export default class Bot<
               configurable: false,
               enumerable: true,
               writable: false,
-              value: session.id || sessionId,
+              value: session.id ?? sessionId,
             });
 
             if (!session.platform) session.platform = platform;

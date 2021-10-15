@@ -37,7 +37,7 @@ const setup = (
     client,
     event: new ConsoleEvent(rawEvent),
     session,
-    fallbackMethods: fallbackMethods || false,
+    fallbackMethods: fallbackMethods ?? false,
     mockPlatform,
   });
   return {

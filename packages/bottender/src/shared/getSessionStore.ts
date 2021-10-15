@@ -7,9 +7,9 @@ import getBottenderConfig from './getBottenderConfig';
 function getSessionStore(): SessionStore {
   const { session } = getBottenderConfig();
 
-  const sessionDriver = (session && session.driver) || 'memory';
+  const sessionDriver = (session && session.driver) ?? 'memory';
 
-  const storesConfig = (session && session.stores) || {};
+  const storesConfig = (session && session.stores) ?? {};
 
   switch (sessionDriver) {
     case 'memory': {
@@ -17,7 +17,7 @@ function getSessionStore(): SessionStore {
         require('../session/MemorySessionStore').default;
 
       return new MemorySessionStore(
-        storesConfig.memory || {},
+        storesConfig.memory ?? {},
         session && session.expiresIn
       );
     }
@@ -25,7 +25,7 @@ function getSessionStore(): SessionStore {
       const FileSessionStore = require('../session/FileSessionStore').default;
 
       return new FileSessionStore(
-        storesConfig.file || {},
+        storesConfig.file ?? {},
         session && session.expiresIn
       );
     }
@@ -33,7 +33,7 @@ function getSessionStore(): SessionStore {
       const MongoSessionStore = require('../session/MongoSessionStore').default;
 
       return new MongoSessionStore(
-        storesConfig.mongo || {},
+        storesConfig.mongo ?? {},
         session && session.expiresIn
       );
     }
@@ -41,7 +41,7 @@ function getSessionStore(): SessionStore {
       const RedisSessionStore = require('../session/RedisSessionStore').default;
 
       return new RedisSessionStore(
-        storesConfig.redis || {},
+        storesConfig.redis ?? {},
         session && session.expiresIn
       );
     }
@@ -62,7 +62,7 @@ function getSessionStore(): SessionStore {
         require('../session/MemorySessionStore').default;
 
       return new MemorySessionStore(
-        storesConfig.memory || {},
+        storesConfig.memory ?? {},
         session && session.expiresIn
       );
     }

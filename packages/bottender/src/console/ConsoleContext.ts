@@ -73,7 +73,7 @@ export default class ConsoleContext extends Context<
    *
    */
   get platform(): string {
-    return this._mockPlatform || 'console';
+    return this._mockPlatform ?? 'console';
   }
 
   /**

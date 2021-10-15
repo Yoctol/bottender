@@ -69,10 +69,10 @@ export default abstract class Context<
   }: Options<C, E>) {
     this._client = client;
     this._event = event;
-    this._session = session || null;
-    this._initialState = initialState || {};
-    this._requestContext = requestContext || null;
-    this._emitter = emitter || null;
+    this._session = session ?? null;
+    this._initialState = initialState ?? {};
+    this._requestContext = requestContext ?? null;
+    this._emitter = emitter ?? null;
     this._intent = null;
 
     debugContext('Context created with rawEvent:');
