@@ -116,7 +116,7 @@
       "items": [
         {
           "type": "doc",
-          "id": "version-0.15.17/api-console-context"
+          "id": "version-0.15.17/api-consolecontext"
         },
         {
           "type": "doc",
@@ -130,11 +130,11 @@
       "items": [
         {
           "type": "doc",
-          "id": "version-0.15.17/api-messenger-context"
+          "id": "version-0.15.17/api-messengercontext"
         },
         {
           "type": "doc",
-          "id": "version-0.15.17/api-messenger-event"
+          "id": "version-0.15.17/api-messengerevent"
         }
       ]
     },
@@ -144,11 +144,11 @@
       "items": [
         {
           "type": "doc",
-          "id": "version-0.15.17/api-line-context"
+          "id": "version-0.15.17/api-linecontext"
         },
         {
           "type": "doc",
-          "id": "version-0.15.17/api-line-event"
+          "id": "version-0.15.17/api-lineevent"
         }
       ]
     },
@@ -158,11 +158,11 @@
       "items": [
         {
           "type": "doc",
-          "id": "version-0.15.17/api-slack-context"
+          "id": "version-0.15.17/api-slackcontext"
         },
         {
           "type": "doc",
-          "id": "version-0.15.17/api-slack-event"
+          "id": "version-0.15.17/api-slackevent"
         }
       ]
     },
@@ -172,11 +172,11 @@
       "items": [
         {
           "type": "doc",
-          "id": "version-0.15.17/api-telegram-context"
+          "id": "version-0.15.17/api-telegramcontext"
         },
         {
           "type": "doc",
-          "id": "version-0.15.17/api-telegram-event"
+          "id": "version-0.15.17/api-telegramevent"
         }
       ]
     },
@@ -186,11 +186,11 @@
       "items": [
         {
           "type": "doc",
-          "id": "version-0.15.17/api-viber-context"
+          "id": "version-0.15.17/api-vibercontext"
         },
         {
           "type": "doc",
-          "id": "version-0.15.17/api-viber-event"
+          "id": "version-0.15.17/api-viberevent"
         }
       ]
     }

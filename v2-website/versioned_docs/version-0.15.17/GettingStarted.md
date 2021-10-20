@@ -2,6 +2,7 @@
 id: getting-started
 title: Getting Started
 original_id: getting-started
+slug: /
 ---
 
 ## Requirements
