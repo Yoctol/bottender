@@ -1,5 +1,5 @@
 ---
-id: version-1.2.0-channel-telegram-sending-messages
+id: channel-telegram-sending-messages
 title: Sending Telegram Messages
 original_id: channel-telegram-sending-messages
 ---
@@ -8,7 +8,7 @@ The more I know about Telegram, the more I love it. It might be the best chat ch
 
 Although Telegram is not one of the top 5 chat channels, I surprisingly found that Telegram is the most activity chat channels for bots from [Google Trends.](https://trends.google.com/trends/explore?date=2018-01-01%202019-01-01&q=Telegram%20Bot,Slack%20App,LINE%20Bot,Messenger%20Bot,Viber%20Bot)
 
-<p><img width="100%" src="https://user-images.githubusercontent.com/662387/71064407-fad9f880-21a9-11ea-9022-9d0a566fc29c.png">
+<p><img width="100%" src="https://user-images.githubusercontent.com/662387/71064407-fad9f880-21a9-11ea-9022-9d0a566fc29c.png"/>
 </p>
 
 Plus, I may argue that Telegram is the most developer-friendly chat channel. For example:
@@ -17,7 +17,7 @@ Plus, I may argue that Telegram is the most developer-friendly chat channel. For
 - The desktop and mobile version of Telegram has quite similar behavior
 - Your app can proactively send messages to your users without extra cost (while Messenger or LINE asked for extra cost for push messages)
 
-<p><img width="300" src="https://user-images.githubusercontent.com/662387/70965210-e292ac80-20c9-11ea-9f1b-74abced2ff9e.jpeg">
+<p><img width="300" src="https://user-images.githubusercontent.com/662387/70965210-e292ac80-20c9-11ea-9f1b-74abced2ff9e.jpeg"/>
 <br/> <em>Telegram is so freindly that developers can't refuse</em> </p>
 
 Telegram also cares about user's privacy. For example, you may check ["Privacy Mode"](https://core.telegram.org/bots#privacy-mode) before building a Telegram Bot for group chat. By default, A bot running in privacy mode only receives certain types of messages instead of complete chat history.
@@ -45,7 +45,7 @@ await context.editMessageText(response.messageId, '*world*', {
 
 If you can't wait to try Telegram Bots features, we prepared a simple demo bot for you, [Bottender Playground](https://t.me/BottenderPlaygroundBot).
 
- <p><a href="https://t.me/BottenderPlaygroundBot" target="_blank"><img width="400" src="https://user-images.githubusercontent.com/662387/71342435-c0040600-2597-11ea-8258-ae8e06c89575.gif"></a></p>
+ <p><a href="https://t.me/BottenderPlaygroundBot" target="_blank"><img width="400" src="https://user-images.githubusercontent.com/662387/71342435-c0040600-2597-11ea-8258-ae8e06c89575.gif"/></a></p>
 
 <hr />
 
@@ -76,7 +76,7 @@ await context.sendMessage('*hello*', { parseMode: 'markdown' });
 
 You can see the possible `Markdown` format below.
 
- <p><img width="800" src="https://user-images.githubusercontent.com/662387/71338571-5ed63580-258b-11ea-8362-8de4a081c4b0.png"></p>
+ <p><img width="800" src="https://user-images.githubusercontent.com/662387/71338571-5ed63580-258b-11ea-8362-8de4a081c4b0.png"/></p>
 
 > **Note:**
 > For more info, please refer to Telegram's official doc, [Formatting Options](https://core.telegram.org/bots/api#formatting-options).
@@ -388,9 +388,9 @@ const replyMarkup = {
 
 ### Keyboard
 
-<p><img width="300" src="https://user-images.githubusercontent.com/662387/70965224-e45c7000-20c9-11ea-9a1d-2e911e00e435.jpeg"></p>
+<p><img width="300" src="https://user-images.githubusercontent.com/662387/70965224-e45c7000-20c9-11ea-9a1d-2e911e00e435.jpeg"/></p>
 
-<p><img width="300" src="https://user-images.githubusercontent.com/662387/70965221-e3c3d980-20c9-11ea-9b9d-05410817c5d8.jpeg"></p>
+<p><img width="300" src="https://user-images.githubusercontent.com/662387/70965221-e3c3d980-20c9-11ea-9b9d-05410817c5d8.jpeg"/></p>
 
 Whenever your bot sends a message, it can pass along a special keyboard with predefined reply options.
 

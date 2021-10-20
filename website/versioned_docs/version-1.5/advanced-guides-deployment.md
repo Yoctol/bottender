@@ -1,5 +1,5 @@
 ---
-id: version-1.5-advanced-guides-deployment
+id: advanced-guides-deployment
 title: Deployment
 original_id: advanced-guides-deployment
 ---
@@ -19,7 +19,7 @@ We assumed that you already built at least one basic Bottender app in developmen
 
 ## Heroku
 
-<p><img width="300" src="https://user-images.githubusercontent.com/662387/72130857-a8a98300-33b5-11ea-9ec6-10c8aac37230.jpg"></p>
+<p><img width="300" src="https://user-images.githubusercontent.com/662387/72130857-a8a98300-33b5-11ea-9ec6-10c8aac37230.jpg"/></p>
 
 Heroku is one of the most popular hosting services. Not only the clear document, ease of scalability, using Git for deployment, but also the friendly [free pricing plan](https://www.heroku.com/pricing) for experiment purpose.
 
@@ -135,7 +135,7 @@ Congratulations! You have made your Bottender bot production-ready. Share your f
 
 ## ZEIT Now 2.0
 
-<p><img width="1000" src="https://user-images.githubusercontent.com/662387/72130872-acd5a080-33b5-11ea-8c6c-ae06dd250be6.png"></p>
+<p><img width="1000" src="https://user-images.githubusercontent.com/662387/72130872-acd5a080-33b5-11ea-8c6c-ae06dd250be6.png"/></p>
 
 ZEIT Now 2.0 is a super developer-friendly hosting service. ZEIT Now is famous for its one-word magic command `now` in the deployment of static web hosting.
 

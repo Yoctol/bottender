@@ -1,5 +1,5 @@
 ---
-id: version-1.0.5-the-basics-routing
+id: the-basics-routing
 title: Routing
 original_id: the-basics-routing
 ---

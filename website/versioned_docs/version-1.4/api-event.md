@@ -1,5 +1,5 @@
 ---
-id: version-1.4-api-event
+id: api-event
 title: Event
 original_id: api-event
 ---

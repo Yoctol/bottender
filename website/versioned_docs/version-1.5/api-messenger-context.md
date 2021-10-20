@@ -1,5 +1,5 @@
 ---
-id: version-1.5-api-messenger-context
+id: api-messenger-context
 title: MessengerContext
 original_id: api-messenger-context
 ---

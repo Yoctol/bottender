@@ -1,5 +1,5 @@
 ---
-id: version-1.0.5-the-basics-console-mode
+id: the-basics-console-mode
 title: Console Mode
 original_id: the-basics-console-mode
 ---

@@ -1,5 +1,5 @@
 ---
-id: version-1.0.5-api-slack-context
+id: api-slack-context
 title: SlackContext
 original_id: api-slack-context
 ---

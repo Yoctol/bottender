@@ -1,5 +1,5 @@
 ---
-id: version-1.3.1-the-basics-routing
+id: the-basics-routing
 title: Routing
 original_id: the-basics-routing
 ---
@@ -148,7 +148,7 @@ If you prefer to use your route predicate, you may use the `route` function to c
 const { router, route } = require('bottender/router');
 
 function sayHiTo(name, Action) {
-  return route(context => context.event.text === `Hi ${name}`, Action);
+  return route((context) => context.event.text === `Hi ${name}`, Action);
 }
 
 async function App(context) {

@@ -1,5 +1,5 @@
 ---
-id: version-1.4-channel-line-routing
+id: channel-line-routing
 title: LINE Routing
 original_id: channel-line-routing
 ---

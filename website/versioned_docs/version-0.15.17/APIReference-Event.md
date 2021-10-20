@@ -1,5 +1,5 @@
 ---
-id: version-0.15.17-api-event
+id: api-event
 title: Event
 original_id: api-event
 ---
@@ -9,7 +9,7 @@ Bottender event helps you determine what kind of message is sent from user.
 You can access `context.event` object within your handlers as the following example shows.
 
 ```js
-bot.onEvent(async context => {
+bot.onEvent(async (context) => {
   if (context.event.isText) {
     await context.sendText('I know you sent text message.');
   } else {

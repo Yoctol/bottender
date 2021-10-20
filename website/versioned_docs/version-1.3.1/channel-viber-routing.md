@@ -1,5 +1,5 @@
 ---
-id: version-1.3.1-channel-viber-routing
+id: channel-viber-routing
 title: Viber Routing
 original_id: channel-viber-routing
 ---

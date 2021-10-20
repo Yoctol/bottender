@@ -1,5 +1,5 @@
 ---
-id: version-1.3.1-channel-messenger-handling-events
+id: channel-messenger-handling-events
 title: Handling Messenger Events
 original_id: channel-messenger-handling-events
 ---

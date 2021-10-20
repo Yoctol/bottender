@@ -1,5 +1,5 @@
 ---
-id: version-1.0.5-advanced-guides-multi-channel
+id: advanced-guides-multi-channel
 title: Multi-Messaging Channel Support
 original_id: advanced-guides-multi-channel
 ---

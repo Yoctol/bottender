@@ -1,5 +1,5 @@
 ---
-id: version-1.0.5-channel-messenger-persona
+id: channel-messenger-persona
 title: Using Persona
 original_id: channel-messenger-persona
 ---

@@ -1,5 +1,5 @@
 ---
-id: version-0.15.17-deployment
+id: deployment
 title: Deployment
 original_id: deployment
 ---

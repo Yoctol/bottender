@@ -1,5 +1,5 @@
 ---
-id: version-1.5-api-viber-client
+id: api-viber-client
 title: ViberClient
 original_id: api-viber-client
 ---
@@ -353,7 +353,7 @@ client.sendCarouselContent(USER_ID, {
     {
       columns: 6,
       rows: 2,
-      text: '<font color=#323232><b>Headphones with Microphone, On-ear Wired earphones</b></font><font color=#777777><br>Sound Intone </font><font color=#6fc133>$17.99</font>',
+      text: '<font color=#323232><b>Headphones with Microphone, On-ear Wired earphones</b></font><font color=#777777><br/>Sound Intone </font><font color=#6fc133>$17.99</font>',
       actionType: 'open-url',
       actionBody: 'https://www.google.com',
       textSize: 'medium',
@@ -391,7 +391,7 @@ client.sendCarouselContent(USER_ID, {
     {
       columns: 6,
       rows: 2,
-      text: "<font color=#323232><b>Hanes Men's Humor Graphic T-Shirt</b></font><font color=#777777><br>Hanes</font><font color=#6fc133>$10.99</font>",
+      text: "<font color=#323232><b>Hanes Men's Humor Graphic T-Shirt</b></font><font color=#777777><br/>Hanes</font><font color=#6fc133>$10.99</font>",
       actionType: 'open-url',
       actionBody: 'https://www.google.com',
       textSize: 'medium',

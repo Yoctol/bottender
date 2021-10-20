@@ -1,5 +1,5 @@
 ---
-id: version-1.3.1-the-basics-chain
+id: the-basics-chain
 title: Chain of Responsibility
 original_id: the-basics-chain
 ---

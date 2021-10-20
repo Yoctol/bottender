@@ -1,5 +1,5 @@
 ---
-id: version-0.15.17-viber
+id: viber
 title: Viber
 original_id: viber
 ---
@@ -30,7 +30,7 @@ const bot = new ViberBot({
   accessToken: '__FILL_YOUR_TOKEN_HERE__',
 });
 
-bot.onEvent(async context => {
+bot.onEvent(async (context) => {
   await context.sendText('Hello World');
 });
 
@@ -71,7 +71,7 @@ more on [ViberEvent Reference](api-viberevent).
 Example:
 
 ```js
-bot.onEvent(async context => {
+bot.onEvent(async (context) => {
   if (context.event.isText) {
     await context.sendText(`I know this is a text: ${event.text}.`);
   } else if (context.event.isPicture) {
@@ -104,7 +104,7 @@ more on [ViberContext Reference](api-vibercontext).
 Example:
 
 ```js
-bot.onEvent(async context => {
+bot.onEvent(async (context) => {
   await context.sendText('Hello World!');
   await context.sendPicture({
     text: 'Photo description',

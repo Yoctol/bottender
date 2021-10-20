@@ -1,5 +1,5 @@
 ---
-id: version-0.15.17-api-telegramcontext
+id: api-telegramcontext
 title: TelegramContext
 original_id: api-telegramcontext
 ---
@@ -307,7 +307,7 @@ Gets a list of profile pictures for a user.
 Example:
 
 ```js
-context.getUserProfilePhotos().then(result => {
+context.getUserProfilePhotos().then((result) => {
   console.log(result);
   // {
   //   total_count: 3,
@@ -344,7 +344,7 @@ Gets up to date information about the chat (current name of the user for one-on-
 Example:
 
 ```js
-context.getChat().then(result => {
+context.getChat().then((result) => {
   console.log(result);
   // {
   //   id: 313534466,
@@ -365,7 +365,7 @@ Gets a list of administrators in the chat.
 Example:
 
 ```js
-context.getChatAdministrators().then(result => {
+context.getChatAdministrators().then((result) => {
   console.log(result);
   // [
   //   {
@@ -391,7 +391,7 @@ Gets the number of members in the chat.
 Example:
 
 ```js
-context.getChatMembersCount().then(result => {
+context.getChatMembersCount().then((result) => {
   console.log(result);
   // '6'
 });
@@ -410,7 +410,7 @@ Gets information about a member of the chat.
 Example:
 
 ```js
-context.getChatMember(USER_ID).then(result => {
+context.getChatMember(USER_ID).then((result) => {
   console.log(result);
   // {
   //   user: {

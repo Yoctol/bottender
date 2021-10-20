@@ -1,5 +1,5 @@
 ---
-id: version-0.15.17-api-consolecontext
+id: api-consolecontext
 title: ConsoleContext
 original_id: api-consolecontext
 ---

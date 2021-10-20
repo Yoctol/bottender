@@ -1,5 +1,5 @@
 ---
-id: version-0.15.17-state
+id: state
 title: State
 original_id: state
 ---
@@ -40,7 +40,7 @@ bot.setInitialState({
   nickname: null,
 });
 
-bot.onEvent(async context => {
+bot.onEvent(async (context) => {
   if (context.state.asking) {
     context.setState({ nickname: context.event.text, asking: false });
     await context.sendText(`Hello ${context.state.nickname}`);

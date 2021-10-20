@@ -1,5 +1,5 @@
 ---
-id: version-1.3.1-the-basics-actions
+id: the-basics-actions
 title: Bottender Actions
 original_id: the-basics-actions
 ---

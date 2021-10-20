@@ -1,5 +1,5 @@
 ---
-id: version-1.3.1-channel-whatsapp-routing
+id: channel-whatsapp-routing
 title: WhatsApp Routing
 original_id: channel-whatsapp-routing
 ---

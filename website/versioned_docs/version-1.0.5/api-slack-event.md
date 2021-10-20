@@ -1,5 +1,5 @@
 ---
-id: version-1.0.5-api-slack-event
+id: api-slack-event
 title: SlackEvent
 original_id: api-slack-event
 ---

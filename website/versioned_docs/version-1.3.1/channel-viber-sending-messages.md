@@ -1,5 +1,5 @@
 ---
-id: version-1.3.1-channel-viber-sending-messages
+id: channel-viber-sending-messages
 title: Sending Viber Messages
 original_id: channel-viber-sending-messages
 ---
@@ -158,8 +158,7 @@ await context.sendCarouselContent({
     {
       columns: 6,
       rows: 2,
-      text:
-        '<font color=#323232><b>Headphones with Microphone, On-ear Wired earphones</b></font><font color=#777777><br>Sound Intone </font><font color=#6fc133>$17.99</font>',
+      text: '<font color=#323232><b>Headphones with Microphone, On-ear Wired earphones</b></font><font color=#777777><br/>Sound Intone </font><font color=#6fc133>$17.99</font>',
       actionType: 'open-url',
       actionBody: 'https://www.google.com',
       textSize: 'medium',
@@ -197,8 +196,7 @@ await context.sendCarouselContent({
     {
       columns: 6,
       rows: 2,
-      text:
-        "<font color=#323232><b>Hanes Men's Humor Graphic T-Shirt</b></font><font color=#777777><br>Hanes</font><font color=#6fc133>$10.99</font>",
+      text: "<font color=#323232><b>Hanes Men's Humor Graphic T-Shirt</b></font><font color=#777777><br/>Hanes</font><font color=#6fc133>$10.99</font>",
       actionType: 'open-url',
       actionBody: 'https://www.google.com',
       textSize: 'medium',

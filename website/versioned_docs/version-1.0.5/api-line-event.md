@@ -1,5 +1,5 @@
 ---
-id: version-1.0.5-api-line-event
+id: api-line-event
 title: LineEvent
 original_id: api-line-event
 ---

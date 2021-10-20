@@ -1,5 +1,5 @@
 ---
-id: version-1.0.5-api-viber-event
+id: api-viber-event
 title: ViberEvent
 original_id: api-viber-event
 ---

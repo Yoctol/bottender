@@ -1,5 +1,5 @@
 ---
-id: version-1.0.5-channel-line-migrating-from-sdk
+id: channel-line-migrating-from-sdk
 title: Migrating from LINE SDK for Node.js
 original_id: channel-line-migrating-from-sdk
 ---
@@ -29,7 +29,7 @@ const config = {
 
 const app = express();
 app.post('/webhooks/line', line.middleware(config), (req, res) => {
-  Promise.all(req.body.events.map(handleEvent)).then(result =>
+  Promise.all(req.body.events.map(handleEvent)).then((result) =>
     res.json(result)
   );
 });
@@ -68,7 +68,7 @@ Finally, add Bot echo feature by editing `src/index.js` file and add one line of
 ```js
 module.exports = function App(context) {
   await context.sendText(context.event.text);
-}
+};
 ```
 
 ## Migrate Your LINE SDK Bot Project to Bottender
@@ -105,7 +105,7 @@ Create the main logic of your bot project by editing your bot logic in `index.js
 ```js
 module.exports = function App(context) {
   await context.sendText(context.event.text);
-}
+};
 ```
 
 Create an environment file `.env`, and fill in access token and channel secret:

@@ -1,5 +1,5 @@
 ---
-id: version-0.15.17-testing
+id: testing
 title: Testing
 original_id: testing
 ---
@@ -21,7 +21,7 @@ bot.onEvent(handler);
 
 ```js
 // handler.js
-module.exports = async context => {
+module.exports = async (context) => {
   if (context.event.isText) {
     await context.sendText('You say: ' + context.event.text);
   } else if (context.event.isMessage) {

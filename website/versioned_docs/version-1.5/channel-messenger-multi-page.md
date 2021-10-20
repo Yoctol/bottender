@@ -1,5 +1,5 @@
 ---
-id: version-1.5-channel-messenger-multi-page
+id: channel-messenger-multi-page
 title: Messenger Multi-Page Support
 original_id: channel-messenger-multi-page
 ---

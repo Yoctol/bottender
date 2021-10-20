@@ -1,5 +1,5 @@
 ---
-id: version-1.3.1-api-messenger-context
+id: api-messenger-context
 title: MessengerContext
 original_id: api-messenger-context
 ---
@@ -963,7 +963,7 @@ Retrieving Labels Associated with the user.
 Example:
 
 ```js
-context.getAssociatedLabels().then(result => {
+context.getAssociatedLabels().then((result) => {
   console.log(result);
   // {
   //   data: [
@@ -1001,7 +1001,7 @@ Retrieving profile of the user.
 Example:
 
 ```js
-context.getUserProfile().then(user => {
+context.getUserProfile().then((user) => {
   console.log(user);
   // {
   //   firstName: 'Johnathan',

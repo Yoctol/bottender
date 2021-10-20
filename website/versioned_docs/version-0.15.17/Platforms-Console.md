@@ -1,5 +1,5 @@
 ---
-id: version-0.15.17-console
+id: console
 title: Console
 original_id: console
 ---
@@ -17,7 +17,7 @@ const bot = new ConsoleBot();
 Then, define your handler function:
 
 ```js
-bot.onEvent(async context => {
+bot.onEvent(async (context) => {
   if (context.event.isText) {
     await context.sendText('received text.');
   } else if (context.event.isPayload) {
@@ -59,7 +59,7 @@ const bot = new ConsoleBot({
   fallbackMethods: true,
 });
 
-bot.onEvent(async context => {
+bot.onEvent(async (context) => {
   await context.sendText('Hello World');
   await context.sendImage('https://example.com/vr.jpg');
   await context.sendButtonTemplate('What do you want to do next?', [

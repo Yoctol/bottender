@@ -1,5 +1,5 @@
 ---
-id: version-1.3.1-channel-line-migrating-from-sdk
+id: channel-line-migrating-from-sdk
 title: Migrating from LINE SDK for Node.js
 original_id: channel-line-migrating-from-sdk
 ---
@@ -27,7 +27,7 @@ const config = {
 
 const app = express();
 app.post('/webhooks/line', line.middleware(config), (req, res) => {
-  Promise.all(req.body.events.map(handleEvent)).then(result =>
+  Promise.all(req.body.events.map(handleEvent)).then((result) =>
     res.json(result)
   );
 });
@@ -103,7 +103,7 @@ Create the main logic of your bot project by editing your bot logic in the `inde
 ```js
 module.exports = function App(context) {
   await context.sendText(context.event.text);
-}
+};
 ```
 
 Create an environment file `.env`, and fill in access token and channel secret:

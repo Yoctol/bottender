@@ -1,5 +1,5 @@
 ---
-id: version-1.3.1-channel-telegram-routing
+id: channel-telegram-routing
 title: Telegram Routings
 original_id: channel-telegram-routing
 ---

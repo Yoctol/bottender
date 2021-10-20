@@ -1,7 +1,8 @@
 ---
-id: version-1.3.1-getting-started
+id: getting-started
 title: Getting Started
 original_id: getting-started
+slug: /
 ---
 
 ## Create a New Bottender App

@@ -1,5 +1,5 @@
 ---
-id: version-0.15.17-session
+id: session
 title: Conversation Session
 original_id: session
 ---
@@ -117,10 +117,10 @@ import { RedisSessionStore } from 'bottender';
 new RedisSessionStore(redisOption, expiresIn);
 ```
 
-| Param       | Type                       | Description                                                                                                                 |
-| ----------- | -------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| redisOption | `String | Number | Object` | The [ioredis connection option](https://github.com/luin/ioredis#connect-to-redis) to your database. See below for examples. |
-| expiresIn   | `Number`                   | Optional. Session expiration time in minutes, defaults to `365 * 24 * 60`, or 1 year.                                       |
+| Param       | Type     | Description                                                                           |
+| ----------- | -------- | ------------------------------------------------------------------------------------- | ------- | --------------------------------------------------------------------------------------------------------------------------- |
+| redisOption | `String  | Number                                                                                | Object` | The [ioredis connection option](https://github.com/luin/ioredis#connect-to-redis) to your database. See below for examples. |
+| expiresIn   | `Number` | Optional. Session expiration time in minutes, defaults to `365 * 24 * 60`, or 1 year. |
 
 Examples:
 

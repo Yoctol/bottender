@@ -1,5 +1,5 @@
 ---
-id: version-0.15.17-server
+id: server
 title: HTTP Server
 original_id: server
 ---

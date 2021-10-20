@@ -1,5 +1,5 @@
 ---
-id: version-1.3.1-channel-messenger-routing
+id: channel-messenger-routing
 title: Messenger Routing
 original_id: channel-messenger-routing
 ---

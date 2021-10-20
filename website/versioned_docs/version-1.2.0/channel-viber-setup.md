@@ -1,5 +1,5 @@
 ---
-id: version-1.2.0-channel-viber-setup
+id: channel-viber-setup
 title: Viber Setup
 original_id: channel-viber-setup
 ---

@@ -1,5 +1,5 @@
 ---
-id: version-1.1.0-advanced-guides-multi-channel
+id: advanced-guides-multi-channel
 title: Multi-Channel Support
 original_id: advanced-guides-multi-channel
 ---

@@ -1,12 +1,12 @@
 ---
-id: version-1.1.0-channel-slack-block-kit
+id: channel-slack-block-kit
 title: Slack Block Kit
 original_id: channel-slack-block-kit
 ---
 
- <p><img width="600" src="https://user-images.githubusercontent.com/662387/71472482-31e58500-280e-11ea-91c0-f05096bcede5.png"></p>
+ <p><img width="600" src="https://user-images.githubusercontent.com/662387/71472482-31e58500-280e-11ea-91c0-f05096bcede5.png"/></p>
 
-<p><img width="600" src="https://user-images.githubusercontent.com/662387/71472483-31e58500-280e-11ea-838d-9dace3857956.png"></p>
+<p><img width="600" src="https://user-images.githubusercontent.com/662387/71472483-31e58500-280e-11ea-838d-9dace3857956.png"/></p>
 
 Rich interactive UI is a crucial factor for friendly user experience, especially when the majority of bot users are familiar with webs and apps.
 
@@ -21,7 +21,7 @@ Blocks are visual components that can be stacked and arranged to create app layo
 
 In the following, you can see a simple example.
 
-<p><img width="800" src="https://user-images.githubusercontent.com/662387/71472395-d74c2900-280d-11ea-91bb-ea9f345cd21f.png"></p>
+<p><img width="800" src="https://user-images.githubusercontent.com/662387/71472395-d74c2900-280d-11ea-91bb-ea9f345cd21f.png"/></p>
 
 ```js
 module.exports = async function App(context) {
@@ -51,7 +51,7 @@ When it comes to complicated blocks, we strongly recommend you to build and play
 
 It demonstrates how to use the template from Block Kit Builder. Plus, we suggest you write a function to render the template with the model.
 
-<p><img width="800" src="https://user-images.githubusercontent.com/662387/71472409-e8953580-280d-11ea-9c0c-16470b1358be.png"></p>
+<p><img width="800" src="https://user-images.githubusercontent.com/662387/71472409-e8953580-280d-11ea-9c0c-16470b1358be.png"/></p>
 
 ```js
 function blockTemplate1(user) {
@@ -71,8 +71,7 @@ function blockTemplate1(user) {
         type: 'section',
         text: {
           type: 'mrkdwn',
-          text:
-            '*Farmhouse Thai Cuisine*\n:star::star::star::star: 1528 reviews\n They do have some vegan options, like the roti and curry, plus they have a ton of salad stuff and noodles can be ordered without meat!! They have something for everyone here',
+          text: '*Farmhouse Thai Cuisine*\n:star::star::star::star: 1528 reviews\n They do have some vegan options, like the roti and curry, plus they have a ton of salad stuff and noodles can be ordered without meat!! They have something for everyone here',
         },
         accessory: {
           type: 'image',
@@ -85,8 +84,7 @@ function blockTemplate1(user) {
         type: 'section',
         text: {
           type: 'mrkdwn',
-          text:
-            '*Kin Khao*\n:star::star::star::star: 1638 reviews\n The sticky rice also goes wonderfully with the caramelized pork belly, which is absolutely melt-in-your-mouth and so soft.',
+          text: '*Kin Khao*\n:star::star::star::star: 1638 reviews\n The sticky rice also goes wonderfully with the caramelized pork belly, which is absolutely melt-in-your-mouth and so soft.',
         },
         accessory: {
           type: 'image',
@@ -99,8 +97,7 @@ function blockTemplate1(user) {
         type: 'section',
         text: {
           type: 'mrkdwn',
-          text:
-            '*Ler Ros*\n:star::star::star::star: 2082 reviews\n I would really recommend the Yum Koh Moo Yang - Spicy lime dressing and roasted quick marinated pork shoulder, basil leaves, chili & rice powder.',
+          text: '*Ler Ros*\n:star::star::star::star: 2082 reviews\n I would really recommend the Yum Koh Moo Yang - Spicy lime dressing and roasted quick marinated pork shoulder, basil leaves, chili & rice powder.',
         },
         accessory: {
           type: 'image',
@@ -160,7 +157,7 @@ module.exports = async function App(context) {
 
 Interactive blocks (e.g., buttons, drop-down menus, date pickers) are part of block kits. So you have to set up a webhook URL to receive payloads. Traverse to [Slack Developer Console](https://api.slack.com/apps) → \${YourApp} → `Interactive Components` → `Interactivity` . And fill in your webhook URL.
 
-<p><img width="800" src="https://user-images.githubusercontent.com/662387/71472551-753ff380-280e-11ea-98ea-63c15b0e15bc.png"></p>
+<p><img width="800" src="https://user-images.githubusercontent.com/662387/71472551-753ff380-280e-11ea-98ea-63c15b0e15bc.png"/></p>
 
 > **Note:**
 >

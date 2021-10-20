@@ -1,5 +1,5 @@
 ---
-id: version-0.15.17-slack
+id: slack
 title: Slack
 original_id: slack
 ---
@@ -56,7 +56,7 @@ For the **message** related events, Bottender supports some helpers:
 For example:
 
 ```js
-bot.onEvent(async context => {
+bot.onEvent(async (context) => {
   if (context.event.isChannelsMessage) {
     await context.sendText('Hello, this is a channels message!');
   } else if (context.event.isGroupsMessage) {
@@ -87,7 +87,7 @@ If you want to get user info from user ID, you can find it with `session.team` i
 
 ```js
 function getNameFromId(id, session) {
-  return session.team.members.find(member => member.id === id).name;
+  return session.team.members.find((member) => member.id === id).name;
 }
 ```
 

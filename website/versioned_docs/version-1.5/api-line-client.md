@@ -1,5 +1,5 @@
 ---
-id: version-1.5-api-line-client
+id: api-line-client
 title: LineClient
 original_id: api-line-client
 ---

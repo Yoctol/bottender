@@ -1,5 +1,5 @@
 ---
-id: version-1.3.1-advanced-guides-nlu
+id: advanced-guides-nlu
 title: Natural Language Understanding
 original_id: advanced-guides-nlu
 ---

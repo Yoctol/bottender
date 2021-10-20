@@ -1,5 +1,5 @@
 ---
-id: version-1.5-api-telegram-client
+id: api-telegram-client
 title: TelegramClient
 original_id: api-telegram-client
 ---

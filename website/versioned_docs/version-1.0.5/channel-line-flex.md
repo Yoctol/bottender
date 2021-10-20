@@ -1,5 +1,5 @@
 ---
-id: version-1.0.5-channel-line-flex
+id: channel-line-flex
 title: Sending Flex Message
 original_id: channel-line-flex
 ---
@@ -65,8 +65,7 @@ async function App(context) {
     type: 'bubble',
     hero: {
       type: 'image',
-      url:
-        'https://scdn.line-apps.com/n/channel_devcenter/img/fx/01_1_cafe.png',
+      url: 'https://scdn.line-apps.com/n/channel_devcenter/img/fx/01_1_cafe.png',
       size: 'full',
       aspectRatio: '20:13',
     },

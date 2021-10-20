@@ -1,5 +1,5 @@
 ---
-id: version-1.4-channel-line-errors
+id: channel-line-errors
 title: Error Handling in LINE
 original_id: channel-line-errors
 ---

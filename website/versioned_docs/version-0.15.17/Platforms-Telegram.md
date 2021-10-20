@@ -1,5 +1,5 @@
 ---
-id: version-0.15.17-telegram
+id: telegram
 title: Telegram
 original_id: telegram
 ---
@@ -49,7 +49,7 @@ const bot = new TelegramBot({
   accessToken: '__FILL_YOUR_TOKEN_HERE__',
 });
 
-bot.onEvent(async context => {
+bot.onEvent(async (context) => {
   await context.sendText('Hello World');
 });
 
@@ -86,7 +86,7 @@ more on [TelegramEvent Reference](api-telegramevent).
 Example:
 
 ```js
-bot.onEvent(async context => {
+bot.onEvent(async (context) => {
   if (context.event.isPhoto) {
     await context.sendMessage('I know this is a photo.');
   } else if (
@@ -116,7 +116,7 @@ more on [TelegramContext Reference](api-telegramcontext).
 Example:
 
 ```js
-bot.onEvent(async context => {
+bot.onEvent(async (context) => {
   await context.sendMessage('Hello World!');
   await context.sendPhoto('http://example.com/pic.png');
   await context.sendContact({

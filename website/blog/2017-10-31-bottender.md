@@ -1,10 +1,10 @@
 ---
 title: Bottender
 author: C. T. Lin
-authorURL: https://twitter.com/chentsulin
+authorURL: 'https://twitter.com/chentsulin'
 authorTitle: Co-Creator of Bottender
 authorTwitter: chentsulin
-authorImageURL: https://avatars1.githubusercontent.com/u/3382565?s=460&v=4
+authorImageURL: 'https://avatars1.githubusercontent.com/u/3382565?s=460&v=4'
 ---
 
 We're very proud to open-source [Bottender](https://github.com/yoctol/bottender), a JavaScript framework for cross-platform bots, built on top of [Messaging-APIs](https://github.com/Yoctol/messaging-apis) and lots of great tools from the JavaScript community!
@@ -48,7 +48,7 @@ Here comes Bottender, our proposal of modern and friendly bot development.
 The advantages of this approach over similar models is that you can do whatever you want in your function. And because of that, your entire system remains highly composable and testable.
 
 ```js
-bot.onEvent(context => {
+bot.onEvent((context) => {
   if (context.event.isText) {
     console.log('Cool. You sent a text to me.');
   }
@@ -64,7 +64,7 @@ Furthermore, this handler function are fully testable without pain. Your test su
 When it comes to database queries or asynchronous API calls, modern async/await syntax give you great advantage to control your logic. Bottender's first class async/await support let you simply pass in any `async` handler. Farewell to callback hells.
 
 ```js
-bot.onEvent(async context => {
+bot.onEvent(async (context) => {
   if (context.event.text === 'you shoull call api') {
     const result = await callSomeAsyncAPI(context.event.text);
     await context.sendText(result);
@@ -83,7 +83,7 @@ bot.setInitialState({
   todos: [],
 });
 
-bot.onEvent(context => {
+bot.onEvent((context) => {
   if (context.event.isText) {
     context.setState({
       todos: context.state.todos.concat(context.event.text),

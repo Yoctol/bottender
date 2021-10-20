@@ -1,5 +1,5 @@
 ---
-id: version-1.3.1-channel-line-rich-menu
+id: channel-line-rich-menu
 title: LINE Rich Menu
 original_id: channel-line-rich-menu
 ---

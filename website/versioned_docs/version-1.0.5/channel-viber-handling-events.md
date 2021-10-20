@@ -1,5 +1,5 @@
 ---
-id: version-1.0.5-channel-viber-handling-events
+id: channel-viber-handling-events
 title: Handling Viber Events
 original_id: channel-viber-handling-events
 ---

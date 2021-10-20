@@ -1,5 +1,5 @@
 ---
-id: version-1.4-api-viber-client
+id: api-viber-client
 title: ViberClient
 original_id: api-viber-client
 ---
@@ -45,7 +45,7 @@ async function MyAction(context) {
 `ViberClient` uses [axios](https://github.com/axios/axios) as HTTP client. We use [axios-error](https://github.com/Yoctol/messaging-apis/tree/master/packages/axios-error) package to wrap API error instances for better formatting error messages. Calling `console.log` with the error instance returns the formatted message. If you'd like to get the axios `request`, `response`, or `config`, you can still get them via those keys on the error instance.
 
 ```js
-client.setWebhook(url).catch(error => {
+client.setWebhook(url).catch((error) => {
   console.log(error); // the formatted error message
   console.log(error.stack); // stack trace of the error
   console.log(error.config); // axios request config
@@ -353,8 +353,7 @@ client.sendCarouselContent(USER_ID, {
     {
       columns: 6,
       rows: 2,
-      text:
-        '<font color=#323232><b>Headphones with Microphone, On-ear Wired earphones</b></font><font color=#777777><br>Sound Intone </font><font color=#6fc133>$17.99</font>',
+      text: '<font color=#323232><b>Headphones with Microphone, On-ear Wired earphones</b></font><font color=#777777><br/>Sound Intone </font><font color=#6fc133>$17.99</font>',
       actionType: 'open-url',
       actionBody: 'https://www.google.com',
       textSize: 'medium',
@@ -392,8 +391,7 @@ client.sendCarouselContent(USER_ID, {
     {
       columns: 6,
       rows: 2,
-      text:
-        "<font color=#323232><b>Hanes Men's Humor Graphic T-Shirt</b></font><font color=#777777><br>Hanes</font><font color=#6fc133>$10.99</font>",
+      text: "<font color=#323232><b>Hanes Men's Humor Graphic T-Shirt</b></font><font color=#777777><br/>Hanes</font><font color=#6fc133>$10.99</font>",
       actionType: 'open-url',
       actionBody: 'https://www.google.com',
       textSize: 'medium',
@@ -500,7 +498,7 @@ client
     ],
     'a broadcast to everybody'
   )
-  .then(result => {
+  .then((result) => {
     console.log(result);
     // {
     //   messageToken: 40808912438712,
@@ -533,7 +531,7 @@ It will fetch the account’s details as registered in Viber.
 Example:
 
 ```js
-client.getAccountInfo().then(info => {
+client.getAccountInfo().then((info) => {
   console.log(info);
   // {
   //   status: 0,
@@ -580,7 +578,7 @@ It will fetch the details of a specific Viber user based on his unique user ID.
 Example:
 
 ```js
-client.getUserDetails('01234567890A=').then(user => {
+client.getUserDetails('01234567890A=').then((user) => {
   console.log(user);
   // {
   //   id: '01234567890A=',
@@ -615,7 +613,7 @@ Example:
 ```js
 client
   .getOnlineStatus(['01234567890=', '01234567891=', '01234567893='])
-  .then(status => {
+  .then((status) => {
     console.log(status);
     // [
     //   {

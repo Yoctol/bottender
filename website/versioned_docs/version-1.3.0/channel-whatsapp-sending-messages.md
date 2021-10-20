@@ -1,5 +1,5 @@
 ---
-id: version-1.3.0-channel-whatsapp-sending-messages
+id: channel-whatsapp-sending-messages
 title: Sending WhatsApp Messages
 original_id: channel-whatsapp-sending-messages
 ---

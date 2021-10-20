@@ -1,7 +1,8 @@
 ---
-id: version-0.15.17-getting-started
+id: getting-started
 title: Getting Started
 original_id: getting-started
+slug: /
 ---
 
 ## Requirements
@@ -37,7 +38,7 @@ const { ConsoleBot } = require('bottender');
 
 const bot = new ConsoleBot();
 
-bot.onEvent(async context => {
+bot.onEvent(async (context) => {
   await context.sendText('Hello World');
 });
 

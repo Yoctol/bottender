@@ -1,5 +1,5 @@
 ---
-id: version-0.15.17-error-handling
+id: error-handling
 title: Error Handling
 original_id: error-handling
 ---
@@ -18,7 +18,7 @@ Put the `try block` inside the handler function, and the error will be caught.
 For example:
 
 ```js
-bot.onEvent(async context => {
+bot.onEvent(async (context) => {
   try {
     await fetch('');
     await context.sendText('');
@@ -39,7 +39,7 @@ For example:
 const { MessengerHandler } = require('bottender');
 
 const handler = new MessengerHandler()
-  .onEvent(async context => {
+  .onEvent(async (context) => {
     throw new Error('An error happened!');
   })
   .onError(async (context, err) => {

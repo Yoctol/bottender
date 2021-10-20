@@ -1,5 +1,5 @@
 ---
-id: version-0.15.17-line
+id: line
 title: LINE
 original_id: line
 ---
@@ -62,7 +62,7 @@ There are many different types of events your bot may receive from LINE. In Bott
 For example:
 
 ```js
-bot.onEvent(async context => {
+bot.onEvent(async (context) => {
   if (context.event.isFollow) {
     await context.sendText('Hello, welcome to this bot!');
   } else if (context.event.isText && context.event.text === 'How are you?') {

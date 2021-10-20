@@ -1,5 +1,5 @@
 ---
-id: version-1.3.1-the-basics-session
+id: the-basics-session
 title: Session
 original_id: the-basics-session
 ---

@@ -1,5 +1,5 @@
 ---
-id: version-0.15.17-api-handler
+id: api-handler
 title: Handler
 original_id: api-handler
 ---
@@ -29,10 +29,10 @@ It will always trigger handler function if `event.isXXX` is true and **just have
 
 It will trigger handler function if `event.isXXX` is true and predicate function return true.
 
-|   Param   |    Type    |                                                                              Description                                                                               |
-| :-------: | :--------: | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
-| predicate | `function` | This is a callback function receiving two parameters. Handler function will be triggered if it **returns true**. <br> `function predicate(XXX, context) { /* ... */ }` |
-|  handler  | `function` |                    This is a callback function receiving [context](api-context) as first parameter. <br> `function handler(context) { /* ... */ }`                     |
+|   Param   |    Type    |                                                                               Description                                                                               |
+| :-------: | :--------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+| predicate | `function` | This is a callback function receiving two parameters. Handler function will be triggered if it **returns true**. <br/> `function predicate(XXX, context) { /* ... */ }` |
+|  handler  | `function` |                    This is a callback function receiving [context](api-context) as first parameter. <br/> `function handler(context) { /* ... */ }`                     |
 
 - Notices: `onText`, `onPayload` also support first parameter to be **string** type or **RegExp**. See more details from [example](#ontext) below.
 
@@ -40,32 +40,32 @@ It will trigger handler function if `event.isXXX` is true and predicate function
 
 It will trigger handler function from **any event**.
 
-|  Param  |    Type    |                                                           Description                                                           |
-| :-----: | :--------: | :-----------------------------------------------------------------------------------------------------------------------------: |
-| handler | `function` | This is a callback function receiving [context](api-context) as first parameter. <br> `function handler(context) { /* ... */ }` |
+|  Param  |    Type    |                                                           Description                                                            |
+| :-----: | :--------: | :------------------------------------------------------------------------------------------------------------------------------: |
+| handler | `function` | This is a callback function receiving [context](api-context) as first parameter. <br/> `function handler(context) { /* ... */ }` |
 
 #### `onUnhandled(handler)`
 
 It will trigger handler function if any `onXXX` function don't send any things back to user.
 
-|  Param  |    Type    |                                                           Description                                                           |
-| :-----: | :--------: | :-----------------------------------------------------------------------------------------------------------------------------: |
-| handler | `function` | This is a callback function receiving [context](api-context) as first parameter. <br> `function handler(context) { /* ... */ }` |
+|  Param  |    Type    |                                                           Description                                                            |
+| :-----: | :--------: | :------------------------------------------------------------------------------------------------------------------------------: |
+| handler | `function` | This is a callback function receiving [context](api-context) as first parameter. <br/> `function handler(context) { /* ... */ }` |
 
 #### `onError(handler)`
 
 It will trigger handler function if any Error is thrown.
 
-|  Param  |    Type    |                                                                               Description                                                                                |
-| :-----: | :--------: | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
-| handler | `function` | This is a callback function receiving [context](api-context) as first parameter and **error as second parameter**. <br> `function handler(context, error) { /* ... */ }` |
+|  Param  |    Type    |                                                                                Description                                                                                |
+| :-----: | :--------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+| handler | `function` | This is a callback function receiving [context](api-context) as first parameter and **error as second parameter**. <br/> `function handler(context, error) { /* ... */ }` |
 
 ### Methods table
 
 |       Name       | Messenger | LINE | Slack | Telegram |                                                                           Description                                                                            |
 | :--------------: | :-------: | :--: | :---: | :------: | :--------------------------------------------------------------------------------------------------------------------------------------------------------------: |
 |        on        |    ✅     |  ✅  |  ✅   |    ✅    |                                   it will trigger function from second parameter if function from first parameter return true.                                   |
-|     onEvent      |    ✅     |  ✅  |  ✅   |    ✅    |            it will always trigger function from parameter. <br><br>**Notice: This method will handle all event. Make sure this is the last method.**             |
+|     onEvent      |    ✅     |  ✅  |  ✅   |    ✅    |           it will always trigger function from parameter. <br/><br/>**Notice: This method will handle all event. Make sure this is the last method.**            |
 |    onMessage     |    ✅     |  ✅  |  ✅   |    ✅    |                  it will trigger function from parameter if **context.event.isMessage** is true and function from first parameter return true.                   |
 |      onText      |    ✅     |  ✅  |  ✅   |    ✅    |                    it will trigger function from parameter if **context.event.isText** is true and function from first parameter return true.                    |
 |   onUnhandled    |    ✅     |  ✅  |  ✅   |    ✅    |                                                 it will trigger function from parameter if event is not handled.                                                 |
@@ -126,21 +126,21 @@ MessengerBot > I do not know what you said.
 
 ```js
 const handler = new MessengerHandler()
-  .onText('yee', async context => {
+  .onText('yee', async (context) => {
     await context.sendText('yee.');
   })
-  .onText(/yo/i, async context => {
+  .onText(/yo/i, async (context) => {
     await context.sendText('Hi there!');
   })
   .onText(
     (text, context) => {
       return text.length > 20;
     },
-    async context => {
+    async (context) => {
       await context.sendText('You talk too much!');
     }
   )
-  .onText(async context => {
+  .onText(async (context) => {
     await context.sendText('I do not know what you said.');
   });
 ```
@@ -154,11 +154,11 @@ MessengerBot > Oops. I do nothing.
 
 ```js
 const handler = new MessengerHandler()
-  .onText(async context => {
+  .onText(async (context) => {
     // event will come here first
     // but you do nothing
   })
-  .onUnhandled(async context => {
+  .onUnhandled(async (context) => {
     await context.sendText('Oops. I do nothing.');
   });
 ```
@@ -172,7 +172,7 @@ MessengerBot > Oops. Error happens.
 
 ```js
 const handler = new MessengerHandler()
-  .onText(context => {
+  .onText((context) => {
     throw new Error('Here comes error!');
   })
   .onError(async (context, err) => {
