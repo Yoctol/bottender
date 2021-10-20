@@ -180,10 +180,10 @@ context.sendVideoNote('https://example.com/video_note.mp4', {
 
 send a group of photos or videos as an album.
 
-| Param   | Type                                                               | Description                                                                              |
-| ------- | ------------------------------------------------------------------ | ---------------------------------------------------------------------------------------- |
-| media   | Array<[InputMedia](https://core.telegram.org/bots/api#inputmedia)> | A JSON-serialized array describing photos and videos to be sent, must include 2–10 items |
-| options | `Object`                                                           | Other optional parameters.                                                               |
+| Param   | Type                                                                                  | Description                                                                              |
+| ------- | ------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| media   | <code>Array&lt;[InputMedia](https://core.telegram.org/bots/api#inputmedia)&gt;</code> | A JSON-serialized array describing photos and videos to be sent, must include 2–10 items |
+| options | `Object`                                                                              | Other optional parameters.                                                               |
 
 Example:
 
@@ -826,10 +826,10 @@ context.answerPreCheckoutQuery(true);
 
 Send answers to the inline query.
 
-| Param   | Type                                                                             | Description                                               |
-| ------- | -------------------------------------------------------------------------------- | --------------------------------------------------------- |
-| results | Array<[InlineQueryResult](https://core.telegram.org/bots/api#inlinequeryresult)> | Array of object represents one result of an inline query. |
-| options | `Object`                                                                         | Additional Telegram query options.                        |
+| Param   | Type                                                                                                | Description                                               |
+| ------- | --------------------------------------------------------------------------------------------------- | --------------------------------------------------------- |
+| results | <code>Array&lt;[InlineQueryResult](https://core.telegram.org/bots/api#inlinequeryresult)&gt;</code> | Array of object represents one result of an inline query. |
+| options | `Object`                                                                                            | Additional Telegram query options.                        |
 
 Example:
 
