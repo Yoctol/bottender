@@ -1,0 +1,31 @@
+{
+  "unversionedId": "api-event",
+  "id": "version-0.15.17/api-event",
+  "isDocsHomePage": false,
+  "title": "Event",
+  "description": "Bottender event helps you determine what kind of message is sent from user.",
+  "source": "@site/versioned_docs/version-0.15.17/APIReference-Event.md",
+  "sourceDirName": ".",
+  "slug": "/api-event",
+  "permalink": "/docs/0.15.17/api-event",
+  "editUrl": "https://github.com/Yoctol/bottender/edit/master/docs/versioned_docs/version-0.15.17/APIReference-Event.md",
+  "tags": [],
+  "version": "0.15.17",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "10/14/2018",
+  "frontMatter": {
+    "id": "api-event",
+    "title": "Event",
+    "original_id": "api-event"
+  },
+  "sidebar": "version-0.15.17/api",
+  "previous": {
+    "title": "Context",
+    "permalink": "/docs/0.15.17/api-context"
+  },
+  "next": {
+    "title": "Handler",
+    "permalink": "/docs/0.15.17/api-handler"
+  }
+}

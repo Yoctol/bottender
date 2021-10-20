@@ -1,0 +1,31 @@
+{
+  "unversionedId": "channel-line-setup",
+  "id": "version-1.2.0/channel-line-setup",
+  "isDocsHomePage": false,
+  "title": "LINE Setup",
+  "description": "Enable LINE Channel",
+  "source": "@site/versioned_docs/version-1.2.0/channel-line-setup.md",
+  "sourceDirName": ".",
+  "slug": "/channel-line-setup",
+  "permalink": "/docs/1.2.0/channel-line-setup",
+  "editUrl": "https://github.com/Yoctol/bottender/edit/master/docs/versioned_docs/version-1.2.0/channel-line-setup.md",
+  "tags": [],
+  "version": "1.2.0",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "10/14/2018",
+  "frontMatter": {
+    "id": "channel-line-setup",
+    "title": "LINE Setup",
+    "original_id": "channel-line-setup"
+  },
+  "sidebar": "version-1.2.0/docs",
+  "previous": {
+    "title": "Messenger Multi-Page Support",
+    "permalink": "/docs/1.2.0/channel-messenger-multi-page"
+  },
+  "next": {
+    "title": "Handling LINE Events",
+    "permalink": "/docs/1.2.0/channel-line-handling-events"
+  }
+}

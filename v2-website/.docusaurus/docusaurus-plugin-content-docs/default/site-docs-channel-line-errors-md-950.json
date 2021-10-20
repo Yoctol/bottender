@@ -1,0 +1,30 @@
+{
+  "unversionedId": "channel-line-errors",
+  "id": "channel-line-errors",
+  "isDocsHomePage": false,
+  "title": "Error Handling in LINE",
+  "description": "Customizing the Error Message in LINE",
+  "source": "@site/../docs/channel-line-errors.md",
+  "sourceDirName": ".",
+  "slug": "/channel-line-errors",
+  "permalink": "/docs/next/channel-line-errors",
+  "editUrl": "https://github.com/Yoctol/bottender/edit/master/docs/../docs/channel-line-errors.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "10/14/2018",
+  "frontMatter": {
+    "id": "channel-line-errors",
+    "title": "Error Handling in LINE"
+  },
+  "sidebar": "docs",
+  "previous": {
+    "title": "LINE Notify",
+    "permalink": "/docs/next/channel-line-notify"
+  },
+  "next": {
+    "title": "Migrating from LINE SDK for Node.js",
+    "permalink": "/docs/next/channel-line-migrating-from-sdk"
+  }
+}

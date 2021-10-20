@@ -1,0 +1,30 @@
+{
+  "unversionedId": "channel-messenger-persona",
+  "id": "channel-messenger-persona",
+  "isDocsHomePage": false,
+  "title": "Using Messenger Persona",
+  "description": "Messenger Persona Practical Guide",
+  "source": "@site/../docs/channel-messenger-persona.md",
+  "sourceDirName": ".",
+  "slug": "/channel-messenger-persona",
+  "permalink": "/docs/next/channel-messenger-persona",
+  "editUrl": "https://github.com/Yoctol/bottender/edit/master/docs/../docs/channel-messenger-persona.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "10/14/2018",
+  "frontMatter": {
+    "id": "channel-messenger-persona",
+    "title": "Using Messenger Persona"
+  },
+  "sidebar": "docs",
+  "previous": {
+    "title": "Messenger Handover Protocol",
+    "permalink": "/docs/next/channel-messenger-handover-protocol"
+  },
+  "next": {
+    "title": "Messenger Multi-Page Support",
+    "permalink": "/docs/next/channel-messenger-multi-page"
+  }
+}

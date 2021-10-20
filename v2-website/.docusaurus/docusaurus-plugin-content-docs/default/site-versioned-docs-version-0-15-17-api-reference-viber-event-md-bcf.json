@@ -1,0 +1,22 @@
+{
+  "unversionedId": "api-viberevent",
+  "id": "version-0.15.17/api-viberevent",
+  "isDocsHomePage": false,
+  "title": "ViberEvent",
+  "description": "rawEvent",
+  "source": "@site/versioned_docs/version-0.15.17/APIReference-ViberEvent.md",
+  "sourceDirName": ".",
+  "slug": "/api-viberevent",
+  "permalink": "/docs/0.15.17/api-viberevent",
+  "editUrl": "https://github.com/Yoctol/bottender/edit/master/docs/versioned_docs/version-0.15.17/APIReference-ViberEvent.md",
+  "tags": [],
+  "version": "0.15.17",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "10/14/2018",
+  "frontMatter": {
+    "id": "api-viberevent",
+    "title": "ViberEvent",
+    "original_id": "api-viberevent"
+  }
+}

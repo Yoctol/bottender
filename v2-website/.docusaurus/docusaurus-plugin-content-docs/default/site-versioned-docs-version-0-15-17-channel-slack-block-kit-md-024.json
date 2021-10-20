@@ -1,0 +1,21 @@
+{
+  "unversionedId": "channel-slack-block-kit",
+  "id": "version-0.15.17/channel-slack-block-kit",
+  "isDocsHomePage": false,
+  "title": "Slack Block Kit",
+  "description": "Rich interactive UI is a crucial factor for friendly user experience, especially when the majority of bot users are familiar with webs and apps.",
+  "source": "@site/versioned_docs/version-0.15.17/channel-slack-block-kit.md",
+  "sourceDirName": ".",
+  "slug": "/channel-slack-block-kit",
+  "permalink": "/docs/0.15.17/channel-slack-block-kit",
+  "editUrl": "https://github.com/Yoctol/bottender/edit/master/docs/versioned_docs/version-0.15.17/channel-slack-block-kit.md",
+  "tags": [],
+  "version": "0.15.17",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "10/14/2018",
+  "frontMatter": {
+    "id": "channel-slack-block-kit",
+    "title": "Slack Block Kit"
+  }
+}

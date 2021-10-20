@@ -1,0 +1,351 @@
+{
+  "version-1.3.1/docs": [
+    {
+      "type": "category",
+      "label": "Getting Started",
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-1.3.1/getting-started"
+        },
+        {
+          "type": "doc",
+          "id": "version-1.3.1/migrating-v1"
+        }
+      ]
+    },
+    {
+      "type": "category",
+      "label": "The Basics",
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-1.3.1/the-basics-console-mode"
+        },
+        {
+          "type": "doc",
+          "id": "version-1.3.1/the-basics-actions"
+        },
+        {
+          "type": "doc",
+          "id": "version-1.3.1/the-basics-routing"
+        },
+        {
+          "type": "doc",
+          "id": "version-1.3.1/the-basics-chain"
+        },
+        {
+          "type": "doc",
+          "id": "version-1.3.1/the-basics-session"
+        },
+        {
+          "type": "doc",
+          "id": "version-1.3.1/the-basics-errors"
+        }
+      ]
+    },
+    {
+      "type": "category",
+      "label": "Advanced Guides",
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-1.3.1/advanced-guides-custom-server"
+        },
+        {
+          "type": "doc",
+          "id": "version-1.3.1/advanced-guides-deployment"
+        },
+        {
+          "type": "doc",
+          "id": "version-1.3.1/advanced-guides-nlu"
+        },
+        {
+          "type": "doc",
+          "id": "version-1.3.1/advanced-guides-multi-channel"
+        }
+      ]
+    },
+    {
+      "type": "category",
+      "label": "Guides (Messenger)",
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-1.3.1/channel-messenger-setup"
+        },
+        {
+          "type": "doc",
+          "id": "version-1.3.1/channel-messenger-handling-events"
+        },
+        {
+          "type": "doc",
+          "id": "version-1.3.1/channel-messenger-sending-messages"
+        },
+        {
+          "type": "doc",
+          "id": "version-1.3.1/channel-messenger-routing"
+        },
+        {
+          "type": "doc",
+          "id": "version-1.3.1/channel-messenger-profile"
+        },
+        {
+          "type": "doc",
+          "id": "version-1.3.1/channel-messenger-handover-protocol"
+        },
+        {
+          "type": "doc",
+          "id": "version-1.3.1/channel-messenger-persona"
+        },
+        {
+          "type": "doc",
+          "id": "version-1.3.1/channel-messenger-multi-page"
+        }
+      ]
+    },
+    {
+      "type": "category",
+      "label": "Guides (WhatsApp)",
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-1.3.1/channel-whatsapp-setup"
+        },
+        {
+          "type": "doc",
+          "id": "version-1.3.1/channel-whatsapp-handling-events"
+        },
+        {
+          "type": "doc",
+          "id": "version-1.3.1/channel-whatsapp-sending-messages"
+        },
+        {
+          "type": "doc",
+          "id": "version-1.3.1/channel-whatsapp-routing"
+        }
+      ]
+    },
+    {
+      "type": "category",
+      "label": "Guides (LINE)",
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-1.3.1/channel-line-setup"
+        },
+        {
+          "type": "doc",
+          "id": "version-1.3.1/channel-line-handling-events"
+        },
+        {
+          "type": "doc",
+          "id": "version-1.3.1/channel-line-sending-messages"
+        },
+        {
+          "type": "doc",
+          "id": "version-1.3.1/channel-line-routing"
+        },
+        {
+          "type": "doc",
+          "id": "version-1.3.1/channel-line-flex"
+        },
+        {
+          "type": "doc",
+          "id": "version-1.3.1/channel-line-rich-menu"
+        },
+        {
+          "type": "doc",
+          "id": "version-1.3.1/channel-line-liff"
+        },
+        {
+          "type": "doc",
+          "id": "version-1.3.1/channel-line-errors"
+        },
+        {
+          "type": "doc",
+          "id": "version-1.3.1/channel-line-migrating-from-sdk"
+        }
+      ]
+    },
+    {
+      "type": "category",
+      "label": "Guides (Slack)",
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-1.3.1/channel-slack-setup"
+        },
+        {
+          "type": "doc",
+          "id": "version-1.3.1/channel-slack-handling-events"
+        },
+        {
+          "type": "doc",
+          "id": "version-1.3.1/channel-slack-sending-messages"
+        },
+        {
+          "type": "doc",
+          "id": "version-1.3.1/channel-slack-routing"
+        },
+        {
+          "type": "doc",
+          "id": "version-1.3.1/channel-slack-slash-command"
+        },
+        {
+          "type": "doc",
+          "id": "version-1.3.1/channel-slack-block-kit"
+        }
+      ]
+    },
+    {
+      "type": "category",
+      "label": "Guides (Telegram)",
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-1.3.1/channel-telegram-setup"
+        },
+        {
+          "type": "doc",
+          "id": "version-1.3.1/channel-telegram-handling-events"
+        },
+        {
+          "type": "doc",
+          "id": "version-1.3.1/channel-telegram-sending-messages"
+        },
+        {
+          "type": "doc",
+          "id": "version-1.3.1/channel-telegram-routing"
+        }
+      ]
+    },
+    {
+      "type": "category",
+      "label": "Guides (Viber)",
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-1.3.1/channel-viber-setup"
+        },
+        {
+          "type": "doc",
+          "id": "version-1.3.1/channel-viber-handling-events"
+        },
+        {
+          "type": "doc",
+          "id": "version-1.3.1/channel-viber-sending-messages"
+        },
+        {
+          "type": "doc",
+          "id": "version-1.3.1/channel-viber-routing"
+        }
+      ]
+    },
+    {
+      "type": "category",
+      "label": "FAQ",
+      "items": []
+    }
+  ],
+  "version-1.3.1/api": [
+    {
+      "type": "category",
+      "label": "Core",
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-1.3.1/api-context"
+        },
+        {
+          "type": "doc",
+          "id": "version-1.3.1/api-event"
+        }
+      ]
+    },
+    {
+      "type": "category",
+      "label": "Messenger",
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-1.3.1/api-messenger-context"
+        },
+        {
+          "type": "doc",
+          "id": "version-1.3.1/api-messenger-event"
+        }
+      ]
+    },
+    {
+      "type": "category",
+      "label": "LINE",
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-1.3.1/api-line-context"
+        },
+        {
+          "type": "doc",
+          "id": "version-1.3.1/api-line-event"
+        }
+      ]
+    },
+    {
+      "type": "category",
+      "label": "Slack",
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-1.3.1/api-slack-context"
+        },
+        {
+          "type": "doc",
+          "id": "version-1.3.1/api-slack-event"
+        }
+      ]
+    },
+    {
+      "type": "category",
+      "label": "Telegram",
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-1.3.1/api-telegram-context"
+        },
+        {
+          "type": "doc",
+          "id": "version-1.3.1/api-telegram-event"
+        }
+      ]
+    },
+    {
+      "type": "category",
+      "label": "Viber",
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-1.3.1/api-viber-context"
+        },
+        {
+          "type": "doc",
+          "id": "version-1.3.1/api-viber-event"
+        }
+      ]
+    },
+    {
+      "type": "category",
+      "label": "Console",
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-1.3.1/api-console-context"
+        },
+        {
+          "type": "doc",
+          "id": "version-1.3.1/api-console-event"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "unversionedId": "channel-whatsapp-handling-events",
+  "id": "channel-whatsapp-handling-events",
+  "isDocsHomePage": false,
+  "title": "Handling WhatsApp Events",
+  "description": "Text Events",
+  "source": "@site/../docs/channel-whatsapp-handling-events.md",
+  "sourceDirName": ".",
+  "slug": "/channel-whatsapp-handling-events",
+  "permalink": "/docs/next/channel-whatsapp-handling-events",
+  "editUrl": "https://github.com/Yoctol/bottender/edit/master/docs/../docs/channel-whatsapp-handling-events.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "10/14/2018",
+  "frontMatter": {
+    "id": "channel-whatsapp-handling-events",
+    "title": "Handling WhatsApp Events"
+  },
+  "sidebar": "docs",
+  "previous": {
+    "title": "WhatsApp Setup",
+    "permalink": "/docs/next/channel-whatsapp-setup"
+  },
+  "next": {
+    "title": "Sending WhatsApp Messages",
+    "permalink": "/docs/next/channel-whatsapp-sending-messages"
+  }
+}

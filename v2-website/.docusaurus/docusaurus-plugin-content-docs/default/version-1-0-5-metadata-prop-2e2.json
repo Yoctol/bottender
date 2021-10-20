@@ -1,0 +1,357 @@
+{
+  "pluginId": "default",
+  "version": "1.0.5",
+  "label": "1.0.5",
+  "banner": "unmaintained",
+  "badge": true,
+  "className": "docs-version-1.0.5",
+  "isLast": false,
+  "docsSidebars": {
+    "version-1.0.5/docs": [
+      {
+        "type": "category",
+        "label": "Getting Started",
+        "items": [
+          {
+            "type": "link",
+            "label": "Getting Started",
+            "href": "/docs/1.0.5/getting-started"
+          },
+          {
+            "type": "link",
+            "label": "Migrating from v0.x to v1.x",
+            "href": "/docs/1.0.5/migrating-v1"
+          }
+        ],
+        "collapsible": true,
+        "collapsed": true
+      },
+      {
+        "type": "category",
+        "label": "The Basics",
+        "items": [
+          {
+            "type": "link",
+            "label": "Console Mode",
+            "href": "/docs/1.0.5/the-basics-console-mode"
+          },
+          {
+            "type": "link",
+            "label": "Resolving Actions",
+            "href": "/docs/1.0.5/the-basics-actions"
+          },
+          {
+            "type": "link",
+            "label": "Routing",
+            "href": "/docs/1.0.5/the-basics-routing"
+          },
+          {
+            "type": "link",
+            "label": "Chain of Responsibility",
+            "href": "/docs/1.0.5/the-basics-chain"
+          },
+          {
+            "type": "link",
+            "label": "Session",
+            "href": "/docs/1.0.5/the-basics-session"
+          },
+          {
+            "type": "link",
+            "label": "Error Handling",
+            "href": "/docs/1.0.5/the-basics-errors"
+          }
+        ],
+        "collapsible": true,
+        "collapsed": true
+      },
+      {
+        "type": "category",
+        "label": "Advanced Guides",
+        "items": [
+          {
+            "type": "link",
+            "label": "Natural Language Understanding",
+            "href": "/docs/1.0.5/advanced-guides-nlu"
+          },
+          {
+            "type": "link",
+            "label": "Multi-Messaging Channel Support",
+            "href": "/docs/1.0.5/advanced-guides-multi-channel"
+          }
+        ],
+        "collapsible": true,
+        "collapsed": true
+      },
+      {
+        "type": "category",
+        "label": "Guides (Messenger)",
+        "items": [
+          {
+            "type": "link",
+            "label": "Messenger Setup",
+            "href": "/docs/1.0.5/channel-messenger-setup"
+          },
+          {
+            "type": "link",
+            "label": "Handling Messenger Events",
+            "href": "/docs/1.0.5/channel-messenger-handling-events"
+          },
+          {
+            "type": "link",
+            "label": "Sending Messenger Messages",
+            "href": "/docs/1.0.5/channel-messenger-sending-messages"
+          },
+          {
+            "type": "link",
+            "label": "Messenger Profile",
+            "href": "/docs/1.0.5/channel-messenger-profile"
+          },
+          {
+            "type": "link",
+            "label": "Using Persona",
+            "href": "/docs/1.0.5/channel-messenger-persona"
+          }
+        ],
+        "collapsible": true,
+        "collapsed": true
+      },
+      {
+        "type": "category",
+        "label": "Guides (LINE)",
+        "items": [
+          {
+            "type": "link",
+            "label": "LINE Setup",
+            "href": "/docs/1.0.5/channel-line-setup"
+          },
+          {
+            "type": "link",
+            "label": "Handling LINE Events",
+            "href": "/docs/1.0.5/channel-line-handling-events"
+          },
+          {
+            "type": "link",
+            "label": "Sending LINE Messages",
+            "href": "/docs/1.0.5/channel-line-sending-messages"
+          },
+          {
+            "type": "link",
+            "label": "Sending Flex Message",
+            "href": "/docs/1.0.5/channel-line-flex"
+          },
+          {
+            "type": "link",
+            "label": "Rich Menu",
+            "href": "/docs/1.0.5/channel-line-rich-menu"
+          },
+          {
+            "type": "link",
+            "label": "Error Handling in LINE",
+            "href": "/docs/1.0.5/channel-line-errors"
+          },
+          {
+            "type": "link",
+            "label": "Migrating from LINE SDK for Node.js",
+            "href": "/docs/1.0.5/channel-line-migrating-from-sdk"
+          }
+        ],
+        "collapsible": true,
+        "collapsed": true
+      },
+      {
+        "type": "category",
+        "label": "Guides (Slack)",
+        "items": [
+          {
+            "type": "link",
+            "label": "Slack Setup",
+            "href": "/docs/1.0.5/channel-slack-setup"
+          },
+          {
+            "type": "link",
+            "label": "Handling Slack Events",
+            "href": "/docs/1.0.5/channel-slack-handling-events"
+          }
+        ],
+        "collapsible": true,
+        "collapsed": true
+      },
+      {
+        "type": "category",
+        "label": "Guides (Telegram)",
+        "items": [
+          {
+            "type": "link",
+            "label": "Telegram Setup",
+            "href": "/docs/1.0.5/channel-telegram-setup"
+          },
+          {
+            "type": "link",
+            "label": "Handling Telegram Events",
+            "href": "/docs/1.0.5/channel-telegram-handling-events"
+          },
+          {
+            "type": "link",
+            "label": "Sending Telegram Messages",
+            "href": "/docs/1.0.5/channel-telegram-sending-messages"
+          }
+        ],
+        "collapsible": true,
+        "collapsed": true
+      },
+      {
+        "type": "category",
+        "label": "Guides (Viber)",
+        "items": [
+          {
+            "type": "link",
+            "label": "Viber Setup",
+            "href": "/docs/1.0.5/channel-viber-setup"
+          },
+          {
+            "type": "link",
+            "label": "Handling Viber Events",
+            "href": "/docs/1.0.5/channel-viber-handling-events"
+          }
+        ],
+        "collapsible": true,
+        "collapsed": true
+      },
+      {
+        "type": "category",
+        "label": "FAQ",
+        "items": [],
+        "collapsible": true,
+        "collapsed": true
+      }
+    ],
+    "version-1.0.5/api": [
+      {
+        "type": "category",
+        "label": "Core",
+        "items": [
+          {
+            "type": "link",
+            "label": "Context",
+            "href": "/docs/1.0.5/api-context"
+          },
+          {
+            "type": "link",
+            "label": "Event",
+            "href": "/docs/1.0.5/api-event"
+          }
+        ],
+        "collapsible": true,
+        "collapsed": true
+      },
+      {
+        "type": "category",
+        "label": "Messenger",
+        "items": [
+          {
+            "type": "link",
+            "label": "MessengerContext",
+            "href": "/docs/1.0.5/api-messenger-context"
+          },
+          {
+            "type": "link",
+            "label": "MessengerEvent",
+            "href": "/docs/1.0.5/api-messenger-event"
+          }
+        ],
+        "collapsible": true,
+        "collapsed": true
+      },
+      {
+        "type": "category",
+        "label": "LINE",
+        "items": [
+          {
+            "type": "link",
+            "label": "LineContext",
+            "href": "/docs/1.0.5/api-line-context"
+          },
+          {
+            "type": "link",
+            "label": "LineEvent",
+            "href": "/docs/1.0.5/api-line-event"
+          }
+        ],
+        "collapsible": true,
+        "collapsed": true
+      },
+      {
+        "type": "category",
+        "label": "Slack",
+        "items": [
+          {
+            "type": "link",
+            "label": "SlackContext",
+            "href": "/docs/1.0.5/api-slack-context"
+          },
+          {
+            "type": "link",
+            "label": "SlackEvent",
+            "href": "/docs/1.0.5/api-slack-event"
+          }
+        ],
+        "collapsible": true,
+        "collapsed": true
+      },
+      {
+        "type": "category",
+        "label": "Telegram",
+        "items": [
+          {
+            "type": "link",
+            "label": "TelegramContext",
+            "href": "/docs/1.0.5/api-telegram-context"
+          },
+          {
+            "type": "link",
+            "label": "TelegramEvent",
+            "href": "/docs/1.0.5/api-telegram-event"
+          }
+        ],
+        "collapsible": true,
+        "collapsed": true
+      },
+      {
+        "type": "category",
+        "label": "Viber",
+        "items": [
+          {
+            "type": "link",
+            "label": "ViberContext",
+            "href": "/docs/1.0.5/api-viber-context"
+          },
+          {
+            "type": "link",
+            "label": "ViberEvent",
+            "href": "/docs/1.0.5/api-viber-event"
+          }
+        ],
+        "collapsible": true,
+        "collapsed": true
+      },
+      {
+        "type": "category",
+        "label": "Console",
+        "items": [
+          {
+            "type": "link",
+            "label": "ConsoleContext",
+            "href": "/docs/1.0.5/api-console-context"
+          },
+          {
+            "type": "link",
+            "label": "ConsoleEvent",
+            "href": "/docs/1.0.5/api-console-event"
+          }
+        ],
+        "collapsible": true,
+        "collapsed": true
+      }
+    ]
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "unversionedId": "channel-messenger-routing",
+  "id": "version-1.5/channel-messenger-routing",
+  "isDocsHomePage": false,
+  "title": "Messenger Routing",
+  "description": "Bottender offers a bunch of helpers to route within your Messenger or multi-platform app. For example, you may use Messenger particular routes within your router:",
+  "source": "@site/versioned_docs/version-1.5/channel-messenger-routing.md",
+  "sourceDirName": ".",
+  "slug": "/channel-messenger-routing",
+  "permalink": "/docs/channel-messenger-routing",
+  "editUrl": "https://github.com/Yoctol/bottender/edit/master/docs/versioned_docs/version-1.5/channel-messenger-routing.md",
+  "tags": [],
+  "version": "1.5",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "10/14/2018",
+  "frontMatter": {
+    "id": "channel-messenger-routing",
+    "title": "Messenger Routing",
+    "original_id": "channel-messenger-routing"
+  },
+  "sidebar": "version-1.5/docs",
+  "previous": {
+    "title": "Sending Messenger Messages",
+    "permalink": "/docs/channel-messenger-sending-messages"
+  },
+  "next": {
+    "title": "Messenger Profile",
+    "permalink": "/docs/channel-messenger-profile"
+  }
+}

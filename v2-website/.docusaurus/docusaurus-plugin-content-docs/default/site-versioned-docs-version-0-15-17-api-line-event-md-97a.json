@@ -1,0 +1,30 @@
+{
+  "unversionedId": "api-line-event",
+  "id": "version-0.15.17/api-line-event",
+  "isDocsHomePage": false,
+  "title": "LineEvent",
+  "description": "rawEvent",
+  "source": "@site/versioned_docs/version-0.15.17/api-line-event.md",
+  "sourceDirName": ".",
+  "slug": "/api-line-event",
+  "permalink": "/docs/0.15.17/api-line-event",
+  "editUrl": "https://github.com/Yoctol/bottender/edit/master/docs/versioned_docs/version-0.15.17/api-line-event.md",
+  "tags": [],
+  "version": "0.15.17",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "10/14/2018",
+  "frontMatter": {
+    "id": "api-line-event",
+    "title": "LineEvent"
+  },
+  "sidebar": "version-0.15.17/api",
+  "previous": {
+    "title": "LineContext",
+    "permalink": "/docs/0.15.17/api-line-context"
+  },
+  "next": {
+    "title": "SlackContext",
+    "permalink": "/docs/0.15.17/api-slack-context"
+  }
+}

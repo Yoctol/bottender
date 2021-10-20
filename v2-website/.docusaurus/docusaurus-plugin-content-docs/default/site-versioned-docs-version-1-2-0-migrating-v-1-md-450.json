@@ -1,0 +1,31 @@
+{
+  "unversionedId": "migrating-v1",
+  "id": "version-1.2.0/migrating-v1",
+  "isDocsHomePage": false,
+  "title": "Migrating from v0.x to v1.x",
+  "description": "To make bot developers have a happier development experience, we made some changes in terms of a better-structured config file, unifying cases to camel case, and introduction of two design patterns: Router and Chain.",
+  "source": "@site/versioned_docs/version-1.2.0/migrating-v1.md",
+  "sourceDirName": ".",
+  "slug": "/migrating-v1",
+  "permalink": "/docs/1.2.0/migrating-v1",
+  "editUrl": "https://github.com/Yoctol/bottender/edit/master/docs/versioned_docs/version-1.2.0/migrating-v1.md",
+  "tags": [],
+  "version": "1.2.0",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "10/14/2018",
+  "frontMatter": {
+    "id": "migrating-v1",
+    "title": "Migrating from v0.x to v1.x",
+    "original_id": "migrating-v1"
+  },
+  "sidebar": "version-1.2.0/docs",
+  "previous": {
+    "title": "Getting Started",
+    "permalink": "/docs/1.2.0/getting-started"
+  },
+  "next": {
+    "title": "Console Mode",
+    "permalink": "/docs/1.2.0/the-basics-console-mode"
+  }
+}

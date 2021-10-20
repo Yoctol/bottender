@@ -1,0 +1,21 @@
+{
+  "unversionedId": "channel-viber-handling-events",
+  "id": "version-0.15.17/channel-viber-handling-events",
+  "isDocsHomePage": false,
+  "title": "Handling Viber Events",
+  "description": "Text Events",
+  "source": "@site/versioned_docs/version-0.15.17/channel-viber-handling-events.md",
+  "sourceDirName": ".",
+  "slug": "/channel-viber-handling-events",
+  "permalink": "/docs/0.15.17/channel-viber-handling-events",
+  "editUrl": "https://github.com/Yoctol/bottender/edit/master/docs/versioned_docs/version-0.15.17/channel-viber-handling-events.md",
+  "tags": [],
+  "version": "0.15.17",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "10/14/2018",
+  "frontMatter": {
+    "id": "channel-viber-handling-events",
+    "title": "Handling Viber Events"
+  }
+}

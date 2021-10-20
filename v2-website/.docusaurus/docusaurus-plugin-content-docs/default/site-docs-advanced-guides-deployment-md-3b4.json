@@ -1,0 +1,30 @@
+{
+  "unversionedId": "advanced-guides-deployment",
+  "id": "advanced-guides-deployment",
+  "isDocsHomePage": false,
+  "title": "Deployment",
+  "description": "Once you finished your bot in development, the next step is to deploy your bot to a hosting service.",
+  "source": "@site/../docs/advanced-guides-deployment.md",
+  "sourceDirName": ".",
+  "slug": "/advanced-guides-deployment",
+  "permalink": "/docs/next/advanced-guides-deployment",
+  "editUrl": "https://github.com/Yoctol/bottender/edit/master/docs/../docs/advanced-guides-deployment.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "10/14/2018",
+  "frontMatter": {
+    "id": "advanced-guides-deployment",
+    "title": "Deployment"
+  },
+  "sidebar": "docs",
+  "previous": {
+    "title": "Running Bottender with Custom Servers",
+    "permalink": "/docs/next/advanced-guides-custom-server"
+  },
+  "next": {
+    "title": "Natural Language Understanding",
+    "permalink": "/docs/next/advanced-guides-nlu"
+  }
+}

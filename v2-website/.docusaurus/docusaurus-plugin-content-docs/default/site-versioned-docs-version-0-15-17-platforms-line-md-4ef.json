@@ -1,0 +1,31 @@
+{
+  "unversionedId": "line",
+  "id": "version-0.15.17/line",
+  "isDocsHomePage": false,
+  "title": "LINE",
+  "description": "This guide will give you some basic concepts of LINE bots. For more information, check official docs.",
+  "source": "@site/versioned_docs/version-0.15.17/Platforms-LINE.md",
+  "sourceDirName": ".",
+  "slug": "/line",
+  "permalink": "/docs/0.15.17/line",
+  "editUrl": "https://github.com/Yoctol/bottender/edit/master/docs/versioned_docs/version-0.15.17/Platforms-LINE.md",
+  "tags": [],
+  "version": "0.15.17",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "10/14/2018",
+  "frontMatter": {
+    "id": "line",
+    "title": "LINE",
+    "original_id": "line"
+  },
+  "sidebar": "version-0.15.17/docs",
+  "previous": {
+    "title": "Messenger",
+    "permalink": "/docs/0.15.17/messenger"
+  },
+  "next": {
+    "title": "Slack",
+    "permalink": "/docs/0.15.17/slack"
+  }
+}

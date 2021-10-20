@@ -1,0 +1,21 @@
+{
+  "unversionedId": "channel-line-errors",
+  "id": "version-0.15.17/channel-line-errors",
+  "isDocsHomePage": false,
+  "title": "Error Handling in LINE",
+  "description": "Customizing the Error Message in LINE",
+  "source": "@site/versioned_docs/version-0.15.17/channel-line-errors.md",
+  "sourceDirName": ".",
+  "slug": "/channel-line-errors",
+  "permalink": "/docs/0.15.17/channel-line-errors",
+  "editUrl": "https://github.com/Yoctol/bottender/edit/master/docs/versioned_docs/version-0.15.17/channel-line-errors.md",
+  "tags": [],
+  "version": "0.15.17",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "10/14/2018",
+  "frontMatter": {
+    "id": "channel-line-errors",
+    "title": "Error Handling in LINE"
+  }
+}

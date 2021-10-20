@@ -1,0 +1,31 @@
+{
+  "unversionedId": "the-basics-actions",
+  "id": "version-1.3.1/the-basics-actions",
+  "isDocsHomePage": false,
+  "title": "Bottender Actions",
+  "description": "Bottender actions are the smallest building blocks of Bottender apps. An action describes what you want your bot to do when receiving an event:",
+  "source": "@site/versioned_docs/version-1.3.1/the-basics-actions.md",
+  "sourceDirName": ".",
+  "slug": "/the-basics-actions",
+  "permalink": "/docs/1.3.1/the-basics-actions",
+  "editUrl": "https://github.com/Yoctol/bottender/edit/master/docs/versioned_docs/version-1.3.1/the-basics-actions.md",
+  "tags": [],
+  "version": "1.3.1",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "10/14/2018",
+  "frontMatter": {
+    "id": "the-basics-actions",
+    "title": "Bottender Actions",
+    "original_id": "the-basics-actions"
+  },
+  "sidebar": "version-1.3.1/docs",
+  "previous": {
+    "title": "Console Mode",
+    "permalink": "/docs/1.3.1/the-basics-console-mode"
+  },
+  "next": {
+    "title": "Routing",
+    "permalink": "/docs/1.3.1/the-basics-routing"
+  }
+}

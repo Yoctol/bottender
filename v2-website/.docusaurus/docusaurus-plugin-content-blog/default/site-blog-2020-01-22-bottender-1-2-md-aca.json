@@ -1,0 +1,27 @@
+{
+  "permalink": "/blog/2020/01/22/bottender-1_2",
+  "source": "@site/blog/2020-01-22-bottender-1_2.md",
+  "title": "Bottender 1.2: Serverless, NLU Integration, and More",
+  "description": "We are excited to introduce Bottender 1.2 today, featuring:",
+  "date": "2020-01-22T00:00:00.000Z",
+  "formattedDate": "January 22, 2020",
+  "tags": [],
+  "readingTime": 3.58,
+  "truncated": true,
+  "authors": [
+    {
+      "name": "C. T. Lin",
+      "title": "Co-Creator of Bottender",
+      "url": "https://twitter.com/chentsulin",
+      "imageURL": "https://avatars1.githubusercontent.com/u/3382565?s=460&v=4"
+    }
+  ],
+  "prevItem": {
+    "title": "Bottender 1.3: WhatsApp Support, TypeScript Improvement",
+    "permalink": "/blog/2020/03/06/bottender-1_3"
+  },
+  "nextItem": {
+    "title": "Bottender 1.1: Multi-Channel Routing, Better Slack APIs Support in Chat, View, Block Kit",
+    "permalink": "/blog/2019/12/27/bottender-1_1"
+  }
+}

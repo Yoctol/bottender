@@ -1,0 +1,31 @@
+{
+  "unversionedId": "channel-slack-handling-events",
+  "id": "version-1.0.5/channel-slack-handling-events",
+  "isDocsHomePage": false,
+  "title": "Handling Slack Events",
+  "description": "Handling Text Events",
+  "source": "@site/versioned_docs/version-1.0.5/channel-slack-handling-events.md",
+  "sourceDirName": ".",
+  "slug": "/channel-slack-handling-events",
+  "permalink": "/docs/1.0.5/channel-slack-handling-events",
+  "editUrl": "https://github.com/Yoctol/bottender/edit/master/docs/versioned_docs/version-1.0.5/channel-slack-handling-events.md",
+  "tags": [],
+  "version": "1.0.5",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "10/14/2018",
+  "frontMatter": {
+    "id": "channel-slack-handling-events",
+    "title": "Handling Slack Events",
+    "original_id": "channel-slack-handling-events"
+  },
+  "sidebar": "version-1.0.5/docs",
+  "previous": {
+    "title": "Slack Setup",
+    "permalink": "/docs/1.0.5/channel-slack-setup"
+  },
+  "next": {
+    "title": "Telegram Setup",
+    "permalink": "/docs/1.0.5/channel-telegram-setup"
+  }
+}

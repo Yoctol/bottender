@@ -1,0 +1,21 @@
+{
+  "unversionedId": "channel-telegram-routing",
+  "id": "version-0.15.17/channel-telegram-routing",
+  "isDocsHomePage": false,
+  "title": "Telegram Routings",
+  "description": "Bottender offers a bunch of helpers to route within your Telegram or multi-platform app. For example, you may use Telegram particular routes within your router:",
+  "source": "@site/versioned_docs/version-0.15.17/channel-telegram-routing.md",
+  "sourceDirName": ".",
+  "slug": "/channel-telegram-routing",
+  "permalink": "/docs/0.15.17/channel-telegram-routing",
+  "editUrl": "https://github.com/Yoctol/bottender/edit/master/docs/versioned_docs/version-0.15.17/channel-telegram-routing.md",
+  "tags": [],
+  "version": "0.15.17",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "10/14/2018",
+  "frontMatter": {
+    "id": "channel-telegram-routing",
+    "title": "Telegram Routings"
+  }
+}

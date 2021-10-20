@@ -1,0 +1,21 @@
+{
+  "unversionedId": "the-basics-errors",
+  "id": "version-0.15.17/the-basics-errors",
+  "isDocsHomePage": false,
+  "title": "Error Handling",
+  "description": "Customizing the Error Message",
+  "source": "@site/versioned_docs/version-0.15.17/the-basics-errors.md",
+  "sourceDirName": ".",
+  "slug": "/the-basics-errors",
+  "permalink": "/docs/0.15.17/the-basics-errors",
+  "editUrl": "https://github.com/Yoctol/bottender/edit/master/docs/versioned_docs/version-0.15.17/the-basics-errors.md",
+  "tags": [],
+  "version": "0.15.17",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "10/14/2018",
+  "frontMatter": {
+    "id": "the-basics-errors",
+    "title": "Error Handling"
+  }
+}

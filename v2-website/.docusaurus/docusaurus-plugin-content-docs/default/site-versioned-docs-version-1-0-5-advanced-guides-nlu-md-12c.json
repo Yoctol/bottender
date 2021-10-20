@@ -1,0 +1,31 @@
+{
+  "unversionedId": "advanced-guides-nlu",
+  "id": "version-1.0.5/advanced-guides-nlu",
+  "isDocsHomePage": false,
+  "title": "Natural Language Understanding",
+  "description": "Leverage NLU Technologies",
+  "source": "@site/versioned_docs/version-1.0.5/advanced-guides-nlu.md",
+  "sourceDirName": ".",
+  "slug": "/advanced-guides-nlu",
+  "permalink": "/docs/1.0.5/advanced-guides-nlu",
+  "editUrl": "https://github.com/Yoctol/bottender/edit/master/docs/versioned_docs/version-1.0.5/advanced-guides-nlu.md",
+  "tags": [],
+  "version": "1.0.5",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "10/14/2018",
+  "frontMatter": {
+    "id": "advanced-guides-nlu",
+    "title": "Natural Language Understanding",
+    "original_id": "advanced-guides-nlu"
+  },
+  "sidebar": "version-1.0.5/docs",
+  "previous": {
+    "title": "Error Handling",
+    "permalink": "/docs/1.0.5/the-basics-errors"
+  },
+  "next": {
+    "title": "Multi-Messaging Channel Support",
+    "permalink": "/docs/1.0.5/advanced-guides-multi-channel"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "unversionedId": "migrating-v1",
+  "id": "version-1.5/migrating-v1",
+  "isDocsHomePage": false,
+  "title": "Migrating from v0.x to v1",
+  "description": "To make bot developers have happier development experience, we made the following changes:",
+  "source": "@site/versioned_docs/version-1.5/migrating-v1.md",
+  "sourceDirName": ".",
+  "slug": "/migrating-v1",
+  "permalink": "/docs/migrating-v1",
+  "editUrl": "https://github.com/Yoctol/bottender/edit/master/docs/versioned_docs/version-1.5/migrating-v1.md",
+  "tags": [],
+  "version": "1.5",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "10/14/2018",
+  "frontMatter": {
+    "id": "migrating-v1",
+    "title": "Migrating from v0.x to v1",
+    "original_id": "migrating-v1"
+  },
+  "sidebar": "version-1.5/docs",
+  "previous": {
+    "title": "Getting Started",
+    "permalink": "/docs/getting-started"
+  },
+  "next": {
+    "title": "Console Mode",
+    "permalink": "/docs/the-basics-console-mode"
+  }
+}

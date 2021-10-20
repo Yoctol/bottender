@@ -1,0 +1,4170 @@
+{
+  "docusaurus-plugin-content-docs": {
+    "default": {
+      "path": "/docs",
+      "versions": [
+        {
+          "name": "current",
+          "label": "Next",
+          "isLast": false,
+          "path": "/docs/next",
+          "mainDocId": "getting-started",
+          "docs": [
+            {
+              "id": "advanced-guides-custom-server",
+              "path": "/docs/next/advanced-guides-custom-server",
+              "sidebar": "docs"
+            },
+            {
+              "id": "advanced-guides-deployment",
+              "path": "/docs/next/advanced-guides-deployment",
+              "sidebar": "docs"
+            },
+            {
+              "id": "advanced-guides-multi-channel",
+              "path": "/docs/next/advanced-guides-multi-channel",
+              "sidebar": "docs"
+            },
+            {
+              "id": "advanced-guides-nlu",
+              "path": "/docs/next/advanced-guides-nlu",
+              "sidebar": "docs"
+            },
+            {
+              "id": "api-console-context",
+              "path": "/docs/next/api-console-context",
+              "sidebar": "api"
+            },
+            {
+              "id": "api-console-event",
+              "path": "/docs/next/api-console-event",
+              "sidebar": "api"
+            },
+            {
+              "id": "api-context",
+              "path": "/docs/next/api-context",
+              "sidebar": "api"
+            },
+            {
+              "id": "api-event",
+              "path": "/docs/next/api-event",
+              "sidebar": "api"
+            },
+            {
+              "id": "api-line-client",
+              "path": "/docs/next/api-line-client",
+              "sidebar": "api"
+            },
+            {
+              "id": "api-line-context",
+              "path": "/docs/next/api-line-context",
+              "sidebar": "api"
+            },
+            {
+              "id": "api-line-event",
+              "path": "/docs/next/api-line-event",
+              "sidebar": "api"
+            },
+            {
+              "id": "api-messenger-client",
+              "path": "/docs/next/api-messenger-client",
+              "sidebar": "api"
+            },
+            {
+              "id": "api-messenger-context",
+              "path": "/docs/next/api-messenger-context",
+              "sidebar": "api"
+            },
+            {
+              "id": "api-messenger-event",
+              "path": "/docs/next/api-messenger-event",
+              "sidebar": "api"
+            },
+            {
+              "id": "api-slack-client",
+              "path": "/docs/next/api-slack-client",
+              "sidebar": "api"
+            },
+            {
+              "id": "api-slack-context",
+              "path": "/docs/next/api-slack-context",
+              "sidebar": "api"
+            },
+            {
+              "id": "api-slack-event",
+              "path": "/docs/next/api-slack-event",
+              "sidebar": "api"
+            },
+            {
+              "id": "api-telegram-client",
+              "path": "/docs/next/api-telegram-client",
+              "sidebar": "api"
+            },
+            {
+              "id": "api-telegram-context",
+              "path": "/docs/next/api-telegram-context",
+              "sidebar": "api"
+            },
+            {
+              "id": "api-telegram-event",
+              "path": "/docs/next/api-telegram-event",
+              "sidebar": "api"
+            },
+            {
+              "id": "api-viber-client",
+              "path": "/docs/next/api-viber-client",
+              "sidebar": "api"
+            },
+            {
+              "id": "api-viber-context",
+              "path": "/docs/next/api-viber-context",
+              "sidebar": "api"
+            },
+            {
+              "id": "api-viber-event",
+              "path": "/docs/next/api-viber-event",
+              "sidebar": "api"
+            },
+            {
+              "id": "channel-line-errors",
+              "path": "/docs/next/channel-line-errors",
+              "sidebar": "docs"
+            },
+            {
+              "id": "channel-line-flex",
+              "path": "/docs/next/channel-line-flex",
+              "sidebar": "docs"
+            },
+            {
+              "id": "channel-line-handling-events",
+              "path": "/docs/next/channel-line-handling-events",
+              "sidebar": "docs"
+            },
+            {
+              "id": "channel-line-liff",
+              "path": "/docs/next/channel-line-liff",
+              "sidebar": "docs"
+            },
+            {
+              "id": "channel-line-migrating-from-sdk",
+              "path": "/docs/next/channel-line-migrating-from-sdk",
+              "sidebar": "docs"
+            },
+            {
+              "id": "channel-line-notify",
+              "path": "/docs/next/channel-line-notify",
+              "sidebar": "docs"
+            },
+            {
+              "id": "channel-line-rich-menu",
+              "path": "/docs/next/channel-line-rich-menu",
+              "sidebar": "docs"
+            },
+            {
+              "id": "channel-line-routing",
+              "path": "/docs/next/channel-line-routing",
+              "sidebar": "docs"
+            },
+            {
+              "id": "channel-line-sending-messages",
+              "path": "/docs/next/channel-line-sending-messages",
+              "sidebar": "docs"
+            },
+            {
+              "id": "channel-line-setup",
+              "path": "/docs/next/channel-line-setup",
+              "sidebar": "docs"
+            },
+            {
+              "id": "channel-messenger-handling-events",
+              "path": "/docs/next/channel-messenger-handling-events",
+              "sidebar": "docs"
+            },
+            {
+              "id": "channel-messenger-handover-protocol",
+              "path": "/docs/next/channel-messenger-handover-protocol",
+              "sidebar": "docs"
+            },
+            {
+              "id": "channel-messenger-multi-page",
+              "path": "/docs/next/channel-messenger-multi-page",
+              "sidebar": "docs"
+            },
+            {
+              "id": "channel-messenger-persona",
+              "path": "/docs/next/channel-messenger-persona",
+              "sidebar": "docs"
+            },
+            {
+              "id": "channel-messenger-profile",
+              "path": "/docs/next/channel-messenger-profile",
+              "sidebar": "docs"
+            },
+            {
+              "id": "channel-messenger-routing",
+              "path": "/docs/next/channel-messenger-routing",
+              "sidebar": "docs"
+            },
+            {
+              "id": "channel-messenger-sending-messages",
+              "path": "/docs/next/channel-messenger-sending-messages",
+              "sidebar": "docs"
+            },
+            {
+              "id": "channel-messenger-setup",
+              "path": "/docs/next/channel-messenger-setup",
+              "sidebar": "docs"
+            },
+            {
+              "id": "channel-slack-block-kit",
+              "path": "/docs/next/channel-slack-block-kit",
+              "sidebar": "docs"
+            },
+            {
+              "id": "channel-slack-handling-events",
+              "path": "/docs/next/channel-slack-handling-events",
+              "sidebar": "docs"
+            },
+            {
+              "id": "channel-slack-routing",
+              "path": "/docs/next/channel-slack-routing",
+              "sidebar": "docs"
+            },
+            {
+              "id": "channel-slack-sending-messages",
+              "path": "/docs/next/channel-slack-sending-messages",
+              "sidebar": "docs"
+            },
+            {
+              "id": "channel-slack-setup",
+              "path": "/docs/next/channel-slack-setup",
+              "sidebar": "docs"
+            },
+            {
+              "id": "channel-slack-slash-command",
+              "path": "/docs/next/channel-slack-slash-command",
+              "sidebar": "docs"
+            },
+            {
+              "id": "channel-telegram-handling-events",
+              "path": "/docs/next/channel-telegram-handling-events",
+              "sidebar": "docs"
+            },
+            {
+              "id": "channel-telegram-routing",
+              "path": "/docs/next/channel-telegram-routing",
+              "sidebar": "docs"
+            },
+            {
+              "id": "channel-telegram-sending-messages",
+              "path": "/docs/next/channel-telegram-sending-messages",
+              "sidebar": "docs"
+            },
+            {
+              "id": "channel-telegram-setup",
+              "path": "/docs/next/channel-telegram-setup",
+              "sidebar": "docs"
+            },
+            {
+              "id": "channel-viber-handling-events",
+              "path": "/docs/next/channel-viber-handling-events",
+              "sidebar": "docs"
+            },
+            {
+              "id": "channel-viber-routing",
+              "path": "/docs/next/channel-viber-routing",
+              "sidebar": "docs"
+            },
+            {
+              "id": "channel-viber-sending-messages",
+              "path": "/docs/next/channel-viber-sending-messages",
+              "sidebar": "docs"
+            },
+            {
+              "id": "channel-viber-setup",
+              "path": "/docs/next/channel-viber-setup",
+              "sidebar": "docs"
+            },
+            {
+              "id": "channel-whatsapp-handling-events",
+              "path": "/docs/next/channel-whatsapp-handling-events",
+              "sidebar": "docs"
+            },
+            {
+              "id": "channel-whatsapp-routing",
+              "path": "/docs/next/channel-whatsapp-routing",
+              "sidebar": "docs"
+            },
+            {
+              "id": "channel-whatsapp-sending-messages",
+              "path": "/docs/next/channel-whatsapp-sending-messages",
+              "sidebar": "docs"
+            },
+            {
+              "id": "channel-whatsapp-setup",
+              "path": "/docs/next/channel-whatsapp-setup",
+              "sidebar": "docs"
+            },
+            {
+              "id": "getting-started",
+              "path": "/docs/next/",
+              "sidebar": "docs"
+            },
+            {
+              "id": "migrating-v1",
+              "path": "/docs/next/migrating-v1",
+              "sidebar": "docs"
+            },
+            {
+              "id": "the-basics-actions",
+              "path": "/docs/next/the-basics-actions",
+              "sidebar": "docs"
+            },
+            {
+              "id": "the-basics-chain",
+              "path": "/docs/next/the-basics-chain",
+              "sidebar": "docs"
+            },
+            {
+              "id": "the-basics-console-mode",
+              "path": "/docs/next/the-basics-console-mode",
+              "sidebar": "docs"
+            },
+            {
+              "id": "the-basics-context-event",
+              "path": "/docs/next/the-basics-context-event"
+            },
+            {
+              "id": "the-basics-errors",
+              "path": "/docs/next/the-basics-errors",
+              "sidebar": "docs"
+            },
+            {
+              "id": "the-basics-routing",
+              "path": "/docs/next/the-basics-routing",
+              "sidebar": "docs"
+            },
+            {
+              "id": "the-basics-session",
+              "path": "/docs/next/the-basics-session",
+              "sidebar": "docs"
+            }
+          ]
+        },
+        {
+          "name": "1.5",
+          "label": "1.5",
+          "isLast": true,
+          "path": "/docs",
+          "mainDocId": "getting-started",
+          "docs": [
+            {
+              "id": "advanced-guides-custom-server",
+              "path": "/docs/advanced-guides-custom-server",
+              "sidebar": "version-1.5/docs"
+            },
+            {
+              "id": "advanced-guides-deployment",
+              "path": "/docs/advanced-guides-deployment",
+              "sidebar": "version-1.5/docs"
+            },
+            {
+              "id": "advanced-guides-multi-channel",
+              "path": "/docs/advanced-guides-multi-channel",
+              "sidebar": "version-1.5/docs"
+            },
+            {
+              "id": "advanced-guides-multi-channel",
+              "path": "/docs/advanced-guides-multi-channel",
+              "sidebar": "version-1.5/docs"
+            },
+            {
+              "id": "advanced-guides-nlu",
+              "path": "/docs/advanced-guides-nlu",
+              "sidebar": "version-1.5/docs"
+            },
+            {
+              "id": "api-console-context",
+              "path": "/docs/api-console-context",
+              "sidebar": "version-1.5/api"
+            },
+            {
+              "id": "api-console-event",
+              "path": "/docs/api-console-event",
+              "sidebar": "version-1.5/api"
+            },
+            {
+              "id": "api-console-event",
+              "path": "/docs/api-console-event",
+              "sidebar": "version-1.5/api"
+            },
+            {
+              "id": "api-consolecontext",
+              "path": "/docs/api-consolecontext"
+            },
+            {
+              "id": "api-context",
+              "path": "/docs/api-context",
+              "sidebar": "version-1.5/api"
+            },
+            {
+              "id": "api-context",
+              "path": "/docs/api-context",
+              "sidebar": "version-1.5/api"
+            },
+            {
+              "id": "api-event",
+              "path": "/docs/api-event",
+              "sidebar": "version-1.5/api"
+            },
+            {
+              "id": "api-event",
+              "path": "/docs/api-event",
+              "sidebar": "version-1.5/api"
+            },
+            {
+              "id": "api-handler",
+              "path": "/docs/api-handler"
+            },
+            {
+              "id": "api-line-client",
+              "path": "/docs/api-line-client",
+              "sidebar": "version-1.5/api"
+            },
+            {
+              "id": "api-line-context",
+              "path": "/docs/api-line-context",
+              "sidebar": "version-1.5/api"
+            },
+            {
+              "id": "api-line-event",
+              "path": "/docs/api-line-event",
+              "sidebar": "version-1.5/api"
+            },
+            {
+              "id": "api-linecontext",
+              "path": "/docs/api-linecontext"
+            },
+            {
+              "id": "api-lineevent",
+              "path": "/docs/api-lineevent"
+            },
+            {
+              "id": "api-messenger-client",
+              "path": "/docs/api-messenger-client",
+              "sidebar": "version-1.5/api"
+            },
+            {
+              "id": "api-messenger-context",
+              "path": "/docs/api-messenger-context",
+              "sidebar": "version-1.5/api"
+            },
+            {
+              "id": "api-messenger-event",
+              "path": "/docs/api-messenger-event",
+              "sidebar": "version-1.5/api"
+            },
+            {
+              "id": "api-messengercontext",
+              "path": "/docs/api-messengercontext"
+            },
+            {
+              "id": "api-messengerevent",
+              "path": "/docs/api-messengerevent"
+            },
+            {
+              "id": "api-slack-client",
+              "path": "/docs/api-slack-client",
+              "sidebar": "version-1.5/api"
+            },
+            {
+              "id": "api-slack-context",
+              "path": "/docs/api-slack-context",
+              "sidebar": "version-1.5/api"
+            },
+            {
+              "id": "api-slack-event",
+              "path": "/docs/api-slack-event",
+              "sidebar": "version-1.5/api"
+            },
+            {
+              "id": "api-slackcontext",
+              "path": "/docs/api-slackcontext"
+            },
+            {
+              "id": "api-slackevent",
+              "path": "/docs/api-slackevent"
+            },
+            {
+              "id": "api-telegram-client",
+              "path": "/docs/api-telegram-client",
+              "sidebar": "version-1.5/api"
+            },
+            {
+              "id": "api-telegram-context",
+              "path": "/docs/api-telegram-context",
+              "sidebar": "version-1.5/api"
+            },
+            {
+              "id": "api-telegram-event",
+              "path": "/docs/api-telegram-event",
+              "sidebar": "version-1.5/api"
+            },
+            {
+              "id": "api-telegramcontext",
+              "path": "/docs/api-telegramcontext"
+            },
+            {
+              "id": "api-telegramevent",
+              "path": "/docs/api-telegramevent"
+            },
+            {
+              "id": "api-viber-client",
+              "path": "/docs/api-viber-client",
+              "sidebar": "version-1.5/api"
+            },
+            {
+              "id": "api-viber-context",
+              "path": "/docs/api-viber-context",
+              "sidebar": "version-1.5/api"
+            },
+            {
+              "id": "api-viber-event",
+              "path": "/docs/api-viber-event",
+              "sidebar": "version-1.5/api"
+            },
+            {
+              "id": "api-vibercontext",
+              "path": "/docs/api-vibercontext"
+            },
+            {
+              "id": "api-viberevent",
+              "path": "/docs/api-viberevent"
+            },
+            {
+              "id": "channel-line-errors",
+              "path": "/docs/channel-line-errors",
+              "sidebar": "version-1.5/docs"
+            },
+            {
+              "id": "channel-line-flex",
+              "path": "/docs/channel-line-flex",
+              "sidebar": "version-1.5/docs"
+            },
+            {
+              "id": "channel-line-handling-events",
+              "path": "/docs/channel-line-handling-events",
+              "sidebar": "version-1.5/docs"
+            },
+            {
+              "id": "channel-line-liff",
+              "path": "/docs/channel-line-liff",
+              "sidebar": "version-1.5/docs"
+            },
+            {
+              "id": "channel-line-migrating-from-sdk",
+              "path": "/docs/channel-line-migrating-from-sdk",
+              "sidebar": "version-1.5/docs"
+            },
+            {
+              "id": "channel-line-notify",
+              "path": "/docs/channel-line-notify",
+              "sidebar": "version-1.5/docs"
+            },
+            {
+              "id": "channel-line-rich-menu",
+              "path": "/docs/channel-line-rich-menu",
+              "sidebar": "version-1.5/docs"
+            },
+            {
+              "id": "channel-line-routing",
+              "path": "/docs/channel-line-routing",
+              "sidebar": "version-1.5/docs"
+            },
+            {
+              "id": "channel-line-sending-messages",
+              "path": "/docs/channel-line-sending-messages",
+              "sidebar": "version-1.5/docs"
+            },
+            {
+              "id": "channel-line-setup",
+              "path": "/docs/channel-line-setup",
+              "sidebar": "version-1.5/docs"
+            },
+            {
+              "id": "channel-messenger-handling-events",
+              "path": "/docs/channel-messenger-handling-events",
+              "sidebar": "version-1.5/docs"
+            },
+            {
+              "id": "channel-messenger-handover-protocol",
+              "path": "/docs/channel-messenger-handover-protocol",
+              "sidebar": "version-1.5/docs"
+            },
+            {
+              "id": "channel-messenger-multi-page",
+              "path": "/docs/channel-messenger-multi-page",
+              "sidebar": "version-1.5/docs"
+            },
+            {
+              "id": "channel-messenger-persona",
+              "path": "/docs/channel-messenger-persona",
+              "sidebar": "version-1.5/docs"
+            },
+            {
+              "id": "channel-messenger-profile",
+              "path": "/docs/channel-messenger-profile",
+              "sidebar": "version-1.5/docs"
+            },
+            {
+              "id": "channel-messenger-routing",
+              "path": "/docs/channel-messenger-routing",
+              "sidebar": "version-1.5/docs"
+            },
+            {
+              "id": "channel-messenger-sending-messages",
+              "path": "/docs/channel-messenger-sending-messages",
+              "sidebar": "version-1.5/docs"
+            },
+            {
+              "id": "channel-messenger-setup",
+              "path": "/docs/channel-messenger-setup",
+              "sidebar": "version-1.5/docs"
+            },
+            {
+              "id": "channel-slack-block-kit",
+              "path": "/docs/channel-slack-block-kit",
+              "sidebar": "version-1.5/docs"
+            },
+            {
+              "id": "channel-slack-handling-events",
+              "path": "/docs/channel-slack-handling-events",
+              "sidebar": "version-1.5/docs"
+            },
+            {
+              "id": "channel-slack-routing",
+              "path": "/docs/channel-slack-routing",
+              "sidebar": "version-1.5/docs"
+            },
+            {
+              "id": "channel-slack-sending-messages",
+              "path": "/docs/channel-slack-sending-messages",
+              "sidebar": "version-1.5/docs"
+            },
+            {
+              "id": "channel-slack-setup",
+              "path": "/docs/channel-slack-setup",
+              "sidebar": "version-1.5/docs"
+            },
+            {
+              "id": "channel-slack-slash-command",
+              "path": "/docs/channel-slack-slash-command",
+              "sidebar": "version-1.5/docs"
+            },
+            {
+              "id": "channel-telegram-handling-events",
+              "path": "/docs/channel-telegram-handling-events",
+              "sidebar": "version-1.5/docs"
+            },
+            {
+              "id": "channel-telegram-routing",
+              "path": "/docs/channel-telegram-routing",
+              "sidebar": "version-1.5/docs"
+            },
+            {
+              "id": "channel-telegram-sending-messages",
+              "path": "/docs/channel-telegram-sending-messages",
+              "sidebar": "version-1.5/docs"
+            },
+            {
+              "id": "channel-telegram-setup",
+              "path": "/docs/channel-telegram-setup",
+              "sidebar": "version-1.5/docs"
+            },
+            {
+              "id": "channel-viber-handling-events",
+              "path": "/docs/channel-viber-handling-events",
+              "sidebar": "version-1.5/docs"
+            },
+            {
+              "id": "channel-viber-routing",
+              "path": "/docs/channel-viber-routing",
+              "sidebar": "version-1.5/docs"
+            },
+            {
+              "id": "channel-viber-sending-messages",
+              "path": "/docs/channel-viber-sending-messages",
+              "sidebar": "version-1.5/docs"
+            },
+            {
+              "id": "channel-viber-setup",
+              "path": "/docs/channel-viber-setup",
+              "sidebar": "version-1.5/docs"
+            },
+            {
+              "id": "channel-whatsapp-handling-events",
+              "path": "/docs/channel-whatsapp-handling-events",
+              "sidebar": "version-1.5/docs"
+            },
+            {
+              "id": "channel-whatsapp-routing",
+              "path": "/docs/channel-whatsapp-routing",
+              "sidebar": "version-1.5/docs"
+            },
+            {
+              "id": "channel-whatsapp-sending-messages",
+              "path": "/docs/channel-whatsapp-sending-messages",
+              "sidebar": "version-1.5/docs"
+            },
+            {
+              "id": "channel-whatsapp-setup",
+              "path": "/docs/channel-whatsapp-setup",
+              "sidebar": "version-1.5/docs"
+            },
+            {
+              "id": "commands",
+              "path": "/docs/commands"
+            },
+            {
+              "id": "console",
+              "path": "/docs/console"
+            },
+            {
+              "id": "custom-connector",
+              "path": "/docs/custom-connector"
+            },
+            {
+              "id": "deployment",
+              "path": "/docs/deployment"
+            },
+            {
+              "id": "error-handling",
+              "path": "/docs/error-handling"
+            },
+            {
+              "id": "getting-started",
+              "path": "/docs/getting-started",
+              "sidebar": "version-1.5/docs"
+            },
+            {
+              "id": "getting-started",
+              "path": "/docs/getting-started",
+              "sidebar": "version-1.5/docs"
+            },
+            {
+              "id": "intents",
+              "path": "/docs/intents"
+            },
+            {
+              "id": "line",
+              "path": "/docs/line"
+            },
+            {
+              "id": "messenger",
+              "path": "/docs/messenger"
+            },
+            {
+              "id": "middleware",
+              "path": "/docs/middleware"
+            },
+            {
+              "id": "migrating-v1",
+              "path": "/docs/migrating-v1",
+              "sidebar": "version-1.5/docs"
+            },
+            {
+              "id": "server",
+              "path": "/docs/server"
+            },
+            {
+              "id": "session",
+              "path": "/docs/session"
+            },
+            {
+              "id": "slack",
+              "path": "/docs/slack"
+            },
+            {
+              "id": "state",
+              "path": "/docs/state"
+            },
+            {
+              "id": "telegram",
+              "path": "/docs/telegram"
+            },
+            {
+              "id": "testing",
+              "path": "/docs/testing"
+            },
+            {
+              "id": "the-basics-actions",
+              "path": "/docs/the-basics-actions",
+              "sidebar": "version-1.5/docs"
+            },
+            {
+              "id": "the-basics-chain",
+              "path": "/docs/the-basics-chain",
+              "sidebar": "version-1.5/docs"
+            },
+            {
+              "id": "the-basics-console-mode",
+              "path": "/docs/the-basics-console-mode",
+              "sidebar": "version-1.5/docs"
+            },
+            {
+              "id": "the-basics-context-event",
+              "path": "/docs/the-basics-context-event"
+            },
+            {
+              "id": "the-basics-errors",
+              "path": "/docs/the-basics-errors",
+              "sidebar": "version-1.5/docs"
+            },
+            {
+              "id": "the-basics-routing",
+              "path": "/docs/the-basics-routing",
+              "sidebar": "version-1.5/docs"
+            },
+            {
+              "id": "the-basics-session",
+              "path": "/docs/the-basics-session",
+              "sidebar": "version-1.5/docs"
+            },
+            {
+              "id": "troubleshooting",
+              "path": "/docs/troubleshooting"
+            },
+            {
+              "id": "viber",
+              "path": "/docs/viber"
+            }
+          ]
+        },
+        {
+          "name": "1.4",
+          "label": "1.4",
+          "isLast": false,
+          "path": "/docs/1.4",
+          "mainDocId": "getting-started",
+          "docs": [
+            {
+              "id": "advanced-guides-custom-server",
+              "path": "/docs/1.4/advanced-guides-custom-server",
+              "sidebar": "version-1.4/docs"
+            },
+            {
+              "id": "advanced-guides-deployment",
+              "path": "/docs/1.4/advanced-guides-deployment",
+              "sidebar": "version-1.4/docs"
+            },
+            {
+              "id": "advanced-guides-multi-channel",
+              "path": "/docs/1.4/advanced-guides-multi-channel",
+              "sidebar": "version-1.4/docs"
+            },
+            {
+              "id": "advanced-guides-multi-channel",
+              "path": "/docs/1.4/advanced-guides-multi-channel",
+              "sidebar": "version-1.4/docs"
+            },
+            {
+              "id": "advanced-guides-nlu",
+              "path": "/docs/1.4/advanced-guides-nlu",
+              "sidebar": "version-1.4/docs"
+            },
+            {
+              "id": "api-console-context",
+              "path": "/docs/1.4/api-console-context",
+              "sidebar": "version-1.4/api"
+            },
+            {
+              "id": "api-console-event",
+              "path": "/docs/1.4/api-console-event",
+              "sidebar": "version-1.4/api"
+            },
+            {
+              "id": "api-console-event",
+              "path": "/docs/1.4/api-console-event",
+              "sidebar": "version-1.4/api"
+            },
+            {
+              "id": "api-consolecontext",
+              "path": "/docs/1.4/api-consolecontext"
+            },
+            {
+              "id": "api-context",
+              "path": "/docs/1.4/api-context",
+              "sidebar": "version-1.4/api"
+            },
+            {
+              "id": "api-context",
+              "path": "/docs/1.4/api-context",
+              "sidebar": "version-1.4/api"
+            },
+            {
+              "id": "api-event",
+              "path": "/docs/1.4/api-event",
+              "sidebar": "version-1.4/api"
+            },
+            {
+              "id": "api-event",
+              "path": "/docs/1.4/api-event",
+              "sidebar": "version-1.4/api"
+            },
+            {
+              "id": "api-handler",
+              "path": "/docs/1.4/api-handler"
+            },
+            {
+              "id": "api-line-client",
+              "path": "/docs/1.4/api-line-client",
+              "sidebar": "version-1.4/api"
+            },
+            {
+              "id": "api-line-context",
+              "path": "/docs/1.4/api-line-context",
+              "sidebar": "version-1.4/api"
+            },
+            {
+              "id": "api-line-event",
+              "path": "/docs/1.4/api-line-event",
+              "sidebar": "version-1.4/api"
+            },
+            {
+              "id": "api-linecontext",
+              "path": "/docs/1.4/api-linecontext"
+            },
+            {
+              "id": "api-lineevent",
+              "path": "/docs/1.4/api-lineevent"
+            },
+            {
+              "id": "api-messenger-client",
+              "path": "/docs/1.4/api-messenger-client",
+              "sidebar": "version-1.4/api"
+            },
+            {
+              "id": "api-messenger-context",
+              "path": "/docs/1.4/api-messenger-context",
+              "sidebar": "version-1.4/api"
+            },
+            {
+              "id": "api-messenger-event",
+              "path": "/docs/1.4/api-messenger-event",
+              "sidebar": "version-1.4/api"
+            },
+            {
+              "id": "api-messengercontext",
+              "path": "/docs/1.4/api-messengercontext"
+            },
+            {
+              "id": "api-messengerevent",
+              "path": "/docs/1.4/api-messengerevent"
+            },
+            {
+              "id": "api-slack-client",
+              "path": "/docs/1.4/api-slack-client",
+              "sidebar": "version-1.4/api"
+            },
+            {
+              "id": "api-slack-context",
+              "path": "/docs/1.4/api-slack-context",
+              "sidebar": "version-1.4/api"
+            },
+            {
+              "id": "api-slack-event",
+              "path": "/docs/1.4/api-slack-event",
+              "sidebar": "version-1.4/api"
+            },
+            {
+              "id": "api-slackcontext",
+              "path": "/docs/1.4/api-slackcontext"
+            },
+            {
+              "id": "api-slackevent",
+              "path": "/docs/1.4/api-slackevent"
+            },
+            {
+              "id": "api-telegram-client",
+              "path": "/docs/1.4/api-telegram-client",
+              "sidebar": "version-1.4/api"
+            },
+            {
+              "id": "api-telegram-context",
+              "path": "/docs/1.4/api-telegram-context",
+              "sidebar": "version-1.4/api"
+            },
+            {
+              "id": "api-telegram-event",
+              "path": "/docs/1.4/api-telegram-event",
+              "sidebar": "version-1.4/api"
+            },
+            {
+              "id": "api-telegramcontext",
+              "path": "/docs/1.4/api-telegramcontext"
+            },
+            {
+              "id": "api-telegramevent",
+              "path": "/docs/1.4/api-telegramevent"
+            },
+            {
+              "id": "api-viber-client",
+              "path": "/docs/1.4/api-viber-client",
+              "sidebar": "version-1.4/api"
+            },
+            {
+              "id": "api-viber-context",
+              "path": "/docs/1.4/api-viber-context",
+              "sidebar": "version-1.4/api"
+            },
+            {
+              "id": "api-viber-event",
+              "path": "/docs/1.4/api-viber-event",
+              "sidebar": "version-1.4/api"
+            },
+            {
+              "id": "api-vibercontext",
+              "path": "/docs/1.4/api-vibercontext"
+            },
+            {
+              "id": "api-viberevent",
+              "path": "/docs/1.4/api-viberevent"
+            },
+            {
+              "id": "channel-line-errors",
+              "path": "/docs/1.4/channel-line-errors",
+              "sidebar": "version-1.4/docs"
+            },
+            {
+              "id": "channel-line-flex",
+              "path": "/docs/1.4/channel-line-flex",
+              "sidebar": "version-1.4/docs"
+            },
+            {
+              "id": "channel-line-handling-events",
+              "path": "/docs/1.4/channel-line-handling-events",
+              "sidebar": "version-1.4/docs"
+            },
+            {
+              "id": "channel-line-liff",
+              "path": "/docs/1.4/channel-line-liff",
+              "sidebar": "version-1.4/docs"
+            },
+            {
+              "id": "channel-line-migrating-from-sdk",
+              "path": "/docs/1.4/channel-line-migrating-from-sdk",
+              "sidebar": "version-1.4/docs"
+            },
+            {
+              "id": "channel-line-notify",
+              "path": "/docs/1.4/channel-line-notify",
+              "sidebar": "version-1.4/docs"
+            },
+            {
+              "id": "channel-line-rich-menu",
+              "path": "/docs/1.4/channel-line-rich-menu",
+              "sidebar": "version-1.4/docs"
+            },
+            {
+              "id": "channel-line-routing",
+              "path": "/docs/1.4/channel-line-routing",
+              "sidebar": "version-1.4/docs"
+            },
+            {
+              "id": "channel-line-sending-messages",
+              "path": "/docs/1.4/channel-line-sending-messages",
+              "sidebar": "version-1.4/docs"
+            },
+            {
+              "id": "channel-line-setup",
+              "path": "/docs/1.4/channel-line-setup",
+              "sidebar": "version-1.4/docs"
+            },
+            {
+              "id": "channel-messenger-handling-events",
+              "path": "/docs/1.4/channel-messenger-handling-events",
+              "sidebar": "version-1.4/docs"
+            },
+            {
+              "id": "channel-messenger-handover-protocol",
+              "path": "/docs/1.4/channel-messenger-handover-protocol",
+              "sidebar": "version-1.4/docs"
+            },
+            {
+              "id": "channel-messenger-multi-page",
+              "path": "/docs/1.4/channel-messenger-multi-page",
+              "sidebar": "version-1.4/docs"
+            },
+            {
+              "id": "channel-messenger-persona",
+              "path": "/docs/1.4/channel-messenger-persona",
+              "sidebar": "version-1.4/docs"
+            },
+            {
+              "id": "channel-messenger-profile",
+              "path": "/docs/1.4/channel-messenger-profile",
+              "sidebar": "version-1.4/docs"
+            },
+            {
+              "id": "channel-messenger-routing",
+              "path": "/docs/1.4/channel-messenger-routing",
+              "sidebar": "version-1.4/docs"
+            },
+            {
+              "id": "channel-messenger-sending-messages",
+              "path": "/docs/1.4/channel-messenger-sending-messages",
+              "sidebar": "version-1.4/docs"
+            },
+            {
+              "id": "channel-messenger-setup",
+              "path": "/docs/1.4/channel-messenger-setup",
+              "sidebar": "version-1.4/docs"
+            },
+            {
+              "id": "channel-slack-block-kit",
+              "path": "/docs/1.4/channel-slack-block-kit",
+              "sidebar": "version-1.4/docs"
+            },
+            {
+              "id": "channel-slack-handling-events",
+              "path": "/docs/1.4/channel-slack-handling-events",
+              "sidebar": "version-1.4/docs"
+            },
+            {
+              "id": "channel-slack-routing",
+              "path": "/docs/1.4/channel-slack-routing",
+              "sidebar": "version-1.4/docs"
+            },
+            {
+              "id": "channel-slack-sending-messages",
+              "path": "/docs/1.4/channel-slack-sending-messages",
+              "sidebar": "version-1.4/docs"
+            },
+            {
+              "id": "channel-slack-setup",
+              "path": "/docs/1.4/channel-slack-setup",
+              "sidebar": "version-1.4/docs"
+            },
+            {
+              "id": "channel-slack-slash-command",
+              "path": "/docs/1.4/channel-slack-slash-command",
+              "sidebar": "version-1.4/docs"
+            },
+            {
+              "id": "channel-telegram-handling-events",
+              "path": "/docs/1.4/channel-telegram-handling-events",
+              "sidebar": "version-1.4/docs"
+            },
+            {
+              "id": "channel-telegram-routing",
+              "path": "/docs/1.4/channel-telegram-routing",
+              "sidebar": "version-1.4/docs"
+            },
+            {
+              "id": "channel-telegram-sending-messages",
+              "path": "/docs/1.4/channel-telegram-sending-messages",
+              "sidebar": "version-1.4/docs"
+            },
+            {
+              "id": "channel-telegram-setup",
+              "path": "/docs/1.4/channel-telegram-setup",
+              "sidebar": "version-1.4/docs"
+            },
+            {
+              "id": "channel-viber-handling-events",
+              "path": "/docs/1.4/channel-viber-handling-events",
+              "sidebar": "version-1.4/docs"
+            },
+            {
+              "id": "channel-viber-routing",
+              "path": "/docs/1.4/channel-viber-routing",
+              "sidebar": "version-1.4/docs"
+            },
+            {
+              "id": "channel-viber-sending-messages",
+              "path": "/docs/1.4/channel-viber-sending-messages",
+              "sidebar": "version-1.4/docs"
+            },
+            {
+              "id": "channel-viber-setup",
+              "path": "/docs/1.4/channel-viber-setup",
+              "sidebar": "version-1.4/docs"
+            },
+            {
+              "id": "channel-whatsapp-handling-events",
+              "path": "/docs/1.4/channel-whatsapp-handling-events",
+              "sidebar": "version-1.4/docs"
+            },
+            {
+              "id": "channel-whatsapp-routing",
+              "path": "/docs/1.4/channel-whatsapp-routing",
+              "sidebar": "version-1.4/docs"
+            },
+            {
+              "id": "channel-whatsapp-sending-messages",
+              "path": "/docs/1.4/channel-whatsapp-sending-messages",
+              "sidebar": "version-1.4/docs"
+            },
+            {
+              "id": "channel-whatsapp-setup",
+              "path": "/docs/1.4/channel-whatsapp-setup",
+              "sidebar": "version-1.4/docs"
+            },
+            {
+              "id": "commands",
+              "path": "/docs/1.4/commands"
+            },
+            {
+              "id": "console",
+              "path": "/docs/1.4/console"
+            },
+            {
+              "id": "custom-connector",
+              "path": "/docs/1.4/custom-connector"
+            },
+            {
+              "id": "deployment",
+              "path": "/docs/1.4/deployment"
+            },
+            {
+              "id": "error-handling",
+              "path": "/docs/1.4/error-handling"
+            },
+            {
+              "id": "getting-started",
+              "path": "/docs/1.4/getting-started",
+              "sidebar": "version-1.4/docs"
+            },
+            {
+              "id": "getting-started",
+              "path": "/docs/1.4/getting-started",
+              "sidebar": "version-1.4/docs"
+            },
+            {
+              "id": "intents",
+              "path": "/docs/1.4/intents"
+            },
+            {
+              "id": "line",
+              "path": "/docs/1.4/line"
+            },
+            {
+              "id": "messenger",
+              "path": "/docs/1.4/messenger"
+            },
+            {
+              "id": "middleware",
+              "path": "/docs/1.4/middleware"
+            },
+            {
+              "id": "migrating-v1",
+              "path": "/docs/1.4/migrating-v1",
+              "sidebar": "version-1.4/docs"
+            },
+            {
+              "id": "server",
+              "path": "/docs/1.4/server"
+            },
+            {
+              "id": "session",
+              "path": "/docs/1.4/session"
+            },
+            {
+              "id": "slack",
+              "path": "/docs/1.4/slack"
+            },
+            {
+              "id": "state",
+              "path": "/docs/1.4/state"
+            },
+            {
+              "id": "telegram",
+              "path": "/docs/1.4/telegram"
+            },
+            {
+              "id": "testing",
+              "path": "/docs/1.4/testing"
+            },
+            {
+              "id": "the-basics-actions",
+              "path": "/docs/1.4/the-basics-actions",
+              "sidebar": "version-1.4/docs"
+            },
+            {
+              "id": "the-basics-chain",
+              "path": "/docs/1.4/the-basics-chain",
+              "sidebar": "version-1.4/docs"
+            },
+            {
+              "id": "the-basics-console-mode",
+              "path": "/docs/1.4/the-basics-console-mode",
+              "sidebar": "version-1.4/docs"
+            },
+            {
+              "id": "the-basics-context-event",
+              "path": "/docs/1.4/the-basics-context-event"
+            },
+            {
+              "id": "the-basics-errors",
+              "path": "/docs/1.4/the-basics-errors",
+              "sidebar": "version-1.4/docs"
+            },
+            {
+              "id": "the-basics-routing",
+              "path": "/docs/1.4/the-basics-routing",
+              "sidebar": "version-1.4/docs"
+            },
+            {
+              "id": "the-basics-session",
+              "path": "/docs/1.4/the-basics-session",
+              "sidebar": "version-1.4/docs"
+            },
+            {
+              "id": "troubleshooting",
+              "path": "/docs/1.4/troubleshooting"
+            },
+            {
+              "id": "viber",
+              "path": "/docs/1.4/viber"
+            }
+          ]
+        },
+        {
+          "name": "1.3.1",
+          "label": "1.3.1",
+          "isLast": false,
+          "path": "/docs/1.3.1",
+          "mainDocId": "getting-started",
+          "docs": [
+            {
+              "id": "advanced-guides-custom-server",
+              "path": "/docs/1.3.1/advanced-guides-custom-server",
+              "sidebar": "version-1.3.1/docs"
+            },
+            {
+              "id": "advanced-guides-deployment",
+              "path": "/docs/1.3.1/advanced-guides-deployment",
+              "sidebar": "version-1.3.1/docs"
+            },
+            {
+              "id": "advanced-guides-multi-channel",
+              "path": "/docs/1.3.1/advanced-guides-multi-channel",
+              "sidebar": "version-1.3.1/docs"
+            },
+            {
+              "id": "advanced-guides-multi-channel",
+              "path": "/docs/1.3.1/advanced-guides-multi-channel",
+              "sidebar": "version-1.3.1/docs"
+            },
+            {
+              "id": "advanced-guides-nlu",
+              "path": "/docs/1.3.1/advanced-guides-nlu",
+              "sidebar": "version-1.3.1/docs"
+            },
+            {
+              "id": "api-console-context",
+              "path": "/docs/1.3.1/api-console-context",
+              "sidebar": "version-1.3.1/api"
+            },
+            {
+              "id": "api-console-event",
+              "path": "/docs/1.3.1/api-console-event",
+              "sidebar": "version-1.3.1/api"
+            },
+            {
+              "id": "api-console-event",
+              "path": "/docs/1.3.1/api-console-event",
+              "sidebar": "version-1.3.1/api"
+            },
+            {
+              "id": "api-consolecontext",
+              "path": "/docs/1.3.1/api-consolecontext"
+            },
+            {
+              "id": "api-context",
+              "path": "/docs/1.3.1/api-context",
+              "sidebar": "version-1.3.1/api"
+            },
+            {
+              "id": "api-context",
+              "path": "/docs/1.3.1/api-context",
+              "sidebar": "version-1.3.1/api"
+            },
+            {
+              "id": "api-event",
+              "path": "/docs/1.3.1/api-event",
+              "sidebar": "version-1.3.1/api"
+            },
+            {
+              "id": "api-event",
+              "path": "/docs/1.3.1/api-event",
+              "sidebar": "version-1.3.1/api"
+            },
+            {
+              "id": "api-handler",
+              "path": "/docs/1.3.1/api-handler"
+            },
+            {
+              "id": "api-line-client",
+              "path": "/docs/1.3.1/api-line-client"
+            },
+            {
+              "id": "api-line-context",
+              "path": "/docs/1.3.1/api-line-context",
+              "sidebar": "version-1.3.1/api"
+            },
+            {
+              "id": "api-line-event",
+              "path": "/docs/1.3.1/api-line-event",
+              "sidebar": "version-1.3.1/api"
+            },
+            {
+              "id": "api-linecontext",
+              "path": "/docs/1.3.1/api-linecontext"
+            },
+            {
+              "id": "api-lineevent",
+              "path": "/docs/1.3.1/api-lineevent"
+            },
+            {
+              "id": "api-messenger-client",
+              "path": "/docs/1.3.1/api-messenger-client"
+            },
+            {
+              "id": "api-messenger-context",
+              "path": "/docs/1.3.1/api-messenger-context",
+              "sidebar": "version-1.3.1/api"
+            },
+            {
+              "id": "api-messenger-event",
+              "path": "/docs/1.3.1/api-messenger-event",
+              "sidebar": "version-1.3.1/api"
+            },
+            {
+              "id": "api-messengercontext",
+              "path": "/docs/1.3.1/api-messengercontext"
+            },
+            {
+              "id": "api-messengerevent",
+              "path": "/docs/1.3.1/api-messengerevent"
+            },
+            {
+              "id": "api-slack-client",
+              "path": "/docs/1.3.1/api-slack-client"
+            },
+            {
+              "id": "api-slack-context",
+              "path": "/docs/1.3.1/api-slack-context",
+              "sidebar": "version-1.3.1/api"
+            },
+            {
+              "id": "api-slack-event",
+              "path": "/docs/1.3.1/api-slack-event",
+              "sidebar": "version-1.3.1/api"
+            },
+            {
+              "id": "api-slackcontext",
+              "path": "/docs/1.3.1/api-slackcontext"
+            },
+            {
+              "id": "api-slackevent",
+              "path": "/docs/1.3.1/api-slackevent"
+            },
+            {
+              "id": "api-telegram-client",
+              "path": "/docs/1.3.1/api-telegram-client"
+            },
+            {
+              "id": "api-telegram-context",
+              "path": "/docs/1.3.1/api-telegram-context",
+              "sidebar": "version-1.3.1/api"
+            },
+            {
+              "id": "api-telegram-event",
+              "path": "/docs/1.3.1/api-telegram-event",
+              "sidebar": "version-1.3.1/api"
+            },
+            {
+              "id": "api-telegramcontext",
+              "path": "/docs/1.3.1/api-telegramcontext"
+            },
+            {
+              "id": "api-telegramevent",
+              "path": "/docs/1.3.1/api-telegramevent"
+            },
+            {
+              "id": "api-viber-client",
+              "path": "/docs/1.3.1/api-viber-client"
+            },
+            {
+              "id": "api-viber-context",
+              "path": "/docs/1.3.1/api-viber-context",
+              "sidebar": "version-1.3.1/api"
+            },
+            {
+              "id": "api-viber-event",
+              "path": "/docs/1.3.1/api-viber-event",
+              "sidebar": "version-1.3.1/api"
+            },
+            {
+              "id": "api-vibercontext",
+              "path": "/docs/1.3.1/api-vibercontext"
+            },
+            {
+              "id": "api-viberevent",
+              "path": "/docs/1.3.1/api-viberevent"
+            },
+            {
+              "id": "channel-line-errors",
+              "path": "/docs/1.3.1/channel-line-errors",
+              "sidebar": "version-1.3.1/docs"
+            },
+            {
+              "id": "channel-line-flex",
+              "path": "/docs/1.3.1/channel-line-flex",
+              "sidebar": "version-1.3.1/docs"
+            },
+            {
+              "id": "channel-line-handling-events",
+              "path": "/docs/1.3.1/channel-line-handling-events",
+              "sidebar": "version-1.3.1/docs"
+            },
+            {
+              "id": "channel-line-liff",
+              "path": "/docs/1.3.1/channel-line-liff",
+              "sidebar": "version-1.3.1/docs"
+            },
+            {
+              "id": "channel-line-migrating-from-sdk",
+              "path": "/docs/1.3.1/channel-line-migrating-from-sdk",
+              "sidebar": "version-1.3.1/docs"
+            },
+            {
+              "id": "channel-line-notify",
+              "path": "/docs/1.3.1/channel-line-notify"
+            },
+            {
+              "id": "channel-line-rich-menu",
+              "path": "/docs/1.3.1/channel-line-rich-menu",
+              "sidebar": "version-1.3.1/docs"
+            },
+            {
+              "id": "channel-line-routing",
+              "path": "/docs/1.3.1/channel-line-routing",
+              "sidebar": "version-1.3.1/docs"
+            },
+            {
+              "id": "channel-line-sending-messages",
+              "path": "/docs/1.3.1/channel-line-sending-messages",
+              "sidebar": "version-1.3.1/docs"
+            },
+            {
+              "id": "channel-line-setup",
+              "path": "/docs/1.3.1/channel-line-setup",
+              "sidebar": "version-1.3.1/docs"
+            },
+            {
+              "id": "channel-messenger-handling-events",
+              "path": "/docs/1.3.1/channel-messenger-handling-events",
+              "sidebar": "version-1.3.1/docs"
+            },
+            {
+              "id": "channel-messenger-handover-protocol",
+              "path": "/docs/1.3.1/channel-messenger-handover-protocol",
+              "sidebar": "version-1.3.1/docs"
+            },
+            {
+              "id": "channel-messenger-multi-page",
+              "path": "/docs/1.3.1/channel-messenger-multi-page",
+              "sidebar": "version-1.3.1/docs"
+            },
+            {
+              "id": "channel-messenger-persona",
+              "path": "/docs/1.3.1/channel-messenger-persona",
+              "sidebar": "version-1.3.1/docs"
+            },
+            {
+              "id": "channel-messenger-profile",
+              "path": "/docs/1.3.1/channel-messenger-profile",
+              "sidebar": "version-1.3.1/docs"
+            },
+            {
+              "id": "channel-messenger-routing",
+              "path": "/docs/1.3.1/channel-messenger-routing",
+              "sidebar": "version-1.3.1/docs"
+            },
+            {
+              "id": "channel-messenger-sending-messages",
+              "path": "/docs/1.3.1/channel-messenger-sending-messages",
+              "sidebar": "version-1.3.1/docs"
+            },
+            {
+              "id": "channel-messenger-setup",
+              "path": "/docs/1.3.1/channel-messenger-setup",
+              "sidebar": "version-1.3.1/docs"
+            },
+            {
+              "id": "channel-slack-block-kit",
+              "path": "/docs/1.3.1/channel-slack-block-kit",
+              "sidebar": "version-1.3.1/docs"
+            },
+            {
+              "id": "channel-slack-handling-events",
+              "path": "/docs/1.3.1/channel-slack-handling-events",
+              "sidebar": "version-1.3.1/docs"
+            },
+            {
+              "id": "channel-slack-routing",
+              "path": "/docs/1.3.1/channel-slack-routing",
+              "sidebar": "version-1.3.1/docs"
+            },
+            {
+              "id": "channel-slack-sending-messages",
+              "path": "/docs/1.3.1/channel-slack-sending-messages",
+              "sidebar": "version-1.3.1/docs"
+            },
+            {
+              "id": "channel-slack-setup",
+              "path": "/docs/1.3.1/channel-slack-setup",
+              "sidebar": "version-1.3.1/docs"
+            },
+            {
+              "id": "channel-slack-slash-command",
+              "path": "/docs/1.3.1/channel-slack-slash-command",
+              "sidebar": "version-1.3.1/docs"
+            },
+            {
+              "id": "channel-telegram-handling-events",
+              "path": "/docs/1.3.1/channel-telegram-handling-events",
+              "sidebar": "version-1.3.1/docs"
+            },
+            {
+              "id": "channel-telegram-routing",
+              "path": "/docs/1.3.1/channel-telegram-routing",
+              "sidebar": "version-1.3.1/docs"
+            },
+            {
+              "id": "channel-telegram-sending-messages",
+              "path": "/docs/1.3.1/channel-telegram-sending-messages",
+              "sidebar": "version-1.3.1/docs"
+            },
+            {
+              "id": "channel-telegram-setup",
+              "path": "/docs/1.3.1/channel-telegram-setup",
+              "sidebar": "version-1.3.1/docs"
+            },
+            {
+              "id": "channel-viber-handling-events",
+              "path": "/docs/1.3.1/channel-viber-handling-events",
+              "sidebar": "version-1.3.1/docs"
+            },
+            {
+              "id": "channel-viber-routing",
+              "path": "/docs/1.3.1/channel-viber-routing",
+              "sidebar": "version-1.3.1/docs"
+            },
+            {
+              "id": "channel-viber-sending-messages",
+              "path": "/docs/1.3.1/channel-viber-sending-messages",
+              "sidebar": "version-1.3.1/docs"
+            },
+            {
+              "id": "channel-viber-setup",
+              "path": "/docs/1.3.1/channel-viber-setup",
+              "sidebar": "version-1.3.1/docs"
+            },
+            {
+              "id": "channel-whatsapp-handling-events",
+              "path": "/docs/1.3.1/channel-whatsapp-handling-events",
+              "sidebar": "version-1.3.1/docs"
+            },
+            {
+              "id": "channel-whatsapp-routing",
+              "path": "/docs/1.3.1/channel-whatsapp-routing",
+              "sidebar": "version-1.3.1/docs"
+            },
+            {
+              "id": "channel-whatsapp-sending-messages",
+              "path": "/docs/1.3.1/channel-whatsapp-sending-messages",
+              "sidebar": "version-1.3.1/docs"
+            },
+            {
+              "id": "channel-whatsapp-setup",
+              "path": "/docs/1.3.1/channel-whatsapp-setup",
+              "sidebar": "version-1.3.1/docs"
+            },
+            {
+              "id": "commands",
+              "path": "/docs/1.3.1/commands"
+            },
+            {
+              "id": "console",
+              "path": "/docs/1.3.1/console"
+            },
+            {
+              "id": "custom-connector",
+              "path": "/docs/1.3.1/custom-connector"
+            },
+            {
+              "id": "deployment",
+              "path": "/docs/1.3.1/deployment"
+            },
+            {
+              "id": "error-handling",
+              "path": "/docs/1.3.1/error-handling"
+            },
+            {
+              "id": "getting-started",
+              "path": "/docs/1.3.1/getting-started",
+              "sidebar": "version-1.3.1/docs"
+            },
+            {
+              "id": "getting-started",
+              "path": "/docs/1.3.1/getting-started",
+              "sidebar": "version-1.3.1/docs"
+            },
+            {
+              "id": "intents",
+              "path": "/docs/1.3.1/intents"
+            },
+            {
+              "id": "line",
+              "path": "/docs/1.3.1/line"
+            },
+            {
+              "id": "messenger",
+              "path": "/docs/1.3.1/messenger"
+            },
+            {
+              "id": "middleware",
+              "path": "/docs/1.3.1/middleware"
+            },
+            {
+              "id": "migrating-v1",
+              "path": "/docs/1.3.1/migrating-v1",
+              "sidebar": "version-1.3.1/docs"
+            },
+            {
+              "id": "server",
+              "path": "/docs/1.3.1/server"
+            },
+            {
+              "id": "session",
+              "path": "/docs/1.3.1/session"
+            },
+            {
+              "id": "slack",
+              "path": "/docs/1.3.1/slack"
+            },
+            {
+              "id": "state",
+              "path": "/docs/1.3.1/state"
+            },
+            {
+              "id": "telegram",
+              "path": "/docs/1.3.1/telegram"
+            },
+            {
+              "id": "testing",
+              "path": "/docs/1.3.1/testing"
+            },
+            {
+              "id": "the-basics-actions",
+              "path": "/docs/1.3.1/the-basics-actions",
+              "sidebar": "version-1.3.1/docs"
+            },
+            {
+              "id": "the-basics-chain",
+              "path": "/docs/1.3.1/the-basics-chain",
+              "sidebar": "version-1.3.1/docs"
+            },
+            {
+              "id": "the-basics-console-mode",
+              "path": "/docs/1.3.1/the-basics-console-mode",
+              "sidebar": "version-1.3.1/docs"
+            },
+            {
+              "id": "the-basics-context-event",
+              "path": "/docs/1.3.1/the-basics-context-event"
+            },
+            {
+              "id": "the-basics-errors",
+              "path": "/docs/1.3.1/the-basics-errors",
+              "sidebar": "version-1.3.1/docs"
+            },
+            {
+              "id": "the-basics-routing",
+              "path": "/docs/1.3.1/the-basics-routing",
+              "sidebar": "version-1.3.1/docs"
+            },
+            {
+              "id": "the-basics-session",
+              "path": "/docs/1.3.1/the-basics-session",
+              "sidebar": "version-1.3.1/docs"
+            },
+            {
+              "id": "troubleshooting",
+              "path": "/docs/1.3.1/troubleshooting"
+            },
+            {
+              "id": "viber",
+              "path": "/docs/1.3.1/viber"
+            }
+          ]
+        },
+        {
+          "name": "1.3.0",
+          "label": "1.3.0",
+          "isLast": false,
+          "path": "/docs/1.3.0",
+          "mainDocId": "getting-started",
+          "docs": [
+            {
+              "id": "advanced-guides-custom-server",
+              "path": "/docs/1.3.0/advanced-guides-custom-server",
+              "sidebar": "version-1.3.0/docs"
+            },
+            {
+              "id": "advanced-guides-deployment",
+              "path": "/docs/1.3.0/advanced-guides-deployment",
+              "sidebar": "version-1.3.0/docs"
+            },
+            {
+              "id": "advanced-guides-multi-channel",
+              "path": "/docs/1.3.0/advanced-guides-multi-channel",
+              "sidebar": "version-1.3.0/docs"
+            },
+            {
+              "id": "advanced-guides-multi-channel",
+              "path": "/docs/1.3.0/advanced-guides-multi-channel",
+              "sidebar": "version-1.3.0/docs"
+            },
+            {
+              "id": "advanced-guides-nlu",
+              "path": "/docs/1.3.0/advanced-guides-nlu",
+              "sidebar": "version-1.3.0/docs"
+            },
+            {
+              "id": "api-console-context",
+              "path": "/docs/1.3.0/api-console-context",
+              "sidebar": "version-1.3.0/api"
+            },
+            {
+              "id": "api-console-event",
+              "path": "/docs/1.3.0/api-console-event",
+              "sidebar": "version-1.3.0/api"
+            },
+            {
+              "id": "api-console-event",
+              "path": "/docs/1.3.0/api-console-event",
+              "sidebar": "version-1.3.0/api"
+            },
+            {
+              "id": "api-consolecontext",
+              "path": "/docs/1.3.0/api-consolecontext"
+            },
+            {
+              "id": "api-context",
+              "path": "/docs/1.3.0/api-context",
+              "sidebar": "version-1.3.0/api"
+            },
+            {
+              "id": "api-context",
+              "path": "/docs/1.3.0/api-context",
+              "sidebar": "version-1.3.0/api"
+            },
+            {
+              "id": "api-event",
+              "path": "/docs/1.3.0/api-event",
+              "sidebar": "version-1.3.0/api"
+            },
+            {
+              "id": "api-event",
+              "path": "/docs/1.3.0/api-event",
+              "sidebar": "version-1.3.0/api"
+            },
+            {
+              "id": "api-handler",
+              "path": "/docs/1.3.0/api-handler"
+            },
+            {
+              "id": "api-line-client",
+              "path": "/docs/1.3.0/api-line-client"
+            },
+            {
+              "id": "api-line-context",
+              "path": "/docs/1.3.0/api-line-context",
+              "sidebar": "version-1.3.0/api"
+            },
+            {
+              "id": "api-line-event",
+              "path": "/docs/1.3.0/api-line-event",
+              "sidebar": "version-1.3.0/api"
+            },
+            {
+              "id": "api-linecontext",
+              "path": "/docs/1.3.0/api-linecontext"
+            },
+            {
+              "id": "api-lineevent",
+              "path": "/docs/1.3.0/api-lineevent"
+            },
+            {
+              "id": "api-messenger-client",
+              "path": "/docs/1.3.0/api-messenger-client"
+            },
+            {
+              "id": "api-messenger-context",
+              "path": "/docs/1.3.0/api-messenger-context",
+              "sidebar": "version-1.3.0/api"
+            },
+            {
+              "id": "api-messenger-event",
+              "path": "/docs/1.3.0/api-messenger-event",
+              "sidebar": "version-1.3.0/api"
+            },
+            {
+              "id": "api-messengercontext",
+              "path": "/docs/1.3.0/api-messengercontext"
+            },
+            {
+              "id": "api-messengerevent",
+              "path": "/docs/1.3.0/api-messengerevent"
+            },
+            {
+              "id": "api-slack-client",
+              "path": "/docs/1.3.0/api-slack-client"
+            },
+            {
+              "id": "api-slack-context",
+              "path": "/docs/1.3.0/api-slack-context",
+              "sidebar": "version-1.3.0/api"
+            },
+            {
+              "id": "api-slack-event",
+              "path": "/docs/1.3.0/api-slack-event",
+              "sidebar": "version-1.3.0/api"
+            },
+            {
+              "id": "api-slackcontext",
+              "path": "/docs/1.3.0/api-slackcontext"
+            },
+            {
+              "id": "api-slackevent",
+              "path": "/docs/1.3.0/api-slackevent"
+            },
+            {
+              "id": "api-telegram-client",
+              "path": "/docs/1.3.0/api-telegram-client"
+            },
+            {
+              "id": "api-telegram-context",
+              "path": "/docs/1.3.0/api-telegram-context",
+              "sidebar": "version-1.3.0/api"
+            },
+            {
+              "id": "api-telegram-event",
+              "path": "/docs/1.3.0/api-telegram-event",
+              "sidebar": "version-1.3.0/api"
+            },
+            {
+              "id": "api-telegramcontext",
+              "path": "/docs/1.3.0/api-telegramcontext"
+            },
+            {
+              "id": "api-telegramevent",
+              "path": "/docs/1.3.0/api-telegramevent"
+            },
+            {
+              "id": "api-viber-client",
+              "path": "/docs/1.3.0/api-viber-client"
+            },
+            {
+              "id": "api-viber-context",
+              "path": "/docs/1.3.0/api-viber-context",
+              "sidebar": "version-1.3.0/api"
+            },
+            {
+              "id": "api-viber-event",
+              "path": "/docs/1.3.0/api-viber-event",
+              "sidebar": "version-1.3.0/api"
+            },
+            {
+              "id": "api-vibercontext",
+              "path": "/docs/1.3.0/api-vibercontext"
+            },
+            {
+              "id": "api-viberevent",
+              "path": "/docs/1.3.0/api-viberevent"
+            },
+            {
+              "id": "channel-line-errors",
+              "path": "/docs/1.3.0/channel-line-errors",
+              "sidebar": "version-1.3.0/docs"
+            },
+            {
+              "id": "channel-line-flex",
+              "path": "/docs/1.3.0/channel-line-flex",
+              "sidebar": "version-1.3.0/docs"
+            },
+            {
+              "id": "channel-line-handling-events",
+              "path": "/docs/1.3.0/channel-line-handling-events",
+              "sidebar": "version-1.3.0/docs"
+            },
+            {
+              "id": "channel-line-liff",
+              "path": "/docs/1.3.0/channel-line-liff",
+              "sidebar": "version-1.3.0/docs"
+            },
+            {
+              "id": "channel-line-migrating-from-sdk",
+              "path": "/docs/1.3.0/channel-line-migrating-from-sdk",
+              "sidebar": "version-1.3.0/docs"
+            },
+            {
+              "id": "channel-line-notify",
+              "path": "/docs/1.3.0/channel-line-notify"
+            },
+            {
+              "id": "channel-line-rich-menu",
+              "path": "/docs/1.3.0/channel-line-rich-menu",
+              "sidebar": "version-1.3.0/docs"
+            },
+            {
+              "id": "channel-line-routing",
+              "path": "/docs/1.3.0/channel-line-routing",
+              "sidebar": "version-1.3.0/docs"
+            },
+            {
+              "id": "channel-line-sending-messages",
+              "path": "/docs/1.3.0/channel-line-sending-messages",
+              "sidebar": "version-1.3.0/docs"
+            },
+            {
+              "id": "channel-line-setup",
+              "path": "/docs/1.3.0/channel-line-setup",
+              "sidebar": "version-1.3.0/docs"
+            },
+            {
+              "id": "channel-messenger-handling-events",
+              "path": "/docs/1.3.0/channel-messenger-handling-events",
+              "sidebar": "version-1.3.0/docs"
+            },
+            {
+              "id": "channel-messenger-handover-protocol",
+              "path": "/docs/1.3.0/channel-messenger-handover-protocol",
+              "sidebar": "version-1.3.0/docs"
+            },
+            {
+              "id": "channel-messenger-multi-page",
+              "path": "/docs/1.3.0/channel-messenger-multi-page",
+              "sidebar": "version-1.3.0/docs"
+            },
+            {
+              "id": "channel-messenger-persona",
+              "path": "/docs/1.3.0/channel-messenger-persona",
+              "sidebar": "version-1.3.0/docs"
+            },
+            {
+              "id": "channel-messenger-profile",
+              "path": "/docs/1.3.0/channel-messenger-profile",
+              "sidebar": "version-1.3.0/docs"
+            },
+            {
+              "id": "channel-messenger-routing",
+              "path": "/docs/1.3.0/channel-messenger-routing",
+              "sidebar": "version-1.3.0/docs"
+            },
+            {
+              "id": "channel-messenger-sending-messages",
+              "path": "/docs/1.3.0/channel-messenger-sending-messages",
+              "sidebar": "version-1.3.0/docs"
+            },
+            {
+              "id": "channel-messenger-setup",
+              "path": "/docs/1.3.0/channel-messenger-setup",
+              "sidebar": "version-1.3.0/docs"
+            },
+            {
+              "id": "channel-slack-block-kit",
+              "path": "/docs/1.3.0/channel-slack-block-kit",
+              "sidebar": "version-1.3.0/docs"
+            },
+            {
+              "id": "channel-slack-handling-events",
+              "path": "/docs/1.3.0/channel-slack-handling-events",
+              "sidebar": "version-1.3.0/docs"
+            },
+            {
+              "id": "channel-slack-routing",
+              "path": "/docs/1.3.0/channel-slack-routing",
+              "sidebar": "version-1.3.0/docs"
+            },
+            {
+              "id": "channel-slack-sending-messages",
+              "path": "/docs/1.3.0/channel-slack-sending-messages",
+              "sidebar": "version-1.3.0/docs"
+            },
+            {
+              "id": "channel-slack-setup",
+              "path": "/docs/1.3.0/channel-slack-setup",
+              "sidebar": "version-1.3.0/docs"
+            },
+            {
+              "id": "channel-slack-slash-command",
+              "path": "/docs/1.3.0/channel-slack-slash-command",
+              "sidebar": "version-1.3.0/docs"
+            },
+            {
+              "id": "channel-telegram-handling-events",
+              "path": "/docs/1.3.0/channel-telegram-handling-events",
+              "sidebar": "version-1.3.0/docs"
+            },
+            {
+              "id": "channel-telegram-routing",
+              "path": "/docs/1.3.0/channel-telegram-routing",
+              "sidebar": "version-1.3.0/docs"
+            },
+            {
+              "id": "channel-telegram-sending-messages",
+              "path": "/docs/1.3.0/channel-telegram-sending-messages",
+              "sidebar": "version-1.3.0/docs"
+            },
+            {
+              "id": "channel-telegram-setup",
+              "path": "/docs/1.3.0/channel-telegram-setup",
+              "sidebar": "version-1.3.0/docs"
+            },
+            {
+              "id": "channel-viber-handling-events",
+              "path": "/docs/1.3.0/channel-viber-handling-events",
+              "sidebar": "version-1.3.0/docs"
+            },
+            {
+              "id": "channel-viber-routing",
+              "path": "/docs/1.3.0/channel-viber-routing",
+              "sidebar": "version-1.3.0/docs"
+            },
+            {
+              "id": "channel-viber-sending-messages",
+              "path": "/docs/1.3.0/channel-viber-sending-messages",
+              "sidebar": "version-1.3.0/docs"
+            },
+            {
+              "id": "channel-viber-setup",
+              "path": "/docs/1.3.0/channel-viber-setup",
+              "sidebar": "version-1.3.0/docs"
+            },
+            {
+              "id": "channel-whatsapp-handling-events",
+              "path": "/docs/1.3.0/channel-whatsapp-handling-events",
+              "sidebar": "version-1.3.0/docs"
+            },
+            {
+              "id": "channel-whatsapp-routing",
+              "path": "/docs/1.3.0/channel-whatsapp-routing",
+              "sidebar": "version-1.3.0/docs"
+            },
+            {
+              "id": "channel-whatsapp-sending-messages",
+              "path": "/docs/1.3.0/channel-whatsapp-sending-messages",
+              "sidebar": "version-1.3.0/docs"
+            },
+            {
+              "id": "channel-whatsapp-setup",
+              "path": "/docs/1.3.0/channel-whatsapp-setup",
+              "sidebar": "version-1.3.0/docs"
+            },
+            {
+              "id": "commands",
+              "path": "/docs/1.3.0/commands"
+            },
+            {
+              "id": "console",
+              "path": "/docs/1.3.0/console"
+            },
+            {
+              "id": "custom-connector",
+              "path": "/docs/1.3.0/custom-connector"
+            },
+            {
+              "id": "deployment",
+              "path": "/docs/1.3.0/deployment"
+            },
+            {
+              "id": "error-handling",
+              "path": "/docs/1.3.0/error-handling"
+            },
+            {
+              "id": "getting-started",
+              "path": "/docs/1.3.0/getting-started",
+              "sidebar": "version-1.3.0/docs"
+            },
+            {
+              "id": "getting-started",
+              "path": "/docs/1.3.0/getting-started",
+              "sidebar": "version-1.3.0/docs"
+            },
+            {
+              "id": "intents",
+              "path": "/docs/1.3.0/intents"
+            },
+            {
+              "id": "line",
+              "path": "/docs/1.3.0/line"
+            },
+            {
+              "id": "messenger",
+              "path": "/docs/1.3.0/messenger"
+            },
+            {
+              "id": "middleware",
+              "path": "/docs/1.3.0/middleware"
+            },
+            {
+              "id": "migrating-v1",
+              "path": "/docs/1.3.0/migrating-v1",
+              "sidebar": "version-1.3.0/docs"
+            },
+            {
+              "id": "server",
+              "path": "/docs/1.3.0/server"
+            },
+            {
+              "id": "session",
+              "path": "/docs/1.3.0/session"
+            },
+            {
+              "id": "slack",
+              "path": "/docs/1.3.0/slack"
+            },
+            {
+              "id": "state",
+              "path": "/docs/1.3.0/state"
+            },
+            {
+              "id": "telegram",
+              "path": "/docs/1.3.0/telegram"
+            },
+            {
+              "id": "testing",
+              "path": "/docs/1.3.0/testing"
+            },
+            {
+              "id": "the-basics-actions",
+              "path": "/docs/1.3.0/the-basics-actions",
+              "sidebar": "version-1.3.0/docs"
+            },
+            {
+              "id": "the-basics-chain",
+              "path": "/docs/1.3.0/the-basics-chain",
+              "sidebar": "version-1.3.0/docs"
+            },
+            {
+              "id": "the-basics-console-mode",
+              "path": "/docs/1.3.0/the-basics-console-mode",
+              "sidebar": "version-1.3.0/docs"
+            },
+            {
+              "id": "the-basics-context-event",
+              "path": "/docs/1.3.0/the-basics-context-event"
+            },
+            {
+              "id": "the-basics-errors",
+              "path": "/docs/1.3.0/the-basics-errors",
+              "sidebar": "version-1.3.0/docs"
+            },
+            {
+              "id": "the-basics-routing",
+              "path": "/docs/1.3.0/the-basics-routing",
+              "sidebar": "version-1.3.0/docs"
+            },
+            {
+              "id": "the-basics-session",
+              "path": "/docs/1.3.0/the-basics-session",
+              "sidebar": "version-1.3.0/docs"
+            },
+            {
+              "id": "troubleshooting",
+              "path": "/docs/1.3.0/troubleshooting"
+            },
+            {
+              "id": "viber",
+              "path": "/docs/1.3.0/viber"
+            }
+          ]
+        },
+        {
+          "name": "1.2.0",
+          "label": "1.2.0",
+          "isLast": false,
+          "path": "/docs/1.2.0",
+          "mainDocId": "getting-started",
+          "docs": [
+            {
+              "id": "advanced-guides-custom-server",
+              "path": "/docs/1.2.0/advanced-guides-custom-server",
+              "sidebar": "version-1.2.0/docs"
+            },
+            {
+              "id": "advanced-guides-deployment",
+              "path": "/docs/1.2.0/advanced-guides-deployment",
+              "sidebar": "version-1.2.0/docs"
+            },
+            {
+              "id": "advanced-guides-multi-channel",
+              "path": "/docs/1.2.0/advanced-guides-multi-channel",
+              "sidebar": "version-1.2.0/docs"
+            },
+            {
+              "id": "advanced-guides-multi-channel",
+              "path": "/docs/1.2.0/advanced-guides-multi-channel",
+              "sidebar": "version-1.2.0/docs"
+            },
+            {
+              "id": "advanced-guides-nlu",
+              "path": "/docs/1.2.0/advanced-guides-nlu",
+              "sidebar": "version-1.2.0/docs"
+            },
+            {
+              "id": "api-console-context",
+              "path": "/docs/1.2.0/api-console-context",
+              "sidebar": "version-1.2.0/api"
+            },
+            {
+              "id": "api-console-event",
+              "path": "/docs/1.2.0/api-console-event",
+              "sidebar": "version-1.2.0/api"
+            },
+            {
+              "id": "api-console-event",
+              "path": "/docs/1.2.0/api-console-event",
+              "sidebar": "version-1.2.0/api"
+            },
+            {
+              "id": "api-consolecontext",
+              "path": "/docs/1.2.0/api-consolecontext"
+            },
+            {
+              "id": "api-context",
+              "path": "/docs/1.2.0/api-context",
+              "sidebar": "version-1.2.0/api"
+            },
+            {
+              "id": "api-context",
+              "path": "/docs/1.2.0/api-context",
+              "sidebar": "version-1.2.0/api"
+            },
+            {
+              "id": "api-event",
+              "path": "/docs/1.2.0/api-event",
+              "sidebar": "version-1.2.0/api"
+            },
+            {
+              "id": "api-event",
+              "path": "/docs/1.2.0/api-event",
+              "sidebar": "version-1.2.0/api"
+            },
+            {
+              "id": "api-handler",
+              "path": "/docs/1.2.0/api-handler"
+            },
+            {
+              "id": "api-line-client",
+              "path": "/docs/1.2.0/api-line-client"
+            },
+            {
+              "id": "api-line-context",
+              "path": "/docs/1.2.0/api-line-context",
+              "sidebar": "version-1.2.0/api"
+            },
+            {
+              "id": "api-line-event",
+              "path": "/docs/1.2.0/api-line-event",
+              "sidebar": "version-1.2.0/api"
+            },
+            {
+              "id": "api-linecontext",
+              "path": "/docs/1.2.0/api-linecontext"
+            },
+            {
+              "id": "api-lineevent",
+              "path": "/docs/1.2.0/api-lineevent"
+            },
+            {
+              "id": "api-messenger-client",
+              "path": "/docs/1.2.0/api-messenger-client"
+            },
+            {
+              "id": "api-messenger-context",
+              "path": "/docs/1.2.0/api-messenger-context",
+              "sidebar": "version-1.2.0/api"
+            },
+            {
+              "id": "api-messenger-event",
+              "path": "/docs/1.2.0/api-messenger-event",
+              "sidebar": "version-1.2.0/api"
+            },
+            {
+              "id": "api-messengercontext",
+              "path": "/docs/1.2.0/api-messengercontext"
+            },
+            {
+              "id": "api-messengerevent",
+              "path": "/docs/1.2.0/api-messengerevent"
+            },
+            {
+              "id": "api-slack-client",
+              "path": "/docs/1.2.0/api-slack-client"
+            },
+            {
+              "id": "api-slack-context",
+              "path": "/docs/1.2.0/api-slack-context",
+              "sidebar": "version-1.2.0/api"
+            },
+            {
+              "id": "api-slack-event",
+              "path": "/docs/1.2.0/api-slack-event",
+              "sidebar": "version-1.2.0/api"
+            },
+            {
+              "id": "api-slackcontext",
+              "path": "/docs/1.2.0/api-slackcontext"
+            },
+            {
+              "id": "api-slackevent",
+              "path": "/docs/1.2.0/api-slackevent"
+            },
+            {
+              "id": "api-telegram-client",
+              "path": "/docs/1.2.0/api-telegram-client"
+            },
+            {
+              "id": "api-telegram-context",
+              "path": "/docs/1.2.0/api-telegram-context",
+              "sidebar": "version-1.2.0/api"
+            },
+            {
+              "id": "api-telegram-event",
+              "path": "/docs/1.2.0/api-telegram-event",
+              "sidebar": "version-1.2.0/api"
+            },
+            {
+              "id": "api-telegramcontext",
+              "path": "/docs/1.2.0/api-telegramcontext"
+            },
+            {
+              "id": "api-telegramevent",
+              "path": "/docs/1.2.0/api-telegramevent"
+            },
+            {
+              "id": "api-viber-client",
+              "path": "/docs/1.2.0/api-viber-client"
+            },
+            {
+              "id": "api-viber-context",
+              "path": "/docs/1.2.0/api-viber-context",
+              "sidebar": "version-1.2.0/api"
+            },
+            {
+              "id": "api-viber-event",
+              "path": "/docs/1.2.0/api-viber-event",
+              "sidebar": "version-1.2.0/api"
+            },
+            {
+              "id": "api-vibercontext",
+              "path": "/docs/1.2.0/api-vibercontext"
+            },
+            {
+              "id": "api-viberevent",
+              "path": "/docs/1.2.0/api-viberevent"
+            },
+            {
+              "id": "channel-line-errors",
+              "path": "/docs/1.2.0/channel-line-errors",
+              "sidebar": "version-1.2.0/docs"
+            },
+            {
+              "id": "channel-line-flex",
+              "path": "/docs/1.2.0/channel-line-flex",
+              "sidebar": "version-1.2.0/docs"
+            },
+            {
+              "id": "channel-line-handling-events",
+              "path": "/docs/1.2.0/channel-line-handling-events",
+              "sidebar": "version-1.2.0/docs"
+            },
+            {
+              "id": "channel-line-liff",
+              "path": "/docs/1.2.0/channel-line-liff",
+              "sidebar": "version-1.2.0/docs"
+            },
+            {
+              "id": "channel-line-migrating-from-sdk",
+              "path": "/docs/1.2.0/channel-line-migrating-from-sdk",
+              "sidebar": "version-1.2.0/docs"
+            },
+            {
+              "id": "channel-line-notify",
+              "path": "/docs/1.2.0/channel-line-notify"
+            },
+            {
+              "id": "channel-line-rich-menu",
+              "path": "/docs/1.2.0/channel-line-rich-menu",
+              "sidebar": "version-1.2.0/docs"
+            },
+            {
+              "id": "channel-line-routing",
+              "path": "/docs/1.2.0/channel-line-routing",
+              "sidebar": "version-1.2.0/docs"
+            },
+            {
+              "id": "channel-line-sending-messages",
+              "path": "/docs/1.2.0/channel-line-sending-messages",
+              "sidebar": "version-1.2.0/docs"
+            },
+            {
+              "id": "channel-line-setup",
+              "path": "/docs/1.2.0/channel-line-setup",
+              "sidebar": "version-1.2.0/docs"
+            },
+            {
+              "id": "channel-messenger-handling-events",
+              "path": "/docs/1.2.0/channel-messenger-handling-events",
+              "sidebar": "version-1.2.0/docs"
+            },
+            {
+              "id": "channel-messenger-handover-protocol",
+              "path": "/docs/1.2.0/channel-messenger-handover-protocol",
+              "sidebar": "version-1.2.0/docs"
+            },
+            {
+              "id": "channel-messenger-multi-page",
+              "path": "/docs/1.2.0/channel-messenger-multi-page",
+              "sidebar": "version-1.2.0/docs"
+            },
+            {
+              "id": "channel-messenger-persona",
+              "path": "/docs/1.2.0/channel-messenger-persona",
+              "sidebar": "version-1.2.0/docs"
+            },
+            {
+              "id": "channel-messenger-profile",
+              "path": "/docs/1.2.0/channel-messenger-profile",
+              "sidebar": "version-1.2.0/docs"
+            },
+            {
+              "id": "channel-messenger-routing",
+              "path": "/docs/1.2.0/channel-messenger-routing",
+              "sidebar": "version-1.2.0/docs"
+            },
+            {
+              "id": "channel-messenger-sending-messages",
+              "path": "/docs/1.2.0/channel-messenger-sending-messages",
+              "sidebar": "version-1.2.0/docs"
+            },
+            {
+              "id": "channel-messenger-setup",
+              "path": "/docs/1.2.0/channel-messenger-setup",
+              "sidebar": "version-1.2.0/docs"
+            },
+            {
+              "id": "channel-slack-block-kit",
+              "path": "/docs/1.2.0/channel-slack-block-kit",
+              "sidebar": "version-1.2.0/docs"
+            },
+            {
+              "id": "channel-slack-handling-events",
+              "path": "/docs/1.2.0/channel-slack-handling-events",
+              "sidebar": "version-1.2.0/docs"
+            },
+            {
+              "id": "channel-slack-routing",
+              "path": "/docs/1.2.0/channel-slack-routing",
+              "sidebar": "version-1.2.0/docs"
+            },
+            {
+              "id": "channel-slack-sending-messages",
+              "path": "/docs/1.2.0/channel-slack-sending-messages",
+              "sidebar": "version-1.2.0/docs"
+            },
+            {
+              "id": "channel-slack-setup",
+              "path": "/docs/1.2.0/channel-slack-setup",
+              "sidebar": "version-1.2.0/docs"
+            },
+            {
+              "id": "channel-slack-slash-command",
+              "path": "/docs/1.2.0/channel-slack-slash-command"
+            },
+            {
+              "id": "channel-telegram-handling-events",
+              "path": "/docs/1.2.0/channel-telegram-handling-events",
+              "sidebar": "version-1.2.0/docs"
+            },
+            {
+              "id": "channel-telegram-routing",
+              "path": "/docs/1.2.0/channel-telegram-routing",
+              "sidebar": "version-1.2.0/docs"
+            },
+            {
+              "id": "channel-telegram-sending-messages",
+              "path": "/docs/1.2.0/channel-telegram-sending-messages",
+              "sidebar": "version-1.2.0/docs"
+            },
+            {
+              "id": "channel-telegram-setup",
+              "path": "/docs/1.2.0/channel-telegram-setup",
+              "sidebar": "version-1.2.0/docs"
+            },
+            {
+              "id": "channel-viber-handling-events",
+              "path": "/docs/1.2.0/channel-viber-handling-events",
+              "sidebar": "version-1.2.0/docs"
+            },
+            {
+              "id": "channel-viber-routing",
+              "path": "/docs/1.2.0/channel-viber-routing",
+              "sidebar": "version-1.2.0/docs"
+            },
+            {
+              "id": "channel-viber-sending-messages",
+              "path": "/docs/1.2.0/channel-viber-sending-messages",
+              "sidebar": "version-1.2.0/docs"
+            },
+            {
+              "id": "channel-viber-setup",
+              "path": "/docs/1.2.0/channel-viber-setup",
+              "sidebar": "version-1.2.0/docs"
+            },
+            {
+              "id": "channel-whatsapp-handling-events",
+              "path": "/docs/1.2.0/channel-whatsapp-handling-events"
+            },
+            {
+              "id": "channel-whatsapp-routing",
+              "path": "/docs/1.2.0/channel-whatsapp-routing"
+            },
+            {
+              "id": "channel-whatsapp-sending-messages",
+              "path": "/docs/1.2.0/channel-whatsapp-sending-messages"
+            },
+            {
+              "id": "channel-whatsapp-setup",
+              "path": "/docs/1.2.0/channel-whatsapp-setup"
+            },
+            {
+              "id": "commands",
+              "path": "/docs/1.2.0/commands"
+            },
+            {
+              "id": "console",
+              "path": "/docs/1.2.0/console"
+            },
+            {
+              "id": "custom-connector",
+              "path": "/docs/1.2.0/custom-connector"
+            },
+            {
+              "id": "deployment",
+              "path": "/docs/1.2.0/deployment"
+            },
+            {
+              "id": "error-handling",
+              "path": "/docs/1.2.0/error-handling"
+            },
+            {
+              "id": "getting-started",
+              "path": "/docs/1.2.0/getting-started",
+              "sidebar": "version-1.2.0/docs"
+            },
+            {
+              "id": "getting-started",
+              "path": "/docs/1.2.0/getting-started",
+              "sidebar": "version-1.2.0/docs"
+            },
+            {
+              "id": "intents",
+              "path": "/docs/1.2.0/intents"
+            },
+            {
+              "id": "line",
+              "path": "/docs/1.2.0/line"
+            },
+            {
+              "id": "messenger",
+              "path": "/docs/1.2.0/messenger"
+            },
+            {
+              "id": "middleware",
+              "path": "/docs/1.2.0/middleware"
+            },
+            {
+              "id": "migrating-v1",
+              "path": "/docs/1.2.0/migrating-v1",
+              "sidebar": "version-1.2.0/docs"
+            },
+            {
+              "id": "server",
+              "path": "/docs/1.2.0/server"
+            },
+            {
+              "id": "session",
+              "path": "/docs/1.2.0/session"
+            },
+            {
+              "id": "slack",
+              "path": "/docs/1.2.0/slack"
+            },
+            {
+              "id": "state",
+              "path": "/docs/1.2.0/state"
+            },
+            {
+              "id": "telegram",
+              "path": "/docs/1.2.0/telegram"
+            },
+            {
+              "id": "testing",
+              "path": "/docs/1.2.0/testing"
+            },
+            {
+              "id": "the-basics-actions",
+              "path": "/docs/1.2.0/the-basics-actions",
+              "sidebar": "version-1.2.0/docs"
+            },
+            {
+              "id": "the-basics-chain",
+              "path": "/docs/1.2.0/the-basics-chain",
+              "sidebar": "version-1.2.0/docs"
+            },
+            {
+              "id": "the-basics-console-mode",
+              "path": "/docs/1.2.0/the-basics-console-mode",
+              "sidebar": "version-1.2.0/docs"
+            },
+            {
+              "id": "the-basics-context-event",
+              "path": "/docs/1.2.0/the-basics-context-event"
+            },
+            {
+              "id": "the-basics-errors",
+              "path": "/docs/1.2.0/the-basics-errors",
+              "sidebar": "version-1.2.0/docs"
+            },
+            {
+              "id": "the-basics-routing",
+              "path": "/docs/1.2.0/the-basics-routing",
+              "sidebar": "version-1.2.0/docs"
+            },
+            {
+              "id": "the-basics-session",
+              "path": "/docs/1.2.0/the-basics-session",
+              "sidebar": "version-1.2.0/docs"
+            },
+            {
+              "id": "troubleshooting",
+              "path": "/docs/1.2.0/troubleshooting"
+            },
+            {
+              "id": "viber",
+              "path": "/docs/1.2.0/viber"
+            }
+          ]
+        },
+        {
+          "name": "1.1.0",
+          "label": "1.1.0",
+          "isLast": false,
+          "path": "/docs/1.1.0",
+          "mainDocId": "getting-started",
+          "docs": [
+            {
+              "id": "advanced-guides-custom-server",
+              "path": "/docs/1.1.0/advanced-guides-custom-server"
+            },
+            {
+              "id": "advanced-guides-deployment",
+              "path": "/docs/1.1.0/advanced-guides-deployment",
+              "sidebar": "version-1.1.0/docs"
+            },
+            {
+              "id": "advanced-guides-multi-channel",
+              "path": "/docs/1.1.0/advanced-guides-multi-channel",
+              "sidebar": "version-1.1.0/docs"
+            },
+            {
+              "id": "advanced-guides-multi-channel",
+              "path": "/docs/1.1.0/advanced-guides-multi-channel",
+              "sidebar": "version-1.1.0/docs"
+            },
+            {
+              "id": "advanced-guides-nlu",
+              "path": "/docs/1.1.0/advanced-guides-nlu",
+              "sidebar": "version-1.1.0/docs"
+            },
+            {
+              "id": "api-console-context",
+              "path": "/docs/1.1.0/api-console-context",
+              "sidebar": "version-1.1.0/api"
+            },
+            {
+              "id": "api-console-event",
+              "path": "/docs/1.1.0/api-console-event",
+              "sidebar": "version-1.1.0/api"
+            },
+            {
+              "id": "api-console-event",
+              "path": "/docs/1.1.0/api-console-event",
+              "sidebar": "version-1.1.0/api"
+            },
+            {
+              "id": "api-consolecontext",
+              "path": "/docs/1.1.0/api-consolecontext"
+            },
+            {
+              "id": "api-context",
+              "path": "/docs/1.1.0/api-context",
+              "sidebar": "version-1.1.0/api"
+            },
+            {
+              "id": "api-context",
+              "path": "/docs/1.1.0/api-context",
+              "sidebar": "version-1.1.0/api"
+            },
+            {
+              "id": "api-event",
+              "path": "/docs/1.1.0/api-event",
+              "sidebar": "version-1.1.0/api"
+            },
+            {
+              "id": "api-event",
+              "path": "/docs/1.1.0/api-event",
+              "sidebar": "version-1.1.0/api"
+            },
+            {
+              "id": "api-handler",
+              "path": "/docs/1.1.0/api-handler"
+            },
+            {
+              "id": "api-line-client",
+              "path": "/docs/1.1.0/api-line-client"
+            },
+            {
+              "id": "api-line-context",
+              "path": "/docs/1.1.0/api-line-context",
+              "sidebar": "version-1.1.0/api"
+            },
+            {
+              "id": "api-line-event",
+              "path": "/docs/1.1.0/api-line-event",
+              "sidebar": "version-1.1.0/api"
+            },
+            {
+              "id": "api-linecontext",
+              "path": "/docs/1.1.0/api-linecontext"
+            },
+            {
+              "id": "api-lineevent",
+              "path": "/docs/1.1.0/api-lineevent"
+            },
+            {
+              "id": "api-messenger-client",
+              "path": "/docs/1.1.0/api-messenger-client"
+            },
+            {
+              "id": "api-messenger-context",
+              "path": "/docs/1.1.0/api-messenger-context",
+              "sidebar": "version-1.1.0/api"
+            },
+            {
+              "id": "api-messenger-event",
+              "path": "/docs/1.1.0/api-messenger-event",
+              "sidebar": "version-1.1.0/api"
+            },
+            {
+              "id": "api-messengercontext",
+              "path": "/docs/1.1.0/api-messengercontext"
+            },
+            {
+              "id": "api-messengerevent",
+              "path": "/docs/1.1.0/api-messengerevent"
+            },
+            {
+              "id": "api-slack-client",
+              "path": "/docs/1.1.0/api-slack-client"
+            },
+            {
+              "id": "api-slack-context",
+              "path": "/docs/1.1.0/api-slack-context",
+              "sidebar": "version-1.1.0/api"
+            },
+            {
+              "id": "api-slack-event",
+              "path": "/docs/1.1.0/api-slack-event",
+              "sidebar": "version-1.1.0/api"
+            },
+            {
+              "id": "api-slackcontext",
+              "path": "/docs/1.1.0/api-slackcontext"
+            },
+            {
+              "id": "api-slackevent",
+              "path": "/docs/1.1.0/api-slackevent"
+            },
+            {
+              "id": "api-telegram-client",
+              "path": "/docs/1.1.0/api-telegram-client"
+            },
+            {
+              "id": "api-telegram-context",
+              "path": "/docs/1.1.0/api-telegram-context",
+              "sidebar": "version-1.1.0/api"
+            },
+            {
+              "id": "api-telegram-event",
+              "path": "/docs/1.1.0/api-telegram-event",
+              "sidebar": "version-1.1.0/api"
+            },
+            {
+              "id": "api-telegramcontext",
+              "path": "/docs/1.1.0/api-telegramcontext"
+            },
+            {
+              "id": "api-telegramevent",
+              "path": "/docs/1.1.0/api-telegramevent"
+            },
+            {
+              "id": "api-viber-client",
+              "path": "/docs/1.1.0/api-viber-client"
+            },
+            {
+              "id": "api-viber-context",
+              "path": "/docs/1.1.0/api-viber-context",
+              "sidebar": "version-1.1.0/api"
+            },
+            {
+              "id": "api-viber-event",
+              "path": "/docs/1.1.0/api-viber-event",
+              "sidebar": "version-1.1.0/api"
+            },
+            {
+              "id": "api-vibercontext",
+              "path": "/docs/1.1.0/api-vibercontext"
+            },
+            {
+              "id": "api-viberevent",
+              "path": "/docs/1.1.0/api-viberevent"
+            },
+            {
+              "id": "channel-line-errors",
+              "path": "/docs/1.1.0/channel-line-errors",
+              "sidebar": "version-1.1.0/docs"
+            },
+            {
+              "id": "channel-line-flex",
+              "path": "/docs/1.1.0/channel-line-flex",
+              "sidebar": "version-1.1.0/docs"
+            },
+            {
+              "id": "channel-line-handling-events",
+              "path": "/docs/1.1.0/channel-line-handling-events",
+              "sidebar": "version-1.1.0/docs"
+            },
+            {
+              "id": "channel-line-liff",
+              "path": "/docs/1.1.0/channel-line-liff"
+            },
+            {
+              "id": "channel-line-migrating-from-sdk",
+              "path": "/docs/1.1.0/channel-line-migrating-from-sdk",
+              "sidebar": "version-1.1.0/docs"
+            },
+            {
+              "id": "channel-line-notify",
+              "path": "/docs/1.1.0/channel-line-notify"
+            },
+            {
+              "id": "channel-line-rich-menu",
+              "path": "/docs/1.1.0/channel-line-rich-menu",
+              "sidebar": "version-1.1.0/docs"
+            },
+            {
+              "id": "channel-line-routing",
+              "path": "/docs/1.1.0/channel-line-routing",
+              "sidebar": "version-1.1.0/docs"
+            },
+            {
+              "id": "channel-line-sending-messages",
+              "path": "/docs/1.1.0/channel-line-sending-messages",
+              "sidebar": "version-1.1.0/docs"
+            },
+            {
+              "id": "channel-line-setup",
+              "path": "/docs/1.1.0/channel-line-setup",
+              "sidebar": "version-1.1.0/docs"
+            },
+            {
+              "id": "channel-messenger-handling-events",
+              "path": "/docs/1.1.0/channel-messenger-handling-events",
+              "sidebar": "version-1.1.0/docs"
+            },
+            {
+              "id": "channel-messenger-handover-protocol",
+              "path": "/docs/1.1.0/channel-messenger-handover-protocol",
+              "sidebar": "version-1.1.0/docs"
+            },
+            {
+              "id": "channel-messenger-multi-page",
+              "path": "/docs/1.1.0/channel-messenger-multi-page",
+              "sidebar": "version-1.1.0/docs"
+            },
+            {
+              "id": "channel-messenger-persona",
+              "path": "/docs/1.1.0/channel-messenger-persona",
+              "sidebar": "version-1.1.0/docs"
+            },
+            {
+              "id": "channel-messenger-profile",
+              "path": "/docs/1.1.0/channel-messenger-profile",
+              "sidebar": "version-1.1.0/docs"
+            },
+            {
+              "id": "channel-messenger-routing",
+              "path": "/docs/1.1.0/channel-messenger-routing",
+              "sidebar": "version-1.1.0/docs"
+            },
+            {
+              "id": "channel-messenger-sending-messages",
+              "path": "/docs/1.1.0/channel-messenger-sending-messages",
+              "sidebar": "version-1.1.0/docs"
+            },
+            {
+              "id": "channel-messenger-setup",
+              "path": "/docs/1.1.0/channel-messenger-setup",
+              "sidebar": "version-1.1.0/docs"
+            },
+            {
+              "id": "channel-slack-block-kit",
+              "path": "/docs/1.1.0/channel-slack-block-kit",
+              "sidebar": "version-1.1.0/docs"
+            },
+            {
+              "id": "channel-slack-handling-events",
+              "path": "/docs/1.1.0/channel-slack-handling-events",
+              "sidebar": "version-1.1.0/docs"
+            },
+            {
+              "id": "channel-slack-routing",
+              "path": "/docs/1.1.0/channel-slack-routing",
+              "sidebar": "version-1.1.0/docs"
+            },
+            {
+              "id": "channel-slack-sending-messages",
+              "path": "/docs/1.1.0/channel-slack-sending-messages",
+              "sidebar": "version-1.1.0/docs"
+            },
+            {
+              "id": "channel-slack-setup",
+              "path": "/docs/1.1.0/channel-slack-setup",
+              "sidebar": "version-1.1.0/docs"
+            },
+            {
+              "id": "channel-slack-slash-command",
+              "path": "/docs/1.1.0/channel-slack-slash-command"
+            },
+            {
+              "id": "channel-telegram-handling-events",
+              "path": "/docs/1.1.0/channel-telegram-handling-events",
+              "sidebar": "version-1.1.0/docs"
+            },
+            {
+              "id": "channel-telegram-routing",
+              "path": "/docs/1.1.0/channel-telegram-routing",
+              "sidebar": "version-1.1.0/docs"
+            },
+            {
+              "id": "channel-telegram-sending-messages",
+              "path": "/docs/1.1.0/channel-telegram-sending-messages",
+              "sidebar": "version-1.1.0/docs"
+            },
+            {
+              "id": "channel-telegram-setup",
+              "path": "/docs/1.1.0/channel-telegram-setup",
+              "sidebar": "version-1.1.0/docs"
+            },
+            {
+              "id": "channel-viber-handling-events",
+              "path": "/docs/1.1.0/channel-viber-handling-events",
+              "sidebar": "version-1.1.0/docs"
+            },
+            {
+              "id": "channel-viber-routing",
+              "path": "/docs/1.1.0/channel-viber-routing",
+              "sidebar": "version-1.1.0/docs"
+            },
+            {
+              "id": "channel-viber-sending-messages",
+              "path": "/docs/1.1.0/channel-viber-sending-messages",
+              "sidebar": "version-1.1.0/docs"
+            },
+            {
+              "id": "channel-viber-setup",
+              "path": "/docs/1.1.0/channel-viber-setup",
+              "sidebar": "version-1.1.0/docs"
+            },
+            {
+              "id": "channel-whatsapp-handling-events",
+              "path": "/docs/1.1.0/channel-whatsapp-handling-events"
+            },
+            {
+              "id": "channel-whatsapp-routing",
+              "path": "/docs/1.1.0/channel-whatsapp-routing"
+            },
+            {
+              "id": "channel-whatsapp-sending-messages",
+              "path": "/docs/1.1.0/channel-whatsapp-sending-messages"
+            },
+            {
+              "id": "channel-whatsapp-setup",
+              "path": "/docs/1.1.0/channel-whatsapp-setup"
+            },
+            {
+              "id": "commands",
+              "path": "/docs/1.1.0/commands"
+            },
+            {
+              "id": "console",
+              "path": "/docs/1.1.0/console"
+            },
+            {
+              "id": "custom-connector",
+              "path": "/docs/1.1.0/custom-connector"
+            },
+            {
+              "id": "deployment",
+              "path": "/docs/1.1.0/deployment"
+            },
+            {
+              "id": "error-handling",
+              "path": "/docs/1.1.0/error-handling"
+            },
+            {
+              "id": "getting-started",
+              "path": "/docs/1.1.0/getting-started",
+              "sidebar": "version-1.1.0/docs"
+            },
+            {
+              "id": "getting-started",
+              "path": "/docs/1.1.0/getting-started",
+              "sidebar": "version-1.1.0/docs"
+            },
+            {
+              "id": "intents",
+              "path": "/docs/1.1.0/intents"
+            },
+            {
+              "id": "line",
+              "path": "/docs/1.1.0/line"
+            },
+            {
+              "id": "messenger",
+              "path": "/docs/1.1.0/messenger"
+            },
+            {
+              "id": "middleware",
+              "path": "/docs/1.1.0/middleware"
+            },
+            {
+              "id": "migrating-v1",
+              "path": "/docs/1.1.0/migrating-v1",
+              "sidebar": "version-1.1.0/docs"
+            },
+            {
+              "id": "server",
+              "path": "/docs/1.1.0/server"
+            },
+            {
+              "id": "session",
+              "path": "/docs/1.1.0/session"
+            },
+            {
+              "id": "slack",
+              "path": "/docs/1.1.0/slack"
+            },
+            {
+              "id": "state",
+              "path": "/docs/1.1.0/state"
+            },
+            {
+              "id": "telegram",
+              "path": "/docs/1.1.0/telegram"
+            },
+            {
+              "id": "testing",
+              "path": "/docs/1.1.0/testing"
+            },
+            {
+              "id": "the-basics-actions",
+              "path": "/docs/1.1.0/the-basics-actions",
+              "sidebar": "version-1.1.0/docs"
+            },
+            {
+              "id": "the-basics-chain",
+              "path": "/docs/1.1.0/the-basics-chain",
+              "sidebar": "version-1.1.0/docs"
+            },
+            {
+              "id": "the-basics-console-mode",
+              "path": "/docs/1.1.0/the-basics-console-mode",
+              "sidebar": "version-1.1.0/docs"
+            },
+            {
+              "id": "the-basics-context-event",
+              "path": "/docs/1.1.0/the-basics-context-event"
+            },
+            {
+              "id": "the-basics-errors",
+              "path": "/docs/1.1.0/the-basics-errors",
+              "sidebar": "version-1.1.0/docs"
+            },
+            {
+              "id": "the-basics-routing",
+              "path": "/docs/1.1.0/the-basics-routing",
+              "sidebar": "version-1.1.0/docs"
+            },
+            {
+              "id": "the-basics-session",
+              "path": "/docs/1.1.0/the-basics-session",
+              "sidebar": "version-1.1.0/docs"
+            },
+            {
+              "id": "troubleshooting",
+              "path": "/docs/1.1.0/troubleshooting"
+            },
+            {
+              "id": "viber",
+              "path": "/docs/1.1.0/viber"
+            }
+          ]
+        },
+        {
+          "name": "1.0.5",
+          "label": "1.0.5",
+          "isLast": false,
+          "path": "/docs/1.0.5",
+          "mainDocId": "getting-started",
+          "docs": [
+            {
+              "id": "advanced-guides-custom-server",
+              "path": "/docs/1.0.5/advanced-guides-custom-server"
+            },
+            {
+              "id": "advanced-guides-deployment",
+              "path": "/docs/1.0.5/advanced-guides-deployment"
+            },
+            {
+              "id": "advanced-guides-multi-channel",
+              "path": "/docs/1.0.5/advanced-guides-multi-channel",
+              "sidebar": "version-1.0.5/docs"
+            },
+            {
+              "id": "advanced-guides-multi-channel",
+              "path": "/docs/1.0.5/advanced-guides-multi-channel",
+              "sidebar": "version-1.0.5/docs"
+            },
+            {
+              "id": "advanced-guides-nlu",
+              "path": "/docs/1.0.5/advanced-guides-nlu",
+              "sidebar": "version-1.0.5/docs"
+            },
+            {
+              "id": "api-console-context",
+              "path": "/docs/1.0.5/api-console-context",
+              "sidebar": "version-1.0.5/api"
+            },
+            {
+              "id": "api-console-event",
+              "path": "/docs/1.0.5/api-console-event",
+              "sidebar": "version-1.0.5/api"
+            },
+            {
+              "id": "api-console-event",
+              "path": "/docs/1.0.5/api-console-event",
+              "sidebar": "version-1.0.5/api"
+            },
+            {
+              "id": "api-consolecontext",
+              "path": "/docs/1.0.5/api-consolecontext"
+            },
+            {
+              "id": "api-context",
+              "path": "/docs/1.0.5/api-context",
+              "sidebar": "version-1.0.5/api"
+            },
+            {
+              "id": "api-context",
+              "path": "/docs/1.0.5/api-context",
+              "sidebar": "version-1.0.5/api"
+            },
+            {
+              "id": "api-event",
+              "path": "/docs/1.0.5/api-event",
+              "sidebar": "version-1.0.5/api"
+            },
+            {
+              "id": "api-event",
+              "path": "/docs/1.0.5/api-event",
+              "sidebar": "version-1.0.5/api"
+            },
+            {
+              "id": "api-handler",
+              "path": "/docs/1.0.5/api-handler"
+            },
+            {
+              "id": "api-line-client",
+              "path": "/docs/1.0.5/api-line-client"
+            },
+            {
+              "id": "api-line-context",
+              "path": "/docs/1.0.5/api-line-context",
+              "sidebar": "version-1.0.5/api"
+            },
+            {
+              "id": "api-line-event",
+              "path": "/docs/1.0.5/api-line-event",
+              "sidebar": "version-1.0.5/api"
+            },
+            {
+              "id": "api-linecontext",
+              "path": "/docs/1.0.5/api-linecontext"
+            },
+            {
+              "id": "api-lineevent",
+              "path": "/docs/1.0.5/api-lineevent"
+            },
+            {
+              "id": "api-messenger-client",
+              "path": "/docs/1.0.5/api-messenger-client"
+            },
+            {
+              "id": "api-messenger-context",
+              "path": "/docs/1.0.5/api-messenger-context",
+              "sidebar": "version-1.0.5/api"
+            },
+            {
+              "id": "api-messenger-event",
+              "path": "/docs/1.0.5/api-messenger-event",
+              "sidebar": "version-1.0.5/api"
+            },
+            {
+              "id": "api-messengercontext",
+              "path": "/docs/1.0.5/api-messengercontext"
+            },
+            {
+              "id": "api-messengerevent",
+              "path": "/docs/1.0.5/api-messengerevent"
+            },
+            {
+              "id": "api-slack-client",
+              "path": "/docs/1.0.5/api-slack-client"
+            },
+            {
+              "id": "api-slack-context",
+              "path": "/docs/1.0.5/api-slack-context",
+              "sidebar": "version-1.0.5/api"
+            },
+            {
+              "id": "api-slack-event",
+              "path": "/docs/1.0.5/api-slack-event",
+              "sidebar": "version-1.0.5/api"
+            },
+            {
+              "id": "api-slackcontext",
+              "path": "/docs/1.0.5/api-slackcontext"
+            },
+            {
+              "id": "api-slackevent",
+              "path": "/docs/1.0.5/api-slackevent"
+            },
+            {
+              "id": "api-telegram-client",
+              "path": "/docs/1.0.5/api-telegram-client"
+            },
+            {
+              "id": "api-telegram-context",
+              "path": "/docs/1.0.5/api-telegram-context",
+              "sidebar": "version-1.0.5/api"
+            },
+            {
+              "id": "api-telegram-event",
+              "path": "/docs/1.0.5/api-telegram-event",
+              "sidebar": "version-1.0.5/api"
+            },
+            {
+              "id": "api-telegramcontext",
+              "path": "/docs/1.0.5/api-telegramcontext"
+            },
+            {
+              "id": "api-telegramevent",
+              "path": "/docs/1.0.5/api-telegramevent"
+            },
+            {
+              "id": "api-viber-client",
+              "path": "/docs/1.0.5/api-viber-client"
+            },
+            {
+              "id": "api-viber-context",
+              "path": "/docs/1.0.5/api-viber-context",
+              "sidebar": "version-1.0.5/api"
+            },
+            {
+              "id": "api-viber-event",
+              "path": "/docs/1.0.5/api-viber-event",
+              "sidebar": "version-1.0.5/api"
+            },
+            {
+              "id": "api-vibercontext",
+              "path": "/docs/1.0.5/api-vibercontext"
+            },
+            {
+              "id": "api-viberevent",
+              "path": "/docs/1.0.5/api-viberevent"
+            },
+            {
+              "id": "channel-line-errors",
+              "path": "/docs/1.0.5/channel-line-errors",
+              "sidebar": "version-1.0.5/docs"
+            },
+            {
+              "id": "channel-line-flex",
+              "path": "/docs/1.0.5/channel-line-flex",
+              "sidebar": "version-1.0.5/docs"
+            },
+            {
+              "id": "channel-line-handling-events",
+              "path": "/docs/1.0.5/channel-line-handling-events",
+              "sidebar": "version-1.0.5/docs"
+            },
+            {
+              "id": "channel-line-liff",
+              "path": "/docs/1.0.5/channel-line-liff"
+            },
+            {
+              "id": "channel-line-migrating-from-sdk",
+              "path": "/docs/1.0.5/channel-line-migrating-from-sdk",
+              "sidebar": "version-1.0.5/docs"
+            },
+            {
+              "id": "channel-line-notify",
+              "path": "/docs/1.0.5/channel-line-notify"
+            },
+            {
+              "id": "channel-line-rich-menu",
+              "path": "/docs/1.0.5/channel-line-rich-menu",
+              "sidebar": "version-1.0.5/docs"
+            },
+            {
+              "id": "channel-line-routing",
+              "path": "/docs/1.0.5/channel-line-routing"
+            },
+            {
+              "id": "channel-line-sending-messages",
+              "path": "/docs/1.0.5/channel-line-sending-messages",
+              "sidebar": "version-1.0.5/docs"
+            },
+            {
+              "id": "channel-line-setup",
+              "path": "/docs/1.0.5/channel-line-setup",
+              "sidebar": "version-1.0.5/docs"
+            },
+            {
+              "id": "channel-messenger-handling-events",
+              "path": "/docs/1.0.5/channel-messenger-handling-events",
+              "sidebar": "version-1.0.5/docs"
+            },
+            {
+              "id": "channel-messenger-handover-protocol",
+              "path": "/docs/1.0.5/channel-messenger-handover-protocol"
+            },
+            {
+              "id": "channel-messenger-multi-page",
+              "path": "/docs/1.0.5/channel-messenger-multi-page"
+            },
+            {
+              "id": "channel-messenger-persona",
+              "path": "/docs/1.0.5/channel-messenger-persona",
+              "sidebar": "version-1.0.5/docs"
+            },
+            {
+              "id": "channel-messenger-profile",
+              "path": "/docs/1.0.5/channel-messenger-profile",
+              "sidebar": "version-1.0.5/docs"
+            },
+            {
+              "id": "channel-messenger-routing",
+              "path": "/docs/1.0.5/channel-messenger-routing"
+            },
+            {
+              "id": "channel-messenger-sending-messages",
+              "path": "/docs/1.0.5/channel-messenger-sending-messages",
+              "sidebar": "version-1.0.5/docs"
+            },
+            {
+              "id": "channel-messenger-setup",
+              "path": "/docs/1.0.5/channel-messenger-setup",
+              "sidebar": "version-1.0.5/docs"
+            },
+            {
+              "id": "channel-slack-block-kit",
+              "path": "/docs/1.0.5/channel-slack-block-kit"
+            },
+            {
+              "id": "channel-slack-handling-events",
+              "path": "/docs/1.0.5/channel-slack-handling-events",
+              "sidebar": "version-1.0.5/docs"
+            },
+            {
+              "id": "channel-slack-routing",
+              "path": "/docs/1.0.5/channel-slack-routing"
+            },
+            {
+              "id": "channel-slack-sending-messages",
+              "path": "/docs/1.0.5/channel-slack-sending-messages"
+            },
+            {
+              "id": "channel-slack-setup",
+              "path": "/docs/1.0.5/channel-slack-setup",
+              "sidebar": "version-1.0.5/docs"
+            },
+            {
+              "id": "channel-slack-slash-command",
+              "path": "/docs/1.0.5/channel-slack-slash-command"
+            },
+            {
+              "id": "channel-telegram-handling-events",
+              "path": "/docs/1.0.5/channel-telegram-handling-events",
+              "sidebar": "version-1.0.5/docs"
+            },
+            {
+              "id": "channel-telegram-routing",
+              "path": "/docs/1.0.5/channel-telegram-routing"
+            },
+            {
+              "id": "channel-telegram-sending-messages",
+              "path": "/docs/1.0.5/channel-telegram-sending-messages",
+              "sidebar": "version-1.0.5/docs"
+            },
+            {
+              "id": "channel-telegram-setup",
+              "path": "/docs/1.0.5/channel-telegram-setup",
+              "sidebar": "version-1.0.5/docs"
+            },
+            {
+              "id": "channel-viber-handling-events",
+              "path": "/docs/1.0.5/channel-viber-handling-events",
+              "sidebar": "version-1.0.5/docs"
+            },
+            {
+              "id": "channel-viber-routing",
+              "path": "/docs/1.0.5/channel-viber-routing"
+            },
+            {
+              "id": "channel-viber-sending-messages",
+              "path": "/docs/1.0.5/channel-viber-sending-messages"
+            },
+            {
+              "id": "channel-viber-setup",
+              "path": "/docs/1.0.5/channel-viber-setup",
+              "sidebar": "version-1.0.5/docs"
+            },
+            {
+              "id": "channel-whatsapp-handling-events",
+              "path": "/docs/1.0.5/channel-whatsapp-handling-events"
+            },
+            {
+              "id": "channel-whatsapp-routing",
+              "path": "/docs/1.0.5/channel-whatsapp-routing"
+            },
+            {
+              "id": "channel-whatsapp-sending-messages",
+              "path": "/docs/1.0.5/channel-whatsapp-sending-messages"
+            },
+            {
+              "id": "channel-whatsapp-setup",
+              "path": "/docs/1.0.5/channel-whatsapp-setup"
+            },
+            {
+              "id": "commands",
+              "path": "/docs/1.0.5/commands"
+            },
+            {
+              "id": "console",
+              "path": "/docs/1.0.5/console"
+            },
+            {
+              "id": "custom-connector",
+              "path": "/docs/1.0.5/custom-connector"
+            },
+            {
+              "id": "deployment",
+              "path": "/docs/1.0.5/deployment"
+            },
+            {
+              "id": "error-handling",
+              "path": "/docs/1.0.5/error-handling"
+            },
+            {
+              "id": "getting-started",
+              "path": "/docs/1.0.5/getting-started",
+              "sidebar": "version-1.0.5/docs"
+            },
+            {
+              "id": "getting-started",
+              "path": "/docs/1.0.5/getting-started",
+              "sidebar": "version-1.0.5/docs"
+            },
+            {
+              "id": "intents",
+              "path": "/docs/1.0.5/intents"
+            },
+            {
+              "id": "line",
+              "path": "/docs/1.0.5/line"
+            },
+            {
+              "id": "messenger",
+              "path": "/docs/1.0.5/messenger"
+            },
+            {
+              "id": "middleware",
+              "path": "/docs/1.0.5/middleware"
+            },
+            {
+              "id": "migrating-v1",
+              "path": "/docs/1.0.5/migrating-v1",
+              "sidebar": "version-1.0.5/docs"
+            },
+            {
+              "id": "server",
+              "path": "/docs/1.0.5/server"
+            },
+            {
+              "id": "session",
+              "path": "/docs/1.0.5/session"
+            },
+            {
+              "id": "slack",
+              "path": "/docs/1.0.5/slack"
+            },
+            {
+              "id": "state",
+              "path": "/docs/1.0.5/state"
+            },
+            {
+              "id": "telegram",
+              "path": "/docs/1.0.5/telegram"
+            },
+            {
+              "id": "testing",
+              "path": "/docs/1.0.5/testing"
+            },
+            {
+              "id": "the-basics-actions",
+              "path": "/docs/1.0.5/the-basics-actions",
+              "sidebar": "version-1.0.5/docs"
+            },
+            {
+              "id": "the-basics-chain",
+              "path": "/docs/1.0.5/the-basics-chain",
+              "sidebar": "version-1.0.5/docs"
+            },
+            {
+              "id": "the-basics-console-mode",
+              "path": "/docs/1.0.5/the-basics-console-mode",
+              "sidebar": "version-1.0.5/docs"
+            },
+            {
+              "id": "the-basics-context-event",
+              "path": "/docs/1.0.5/the-basics-context-event"
+            },
+            {
+              "id": "the-basics-errors",
+              "path": "/docs/1.0.5/the-basics-errors",
+              "sidebar": "version-1.0.5/docs"
+            },
+            {
+              "id": "the-basics-routing",
+              "path": "/docs/1.0.5/the-basics-routing",
+              "sidebar": "version-1.0.5/docs"
+            },
+            {
+              "id": "the-basics-session",
+              "path": "/docs/1.0.5/the-basics-session",
+              "sidebar": "version-1.0.5/docs"
+            },
+            {
+              "id": "troubleshooting",
+              "path": "/docs/1.0.5/troubleshooting"
+            },
+            {
+              "id": "viber",
+              "path": "/docs/1.0.5/viber"
+            }
+          ]
+        },
+        {
+          "name": "0.15.17",
+          "label": "0.15.17",
+          "isLast": false,
+          "path": "/docs/0.15.17",
+          "mainDocId": "getting-started",
+          "docs": [
+            {
+              "id": "advanced-guides-custom-server",
+              "path": "/docs/0.15.17/advanced-guides-custom-server"
+            },
+            {
+              "id": "advanced-guides-deployment",
+              "path": "/docs/0.15.17/advanced-guides-deployment"
+            },
+            {
+              "id": "advanced-guides-multi-channel",
+              "path": "/docs/0.15.17/advanced-guides-multi-channel"
+            },
+            {
+              "id": "advanced-guides-nlu",
+              "path": "/docs/0.15.17/advanced-guides-nlu"
+            },
+            {
+              "id": "api-console-context",
+              "path": "/docs/0.15.17/api-console-context",
+              "sidebar": "version-0.15.17/api"
+            },
+            {
+              "id": "api-console-event",
+              "path": "/docs/0.15.17/api-console-event",
+              "sidebar": "version-0.15.17/api"
+            },
+            {
+              "id": "api-console-event",
+              "path": "/docs/0.15.17/api-console-event",
+              "sidebar": "version-0.15.17/api"
+            },
+            {
+              "id": "api-consolecontext",
+              "path": "/docs/0.15.17/api-consolecontext"
+            },
+            {
+              "id": "api-context",
+              "path": "/docs/0.15.17/api-context",
+              "sidebar": "version-0.15.17/api"
+            },
+            {
+              "id": "api-context",
+              "path": "/docs/0.15.17/api-context",
+              "sidebar": "version-0.15.17/api"
+            },
+            {
+              "id": "api-event",
+              "path": "/docs/0.15.17/api-event",
+              "sidebar": "version-0.15.17/api"
+            },
+            {
+              "id": "api-event",
+              "path": "/docs/0.15.17/api-event",
+              "sidebar": "version-0.15.17/api"
+            },
+            {
+              "id": "api-handler",
+              "path": "/docs/0.15.17/api-handler",
+              "sidebar": "version-0.15.17/api"
+            },
+            {
+              "id": "api-line-client",
+              "path": "/docs/0.15.17/api-line-client"
+            },
+            {
+              "id": "api-line-context",
+              "path": "/docs/0.15.17/api-line-context",
+              "sidebar": "version-0.15.17/api"
+            },
+            {
+              "id": "api-line-event",
+              "path": "/docs/0.15.17/api-line-event",
+              "sidebar": "version-0.15.17/api"
+            },
+            {
+              "id": "api-linecontext",
+              "path": "/docs/0.15.17/api-linecontext"
+            },
+            {
+              "id": "api-lineevent",
+              "path": "/docs/0.15.17/api-lineevent"
+            },
+            {
+              "id": "api-messenger-client",
+              "path": "/docs/0.15.17/api-messenger-client"
+            },
+            {
+              "id": "api-messenger-context",
+              "path": "/docs/0.15.17/api-messenger-context",
+              "sidebar": "version-0.15.17/api"
+            },
+            {
+              "id": "api-messenger-event",
+              "path": "/docs/0.15.17/api-messenger-event",
+              "sidebar": "version-0.15.17/api"
+            },
+            {
+              "id": "api-messengercontext",
+              "path": "/docs/0.15.17/api-messengercontext"
+            },
+            {
+              "id": "api-messengerevent",
+              "path": "/docs/0.15.17/api-messengerevent"
+            },
+            {
+              "id": "api-slack-client",
+              "path": "/docs/0.15.17/api-slack-client"
+            },
+            {
+              "id": "api-slack-context",
+              "path": "/docs/0.15.17/api-slack-context",
+              "sidebar": "version-0.15.17/api"
+            },
+            {
+              "id": "api-slack-event",
+              "path": "/docs/0.15.17/api-slack-event",
+              "sidebar": "version-0.15.17/api"
+            },
+            {
+              "id": "api-slackcontext",
+              "path": "/docs/0.15.17/api-slackcontext"
+            },
+            {
+              "id": "api-slackevent",
+              "path": "/docs/0.15.17/api-slackevent"
+            },
+            {
+              "id": "api-telegram-client",
+              "path": "/docs/0.15.17/api-telegram-client"
+            },
+            {
+              "id": "api-telegram-context",
+              "path": "/docs/0.15.17/api-telegram-context",
+              "sidebar": "version-0.15.17/api"
+            },
+            {
+              "id": "api-telegram-event",
+              "path": "/docs/0.15.17/api-telegram-event",
+              "sidebar": "version-0.15.17/api"
+            },
+            {
+              "id": "api-telegramcontext",
+              "path": "/docs/0.15.17/api-telegramcontext"
+            },
+            {
+              "id": "api-telegramevent",
+              "path": "/docs/0.15.17/api-telegramevent"
+            },
+            {
+              "id": "api-viber-client",
+              "path": "/docs/0.15.17/api-viber-client"
+            },
+            {
+              "id": "api-viber-context",
+              "path": "/docs/0.15.17/api-viber-context",
+              "sidebar": "version-0.15.17/api"
+            },
+            {
+              "id": "api-viber-event",
+              "path": "/docs/0.15.17/api-viber-event",
+              "sidebar": "version-0.15.17/api"
+            },
+            {
+              "id": "api-vibercontext",
+              "path": "/docs/0.15.17/api-vibercontext"
+            },
+            {
+              "id": "api-viberevent",
+              "path": "/docs/0.15.17/api-viberevent"
+            },
+            {
+              "id": "channel-line-errors",
+              "path": "/docs/0.15.17/channel-line-errors"
+            },
+            {
+              "id": "channel-line-flex",
+              "path": "/docs/0.15.17/channel-line-flex"
+            },
+            {
+              "id": "channel-line-handling-events",
+              "path": "/docs/0.15.17/channel-line-handling-events"
+            },
+            {
+              "id": "channel-line-liff",
+              "path": "/docs/0.15.17/channel-line-liff"
+            },
+            {
+              "id": "channel-line-migrating-from-sdk",
+              "path": "/docs/0.15.17/channel-line-migrating-from-sdk"
+            },
+            {
+              "id": "channel-line-notify",
+              "path": "/docs/0.15.17/channel-line-notify"
+            },
+            {
+              "id": "channel-line-rich-menu",
+              "path": "/docs/0.15.17/channel-line-rich-menu"
+            },
+            {
+              "id": "channel-line-routing",
+              "path": "/docs/0.15.17/channel-line-routing"
+            },
+            {
+              "id": "channel-line-sending-messages",
+              "path": "/docs/0.15.17/channel-line-sending-messages"
+            },
+            {
+              "id": "channel-line-setup",
+              "path": "/docs/0.15.17/channel-line-setup"
+            },
+            {
+              "id": "channel-messenger-handling-events",
+              "path": "/docs/0.15.17/channel-messenger-handling-events"
+            },
+            {
+              "id": "channel-messenger-handover-protocol",
+              "path": "/docs/0.15.17/channel-messenger-handover-protocol"
+            },
+            {
+              "id": "channel-messenger-multi-page",
+              "path": "/docs/0.15.17/channel-messenger-multi-page"
+            },
+            {
+              "id": "channel-messenger-persona",
+              "path": "/docs/0.15.17/channel-messenger-persona"
+            },
+            {
+              "id": "channel-messenger-profile",
+              "path": "/docs/0.15.17/channel-messenger-profile"
+            },
+            {
+              "id": "channel-messenger-routing",
+              "path": "/docs/0.15.17/channel-messenger-routing"
+            },
+            {
+              "id": "channel-messenger-sending-messages",
+              "path": "/docs/0.15.17/channel-messenger-sending-messages"
+            },
+            {
+              "id": "channel-messenger-setup",
+              "path": "/docs/0.15.17/channel-messenger-setup"
+            },
+            {
+              "id": "channel-slack-block-kit",
+              "path": "/docs/0.15.17/channel-slack-block-kit"
+            },
+            {
+              "id": "channel-slack-handling-events",
+              "path": "/docs/0.15.17/channel-slack-handling-events"
+            },
+            {
+              "id": "channel-slack-routing",
+              "path": "/docs/0.15.17/channel-slack-routing"
+            },
+            {
+              "id": "channel-slack-sending-messages",
+              "path": "/docs/0.15.17/channel-slack-sending-messages"
+            },
+            {
+              "id": "channel-slack-setup",
+              "path": "/docs/0.15.17/channel-slack-setup"
+            },
+            {
+              "id": "channel-slack-slash-command",
+              "path": "/docs/0.15.17/channel-slack-slash-command"
+            },
+            {
+              "id": "channel-telegram-handling-events",
+              "path": "/docs/0.15.17/channel-telegram-handling-events"
+            },
+            {
+              "id": "channel-telegram-routing",
+              "path": "/docs/0.15.17/channel-telegram-routing"
+            },
+            {
+              "id": "channel-telegram-sending-messages",
+              "path": "/docs/0.15.17/channel-telegram-sending-messages"
+            },
+            {
+              "id": "channel-telegram-setup",
+              "path": "/docs/0.15.17/channel-telegram-setup"
+            },
+            {
+              "id": "channel-viber-handling-events",
+              "path": "/docs/0.15.17/channel-viber-handling-events"
+            },
+            {
+              "id": "channel-viber-routing",
+              "path": "/docs/0.15.17/channel-viber-routing"
+            },
+            {
+              "id": "channel-viber-sending-messages",
+              "path": "/docs/0.15.17/channel-viber-sending-messages"
+            },
+            {
+              "id": "channel-viber-setup",
+              "path": "/docs/0.15.17/channel-viber-setup"
+            },
+            {
+              "id": "channel-whatsapp-handling-events",
+              "path": "/docs/0.15.17/channel-whatsapp-handling-events"
+            },
+            {
+              "id": "channel-whatsapp-routing",
+              "path": "/docs/0.15.17/channel-whatsapp-routing"
+            },
+            {
+              "id": "channel-whatsapp-sending-messages",
+              "path": "/docs/0.15.17/channel-whatsapp-sending-messages"
+            },
+            {
+              "id": "channel-whatsapp-setup",
+              "path": "/docs/0.15.17/channel-whatsapp-setup"
+            },
+            {
+              "id": "commands",
+              "path": "/docs/0.15.17/commands",
+              "sidebar": "version-0.15.17/docs"
+            },
+            {
+              "id": "console",
+              "path": "/docs/0.15.17/console",
+              "sidebar": "version-0.15.17/docs"
+            },
+            {
+              "id": "custom-connector",
+              "path": "/docs/0.15.17/custom-connector",
+              "sidebar": "version-0.15.17/docs"
+            },
+            {
+              "id": "deployment",
+              "path": "/docs/0.15.17/deployment",
+              "sidebar": "version-0.15.17/docs"
+            },
+            {
+              "id": "error-handling",
+              "path": "/docs/0.15.17/error-handling",
+              "sidebar": "version-0.15.17/docs"
+            },
+            {
+              "id": "getting-started",
+              "path": "/docs/0.15.17/getting-started",
+              "sidebar": "version-0.15.17/docs"
+            },
+            {
+              "id": "getting-started",
+              "path": "/docs/0.15.17/getting-started",
+              "sidebar": "version-0.15.17/docs"
+            },
+            {
+              "id": "intents",
+              "path": "/docs/0.15.17/intents",
+              "sidebar": "version-0.15.17/docs"
+            },
+            {
+              "id": "line",
+              "path": "/docs/0.15.17/line",
+              "sidebar": "version-0.15.17/docs"
+            },
+            {
+              "id": "messenger",
+              "path": "/docs/0.15.17/messenger",
+              "sidebar": "version-0.15.17/docs"
+            },
+            {
+              "id": "middleware",
+              "path": "/docs/0.15.17/middleware",
+              "sidebar": "version-0.15.17/docs"
+            },
+            {
+              "id": "migrating-v1",
+              "path": "/docs/0.15.17/migrating-v1"
+            },
+            {
+              "id": "server",
+              "path": "/docs/0.15.17/server",
+              "sidebar": "version-0.15.17/docs"
+            },
+            {
+              "id": "session",
+              "path": "/docs/0.15.17/session",
+              "sidebar": "version-0.15.17/docs"
+            },
+            {
+              "id": "slack",
+              "path": "/docs/0.15.17/slack",
+              "sidebar": "version-0.15.17/docs"
+            },
+            {
+              "id": "state",
+              "path": "/docs/0.15.17/state",
+              "sidebar": "version-0.15.17/docs"
+            },
+            {
+              "id": "telegram",
+              "path": "/docs/0.15.17/telegram",
+              "sidebar": "version-0.15.17/docs"
+            },
+            {
+              "id": "testing",
+              "path": "/docs/0.15.17/testing",
+              "sidebar": "version-0.15.17/docs"
+            },
+            {
+              "id": "the-basics-actions",
+              "path": "/docs/0.15.17/the-basics-actions"
+            },
+            {
+              "id": "the-basics-chain",
+              "path": "/docs/0.15.17/the-basics-chain"
+            },
+            {
+              "id": "the-basics-console-mode",
+              "path": "/docs/0.15.17/the-basics-console-mode"
+            },
+            {
+              "id": "the-basics-context-event",
+              "path": "/docs/0.15.17/the-basics-context-event"
+            },
+            {
+              "id": "the-basics-errors",
+              "path": "/docs/0.15.17/the-basics-errors"
+            },
+            {
+              "id": "the-basics-routing",
+              "path": "/docs/0.15.17/the-basics-routing"
+            },
+            {
+              "id": "the-basics-session",
+              "path": "/docs/0.15.17/the-basics-session"
+            },
+            {
+              "id": "troubleshooting",
+              "path": "/docs/0.15.17/troubleshooting",
+              "sidebar": "version-0.15.17/docs"
+            },
+            {
+              "id": "viber",
+              "path": "/docs/0.15.17/viber",
+              "sidebar": "version-0.15.17/docs"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

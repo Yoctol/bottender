@@ -18,7 +18,7 @@ We assumed that you already built at least one basic Bottender app in developmen
 
 ## Heroku
 
-<p><img width="300" src="https://user-images.githubusercontent.com/662387/72130857-a8a98300-33b5-11ea-9ec6-10c8aac37230.jpg"></p>
+<p><img width="300" src="https://user-images.githubusercontent.com/662387/72130857-a8a98300-33b5-11ea-9ec6-10c8aac37230.jpg"/></p>
 
 Heroku is one of the most popular hosting services. Not only the clear document, ease of scalability, using Git for deployment, but also the friendly [free pricing plan](https://www.heroku.com/pricing) for experiment purpose.
 

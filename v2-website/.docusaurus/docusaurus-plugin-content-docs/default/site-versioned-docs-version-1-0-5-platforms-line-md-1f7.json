@@ -1,0 +1,22 @@
+{
+  "unversionedId": "line",
+  "id": "version-1.0.5/line",
+  "isDocsHomePage": false,
+  "title": "LINE",
+  "description": "This guide will give you some basic concepts of LINE bots. For more information, check official docs.",
+  "source": "@site/versioned_docs/version-1.0.5/Platforms-LINE.md",
+  "sourceDirName": ".",
+  "slug": "/line",
+  "permalink": "/docs/1.0.5/line",
+  "editUrl": "https://github.com/Yoctol/bottender/edit/master/docs/versioned_docs/version-1.0.5/Platforms-LINE.md",
+  "tags": [],
+  "version": "1.0.5",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "10/14/2018",
+  "frontMatter": {
+    "id": "line",
+    "title": "LINE",
+    "original_id": "line"
+  }
+}

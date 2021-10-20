@@ -1,0 +1,22 @@
+{
+  "unversionedId": "api-linecontext",
+  "id": "version-1.2.0/api-linecontext",
+  "isDocsHomePage": false,
+  "title": "LineContext",
+  "description": "- Reply API",
+  "source": "@site/versioned_docs/version-1.2.0/APIReference-LineContext.md",
+  "sourceDirName": ".",
+  "slug": "/api-linecontext",
+  "permalink": "/docs/1.2.0/api-linecontext",
+  "editUrl": "https://github.com/Yoctol/bottender/edit/master/docs/versioned_docs/version-1.2.0/APIReference-LineContext.md",
+  "tags": [],
+  "version": "1.2.0",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "10/14/2018",
+  "frontMatter": {
+    "id": "api-linecontext",
+    "title": "LineContext",
+    "original_id": "api-linecontext"
+  }
+}

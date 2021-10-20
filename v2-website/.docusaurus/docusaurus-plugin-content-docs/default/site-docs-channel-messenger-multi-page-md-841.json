@@ -1,0 +1,30 @@
+{
+  "unversionedId": "channel-messenger-multi-page",
+  "id": "channel-messenger-multi-page",
+  "isDocsHomePage": false,
+  "title": "Messenger Multi-Page Support",
+  "description": "This doc outlines how to build a single Bottender app to serve multiple Facebook Pages. For example, you can create a single Bottender app of dental appointments for multiple clinics with individual clinic info.",
+  "source": "@site/../docs/channel-messenger-multi-page.md",
+  "sourceDirName": ".",
+  "slug": "/channel-messenger-multi-page",
+  "permalink": "/docs/next/channel-messenger-multi-page",
+  "editUrl": "https://github.com/Yoctol/bottender/edit/master/docs/../docs/channel-messenger-multi-page.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "10/14/2018",
+  "frontMatter": {
+    "id": "channel-messenger-multi-page",
+    "title": "Messenger Multi-Page Support"
+  },
+  "sidebar": "docs",
+  "previous": {
+    "title": "Using Messenger Persona",
+    "permalink": "/docs/next/channel-messenger-persona"
+  },
+  "next": {
+    "title": "WhatsApp Setup",
+    "permalink": "/docs/next/channel-whatsapp-setup"
+  }
+}

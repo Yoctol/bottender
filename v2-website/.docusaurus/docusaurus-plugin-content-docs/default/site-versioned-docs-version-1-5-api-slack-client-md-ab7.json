@@ -1,0 +1,31 @@
+{
+  "unversionedId": "api-slack-client",
+  "id": "version-1.5/api-slack-client",
+  "isDocsHomePage": false,
+  "title": "SlackClient",
+  "description": "- Usage",
+  "source": "@site/versioned_docs/version-1.5/api-slack-client.md",
+  "sourceDirName": ".",
+  "slug": "/api-slack-client",
+  "permalink": "/docs/api-slack-client",
+  "editUrl": "https://github.com/Yoctol/bottender/edit/master/docs/versioned_docs/version-1.5/api-slack-client.md",
+  "tags": [],
+  "version": "1.5",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "10/14/2018",
+  "frontMatter": {
+    "id": "api-slack-client",
+    "title": "SlackClient",
+    "original_id": "api-slack-client"
+  },
+  "sidebar": "version-1.5/api",
+  "previous": {
+    "title": "SlackEvent",
+    "permalink": "/docs/api-slack-event"
+  },
+  "next": {
+    "title": "TelegramContext",
+    "permalink": "/docs/api-telegram-context"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "unversionedId": "custom-connector",
+  "id": "version-0.15.17/custom-connector",
+  "isDocsHomePage": false,
+  "title": "CustomConnector",
+  "description": "To create a custom connector, you must implement the following classes:",
+  "source": "@site/versioned_docs/version-0.15.17/Guides-CustomConnector.md",
+  "sourceDirName": ".",
+  "slug": "/custom-connector",
+  "permalink": "/docs/0.15.17/custom-connector",
+  "editUrl": "https://github.com/Yoctol/bottender/edit/master/docs/versioned_docs/version-0.15.17/Guides-CustomConnector.md",
+  "tags": [],
+  "version": "0.15.17",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "10/14/2018",
+  "frontMatter": {
+    "id": "custom-connector",
+    "title": "CustomConnector",
+    "original_id": "custom-connector"
+  },
+  "sidebar": "version-0.15.17/docs",
+  "previous": {
+    "title": "Testing",
+    "permalink": "/docs/0.15.17/testing"
+  },
+  "next": {
+    "title": "Troubleshooting",
+    "permalink": "/docs/0.15.17/troubleshooting"
+  }
+}

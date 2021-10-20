@@ -1,0 +1,31 @@
+{
+  "unversionedId": "the-basics-session",
+  "id": "version-1.4/the-basics-session",
+  "isDocsHomePage": false,
+  "title": "Session",
+  "description": "Introduction",
+  "source": "@site/versioned_docs/version-1.4/the-basics-session.md",
+  "sourceDirName": ".",
+  "slug": "/the-basics-session",
+  "permalink": "/docs/1.4/the-basics-session",
+  "editUrl": "https://github.com/Yoctol/bottender/edit/master/docs/versioned_docs/version-1.4/the-basics-session.md",
+  "tags": [],
+  "version": "1.4",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "10/14/2018",
+  "frontMatter": {
+    "id": "the-basics-session",
+    "title": "Session",
+    "original_id": "the-basics-session"
+  },
+  "sidebar": "version-1.4/docs",
+  "previous": {
+    "title": "Chain of Responsibility",
+    "permalink": "/docs/1.4/the-basics-chain"
+  },
+  "next": {
+    "title": "Error Handling",
+    "permalink": "/docs/1.4/the-basics-errors"
+  }
+}

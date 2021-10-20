@@ -1,0 +1,27 @@
+{
+  "unversionedId": "api-console-event",
+  "id": "version-1.4/api-console-event",
+  "isDocsHomePage": false,
+  "title": "ConsoleEvent",
+  "description": "rawEvent",
+  "source": "@site/versioned_docs/version-1.4/APIReference-ConsoleEvent.md",
+  "sourceDirName": ".",
+  "slug": "/api-console-event",
+  "permalink": "/docs/1.4/api-console-event",
+  "editUrl": "https://github.com/Yoctol/bottender/edit/master/docs/versioned_docs/version-1.4/APIReference-ConsoleEvent.md",
+  "tags": [],
+  "version": "1.4",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "10/14/2018",
+  "frontMatter": {
+    "id": "api-console-event",
+    "title": "ConsoleEvent",
+    "original_id": "api-console-event"
+  },
+  "sidebar": "version-1.4/api",
+  "previous": {
+    "title": "ConsoleContext",
+    "permalink": "/docs/1.4/api-console-context"
+  }
+}

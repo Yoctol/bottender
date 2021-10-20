@@ -1,0 +1,30 @@
+{
+  "unversionedId": "api-slack-event",
+  "id": "version-0.15.17/api-slack-event",
+  "isDocsHomePage": false,
+  "title": "SlackEvent",
+  "description": "rawEvent",
+  "source": "@site/versioned_docs/version-0.15.17/api-slack-event.md",
+  "sourceDirName": ".",
+  "slug": "/api-slack-event",
+  "permalink": "/docs/0.15.17/api-slack-event",
+  "editUrl": "https://github.com/Yoctol/bottender/edit/master/docs/versioned_docs/version-0.15.17/api-slack-event.md",
+  "tags": [],
+  "version": "0.15.17",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "10/14/2018",
+  "frontMatter": {
+    "id": "api-slack-event",
+    "title": "SlackEvent"
+  },
+  "sidebar": "version-0.15.17/api",
+  "previous": {
+    "title": "SlackContext",
+    "permalink": "/docs/0.15.17/api-slack-context"
+  },
+  "next": {
+    "title": "TelegramContext",
+    "permalink": "/docs/0.15.17/api-telegram-context"
+  }
+}

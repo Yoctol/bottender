@@ -1,0 +1,31 @@
+{
+  "unversionedId": "the-basics-chain",
+  "id": "version-1.0.5/the-basics-chain",
+  "isDocsHomePage": false,
+  "title": "Chain of Responsibility",
+  "description": "An advanced way to organize your actions is using the \"Chain of Responsibility\". This enables you to prioritize your actions explicitly by the order of the actions.",
+  "source": "@site/versioned_docs/version-1.0.5/the-basics-chain.md",
+  "sourceDirName": ".",
+  "slug": "/the-basics-chain",
+  "permalink": "/docs/1.0.5/the-basics-chain",
+  "editUrl": "https://github.com/Yoctol/bottender/edit/master/docs/versioned_docs/version-1.0.5/the-basics-chain.md",
+  "tags": [],
+  "version": "1.0.5",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "10/14/2018",
+  "frontMatter": {
+    "id": "the-basics-chain",
+    "title": "Chain of Responsibility",
+    "original_id": "the-basics-chain"
+  },
+  "sidebar": "version-1.0.5/docs",
+  "previous": {
+    "title": "Routing",
+    "permalink": "/docs/1.0.5/the-basics-routing"
+  },
+  "next": {
+    "title": "Session",
+    "permalink": "/docs/1.0.5/the-basics-session"
+  }
+}

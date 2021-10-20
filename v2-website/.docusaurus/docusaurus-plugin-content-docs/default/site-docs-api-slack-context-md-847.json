@@ -1,0 +1,30 @@
+{
+  "unversionedId": "api-slack-context",
+  "id": "api-slack-context",
+  "isDocsHomePage": false,
+  "title": "SlackContext",
+  "description": "Chat API",
+  "source": "@site/../docs/api-slack-context.md",
+  "sourceDirName": ".",
+  "slug": "/api-slack-context",
+  "permalink": "/docs/next/api-slack-context",
+  "editUrl": "https://github.com/Yoctol/bottender/edit/master/docs/../docs/api-slack-context.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "10/14/2018",
+  "frontMatter": {
+    "id": "api-slack-context",
+    "title": "SlackContext"
+  },
+  "sidebar": "api",
+  "previous": {
+    "title": "LineClient",
+    "permalink": "/docs/next/api-line-client"
+  },
+  "next": {
+    "title": "SlackEvent",
+    "permalink": "/docs/next/api-slack-event"
+  }
+}

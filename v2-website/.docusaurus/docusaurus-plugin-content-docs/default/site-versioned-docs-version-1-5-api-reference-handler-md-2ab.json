@@ -1,0 +1,22 @@
+{
+  "unversionedId": "api-handler",
+  "id": "version-1.5/api-handler",
+  "isDocsHomePage": false,
+  "title": "Handler",
+  "description": "A Bottender Handler includes many helpful methods and lets you easily handle different kinds of events from platforms.",
+  "source": "@site/versioned_docs/version-1.5/APIReference-Handler.md",
+  "sourceDirName": ".",
+  "slug": "/api-handler",
+  "permalink": "/docs/api-handler",
+  "editUrl": "https://github.com/Yoctol/bottender/edit/master/docs/versioned_docs/version-1.5/APIReference-Handler.md",
+  "tags": [],
+  "version": "1.5",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "10/14/2018",
+  "frontMatter": {
+    "id": "api-handler",
+    "title": "Handler",
+    "original_id": "api-handler"
+  }
+}

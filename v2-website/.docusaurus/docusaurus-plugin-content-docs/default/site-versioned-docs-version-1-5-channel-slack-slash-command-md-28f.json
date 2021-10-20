@@ -1,0 +1,31 @@
+{
+  "unversionedId": "channel-slack-slash-command",
+  "id": "version-1.5/channel-slack-slash-command",
+  "isDocsHomePage": false,
+  "title": "Handling Slack Slash Commands",
+  "description": "Handling Slash Commands",
+  "source": "@site/versioned_docs/version-1.5/channel-slack-slash-command.md",
+  "sourceDirName": ".",
+  "slug": "/channel-slack-slash-command",
+  "permalink": "/docs/channel-slack-slash-command",
+  "editUrl": "https://github.com/Yoctol/bottender/edit/master/docs/versioned_docs/version-1.5/channel-slack-slash-command.md",
+  "tags": [],
+  "version": "1.5",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "10/14/2018",
+  "frontMatter": {
+    "id": "channel-slack-slash-command",
+    "title": "Handling Slack Slash Commands",
+    "original_id": "channel-slack-slash-command"
+  },
+  "sidebar": "version-1.5/docs",
+  "previous": {
+    "title": "Slack Routing",
+    "permalink": "/docs/channel-slack-routing"
+  },
+  "next": {
+    "title": "Slack Block Kit",
+    "permalink": "/docs/channel-slack-block-kit"
+  }
+}

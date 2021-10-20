@@ -1,0 +1,21 @@
+{
+  "unversionedId": "channel-messenger-persona",
+  "id": "version-0.15.17/channel-messenger-persona",
+  "isDocsHomePage": false,
+  "title": "Using Messenger Persona",
+  "description": "Messenger Persona Practical Guide",
+  "source": "@site/versioned_docs/version-0.15.17/channel-messenger-persona.md",
+  "sourceDirName": ".",
+  "slug": "/channel-messenger-persona",
+  "permalink": "/docs/0.15.17/channel-messenger-persona",
+  "editUrl": "https://github.com/Yoctol/bottender/edit/master/docs/versioned_docs/version-0.15.17/channel-messenger-persona.md",
+  "tags": [],
+  "version": "0.15.17",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "10/14/2018",
+  "frontMatter": {
+    "id": "channel-messenger-persona",
+    "title": "Using Messenger Persona"
+  }
+}

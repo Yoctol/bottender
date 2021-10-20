@@ -1,0 +1,22 @@
+{
+  "unversionedId": "server",
+  "id": "version-1.4/server",
+  "isDocsHomePage": false,
+  "title": "HTTP Server",
+  "description": "Bottender supports the following HTTP servers. You can choose one of them to develop your own bots.",
+  "source": "@site/versioned_docs/version-1.4/Guides-Server.md",
+  "sourceDirName": ".",
+  "slug": "/server",
+  "permalink": "/docs/1.4/server",
+  "editUrl": "https://github.com/Yoctol/bottender/edit/master/docs/versioned_docs/version-1.4/Guides-Server.md",
+  "tags": [],
+  "version": "1.4",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "10/14/2018",
+  "frontMatter": {
+    "id": "server",
+    "title": "HTTP Server",
+    "original_id": "server"
+  }
+}

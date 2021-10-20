@@ -1,0 +1,31 @@
+{
+  "unversionedId": "channel-whatsapp-setup",
+  "id": "version-1.4/channel-whatsapp-setup",
+  "isDocsHomePage": false,
+  "title": "WhatsApp Setup",
+  "description": "Introduction",
+  "source": "@site/versioned_docs/version-1.4/channel-whatsapp-setup.md",
+  "sourceDirName": ".",
+  "slug": "/channel-whatsapp-setup",
+  "permalink": "/docs/1.4/channel-whatsapp-setup",
+  "editUrl": "https://github.com/Yoctol/bottender/edit/master/docs/versioned_docs/version-1.4/channel-whatsapp-setup.md",
+  "tags": [],
+  "version": "1.4",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "10/14/2018",
+  "frontMatter": {
+    "id": "channel-whatsapp-setup",
+    "title": "WhatsApp Setup",
+    "original_id": "channel-whatsapp-setup"
+  },
+  "sidebar": "version-1.4/docs",
+  "previous": {
+    "title": "Messenger Multi-Page Support",
+    "permalink": "/docs/1.4/channel-messenger-multi-page"
+  },
+  "next": {
+    "title": "Handling WhatsApp Events",
+    "permalink": "/docs/1.4/channel-whatsapp-handling-events"
+  }
+}

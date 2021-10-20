@@ -1,0 +1,21 @@
+{
+  "unversionedId": "channel-slack-routing",
+  "id": "version-0.15.17/channel-slack-routing",
+  "isDocsHomePage": false,
+  "title": "Slack Routing",
+  "description": "Bottender offers a bunch of helpers to route within your Slack or multi-platform app. For example, you may use Slack particular routes within your router:",
+  "source": "@site/versioned_docs/version-0.15.17/channel-slack-routing.md",
+  "sourceDirName": ".",
+  "slug": "/channel-slack-routing",
+  "permalink": "/docs/0.15.17/channel-slack-routing",
+  "editUrl": "https://github.com/Yoctol/bottender/edit/master/docs/versioned_docs/version-0.15.17/channel-slack-routing.md",
+  "tags": [],
+  "version": "0.15.17",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "10/14/2018",
+  "frontMatter": {
+    "id": "channel-slack-routing",
+    "title": "Slack Routing"
+  }
+}

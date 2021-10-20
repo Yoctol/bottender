@@ -1,0 +1,31 @@
+{
+  "unversionedId": "api-telegram-event",
+  "id": "version-1.5/api-telegram-event",
+  "isDocsHomePage": false,
+  "title": "TelegramEvent",
+  "description": "rawEvent",
+  "source": "@site/versioned_docs/version-1.5/api-telegram-event.md",
+  "sourceDirName": ".",
+  "slug": "/api-telegram-event",
+  "permalink": "/docs/api-telegram-event",
+  "editUrl": "https://github.com/Yoctol/bottender/edit/master/docs/versioned_docs/version-1.5/api-telegram-event.md",
+  "tags": [],
+  "version": "1.5",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "10/14/2018",
+  "frontMatter": {
+    "id": "api-telegram-event",
+    "title": "TelegramEvent",
+    "original_id": "api-telegram-event"
+  },
+  "sidebar": "version-1.5/api",
+  "previous": {
+    "title": "TelegramContext",
+    "permalink": "/docs/api-telegram-context"
+  },
+  "next": {
+    "title": "TelegramClient",
+    "permalink": "/docs/api-telegram-client"
+  }
+}

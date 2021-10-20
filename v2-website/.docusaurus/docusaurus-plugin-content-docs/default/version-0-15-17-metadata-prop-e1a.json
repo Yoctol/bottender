@@ -1,0 +1,260 @@
+{
+  "pluginId": "default",
+  "version": "0.15.17",
+  "label": "0.15.17",
+  "banner": "unmaintained",
+  "badge": true,
+  "className": "docs-version-0.15.17",
+  "isLast": false,
+  "docsSidebars": {
+    "version-0.15.17/docs": [
+      {
+        "type": "category",
+        "label": "Installation",
+        "items": [
+          {
+            "type": "link",
+            "label": "Getting Started",
+            "href": "/docs/0.15.17/getting-started"
+          }
+        ],
+        "collapsible": true,
+        "collapsed": true
+      },
+      {
+        "type": "category",
+        "label": "Platforms",
+        "items": [
+          {
+            "type": "link",
+            "label": "Console",
+            "href": "/docs/0.15.17/console"
+          },
+          {
+            "type": "link",
+            "label": "Messenger",
+            "href": "/docs/0.15.17/messenger"
+          },
+          {
+            "type": "link",
+            "label": "LINE",
+            "href": "/docs/0.15.17/line"
+          },
+          {
+            "type": "link",
+            "label": "Slack",
+            "href": "/docs/0.15.17/slack"
+          },
+          {
+            "type": "link",
+            "label": "Telegram",
+            "href": "/docs/0.15.17/telegram"
+          },
+          {
+            "type": "link",
+            "label": "Viber",
+            "href": "/docs/0.15.17/viber"
+          }
+        ],
+        "collapsible": true,
+        "collapsed": true
+      },
+      {
+        "type": "category",
+        "label": "Guides",
+        "items": [
+          {
+            "type": "link",
+            "label": "Commands",
+            "href": "/docs/0.15.17/commands"
+          },
+          {
+            "type": "link",
+            "label": "Deployment",
+            "href": "/docs/0.15.17/deployment"
+          },
+          {
+            "type": "link",
+            "label": "Error Handling",
+            "href": "/docs/0.15.17/error-handling"
+          },
+          {
+            "type": "link",
+            "label": "Intents",
+            "href": "/docs/0.15.17/intents"
+          },
+          {
+            "type": "link",
+            "label": "Middleware",
+            "href": "/docs/0.15.17/middleware"
+          },
+          {
+            "type": "link",
+            "label": "HTTP Server",
+            "href": "/docs/0.15.17/server"
+          },
+          {
+            "type": "link",
+            "label": "Conversation Session",
+            "href": "/docs/0.15.17/session"
+          },
+          {
+            "type": "link",
+            "label": "State",
+            "href": "/docs/0.15.17/state"
+          },
+          {
+            "type": "link",
+            "label": "Testing",
+            "href": "/docs/0.15.17/testing"
+          },
+          {
+            "type": "link",
+            "label": "CustomConnector",
+            "href": "/docs/0.15.17/custom-connector"
+          },
+          {
+            "type": "link",
+            "label": "Troubleshooting",
+            "href": "/docs/0.15.17/troubleshooting"
+          }
+        ],
+        "collapsible": true,
+        "collapsed": true
+      }
+    ],
+    "version-0.15.17/api": [
+      {
+        "type": "category",
+        "label": "Core",
+        "items": [
+          {
+            "type": "link",
+            "label": "Context",
+            "href": "/docs/0.15.17/api-context"
+          },
+          {
+            "type": "link",
+            "label": "Event",
+            "href": "/docs/0.15.17/api-event"
+          },
+          {
+            "type": "link",
+            "label": "Handler",
+            "href": "/docs/0.15.17/api-handler"
+          }
+        ],
+        "collapsible": true,
+        "collapsed": true
+      },
+      {
+        "type": "category",
+        "label": "Console",
+        "items": [
+          {
+            "type": "link",
+            "label": "ConsoleContext",
+            "href": "/docs/0.15.17/api-console-context"
+          },
+          {
+            "type": "link",
+            "label": "ConsoleEvent",
+            "href": "/docs/0.15.17/api-console-event"
+          }
+        ],
+        "collapsible": true,
+        "collapsed": true
+      },
+      {
+        "type": "category",
+        "label": "Messenger",
+        "items": [
+          {
+            "type": "link",
+            "label": "MessengerContext",
+            "href": "/docs/0.15.17/api-messenger-context"
+          },
+          {
+            "type": "link",
+            "label": "MessengerEvent",
+            "href": "/docs/0.15.17/api-messenger-event"
+          }
+        ],
+        "collapsible": true,
+        "collapsed": true
+      },
+      {
+        "type": "category",
+        "label": "LINE",
+        "items": [
+          {
+            "type": "link",
+            "label": "LineContext",
+            "href": "/docs/0.15.17/api-line-context"
+          },
+          {
+            "type": "link",
+            "label": "LineEvent",
+            "href": "/docs/0.15.17/api-line-event"
+          }
+        ],
+        "collapsible": true,
+        "collapsed": true
+      },
+      {
+        "type": "category",
+        "label": "Slack",
+        "items": [
+          {
+            "type": "link",
+            "label": "SlackContext",
+            "href": "/docs/0.15.17/api-slack-context"
+          },
+          {
+            "type": "link",
+            "label": "SlackEvent",
+            "href": "/docs/0.15.17/api-slack-event"
+          }
+        ],
+        "collapsible": true,
+        "collapsed": true
+      },
+      {
+        "type": "category",
+        "label": "Telegram",
+        "items": [
+          {
+            "type": "link",
+            "label": "TelegramContext",
+            "href": "/docs/0.15.17/api-telegram-context"
+          },
+          {
+            "type": "link",
+            "label": "TelegramEvent",
+            "href": "/docs/0.15.17/api-telegram-event"
+          }
+        ],
+        "collapsible": true,
+        "collapsed": true
+      },
+      {
+        "type": "category",
+        "label": "Viber",
+        "items": [
+          {
+            "type": "link",
+            "label": "ViberContext",
+            "href": "/docs/0.15.17/api-viber-context"
+          },
+          {
+            "type": "link",
+            "label": "ViberEvent",
+            "href": "/docs/0.15.17/api-viber-event"
+          }
+        ],
+        "collapsible": true,
+        "collapsed": true
+      }
+    ]
+  }
+}

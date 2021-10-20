@@ -1,0 +1,27 @@
+{
+  "unversionedId": "getting-started",
+  "id": "version-1.3.1/getting-started",
+  "isDocsHomePage": false,
+  "title": "Getting Started",
+  "description": "Requirements",
+  "source": "@site/versioned_docs/version-1.3.1/GettingStarted.md",
+  "sourceDirName": ".",
+  "slug": "/getting-started",
+  "permalink": "/docs/1.3.1/getting-started",
+  "editUrl": "https://github.com/Yoctol/bottender/edit/master/docs/versioned_docs/version-1.3.1/GettingStarted.md",
+  "tags": [],
+  "version": "1.3.1",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "10/14/2018",
+  "frontMatter": {
+    "id": "getting-started",
+    "title": "Getting Started",
+    "original_id": "getting-started"
+  },
+  "sidebar": "version-1.3.1/docs",
+  "next": {
+    "title": "Migrating from v0.x to v1",
+    "permalink": "/docs/1.3.1/migrating-v1"
+  }
+}

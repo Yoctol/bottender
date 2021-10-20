@@ -1,0 +1,30 @@
+{
+  "unversionedId": "api-telegram-client",
+  "id": "api-telegram-client",
+  "isDocsHomePage": false,
+  "title": "TelegramClient",
+  "description": "- Usage",
+  "source": "@site/../docs/api-telegram-client.md",
+  "sourceDirName": ".",
+  "slug": "/api-telegram-client",
+  "permalink": "/docs/next/api-telegram-client",
+  "editUrl": "https://github.com/Yoctol/bottender/edit/master/docs/../docs/api-telegram-client.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "10/14/2018",
+  "frontMatter": {
+    "id": "api-telegram-client",
+    "title": "TelegramClient"
+  },
+  "sidebar": "api",
+  "previous": {
+    "title": "TelegramEvent",
+    "permalink": "/docs/next/api-telegram-event"
+  },
+  "next": {
+    "title": "ViberContext",
+    "permalink": "/docs/next/api-viber-context"
+  }
+}

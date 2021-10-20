@@ -1,0 +1,30 @@
+{
+  "unversionedId": "api-console-context",
+  "id": "api-console-context",
+  "isDocsHomePage": false,
+  "title": "ConsoleContext",
+  "description": "Extends from Context.",
+  "source": "@site/../docs/api-console-context.md",
+  "sourceDirName": ".",
+  "slug": "/api-console-context",
+  "permalink": "/docs/next/api-console-context",
+  "editUrl": "https://github.com/Yoctol/bottender/edit/master/docs/../docs/api-console-context.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "10/14/2018",
+  "frontMatter": {
+    "id": "api-console-context",
+    "title": "ConsoleContext"
+  },
+  "sidebar": "api",
+  "previous": {
+    "title": "ViberClient",
+    "permalink": "/docs/next/api-viber-client"
+  },
+  "next": {
+    "title": "ConsoleEvent",
+    "permalink": "/docs/next/api-console-event"
+  }
+}

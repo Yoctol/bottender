@@ -1,0 +1,30 @@
+{
+  "unversionedId": "api-messenger-context",
+  "id": "version-0.15.17/api-messenger-context",
+  "isDocsHomePage": false,
+  "title": "MessengerContext",
+  "description": "- Message Content Types",
+  "source": "@site/versioned_docs/version-0.15.17/api-messenger-context.md",
+  "sourceDirName": ".",
+  "slug": "/api-messenger-context",
+  "permalink": "/docs/0.15.17/api-messenger-context",
+  "editUrl": "https://github.com/Yoctol/bottender/edit/master/docs/versioned_docs/version-0.15.17/api-messenger-context.md",
+  "tags": [],
+  "version": "0.15.17",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "10/14/2018",
+  "frontMatter": {
+    "id": "api-messenger-context",
+    "title": "MessengerContext"
+  },
+  "sidebar": "version-0.15.17/api",
+  "previous": {
+    "title": "ConsoleEvent",
+    "permalink": "/docs/0.15.17/api-console-event"
+  },
+  "next": {
+    "title": "MessengerEvent",
+    "permalink": "/docs/0.15.17/api-messenger-event"
+  }
+}

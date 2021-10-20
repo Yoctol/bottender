@@ -1,0 +1,30 @@
+{
+  "unversionedId": "api-telegram-context",
+  "id": "version-0.15.17/api-telegram-context",
+  "isDocsHomePage": false,
+  "title": "TelegramContext",
+  "description": "- Send API",
+  "source": "@site/versioned_docs/version-0.15.17/api-telegram-context.md",
+  "sourceDirName": ".",
+  "slug": "/api-telegram-context",
+  "permalink": "/docs/0.15.17/api-telegram-context",
+  "editUrl": "https://github.com/Yoctol/bottender/edit/master/docs/versioned_docs/version-0.15.17/api-telegram-context.md",
+  "tags": [],
+  "version": "0.15.17",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "10/14/2018",
+  "frontMatter": {
+    "id": "api-telegram-context",
+    "title": "TelegramContext"
+  },
+  "sidebar": "version-0.15.17/api",
+  "previous": {
+    "title": "SlackEvent",
+    "permalink": "/docs/0.15.17/api-slack-event"
+  },
+  "next": {
+    "title": "TelegramEvent",
+    "permalink": "/docs/0.15.17/api-telegram-event"
+  }
+}

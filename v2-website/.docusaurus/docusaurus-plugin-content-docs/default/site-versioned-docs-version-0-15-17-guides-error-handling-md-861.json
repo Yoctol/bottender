@@ -1,0 +1,31 @@
+{
+  "unversionedId": "error-handling",
+  "id": "version-0.15.17/error-handling",
+  "isDocsHomePage": false,
+  "title": "Error Handling",
+  "description": "When you develop a bot using Bottender, you can use the following approaches for error handling:",
+  "source": "@site/versioned_docs/version-0.15.17/Guides-ErrorHandling.md",
+  "sourceDirName": ".",
+  "slug": "/error-handling",
+  "permalink": "/docs/0.15.17/error-handling",
+  "editUrl": "https://github.com/Yoctol/bottender/edit/master/docs/versioned_docs/version-0.15.17/Guides-ErrorHandling.md",
+  "tags": [],
+  "version": "0.15.17",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "10/14/2018",
+  "frontMatter": {
+    "id": "error-handling",
+    "title": "Error Handling",
+    "original_id": "error-handling"
+  },
+  "sidebar": "version-0.15.17/docs",
+  "previous": {
+    "title": "Deployment",
+    "permalink": "/docs/0.15.17/deployment"
+  },
+  "next": {
+    "title": "Intents",
+    "permalink": "/docs/0.15.17/intents"
+  }
+}

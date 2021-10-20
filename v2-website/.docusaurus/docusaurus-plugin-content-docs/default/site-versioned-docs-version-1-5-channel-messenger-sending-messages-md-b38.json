@@ -1,0 +1,31 @@
+{
+  "unversionedId": "channel-messenger-sending-messages",
+  "id": "version-1.5/channel-messenger-sending-messages",
+  "isDocsHomePage": false,
+  "title": "Sending Messenger Messages",
+  "description": "Sending Text Messages",
+  "source": "@site/versioned_docs/version-1.5/channel-messenger-sending-messages.md",
+  "sourceDirName": ".",
+  "slug": "/channel-messenger-sending-messages",
+  "permalink": "/docs/channel-messenger-sending-messages",
+  "editUrl": "https://github.com/Yoctol/bottender/edit/master/docs/versioned_docs/version-1.5/channel-messenger-sending-messages.md",
+  "tags": [],
+  "version": "1.5",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "10/14/2018",
+  "frontMatter": {
+    "id": "channel-messenger-sending-messages",
+    "title": "Sending Messenger Messages",
+    "original_id": "channel-messenger-sending-messages"
+  },
+  "sidebar": "version-1.5/docs",
+  "previous": {
+    "title": "Handling Messenger Events",
+    "permalink": "/docs/channel-messenger-handling-events"
+  },
+  "next": {
+    "title": "Messenger Routing",
+    "permalink": "/docs/channel-messenger-routing"
+  }
+}

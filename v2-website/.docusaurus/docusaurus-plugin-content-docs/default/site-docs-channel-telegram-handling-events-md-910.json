@@ -1,0 +1,30 @@
+{
+  "unversionedId": "channel-telegram-handling-events",
+  "id": "channel-telegram-handling-events",
+  "isDocsHomePage": false,
+  "title": "Handling Telegram Events",
+  "description": "Text Events",
+  "source": "@site/../docs/channel-telegram-handling-events.md",
+  "sourceDirName": ".",
+  "slug": "/channel-telegram-handling-events",
+  "permalink": "/docs/next/channel-telegram-handling-events",
+  "editUrl": "https://github.com/Yoctol/bottender/edit/master/docs/../docs/channel-telegram-handling-events.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "10/14/2018",
+  "frontMatter": {
+    "id": "channel-telegram-handling-events",
+    "title": "Handling Telegram Events"
+  },
+  "sidebar": "docs",
+  "previous": {
+    "title": "Telegram Setup",
+    "permalink": "/docs/next/channel-telegram-setup"
+  },
+  "next": {
+    "title": "Sending Telegram Messages",
+    "permalink": "/docs/next/channel-telegram-sending-messages"
+  }
+}

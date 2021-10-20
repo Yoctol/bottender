@@ -1,0 +1,31 @@
+{
+  "unversionedId": "channel-line-sending-messages",
+  "id": "version-1.5/channel-line-sending-messages",
+  "isDocsHomePage": false,
+  "title": "Sending LINE Messages",
+  "description": "Reply API and Push API",
+  "source": "@site/versioned_docs/version-1.5/channel-line-sending-messages.md",
+  "sourceDirName": ".",
+  "slug": "/channel-line-sending-messages",
+  "permalink": "/docs/channel-line-sending-messages",
+  "editUrl": "https://github.com/Yoctol/bottender/edit/master/docs/versioned_docs/version-1.5/channel-line-sending-messages.md",
+  "tags": [],
+  "version": "1.5",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "10/14/2018",
+  "frontMatter": {
+    "id": "channel-line-sending-messages",
+    "title": "Sending LINE Messages",
+    "original_id": "channel-line-sending-messages"
+  },
+  "sidebar": "version-1.5/docs",
+  "previous": {
+    "title": "Handling LINE Events",
+    "permalink": "/docs/channel-line-handling-events"
+  },
+  "next": {
+    "title": "LINE Routing",
+    "permalink": "/docs/channel-line-routing"
+  }
+}

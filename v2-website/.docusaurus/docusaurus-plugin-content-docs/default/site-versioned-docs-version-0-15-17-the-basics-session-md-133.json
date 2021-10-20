@@ -1,0 +1,21 @@
+{
+  "unversionedId": "the-basics-session",
+  "id": "version-0.15.17/the-basics-session",
+  "isDocsHomePage": false,
+  "title": "Session",
+  "description": "Introduction",
+  "source": "@site/versioned_docs/version-0.15.17/the-basics-session.md",
+  "sourceDirName": ".",
+  "slug": "/the-basics-session",
+  "permalink": "/docs/0.15.17/the-basics-session",
+  "editUrl": "https://github.com/Yoctol/bottender/edit/master/docs/versioned_docs/version-0.15.17/the-basics-session.md",
+  "tags": [],
+  "version": "0.15.17",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "10/14/2018",
+  "frontMatter": {
+    "id": "the-basics-session",
+    "title": "Session"
+  }
+}

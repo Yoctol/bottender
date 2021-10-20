@@ -1,0 +1,21 @@
+{
+  "unversionedId": "channel-whatsapp-routing",
+  "id": "version-1.0.5/channel-whatsapp-routing",
+  "isDocsHomePage": false,
+  "title": "WhatsApp Routing",
+  "description": "Bottender offers a bunch of helpers to route within your WhatsApp or multi-platform app. For example, you may use WhatsApp particular routes within your router:",
+  "source": "@site/versioned_docs/version-1.0.5/channel-whatsapp-routing.md",
+  "sourceDirName": ".",
+  "slug": "/channel-whatsapp-routing",
+  "permalink": "/docs/1.0.5/channel-whatsapp-routing",
+  "editUrl": "https://github.com/Yoctol/bottender/edit/master/docs/versioned_docs/version-1.0.5/channel-whatsapp-routing.md",
+  "tags": [],
+  "version": "1.0.5",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "10/14/2018",
+  "frontMatter": {
+    "id": "channel-whatsapp-routing",
+    "title": "WhatsApp Routing"
+  }
+}

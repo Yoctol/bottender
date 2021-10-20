@@ -1,0 +1,31 @@
+{
+  "unversionedId": "api-line-event",
+  "id": "version-1.4/api-line-event",
+  "isDocsHomePage": false,
+  "title": "LineEvent",
+  "description": "rawEvent",
+  "source": "@site/versioned_docs/version-1.4/api-line-event.md",
+  "sourceDirName": ".",
+  "slug": "/api-line-event",
+  "permalink": "/docs/1.4/api-line-event",
+  "editUrl": "https://github.com/Yoctol/bottender/edit/master/docs/versioned_docs/version-1.4/api-line-event.md",
+  "tags": [],
+  "version": "1.4",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "10/14/2018",
+  "frontMatter": {
+    "id": "api-line-event",
+    "title": "LineEvent",
+    "original_id": "api-line-event"
+  },
+  "sidebar": "version-1.4/api",
+  "previous": {
+    "title": "LineContext",
+    "permalink": "/docs/1.4/api-line-context"
+  },
+  "next": {
+    "title": "LineClient",
+    "permalink": "/docs/1.4/api-line-client"
+  }
+}

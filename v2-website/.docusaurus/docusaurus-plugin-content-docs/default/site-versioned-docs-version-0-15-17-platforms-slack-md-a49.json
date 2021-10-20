@@ -1,0 +1,31 @@
+{
+  "unversionedId": "slack",
+  "id": "version-0.15.17/slack",
+  "isDocsHomePage": false,
+  "title": "Slack",
+  "description": "This guide will give you some basic concepts of developing a Slack bot. For more detail, check official docs.",
+  "source": "@site/versioned_docs/version-0.15.17/Platforms-Slack.md",
+  "sourceDirName": ".",
+  "slug": "/slack",
+  "permalink": "/docs/0.15.17/slack",
+  "editUrl": "https://github.com/Yoctol/bottender/edit/master/docs/versioned_docs/version-0.15.17/Platforms-Slack.md",
+  "tags": [],
+  "version": "0.15.17",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "10/14/2018",
+  "frontMatter": {
+    "id": "slack",
+    "title": "Slack",
+    "original_id": "slack"
+  },
+  "sidebar": "version-0.15.17/docs",
+  "previous": {
+    "title": "LINE",
+    "permalink": "/docs/0.15.17/line"
+  },
+  "next": {
+    "title": "Telegram",
+    "permalink": "/docs/0.15.17/telegram"
+  }
+}

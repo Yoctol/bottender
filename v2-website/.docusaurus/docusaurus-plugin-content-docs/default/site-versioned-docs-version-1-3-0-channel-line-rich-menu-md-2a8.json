@@ -1,0 +1,31 @@
+{
+  "unversionedId": "channel-line-rich-menu",
+  "id": "version-1.3.0/channel-line-rich-menu",
+  "isDocsHomePage": false,
+  "title": "Rich Menu",
+  "description": "What is Rich Menu",
+  "source": "@site/versioned_docs/version-1.3.0/channel-line-rich-menu.md",
+  "sourceDirName": ".",
+  "slug": "/channel-line-rich-menu",
+  "permalink": "/docs/1.3.0/channel-line-rich-menu",
+  "editUrl": "https://github.com/Yoctol/bottender/edit/master/docs/versioned_docs/version-1.3.0/channel-line-rich-menu.md",
+  "tags": [],
+  "version": "1.3.0",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "10/14/2018",
+  "frontMatter": {
+    "id": "channel-line-rich-menu",
+    "title": "Rich Menu",
+    "original_id": "channel-line-rich-menu"
+  },
+  "sidebar": "version-1.3.0/docs",
+  "previous": {
+    "title": "Sending Flex Message",
+    "permalink": "/docs/1.3.0/channel-line-flex"
+  },
+  "next": {
+    "title": "LINE Front-end Framework (LIFF)",
+    "permalink": "/docs/1.3.0/channel-line-liff"
+  }
+}

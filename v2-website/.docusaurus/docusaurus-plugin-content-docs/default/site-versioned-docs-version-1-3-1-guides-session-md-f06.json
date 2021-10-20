@@ -1,0 +1,22 @@
+{
+  "unversionedId": "session",
+  "id": "version-1.3.1/session",
+  "isDocsHomePage": false,
+  "title": "Conversation Session",
+  "description": "A session is a place to store data that you want to access to across requests. Each user that talks to your bot have a unique session. You can use sessions to store and access user data as they talk to your bot.",
+  "source": "@site/versioned_docs/version-1.3.1/Guides-Session.md",
+  "sourceDirName": ".",
+  "slug": "/session",
+  "permalink": "/docs/1.3.1/session",
+  "editUrl": "https://github.com/Yoctol/bottender/edit/master/docs/versioned_docs/version-1.3.1/Guides-Session.md",
+  "tags": [],
+  "version": "1.3.1",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "10/14/2018",
+  "frontMatter": {
+    "id": "session",
+    "title": "Conversation Session",
+    "original_id": "session"
+  }
+}

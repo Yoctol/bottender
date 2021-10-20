@@ -1,0 +1,21 @@
+{
+  "unversionedId": "api-line-client",
+  "id": "version-1.3.1/api-line-client",
+  "isDocsHomePage": false,
+  "title": "LineClient",
+  "description": "- Usage",
+  "source": "@site/versioned_docs/version-1.3.1/api-line-client.md",
+  "sourceDirName": ".",
+  "slug": "/api-line-client",
+  "permalink": "/docs/1.3.1/api-line-client",
+  "editUrl": "https://github.com/Yoctol/bottender/edit/master/docs/versioned_docs/version-1.3.1/api-line-client.md",
+  "tags": [],
+  "version": "1.3.1",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "10/14/2018",
+  "frontMatter": {
+    "id": "api-line-client",
+    "title": "LineClient"
+  }
+}

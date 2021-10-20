@@ -1,0 +1,31 @@
+{
+  "unversionedId": "channel-telegram-sending-messages",
+  "id": "version-1.4/channel-telegram-sending-messages",
+  "isDocsHomePage": false,
+  "title": "Sending Telegram Messages",
+  "description": "Bottender Playground",
+  "source": "@site/versioned_docs/version-1.4/channel-telegram-sending-messages.md",
+  "sourceDirName": ".",
+  "slug": "/channel-telegram-sending-messages",
+  "permalink": "/docs/1.4/channel-telegram-sending-messages",
+  "editUrl": "https://github.com/Yoctol/bottender/edit/master/docs/versioned_docs/version-1.4/channel-telegram-sending-messages.md",
+  "tags": [],
+  "version": "1.4",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "10/14/2018",
+  "frontMatter": {
+    "id": "channel-telegram-sending-messages",
+    "title": "Sending Telegram Messages",
+    "original_id": "channel-telegram-sending-messages"
+  },
+  "sidebar": "version-1.4/docs",
+  "previous": {
+    "title": "Handling Telegram Events",
+    "permalink": "/docs/1.4/channel-telegram-handling-events"
+  },
+  "next": {
+    "title": "Telegram Routings",
+    "permalink": "/docs/1.4/channel-telegram-routing"
+  }
+}

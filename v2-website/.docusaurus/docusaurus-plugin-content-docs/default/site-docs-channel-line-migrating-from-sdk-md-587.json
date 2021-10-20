@@ -1,0 +1,30 @@
+{
+  "unversionedId": "channel-line-migrating-from-sdk",
+  "id": "channel-line-migrating-from-sdk",
+  "isDocsHomePage": false,
+  "title": "Migrating from LINE SDK for Node.js",
+  "description": "Bottender aims to help LINE developers focus on project-specific business logic. We carefully craft Bottender to save developers' time based on real project experience.",
+  "source": "@site/../docs/channel-line-migrating-from-sdk.md",
+  "sourceDirName": ".",
+  "slug": "/channel-line-migrating-from-sdk",
+  "permalink": "/docs/next/channel-line-migrating-from-sdk",
+  "editUrl": "https://github.com/Yoctol/bottender/edit/master/docs/../docs/channel-line-migrating-from-sdk.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "10/14/2018",
+  "frontMatter": {
+    "id": "channel-line-migrating-from-sdk",
+    "title": "Migrating from LINE SDK for Node.js"
+  },
+  "sidebar": "docs",
+  "previous": {
+    "title": "Error Handling in LINE",
+    "permalink": "/docs/next/channel-line-errors"
+  },
+  "next": {
+    "title": "Slack Setup",
+    "permalink": "/docs/next/channel-slack-setup"
+  }
+}

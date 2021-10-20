@@ -1,0 +1,23 @@
+{
+  "permalink": "/blog/2017/10/31/bottender",
+  "source": "@site/blog/2017-10-31-bottender.md",
+  "title": "Bottender",
+  "description": "We're very proud to open-source Bottender, a JavaScript framework for cross-platform bots, built on top of Messaging-APIs and lots of great tools from the JavaScript community!",
+  "date": "2017-10-31T00:00:00.000Z",
+  "formattedDate": "October 31, 2017",
+  "tags": [],
+  "readingTime": 2.875,
+  "truncated": true,
+  "authors": [
+    {
+      "name": "C. T. Lin",
+      "title": "Co-Creator of Bottender",
+      "url": "https://twitter.com/chentsulin",
+      "imageURL": "https://avatars1.githubusercontent.com/u/3382565?s=460&v=4"
+    }
+  ],
+  "prevItem": {
+    "title": "Bottender 0.15",
+    "permalink": "/blog/2018/08/03/bottender-0_15"
+  }
+}

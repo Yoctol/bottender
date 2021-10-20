@@ -1,0 +1,21 @@
+{
+  "unversionedId": "channel-viber-sending-messages",
+  "id": "version-0.15.17/channel-viber-sending-messages",
+  "isDocsHomePage": false,
+  "title": "Sending Viber Messages",
+  "description": "Sending Text Messages",
+  "source": "@site/versioned_docs/version-0.15.17/channel-viber-sending-messages.md",
+  "sourceDirName": ".",
+  "slug": "/channel-viber-sending-messages",
+  "permalink": "/docs/0.15.17/channel-viber-sending-messages",
+  "editUrl": "https://github.com/Yoctol/bottender/edit/master/docs/versioned_docs/version-0.15.17/channel-viber-sending-messages.md",
+  "tags": [],
+  "version": "0.15.17",
+  "lastUpdatedBy": "Author",
+  "lastUpdatedAt": 1539502055,
+  "formattedLastUpdatedAt": "10/14/2018",
+  "frontMatter": {
+    "id": "channel-viber-sending-messages",
+    "title": "Sending Viber Messages"
+  }
+}
