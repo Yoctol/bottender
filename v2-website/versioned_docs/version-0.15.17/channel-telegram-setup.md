@@ -63,7 +63,7 @@ To make a Telegram bot work, you must prepare the following environment variable
 
 You can get a Telegram bot account and a bot token by sending the `/newbot` command to [@BotFather](https://t.me/BotFather) on Telegram.
 
-<p><img width="800px" src="https://user-images.githubusercontent.com/662387/71246889-9312e180-2352-11ea-97da-9a5adc014fda.png"></p>
+<p><img width="800px" src="https://user-images.githubusercontent.com/662387/71246889-9312e180-2352-11ea-97da-9a5adc014fda.png"/></p>
 
 After you get your **Telegram Bot Token**, paste the value into the `TELEGRAM_ACCESS_TOKEN` field in your `.env` file:
 

@@ -291,7 +291,7 @@ await context.sendText('Hi!', {
 
 ### User Email Quick Reply
 
-<img width="382" alt="27807597_203144990422079_3327502058327638016_n" src="https://user-images.githubusercontent.com/662387/69863616-3f275680-12d8-11ea-82b0-d4033f67f03c.png">
+<img width="382" alt="27807597_203144990422079_3327502058327638016_n" src="https://user-images.githubusercontent.com/662387/69863616-3f275680-12d8-11ea-82b0-d4033f67f03c.png"/>
 
 The `User Email Quick Reply` can be treated as an agree button to collect the user's Email.
 
