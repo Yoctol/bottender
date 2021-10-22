@@ -22,7 +22,7 @@ const HomeSplash = () => {
           A framework for building <br />
           conversational user interfaces.
         </h2>
-        <Link className="primary large" to="docs/getting-started">
+        <Link className="primary large" to="docs/">
           Get Started
         </Link>
       </div>
@@ -147,7 +147,7 @@ text('*', Unknown),
             />
             <div className="get-started-content">
               <h2>Build Your Bot Today!</h2>
-              <Link className="primary large" to="docs/getting-started">
+              <Link className="primary large" to="docs/">
                 Get Started Now
               </Link>
             </div>
