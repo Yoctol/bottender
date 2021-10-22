@@ -22,10 +22,14 @@ a.primary.large {
 }
 
 a.primary:hover {
+  text-decoration: none;
+  color: #ffffff;
   background: linear-gradient(180deg, #64beff 0%, #3290ff 100%);
 }
 
 a.primary:active {
+  text-decoration: none;
+  color: #ffffff;
   background: linear-gradient(180deg, #0086e8 0%, #035bc8 100%);
 }
 

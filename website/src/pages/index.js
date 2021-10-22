@@ -1,32 +1,46 @@
 // eslint-disable-next-line import/no-unresolved
+import Highlight, { defaultProps } from 'prism-react-renderer';
 import Layout from '@theme/Layout';
 import Link from '@docusaurus/Link';
 import React from 'react';
+import theme from 'prism-react-renderer/themes/vsDark'; // FIXME: which theme?
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 
-const HomeSplash = () => {
-  const { siteConfig } = useDocusaurusContext();
+const sampleCode = `
+const { router, text } = require('bottender/router');
 
-  const SplashContainer = (props) => (
+async function SayHi(context) {
+  await context.sendText('Hi!');
+}
+
+async function Unknown(context) {
+  await context.sendText('Sorry, I don’t know what you say.');
+}
+
+module.export = function App(context) {
+  return router([
+    text('hi', SayHi),
+    text('*', Unknown),
+  ]);
+};`.trim();
+
+const HomeSplash = () => {
+  return (
     <div className="homeContainer">
-      <div className="homeSplashFade">{props.children}</div>
+      <div className="homeSplashFade">
+        <div className="hero-content">
+          <h1>Bottender</h1>
+          <h2>
+            A framework for building <br />
+            conversational user interfaces.
+          </h2>
+          <Link className="primary large" to="docs/">
+            Get Started
+          </Link>
+        </div>
+      </div>
       <div className="triangle" />
     </div>
-  );
-
-  return (
-    <SplashContainer>
-      <div className="hero-content">
-        <h1>Bottender</h1>
-        <h2>
-          A framework for building <br />
-          conversational user interfaces.
-        </h2>
-        <Link className="primary large" to="docs/">
-          Get Started
-        </Link>
-      </div>
-    </SplashContainer>
   );
 };
 
@@ -94,28 +108,33 @@ const Index = () => {
         <div className="demo">
           <div className="demo-content">
             <div className="code-block">
-              {/* <MarkdownBlock>
-                {`
-~~~javascript
-const { router, text } = require('bottender/router');
-
-async function SayHi(context) {
-await context.sendText('Hi!');
-}
-
-async function Unknown(context) {
-await context.sendText('Sorry, I don’t know what you say.');
-}
-
-module.export = function App(context) {
-return router([
-text('hi', SayHi),
-text('*', Unknown),
-]);
-};
-~~~
-        `}
-              </MarkdownBlock> */}
+              <Highlight
+                {...defaultProps}
+                code={sampleCode}
+                theme={theme}
+                language="javascript"
+              >
+                {({
+                  className,
+                  style,
+                  tokens,
+                  getLineProps,
+                  getTokenProps,
+                }) => (
+                  <pre
+                    className={className}
+                    style={{ ...style, padding: '20px' }}
+                  >
+                    {tokens.map((line, i) => (
+                      <div key={i} {...getLineProps({ line, key: i })}>
+                        {line.map((token, key) => (
+                          <span key={key} {...getTokenProps({ token, key })} />
+                        ))}
+                      </div>
+                    ))}
+                  </pre>
+                )}
+              </Highlight>
             </div>
             <div className="description">
               <h3>Intuitive APIs</h3>

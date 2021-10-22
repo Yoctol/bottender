@@ -12,6 +12,8 @@ module.exports = {
   ],
   stylesheets: [
     'https://fonts.googleapis.com/css?family=Montserrat:700|Roboto&display=swap',
+    '/css/custom.css',
+    '/css/code-blocks-buttons.css',
   ],
   favicon: 'img/favicon-192x192.png',
   customFields: {
@@ -89,7 +91,7 @@ module.exports = {
           path: 'blog',
         },
         theme: {
-          customCss: '../src/css/customTheme.css',
+          customCss: [require.resolve('./src/css/customTheme.css')],
         },
       },
     ],
@@ -110,6 +112,11 @@ module.exports = {
         {
           to: 'docs/api-context',
           label: 'API',
+          position: 'left',
+        },
+        {
+          to: '/blog',
+          label: 'Blog',
           position: 'left',
         },
         {
