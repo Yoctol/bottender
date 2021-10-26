@@ -32,5 +32,8 @@
     "nlu",
     "qna-maker",
     "understanding"
-  ]
+  ],
+  "engines": {
+    "node": ">=14"
+  }
 }

@@ -19,5 +19,8 @@
     "lodash": "^4.17.21",
     "messaging-api-common": "^1.0.4",
     "type-fest": "^2.5.0"
+  },
+  "engines": {
+    "node": ">=14"
   }
 }

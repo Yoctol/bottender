@@ -20,5 +20,8 @@
     "ts-invariant": "^0.9.3",
     "type-fest": "^2.5.0",
     "warning": "^4.0.3"
+  },
+  "engines": {
+    "node": ">=14"
   }
 }

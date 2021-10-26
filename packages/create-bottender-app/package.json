@@ -25,5 +25,8 @@
     "inquirer": "^8.1.5",
     "prettier": "^2.4.1",
     "validate-npm-package-name": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=14"
   }
 }

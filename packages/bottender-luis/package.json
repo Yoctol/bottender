@@ -32,5 +32,8 @@
     "messaging",
     "nlu",
     "understanding"
-  ]
+  ],
+  "engines": {
+    "node": ">=14"
+  }
 }

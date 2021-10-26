@@ -20,5 +20,8 @@
     "lodash": "^4.17.21",
     "type-fest": "^2.5.0",
     "warning": "^4.0.3"
+  },
+  "engines": {
+    "node": ">=14"
   }
 }
