@@ -14,8 +14,8 @@
     "write-translations": "docusaurus-write-translations"
   },
   "dependencies": {
-    "@docusaurus/core": "2.0.0-beta.7",
-    "@docusaurus/preset-classic": "2.0.0-beta.7",
+    "@docusaurus/core": "2.0.0-beta.9",
+    "@docusaurus/preset-classic": "2.0.0-beta.9",
     "clsx": "^1.1.1",
     "prism-react-renderer": "^1.2.1",
     "react": "^17.0.1",
