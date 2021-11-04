@@ -461,7 +461,7 @@ a {
 }
 
 @media only screen and (min-width: 1400px) {
-  .gridBlock{
+  .gridBlock {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -474,6 +474,23 @@ a {
 /**
  * Showcase
  */
+
+.showcaseSection {
+  margin: 80px auto;
+  max-width: 900px;
+}
+
+.showcaseSection,
+.showcaseSection .prose h1 {
+  text-align: center;
+}
+
+.showcaseSection .prose {
+  margin: 0 auto;
+  max-width: 560px;
+  text-align: center;
+}
+
 .showcase {
   align-items: center;
   display: flex;
@@ -501,6 +518,9 @@ a {
 }
 
 .showcase .link img {
+  border-style: none;
+  box-sizing: content-box;
+  max-width: 100%;
   max-height: 110px;
   padding: 20px;
   width: 110px;

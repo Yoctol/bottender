@@ -98,6 +98,9 @@ module.exports = {
   ],
   plugins: [],
   themeConfig: {
+    colorMode: {
+      disableSwitch: true,
+    },
     navbar: {
       title: 'Bottender',
       items: [
