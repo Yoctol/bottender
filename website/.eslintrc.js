@@ -7,5 +7,6 @@ module.exports = {
   },
   rules: {
     'react/prop-types': 'off',
+    'import/no-unresolved': ['error', { ignore: ['^@theme', '^@docusaurus'] }],
   },
 };

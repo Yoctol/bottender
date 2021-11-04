@@ -6,4 +6,9 @@
   --ifm-color-primary-dark: #09192B;
   --ifm-color-primary-darker: #081829;
   --ifm-color-primary-darkest: #071422;
+
+  --ifm-footer-background-color: #0a1c30;
+  --ifm-footer-color: #ffffff;
+  --ifm-footer-link-color: #ffffff;
+  --ifm-footer-link-hover-color: #ffffff;
 }

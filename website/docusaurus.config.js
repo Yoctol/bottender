@@ -100,9 +100,6 @@ module.exports = {
   themeConfig: {
     navbar: {
       title: 'Bottender',
-      logo: {
-        src: 'img/bottender.svg',
-      },
       items: [
         {
           to: 'docs/',
@@ -184,6 +181,9 @@ module.exports = {
     },
     image: 'img/og-image.png',
     footer: {
+      logo: {
+        src: 'img/bottender.svg',
+      },
       links: [
         {
           title: 'Community',
@@ -196,9 +196,6 @@ module.exports = {
         },
       ],
       copyright: '© 2019 - PRESENT YOCTOL.AI ALL RIGHTS RESERVED.',
-      // logo: {
-      //   src: '',
-      // },
     },
     algolia: {
       apiKey: '3498a488684b0324b9d56808fad17a33',
