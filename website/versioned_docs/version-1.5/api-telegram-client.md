@@ -1,5 +1,5 @@
 ---
-id: version-1.5-api-telegram-client
+id: api-telegram-client
 title: TelegramClient
 original_id: api-telegram-client
 ---
@@ -337,11 +337,11 @@ client.sendVideoNote(CHAT_ID, 'https://example.com/video_note.mp4', {
 
 send a group of photos or videos as an album.
 
-| Param   | Type                                                               | Description                                                                              |
-| ------- | ------------------------------------------------------------------ | ---------------------------------------------------------------------------------------- |
-| chatId  | <code>Number &#124; String</code>                                  | Unique identifier for the target chat or username of the target channel.                 |
-| media   | Array<[InputMedia](https://core.telegram.org/bots/api#inputmedia)> | A JSON-serialized array describing photos and videos to be sent, must include 2–10 items |
-| options | `Object`                                                           | Other optional parameters.                                                               |
+| Param   | Type                                                                                  | Description                                                                              |
+| ------- | ------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| chatId  | <code>Number &#124; String</code>                                                     | Unique identifier for the target chat or username of the target channel.                 |
+| media   | <code>Array&lt;[InputMedia](https://core.telegram.org/bots/api#inputmedia)&gt;</code> | A JSON-serialized array describing photos and videos to be sent, must include 2–10 items |
+| options | `Object`                                                                              | Other optional parameters.                                                               |
 
 Example:
 
@@ -1130,11 +1130,11 @@ client.answerPreCheckoutQuery('UNIQUE_ID', true);
 
 Send answers to an inline query.
 
-| Param         | Type                                                                             | Description                                               |
-| ------------- | -------------------------------------------------------------------------------- | --------------------------------------------------------- |
-| inlineQueryId | `String`                                                                         | Unique identifier of the query.                           |
-| results       | Array<[InlineQueryResult](https://core.telegram.org/bots/api#inlinequeryresult)> | Array of object represents one result of an inline query. |
-| options       | `Object`                                                                         | Additional Telegram query options.                        |
+| Param         | Type                                                                                                | Description                                               |
+| ------------- | --------------------------------------------------------------------------------------------------- | --------------------------------------------------------- |
+| inlineQueryId | `String`                                                                                            | Unique identifier of the query.                           |
+| results       | <code>Array&lt;[InlineQueryResult](https://core.telegram.org/bots/api#inlinequeryresult)&gt;</code> | Array of object represents one result of an inline query. |
+| options       | `Object`                                                                                            | Additional Telegram query options.                        |
 
 Example:
 

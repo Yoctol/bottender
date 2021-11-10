@@ -1,5 +1,5 @@
 ---
-id: version-0.15.17-custom-connector
+id: custom-connector
 title: CustomConnector
 original_id: custom-connector
 ---

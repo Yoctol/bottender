@@ -1,5 +1,5 @@
 ---
-id: version-0.15.17-api-context
+id: api-context
 title: Context
 original_id: api-context
 ---
@@ -100,7 +100,7 @@ Delay and show indicators for milliseconds.
 Example:
 
 ```js
-bot.onEvent(async context => {
+bot.onEvent(async (context) => {
   await context.typing(100); // turn on typing mode and wait 0.1 secs.
   await context.sendText('Hello World');
 });

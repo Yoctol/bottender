@@ -1,5 +1,5 @@
 ---
-id: version-1.5-api-telegram-context
+id: api-telegram-context
 title: TelegramContext
 original_id: api-telegram-context
 ---

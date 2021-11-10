@@ -1,5 +1,5 @@
 ---
-id: version-0.15.17-api-messengerevent
+id: api-messengerevent
 title: MessengerEvent
 original_id: api-messengerevent
 ---

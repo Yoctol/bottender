@@ -1,5 +1,5 @@
 ---
-id: version-1.5-api-messenger-client
+id: api-messenger-client
 title: MessengerClient
 original_id: api-messenger-client
 ---

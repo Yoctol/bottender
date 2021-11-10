@@ -1,5 +1,5 @@
 ---
-id: version-1.5-channel-line-liff
+id: channel-line-liff
 title: LINE Front-end Framework (LIFF)
 original_id: channel-line-liff
 ---

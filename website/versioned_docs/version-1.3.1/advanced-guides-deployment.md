@@ -1,5 +1,5 @@
 ---
-id: version-1.3.1-advanced-guides-deployment
+id: advanced-guides-deployment
 title: Deployment
 original_id: advanced-guides-deployment
 ---
@@ -8,7 +8,7 @@ Once you finished your bot in development, the next step is to deploy your bot t
 
 ### Before Going Further
 
-We assumed that you already built at least one basic Bottender app in development. If you haven't, you may check [Getting Started](https://bottender.js.org/docs/getting-started) to create your first Bottender app in a few minutes, then jump to the setup doc of your favorite chat channel:
+We assumed that you already built at least one basic Bottender app in development. If you haven't, you may check [Getting Started](./getting-started.md) to create your first Bottender app in a few minutes, then jump to the setup doc of your favorite chat channel:
 
 - [Messenger Setup](https://bottender.js.org/docs/channel-messenger-setup)
 - [WhatsApp Setup](https://bottender.js.org/docs/channel-whatsapp-setup)
@@ -19,7 +19,7 @@ We assumed that you already built at least one basic Bottender app in developmen
 
 ## Heroku
 
-<p><img width="300" src="https://user-images.githubusercontent.com/662387/72130857-a8a98300-33b5-11ea-9ec6-10c8aac37230.jpg"></p>
+<p><img width="300" src="https://user-images.githubusercontent.com/662387/72130857-a8a98300-33b5-11ea-9ec6-10c8aac37230.jpg"/></p>
 
 Heroku is one of the most popular hosting services. Not only the clear document, ease of scalability, using Git for deployment, but also the friendly [free pricing plan](https://www.heroku.com/pricing) for experiment purpose.
 
@@ -135,7 +135,7 @@ Congratulations! You have made your Bottender bot production-ready. Share your f
 
 ## ZEIT Now 2.0
 
-<p><img width="1000" src="https://user-images.githubusercontent.com/662387/72130872-acd5a080-33b5-11ea-8c6c-ae06dd250be6.png"></p>
+<p><img width="1000" src="https://user-images.githubusercontent.com/662387/72130872-acd5a080-33b5-11ea-8c6c-ae06dd250be6.png"/></p>
 
 ZEIT Now 2.0 is a super developer-friendly hosting service. ZEIT Now is famous for its one-word magic command `now` in the deployment of static web hosting.
 
@@ -187,7 +187,7 @@ app.prepare().then(() => {
     return handle(req, res);
   });
 
-  server.listen(port, err => {
+  server.listen(port, (err) => {
     if (err) throw err;
     console.log(`> Ready on http://localhost:${port}`);
   });

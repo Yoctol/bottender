@@ -1,5 +1,5 @@
 ---
-id: version-0.15.17-middleware
+id: middleware
 title: Middleware
 original_id: middleware
 ---

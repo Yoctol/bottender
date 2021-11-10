@@ -1,5 +1,5 @@
 ---
-id: version-0.15.17-api-telegramevent
+id: api-telegramevent
 title: TelegramEvent
 original_id: api-telegramevent
 ---

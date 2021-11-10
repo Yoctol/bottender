@@ -1,16 +1,26 @@
 {
   "scripts": {
-    "build": "docusaurus-build",
+    "build": "docusaurus build",
     "crowdin-download": "crowdin --config ../crowdin.yaml download -b master",
     "crowdin-upload": "crowdin --config ../crowdin.yaml upload sources --auto-update -b master",
+    "deploy": "docusaurus deploy",
+    "docusaurus": "docusaurus",
     "examples": "docusaurus-examples",
     "publish-gh-pages": "docusaurus-publish",
     "rename-version": "docusaurus-rename-version",
-    "start": "docusaurus-start",
+    "start": "docusaurus start",
+    "swizzle": "docusaurus swizzle",
     "version": "docusaurus-version",
     "write-translations": "docusaurus-write-translations"
   },
-  "devDependencies": {
-    "docusaurus": "^1.14.7"
-  }
+  "dependencies": {
+    "@docusaurus/core": "2.0.0-beta.9",
+    "@docusaurus/preset-classic": "2.0.0-beta.9",
+    "clsx": "^1.1.1",
+    "prism-react-renderer": "^1.2.1",
+    "prop-types": "^15.7.2",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
+  },
+  "devDependencies": {}
 }

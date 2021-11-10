@@ -1,5 +1,5 @@
 ---
-id: version-1.3.0-channel-slack-slash-command
+id: channel-slack-slash-command
 title: Handling Slack Slash Commands
 original_id: channel-slack-slash-command
 ---
@@ -17,7 +17,7 @@ To enable this feature, you need to:
 
 - Slack's slash command can be created in [Slack Developer Console](https://api.slack.com/apps) → \${YourApp} → Slash Commands → Create New Command
 
-<p><img width="800" src="https://user-images.githubusercontent.com/4010549/74177974-bdf42480-4c75-11ea-9dc0-ba744ed9e134.png"></p>
+<p><img width="800" src="https://user-images.githubusercontent.com/4010549/74177974-bdf42480-4c75-11ea-9dc0-ba744ed9e134.png"/></p>
 
 - Fill in fields in the form correspondingly and save it.
   - `Command`: Your command text, must start with `/`
@@ -25,7 +25,7 @@ To enable this feature, you need to:
   - `Short Description`: Description to explain what this command does.
   - `Usage Hint`: Hint text for arguments (Optional)
 
-<p><img width="800" src="https://user-images.githubusercontent.com/4010549/74179896-53dd7e80-4c79-11ea-83f8-01f84ca38fae.png"></p>
+<p><img width="800" src="https://user-images.githubusercontent.com/4010549/74179896-53dd7e80-4c79-11ea-83f8-01f84ca38fae.png"/></p>
 
 ### Handling Slash Command Events in Your Slack Bot
 

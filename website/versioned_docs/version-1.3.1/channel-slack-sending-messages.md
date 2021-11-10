@@ -1,5 +1,5 @@
 ---
-id: version-1.3.1-channel-slack-sending-messages
+id: channel-slack-sending-messages
 title: Sending Slack Messages
 original_id: channel-slack-sending-messages
 ---

@@ -1,57 +1,198 @@
 {
-  "version-0.15.17-docs": {
-    "Installation": ["version-0.15.17-getting-started"],
-    "Platforms": [
-      "version-0.15.17-console",
-      "version-0.15.17-messenger",
-      "version-0.15.17-line",
-      "version-0.15.17-slack",
-      "version-0.15.17-telegram",
-      "version-0.15.17-viber"
-    ],
-    "Guides": [
-      "version-0.15.17-commands",
-      "version-0.15.17-deployment",
-      "version-0.15.17-error-handling",
-      "version-0.15.17-intents",
-      "version-0.15.17-middleware",
-      "version-0.15.17-server",
-      "version-0.15.17-session",
-      "version-0.15.17-state",
-      "version-0.15.17-testing",
-      "version-0.15.17-custom-connector",
-      "version-0.15.17-troubleshooting"
-    ]
-  },
-  "version-0.15.17-api": {
-    "Core": [
-      "version-0.15.17-api-context",
-      "version-0.15.17-api-event",
-      "version-0.15.17-api-handler"
-    ],
-    "Console": [
-      "version-0.15.17-api-consolecontext",
-      "version-0.15.17-api-consoleevent"
-    ],
-    "Messenger": [
-      "version-0.15.17-api-messengercontext",
-      "version-0.15.17-api-messengerevent"
-    ],
-    "LINE": [
-      "version-0.15.17-api-linecontext",
-      "version-0.15.17-api-lineevent"
-    ],
-    "Slack": [
-      "version-0.15.17-api-slackcontext",
-      "version-0.15.17-api-slackevent"
-    ],
-    "Telegram": [
-      "version-0.15.17-api-telegramcontext",
-      "version-0.15.17-api-telegramevent"
-    ],
-    "Viber": [
-      "version-0.15.17-api-vibercontext",
-      "version-0.15.17-api-viberevent"
-    ]
-  }
+  "version-0.15.17/docs": [
+    {
+      "type": "category",
+      "label": "Installation",
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-0.15.17/getting-started"
+        }
+      ]
+    },
+    {
+      "type": "category",
+      "label": "Platforms",
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-0.15.17/console"
+        },
+        {
+          "type": "doc",
+          "id": "version-0.15.17/messenger"
+        },
+        {
+          "type": "doc",
+          "id": "version-0.15.17/line"
+        },
+        {
+          "type": "doc",
+          "id": "version-0.15.17/slack"
+        },
+        {
+          "type": "doc",
+          "id": "version-0.15.17/telegram"
+        },
+        {
+          "type": "doc",
+          "id": "version-0.15.17/viber"
+        }
+      ]
+    },
+    {
+      "type": "category",
+      "label": "Guides",
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-0.15.17/commands"
+        },
+        {
+          "type": "doc",
+          "id": "version-0.15.17/deployment"
+        },
+        {
+          "type": "doc",
+          "id": "version-0.15.17/error-handling"
+        },
+        {
+          "type": "doc",
+          "id": "version-0.15.17/intents"
+        },
+        {
+          "type": "doc",
+          "id": "version-0.15.17/middleware"
+        },
+        {
+          "type": "doc",
+          "id": "version-0.15.17/server"
+        },
+        {
+          "type": "doc",
+          "id": "version-0.15.17/session"
+        },
+        {
+          "type": "doc",
+          "id": "version-0.15.17/state"
+        },
+        {
+          "type": "doc",
+          "id": "version-0.15.17/testing"
+        },
+        {
+          "type": "doc",
+          "id": "version-0.15.17/custom-connector"
+        },
+        {
+          "type": "doc",
+          "id": "version-0.15.17/troubleshooting"
+        }
+      ]
+    }
+  ],
+  "version-0.15.17/api": [
+    {
+      "type": "category",
+      "label": "Core",
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-0.15.17/api-context"
+        },
+        {
+          "type": "doc",
+          "id": "version-0.15.17/api-event"
+        },
+        {
+          "type": "doc",
+          "id": "version-0.15.17/api-handler"
+        }
+      ]
+    },
+    {
+      "type": "category",
+      "label": "Console",
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-0.15.17/api-consolecontext"
+        },
+        {
+          "type": "doc",
+          "id": "version-0.15.17/api-console-event"
+        }
+      ]
+    },
+    {
+      "type": "category",
+      "label": "Messenger",
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-0.15.17/api-messengercontext"
+        },
+        {
+          "type": "doc",
+          "id": "version-0.15.17/api-messengerevent"
+        }
+      ]
+    },
+    {
+      "type": "category",
+      "label": "LINE",
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-0.15.17/api-linecontext"
+        },
+        {
+          "type": "doc",
+          "id": "version-0.15.17/api-lineevent"
+        }
+      ]
+    },
+    {
+      "type": "category",
+      "label": "Slack",
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-0.15.17/api-slackcontext"
+        },
+        {
+          "type": "doc",
+          "id": "version-0.15.17/api-slackevent"
+        }
+      ]
+    },
+    {
+      "type": "category",
+      "label": "Telegram",
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-0.15.17/api-telegramcontext"
+        },
+        {
+          "type": "doc",
+          "id": "version-0.15.17/api-telegramevent"
+        }
+      ]
+    },
+    {
+      "type": "category",
+      "label": "Viber",
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-0.15.17/api-vibercontext"
+        },
+        {
+          "type": "doc",
+          "id": "version-0.15.17/api-viberevent"
+        }
+      ]
+    }
+  ]
 }

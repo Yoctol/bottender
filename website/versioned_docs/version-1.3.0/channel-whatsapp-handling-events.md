@@ -1,5 +1,5 @@
 ---
-id: version-1.3.0-channel-whatsapp-handling-events
+id: channel-whatsapp-handling-events
 title: Handling WhatsApp Events
 original_id: channel-whatsapp-handling-events
 ---

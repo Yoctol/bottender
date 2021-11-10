@@ -1,5 +1,5 @@
 ---
-id: version-0.15.17-api-telegramcontext
+id: api-telegramcontext
 title: TelegramContext
 original_id: api-telegramcontext
 ---
@@ -180,10 +180,10 @@ context.sendVideoNote('https://example.com/video_note.mp4', {
 
 send a group of photos or videos as an album.
 
-| Param   | Type                                                               | Description                                                                              |
-| ------- | ------------------------------------------------------------------ | ---------------------------------------------------------------------------------------- |
-| media   | Array<[InputMedia](https://core.telegram.org/bots/api#inputmedia)> | A JSON-serialized array describing photos and videos to be sent, must include 2–10 items |
-| options | `Object`                                                           | Other optional parameters.                                                               |
+| Param   | Type                                                                                  | Description                                                                              |
+| ------- | ------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| media   | <code>Array&lt;[InputMedia](https://core.telegram.org/bots/api#inputmedia)&gt;</code> | A JSON-serialized array describing photos and videos to be sent, must include 2–10 items |
+| options | `Object`                                                                              | Other optional parameters.                                                               |
 
 Example:
 
@@ -307,7 +307,7 @@ Gets a list of profile pictures for a user.
 Example:
 
 ```js
-context.getUserProfilePhotos().then(result => {
+context.getUserProfilePhotos().then((result) => {
   console.log(result);
   // {
   //   total_count: 3,
@@ -344,7 +344,7 @@ Gets up to date information about the chat (current name of the user for one-on-
 Example:
 
 ```js
-context.getChat().then(result => {
+context.getChat().then((result) => {
   console.log(result);
   // {
   //   id: 313534466,
@@ -365,7 +365,7 @@ Gets a list of administrators in the chat.
 Example:
 
 ```js
-context.getChatAdministrators().then(result => {
+context.getChatAdministrators().then((result) => {
   console.log(result);
   // [
   //   {
@@ -391,7 +391,7 @@ Gets the number of members in the chat.
 Example:
 
 ```js
-context.getChatMembersCount().then(result => {
+context.getChatMembersCount().then((result) => {
   console.log(result);
   // '6'
 });
@@ -410,7 +410,7 @@ Gets information about a member of the chat.
 Example:
 
 ```js
-context.getChatMember(USER_ID).then(result => {
+context.getChatMember(USER_ID).then((result) => {
   console.log(result);
   // {
   //   user: {
@@ -826,10 +826,10 @@ context.answerPreCheckoutQuery(true);
 
 Send answers to the inline query.
 
-| Param   | Type                                                                             | Description                                               |
-| ------- | -------------------------------------------------------------------------------- | --------------------------------------------------------- |
-| results | Array<[InlineQueryResult](https://core.telegram.org/bots/api#inlinequeryresult)> | Array of object represents one result of an inline query. |
-| options | `Object`                                                                         | Additional Telegram query options.                        |
+| Param   | Type                                                                                                | Description                                               |
+| ------- | --------------------------------------------------------------------------------------------------- | --------------------------------------------------------- |
+| results | <code>Array&lt;[InlineQueryResult](https://core.telegram.org/bots/api#inlinequeryresult)&gt;</code> | Array of object represents one result of an inline query. |
+| options | `Object`                                                                                            | Additional Telegram query options.                        |
 
 Example:
 

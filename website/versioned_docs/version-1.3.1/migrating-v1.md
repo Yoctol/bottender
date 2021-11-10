@@ -1,5 +1,5 @@
 ---
-id: version-1.3.1-migrating-v1
+id: migrating-v1
 title: Migrating from v0.x to v1
 original_id: migrating-v1
 ---
@@ -49,7 +49,7 @@ const bot = new MessengerBot({
   sessionStore: new MemorySessionStore(maxSize),
 });
 
-bot.onEvent(async context => {
+bot.onEvent(async (context) => {
   await context.sendText('Hello World');
 });
 
@@ -190,7 +190,7 @@ npx bottender-codemod camelcase <your_file_path> --dry --print
 
 ## Replace Middleware and Handlers with Router and Chain
 
-Using the `middleware` function and the `Handler` classes together are very difficult. So, we are deprecating those APIs in favor of the new  APIs: [Routing](the-basics-routing.md) and [Chain](the-basics-chain.md). If you prefer the `middleware` function and the `Handler` classes, you can still use them by installing the `@bottender/handlers` package:
+Using the `middleware` function and the `Handler` classes together are very difficult. So, we are deprecating those APIs in favor of the new APIs: [Routing](the-basics-routing.md) and [Chain](the-basics-chain.md). If you prefer the `middleware` function and the `Handler` classes, you can still use them by installing the `@bottender/handlers` package:
 
 ```js
 npm install @bottender/handlers

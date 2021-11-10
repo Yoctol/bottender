@@ -1,5 +1,5 @@
 ---
-id: version-1.4-channel-line-liff
+id: channel-line-liff
 title: LINE Front-end Framework (LIFF)
 original_id: channel-line-liff
 ---
@@ -115,19 +115,19 @@ Before starting using any feature provided by LIFF, you need to create a `liff.h
           .then(() => {
             alert('LIFF init success!');
           })
-          .catch(err => {
+          .catch((err) => {
             alert(`error: ${JSON.stringify(err)}`);
           });
       }
 
       document.addEventListener('DOMContentLoaded', () => {
         fetch(`/send-id`)
-          .then(reqResponse => reqResponse.json())
-          .then(jsonResponse => {
+          .then((reqResponse) => reqResponse.json())
+          .then((jsonResponse) => {
             let myLiffId = jsonResponse.id;
             initializeLiff(myLiffId);
           })
-          .catch(err => {
+          .catch((err) => {
             alert(`error: ${JSON.stringify(err)}`);
           });
       });
@@ -168,7 +168,7 @@ Let's add a click event listener to send messages on click. You could replace th
         .then(() => {
           setButtonHandler();
         })
-        .catch(err => {
+        .catch((err) => {
           alert(`error: ${JSON.stringify(err)}`);
         });
     }
@@ -188,7 +188,7 @@ Let's add a click event listener to send messages on click. You could replace th
             alert('message sent');
             liff.closeWindow();
           })
-          .catch(err => {
+          .catch((err) => {
             window.alert('Error sending message: ' + err);
           });
       });
@@ -196,12 +196,12 @@ Let's add a click event listener to send messages on click. You could replace th
 
     document.addEventListener('DOMContentLoaded', () => {
       fetch(`/send-id`)
-        .then(reqResponse => reqResponse.json())
-        .then(jsonResponse => {
+        .then((reqResponse) => reqResponse.json())
+        .then((jsonResponse) => {
           let myLiffId = jsonResponse.id;
           initializeLiff(myLiffId);
         })
-        .catch(err => {
+        .catch((err) => {
           alert(`error: ${JSON.stringify(err)}`);
         });
     });

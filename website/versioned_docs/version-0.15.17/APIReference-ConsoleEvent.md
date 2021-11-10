@@ -1,5 +1,5 @@
 ---
-id: version-0.15.17-api-console-event
+id: api-console-event
 title: ConsoleEvent
 original_id: api-console-event
 ---

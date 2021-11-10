@@ -1,5 +1,5 @@
 ---
-id: version-1.4-migrating-v1
+id: migrating-v1
 title: Migrating from v0.x to v1
 original_id: migrating-v1
 ---
@@ -49,7 +49,7 @@ const bot = new MessengerBot({
   sessionStore: new MemorySessionStore(maxSize),
 });
 
-bot.onEvent(async context => {
+bot.onEvent(async (context) => {
   await context.sendText('Hello World');
 });
 

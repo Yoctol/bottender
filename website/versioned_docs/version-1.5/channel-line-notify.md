@@ -1,5 +1,5 @@
 ---
-id: version-1.5-channel-line-notify
+id: channel-line-notify
 title: LINE Notify
 original_id: channel-line-notify
 ---

@@ -1,5 +1,5 @@
 ---
-id: version-1.5-api-slack-client
+id: api-slack-client
 title: SlackClient
 original_id: api-slack-client
 ---

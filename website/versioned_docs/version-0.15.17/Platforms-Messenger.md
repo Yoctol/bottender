@@ -1,5 +1,5 @@
 ---
-id: version-0.15.17-messenger
+id: messenger
 title: Messenger
 original_id: messenger
 ---
@@ -56,7 +56,7 @@ const bot = new MessengerBot({
   appSecret: '__FILL_YOUR_SECRET_HERE__',
 });
 
-bot.onEvent(async context => {
+bot.onEvent(async (context) => {
   await context.sendText('Hello World');
 });
 
@@ -103,7 +103,7 @@ more on [MessengerEvent Reference](api-messengerevent).
 For example:
 
 ```js
-bot.onEvent(async context => {
+bot.onEvent(async (context) => {
   if (context.event.isQuickReply) {
     await context.sendText('I know this is a quick reply.');
   } else if (context.event.payload === 'A_DEVELOPER_DEFINED_PAYLOAD') {
@@ -136,7 +136,7 @@ more on [MessengerContext Reference](api-messengercontext).
 For example:
 
 ```js
-bot.onEvent(async context => {
+bot.onEvent(async (context) => {
   await context.sendText('Hello World!');
   await context.sendImage('http://example.com/pic.png');
   await context.sendGenericTemplate([

@@ -1,5 +1,5 @@
 ---
-id: version-1.3.1-channel-slack-routing
+id: channel-slack-routing
 title: Slack Routing
 original_id: channel-slack-routing
 ---

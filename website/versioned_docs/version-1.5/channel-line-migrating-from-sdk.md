@@ -1,5 +1,5 @@
 ---
-id: version-1.5-channel-line-migrating-from-sdk
+id: channel-line-migrating-from-sdk
 title: Migrating from LINE SDK for Node.js
 original_id: channel-line-migrating-from-sdk
 ---

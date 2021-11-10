@@ -51,7 +51,7 @@ The above two examples are equivalent. However, we recommend using the first usa
 
 **Text message** is the most frequent and common message types among all chat channels. It also offers a minimal format while carrying out dynamic data, e.g., stock price and weather info.
 
- <p><img width="300" src="https://user-images.githubusercontent.com/662387/70680790-38cfac00-1cd4-11ea-88a3-12ed1c71effc.png"></p>
+ <p><img width="300" src="https://user-images.githubusercontent.com/662387/70680790-38cfac00-1cd4-11ea-88a3-12ed1c71effc.png"/></p>
 
 ### Plain Text
 
@@ -69,7 +69,7 @@ For more information, please refer to LINE's official doc, [Text Message](https:
 
 You can include LINE's original emoji (usually involves LINE Friends) in text messages using character code. You can find the list of LINE emoji in [emoji list](https://developers.line.me/media/messaging-api/emoji-list.pdf).
 
-<p><img width="300" src="https://user-images.githubusercontent.com/662387/70680894-82b89200-1cd4-11ea-92e8-53e222bbd12d.png"></p>
+<p><img width="300" src="https://user-images.githubusercontent.com/662387/70680894-82b89200-1cd4-11ea-92e8-53e222bbd12d.png"/></p>
 
 ```js
 async function SendHi(context) {
@@ -85,7 +85,7 @@ async function SendHi(context) {
 
 By **Stickers**, LINE creates a versatile, communicative language. Stickers make your bot expressive and engaging. To send a sticker, you need to indicate the package ID and sticker ID of the sticker.
 
-<p><img width="300" src="https://user-images.githubusercontent.com/662387/70680788-38cfac00-1cd4-11ea-81a7-880abdf1ff45.png"></p>
+<p><img width="300" src="https://user-images.githubusercontent.com/662387/70680788-38cfac00-1cd4-11ea-81a7-880abdf1ff45.png"/></p>
 
 ```js
 await context.sendSticker({
@@ -102,7 +102,7 @@ For more information, please refer to LINE's official doc, [Sticker Message](htt
 
 To send an **Image**, you need to prepare URLs of the original image and a smaller preview image. Users can see the preview image in the chat. When the user clicked the preview image, s/he can see the original image.
 
-<p><img width="300" src="https://user-images.githubusercontent.com/662387/70680782-379e7f00-1cd4-11ea-8f41-bd18c194a55b.png"></p>
+<p><img width="300" src="https://user-images.githubusercontent.com/662387/70680782-379e7f00-1cd4-11ea-8f41-bd18c194a55b.png"/></p>
 
 If you want to set up a call to action on the image, you may refer to [Imagemaps](#imagemap).
 
@@ -121,7 +121,7 @@ For more information, please refer to LINE's official doc, [Image Message](https
 
 To send a **Video**, you need to prepare the URL of the video file and the URL of a preview image. The user can play the video by tapping on the preview image.
 
-<p><img width="300" src="https://user-images.githubusercontent.com/662387/70680791-38cfac00-1cd4-11ea-8d1f-ea98199ae363.png"></p>
+<p><img width="300" src="https://user-images.githubusercontent.com/662387/70680791-38cfac00-1cd4-11ea-8d1f-ea98199ae363.png"/></p>
 
 ```js
 await context.sendVideo({
@@ -138,7 +138,7 @@ For more information, please refer to LINE's official doc, [Video Message](https
 
 To send an `Audio` file, you need to prepare the URL of the file and the duration of the audio.
 
-<p><img width="300" src="https://user-images.githubusercontent.com/662387/70680776-3705e880-1cd4-11ea-843b-782a95aaa30d.png"></p>
+<p><img width="300" src="https://user-images.githubusercontent.com/662387/70680776-3705e880-1cd4-11ea-843b-782a95aaa30d.png"/></p>
 
 ```js
 await context.sendAudio({
@@ -155,7 +155,7 @@ For more information, please refer to LINE's official doc, [Audio Message](https
 
 To send your location information to users, you have to prepare a title, address, and latitude and longitude.
 
-<p><img width="300" src="https://user-images.githubusercontent.com/662387/70680786-38371580-1cd4-11ea-9755-e8f335183ebd.png"></p>
+<p><img width="300" src="https://user-images.githubusercontent.com/662387/70680786-38371580-1cd4-11ea-9755-e8f335183ebd.png"/></p>
 
 ```js
 await context.sendLocation({
@@ -172,7 +172,7 @@ For more information, please refer to LINE's official doc, [Location Message](ht
 
 **Imagemap** offers very flexible and interactive usage. It is an image with multiple tappable areas. When a user taps one of these areas, the user can link to a webpage or send a message on their behalf.
 
-<p><img width="300" src="https://user-images.githubusercontent.com/662387/70680785-38371580-1cd4-11ea-98ce-c41438379fe8.png"></p>
+<p><img width="300" src="https://user-images.githubusercontent.com/662387/70680785-38371580-1cd4-11ea-98ce-c41438379fe8.png"/></p>
 
 ```js
 const imagemap = {
@@ -254,7 +254,7 @@ await context.sendTemplate(altText, template);
 
 A **Confirm Template** is designed for confirmation.
 
-<p><img width="300" src="https://user-images.githubusercontent.com/662387/70680779-379e7f00-1cd4-11ea-9706-941b6a30e003.png"></p>
+<p><img width="300" src="https://user-images.githubusercontent.com/662387/70680779-379e7f00-1cd4-11ea-9706-941b6a30e003.png"/></p>
 
 ```js
 const template = {
@@ -282,7 +282,7 @@ For more information, please refer to LINE's official doc, [Confirm Template](ht
 
 A `Buttons Template` includes an image, title, text, and multiple action buttons.
 
-<p><img width="300" src="https://user-images.githubusercontent.com/662387/70680777-3705e880-1cd4-11ea-896d-c0f53257276c.png"></p>
+<p><img width="300" src="https://user-images.githubusercontent.com/662387/70680777-3705e880-1cd4-11ea-896d-c0f53257276c.png"/></p>
 
 ```js
 const template = {
@@ -321,7 +321,7 @@ For more information, please refer to LINE's official doc, [Buttons Template](ht
 
 You can have up to 10 Buttons Template in a row to compose a Carousel Template.
 
-<p><img width="300" src="https://user-images.githubusercontent.com/662387/70680778-3705e880-1cd4-11ea-8bcd-7e38aa45f74e.png"></p>
+<p><img width="300" src="https://user-images.githubusercontent.com/662387/70680778-3705e880-1cd4-11ea-8bcd-7e38aa45f74e.png"/></p>
 
 ```js
 const template = [
@@ -385,7 +385,7 @@ For more information, please refer to LINE's official doc, [Carousel Template](h
 
 **Image Carousel Template** has multiple images that can be cycled like a carousel. Users can scroll the images horizontally to browse possible choices. Without the bother of buttons, it helps your user focus on the product images.
 
-<p><img width="300" src="https://user-images.githubusercontent.com/662387/70680783-38371580-1cd4-11ea-888e-336a24e67029.png"></p>
+<p><img width="300" src="https://user-images.githubusercontent.com/662387/70680783-38371580-1cd4-11ea-888e-336a24e67029.png"/></p>
 
 ```js
 const template = [
@@ -422,7 +422,7 @@ For more information, please refer to LINE's official doc, [Image Carousel Templ
 
 ## Sending Flex Messages
 
-<p><img width="800" src="https://user-images.githubusercontent.com/662387/70701503-6bdf6300-1d07-11ea-86d6-924d676a1f80.png"></p>
+<p><img width="800" src="https://user-images.githubusercontent.com/662387/70701503-6bdf6300-1d07-11ea-86d6-924d676a1f80.png"/></p>
 
 Since we love [Flex Message](./channel-line-flex.md) and inspired by its flexibility and interactive, we wrote a separate doc, [Flex Message](./channel-line-flex.md).
 
@@ -436,7 +436,7 @@ A Quick Reply consists of up to 13 Quick Reply Buttons. When the user taps a Qui
 
 Quick Reply can be used in a 1 on 1 chat with a LINE official account, a group, and a room.
 
-<p><img width="300" src="https://user-images.githubusercontent.com/662387/70680787-38cfac00-1cd4-11ea-92ea-e7a2379ce9c2.png"></p>
+<p><img width="300" src="https://user-images.githubusercontent.com/662387/70680787-38cfac00-1cd4-11ea-92ea-e7a2379ce9c2.png"/></p>
 
 ```js
 const quickReply = {

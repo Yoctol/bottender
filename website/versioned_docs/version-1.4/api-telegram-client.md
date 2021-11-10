@@ -1,5 +1,5 @@
 ---
-id: version-1.4-api-telegram-client
+id: api-telegram-client
 title: TelegramClient
 original_id: api-telegram-client
 ---
@@ -47,7 +47,7 @@ async function MyAction(context) {
 `TelegramClient` uses [axios](https://github.com/axios/axios) as HTTP client. We use [axios-error](https://github.com/Yoctol/messaging-apis/tree/master/packages/axios-error) package to wrap API error instances for better formatting error messages. Calling `console.log` with the error instance returns the formatted message. If you'd like to get the axios `request`, `response`, or `config`, you can still get them via those keys on the error instance.
 
 ```js
-client.getWebhookInfo().catch(error => {
+client.getWebhookInfo().catch((error) => {
   console.log(error); // the formatted error message
   console.log(error.stack); // stack trace of the error
   console.log(error.config); // axios request config
@@ -73,7 +73,7 @@ Gets current webhook status.
 Example:
 
 ```js
-client.getWebhookInfo().then(info => {
+client.getWebhookInfo().then((info) => {
   console.log(info);
   // {
   //   url: 'https://4a16faff.ngrok.io/',
@@ -101,7 +101,7 @@ client
   .getUpdates({
     limit: 10,
   })
-  .then(updates => {
+  .then((updates) => {
     console.log(updates);
     /*
       [
@@ -337,11 +337,11 @@ client.sendVideoNote(CHAT_ID, 'https://example.com/video_note.mp4', {
 
 send a group of photos or videos as an album.
 
-| Param   | Type                                                               | Description                                                                              |
-| ------- | ------------------------------------------------------------------ | ---------------------------------------------------------------------------------------- |
-| chatId  | <code>Number &#124; String</code>                                  | Unique identifier for the target chat or username of the target channel.                 |
-| media   | Array<[InputMedia](https://core.telegram.org/bots/api#inputmedia)> | A JSON-serialized array describing photos and videos to be sent, must include 2–10 items |
-| options | `Object`                                                           | Other optional parameters.                                                               |
+| Param   | Type                                                                                  | Description                                                                              |
+| ------- | ------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| chatId  | <code>Number &#124; String</code>                                                     | Unique identifier for the target chat or username of the target channel.                 |
+| media   | <code>Array&lt;[InputMedia](https://core.telegram.org/bots/api#inputmedia)&gt;</code> | A JSON-serialized array describing photos and videos to be sent, must include 2–10 items |
+| options | `Object`                                                                              | Other optional parameters.                                                               |
 
 Example:
 
@@ -468,7 +468,7 @@ Gets bot's information.
 Example:
 
 ```js
-client.getMe().then(result => {
+client.getMe().then((result) => {
   console.log(result);
   // {
   //   id: 313534466,
@@ -492,7 +492,7 @@ Gets a list of profile pictures for a user.
 Example:
 
 ```js
-client.getUserProfilePhotos(USER_ID, { limit: 1 }).then(result => {
+client.getUserProfilePhotos(USER_ID, { limit: 1 }).then((result) => {
   console.log(result);
   // {
   //   totalCount: 3,
@@ -540,7 +540,7 @@ Example:
 ```js
 client
   .getFile('UtAqweADGTo4Gz8cZAeR-ouu4XBx78EeqRkABPL_pM4A1UpI0koD65K2')
-  .then(file => {
+  .then((file) => {
     console.log(file);
     // {
     //   fileId: 'UtAqweADGTo4Gz8cZAeR-ouu4XBx78EeqRkABPL_pM4A1UpI0koD65K2',
@@ -565,7 +565,7 @@ Example:
 ```js
 client
   .getFileLink('UtAqweADGTo4Gz8cZAeR-ouu4XBx78EeqRkABPL_pM4A1UpI0koD65K2')
-  .then(link => {
+  .then((link) => {
     console.log(link);
     // 'https://api.telegram.org/file/bot<ACCESS_TOKEN>/photos/1068230105874016297.jpg'
   });
@@ -584,7 +584,7 @@ Gets up to date information about the chat (current name of the user for one-on-
 Example:
 
 ```js
-client.getChat(CHAT_ID).then(chat => {
+client.getChat(CHAT_ID).then((chat) => {
   console.log(chat);
   // {
   //   id: 313534466,
@@ -609,7 +609,7 @@ Gets a list of administrators in a chat.
 Example:
 
 ```js
-client.getChatAdministrators(CHAT_ID).then(admins => {
+client.getChatAdministrators(CHAT_ID).then((admins) => {
   console.log(admins);
   // [
   //   {
@@ -639,7 +639,7 @@ Gets the number of members in a chat.
 Example:
 
 ```js
-client.getChatMembersCount(CHAT_ID).then(count => {
+client.getChatMembersCount(CHAT_ID).then((count) => {
   console.log(count); // '6'
 });
 ```
@@ -658,7 +658,7 @@ Gets information about a member of a chat.
 Example:
 
 ```js
-client.getChatMember(CHAT_ID, USER_ID).then(member => {
+client.getChatMember(CHAT_ID, USER_ID).then((member) => {
   console.log(member);
   // {
   //   user: {
@@ -1130,11 +1130,11 @@ client.answerPreCheckoutQuery('UNIQUE_ID', true);
 
 Send answers to an inline query.
 
-| Param         | Type                                                                             | Description                                               |
-| ------------- | -------------------------------------------------------------------------------- | --------------------------------------------------------- |
-| inlineQueryId | `String`                                                                         | Unique identifier of the query.                           |
-| results       | Array<[InlineQueryResult](https://core.telegram.org/bots/api#inlinequeryresult)> | Array of object represents one result of an inline query. |
-| options       | `Object`                                                                         | Additional Telegram query options.                        |
+| Param         | Type                                                                                                | Description                                               |
+| ------------- | --------------------------------------------------------------------------------------------------- | --------------------------------------------------------- |
+| inlineQueryId | `String`                                                                                            | Unique identifier of the query.                           |
+| results       | <code>Array&lt;[InlineQueryResult](https://core.telegram.org/bots/api#inlinequeryresult)&gt;</code> | Array of object represents one result of an inline query. |
+| options       | `Object`                                                                                            | Additional Telegram query options.                        |
 
 Example:
 
@@ -1215,7 +1215,7 @@ Gets data for high score tables.
 Example:
 
 ```js
-client.getGameHighScores(USER_ID).then(scores => {
+client.getGameHighScores(USER_ID).then((scores) => {
   console.log(scores);
   // [
   //   {

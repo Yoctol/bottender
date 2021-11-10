@@ -1,5 +1,5 @@
 ---
-id: version-1.4-channel-line-notify
+id: channel-line-notify
 title: LINE Notify
 original_id: channel-line-notify
 ---
@@ -97,7 +97,7 @@ const lineNotify = require('../lineNotify');
 app.prepare().then(() => {
   //...
 
-  server.get('/notify/redirect', async function(req, res) {
+  server.get('/notify/redirect', async function (req, res) {
     const code = req.query.code;
     const token = await lineNotify.getToken(code);
     await lineNotify.sendNotify(token, 'Hello bottender!');

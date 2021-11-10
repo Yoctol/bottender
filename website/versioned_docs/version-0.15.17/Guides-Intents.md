@@ -1,5 +1,5 @@
 ---
-id: version-0.15.17-intents
+id: intents
 title: Intents
 original_id: intents
 ---
@@ -18,7 +18,7 @@ Check [Event Reference](api-event) to get more information about event.
 Here's an example handler which only handles specific commands:
 
 ```js
-bot.onEvent(async context => {
+bot.onEvent(async (context) => {
   if (context.event.isText) {
     switch (context.event.text) {
       case '/start':
@@ -42,7 +42,7 @@ bot.onEvent(async context => {
 Exactly matching looks a little rigid. Consider using some equality operators to determine whether receiving greeting words or not:
 
 ```js
-bot.onEvent(async context => {
+bot.onEvent(async (context) => {
   if (context.event.isText) {
     const { text } = context.event.message;
     if (text === 'hello' || text === 'hi') {
@@ -57,7 +57,7 @@ It only matches `hello` and `hi`. Neither `Hello` nor `hi~` would work in the ab
 We can use [regular expressions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp) for more general pattern matching. It will be helpful when building rule-based logic.
 
 ```js
-bot.onEvent(async context => {
+bot.onEvent(async (context) => {
   if (context.event.isText) {
     const { text } = context.event.message;
     if (/^h(ello|i)/i.test(text)) {

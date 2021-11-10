@@ -1,5 +1,5 @@
 ---
-id: version-0.15.17-commands
+id: commands
 title: Commands
 original_id: commands
 ---

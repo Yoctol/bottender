@@ -1,5 +1,5 @@
 ---
-id: version-1.3.1-channel-telegram-sending-messages
+id: channel-telegram-sending-messages
 title: Sending Telegram Messages
 original_id: channel-telegram-sending-messages
 ---
@@ -27,7 +27,7 @@ await context.editMessageText(response.messageId, '*world*', {
 
 If you can't wait to try Telegram Bots features, we prepared a simple demo bot for you, [Bottender Playground](https://t.me/BottenderPlaygroundBot).
 
- <p><a href="https://t.me/BottenderPlaygroundBot" target="_blank"><img width="400" src="https://user-images.githubusercontent.com/662387/71342435-c0040600-2597-11ea-8258-ae8e06c89575.gif"></a></p>
+ <p><a href="https://t.me/BottenderPlaygroundBot" target="_blank"><img width="400" src="https://user-images.githubusercontent.com/662387/71342435-c0040600-2597-11ea-8258-ae8e06c89575.gif"/></a></p>
 
 <hr />
 
@@ -57,7 +57,7 @@ await context.sendMessage('*hello*', { parseMode: 'markdown' });
 
 You can see the possible `Markdown` format below.
 
- <p><img width="800" src="https://user-images.githubusercontent.com/662387/71338571-5ed63580-258b-11ea-8362-8de4a081c4b0.png"></p>
+ <p><img width="800" src="https://user-images.githubusercontent.com/662387/71338571-5ed63580-258b-11ea-8362-8de4a081c4b0.png"/></p>
 
 For more information, please refer to Telegram's official doc, [Formatting Options](https://core.telegram.org/bots/api#formatting-options).
 
@@ -349,9 +349,9 @@ For more information, please refer to Telegram's official doc, [Inline Keyboards
 
 ### Keyboard
 
-<p><img width="300" src="https://user-images.githubusercontent.com/662387/70965224-e45c7000-20c9-11ea-9a1d-2e911e00e435.jpeg"></p>
+<p><img width="300" src="https://user-images.githubusercontent.com/662387/70965224-e45c7000-20c9-11ea-9a1d-2e911e00e435.jpeg"/></p>
 
-<p><img width="300" src="https://user-images.githubusercontent.com/662387/70965221-e3c3d980-20c9-11ea-9b9d-05410817c5d8.jpeg"></p>
+<p><img width="300" src="https://user-images.githubusercontent.com/662387/70965221-e3c3d980-20c9-11ea-9b9d-05410817c5d8.jpeg"/></p>
 
 Whenever your bot sends a message, it can pass along a special keyboard with predefined reply options.
 

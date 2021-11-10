@@ -1,5 +1,5 @@
 ---
-id: version-1.3.1-channel-line-liff
+id: channel-line-liff
 title: LINE Front-end Framework (LIFF)
 original_id: channel-line-liff
 ---
@@ -27,7 +27,7 @@ LIFF v2 introduces some new features to developers, e.g., scanning QR codes, all
 
 For catching up quickly, this is a minimal implementation - [Bottender example with LIFF v2](https://github.com/Yoctol/bottender/tree/master/examples/line-liff-v2).
 
-The following sections are step by step tutorials about how to send messages with LIFF in a Bottender project created by [Create Bottender App](https://bottender.js.org/docs/getting-started#create-a-new-bottender-app).
+The following sections are step by step tutorials about how to send messages with LIFF in a Bottender project created by [Create Bottender App](./getting-started.md#create-a-new-bottender-app).
 
 > **Note:** LIFF v1 is not recommended anymore. If you're using it, you should migrate to LIFF v2. However, you could still find an example for [LIFF v1 here](https://github.com/Yoctol/bottender/tree/master/examples/line-liff-v1).
 
@@ -115,19 +115,19 @@ Before starting using any feature provided by LIFF, you need to create a `liff.h
           .then(() => {
             alert('LIFF init success!');
           })
-          .catch(err => {
+          .catch((err) => {
             alert(`error: ${JSON.stringify(err)}`);
           });
       }
 
       document.addEventListener('DOMContentLoaded', () => {
         fetch(`/send-id`)
-          .then(reqResponse => reqResponse.json())
-          .then(jsonResponse => {
+          .then((reqResponse) => reqResponse.json())
+          .then((jsonResponse) => {
             let myLiffId = jsonResponse.id;
             initializeLiff(myLiffId);
           })
-          .catch(err => {
+          .catch((err) => {
             alert(`error: ${JSON.stringify(err)}`);
           });
       });
@@ -168,7 +168,7 @@ Let's add a click event listener to send messages on click. You could replace th
         .then(() => {
           setButtonHandler();
         })
-        .catch(err => {
+        .catch((err) => {
           alert(`error: ${JSON.stringify(err)}`);
         });
     }
@@ -188,7 +188,7 @@ Let's add a click event listener to send messages on click. You could replace th
             alert('message sent');
             liff.closeWindow();
           })
-          .catch(err => {
+          .catch((err) => {
             window.alert('Error sending message: ' + err);
           });
       });
@@ -196,12 +196,12 @@ Let's add a click event listener to send messages on click. You could replace th
 
     document.addEventListener('DOMContentLoaded', () => {
       fetch(`/send-id`)
-        .then(reqResponse => reqResponse.json())
-        .then(jsonResponse => {
+        .then((reqResponse) => reqResponse.json())
+        .then((jsonResponse) => {
           let myLiffId = jsonResponse.id;
           initializeLiff(myLiffId);
         })
-        .catch(err => {
+        .catch((err) => {
           alert(`error: ${JSON.stringify(err)}`);
         });
     });

@@ -1,5 +1,5 @@
 ---
-id: version-1.5-advanced-guides-custom-server
+id: advanced-guides-custom-server
 title: Running Bottender with Custom Servers
 original_id: advanced-guides-custom-server
 ---
