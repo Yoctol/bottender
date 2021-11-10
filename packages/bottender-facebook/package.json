@@ -1,6 +1,6 @@
 {
   "name": "@bottender/facebook",
-  "version": "1.5.4",
+  "version": "1.5.5",
   "license": "MIT",
   "homepage": "https://bottender.js.org/",
   "repository": {
@@ -23,6 +23,6 @@
     "bottender": ">= 1.5.1-alpha.4"
   },
   "devDependencies": {
-    "bottender": "^1.5.4"
+    "bottender": "^1.5.5"
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "@bottender/dialogflow",
-  "version": "1.5.4",
+  "version": "1.5.5",
   "description": "Dialogflow integration for Bottender.",
   "license": "MIT",
   "homepage": "https://bottender.js.org/",
@@ -21,7 +21,7 @@
     "bottender": ">= 1.2.0-0"
   },
   "devDependencies": {
-    "bottender": "^1.5.4"
+    "bottender": "^1.5.5"
   },
   "keywords": [
     "bot",
