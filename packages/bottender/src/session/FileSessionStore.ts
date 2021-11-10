@@ -1,6 +1,6 @@
 import os from 'os';
 
-import JFSStore, { Instance } from 'jfs';
+import JFSStore, { Instance } from '@bottender/jfs';
 import isBefore from 'date-fns/isBefore';
 import subMinutes from 'date-fns/subMinutes';
 
