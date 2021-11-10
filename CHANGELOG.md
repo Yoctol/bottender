@@ -1,3 +1,7 @@
+# 1.5.5 / 2021-11-10
+
+- [deps] use forked `@bottender/jfs` instead of unmaintained `jfs`.
+
 # 1.5.4 / 2021-10-11
 
 ## line
