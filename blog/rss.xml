@@ -1,0 +1,464 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+    <channel>
+        <title>Bottender Blog</title>
+        <link>https://bottender.js.org/blog</link>
+        <description>Bottender Blog</description>
+        <lastBuildDate>Fri, 17 Apr 2020 00:00:00 GMT</lastBuildDate>
+        <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
+        <generator>https://github.com/jpmonette/feed</generator>
+        <item>
+            <title><![CDATA[Bottender 1.4: Customizable Session Store, Messenger, LINE Features, Multi-language Documentation]]></title>
+            <link>https://bottender.js.org/blog/2020/04/17/bottender-1_4</link>
+            <guid>Bottender 1.4: Customizable Session Store, Messenger, LINE Features, Multi-language Documentation</guid>
+            <pubDate>Fri, 17 Apr 2020 00:00:00 GMT</pubDate>
+            <description><![CDATA[Today we are very excited to introduce Bottender 1.4, featuring:]]></description>
+            <content:encoded><![CDATA[<p><img src="https://user-images.githubusercontent.com/3382565/79356403-7f2e6380-7f71-11ea-9180-c13b47642a42.png"/></p><p>Today we are very excited to introduce Bottender 1.4, featuring:</p><ul><li><strong><a href="/blog/2020/04/17/bottender-1_4#routes-readability-improvement">Routes Readability Improvement</a></strong></li><li><strong><a href="/blog/2020/04/17/bottender-1_4#customizable-session-store">Customizable Session Store</a></strong></li><li><strong><a href="/blog/2020/04/17/bottender-1_4#messenger-one-time-notification-beta">Messenger One-Time Notification (Beta)</a></strong></li><li><strong><a href="/blog/2020/04/17/bottender-1_4#messenger-message-reaction-event">Messenger Message Reaction Event</a></strong></li><li><strong><a href="/blog/2020/04/17/bottender-1_4#built-in-line-notify-support">Built-In LINE Notify Support</a></strong></li><li><strong><a href="/blog/2020/04/17/bottender-1_4#line-icon-and-display-name-switch">LINE Icon and Display Name Switch</a></strong></li><li><strong><a href="/blog/2020/04/17/bottender-1_4#line-emoji-in-text-messages">LINE Emoji in Text Messages</a></strong></li><li><strong><a href="/blog/2020/04/17/bottender-1_4#multi-language-documentation-website">Multi-language Documentation Website</a></strong></li></ul><p>Besides, we also bring a bunch of TypeScript improvements into this release. If you&#x27;re using TypeScript with Bottender in your project, you may want to upgrade and see the changes.</p><h2>Routes Readability Improvement</h2><p>We add <code>.any</code> to the original route APIs to hint that they trigger the provided action when receiving <strong>any</strong> events on specific platform:</p><ul><li><code>messenger</code> -&gt; <code>messenger.any</code></li><li><code>line</code> -&gt; <code>line.any</code></li><li><code>telegram</code> -&gt; <code>telegram.any</code></li><li><code>whatsapp</code> -&gt; <code>whatsapp.any</code></li><li><code>slack</code> -&gt; <code>slack.any</code></li><li><code>viber</code> -&gt; <code>viber.any</code></li></ul><p>Considering the following example, having <code>.any</code> can make the code easier to read:</p><pre><code class="language-js">function App() {
+  return router([
+    messenger.postback(HandleMessengerPostback),
+    messenger.delivery(HandleMessengerDelivery),
+    messenger.read(HandleRead),
+    messenger.any(HandleMessengerEvent),
+    line.follow(HandleLINEFollow),
+    line.unfollow(HandleLINEUnfollow),
+    line.join(HandleLINEJoin),
+    line.leave(HandleLINELeave),
+    line.any(HandleLineEvent),
+  ]);
+}
+</code></pre><h2>Customizable Session Store</h2><p>Starting from Bottender 1.4, Bottender supports using any custom session store that implemented the <a href="https://github.com/Yoctol/bottender/blob/master/packages/bottender/src/session/SessionStore.ts">SessionStore</a> interface.</p><p>To use your custom session store, set <code>driver</code> to your custom key and put the instance of your session store to <code>stores</code> accordingly in your <code>bottender.config.js</code> file:</p><pre><code class="language-js">// bottender.config.js
+
+module.exports = {
+  session: {
+    driver: &#x27;mysession&#x27;,
+    stores: {
+      mysession: new MySessionStore();
+    },
+  },
+};
+</code></pre><p>So, now you can store your sessions in any storage, for example, Firebase and Amazon DynamoDB.</p><h2>Messenger One-Time Notification (Beta)</h2><p><a href="https://developers.facebook.com/docs/messenger-platform/send-messages/one-time-notification">The Messenger Platform&#x27;s One-Time Notification API (Beta)</a> is a feature that allows a page to request a user permission for sending one follow-up message after the 24-hour messaging window has ended. The user will be offered to receive a future notification.</p><p><img src="https://user-images.githubusercontent.com/3382565/79429450-18a15800-7ffa-11ea-82a8-61af539ac738.png"/></p><p>To send a one time notification template, call <code>context.sendOneTimeNotifReqTemplate()</code> with a title and payload:</p><pre><code class="language-js">async function MyAction(context) {
+  await context.sendOneTimeNotifReqTemplate({
+    title: &#x27;&lt;TITLE_TEXT&gt;&#x27;,
+    payload: &#x27;&lt;USER_DEFINED_PAYLOAD&gt;&#x27;,
+  });
+}
+</code></pre><p>When the user consents to be notified on a specific update, you will get an `optin&#x27; event with the payload and one-time token. You will need to store the token somewhere to use it in the future.</p><pre><code class="language-js">function App() {
+  return router([
+    messenger.optin(async HandleOption(context) {
+      const { optin } = context.event;
+      if (optin.type === &#x27;one_time_notif_req&#x27;) {
+         // optin.payload -&gt; the payload you sent in  `context.sendOneTimeNotifReqTemplate` request
+         // optin.oneTimeNotifToken -&gt; the one-time token you need to store somewhere
+      }
+    }),
+  ]);
+}
+</code></pre><p>When the information becomes available, you can use this one-time token to send a follow up message to the user:</p><pre><code class="language-js">const { getClient } = require(&#x27;bottender&#x27;);
+
+const messenger = getClient(&#x27;messenger&#x27;);
+
+messenger.sendText(
+  { oneTimeNotifToken: &#x27;ONE_TIME_TOKEN&#x27; },
+  &#x27;This is a one-time notification.&#x27;
+);
+</code></pre><h2>Messenger Message Reaction Event</h2><p><a href="https://developers.facebook.com/docs/messenger-platform/reference/webhook-events/message-reactions/">Message reaction</a> is a type of event that triggered when a user press and hold any message, and then tap to make the selection from the following types of emojis:</p><ul><li>smile</li><li>angry</li><li>sad</li><li>wow</li><li>love</li><li>like</li><li>dislike</li></ul><p><img src="https://user-images.githubusercontent.com/3382565/79419985-85acf180-7fea-11ea-80d5-c99b4a665b70.jpg"/></p><p>To handle message reaction events, you must subscribe to the <code>message_reactions</code> field for your page. And then you can do whatever you want when receiving <code>react</code> and <code>unreact</code> events:</p><pre><code class="language-js">const { router, messenger } = require(&#x27;bottender/router&#x27;);
+
+function App() {
+  return router([
+    messenger.reaction.react(async function HandleReactionReact(context) {
+      // Handle react here
+      context.event.reaction.reaction; // &quot;love&quot;
+    }),
+    messenger.reaction.unreact(async function HandleReactionUnreact(context) {
+      // Handle unreact here
+    }),
+  ]);
+}
+</code></pre><p>It is particularly useful when you want to know the feedback from your users.</p><h2>Built-In LINE Notify Support</h2><p>Push API allows you to send messages directly to your users anytime. However, it might cost some money depends on the pricing plan in your country. <a href="https://notify-bot.line.me/">LINE Notify</a> is a service that helps you build your notification app without the cost we mentioned earlier.</p><p>Bottender now supports LINE Notify using the <code>LineNotify</code> class. You can use it to exchange the token and send notifications to the user:</p><pre><code class="language-js">const { LineNotify } = require(&#x27;bottender&#x27;);
+
+const lineNotify = new LineNotify({
+  clientId: &#x27;&lt;LINE_NOTIFY_CLIENT_ID&gt;&#x27;,
+  clientSecret: &#x27;&lt;LINE_NOTIFY_CLIENT_SECRET&gt;&#x27;,
+  redirectUri: &#x27;https://example.com/your/notify/redirect/path&#x27;,
+});
+
+const token = await lineNotify.getToken(&#x27;&lt;AUTHORIZATION_CODE&gt;&#x27;);
+await lineNotify.sendNotify(token, &#x27;Hello bottender!&#x27;);
+</code></pre><p>To learn more about LINE Notify refer to the <a href="/docs/channel-line-notify">LINE Notify Documentation</a>.</p><h2>LINE Icon and Display Name Switch</h2><p>Recently, LINE announced that <a href="https://developers.line.biz/zh-hant/news/2020/03/17/icon-nickname-switch/">icon and display name for LINE official account can be changed</a>.</p><p><img src="https://user-images.githubusercontent.com/3382565/79414458-44faab80-7fdd-11ea-9b72-d039df1addf3.png"/></p><p>To change the icon and display name of your LINE Official Account, provide the <code>sender</code> option:</p><pre><code class="language-js">await context.sendText(&#x27;Hello, I am Cony!!&#x27;, {
+  sender: {
+    name: &#x27;Cony&#x27;,
+    iconUrl: &#x27;https://line.me/conyprof&#x27;,
+  },
+});
+</code></pre><h2>LINE Emoji in Text Messages</h2><p>You might have already learned that you can include LINE emojis in your text message:</p><pre><code class="language-js">await context.sendText(
+  `Look at this: ${String.fromCodePoint(0x100084)} It&#x27;s a LINE emoji!`
+);
+</code></pre><p>In <a href="https://developers.line.biz/zh-hant/news/2020/04/14/messaging-api-update-april-2020/">Messaging API Update for April 2020</a>, LINE announced LINE original emoji in the previous example is deprecated.</p><p>Now you can provide the <code>emoji</code> option includes an index, product ID, and emoji ID of the emojis in your text message:</p><pre><code class="language-js">await context.sendText(&quot;Look at this: $ It&#x27;s a LINE emoji!&quot;, {
+  emojis: [
+    {
+      index: 14,
+      productId: &#x27;5ac1bfd5040ab15980c9b435&#x27;,
+      emojiId: &#x27;001&#x27;,
+    },
+  ],
+});
+</code></pre><p>For more emojis, see <a href="https://d.line-scdn.net/r/devcenter/sendable_line_emoji_list.pdf">Sendable LINE Emoji List</a>.</p><h2>Multi-language Documentation Website</h2><p>In this version, we start moving our official documentation website from English-only to multi-language. Thanks to <a href="https://docusaurus.io/">Docusaurus</a> and <a href="https://crowdin.com/">Crowdin</a> Open source Plan, the multi-language setup couldn&#x27;t be easier.</p><p>The first language we try to translate is Traditional Chinese, and almost 70% of the latest documentation has been translated.</p><p>You can find the language switch dropdown on the website header:</p><p><img src="https://user-images.githubusercontent.com/3382565/79418575-927c1600-7fe7-11ea-9c41-4d69c9a5a4a9.png"/></p><p>We&#x27;ll keep spending a lot of effort on improving our English documents because it&#x27;s still a lot of important topics we need to cover.</p><p>If you&#x27;re interested in helping translate those documents (especially other than Traditional Chinese), please contact us on Twitter <a href="https://twitter.com/bottenderjs">@bottenderjs</a> or send email to <a href="mailto:bottender@yoctol.com">bottender@yoctol.com</a>.</p>]]></content:encoded>
+        </item>
+        <item>
+            <title><![CDATA[Notice of LINE domain name change for certain endpoints]]></title>
+            <link>https://bottender.js.org/blog/2020/04/08/line-domain-name-change</link>
+            <guid>Notice of LINE domain name change for certain endpoints</guid>
+            <pubDate>Wed, 08 Apr 2020 00:00:00 GMT</pubDate>
+            <description><![CDATA[According to the Notice of domain name change for certain endpoints post on LINE Developer News, the domain name of the following LINE Messaging API endpoints has been changed from api.line.me to api-data.line.me during the transition period:]]></description>
+            <content:encoded><![CDATA[<p>According to the <a href="https://developers.line.biz/en/news/2019/11/08/domain-name-change/">Notice of domain name change for certain endpoints</a> post on LINE Developer News, the domain name of the following LINE Messaging API endpoints has been changed from <code>api.line.me</code> to <code>api-data.line.me</code> during the transition period:</p><ul><li><a href="https://developers.line.biz/en/reference/messaging-api/#get-content">Get content</a>:</li></ul><pre><code class="language-js">context.getMessageContent();
+
+// or in Bottender v0.15
+context.retrieveMessageContent();
+</code></pre><ul><li><a href="https://developers.line.biz/en/reference/messaging-api/#upload-rich-menu-image">Upload rich menu image</a>:</li></ul><pre><code class="language-js">const { getClient } = require(&#x27;bottender&#x27;);
+
+const line = getClient(&#x27;line&#x27;);
+
+await line.uploadRichMenuImage(richMenuId, imageBuffer);
+</code></pre><ul><li><a href="https://developers.line.biz/en/reference/messaging-api/#download-rich-menu-image">Download rich menu image</a>:</li></ul><pre><code class="language-js">const { getClient } = require(&#x27;bottender&#x27;);
+
+const line = getClient(&#x27;line&#x27;);
+
+const imageBuffer = await line.downloadRichMenuImage(richMenuId);
+</code></pre><p>If you are using the above endpoints and methods, please make sure to upgrade Bottender to <code>v1.3.3+</code> (or <code>v0.15.18+</code> if using <code>v0.x</code>) before <strong>April 30, 2020</strong>.</p>]]></content:encoded>
+        </item>
+        <item>
+            <title><![CDATA[Bottender 1.3: WhatsApp Support, TypeScript Improvement]]></title>
+            <link>https://bottender.js.org/blog/2020/03/06/bottender-1_3</link>
+            <guid>Bottender 1.3: WhatsApp Support, TypeScript Improvement</guid>
+            <pubDate>Fri, 06 Mar 2020 00:00:00 GMT</pubDate>
+            <description><![CDATA[We are excited to introduce Bottender 1.3 today, featuring:]]></description>
+            <content:encoded><![CDATA[<p><img src="https://user-images.githubusercontent.com/3382565/76055870-d410ae80-5faf-11ea-89bf-b3f09a773285.png"/></p><p>We are excited to introduce Bottender 1.3 today, featuring:</p><ul><li><strong><a href="/blog/2020/03/06/bottender-1_3#whatsapp-support">WhatsApp Support</a></strong></li><li><strong><a href="/blog/2020/03/06/bottender-1_3#slack-request-signing">Slack Request Signing</a></strong></li><li><strong><a href="/blog/2020/03/06/bottender-1_3#slack-slash-command">Slack Slash Command</a></strong></li><li><strong><a href="/blog/2020/03/06/bottender-1_3#typescript-support-in-create-bottender-app">TypeScript Support in Create Bottender App</a></strong></li><li><strong><a href="/blog/2020/03/06/bottender-1_3#more-exported-typescript-types">More Exported TypeScript Types</a></strong></li></ul><h2>WhatsApp Support</h2><p>Since we released Bottender in 2017, WhatsApp support has been a highly requested feature because of its popularity.</p><p>As a result, we managed to implement the support with <a href="https://www.twilio.com/whatsapp">Twilio API for WhatsApp</a> in this release. Twilio API for WhatsApp is one of the most popular ways to send and receive messages programmatically in WhatsApp.</p><p>In Bottender v1.3, you may enable <code>whatsapp</code> webhook in your <code>bottender.config.js</code> file to start listening to the WhatsApp requests:</p><pre><code class="language-js">module.exports = {
+  channels: {
+    whatsapp: {
+      enabled: true,
+      path: &#x27;/webhooks/whatsapp&#x27;,
+      accountSid: process.env.WHATSAPP_ACCOUNT_SID,
+      authToken: process.env.WHATSAPP_AUTH_TOKEN,
+      phoneNumber: process.env.WHATSAPP_PHONE_NUMBER,
+    },
+  },
+};
+</code></pre><p>Moreover, Bottender provides the WhatsApp routes for you to define WhatsApp specific routing:</p><pre><code class="language-js">const { router, whatsapp } = require(&#x27;bottender/router&#x27;);
+
+function App() {
+  return router([
+    whatsapp.message(HandleMessage),
+    whatsapp.media(HandleMedia),
+    whatsapp.received(HandleReceived),
+    whatsapp.sent(HandleSent),
+    whatsapp.delivered(HandleDelivered),
+    whatsapp.read(HandleRead),
+    whatsapp(HandleWhatsapp),
+  ]);
+}
+</code></pre><h2>Slack Request Signing</h2><p>We now support request signing for verification instead of tokens. According to <a href="https://api.slack.com/docs/verifying-requests-from-slack#verification_token_deprecation">Slack&#x27;s announcement</a>, verification by the token is deprecated now. We highly recommend our users to upgrade if you&#x27;re using this feature.</p><p>To upgrade, get your Slack app&#x27;s signing secret from Slack console and paste it to your <code>.env</code> and <code>bottender.config.js</code> accordingly. See our <a href="https://bottender.js.org/docs/channel-slack-setup">doc</a> for detailed instruction.</p><pre><code class="language-yaml"># .env
+
+SLACK_ACCESS_TOKEN=__YOUR_ACCESS_TOKEN_HERE__
+SLACK_SIGNING_SECRET=__YOUR_SECRET_HERE__
+# SLACK_VERIFICATION_TOKEN= # deprecated, use SLACK_SIGNING_SECRET
+</code></pre><pre><code class="language-js">// bottender.config.js
+
+module.exports = {
+  channels: {
+    slack: {
+      enabled: true,
+      path: &#x27;/webhooks/slack&#x27;,
+      accessToken: process.env.SLACK_ACCESS_TOKEN,
+      signingSecret: process.env.SLACK_SIGNING_SECRET,
+      // verificationToken: process.env.SLACK_VERIFICATION_TOKEN, // deprecated, use signingSecret
+    },
+  },
+};
+</code></pre><h2>Slack Slash Command</h2><p>Plus, we add support for Slack Slash Command. It can handle commands like <code>/todo ask @crushermd to bake a birthday cake for @worf in #d-social</code> and access arguments in Bottender context:</p><p>To determine whether the event is a slash command event, you may check the boolean value - <code>context.event.isCommand</code>:</p><pre><code class="language-js">async function App(context) {
+  if (context.event.isCommand) {
+    // handling the slash command event
+  }
+}
+</code></pre><p>You can get the command from <code>context.event.command</code> and its arguments from <code>context.event.text</code> and use them in the reply:</p><pre><code class="language-js">async function App(context) {
+  if (context.event.isCommand) {
+    await context.sendText(
+      `I received slash command &#x27;${context.event.command}&#x27; with arguments: &#x27;${context.event.text}&#x27;`
+    );
+  }
+}
+</code></pre><p>You also need to add commands in Slack&#x27;s console to enable this feature. See our <a href="https://bottender.js.org/docs/channel-slack-slash-comman">doc</a> for detailed setup in Slack&#x27;s console.</p><h3>TypeScript Support in Create Bottender App</h3><p>In Bottender v1.3, Create Bottender App makes configuring TypeScript very simple. In fact, almost everything is configured for you out of the box. To create a TypeScript application, the only thing you need to do is to add <code>--typescript</code> to your command:</p><pre><code class="language-sh">npx create-bottender-app my-app --typescript
+</code></pre><p>Besides, you could still use the <code>dev</code> command to develop your TypeScript application:</p><pre><code class="language-sh">bottender dev
+</code></pre><p>If <code>tsconfig.json</code> present, it will watch and compile your TypeScript files for you.</p><h3>More Exported TypeScript Types</h3><p>In previous releases, most of the types we defined didn&#x27;t get exported to the Bottender users. It makes our TypeScript users sometimes have to redefine the same types in their codebase.</p><p>In Bottender v1.3, you may import defined types to type hint your TypeScript application:</p><pre><code class="language-ts">import {
+  MessengerTypes,
+  WhatsappTypes,
+  LineTypes,
+  TelegramTypes,
+  SlackTypes,
+  ViberTypes,
+} from &#x27;bottender&#x27;;
+</code></pre><p>However, there are still some types that need to be exported or polished. We will keep an eye on it and try our best to investigate more TypeScript use cases.</p><p>If you have some problems with using TypeScript in Bottender, feel free to <a href="https://github.com/Yoctol/bottender/issues/new/choose">open an issue</a> in Bottender repo. Let&#x27;s improve it together!</p>]]></content:encoded>
+        </item>
+        <item>
+            <title><![CDATA[Bottender 1.2: Serverless, NLU Integration, and More]]></title>
+            <link>https://bottender.js.org/blog/2020/01/22/bottender-1_2</link>
+            <guid>Bottender 1.2: Serverless, NLU Integration, and More</guid>
+            <pubDate>Wed, 22 Jan 2020 00:00:00 GMT</pubDate>
+            <description><![CDATA[We are excited to introduce Bottender 1.2 today, featuring:]]></description>
+            <content:encoded><![CDATA[<p><img src="https://user-images.githubusercontent.com/3382565/72883961-41d68300-3d40-11ea-9e86-323d77871e41.png"/></p><p>We are excited to introduce Bottender 1.2 today, featuring:</p><ul><li><strong><a href="/blog/2020/01/22/bottender-1_2#serverless-supporting-and-documentation">Serverless Support and Documentation</a>:</strong> Zeit Now v2 and AWS Lambda</li><li><strong><a href="/blog/2020/01/22/bottender-1_2#built-in-support-for-intent-labeling">Built-In Support for Intent Labeling</a>:</strong> Bottender context now support labeling user intent and handled status.</li><li><strong><a href="/blog/2020/01/22/bottender-1_2#packages-to-integrate-with-nlu-services">Packages to Integrate with NLU Services</a>:</strong> Bots can now integrate with popular NLU services Dialogflow, LUIS, QnA Maker, and Rasa with less efforts.</li><li><strong><a href="https://bottender.js.org/blog/2020/01/22/bottender-1_2#accessing-session-store">Accessing Session Store</a>:</strong> Manipulating session data directly if you needed.</li><li><strong><a href="/blog/2020/01/22/bottender-1_2#accessing-messaging-clients">Accessing Messaging Clients</a>:</strong> Getting configured messaging clients out of the box to call API anytime.</li></ul><p>All of these benefits are non-breaking and fully backward compatible. You can update it by running:</p><pre><code class="language-sh">npm install bottender@latest
+</code></pre><h2>Serverless Supporting and Documentation</h2><p>Since Bottender aims to be server-agnostic from the very beginning, this makes it possible to integrate with most of Node.js server frameworks and even serverless frameworks via HTTP protocol.</p><p>In the last few months, we were trying to deploy Bottender bot as a function on serverless environments such as <a href="https://zeit.co/">Zeit Now</a> or <a href="https://aws.amazon.com/lambda/">AWS Lambda</a> and finally got succeeded.</p><p>You can check out <a href="https://bottender.js.org/docs/advanced-guides-deployment#zeit-now-20">step-by-step deployment guide for Zeit Now</a> and <a href="https://github.com/Yoctol/bottender/tree/master/examples/with-aws-lambda">AWS Lambda example</a> for further details.</p><p>We understand that the bundle size and performance is quite sensitive while deploying to the serverless environment, more optimization and documentation or examples for Google Cloud Functions and Azure Functions are still ongoing.</p><h2>Built-In Support for Intent Labeling</h2><p>Bottender v1.2 introduces a new API <code>context.setIntent()</code> for labeling intent to the conversation context:</p><pre><code class="language-js">context.setIntent(&#x27;greeting&#x27;);
+
+context.intent; // &#x27;greeting&#x27;
+</code></pre><p>Furthermore, you can also set handled status by <code>context.setAsHandled()</code> or <code>context.setAsNotHandled()</code>:</p><pre><code class="language-js">context.setAsHandled();
+
+context.isHandled; // true
+
+context.setAsNotHandled();
+
+context.isHandled; // false
+</code></pre><p>This feature might found not very useful at this moment, but it&#x27;s the key to the chatbot analytics, and we will soon introduce <a href="https://chatbase.com/">Chatbase</a> and <a href="https://www.dashbot.io/">Dashbot</a> integrations on top of it in the future release.</p><h2>Packages to Integrate with NLU Services</h2><p>In v1.2, we announced four npm packages to integrate with the great natural language understanding (NLU) services:
+<a href="https://dialogflow.com/">Google Dialogflow</a>, <a href="https://www.luis.ai/">Microsoft LUIS</a>, <a href="https://www.qnamaker.ai/">Microsoft QnA Maker</a> and <a href="https://rasa.com/">Rasa</a>.</p><ul><li><code>@bottender/dialogflow</code></li><li><code>@bottender/luis</code></li><li><code>@bottender/qna-maker</code></li><li><code>@bottender/rasa</code></li></ul><p>To understand how those packages work, let&#x27;s use <code>Dialogflow</code> as an example.</p><p>After installing the <code>@bottender/dialogflow</code> package, you can create an action using <code>dialogflow</code> function and put it in your bot:</p><pre><code class="language-js">const dialogflow = require(&#x27;@bottender/dialogflow&#x27;);
+
+async function SayHello(context) {
+  await context.sendText(&#x27;Hello!&#x27;);
+}
+
+async function Unknown(context) {
+  await context.sendText(&#x27;Sorry, I don’t know what you say.&#x27;);
+}
+
+const Dialogflow = dialogflow({
+  projectId: process.env.GOOGLE_APPLICATION_PROJECT_ID,
+  actions: {
+    greeting: SayHello,
+  },
+});
+
+module.exports = async function App() {
+  return chain([
+    Dialogflow, //
+    Unknown,
+  ]);
+};
+</code></pre><p>The bot in the above example says <code>Hello!</code> when the intent received from Dialogflow is <code>greeting</code>. Otherwise, it replies with a fallback sentence.</p><p>In addition, it automatically calls <code>context.setIntent()</code> or <code>context.setAsNotHandled()</code> methods that we mentioned earlier to label the intent and handled status under the hood.</p><h2>Accessing Session Store</h2><p>Bottender now supports accessing underlying session store configured by <code>bottender.config.js</code>:</p><pre><code class="language-js">const { getSessionStore } = require(&#x27;bottender&#x27;);
+
+const sessionStore = getSessionStore();
+</code></pre><p>You may want to get particular session data or clean up a specific session by manipulating the session store directly.</p><h2>Accessing Messaging Clients</h2><p>Bottender now supports accessing underlying <a href="https://github.com/Yoctol/messaging-apis">messaging clients</a> configured by <code>bottender.config.js</code>:</p><pre><code class="language-js">const { getClient } = require(&#x27;bottender&#x27;);
+
+const messenger = getClient(&#x27;messenger&#x27;);
+const line = getClient(&#x27;line&#x27;);
+</code></pre><p>For example, to send a text message to the user by user id, you may call <code>sendText</code> method on Messenger client with some extra parameters:</p><pre><code class="language-js">const messenger = getClient(&#x27;messenger&#x27;);
+
+messenger.sendText(USER_ID, &#x27;Hello!&#x27;, { tag: &#x27;CONFIRMED_EVENT_UPDATE&#x27; });
+</code></pre><p>And it could also be done in LINE by using <code>pushText</code> method:</p><pre><code class="language-js">const line = getClient(&#x27;line&#x27;);
+
+line.pushText(USER_ID, &#x27;Hello!&#x27;);
+</code></pre><h2>What&#x27;s Next?</h2><p>We are always welcome any feedback and feature requests from the community; we believe that listening to the community makes perfect.</p><p>One of the most concerned topics in the period is TypeScript usage. Therefore, we will focus on polishing TypeScript types and better TypeScript support with Create Bottender App and Bottender core in the upcoming month.</p><p>WhatsApp connector is another notable feature we&#x27;re currently working on. There are a lot of users ever request this feature.</p><p>Don&#x27;t be shy! If you&#x27;re using Bottender in your bot, send us a pull request to our <a href="https://bottender.js.org/users">users</a> page to add your bot. Let us know how you use Bottender!</p>]]></content:encoded>
+        </item>
+        <item>
+            <title><![CDATA[Bottender 1.1: Multi-Channel Routing, Better Slack APIs Support in Chat, View, Block Kit]]></title>
+            <link>https://bottender.js.org/blog/2019/12/27/bottender-1_1</link>
+            <guid>Bottender 1.1: Multi-Channel Routing, Better Slack APIs Support in Chat, View, Block Kit</guid>
+            <pubDate>Fri, 27 Dec 2019 00:00:00 GMT</pubDate>
+            <description><![CDATA[In Bottender v1.1, we made two remarkable improvements in:]]></description>
+            <content:encoded><![CDATA[<p>In Bottender v1.1, we made two remarkable improvements in:</p><ul><li><strong><a href="/blog/2019/12/27/bottender-1_1#multi-channel-routing">Multi-Channel Routing</a></strong></li><li><strong><a href="/blog/2019/12/27/bottender-1_1#better-slack-apis-support-in-chat-view-block-kits">Better Slack APIs Support in Chat, View, Block Kit</a></strong></li></ul><h2>Multi-Channel Routing</h2><p>In Bottender v1.0, we first introduced the idea of <a href="/docs/the-basics-routing"><code>Routing</code></a> to help bot developers organize the path of bot actions.</p><p>When we come to Bottender v1.1, we are glad to announce <code>Multi-Channel Routing</code>, which enable bot developers to have a dedicated path control cross multiple chat channels.</p><pre><code class="language-js">const {
+  router,
+  messenger,
+  line,
+  slack,
+  telegram,
+  viber,
+} = require(&#x27;bottender/router&#x27;);
+
+async function MessengerAction(context) {
+  /* ... */
+}
+async function LineAction(context) {
+  /* ... */
+}
+async function SlackAction(context) {
+  /* ... */
+}
+async function TelegramAction(context) {
+  /* ... */
+}
+async function ViberAction(context) {
+  /* ... */
+}
+
+function App() {
+  return router([
+    messenger(MessengerAction),
+    line(LineAction),
+    slack(SlackAction),
+    telegram(TelegramAction),
+    viber(ViberAction),
+  ]);
+}
+</code></pre><h3>More Events for Routing</h3><p>Besides, Bottender v1.1 adds chat channel specific events for <code>Routing</code>, which allows you to write better modular code in your product codebase.</p><p>For example, you can use the same action to update your customer database while a bot user follows/unfollows your bot either on Messenger, LINE or Viber.</p><pre><code class="language-js">const { router, payload, line, telegram } = require(&#x27;bottender/router&#x27;);
+
+async function Follow(context) {
+  console.log(`insert ${context.session.user.id} into database`);
+  await context.sendText(&#x27;Welcome to my bot!&#x27;);
+}
+
+async function Unfollow(context) {
+  console.log(`delete ${context.session.user.id} from database`);
+}
+
+function App() {
+  return router([
+    payload(&#x27;GET_STARTED&#x27;, Follow),
+    line.follow(Follow),
+    line.unfollow(Unfollow),
+    line.join(Follow),
+    line.leave(Unfollow),
+    viber.subscribed(Follow),
+    viber.unsubscribed(Unfollow),
+  ]);
+}
+</code></pre><blockquote><p><strong>Note:</strong> Please refer to <a href="https://github.com/Yoctol/bottender/releases/tag/v1.1.0">v1.1.0 Change Log</a> to see the whole list of support events for <code>Routing</code>.</p></blockquote><h2>Better Slack APIs Support in Chat, View, Block Kits</h2><p>Since we have observed the increasing needs of Slack Bots, Bottender 1.1 now supports Slack <code>Chat</code> and <code>View</code> APIs. Slack bot developers, can use <a href="https://api.slack.com/methods">Slack Native APIs</a> on Bottender without adaptions. Check out our new doc, <a href="/docs/channel-slack-sending-messages">Sending Slack Messages</a> for more info.</p><pre><code class="language-js">context.chat.postMessage(/* ... */);
+context.chat.postEphemeral(/* ... */);
+context.chat.update(/* ... */);
+context.chat.delete(/* ... */);
+context.chat.meMessage(/* ... */);
+context.chat.getPermalink(/* ... */);
+context.chat.scheduleMessage(/* ... */);
+context.chat.deleteScheduledMessage(/* ... */);
+context.chat.scheduledMessages.list(/* ... */);
+</code></pre><p>Plus, we also improved <a href="https://api.slack.com/block-kit"><code>Block Kit</code> and <code>Modal</code></a> support. Thanks to static type-checking, you can have a pleasant experience when building block kits UIs. For more info, please see our new doc, <a href="/docs/channel-slack-block-kit">Slack Block Kit</a>.</p><pre><code class="language-js">context.views.open(/* ... */);
+context.views.publish(/* ... */);
+context.views.push(/* ... */);
+context.views.update(/* ... */);
+</code></pre>]]></content:encoded>
+        </item>
+        <item>
+            <title><![CDATA[Bottender 1.0: Create Bottender App, Router, Action Runner and Bottender.js.org]]></title>
+            <link>https://bottender.js.org/blog/2019/12/05/bottender-1</link>
+            <guid>Bottender 1.0: Create Bottender App, Router, Action Runner and Bottender.js.org</guid>
+            <pubDate>Thu, 05 Dec 2019 00:00:00 GMT</pubDate>
+            <description><![CDATA[We're very proud to announce the production-ready Bottender 1.0 today, featuring:]]></description>
+            <content:encoded><![CDATA[<p>We&#x27;re very proud to announce the production-ready <strong>Bottender 1.0</strong> today, featuring:</p><ul><li><strong><a href="/blog/2019/12/05/bottender-1#create-bottender-app">Create Bottender App</a></strong></li><li><strong><a href="/blog/2019/12/05/bottender-1#conversation-made-easy-and-simple">Conversation Made Easy and Simple</a></strong><ul><li><strong><a href="/blog/2019/12/05/bottender-1#conversation-router">Conversation Router</a></strong></li><li><strong><a href="/blog/2019/12/05/bottender-1#action-runner">Action Runner</a></strong></li></ul></li><li><strong><a href="/blog/2019/12/05/bottender-1#integrating-with-natural-language-understanding-nlu">Integrating with Natural Language Understanding (NLU)</a></strong></li><li><strong><a href="/blog/2019/12/05/bottender-1#fundamentally-rewritten-in-typescript">Fundamentally Rewritten in TypeScript</a></strong></li><li><strong><a href="/blog/2019/12/05/bottender-1#bottenderjsorg">Bottender.js.org</a></strong><ul><li><strong><a href="/blog/2019/12/05/bottender-1#versioned-documents-and-search-box">Versioned Documents and Search Box</a></strong></li><li><strong><a href="/blog/2019/12/05/bottender-1#preview-website-on-the-pr">Preview Website on the PR</a></strong></li></ul></li><li><strong><a href="/blog/2019/12/05/bottender-1#whats-next">What&#x27;s Next</a></strong><ul><li><strong><a href="/blog/2019/12/05/bottender-1#slot-filling">Slot Filling</a></strong></li><li><strong><a href="/blog/2019/12/05/bottender-1#serverless-support">Serverless Support</a></strong></li></ul></li></ul><p>Checkout v1 <a href="https://github.com/Yoctol/bottender/releases/tag/v1.0.0">changelog</a> and <a href="/docs/migrating-v1">migration guide</a> for more details.</p><h2>Create Bottender App</h2><p><code>create-bottender-app</code> is the best way to start building a new application in Bottender. It saves significant your time from installing packages and writing boilerplates.</p><p>You can start a multi-channel bot with only one command:</p><pre><code class="language-sh">$ npx create-bottender-app my-app
+</code></pre><p><img src="https://user-images.githubusercontent.com/3382565/67745483-5667ef80-fa5f-11e9-8bae-39489b8544e7.png"/></p><h2>Conversation Made Easy and Simple</h2><p>While Bottender v0 focused on <strong>Making Bots</strong>, Bottender v1 retargeted on <strong>Conversational User Interface</strong>. You may notice that Bottender&#x27;s new tagline, &quot;a framework for building conversational user interfaces.&quot;</p><p>When it comes to commercial bot projects, we found that complicated messaging applications are not avoidable. To make the code easy to read and maintain, we introduced a new primitive, <code>Action</code>. <code>Actions</code> are the smallest building blocks of Bottender apps. Meanwhile, with <code>Actions</code>, Bottender users can benefit from the functional declarative world.</p><pre><code class="language-js">async function SayHi(context) {
+  await context.sendText(&#x27;Hi!&#x27;);
+}
+</code></pre><h3>Conversation Router</h3><p>With Bottender v1, you can use the new <code>Router</code> to organize your conversations. It&#x27;s declarative and easy to read. Also, it makes debug very straightforward.</p><pre><code class="language-js">const { router, text } = require(&#x27;bottender/router&#x27;);
+
+async function SayHi(context) {
+  await context.sendText(&#x27;Hi!&#x27;);
+}
+
+async function Unknown(context) {
+  await context.sendText(&#x27;Sorry, I don’t know what you say.&#x27;);
+}
+
+module.export = function App(context) {
+  return router([
+    text(&#x27;hi&#x27;, SayHi), //
+    text(&#x27;*&#x27;, Unknown),
+  ]);
+};
+</code></pre><h3>Action Runner</h3><p>Bottender v1 introduces a new built-in <code>Action Runner</code> in the core, which makes Bottender as the command center of actions. <code>Action Runner</code> is a flexible and clear working pattern. It helps developers focus on implementing actions corresponding to different contexts. On the other hand, it also offers developers enormous possibilities for customization features.</p><pre><code class="language-js">const { withProps } = require(&#x27;bottender&#x27;);
+
+const { router, text } = require(&#x27;bottender/router&#x27;);
+
+async function SayHi(context, { name }) {
+  await context.sendText(`Hi! ${name}.`);
+}
+
+async function SayHiToJohn(context) {
+  return withProps(SayHi, { name: &#x27;John&#x27; });
+}
+
+async function App(context) {
+  return router([
+    text(&#x27;hi&#x27;, SayHiToJohn), //
+    text(&#x27;*&#x27;, Unknown),
+  ]);
+}
+</code></pre><p>Plus, <code>Action Runner</code> allows Bottender to have better control of conversation flow. For example, you may use debug environment variable <code>DEBUG=bottender:action</code> to debug how your app handling events:</p><p><img src="https://user-images.githubusercontent.com/3382565/70204869-0dd9db00-175d-11ea-814f-140b3807f39d.gif"/></p><h2>Integrating with Natural Language Understanding (NLU)</h2><p>Natural Language Understanding (NLU) is a critical factor of conversational business. Thanks to the growing machine learning and deep learning techniques, data scientists have made significant progress in the area of understanding human language in the past few years.</p><p>Therefore, we rethink the best practices about how to use NLU techniques with Bottender. You can find Bottender official guides and examples for the modern NLU solutions:</p><ul><li><a href="/docs/advanced-guides-nlu#building-with-dialogflow">Dialogflow</a></li><li><a href="/docs/advanced-guides-nlu#building-with-qna-maker">QnA Maker</a></li><li><a href="/docs/advanced-guides-nlu#building-with-luis">LUIS</a></li><li><a href="/docs/advanced-guides-nlu#building-with-rasa-nlu">Rasa</a></li></ul><h2>Fundamentally Rewritten in TypeScript</h2><p>Static typing in JavaScript is one of the most impactful trending in the last few years. We adapt it to improve code reliability dramatically.</p><p>Although we had embraced Flow Tye two years ago, we found TypeScript grows much faster and mature, owns better developer communities. Bottender v1 has fundamentally rewritten in TypeScript.</p><p>Since Bottender is created for developers by developers, developer experience is a critical factor we always pursuit. TypeScript offers a better developer experience, e.g., dynamic tips, as you coding with VSCode.</p><p><img src="https://user-images.githubusercontent.com/3382565/70221821-f9f59f80-1783-11ea-9da5-af802d384c8c.png"/></p><h2>Bottender.js.org</h2><p>We are very happy to introduce the new Bottender document site, bottender.js.org, built by Bottender core contributor <a href="https://github.com/jigsawye">Evan Ye</a>.</p><p><img src="https://user-images.githubusercontent.com/3382565/70168751-6c269f80-1704-11ea-831e-cb6a49065d96.png"/></p><p>We have fully understood the importance of official documents and examples. Several team members are dedicated to the endless wish list of docs and examples. You can always expect new docs release every week. Last but not least, <a href="/docs/api-context">API doc</a> is also available.</p><p><a href="https://twitter.com/bottenderjs">Tweet us</a> if you want to read any specific topics! We are trying to give you an answer (even due day) as soon as possible.</p><h3>Versioned Documents and Search Box</h3><p>Thanks to the super powerful doc site package, <a href="https://docusaurus.io/">Docusaurus</a> and <a href="https://community.algolia.com/docsearch/">Docsearch</a>, all documents on bottender.js.org are versioned and searchable by heading:</p><p><img src="https://user-images.githubusercontent.com/3382565/70169022-f1aa4f80-1704-11ea-8726-7a7ecc2fa1f1.png"/></p><h3>Preview Website on the PR</h3><p>Every time a change happens inside a PR, Netlify automatically deploys it and make the preview of it ready.</p><p><img src="https://user-images.githubusercontent.com/3382565/70206187-a2463c80-1761-11ea-82fb-1ed6334368dc.png"/></p><h2>What&#x27;s Next</h2><p>Since we have allocated enough resources to make Bottender active, you can keep an eye on our ambitious roadmap in <a href="https://github.com/Yoctol/bottender/issues/435">this issue</a>. Future item priorities are always dynamic, <a href="https://twitter.com/bottenderjs">tweet us</a> if you want to upvote any of it.</p><p>In the following section, you can find out two major coming features.</p><h3>Slot Filling</h3><p>The multi-turn conversation is a daily chat pattern. It is used to get every detail for a particular scenario, e.g., booking a hotel, searching for the right gift. The most common way to achieve the multi-turn conversation is <code>Slot Filling</code>.</p><p>We already experimented with it in the past few months and made significant progress. You can expect a deep integration between <code>Slot Filling</code> of Dialogflow and Bottender in the near future.</p><h3>Serverless Support</h3><p>Chatbot is one of the best applications for serverless computing. Simplified HTTP adapter APIs of Bottender v1.0 makes it possible. In the near future, we are planning to support the following serverless computing:</p><ul><li>AWS lambda</li><li>Google cloud functions</li><li>Azure functions</li><li>Zeit Now 2.0</li></ul>]]></content:encoded>
+        </item>
+        <item>
+            <title><![CDATA[Bottender 0.15]]></title>
+            <link>https://bottender.js.org/blog/2018/08/03/bottender-0_15</link>
+            <guid>Bottender 0.15</guid>
+            <pubDate>Fri, 03 Aug 2018 00:00:00 GMT</pubDate>
+            <description><![CDATA[After half an year of our open source journey, we are thrilled to finally introduce our latest work - Bottender v0.15. With the release this time, not only did we make tremendous progress from our experiences previously, we also benefited quite a lot by the feedback from the whole community, which we are highly appreciative of. Thanks to your support and feedback for us to get here today.]]></description>
+            <content:encoded><![CDATA[<p>After half an year of our open source journey, we are thrilled to finally introduce our latest work - Bottender v0.15. With the release this time, not only did we make tremendous progress from our experiences previously, we also benefited quite a lot by the feedback from the whole community, which we are highly appreciative of. Thanks to your support and feedback for us to get here today.</p><p>You can now install the latest package by simply entering the command to your terminal:</p><pre><code class="language-sh">$ npm i bottender@latest
+</code></pre><pre><code>$ yarn add bottender@latest
+</code></pre><p>As we cannot stress enough the importance of a smooth process when it comes to developing, we try to avoid any sorts of breaking changes when updating to a new version. With that being said, developers should find it easy when making updates.</p><p>You can find the full change log <a href="https://github.com/Yoctol/bottender/releases/tag/v0.15.0">on GitHub Realease Page</a>.</p><h2>Improving Developer Experience</h2><p>Developer experience has alwasys been our top priority. With the latest version v0.15, we launch two new features that will better the developing process significantly. They will not only speed up your developing process, they also make debugging much simpler than you can ever imagine.</p><h3>ConsoleBot</h3><p>With the help of <code>ConsoleBot</code>, it means less deployment, zero platform configuring, and skipping permission review in early development stages. You can now review the outcome on your terminal console. Under certain circumstances, you&#x27;ll be able to develop without Internet access required, which facilitates a more convenient developing process.</p><p><img src="/img/blog/2018-08-03/console-bot.png" alt="console bot"/></p><h3>Debug</h3><p>We are currently using <a href="https://github.com/visionmedia/debug">debug</a> package to gather and organize all the debug information. You can reach different part of the debug log by adjusting <code>DEBUG</code> environment variable; following is a list of supported arguments:</p><pre><code class="language-sh">DEBUG=bottender:*
+DEBUG=bottender:request
+DEBUG=bottender:session:read
+DEBUG=bottender:session:write
+</code></pre><p>Monitoring the incoming requests and session read/write makes it easy to trace unexpected errors and it, at the same time, gives you a fuller understanding of how the whole program works.</p><p><img src="/img/blog/2018-08-03/console-debug.jpg" alt="console debug"/></p><h2>Boosting Performance with Batch</h2><p>In this version, we built various batch requests strategy for Messenger and Line respectively, which potentially results in notable drops with API calls.</p><h3>Messenger Batch</h3><p>For Facebook Messenger, with <a href="https://developers.facebook.com/docs/graph-api/making-multiple-requests/">Batch requests in Graph API</a>, it is estimated that the HTTP requests will reduce to 1/50, and it automatically triggers retry when over-reaching request limits, which ensures availability under heavy network traffic.</p><pre><code class="language-js">const { isError613 } = require(&#x27;messenger-batch&#x27;);
+
+new MessengerBot({
+  // ...
+  batchConfig: {
+    delay: 1000,
+    shouldRetry: isError613, // (#613) Calls to this api have exceeded the rate limit.
+    retryTimes: 2,
+  },
+});
+</code></pre><h3>LINE Batch</h3><p>As for LINE, we combine 5 messages in one batch request. By doing so, we can maximize the functionality of reply token while using Reply API:</p><pre><code class="language-js">new LineBot({
+  // ...
+  shouldBatch: true, // Default: false
+});
+</code></pre><h2>Comprehensive Platform Support</h2><p>In the previous version <code>v0.14.x</code>, we support a new platform <code>Viber</code>, and we are still perfecting functionaities on all platforms. On top of that, the new launch <code>v0.15</code> supports some relatively new platform features, such as:</p><ul><li><a href="https://blog.messengerdevelopers.com/announcing-messenger-platform-v2-4-8a8ecd5f0f04">Messenger Platform 2.4</a></li><li><a href="https://developers.line.me/en/docs/messaging-api/using-flex-messages/">LINE Flex Message</a></li></ul><p><img src="https://i.imgur.com/VtWnPud.png"/></p><h2>Customize Connector</h2><p>One of the Bottender&#x27;s design intention is to provide a flexible and multi-functional connector, making hooking up with any platform possible.</p><p>Apart from the currently built in console, Messenger, LINE, Slack, Telegram, Viber connectors, you can literally connect it to anything you please! You can find more detailed infomation on customized connector <a href="https://bottender.js.org/docs/Guides-CustomConnector">in our document</a>.</p><p>If you develop your own customized connector, feel free to publish it on npm, tag <code>bottender-connector</code> and share with everyone!</p><h2>More Engaged in the Community</h2><p>We continue receiving a lot of feedback from Twitter and GitHub, which is not going unnoticed. For more developer feedback, we set up a Discord Bottender developer channel, aiming at providing a platform where more voices could be heard. <a href="https://discordapp.com/invite/unmFzmR">Join Discord Bottender channel now</a>, chat with us and receive all first-hand information!</p><p>Besides that, in order to better help developers solve Bottender related issue, we created the <a href="https://stackoverflow.com/questions/tagged/bottender">bottender tag</a> on Stackoverflow; feel free to throw in any questions you might have!</p><h2>Forging Ahead</h2><p>Our top goal is to provide easy acceccibility and to enhance performance. To acheive that, we will be focusing on the following:</p><h3>More Friendly Developing Environment</h3><p>We will keep on learning from different developing friendly projects, such as React so as to identify some common issues and provide corresponding solutions. We also strive for providing effective debugging tools.</p><h3>Supporting More Platforms</h3><p>Aside from working on implementing new functions to the existing platforms, we are also made aware that the community has high hopes on development regarding WeChat, Discord, Web and other platforms, which we would definitely put more effort into.</p><p>With our accumulative experiences from connector developing , we are confident the interface of connector and related files would be available in a more user-friendly way.</p><h3>Serverless</h3><p>Experiments are currently held on some major cloud providers with Serverless service, such as AWS Lambda, Google Cloud Functions, and Azure Functions ect. This would reduce a decent amount of maintaining costs when running less frequently visited chatbot service and more importantly, no sacrifices are to be made when it comes to user experience.</p>]]></content:encoded>
+        </item>
+        <item>
+            <title><![CDATA[Bottender]]></title>
+            <link>https://bottender.js.org/blog/2017/10/31/bottender</link>
+            <guid>Bottender</guid>
+            <pubDate>Tue, 31 Oct 2017 00:00:00 GMT</pubDate>
+            <description><![CDATA[We're very proud to open-source Bottender, a JavaScript framework for cross-platform bots, built on top of Messaging-APIs and lots of great tools from the JavaScript community!]]></description>
+            <content:encoded><![CDATA[<p>We&#x27;re very proud to open-source <a href="https://github.com/yoctol/bottender">Bottender</a>, a JavaScript framework for cross-platform bots, built on top of <a href="https://github.com/Yoctol/messaging-apis">Messaging-APIs</a> and lots of great tools from the JavaScript community!</p><p><img src="/img/blog/2017-10-31/logo-600x600.png" alt="bottender logo"/></p><p>To begin with, install <code>bottender</code> globally from the npm registry:</p><pre><code class="language-sh">npm install -g bottender
+</code></pre><p>And enter interactive bot creation process with:</p><pre><code class="language-sh">bottender init
+</code></pre><p>After answering a few questions, a new bot will be created for you.</p><p><img src="/img/blog/2017-10-31/init-screenshot.png" alt="bottender init screenshot"/></p><br/><h2>Motivation</h2><p>We are eager to envision a future of modern and friendly bot development, because we believe bots are the next big thing in terms of impact, scale and complexity.</p><p>Bot development should benefit from the latest improvements in JavaScript. Thanks to Babel, Node.js and the V8 engine, modern developers have escaped from call-back hell, but still have full access to the power of asynchronous error handling and state maintenance.</p><p>Also, bot development should be friendly. That is, developing bots on multiple messaging platforms should imply a consistent development experience without losing any of the characteristics or features of each platform.</p><p>Here comes Bottender, our proposal of modern and friendly bot development.</p><br/><h2>Only JavaScript. Handler is a function</h2><p>The advantages of this approach over similar models is that you can do whatever you want in your function. And because of that, your entire system remains highly composable and testable.</p><pre><code class="language-js">bot.onEvent((context) =&gt; {
+  if (context.event.isText) {
+    console.log(&#x27;Cool. You sent a text to me.&#x27;);
+  }
+});
+</code></pre><p>Furthermore, this handler function are fully testable without pain. Your test suite can simply import and test it.</p><br/><h2>Control Asynchronous Flow using Async Functions</h2><p>When it comes to database queries or asynchronous API calls, modern async/await syntax give you great advantage to control your logic. Bottender&#x27;s first class async/await support let you simply pass in any <code>async</code> handler. Farewell to callback hells.</p><pre><code class="language-js">bot.onEvent(async (context) =&gt; {
+  if (context.event.text === &#x27;you shoull call api&#x27;) {
+    const result = await callSomeAsyncAPI(context.event.text);
+    await context.sendText(result);
+  }
+});
+</code></pre><br/><h2>Keep Conversation State at Session Store</h2><p>Conversation state can be initially defined with <code>bot.setInitialState()</code>, and can be modified during conversation using <code>context.setState()</code>. The state control is handled by underlying session store.</p><pre><code class="language-js">bot.setInitialState({
+  todos: [],
+});
+
+bot.onEvent((context) =&gt; {
+  if (context.event.isText) {
+    context.setState({
+      todos: context.state.todos.concat(context.event.text),
+    });
+  }
+});
+</code></pre><p>You can use <code>memory</code> session store in development, and replace it with persistence session stores on production.</p><pre><code class="language-js">const { FileSessionStore } = require(&#x27;bottender&#x27;);
+
+const bot = new MessengerBot({
+  sessionStore: new FileSessionStore(),
+});
+</code></pre><p>We provide not only <code>file</code> session store but also <code>redis</code> and <code>mongo</code> session stores. You can even submit your session store by following the interface implementation.</p><br/><h2>Simple deployment</h2><p>To put your bot logic online, you need a HTTP server. Bottender provides simple <code>createServer()</code> function that do the trick for you, the server created can be extended as well.</p><pre><code class="language-js">const createServer = require(&#x27;bottender/express&#x27;);
+
+const server = createServer(bot);
+
+server.listen(3000, () =&gt; {
+  console.log(&#x27;bot server is running on 3000 port&#x27;);
+});
+</code></pre><p>Bottender supports four Node.js server frameworks, simply require corresponding <code>createServer()</code> from submodules.</p><pre><code class="language-js">// import from express
+const createServer = require(&#x27;bottender/express&#x27;);
+
+// import from koa
+const createServer = require(&#x27;bottender/koa&#x27;);
+
+// import from micro
+const createServer = require(&#x27;bottender/micro&#x27;);
+
+// import from restify
+const createServer = require(&#x27;bottender/restify&#x27;);
+</code></pre><p>Since Bottender works as a Node.js HTTP server, you can easily deploy your bots to PaaS like <a href="https://www.heroku.com/">Heroku</a> or <a href="https://zeit.co/now">Now</a>. For more details, check out the <a href="https://bottender.js.org/docs/Guides-Deployment">Deployment</a> guide.</p>]]></content:encoded>
+        </item>
+    </channel>
+</rss>
