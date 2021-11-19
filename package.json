@@ -18,6 +18,7 @@
     "lint:fix": "yarn lint:fix:md && yarn lint --fix",
     "lint:fix:md": "prettier --write **/*.md",
     "lint:staged": "lint-staged",
+    "lint:website": "eslint website --ext=js,ts,tsx",
     "prepare": "husky install",
     "publish": "lerna publish",
     "prepublishOnly": "yarn clean && yarn && yarn test",

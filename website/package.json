@@ -10,6 +10,7 @@
     "rename-version": "docusaurus-rename-version",
     "start": "docusaurus start",
     "swizzle": "docusaurus swizzle",
+    "type-check": "tsc --noEmit",
     "version": "docusaurus-version",
     "write-translations": "docusaurus-write-translations"
   },
@@ -22,5 +23,9 @@
     "react": "^17.0.1",
     "react-dom": "^17.0.1"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@docusaurus/module-type-aliases": "^2.0.0-beta.9",
+    "@tsconfig/docusaurus": "^1.0.4",
+    "typescript": "^4.4.4"
+  }
 }

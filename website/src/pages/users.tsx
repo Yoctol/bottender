@@ -1,25 +1,24 @@
 import Layout from '@theme/Layout';
-import React from 'react';
-import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+import React, { FC } from 'react';
+import Translate from '@docusaurus/Translate';
 
 import Showcase from '../components/Showcase';
+import users from '../../data/users';
 
-const Users = () => {
-  const { siteConfig } = useDocusaurusContext();
-
+const Users: FC = () => {
   return (
     <Layout>
       <div className="mainContainer">
         <div className="showcaseSection">
           <div className="prose">
             <h1>
-              <translate>Who is using Bottender?</translate>
+              <Translate>Who is using Bottender?</Translate>
             </h1>
           </div>
-          <Showcase users={siteConfig.customFields.users} />
+          <Showcase users={users} />
           <div className="prose">
             <p>
-              <translate>Is your project using Bottender?</translate>
+              <Translate>Is your project using Bottender?</Translate>
             </p>
             <p>
               Edit this page with a{' '}
