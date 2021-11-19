@@ -1,7 +1,7 @@
 import Highlight, { defaultProps } from 'prism-react-renderer';
 import Layout from '@theme/Layout';
 import Link from '@docusaurus/Link';
-import React from 'react';
+import React, { FC } from 'react';
 import theme from 'prism-react-renderer/themes/vsDark'; // FIXME: which theme?
 
 const sampleCode = `
@@ -22,7 +22,7 @@ module.export = function App(context) {
   ]);
 };`.trim();
 
-const HomeSplash = () => {
+const HomeSplash: FC = () => {
   return (
     <div className="homeContainer">
       <div className="homeSplashFade">
@@ -42,10 +42,10 @@ const HomeSplash = () => {
   );
 };
 
-const Index = () => {
+const Index: FC = () => {
   return (
     <Layout>
-      <HomeSplash language="en" />
+      <HomeSplash />
       <div className="mainContainer indexContainer">
         <div className="features">
           <h2>Why Bottender?</h2>

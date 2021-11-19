@@ -1,7 +1,7 @@
 import Layout from '@theme/Layout';
-import React from 'react';
+import React, { FC } from 'react';
 
-const Versions = () => {
+const Versions: FC = () => {
   return <Layout>Versions</Layout>;
 };
 

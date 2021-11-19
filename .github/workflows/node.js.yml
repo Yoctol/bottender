@@ -47,6 +47,20 @@ jobs:
         if: ${{ matrix.os == 'ubuntu-latest' && matrix.node-version == 12 }}
         run: npm run lint
 
+      - name: Install npm dependencies for website
+        if: ${{ matrix.os == 'ubuntu-latest' && matrix.node-version == 14 }}
+        working-directory: ./website
+        run: yarn --frozen-lockfile
+
+      - name: Run lint rules for website
+        if: ${{ matrix.os == 'ubuntu-latest' && matrix.node-version == 14 }}
+        run: npm run lint:website
+
+      - name: Run type check for website
+        if: ${{ matrix.os == 'ubuntu-latest' && matrix.node-version == 14 }}
+        working-directory: ./website
+        run: npm run type-check
+
       - name: Run tests
         run: npm run testonly:cov -- --colors
 
