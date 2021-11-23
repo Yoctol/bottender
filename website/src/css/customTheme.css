@@ -11,4 +11,6 @@
   --ifm-footer-color: #ffffff;
   --ifm-footer-link-color: #ffffff;
   --ifm-footer-link-hover-color: #ffffff;
+
+  --ifm-link-color: var(--ifm-color-info-darkest);
 }
