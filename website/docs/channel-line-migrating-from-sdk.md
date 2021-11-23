@@ -102,7 +102,7 @@ Create the main logic of your bot project by editing your bot logic in the `inde
 ```js
 module.exports = function App(context) {
   await context.sendText(context.event.text);
-}
+};
 ```
 
 Create an environment file `.env`, and fill in access token and channel secret:
