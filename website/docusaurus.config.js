@@ -36,9 +36,10 @@ const config = {
         docs: {
           showLastUpdateAuthor: true,
           showLastUpdateTime: true,
-          editUrl: 'https://github.com/Yoctol/bottender/edit/master/docs/',
-          path: '../docs',
-          sidebarPath: '../website/sidebars.json',
+          editUrl:
+            'https://github.com/Yoctol/bottender/edit/master/website/docs/',
+          path: 'docs',
+          sidebarPath: 'sidebars.json',
         },
         blog: {
           path: 'blog',

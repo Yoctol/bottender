@@ -1955,8 +1955,8 @@ client.getTargetAudience().then((targetAudience) => {
 Sets the values of target audience.
 
 | Param     | Type            | Description                                                                                                                             |
-| --------- | --------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
-| type      | `String`        | Audience type. Valid values include `all | custom | none`.                                                                              |
+| --------- | --------------- | --------------------------------------------------------------------------------------------------------------------------------------- | ------ | ------ |
+| type      | `String`        | Audience type. Valid values include `all                                                                                                | custom | none`. |
 | whitelist | `Array<String>` | List of ISO 3166 Alpha-2 codes. Users in any of the blacklist countries won't see your bot on discovery surfaces on Messenger Platform. |
 | blacklist | `Array<String>` | List of ISO 3166 Alpha-2 codes. Users in any of the whitelist countries will see your bot on discovery surfaces on Messenger Platform.  |
 
