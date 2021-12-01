@@ -1,0 +1,15 @@
+# put your Crowdin API token in $HOME/.crowdin.yml
+# https://support.crowdin.com/configuration-file/#split-project-configuration-and-api-credentials
+project_id: 391763
+base_path: './'
+preserve_hierarchy: true
+
+files:
+  - source: '/i18n/en/**/*'
+    translation: '/i18n/%locale%/**/%original_file_name%'
+  - source: '/docs/**/*'
+    translation: '/i18n/%locale%/docusaurus-plugin-content-docs/current/**/%original_file_name%'
+  - source: '/versioned_docs/**/*'
+    translation: '/i18n/%locale%/docusaurus-plugin-content-docs/current/versioned_docs/**/%original_file_name%'
+  - source: '/blog/**/*'
+    translation: '/i18n/%locale%/docusaurus-plugin-content-blog/**/%original_file_name%'

@@ -77,7 +77,7 @@ All methods return a Promise.
 
 <br />
 
-<a id="send-api" />
+<a id="send-api"></a>
 
 ### Send API - [Official Docs](https://developers.facebook.com/docs/messenger-platform/send-api-reference)
 
@@ -146,7 +146,7 @@ Available messaging types:
 
 <br />
 
-<a id="content-types" />
+<a id="content-types"></a>
 
 ### Content Types - [Content types](https://developers.facebook.com/docs/messenger-platform/send-api-reference/contenttypes)
 
@@ -356,7 +356,7 @@ client.sendFile(USER_ID, buffer, { filename: 'file.pdf' });
 
 <br />
 
-<a id="templates" />
+<a id="templates"></a>
 
 ### Templates - [Official Docs](https://developers.facebook.com/docs/messenger-platform/send-api-reference/templates)
 
@@ -956,7 +956,7 @@ client.sendAirlineUpdateTemplate(USER_ID, {
 
 <br />
 
-<a id="quick-replies" />
+<a id="quick-replies"></a>
 
 ### Quick Replies - [Official Docs](https://developers.facebook.com/docs/messenger-platform/send-api-reference/quick-replies)
 
@@ -994,7 +994,7 @@ It works with all of send message methods.
 
 <br />
 
-<a id="sender-actions" />
+<a id="sender-actions"></a>
 
 ### Sender Actions - [Official Docs](https://developers.facebook.com/docs/messenger-platform/send-api-reference/sender-actions)
 
@@ -1065,7 +1065,7 @@ client.typingOff(USER_ID);
 
 <br />
 
-<a id="attachment-upload-api" />
+<a id="attachment-upload-api"></a>
 
 ### Attachment Upload API - [Official Docs](https://developers.facebook.com/docs/messenger-platform/send-api-reference/attachment-upload)
 
@@ -1248,7 +1248,7 @@ client.uploadFile(buffer, {
 
 <br />
 
-<a id="message-batching" />
+<a id="message-batching"></a>
 
 ### Message Batching - [Official Docs](https://developers.facebook.com/docs/graph-api/making-multiple-requests)
 
@@ -1312,7 +1312,7 @@ Those methods exactly have same argument signature with client methods.
 
 <br />
 
-<a id="custom-labels" />
+<a id="custom-labels"></a>
 
 ### Custom Labels - [Official Docs](https://developers.facebook.com/docs/messenger-platform/identity/custom-labels)
 
@@ -1482,7 +1482,7 @@ client.deleteLabel(LABEL_ID);
 
 <br />
 
-<a id="user-profile-api" />
+<a id="user-profile-api"></a>
 
 ### User Profile API - [Official Docs](https://developers.facebook.com/docs/messenger-platform/user-profile)
 
@@ -1511,7 +1511,7 @@ client.getUserProfile(USER_ID).then((user) => {
 
 <br />
 
-<a id="messenger-profile-api" />
+<a id="messenger-profile-api"></a>
 
 ### Messenger Profile API - [Official Docs](https://developers.facebook.com/docs/messenger-platform/messenger-profile)
 
@@ -1606,7 +1606,7 @@ client.deleteMessengerProfile(['get_started', 'persistent_menu']);
 
 <br />
 
-<a id="persistent-menu" />
+<a id="persistent-menu"></a>
 
 ### Persistent Menu - [Official Docs](https://developers.facebook.com/docs/messenger-platform/messenger-profile/persistent-menu)
 
@@ -1723,7 +1723,7 @@ Example:
 client.deletePersistentMenu();
 ```
 
-<a id="get-started-button" />
+<a id="get-started-button"></a>
 
 ### Get Started Button - [Official Docs](https://developers.facebook.com/docs/messenger-platform/messenger-profile/get-started-button)
 
@@ -1772,7 +1772,7 @@ Example:
 client.deleteGetStarted();
 ```
 
-<a id="greeting-text" />
+<a id="greeting-text"></a>
 
 ### Greeting Text - [Officail docs](https://developers.facebook.com/docs/messenger-platform/messenger-profile/greeting-text)
 
@@ -1829,7 +1829,7 @@ Example:
 client.deleteGreeting();
 ```
 
-<a id="domain-whitelist" />
+<a id="domain-whitelist"></a>
 
 ### Whitelisted Domains - [Official Docs](https://developers.facebook.com/docs/messenger-platform/messenger-profile/domain-whitelisting)
 
@@ -1874,7 +1874,7 @@ Example:
 client.deleteWhitelistedDomains();
 ```
 
-<a id="account-linking-url" />
+<a id="account-linking-url"></a>
 
 ### Account Linking URL - [Official Docs](https://developers.facebook.com/docs/messenger-platform/reference/messenger-profile-api/account-linking-url)
 
@@ -1926,7 +1926,7 @@ client.deleteAccountLinkingURL();
 
 <br />
 
-<a id="target-audience" />
+<a id="target-audience"></a>
 
 ### Target Audience - [Official Docs](https://developers.facebook.com/docs/messenger-platform/messenger-profile/target-audience)
 
@@ -1980,7 +1980,7 @@ client.deleteTargetAudience();
 
 <br />
 
-<a id="chat-extension-home-url" />
+<a id="chat-extension-home-url"></a>
 
 ### Chat Extension Home URL - [Official Docs](https://developers.facebook.com/docs/messenger-platform/messenger-profile/home-url)
 
@@ -2154,7 +2154,7 @@ client.getSecondaryReceivers().then((receivers) => {
 
 <br />
 
-<a id="page-messaging-insights-api" />
+<a id="page-messaging-insights-api"></a>
 
 ### Page Messaging Insights API - [Official Docs](https://developers.facebook.com/docs/messenger-platform/insights/page-messaging)
 
@@ -2374,7 +2374,7 @@ client.getNewConversations().then((result) => {
 
 <br />
 
-<a id="built-in-nlp-api" />
+<a id="built-in-nlp-api"></a>
 
 ### Built-in NLP API - [Official Docs](https://developers.facebook.com/docs/messenger-platform/built-in-nlp)
 
@@ -2425,7 +2425,7 @@ client.disableNLP();
 
 <br />
 
-<a id="event-logging-api" />
+<a id="event-logging-api"></a>
 
 ### Event Logging API - [Official Docs](https://developers.facebook.com/docs/app-events/bots-for-messenger#logging-custom-events)
 
@@ -2458,7 +2458,7 @@ client.logCustomEvents({
 });
 ```
 
-<a id="id-matching-api" />
+<a id="id-matching-api"></a>
 
 ### ID Matching API - [Official Docs](https://developers.facebook.com/docs/messenger-platform/identity/id-matching)
 
@@ -2562,7 +2562,7 @@ client
 
 <br />
 
-<a id="persona-api" />
+<a id="persona-api"></a>
 
 ### Persona API - [Official Docs](https://developers.facebook.com/docs/messenger-platform/send-messages/personas)
 

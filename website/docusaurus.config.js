@@ -51,6 +51,10 @@ const config = {
     ],
   ],
   plugins: [],
+  i18n: {
+    defaultLocale: 'en',
+    locales: ['en', 'ja', 'zh-TW'],
+  },
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
@@ -89,6 +93,10 @@ const config = {
             href: 'https://github.com/yoctol/bottender',
             label: 'GitHub',
             position: 'left',
+          },
+          {
+            type: 'localeDropdown',
+            position: 'right',
           },
           {
             label: 'Version',

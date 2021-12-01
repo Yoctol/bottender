@@ -321,7 +321,7 @@ context.sendCarouselContent({
 
 <br />
 
-<a id="keyboards" />
+<a id="keyboards"></a>
 
 ### Keyboards - [Official Docs](https://developers.viber.com/docs/api/rest-bot-api/#keyboards)
 
