@@ -13,8 +13,8 @@
 
 > The readme below is the documentation for the v1 (stable) version of Bottender. To view the documentation:
 >
-> - for the latest Bottender version (v1.x), visit https://bottender.js.org/docs
-> - for the legacy Bottender version (v0.15), visit https://bottender.js.org/docs/0.15.17
+> - for the latest Bottender version (v1.x), visit https://bottender.js.org/docs/en/getting-started
+> - for the legacy Bottender version (v0.15), visit https://bottender.js.org/docs/en/0.15.17/getting-started
 
 - **Declarative** - Bottender takes care of the complexity of conversational UIs for you. Design actions for each event and state in your application, and Bottender will run accordingly. This approach makes your code more predictable and easier to debug.
 
@@ -25,7 +25,7 @@
 - **Ready for Production** - There are thousands of bots powered by Bottender. It has been optimized for real world use cases, automatic batching request and dozens of other compelling features.
 
 Bottender is built on top of
-[Messaging APIs](https://github.com/bottenderjs/messaging-apis).
+[Messaging APIs](https://github.com/Yoctol/messaging-apis).
 
 ## Installation
 
@@ -41,7 +41,7 @@ Installation may fail on Windows during compilation of the native dependencies w
 
 You can find the Bottender documentation [on the website](https://bottender.js.org?new).
 
-Check out the [Getting Started](https://bottender.js.org/docs) page for a quick overview.
+Check out the [Getting Started](https://bottender.js.org/docs/en/getting-started) page for a quick overview.
 
 ## Community
 
@@ -117,7 +117,7 @@ module.export = function App(context) {
 
 ## Ecosystem
 
-- [bottender-compose](https://github.com/bottenderjs/bottender-compose) - An utility library for Bottender and higher-order handlers.
+- [bottender-compose](https://github.com/Yoctol/bottender-compose) - An utility library for Bottender and higher-order handlers.
 
 ## Contributing
 

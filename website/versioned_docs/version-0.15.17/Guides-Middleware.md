@@ -22,7 +22,7 @@ Handlers is an array of functions with args like below:
 ```js
 /**
  * @param {Object} context - A context can use all methods in client (see {@link
- *     https://github.com/bottenderjs/messaging-apis}|messaging-apis}) and sessions.
+ *     https://github.com/Yoctol/messaging-apis}|messaging-apis}) and sessions.
  * @param {Function} next - call `next()` to pass control to the next handler.
  */
 function handler(context, next) {

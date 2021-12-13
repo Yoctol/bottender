@@ -1323,7 +1323,7 @@ event.memberLeft;
 
 # 0.15.16 / 2019-01-29
 
-- [deps] upgrade messaging-api-messenger to [0.7.16](https://github.com/bottenderjs/messaging-apis/releases/tag/v0.7.16)
+- [deps] upgrade messaging-api-messenger to [0.7.16](https://github.com/Yoctol/messaging-apis/releases/tag/v0.7.16)
 
 # 0.15.15 / 2018-12-06
 
@@ -1586,7 +1586,7 @@ await context.isThreadOwner(); // true | false
 
 # 0.15.0 / 2018-07-18
 
-`v0.15` is the second major version after we open sourced Bottender. In this version, we introduce a lot of helpful, community requested features based on [Messaging APIs v0.7](https://github.com/bottenderjs/messaging-apis/releases/tag/v0.7.0).
+`v0.15` is the second major version after we open sourced Bottender. In this version, we introduce a lot of helpful, community requested features based on [Messaging APIs v0.7](https://github.com/Yoctol/messaging-apis/releases/tag/v0.7.0).
 
 - [new] add `context.requestContext`:
 
@@ -1658,7 +1658,7 @@ new MessengerBot({
 });
 ```
 
-It will enable [message batching](https://github.com/bottenderjs/messaging-apis/tree/master/packages/messaging-api-messenger#message-batching) functionality via [messaging-api-messenger](https://github.com/bottenderjs/messaging-apis/tree/master/packages/messaging-api-messenger) under the hood.
+It will enable [message batching](https://github.com/Yoctol/messaging-apis/tree/master/packages/messaging-api-messenger#message-batching) functionality via [messaging-api-messenger](https://github.com/Yoctol/messaging-apis/tree/master/packages/messaging-api-messenger) under the hood.
 
 - [deprecated] `sendAirlineFlightUpdateTemplate` has been renamed to `sendAirlineUpdateTemplate`.
 
@@ -2646,7 +2646,7 @@ See [official docs](https://api.slack.com/methods/chat.postMessage) for more ava
   - `context.passThreadControlToPageInbox`
   - `context.takeThreadControl`
 - [new] Send `messaging_type` as `RESPONSE` when reply anything in the context. [#12](https://github.com/Yoctol/bottender/pull/12)
-- [deps] Upgrade [Messaging APIs](https://github.com/bottenderjs/messaging-apis) clients to latest.
+- [deps] Upgrade [Messaging APIs](https://github.com/Yoctol/messaging-apis) clients to latest.
 
 # 0.14.2 / 2017-11-07
 

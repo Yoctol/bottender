@@ -216,6 +216,6 @@ Now, you can see the slack app require more permissions.
 
 Click the `Allow` button. Now you can chat with the slack bot in direct message channel or in any channel the slack bot in.
 
-The next thing you can do is [teaching your bot to echo](https://bottender.js.org/docs#teaching-your-bot-to-echo).
+The next thing you can do is [teaching your bot to echo](https://bottender.js.org/docs/en/getting-started#teaching-your-bot-to-echo).
 
 > **Note:** If your bot doesn't respond after webhook settings, please take a closer look at bot events you subscribed to. Slack doesn't pick any bot events subscription by default. The first bot event you may subscribe to is `message.im`, which is the event whenever a user posts a direct message to your bot.

@@ -46,7 +46,7 @@ npx bottender messenger webhook set
 ## Idea of This Example
 
 This example shows how to use [Messenger Handover Protocol](https://developers.facebook.com/docs/messenger-platform/handover-protocol) in Bottender bots.
-For more information, check our [Messenger Handover Protocol](https://bottender.js.org/docs/channel-messenger-handover-protocol) guides.
+For more information, check our [Messenger Handover Protocol](https://bottender.js.org/docs/en/channel-messenger-handover-protocol) guides.
 
 ## Related Examples
 

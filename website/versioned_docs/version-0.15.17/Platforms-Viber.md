@@ -122,6 +122,6 @@ bot.onEvent(async (context) => {
 
 ## References
 
-- [Messaging-apis-viber](https://github.com/bottenderjs/messaging-apis/tree/master/packages/messaging-api-viber)
+- [Messaging-apis-viber](https://github.com/Yoctol/messaging-apis/tree/master/packages/messaging-api-viber)
 - [Official Viber Page](https://www.viber.com/)
 - [Official Viber Bot API](https://developers.viber.com/docs/api/rest-bot-api/)

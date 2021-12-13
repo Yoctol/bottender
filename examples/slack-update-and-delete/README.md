@@ -42,7 +42,7 @@ This example contains the following topics:
 - update the message sent by bot
 - delete the message sent by bot
 
-For more information, check our [Slack guides](https://bottender.js.org/docs/channel-slack-sending-messages#updating-messages).
+For more information, check our [Slack guides](https://bottender.js.org/docs/en/channel-slack-sending-messages#updating-messages).
 
 ## Related Examples
 

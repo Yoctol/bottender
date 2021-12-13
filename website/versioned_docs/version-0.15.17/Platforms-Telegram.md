@@ -128,7 +128,7 @@ bot.onEvent(async (context) => {
 
 ## References
 
-- [Messaging-apis-telegram](https://github.com/bottenderjs/messaging-apis/tree/master/packages/messaging-api-telegram)
+- [Messaging-apis-telegram](https://github.com/Yoctol/messaging-apis/tree/master/packages/messaging-api-telegram)
 - [Official Telegram Page](https://telegram.org)
 - [Official Telegram Bot Introduction](https://core.telegram.org/bots)
 - [Official Telegram Bot API](https://core.telegram.org/bots/api)
