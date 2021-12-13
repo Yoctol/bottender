@@ -94,5 +94,5 @@ function getNameFromId(id, session) {
 ## References
 
 - [official docs](https://api.slack.com/): official docs of Slack API.
-- [messaging-api-slack](https://github.com/Yoctol/messaging-apis/tree/master/packages/messaging-api-slack)
+- [messaging-api-slack](https://github.com/bottenderjs/messaging-apis/tree/master/packages/messaging-api-slack)
 - [slack-hello-world](https://github.com/Yoctol/bottender/blob/master/examples/slack-hello-world/index.js) example.
