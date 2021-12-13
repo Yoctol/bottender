@@ -281,11 +281,11 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
   /**
    * Sender Actions
    *
-   * https://github.com/Yoctol/messaging-apis/tree/master/packages/messaging-api-messenger#sender-actions
+   * https://github.com/bottenderjs/messaging-apis/tree/master/packages/messaging-api-messenger#sender-actions
    */
 
   /**
-   * https://github.com/Yoctol/messaging-apis/tree/master/packages/messaging-api-messenger#sendsenderactionuserid-action
+   * https://github.com/bottenderjs/messaging-apis/tree/master/packages/messaging-api-messenger#sendsenderactionuserid-action
    */
   async sendSenderAction(
     senderAction: MessengerTypes.SenderAction,
@@ -316,7 +316,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
   }
 
   /**
-   * https://github.com/Yoctol/messaging-apis/tree/master/packages/messaging-api-messenger#typingonuserid
+   * https://github.com/bottenderjs/messaging-apis/tree/master/packages/messaging-api-messenger#typingonuserid
    */
   async typingOn(
     options: MessengerTypes.SendOption = {}
@@ -344,7 +344,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
   }
 
   /**
-   * https://github.com/Yoctol/messaging-apis/tree/master/packages/messaging-api-messenger#typingoffuserid
+   * https://github.com/bottenderjs/messaging-apis/tree/master/packages/messaging-api-messenger#typingoffuserid
    */
   async typingOff(
     options: MessengerTypes.SendOption = {}
@@ -372,7 +372,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
   }
 
   /**
-   * https://github.com/Yoctol/messaging-apis/tree/master/packages/messaging-api-messenger#markseenuserid
+   * https://github.com/bottenderjs/messaging-apis/tree/master/packages/messaging-api-messenger#markseenuserid
    */
   async markSeen(): Promise<
     MessengerTypes.SendSenderActionResponse | undefined
@@ -400,11 +400,11 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
   /**
    * Handover Protocol
    *
-   * https://github.com/Yoctol/messaging-apis/tree/master/packages/messaging-api-messenger#handover-protocol-api
+   * https://github.com/bottenderjs/messaging-apis/tree/master/packages/messaging-api-messenger#handover-protocol-api
    */
 
   /**
-   * https://github.com/Yoctol/messaging-apis/tree/master/packages/messaging-api-messenger#passthreadcontroluserid-targetappid-metadata---official-docs
+   * https://github.com/bottenderjs/messaging-apis/tree/master/packages/messaging-api-messenger#passthreadcontroluserid-targetappid-metadata---official-docs
    */
   async passThreadControl(
     targetAppId: number,
@@ -436,7 +436,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
   }
 
   /**
-   * https://github.com/Yoctol/messaging-apis/tree/master/packages/messaging-api-messenger#passthreadcontroltopageinboxuserid-metadata---official-docs
+   * https://github.com/bottenderjs/messaging-apis/tree/master/packages/messaging-api-messenger#passthreadcontroltopageinboxuserid-metadata---official-docs
    */
   async passThreadControlToPageInbox(
     metadata?: string
@@ -465,7 +465,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
   }
 
   /**
-   * https://github.com/Yoctol/messaging-apis/tree/master/packages/messaging-api-messenger#takethreadcontroluserid-metadata---official-docs
+   * https://github.com/bottenderjs/messaging-apis/tree/master/packages/messaging-api-messenger#takethreadcontroluserid-metadata---official-docs
    */
   async takeThreadControl(
     metadata?: string
@@ -491,7 +491,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
   }
 
   /**
-   * https://github.com/Yoctol/messaging-apis/blob/master/packages/messaging-api-messenger/README.md#requestthreadcontroluserid-metadata---official-docs
+   * https://github.com/bottenderjs/messaging-apis/blob/master/packages/messaging-api-messenger/README.md#requestthreadcontroluserid-metadata---official-docs
    */
   async requestThreadControl(
     metadata?: string
@@ -517,7 +517,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
   }
 
   /**
-   * https://github.com/Yoctol/messaging-apis/blob/master/packages/messaging-api-messenger/README.md#requestthreadcontroluserid-metadata---official-docs
+   * https://github.com/bottenderjs/messaging-apis/blob/master/packages/messaging-api-messenger/README.md#requestthreadcontroluserid-metadata---official-docs
    */
   async getThreadOwner(): Promise<{ appId: string } | undefined> {
     if (!this._session) {
@@ -558,11 +558,11 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
   /**
    * Targeting Broadcast Messages
    *
-   * https://github.com/Yoctol/messaging-apis/tree/master/packages/messaging-api-messenger#targeting-broadcast-messages---official-docs
+   * https://github.com/bottenderjs/messaging-apis/tree/master/packages/messaging-api-messenger#targeting-broadcast-messages---official-docs
    */
 
   /**
-   * https://github.com/Yoctol/messaging-apis/tree/master/packages/messaging-api-messenger#associatelabeluserid-labelid
+   * https://github.com/bottenderjs/messaging-apis/tree/master/packages/messaging-api-messenger#associatelabeluserid-labelid
    */
   async associateLabel(
     labelId: number
@@ -588,7 +588,7 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
   }
 
   /**
-   * https://github.com/Yoctol/messaging-apis/tree/master/packages/messaging-api-messenger#dissociatelabeluserid-labelid
+   * https://github.com/bottenderjs/messaging-apis/tree/master/packages/messaging-api-messenger#dissociatelabeluserid-labelid
    */
   async dissociateLabel(
     labelId: number
@@ -614,21 +614,21 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
   }
 
   /**
-   * https://github.com/Yoctol/messaging-apis/tree/master/packages/messaging-api-messenger#getassociatedlabelsuserid
+   * https://github.com/bottenderjs/messaging-apis/tree/master/packages/messaging-api-messenger#getassociatedlabelsuserid
    */
   async getAssociatedLabels(): Promise<
     | {
-        data: {
-          name: string;
-          id: string;
-        }[];
-        paging: {
-          cursors: {
-            before: string;
-            after: string;
-          };
+      data: {
+        name: string;
+        id: string;
+      }[];
+      paging: {
+        cursors: {
+          before: string;
+          after: string;
         };
-      }
+      };
+    }
     | undefined
   > {
     if (!this._session) {

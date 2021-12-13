@@ -29,12 +29,12 @@ context.platform; // 'console', 'messenger', 'line', 'slack', 'telegram', 'viber
 
 The client instance. Client type depends on your platform.
 
-See [Messaging APIs](https://github.com/Yoctol/messaging-apis) for more information.
+See [Messaging APIs](https://github.com/bottenderjs/messaging-apis) for more information.
 
 Example:
 
 ```js
-context.client; // client from [Messaging APIs](https://github.com/Yoctol/messaging-apis)
+context.client; // client from [Messaging APIs](https://github.com/bottenderjs/messaging-apis)
 ```
 
 #### `event`

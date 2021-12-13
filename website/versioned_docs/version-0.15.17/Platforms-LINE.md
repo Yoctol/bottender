@@ -114,5 +114,5 @@ To ensure that the request is sent from the LINE Platform, you should provide yo
 - [official docs](https://developers.line.me/en/docs/messaging-api/overview/): official docs of LINE messaging API.
 - [LINE@ MANAGER](https://admin-official.line.me/)
 - [LINE developers](https://developers.line.me)
-- [messaging-api-line](https://github.com/Yoctol/messaging-apis/tree/master/packages/messaging-api-line)
+- [messaging-api-line](https://github.com/bottenderjs/messaging-apis/tree/master/packages/messaging-api-line)
 - [line-hello-world](https://github.com/Yoctol/bottender/blob/master/examples/line-hello-world/index.js) example.

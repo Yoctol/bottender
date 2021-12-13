@@ -48,7 +48,7 @@ This example contains the following topics:
 - How to use home tab.
 - How to update home tab view.
 
-For more information, check our [Slack guides](https://bottender.js.org/docs/en/channel-slack-block-kit).
+For more information, check our [Slack guides](https://bottender.js.org/docs/channel-slack-block-kit).
 
 ## Related Examples
 
