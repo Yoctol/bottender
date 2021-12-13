@@ -49,4 +49,3 @@ This example contains the following topics:
 - build a multiple layer inline keyboard
 
 For more information, check [Telegram Bots#Inline Keyboards](https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating)
-

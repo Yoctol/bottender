@@ -618,17 +618,17 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
    */
   async getAssociatedLabels(): Promise<
     | {
-      data: {
-        name: string;
-        id: string;
-      }[];
-      paging: {
-        cursors: {
-          before: string;
-          after: string;
+        data: {
+          name: string;
+          id: string;
+        }[];
+        paging: {
+          cursors: {
+            before: string;
+            after: string;
+          };
         };
-      };
-    }
+      }
     | undefined
   > {
     if (!this._session) {

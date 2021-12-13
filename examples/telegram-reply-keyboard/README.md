@@ -49,4 +49,3 @@ This example contains the following topics:
 - remove the custom keyboard
 
 For more information, check [Telegram Bots#Keyboards](https://core.telegram.org/bots#keyboards)
-

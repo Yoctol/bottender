@@ -52,12 +52,14 @@ export default class TelegramBot extends Bot<
       try {
         const params = this._offset
           ? {
-            ...options,
-            offset: this._offset,
-          }
+              ...options,
+              offset: this._offset,
+            }
           : options;
 
-        const updates = await (this.connector as TelegramConnector).client.getUpdates(params);
+        const updates = await (
+          this.connector as TelegramConnector
+        ).client.getUpdates(params);
 
         if (updates.length > 0) {
           for (let i = 0; i < updates.length; i++) {
