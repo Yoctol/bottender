@@ -7,7 +7,7 @@ authorTwitter: chentsulin
 authorImageURL: 'https://avatars1.githubusercontent.com/u/3382565?s=460&v=4'
 ---
 
-We're very proud to open-source [Bottender](https://github.com/yoctol/bottender), a JavaScript framework for cross-platform bots, built on top of [Messaging-APIs](https://github.com/Yoctol/messaging-apis) and lots of great tools from the JavaScript community!
+We're very proud to open-source [Bottender](https://github.com/yoctol/bottender), a JavaScript framework for cross-platform bots, built on top of [Messaging-APIs](https://github.com/bottenderjs/messaging-apis) and lots of great tools from the JavaScript community!
 
 ![bottender logo](/img/blog/2017-10-31/logo-600x600.png)
 

@@ -28,7 +28,7 @@ Runs the app in development mode.<br>
 The bot will automatically reload if you make changes to the code.<br>
 By default, server runs on [http://localhost:5000](http://localhost:5000) and ngrok runs on [http://localhost:4040](http://localhost:4040).
 
-To run in [Console Mode](https://bottender.js.org/docs/en/the-basics-console-mode), provide the `--console` option:
+To run in [Console Mode](https://bottender.js.org/docs/the-basics-console-mode), provide the `--console` option:
 
 ```sh
 npm run dev -- --console
@@ -40,7 +40,7 @@ yarn dev --console
 Runs the app in production mode.<br>
 By default, server runs on [http://localhost:5000](http://localhost:5000).
 
-To run in [Console Mode](https://bottender.js.org/docs/en/the-basics-console-mode), provide the `--console` option:
+To run in [Console Mode](https://bottender.js.org/docs/the-basics-console-mode), provide the `--console` option:
 
 ```sh
 npm start -- --console
@@ -57,6 +57,6 @@ Runs the test cases using [Jest](https://jestjs.io/).
 
 ## Learn More
 
-To learn Bottender, check out the [Bottender documentation](https://bottender.js.org/docs/en/getting-started).
+To learn Bottender, check out the [Bottender documentation](https://bottender.js.org/docs).
 
 For more examples, see [Bottender examples](https://github.com/Yoctol/bottender/tree/master/examples).

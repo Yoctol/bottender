@@ -165,5 +165,5 @@ bot.onEvent(async (context) => {
 
 ## References
 
-- [Messaging-api-messenger](https://github.com/Yoctol/messaging-apis/tree/master/packages/messaging-api-messenger): Our open source Messenger API client project.
+- [Messaging-api-messenger](https://github.com/bottenderjs/messaging-apis/tree/master/packages/messaging-api-messenger): Our open source Messenger API client project.
 - [Messenger Platform](https://developers.facebook.com/docs/messenger-platform): The Messenger Platform docs.

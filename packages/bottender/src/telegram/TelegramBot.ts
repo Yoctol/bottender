@@ -56,10 +56,10 @@ export default class TelegramBot extends Bot<
               offset: this._offset,
             }
           : options;
-        // TODO: Remove casting after https://github.com/Yoctol/messaging-apis/issues/622
-        const updates = (await (this.connector as any).client.getUpdates(
-          params
-        )) as unknown as TelegramRequestBody[];
+
+        const updates = await (
+          this.connector as TelegramConnector
+        ).client.getUpdates(params);
 
         if (updates.length > 0) {
           for (let i = 0; i < updates.length; i++) {
