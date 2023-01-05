@@ -75,7 +75,7 @@ All methods return a Promise.
 
 <br />
 
-<a id="reply-api" />
+<a id="reply-api"></a>
 
 ### Reply API - [Official Docs](https://developers.line.me/en/reference/messaging-api/#send-reply-message)
 
@@ -686,7 +686,7 @@ client.replyFlex(REPLY_TOKEN, 'this is a flex', {
 
 <br />
 
-<a id="push-api" />
+<a id="push-api"></a>
 
 ### Push API - [Official Docs](https://developers.line.me/en/reference/messaging-api/#send-push-message)
 
@@ -1266,7 +1266,7 @@ client.pushFlex(USER_ID, 'this is a flex', {
 
 <br />
 
-<a id="multicast-api" />
+<a id="multicast-api"></a>
 
 ### Multicast API - [Official Docs](https://developers.line.me/en/reference/messaging-api/#send-multicast-messages)
 
@@ -1852,7 +1852,7 @@ client.multicastFlex([USER_ID], 'this is a flex', {
 
 <br />
 
-<a id="quick-replies" />
+<a id="quick-replies"></a>
 
 ### Quick Replies - [Official Docs](https://developers.line.me/en/reference/messaging-api/#quick-reply)
 
@@ -1900,7 +1900,7 @@ context.replyText(
 
 <br />
 
-<a id="content-api" />
+<a id="content-api"></a>
 
 ### Content API - [Official Docs](https://developers.line.me/en/reference/messaging-api/#get-content)
 
@@ -1923,7 +1923,7 @@ client.getMessageContent(MESSAGE_ID).then((buffer) => {
 
 <br />
 
-<a id="profile-api" />
+<a id="profile-api"></a>
 
 ### Profile API - [Official Docs](https://developers.line.me/en/reference/messaging-api/#get-profile)
 
@@ -1951,7 +1951,7 @@ client.getUserProfile(USER_ID).then((profile) => {
 
 <br />
 
-<a id="grouproom-member-profile-api" />
+<a id="grouproom-member-profile-api"></a>
 
 ### Group/Room Member Profile API - [Official Docs](https://developers.line.me/en/messaging-api/group-chats/#getting-a-user-profile-of-a-member-of-a-group-or-room)
 
@@ -2003,7 +2003,7 @@ client.getRoomMemberProfile(ROOM_ID, USER_ID).then((member) => {
 
 <br />
 
-<a id="grouproom-member-ids-api" />
+<a id="grouproom-member-ids-api"></a>
 
 ### Group/Room Member IDs API - [Official Docs](https://developers.line.me/en/messaging-api/group-chats/#getting-user-ids-of-the-members-of-a-group-or-room)
 
@@ -2121,7 +2121,7 @@ client.getAllRoomMemberIds(ROOM_ID).then((ids) => {
 
 <br />
 
-<a id="leave-api" />
+<a id="leave-api"></a>
 
 ### Leave API - [Official Docs](https://developers.line.me/en/messaging-api/group-chats/#leaving-a-group-or-room)
 
@@ -2157,7 +2157,7 @@ client.leaveRoom(ROOM_ID);
 
 <br />
 
-<a id="rich-menu-api" />
+<a id="rich-menu-api"></a>
 
 ### Rich Menu API - [Official Docs](https://developers.line.me/en/reference/messaging-api/#rich-menu)
 
@@ -2443,7 +2443,7 @@ client.deleteDefaultRichMenu();
 
 <br />
 
-<a id="account-link-api" />
+<a id="account-link-api"></a>
 
 ### Account Link API - [Official Docs](https://developers.line.me/en/reference/messaging-api/#account-link)
 
@@ -2466,7 +2466,7 @@ client.issueLinkToken(USER_ID).then((result) => {
 });
 ```
 
-<a id="liff-api" />
+<a id="liff-api"></a>
 
 ### LINE Front-end Framework API - [Official Docs](https://developers.line.me/en/liff/reference/)
 

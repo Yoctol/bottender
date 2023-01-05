@@ -424,7 +424,7 @@ client.sendCarouselContent(USER_ID, {
 
 <br />
 
-<a id="keyboards" />
+<a id="keyboards"></a>
 
 ### Keyboards - [Official Docs](https://developers.viber.com/docs/api/rest-bot-api/#keyboards)
 
@@ -463,7 +463,7 @@ Which in turn will look like this:
 
 <br />
 
-<a id="broadcast-api" />
+<a id="broadcast-api"></a>
 
 ### Broadcast API - [Official Docs](https://developers.viber.com/docs/api/rest-bot-api/#broadcast-message)
 

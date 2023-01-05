@@ -19,7 +19,7 @@ title: LineContext
 - [Rich Menu API](#rich-menu-api)
 - [Account Link API](#account-link-api)
 
-<a id="reply-api" />
+<a id="reply-api"></a>
 
 ### Reply API - [Official Docs](https://developers.line.me/en/docs/messaging-api/reference/#send-reply-message)
 
@@ -549,7 +549,7 @@ context.replyFlex('this is a flex', {
 
 <br />
 
-<a id="push-api" />
+<a id="push-api"></a>
 
 ### Push API - [Official Docs](https://developers.line.me/en/docs/messaging-api/reference/#send-push-message)
 
@@ -1085,7 +1085,7 @@ context.pushFlex('this is a flex', {
 
 <br />
 
-<a id="quick-replies" />
+<a id="quick-replies"></a>
 
 ### Quick Replies - [Official Docs](https://developers.line.me/en/reference/messaging-api/#quick-reply)
 
@@ -1132,7 +1132,7 @@ context.replyText(
 
 <br />
 
-<a id="profile-api" />
+<a id="profile-api"></a>
 
 ### Profile API - [Official Docs](https://developers.line.me/en/docs/messaging-api/reference/#get-profile)
 
@@ -1156,7 +1156,7 @@ context.getUserProfile().then((profile) => {
 
 <br />
 
-<a id="grouproom-member-profile-api" />
+<a id="grouproom-member-profile-api"></a>
 
 ### Group/Room Member Profile API - [Official Docs](https://developers.line.me/en/docs/messaging-api/group-chats/#getting-a-user-profile-of-a-member-of-a-group-or-room)
 
@@ -1183,7 +1183,7 @@ context.getMemberProfile(USER_ID).then((member) => {
 
 <br />
 
-<a id="grouproom-member-ids-api" />
+<a id="grouproom-member-ids-api"></a>
 
 ### Group/Room Member IDs API - [Official Docs](https://developers.line.me/en/docs/messaging-api/group-chats/#getting-user-ids-of-the-members-of-a-group-or-room)
 
@@ -1239,7 +1239,7 @@ context.getAllMemberIds().then((ids) => {
 
 <br />
 
-<a id="leave-api" />
+<a id="leave-api"></a>
 
 ### Leave API - [Official Docs](https://developers.line.me/en/docs/messaging-api/group-chats/#leaving-a-group-or-room)
 
@@ -1255,7 +1255,7 @@ context.leave();
 
 <br />
 
-<a id="rich-menu-api" />
+<a id="rich-menu-api"></a>
 
 ### Rich Menu API - [Official Docs](https://developers.line.me/en/docs/messaging-api/reference/#rich-menu)
 
@@ -1306,7 +1306,7 @@ context.unlinkRichMenu();
 
 <br />
 
-<a id="account-link-api" />
+<a id="account-link-api"></a>
 
 ### Account Link API - [Official Docs](https://developers.line.me/en/docs/messaging-api/reference/#account-link)
 

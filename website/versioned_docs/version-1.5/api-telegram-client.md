@@ -162,7 +162,7 @@ client.deleteWebhook();
 
 <br />
 
-<a id="send-api" />
+<a id="send-api"></a>
 
 ### Send API - [Official Docs](https://core.telegram.org/bots/api#available-methods)
 

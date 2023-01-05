@@ -52,7 +52,7 @@ Available messaging types:
 
 <br />
 
-<a id="message-content-types" />
+<a id="message-content-types"></a>
 
 ### Message Content Types - [Official Docs](https://developers.facebook.com/docs/messenger-platform/send-messages#content_types)
 
@@ -233,7 +233,7 @@ context.sendFile(fs.createReadStream('receipt.pdf'));
 
 <br />
 
-<a id="templates" />
+<a id="templates"></a>
 
 ### Templates - [Official Docs](https://developers.facebook.com/docs/messenger-platform/send-api-reference/templates)
 
@@ -917,7 +917,7 @@ context.sendAirlineFlightUpdateTemplate({
 
 <br />
 
-<a id="quick-replies" />
+<a id="quick-replies"></a>
 
 ### Quick Replies - [Official Docs](https://developers.facebook.com/docs/messenger-platform/send-api-reference/quick-replies)
 
@@ -955,7 +955,7 @@ It works with all of send message methods.
 
 <br />
 
-<a id="sender-actions" />
+<a id="sender-actions"></a>
 
 ### Sender Actions - [Official Docs](https://developers.facebook.com/docs/messenger-platform/send-api-reference/sender-actions)
 
@@ -1015,7 +1015,7 @@ context.typingOff();
 
 <br />
 
-<a id="targeting-broadcast-messages" />
+<a id="targeting-broadcast-messages"></a>
 
 ### Targeting Broadcast Messages - [Official Docs](https://developers.facebook.com/docs/messenger-platform/send-messages/broadcast-messages/target-broadcasts)
 
@@ -1085,7 +1085,7 @@ context.getAssociatedLabels().then((result) => {
 
 <br />
 
-<a id="user-profile-api" />
+<a id="user-profile-api"></a>
 
 ### User Profile API - [Official Docs](https://developers.facebook.com/docs/messenger-platform/user-profile)
 
